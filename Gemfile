@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'govuk_template'
+gem 'govuk_frontend_toolkit'
 gem 'rubocop', require: false
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
