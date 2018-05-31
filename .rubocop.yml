@@ -19,6 +19,11 @@ Style/FrozenStringLiteralComment:
 Style/StringLiterals:
     EnforcedStyle: double_quotes
 
+# This was enforcing nested class definitions where a compact style would
+# sometimes be a better choice
+Style/ClassAndModuleChildren:
+    Enabled: false
+
 Metrics/LineLength:
     Max: 120
 
