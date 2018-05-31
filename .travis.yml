@@ -14,15 +14,15 @@ jobs:
     install: true
     script: ./infrastructure/scripts/lint.sh
   - stage: deploy-to-int
-    if: branch=master
+    if: branch = master AND type != pull_request
     install: true
     script: SPACE=int ./infrastructure/scripts/deploy.sh
   - stage: deploy-to-staging
-    if: branch=staging
+    if: branch = staging AND type != pull_request
     install: true
     script: SPACE=staging ./infrastructure/scripts/deploy.sh
   - stage: deploy-to-live
-    if: branch=live
+    if: branch = live AND type != pull_request
     install: true
     script: SPACE=live ./infrastructure/scripts/deploy.sh
 notifications:
