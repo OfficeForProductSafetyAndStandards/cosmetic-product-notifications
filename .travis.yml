@@ -6,8 +6,8 @@ branches:
   - live
 jobs:
   include:
-  # - stage: test
-  #   script: ./infrastructure/scripts/test.sh
+  - stage: test
+    script: ./infrastructure/scripts/test.sh
   # - stage: test
   #   script: ./infrastructure/scripts/lint.sh
   - stage: deploy-to-int
