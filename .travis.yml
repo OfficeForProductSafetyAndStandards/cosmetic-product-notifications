@@ -1,4 +1,9 @@
 sudo: required
+branches:
+  only:
+  - master
+  - staging
+  - live
 jobs:
   include:
   - stage: test
