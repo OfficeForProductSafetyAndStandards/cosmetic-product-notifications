@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds.svg?branch=master)](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
 # BEIS - Market Surveillance & Product Safety Digital Service
 
 ## Getting Setup
