@@ -11,22 +11,18 @@ jobs:
     install: true
     script: ./infrastructure/scripts/test.sh
   - stage: test
-    # Skip the install step
     install: true
     script: ./infrastructure/scripts/lint.sh
   - stage: deploy-to-int
     if: branch=master
-    # Skip the install step
     install: true
     script: SPACE=int ./infrastructure/scripts/deploy.sh
   - stage: deploy-to-staging
     if: branch=staging
-    # Skip the install step
     install: true
     script: SPACE=staging ./infrastructure/scripts/deploy.sh
   - stage: deploy-to-live
     if: branch=live
-    # Skip the install step
     install: true
     script: SPACE=live ./infrastructure/scripts/deploy.sh
 notifications:
