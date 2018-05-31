@@ -1,4 +1,5 @@
 #!/bin/bash
 set -ex
 
-bin/rails test
+docker-compose build
+docker-compose run web bin/rails test

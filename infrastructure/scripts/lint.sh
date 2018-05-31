@@ -1,4 +1,5 @@
 #!/bin/bash
 set -ex
 
-rubocop
+docker-compose build
+docker-compose run web rubocop
