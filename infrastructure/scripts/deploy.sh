@@ -25,7 +25,7 @@ case $SPACE in
   ;;
 esac
 
-./infrastructure/ci-install-cf.sh
+./infrastructure/install-cf.sh
 
 cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o "beis-mspsds" -s $space
 
