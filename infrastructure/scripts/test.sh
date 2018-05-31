@@ -2,4 +2,5 @@
 set -ex
 
 docker-compose build
-docker-compose run web rake db:create && bin/rails test
+docker-compose run web rake db:create
+docker-compose run web bin/rails test
