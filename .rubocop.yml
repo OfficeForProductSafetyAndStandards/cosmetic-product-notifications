@@ -1,5 +1,26 @@
 Rails:
     Enabled: true
 
+AllCops:
+  Exclude:
+    - 'bin/**'
+
+# Since this is a prototype, strict documentation
+# is not necessary. Consider adding this back in
+# at a later date
 Style/Documentation:
     Enabled: false
+
+# This enforces adding a lot of comments in preparation
+# for an upgrade to Ruby 3, which seems unnecessary at the moment
+Style/FrozenStringLiteralComment:
+    Enabled: false
+
+Style/StringLiterals:
+    EnforcedStyle: double_quotes
+
+Metrics/LineLength:
+    Max: 120
+
+Layout/EndOfLine:
+  EnforcedStyle: lf

@@ -8,8 +8,8 @@ jobs:
   include:
   - stage: test
     script: ./infrastructure/scripts/test.sh
-  # - stage: test
-  #   script: ./infrastructure/scripts/lint.sh
+  - stage: test
+    script: ./infrastructure/scripts/lint.sh
   - stage: deploy-to-int
     if: branch=master
     # Skip the install step
