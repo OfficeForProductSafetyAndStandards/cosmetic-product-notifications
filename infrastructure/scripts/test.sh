@@ -1,4 +1,4 @@
 #!/bin/bash
 set -ex
 
-rails test
+bin/rails test
