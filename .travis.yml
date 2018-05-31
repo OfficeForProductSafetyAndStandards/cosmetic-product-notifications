@@ -6,10 +6,10 @@ branches:
   - live
 jobs:
   include:
-  - stage: test
-    script: ./infrastructure/test.sh
-  - stage: test
-    script: ./infrastructure/lint.sh
+  # - stage: test
+  #   script: ./infrastructure/test.sh
+  # - stage: test
+  #   script: ./infrastructure/lint.sh
   - stage: deploy-to-int
     if: branch=master
     script: SPACE=int ./infrastructure/deploy.sh
