@@ -7,8 +7,12 @@ branches:
 jobs:
   include:
   - stage: test
+    # Skip the install step
+    install: true
     script: ./infrastructure/scripts/test.sh
   - stage: test
+    # Skip the install step
+    install: true
     script: ./infrastructure/scripts/lint.sh
   - stage: deploy-to-int
     if: branch=master
