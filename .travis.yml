@@ -7,18 +7,18 @@ branches:
 jobs:
   include:
   # - stage: test
-  #   script: ./infrastructure/test.sh
+  #   script: ./infrastructure/scripts/test.sh
   # - stage: test
-  #   script: ./infrastructure/lint.sh
+  #   script: ./infrastructure/scripts/lint.sh
   - stage: deploy-to-int
     if: branch=master
-    script: SPACE=int ./infrastructure/deploy.sh
+    script: SPACE=int ./infrastructure/scripts/deploy.sh
   - stage: deploy-to-staging
     if: branch=staging
-    script: SPACE=staging ./infrastructure/deploy.sh
+    script: SPACE=staging ./infrastructure/scripts/deploy.sh
   - stage: deploy-to-live
     if: branch=live
-    script: SPACE=live ./infrastructure/deploy.sh
+    script: SPACE=live ./infrastructure/scripts/deploy.sh
 notifications:
   email:
   - anthony.pengelly@softwire.com
