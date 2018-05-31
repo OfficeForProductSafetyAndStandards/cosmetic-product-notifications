@@ -2,8 +2,9 @@
 # BEIS - Market Surveillance & Product Safety Digital Service
 
 ## Getting Setup
-Install Docker
-Install docker-compose
+Install Docker: https://docs.docker.com/install/
+
+Install docker-compose: https://docs.docker.com/compose/install/
 
 ```
 docker-compose build
@@ -16,11 +17,25 @@ docker-compose run web rake db:create
 Visit the site on localhost:3000
 
 ### Windows Subsystem for Linux
-`sudo ln -s /mnt/c /c`
+You will have to install the docker server on Windows, and the docker client on WSL
 
-`cd /c/path/to/project`
+To make this work, make the current path look like a windows path to appease Windows Docker
+```
+sudo ln -s /mnt/c /c
+cd /c/path/to/project
+```
 
 (from https://medium.com/software-development-stories/developing-a-dockerized-web-app-on-windows-subsystem-for-linux-wsl-61efec965080)
 
-## First time setup
-https://docs.docker.com/compose/rails
+## Tests
+You can run the tests with the following command:
+```
+docker-compose run web rails test
+```
+
+You can run the linting with:
+```
+docker-compose run web rubocop
+```
+
+Running this with the --auto-correct flag set will cause rubocop to attempt to fix as many of the issues as it can.
