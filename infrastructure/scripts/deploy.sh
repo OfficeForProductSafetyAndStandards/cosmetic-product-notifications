@@ -29,6 +29,6 @@ esac
 
 cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o "beis-mspsds" -s $SPACE
 
-cf push --hostname $HOSTNAME
+cf push $HOSTNAME
 
 cf logout
