@@ -26,8 +26,12 @@ Create a blank database in the `int` space:
 
 ## Rails Site
 
-Add the "RAILS_ENV" variable to tell rails to use the prod database
+Create the app using the current repository
 
     cf push
+    # Add the "RAILS_ENV" variable to tell rails to use the prod database
     cf set-env mspsds-int RAILS_ENV production
+    # Add a username and password for the HTTP authentication
+    cf set-env mspsds-int USERNAME XXX
+    cf set-env mspsds-int PASSWORD XXX
     cf restage mspsds-int
