@@ -1,0 +1,29 @@
+sudo: required
+branches:
+  only:
+  - master
+  - staging
+  - live
+jobs:
+  include:
+  - stage: test
+    script: ./infrastructure/test.sh
+  - stage: test
+    script: ./infrastructure/lint.sh
+  - stage: deploy-to-int
+    if: branch=master
+    script: SPACE=int ./infrastructure/deploy.sh
+  - stage: deploy-to-staging
+    if: branch=staging
+    script: SPACE=staging ./infrastructure/deploy.sh
+  - stage: deploy-to-live
+    if: branch=live
+    script: SPACE=live ./infrastructure/deploy.sh
+notifications:
+  email:
+  - anthony.pengelly@softwire.com
+  #- david.broder-rogers@softwire.com
+env:
+  global:
+  - secure: F8eVV8PG7rO0LLOpVfPd0EB30EHhYtImiYpbqgRCgqJcSoOy1QpjVu1tLSVUQGaOmcJ8Lp8B5eW08v1Al3EUdsAZilPwaT8R5IKdPZ//du+xTUI6EnPAzvOqvs5VBdRrZIDX/gZH8lVHuaxXAdCC0/DXdyInalvK/tlHhViq/EhQj5sHfllnWT7RcuBJD2jlbXHrV2J5Ycq+sU9Wz8agRI3IT4QpAA4RYLBiIY1tsj8mokVZHa4h1XVKGziRXN/+FNf2N8v2MbO1Yjia6QmwhEOeaWxKxI56tG2CvXia1hNI7uqqNmAbjgpybBzCQwsMgCJZ0cL+0yfX8tYS4VDhmOgs3O4Npkj3IR9/6WY0wwiVYAR/GwT8TxNfczutmFwkMA9oHHZFWX0AlLpJTUUpmDadV08EhN9gknPNBCVuTBtpny0TK73vvaaBxc1PMiCU5082dbeocT447d0vaWfitJqAu4Mlq92Vw/6BVafQAx0/bmn5zKTkyNeVPRBq6sW+fwBhHYQdQLiJwlw3K4a08H3SCI7t2JO6jiqrT0VlYUj44ZAd3Xct2xl+RXb92GP2W5hkgnm1I+OmNS4TknTy4IlPlWo1116UeiSEz3R0bldW+jzCbkR+Tfge9NyYEISBXEdgr6NWGpTmuQil/SDCXwAqn71/+aPWDfpAzI2UMB8=
+  - secure: OMqDkgIijuZvIDd8UNnOXeIx/WlIXs+JFvNLwE+gRezN9jr7BkGj/XwDJKKg4iUguAHu+d2r9pQ4lz3vy41Y0Lz9yIrUCUtL8/g/I+O9Ijf4k7oEpxMgpo5ZLRTbw0WfBr1m4q1kTPYjk88jpjzVZnqu0BoG1yzufzzxqAL03grcE/ro2sgQuipnRNNu1r8cW7sSCDOxWM4uNsBNELJbtbpZ7dceKpIcoFf7otJyRl+fCaiNeD1yoa5JlIUWVs+yNQUM9ZKMrNwNb52y1xjSXjTs4yAVYN8Bbp0k9qyGzUeRtPXLwoBsbmjaR8aBKwuEYGf+VJ29J24bagnhb2S/2+P2en03qBH0V+WvKWbH0ftGkdELXLf+iA/hEnQV0R9plmHV57thm+OPCbIxkHo6WkGoocMmPQGkW9Xh/0LZfaeZIESqQOIA8uoMfhH7jQIMv4Iqv9VIbw0onw2JM4HtuSfUQz23Zk65s6wqKsnIiBfZK5SnZ34j3OgOnhwPQx67HbfyhspP+Nw+7yqMWa4EIXRZxVD343w9//qUMjC/b+24jxFEn16xC0cdwX59rEqDszTtcu2di1ayKUFjNPGOEgOvNPDaVOIWDxYoimhlVlK6q5fjEK/GIknbJwpAH1G6BC1XV2IxllwLT/CORmFrqxaGMPQu5YXDDzBEKX4Fjt0=
