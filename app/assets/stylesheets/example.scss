@@ -1,0 +1,12 @@
+@import "_grid_layout.scss";
+@import "_colours.scss";
+
+.example-page {
+  .sidebar {
+    background-color: $grey-3;
+  }
+  
+  .button-box {
+      padding-bottom: $gutter;
+  }
+}

@@ -1,4 +1,10 @@
 @import "_grid_layout.scss";
+
+// Set the entire site to use border-box
+* {
+  box-sizing: border-box;
+}
+
 // From: https://github.com/alphagov/govuk_elements
 // Layout
 // ==========================================================================
