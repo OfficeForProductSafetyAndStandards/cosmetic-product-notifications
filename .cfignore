@@ -13,3 +13,6 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore npm files
+/node_modules/**

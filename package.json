@@ -1,0 +1,18 @@
+{
+  "name": "beis-mspsds",
+  "version": "1.0.0",
+  "description": "Market Surveillance and Product Safety",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UKGovernmentBEIS/beis-mspsds.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "govuk-elements-sass": "^3.1.2"
+  }
+}
