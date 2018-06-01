@@ -29,6 +29,7 @@ esac
 
 cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o "beis-mspsds" -s $SPACE
 
-cf push $HOSTNAME
+# v3-push is in an experimental stage so could break
+cf v3-push $HOSTNAME -b nodejs_buildpack -b ruby_buildpack
 
 cf logout
