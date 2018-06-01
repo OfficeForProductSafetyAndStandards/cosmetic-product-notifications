@@ -1,0 +1,22 @@
+// Classes are defined here: http://govuk-elements.herokuapp.com/
+
+// Settings (variables)
+@import "colours";                                // Colour variables
+@import "font_stack";                             // Font family variables
+@import "measurements";                           // Widths and gutter variables
+
+// Mixins
+@import "conditionals";                           // Media query mixin
+@import "device-pixels";                          // Retina image mixin
+@import "grid_layout";                            // Basic grid layout mixin
+@import "typography";                             // Core bold and heading mixins
+@import "shims";                                  // Inline block mixin, clearfix placeholder
+
+// Mixins to generate components (chunks of UI)
+@import "design-patterns/alpha-beta";             // Only required if using _phase-banner.scss
+@import "design-patterns/buttons";                // Only required if using _buttons.scss
+
+// Functions
+// @import "url-helpers";                         // Function to output image-url, or prefixed path (Rails and Compass only)
+
+@import "govuk-elements-sass/public/sass/govuk-elements";

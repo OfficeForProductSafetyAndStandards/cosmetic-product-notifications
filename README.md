@@ -40,6 +40,9 @@ docker-compose run web rubocop
 
 Running this with the --auto-correct flag set will cause rubocop to attempt to fix as many of the issues as it can.
 
+## Styles
+This project is following the GOV UK style guides. We have used the GOV UK elements library to define CSS classes. The design guide for this is here: http://govuk-elements.herokuapp.com/.
+
 ## Licence
 
 Unless stated otherwise, the codebase is released under the MIT License. This covers both the codebase and any sample code in the documentation.
