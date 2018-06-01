@@ -6,28 +6,11 @@
 <% end %>
 <% content_for :header_class, "with-proposition" %>
 <% content_for :proposition_header do %>
-    <div class="header-proposition">
-        <div class="content">
-            <a href="/" id="proposition-name">Market Surveillance &amp; Product Safety</a>
-            <a role="button" href="#proposition-links" class="js-header-toggle menu" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">
-                Menu
-            </a>
-            <nav id="proposition-menu">
-                <ul id="proposition-links" aria-label="Top Level Navigation">
-                    <li><a href="/pages/example" class="active">Toolkit Examples</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    <%= render 'layouts/header' %>
 <% end %>
 <% content_for :content do %>
     <div id="content">
-        <div class="phase-banner">
-            <p>
-                <strong class="phase-tag">ALPHA</strong>
-                <span>This is a new service – your <a href="#">feedback</a> will help us to improve it.</span>
-            </p>
-        </div>
+        <%= render 'layouts/alpha_tag' %>
         <%= yield %>
     </div>
 <% end %>
