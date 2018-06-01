@@ -22,7 +22,8 @@ Create a blank database in the `int` space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
-    cf create-service postgres Free mspsds-database # Consider larger DBs for other environments
+    # Consider larger DBs for other environments
+    cf create-service postgres tiny-unencrypted-9.5 mspsds-database
 
 ## Rails Site
 
