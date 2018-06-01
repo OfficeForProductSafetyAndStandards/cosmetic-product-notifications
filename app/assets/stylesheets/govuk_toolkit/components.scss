@@ -1,0 +1,9 @@
+@import "design-patterns/_alpha-beta.scss";
+
+.phase_banner {
+  @include phase-banner();
+}
+
+.phase-tag {
+  @include phase-tag();
+}
