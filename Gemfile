@@ -5,6 +5,7 @@ ruby "2.4.3"
 gem "govuk_frontend_toolkit"
 gem "govuk_template"
 gem "rubocop", require: false
+gem "devise"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "bootsnap", ">= 1.1.0"
