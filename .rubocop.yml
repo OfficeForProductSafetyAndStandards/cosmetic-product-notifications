@@ -4,6 +4,7 @@ Rails:
 AllCops:
   Exclude:
     - 'bin/**'
+    - 'config/db/**'
 
 # Since this is a prototype, strict documentation
 # is not necessary. Consider adding this back in
