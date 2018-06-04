@@ -1,0 +1,10 @@
+@import "design-patterns/buttons"; 
+@import "colours";
+
+.button-secondary{
+    @include button($grey-3);
+}
+
+.button-warning{
+    @include button($red);
+}
