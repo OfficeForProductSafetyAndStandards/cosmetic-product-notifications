@@ -4,7 +4,7 @@ ruby "2.4.3"
 
 gem "govuk_frontend_toolkit"
 gem "govuk_template"
-gem 'notifications-ruby-client'
+gem "notifications-ruby-client"
 
 gem "devise"
 gem "rubocop", require: false
