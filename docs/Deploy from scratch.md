@@ -35,4 +35,6 @@ Create the app using the current repository
     # Add a username and password for the HTTP authentication
     cf set-env mspsds-int USERNAME XXX
     cf set-env mspsds-int PASSWORD XXX
+    # Add API key created in Notify
+    cf set-env mspsds-int NOTIFY_API_KEY XXX
     cf restage mspsds-int
