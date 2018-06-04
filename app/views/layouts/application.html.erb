@@ -6,12 +6,13 @@
 <% end %>
 <% content_for :header_class, "with-proposition" %>
 <% content_for :proposition_header do %>
-    <%= render 'layouts/header' %>
+    <%= render "layouts/header" %>
 <% end %>
 <% content_for :content do %>
     <div id="content">
-        <%= render 'layouts/alpha_tag' %>
+        <%= render "layouts/alpha_tag" %>
+        <%= render "layouts/notice" %>
         <%= yield %>
     </div>
 <% end %>
-<%= render file: 'layouts/govuk_template' %>
+<%= render file: "layouts/govuk_template" %>

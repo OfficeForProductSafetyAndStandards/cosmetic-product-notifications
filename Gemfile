@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.4.3"
 
+gem "devise"
 gem "govuk_frontend_toolkit"
 gem "govuk_template"
 gem "rubocop", require: false

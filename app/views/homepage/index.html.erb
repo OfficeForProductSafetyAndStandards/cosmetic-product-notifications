@@ -4,7 +4,9 @@
     <div class="grid-row">
         <div class="column-full">
             <h1 class="heading-xlarge">Market Surveillance Homepage</h1>
-            <a href="/pages/example">Example page</a>
+            <%= link_to "Visit the example page", "/pages/example", :class => "button button-start" %><br />
+            <p>Or</p>
+            <%= render 'layouts/login_buttons' %>
         </div>
     </div>
 </div>
