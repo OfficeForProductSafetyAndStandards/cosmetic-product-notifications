@@ -6,6 +6,8 @@ Install Docker: https://docs.docker.com/install/
 
 Install docker-compose: https://docs.docker.com/compose/install/
 
+Copy the file `.env-template` to `.env` and fill in any environment variables.
+
 ```
 docker-compose build
 docker-compose up

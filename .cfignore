@@ -16,3 +16,6 @@
 
 # Ignore npm files
 /node_modules/**
+
+# Ignore personal .env file
+.env
