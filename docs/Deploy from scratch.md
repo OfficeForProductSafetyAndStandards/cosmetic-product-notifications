@@ -37,4 +37,6 @@ Create the app using the current repository
     cf set-env mspsds-int PASSWORD XXX
     # Add API key created in Notify
     cf set-env mspsds-int NOTIFY_API_KEY XXX
+    # Add host for email links
+    cf set-env mspsds-int MSPSDS_HOST "mspsds-int.cloudapps.digital"
     cf restage mspsds-int
