@@ -66,7 +66,9 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Url for mailer
-  config.action_mailer.default_url_options[:host] = ENV["MSPSDS_HOST"]
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    config.action_mailer.default_url_options[:host] = ENV["MSPSDS_HOST"]
+  end
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
