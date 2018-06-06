@@ -114,6 +114,8 @@ GEM
     pg (0.21.0)
     powerpack (0.1.1)
     puma (3.11.4)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     rack (2.0.5)
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
@@ -220,6 +222,7 @@ DEPENDENCIES
   notifications-ruby-client
   pg (~> 0.18)
   puma (~> 3.0)
+  pundit
   rails (~> 5.2)
   royce
   rubocop
