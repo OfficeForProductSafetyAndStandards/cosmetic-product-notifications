@@ -7,6 +7,7 @@ gem "govuk_template"
 gem "notifications-ruby-client"
 
 gem "devise"
+gem "royce"
 gem "rubocop", require: false
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
