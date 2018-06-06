@@ -6,6 +6,16 @@
             <h1 class="heading-xlarge">Users</h1>
             <table>
                 <tbody>
+                    <tr>
+                        <th>Email</th>
+                        <% User.available_role_names.each do |role| %>
+                            <th>
+                                <%= role.titleize %>
+                            </th>
+                        <% end %>
+                        <th></th>
+                        <th></th>
+                    </tr>
                     <% @users.each do |user| %>
                         <tr>
                             <%= render user %>

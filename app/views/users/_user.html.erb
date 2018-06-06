@@ -4,14 +4,11 @@
     <%= form_for(user) do |form| %>
         <% User.available_role_names.each do |role| %>
             <td>
-                <%= form.label(role) do %>
-                <%= check_box_tag "user[_roles][]", role, user.has_role?(role) %>
-                <%= role %>
-                <% end %>
+                <%= check_box_tag "user[_roles][]", role, user.has_role?(role), "aria-label" => role %>
             </td>
         <% end %>
         <td>
-            <%= form.submit "Update Roles", :class => "button" %>
+            <%= form.submit "Update", :class => "button" %>
         </td>
     <% end %>
 <td>
