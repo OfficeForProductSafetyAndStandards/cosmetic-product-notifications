@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+  resources :users
   get "homepage/index"
   root to: "homepage#index"
   get "/pages/:page" => "pages#show"

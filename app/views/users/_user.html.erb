@@ -1,0 +1,22 @@
+<td>
+    <%= user.email %>
+</td>
+    <%= form_for(user) do |form| %>
+        <% User.available_role_names.each do |role| %>
+            <td>
+                <%= form.label(role) do %>
+                <%= check_box_tag "user[_roles][]", role, user.has_role?(role) %>
+                <%= role %>
+                <% end %>
+            </td>
+        <% end %>
+        <td>
+            <%= form.submit "Update Roles", :class => "button" %>
+        </td>
+    <% end %>
+<td>
+    <%= link_to("Delete user", user_path(user),
+            :data => { :confirm => "Are you sure?" },
+            :method => :delete,
+            :class => 'button-warning') unless user == current_user %>
+</td>
