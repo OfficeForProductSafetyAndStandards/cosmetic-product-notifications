@@ -7,6 +7,7 @@ gem "govuk_template"
 gem "notifications-ruby-client"
 
 gem "devise"
+gem "devise_invitable"
 gem "pundit"
 gem "royce"
 gem "rubocop", require: false

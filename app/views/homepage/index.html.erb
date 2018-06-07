@@ -6,7 +6,11 @@
             <h1 class="heading-xlarge">Market Surveillance Homepage</h1>
             <%= link_to "Visit the example page", "/pages/example", :class => "button button-start" %><br />
             <p>Or</p>
-            <%= render 'layouts/login_buttons' %>
+            <%= render 'layouts/login_buttons' %><br /><br />
+            <% if signed_in? && policy(User).index? %>
+                <p>You're an admin, this means that you can also</p>
+                <%= link_to "Edit users", "/users", :class => "button" %>
+            <% end %>
         </div>
     </div>
 </div>
