@@ -4,6 +4,10 @@ class UserPolicy < ApplicationPolicy
     @user.admin?
   end
 
+  def invite?
+    @user.admin?
+  end
+
   def show?
     @user.admin? || @user == @record
   end
