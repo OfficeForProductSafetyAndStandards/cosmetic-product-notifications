@@ -43,3 +43,8 @@ Create the app using the current repository
     cf set-env mspsds-int ADMIN_EMAIL "john@example.com"
     cf set-env mspsds-int ADMIN_PASSWORD XXX
     cf restage mspsds-int
+
+Trigger the deploy script on travis.
+Then seed the database
+
+    cf run-task mspsds-int "bundle exec rake db:seed" --name seed-db
