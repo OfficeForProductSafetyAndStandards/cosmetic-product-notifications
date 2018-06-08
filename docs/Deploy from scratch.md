@@ -39,4 +39,7 @@ Create the app using the current repository
     cf set-env mspsds-int NOTIFY_API_KEY XXX
     # Add host for email links
     cf set-env mspsds-int MSPSDS_HOST "mspsds-int.cloudapps.digital"
+    # Seed the DB with an admin
+    cf set-env mspsds-int ADMIN_EMAIL "john@example.com"
+    cf set-env mspsds-int ADMIN_PASSWORD XXX
     cf restage mspsds-int

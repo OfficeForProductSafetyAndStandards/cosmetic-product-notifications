@@ -15,6 +15,8 @@ docker-compose up
 Then in a different terminal initialise the DB
 ```
 docker-compose run web rake db:create
+# Add an admin user
+docker-compose run -e ADMIN_EMAIL=XXX -e ADMIN_PASSWORD=XXX web rails db:seed
 ```
 Visit the site on localhost:3000
 
