@@ -2,5 +2,7 @@
 set -ex
 
 docker-compose build
-docker-compose run web rake db:create
+# Use bundler to stop spring checking the DB before it's ready
+docker-compose run web bundle exec rake db:create
+docker-compose run -e RAILS_ENV=test web bundle exec rake db:schema:load
 docker-compose run web rails test
