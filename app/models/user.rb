@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  royce_roles %w[user admin]
-  before_create :set_default_role
+  rolify
+  after_create :set_default_role
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -10,6 +10,6 @@ class User < ApplicationRecord
   private
 
   def set_default_role
-    add_role :user
+    add_role(:user) if roles.blank?
   end
 end

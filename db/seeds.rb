@@ -11,6 +11,6 @@ user = User.create(
     password_confirmation: ENV["ADMIN_PASSWORD"]
 )
 
-user.user!
-user.admin!
+user.add_role(:user)
+user.add_role(:admin)
 user.save!

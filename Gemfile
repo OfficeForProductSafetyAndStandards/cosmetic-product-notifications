@@ -9,7 +9,7 @@ gem "notifications-ruby-client"
 gem "devise"
 gem "devise_invitable"
 gem "pundit"
-gem "royce"
+gem "rolify"
 gem "rubocop", require: false
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

@@ -24,11 +24,11 @@ class UsersController < ApplicationController
   private
 
   def assign_roles(new_roles)
-    User.available_role_names.each do |role|
-      if new_roles.include? role
-        @user.add_role role unless @user.has_role? role
-      elsif @user.has_role? role
-        @user.remove_role role
+    Role.all.each do |role|
+      if new_roles.include? role.name
+        @user.add_role role.name unless @user.has_role? role.name
+      elsif @user.has_role? role.name
+        @user.remove_role role.name
       end
     end
   end

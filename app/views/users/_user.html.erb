@@ -2,9 +2,9 @@
     <%= user.email %>
 </td>
     <%= form_for(user) do |form| %>
-        <% User.available_role_names.each do |role| %>
+        <% Role.all.each do |role| %>
             <td>
-                <%= check_box_tag "user[_roles][]", role, user.has_role?(role), "aria-label" => role %>
+                <%= check_box_tag "user[_roles][]", role.name, user.has_role?(role.name), "aria-label" => role.name %>
             </td>
         <% end %>
         <td>

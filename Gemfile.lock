@@ -154,8 +154,7 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
-    royce (1.0.6)
-      rails (>= 4.1.4)
+    rolify (5.2.0)
     rubocop (0.56.0)
       parallel (~> 1.10)
       parser (>= 2.5)
@@ -228,7 +227,7 @@ DEPENDENCIES
   puma (~> 3.0)
   pundit
   rails (~> 5.2)
-  royce
+  rolify
   rubocop
   sass-rails (~> 5.0)
   spring

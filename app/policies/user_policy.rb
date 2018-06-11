@@ -1,23 +1,23 @@
 
 class UserPolicy < ApplicationPolicy
   def index?
-    @user.admin?
+    @user.has_role? :admin
   end
 
   def invite?
-    @user.admin?
+    @user.has_role? :admin
   end
 
   def show?
-    @user.admin? || @user == @record
+    @user.has_role?(:admin) || @user == @record
   end
 
   def update?
-    @user.admin?
+    @user.has_role? :admin
   end
 
   def destroy?
     return false if @user == @record
-    @user.admin?
+    @user.has_role? :admin
   end
 end
