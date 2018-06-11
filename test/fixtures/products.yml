@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  gtin: MyString
+  name: MyString
+  description: MyText
+  model: MyString
+  mpn: MyString
+  batch_number: MyString
+  purchase_url: MyString
+  brand: MyString
+
+two:
+  gtin: MyString
+  name: MyString
+  description: MyText
+  model: MyString
+  mpn: MyString
+  batch_number: MyString
+  purchase_url: MyString
+  brand: MyString

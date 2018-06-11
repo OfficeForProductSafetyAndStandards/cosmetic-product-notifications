@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Gtin:</strong>
+  <%= @product.gtin %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @product.description %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @product.model %>
+</p>
+
+<p>
+  <strong>Mpn:</strong>
+  <%= @product.mpn %>
+</p>
+
+<p>
+  <strong>Batch number:</strong>
+  <%= @product.batch_number %>
+</p>
+
+<p>
+  <strong>Purchase url:</strong>
+  <%= @product.purchase_url %>
+</p>
+
+<p>
+  <strong>Brand:</strong>
+  <%= @product.brand %>
+</p>
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

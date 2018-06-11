@@ -15,6 +15,19 @@ ActiveRecord::Schema.define(version: 2018_07_06_141100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "products", force: :cascade do |t|
+    t.string "gtin"
+    t.string "name"
+    t.text "description"
+    t.string "model"
+    t.string "mpn"
+    t.string "batch_number"
+    t.string "purchase_url"
+    t.string "brand"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
