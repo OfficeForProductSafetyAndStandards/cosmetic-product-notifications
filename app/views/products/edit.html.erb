@@ -1,6 +1,19 @@
-<h1>Editing Product</h1>
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to 'Products', products_path %>
+        </li>
+        <li>
+            <%= link_to 'Edit', edit_product_path(@product) %>
+        </li>
+    </ol>
+</div>
+
+<h1 class="heading-xlarge">Edit Product</h1>
 
 <%= render 'form', product: @product %>
 
-<%= link_to 'Show', @product %> |
-<%= link_to 'Back', products_path %>
+<%= link_to 'Back', products_path, :class => "link-back" %>

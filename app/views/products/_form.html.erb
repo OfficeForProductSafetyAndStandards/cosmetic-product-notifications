@@ -1,7 +1,7 @@
 <%= form_with(model: product, local: true) do |form| %>
   <% if product.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+      <h2 class="heading-large"><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
       <ul>
       <% product.errors.full_messages.each do |message| %>
@@ -11,47 +11,47 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :gtin %>
-    <%= form.text_field :gtin %>
+  <div class="form-group">
+    <%= form.label :gtin, :class => "form-label" %>
+    <%= form.text_field :gtin, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, :class => "form-label" %>
+    <%= form.text_field :name, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label :description, :class => "form-label" %>
+    <%= form.text_area :description, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :model %>
-    <%= form.text_field :model %>
+  <div class="form-group">
+    <%= form.label :model, :class => "form-label" %>
+    <%= form.text_field :model, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :mpn %>
-    <%= form.text_field :mpn %>
+  <div class="form-group">
+    <%= form.label :mpn, :class => "form-label" %>
+    <%= form.text_field :mpn, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :batch_number %>
-    <%= form.text_field :batch_number %>
+  <div class="form-group">
+    <%= form.label :batch_number, :class => "form-label" %>
+    <%= form.text_field :batch_number, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :purchase_url %>
-    <%= form.text_field :purchase_url %>
+  <div class="form-group">
+    <%= form.label :purchase_url, :class => "form-label" %>
+    <%= form.text_field :purchase_url, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :brand %>
-    <%= form.text_field :brand %>
+  <div class="form-group">
+    <%= form.label :brand, :class => "form-label" %>
+    <%= form.text_field :brand, :class => "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit "Update", :class => "button" %>
   </div>
 <% end %>

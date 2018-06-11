@@ -1,5 +1,19 @@
-<h1>New Product</h1>
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to 'Products', products_path %>
+        </li>
+        <li>
+            <%= link_to 'New', new_product_path %>
+        </li>
+    </ol>
+</div>
+
+<h1 class="heading-xlarge">New Product</h1>
 
 <%= render 'form', product: @product %>
 
-<%= link_to 'Back', products_path %>
+<%= link_to 'Back', products_path, :class => "link-back" %>

@@ -1,44 +1,74 @@
-<p id="notice"><%= notice %></p>
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to 'Products', products_path %>
+        </li>
+        <li>
+            <%= link_to 'View', @product %>
+        </li>
+    </ol>
+</div>
 
+<h4 class="heading-small">
+  GTIN (Global Trade Item Number/Barcode):
+</h4>
 <p>
-  <strong>Gtin:</strong>
   <%= @product.gtin %>
 </p>
 
+<h4 class="heading-small">
+  Name:
+</h4>
 <p>
-  <strong>Name:</strong>
   <%= @product.name %>
 </p>
 
+<h4 class="heading-small">
+  Description:
+</h4>
 <p>
-  <strong>Description:</strong>
   <%= @product.description %>
 </p>
 
+<h4 class="heading-small">
+  Model:
+</h4>
 <p>
-  <strong>Model:</strong>
   <%= @product.model %>
 </p>
 
+<h4 class="heading-small">
+  MPN (Manufacturer Part Number):
+</h4>
 <p>
-  <strong>Mpn:</strong>
   <%= @product.mpn %>
 </p>
 
+<h4 class="heading-small">
+  Batch number:
+</h4>
 <p>
-  <strong>Batch number:</strong>
   <%= @product.batch_number %>
 </p>
 
+<h4 class="heading-small">
+  Purchase url:
+</h4>
 <p>
-  <strong>Purchase url:</strong>
   <%= @product.purchase_url %>
 </p>
 
+<h4 class="heading-small">
+  Brand:
+</h4>
 <p>
-  <strong>Brand:</strong>
   <%= @product.brand %>
 </p>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<div class="form-group">
+  <%= link_to 'Edit', edit_product_path(@product), :class => "button" %>
+</div>
+<%= link_to 'Back', products_path, :class => "link-back" %>
