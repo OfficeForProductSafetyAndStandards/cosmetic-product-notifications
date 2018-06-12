@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= form.label :gtin, :class => "form-label" %>
+    <%= form.label :gtin, "GTIN (Global Trade Item Number/Barcode)", :class => "form-label" %>
     <%= form.text_field :gtin, :class => "form-control" %>
   </div>
 
@@ -32,7 +32,7 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :mpn, :class => "form-label" %>
+    <%= form.label :mpn, "Manufacturer Part Number", :class => "form-label" %>
     <%= form.text_field :mpn, :class => "form-control" %>
   </div>
 
@@ -42,7 +42,7 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :purchase_url, :class => "form-label" %>
+    <%= form.label :purchase_url, "Purchase URL", :class => "form-label" %>
     <%= form.text_field :purchase_url, :class => "form-control" %>
   </div>
 
@@ -52,6 +52,6 @@
   </div>
 
   <div class="form-group">
-    <%= form.submit "Update", :class => "button" %>
+    <%= form.submit "Submit", :class => "button" %>
   </div>
 <% end %>
