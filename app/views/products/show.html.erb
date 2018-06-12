@@ -12,6 +12,8 @@
     </ol>
 </div>
 
+<%= image_tag(@product.image_url, alt: @product.name) %>
+
 <h4 class="heading-small">
   GTIN (Global Trade Item Number/Barcode)
 </h4>
@@ -58,7 +60,7 @@
   Purchase URL
 </h4>
 <p>
-  <%= @product.purchase_url %>
+  <%= link_to @product.purchase_url, @product.purchase_url, target: "_blank" %>
 </p>
 
 <h4 class="heading-small">

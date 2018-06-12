@@ -3,7 +3,7 @@ require "json"
 
 namespace :data_import do
   desc "Import data from the Open Product Database"
-  task ops: :environment do
+  task opd: :environment do
     puts number_of_hits
     # TODO: Change the number of rows to be the number of hits
     # We may need to paginate this as it is almost 1 million!
@@ -15,7 +15,8 @@ namespace :data_import do
         gtin: product["fields"]["gtin_cd"],
         name: product["fields"]["gtin_nm"],
         purchase_url: product["fields"]["brand_link"],
-        brand: product["fields"]["brand_nm"]
+        brand: product["fields"]["brand_nm"],
+        image_url: product["fields"]["gtin_img"]
       )
     end
   end

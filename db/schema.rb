@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2018_07_06_141100) do
     t.string "brand"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_url"
   end
 
   create_table "roles", force: :cascade do |t|
