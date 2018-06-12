@@ -1,0 +1,17 @@
+@import "design-patterns/buttons"; 
+@import "colours";
+
+.pagination {
+    a {
+        @include button($grey-3);
+    }
+
+    .current {
+        @include button($grey-1);
+        font-style: normal;
+    }
+
+    .previous_page, .next_page {
+        @include button;
+    }
+}

@@ -10,7 +10,10 @@
 </div>
 
 <h1 class="heading-xlarge">Products</h1>
+<%= link_to 'New Product', new_product_path, :class => "button" %><br /><br />
 
+<%= will_paginate @products %>
+<br />
 <table>
   <thead>
     <tr>
@@ -32,7 +35,6 @@
     <% end %>
   </tbody>
 </table>
+<br />
+<%= will_paginate @products %>
 
-<br>
-
-<%= link_to 'New Product', new_product_path, :class => "button" %>

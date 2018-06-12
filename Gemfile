@@ -11,6 +11,7 @@ gem "devise_invitable"
 gem "pundit"
 gem "rolify"
 gem "rubocop", require: false
+gem "will_paginate"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "bootsnap", ">= 1.1.0"
