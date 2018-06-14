@@ -32,7 +32,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_redirected_to product_url(Product.last)
+    assert_redirected_to product_url(Product.first)
   end
 
   test "should show product" do
