@@ -5,11 +5,15 @@ require "open-uri"
 namespace :data_import do
   desc "Import data from the Open Product Database"
   task opd: :environment do
-    puts "Fetching #{number_of_hits} rows"
-    products = fetch_products(0, -1)
-    puts "Creating products"
-    create_products products
-    puts "Product creation complete"
+    page_size = 1000
+    # Using pagination, the API only allows the first 10000 entries
+    # hits = number_of_hits
+    hits = 9_000
+    puts "Fetching #{hits} rows"
+    (0..((hits / page_size).ceil - 1)).each do |i|
+      products = fetch_products(i * page_size, page_size)
+      create_products products
+    end
   end
 end
 
@@ -25,8 +29,6 @@ def create_products(products)
   end
 end
 
-# API supports only the first 10,000 rows paginated. Alternatively, you can get all data using
-# rows = -1
 def fetch_products(start, rows)
   puts "Fetching rows #{start} to #{start + rows}"
   uri = URI("https://pod.opendatasoft.com/api/v2/catalog/datasets/pod_gtin/exports/json"\
