@@ -1,6 +1,6 @@
 class CreateProducts < ActiveRecord::Migration[5.2]
   def change
-    create_table :products, id: :uuid do |t|
+    create_table :products, id: :uuid, default: "uuid_generate_v4()" do |t|
       t.string :gtin
       t.string :name
       t.text :description

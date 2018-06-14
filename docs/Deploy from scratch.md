@@ -42,6 +42,8 @@ Create the app using the current repository
     # Seed the DB with an admin
     cf set-env mspsds-int ADMIN_EMAIL "john@example.com"
     cf set-env mspsds-int ADMIN_PASSWORD XXX
+    # Bind to service
+    cf bind-service mspsds-int mspsds-database
     cf restage mspsds-int
 
 Trigger the deploy script on travis.

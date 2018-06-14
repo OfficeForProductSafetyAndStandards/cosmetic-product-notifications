@@ -3,9 +3,9 @@
 class DeviseCreateUsers < ActiveRecord::Migration[5.2]
   def change
     # For UUID support
-    enable_extension "pgcrypto"
+    enable_extension "uuid-ossp"
 
-    create_table :users, id: :uuid do |t|
+    create_table :users, id: :uuid, default: "uuid_generate_v4()" do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
