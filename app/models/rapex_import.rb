@@ -1,0 +1,2 @@
+class RapexImport < ApplicationRecord
+end
