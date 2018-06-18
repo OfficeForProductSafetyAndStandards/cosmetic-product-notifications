@@ -5,6 +5,7 @@ require "open-uri"
 namespace :data_import do
   desc "Import product data from RAPEX"
   task rapex: :environment do
+    RapexImport.first.destroy
     weekly_reports = rapex_weekly_reports
     previously_imported_reports = RapexImport.all
     weekly_reports.each do |report|
@@ -27,23 +28,42 @@ def import_report(report)
 end
 
 def create_product(notification)
+  return false unless (name = name_or_product(notification))
   Product.create(
     gtin: barcode_from_notification(notification),
-    name: field_from_notification(notification, "product"),
+    name: name,
     description: field_from_notification(notification, "description"),
     model: field_from_notification(notification, "type_numberOfModel"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
-    brand: field_from_notification(notification, "brand"),
+    brand: brand(notification),
     image_url: first_picture_url(notification)
   )
 end
 
 def barcode_from_notification(notification)
-  regex = /(\d{1}\s?-?\d{6}\s?-?\d{6})/
+  regex = /(
+    \d{1}\s?-?\d{6}\s?-?\d{6}|
+    \d{1}\s?-?\d{5}\s?-?\d{5}\s?-?\d{1}|
+    \d{4}\s?-?\d{4}|
+    \d{1}\s?-?\d{2}\s?-?\d{5}\s?-?\d{5}\s?-?\d{1})/x
   batch_barcode = field_from_notification(notification, "batchNumber_barcode")
   barcode = batch_barcode[regex, 1]
   barcode = barcode.tr("-", "").tr(" ", "") unless barcode.nil?
   barcode
+end
+
+def name_or_product(notification)
+  name = field_from_notification(notification, "name")
+  name = nil if name.casecmp("Unknown").zero?
+  product = field_from_notification(notification, "product")
+  product = nil if product.casecmp("Unknown").zero?
+  name || product
+end
+
+def brand(notification)
+  brand = field_from_notification(notification, "brand")
+  brand = nil if brand.casecmp("Unknown").zero?
+  brand
 end
 
 def first_picture_url(notification)
