@@ -5,7 +5,6 @@ require "open-uri"
 namespace :data_import do
   desc "Import product data from RAPEX"
   task rapex: :environment do
-    RapexImport.first.destroy
     weekly_reports = rapex_weekly_reports
     previously_imported_reports = RapexImport.all
     weekly_reports.each do |report|
@@ -41,6 +40,7 @@ def create_product(notification)
 end
 
 def barcode_from_notification(notification)
+  # There are 4 different types of GTIN, so we match for any of them
   regex = /(
     \d{1}\s?-?\d{6}\s?-?\d{6}|
     \d{1}\s?-?\d{5}\s?-?\d{5}\s?-?\d{1}|
@@ -77,7 +77,6 @@ def field_from_notification(notification, field_name)
 end
 
 def notifications(url)
-  puts "Fetching from #{url}"
   xml = Nokogiri::XML(download_url(url))
   xml.xpath("//notification")
 end
