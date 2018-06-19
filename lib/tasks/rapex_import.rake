@@ -20,7 +20,7 @@ namespace :data_import do
     pod_product_count = 9000
     RapexImport.all.destroy_all
     pod_products = Product.last(pod_product_count)
-    Product.where.not(id: pod_products.collect(&:id))
+    Product.where.not(id: pod_products.collect(&:id)).destroy_all
   end
 end
 
