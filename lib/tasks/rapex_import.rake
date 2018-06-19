@@ -5,6 +5,7 @@ require "open-uri"
 namespace :data_import do
   desc "Import product data from RAPEX"
   task rapex: :environment do
+    RapexImport.find_by(reference: "Report-2005-005").destroy
     weekly_reports = rapex_weekly_reports
     previously_imported_reports = RapexImport.all
     weekly_reports.each do |report|
@@ -14,6 +15,13 @@ namespace :data_import do
         RapexImport.create(reference: reference)
       end
     end
+  end
+
+  task delete_rapex: :environment do
+    pod_product_count = 9000
+    RapexImport.all.destroy_all
+    pod_products = Product.find(:all, order: "created_at ASC", limit: pod_product_count)
+    Product.destroy_all(["id NOT IN (?)", pod_products.collect(&:id)])
   end
 end
 
@@ -54,9 +62,9 @@ end
 
 def name_or_product(notification)
   name = field_from_notification(notification, "name")
-  name = nil if name.casecmp("Unknown").zero?
+  name = nil if name.casecmp("Unknown").zero? || name.empty?
   product = field_from_notification(notification, "product")
-  product = nil if product.casecmp("Unknown").zero?
+  product = nil if product.casecmp("Unknown").zero? || product.empty?
   name || product
 end
 
