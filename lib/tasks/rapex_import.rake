@@ -5,10 +5,9 @@ require "open-uri"
 namespace :data_import do
   desc "Import product data from RAPEX"
   task rapex: :environment do
-    RapexImport.find_by(reference: "Report-2005-005").destroy
     weekly_reports = rapex_weekly_reports
     previously_imported_reports = RapexImport.all
-    weekly_reports.each do |report|
+    weekly_reports.reverse.each do |report|
       reference = report.xpath("reference").text
       unless imported_reports_contains_reference(previously_imported_reports, reference)
         import_report(report)
@@ -20,7 +19,7 @@ namespace :data_import do
   task delete_rapex: :environment do
     pod_product_count = 9000
     RapexImport.all.destroy_all
-    pod_products = Product.find(:all, order: "created_at ASC", limit: pod_product_count)
+    pod_products Product.last(pod_product_count).collect(&:created_at)
     Product.destroy_all(["id NOT IN (?)", pod_products.collect(&:id)])
   end
 end
