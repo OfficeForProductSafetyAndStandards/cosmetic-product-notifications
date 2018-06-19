@@ -1,29 +1,53 @@
-<p id="notice"><%= notice %></p>
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to 'Investigations', investigations_path %>
+        </li>
+        <li>
+            <%= link_to 'View', @investigation %>
+        </li>
+    </ol>
+</div>
 
+<h4 class="heading-small">
+  Description
+</h4>
 <p>
-  <strong>Description:</strong>
   <%= @investigation.description %>
 </p>
 
+<h4 class="heading-small">
+  Is closed?
+</h4>
 <p>
-  <strong>Is closed:</strong>
   <%= @investigation.is_closed %>
 </p>
 
+<h4 class="heading-small">
+  Source
+</h4>
 <p>
-  <strong>Source:</strong>
   <%= @investigation.source %>
 </p>
 
+<h4 class="heading-small">
+  Severity
+</h4>
 <p>
-  <strong>Severity:</strong>
   <%= @investigation.severity %>
 </p>
 
+<h4 class="heading-small">
+  Product
+</h4>
 <p>
-  <strong>Product:</strong>
-  <%= @investigation.product %>
+  <%= link_to(@investigation.product.name, @investigation.product) unless @investigation.product.nil? %>
 </p>
 
-<%= link_to 'Edit', edit_investigation_path(@investigation) %> |
-<%= link_to 'Back', investigations_path %>
+<div class="form-group">
+  <%= link_to 'Edit', edit_investigation_path(@investigation), :class => "button" %>
+</div>
+<%= link_to 'Back', investigations_path, :class => "link-back" %>

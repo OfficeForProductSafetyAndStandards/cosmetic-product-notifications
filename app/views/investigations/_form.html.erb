@@ -1,7 +1,7 @@
 <%= form_with(model: investigation, local: true) do |form| %>
   <% if investigation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(investigation.errors.count, "error") %> prohibited this investigation from being saved:</h2>
+      <h2 class="heading-large"><%= pluralize(investigation.errors.count, "error") %> prohibited this investigation from being saved:</h2>
 
       <ul>
       <% investigation.errors.full_messages.each do |message| %>
@@ -11,32 +11,34 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label :description, :class => "form-label" %>
+    <%= form.text_area :description, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :is_closed %>
-    <%= form.check_box :is_closed %>
+  <div class="form-group">
+    <div class="multiple-choice">
+      <%= form.check_box :is_closed %>
+      <%= form.label :is_closed, "Is closed?", :class => "form-label" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :source %>
-    <%= form.text_field :source %>
+  <div class="form-group">
+    <%= form.label :source, :class => "form-label" %>
+    <%= form.text_field :source, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :severity %>
-    <%= form.number_field :severity %>
+  <div class="form-group">
+    <%= form.label :severity, :class => "form-label" %>
+    <%= form.number_field :severity, :class => "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :product_id %>
-    <%= form.text_field :product_id %>
+  <div class="form-group">
+    <%= form.label :product_id, :class => "form-label" %>
+    <%= form.text_field :product_id, :class => "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit "Submit", :class => "button" %>
   </div>
 <% end %>

@@ -1,6 +1,19 @@
-<h1>Editing Investigation</h1>
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to 'Investigations', investigations_path %>
+        </li>
+        <li>
+            <%= link_to 'Edit', edit_investigation_path(@investigation) %>
+        </li>
+    </ol>
+</div>
+
+<h1 class="heading-xlarge">Editing Investigation</h1>
 
 <%= render 'form', investigation: @investigation %>
 
-<%= link_to 'Show', @investigation %> |
-<%= link_to 'Back', investigations_path %>
+<%= link_to 'Back', investigations_path, :class => "link-back" %>

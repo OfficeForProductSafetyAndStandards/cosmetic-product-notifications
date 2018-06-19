@@ -1,35 +1,38 @@
-<p id="notice"><%= notice %></p>
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to 'Investigations', investigations_path %>
+        </li>
+    </ol>
+</div>
 
-<h1>Investigations</h1>
 
+<h1 class="heading-xlarge">Investigations</h1>
+<%= link_to 'New Investigation', new_investigation_path, :class => "button" %><br /><br />
+
+<%= will_paginate @investigations %>
+<br />
 <table>
   <thead>
     <tr>
-      <th>Description</th>
-      <th>Is closed</th>
-      <th>Source</th>
-      <th>Severity</th>
+      <th>ID</th>
       <th>Product</th>
-      <th colspan="3"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @investigations.each do |investigation| %>
       <tr>
-        <td><%= investigation.description %></td>
-        <td><%= investigation.is_closed %></td>
-        <td><%= investigation.source %></td>
-        <td><%= investigation.severity %></td>
-        <td><%= investigation.product %></td>
-        <td><%= link_to 'Show', investigation %></td>
-        <td><%= link_to 'Edit', edit_investigation_path(investigation) %></td>
+        <td><%= link_to investigation.id, investigation %></td>
+        <td><%= link_to(investigation.product.name, investigation.product) unless investigation.product.nil? %></td>
         <td><%= link_to 'Destroy', investigation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Investigation', new_investigation_path %>
+<br />
+<%= will_paginate @investigations %>
