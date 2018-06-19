@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @investigation.description %>
+</p>
+
+<p>
+  <strong>Is closed:</strong>
+  <%= @investigation.is_closed %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @investigation.source %>
+</p>
+
+<p>
+  <strong>Severity:</strong>
+  <%= @investigation.severity %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @investigation.product %>
+</p>
+
+<%= link_to 'Edit', edit_investigation_path(@investigation) %> |
+<%= link_to 'Back', investigations_path %>

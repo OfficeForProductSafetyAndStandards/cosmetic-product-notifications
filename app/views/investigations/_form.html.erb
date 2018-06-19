@@ -1,0 +1,42 @@
+<%= form_with(model: investigation, local: true) do |form| %>
+  <% if investigation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(investigation.errors.count, "error") %> prohibited this investigation from being saved:</h2>
+
+      <ul>
+      <% investigation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :is_closed %>
+    <%= form.check_box :is_closed %>
+  </div>
+
+  <div class="field">
+    <%= form.label :source %>
+    <%= form.text_field :source %>
+  </div>
+
+  <div class="field">
+    <%= form.label :severity %>
+    <%= form.number_field :severity %>
+  </div>
+
+  <div class="field">
+    <%= form.label :product_id %>
+    <%= form.text_field :product_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  is_closed: false
+  source: MyString
+  severity: 1
+  product: one
+
+two:
+  description: MyText
+  is_closed: false
+  source: MyString
+  severity: 1
+  product: two

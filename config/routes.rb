@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :investigations
   resources :products
   devise_for :users, controllers: { invitations: "invitations" }
   resources :users
