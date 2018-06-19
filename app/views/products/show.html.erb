@@ -15,6 +15,13 @@
 <%= image_tag(@product.image_url, alt: @product.name) unless @product.image_url.nil? %>
 
 <h4 class="heading-small">
+  Product ID
+</h4>
+<p>
+  <%= @product.id %>
+</p>
+
+<h4 class="heading-small">
   GTIN (Global Trade Item Number/Barcode)
 </h4>
 <p>
@@ -69,6 +76,13 @@
 <p>
   <%= @product.brand %>
 </p>
+
+<% if @product.investigations.any? -%>
+  <h4 class="heading-small">Investigations</h4>
+  <% @product.investigations.each do |investigation| %>
+    <p><%= link_to investigation.id, investigation %></p>
+  <% end %>
+<% end -%>
 
 <div class="form-group">
   <%= link_to 'Edit', edit_product_path(@product), :class => "button" %>
