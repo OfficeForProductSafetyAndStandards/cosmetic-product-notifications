@@ -19,7 +19,7 @@ namespace :data_import do
   task delete_rapex: :environment do
     pod_product_count = 9000
     RapexImport.all.destroy_all
-    pod_products = Product.last(pod_product_count).collect(&:created_at)
+    pod_products = Product.last(pod_product_count)
     Product.destroy_all(["id NOT IN (?)", pod_products.collect(&:id)])
   end
 end
