@@ -5,7 +5,7 @@ class InvestigationsController < ApplicationController
   # GET /investigations
   # GET /investigations.json
   def index
-    @investigations = Investigation.paginate(page: params[:page], per_page: 50)
+    @investigations = Investigation.paginate(page: params[:page], per_page: 20)
   end
 
   # GET /investigations/1
