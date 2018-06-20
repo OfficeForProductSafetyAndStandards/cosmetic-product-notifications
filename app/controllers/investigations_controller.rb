@@ -69,6 +69,6 @@ class InvestigationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
-    params.require(:investigation).permit(:description, :is_closed, :source, :severity, :product_id)
+    params.require(:investigation).permit(:description, :is_closed, :source, :severity)
   end
 end
