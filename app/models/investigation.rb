@@ -1,4 +1,4 @@
 class Investigation < ApplicationRecord
   default_scope { order(created_at: :desc) }
-  belongs_to :product
+  has_and_belongs_to_many :products
 end

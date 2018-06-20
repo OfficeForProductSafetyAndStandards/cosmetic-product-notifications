@@ -40,12 +40,12 @@
   <%= @investigation.severity %>
 </p>
 
-<h4 class="heading-small">
-  Product
-</h4>
-<p>
-  <%= link_to(@investigation.product.name, @investigation.product) unless @investigation.product.nil? %>
-</p>
+<% if @investigation.products.any? -%>
+  <h4 class="heading-small">Products</h4>
+  <% @investigation.products.each do |product| %>
+    <p><%= link_to product.id, product %></p>
+  <% end %>
+<% end -%>
 
 <div class="form-group">
   <%= link_to 'Edit', edit_investigation_path(@investigation), :class => "button" %>

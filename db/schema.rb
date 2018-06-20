@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_19_151657) do
+ActiveRecord::Schema.define(version: 2018_06_20_125304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,10 +21,13 @@ ActiveRecord::Schema.define(version: 2018_06_19_151657) do
     t.boolean "is_closed"
     t.string "source"
     t.integer "severity"
-    t.uuid "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_investigations_on_product_id"
+  end
+
+  create_table "investigations_products", id: false, force: :cascade do |t|
+    t.uuid "product_id"
+    t.uuid "investigation_id"
   end
 
   create_table "products", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -93,6 +96,4 @@ ActiveRecord::Schema.define(version: 2018_06_19_151657) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
-
-  add_foreign_key "investigations", "products"
 end

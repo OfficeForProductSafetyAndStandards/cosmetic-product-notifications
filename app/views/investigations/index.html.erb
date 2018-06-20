@@ -19,7 +19,6 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Product</th>
       <th colspan="1"></th>
     </tr>
   </thead>
@@ -28,7 +27,6 @@
     <% @investigations.each do |investigation| %>
       <tr>
         <td><%= link_to investigation.id, investigation %></td>
-        <td><%= link_to(investigation.product.name, investigation.product) unless investigation.product.nil? %></td>
         <td><%= link_to 'Destroy', investigation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
