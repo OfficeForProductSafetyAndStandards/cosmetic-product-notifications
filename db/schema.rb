@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_20_125304) do
+ActiveRecord::Schema.define(version: 2018_06_22_111205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "investigation_products", force: :cascade do |t|
+    t.uuid "investigation_id", null: false
+    t.uuid "product_id", null: false
+    t.index ["investigation_id", "product_id"], name: "index_investigation_products_on_investigation_id_and_product_id", unique: true
+    t.index ["investigation_id"], name: "index_investigation_products_on_investigation_id"
+    t.index ["product_id"], name: "index_investigation_products_on_product_id"
+  end
 
   create_table "investigations", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.text "description"

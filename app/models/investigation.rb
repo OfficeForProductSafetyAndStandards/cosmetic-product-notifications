@@ -1,4 +1,7 @@
 class Investigation < ApplicationRecord
   default_scope { order(created_at: :desc) }
-  has_and_belongs_to_many :products
+  has_many :investigation_products, dependent: :destroy
+  has_many :products, through: :investigation_products
+  accepts_nested_attributes_for :products
+  accepts_nested_attributes_for :investigation_products, allow_destroy: true
 end
