@@ -5,11 +5,9 @@ one:
   is_closed: false
   source: MyString
   severity: 1
-  product: one
 
 two:
   description: MyText
   is_closed: false
   source: MyString
   severity: 1
-  product: two

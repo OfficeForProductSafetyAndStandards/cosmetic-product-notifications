@@ -24,7 +24,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         investigation: {
           description: @investigation.description,
           is_closed: @investigation.is_closed,
-          product_id: @investigation.product_id,
           severity: @investigation.severity,
           source: @investigation.source
         }
@@ -49,7 +48,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       investigation: {
         description: @investigation.description,
         is_closed: @investigation.is_closed,
-        product_id: @investigation.product_id,
         severity: @investigation.severity,
         source: @investigation.source
       }
