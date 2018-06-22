@@ -43,7 +43,7 @@
 <% if @investigation.products.any? -%>
   <h4 class="heading-small">Products</h4>
   <% @investigation.products.each do |product| %>
-    <p><%= link_to product.id, product %></p>
+    <p><%= link_to product.name, product %></p>
   <% end %>
 <% end -%>
 

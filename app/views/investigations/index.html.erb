@@ -27,7 +27,7 @@
     <% @investigations.each do |investigation| %>
       <tr>
         <td><%= link_to investigation.id, investigation %></td>
-        <td><%= link_to 'Destroy', investigation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', investigation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

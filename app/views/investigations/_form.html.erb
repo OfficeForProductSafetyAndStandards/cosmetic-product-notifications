@@ -34,6 +34,13 @@
   </div>
 
   <div class="form-group">
+    <%= form.fields_for :investigation_products do |investigation_product| %>
+      <%= render "investigation_product_fields", f: investigation_product %>
+    <% end %>
+    <%= link_to_add_association "Add product", form, :investigation_products, :class => "button" %>
+  </div>
+
+  <div class="form-group">
     <%= form.submit "Submit", :class => "button" %>
   </div>
 <% end %>

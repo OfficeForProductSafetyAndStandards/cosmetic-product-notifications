@@ -6,6 +6,7 @@ gem "govuk_frontend_toolkit"
 gem "govuk_template"
 gem "notifications-ruby-client"
 
+gem "cocoon"
 gem "devise"
 gem "devise_invitable"
 gem "pundit"
