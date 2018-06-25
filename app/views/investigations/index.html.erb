@@ -1,3 +1,5 @@
+<% content_for :page_title, "Investigations - Market Surveillance & Product Safety" %>
+
 <div class="breadcrumbs">
     <ol role="breadcrumbs">
         <li>
@@ -11,7 +13,7 @@
 
 
 <h1 class="heading-xlarge">Investigations</h1>
-<%= link_to 'New Investigation', new_investigation_path, :class => "button" %><br /><br />
+<%= link_to 'New investigation', new_investigation_path, :class => "button" %><br /><br />
 
 <%= will_paginate @investigations %>
 <br />
