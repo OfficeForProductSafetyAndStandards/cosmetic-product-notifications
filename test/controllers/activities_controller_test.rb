@@ -1,26 +1,35 @@
-require 'test_helper'
+require "test_helper"
 
 class ActivitiesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:one)
     @activity = activities(:one)
   end
 
   test "should get index" do
-    get activities_url
+    get investigation_activities_url(@activity.investigation)
     assert_response :success
   end
 
   test "should get new" do
-    get new_activity_url
+    get new_investigation_activity_url(@activity.investigation)
     assert_response :success
   end
 
   test "should create activity" do
-    assert_difference('Activity.count') do
-      post activities_url, params: { activity: { activity_type_id: @activity.activity_type_id, investigation_id: @activity.investigation_id, notes: @activity.notes } }
+    assert_difference("Activity.count") do
+      post investigation_activities_url(@activity.investigation), params: {
+        activity: {
+          activity_type_id: @activity.activity_type_id,
+          investigation_id: @activity.investigation_id,
+          notes: @activity.notes
+        }
+      }
     end
 
-    assert_redirected_to activity_url(Activity.last)
+    assert_redirected_to activity_url(Activity.first)
   end
 
   test "should show activity" do
@@ -34,15 +43,21 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update activity" do
-    patch activity_url(@activity), params: { activity: { activity_type_id: @activity.activity_type_id, investigation_id: @activity.investigation_id, notes: @activity.notes } }
+    patch activity_url(@activity), params: {
+      activity: {
+        activity_type_id: @activity.activity_type_id,
+        investigation_id: @activity.investigation_id,
+        notes: @activity.notes
+      }
+    }
     assert_redirected_to activity_url(@activity)
   end
 
   test "should destroy activity" do
-    assert_difference('Activity.count', -1) do
+    assert_difference("Activity.count", -1) do
       delete activity_url(@activity)
     end
 
-    assert_redirected_to activities_url
+    assert_redirected_to investigation_url(@activity.investigation)
   end
 end
