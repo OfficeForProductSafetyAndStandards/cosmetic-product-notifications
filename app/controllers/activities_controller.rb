@@ -57,7 +57,8 @@ class ActivitiesController < ApplicationController
     @activity.destroy
     respond_to do |format|
       format.html do
-        redirect_to investigation_url(@activity.investigation), notice: "Activity was successfully destroyed."
+        redirect_to investigation_activities_url(@activity.investigation),
+                    notice: "Activity was successfully destroyed."
       end
       format.json { head :no_content }
     end

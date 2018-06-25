@@ -26,10 +26,10 @@
 </p>
 
 <h4 class="heading-small">
-  Is closed?
+  Status
 </h4>
 <p>
-  <%= @investigation.is_closed %>
+  <%= @investigation.is_closed? ? "Closed" : "Open" %>
 </p>
 
 <h4 class="heading-small">
@@ -58,9 +58,7 @@
   <% @investigation.activities.limit(5).each do |activity| %>
     <p><%= link_to "#{activity.created_at} - #{activity.activity_type.titleized_name}", activity %></p>
   <% end %>
-  <% if @investigation.activities.length > 5 %>
-    <%= link_to "See all", investigation_activities_path(@investigation) %><br /> <br />
-  <% end %>
+  <%= link_to "See all", investigation_activities_path(@investigation) %><br /> <br />
 <% end -%>
 
 <div class="form-group">

@@ -53,6 +53,7 @@ class InvestigationsController < ApplicationController
   # DELETE /investigations/1
   # DELETE /investigations/1.json
   def destroy
+    authorize @investigation
     @investigation.destroy
     respond_to do |format|
       format.html { redirect_to investigations_url, notice: "Investigation was successfully destroyed." }
@@ -70,7 +71,7 @@ class InvestigationsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
     params.require(:investigation).permit(
-      :description, :is_closed, :source, :severity,
+      :description, :source, :severity,
       investigation_products_attributes: %i[id product_id _destroy]
     )
   end
