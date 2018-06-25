@@ -5,12 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-user = User.create(
-    email: ENV["ADMIN_EMAIL"],
-    password: ENV["ADMIN_PASSWORD"],
-    password_confirmation: ENV["ADMIN_PASSWORD"]
-)
-
-user.add_role(:user)
-user.add_role(:admin)
-user.save!
+puts "Creating admin..."
+if User.where(email: ENV["ADMIN_EMAIL"]).first.nil?
+    user = User.create(
+        email: ENV["ADMIN_EMAIL"],
+        password: ENV["ADMIN_PASSWORD"],
+        password_confirmation: ENV["ADMIN_PASSWORD"]
+    )
+    
+    user.add_role(:user)
+    user.add_role(:admin)
+    user.save!
+    puts "Admin created"
+else
+    puts "User with email #{ENV["ADMIN_EMAIL"]} already exists"
+end
