@@ -12,6 +12,10 @@
     </ol>
 </div>
 
+<h1 class="heading-xlarge">
+  Investigation
+</h1>
+
 <h4 class="heading-small">
   Description
 </h4>
@@ -49,8 +53,11 @@
 
 <% if @investigation.activities.any? -%>
   <h4 class="heading-small">Activities</h4>
-  <% @investigation.activities.each do |activity| %>
-    <p><%= activity.created_at %> - <%= link_to activity.activity_type.titleized_name, activity %></p>
+  <% @investigation.activities.limit(5).each do |activity| %>
+    <p><%= link_to "#{activity.created_at} - #{activity.activity_type.titleized_name}", activity %></p>
+  <% end %>
+  <% if @investigation.activities.length > 5 %>
+    <%= link_to "See all", investigation_activities_path(@investigation) %><br /> <br />
   <% end %>
 <% end -%>
 

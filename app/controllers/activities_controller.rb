@@ -7,7 +7,7 @@ class ActivitiesController < ApplicationController
   # GET /activities.json
   def index
     @investigation = Investigation.find(params[:investigation_id])
-    @activities = @investigation.activities
+    @activities = @investigation.activities.paginate(page: params[:page], per_page: 20)
   end
 
   # GET /activities/1

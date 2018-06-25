@@ -1,7 +1,7 @@
 <%= form_with(model: [investigation, activity], local: true) do |form| %>
   <% if activity.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+      <h2 class="heading-large"><%= pluralize(activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
 
       <ul>
       <% activity.errors.full_messages.each do |message| %>
@@ -11,16 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= collection_select(:activity, :activity_type_id, ActivityType.all, :id, :titleized_name, {prompt: true}) %>
+  <div class="form-group">
+    <fieldset>
+      <legend><h4 class="heading-medium">Activity Type</h4></legend>
+      <% ActivityType.all.each do |activity| %>
+        <div class="multiple-choice">
+          <%= form.radio_button :activity_type_id, activity.id %>
+          <%= form.label :activity_type_id, activity.titleized_name %>
+        </div>
+      <% end %>
+    </fieldset>
   </div>
 
-  <div class="field">
-    <%= form.label :notes %>
-    <%= form.text_area :notes %>
+  <div class="form-group">
+    <%= form.label :notes, :class => "form-label" %>
+    <%= form.text_area :notes, :class => "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit "Submit", :class => "button" %>
   </div>
 <% end %>

@@ -1,19 +1,40 @@
-<p id="notice"><%= notice %></p>
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to "Investigation", investigation_path(@activity.investigation) %>
+        </li>
+        <li>
+            <%= link_to "Activities", investigation_activities_path(@activity.investigation) %>
+        </li>
+        <li>
+            <%= link_to "View", @activity %>
+        </li>
+    </ol>
+</div>
 
+<h1 class="heading-xlarge">
+  Activity
+</h1>
+<p>Activity for <%= link_to "investigation", investigation_path(@activity.investigation) %>.</p>
+
+<h4 class="heading-small">
+  Activity type
+</h4>
 <p>
-  <strong>Investigation:</strong>
-  <%= link_to @activity.investigation.id, @activity.investigation %>
+  <%= @activity.activity_type.titleized_name %>
 </p>
 
+<h4 class="heading-small">
+  Notes
+</h4>
 <p>
-  <strong>Activity type:</strong>
-  <%= @activity.activity_type.name %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
   <%= @activity.notes %>
 </p>
 
-<%= link_to 'Edit', edit_activity_path(@activity) %> |
-<%= link_to 'Back', investigation_path(@activity.investigation) %>
+<div class="form-group">
+  <%= link_to 'Edit', edit_activity_path(@activity), :class => "button" %>
+</div>
+<%= link_to 'Back', investigation_activities_path(@activity.investigation), :class => "link-back" %>

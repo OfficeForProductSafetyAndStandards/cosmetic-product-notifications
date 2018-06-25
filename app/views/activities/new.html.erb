@@ -1,5 +1,22 @@
-<h1>New Activity</h1>
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to "Investigation", investigation_path(@activity.investigation) %>
+        </li>
+        <li>
+            <%= link_to "Activities", investigation_activities_path(@activity.investigation) %>
+        </li>
+        <li>
+            <%= link_to "New", new_investigation_activity_path(@activity.investigation) %>
+        </li>
+    </ol>
+</div>
+
+<h1 class="heading-xlarge">New Activity</h1>
 
 <%= render 'form', activity: @activity, investigation: @activity.investigation %>
 
-<%= link_to 'Back', investigation_path(@activity.investigation) %>
+<%= link_to 'Back', investigation_activities_path(@activity.investigation), :class => "link-back" %>
