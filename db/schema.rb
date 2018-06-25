@@ -33,11 +33,6 @@ ActiveRecord::Schema.define(version: 2018_06_22_111205) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "investigations_products", id: false, force: :cascade do |t|
-    t.uuid "product_id"
-    t.uuid "investigation_id"
-  end
-
   create_table "products", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "gtin"
     t.string "name"
@@ -104,4 +99,5 @@ ActiveRecord::Schema.define(version: 2018_06_22_111205) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
+
 end
