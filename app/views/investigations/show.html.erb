@@ -47,6 +47,17 @@
   <% end %>
 <% end -%>
 
+<% if @investigation.activities.any? -%>
+  <h4 class="heading-small">Activities</h4>
+  <% @investigation.activities.each do |activity| %>
+    <p><%= activity.created_at %> - <%= link_to activity.activity_type.titleized_name, activity %></p>
+  <% end %>
+<% end -%>
+
+<div class="form-group">
+  <%= link_to 'Add activity', new_investigation_activity_path(@investigation), :class => "button" %>
+</div>
+
 <div class="form-group">
   <%= link_to 'Edit', edit_investigation_path(@investigation), :class => "button" %>
 </div>

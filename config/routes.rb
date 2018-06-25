@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :activities
-  resources :investigations
+  resources :investigations do
+    resources :activities, shallow: true
+  end
   resources :products
   devise_for :users, controllers: { invitations: "invitations" }
   resources :users

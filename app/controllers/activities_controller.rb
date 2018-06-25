@@ -4,27 +4,28 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
   def index
-    @activities = Activity.all
+    @investigation = Investigation.find(params[:investigation_id])
+    @activities = @investigation.activities
   end
 
   # GET /activities/1
   # GET /activities/1.json
-  def show
-  end
+  def show; end
 
   # GET /activities/new
   def new
-    @activity = Activity.new
+    investigation = Investigation.find(params[:investigation_id])
+    @activity = investigation.activities.build
   end
 
   # GET /activities/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /activities
   # POST /activities.json
   def create
-    @activity = Activity.new(activity_params)
+    investigation = Investigation.find(params[:investigation_id])
+    @activity = investigation.activities.create(activity_params)
 
     respond_to do |format|
       if @activity.save

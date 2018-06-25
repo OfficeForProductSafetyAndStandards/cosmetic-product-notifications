@@ -2,12 +2,12 @@
 
 <p>
   <strong>Investigation:</strong>
-  <%= @activity.investigation %>
+  <%= link_to @activity.investigation.id, @activity.investigation %>
 </p>
 
 <p>
   <strong>Activity type:</strong>
-  <%= @activity.activity_type %>
+  <%= @activity.activity_type.name %>
 </p>
 
 <p>
@@ -16,4 +16,4 @@
 </p>
 
 <%= link_to 'Edit', edit_activity_path(@activity) %> |
-<%= link_to 'Back', activities_path %>
+<%= link_to 'Back', investigation_path(@activity.investigation) %>
