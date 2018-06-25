@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  investigation: one
+  activity_type: one
+  notes: MyText
+
+two:
+  investigation: two
+  activity_type: two
+  notes: MyText
