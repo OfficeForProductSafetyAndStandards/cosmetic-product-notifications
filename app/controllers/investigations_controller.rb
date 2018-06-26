@@ -50,6 +50,7 @@ class InvestigationsController < ApplicationController
     else
       @investigation.assignee = assignee
       save_and_respond "Assignee was successfully updated."
+      NotifyMailer.assigned_investigation(@investigation, assignee).deliver
     end
   end
 
