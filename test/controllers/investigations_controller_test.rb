@@ -4,10 +4,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    user = users(:one)
-    user.add_role(:user)
-    user.add_role(:admin)
-    sign_in user
+    sign_in_as_admin
     @investigation = investigations(:one)
   end
 
@@ -64,5 +61,52 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to investigations_url
+  end
+
+  test "should close investigation" do
+    post close_investigation_path(@investigation)
+
+    investigation = Investigation.find(@investigation.id)
+    assert_redirected_to investigation_url(investigation)
+    assert investigation.is_closed?
+  end
+
+  test "should reopen investigation" do
+    @investigation.is_closed = true
+    @investigation.save!
+
+    post reopen_investigation_path(@investigation)
+
+    investigation = Investigation.find(@investigation.id)
+    assert_redirected_to investigation_url(investigation)
+    assert_not investigation.is_closed?
+  end
+
+  test "should disallow non-admins from reopening investigation" do
+    @investigation.is_closed = true
+    @investigation.save!
+    sign_in_as_user
+
+    assert_raise Pundit::NotAuthorizedError do
+      post reopen_investigation_path(@investigation)
+    end
+
+    investigation = Investigation.find(@investigation.id)
+    assert investigation.is_closed?
+  end
+
+  private
+
+  def sign_in_as_admin
+    user = users(:one)
+    user.add_role(:user)
+    user.add_role(:admin)
+    sign_in user
+  end
+
+  def sign_in_as_user
+    user = users(:two)
+    user.add_role(:user)
+    sign_in user
   end
 end
