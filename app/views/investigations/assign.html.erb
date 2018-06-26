@@ -15,6 +15,8 @@
 </div>
 
 <h1 class="heading-xlarge">Update assignee</h1>
+<h4 class="heading-medium">Current assignee</h4>
+<p><%= @investigation.assignee.nil? ? "Unassigned" : @investigation.assignee.email %></p>
 
 <%= form_with(url: update_assignee_investigation_path(@investigation), local: true) do |form| %>
   <div class="form-group">

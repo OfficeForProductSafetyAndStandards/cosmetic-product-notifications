@@ -41,12 +41,16 @@ class InvestigationsController < ApplicationController
     @assignee = @investigation.assignee
   end
 
-  # POST /investigations/1/assign
+  # POST /investigations/1/update_assignee
   def update_assignee
     authorize @investigation, :assign?
-    email = params[:email]
-    @investigation.assignee = User.where(email: email).first
-    save_and_respond "Assignee was successfully updated."
+    assignee = User.where("lower(email) = ?", params[:email].downcase).first
+    if assignee.nil?
+      redirect_to assign_investigation_path(@investigation), alert: "Assignee does not exist."
+    else
+      @investigation.assignee = assignee
+      save_and_respond "Assignee was successfully updated."
+    end
   end
 
   # POST /investigations
