@@ -4,7 +4,10 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:one)
+    user = users(:one)
+    user.add_role(:user)
+    user.add_role(:admin)
+    sign_in user
     @investigation = investigations(:one)
   end
 

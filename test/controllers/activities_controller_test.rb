@@ -58,6 +58,6 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
       delete activity_url(@activity)
     end
 
-    assert_redirected_to investigation_url(@activity.investigation)
+    assert_redirected_to investigation_activities_url(@activity.investigation)
   end
 end
