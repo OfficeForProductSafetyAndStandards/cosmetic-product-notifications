@@ -57,7 +57,7 @@
   <% end %>
 </p>
 <div class="form-group">
-  <%= link_to "Assign", assign_investigation_path(@investigation), :class => "button" %>
+  <%= link_to "Assign", assign_investigation_path(@investigation), :class => "button" if policy(@investigation).update? %>
 </div>
 
 <h4 class="heading-small">
