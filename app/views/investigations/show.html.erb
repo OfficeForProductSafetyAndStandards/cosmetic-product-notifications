@@ -79,7 +79,9 @@
   <%= link_to 'Add activity', new_investigation_activity_path(@investigation), :class => "button" %>
 </div>
 
-<div class="form-group">
-  <%= link_to 'Edit investigation', edit_investigation_path(@investigation), :class => "button" %>
-</div>
+<% if policy(@investigation).update? %>
+  <div class="form-group">
+    <%= link_to 'Edit investigation', edit_investigation_path(@investigation), :class => "button" %>
+  </div>
+<% end %>
 <%= link_to 'Back', investigations_path, :class => "link-back" %>

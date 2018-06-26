@@ -18,7 +18,9 @@ class InvestigationsController < ApplicationController
   end
 
   # GET /investigations/1/edit
-  def edit; end
+  def edit
+    authorize @investigation
+  end
 
   # POST /investigations/1/close
   def close
@@ -52,6 +54,7 @@ class InvestigationsController < ApplicationController
   # PATCH/PUT /investigations/1
   # PATCH/PUT /investigations/1.json
   def update
+    authorize @investigation
     respond_to do |format|
       if @investigation.update(investigation_params)
         format.html { redirect_to @investigation, notice: "Investigation was successfully updated." }
