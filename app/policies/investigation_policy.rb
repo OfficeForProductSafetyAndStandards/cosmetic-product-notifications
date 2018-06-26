@@ -1,5 +1,9 @@
 
 class InvestigationPolicy < ApplicationPolicy
+  def assign?
+    update?
+  end
+
   def reopen?
     @user.has_role? :admin
   end

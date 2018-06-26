@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   default_scope { order(created_at: :desc) }
-  has_many :activities, dependent: :destroy
+  has_many :activities, dependent: :nullify
+  has_many :investigations, dependent: :nullify
   rolify
   after_create :set_default_role
 

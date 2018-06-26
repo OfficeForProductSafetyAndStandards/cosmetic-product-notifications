@@ -47,6 +47,20 @@
 </p>
 
 <h4 class="heading-small">
+  Assignee
+</h4>
+<p>
+  <% if @investigation.assignee.nil? %>
+    Unassigned
+  <% else %>
+    <%= @investigation.assignee.email %>
+  <% end %>
+</p>
+<div class="form-group">
+  <%= link_to "Assign", assign_investigation_path(@investigation), :class => "button" %>
+</div>
+
+<h4 class="heading-small">
   Source
 </h4>
 <p>

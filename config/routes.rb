@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     member do
       post :close
       post :reopen
+      get :assign
+      post :update_assignee
     end
     resources :activities, shallow: true
   end

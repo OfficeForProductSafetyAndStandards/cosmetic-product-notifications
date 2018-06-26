@@ -1,6 +1,6 @@
 class InvestigationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[show edit update destroy close reopen]
+  before_action :set_investigation, only: %i[show edit update destroy close reopen assign update_assignee]
 
   # GET /investigations
   # GET /investigations.json
@@ -33,6 +33,20 @@ class InvestigationsController < ApplicationController
     authorize @investigation
     @investigation.is_closed = false
     save_and_respond "Investigation was successfully reopened."
+  end
+
+  # GET /investigations/1/assign
+  def assign
+    authorize @investigation
+    @assignee = @investigation.assignee
+  end
+
+  # POST /investigations/1/assign
+  def update_assignee
+    authorize @investigation, :assign?
+    email = params[:email]
+    @investigation.assignee = User.where(email: email).first
+    save_and_respond "Assignee was successfully updated."
   end
 
   # POST /investigations
