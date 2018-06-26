@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   resources :investigations do
+    member do
+      post :close
+      post :reopen
+    end
     resources :activities, shallow: true
   end
   resources :products

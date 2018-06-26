@@ -19,17 +19,31 @@
 </h1>
 
 <h4 class="heading-small">
-  Description
-</h4>
-<p>
-  <%= @investigation.description %>
-</p>
-
-<h4 class="heading-small">
   Status
 </h4>
 <p>
   <%= @investigation.is_closed? ? "Closed" : "Open" %>
+</p>
+
+<% if @investigation.is_closed? && policy(@investigation).reopen? %>
+  <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
+    <div class="form-group">
+      <%= form.submit "Reopen", :class => "button" %>
+    </div>
+  <% end %>
+<% elsif !@investigation.is_closed? %>
+  <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
+    <div class="form-group">
+      <%= form.submit "Close", :class => "button-warning", data: { confirm: "Are you sure?" } %>
+    </div>
+  <% end %>
+<% end %>
+
+<h4 class="heading-small">
+  Description
+</h4>
+<p>
+  <%= @investigation.description %>
 </p>
 
 <h4 class="heading-small">
@@ -66,6 +80,6 @@
 </div>
 
 <div class="form-group">
-  <%= link_to 'Edit', edit_investigation_path(@investigation), :class => "button" %>
+  <%= link_to 'Edit investigation', edit_investigation_path(@investigation), :class => "button" %>
 </div>
 <%= link_to 'Back', investigations_path, :class => "link-back" %>

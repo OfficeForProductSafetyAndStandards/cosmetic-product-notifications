@@ -1,6 +1,6 @@
 class InvestigationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[show edit update destroy]
+  before_action :set_investigation, only: %i[show edit update destroy close reopen]
 
   # GET /investigations
   # GET /investigations.json
@@ -19,6 +19,19 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/1/edit
   def edit; end
+
+  # POST /investigations/1/close
+  def close
+    @investigation.is_closed = true
+    save_and_respond "Investigation was successfully closed."
+  end
+
+  # POST /investigations/1/reopen
+  def reopen
+    authorize @investigation
+    @investigation.is_closed = false
+    save_and_respond "Investigation was successfully reopened."
+  end
 
   # POST /investigations
   # POST /investigations.json
@@ -62,6 +75,18 @@ class InvestigationsController < ApplicationController
   end
 
   private
+
+  def save_and_respond(notice)
+    respond_to do |format|
+      if @investigation.save
+        format.html { redirect_to @investigation, notice: notice }
+        format.json { render :show, status: :ok, location: @investigation }
+      else
+        format.html { render :show }
+        format.json { render json: @investigation.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_investigation
