@@ -24,6 +24,7 @@
   <thead>
     <tr>
       <th>Time</th>
+      <th>User</th>
       <th>Activity type</th>
       <th></th>
     </tr>
@@ -32,8 +33,9 @@
     <% @activities.each do |activity| %>
       <tr>
         <td><%= link_to activity.created_at, activity %></td>
+        <td><%= activity.user.email %></td>
         <td><%= link_to activity.activity_type.titleized_name, activity %></td>
-        <td><%= link_to 'Delete', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', activity, method: :delete, data: { confirm: 'Are you sure?' } if policy(activity).destroy? %></td>
       </tr>
     <% end %>
   </tbody>

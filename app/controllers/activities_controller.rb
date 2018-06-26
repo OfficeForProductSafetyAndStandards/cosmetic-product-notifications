@@ -40,6 +40,7 @@ class ActivitiesController < ApplicationController
   # PATCH/PUT /activities/1
   # PATCH/PUT /activities/1.json
   def update
+    authorize @activity
     respond_to do |format|
       if @activity.update(activity_params)
         format.html { redirect_to @activity, notice: "Activity was successfully updated." }
@@ -54,6 +55,7 @@ class ActivitiesController < ApplicationController
   # DELETE /activities/1
   # DELETE /activities/1.json
   def destroy
+    authorize @activity
     @activity.destroy
     respond_to do |format|
       format.html do
@@ -69,6 +71,7 @@ class ActivitiesController < ApplicationController
   def create_activity
     investigation = Investigation.find(params[:investigation_id])
     @activity = investigation.activities.create(activity_params)
+    @activity.user = current_user
   end
 
   # Use callbacks to share common setup or constraints between actions.

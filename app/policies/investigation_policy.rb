@@ -5,7 +5,7 @@ class InvestigationPolicy < ApplicationPolicy
   end
 
   def update?
-    !record.is_closed?
+    !@record.is_closed?
   end
 
   def destroy?

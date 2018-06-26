@@ -30,13 +30,22 @@
 </p>
 
 <h4 class="heading-small">
+  User
+</h4>
+<p>
+  <%= @activity.user.email %>
+</p>
+
+<h4 class="heading-small">
   Notes
 </h4>
 <p>
   <%= @activity.notes %>
 </p>
 
-<div class="form-group">
-  <%= link_to 'Edit', edit_activity_path(@activity), :class => "button" %>
-</div>
+<% if policy(@activity).update? %>
+  <div class="form-group">
+    <%= link_to 'Edit', edit_activity_path(@activity), :class => "button" %>
+  </div>
+<% end %>
 <%= link_to 'Back', investigation_activities_path(@activity.investigation), :class => "link-back" %>
