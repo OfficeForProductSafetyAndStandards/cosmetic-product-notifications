@@ -3,9 +3,11 @@
 one:
   investigation: one
   activity_type: one
+  user: one
   notes: MyText
 
 two:
   investigation: two
   activity_type: two
+  user: one
   notes: MyText
