@@ -1,5 +1,5 @@
 class Investigation < ApplicationRecord
-  default_scope { order(created_at: :desc) }
+  default_scope { order(updated_at: :desc) }
   has_many :investigation_products, dependent: :destroy
   has_many :products, through: :investigation_products
   has_many :activities, dependent: :destroy

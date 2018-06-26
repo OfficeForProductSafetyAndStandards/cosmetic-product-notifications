@@ -21,6 +21,8 @@
   <thead>
     <tr>
       <th>ID</th>
+      <th>Status</th>
+      <th>Activity</th>
       <th colspan="1"></th>
     </tr>
   </thead>
@@ -29,6 +31,8 @@
     <% @investigations.each do |investigation| %>
       <tr>
         <td><%= link_to investigation.id, investigation %></td>
+        <td><%= investigation.is_closed? ? "Closed" : "Open" %></td>
+        <td><%= investigation.activities.length %></td>
         <td><%= link_to 'Delete', investigation, method: :delete, data: { confirm: 'Are you sure?' } if policy(investigation).destroy? %></td>
       </tr>
     <% end %>
