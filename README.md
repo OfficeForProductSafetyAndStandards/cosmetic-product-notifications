@@ -15,6 +15,8 @@ docker-compose up
 Then in a different terminal initialise the DB
 ```
 docker-compose run web rake db:create
+# Run the migrations
+docker-compose run web rake db:migrate
 # Add an admin user
 docker-compose run -e ADMIN_EMAIL=XXX -e ADMIN_PASSWORD=XXX web rails db:seed
 ```
