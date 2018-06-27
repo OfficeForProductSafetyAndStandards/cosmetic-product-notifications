@@ -14,6 +14,14 @@
 <h1 class="heading-xlarge">Products</h1>
 <%= link_to 'New product', new_product_path, :class => "button" %><br /><br />
 
+<%= form_with(url: products_path, method: :get) do |form| %>
+  <div class="form-group">
+    <%= form.label "Search", :class => "form-label" %>
+    <%= form.text_field :q, value: params[:q], :class => "form-control" %>
+    <%= form.submit "Go", name: nil, :class => "button" %>
+  </div>
+<% end %>
+
 <%= will_paginate @products %>
 <br />
 <table>
