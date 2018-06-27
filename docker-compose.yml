@@ -4,6 +4,12 @@ services:
     image: postgres
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+  elasticsearch:
+    image: elasticsearch
+    environment:
+      - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
+    volumes:
+      - ./tmp/search:/usr/share/elasticsearch/data
   web:
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
@@ -14,5 +20,7 @@ services:
       - "3000:3000"
     environment:
       - NOTIFY_API_KEY=$NOTIFY_API_KEY
+      - ELASTICSEARCH_HOST=elasticsearch
     depends_on:
       - db
+      - elasticsearch
