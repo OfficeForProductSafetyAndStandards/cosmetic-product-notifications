@@ -3,7 +3,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - postgres-volume:/var/lib/postgresql/data
   web:
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
@@ -16,3 +16,5 @@ services:
       - NOTIFY_API_KEY=$NOTIFY_API_KEY
     depends_on:
       - db
+volumes:
+  postgres-volume:
