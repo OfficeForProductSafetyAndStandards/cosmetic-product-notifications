@@ -24,7 +24,8 @@ def create_products(products)
       name: product["gtin_nm"],
       purchase_url: product["brand_link"],
       brand: product["brand_nm"] && product["brand_nm"][0] || nil,
-      image_url: product["gtin_img"]
+      image_url: product["gtin_img"],
+      source: "Imported from the Open Product Database"
     )
   end
 end
