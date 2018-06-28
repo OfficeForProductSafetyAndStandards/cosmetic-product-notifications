@@ -33,6 +33,7 @@ def import_report(report)
   end
 end
 
+# rubocop:disable Metrics/MethodLength
 def create_product(notification)
   return false unless (name = name_or_product(notification))
   Product.create(
@@ -42,9 +43,11 @@ def create_product(notification)
     model: field_from_notification(notification, "type_numberOfModel"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     brand: brand(notification),
-    image_url: first_picture_url(notification)
+    image_url: first_picture_url(notification),
+    source: "Imported from RAPEX"
   )
 end
+# rubocop:enable Metrics/MethodLength
 
 def barcode_from_notification(notification)
   # There are 4 different types of GTIN, so we match for any of them
