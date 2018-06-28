@@ -19,9 +19,10 @@
 <table>
   <thead>
     <tr>
-      <th>GTIN</th>
+      <th>GTIN (Barcode)</th>
       <th>Name</th>
       <th>Brand</th>
+      <th>Investigations</th>
       <th colspan="1"></th>
     </tr>
   </thead>
@@ -32,6 +33,7 @@
         <td><%= product.gtin %></td>
         <td><%= link_to product.name, product %></td>
         <td><%= product.brand %></td>
+        <td><%= product.investigations.length %></td>
         <td><%= link_to 'Delete', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
