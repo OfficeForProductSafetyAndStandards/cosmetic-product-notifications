@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
+  before_action :create_product, only: %i[create]
 
   # GET /products
   # GET /products.json
@@ -23,8 +24,6 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(product_params)
-
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: "Product was successfully created." }
@@ -63,6 +62,11 @@ class ProductsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  def create_product
+    @product = Product.new(product_params)
+    @product.source = "Created by #{current_user.email}"
+  end
+
   def set_product
     @product = Product.find(params[:id])
   end
