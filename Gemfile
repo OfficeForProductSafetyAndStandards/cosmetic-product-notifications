@@ -15,6 +15,7 @@ gem "devise"
 gem "devise_invitable"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
+gem "faraday_middleware-aws-signers-v4"
 gem "pundit"
 gem "rolify"
 gem "rubocop", require: false
