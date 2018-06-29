@@ -123,7 +123,7 @@ class InvestigationsController < ApplicationController
   def investigation_params
     params.require(:investigation).permit(
       :description, :severity,
-      investigation_products_attributes: %i[id product_id _destroy]
+      product_ids: []
     )
   end
 end
