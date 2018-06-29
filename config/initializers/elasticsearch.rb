@@ -13,7 +13,7 @@ Elasticsearch::Model.client = if Rails.env.production?
                                 Elasticsearch::Client.new(config)
                               end
 
-def aws_elasticsearch_client()
+def aws_elasticsearch_client
   Elasticsearch::Client.new(url: ENV["AWS_ELASTICSEARCH_URL"]) do |f|
     f.request :aws_sigv4,
               service: "es",

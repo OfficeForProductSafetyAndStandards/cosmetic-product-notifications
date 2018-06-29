@@ -6,6 +6,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in users(:one)
     @product = products(:one)
+    Product.import
   end
 
   test "should get index" do
