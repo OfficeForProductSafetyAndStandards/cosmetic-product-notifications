@@ -1,18 +1,5 @@
 require "faraday_middleware/aws_sigv4"
 
-config = {
-  host: "elasticsearch",
-  transport_options: {
-    request: { timeout: 5 }
-  }
-}
-
-Elasticsearch::Model.client = if Rails.env.production?
-                                aws_elasticsearch_client
-                              else
-                                Elasticsearch::Client.new(config)
-                              end
-
 def aws_elasticsearch_client
   Elasticsearch::Client.new(url: ENV["AWS_ELASTICSEARCH_URL"]) do |f|
     f.request :aws_sigv4,
@@ -24,3 +11,20 @@ def aws_elasticsearch_client
     f.adapter  Faraday.default_adapter
   end
 end
+
+def local_elasticsearch_client
+  config = {
+    host: "elasticsearch",
+    transport_options: {
+      request: { timeout: 5 }
+    }
+  }
+
+  Elasticsearch::Client.new(config)
+end
+
+Elasticsearch::Model.client = if Rails.env.production?
+                                aws_elasticsearch_client
+                              else
+                                local_elasticsearch_client
+                              end
