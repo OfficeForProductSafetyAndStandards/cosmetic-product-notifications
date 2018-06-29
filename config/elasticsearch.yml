@@ -1,8 +1,0 @@
-development: &default
-  host: "elasticsearch"
-
-test:
-  <<: *default
-
-production:
-  host: "http://localhost:9200/"
