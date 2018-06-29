@@ -10,7 +10,6 @@ gem "notifications-ruby-client"
 # https://github.com/elastic/elasticsearch-rails/issues/239
 gem "will_paginate"
 
-gem "cocoon"
 gem "devise"
 gem "devise_invitable"
 gem "elasticsearch-model"
