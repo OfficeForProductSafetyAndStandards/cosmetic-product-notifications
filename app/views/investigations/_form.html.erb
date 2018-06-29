@@ -23,7 +23,7 @@
 
   <div class="form-group">
     <%= form.select :product_ids,
-      investigation.products.collect {|p| [p.name, p.id]},
+      investigation.products.collect {|p| ["#{p.name} - #{p.brand}", p.id]},
       {},
       {:multiple => true, :class => "js-investigation-products form-control" }
     %>
