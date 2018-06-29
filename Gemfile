@@ -10,7 +10,6 @@ gem "notifications-ruby-client"
 # https://github.com/elastic/elasticsearch-rails/issues/239
 gem "will_paginate"
 
-gem "cocoon"
 gem "devise"
 gem "devise_invitable"
 gem "elasticsearch-model"
@@ -19,6 +18,7 @@ gem "faraday_middleware-aws-signers-v4"
 gem "pundit"
 gem "rolify"
 gem "rubocop", require: false
+gem "select2-rails"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "bootsnap", ">= 1.1.0"

@@ -6,8 +6,10 @@ Install Docker: https://docs.docker.com/install/
 
 Install docker-compose: https://docs.docker.com/compose/install/
 
-Copy the file `.env-template` to `.env` and fill in any environment variables.
+Copy the file in the root of the directory called `.env-template`. Rename the copy of the file to `.env` and fill in any environment variables.
+This `.env` file will be git ignored, so it is safe to add sensitive data.
 
+Build and start-up the project:
 ```
 docker-compose build
 docker-compose up
@@ -15,6 +17,8 @@ docker-compose up
 Then in a different terminal initialise the DB
 ```
 docker-compose run web rake db:create
+# Run the migrations
+docker-compose run web rake db:migrate
 # Add an admin user
 docker-compose run -e ADMIN_EMAIL=XXX -e ADMIN_PASSWORD=XXX web rails db:seed
 ```
