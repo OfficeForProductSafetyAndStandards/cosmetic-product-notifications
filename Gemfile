@@ -16,6 +16,7 @@ gem "devise_invitable"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 gem "faraday_middleware-aws-sigv4"
+gem "jquery-slick-rails"
 gem "pundit"
 gem "rolify"
 gem "rubocop", require: false

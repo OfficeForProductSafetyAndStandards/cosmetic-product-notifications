@@ -52,8 +52,10 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :image_url, "Image URL", :class => "form-label" %>
-    <%= form.text_field :image_url, :class => "form-control" %>
+    <%= form.fields_for :images do |image| %>
+      <%= render 'image_fields', f: image %>
+    <% end %>
+    <%= link_to_add_association 'add image', form, :images %>
   </div>
 
   <div class="form-group">
