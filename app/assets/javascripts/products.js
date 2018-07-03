@@ -8,5 +8,4 @@ $(window).ready( function() {
         centerMode: true,
         focusOnSelect: true,
     });
-})
-
+});
