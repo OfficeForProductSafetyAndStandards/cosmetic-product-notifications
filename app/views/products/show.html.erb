@@ -18,10 +18,11 @@
   Product
 </h1>
 
-<%= image_tag(@product.image_url, alt: @product.name) unless @product.image_url.nil? %>
-<% @product.images.each do |image| %>
-  <img src="<%= image.url %>" class="thumbnail">
-<% end %>
+<div class="slider-nav">
+  <% @product.images.each do |image| %>
+    <img src="<%= image.url %>">
+  <% end %>
+</div>
 
 <h4 class="heading-small">
   Product ID
