@@ -5,15 +5,15 @@ require "open-uri"
 namespace :data_import do
   desc "Import product data from RAPEX"
   task rapex: :environment do
-    weekly_reports = rapex_weekly_reports
+    report = rapex_weekly_reports[0]
     previously_imported_reports = RapexImport.all
-    weekly_reports.reverse.each do |report|
+    # weekly_reports.reverse.each do |report|
       reference = report.xpath("reference").text
       unless imported_reports_contains_reference(previously_imported_reports, reference)
         import_report(report)
         RapexImport.create(reference: reference)
       end
-    end
+    # end
   end
 
   task delete_rapex: :environment do
@@ -42,7 +42,7 @@ def create_product(notification)
     model: field_from_notification(notification, "type_numberOfModel"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     brand: brand(notification),
-    image_url: first_picture_url(notification)
+    images: all_pictures(notification)
   )
 end
 
@@ -75,6 +75,16 @@ end
 
 def first_picture_url(notification)
   field_from_notification(notification, "pictures/picture")
+end
+
+def all_pictures(notification)
+  images = []
+  urls = notification.xpath("pictures/picture")
+  urls.each { |url|
+      clean_url = url.text.delete("\n") unless url.nil?
+      images.push(Image.create(url: clean_url))
+  }
+  images
 end
 
 def field_from_notification(notification, field_name)
