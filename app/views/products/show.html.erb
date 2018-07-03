@@ -87,6 +87,13 @@
   <%= @product.brand %>
 </p>
 
+<h4 class="heading-small">
+  Source
+</h4>
+<p>
+  <%= @product.source %>
+</p>
+
 <% if @product.investigations.any? -%>
   <h4 class="heading-small">Investigations</h4>
   <% @product.investigations.each do |investigation| %>

@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2018_07_02_145900) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_url"
+    t.string "source"
   end
 
   create_table "rapex_imports", force: :cascade do |t|
