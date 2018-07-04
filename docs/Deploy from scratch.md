@@ -17,7 +17,7 @@ Install the `cf` CLI from https://github.com/cloudfoundry/cli#downloads
     cf target -o "beis-mspsds" -s "int"
 
 Create an AWS user called int-mspsds keep a note of the Access key ID and secret access key.
-Don't add any policies for this user.
+Give this user the AmazonS3FullAccess policy.
 
 
 ## Database
@@ -28,6 +28,10 @@ Create a blank database in the `int` space:
     cf enable-service-access postgres
     # Consider larger DBs for other environments
     cf create-service postgres tiny-unencrypted-9.5 mspsds-database
+
+## S3
+
+Create an S3 bucket named `int-mspsds`. This bucket needs public _read_ access.
 
 ## Elastic Search
 
@@ -49,8 +53,9 @@ Create the app using the current repository
     # Add AWS info
     cf set-env mspsds-int AWS_ACCESS_KEY_ID XXX
     cf set-env mspsds-int AWS_SECRET_ACCESS_KEY XXX
-    cf set-env mspsds-int AWS_ELASTICSEARCH_URL XXX
     cf set-env mspsds-int AWS_REGION XXX
+    cf set-env mspsds-int AWS_ELASTICSEARCH_URL XXX
+    cf set-env mspsds-int AWS_S3_BUCKET XXX
 
     # Add API key created in Notify
     cf set-env mspsds-int NOTIFY_API_KEY XXX
