@@ -22,6 +22,11 @@
   </div>
 
   <div class="form-group">
+    <%= form.label :image, :class => "form-label" %>
+    <%= form.file_field :image, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= form.select :product_ids,
       investigation.products.collect {|p| ["#{p.name} - #{p.brand}", p.id]},
       {},
