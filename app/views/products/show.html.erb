@@ -20,7 +20,7 @@
 
 <div class="slider-nav">
   <% @product.images.each do |image| %>
-    <img src="<%= image.url %>">
+    <%= image_tag(image.url, alt: image.title) %>
   <% end %>
 </div>
 

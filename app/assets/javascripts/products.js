@@ -1,5 +1,5 @@
 
-$(window).ready( function() {
+$(document).on("turbolinks:load", function() {
     $('.slider-nav').slick({
         slidesToShow: 3,
         slidesToScroll: 1,
