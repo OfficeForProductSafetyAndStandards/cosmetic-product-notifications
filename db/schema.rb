@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_03_150147) do
+ActiveRecord::Schema.define(version: 2018_07_04_100622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,17 @@ ActiveRecord::Schema.define(version: 2018_07_03_150147) do
     t.index ["role_id"], name: "index_users_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.string "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.text "object_changes"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "activities", "activity_types"
