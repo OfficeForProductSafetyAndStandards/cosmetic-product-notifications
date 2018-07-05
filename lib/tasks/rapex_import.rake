@@ -33,7 +33,6 @@ def import_report(report)
   end
 end
 
-# rubocop:disable Metrics/MethodLength
 def create_product(notification)
   return false unless (name = name_or_product(notification))
   Product.create(

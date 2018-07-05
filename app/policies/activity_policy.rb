@@ -1,4 +1,3 @@
-
 class ActivityPolicy < ApplicationPolicy
   def update?
     @user.has_role?(:admin) || @user == @record.user
