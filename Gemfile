@@ -16,11 +16,11 @@ gem "devise_invitable"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 gem "faraday_middleware-aws-sigv4"
+gem "jquery-slick-rails"
 gem "pundit"
 gem "rolify"
 gem "rubocop", require: false
 gem "select2-rails"
-gem "jquery-slick-rails"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "bootsnap", ">= 1.1.0"

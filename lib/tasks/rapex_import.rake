@@ -43,8 +43,8 @@ def create_product(notification)
     model: field_from_notification(notification, "type_numberOfModel"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     brand: brand(notification),
-    images: all_pictures(notification)
-    source: "Imported from RAPEX"
+    images: all_pictures(notification),
+    source: "Imported from RAPEX",
   )
 end
 # rubocop:enable Metrics/MethodLength
