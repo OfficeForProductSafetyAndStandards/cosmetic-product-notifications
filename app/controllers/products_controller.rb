@@ -20,6 +20,7 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+    @product.images.build
   end
 
   # GET /products/1/edit
@@ -77,6 +78,8 @@ class ProductsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def product_params
-    params.require(:product).permit(:gtin, :name, :description, :model, :mpn, :batch_number, :purchase_url, :brand)
+    params.require(:product).permit(
+        :gtin, :name, :description, :model, :mpn, :batch_number, :purchase_url, :brand,
+        images_attributes: [:id, :title, :url, :_destroy])
   end
 end

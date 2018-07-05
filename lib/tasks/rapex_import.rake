@@ -43,7 +43,7 @@ def create_product(notification)
     model: field_from_notification(notification, "type_numberOfModel"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     brand: brand(notification),
-    image_url: first_picture_url(notification),
+    images: all_pictures(notification)
     source: "Imported from RAPEX"
   )
 end
@@ -78,6 +78,16 @@ end
 
 def first_picture_url(notification)
   field_from_notification(notification, "pictures/picture")
+end
+
+def all_pictures(notification)
+  images = []
+  urls = notification.xpath("pictures/picture")
+  urls.each { |url|
+      clean_url = url.text.delete("\n") unless url.nil?
+      images.push(Image.create(url: clean_url))
+  }
+  images
 end
 
 def field_from_notification(notification, field_name)

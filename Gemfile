@@ -20,6 +20,7 @@ gem "pundit"
 gem "rolify"
 gem "rubocop", require: false
 gem "select2-rails"
+gem "jquery-slick-rails"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "bootsnap", ">= 1.1.0"
