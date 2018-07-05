@@ -28,5 +28,8 @@ Style/ClassAndModuleChildren:
 Metrics/LineLength:
     Max: 120
 
+Metrics/MethodLength:
+    Max: 15
+
 Layout/EndOfLine:
   EnforcedStyle: lf
