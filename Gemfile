@@ -6,13 +6,20 @@ gem "govuk_frontend_toolkit"
 gem "govuk_template"
 gem "notifications-ruby-client"
 
-gem "cocoon"
+# Will Paginate must be installed before elasticsearch
+# https://github.com/elastic/elasticsearch-rails/issues/239
+gem "will_paginate"
+
+gem "aws-sdk-s3"
 gem "devise"
 gem "devise_invitable"
+gem "elasticsearch-model"
+gem "elasticsearch-rails"
+gem "faraday_middleware-aws-sigv4"
 gem "pundit"
 gem "rolify"
 gem "rubocop", require: false
-gem "will_paginate"
+gem "select2-rails"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "bootsnap", ">= 1.1.0"

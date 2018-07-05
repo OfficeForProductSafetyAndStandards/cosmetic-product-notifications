@@ -73,6 +73,9 @@ bower.json
 # Ignore pow environment settings
 .powenv
 
+# Ignore uploaded files in development
+/storage/*
+
 # Ignore Byebug command history file.
 .byebug_history
 

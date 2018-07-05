@@ -1,6 +1,7 @@
 class InvestigationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_investigation, only: %i[show edit update destroy close reopen assign update_assignee]
+  before_action :create_investigation, only: %i[create]
 
   # GET /investigations
   # GET /investigations.json
@@ -57,8 +58,6 @@ class InvestigationsController < ApplicationController
   # POST /investigations
   # POST /investigations.json
   def create
-    @investigation = Investigation.new(investigation_params)
-
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to @investigation, notice: "Investigation was successfully created." }
@@ -98,6 +97,7 @@ class InvestigationsController < ApplicationController
 
   private
 
+  # Use callbacks to share common setup or constraints between actions.
   def save_and_respond(notice)
     respond_to do |format|
       if @investigation.save
@@ -110,7 +110,11 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  # Use callbacks to share common setup or constraints between actions.
+  def create_investigation
+    @investigation = Investigation.new(investigation_params)
+    @investigation.source = "Created by #{current_user.email}"
+  end
+
   def set_investigation
     @investigation = Investigation.find(params[:id])
   end
@@ -118,8 +122,8 @@ class InvestigationsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
     params.require(:investigation).permit(
-      :description, :source, :severity,
-      investigation_products_attributes: %i[id product_id _destroy]
+      :description, :severity, :image,
+      product_ids: []
     )
   end
 end

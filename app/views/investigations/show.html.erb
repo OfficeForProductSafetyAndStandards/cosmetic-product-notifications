@@ -18,6 +18,8 @@
   Investigation
 </h1>
 
+<%= image_tag(url_for(@investigation.image), alt: "Investigation") if @investigation.image.attached? %>
+
 <h4 class="heading-small">
   Status
 </h4>
