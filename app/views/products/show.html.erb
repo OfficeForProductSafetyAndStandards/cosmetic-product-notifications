@@ -105,3 +105,10 @@
   <%= link_to 'Edit', edit_product_path(@product), :class => "button" %>
 </div>
 <%= link_to 'Back', products_path, :class => "link-back" %>
+
+
+<%= render 'history', versions: @product.versions.reverse %>
+
+<script>
+    productImagesToCarousel();
+</script>

@@ -1,5 +1,4 @@
-
-$(window).ready( function() {
+function productImagesToCarousel() {
     $('.slider-nav').slick({
         slidesToShow: 3,
         slidesToScroll: 1,
@@ -7,5 +6,6 @@ $(window).ready( function() {
         arrows: true,
         centerMode: true,
         focusOnSelect: true,
+        adaptiveHeight: true,
     });
-});
+}
