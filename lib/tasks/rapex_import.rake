@@ -74,10 +74,6 @@ def brand(notification)
   brand
 end
 
-def first_picture_url(notification)
-  field_from_notification(notification, "pictures/picture")
-end
-
 def all_pictures(notification)
   images = []
   urls = notification.xpath("pictures/picture")
