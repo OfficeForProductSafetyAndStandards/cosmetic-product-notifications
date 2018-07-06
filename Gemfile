@@ -11,6 +11,7 @@ gem "notifications-ruby-client"
 gem "will_paginate"
 
 gem "aws-sdk-s3"
+gem "clamby"
 gem "devise"
 gem "devise_invitable"
 gem "elasticsearch-model"

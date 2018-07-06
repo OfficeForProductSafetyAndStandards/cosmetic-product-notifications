@@ -65,6 +65,7 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (10.0.2)
+    clamby (1.4.0)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -255,6 +256,7 @@ DEPENDENCIES
   aws-sdk-s3
   bootsnap (>= 1.1.0)
   byebug
+  clamby
   coffee-rails (~> 4.2)
   devise
   devise_invitable

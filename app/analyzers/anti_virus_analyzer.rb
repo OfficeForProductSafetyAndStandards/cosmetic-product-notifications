@@ -4,6 +4,8 @@ class AntiVirusAnalyzer < ActiveStorage::Analyzer
   end
 
   def metadata
-    { virus_checked: true }
+    download_blob_to_tempfile do |file|
+      { safe: Clamby.safe?(file.path) }
+    end
   end
 end
