@@ -21,6 +21,9 @@ namespace :data_import do
     RapexImport.all.destroy_all
     pod_products = Product.last(pod_product_count)
     Product.where.not(id: pod_products.collect(&:id)).destroy_all
+    InvestigationProduct.destroy_all
+    Investigation.destroy_all
+    Activity.destroy_all
   end
 end
 
@@ -29,25 +32,56 @@ def import_report(report)
   puts "Importing #{reference}"
   url = report.xpath("URL").text.delete("\n")
   notifications(url).each do |notification|
-    create_product notification
+    investigation = create_investigation notification
+    product = create_product notification
+    create_investigation_product investigation, product
+    create_activity notification, investigation
   end
 end
 
 # rubocop:disable Metrics/MethodLength
+# TODO: add checking for existing products
 def create_product(notification)
   return false unless (name = name_or_product(notification))
   Product.create(
-    gtin: barcode_from_notification(notification),
-    name: name,
-    description: field_from_notification(notification, "description"),
-    model: field_from_notification(notification, "type_numberOfModel"),
-    batch_number: field_from_notification(notification, "batchNumber_barcode"),
-    brand: brand(notification),
-    image_url: first_picture_url(notification),
-    source: "Imported from RAPEX"
+      gtin: barcode_from_notification(notification),
+      name: name,
+      description: field_from_notification(notification, "description"),
+      model: field_from_notification(notification, "type_numberOfModel"),
+      batch_number: field_from_notification(notification, "batchNumber_barcode"),
+      brand: brand(notification),
+      image_url: first_picture_url(notification),
+      source: "Imported from RAPEX"
   )
 end
 # rubocop:enable Metrics/MethodLength
+
+def create_investigation(notification)
+  Investigation.create(
+      description: field_from_notification(notification, "description"),
+      is_closed: true,
+      severity: 1,
+      created_at: DateTime.new(1994, 06, 06),  # TODO: replace with actual value
+      updated_at: DateTime.new(2004, 12, 12),  # TODO: replace with actual value
+      source: "Imported from RAPEX"
+  )
+end
+
+def create_investigation_product(investigation, product)
+  InvestigationProduct.create(
+      investigation_id: investigation.id,
+      product_id: product.id,
+  )
+end
+
+def create_activity(notification, investigation)
+  Activity.create(
+      investigation_id: investigation.id,
+      activity_type_id: ActivityType.find_by_name("notification").id,
+      user_id: User.first.id,  # TODO: probably change model user_id to source to prevent having to do this
+      notes: field_from_notification(notification, "measures")
+  )
+end
 
 def barcode_from_notification(notification)
   # There are 4 different types of GTIN, so we match for any of them
