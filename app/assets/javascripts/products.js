@@ -1,4 +1,3 @@
-
 $(document).on("turbolinks:load", function() {
     $('.slider-nav').slick({
         slidesToShow: 3,
@@ -7,5 +6,6 @@ $(document).on("turbolinks:load", function() {
         arrows: true,
         centerMode: true,
         focusOnSelect: true,
+        adaptiveHeight: true,
     });
 });

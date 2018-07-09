@@ -151,6 +151,11 @@ GEM
     notifications-ruby-client (2.6.0)
       jwt (>= 1.5, < 3)
     orm_adapter (0.5.0)
+    paper_trail (9.2.0)
+      activerecord (>= 4.2, < 5.3)
+      paper_trail-association_tracking (< 2)
+      request_store (~> 1.1)
+    paper_trail-association_tracking (1.0.0)
     parallel (1.12.1)
     parser (2.5.1.0)
       ast (~> 2.4.0)
@@ -191,6 +196,8 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    request_store (1.4.1)
+      rack (>= 1.4)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -273,6 +280,7 @@ DEPENDENCIES
   jquery-slick-rails
   listen (~> 3.0.5)
   notifications-ruby-client
+  paper_trail
   pg (~> 0.18)
   puma (~> 3.0)
   pundit
