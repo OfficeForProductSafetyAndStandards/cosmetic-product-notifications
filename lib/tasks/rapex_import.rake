@@ -7,7 +7,7 @@ namespace :data_import do
   task rapex: :environment do
     weekly_reports = rapex_weekly_reports
     previously_imported_reports = RapexImport.all
-    weekly_reports.reverse.each do |report|
+    weekly_reports.reverse_each do |report|
       reference = report.xpath("reference").text
       unless imported_reports_contains_reference(previously_imported_reports, reference)
         import_report(report)
@@ -33,7 +33,6 @@ def import_report(report)
   end
 end
 
-# rubocop:disable Metrics/MethodLength
 def create_product(notification)
   return false unless (name = name_or_product(notification))
   Product.create(
@@ -43,11 +42,10 @@ def create_product(notification)
     model: field_from_notification(notification, "type_numberOfModel"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     brand: brand(notification),
-    image_url: first_picture_url(notification),
+    images: all_pictures(notification),
     source: "Imported from RAPEX"
   )
 end
-# rubocop:enable Metrics/MethodLength
 
 def barcode_from_notification(notification)
   # There are 4 different types of GTIN, so we match for any of them
@@ -76,8 +74,14 @@ def brand(notification)
   brand
 end
 
-def first_picture_url(notification)
-  field_from_notification(notification, "pictures/picture")
+def all_pictures(notification)
+  images = []
+  urls = notification.xpath("pictures/picture")
+  urls.each do |url|
+    clean_url = url.text.delete("\n") unless url.nil?
+    images.push(Image.create(url: clean_url))
+  end
+  images
 end
 
 def field_from_notification(notification, field_name)
