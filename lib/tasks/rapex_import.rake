@@ -28,14 +28,15 @@ namespace :data_import do
 end
 
 def import_report(report)
+  date = DateTime.strptime(report.xpath("publicationDate").text, "%e/%m/%Y")
   reference = report.xpath("reference").text
   puts "Importing #{reference}"
   url = report.xpath("URL").text.delete("\n")
   notifications(url).each do |notification|
-    investigation = create_investigation notification
+    investigation = create_investigation notification, date
     product = create_product notification
     create_investigation_product investigation, product
-    create_activity notification, investigation
+    create_activity notification, investigation, date  # TODO: this should be parsing the field to create multiple
   end
 end
 
@@ -56,13 +57,13 @@ def create_product(notification)
 end
 # rubocop:enable Metrics/MethodLength
 
-def create_investigation(notification)
+def create_investigation(notification, date)
   Investigation.create(
       description: field_from_notification(notification, "description"),
       is_closed: true,
       severity: 1,
-      created_at: DateTime.new(1994, 06, 06),  # TODO: replace with actual value
-      updated_at: DateTime.new(2004, 12, 12),  # TODO: replace with actual value
+      created_at: date,
+      updated_at: date,
       source: "Imported from RAPEX"
   )
 end
@@ -74,11 +75,13 @@ def create_investigation_product(investigation, product)
   )
 end
 
-def create_activity(notification, investigation)
+def create_activity(notification, investigation, date)
   Activity.create(
       investigation_id: investigation.id,
       activity_type_id: ActivityType.find_by_name("notification").id,
       user_id: User.first.id,  # TODO: probably change model user_id to source to prevent having to do this
+      created_at: date,
+      updated_at: date,
       notes: field_from_notification(notification, "measures")
   )
 end
