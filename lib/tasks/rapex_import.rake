@@ -27,60 +27,63 @@ namespace :data_import do
 end
 
 def import_report(report)
-  date = DateTime.strptime(report.xpath("publicationDate").text, "%e/%m/%Y")
+  date = Date.strptime(report.xpath("publicationDate").text, "%e/%m/%Y")
   reference = report.xpath("reference").text
   puts "Importing #{reference}"
   url = report.xpath("URL").text.delete("\n")
   notifications(url).each do |notification|
-    investigation = create_investigation notification, date
-    product = create_product notification
-    create_investigation_product investigation, product
-    create_activity notification, investigation, date  # TODO: this should be parsing the field to create multiple
+    create_records_from_notification notification, date
   end
 end
 
+def create_records_from_notification(notification, date)
+  investigation = create_investigation notification, date
+  product = create_product notification
+  create_investigation_product investigation, product
+  create_activity notification, investigation, date
+end
+
 # rubocop:disable Metrics/MethodLength
-# TODO: add checking for existing products
 def create_product(notification)
   return false unless (name = name_or_product(notification))
-  Product.where.not(gtin: '').where(gtin: barcode_from_notification(notification)).first_or_create(
-      gtin: barcode_from_notification(notification),
-      name: name,
-      description: field_from_notification(notification, "description"),
-      model: field_from_notification(notification, "type_numberOfModel"),
-      batch_number: field_from_notification(notification, "batchNumber_barcode"),
-      brand: brand(notification),
-      image_url: first_picture_url(notification),
-      source: "Imported from RAPEX"
+  Product.where.not(gtin: "").where(gtin: barcode_from_notification(notification)).first_or_create(
+    gtin: barcode_from_notification(notification),
+    name: name,
+    description: field_from_notification(notification, "description"),
+    model: field_from_notification(notification, "type_numberOfModel"),
+    batch_number: field_from_notification(notification, "batchNumber_barcode"),
+    brand: brand(notification),
+    image_url: first_picture_url(notification),
+    source: "Imported from RAPEX"
   )
 end
 # rubocop:enable Metrics/MethodLength
 
 def create_investigation(notification, date)
   Investigation.create(
-      description: field_from_notification(notification, "description"),
-      is_closed: true,
-      severity: 1,
-      created_at: date,
-      updated_at: date,
-      source: "Imported from RAPEX"
+    description: field_from_notification(notification, "description"),
+    is_closed: true,
+    severity: 1,
+    created_at: date,
+    updated_at: date,
+    source: "Imported from RAPEX"
   )
 end
 
 def create_investigation_product(investigation, product)
   InvestigationProduct.create(
-      investigation_id: investigation.id,
-      product_id: product.id,
+    investigation_id: investigation.id,
+    product_id: product.id
   )
 end
 
 def create_activity(notification, investigation, date)
   Activity.create(
-      investigation_id: investigation.id,
-      activity_type_id: ActivityType.find_by_name("notification").id,
-      created_at: date,
-      updated_at: date,
-      notes: field_from_notification(notification, "measures")
+    investigation_id: investigation.id,
+    activity_type_id: ActivityType.find_by(name: "notification").id,
+    created_at: date,
+    updated_at: date,
+    notes: field_from_notification(notification, "measures")
   )
 end
 
