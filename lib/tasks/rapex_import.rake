@@ -16,14 +16,13 @@ namespace :data_import do
     end
   end
 
+  # this will delete products even if they are used by an investigation not from RAPEX
   task delete_rapex: :environment do
-    pod_product_count = 9000
     RapexImport.all.destroy_all
-    pod_products = Product.last(pod_product_count)
-    Product.where.not(id: pod_products.collect(&:id)).destroy_all
-    InvestigationProduct.destroy_all
-    Investigation.destroy_all
-    Activity.destroy_all
+    Product.where(source: "Imported from RAPEX").destroy_all
+    destroyed_investigation_ids = Investigation.where(source: "Imported from RAPEX").destroy_all.collect(&:id)
+    InvestigationProduct.where(investigation_id: destroyed_investigation_ids).destroy_all
+    Activity.where(investigation_id: destroyed_investigation_ids).destroy_all
   end
 end
 
