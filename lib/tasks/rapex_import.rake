@@ -79,7 +79,6 @@ def create_activity(notification, investigation, date)
   Activity.create(
       investigation_id: investigation.id,
       activity_type_id: ActivityType.find_by_name("notification").id,
-      user_id: User.first.id,  # TODO: probably change model user_id to source to prevent having to do this
       created_at: date,
       updated_at: date,
       notes: field_from_notification(notification, "measures")
