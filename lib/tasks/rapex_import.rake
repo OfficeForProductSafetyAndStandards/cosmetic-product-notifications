@@ -44,7 +44,7 @@ end
 # TODO: add checking for existing products
 def create_product(notification)
   return false unless (name = name_or_product(notification))
-  Product.create(
+  Product.where.not(gtin: '').where(gtin: barcode_from_notification(notification)).first_or_create(
       gtin: barcode_from_notification(notification),
       name: name,
       description: field_from_notification(notification, "description"),
