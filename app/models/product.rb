@@ -14,7 +14,6 @@ class Product < ApplicationRecord
   accepts_nested_attributes_for :images, reject_if: :all_blank, allow_destroy: true
 
   has_paper_trail
-  # has_paper_trail meta: { images: Proc.new { |product| product.images.count } }
 end
 
 Product.import force: true # for auto sync model with elastic search

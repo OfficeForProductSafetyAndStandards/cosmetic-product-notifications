@@ -2,8 +2,8 @@
     History
 </h3>
 
-<details>
-  <% versions.each do |version| %>
+<% versions.order(:created_at).reverse.each do |version| %>
+  <details>
     <summary><span class="summary">
         <%= version.event.upcase %>
         on <%= version.created_at.to_formatted_s(:db) %>
@@ -11,9 +11,10 @@
     </span></summary>
 
     <div class="panel panel-border-narrow">
-        <% version.changeset.select { |_, change| !(change[0].blank? && change[1].blank?) }.each do |field, change| %>
-            <p><%= field %>: <%= change[0].to_s %> => <%= change[1].to_s %></p>
+        <% version.changeset.select { |_, (old, new)| !(old.blank? && new.blank?) }.each do |field, (old, new)| %>
+            <p><%= field %>: <%= old.to_s %> => <%= new.to_s %></p>
         <% end %>
     </div>
-  <% end %>
-</details>
+
+  </details>
+<% end %>
