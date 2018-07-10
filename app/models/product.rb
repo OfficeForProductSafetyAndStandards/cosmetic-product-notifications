@@ -10,12 +10,11 @@ class Product < ApplicationRecord
   has_many :investigation_products, dependent: :destroy
   has_many :investigations, through: :investigation_products
   has_many :images, dependent: :destroy, inverse_of: :product
-  belongs_to :source
+  has_one :source, as: :sourceable, dependent: :destroy
 
   accepts_nested_attributes_for :images, reject_if: :all_blank, allow_destroy: true
 
   has_paper_trail
-  # has_paper_trail meta: { images: Proc.new { |product| product.images.count } }
 end
 
 Product.import force: true # for auto sync model with elastic search

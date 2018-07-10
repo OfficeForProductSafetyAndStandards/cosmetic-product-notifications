@@ -79,9 +79,7 @@ ActiveRecord::Schema.define(version: 2018_07_10_104243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "assignee_id"
-    t.uuid "source_id"
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
-    t.index ["source_id"], name: "index_investigations_on_source_id"
   end
 
   create_table "products", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -96,8 +94,6 @@ ActiveRecord::Schema.define(version: 2018_07_10_104243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_url"
-    t.uuid "source_id"
-    t.index ["source_id"], name: "index_products_on_source_id"
   end
 
   create_table "rapex_imports", force: :cascade do |t|
@@ -120,6 +116,8 @@ ActiveRecord::Schema.define(version: 2018_07_10_104243) do
     t.string "type"
     t.string "name"
     t.uuid "user_id"
+    t.integer "sourceable_id"
+    t.string "sourceable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_sources_on_user_id"
@@ -177,8 +175,6 @@ ActiveRecord::Schema.define(version: 2018_07_10_104243) do
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "users"
   add_foreign_key "images", "products"
-  add_foreign_key "investigations", "sources"
   add_foreign_key "investigations", "users", column: "assignee_id"
-  add_foreign_key "products", "sources"
   add_foreign_key "sources", "users"
 end

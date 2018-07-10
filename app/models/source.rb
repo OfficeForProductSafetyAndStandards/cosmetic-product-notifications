@@ -1,6 +1,5 @@
 class Source < ApplicationRecord
-  has_one :product, dependent: :destroy
-  has_one :investigation, dependent: :destroy
+  belongs_to :sourceable, polymorphic: true
 
   def show
     nil

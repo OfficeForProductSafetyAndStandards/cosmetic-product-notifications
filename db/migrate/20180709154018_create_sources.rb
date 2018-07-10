@@ -4,6 +4,8 @@ class CreateSources < ActiveRecord::Migration[5.2]
       t.string :type
       t.string :name
       t.references :user, type: :uuid, foreign_key: true
+      t.integer :sourceable_id
+      t.string :sourceable_type
 
       t.timestamps
     end
