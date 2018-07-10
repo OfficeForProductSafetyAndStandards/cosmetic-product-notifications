@@ -59,13 +59,14 @@ def create_product(notification)
 end
 # rubocop:enable Metrics/MethodLength
 
+# TODO: change 'severity' to something more sensible based on requirements
 def create_investigation(notification, date)
   Investigation.create(
     description: field_from_notification(notification, "description"),
     is_closed: true,
-    severity: 1,
+    severity: field_from_notification(notification, "level") == "Serious Risk" ? 1 : 2,
     created_at: date,
-    updated_at: date,
+    updated_at: date,  # TODO:confirm this is what we want instead of the current Date
     source: "Imported from RAPEX"
   )
 end
@@ -82,7 +83,7 @@ def create_activity(notification, investigation, date)
     investigation_id: investigation.id,
     activity_type_id: ActivityType.find_by(name: "notification").id,
     created_at: date,
-    updated_at: date,
+    updated_at: date,  # TODO: confirm this is what we want instead of the current Date
     notes: field_from_notification(notification, "measures")
   )
 end
