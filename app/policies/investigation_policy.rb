@@ -1,4 +1,3 @@
-
 class InvestigationPolicy < ApplicationPolicy
   def assign?
     update?
