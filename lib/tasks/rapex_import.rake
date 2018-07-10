@@ -64,7 +64,7 @@ def create_investigation(notification, date)
     is_closed: true,
     severity: field_from_notification(notification, "level") == "Serious Risk" ? 1 : 2,
     created_at: date,
-    updated_at: date,  # TODO:confirm this is what we want instead of the current Date
+    updated_at: date,  # TODO: confirm this is what we want instead of the current Date
     source: "Imported from RAPEX"
   )
 end
