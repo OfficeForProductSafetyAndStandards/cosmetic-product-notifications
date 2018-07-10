@@ -5,6 +5,7 @@ class Investigation < ApplicationRecord
   has_many :activities, dependent: :destroy
   belongs_to :assignee, class_name: "User", optional: true
   has_one_attached :image
+  belongs_to :source
 
   accepts_nested_attributes_for :products
   accepts_nested_attributes_for :investigation_products, allow_destroy: true
