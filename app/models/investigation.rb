@@ -8,4 +8,6 @@ class Investigation < ApplicationRecord
 
   accepts_nested_attributes_for :products
   accepts_nested_attributes_for :investigation_products, allow_destroy: true
+
+  has_paper_trail
 end

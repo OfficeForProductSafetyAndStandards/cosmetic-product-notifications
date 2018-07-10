@@ -3,4 +3,6 @@ class Activity < ApplicationRecord
   belongs_to :investigation
   belongs_to :activity_type
   belongs_to :user, optional: true
+
+  has_paper_trail
 end
