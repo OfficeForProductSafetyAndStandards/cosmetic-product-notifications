@@ -91,7 +91,7 @@
   Source
 </h4>
 <p>
-  <%= @product.source %>
+  <%= @product.source.show unless !@product.source %>
 </p>
 
 <% if @product.investigations.any? -%>

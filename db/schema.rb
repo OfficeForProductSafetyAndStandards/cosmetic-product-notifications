@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_06_160654) do
+ActiveRecord::Schema.define(version: 2018_07_10_104243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,12 +75,13 @@ ActiveRecord::Schema.define(version: 2018_07_06_160654) do
   create_table "investigations", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.text "description"
     t.boolean "is_closed"
-    t.string "source"
     t.integer "severity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "assignee_id"
+    t.uuid "source_id"
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
+    t.index ["source_id"], name: "index_investigations_on_source_id"
   end
 
   create_table "products", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -95,7 +96,8 @@ ActiveRecord::Schema.define(version: 2018_07_06_160654) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_url"
-    t.string "source"
+    t.uuid "source_id"
+    t.index ["source_id"], name: "index_products_on_source_id"
   end
 
   create_table "rapex_imports", force: :cascade do |t|
@@ -112,6 +114,15 @@ ActiveRecord::Schema.define(version: 2018_07_06_160654) do
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "sources", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "type"
+    t.string "name"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -166,5 +177,8 @@ ActiveRecord::Schema.define(version: 2018_07_06_160654) do
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "users"
   add_foreign_key "images", "products"
+  add_foreign_key "investigations", "sources"
   add_foreign_key "investigations", "users", column: "assignee_id"
+  add_foreign_key "products", "sources"
+  add_foreign_key "sources", "users"
 end
