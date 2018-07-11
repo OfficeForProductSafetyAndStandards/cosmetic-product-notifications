@@ -102,7 +102,7 @@
 <% end %>
 
 <div class="form-group">
-  <%= link_to 'Create PDF document', investigation_path(@investigation, :format => :pdf) %>
+  <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
 </div>
 
 <%= link_to 'Back', investigations_path, :class => "link-back" %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post "investigations/report", to: "investigations#report"
   resources :investigations do
     member do
       post :close

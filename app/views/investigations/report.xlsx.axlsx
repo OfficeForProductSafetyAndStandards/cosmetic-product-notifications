@@ -1,0 +1,56 @@
+book = xlsx_package.workbook
+
+book.add_worksheet name: "Investigations" do |sheet_investigations|
+  sheet_investigations.add_row %w[ID Status Description Assignee Source Severity Products Activities]
+
+  @investigations.each do |investigation|
+    sheet_investigations.add_row [
+      investigation.id,
+      investigation.is_closed? ? "Closed" : "Open",
+      investigation.description,
+      investigation.assignee ? investigation.assignee.email : "Unassigned",
+      investigation.source,
+      investigation.severity,
+      investigation.products.count,
+      investigation.activities.count
+    ]
+  end
+end
+
+book.add_worksheet name: "Products" do |sheet_products|
+  sheet_products.add_row %w[ID GTIN Name Description Model MPN Batch_Number Purchase_URL Brand Source Investigation_ID]
+
+  @investigations.each do |investigation|
+    investigation.products.each do |product|
+      sheet_products.add_row [
+        product.id,
+        product.gtin,
+        product.name,
+        product.description,
+        product.model,
+        product.mpn,
+        product.batch_number,
+        product.purchase_url,
+        product.brand,
+        product.source,
+        investigation.id
+      ]
+    end
+  end
+end
+
+book.add_worksheet name: "Actions" do |sheet_actions|
+  sheet_actions.add_row %w[ID Type Notes Source Investigation_ID]
+
+  @investigations.each do |investigation|
+    investigation.activities.each do |activity|
+      sheet_actions.add_row [
+        activity.id,
+        activity.activity_type ? activity.activity_type.name : "unknown",
+        activity.notes,
+        activity.user ? activity.user.email : "unknown",
+        investigation.id
+      ]
+    end
+  end
+end
