@@ -9,6 +9,7 @@ one:
   batch_number: MyString
   purchase_url: MyString
   brand: MyString
+  source: one
 
 two:
   gtin: MyString
@@ -19,3 +20,4 @@ two:
   batch_number: MyString
   purchase_url: MyString
   brand: MyString
+  source: one

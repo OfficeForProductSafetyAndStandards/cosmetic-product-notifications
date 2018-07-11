@@ -112,7 +112,7 @@ class InvestigationsController < ApplicationController
 
   def create_investigation
     @investigation = Investigation.new(investigation_params)
-    @investigation.source = "Created by #{current_user.email}"
+    @investigation.source = UserSource.new(user: current_user)
   end
 
   def set_investigation

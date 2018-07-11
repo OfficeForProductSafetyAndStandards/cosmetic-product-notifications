@@ -55,7 +55,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       model: @product.model,
       mpn: @product.mpn,
       name: @product.name,
-      purchase_url: @product.purchase_url
+      purchase_url: @product.purchase_url,
     } }
     assert_redirected_to product_url(@product)
   end
