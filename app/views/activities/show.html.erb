@@ -33,7 +33,7 @@
   User
 </h4>
 <p>
-  <%= @activity.user.email %>
+  <%= @activity.user.nil? ? 'none' : @activity.user.email %>
 </p>
 
 <h4 class="heading-small">
