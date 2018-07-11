@@ -15,7 +15,14 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   # GET /products/1.json
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: @product.id
+      end
+    end
+  end
 
   # GET /products/new
   def new

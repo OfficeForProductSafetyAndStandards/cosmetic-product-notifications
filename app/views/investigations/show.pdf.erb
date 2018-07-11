@@ -1,0 +1,57 @@
+<h2>
+  Investigation
+</h2>
+
+<%= image_tag(url_for(@investigation.image), alt: "Investigation") if @investigation.image.attached? %>
+
+<table style="width:100%; text-align:left">
+  <tr>
+    <th>Status</th>
+    <td><%= @investigation.is_closed? ? "Closed" : "Open" %></td>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <td><%= @investigation.description %></td>
+  </tr>
+  <tr>
+    <th>Assignee</th>
+    <td>
+      <%= @investigation.assignee.nil? ? "Unassigned" : @investigation.assignee.email %>
+    </td>
+  </tr>
+  <tr>
+    <th>Source</th>
+    <td><%= @investigation.source %></td>
+  </tr>
+  <tr>
+    <th>Severity</th>
+    <td><%= @investigation.severity %></td>
+  </tr>
+</table>
+
+<% if @investigation.products.any? -%>
+  <h3>Products</h3>
+  <% @investigation.products.each do |product| %>
+    <p><%= link_to product.name, product %></p>
+  <% end %>
+<% end -%>
+
+<% if @investigation.activities.any? -%>
+  <h3>Activities</h3>
+  <table style="width:100%; text-align: left; -webkit-border-horizontal-spacing: 2em;">
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>User</th>
+      <th>Notes</th>
+    </tr>
+    <% @investigation.activities.each do |activity| %>
+      <tr>
+        <td><%= activity.created_at %></td>
+        <td><%= activity.activity_type.titleized_name %></td>
+        <td><%= activity.user.email %></td>
+        <td><%= activity.notes %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end -%>

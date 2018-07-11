@@ -23,6 +23,8 @@ gem "pundit"
 gem "rolify"
 gem "rubocop", require: false
 gem "select2-rails"
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "bootsnap", ">= 1.1.0"

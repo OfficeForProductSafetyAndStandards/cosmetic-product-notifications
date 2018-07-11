@@ -1,0 +1,70 @@
+<h2>
+  Product
+</h2>
+
+<div>
+  <% @product.images.each do |image| %>
+    <%= image_tag(image.url, alt: image.title) %>
+  <% end %>
+</div>
+
+<table style="width:100%; text-align:left">
+  <tr>
+    <th>Product ID</th>
+    <td><%= @product.id %></td>
+  </tr>
+
+  <tr>
+    <th>GTIN (Global Trade Item Number/Barcode)</th>
+    <td><%= @product.gtin %></td>
+  </tr>
+
+  <tr>
+    <th>Name</th>
+    <td><%= @product.name %></td>
+  </tr>
+
+  <tr>
+    <th>Description</th>
+    <td><%= @product.description %></td>
+  </tr>
+
+  <tr>
+    <th>Model</th>
+    <td><%= @product.model %></td>
+  </tr>
+
+  <tr>
+    <th>MPN (Manufacturer Part Number)</th>
+    <td><%= @product.mpn %></td>
+  </tr>
+
+  <tr>
+    <th>Batch number</th>
+    <td><%= @product.batch_number %></td>
+  </tr>
+
+  <tr>
+    <th>Purchase URL</th>
+    <td><%= link_to(@product.purchase_url, @product.purchase_url, target: "_blank") unless @product.purchase_url.nil? %></td>
+  </tr>
+
+  <tr>
+    <th>Brand</th>
+    <td><%= @product.brand %></td>
+  </tr>
+
+  <tr>
+    <th>Source</th>
+    <td><%= @product.source %></td>
+  </tr>
+</table>
+
+<% if @product.investigations.any? -%>
+  <tr>
+    <th>Investigations</th>
+    <% @product.investigations.each do |investigation| %>
+      <td><%= link_to investigation.id, investigation %></td>
+      </tr>
+    <% end %>
+<% end -%>

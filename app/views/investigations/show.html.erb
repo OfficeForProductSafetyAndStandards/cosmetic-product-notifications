@@ -100,6 +100,11 @@
     <%= link_to 'Edit investigation', edit_investigation_path(@investigation), :class => "button" %>
   </div>
 <% end %>
+
+<div class="form-group">
+  <%= link_to 'Create PDF document', investigation_path(@investigation, :format => :pdf) %>
+</div>
+
 <%= link_to 'Back', investigations_path, :class => "link-back" %>
 
 <%= render 'history', versions: @investigation.versions %>

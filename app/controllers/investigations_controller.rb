@@ -11,7 +11,14 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/1
   # GET /investigations/1.json
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: @investigation.id
+      end
+    end
+  end
 
   # GET /investigations/new
   def new
