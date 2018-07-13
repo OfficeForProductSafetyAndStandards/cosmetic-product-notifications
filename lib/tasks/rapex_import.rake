@@ -19,10 +19,9 @@ namespace :data_import do
   # this will delete products even if they are used by an investigation not from RAPEX
   task delete_rapex: :environment do
     RapexImport.all.destroy_all
-    Product.where(source: "Imported from RAPEX").destroy_all
-    destroyed_investigation_ids = Investigation.where(source: "Imported from RAPEX").destroy_all.collect(&:id)
-    InvestigationProduct.where(investigation_id: destroyed_investigation_ids).destroy_all
-    Activity.where(investigation_id: destroyed_investigation_ids).destroy_all
+    Source.where(name: "RAPEX").each do |source|
+      source.sourceable.destroy
+    end
   end
 end
 
@@ -53,7 +52,7 @@ def create_product(notification)
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     brand: brand(notification),
     images: all_pictures(notification),
-    source: "Imported from RAPEX"
+    source: ReportSource.new(name: "RAPEX")
   )
 end
 
@@ -65,7 +64,7 @@ def create_investigation(notification, date)
     severity: field_from_notification(notification, "level") == "Serious Risk" ? 1 : 2,
     created_at: date,
     updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
-    source: "Imported from RAPEX"
+    source: ReportSource.new(name: "RAPEX")
   )
 end
 
@@ -82,7 +81,8 @@ def create_activity(notification, investigation, date)
     activity_type: ActivityType.find_by(name: "notification"),
     created_at: date,
     updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
-    notes: field_from_notification(notification, "measures")
+    notes: field_from_notification(notification, "measures"),
+    source: ReportSource.new(name: "RAPEX")
   )
 end
 

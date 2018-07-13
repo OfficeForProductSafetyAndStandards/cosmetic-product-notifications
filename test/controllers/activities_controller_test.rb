@@ -4,8 +4,9 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:one)
+    sign_in_as_admin
     @activity = activities(:one)
+    @activity.source = sources(:activity_one)
   end
 
   test "should get index" do

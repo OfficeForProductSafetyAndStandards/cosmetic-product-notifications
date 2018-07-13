@@ -71,7 +71,7 @@ class ActivitiesController < ApplicationController
   def create_activity
     investigation = Investigation.find(params[:investigation_id])
     @activity = investigation.activities.create(activity_params)
-    @activity.user = current_user
+    @activity.source = UserSource.new(user: current_user)
   end
 
   # Use callbacks to share common setup or constraints between actions.
