@@ -1,11 +1,6 @@
-language: ruby
-
 sudo: required
 
-language: ruby
-
-# Skip the bundle install
-install: true
+language: generic
 
 services:
   - docker
@@ -16,20 +11,38 @@ branches:
   - staging
   - live
 
+cache:
+  directories:
+    - ~/docker-cache
+    - ~/bundle-cache
+    - ~/npm-cache
+
 jobs:
   include:
   - stage: test
+    before_install:
+      - mkdir -p ~/docker-cache
+      - mkdir -p ~/bundle-cache
+      - mkdir -p ~/npm-cache
+      # Load cached docker images
+      - ls ~/docker-cache/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"
+    install:
+      - docker-compose build
     before_script:
-      - docker -v
-      - docker-compose -v
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d
-      - docker ps -a
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps web echo 'Gems pre-installed'
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
       - sleep 10 # wait for PostgreSQl and Elasticsearch to start
     script: 
-      - docker-compose exec web rubocop
-      - docker-compose exec web rake db:create db:schema:load test
+      - docker-compose exec web bundle exec rubocop
+      - docker-compose exec web bundle exec rake db:create db:schema:load test
     after_script:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
+    before_cache:
+      # Save docker images
+      - mv ~/docker-cache ~/docker-cache-bak
+      - mkdir -p ~/docker-cache
+      - docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}' | xargs -n 2 -t sh -c 'mv ~/docker-cache-bak/$1.tar.gz ~/docker-cache/$1.tar.gz || docker save $0 | gzip -2 > ~/docker-cache/$1.tar.gz'
+      - rm -rf ~/docker-cache-bak
   - stage: deploy-to-int
     if: branch = master AND type != pull_request
     script: SPACE=int ./infrastructure/scripts/deploy.sh
