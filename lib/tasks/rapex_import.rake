@@ -16,26 +16,36 @@ namespace :data_import do
     end
   end
 
+  # this will delete products even if they are used by an investigation not from RAPEX
   task delete_rapex: :environment do
-    pod_product_count = 9000
     RapexImport.all.destroy_all
-    pod_products = Product.last(pod_product_count)
-    Product.where.not(id: pod_products.collect(&:id)).destroy_all
+    Product.where(source: "Imported from RAPEX").destroy_all
+    destroyed_investigation_ids = Investigation.where(source: "Imported from RAPEX").destroy_all.collect(&:id)
+    InvestigationProduct.where(investigation_id: destroyed_investigation_ids).destroy_all
+    Activity.where(investigation_id: destroyed_investigation_ids).destroy_all
   end
 end
 
 def import_report(report)
+  date = Date.strptime(report.xpath("publicationDate").text, "%e/%m/%Y")
   reference = report.xpath("reference").text
   puts "Importing #{reference}"
   url = report.xpath("URL").text.delete("\n")
   notifications(url).each do |notification|
-    create_product notification
+    create_records_from_notification notification, date
   end
 end
 
+def create_records_from_notification(notification, date)
+  investigation = create_investigation notification, date
+  product = create_product notification
+  create_investigation_product investigation, product
+  create_activity notification, investigation, date
+end
+
 def create_product(notification)
-  return false unless (name = name_or_product(notification))
-  Product.create(
+  return nil unless (name = name_or_product(notification))
+  Product.where.not(gtin: "").where(gtin: barcode_from_notification(notification)).first_or_create(
     gtin: barcode_from_notification(notification),
     name: name,
     description: field_from_notification(notification, "description"),
@@ -44,6 +54,35 @@ def create_product(notification)
     brand: brand(notification),
     images: all_pictures(notification),
     source: "Imported from RAPEX"
+  )
+end
+
+# TODO MSPSDS-131: change 'severity' to something more sensible based on requirements
+def create_investigation(notification, date)
+  Investigation.create(
+    description: field_from_notification(notification, "description"),
+    is_closed: true,
+    severity: field_from_notification(notification, "level") == "Serious Risk" ? 1 : 2,
+    created_at: date,
+    updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
+    source: "Imported from RAPEX"
+  )
+end
+
+def create_investigation_product(investigation, product)
+  InvestigationProduct.create(
+    investigation: investigation,
+    product: product
+  )
+end
+
+def create_activity(notification, investigation, date)
+  Activity.create(
+    investigation: investigation,
+    activity_type: ActivityType.find_by(name: "notification"),
+    created_at: date,
+    updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
+    notes: field_from_notification(notification, "measures")
   )
 end
 
