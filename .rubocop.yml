@@ -33,3 +33,6 @@ Metrics/MethodLength:
 
 Layout/EndOfLine:
   EnforcedStyle: lf
+
+Style/CommentAnnotation:
+  Enabled: false

@@ -5,7 +5,7 @@ require "open-uri"
 namespace :data_import do
   desc "Import product data from RAPEX"
   task rapex: :environment do
-    weekly_reports = [rapex_weekly_reports.last]
+    weekly_reports = rapex_weekly_reports
     previously_imported_reports = RapexImport.all
     weekly_reports.reverse_each do |report|
       reference = report.xpath("reference").text
