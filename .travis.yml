@@ -28,7 +28,7 @@ jobs:
 notifications:
   email:
   - anthony.pengelly@softwire.com
-  #- david.broder-rogers@softwire.com
+  - david.broder-rogers@softwire.com
 env:
   global:
   - secure: F8eVV8PG7rO0LLOpVfPd0EB30EHhYtImiYpbqgRCgqJcSoOy1QpjVu1tLSVUQGaOmcJ8Lp8B5eW08v1Al3EUdsAZilPwaT8R5IKdPZ//du+xTUI6EnPAzvOqvs5VBdRrZIDX/gZH8lVHuaxXAdCC0/DXdyInalvK/tlHhViq/EhQj5sHfllnWT7RcuBJD2jlbXHrV2J5Ycq+sU9Wz8agRI3IT4QpAA4RYLBiIY1tsj8mokVZHa4h1XVKGziRXN/+FNf2N8v2MbO1Yjia6QmwhEOeaWxKxI56tG2CvXia1hNI7uqqNmAbjgpybBzCQwsMgCJZ0cL+0yfX8tYS4VDhmOgs3O4Npkj3IR9/6WY0wwiVYAR/GwT8TxNfczutmFwkMA9oHHZFWX0AlLpJTUUpmDadV08EhN9gknPNBCVuTBtpny0TK73vvaaBxc1PMiCU5082dbeocT447d0vaWfitJqAu4Mlq92Vw/6BVafQAx0/bmn5zKTkyNeVPRBq6sW+fwBhHYQdQLiJwlw3K4a08H3SCI7t2JO6jiqrT0VlYUj44ZAd3Xct2xl+RXb92GP2W5hkgnm1I+OmNS4TknTy4IlPlWo1116UeiSEz3R0bldW+jzCbkR+Tfge9NyYEISBXEdgr6NWGpTmuQil/SDCXwAqn71/+aPWDfpAzI2UMB8=
