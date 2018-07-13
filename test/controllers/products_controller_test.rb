@@ -6,6 +6,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in users(:one)
     @product = products(:one)
+    @product.source = sources(:product_one)
     Product.import
   end
 
@@ -55,7 +56,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       model: @product.model,
       mpn: @product.mpn,
       name: @product.name,
-      purchase_url: @product.purchase_url,
+      purchase_url: @product.purchase_url
     } }
     assert_redirected_to product_url(@product)
   end

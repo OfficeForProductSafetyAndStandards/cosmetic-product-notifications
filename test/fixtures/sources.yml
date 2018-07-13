@@ -15,3 +15,11 @@ investigation_one:
 investigation_two:
   type:
   sourceable: two (Investigation)
+
+activity_one:
+  type:
+  sourceable: two (Activity)
+
+activity_two:
+  type:
+  sourceable: two (Activity)

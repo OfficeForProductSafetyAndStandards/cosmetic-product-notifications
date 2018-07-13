@@ -8,6 +8,7 @@ class Investigation < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
 
   accepts_nested_attributes_for :products
+  accepts_nested_attributes_for :source
   accepts_nested_attributes_for :investigation_products, allow_destroy: true
 
   has_paper_trail

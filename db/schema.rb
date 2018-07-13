@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_10_104243) do
+ActiveRecord::Schema.define(version: 2018_07_13_095224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,10 +43,8 @@ ActiveRecord::Schema.define(version: 2018_07_10_104243) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "user_id"
     t.index ["activity_type_id"], name: "index_activities_on_activity_type_id"
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
-    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "activity_types", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -116,7 +114,7 @@ ActiveRecord::Schema.define(version: 2018_07_10_104243) do
     t.string "type"
     t.string "name"
     t.uuid "user_id"
-    t.integer "sourceable_id"
+    t.uuid "sourceable_id"
     t.string "sourceable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -162,7 +160,7 @@ ActiveRecord::Schema.define(version: 2018_07_10_104243) do
 
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
-    t.integer "item_id", null: false
+    t.uuid "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object"
@@ -173,7 +171,6 @@ ActiveRecord::Schema.define(version: 2018_07_10_104243) do
 
   add_foreign_key "activities", "activity_types"
   add_foreign_key "activities", "investigations"
-  add_foreign_key "activities", "users"
   add_foreign_key "images", "products"
   add_foreign_key "investigations", "users", column: "assignee_id"
   add_foreign_key "sources", "users"

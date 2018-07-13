@@ -5,7 +5,7 @@ require "open-uri"
 namespace :data_import do
   desc "Import product data from RAPEX"
   task rapex: :environment do
-    weekly_reports = rapex_weekly_reports
+    weekly_reports = [rapex_weekly_reports.last]
     previously_imported_reports = RapexImport.all
     weekly_reports.reverse_each do |report|
       reference = report.xpath("reference").text
@@ -17,10 +17,10 @@ namespace :data_import do
   end
 
   task delete_rapex: :environment do
-    pod_product_count = 9000
     RapexImport.all.destroy_all
-    pod_products = Product.last(pod_product_count)
-    Product.where.not(id: pod_products.collect(&:id)).destroy_all
+    Source.where(name: "RAPEX").each do |source|
+      source.sourceable.destroy
+    end
   end
 end
 
@@ -43,7 +43,37 @@ def create_product(notification)
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     brand: brand(notification),
     images: all_pictures(notification),
-    source: "Imported from RAPEX"
+    source: ReportSource.new(name: "RAPEX")
+  )
+end
+
+# TODO MSPSDS-131: change 'severity' to something more sensible based on requirements
+def create_investigation(notification, date)
+  Investigation.create(
+    description: field_from_notification(notification, "description"),
+    is_closed: true,
+    severity: field_from_notification(notification, "level") == "Serious Risk" ? 1 : 2,
+    created_at: date,
+    updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
+    source: ReportSource.new(name: "RAPEX")
+  )
+end
+
+def create_investigation_product(investigation, product)
+  InvestigationProduct.create(
+    investigation: investigation,
+    product: product
+  )
+end
+
+def create_activity(notification, investigation, date)
+  Activity.create(
+    investigation: investigation,
+    activity_type: ActivityType.find_by(name: "notification"),
+    created_at: date,
+    updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
+    notes: field_from_notification(notification, "measures"),
+    source: ReportSource.new(name: "RAPEX")
   )
 end
 

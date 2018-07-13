@@ -13,6 +13,7 @@ class Product < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
 
   accepts_nested_attributes_for :images, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :source
 
   has_paper_trail
 end
