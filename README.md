@@ -58,9 +58,9 @@ bundle install
 ```
 
 ## Tests
-You can run the tests with `docker-compose run web rake test`.
+You can run the tests with `docker-compose run web bundle exec rake test`.
 
-You can run the linting with `docker-compose run web rubocop` or simply `rubocop` if you installed ruby locally for the [IDE Setup section](#ide-setup) above.
+You can run the linting with `docker-compose run web bundle exec rubocop` or simply `rubocop` if you installed ruby locally for the [IDE Setup section](#ide-setup) above.
 Running this with the --auto-correct flag set will cause rubocop to attempt to fix as many of the issues as it can.
 
 ## Styles
