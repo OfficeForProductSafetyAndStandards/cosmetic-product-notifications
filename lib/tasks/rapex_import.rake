@@ -16,6 +16,7 @@ namespace :data_import do
     end
   end
 
+  # this will delete products even if they are used by an investigation not from RAPEX
   task delete_rapex: :environment do
     RapexImport.all.destroy_all
     Source.where(name: "RAPEX").each do |source|
@@ -25,17 +26,25 @@ namespace :data_import do
 end
 
 def import_report(report)
+  date = Date.strptime(report.xpath("publicationDate").text, "%e/%m/%Y")
   reference = report.xpath("reference").text
   puts "Importing #{reference}"
   url = report.xpath("URL").text.delete("\n")
   notifications(url).each do |notification|
-    create_product notification
+    create_records_from_notification notification, date
   end
 end
 
+def create_records_from_notification(notification, date)
+  investigation = create_investigation notification, date
+  product = create_product notification
+  create_investigation_product investigation, product
+  create_activity notification, investigation, date
+end
+
 def create_product(notification)
-  return false unless (name = name_or_product(notification))
-  Product.create(
+  return nil unless (name = name_or_product(notification))
+  Product.where.not(gtin: "").where(gtin: barcode_from_notification(notification)).first_or_create(
     gtin: barcode_from_notification(notification),
     name: name,
     description: field_from_notification(notification, "description"),
