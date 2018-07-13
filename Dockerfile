@@ -7,10 +7,13 @@ RUN apt-get update && apt-get install -y \
 
 RUN mkdir /app
 WORKDIR /app
+
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 RUN npm install
+
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
+
 COPY . /app

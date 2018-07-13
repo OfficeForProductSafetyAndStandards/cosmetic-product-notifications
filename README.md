@@ -42,6 +42,8 @@ cd /c/path/to/project
 VS Code is the preferred IDE.
 You should install the recommended extensions when prompted.
 
+Debugging is available by running the `Docker: Attach to Ruby` configuration.
+
 In order to get things like code completion and linting, it's necessary to install ruby locally.
 
 To make managing ruby versions easier, you can use [rbenv](https://github.com/rbenv/rbenv).

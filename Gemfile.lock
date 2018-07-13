@@ -76,6 +76,9 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
+    debase (0.2.2)
+      debase-ruby_core_source (>= 0.10.2)
+    debase-ruby_core_source (0.10.3)
     devise (4.4.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -216,6 +219,8 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-debug-ide (0.6.1)
+      rake (>= 0.8.1)
     ruby-progressbar (1.9.0)
     sass (3.5.6)
       sass-listen (~> 4.0.0)
@@ -286,6 +291,7 @@ DEPENDENCIES
   byebug
   cocoon
   coffee-rails (~> 4.2)
+  debase
   devise
   devise_invitable
   elasticsearch-model
@@ -305,6 +311,7 @@ DEPENDENCIES
   rails (~> 5.2)
   rolify
   rubocop
+  ruby-debug-ide
   sass-rails (~> 5.0)
   select2-rails
   solargraph
