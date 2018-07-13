@@ -1,11 +1,14 @@
 {
     "files.exclude": {
         ".git": true,
-        ".vscode": true,
         "bin/": true,
         "tmp/": true,
         "**/node_modules/": true,
         "**/package-lock.json": true
     },
     "files.autoSave": "onFocusChange",
+    "ruby.lint": {
+        "rubocop": true,
+    },
+    "ruby.format": "rubocop",
 }
