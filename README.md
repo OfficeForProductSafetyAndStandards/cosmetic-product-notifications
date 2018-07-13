@@ -42,7 +42,7 @@ cd /c/path/to/project
 VS Code is the preferred IDE.
 You should install the recommended extensions when prompted.
 
-Debugging is available by running the `Docker: Attach to Ruby` configuration.
+Debugging is available by running `docker-compose up -f docker-compose.yml -f docker-compose.debug.yml` and then the `Docker: Attach to Ruby` configuration in VS Code.
 
 In order to get things like code completion and linting, it's necessary to install ruby locally.
 
