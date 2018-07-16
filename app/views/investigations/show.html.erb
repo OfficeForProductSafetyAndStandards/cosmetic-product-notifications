@@ -58,14 +58,14 @@
     <%= @investigation.assignee.email %>
   <% end %>
 </p>
-<div class="form-group">
+<div class="form-group no-print">
   <%= link_to "Assign", assign_investigation_path(@investigation), :class => "button" if policy(@investigation).update? %>
 </div>
 
 <h4 class="heading-small">
   Source
 </h4>
-<p>
+<p class="break-after">
   <%= @investigation.source %>
 </p>
 
@@ -91,19 +91,21 @@
   <%= link_to "See all", investigation_activities_path(@investigation) %><br /> <br />
 <% end -%>
 
-<div class="form-group">
+<div class="form-group no-print">
   <%= link_to 'Add activity', new_investigation_activity_path(@investigation), :class => "button" %>
 </div>
 
 <% if policy(@investigation).update? %>
-  <div class="form-group">
+  <div class="form-group no-print">
     <%= link_to 'Edit investigation', edit_investigation_path(@investigation), :class => "button" %>
   </div>
 <% end %>
 
-<div class="form-group">
+
+<div class="form-group no-print">
   <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
 </div>
+
 
 <%= link_to 'Back', investigations_path, :class => "link-back" %>
 
