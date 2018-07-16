@@ -13,7 +13,6 @@ branches:
 
 cache:
   directories:
-    - ~/docker-cache
     - ~/bundle-cache
     - ~/npm-cache
 
@@ -21,11 +20,8 @@ jobs:
   include:
   - stage: test
     before_install:
-      - mkdir -p ~/docker-cache
       - mkdir -p ~/bundle-cache
       - mkdir -p ~/npm-cache
-      # Load cached docker images
-      - ls ~/docker-cache/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"
     install:
       - docker-compose build
     before_script:
@@ -37,12 +33,6 @@ jobs:
       - docker-compose exec web bundle exec rake db:create db:schema:load test
     after_script:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
-    before_cache:
-      # Save docker images
-      - mv ~/docker-cache ~/docker-cache-bak
-      - mkdir -p ~/docker-cache
-      - docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}' | xargs -n 2 -t sh -c 'mv ~/docker-cache-bak/$1.tar.gz ~/docker-cache/$1.tar.gz || docker save $0 | gzip -2 > ~/docker-cache/$1.tar.gz'
-      - rm -rf ~/docker-cache-bak
   - stage: deploy-to-int
     if: branch = master AND type != pull_request
     script: SPACE=int ./infrastructure/scripts/deploy.sh
