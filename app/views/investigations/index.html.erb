@@ -41,4 +41,4 @@
 <br />
 <%= will_paginate @investigations %>
 
-<%= link_to "Export as spreadsheet", investigations_report_path(format: :xlsx), method: :post %>
+<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx), method: :get %>

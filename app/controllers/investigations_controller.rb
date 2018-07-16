@@ -6,6 +6,7 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations
   # GET /investigations.json
+  # GET /investigations.xlsx
   def index
     @investigations = Investigation.paginate(page: params[:page], per_page: 20)
   end
@@ -60,16 +61,6 @@ class InvestigationsController < ApplicationController
       @investigation.assignee = assignee
       save_and_respond "Assignee was successfully updated."
       NotifyMailer.assigned_investigation(@investigation, assignee).deliver
-    end
-  end
-
-  # POST /investigations/report
-  def report
-    respond_to do |format|
-      @investigations = Investigation.all
-      format.xlsx do
-        render xlsx: "report", filename: format("%s_report.xlsx", Time.current.strftime("%Y-%m-%d-%H%M%S"))
-      end
     end
   end
 
