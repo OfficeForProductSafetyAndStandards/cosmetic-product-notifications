@@ -23,7 +23,6 @@
     <p>Still checking upload for viruses</p>
   <% elsif @investigation.image.metadata["safe"] %>
     <%= image_tag(url_for(@investigation.image), alt: "Investigation") %>
-    <p>Upload is safe</p>
   <% end %>
 <% end %>
 
