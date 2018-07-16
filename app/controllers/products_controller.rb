@@ -68,7 +68,7 @@ class ProductsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def create_product
     @product = Product.new(product_params)
-    @product.source = "Created by #{current_user.email}"
+    @product.source = UserSource.new(user: current_user)
   end
 
   def set_product
@@ -77,6 +77,9 @@ class ProductsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def product_params
-    params.require(:product).permit(:gtin, :name, :description, :model, :mpn, :batch_number, :purchase_url, :brand)
+    params.require(:product).permit(
+      :gtin, :name, :description, :model, :mpn, :batch_number, :purchase_url, :brand,
+      images_attributes: %i[id title url _destroy]
+    )
   end
 end

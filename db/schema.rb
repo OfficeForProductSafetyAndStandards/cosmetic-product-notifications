@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_03_150147) do
+ActiveRecord::Schema.define(version: 2018_07_13_095224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,16 +43,23 @@ ActiveRecord::Schema.define(version: 2018_07_03_150147) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "user_id"
     t.index ["activity_type_id"], name: "index_activities_on_activity_type_id"
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
-    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "activity_types", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "images", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "title"
+    t.string "url"
+    t.uuid "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_images_on_product_id"
   end
 
   create_table "investigation_products", force: :cascade do |t|
@@ -66,7 +73,6 @@ ActiveRecord::Schema.define(version: 2018_07_03_150147) do
   create_table "investigations", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.text "description"
     t.boolean "is_closed"
-    t.string "source"
     t.integer "severity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -86,7 +92,6 @@ ActiveRecord::Schema.define(version: 2018_07_03_150147) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_url"
-    t.string "source"
   end
 
   create_table "rapex_imports", force: :cascade do |t|
@@ -103,6 +108,17 @@ ActiveRecord::Schema.define(version: 2018_07_03_150147) do
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "sources", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "type"
+    t.string "name"
+    t.uuid "user_id"
+    t.uuid "sourceable_id"
+    t.string "sourceable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -142,8 +158,20 @@ ActiveRecord::Schema.define(version: 2018_07_03_150147) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.uuid "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.text "object_changes"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+  end
+
   add_foreign_key "activities", "activity_types"
   add_foreign_key "activities", "investigations"
-  add_foreign_key "activities", "users"
+  add_foreign_key "images", "products"
   add_foreign_key "investigations", "users", column: "assignee_id"
+  add_foreign_key "sources", "users"
 end

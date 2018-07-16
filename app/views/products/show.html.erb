@@ -18,7 +18,11 @@
   Product
 </h1>
 
-<%= image_tag(@product.image_url, alt: @product.name) unless @product.image_url.nil? %>
+<div class="slider-nav">
+  <% @product.images.each do |image| %>
+    <%= image_tag(image.url, alt: image.title) %>
+  <% end %>
+</div>
 
 <h4 class="heading-small">
   Product ID
@@ -87,7 +91,7 @@
   Source
 </h4>
 <p>
-  <%= @product.source %>
+  <%= @product.source.show %>
 </p>
 
 <% if @product.investigations.any? -%>
@@ -101,3 +105,6 @@
   <%= link_to 'Edit', edit_product_path(@product), :class => "button" %>
 </div>
 <%= link_to 'Back', products_path, :class => "link-back" %>
+
+
+<%= render 'history', versions: @product.versions %>

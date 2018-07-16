@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+product_one:
+  type:
+  sourceable: one (Product)
+
+product_two:
+  type:
+  sourceable: two (Product)
+
+investigation_one:
+  type:
+  sourceable: one (Investigation)
+
+investigation_two:
+  type:
+  sourceable: two (Investigation)
+
+activity_one:
+  type:
+  sourceable: two (Activity)
+
+activity_two:
+  type:
+  sourceable: two (Activity)

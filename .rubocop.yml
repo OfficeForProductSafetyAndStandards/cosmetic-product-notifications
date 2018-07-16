@@ -28,5 +28,12 @@ Style/ClassAndModuleChildren:
 Metrics/LineLength:
     Max: 120
 
+Metrics/MethodLength:
+    Max: 15
+
 Layout/EndOfLine:
   EnforcedStyle: lf
+
+# This allows to have ticket numbers next to a 'TODO'. e.g. "TODO MSPSDS-10: Change this"
+Style/CommentAnnotation:
+  Enabled: False

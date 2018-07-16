@@ -6,6 +6,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_admin
     @investigation = investigations(:one)
+    @investigation.source = sources(:investigation_one)
   end
 
   test "should get index" do
@@ -93,20 +94,5 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
     investigation = Investigation.find(@investigation.id)
     assert investigation.is_closed?
-  end
-
-  private
-
-  def sign_in_as_admin
-    user = users(:one)
-    user.add_role(:user)
-    user.add_role(:admin)
-    sign_in user
-  end
-
-  def sign_in_as_user
-    user = users(:two)
-    user.add_role(:user)
-    sign_in user
   end
 end

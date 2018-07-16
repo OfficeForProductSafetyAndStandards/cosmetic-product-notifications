@@ -73,7 +73,7 @@
   Source
 </h4>
 <p>
-  <%= @investigation.source %>
+  <%= @investigation.source.show %>
 </p>
 
 <h4 class="heading-small">
@@ -108,3 +108,5 @@
   </div>
 <% end %>
 <%= link_to 'Back', investigations_path, :class => "link-back" %>
+
+<%= render 'history', versions: @investigation.versions %>
