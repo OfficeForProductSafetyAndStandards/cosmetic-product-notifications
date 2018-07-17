@@ -22,7 +22,7 @@
   <% if @investigation.image.metadata["safe"].nil? %>
     <p>Still checking upload for viruses</p>
   <% elsif @investigation.image.metadata["safe"] %>
-    <%= image_tag(url_for(@investigation.image), alt: "Investigation") %>
+    <%= image_tag @investigation.image.variant(resize: "100x100"), alt: "Investigation" %>
   <% end %>
 <% end %>
 
