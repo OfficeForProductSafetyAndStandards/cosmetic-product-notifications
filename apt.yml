@@ -1,0 +1,4 @@
+---
+packages:
+- clamav
+- clamav-daemon

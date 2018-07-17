@@ -18,7 +18,13 @@
   Investigation
 </h1>
 
-<%= image_tag(url_for(@investigation.image), alt: "Investigation") if @investigation.image.attached? %>
+<%  if @investigation.image.attached? %>
+  <% if @investigation.image.metadata["safe"].nil? %>
+    <p>Still checking upload for viruses</p>
+  <% elsif @investigation.image.metadata["safe"] %>
+    <%= image_tag(url_for(@investigation.image), alt: "Investigation") %>
+  <% end %>
+<% end %>
 
 <h4 class="heading-small">
   Status
