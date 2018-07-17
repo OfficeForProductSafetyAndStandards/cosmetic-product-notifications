@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   db:
     image: postgres
@@ -12,17 +13,19 @@ services:
       - elasticsearch-volume:/usr/share/elasticsearch/data
   web:
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
+      - bundle-cache:/usr/local/bundle
+      - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}:/app
-    ports:
-      - "3000:3000"
     environment:
       - NOTIFY_API_KEY=$NOTIFY_API_KEY
     depends_on:
       - db
       - elasticsearch
+
 volumes:
   postgres-volume:
   elasticsearch-volume:
+  bundle-cache:
+  npm-cache:
