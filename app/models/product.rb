@@ -10,8 +10,10 @@ class Product < ApplicationRecord
   has_many :investigation_products, dependent: :destroy
   has_many :investigations, through: :investigation_products
   has_many :images, dependent: :destroy, inverse_of: :product
+  has_one :source, as: :sourceable, dependent: :destroy
 
   accepts_nested_attributes_for :images, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :source
 
   has_paper_trail
 end

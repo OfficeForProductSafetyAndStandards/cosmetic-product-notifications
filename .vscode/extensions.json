@@ -4,8 +4,9 @@
 	"recommendations": [
 		// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
 		"PeterJausovec.vscode-docker",
+		"yzhang.markdown-all-in-one",
 		"rebornix.ruby",
-		"misogi.ruby-rubocop",
-		"vortizhe.simple-ruby-erb"
+		"castwide.solargraph",
+		"vortizhe.simple-ruby-erb",
 	]
 }

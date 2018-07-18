@@ -1,9 +1,9 @@
 class ActivityPolicy < ApplicationPolicy
   def update?
-    @user.has_role?(:admin) || @user == @record.user
+    @record.source.type != "user" || @user.has_role?(:admin) || @user == @record.source.user
   end
 
   def destroy?
-    @user.has_role?(:admin) || @user == @record.user
+    @record.source.type != "user" || @user.has_role?(:admin) || @user == @record.source.user
   end
 end

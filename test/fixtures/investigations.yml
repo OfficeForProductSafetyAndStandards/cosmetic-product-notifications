@@ -3,11 +3,9 @@
 one:
   description: MyText
   is_closed: false
-  source: MyString
   severity: 1
 
 two:
   description: MyText
   is_closed: false
-  source: MyString
   severity: 1
