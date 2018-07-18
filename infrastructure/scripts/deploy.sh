@@ -31,7 +31,6 @@ cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o "beis-mspsds" 
 
 # v3-push is in an experimental stage so could break
 cf v3-push $HOSTNAME \
-  -b https://github.com/cloudfoundry/apt-buildpack.git \
   -b nodejs_buildpack \
   -b ruby_buildpack
 # Run the migrations
