@@ -9,7 +9,7 @@ book.add_worksheet name: "Investigations" do |sheet_investigations|
       investigation.is_closed? ? "Closed" : "Open",
       investigation.description,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
-      investigation.source,
+      investigation.source.show,
       investigation.severity,
       investigation.products.count,
       investigation.activities.count
@@ -32,7 +32,7 @@ book.add_worksheet name: "Products" do |sheet_products|
         product.batch_number,
         product.purchase_url,
         product.brand,
-        product.source,
+        product.source.show,
         investigation.id
       ]
     end
@@ -48,7 +48,7 @@ book.add_worksheet name: "Actions" do |sheet_actions|
         activity.id,
         activity.activity_type ? activity.activity_type.name : "unknown",
         activity.notes,
-        activity.user ? activity.user.email : "unknown",
+        activity.source.show,
         investigation.id
       ]
     end

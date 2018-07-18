@@ -334,8 +334,8 @@ DEPENDENCIES
   rails (~> 5.2)
   rolify
   rubocop
-  rubyzip (>= 1.2.1)
   ruby-debug-ide
+  rubyzip (>= 1.2.1)
   sass-rails (~> 5.0)
   select2-rails
   solargraph

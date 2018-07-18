@@ -21,7 +21,7 @@
   </tr>
   <tr>
     <th>Source</th>
-    <td><%= @investigation.source %></td>
+    <td><%= @investigation.source.show %></td>
   </tr>
   <tr>
     <th>Severity</th>
@@ -42,14 +42,14 @@
     <tr>
       <th>Date</th>
       <th>Type</th>
-      <th>User</th>
+      <th>Source</th>
       <th>Notes</th>
     </tr>
     <% @investigation.activities.each do |activity| %>
       <tr>
         <td><%= activity.created_at %></td>
         <td><%= activity.activity_type.titleized_name %></td>
-        <td><%= activity.user.email %></td>
+        <td><%= activity.source.show %></td>
         <td><%= activity.notes %></td>
       </tr>
     <% end %>
