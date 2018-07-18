@@ -3,3 +3,25 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import 'slick';
 @import 'slick-theme';
+@media print
+{
+    #pager,
+    form,
+    .no-print
+    {
+        display: none !important;
+        height: 0;
+    }
+    #pager,
+    form,
+    .no-print
+    {
+        page-break-before: always;
+    }
+
+    #pager,
+    form,
+    .break-after { 
+        page-break-after: always;
+      }
+    }

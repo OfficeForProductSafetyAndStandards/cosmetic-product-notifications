@@ -1,17 +1,26 @@
 class InvestigationsController < ApplicationController
+  include InvestigationsHelper
   before_action :authenticate_user!
   before_action :set_investigation, only: %i[show edit update destroy close reopen assign update_assignee]
   before_action :create_investigation, only: %i[create]
 
   # GET /investigations
   # GET /investigations.json
+  # GET /investigations.xlsx
   def index
     @investigations = Investigation.paginate(page: params[:page], per_page: 20)
   end
 
   # GET /investigations/1
   # GET /investigations/1.json
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: @investigation.id
+      end
+    end
+  end
 
   # GET /investigations/new
   def new

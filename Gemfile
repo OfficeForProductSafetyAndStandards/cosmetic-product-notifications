@@ -25,6 +25,12 @@ gem "pundit"
 gem "rolify"
 gem "select2-rails"
 
+gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c8ac844"
+gem "axlsx_rails"
+gem "rubyzip", ">= 1.2.1"
+gem "wicked_pdf"
+gem "wkhtmltopdf-binary"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "bootsnap", ">= 1.1.0"
 gem "rails", "~> 5.2"

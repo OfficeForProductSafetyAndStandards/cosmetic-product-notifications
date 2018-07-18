@@ -101,10 +101,16 @@
   <% end %>
 <% end -%>
 
-<div class="form-group">
+<div class="form-group no-print">
   <%= link_to 'Edit', edit_product_path(@product), :class => "button" %>
 </div>
-<%= link_to 'Back', products_path, :class => "link-back" %>
 
+<div class="form-group no-print">
+  <%= link_to 'Create PDF document', product_path(@product, :format => :pdf) %>
+</div>
+
+<div class="form-group no-print">
+  <%= link_to 'Back', products_path, :class => "link-back" %>
+</div>
 
 <%= render 'history', versions: @product.versions %>
