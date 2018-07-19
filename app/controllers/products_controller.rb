@@ -6,11 +6,13 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = if params[:q].blank?
-                  Product.paginate(page: params[:page], per_page: 20)
-                else
-                  Product.search(params[:q]).paginate(page: params[:page], per_page: 20).records
-                end
+    @products = search_for_products
+  end
+
+  # GET /table
+  def table
+    @products = search_for_products
+    render partial: "table"
   end
 
   # GET /products/1
@@ -71,6 +73,14 @@ class ProductsController < ApplicationController
   end
 
   private
+
+  def search_for_products
+    if params[:q].blank?
+      Product.paginate(page: params[:page], per_page: 20)
+    else
+      Product.search(params[:q]).paginate(page: params[:page], per_page: 20).records
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def create_product

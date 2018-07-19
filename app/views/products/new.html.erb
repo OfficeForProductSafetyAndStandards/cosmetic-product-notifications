@@ -1,21 +1,29 @@
 <% content_for :page_title, "New product - Market Surveillance & Product Safety" %>
+<div class="new-product-page">
+    <div class="breadcrumbs">
+        <ol role="breadcrumbs">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <%= link_to 'Products', products_path %>
+            </li>
+            <li>
+                <%= link_to 'New', new_product_path %>
+            </li>
+        </ol>
+    </div>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Products', products_path %>
-        </li>
-        <li>
-            <%= link_to 'New', new_product_path %>
-        </li>
-    </ol>
+    <h1 class="heading-xlarge">New product</h1>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <%= render 'form', product: @product %>
+        </div>
+        <div class="column-third">
+            <h2 class="heading-medium">Have you seen these products?</h2>
+            <div id="suggested-products"></div>
+        </div>
+    </div>
+
+    <%= link_to 'Back', products_path, :class => "link-back" %>
 </div>
-
-<h1 class="heading-xlarge">New product</h1>
-
-<%= render 'form', product: @product %>
-
-<%= link_to 'Back', products_path, :class => "link-back" %>
