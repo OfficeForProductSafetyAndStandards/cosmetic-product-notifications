@@ -16,12 +16,14 @@
 
     <h1 class="heading-xlarge">New product</h1>
     <div class="grid-row">
-        <div class="column-two-thirds">
+        <div class="column-half">
             <%= render 'form', product: @product %>
         </div>
-        <div class="column-third">
+        <div class="column-half">
             <h2 class="heading-medium">Have you seen these products?</h2>
-            <div id="suggested-products"></div>
+            <div id="suggested-products">
+                Start filling in the form for suggestions.
+            </div>
         </div>
     </div>
 
