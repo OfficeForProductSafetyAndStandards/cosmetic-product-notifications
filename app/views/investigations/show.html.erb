@@ -1,118 +1,148 @@
 <% content_for :page_title, "View investigation - Market Surveillance & Product Safety" %>
-
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Investigations', investigations_path %>
-        </li>
-        <li>
-            <%= link_to 'View', @investigation %>
-        </li>
-    </ol>
-</div>
-
-<h1 class="heading-xlarge">
-  Investigation
-</h1>
-
-<%  if @investigation.image.attached? %>
-  <% if @investigation.image.metadata["safe"].nil? %>
-    <p>Still checking upload for viruses</p>
-  <% elsif @investigation.image.metadata["safe"] %>
-    <%= image_tag @investigation.image.variant(resize: "100x100"), alt: "Investigation" %>
-  <% end %>
-<% end %>
-
-<h4 class="heading-small">
-  Status
-</h4>
-<p>
-  <%= @investigation.is_closed? ? "Closed" : "Open" %>
-</p>
-
-<% if @investigation.is_closed? && policy(@investigation).reopen? %>
-  <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
-    <div class="form-group">
-      <%= form.submit "Reopen", :class => "button" %>
-    </div>
-  <% end %>
-<% elsif !@investigation.is_closed? %>
-  <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
-    <div class="form-group">
-      <%= form.submit "Close", :class => "button-warning", data: { confirm: "Are you sure?" } %>
-    </div>
-  <% end %>
-<% end %>
-
-<h4 class="heading-small">
-  Description
-</h4>
-<p>
-  <%= @investigation.description %>
-</p>
-
-<h4 class="heading-small">
-  Assignee
-</h4>
-<p>
-  <% if @investigation.assignee.nil? %>
-    Unassigned
-  <% else %>
-    <%= @investigation.assignee.email %>
-  <% end %>
-</p>
-<div class="form-group no-print">
-  <%= link_to "Assign", assign_investigation_path(@investigation), :class => "button" if policy(@investigation).update? %>
-</div>
-
-<h4 class="heading-small">
-  Source
-</h4>
-<p class="break-after">
-  <%= @investigation.source.show %>
-</p>
-
-<h4 class="heading-small">
-  Severity
-</h4>
-<p>
-  <%= @investigation.severity %>
-</p>
-
-<% if @investigation.products.any? -%>
-  <h4 class="heading-small">Products</h4>
-  <% @investigation.products.each do |product| %>
-    <p><%= link_to product.name, product %></p>
-  <% end %>
-<% end -%>
-
-<% if @investigation.activities.any? -%>
-  <h4 class="heading-small">Activities</h4>
-  <% @investigation.activities.limit(5).each do |activity| %>
-    <p><%= link_to "#{activity.created_at} - #{activity.activity_type.titleized_name}", activity %></p>
-  <% end %>
-  <%= link_to "See all", investigation_activities_path(@investigation) %><br /> <br />
-<% end -%>
-
-<div class="form-group no-print">
-  <%= link_to 'Add activity', new_investigation_activity_path(@investigation), :class => "button" %>
-</div>
-
-<% if policy(@investigation).update? %>
-  <div class="form-group no-print">
-    <%= link_to 'Edit investigation', edit_investigation_path(@investigation), :class => "button" %>
+<div class="show-investigation">
+  <div class="breadcrumbs">
+      <ol role="breadcrumbs">
+          <li>
+              <a href="/">Home</a>
+          </li>
+          <li>
+              <%= link_to 'Investigations', investigations_path %>
+          </li>
+          <li>
+              <%= link_to 'View', @investigation %>
+          </li>
+      </ol>
   </div>
-<% end %>
 
+  <div class="grid-row">
+    <div class="column-third">
+      <p>
+        <%= link_to 'Back to list', investigations_path, :class => "link-back" %>
+      </p>
+    </div>
+    <div class="column-third">
+      <p>
+        <% if @investigation.assignee.nil? %>
+          Unassigned
+        <% else %>
+          Assigned to <%= @investigation.assignee.email %>
+        <% end %>
+      </p>
+    </div>
+    <div class="column-third">
+      <p>
+        Status <%= @investigation.is_closed? ? "Closed" : "Open" %>
+      </p>
+    </div>
+  </div>
 
-<div class="form-group no-print">
-  <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
+  <div class="grid-row">
+    <div class="column-third dummy-column"></div>
+    <div class="column-third">
+      <div class="form-group no-print">
+        <%= link_to "Assign", assign_investigation_path(@investigation), :class => "button" if policy(@investigation).update? %>
+      </div>
+    </div>
+    <div class="column-third">
+      <% if @investigation.is_closed? && policy(@investigation).reopen? %>
+        <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
+          <div class="form-group no-print">
+            <%= form.submit "Reopen", :class => "button" %>
+          </div>
+        <% end %>
+      <% elsif !@investigation.is_closed? %>
+        <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
+          <div class="form-group no-print">
+            <%= form.submit "Close", :class => "button-warning", data: { confirm: "Are you sure?" } %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h1 class="heading-large">
+        TODO Title
+      </h1>
+      <h2 class="heading-small">Product safety Investigation ID:<br /><%= @investigation.id %></h2>
+      <p>Created: <%= @investigation.created_at.to_s :long_ordinal %></p>
+      <p>Risk notes: TODO</p>
+      <p>Source: <%= @investigation.source.show %></p>
+      <p>Severity: <%= @investigation.severity %></p>
+      <p><%= @investigation.description %></p>
+      <%= link_to 'Edit details', edit_investigation_path(@investigation), :class => "no-print" %>
+    </div>
+  </div>
+
+  <% if @investigation.products.any? %>
+    <% @investigation.products.each do |product| %>
+      <div class="grid-row">
+        <div class="column-two-thirds">
+          <h2 class="heading-small sub-heading">
+            Product details
+          </h2>
+          <p>Category: TODO</p>
+          <p>Name: <%= product.name %></p>
+          <p>Brand: <%= product.brand %></p>
+          <p>Type / number of model: <%= product.model %></p>
+          <p>Barcode (GTIN): <%= product.gtin %></p>
+          <p>Associated parts or components: TODO</p>
+          <%= link_to 'Edit details', edit_product_path(product), :class => "no-print" %>
+        </div>
+        <div class="column-third">
+          <h2 class="heading-small sub-heading">
+            Images
+          </h2>
+          <% if product.images.any? %>
+            <%= image_tag(product.images[0].url, alt: product.images[0].title, :class => "product-image") %>
+            <%= link_to "View images (#{product.images.size})", product_path(product), :class => "no-print" %>
+          <% else %>
+            <p>No images.</p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h2 class="heading-small sub-heading">
+        Case activity
+      </h2>
+    </div>
+    <div class="column-two-thirds">
+      <% @investigation.activities.limit(3).each do |activity| %>
+        <div class="activity">
+          <p>
+            <em><%= activity.activity_type.titleized_name %></em>
+            by
+            <%= activity.source.show %>
+            on
+            <%= activity.created_at.to_s :long_ordinal %>
+          </p>
+          <p>Notes: <%= activity.notes %></p>
+        </div>
+      <% end %>
+      <%= link_to "+ View more activity", investigation_activities_path(@investigation) %>
+      <br /><br />
+      <div class="form-group no-print">
+        <%= link_to 'Add activity', new_investigation_activity_path(@investigation), :class => "button" %>
+      </div>
+    </div>
+    <div class="column-third">
+      <% if @investigation.image.attached? && @investigation.image.image? %>
+        <% if @investigation.image.metadata["safe"].nil? %>
+          <p>Still checking upload for viruses</p>
+        <% elsif @investigation.image.metadata["safe"] %>
+          <%= image_tag @investigation.image.variant(resize: "300x300"), alt: "Investigation", :class => "case-image" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group no-print">
+    <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
+  </div>
+
+  <%= render 'history', versions: @investigation.versions %>
 </div>
-
-
-<%= link_to 'Back', investigations_path, :class => "link-back" %>
-
-<%= render 'history', versions: @investigation.versions %>
