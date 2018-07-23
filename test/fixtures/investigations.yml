@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  title: MyText
   description: MyText
   is_closed: false
-  severity: 1
 
 two:
+  title: MyText
   description: MyText
   is_closed: false
-  severity: 1
