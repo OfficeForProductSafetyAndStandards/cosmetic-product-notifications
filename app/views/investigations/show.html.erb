@@ -62,13 +62,12 @@
   <div class="grid-row">
     <div class="column-two-thirds">
       <h1 class="heading-large">
-        TODO Title
+        <%= @investigation.title %>
       </h1>
       <h2 class="heading-small">Product safety Investigation ID:<br /><%= @investigation.id %></h2>
       <p>Created: <%= @investigation.created_at.to_s :long_ordinal %></p>
-      <p>Risk notes: TODO</p>
+      <p>Risk notes: <%= @investigation.risk_notes %></p>
       <p>Source: <%= @investigation.source.show %></p>
-      <p>Severity: <%= @investigation.severity %></p>
       <p><%= @investigation.description %></p>
       <%= link_to 'Edit details', edit_investigation_path(@investigation), :class => "no-print" %>
     </div>
