@@ -55,9 +55,11 @@ Once rbenv is installed, run the following commands:
 
 ### Debugging
 
-If using VS Code, debugging is available by running `docker-compose up -f docker-compose.yml -f docker-compose.debug.yml` and then the `Docker: Attach to Ruby` configuration in VS Code.
+If using VS Code, debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up` and then the `Docker: Attach to Ruby` configuration in VS Code.
 
 You can access the [rails console](https://guides.rubyonrails.org/command_line.html#rails-console) using `docker-compose exec web bin/rails console`.
+
+If your Docker VM uses an IP other than `localhost`, you will need to change the `remoteHost` property in `launch.json` (accessed by clicking the cog icon next to the debug configuration in VS Code).
 
 
 ## Tests
