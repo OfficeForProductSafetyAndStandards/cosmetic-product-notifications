@@ -7,7 +7,7 @@ namespace :data_import do
   task rapex: :environment do
     weekly_reports = rapex_weekly_reports
     previously_imported_reports = RapexImport.all
-    weekly_reports[0..2].reverse_each do |report|
+    weekly_reports.reverse_each do |report|
       reference = report.xpath("reference").text
       unless imported_reports_contains_reference(previously_imported_reports, reference)
         import_report(report)
