@@ -59,6 +59,8 @@ Create the app using the current repository
 
     # Add API key created in Notify
     cf set-env mspsds-int NOTIFY_API_KEY XXX
+    # Add API key created in Companies house
+    cf set-env mspsds-int COMPANIES_HOUSE_API+KEY XXX
 
     # Add host for email links
     cf set-env mspsds-int MSPSDS_HOST "mspsds-int.cloudapps.digital"
