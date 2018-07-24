@@ -78,9 +78,10 @@ class ProductsController < ApplicationController
   # If the user supplies a barcode and it matches, then just return that.
   # Otherwise use the general query param
   def advanced_product_search
-    products = search_for_gtin
-    products = search_for_products if products.blank? && params[:q].present?
-    products
+    gtin_search_results = search_for_gtin if params[:gtin].present?
+    # if there was no GTIN param or there were no results for the GTIN search
+    basic_search_results = search_for_products if gtin_search_results.blank? && params[:q].present?
+    basic_search_results || gtin_search_results || []
   end
 
   def search_for_products
@@ -92,8 +93,8 @@ class ProductsController < ApplicationController
   end
 
   def search_for_gtin
-    params[:gtin].present? && Product.search(query: { match: { gtin: params[:gtin] } })
-                                     .paginate(page: params[:page], per_page: 20).records
+    Product.search(query: { match: { gtin: params[:gtin] } })
+           .paginate(page: params[:page], per_page: 20).records
   end
 
   # Use callbacks to share common setup or constraints between actions.

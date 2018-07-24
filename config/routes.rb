@@ -8,8 +8,13 @@ Rails.application.routes.draw do
     end
     resources :activities, shallow: true
   end
-  get "/products/table" => "products#table"
-  resources :products
+
+  resources :products do
+    collection do
+      get :table
+    end
+  end
+
   devise_for :users, controllers: { invitations: "invitations" }
   resources :users
 

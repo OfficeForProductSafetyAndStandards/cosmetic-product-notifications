@@ -39,7 +39,6 @@ function buildQuery() {
         })
         .get()
         .filter(function(searchTerm) {
-            console.log(searchTerm);
             return searchTerm;
         })
         .map(function(searchTerm) {
