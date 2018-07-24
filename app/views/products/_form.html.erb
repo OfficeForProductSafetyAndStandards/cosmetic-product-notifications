@@ -13,12 +13,17 @@
 
   <div class="form-group">
     <%= form.label :gtin, "GTIN (Global Trade Item Number/Barcode)", :class => "form-label" %>
-    <%= form.text_field :gtin, :class => "form-control" %>
+    <%= form.text_field :gtin, :class => "form-control search-term", id: "gtin-input" %>
   </div>
 
   <div class="form-group">
     <%= form.label :name, :class => "form-label" %>
-    <%= form.text_field :name, :class => "form-control" %>
+    <%= form.text_field :name, :class => "form-control search-term" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :brand, :class => "form-label" %>
+    <%= form.text_field :brand, :class => "form-control search-term" %>
   </div>
 
   <div class="form-group">
@@ -44,11 +49,6 @@
   <div class="form-group">
     <%= form.label :purchase_url, "Purchase URL", :class => "form-label" %>
     <%= form.text_field :purchase_url, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :brand, :class => "form-label" %>
-    <%= form.text_field :brand, :class => "form-control" %>
   </div>
 
   <div class="form-group">
