@@ -1,0 +1,21 @@
+<% content_for :page_title, "New business - Market Surveillance & Product Safety" %>
+
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to 'Businesses', businesses_path %>
+        </li>
+        <li>
+            <%= link_to 'New', new_business_path %>
+        </li>
+    </ol>
+</div>
+
+<h1 class="heading-xlarge">New Business</h1>
+
+<%= render 'form', business: @business %>
+
+<%= link_to 'Back', businesses_path, :class => "link-back" %>

@@ -1,0 +1,62 @@
+<%= form_with(model: business, local: true) do |form| %>
+  <% if business.errors.any? %>
+    <div id="error_explanation">
+      <h2 class="heading-large"><%= pluralize(business.errors.count, "error") %> prohibited this business from being saved:</h2>
+
+      <ul>
+      <% business.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :company_name, :class => "form-label" %>
+    <%= form.text_field :company_name, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :company_type, :class => "form-label" %>
+    <%= form.text_field :company_type, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :registered_office_address_line_1, :class => "form-label" %>
+    <%= form.text_field :registered_office_address_line_1, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :registered_office_address_line_2, :class => "form-label" %>
+    <%= form.text_field :registered_office_address_line_2, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :registered_office_address_locality, :class => "form-label" %>
+    <%= form.text_field :registered_office_address_locality, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :registered_office_address_country, :class => "form-label" %>
+    <%= form.text_field :registered_office_address_country, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :registered_office_address_postal_code, :class => "form-label" %>
+    <%= form.text_field :registered_office_address_postal_code, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :nature_of_business_id, :class => "form-label" %>
+    <%= form.text_field :nature_of_business_id, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :additional_information, :class => "form-label" %>
+    <%= form.text_area :additional_information, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit "Save business", :class => "button" %>
+  </div>
+<% end %>

@@ -1,0 +1,65 @@
+<% content_for :page_title, "View business - Market Surveillance & Product Safety" %>
+
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to 'Businesses', businesses_path %>
+        </li>
+        <li>
+            <%= link_to 'View', @business %>
+        </li>
+    </ol>
+</div>
+
+<h1 class="heading-xlarge">
+  <%= @business.company_name %>
+</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Companies house number</td>
+      <td><%= @business.company_number %></td>
+    </tr>
+    <tr>
+      <td>Company type</td>
+      <td><%= @business.company_type %></td>
+    </tr>
+    <tr>
+      <td>Registered address</td>
+      <td>
+        <%= @business.registered_office_address_line_1 %><br />
+        <%= @business.registered_office_address_line_2 %><br />
+        <%= @business.registered_office_address_locality %><br />
+        <%= @business.registered_office_address_country %><br />
+        <%= @business.registered_office_address_postal_code %>
+      </td>
+    </tr>
+    <tr>
+      <td>Nature of business (SIC)</td>
+      <td><%= @business.nature_of_business_id %></td>
+    </tr>
+    <tr>
+      <td>Additional information</td>
+      <td><%= @business.additional_information %></td>
+    </tr>
+    <tr>
+      <td>Source</td>
+      <td><%= @business.source.show %></td>
+    </tr>
+  </tbody>
+</table>
+<br /><br />
+
+<div class="form-group no-print">
+  <%= link_to 'Edit', edit_business_path(@business), :class => "button" %>
+</div>
+
+<div class="form-group no-print">
+  <%= link_to 'Back', businesses_path, :class => "link-back" %>
+</div>
+
+<%= render 'history', versions: @business.versions %>

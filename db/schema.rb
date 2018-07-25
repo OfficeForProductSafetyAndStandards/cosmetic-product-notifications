@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_095224) do
+ActiveRecord::Schema.define(version: 2018_07_25_135423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,21 @@ ActiveRecord::Schema.define(version: 2018_07_13_095224) do
 
   create_table "activity_types", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "businesses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "company_number"
+    t.string "company_name", null: false
+    t.string "company_type"
+    t.string "registered_office_address_line_1"
+    t.string "registered_office_address_line_2"
+    t.string "registered_office_address_locality"
+    t.string "registered_office_address_country"
+    t.string "registered_office_address_postal_code"
+    t.string "nature_of_business_id"
+    t.text "additional_information"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :businesses
   resources :investigations do
     member do
       post :close
