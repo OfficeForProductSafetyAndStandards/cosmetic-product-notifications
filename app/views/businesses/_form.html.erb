@@ -18,7 +18,11 @@
 
   <div class="form-group">
     <%= form.label :company_type_code, :class => "form-label" %>
-    <%= form.text_field :company_type_code, :class => "form-control" %>
+    <%= form.select :company_type_code,
+      Rails.application.config.companies_house_constants["company_type"].collect {|t| [t[1], t[0]]},
+      {},
+      {:class => "form-control" }
+    %>
   </div>
 
   <div class="form-group">
@@ -48,7 +52,11 @@
 
   <div class="form-group">
     <%= form.label :nature_of_business_id, :class => "form-label" %>
-    <%= form.text_field :nature_of_business_id, :class => "form-control" %>
+    <%= form.select :nature_of_business_id,
+      Rails.application.config.companies_house_constants["sic_descriptions"].collect {|s| [s[1], s[0]]},
+      {},
+      {:class => "form-control" }
+    %>
   </div>
 
   <div class="form-group">
