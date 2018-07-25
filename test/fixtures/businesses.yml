@@ -3,7 +3,7 @@
 one:
   company_number: MyString
   company_name: MyString
-  company_type: MyString
+  company_type_code: MyString
   registered_office_address_line_1: MyString
   registered_office_address_line_2: MyString
   registered_office_address_locality: MyString
@@ -15,7 +15,7 @@ one:
 two:
   company_number: MyString
   company_name: MyString
-  company_type: MyString
+  company_type_code: MyString
   registered_office_address_line_1: MyString
   registered_office_address_line_2: MyString
   registered_office_address_locality: MyString

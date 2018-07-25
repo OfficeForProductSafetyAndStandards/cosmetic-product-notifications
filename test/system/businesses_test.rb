@@ -17,7 +17,7 @@ class BusinessesTest < ApplicationSystemTestCase
     fill_in "Additional Information", with: @business.additional_information
     fill_in "Company Name", with: @business.company_name
     fill_in "Company Number", with: @business.company_number
-    fill_in "Company Type", with: @business.company_type
+    fill_in "Company Type", with: @business.company_type_code
     fill_in "Nature Of Business", with: @business.nature_of_business_id
     fill_in "Registered Office Address Country", with: @business.registered_office_address_country
     fill_in "Registered Office Address Line 1", with: @business.registered_office_address_line_1
@@ -37,7 +37,7 @@ class BusinessesTest < ApplicationSystemTestCase
     fill_in "Additional Information", with: @business.additional_information
     fill_in "Company Name", with: @business.company_name
     fill_in "Company Number", with: @business.company_number
-    fill_in "Company Type", with: @business.company_type
+    fill_in "Company Type", with: @business.company_type_code
     fill_in "Nature Of Business", with: @business.nature_of_business_id
     fill_in "Registered Office Address Country", with: @business.registered_office_address_country
     fill_in "Registered Office Address Line 1", with: @business.registered_office_address_line_1

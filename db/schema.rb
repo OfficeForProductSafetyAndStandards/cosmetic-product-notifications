@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2018_07_25_135423) do
   create_table "businesses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "company_number"
     t.string "company_name", null: false
-    t.string "company_type"
+    t.string "company_type_code"
     t.string "registered_office_address_line_1"
     t.string "registered_office_address_line_2"
     t.string "registered_office_address_locality"

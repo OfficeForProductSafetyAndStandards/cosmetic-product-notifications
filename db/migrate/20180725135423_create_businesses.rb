@@ -3,7 +3,7 @@ class CreateBusinesses < ActiveRecord::Migration[5.2]
     create_table :businesses, id: :uuid, default: "uuid_generate_v4()" do |t|
       t.string :company_number
       t.string :company_name, null: false
-      t.string :company_type
+      t.string :company_type_code
       t.string :registered_office_address_line_1
       t.string :registered_office_address_line_2
       t.string :registered_office_address_locality
