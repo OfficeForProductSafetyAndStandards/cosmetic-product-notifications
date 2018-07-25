@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_095224) do
+ActiveRecord::Schema.define(version: 2018_07_23_103012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,10 +73,11 @@ ActiveRecord::Schema.define(version: 2018_07_13_095224) do
   create_table "investigations", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.text "description"
     t.boolean "is_closed"
-    t.integer "severity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "assignee_id"
+    t.string "title", null: false
+    t.text "risk_notes"
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
 
