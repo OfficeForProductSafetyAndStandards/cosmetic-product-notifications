@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2018_07_23_103012) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "assignee_id"
-    t.string "title", default: "Investigation", null: false
+    t.string "title", null: false
     t.text "risk_notes"
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end

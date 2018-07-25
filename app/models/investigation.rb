@@ -1,4 +1,5 @@
 class Investigation < ApplicationRecord
+  validates :title, presence: true
   default_scope { order(updated_at: :desc) }
   has_many :investigation_products, dependent: :destroy
   has_many :products, through: :investigation_products
