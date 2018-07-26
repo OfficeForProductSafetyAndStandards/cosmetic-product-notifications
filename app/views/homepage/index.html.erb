@@ -9,7 +9,7 @@
             <%= link_to "Investigations", "/investigations", :class => "button button-start" %><br /><br />
             <%= link_to "Businesses", "/businesses", :class => "button button-start" %><br /><br />
             <%= render 'layouts/login_buttons' %><br /><br />
-            <% if signed_in? && policy(User).index? %>
+            <% if user_signed_in? && policy(User).index? %>
                 <p>You're an admin, this means that you can also</p>
                 <%= link_to "Edit users", "/users", :class => "button" %>
             <% end %>
