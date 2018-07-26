@@ -36,14 +36,14 @@ def import_report(report)
 end
 
 def create_records_from_notification(notification, date)
-  investigation = create_investigation notification, date
-  product = create_product notification
+  return nil unless (name = name_or_product(notification))
+  investigation = create_investigation notification, date, name
+  product = create_product notification, name
   create_investigation_product investigation, product
   create_activity notification, investigation, date
 end
 
-def create_product(notification)
-  return nil unless (name = name_or_product(notification))
+def create_product(notification, name)
   Product.where.not(gtin: "").where(gtin: barcode_from_notification(notification)).first_or_create(
     gtin: barcode_from_notification(notification),
     name: name,
@@ -56,12 +56,12 @@ def create_product(notification)
   )
 end
 
-# TODO MSPSDS-131: change 'severity' to something more sensible based on requirements
-def create_investigation(notification, date)
+def create_investigation(notification, date, name)
   Investigation.create(
+    title: name,
     description: field_from_notification(notification, "description"),
     is_closed: true,
-    severity: field_from_notification(notification, "level") == "Serious Risk" ? 1 : 2,
+    risk_notes: risk_notes(notification),
     created_at: date,
     updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
     source: ReportSource.new(name: "RAPEX")
@@ -111,6 +111,13 @@ def brand(notification)
   brand = field_from_notification(notification, "brand")
   brand = nil if brand.casecmp("Unknown").zero?
   brand
+end
+
+def risk_notes(notification)
+  [
+    field_from_notification(notification, "level"),
+    field_from_notification(notification, "riskType")
+  ].compact.join " - "
 end
 
 def all_pictures(notification)

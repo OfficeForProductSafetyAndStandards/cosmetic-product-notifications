@@ -13,8 +13,8 @@ $(document).on("turbolinks:load", function() {
 });
 
 function handleSearchInput() {
-    let debounceTimeout = null;
-    let searchRequest = null;
+    var debounceTimeout = null;
+    var searchRequest = null;
     $('.new-product-page .search-term').on('keyup change', function() {
         clearTimeout(debounceTimeout);
         if (searchRequest) {
@@ -32,8 +32,8 @@ function handleSearchInput() {
 }
 
 function buildQuery() {
-    const query = {};
-    const q = $('.new-product-page .search-term:not(#gtin-input)')
+    var query = {};
+    var q = $('.new-product-page .search-term:not(#gtin-input)')
         .map(function() {
             return $(this).val();
         })
@@ -44,7 +44,7 @@ function buildQuery() {
         .map(function(searchTerm) {
             return searchTerm + "*"
         }).join(" OR ");
-    const gtin = $('.new-product-page #gtin-input').val();
+        var gtin = $('.new-product-page #gtin-input').val();
     if (q) {
         query.q = q;
     }

@@ -1,6 +1,27 @@
 // Place all the styles related to the Investigations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "colours";
+
+.show-investigation {
+    .link-back {
+        margin: 0;
+    }
+
+    .sub-heading, .activity {
+        border-bottom: 1px solid $grey-3;
+    }
+
+    .activity {
+        margin-bottom: 12px;
+    }
+
+    .product-image, .case-image {
+        width: 100%;
+        display: block;
+    }
+}
+
 @media print
 {
     #pager,

@@ -1,7 +1,7 @@
 book = xlsx_package.workbook
 
 book.add_worksheet name: "Investigations" do |sheet_investigations|
-  sheet_investigations.add_row %w[ID Status Description Assignee Source Severity Products Activities]
+  sheet_investigations.add_row %w[ID Status Description Assignee Source Risk_Notes Products Activities]
 
   @investigations.each do |investigation|
     sheet_investigations.add_row [
@@ -10,7 +10,7 @@ book.add_worksheet name: "Investigations" do |sheet_investigations|
       investigation.description,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
       investigation.source.show,
-      investigation.severity,
+      investigation.risk_notes,
       investigation.products.count,
       investigation.activities.count
     ]
