@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <tr>
+      <th>Company number</th>
+      <th>Company name</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @businesses.each do |business| %>
+      <tr>
+        <td><%= business[:company_number] %></td>
+        <td><%= business[:company_name] %></td>
+        <td><%= link_to 'Add', "/" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

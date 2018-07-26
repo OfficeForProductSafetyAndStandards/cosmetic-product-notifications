@@ -9,29 +9,12 @@ $(document).on("turbolinks:load", function() {
         adaptiveHeight: true,
     });
 
-    handleSearchInput();
+    searchOnTextInput($('.new-product-page .search-term'), '/products/table', buildProductQuery, function(data) {
+        $('#suggested-products').html(data);
+    });
 });
 
-function handleSearchInput() {
-    var debounceTimeout = null;
-    var searchRequest = null;
-    $('.new-product-page .search-term').on('keyup change', function() {
-        clearTimeout(debounceTimeout);
-        if (searchRequest) {
-            // Cancel previous outstanding requests
-            searchRequest.abort();
-        }
-        // Don't send requests all the time, just every 500ms
-        debounceTimeout = setTimeout(function() {
-            searchRequest = $.get('/products/table', buildQuery())
-                .done(function(data) {
-                    $('#suggested-products').html(data);
-                });
-        }, 500);
-    });
-}
-
-function buildQuery() {
+function buildProductQuery() {
     var query = {};
     var q = $('.new-product-page .search-term:not(#gtin-input)')
         .map(function() {

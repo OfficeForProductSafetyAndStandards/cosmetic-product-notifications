@@ -1,4 +1,5 @@
 class BusinessesController < ApplicationController
+  include BusinessesHelper
   before_action :authenticate_user!
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[create]
@@ -20,6 +21,12 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/1/edit
   def edit; end
+
+  # GET /businesses/companies_house
+  def companies_house
+    @businesses = companies_house_businesses params[:q]
+    render partial: "companies_house"
+  end
 
   # POST /businesses
   # POST /businesses.json

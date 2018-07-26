@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :businesses
   resources :investigations do
     member do
       post :close
@@ -8,6 +7,12 @@ Rails.application.routes.draw do
       post :update_assignee
     end
     resources :activities, shallow: true
+  end
+
+  resources :businesses do
+    collection do
+      get :companies_house
+    end
   end
 
   resources :products do
