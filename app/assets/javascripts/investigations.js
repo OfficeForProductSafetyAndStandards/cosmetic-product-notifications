@@ -1,10 +1,12 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-// You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).on("turbolinks:load", function() {
-    $(".js-investigation-products").select2({
+    addSelect2AjaxSearchToElement($(".js-investigation-products"), "/products", mapAjaxDataToProduct);
+    addSelect2AjaxSearchToElement($(".js-investigation-businesses"), "/businesses", mapAjaxDataToBusiness);
+});
+
+function addSelect2AjaxSearchToElement(selectElement, url, mapData) {
+    selectElement.select2({
         ajax: {
-            url: "/products",
+            url: url,
             dataType: "json",
             delay: 250,
             data: function(params) {
@@ -15,23 +17,30 @@ $(document).on("turbolinks:load", function() {
                 return query
             },
             processResults: function (data) {
-                // Tranforms the top-level key of the response object from 'items' to 'results'
                 return {
-                    results: data.map(function(product) {
-                        return {
-                            id: product.id,
-                            text: [product.name, product.brand].join(" - ")
-                        }
-                    })
+                    results: data.map(mapData)
                 };
             }
-            // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
-    }).val(getIdsFromOptions()).trigger("change");
-});
+    }).val(getIdsFromOptions(selectElement)).trigger("change");
+}
 
-function getIdsFromOptions() {
-    return $(".js-investigation-products option").map(function() {
+function getIdsFromOptions(selectElement) {
+    return selectElement.find("option").map(function() {
         return $(this).val();
     });
+}
+
+function mapAjaxDataToProduct(data) {
+    return {
+        id: data.id,
+        text: [data.name, data.brand].join(" - ")
+    }
+}
+
+function mapAjaxDataToBusiness(data) {
+    return {
+        id: data.id,
+        text: data.company_name
+    }
 }

@@ -132,7 +132,8 @@ class InvestigationsController < ApplicationController
   def investigation_params
     params.require(:investigation).permit(
       :title, :description, :risk_notes, :image,
-      product_ids: []
+      product_ids: [],
+      business_ids: []
     )
   end
 end
