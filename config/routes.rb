@@ -8,6 +8,12 @@ Rails.application.routes.draw do
     resources :images
   end
 
+  get "sessions/new"
+  post "sessions/signin"
+  delete "sessions/logout"
+  get "sessions/forgot_password"
+  put "sessions/reset_password"
+
   resources :investigations, concerns: %i[document_attachable image_attachable] do
     member do
       get :status
