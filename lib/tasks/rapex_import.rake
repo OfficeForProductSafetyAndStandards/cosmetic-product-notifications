@@ -56,7 +56,6 @@ def create_product(notification, name)
   )
 end
 
-# TODO MSPSDS-131: change 'severity' to something more sensible based on requirements
 def create_investigation(notification, date, name)
   Investigation.create(
     title: name,

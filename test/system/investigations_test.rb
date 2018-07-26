@@ -17,7 +17,7 @@ class InvestigationsTest < ApplicationSystemTestCase
     fill_in "Description", with: @investigation.description
     fill_in "Is Closed", with: @investigation.is_closed
     fill_in "Product", with: @investigation.product_id
-    fill_in "Severity", with: @investigation.severity
+    fill_in "Risk Notes", with: @investigation.risk_notes
     click_on "Create Investigation"
 
     assert_text "Investigation was successfully created"
@@ -31,7 +31,7 @@ class InvestigationsTest < ApplicationSystemTestCase
     fill_in "Description", with: @investigation.description
     fill_in "Is Closed", with: @investigation.is_closed
     fill_in "Product", with: @investigation.product_id
-    fill_in "Severity", with: @investigation.severity
+    fill_in "Risk Notes", with: @investigation.risk_notes
     click_on "Update Investigation"
 
     assert_text "Investigation was successfully updated"
