@@ -141,10 +141,21 @@
 
   <div class="grid-row">
     <div class="column-two-thirds">
-      <h2 class="heading-small sub-heading">
-        Business
-      </h2>
-      <p>No business attached</p><!-- TODO MSPSDS-193 Add when adding businesses -->
+      <% if @investigation.businesses.any? %>
+        <% @investigation.businesses.each do |business| %>
+          <h2 class="heading-small sub-heading">
+            Business
+          </h2>
+          <p>Business name: <%= link_to business.company_name, business %></p>
+          <p>Main address: <%= business.address_summary %></p>
+          <%= link_to 'Edit details', edit_business_path(business), :class => "no-print" %>
+        <% end %>
+      <% else %>
+        <h2 class="heading-small sub-heading">
+          Business
+        </h2>
+        <p>No business attached</p>
+      <% end %>
     </div>
     <div class="column-third">
       <h2 class="heading-small sub-heading">

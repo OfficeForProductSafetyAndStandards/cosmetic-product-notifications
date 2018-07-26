@@ -54,6 +54,33 @@
 </table>
 <br /><br />
 
+<% if @business.investigations.any? %>
+  <h2 class="heading-small sub-heading">
+    Product safety investigations
+  </h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Investigation number</th>
+        <th>Status</th>
+        <th>Last updated</th>
+        <th>Assigned to</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @business.investigations.each do |investigation| %>
+        <tr>
+          <td><%= link_to investigation.id, investigation %></td>
+          <td><%= investigation.is_closed? ? "Closed" : "Open" %></td>
+          <td><%= investigation.updated_at.to_s :long_ordinal %></td>
+          <td><%= investigation.assignee.nil? ? "Unassigned" : investigation.assignee.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br /><br />
+<% end %>
+
 <div class="form-group no-print">
   <%= link_to 'Edit', edit_business_path(@business), :class => "button" %>
 </div>

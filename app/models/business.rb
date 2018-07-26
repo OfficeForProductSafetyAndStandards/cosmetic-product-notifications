@@ -23,6 +23,14 @@ class Business < ApplicationRecord
   def company_type
     Rails.application.config.companies_house_constants["company_type"][company_type_code]
   end
+
+  def address_summary
+    [
+      registered_office_address_line_1,
+      registered_office_address_postal_code,
+      registered_office_address_country
+    ].join(", ")
+  end
 end
 
 Business.import force: true # for auto sync model with elastic search
