@@ -23,6 +23,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Investigation.count") do
       post investigations_url, params: {
         investigation: {
+          title: @investigation.title,
           description: @investigation.description,
           is_closed: @investigation.is_closed,
           source: @investigation.source
@@ -46,6 +47,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should update investigation" do
     patch investigation_url(@investigation), params: {
       investigation: {
+        title: @investigation.title,
         description: @investigation.description,
         is_closed: @investigation.is_closed,
         source: @investigation.source
