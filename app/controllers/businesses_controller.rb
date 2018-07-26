@@ -7,7 +7,11 @@ class BusinessesController < ApplicationController
   # GET /businesses
   # GET /businesses.json
   def index
-    @businesses = Business.paginate(page: params[:page], per_page: 20)
+    @businesses = if params[:q].blank?
+                    Business.paginate(page: params[:page], per_page: 20)
+                  else
+                    Business.search(params[:q]).paginate(page: params[:page], per_page: 20).records
+                  end
   end
 
   # GET /businesses/1

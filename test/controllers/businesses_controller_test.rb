@@ -3,6 +3,8 @@ require "test_helper"
 class BusinessesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @business = businesses(:one)
+    @business.source = sources(:business_one)
+    Business.import
   end
 
   test "should get index" do
