@@ -11,7 +11,8 @@ Rails.application.routes.draw do
 
   resources :businesses do
     collection do
-      get :companies_house
+      get :search_companies_house
+      post :companies_house
     end
   end
 

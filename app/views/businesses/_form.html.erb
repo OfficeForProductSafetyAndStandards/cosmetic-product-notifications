@@ -20,8 +20,8 @@
     <%= form.label :company_type_code, :class => "form-label" %>
     <%= form.select :company_type_code,
       Rails.application.config.companies_house_constants["company_type"].collect {|t| [t[1], t[0]]},
-      {},
-      {:class => "form-control" }
+      { include_blank: "None" },
+      { :class => "form-control" }
     %>
   </div>
 
@@ -54,8 +54,8 @@
     <%= form.label :nature_of_business_id, :class => "form-label" %>
     <%= form.select :nature_of_business_id,
       Rails.application.config.companies_house_constants["sic_descriptions"].collect {|s| [s[1], s[0]]},
-      {},
-      {:class => "form-control" }
+      { include_blank: "None" },
+      { :class => "form-control" }
     %>
   </div>
 

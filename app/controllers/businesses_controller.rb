@@ -22,24 +22,22 @@ class BusinessesController < ApplicationController
   # GET /businesses/1/edit
   def edit; end
 
-  # GET /businesses/companies_house
-  def companies_house
+  # GET /businesses/search_companies_house
+  def search_companies_house
     @businesses = companies_house_businesses params[:q]
     render partial: "companies_house"
+  end
+
+  # POST /businesses/companies_house
+  def companies_house
+    @business = create_business_from_companies_house_number params[:company_number]
+    respond_to_business_creation
   end
 
   # POST /businesses
   # POST /businesses.json
   def create
-    respond_to do |format|
-      if @business.save
-        format.html { redirect_to @business, notice: "Business was successfully created." }
-        format.json { render :show, status: :created, location: @business }
-      else
-        format.html { render :new }
-        format.json { render json: @business.errors, status: :unprocessable_entity }
-      end
-    end
+    respond_to_business_creation
   end
 
   # PATCH/PUT /businesses/1
@@ -76,6 +74,18 @@ class BusinessesController < ApplicationController
 
   def set_business
     @business = Business.find(params[:id])
+  end
+
+  def respond_to_business_creation
+    respond_to do |format|
+      if @business.save
+        format.html { redirect_to @business, notice: "Business was successfully created." }
+        format.json { render :show, status: :created, location: @business }
+      else
+        format.html { render :new }
+        format.json { render json: @business.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
