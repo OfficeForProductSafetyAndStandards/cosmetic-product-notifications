@@ -1,8 +1,7 @@
 require "notifications/client"
 
 # Send emails via notify
-class NotifyMailer < Devise::Mailer
-  include Devise::Controllers::UrlHelpers
+class NotifyMailer
 
   def initialize
     @client = Notifications::Client.new(ENV["NOTIFY_API_KEY"])

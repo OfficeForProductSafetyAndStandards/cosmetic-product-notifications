@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_paper_trail_whodunnit
 
+  helper_method :current_user, :user_signed_in?
+
   def initialize
     Keycloak.proc_cookie_token = lambda do
       cookies.permanent[:keycloak_token]
@@ -15,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return unless Keycloak::Client.user_signed_in?
-    @current_user ||= KeycloakUser.new
+    @current_user ||= User.new
   end
 
   def authenticate_user!
