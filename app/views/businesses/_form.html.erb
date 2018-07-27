@@ -11,53 +11,57 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :company_name, :class => "form-label" %>
-    <%= form.text_field :company_name, :class => "form-control search-term" %>
-  </div>
+  <% if business.from_companies_house? %>
+    <p>Some data is set by companies house and is therefore non-editable</p>
+  <% else %>
+    <div class="form-group">
+      <%= form.label :company_name, :class => "form-label" %>
+      <%= form.text_field :company_name, :class => "form-control search-term" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :company_type_code, :class => "form-label" %>
-    <%= form.select :company_type_code,
-      Rails.application.config.companies_house_constants["company_type"].collect {|t| [t[1], t[0]]},
-      { include_blank: "None" },
-      { :class => "form-control js-business-company-type" }
-    %>
-  </div>
+    <div class="form-group">
+      <%= form.label :company_type_code, :class => "form-label" %>
+      <%= form.select :company_type_code,
+        Rails.application.config.companies_house_constants["company_type"].collect {|t| [t[1], t[0]]},
+        { include_blank: "None" },
+        { :class => "form-control js-business-company-type" }
+      %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :registered_office_address_line_1, :class => "form-label" %>
-    <%= form.text_field :registered_office_address_line_1, :class => "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= form.label :registered_office_address_line_1, :class => "form-label" %>
+      <%= form.text_field :registered_office_address_line_1, :class => "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :registered_office_address_line_2, :class => "form-label" %>
-    <%= form.text_field :registered_office_address_line_2, :class => "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= form.label :registered_office_address_line_2, :class => "form-label" %>
+      <%= form.text_field :registered_office_address_line_2, :class => "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :registered_office_address_locality, :class => "form-label" %>
-    <%= form.text_field :registered_office_address_locality, :class => "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= form.label :registered_office_address_locality, :class => "form-label" %>
+      <%= form.text_field :registered_office_address_locality, :class => "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :registered_office_address_country, :class => "form-label" %>
-    <%= form.text_field :registered_office_address_country, :class => "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= form.label :registered_office_address_country, :class => "form-label" %>
+      <%= form.text_field :registered_office_address_country, :class => "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :registered_office_address_postal_code, :class => "form-label" %>
-    <%= form.text_field :registered_office_address_postal_code, :class => "form-control" %>
-  </div>
+    <div class="form-group">
+      <%= form.label :registered_office_address_postal_code, :class => "form-label" %>
+      <%= form.text_field :registered_office_address_postal_code, :class => "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :nature_of_business_id, :class => "form-label" %>
-    <%= form.select :nature_of_business_id,
-      Rails.application.config.companies_house_constants["sic_descriptions"].collect {|s| [s[1], s[0]]},
-      { include_blank: "None" },
-      { :class => "form-control js-business-sic-codes" }
-    %>
-  </div>
+    <div class="form-group">
+      <%= form.label :nature_of_business_id, :class => "form-label" %>
+      <%= form.select :nature_of_business_id,
+        Rails.application.config.companies_house_constants["sic_descriptions"].collect {|s| [s[1], s[0]]},
+        { include_blank: "None" },
+        { :class => "form-control js-business-sic-codes" }
+      %>
+    </div>
+  <% end %>
 
   <div class="form-group">
     <%= form.label :additional_information, :class => "form-label" %>
