@@ -15,6 +15,14 @@
 <h1 class="heading-xlarge">Businesses</h1>
 <%= link_to 'New business', new_business_path, :class => "button" %><br /><br />
 
+<%= form_with(url: businesses_path, method: :get) do |form| %>
+  <div class="form-group">
+    <%= form.label "Search", :class => "form-label" %>
+    <%= form.text_field :q, value: params[:q], :class => "form-control" %>
+    <%= form.submit "Go", name: nil, :class => "button" %>
+  </div>
+<% end %>
+
 <%= will_paginate @businesses %>
 <br />
 <table>
