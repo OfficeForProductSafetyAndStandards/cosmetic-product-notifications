@@ -102,6 +102,8 @@
       </div>
     <% end %>
   <% end %>
+  <br /><br />
+  <%= link_to 'Add product', edit_investigation_path(@investigation), :class => "button no-print" %>
 
   <div class="grid-row">
     <div class="column-two-thirds">
@@ -125,7 +127,7 @@
       <%= link_to "+ View more activity", investigation_activities_path(@investigation) %>
       <br /><br />
       <div class="form-group no-print">
-        <%= link_to 'Add activity', new_investigation_activity_path(@investigation), :class => "button" %>
+        <%= link_to 'Add activity', new_investigation_activity_path(@investigation), :class => "no-print button" %>
       </div>
     </div>
     <div class="column-third">
@@ -156,6 +158,8 @@
         </h2>
         <p>No business attached</p>
       <% end %>
+      <br /><br />
+      <%= link_to 'Add business', edit_investigation_path(@investigation), :class => "button no-print" %>
     </div>
     <div class="column-third">
       <h2 class="heading-small sub-heading">
