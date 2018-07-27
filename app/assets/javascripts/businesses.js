@@ -3,17 +3,17 @@ $(document).on("turbolinks:load", function() {
     $('.js-business-sic-codes').select2();
 
     searchOnTextInput(
-        $('.new-business-page .companies-house-search-term'),
-        '/businesses/search_companies_house',
+        $('.new-business-page .search-term'),
+        '/businesses/search',
         buildCompaniesHouseQuery,
         function(data) {
-            $('#companies-house-businesses').html(data);
+            $('#suggested-businesses').html(data);
         }
     );
 });
 
 function buildCompaniesHouseQuery() {
     return {
-        q: $('.new-business-page .companies-house-search-term').val()
+        q: $('.new-business-page .search-term').val()
     };
 }

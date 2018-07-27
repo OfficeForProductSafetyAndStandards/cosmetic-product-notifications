@@ -26,10 +26,11 @@ class BusinessesController < ApplicationController
   # GET /businesses/1/edit
   def edit; end
 
-  # GET /businesses/search_companies_house
-  def search_companies_house
-    @businesses = companies_house_client.companies_house_businesses params[:q]
-    render partial: "companies_house"
+  # GET /businesses/search
+  def search
+    @existing_businesses = Business.search(params[:q]).paginate(page: params[:page], per_page: 20).records
+    @companies_house_businesses = companies_house_client.companies_house_businesses params[:q]
+    render partial: "search_results"
   end
 
   # POST /businesses/companies_house

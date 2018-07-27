@@ -1,3 +1,26 @@
+<h3 class="heading-medium">Existing businesses</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Company name</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @existing_businesses.each do |business| %>
+      <tr>
+        <td><%= business.company_name %></td>
+        <td>
+          <%= link_to "View", business %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<h3 class="heading-medium">From Companies House</h3>
 <table>
   <thead>
     <tr>
@@ -8,7 +31,7 @@
   </thead>
 
   <tbody>
-    <% @businesses.each do |business| %>
+    <% @companies_house_businesses.each do |business| %>
       <tr>
         <td><%= business[:company_number] %></td>
         <td><%= business[:company_name] %></td>
