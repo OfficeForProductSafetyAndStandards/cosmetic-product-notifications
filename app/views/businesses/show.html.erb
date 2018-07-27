@@ -1,0 +1,92 @@
+<% content_for :page_title, "View business - Market Surveillance & Product Safety" %>
+
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to 'Businesses', businesses_path %>
+        </li>
+        <li>
+            <%= link_to 'View', @business %>
+        </li>
+    </ol>
+</div>
+
+<h1 class="heading-xlarge">
+  <%= @business.company_name %>
+</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Companies house number</td>
+      <td><%= @business.company_number %></td>
+    </tr>
+    <tr>
+      <td>Company type</td>
+      <td><%= @business.company_type %></td>
+    </tr>
+    <tr>
+      <td>Registered address</td>
+      <td>
+        <%= @business.registered_office_address_line_1 %><br />
+        <%= @business.registered_office_address_line_2 %><br />
+        <%= @business.registered_office_address_locality %><br />
+        <%= @business.registered_office_address_country %><br />
+        <%= @business.registered_office_address_postal_code %>
+      </td>
+    </tr>
+    <tr>
+      <td>Nature of business (SIC)</td>
+      <td><%= @business.nature_of_business %></td>
+    </tr>
+    <tr>
+      <td>Additional information</td>
+      <td><%= @business.additional_information %></td>
+    </tr>
+    <tr>
+      <td>Source</td>
+      <td><%= @business.source.show %></td>
+    </tr>
+  </tbody>
+</table>
+<br /><br />
+
+<% if @business.investigations.any? %>
+  <h2 class="heading-small sub-heading">
+    Product safety investigations
+  </h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Investigation number</th>
+        <th>Status</th>
+        <th>Last updated</th>
+        <th>Assigned to</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @business.investigations.each do |investigation| %>
+        <tr>
+          <td><%= link_to investigation.id, investigation %></td>
+          <td><%= investigation.is_closed? ? "Closed" : "Open" %></td>
+          <td><%= investigation.updated_at.to_s :long_ordinal %></td>
+          <td><%= investigation.assignee.nil? ? "Unassigned" : investigation.assignee.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br /><br />
+<% end %>
+
+<div class="form-group no-print">
+  <%= link_to 'Edit', edit_business_path(@business), :class => "button" %>
+</div>
+
+<div class="form-group no-print">
+  <%= link_to 'Back', businesses_path, :class => "link-back" %>
+</div>
+
+<%= render 'history', versions: @business.versions %>

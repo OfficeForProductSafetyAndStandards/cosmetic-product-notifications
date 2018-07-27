@@ -41,6 +41,15 @@
   </div>
 
   <div class="form-group">
+    <%= form.label :business_ids, "Businesses", :class => "form-label" %>
+    <%= form.select :business_ids,
+      investigation.businesses.collect {|p| [p.company_name, p.id]},
+      {},
+      {:multiple => true, :class => "js-investigation-businesses form-control" }
+    %>
+  </div>
+
+  <div class="form-group">
     <%= form.submit "Save investigation", :class => "button" %>
   </div>
 <% end %>

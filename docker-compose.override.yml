@@ -7,3 +7,4 @@ services:
       - "3000:3000"
     environment:
       - NOTIFY_API_KEY=$NOTIFY_API_KEY
+      - COMPANIES_HOUSE_API_KEY=$COMPANIES_HOUSE_API_KEY

@@ -20,6 +20,7 @@ services:
       - ${PWD-.}:/app
     environment:
       - NOTIFY_API_KEY=$NOTIFY_API_KEY
+      - COMPANIES_HOUSE_API_KEY=$COMPANIES_HOUSE_API_KEY
     depends_on:
       - db
       - elasticsearch

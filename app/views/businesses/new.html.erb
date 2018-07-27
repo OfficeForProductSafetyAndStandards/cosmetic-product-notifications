@@ -1,0 +1,31 @@
+<% content_for :page_title, "New business - Market Surveillance & Product Safety" %>
+<div class="new-business-page">
+    <div class="breadcrumbs">
+        <ol role="breadcrumbs">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <%= link_to 'Businesses', businesses_path %>
+            </li>
+            <li>
+                <%= link_to 'New', new_business_path %>
+            </li>
+        </ol>
+    </div>
+
+    <h1 class="heading-xlarge">New Business</h1>
+    <div class="grid-row">
+        <div class="column-half">
+            <%= render 'form', business: @business %>
+        </div>
+        <div class="column-half">
+            <h2 class="heading-medium">Have you seen these businesses from Companies House?</h2>
+            <div id="companies-house-businesses">
+                Enter the company name for suggestions.
+            </div>
+        </div>
+    </div>
+
+    <%= link_to 'Back', businesses_path, :class => "link-back" %>
+</div>

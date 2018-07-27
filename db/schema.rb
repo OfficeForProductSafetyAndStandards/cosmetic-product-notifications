@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_23_103012) do
+ActiveRecord::Schema.define(version: 2018_07_26_150720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,21 @@ ActiveRecord::Schema.define(version: 2018_07_23_103012) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "businesses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "company_number"
+    t.string "company_name", null: false
+    t.string "company_type_code"
+    t.string "registered_office_address_line_1"
+    t.string "registered_office_address_line_2"
+    t.string "registered_office_address_locality"
+    t.string "registered_office_address_country"
+    t.string "registered_office_address_postal_code"
+    t.string "nature_of_business_id"
+    t.text "additional_information"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "images", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "title"
     t.string "url"
@@ -60,6 +75,14 @@ ActiveRecord::Schema.define(version: 2018_07_23_103012) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_images_on_product_id"
+  end
+
+  create_table "investigation_businesses", force: :cascade do |t|
+    t.uuid "investigation_id", null: false
+    t.uuid "business_id", null: false
+    t.index ["business_id"], name: "index_investigation_businesses_on_business_id"
+    t.index ["investigation_id", "business_id"], name: "index_on_investigation_id_and_business_id", unique: true
+    t.index ["investigation_id"], name: "index_investigation_businesses_on_investigation_id"
   end
 
   create_table "investigation_products", force: :cascade do |t|

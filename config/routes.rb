@@ -9,6 +9,13 @@ Rails.application.routes.draw do
     resources :activities, shallow: true
   end
 
+  resources :businesses do
+    collection do
+      get :search_companies_house
+      post :companies_house
+    end
+  end
+
   resources :products do
     collection do
       get :table

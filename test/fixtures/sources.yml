@@ -16,6 +16,14 @@ investigation_two:
   type:
   sourceable: two (Investigation)
 
+business_one:
+  type:
+  sourceable: one (Business)
+
+business_two:
+  type:
+  sourceable: two (Business)
+
 activity_one:
   type:
   sourceable: one (Activity)
