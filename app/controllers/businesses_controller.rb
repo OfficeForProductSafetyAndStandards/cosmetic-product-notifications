@@ -1,5 +1,3 @@
-require_relative "../clients/companies_house_client"
-
 class BusinessesController < ApplicationController
   include BusinessesHelper
   before_action :authenticate_user!
