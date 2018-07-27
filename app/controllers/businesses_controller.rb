@@ -12,7 +12,7 @@ class BusinessesController < ApplicationController
     @businesses = if params[:q].blank?
                     Business.paginate(page: params[:page], per_page: 20)
                   else
-                    Business.search(params[:q]).paginate(page: params[:page], per_page: 20).records
+                    search_for_businesses(20)
                   end
   end
 
@@ -30,8 +30,7 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/search
   def search
-    @existing_businesses = Business.search(params[:q])
-                                   .paginate(page: params[:page], per_page: BUSINESS_SUGGESTION_LIMIT).records
+    @existing_businesses = search_for_businesses(BUSINESS_SUGGESTION_LIMIT)
     companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(params[:q])
     @companies_house_businesses = filter_out_existing_businesses(companies_house_response)
                                   .first(BUSINESS_SUGGESTION_LIMIT)
@@ -84,6 +83,12 @@ class BusinessesController < ApplicationController
 
   def set_business
     @business = Business.find(params[:id])
+  end
+
+  def search_for_businesses(page_size)
+    Business.search(params[:q])
+            .paginate(page: params[:page], per_page: page_size)
+            .records
   end
 
   def respond_to_business_creation
