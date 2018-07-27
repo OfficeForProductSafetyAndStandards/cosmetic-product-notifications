@@ -21,7 +21,7 @@
     <%= form.select :company_type_code,
       Rails.application.config.companies_house_constants["company_type"].collect {|t| [t[1], t[0]]},
       { include_blank: "None" },
-      { :class => "form-control" }
+      { :class => "form-control js-business-company-type" }
     %>
   </div>
 
@@ -55,7 +55,7 @@
     <%= form.select :nature_of_business_id,
       Rails.application.config.companies_house_constants["sic_descriptions"].collect {|s| [s[1], s[0]]},
       { include_blank: "None" },
-      { :class => "form-control" }
+      { :class => "form-control js-business-sic-codes" }
     %>
   </div>
 
