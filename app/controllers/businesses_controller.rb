@@ -1,3 +1,5 @@
+require_relative "../clients/companies_house_client"
+
 class BusinessesController < ApplicationController
   include BusinessesHelper
   before_action :authenticate_user!
@@ -28,13 +30,13 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/search_companies_house
   def search_companies_house
-    @businesses = companies_house_client.companies_house_businesses params[:q]
+    @businesses = CompaniesHouseClient.instance.companies_house_businesses params[:q]
     render partial: "companies_house"
   end
 
   # POST /businesses/companies_house
   def companies_house
-    @business = companies_house_client.create_business_from_companies_house_number params[:company_number]
+    @business = CompaniesHouseClient.instance.create_business_from_companies_house_number params[:company_number]
     respond_to_business_creation
   end
 
