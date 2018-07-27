@@ -4,11 +4,6 @@ class BusinessesController < ApplicationController
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[create]
 
-  def initialize
-    @companies_house_client = CompaniesHouseClient.new
-    super
-  end
-
   # GET /businesses
   # GET /businesses.json
   def index
@@ -33,13 +28,13 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/search_companies_house
   def search_companies_house
-    @businesses = @companies_house_client.companies_house_businesses params[:q]
+    @businesses = companies_house_client.companies_house_businesses params[:q]
     render partial: "companies_house"
   end
 
   # POST /businesses/companies_house
   def companies_house
-    @business = @companies_house_client.create_business_from_companies_house_number params[:company_number]
+    @business = companies_house_client.create_business_from_companies_house_number params[:company_number]
     respond_to_business_creation
   end
 
