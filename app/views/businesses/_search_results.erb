@@ -37,7 +37,7 @@
     <% if @companies_house_businesses.any? %>
       <% @companies_house_businesses.each do |business| %>
         <tr>
-          <td><%= business[:company_name] %></td>
+          <td><%= link_to business[:company_name], business[:url], target: "_blank" %></td>
           <td>
             <%= form_with(url: "/businesses/companies_house", local: true) do |form| %>
               <%= form.hidden_field :company_number, value: business[:company_number] %>

@@ -13,7 +13,8 @@ class CompaniesHouseClient
     response["items"].collect do |business|
       {
         company_name: business["title"],
-        company_number: business["company_number"]
+        company_number: business["company_number"],
+        url: Rails.application.config.view_company_url + business["company_number"]
       }
     end
   end
