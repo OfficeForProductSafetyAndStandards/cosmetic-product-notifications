@@ -1,7 +1,6 @@
 require "test_helper"
 
 class BusinessesControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
 
   setup do
     # TODO MSPSDS_197: figure out how to move this to User model without

@@ -6,17 +6,21 @@ class User < ApplicationRecord
   default_scope { order(created_at: :desc) }
   has_many :user_source, dependent: :nullify
 
-  rolify
-  after_create :set_default_role
+  def initialize
+    userinfo = JSON(Keycloak::Client.get_userinfo)
+    @user_id = userinfo[:sub]
+    @email = userinfo[:email]
+  end
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :invitable, :database_authenticatable, :recoverable,
-         :rememberable, :trackable, :validatable
+  def self.all
+    Keycloak::Internal.get_users
+  end
 
-private
+  def self.find(email)
+    Keycloak::Internal.get_user_info(email)
+  end
 
-  def set_default_role
-    add_role(:user) if roles.blank?
+  def has_role?(role)
+    Keycloak::Client.has_role? role
   end
 end
