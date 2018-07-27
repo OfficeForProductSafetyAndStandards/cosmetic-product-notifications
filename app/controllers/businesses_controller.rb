@@ -6,6 +6,8 @@ class BusinessesController < ApplicationController
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[create]
 
+  BUSINESS_SUGGESTION_LIMIT = 5
+
   # GET /businesses
   # GET /businesses.json
   def index
@@ -30,8 +32,11 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/search
   def search
-    @existing_businesses = Business.search(params[:q]).paginate(page: params[:page], per_page: 20).records
-    @companies_house_businesses = CompaniesHouseClient.instance.companies_house_businesses params[:q]
+    @existing_businesses = Business.search(params[:q])
+                                   .paginate(page: params[:page], per_page: BUSINESS_SUGGESTION_LIMIT).records
+    companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(params[:q])
+    @companies_house_businesses = filter_out_existing_businesses(companies_house_response)
+                                  .first(BUSINESS_SUGGESTION_LIMIT)
     render partial: "search_results"
   end
 
@@ -93,6 +98,10 @@ class BusinessesController < ApplicationController
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def filter_out_existing_businesses(businesses)
+    businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
