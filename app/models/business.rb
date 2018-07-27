@@ -31,6 +31,10 @@ class Business < ApplicationRecord
       registered_office_address_country
     ].join(", ")
   end
+
+  def from_companies_house?
+    !company_number.nil?
+  end
 end
 
 Business.import force: true # for auto sync model with elastic search
