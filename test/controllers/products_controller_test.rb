@@ -3,7 +3,7 @@ require "test_helper"
 class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
-    sign_in users(:one)
+    sign_in_as_user
     @product = products(:one)
     @product.source = sources(:product_one)
     Product.import

@@ -66,6 +66,7 @@ group :development, :test do
   gem "byebug", platform: :mri
   gem "debase"
   gem "ruby-debug-ide"
+  gem "rspec-mocks"
 end
 
 group :development do
