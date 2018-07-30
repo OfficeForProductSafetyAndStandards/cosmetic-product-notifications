@@ -1,0 +1,53 @@
+<h3 class="heading-medium">Existing businesses</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Company name</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @existing_businesses.any? %>
+      <% @existing_businesses.each do |business| %>
+        <tr>
+          <td><%= business.company_name %></td>
+          <td>
+            <%= link_to "View", business %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+     <tr><td colspan="2">No matches.</td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<h3 class="heading-medium">From Companies House</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Company name</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @companies_house_businesses.any? %>
+      <% @companies_house_businesses.each do |business| %>
+        <tr>
+          <td><%= link_to business[:company_name], business[:url], target: "_blank" %></td>
+          <td>
+            <%= form_with(url: "/businesses/companies_house", local: true) do |form| %>
+              <%= form.hidden_field :company_number, value: business[:company_number] %>
+              <%= form.submit "Add", :class => "button" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+     <tr><td colspan="2">No matches.</td></tr>
+    <% end %>
+  </tbody>
+</table>

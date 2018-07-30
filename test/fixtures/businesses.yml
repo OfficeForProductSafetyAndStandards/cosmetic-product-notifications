@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  company_number: MyString
   company_name: MyString
   company_type_code: MyString
   registered_office_address_line_1: MyString
@@ -13,7 +12,6 @@ one:
   additional_information: MyText
 
 two:
-  company_number: MyString
   company_name: MyString
   company_type_code: MyString
   registered_office_address_line_1: MyString

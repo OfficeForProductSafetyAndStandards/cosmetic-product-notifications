@@ -13,7 +13,8 @@ class CompaniesHouseClient
     response["items"].collect do |business|
       {
         company_name: business["title"],
-        company_number: business["company_number"]
+        company_number: business["company_number"],
+        url: Rails.application.config.view_company_url + business["company_number"]
       }
     end
   end
@@ -23,14 +24,21 @@ class CompaniesHouseClient
     create_business_from_companies_house_response(profile)
   end
 
+  def update_business_from_companies_house(business)
+    profile = @client.company(business.company_number)
+    add_companies_house_response_to_business(business, profile)
+  end
+
   private
 
   def create_business_from_companies_house_response(response)
-    business = Business.new(
-      company_number: response["company_number"],
-      company_name: response["company_name"],
-      company_type_code: response["type"]
-    )
+    add_companies_house_response_to_business(Business.new, response)
+  end
+
+  def add_companies_house_response_to_business(business, response)
+    business.company_number = response["company_number"]
+    business.company_name = response["company_name"]
+    business.company_type_code = response["type"]
     business = add_registered_address_to_business(business, response)
     business = add_sic_code_to_business(business, response)
     business.source = ReportSource.new(name: "Companies House")

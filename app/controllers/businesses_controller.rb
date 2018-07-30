@@ -4,19 +4,26 @@ class BusinessesController < ApplicationController
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[create]
 
+  BUSINESS_SUGGESTION_LIMIT = 5
+
   # GET /businesses
   # GET /businesses.json
   def index
     @businesses = if params[:q].blank?
                     Business.paginate(page: params[:page], per_page: 20)
                   else
-                    Business.search(params[:q]).paginate(page: params[:page], per_page: 20).records
+                    search_for_businesses(20)
                   end
   end
 
   # GET /businesses/1
   # GET /businesses/1.json
-  def show; end
+  def show
+    return unless @business.from_companies_house?
+    @business = CompaniesHouseClient.instance.update_business_from_companies_house(@business)
+    PaperTrail.request.whodunnit = nil # This will stop papertrail recording the current user
+    @business.save
+  end
 
   # GET /businesses/new
   def new
@@ -26,10 +33,13 @@ class BusinessesController < ApplicationController
   # GET /businesses/1/edit
   def edit; end
 
-  # GET /businesses/search_companies_house
-  def search_companies_house
-    @businesses = CompaniesHouseClient.instance.companies_house_businesses params[:q]
-    render partial: "companies_house"
+  # GET /businesses/search
+  def search
+    @existing_businesses = search_for_businesses(BUSINESS_SUGGESTION_LIMIT)
+    companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(params[:q])
+    @companies_house_businesses = filter_out_existing_businesses(companies_house_response)
+                                  .first(BUSINESS_SUGGESTION_LIMIT)
+    render partial: "search_results"
   end
 
   # POST /businesses/companies_house
@@ -80,6 +90,12 @@ class BusinessesController < ApplicationController
     @business = Business.find(params[:id])
   end
 
+  def search_for_businesses(page_size)
+    Business.search(params[:q])
+            .paginate(page: params[:page], per_page: page_size)
+            .records
+  end
+
   def respond_to_business_creation
     respond_to do |format|
       if @business.save
@@ -92,10 +108,13 @@ class BusinessesController < ApplicationController
     end
   end
 
+  def filter_out_existing_businesses(businesses)
+    businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def business_params
     params.require(:business).permit(
-      :company_number,
       :company_name,
       :company_type_code,
       :registered_office_address_line_1, :registered_office_address_line_2, :registered_office_address_locality,
