@@ -1,0 +1,19 @@
+<h3 class="heading-medium"><%= user.email %></h3>
+
+<table>
+  <thead>
+  <tr>
+    <th>Assigned Investigations</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% user.investigations.each do |investigation| %>
+    <tr>
+      <td><%= link_to investigation.title, investigation %></td>
+      <td><%= investigation.is_closed? ? "Closed" : "Open" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
