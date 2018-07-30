@@ -31,3 +31,11 @@ activity_one:
 activity_two:
   type:
   sourceable: two (Activity)
+
+address_one:
+  type:
+  sourceable: one (Address)
+
+address_one:
+  type:
+  sourceable: two (Address)

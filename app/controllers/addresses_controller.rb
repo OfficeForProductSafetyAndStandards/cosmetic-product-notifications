@@ -56,7 +56,9 @@ class AddressesController < ApplicationController
   def destroy
     @address.destroy
     respond_to do |format|
-      format.html { redirect_to business_addresses_url(@address.business), notice: "Address was successfully destroyed." }
+      format.html do
+        redirect_to business_addresses_url(@address.business), notice: "Address was successfully destroyed."
+      end
       format.json { head :no_content }
     end
   end
