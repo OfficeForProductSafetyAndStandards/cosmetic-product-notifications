@@ -5,16 +5,12 @@ class User < ActiveHash::Base
   field :last_name
   field :email
 
-  has_many :activities
-  has_many :investigations, foreign_key: "assignee_id"
-  has_many :user_sources
+  has_many :activities, dependent: :nullify
+  has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
+  has_many :user_sources, dependent: :delete
 
   def self.find_or_create(id, email, first_name, last_name)
-    user = User.find_by_id id
-    if user == nil
-      user = User.create(id: id, email: email, first_name: first_name, last_name: last_name)
-    end
-    return user
+    User.find(id) || User.create(id: id, email: email, first_name: first_name, last_name: last_name)
   end
 
   def full_name

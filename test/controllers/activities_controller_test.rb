@@ -1,7 +1,6 @@
 require "test_helper"
 
 class ActivitiesControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     sign_in_as_admin
     @activity = activities(:one)

@@ -1,7 +1,6 @@
 require "test_helper"
 
 class InvestigationsControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     sign_in_as_admin
     @investigation = investigations(:one)

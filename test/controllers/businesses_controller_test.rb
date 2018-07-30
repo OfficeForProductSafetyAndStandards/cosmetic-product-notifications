@@ -1,7 +1,6 @@
 require "test_helper"
 
 class BusinessesControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     sign_in_as_admin
     @business = businesses(:one)

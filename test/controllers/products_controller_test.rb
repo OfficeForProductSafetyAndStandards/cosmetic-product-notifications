@@ -1,7 +1,6 @@
 require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     sign_in_as_user
     @product = products(:one)
