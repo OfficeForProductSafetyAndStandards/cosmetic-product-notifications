@@ -6,6 +6,7 @@ ruby File.read(".ruby-version").strip
 # https://github.com/elastic/elasticsearch-rails/issues/239
 gem "will_paginate"
 
+gem "active_hash"
 gem "ar_merge"
 gem "aws-sdk-s3"
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c8ac844"
