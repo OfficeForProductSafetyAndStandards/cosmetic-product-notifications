@@ -10,6 +10,7 @@ gem "notifications-ruby-client"
 # https://github.com/elastic/elasticsearch-rails/issues/239
 gem "will_paginate"
 
+gem "active_hash"
 gem "aws-sdk-s3"
 gem "clamby"
 gem "cocoon"
