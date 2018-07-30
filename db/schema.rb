@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_27_134613) do
+ActiveRecord::Schema.define(version: 2018_07_30_105838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,19 @@ ActiveRecord::Schema.define(version: 2018_07_27_134613) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "addresses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid "business_id"
+    t.string "address_type", null: false
+    t.string "line_1"
+    t.string "line_2"
+    t.string "locality"
+    t.string "country"
+    t.string "postal_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_addresses_on_business_id"
   end
 
   create_table "businesses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -196,6 +209,7 @@ ActiveRecord::Schema.define(version: 2018_07_27_134613) do
 
   add_foreign_key "activities", "activity_types"
   add_foreign_key "activities", "investigations"
+  add_foreign_key "addresses", "businesses"
   add_foreign_key "images", "products"
   add_foreign_key "investigations", "users", column: "assignee_id"
   add_foreign_key "sources", "users"

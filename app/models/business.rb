@@ -10,6 +10,7 @@ class Business < ApplicationRecord
   default_scope { order(created_at: :desc) }
   has_many :investigation_businesses, dependent: :destroy
   has_many :investigations, through: :investigation_businesses
+  has_many :addresses, dependent: :destroy
   has_one :source, as: :sourceable, dependent: :destroy
 
   accepts_nested_attributes_for :source

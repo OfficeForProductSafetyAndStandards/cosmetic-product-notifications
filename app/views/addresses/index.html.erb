@@ -1,0 +1,42 @@
+<% content_for :page_title, "Addresses - Market Surveillance & Product Safety" %>
+
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to "Business", business_path(@business) %>
+        </li>
+        <li>
+            <%= link_to "Addresses", business_addresses_path(@business) %>
+        </li>
+    </ol>
+</div>
+
+
+<h1 class="heading-xlarge">Addresses</h1>
+<%= link_to 'New address', new_business_address_path(@business), :class => "button" %><br /><br />
+<p>Businesses for <%= link_to "business", business_path(@business) %>.</p>
+
+<%= will_paginate @addresses %>
+<table>
+  <thead>
+    <tr>
+      <th>Address type</th>
+      <th>Address</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @addresses.each do |address| %>
+      <tr>
+        <td><%= address.address_type %></td>
+        <td><%= link_to address.summary, address %></td>
+        <td><%= link_to 'Delete', address, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br />
+<%= will_paginate @addresses %>
