@@ -2,7 +2,6 @@ require "notifications/client"
 
 # Send emails via notify
 class NotifyMailer
-
   def initialize
     @client = Notifications::Client.new(ENV["NOTIFY_API_KEY"])
   end

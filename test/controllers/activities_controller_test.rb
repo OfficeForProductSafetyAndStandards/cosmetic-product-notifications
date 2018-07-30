@@ -1,7 +1,6 @@
 require "test_helper"
 
 class ActivitiesControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     # TODO MSPSDS_197: figure out how to move this to User model without
     # build breaking (on db creation or docker-compose up)

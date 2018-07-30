@@ -11,12 +11,12 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   def sign_in_as_admin
-    admin = {:sub => "admin", :email => "admin@example.com", :firstName => "First", :lastName => "Last"}
+    admin = { sub: "admin", email: "admin@example.com", firstName: "First", lastName: "Last" }
     stub_credentials(user: admin, is_admin: true)
   end
 
   def sign_in_as_user
-    user = {:sub => "user", :email => "user@example.com", :firstName => "First", :lastName => "Last"}
+    user = { sub: "user", email: "user@example.com", firstName: "First", lastName: "Last" }
     stub_credentials(user: user, is_admin: false)
   end
 
