@@ -7,7 +7,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     # build breaking (on db creation or docker-compose up)
     User.import force: true
 
-    sign_in users(:one)
+    sign_in_as_user
     @product = products(:one)
     @product.source = sources(:product_one)
     Product.import
