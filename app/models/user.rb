@@ -1,20 +1,23 @@
-class User < ApplicationRecord
-  default_scope { order(created_at: :desc) }
+class User < ActiveHash::Base
+  include ActiveHash::Associations
+
+  field :first_name
+  field :last_name
+  field :email
+
   has_many :activities, dependent: :nullify
-  has_many :investigations, dependent: :nullify
-  has_many :user_source, dependent: :destroy
+  has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
+  has_many :user_sources, dependent: :delete
 
-  rolify
-  after_create :set_default_role
+  def self.find_or_create(user)
+    User.find_by(id: user[:id]) || User.create(user)
+  end
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :invitable, :database_authenticatable, :recoverable,
-         :rememberable, :trackable, :validatable
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
-  private
-
-  def set_default_role
-    add_role(:user) if roles.blank?
+  def has_role?(role)
+    KeycloakClient.instance.has_role? role
   end
 end

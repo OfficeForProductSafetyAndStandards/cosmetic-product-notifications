@@ -54,7 +54,7 @@ class InvestigationsController < ApplicationController
   # POST /investigations/1/update_assignee
   def update_assignee
     authorize @investigation, :assign?
-    assignee = User.where("lower(email) = ?", params[:email].downcase).first
+    assignee = User.find_by(email: params[:email].downcase)
     if assignee.nil?
       redirect_to assign_investigation_path(@investigation), alert: "Assignee does not exist."
     else

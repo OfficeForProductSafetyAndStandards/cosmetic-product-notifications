@@ -1,8 +1,6 @@
 require "test_helper"
 
 class InvestigationsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
-
   setup do
     sign_in_as_admin
     @investigation = investigations(:one)

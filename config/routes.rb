@@ -1,4 +1,11 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
+  get "sessions/new"
+  post "sessions/signin"
+  delete "sessions/logout"
+  get "sessions/forgot_password"
+  put "sessions/reset_password"
+
   resources :investigations do
     member do
       post :close
@@ -22,7 +29,6 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, controllers: { invitations: "invitations" }
   resources :users
 
   get "homepage/index"
@@ -30,3 +36,4 @@ Rails.application.routes.draw do
   get "/pages/:page" => "pages#show"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
+# rubocop:enable Metrics/BlockLength

@@ -1,8 +1,6 @@
 require "test_helper"
 
 class BusinessesControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
-
   setup do
     sign_in_as_admin
     @business = businesses(:one)

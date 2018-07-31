@@ -10,20 +10,19 @@ gem "notifications-ruby-client"
 # https://github.com/elastic/elasticsearch-rails/issues/239
 gem "will_paginate"
 
+gem "active_hash"
 gem "aws-sdk-s3"
 gem "clamby"
 gem "cocoon"
 gem "companies-house-rest"
-gem "devise"
-gem "devise_invitable"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 gem "faraday_middleware-aws-sigv4"
 gem "jquery-slick-rails"
+gem "keycloak"
 gem "mini_magick"
 gem "paper_trail"
 gem "pundit"
-gem "rolify"
 gem "select2-rails"
 
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c8ac844"
@@ -66,6 +65,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platform: :mri
   gem "debase"
+  gem "rspec-mocks"
   gem "ruby-debug-ide"
 end
 

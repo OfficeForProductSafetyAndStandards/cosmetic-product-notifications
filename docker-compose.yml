@@ -11,6 +11,13 @@ services:
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     volumes:
       - elasticsearch-volume:/usr/share/elasticsearch/data
+  keycloak:
+    image: jboss/keycloak
+    environment: 
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    ports:
+      - "8080:8080"
   web:
     build: .
     volumes:
@@ -21,6 +28,9 @@ services:
     environment:
       - NOTIFY_API_KEY=$NOTIFY_API_KEY
       - COMPANIES_HOUSE_API_KEY=$COMPANIES_HOUSE_API_KEY
+      - KEYCLOAK_AUTH_URL=$KEYCLOAK_AUTH_URL
+      - KEYCLOAK_CLIENT_ID=$KEYCLOAK_CLIENT_ID
+      - KEYCLOAK_CLIENT_SECRET=$KEYCLOAK_CLIENT_SECRET
     depends_on:
       - db
       - elasticsearch
