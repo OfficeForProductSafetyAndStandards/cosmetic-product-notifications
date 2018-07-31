@@ -6,8 +6,7 @@ class SessionsController < ApplicationController
     flash[:notice] = "Signed in successfully." if KeycloakClient.instance.user_signed_in?
     redirect_to root_path
   rescue RestClient::ExceptionWithResponse => error
-    flash[:alert] = signin_error_message(error)
-    redirect_to sessions_new_path
+    redirect_to sessions_new_path, alert: signin_error_message(error)
   end
 
   def logout
@@ -19,11 +18,9 @@ class SessionsController < ApplicationController
 
   def reset_password
     send_password_reset_email(params[:user])
-    flash[:notice] = "A password reset link has been sent to your email address."
-    redirect_to root_path
+    redirect_to root_path, notice: "A password reset link has been sent to your email address."
   rescue RuntimeError
-    flash[:alert] = "Failed to send reset email."
-    redirect_to sessions_forgot_password_path
+    redirect_to sessions_forgot_password_path, alert: "Failed to send reset email."
   end
 
   private
