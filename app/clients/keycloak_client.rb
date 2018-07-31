@@ -48,9 +48,8 @@ class KeycloakClient
 
   def user_info
     response = @client.get_userinfo
-    JSON.parse(response).map do |user|
-      { id: user["sub"], email: user["email"], first_name: user["firstName"], last_name: user["lastName"] }
-    end
+    user = JSON.parse(response)
+    { id: user["sub"], email: user["email"], first_name: user["given_name"], last_name: user["family_name"] }
   end
 
   def has_role?(role)
