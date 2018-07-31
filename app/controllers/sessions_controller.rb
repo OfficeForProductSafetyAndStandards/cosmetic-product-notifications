@@ -37,6 +37,6 @@ class SessionsController < ApplicationController
   end
 
   def signin_error_message(error)
-    error.is_a? RestClient::Unauthorized ? "Invalid email or password." : JSON(error.response)["error_description"]
+    error.is_a?(RestClient::Unauthorized) ? "Invalid email or password." : JSON(error.response)["error_description"]
   end
 end

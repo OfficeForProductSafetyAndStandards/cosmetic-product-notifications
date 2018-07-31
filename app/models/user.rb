@@ -10,7 +10,7 @@ class User < ActiveHash::Base
   has_many :user_sources, dependent: :delete
 
   def self.find_or_create(user)
-    User.find(user[:id]) || User.create(user)
+    User.find_by(id: user[:id]) || User.create(user)
   end
 
   def full_name
