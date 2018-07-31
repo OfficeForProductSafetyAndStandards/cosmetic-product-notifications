@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    return unless Keycloak::Client.user_signed_in?
+    return unless KeycloakClient.instance.user_signed_in?
     @current_user ||= find_or_create_user
   end
 
@@ -25,14 +25,14 @@ class ApplicationController < ActionController::Base
   end
 
   def user_signed_in?
-    Keycloak::Client.user_signed_in? || keycloak_controller?
+    KeycloakClient.instance.user_signed_in? || keycloak_controller?
   end
 
   private
 
   def find_or_create_user
-    userinfo = JSON.parse(Keycloak::Client.get_userinfo).with_indifferent_access
-    User.find_or_create(userinfo[:sub], userinfo[:email], userinfo[:firstName], userinfo[:lastName])
+    user = KeycloakClient.instance.user_info
+    User.find_or_create(user)
   end
 
   def keycloak_controller?

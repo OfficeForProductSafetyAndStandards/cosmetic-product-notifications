@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 
   def signin
     request_and_store_token(params[:user])
-    flash[:notice] = "Signed in successfully." if Keycloak::Client.user_signed_in?
+    flash[:notice] = "Signed in successfully." if KeycloakClient.instance.user_signed_in?
     redirect_to root_path
   rescue RestClient::ExceptionWithResponse => error
     flash[:alert] = signin_error_message(error)
@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
   end
 
   def logout
-    flash[:notice] = "Signed out successfully." if Keycloak::Client.logout
+    flash[:notice] = "Signed out successfully." if KeycloakClient.instance.logout
     redirect_to root_path
   end
 
@@ -29,11 +29,11 @@ class SessionsController < ApplicationController
   private
 
   def request_and_store_token(user)
-    cookies.permanent[:keycloak_token] = Keycloak::Client.get_token user[:email], user[:password]
+    cookies.permanent[:keycloak_token] = KeycloakClient.instance.token_for_user(user)
   end
 
   def send_password_reset_email(user)
-    Keycloak::Internal.forgot_password user[:email], root_path
+    KeycloakClient.instance.send_password_reset_email(user, root_path)
   end
 
   def signin_error_message(error)
