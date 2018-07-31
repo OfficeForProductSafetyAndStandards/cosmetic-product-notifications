@@ -3,6 +3,7 @@ class BusinessesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[create]
+  before_action :create_business, only: %i[create]
 
   BUSINESS_SUGGESTION_LIMIT = 5
 
@@ -28,10 +29,13 @@ class BusinessesController < ApplicationController
   # GET /businesses/new
   def new
     @business = Business.new
+    @business.addresses.build
   end
 
   # GET /businesses/1/edit
-  def edit; end
+  def edit
+    @business.addresses.build unless @business.addresses.any?
+  end
 
   # GET /businesses/search
   def search
@@ -57,8 +61,11 @@ class BusinessesController < ApplicationController
   # PATCH/PUT /businesses/1
   # PATCH/PUT /businesses/1.json
   def update
+    @business.assign_attributes(business_params)
+    @business.primary_address.address_type = "Registered office address"
+    @business.primary_address.source ||= UserSource.new(user: current_user)
     respond_to do |format|
-      if @business.update(business_params)
+      if @business.save
         format.html { redirect_to @business, notice: "Business was successfully updated." }
         format.json { render :show, status: :ok, location: @business }
       else
@@ -83,6 +90,10 @@ class BusinessesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def create_business
     @business = Business.new(business_params)
+    if @business.addresses.any?
+      @business.primary_address.address_type = "Registered office address"
+      @business.primary_address.source = UserSource.new(user: current_user)
+    end
     @business.source = UserSource.new(user: current_user)
   end
 
@@ -117,10 +128,9 @@ class BusinessesController < ApplicationController
     params.require(:business).permit(
       :company_name,
       :company_type_code,
-      :registered_office_address_line_1, :registered_office_address_line_2, :registered_office_address_locality,
-      :registered_office_address_country, :registered_office_address_postal_code,
       :nature_of_business_id,
-      :additional_information
+      :additional_information,
+      addresses_attributes: %i[id line_1 line_2 locality country postal_code _destroy]
     )
   end
 end

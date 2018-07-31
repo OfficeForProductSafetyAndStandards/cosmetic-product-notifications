@@ -45,13 +45,16 @@ class CompaniesHouseClient
     business
   end
 
+  # TODO MSPSDS-179 Fix
   def add_registered_address_to_business(business, response)
     if response["registered_office_address"].present?
-      business.registered_office_address_line_1 = response["registered_office_address"]["address_line_1"]
-      business.registered_office_address_line_2 = response["registered_office_address"]["address_line_2"]
-      business.registered_office_address_locality = response["registered_office_address"]["locality"]
-      business.registered_office_address_country = response["registered_office_address"]["country"]
-      business.registered_office_address_postal_code = response["registered_office_address"]["postal_code"]
+      # registered_office_address = business.registered_office_address || business.registered_office_address.create
+      # registered_office_address.line_1 = response["registered_office_address"]["address_line_1"]
+      # registered_office_address.line_2 = response["registered_office_address"]["address_line_2"]
+      # registered_office_address.locality = response["registered_office_address"]["locality"]
+      # registered_office_address.country = response["registered_office_address"]["country"]
+      # registered_office_address.postal_code = response["registered_office_address"]["postal_code"]
+      # registered_office_address.save
     end
     business
   end

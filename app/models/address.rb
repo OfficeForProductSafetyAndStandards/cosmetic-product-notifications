@@ -1,6 +1,6 @@
 class Address < ApplicationRecord
   validates :address_type, presence: true
-  default_scope { order(created_at: :desc) }
+  default_scope { order(created_at: :asc) }
   belongs_to :business
   has_one :source, as: :sourceable, dependent: :destroy
 
@@ -13,6 +13,6 @@ class Address < ApplicationRecord
       line_1,
       postal_code,
       country
-    ].join(", ")
+    ].reject(&:empty?).join(", ")
   end
 end
