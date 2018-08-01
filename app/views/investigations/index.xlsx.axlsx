@@ -42,7 +42,7 @@ end
 
 book.add_worksheet name: "Businesses" do |sheet_businesses|
   sheet_businesses.add_row %w[ID Company_Number Company_Name Company_Type Address_Line_1 Address_Line_2 Locality
-                              Postal_Code Country Nature_Of_Business Additional_Information Source Investigation_ID]
+                              Country Postal_Code Nature_Of_Business Additional_Information Source Investigation_ID]
 
   @investigations.each do |investigation|
     investigation.businesses.each do |business|
