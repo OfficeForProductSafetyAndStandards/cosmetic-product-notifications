@@ -43,6 +43,7 @@ class CompaniesHouseClient
     business.source ||= ReportSource.new(name: "Companies House")
     business.save
     add_registered_address_to_business(business, response)
+    business
   end
 
   def add_registered_address_to_business(business, response)
