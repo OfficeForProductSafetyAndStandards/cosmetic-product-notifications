@@ -3,7 +3,7 @@ class BusinessesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[create]
-  before_action :create_business, only: %i[create]
+  before_action :update_business, only: %i[update]
 
   BUSINESS_SUGGESTION_LIMIT = 5
 
@@ -61,9 +61,6 @@ class BusinessesController < ApplicationController
   # PATCH/PUT /businesses/1
   # PATCH/PUT /businesses/1.json
   def update
-    @business.assign_attributes(business_params)
-    @business.primary_address.address_type = "Registered office address"
-    @business.primary_address.source ||= UserSource.new(user: current_user)
     respond_to do |format|
       if @business.save
         format.html { redirect_to @business, notice: "Business was successfully updated." }
@@ -90,15 +87,17 @@ class BusinessesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def create_business
     @business = Business.new(business_params)
-    if @business.addresses.any?
-      @business.primary_address.address_type = "Registered office address"
-      @business.primary_address.source = UserSource.new(user: current_user)
-    end
+    set_defaults_on_primary_address if @business.addresses.any?
     @business.source = UserSource.new(user: current_user)
   end
 
   def set_business
     @business = Business.find(params[:id])
+  end
+
+  def update_business
+    @business.assign_attributes(business_params)
+    set_defaults_on_primary_address if @business.addresses.any?
   end
 
   def search_for_businesses(page_size)
@@ -121,6 +120,11 @@ class BusinessesController < ApplicationController
 
   def filter_out_existing_businesses(businesses)
     businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
+  end
+
+  def set_defaults_on_primary_address
+    @business.primary_address.address_type ||= "Registered office address"
+    @business.primary_address.source ||= UserSource.new(user: current_user)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

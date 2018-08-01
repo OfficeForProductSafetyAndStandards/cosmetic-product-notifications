@@ -14,7 +14,7 @@ class Business < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
 
   accepts_nested_attributes_for :source
-  accepts_nested_attributes_for :addresses
+  accepts_nested_attributes_for :addresses, reject_if: :all_blank
 
   has_paper_trail
 
