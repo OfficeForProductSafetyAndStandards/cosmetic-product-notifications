@@ -28,12 +28,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
           additional_information: @business.additional_information,
           company_number: @business.company_number,
           company_type_code: @business.company_type_code,
-          nature_of_business_id: @business.nature_of_business_id,
-          registered_office_address_country: @business.registered_office_address_country,
-          registered_office_address_line_1: @business.registered_office_address_line_1,
-          registered_office_address_line_2: @business.registered_office_address_line_2,
-          registered_office_address_locality: @business.registered_office_address_locality,
-          registered_office_address_postal_code: @business.registered_office_address_postal_code
+          nature_of_business_id: @business.nature_of_business_id
         }
       }
     end
@@ -58,12 +53,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
         additional_information: @business.additional_information,
         company_number: @business.company_number,
         company_type_code: @business.company_type_code,
-        nature_of_business_id: @business.nature_of_business_id,
-        registered_office_address_country: @business.registered_office_address_country,
-        registered_office_address_line_1: @business.registered_office_address_line_1,
-        registered_office_address_line_2: @business.registered_office_address_line_2,
-        registered_office_address_locality: @business.registered_office_address_locality,
-        registered_office_address_postal_code: @business.registered_office_address_postal_code
+        nature_of_business_id: @business.nature_of_business_id
       }
     }
     assert_redirected_to business_url(@business)
