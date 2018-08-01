@@ -13,7 +13,7 @@ class Address < ApplicationRecord
       line_1,
       postal_code,
       country
-    ].reject(&:empty?).join(", ")
+    ].reject(&:blank?).join(", ")
   end
 
   def from_companies_house?
