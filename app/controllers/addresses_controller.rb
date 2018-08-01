@@ -40,6 +40,7 @@ class AddressesController < ApplicationController
   # PATCH/PUT /addresses/1
   # PATCH/PUT /addresses/1.json
   def update
+    authorize @address
     respond_to do |format|
       if @address.update(address_params)
         format.html { redirect_to @address, notice: "Address was successfully updated." }
@@ -54,6 +55,7 @@ class AddressesController < ApplicationController
   # DELETE /addresses/1
   # DELETE /addresses/1.json
   def destroy
+    authorize @address
     @address.destroy
     respond_to do |format|
       format.html do

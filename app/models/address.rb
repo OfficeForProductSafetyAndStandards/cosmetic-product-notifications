@@ -15,4 +15,8 @@ class Address < ApplicationRecord
       country
     ].reject(&:empty?).join(", ")
   end
+
+  def from_companies_house?
+    source.name == "Companies House"
+  end
 end

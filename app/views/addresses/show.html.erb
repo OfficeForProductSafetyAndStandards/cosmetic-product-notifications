@@ -70,9 +70,11 @@
 </table>
 <br /><br />
 
-<div class="form-group">
-  <%= link_to 'Edit', edit_address_path(@address), :class => "button" %>
-</div>
+<% if policy(@address).update? %>
+  <div class="form-group">
+    <%= link_to 'Edit', edit_address_path(@address), :class => "button" %>
+  </div>
+<% end %>
 
 <%= link_to 'Back', business_addresses_path(@address.business), :class => "link-back" %>
 

@@ -33,7 +33,7 @@
       <tr>
         <td><%= address.address_type %></td>
         <td><%= link_to address.summary, address %></td>
-        <td><%= link_to 'Delete', address, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', address, method: :delete, data: { confirm: 'Are you sure?' } if policy(address).destroy? %></td>
       </tr>
     <% end %>
   </tbody>
