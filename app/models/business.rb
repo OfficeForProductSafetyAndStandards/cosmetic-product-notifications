@@ -10,9 +10,11 @@ class Business < ApplicationRecord
   default_scope { order(created_at: :desc) }
   has_many :investigation_businesses, dependent: :destroy
   has_many :investigations, through: :investigation_businesses
+  has_many :addresses, dependent: :destroy
   has_one :source, as: :sourceable, dependent: :destroy
 
   accepts_nested_attributes_for :source
+  accepts_nested_attributes_for :addresses, reject_if: :all_blank
 
   has_paper_trail
 
@@ -24,16 +26,12 @@ class Business < ApplicationRecord
     Rails.application.config.companies_house_constants["company_type"][company_type_code]
   end
 
-  def address_summary
-    [
-      registered_office_address_line_1,
-      registered_office_address_postal_code,
-      registered_office_address_country
-    ].join(", ")
-  end
-
   def from_companies_house?
     !company_number.nil?
+  end
+
+  def primary_address
+    addresses.first
   end
 end
 

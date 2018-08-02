@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   resources :investigations do
     member do
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
       get :search
       post :companies_house
     end
+    resources :addresses, shallow: true
   end
 
   resources :products do
@@ -30,3 +32,4 @@ Rails.application.routes.draw do
   get "/pages/:page" => "pages#show"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
+# rubocop:enable Metrics/BlockLength

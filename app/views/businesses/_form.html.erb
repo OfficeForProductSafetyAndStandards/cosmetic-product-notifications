@@ -28,30 +28,33 @@
       %>
     </div>
 
-    <div class="form-group">
-      <%= form.label :registered_office_address_line_1, :class => "form-label" %>
-      <%= form.text_field :registered_office_address_line_1, :class => "form-control" %>
-    </div>
+    <%= form.fields_for :addresses, [business.primary_address] do |ff| %>
+      <p>Registered office address</p>
+      <div class="form-group">
+        <%= ff.label :line_1, :class => "form-label" %>
+        <%= ff.text_field :line_1, :class => "form-control" %>
+      </div>
 
-    <div class="form-group">
-      <%= form.label :registered_office_address_line_2, :class => "form-label" %>
-      <%= form.text_field :registered_office_address_line_2, :class => "form-control" %>
-    </div>
+      <div class="form-group">
+        <%= ff.label :line_2, :class => "form-label" %>
+        <%= ff.text_field :line_2, :class => "form-control" %>
+      </div>
 
-    <div class="form-group">
-      <%= form.label :registered_office_address_locality, :class => "form-label" %>
-      <%= form.text_field :registered_office_address_locality, :class => "form-control" %>
-    </div>
+      <div class="form-group">
+        <%= ff.label :locality, :class => "form-label" %>
+        <%= ff.text_field :locality, :class => "form-control" %>
+      </div>
 
-    <div class="form-group">
-      <%= form.label :registered_office_address_country, :class => "form-label" %>
-      <%= form.text_field :registered_office_address_country, :class => "form-control" %>
-    </div>
+      <div class="form-group">
+        <%= ff.label :country, :class => "form-label" %>
+        <%= ff.text_field :country, :class => "form-control" %>
+      </div>
 
-    <div class="form-group">
-      <%= form.label :registered_office_address_postal_code, :class => "form-label" %>
-      <%= form.text_field :registered_office_address_postal_code, :class => "form-control" %>
-    </div>
+      <div class="form-group">
+        <%= ff.label :postal_code, :class => "form-label" %>
+        <%= ff.text_field :postal_code, :class => "form-control" %>
+      </div>
+    <% end %>
 
     <div class="form-group">
       <%= form.label :nature_of_business_id, :class => "form-label" %>

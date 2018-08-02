@@ -1,0 +1,24 @@
+<% content_for :page_title, "Edit address - Market Surveillance & Product Safety" %>
+
+<div class="breadcrumbs">
+    <ol role="breadcrumbs">
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <%= link_to "Business", business_path(@address.business) %>
+        </li>
+        <li>
+            <%= link_to "Addresses", business_addresses_path(@address.business) %>
+        </li>
+        <li>
+            <%= link_to "Edit", edit_address_path(@address) %>
+        </li>
+    </ol>
+</div>
+
+<h1 class="heading-xlarge">Editing address</h1>
+
+<%= render 'form', address: @address, business: nil %>
+
+<%= link_to 'Back', @address, :class => "link-back" %>

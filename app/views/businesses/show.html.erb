@@ -31,11 +31,13 @@
     <tr>
       <td>Registered address</td>
       <td>
-        <%= @business.registered_office_address_line_1 %><br />
-        <%= @business.registered_office_address_line_2 %><br />
-        <%= @business.registered_office_address_locality %><br />
-        <%= @business.registered_office_address_country %><br />
-        <%= @business.registered_office_address_postal_code %>
+        <% if @business.addresses.any? %>
+          <%= @business.primary_address.line_1 %><br />
+          <%= @business.primary_address.line_2 %><br />
+          <%= @business.primary_address.locality %><br />
+          <%= @business.primary_address.country %><br />
+          <%= @business.primary_address.postal_code %>
+        <% end %>
       </td>
     </tr>
     <tr>
@@ -53,6 +55,19 @@
   </tbody>
 </table>
 <br /><br />
+
+<h2 class="heading-small sub-heading">
+  Addresses
+</h2>
+<% if @business.addresses.any? %>
+  <p><%= @business.primary_address.address_type %></p>
+  <p><%= @business.primary_address.summary %></p>
+  <%= link_to "+ View all addresses", business_addresses_path(@business) %>
+  <br /><br />
+<% end %>
+<div class="form-group no-print">
+  <%= link_to 'Add address', new_business_address_path(@business), :class => "no-print button" %>
+</div>
 
 <% if @business.investigations.any? %>
   <h2 class="heading-small sub-heading">
