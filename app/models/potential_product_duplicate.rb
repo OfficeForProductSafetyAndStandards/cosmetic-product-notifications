@@ -26,5 +26,4 @@ class PotentialProductDuplicate < ApplicationRecord
   def inverse_options
     { duplicate_product_id: product_id, product_id: duplicate_product_id }
   end
-
 end

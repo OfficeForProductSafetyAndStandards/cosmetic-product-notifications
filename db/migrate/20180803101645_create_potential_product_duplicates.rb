@@ -4,8 +4,6 @@ class CreatePotentialProductDuplicates < ActiveRecord::Migration[5.2]
       t.references :product, index: true, foreign_key: true, type: :uuid
       t.references :duplicate_product, index: true, type: :uuid
       t.decimal :score
-
-      t.timestamps
     end
 
     add_foreign_key :potential_product_duplicates, :products, column: :duplicate_product_id

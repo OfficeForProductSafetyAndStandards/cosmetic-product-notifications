@@ -117,8 +117,6 @@ ActiveRecord::Schema.define(version: 2018_08_03_101645) do
     t.uuid "product_id"
     t.uuid "duplicate_product_id"
     t.decimal "score"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["duplicate_product_id"], name: "index_potential_product_duplicates_on_duplicate_product_id"
     t.index ["product_id", "duplicate_product_id"], name: "index_on_product_id_and_duplicate_product_id", unique: true
     t.index ["product_id"], name: "index_potential_product_duplicates_on_product_id"
