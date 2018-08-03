@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_30_130416) do
+ActiveRecord::Schema.define(version: 2018_08_03_101645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,17 @@ ActiveRecord::Schema.define(version: 2018_07_30_130416) do
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
 
+  create_table "potential_product_duplicates", force: :cascade do |t|
+    t.uuid "product_id"
+    t.uuid "duplicate_product_id"
+    t.decimal "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["duplicate_product_id"], name: "index_potential_product_duplicates_on_duplicate_product_id"
+    t.index ["product_id", "duplicate_product_id"], name: "index_on_product_id_and_duplicate_product_id", unique: true
+    t.index ["product_id"], name: "index_potential_product_duplicates_on_product_id"
+  end
+
   create_table "products", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "gtin"
     t.string "name"
@@ -207,5 +218,7 @@ ActiveRecord::Schema.define(version: 2018_07_30_130416) do
   add_foreign_key "addresses", "businesses"
   add_foreign_key "images", "products"
   add_foreign_key "investigations", "users", column: "assignee_id"
+  add_foreign_key "potential_product_duplicates", "products"
+  add_foreign_key "potential_product_duplicates", "products", column: "duplicate_product_id"
   add_foreign_key "sources", "users"
 end

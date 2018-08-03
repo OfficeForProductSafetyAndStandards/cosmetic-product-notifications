@@ -101,6 +101,13 @@
   <% end %>
 <% end -%>
 
+<% if @product.potential_product_duplicates.any? -%>
+  <h4 class="heading-small">Potential duplicates</h4>
+  <% @product.potential_product_duplicates.each do |duplicate| %>
+    <p><%= link_to duplicate.duplicate_product.name, duplicate.duplicate_product %> - score: <%= duplicate.score %></p>
+  <% end %>
+<% end -%>
+
 <div class="form-group no-print">
   <%= link_to 'Edit', edit_product_path(@product), :class => "button" %>
 </div>

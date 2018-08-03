@@ -5,15 +5,18 @@ module ProductDuplicates
 
   included do
     after_create :search_for_duplicates
+
+    has_many :potential_product_duplicates, dependent: :destroy
+    has_many :duplicate_products, through: :potential_product_duplicates
   end
 
   private
 
   def search_for_duplicates
     duplicates = Product.search(construct_search_query)
-    puts "_______________________________________________________________________________________________________________________________________________________"
-    puts duplicates.size
-    puts duplicates.collect(&:_score)
+    duplicates.records.each_with_hit do |record, hit|
+      potential_product_duplicates.create(duplicate_product: record, score: hit._score)
+    end
   end
 
   def construct_search_query
