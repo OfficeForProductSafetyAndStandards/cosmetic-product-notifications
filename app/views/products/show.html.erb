@@ -107,14 +107,14 @@
     <thead>
       <tr>
         <th>Product name</th>
-        <th>Score</th>
+        <th>Likelihood</th>
       </tr>
     </thead>
     <tbody>
       <% @product.potential_product_duplicates.each do |duplicate| %>
         <tr>
           <td><%= link_to duplicate.duplicate_product.name, duplicate.duplicate_product %></td>
-          <td><%= duplicate.score %></td>
+          <td><%= duplicate.descriptive_likelihood %></td>
         </tr>
       <% end %>
     </tbody>
