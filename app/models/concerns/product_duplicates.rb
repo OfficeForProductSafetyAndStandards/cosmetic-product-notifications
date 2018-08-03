@@ -14,8 +14,8 @@ module ProductDuplicates
 
   def search_for_duplicates
     duplicates = Product.search(construct_search_query)
-    duplicates.records.each_with_hit do |record, hit|
-      potential_product_duplicates.create(duplicate_product: record, score: hit._score)
+    duplicates.each do |result|
+      potential_product_duplicates.create(duplicate_product_id: result.id, score: result._score)
     end
   end
 
