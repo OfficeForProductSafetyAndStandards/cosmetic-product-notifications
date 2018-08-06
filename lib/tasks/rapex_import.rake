@@ -44,8 +44,12 @@ def create_records_from_notification(notification, date)
 end
 
 def create_product(notification, name)
-  Product.where.not(gtin: "").where(gtin: barcode_from_notification(notification)).first_or_create(
-    gtin: barcode_from_notification(notification),
+  barcode = barcode_from_notification(notification)
+  existing_products = Product.where(gtin: barcode) if barcode.present?
+  return existing_products.first if existing_products&.any?
+
+  Product.create(
+    gtin: barcode,
     name: name,
     description: field_from_notification(notification, "description"),
     model: field_from_notification(notification, "type_numberOfModel"),
