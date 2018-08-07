@@ -3,6 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import 'slick';
 @import 'slick-theme';
+
+.date-select-control select {
+    margin-bottom: 12px;
+}
+
 @media print
 {
     #pager,

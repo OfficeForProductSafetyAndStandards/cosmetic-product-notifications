@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 2018_08_07_110434) do
     t.string "serial_number"
     t.string "manufacturer"
     t.string "country_of_origin"
-    t.datetime "date_placed_on_market"
+    t.date "date_placed_on_market"
     t.string "associated_parts"
   end
 

@@ -7,7 +7,7 @@ class ChangeProductDataStructure < ActiveRecord::Migration[5.2]
     add_column :products, :serial_number, :string
     add_column :products, :manufacturer, :string
     add_column :products, :country_of_origin, :string
-    add_column :products, :date_placed_on_market, :datetime
+    add_column :products, :date_placed_on_market, :date
     add_column :products, :associated_parts, :string
   end
 end
