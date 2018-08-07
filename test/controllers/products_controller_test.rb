@@ -28,9 +28,8 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
         description: @product.description,
         gtin: @product.gtin,
         model: @product.model,
-        mpn: @product.mpn,
         name: @product.name,
-        purchase_url: @product.purchase_url
+        url_reference: @product.url_reference
       } }
     end
 
@@ -54,9 +53,8 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       description: @product.description,
       gtin: @product.gtin,
       model: @product.model,
-      mpn: @product.mpn,
       name: @product.name,
-      purchase_url: @product.purchase_url
+      url_reference: @product.url_reference
     } }
     assert_redirected_to product_url(@product)
   end
