@@ -5,8 +5,8 @@ class PotentialProductDuplicate < ApplicationRecord
   after_create :create_inverse, unless: :inverse?
   after_destroy :destroy_inverses, if: :inverse?
 
-  # The elasticsearch score does not have a hard upper limit, but anything over
-  # 25 is going to be very similar
+  # The elasticsearch score does not have a hard upper limit
+  # These numbers have been decided on using trial and error
   def descriptive_likelihood
     return "Very likely" if score >= 150
     return "Likely" if score >= 120
