@@ -111,7 +111,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @product.potential_product_duplicates.each do |duplicate| %>
+      <% @product.potential_product_duplicates.sort_by { |duplicate| -duplicate.score }.each do |duplicate| %>
         <tr>
           <td><%= link_to duplicate.duplicate_product.name, duplicate.duplicate_product %></td>
           <td><%= duplicate.descriptive_likelihood %></td>

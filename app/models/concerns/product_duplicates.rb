@@ -12,10 +12,24 @@ module ProductDuplicates
 
   private
 
+  SEARCH_PROPERTIES = [
+    { key: :name, weighting: 3 },
+    { key: :gtin, weighting: 6 },
+    { key: :model, weighting: 1 },
+    { key: :brand, weighting: 1 },
+    { key: :mpn, weighting: 4 },
+    { key: :batch_number, weighting: 2 },
+    { key: :description, weighting: 0.2 }
+  ].freeze
+
+  ELASTICSEARCH_THRESHOLD = 90
+
   def search_for_duplicates
     duplicates = Product.search(construct_search_query)
     duplicates.each do |result|
-      potential_product_duplicates.create(duplicate_product_id: result.id, score: result._score)
+      if result._score > ELASTICSEARCH_THRESHOLD
+        potential_product_duplicates.create(duplicate_product_id: result.id, score: result._score)
+      end
     end
   end
 
@@ -23,31 +37,24 @@ module ProductDuplicates
     {
       query: {
         bool: {
-          should: priority_fields + other_fields
+          should: construct_query_from_properties
         }
       }
     }
   end
 
-  def priority_fields
-    construct_query_from_keys(%i[name gtin model], 2)
-  end
-
-  def other_fields
-    construct_query_from_keys(%i[brand mpn batch_number], 1)
-  end
-
-  def construct_query_from_keys(keys, boost)
-    keys.reject { |key| self[key].blank? }
-        .collect do |key|
-          query = {
-            match: {}
-          }
-          query[:match][key] = {
-            "query": self[key],
-            "boost": boost
-          }
-          query
-        end
+  def construct_query_from_properties
+    SEARCH_PROPERTIES
+      .reject { |property| self[property[:key]].blank? }
+      .collect do |property|
+        query = {
+          match: {}
+        }
+        query[:match][property[:key]] = {
+          "query": self[property[:key]],
+          "boost": property[:weighting]
+        }
+        query
+      end
   end
 end
