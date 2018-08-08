@@ -35,8 +35,10 @@ Create an S3 bucket named `int-mspsds`. This bucket needs public _read_ access.
 
 ## Elastic Search
 
-Create an AWS Elasticsearch domain called `int-mspsds`, choosing a suitable instance size.
-For access, choose public, and then allow your int-mspsds user to access the resource (by pasting their ARN).
+Create an empty elasticsearch instance in the `int` space
+
+    cf marketplace -s elasticsearch
+    cf create-service elasticsearch small-ha-6.x mspsds-elasticsearch
 
 ## Rails Site
 
@@ -54,7 +56,6 @@ Create the app using the current repository
     cf set-env mspsds-int AWS_ACCESS_KEY_ID XXX
     cf set-env mspsds-int AWS_SECRET_ACCESS_KEY XXX
     cf set-env mspsds-int AWS_REGION XXX
-    cf set-env mspsds-int AWS_ELASTICSEARCH_URL XXX
     cf set-env mspsds-int AWS_S3_BUCKET XXX
 
     # Add API key created in Notify
@@ -71,6 +72,7 @@ Create the app using the current repository
 
     # Bind to service
     cf bind-service mspsds-int mspsds-database
+    cf bind-service mspsds-int mspsds-elasticsearch
     cf restage mspsds-int
 
 Trigger the deploy script on travis.
