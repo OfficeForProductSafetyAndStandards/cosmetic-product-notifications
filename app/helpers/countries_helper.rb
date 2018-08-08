@@ -2,22 +2,15 @@ require "net/http"
 require "json"
 
 module CountriesHelper
-  COUNTRIES_REGISTER_URL = "https://country.register.gov.uk/records.json?page-size=5000".freeze
+  PATH_TO_COUNTRIES_LIST =
+    "node_modules/govuk-country-and-territory-autocomplete/dist/location-autocomplete-canonical-list.json".freeze
 
-  def all_countries
-    fetch_countries
+  # JSON is of the form [["Abu Dhabi", "territory:AE-AZ"], ["Afghanistan", "country:AF"]]
+  def country_from_code(code)
+    all_countries.find { |country| country[1] == code }[0]
   end
 
-  def fetch_countries
-    uri = URI(COUNTRIES_REGISTER_URL)
-    req = Net::HTTP::Get.new(uri)
-    req["Authorization"] = ENV["COMPANIES_HOUSE_API_KEY"]
-
-    res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-      http.request(req)
-    end
-    JSON.parse(res.body).collect do |country|
-      country[1]["item"][0]["name"]
-    end
+  def all_countries
+    JSON.parse(File.read(PATH_TO_COUNTRIES_LIST))
   end
 end
