@@ -61,7 +61,10 @@
     <%= form.select :country_of_origin,
       countries,
       { include_blank: "Unknown" },
-      { :class => "form-control js-product-country-of-origin" }
+      {
+        class: "form-control js-product-country-of-origin",
+        id: "location-autocomplete"
+      }
     %>
   </div>
 
