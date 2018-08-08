@@ -21,7 +21,6 @@ services:
     environment:
       - NOTIFY_API_KEY=$NOTIFY_API_KEY
       - COMPANIES_HOUSE_API_KEY=$COMPANIES_HOUSE_API_KEY
-      - GOVUK_REGISTERS_API_KEY=$GOVUK_REGISTERS_API_KEY
     depends_on:
       - db
       - elasticsearch
