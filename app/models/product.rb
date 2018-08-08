@@ -1,6 +1,7 @@
 require "elasticsearch/model"
 
 class Product < ApplicationRecord
+  include CountriesHelper
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
@@ -16,6 +17,10 @@ class Product < ApplicationRecord
   accepts_nested_attributes_for :source
 
   has_paper_trail
+
+  def country_of_origin_for_display
+    country_from_code country_of_origin
+  end
 end
 
 Product.import force: true # for auto sync model with elastic search

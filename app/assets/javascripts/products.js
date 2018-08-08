@@ -15,6 +15,11 @@ $(document).on("turbolinks:load", function() {
 
     // Rails date_select does not allow the setting of classes
     $('.date-select-control select').addClass("form-control");
+
+    openregisterLocationPicker({
+        selectElement: document.getElementById('location-autocomplete'),
+        url: '/assets/govuk-country-and-territory-autocomplete/dist/location-autocomplete-graph.json'
+    })
 });
 
 function buildProductQuery() {
