@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_30_130416) do
+ActiveRecord::Schema.define(version: 2018_08_07_110434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,13 +118,16 @@ ActiveRecord::Schema.define(version: 2018_07_30_130416) do
     t.string "name"
     t.text "description"
     t.string "model"
-    t.string "mpn"
     t.string "batch_number"
-    t.string "purchase_url"
+    t.string "url_reference"
     t.string "brand"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image_url"
+    t.string "serial_number"
+    t.string "manufacturer"
+    t.string "country_of_origin"
+    t.date "date_placed_on_market"
+    t.string "associated_parts"
   end
 
   create_table "rapex_imports", force: :cascade do |t|

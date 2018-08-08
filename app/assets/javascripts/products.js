@@ -12,6 +12,9 @@ $(document).on("turbolinks:load", function() {
     searchOnTextInput($('.new-product-page .search-term'), '/products/table', buildProductQuery, function(data) {
         $('#suggested-products').html(data);
     });
+
+    // Rails date_select does not allow the setting of classes
+    $('.date-select-control select').addClass("form-control");
 });
 
 function buildProductQuery() {

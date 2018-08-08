@@ -25,6 +25,11 @@
   </tr>
 
   <tr>
+    <th>Brand</th>
+    <td><%= @product.brand %></td>
+  </tr>
+
+  <tr>
     <th>Description</th>
     <td><%= @product.description %></td>
   </tr>
@@ -35,23 +40,38 @@
   </tr>
 
   <tr>
-    <th>MPN (Manufacturer Part Number)</th>
-    <td><%= @product.mpn %></td>
-  </tr>
-
-  <tr>
     <th>Batch number</th>
     <td><%= @product.batch_number %></td>
   </tr>
 
   <tr>
-    <th>Purchase URL</th>
-    <td><%= link_to(@product.purchase_url, @product.purchase_url, target: "_blank") unless @product.purchase_url.nil? %></td>
+    <th>Serial number</th>
+    <td><%= @product.serial_number %></td>
   </tr>
 
   <tr>
-    <th>Brand</th>
-    <td><%= @product.brand %></td>
+    <th>URL reference</th>
+    <td><%= link_to(@product.url_reference, @product.url_reference, target: "_blank") unless @product.url_reference.nil? %></td>
+  </tr>
+
+  <tr>
+    <th>Manufacturer</th>
+    <td><%= @product.manufacturer %></td>
+  </tr>
+
+  <tr>
+    <th>Country of origin</th>
+    <td><%= @product.country_of_origin %></td>
+  </tr>
+
+  <tr>
+    <th>Date placed on the market</th>
+    <td><%= @product.date_placed_on_market&.to_s :long_ordinal %></td>
+  </tr>
+
+  <tr>
+    <th>Associated parts or components</th>
+    <td><%= @product.associated_parts %></td>
   </tr>
 
   <tr>
