@@ -24,6 +24,7 @@ gem "paper_trail"
 gem "pundit"
 gem "rolify"
 gem "select2-rails"
+gem "sidekiq"
 
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c8ac844"
 gem "axlsx_rails"

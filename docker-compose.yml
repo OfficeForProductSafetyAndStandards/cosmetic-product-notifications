@@ -11,6 +11,12 @@ services:
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     volumes:
       - elasticsearch-volume:/usr/share/elasticsearch/data
+  redis:
+    image: redis
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    volumes:
+      - redis-volume:/data
   web:
     build: .
     volumes:
@@ -24,9 +30,26 @@ services:
     depends_on:
       - db
       - elasticsearch
+      - redis
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - bundle-cache:/usr/local/bundle
+      - npm-cache:/root/.npm
+      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+      - ${PWD-.}:/app
+    environment:
+      - NOTIFY_API_KEY=$NOTIFY_API_KEY
+      - COMPANIES_HOUSE_API_KEY=$COMPANIES_HOUSE_API_KEY
+    depends_on:
+      - db
+      - elasticsearch
+      - redis
 
 volumes:
   postgres-volume:
   elasticsearch-volume:
+  redis-volume:
   bundle-cache:
   npm-cache:
