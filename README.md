@@ -68,6 +68,12 @@ This project is following the GOV UK style guides.
 We have used the GOV UK elements library to define CSS classes.
 The design guide for this is [here](http://govuk-elements.herokuapp.com/).
 
+## Deployment
+Anything which is pushed to `master` will trigger the [travis build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds) and cause a deployment to the INT site.
+
+Anthing pushed to the branch `staging` will cause travis to instead build to the STAGING environment. Please only do this if you are confident that this is
+stable commit.
+
 ## Licence
 
 Unless stated otherwise, the codebase is released under the MIT License. This covers both the codebase and any sample code in the documentation.

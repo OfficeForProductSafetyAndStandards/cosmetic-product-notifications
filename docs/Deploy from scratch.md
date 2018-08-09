@@ -44,7 +44,7 @@ Create an empty elasticsearch instance in the `int` space
 
 Create the app using the current repository
 
-    cf push
+    cf push mspsds-int # This may fail, but as long as the app is created, we can still add the env variables and come back to it!
     # Add the "RAILS_ENV" variable to tell rails to use the prod database
     cf set-env mspsds-int RAILS_ENV production
 
@@ -73,7 +73,6 @@ Create the app using the current repository
     # Bind to service
     cf bind-service mspsds-int mspsds-database
     cf bind-service mspsds-int mspsds-elasticsearch
-    cf restage mspsds-int
 
 Trigger the deploy script on travis.
 Then seed the database
