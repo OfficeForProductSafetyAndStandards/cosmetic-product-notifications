@@ -24,9 +24,8 @@ services:
       - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}:/app
-    environment:
-      - NOTIFY_API_KEY=$NOTIFY_API_KEY
-      - COMPANIES_HOUSE_API_KEY=$COMPANIES_HOUSE_API_KEY
+    env_file:
+      - .env
     depends_on:
       - db
       - elasticsearch
@@ -39,9 +38,8 @@ services:
       - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}:/app
-    environment:
-      - NOTIFY_API_KEY=$NOTIFY_API_KEY
-      - COMPANIES_HOUSE_API_KEY=$COMPANIES_HOUSE_API_KEY
+    env_file:
+      - .env
     depends_on:
       - db
       - elasticsearch
