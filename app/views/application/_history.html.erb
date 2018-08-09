@@ -7,7 +7,7 @@
     <summary><span class="summary">
         <%= version.event.upcase %>
         on <%= version.created_at.to_formatted_s(:db) %>
-        by <%= version.whodunnit ? User.find(version.whodunnit).email : "anonymous" %>
+        by <%= version.whodunnit && (user = User.find_by(id: version.whodunnit)).present? ? user.email : "anonymous" %>
     </span></summary>
 
     <div class="panel panel-border-narrow">
