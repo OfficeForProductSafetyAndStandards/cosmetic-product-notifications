@@ -13,7 +13,6 @@ services:
       - elasticsearch-volume:/usr/share/elasticsearch/data
   redis:
     image: redis
-    command: ["redis-server", "--appendonly", "yes"]
     hostname: redis
     volumes:
       - redis-volume:/data
