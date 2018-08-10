@@ -11,14 +11,43 @@
     </ol>
 </div>
 
-<h1 class="heading-xlarge">Products</h1>
-<%= link_to 'New product', new_product_path, :class => "button" %><br /><br />
 
-<%= form_with(url: products_path, method: :get) do |form| %>
+<div class="govuk-tabs" data-module="tabs">
+  <h2 class="govuk-tabs__title">
+    Contents
+  </h2>
+
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="/pages/example">
+        Issues
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="/investigations">
+        Investigations
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="/businesses">
+        Businesses
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="/products" aria-selected="true">
+        Products
+      </a>
+    </li>
+  </ul>
+</div>
+
+<%= link_to 'New product', new_product_path, class: "button" %><br /><br />
+
+<%= form_with(url: products_path, method: "get", class: "grey govuk-!-padding-3") do |form| %>
   <div class="form-group">
-    <%= form.label "Search", :class => "form-label" %>
-    <%= form.text_field :q, value: params[:q], :class => "form-control" %>
-    <%= form.submit "Go", name: nil, :class => "button" %>
+    <%= form.label "Search for Products", class: "form-label" %>
+    <%= form.text_field :q, value: params[:q], class: "form-control" %>
+    <%= form.submit ">", name: nil, class: "button" %>
   </div>
 <% end %>
 

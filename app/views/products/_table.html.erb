@@ -1,12 +1,12 @@
 <table>
   <thead>
     <tr>
-      <th>GTIN (Barcode)</th>
       <th>Name</th>
       <th>Brand</th>
+      <th>Category(s)</th>
+      <th>Origin Co</th>
       <% unless @compressed %>
         <th>Investigations</th>
-        <th colspan="1"></th>
       <% end %>
     </tr>
   </thead>
@@ -14,12 +14,12 @@
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= product.gtin %></td>
         <td><%= link_to product.name, product %></td>
         <td><%= product.brand %></td>
+        <td>N/A</td>
+        <td><%= product.country_of_origin_for_display%></td>
         <% unless @compressed %>
           <td><%= product.investigations.length %></td>
-          <td><%= link_to 'Delete', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>

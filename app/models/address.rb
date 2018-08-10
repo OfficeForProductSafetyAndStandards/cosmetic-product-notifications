@@ -16,6 +16,13 @@ class Address < ApplicationRecord
     ].reject(&:blank?).join(", ")
   end
 
+  def short
+    [
+        locality,
+        country
+    ].reject(&:blank?).join(", ")
+  end
+
   def from_companies_house?
     source.name == "Companies House"
   end

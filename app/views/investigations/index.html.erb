@@ -12,28 +12,94 @@
 </div>
 
 
-<h1 class="heading-xlarge">Investigations</h1>
-<%= link_to 'New investigation', new_investigation_path, :class => "button" %><br /><br />
+<div class="govuk-tabs" data-module="tabs">
+  <h2 class="govuk-tabs__title">
+    Contents
+  </h2>
+
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="/pages/example">
+        Issues
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="/investigations" aria-selected="true">
+        Investigations
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="/businesses">
+        Businesses
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="/products">
+        Products
+      </a>
+    </li>
+  </ul>
+</div>
+
+<% if @current_user %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <div class="govuk-body govuk-!-font-size-48 govuk-grid-column-one-quarter" style="text-align:right">
+        <%= @investigations.where(assignee: @current_user).count %>
+      </div>
+      <div class="govuk-grid-column-half">
+        Investigations assigned to you >
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="govuk-body govuk-!-font-size-48 govuk-grid-column-one-quarter" style="text-align:right">
+        <%= @investigations.where(assignee: @current_user).count %>
+      </div>
+      <div class="govuk-grid-column-half">
+        Overdue actions >
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="govuk-body govuk-!-font-size-48 govuk-grid-column-one-quarter" style="text-align:right">
+        <%= @investigations.where(assignee: @current_user).count %>
+      </div>
+      <div class="govuk-grid-column-half">
+        Actions due soon >
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <%= link_to 'Create investigation', new_investigation_path, :class => "button" %><br /><br />
+  </div>
+</div>
 
 <%= will_paginate @investigations %>
 <br />
 <table>
   <thead>
     <tr>
-      <th>ID</th>
+      <th>Case ID</th>
+      <th>Product</th>
       <th>Status</th>
-      <th>Activity</th>
-      <th colspan="1"></th>
+      <th>Last updated</th>
+      <th>Assigned to</th>
     </tr>
   </thead>
 
   <tbody>
     <% @investigations.each do |investigation| %>
       <tr>
-        <td><%= link_to investigation.id, investigation %></td>
+        <td><%= link_to investigation.title, investigation, class: "govuk-link"%></td>
+        <td>
+          <%= investigation.products.first ? investigation.products.first.name : "" %>
+          <%= investigation.products.first ? investigation.products.first.brand : "" %>
+        </td>
         <td><%= investigation.is_closed? ? "Closed" : "Open" %></td>
-        <td><%= investigation.activities.length %></td>
-        <td><%= link_to 'Delete', investigation, method: :delete, data: { confirm: 'Are you sure?' } if policy(investigation).destroy? %></td>
+        <td><%= investigation.updated_at.strftime("%d %B %Y") %></td>
+        <td><%= investigation.assignee ? investigation.assignee.email : "" %></td>
       </tr>
     <% end %>
   </tbody>
