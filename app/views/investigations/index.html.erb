@@ -1,44 +1,51 @@
 <% content_for :page_title, "Investigations - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Investigations', investigations_path %>
-        </li>
-    </ol>
-</div>
+<%= render "layouts/navbar" %>
 
+<% if @current_user %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <div class="govuk-grid-column-one-quarter assigned-number">
+        <%= @investigations.where(assignee: @current_user).count %>
+      </div>
+      <div class="govuk-grid-column-half investigation-number-description">
+        Investigations assigned to you
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third not-implemented">
+      <div class="govuk-grid-column-one-quarter overdue-number">
+        <%= @investigations.where(assignee: @current_user).count %>
+      </div>
+      <div class="govuk-grid-column-half investigation-number-description">
+        Overdue actions
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third not-implemented">
+      <div class="govuk-grid-column-one-quarter due-number">
+        <%= @investigations.where(assignee: @current_user).count %>
+      </div>
+      <div class="govuk-grid-column-half investigation-number-description">
+        Actions due soon
+      </div>
+    </div>
+  </div>
+<% end %>
 
-<h1 class="heading-xlarge">Investigations</h1>
-<%= link_to 'New investigation', new_investigation_path, :class => "button" %><br /><br />
+<%= form_with(url: investigations_path, method: "get", class: "grey govuk-!-padding-3") do |form| %>
+  <div class="form-group">
+    <%= form.label "Search for keywords", class: "form-label" %>
+    <%= form.text_field :q, value: params[:q], class: "form-control" %>
+    <%= form.submit ">", name: nil, class: "govuk-button" %>
+  </div>
+<% end %>
+</br>
+
+<%= link_to 'Assign', new_investigation_path, class: "govuk-button govuk-button--disabled not-implemented" %>
+<%= link_to 'Create investigation', new_investigation_path, class: "govuk-button right" %>
 
 <%= will_paginate @investigations %>
-<br />
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Status</th>
-      <th>Activity</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @investigations.each do |investigation| %>
-      <tr>
-        <td><%= link_to investigation.id, investigation %></td>
-        <td><%= investigation.is_closed? ? "Closed" : "Open" %></td>
-        <td><%= investigation.activities.length %></td>
-        <td><%= link_to 'Delete', investigation, method: :delete, data: { confirm: 'Are you sure?' } if policy(investigation).destroy? %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<br />
+<%= render 'table', investigation: @investigations %>
 <%= will_paginate @investigations %>
+</br>
+<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx), class: "govuk-button"%>
 
-<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx)%>

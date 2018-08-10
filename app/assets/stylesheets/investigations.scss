@@ -22,6 +22,37 @@
     }
 }
 
+.assigned-number {
+  font-size: 3em;
+  text-align: right;
+  color: $light-blue;
+}
+
+.overdue-number {
+  font-size: 3em;
+  text-align: right;
+  color: red;
+}
+
+.due-number {
+  font-size: 3em;
+  text-align: right;
+  color: $green;
+}
+
+.investigation-number-description {
+  padding-top: 0.75em;
+  padding-right: 10%;
+}
+
+.investigation-number-description::after {
+  content: " >";
+}
+
+td > span {
+  display: block;
+}
+
 @media print
 {
     #pager,

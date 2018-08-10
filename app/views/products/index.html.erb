@@ -1,30 +1,19 @@
 <% content_for :page_title, "Products - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Products', products_path %>
-        </li>
-    </ol>
-</div>
+<%= render "layouts/navbar" %>
 
-<h1 class="heading-xlarge">Products</h1>
-<%= link_to 'New product', new_product_path, :class => "button" %><br /><br />
-
-<%= form_with(url: products_path, method: :get) do |form| %>
+<%= form_with(url: products_path, method: "get", class: "grey govuk-!-padding-3") do |form| %>
   <div class="form-group">
-    <%= form.label "Search", :class => "form-label" %>
-    <%= form.text_field :q, value: params[:q], :class => "form-control" %>
-    <%= form.submit "Go", name: nil, :class => "button" %>
+    <%= form.label "Search for Products", class: "form-label" %>
+    <%= form.text_field :q, value: params[:q], class: "form-control" %>
+    <%= form.submit ">", name: nil, class: "govuk-button" %>
   </div>
 <% end %>
+</br>
+
+<%= link_to 'New product', new_product_path, class: "govuk-button right" %><br /><br />
 
 <%= will_paginate @products %>
-<br />
 <%= render 'table', product: @products %>
-<br />
 <%= will_paginate @products %>
 
