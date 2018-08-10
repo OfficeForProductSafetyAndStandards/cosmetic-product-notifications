@@ -19,7 +19,6 @@ cache:
 jobs:
   include:
   - stage: test
-    if: branch != MSPSDS-180_redis
     before_install:
       - mkdir -p ~/bundle-cache
       - mkdir -p ~/npm-cache
