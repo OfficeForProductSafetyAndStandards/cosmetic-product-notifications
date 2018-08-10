@@ -24,8 +24,6 @@ services:
       - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}:/app
-    env_file:
-      - .env
     depends_on:
       - db
       - elasticsearch
@@ -38,8 +36,6 @@ services:
       - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}:/app
-    env_file:
-      - .env
     depends_on:
       - db
       - elasticsearch
