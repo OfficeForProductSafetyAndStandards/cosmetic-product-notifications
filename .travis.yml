@@ -7,7 +7,6 @@ services:
 
 branches:
   only:
-  - MSPSDS-180_redis
   - master
   - staging
   - live
@@ -35,20 +34,21 @@ jobs:
       - docker-compose exec web bundle exec rake db:create db:schema:load test
     after_script:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
-  - stage: deploy-to-int-test
-    if: branch = MSPSDS-180_redis AND type != pull_request
-    script: SPACE=int ./infrastructure/scripts/deploy-app.sh
-  - if: branch = MSPSDS-180_redis AND type != pull_request
-    script: SPACE=int ./infrastructure/scripts/deploy-sidekiq.sh
   - stage: deploy-to-int
     if: branch = master AND type != pull_request
     script: SPACE=int ./infrastructure/scripts/deploy-app.sh
+  - if: branch = master AND type != pull_request
+    script: SPACE=int ./infrastructure/scripts/deploy-sidekiq.sh
   - stage: deploy-to-staging
     if: branch = staging AND type != pull_request
     script: SPACE=staging ./infrastructure/scripts/deploy-app.sh
+  - if: branch = staging AND type != pull_request
+    script: SPACE=int ./infrastructure/scripts/deploy-sidekiq.sh
   - stage: deploy-to-live
     if: branch = live AND type != pull_request
     script: SPACE=live ./infrastructure/scripts/deploy-app.sh
+  - if: branch = staging AND type != pull_request
+    script: SPACE=int ./infrastructure/scripts/deploy-sidekiq.sh
 
 notifications:
   email:
