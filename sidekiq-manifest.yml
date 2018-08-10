@@ -2,7 +2,8 @@
 applications:
 - name: mspsds-sidekiq
   memory: 256M
-  buildpack: ruby_buildpack
+  buildpacks:
+    - ruby_buildpack
   instances: 1
   path: .
   command: bundle exec sidekiq

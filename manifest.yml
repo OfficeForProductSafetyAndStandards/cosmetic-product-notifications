@@ -4,7 +4,8 @@ applications:
   random-route: true
   memory: 256M
   instances: 1
-  buildpack: ruby_buildpack
+  buildpacks:
+    - ruby_buildpack
   path: .
   command: bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
   services:
