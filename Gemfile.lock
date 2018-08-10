@@ -133,6 +133,9 @@ GEM
     execjs (2.7.0)
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware-aws-sigv4 (0.2.4)
+      aws-sigv4 (~> 1.0)
+      faraday (>= 0.9)
     ffi (1.9.25)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -334,6 +337,7 @@ DEPENDENCIES
   devise_invitable
   elasticsearch-model
   elasticsearch-rails
+  faraday_middleware-aws-sigv4
   govuk_frontend_toolkit
   govuk_template
   jbuilder (~> 2.5)
