@@ -40,11 +40,18 @@ Create an empty elasticsearch instance in the `int` space
     cf marketplace -s elasticsearch
     cf create-service elasticsearch small-ha-6.x mspsds-elasticsearch
 
+## Redis
+
+Create an empty redis instance in the `int` space. Sidekiq will only work with the unclustered version
+
+    cf marketplace -s redis
+    cf create-service redis tiny-unclustered-3.2 mspsds-redis
+
 ## Rails Site
 
 Create the app using the current repository
 
-    cf push
+    cf push --no-start
     # Add the "RAILS_ENV" variable to tell rails to use the prod database
     cf set-env mspsds-int RAILS_ENV production
 
@@ -58,6 +65,7 @@ Create the app using the current repository
     cf set-env mspsds-int AWS_REGION XXX
     cf set-env mspsds-int AWS_S3_BUCKET XXX
 
+
     # Add API key created in Notify
     cf set-env mspsds-int NOTIFY_API_KEY XXX
     # Add API key created in Companies house
@@ -70,12 +78,18 @@ Create the app using the current repository
     cf set-env mspsds-int ADMIN_EMAIL "john@example.com"
     cf set-env mspsds-int ADMIN_PASSWORD XXX
 
-    # Bind to service
-    cf bind-service mspsds-int mspsds-database
-    cf bind-service mspsds-int mspsds-elasticsearch
-    cf restage mspsds-int
+    # Repeat a subset for mspsds-sidekiq
+    cf push -f sidekiq-manifest.yml --no-start
+    cf set-env mspsds-sidekiq RAILS_ENV production
+    cf set-env mspsds-sidekiq AWS_ACCESS_KEY_ID XXX
+    cf set-env mspsds-sidekiq AWS_SECRET_ACCESS_KEY XXX
+    cf set-env mspsds-sidekiq AWS_REGION XXX
+    cf set-env mspsds-sidekiq AWS_S3_BUCKET XXX
+    cf set-env mspsds-sidekiq NOTIFY_API_KEY XXX
+    cf set-env mspsds-sidekiq COMPANIES_HOUSE_API_KEY XXX
+    cf set-env mspsds-sidekiq MSPSDS_HOST "mspsds-int.cloudapps.digital"
 
-Trigger the deploy script on travis.
+Trigger the deploy scripts on travis
 Then seed the database
 
     cf run-task mspsds-int "bundle exec rake db:seed" --name seed-db
