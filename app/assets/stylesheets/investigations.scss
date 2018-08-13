@@ -4,22 +4,78 @@
 @import "colours";
 
 .show-investigation {
-    .link-back {
-        margin: 0;
+
+  .govuk-grid-row {
+    padding-bottom: 2em;
+  }
+
+  .link-back {
+    margin: 0;
+  }
+
+  .sub-heading, .activity {
+    border-bottom: 1px solid $grey-3;
+  }
+
+  .activity {
+    margin-bottom: 12px;
+  }
+
+  .product-image, .case-image {
+    width: 100%;
+    display: block;
+  }
+
+  .top-details {
+    font-size: 0.75em;
+    margin-bottom: 0.5em;
+  }
+
+  .investigation-details {
+    .title {
+      font-size: 1.5em;
+      font-weight: bold;
     }
 
-    .sub-heading, .activity {
-        border-bottom: 1px solid $grey-3;
+    .issue-id {
+      font-weight: bold;
     }
+    span {
+      display: block;
+      padding-top: 0.75em;
+    }
+  }
 
-    .activity {
-        margin-bottom: 12px;
-    }
+  .event-summary-box {
+    background-color: $purple;
+    color: $white;
+    padding: 1em;
+    margin-bottom: 0.5em;
 
-    .product-image, .case-image {
-        width: 100%;
-        display: block;
+    span {
+      display: block;
     }
+  }
+
+  .product-details {
+    span {
+      display: block;
+    }
+  }
+
+  .investigation-activity {
+    .add-activity-button, .investigation-history{
+      font-size: 0.75em;
+      padding: 0.2em;
+    }
+  }
+
+  .investigation-business {
+    .add-business-button {
+      font-size: 0.75em;
+      padding: 0.2em;
+    }
+  }
 }
 
 .assigned-number {
