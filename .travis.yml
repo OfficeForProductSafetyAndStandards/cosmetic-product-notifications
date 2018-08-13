@@ -42,12 +42,12 @@ jobs:
     if: branch = staging AND type != pull_request
     script: SPACE=staging ./infrastructure/scripts/deploy-app.sh
   - if: branch = staging AND type != pull_request
-    script: SPACE=int ./infrastructure/scripts/deploy-sidekiq.sh
+    script: SPACE=staging ./infrastructure/scripts/deploy-sidekiq.sh
   - stage: deploy-to-live
     if: branch = live AND type != pull_request
     script: SPACE=live ./infrastructure/scripts/deploy-app.sh
-  - if: branch = staging AND type != pull_request
-    script: SPACE=int ./infrastructure/scripts/deploy-sidekiq.sh
+  - if: branch = live AND type != pull_request
+    script: SPACE=live ./infrastructure/scripts/deploy-sidekiq.sh
 
 notifications:
   email:
