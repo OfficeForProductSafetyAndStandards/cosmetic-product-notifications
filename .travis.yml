@@ -29,8 +29,8 @@ jobs:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
       - sleep 10 # wait for PostgreSQl and Elasticsearch to start
     script: 
-      - docker-compose exec web bundle exec rubocop
-      - docker-compose exec web bundle exec rake db:create db:schema:load test
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml  exec web bundle exec rubocop
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml  exec web bundle exec rake db:create db:schema:load test
     after_script:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
   - stage: deploy-to-int
