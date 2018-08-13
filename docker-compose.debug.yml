@@ -6,6 +6,3 @@ services:
     ports:
       - "1234:1234"
       - "3000:3000"
-    environment:
-      - NOTIFY_API_KEY=$NOTIFY_API_KEY
-      - COMPANIES_HOUSE_API_KEY=$COMPANIES_HOUSE_API_KEY

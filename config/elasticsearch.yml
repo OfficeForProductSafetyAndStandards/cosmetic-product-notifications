@@ -12,4 +12,4 @@ test:
   <<: *default
 
 production:
-  :url: <%= ENV['VCAP_SERVICES'] && JSON.parse(ENV['VCAP_SERVICES'])["elasticsearch"][0]["credentials"]["uri"] %>
+  :url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("mspsds-elasticsearch")["uri"] %>
