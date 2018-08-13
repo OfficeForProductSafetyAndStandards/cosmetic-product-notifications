@@ -1,110 +1,51 @@
 <% content_for :page_title, "Investigations - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Investigations', investigations_path %>
-        </li>
-    </ol>
-</div>
-
-
-<div class="govuk-tabs" data-module="tabs">
-  <h2 class="govuk-tabs__title">
-    Contents
-  </h2>
-
-  <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/pages/example">
-        Issues
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/investigations" aria-selected="true">
-        Investigations
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/businesses">
-        Businesses
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/products">
-        Products
-      </a>
-    </li>
-  </ul>
-</div>
+<%= render "layouts/navbar" %>
 
 <% if @current_user %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
-      <div class="govuk-body govuk-!-font-size-48 govuk-grid-column-one-quarter" style="text-align:right">
+      <div class="govuk-grid-column-one-quarter assigned-number">
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
-      <div class="govuk-grid-column-half">
-        Investigations assigned to you >
+      <div class="govuk-grid-column-half investigation-number-description">
+        Investigations assigned to you
       </div>
     </div>
-    <div class="govuk-grid-column-one-third">
-      <div class="govuk-body govuk-!-font-size-48 govuk-grid-column-one-quarter" style="text-align:right">
+    <div class="govuk-grid-column-one-third not-implemented">
+      <div class="govuk-grid-column-one-quarter overdue-number">
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
-      <div class="govuk-grid-column-half">
-        Overdue actions >
+      <div class="govuk-grid-column-half investigation-number-description">
+        Overdue actions
       </div>
     </div>
-    <div class="govuk-grid-column-one-third">
-      <div class="govuk-body govuk-!-font-size-48 govuk-grid-column-one-quarter" style="text-align:right">
+    <div class="govuk-grid-column-one-third not-implemented">
+      <div class="govuk-grid-column-one-quarter due-number">
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
-      <div class="govuk-grid-column-half">
-        Actions due soon >
+      <div class="govuk-grid-column-half investigation-number-description">
+        Actions due soon
       </div>
     </div>
   </div>
 <% end %>
 
-<div class="govuk-width-container">
-  <div class="govuk-grid-row">
-    <%= link_to 'Create investigation', new_investigation_path, :class => "button" %><br /><br />
+<%= form_with(url: investigations_path, method: "get", class: "grey govuk-!-padding-3") do |form| %>
+  <div class="form-group">
+    <%= form.label "Search for keywords", class: "form-label" %>
+    <%= form.text_field :q, value: params[:q], class: "form-control" %>
+    <%= form.submit ">", name: nil, class: "govuk-button" %>
   </div>
-</div>
+<% end %>
+</br>
+
+<%= link_to 'Assign', new_investigation_path, class: "govuk-button govuk-button--disabled not-implemented" %>
+<%= link_to 'Create investigation', new_investigation_path, class: "govuk-button right" %>
 
 <%= will_paginate @investigations %>
-<br />
-<table>
-  <thead>
-    <tr>
-      <th>Case ID</th>
-      <th>Product</th>
-      <th>Status</th>
-      <th>Last updated</th>
-      <th>Assigned to</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @investigations.each do |investigation| %>
-      <tr>
-        <td><%= link_to investigation.title, investigation, class: "govuk-link"%></td>
-        <td>
-          <%= investigation.products.first ? investigation.products.first.name : "" %>
-          <%= investigation.products.first ? investigation.products.first.brand : "" %>
-        </td>
-        <td><%= investigation.is_closed? ? "Closed" : "Open" %></td>
-        <td><%= investigation.updated_at.strftime("%d %B %Y") %></td>
-        <td><%= investigation.assignee ? investigation.assignee.email : "" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<br />
+<%= render 'table', investigation: @investigations %>
 <%= will_paginate @investigations %>
+</br>
+<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx), class: "govuk-button"%>
 
-<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx)%>

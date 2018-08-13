@@ -16,7 +16,7 @@
 
 
 <h1 class="heading-xlarge">Activities</h1>
-<%= link_to 'New activity', new_investigation_activity_path(@investigation), :class => "button" %><br /><br />
+<%= link_to 'New activity', new_investigation_activity_path(@investigation), :class => "govuk-button" %><br /><br />
 <p>Activities for <%= link_to "investigation", investigation_path(@investigation) %>.</p>
 
 <%= will_paginate @activities %>

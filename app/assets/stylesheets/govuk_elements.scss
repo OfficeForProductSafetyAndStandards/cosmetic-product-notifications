@@ -27,5 +27,18 @@
 }
 
 .grey {
-  background-color: #dee0e2
+  background-color: #dee0e2;
+}
+
+.not-implemented {
+  color: $red;
+  opacity: 0.1;
+}
+
+.right {
+  float: right;
+}
+
+.navbar {
+  padding-top: 1.5em;
 }

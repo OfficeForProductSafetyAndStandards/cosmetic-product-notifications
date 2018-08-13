@@ -1,59 +1,19 @@
 <% content_for :page_title, "Products - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Products', products_path %>
-        </li>
-    </ol>
-</div>
-
-
-<div class="govuk-tabs" data-module="tabs">
-  <h2 class="govuk-tabs__title">
-    Contents
-  </h2>
-
-  <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/pages/example">
-        Issues
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/investigations">
-        Investigations
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/businesses">
-        Businesses
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/products" aria-selected="true">
-        Products
-      </a>
-    </li>
-  </ul>
-</div>
-
-<%= link_to 'New product', new_product_path, class: "button" %><br /><br />
+<%= render "layouts/navbar" %>
 
 <%= form_with(url: products_path, method: "get", class: "grey govuk-!-padding-3") do |form| %>
   <div class="form-group">
     <%= form.label "Search for Products", class: "form-label" %>
     <%= form.text_field :q, value: params[:q], class: "form-control" %>
-    <%= form.submit ">", name: nil, class: "button" %>
+    <%= form.submit ">", name: nil, class: "govuk-button" %>
   </div>
 <% end %>
+</br>
+
+<%= link_to 'New product', new_product_path, class: "govuk-button right" %><br /><br />
 
 <%= will_paginate @products %>
-<br />
 <%= render 'table', product: @products %>
-<br />
 <%= will_paginate @products %>
 

@@ -8,6 +8,11 @@
     margin-bottom: 12px;
 }
 
+.investigations {
+  text-align: center;
+  font-size: 1.5em;
+}
+
 // The autocomplete form element does not use the same rules as the rest of the form elements
 // So it ends up being 100% at large screen sizes
 .autocomplete__wrapper {

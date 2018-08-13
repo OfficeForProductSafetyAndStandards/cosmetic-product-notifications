@@ -40,14 +40,14 @@
     <div class="column-third dummy-column"></div>
     <div class="column-third">
       <div class="form-group no-print">
-        <%= link_to "Assign", assign_investigation_path(@investigation), :class => "button" if policy(@investigation).update? %>
+        <%= link_to "Assign", assign_investigation_path(@investigation), :class => "govuk-button" if policy(@investigation).update? %>
       </div>
     </div>
     <div class="column-third">
       <% if @investigation.is_closed? && policy(@investigation).reopen? %>
         <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
           <div class="form-group no-print">
-            <%= form.submit "Reopen", :class => "button" %>
+            <%= form.submit "Reopen", :class => "govuk-button" %>
           </div>
         <% end %>
       <% elsif !@investigation.is_closed? %>

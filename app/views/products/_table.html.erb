@@ -16,10 +16,14 @@
       <tr>
         <td><%= link_to product.name, product %></td>
         <td><%= product.brand %></td>
-        <td>N/A</td>
+        <td><span class="not-implemented">Some category (+10)</span></td>
         <td><%= product.country_of_origin_for_display%></td>
         <% unless @compressed %>
-          <td><%= product.investigations.length %></td>
+        <td>
+          <span class="investigations not-implemented">
+            <%= link_to product.investigations.count, investigations_path %>
+          </span>
+        </td>
         <% end %>
       </tr>
     <% end %>

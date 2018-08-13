@@ -45,7 +45,7 @@
 
 <% if policy(@activity).update? %>
   <div class="form-group">
-    <%= link_to 'Edit', edit_activity_path(@activity), :class => "button" %>
+    <%= link_to 'Edit', edit_activity_path(@activity), :class => "govuk-button" %>
   </div>
 <% end %>
 <%= link_to 'Back', investigation_activities_path(@activity.investigation), :class => "link-back" %>
