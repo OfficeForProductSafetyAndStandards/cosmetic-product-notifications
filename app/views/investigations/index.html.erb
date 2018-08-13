@@ -8,7 +8,7 @@
       <div class="govuk-grid-column-one-quarter assigned-number">
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
-      <div class="govuk-grid-column-half investigation-number-description">
+      <div class="govuk-grid-column-one-half investigation-number-description">
         Investigations assigned to you
       </div>
     </div>
@@ -16,7 +16,7 @@
       <div class="govuk-grid-column-one-quarter overdue-number">
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
-      <div class="govuk-grid-column-half investigation-number-description">
+      <div class="govuk-grid-column-one-half investigation-number-description">
         Overdue actions
       </div>
     </div>
@@ -24,14 +24,14 @@
       <div class="govuk-grid-column-one-quarter due-number">
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
-      <div class="govuk-grid-column-half investigation-number-description">
+      <div class="govuk-grid-column-one-half investigation-number-description">
         Actions due soon
       </div>
     </div>
   </div>
 <% end %>
 
-<%= form_with(url: investigations_path, method: "get", class: "grey govuk-!-padding-3") do |form| %>
+<%= form_with(url: investigations_path, method: "get", class: "search-background govuk-!-padding-3") do |form| %>
   <div class="form-group">
     <%= form.label "Search for keywords", class: "form-label" %>
     <%= form.text_field :q, value: params[:q], class: "form-control" %>

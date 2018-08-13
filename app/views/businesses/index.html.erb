@@ -2,7 +2,7 @@
 
 <%= render "layouts/navbar" %>
 
-<%= form_with(url: businesses_path, method: :get, class: "grey govuk-!-padding-3") do |form| %>
+<%= form_with(url: businesses_path, method: :get, class: "search-background govuk-!-padding-3") do |form| %>
   <div class="form-group">
     <%= form.label "Search for business", :class => "form-label" %>
     <%= form.text_field :q, value: params[:q], :class => "form-control" %>
