@@ -11,5 +11,4 @@ applications:
   health-check-type: process
   services:
     - mspsds-redis
-    - mspsds-elasticsearch
     - mspsds-database
