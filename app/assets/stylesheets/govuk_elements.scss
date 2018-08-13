@@ -26,13 +26,13 @@
     height: 1px;
 }
 
-.grey {
-  background-color: #dee0e2;
+.search-background {
+  background-color: $grey-3;
 }
 
 .not-implemented {
   color: $red;
-  opacity: 0.1;
+  opacity: 0.2;
 }
 
 .right {
