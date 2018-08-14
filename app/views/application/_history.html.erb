@@ -5,15 +5,15 @@
 <% versions.order(:created_at).reverse.each do |version| %>
   <details>
     <summary><span class="summary">
-        <%= version.event.upcase %>
-        on <%= version.created_at.to_formatted_s(:db) %>
-        by <%= version.whodunnit && (user = User.find_by(id: version.whodunnit)).present? ? user.email : "anonymous" %>
+      <%= version.event.upcase %>
+      on <%= version.created_at.to_formatted_s(:db) %>
+      by <%= version.whodunnit && (user = User.find_by(id: version.whodunnit)).present? ? user.email : "anonymous" %>
     </span></summary>
 
     <div class="panel panel-border-narrow">
-        <% version.changeset.select { |_, (old, new)| !(old.blank? && new.blank?) }.each do |field, (old, new)| %>
-            <p><%= field %>: <%= old.to_s %> => <%= new.to_s %></p>
-        <% end %>
+      <% version.changeset.select { |_, (old, new)| !(old.blank? && new.blank?) }.each do |field, (old, new)| %>
+        <p><%= field %>: <%= old.to_s %> => <%= new.to_s %></p>
+      <% end %>
     </div>
 
   </details>

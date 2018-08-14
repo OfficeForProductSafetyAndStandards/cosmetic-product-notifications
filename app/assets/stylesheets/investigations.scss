@@ -74,6 +74,16 @@
       padding-bottom: 0.2em;
       padding-top: 0.2em;
     }
+
+    .filter {
+      background-color: $grey-3;
+      padding: 1em
+    }
+
+    select {
+      width: 50%;
+      margin-left: 0.5em;
+    }
   }
 
   .investigation-documents {
@@ -110,7 +120,46 @@
       display: block;
     }
   }
+
+  .investigation-comments {
+    summary {
+      background-color: $grey-1;
+      color: $white;
+      font-weight: bold;
+      width: 100%;
+      size: 1.5em;
+      padding: 0.5em 2em 0.5em 2em;
+      text-decoration: unset;
+    }
+    .govuk-details__summary:before {
+      all: unset;
+    }
+
+    .govuk-details__summary:after {
+      content: "－";
+      font-weight: bolder;
+      float: right;
+    }
+
+    .govuk-details__summary-text {
+      text-decoration: unset;
+    }
+
+    .comment {
+      margin-left: 2em;
+      margin-bottom: 1em;
+
+      .comment-tag{
+        font-weight: bold;
+      }
+
+      span {
+        display: block;
+      }
+    }
+  }
 }
+
 
 .assigned-number {
   font-size: 3em;

@@ -2,30 +2,29 @@
 <div class="show-investigation">
 
   <div class="govuk-grid-row top-details">
-    <div class="govuk-grid-column-two-thirds">
-        <%= link_to 'Back to list', investigations_path, class: "govuk-back-link link-back" %>
-        <%= link_to "View Audit Log", "#history-section", class: "right" %>
-    </div>
-    <div class="govuk-grid-column-one-third">
+    <div class="govuk-grid-column-full">
+      <%= link_to 'Back to list', investigations_path, class: "govuk-back-link link-back" %>
+      <span class="right">
+        Status
+        <% if @investigation.is_closed? && policy(@investigation).reopen? %>
+          <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
+            <%= form.submit "Closed", data: { confirm: "Are you sure you want to reopen the issue?" }%>
+          <% end %>
+        <% elsif !@investigation.is_closed? %>
+          <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
+            <%= form.submit "Open", data: { confirm: "Are you sure you want to close the issue?" } %>
+          <% end %>
+        <% end %>
+      </span>
+      <span class="right">
         <% if @investigation.assignee.nil? %>
           Unassigned
         <% else %>
           Assigned <%=link_to @investigation.assignee.email, @investigation.assignee, class: "not-implemented"%>
         <% end %>
-      <span class="right">
-        Status
-        <% if @investigation.is_closed? && policy(@investigation).reopen? %>
-        <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
-            <%= form.submit "Closed", data: { confirm: "Are you sure you want to reopen the issue?" }%>
-        <% end %>
-      <% elsif !@investigation.is_closed? %>
-        <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
-            <span>
-            <%= form.submit "Open", data: { confirm: "Are you sure you want to close the issue?" } %>
-            </span>
-        <% end %>
-      <% end %>
       </span>
+      <%= link_to "View Audit Log", "#history-section", class: "right" %>
+      <%= link_to "Watch this issue", "#", class: "right" %>
     </div>
   </div>
 
@@ -90,6 +89,14 @@
                     class: "add-activity-button right govuk-button no-print" %>
         <%= link_to "View issue history", "#", class: "investigation-history not-implemented right" %>
       </h2>
+      <div class="filter not-implemented">
+        Filter:
+        <select>
+          <option value="latest">Latest</option>
+          <option value="newest">Newest</option>
+          <option value="due">Due</option>
+        </select>
+      </div>
       <% @investigation.activities.limit(3).each do |activity| %>
         <div class="activity">
           <p>
@@ -159,6 +166,21 @@
       <div class="form-group no-print">
         <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
       </div>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row investigation-comments">
+    <div class="govuk-grid-column-full not-implemented">
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">Comments</span>
+        </summary>
+
+        <div class="comment">
+          <span class="comment-tag">[person] on [date]</span>
+          <span>[Some comment]</span>
+        </div>
+      </details>
     </div>
   </div>
 
