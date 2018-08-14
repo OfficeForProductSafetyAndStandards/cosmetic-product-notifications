@@ -44,7 +44,7 @@
 <%= link_to 'Create investigation', new_investigation_path, class: "govuk-button right" %>
 
 <%= will_paginate @investigations %>
-<%= render 'table', investigation: @investigations %>
+<%= render 'table' %>
 <%= will_paginate @investigations %>
 </br>
 <%= link_to "Export as spreadsheet", investigations_path(format: :xlsx), class: "govuk-button"%>

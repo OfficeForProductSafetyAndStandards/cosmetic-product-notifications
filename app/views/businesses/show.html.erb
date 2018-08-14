@@ -1,107 +1,136 @@
 <% content_for :page_title, "View business - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Businesses', businesses_path %>
-        </li>
-        <li>
-            <%= link_to 'View', @business %>
-        </li>
-    </ol>
-</div>
-
-<h1 class="heading-xlarge">
-  <%= @business.company_name %>
-</h1>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Companies house number</td>
-      <td><%= @business.company_number %></td>
-    </tr>
-    <tr>
-      <td>Company type</td>
-      <td><%= @business.company_type %></td>
-    </tr>
-    <tr>
-      <td>Registered address</td>
-      <td>
-        <% if @business.addresses.any? %>
-          <%= @business.primary_address.line_1 %><br />
-          <%= @business.primary_address.line_2 %><br />
-          <%= @business.primary_address.locality %><br />
-          <%= @business.primary_address.country %><br />
-          <%= @business.primary_address.postal_code %>
-        <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td>Nature of business (SIC)</td>
-      <td><%= @business.nature_of_business %></td>
-    </tr>
-    <tr>
-      <td>Additional information</td>
-      <td><%= @business.additional_information %></td>
-    </tr>
-    <tr>
-      <td>Source</td>
-      <td><%= @business.source.show %></td>
-    </tr>
-  </tbody>
-</table>
-<br /><br />
-
-<h2 class="heading-small sub-heading">
-  Addresses
-</h2>
-<% if @business.addresses.any? %>
-  <p><%= @business.primary_address.address_type %></p>
-  <p><%= @business.primary_address.summary %></p>
-  <%= link_to "+ View all addresses", business_addresses_path(@business) %>
-  <br /><br />
-<% end %>
-<div class="form-group no-print">
-  <%= link_to 'Add address', new_business_address_path(@business), :class => "no-print govuk-button" %>
-</div>
-
-<% if @business.investigations.any? %>
-  <h2 class="heading-small sub-heading">
-    Product safety investigations
-  </h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Investigation number</th>
-        <th>Status</th>
-        <th>Last updated</th>
-        <th>Assigned to</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @business.investigations.each do |investigation| %>
+<div class="show-business">
+  <%= link_to 'Back to list', businesses_path, class: "govuk-back-link" %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third business-details">
+      <span>Business details</span>
+      <h2 class="govuk-heading-l">
+        <%= @business.company_name %>
+      </h2>
+      <span class="not-implemented">
+        Trading as: [Company trading name]
+      </span>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="action-links">
+        <span class="action-links-header">Actions</span>
+        <span><%= link_to "Link Business", "#", class: "not-implemented" %></span>
+        <span><%= link_to "Create New Issue", "#", class: "not-implemented" %></span>
+        <span><%= link_to "Create new Investigation", "#", class: "not-implemented" %></span>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="open-investigations">
+        <span>Open investigations</span>
+        <span class="investigation-number"><%= @investigations.count %></span>
+        <span><%= link_to "View", investigations_path, class: "not-implemented" %></span>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full company-details">
+      <table class="company-details-table">
+        <thead>
+          <td class="company-details-header">Company Details</td>
+        <td></td>
+        </thead>
+        <tbody>
         <tr>
-          <td><%= link_to investigation.id, investigation %></td>
-          <td><%= investigation.is_closed? ? "Closed" : "Open" %></td>
-          <td><%= investigation.updated_at.to_s :long_ordinal %></td>
-          <td><%= investigation.assignee.nil? ? "Unassigned" : investigation.assignee.email %></td>
+          <td>Company number</td>
+          <td><%= @business.company_number %></td>
         </tr>
+        <tr>
+          <td>Company type</td>
+          <td><%= @business.company_type %></td>
+        </tr>
+        <tr>
+          <td>Registered address</td>
+          <td>
+            <% if @business.addresses.any? %>
+              <span>
+                <%= @business.primary_address.line_1 %>,
+                <%= @business.primary_address.line_2 %>,
+                <%= @business.primary_address.locality %>,
+                <%= @business.primary_address.country %>,
+                <%= @business.primary_address.postal_code %>
+              </span>
+            <% end %>
+          </td>
+        </tr>
+        <tr class="not-implemented">
+          <td>VAT Number</td>
+          <td>[VAT Number]</td>
+        </tr>
+        <tr>
+          <td>Nature of business (SIC)</td>
+          <td><%= @business.nature_of_business %></td>
+        </tr>
+        <tr class="not-implemented">
+          <td>Primary Authority</td>
+          <td>[Primary Authority name]</td>
+        </tr>
+        <tr>
+          <td>Additional Information</td>
+          <td><%= @business.additional_information %></td>
+        </tr>
+        </tbody>
+      </table>
+      <%= link_to "Add more details", edit_business_path(@business), class: "govuk-button"%>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third company-locations">
+      <h4 class="govuk-heading-s">
+        Locations
+      </h4>
+      <% if @business.addresses.any? %>
+        <span>Primary address</span>
+        <span><%= @business.primary_address.line_1 %></span>
+        <span><%= @business.primary_address.line_2 %></span>
+        <span><%= @business.primary_address.locality %></span>
+        <span><%= @business.primary_address.country %>, <%= @business.primary_address.postal_code %></span>
+
+        <span class="address-number"><%= @business.addresses.count %></span>
+        <span class="small-space-below"><%= link_to "View all >", business_addresses_path(@business) %></span>
       <% end %>
-    </tbody>
-  </table>
-  <br /><br />
-<% end %>
 
-<div class="form-group no-print">
-  <%= link_to 'Edit', edit_business_path(@business), :class => "govuk-button" %>
+      <div class="form-group no-print">
+        <%= link_to 'Add Location', new_business_address_path(@business),
+                    class: "no-print govuk-button", style: "width: 100%" %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-column-one-third company-responsible-contact not-implemented">
+      <h4 class="govuk-heading-s">
+        Responsible contact
+      </h4>
+      <span>[Name]</span>
+      <span>[position]</span>
+      <span></span>
+      <span>[Email]</span>
+      <span>[Phone number]</span>
+      <span class="contact-number">5</span>
+      <span class="small-space-below"><%= link_to "View all >", business_addresses_path(@business) %></span>
+
+      <div class="form-group no-print">
+        <%= link_to 'Add Contact', new_business_address_path(@business),
+                    class: "no-print govuk-button", style: "width: 100%"  %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-column-one-third company-other-info">
+      <h4 class="govuk-heading-s">
+        Other information
+      </h4>
+
+      <span class="small-square-dark not-implemented">99</span> <span>Documents</span>
+      <span class="small-square-light not-implemented">1</span> <span>Issues</span>
+
+      <span calss="not-implemented">Primary Authority - <%= link_to "Add", "#", class: "not-implemented" %></span>
+    </div>
+  </div>
+
+  <%= render 'related' %>
 </div>
-
-<div class="form-group no-print">
-  <%= link_to 'Back', businesses_path, :class => "link-back" %>
-</div>
-
-<%= render 'history', versions: @business.versions %>

@@ -1,8 +1,95 @@
 // Place all the styles related to the Businesses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "colours";
+
 
 .investigations {
   text-align: center;
   font-size: 1.5em;
+}
+
+.show-business {
+  .business-details {
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .action-links {
+    background-color: $grey-3;
+    padding: 1em;
+    height: 100%;
+
+    .action-links-header {
+      margin-bottom: 0.5em;
+      font-weight: bold;
+    }
+  }
+
+  .open-investigations {
+    background-color: $purple;
+    padding: 1em;
+    text-align: center;
+    height: 100%;
+
+    .investigation-number {
+      font-size: 3em;
+    }
+
+    span, a {
+      color: $white;
+    }
+  }
+
+  .company-details {
+
+    .company-details-header {
+      font-weight: bold;
+    }
+
+    .company-details-table {
+      margin-bottom: 0.75em;
+    }
+  }
+
+  .company-locations {
+    .address-number {
+      font-size: 2em;
+      color: $light-blue;
+      margin-top: 0.5em;
+    }
+
+    span:before {
+      content: "\200D"
+    }
+
+    a {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  .company-responsible-contact {
+    .contact-number {
+      font-size: 2em;
+      color: $light-blue;
+      margin-top: 0.5em;
+    }
+
+    span:before {
+      content: "\200D"
+    }
+
+    a {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  .company-other-info {
+
+  }
+
+  span {
+    display: block;
+  }
 }

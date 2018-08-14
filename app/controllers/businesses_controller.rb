@@ -20,6 +20,7 @@ class BusinessesController < ApplicationController
   # GET /businesses/1
   # GET /businesses/1.json
   def show
+    @investigations = @business.investigations
     return unless @business.from_companies_house?
     PaperTrail.request.whodunnit = nil # This will stop papertrail recording the current user
     CompaniesHouseClient.instance.update_business_from_companies_house(@business)

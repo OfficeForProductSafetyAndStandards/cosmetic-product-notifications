@@ -43,3 +43,25 @@
 .navbar {
   padding-top: 1.5em;
 }
+
+.small-space-below {
+  margin-bottom: 0.5em;
+}
+
+.small-square-dark {
+  height: 1.5em;
+  width: 1.5em;
+  font-size: 2em;
+  text-align: center;
+  color: $white;
+  background-color: $grey-1;
+}
+
+.small-square-light {
+  height: 1.5em;
+  width: 1.5em;
+  font-size: 2em;
+  text-align: center;
+  color: $white;
+  background-color: $grey-2;
+}
