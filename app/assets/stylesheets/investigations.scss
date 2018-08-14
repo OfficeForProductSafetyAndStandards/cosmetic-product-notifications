@@ -29,17 +29,22 @@
   .top-details {
     font-size: 0.75em;
     margin-bottom: 0.5em;
+
+    form {
+      all: unset;
+
+      input {
+        all: unset;
+        cursor: pointer;
+        color: blue;
+        text-decoration: underline;
+      }
+    }
   }
 
   .investigation-details {
-    .title {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
+    padding-top: 1.5em;
 
-    .issue-id {
-      font-weight: bold;
-    }
     span {
       display: block;
       padding-top: 0.75em;
@@ -66,14 +71,43 @@
   .investigation-activity {
     .add-activity-button, .investigation-history{
       font-size: 0.75em;
-      padding: 0.2em;
+      padding-bottom: 0.2em;
+      padding-top: 0.2em;
+    }
+  }
+
+  .investigation-documents {
+    .document-block {
+      color: $white;
+      background-color: $grey-1;
+      text-align: center;
+      padding: 1em;
+      margin-bottom: 0.5em;
+
+      .document-number {
+        font-weight: bold;
+        font-size: 2.5em;
+      }
+    }
+
+    span {
+      display: block;
     }
   }
 
   .investigation-business {
     .add-business-button {
       font-size: 0.75em;
-      padding: 0.2em;
+      padding-bottom: 0.2em;
+      padding-top: 0.2em;
+    }
+
+    .business-block {
+      margin-bottom: 1em;
+    }
+
+    span {
+      display: block;
     }
   }
 }

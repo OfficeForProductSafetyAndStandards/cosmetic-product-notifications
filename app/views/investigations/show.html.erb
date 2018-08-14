@@ -1,9 +1,10 @@
 <% content_for :page_title, "View investigation - Market Surveillance & Product Safety" %>
 <div class="show-investigation">
+
   <div class="govuk-grid-row top-details">
     <div class="govuk-grid-column-two-thirds">
-        <%= link_to 'Back to list', investigations_path, :class => "govuk-back-link link-back" %>
-        <span class="right not-implemented">View Audit Log</span>
+        <%= link_to 'Back to list', investigations_path, class: "govuk-back-link link-back" %>
+        <%= link_to "View Audit Log", "#history-section", class: "right" %>
     </div>
     <div class="govuk-grid-column-one-third">
         <% if @investigation.assignee.nil? %>
@@ -12,7 +13,19 @@
           Assigned <%=link_to @investigation.assignee.email, @investigation.assignee, class: "not-implemented"%>
         <% end %>
       <span class="right">
-        Status <%= @investigation.is_closed? ? "Closed" : "Open" %></span>
+        Status
+        <% if @investigation.is_closed? && policy(@investigation).reopen? %>
+        <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
+            <%= form.submit "Closed", data: { confirm: "Are you sure you want to reopen the issue?" }%>
+        <% end %>
+      <% elsif !@investigation.is_closed? %>
+        <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
+            <span>
+            <%= form.submit "Open", data: { confirm: "Are you sure you want to close the issue?" } %>
+            </span>
+        <% end %>
+      <% end %>
+      </span>
     </div>
   </div>
 
@@ -34,20 +47,7 @@
         <span>Game limited</span>
         <span>48 Bush Road, N1 1XQ ></span>
       </div>
-      <%= link_to "Add event reminder", "#", class: "govuk-button", style: "width: 100%"%>
-      <% if @investigation.is_closed? && policy(@investigation).reopen? %>
-        <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
-          <div class="form-group no-print">
-            <%= form.submit "Reopen", :class => "govuk-button" %>
-          </div>
-        <% end %>
-      <% elsif !@investigation.is_closed? %>
-        <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
-          <div class="form-group no-print">
-            <%= form.submit "Close", :class => "button-warning", data: { confirm: "Are you sure?" } %>
-          </div>
-        <% end %>
-      <% end %>
+      <%= link_to "Add event reminder", "#", class: "govuk-button not-implemented", style: "width: 100%"%>
     </div>
   </div>
 
@@ -104,14 +104,23 @@
       <% end %>
       <%= link_to "+ View more activity", investigation_activities_path(@investigation) %>
     </div>
-    <div class="govuk-grid-column-one-third">
-      <% if @investigation.image.attached? && @investigation.image.image? %>
-        <% if @investigation.image.metadata["safe"].nil? %>
-          <p>Still checking upload for viruses</p>
-        <% elsif @investigation.image.metadata["safe"] %>
-          <%= image_tag @investigation.image.variant(resize: "300x300"), alt: "Investigation", :class => "case-image" %>
-        <% end %>
-      <% end %>
+    <div class="govuk-grid-column-one-third investigation-documents">
+      <h2 class="govuk-heading-m">
+
+      </h2>
+      <div class="document-block not-implemented">
+        <span>Documents</span>
+        <span class="document-number">10</span>
+        <span>View ></span>
+      </div>
+      <%= link_to "Upload document", "#", class: "govuk-button not-implemented", style: "width: 100%"%>
+      <%# if @investigation.image.attached? && @investigation.image.image? %>
+        <%# if @investigation.image.metadata["safe"].nil? %>
+<!--          <p>Still checking upload for viruses</p>-->
+        <%# elsif @investigation.image.metadata["safe"] %>
+          <%#= image_tag @investigation.image.variant(resize: "300x300"), alt: "Investigation", :class => "case-image" %>
+        <%# end %>
+      <%# end %>
     </div>
   </div>
 
@@ -123,10 +132,13 @@
       </h2>
       <% if @investigation.businesses.any? %>
         <% @investigation.businesses.each do |business| %>
-
-          <p>Business name: <%= link_to business.company_name, business %></p>
-          <p>Main address: <%= business.addresses.any? ? business.primary_address.summary : "" %></p>
-          <%= link_to 'Edit details', edit_business_path(business), :class => "no-print" %>
+          <div class="business-block">
+            <span class="not-implemented">Economic operator type: [Operator Type]</span>
+            <span>Business name: <%= link_to business.company_name, business %></span>
+            <span class="not-implemented">Responsible Contact: [Contact name on Contact Number]</span>
+            <span>Main address: <%= business.addresses.any? ? business.primary_address.summary : "" %></span>
+            <%= link_to 'Edit details', edit_business_path(business), :class => "no-print" %>
+          </div>
         <% end %>
       <% else %>
         <h2 class="heading-small sub-heading">
@@ -136,15 +148,19 @@
       <% end %>
       <br /><br />
     </div>
+
     <div class="govuk-grid-column-one-third">
-      <h2 class="heading-small sub-heading">
-        Additional information
+      <h2 class="govuk-heading-m">
+        Additional Info
       </h2>
+      <span class="not-implemented">Primary Authority: <%= link_to "Add", "#" %></span>
+      <span class="not-implemented">Related Cases: <%= link_to "Link", "#" %></span>
+      <span class="not-implemented">Similar Products: <%= link_to "Link", "#" %></span>
       <div class="form-group no-print">
         <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
       </div>
     </div>
   </div>
 
-  <%= render 'history', versions: @investigation.versions %>
+  <%= render 'history', versions: @investigation.versions%>
 </div>
