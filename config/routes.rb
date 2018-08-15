@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post :update_assignee
     end
     resources :activities, shallow: true
+    resources :products, only: %i[new create]
   end
 
   resources :businesses do

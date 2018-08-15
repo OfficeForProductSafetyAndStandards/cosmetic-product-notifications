@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   include CountriesHelper
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
+  before_action :set_investigation, only: %i[new create]
   before_action :create_product, only: %i[create]
 
   # GET /products
@@ -29,8 +30,13 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/new
+  # This route can also be triggered when nested within an investigation
   def new
-    @product = Product.new
+    @product = if @investigation.present?
+                 @investigation.products.build
+               else
+                 Product.new
+               end
     @countries = all_countries
   end
 
@@ -41,10 +47,11 @@ class ProductsController < ApplicationController
 
   # POST /products
   # POST /products.json
+  # This route can also be triggered when nested within an investigation
   def create
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: "Product was successfully created." }
+        format.html { redirect_to (@investigation.presence || @product), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new }
@@ -101,9 +108,17 @@ class ProductsController < ApplicationController
            .paginate(page: params[:page], per_page: 20).records
   end
 
+  def set_investigation
+    @investigation = Investigation.find_by(id: params[:investigation_id])
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def create_product
-    @product = Product.new(product_params)
+    @product = if @investigation.present?
+                 @investigation.products.create(product_params)
+               else
+                 Product.new(product_params)
+               end
     @product.source = UserSource.new(user: current_user)
   end
 

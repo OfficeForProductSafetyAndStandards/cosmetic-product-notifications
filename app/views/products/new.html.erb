@@ -17,7 +17,7 @@
     <h1 class="heading-xlarge">New product</h1>
     <div class="grid-row">
         <div class="column-half">
-            <%= render 'form', product: @product, countries: @countries %>
+            <%= render 'form', product: @product, countries: @countries, form_model: [@investigation, @product] %>
         </div>
         <div class="column-half">
             <h2 class="heading-medium">Have you seen these products?</h2>
