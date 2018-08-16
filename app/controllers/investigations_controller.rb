@@ -60,6 +60,7 @@ class InvestigationsController < ApplicationController
     else
       @investigation.assignee = assignee
       save_and_respond "Assignee was successfully updated."
+      record_assignment(@investigation)
       NotifyMailer.assigned_investigation(@investigation, assignee).deliver
     end
   end
@@ -110,7 +111,6 @@ class InvestigationsController < ApplicationController
   def save_and_respond(notice)
     respond_to do |format|
       if @investigation.save
-        record_assignment(@investigation)
         format.html { redirect_to @investigation, notice: notice }
         format.json { render :show, status: :ok, location: @investigation }
       else
