@@ -1,9 +1,7 @@
 $(document).on("turbolinks:load", function() {
     addSelect2AjaxSearchToElement($(".js-investigation-products"), "/products", mapAjaxDataToProduct);
     addSelect2AjaxSearchToElement($(".js-investigation-businesses"), "/businesses", mapAjaxDataToBusiness);
-    addSelect2AjaxSearchToElement($(".js-assignee-email"), "/businesses", mapAjaxDataToEmail);
-
-    $(".js-assignee-email").select2()
+    addSelect2AjaxSearchToElement($(".js-assignee-email"), "/users", mapAjaxDataToEmail);
 });
 
 function mapAjaxDataToProduct(data) {
@@ -22,6 +20,7 @@ function mapAjaxDataToBusiness(data) {
 
 function mapAjaxDataToEmail(data) {
     return {
-        text: data.email + "som"
+        id: data.email,
+        text: data.email
     }
 }

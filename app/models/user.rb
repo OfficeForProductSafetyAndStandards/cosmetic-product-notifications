@@ -1,4 +1,9 @@
+require "elasticsearch/model"
+
 class User < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   default_scope { order(created_at: :desc) }
   has_many :user_source, dependent: :nullify
 
@@ -16,3 +21,5 @@ class User < ApplicationRecord
     add_role(:user) if roles.blank?
   end
 end
+
+User.import force: true

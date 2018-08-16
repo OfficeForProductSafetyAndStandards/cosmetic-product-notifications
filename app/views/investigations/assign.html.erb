@@ -24,7 +24,7 @@
     <%= form.select :email,
                     User.all.collect {|u| [u.email]},
                     { include_blank: "None" },
-                    {class: "js-assignee-email form-control" }
+                    { class: "js-assignee-email form-control" }
     %>
   </div>
   
