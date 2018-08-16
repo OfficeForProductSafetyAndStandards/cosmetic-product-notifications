@@ -117,7 +117,7 @@
           <p>
             <em><%= activity.activity_type.titleized_name %></em>
             by
-            <%= activity.source.show %>
+            <%= activity.source.name %>
             on
             <%= activity.created_at.to_s :long_ordinal %>
           </p>

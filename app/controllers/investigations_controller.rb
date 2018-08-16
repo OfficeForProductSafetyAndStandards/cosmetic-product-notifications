@@ -110,6 +110,7 @@ class InvestigationsController < ApplicationController
   def save_and_respond(notice)
     respond_to do |format|
       if @investigation.save
+        record_assignment(@investigation)
         format.html { redirect_to @investigation, notice: notice }
         format.json { render :show, status: :ok, location: @investigation }
       else

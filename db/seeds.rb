@@ -5,9 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-def create_activity_type_if_not_exist(activity_type)
+def create_activity_type_if_not_exist(activity_type, is_automatic: false)
     if ActivityType.where(name: activity_type).first.nil?
-        ActivityType.create(name: activity_type)
+        ActivityType.create(name: activity_type, is_automatic: is_automatic)
         puts "Activity type #{activity_type} created"
     else
         puts "Activity type #{activity_type} already exists"
@@ -21,7 +21,7 @@ if User.where(email: ENV["ADMIN_EMAIL"]).first.nil?
         password: ENV["ADMIN_PASSWORD"],
         password_confirmation: ENV["ADMIN_PASSWORD"]
     )
-    
+
     user.add_role(:user)
     user.add_role(:admin)
     user.save!
@@ -41,3 +41,6 @@ create_activity_type_if_not_exist "notification"
 create_activity_type_if_not_exist "recall"
 create_activity_type_if_not_exist "research"
 create_activity_type_if_not_exist "other"
+
+# automatic activity types
+create_activity_type_if_not_exist "assign", is_automatic: true
