@@ -1,0 +1,27 @@
+<table>
+  <thead>
+  <tr>
+    <th>Business name(s)</th>
+    <th>Type(s)</th>
+    <th>Category(s)</th>
+    <th>Location(s)</th>
+    <th>Investigations</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @businesses.each do |business| %>
+    <tr>
+      <td><%= link_to business.company_name, business %></td>
+      <td><%= business.company_type_code %> <span class="not-implemented">(+10)</span></td>
+      <td><span class="not-implemented">Some category (+10)</span></td>
+      <td><%= business.addresses.first ? business.addresses.first.short : "" %></td>
+      <td>
+          <span class="investigations not-implemented">
+            <%= link_to business.investigations.count, investigations_path %>
+          </span>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
