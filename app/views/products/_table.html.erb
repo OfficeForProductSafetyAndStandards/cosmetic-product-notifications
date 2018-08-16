@@ -1,22 +1,26 @@
 <table>
   <thead>
     <tr>
-      <th>GTIN (Barcode)</th>
       <th>Name</th>
       <th>Brand</th>
+      <th>Category(s)</th>
+      <th>Origin Co</th>
       <th>Investigations</th>
-      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= product.gtin %></td>
         <td><%= link_to product.name, product %></td>
         <td><%= product.brand %></td>
-        <td><%= product.investigations.length %></td>
-        <td><%= link_to 'Delete', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><span class="not-implemented">Some category (+10)</span></td>
+        <td><%= product.country_of_origin_for_display%></td>
+        <td>
+          <span class="investigations not-implemented">
+            <%= link_to product.investigations.count, investigations_path %>
+          </span>
+        </td>
       </tr>
     <% end %>
     <% if @products.empty? %>

@@ -18,3 +18,4 @@
 //= require cocoon
 //= require jquery.slick
 //= require govuk-country-and-territory-autocomplete/dist/location-autocomplete.min.js
+//= require govuk-frontend/all.js

@@ -41,7 +41,7 @@
           <td>
             <%= form_with(url: "/businesses/companies_house", local: true) do |form| %>
               <%= form.hidden_field :company_number, value: business[:company_number] %>
-              <%= form.submit "Add", :class => "button" %>
+              <%= form.submit "Add", :class => "govuk-button" %>
             <% end %>
           </td>
         </tr>
