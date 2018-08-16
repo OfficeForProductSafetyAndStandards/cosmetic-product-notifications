@@ -8,12 +8,12 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = search_for_products
+    @products = search_for_products(20)
   end
 
   # GET /products/suggested
   def suggested
-    @products = advanced_product_search
+    @products = advanced_product_search(4)
     render partial: "suggested"
   end
 
@@ -87,24 +87,24 @@ class ProductsController < ApplicationController
 
   # If the user supplies a barcode and it matches, then just return that.
   # Otherwise use the general query param
-  def advanced_product_search
-    gtin_search_results = search_for_gtin if params[:gtin].present?
+  def advanced_product_search(page_size)
+    gtin_search_results = search_for_gtin(page_size) if params[:gtin].present?
     # if there was no GTIN param or there were no results for the GTIN search
-    basic_search_results = search_for_products if gtin_search_results.blank? && params[:q].present?
+    basic_search_results = search_for_products(page_size) if gtin_search_results.blank? && params[:q].present?
     basic_search_results || gtin_search_results || []
   end
 
-  def search_for_products
+  def search_for_products(page_size)
     if params[:q].blank?
-      Product.paginate(page: params[:page], per_page: 20)
+      Product.paginate(page: params[:page], per_page: page_size)
     else
-      Product.search(params[:q]).paginate(page: params[:page], per_page: 20).records
+      Product.search(params[:q]).paginate(page: params[:page], per_page: page_size).records
     end
   end
 
-  def search_for_gtin
+  def search_for_gtin(page_size)
     Product.search(query: { match: { gtin: params[:gtin] } })
-           .paginate(page: params[:page], per_page: 20).records
+           .paginate(page: params[:page], per_page: page_size).records
   end
 
   def set_investigation
