@@ -20,7 +20,48 @@
 // @import "url-helpers";                         // Function to output image-url, or prefixed path (Rails and Compass only)
 
 @import "govuk-elements-sass/public/sass/govuk-elements";
+@import "govuk-frontend/all";
 
 .dummy-column {
     height: 1px;
+}
+
+.search-background {
+  background-color: $grey-3;
+}
+
+.not-implemented {
+  color: $red;
+  opacity: 0.2;
+}
+
+.right {
+  float: right;
+  margin-left: 2em;
+}
+
+.navbar {
+  padding-top: 1.5em;
+}
+
+.small-space-below {
+  margin-bottom: 0.5em;
+}
+
+.small-square-dark {
+  height: 1.5em;
+  width: 1.5em;
+  font-size: 2em;
+  text-align: center;
+  color: $white;
+  background-color: $grey-1;
+}
+
+.small-square-light {
+  height: 1.5em;
+  width: 1.5em;
+  font-size: 2em;
+  text-align: center;
+  color: $white;
+  background-color: $grey-2;
 }
