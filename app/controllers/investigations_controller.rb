@@ -129,6 +129,15 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.find(params[:id])
   end
 
+  def record_assignment(investigation)
+    Activity.create(
+      source: UserSource.new(user: current_user),
+      investigation: investigation,
+      activity_type: ActivityType.find(name: "assign"),
+      notes: "Assigned to #{investigation.assignee.email}"
+    )
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
     params.require(:investigation).permit(
