@@ -1,6 +1,6 @@
 <% @products.each do |product| %>
   <div class="grid-row">
-    <div class="column-third">
+    <div class="column-third dummy-column">
       <%= image_tag(product.images[0].url, alt: product.images[0].title, :class => "product-image") if product.images.any? %>
     </div>
     <div class="column-two-thirds">
