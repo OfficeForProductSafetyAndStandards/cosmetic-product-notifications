@@ -38,7 +38,7 @@
     <%= form.submit ">", name: nil, class: "govuk-button" %>
   </div>
 <% end %>
-</br>
+<br/>
 
 <%= link_to 'Assign', new_investigation_path, class: "govuk-button govuk-button--disabled not-implemented" %>
 <%= link_to 'Create investigation', new_investigation_path, class: "govuk-button right" %>
@@ -46,6 +46,6 @@
 <%= will_paginate @investigations %>
 <%= render 'table' %>
 <%= will_paginate @investigations %>
-</br>
+<br/>
 <%= link_to "Export as spreadsheet", investigations_path(format: :xlsx), class: "govuk-button"%>
 

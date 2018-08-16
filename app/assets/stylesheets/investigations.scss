@@ -188,8 +188,11 @@
   content: " >";
 }
 
-td > span {
-  display: block;
+.investigation-list {
+
+  span {
+    display: block;
+  }
 }
 
 @media print

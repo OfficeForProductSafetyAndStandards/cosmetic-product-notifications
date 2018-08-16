@@ -18,8 +18,8 @@ class Address < ApplicationRecord
 
   def short
     [
-        locality,
-        country
+      locality,
+      country
     ].reject(&:blank?).join(", ")
   end
 

@@ -1,10 +1,6 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   resources :investigations do
-    collection do
-      get :table
-    end
-
     member do
       post :close
       post :reopen
