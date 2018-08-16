@@ -1,5 +1,6 @@
 <% content_for :page_title, "New product - Market Surveillance & Product Safety" %>
-<div class="new-product-page">
+<%# The data attribute is used by JS to determine if there is an investigation %>
+<div class="new-product-page" data-investigation-id=<%= @investigation&.id %>>
     <div class="breadcrumbs">
         <ol role="breadcrumbs">
             <li>
@@ -20,7 +21,7 @@
             <%= render 'form', product: @product, countries: @countries, form_model: [@investigation, @product] %>
         </div>
         <div class="column-half">
-            <h2 class="heading-medium">Have you seen these products?</h2>
+            <h2 class="heading-medium">Suggested products</h2>
             <div id="suggested-products">
                 Start filling in the form for suggestions.
             </div>

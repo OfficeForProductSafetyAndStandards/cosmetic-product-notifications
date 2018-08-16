@@ -6,9 +6,14 @@ Rails.application.routes.draw do
       post :reopen
       get :assign
       post :update_assignee
+      post :add_product
     end
     resources :activities, shallow: true
-    resources :products, only: %i[new create]
+    resources :products, only: %i[new create] do
+      collection do
+        get :suggested
+      end
+    end
   end
 
   resources :businesses do
@@ -21,7 +26,7 @@ Rails.application.routes.draw do
 
   resources :products do
     collection do
-      get :table
+      get :suggested
     end
   end
 

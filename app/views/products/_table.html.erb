@@ -4,10 +4,8 @@
       <th>GTIN (Barcode)</th>
       <th>Name</th>
       <th>Brand</th>
-      <% unless @compressed %>
-        <th>Investigations</th>
-        <th colspan="1"></th>
-      <% end %>
+      <th>Investigations</th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
@@ -17,10 +15,8 @@
         <td><%= product.gtin %></td>
         <td><%= link_to product.name, product %></td>
         <td><%= product.brand %></td>
-        <% unless @compressed %>
-          <td><%= product.investigations.length %></td>
-          <td><%= link_to 'Delete', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+        <td><%= product.investigations.length %></td>
+        <td><%= link_to 'Delete', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
     <% if @products.empty? %>

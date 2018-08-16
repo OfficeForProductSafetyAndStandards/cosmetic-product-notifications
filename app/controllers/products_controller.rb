@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   include CountriesHelper
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
-  before_action :set_investigation, only: %i[new create]
+  before_action :set_investigation, only: %i[suggested new create]
   before_action :create_product, only: %i[create]
 
   # GET /products
@@ -11,11 +11,10 @@ class ProductsController < ApplicationController
     @products = search_for_products
   end
 
-  # GET /products/table
-  def table
+  # GET /products/suggested
+  def suggested
     @products = advanced_product_search
-    @compressed = true
-    render partial: "table"
+    render partial: "suggested"
   end
 
   # GET /products/1

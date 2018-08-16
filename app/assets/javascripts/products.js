@@ -9,7 +9,7 @@ $(document).on("turbolinks:load", function() {
         adaptiveHeight: true,
     });
 
-    searchOnTextInput($('.new-product-page .search-term'), '/products/table', buildProductQuery, function(data) {
+    searchOnTextInput($('.new-product-page .search-term'), buildSuggestedUrl(), buildProductQuery, function(data) {
         $('#suggested-products').html(data);
     });
 
@@ -43,4 +43,13 @@ function buildProductQuery() {
         query.gtin = gtin;
     }
     return query;
+}
+
+function buildSuggestedUrl() {
+    var url = "/products/suggested";
+    var investigationId = $(".new-product-page").data("investigation-id");
+    if(investigationId) {
+        url = "/investigations/" + investigationId + url;
+    }
+    return url;
 }
