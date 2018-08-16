@@ -1,8 +1,7 @@
 require "elasticsearch/model"
 
 class User < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include Searchable
 
   default_scope { order(created_at: :desc) }
   has_many :user_source, dependent: :nullify
@@ -22,4 +21,4 @@ class User < ApplicationRecord
   end
 end
 
-User.import force: true
+User.import force: true # for auto sync model with elastic search
