@@ -13,14 +13,17 @@
                 <li>
                     <%= link_to 'Investigation', @investigation %>
                 </li>
+                <li>
+                    <%= link_to 'New Product', new_investigation_product_path(@investigation) %>
+                </li>
             <% else %>
                 <li>
                     <%= link_to 'Products', products_path %>
                 </li>
+                <li>
+                    <%= link_to 'New', new_product_path %>
+                </li>
             <% end %>
-            <li>
-                <%= link_to 'New', new_product_path %>
-            </li>
         </ol>
     </div>
 
