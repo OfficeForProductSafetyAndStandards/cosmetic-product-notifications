@@ -1,6 +1,6 @@
 <% content_for :page_title, "New product - Market Surveillance & Product Safety" %>
 <%# The data attribute is used by JS to determine if there is an investigation %>
-<div class="new-product-page" data-investigation-id=<%= @investigation&.id %>>
+<div class="continue-creation-product-page" data-investigation-id=<%= @investigation&.id %>>
     <div class="breadcrumbs">
         <ol role="breadcrumbs">
             <li>
@@ -27,21 +27,7 @@
     <%= link_to 'Back', @investigation.presence || products_path, class: "govuk-back-link link-back" %>
 
     <h1 class="heading-xlarge">New product</h1>
-    <%= form_with(model: @product, url: @post_url, local: true) do |form| %>
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half">
-                <%= render 'core_params', form: form, product: @product, countries: @countries %>
-            </div>
-            <div class="govuk-grid-column-one-half">
-                <h2 class="heading-medium">Suggested products</h2>
-                <div id="suggested-products">
-                    Start filling in the form for suggestions.
-                </div>
-                <div class="form-group govuk-!-padding-top-5">
-                    <%= form.submit "Create new", :class => "govuk-button" %>
-                </div>
-            </div>
-        </div>
-    <% end %>
+    <%= render 'form', product: @product, countries: @countries, form_model: [@investigation, @product] %>
+
     <%= link_to 'Back', products_path, :class => "link-back" %>
 </div>

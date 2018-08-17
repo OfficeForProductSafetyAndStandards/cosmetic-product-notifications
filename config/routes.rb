@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :activities, shallow: true
     resources :products, only: %i[new create] do
       collection do
+        post :continue_creation
         get :suggested
       end
     end
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
 
   resources :products do
     collection do
+      post :continue_creation
       get :suggested
     end
   end

@@ -2,8 +2,8 @@ class ProductsController < ApplicationController
   include CountriesHelper
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
-  before_action :set_investigation, only: %i[suggested new create]
-  before_action :create_product, only: %i[create]
+  before_action :set_investigation, only: %i[suggested new create continue_creation]
+  before_action :create_product, only: %i[create continue_creation]
 
   # GET /products
   # GET /products.json
@@ -37,6 +37,17 @@ class ProductsController < ApplicationController
                  Product.new
                end
     @countries = all_countries
+    @suggestions = true
+    @post_url = if @investigation.present?
+                  continue_creation_investigation_products_path(@investigation)
+                else
+                  continue_creation_products_path
+                end
+  end
+
+  # POST /products/continue_creation
+  def continue_creation
+    @countries = all_countries
   end
 
   # GET /products/1/edit
@@ -49,7 +60,7 @@ class ProductsController < ApplicationController
   # This route can also be triggered when nested within an investigation
   def create
     respond_to do |format|
-      if @product.save
+      if save_product
         format.html { redirect_to (@investigation.presence || @product), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
@@ -113,16 +124,20 @@ class ProductsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def create_product
-    @product = if @investigation.present?
-                 @investigation.products.create(product_params)
-               else
-                 Product.new(product_params)
-               end
+    @product = Product.new(product_params)
     @product.source = UserSource.new(user: current_user)
   end
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  def save_product
+    if @investigation.present?
+      @investigation.products << @product
+    else
+      @product.save
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
