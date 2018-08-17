@@ -1,5 +1,4 @@
 class Investigation < ApplicationRecord
-  include Searchable
 
   validates :title, presence: true
   default_scope { order(updated_at: :desc) }
@@ -23,5 +22,3 @@ class Investigation < ApplicationRecord
 
   has_paper_trail
 end
-
-Investigation.import force: true # for auto sync model with elastic search
