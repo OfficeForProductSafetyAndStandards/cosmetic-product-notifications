@@ -10,8 +10,8 @@ Rails.application.routes.draw do
     end
     resources :activities, shallow: true
     resources :products, only: %i[new create] do
+      post :confirm, on: :new
       collection do
-        post :continue_creation
         get :suggested
       end
     end
@@ -26,8 +26,8 @@ Rails.application.routes.draw do
   end
 
   resources :products do
+    post :confirm, on: :new
     collection do
-      post :continue_creation
       get :suggested
     end
   end

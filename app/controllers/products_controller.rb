@@ -2,8 +2,8 @@ class ProductsController < ApplicationController
   include CountriesHelper
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
-  before_action :set_investigation, only: %i[suggested new create continue_creation]
-  before_action :create_product, only: %i[create continue_creation]
+  before_action :set_investigation, only: %i[suggested new create confirm]
+  before_action :create_product, only: %i[create confirm]
 
   # GET /products
   # GET /products.json
@@ -39,14 +39,14 @@ class ProductsController < ApplicationController
     @countries = all_countries
     @suggestions = true
     @post_url = if @investigation.present?
-                  continue_creation_investigation_products_path(@investigation)
+                  confirm_new_investigation_product_path(@investigation)
                 else
-                  continue_creation_products_path
+                  confirm_new_product_path
                 end
   end
 
-  # POST /products/continue_creation
-  def continue_creation
+  # POST /products/new/confirm
+  def confirm
     @countries = all_countries
   end
 
