@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
   before_action :set_investigation, only: %i[suggested new create confirm]
   before_action :create_product, only: %i[create confirm]
+  before_action :set_countries, only: %i[new confirm edit]
 
   # GET /products
   # GET /products.json
@@ -31,12 +32,7 @@ class ProductsController < ApplicationController
   # GET /products/new
   # This route can also be triggered when nested within an investigation
   def new
-    @product = if @investigation.present?
-                 @investigation.products.build
-               else
-                 Product.new
-               end
-    @countries = all_countries
+    @product = Product.new
     @suggestions = true
     @post_url = if @investigation.present?
                   confirm_new_investigation_product_path(@investigation)
@@ -46,14 +42,10 @@ class ProductsController < ApplicationController
   end
 
   # POST /products/new/confirm
-  def confirm
-    @countries = all_countries
-  end
+  def confirm; end
 
   # GET /products/1/edit
-  def edit
-    @countries = all_countries
-  end
+  def edit; end
 
   # POST /products
   # POST /products.json
@@ -130,6 +122,10 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  def set_countries
+    @countries = all_countries
   end
 
   def save_product
