@@ -33,7 +33,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   def search_for_users
     if params[:q].blank?
       User.paginate(page: params[:page], per_page: 20)

@@ -22,8 +22,11 @@
   <div class="form-group">
     <%= form.label :email, :class => "form-label" %>
     <%= form.select :email,
-                    User.all.collect {|u| [u.email]},
-                    { include_blank: "None" },
+                    options_for_select(
+                      [ @investigation.assignee.email, User.all.collect {|u| [u.email]} ],
+                      @investigation.assignee.email
+                    ),
+                    { },
                     { class: "js-assignee-email form-control" }
     %>
   </div>
