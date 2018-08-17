@@ -60,7 +60,7 @@ class InvestigationsController < ApplicationController
     else
       @investigation.assignee = assignee
       save_and_respond "Assignee was successfully updated."
-      record_assignment(@investigation)
+      record_assignment
       NotifyMailer.assigned_investigation(@investigation, assignee).deliver
     end
   end
@@ -129,12 +129,11 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.find(params[:id])
   end
 
-  def record_assignment(investigation)
-    Activity.create(
+  def record_assignment
+    @investigation.activities.create(
       source: UserSource.new(user: current_user),
-      investigation: investigation,
-      activity_type: ActivityType.find(name: "assign"),
-      notes: "Assigned to #{investigation.assignee.email}"
+      activity_type: :assign,
+      notes: "Assigned to #{@investigation.assignee.email}"
     )
   end
 

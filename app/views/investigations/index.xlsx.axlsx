@@ -76,7 +76,7 @@ book.add_worksheet name: "Actions" do |sheet_actions|
     investigation.activities.each do |activity|
       sheet_actions.add_row [
         activity.id,
-        activity.activity_type ? activity.activity_type.name : "unknown",
+        activity.type || "unknown",
         activity.notes,
         activity.source.show,
         investigation.id

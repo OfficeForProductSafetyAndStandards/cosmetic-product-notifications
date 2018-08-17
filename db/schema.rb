@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_16_093020) do
+ActiveRecord::Schema.define(version: 2018_08_17_135353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,19 +39,11 @@ ActiveRecord::Schema.define(version: 2018_08_16_093020) do
 
   create_table "activities", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.uuid "investigation_id"
-    t.uuid "activity_type_id"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["activity_type_id"], name: "index_activities_on_activity_type_id"
+    t.integer "activity_type", default: 0
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
-  end
-
-  create_table "activity_types", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "is_automatic", default: false, null: false
   end
 
   create_table "addresses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -206,7 +198,6 @@ ActiveRecord::Schema.define(version: 2018_08_16_093020) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  add_foreign_key "activities", "activity_types"
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
   add_foreign_key "images", "products"

@@ -20,7 +20,7 @@
         <% if @investigation.assignee.nil? %>
           Unassigned
         <% else %>
-          Assigned <%=link_to @investigation.assignee.email, @investigation.assignee, class: "not-implemented"%>
+          Assigned <%=link_to @investigation.assignee.email, assign_investigation_path(@investigation) %>
         <% end %>
       </span>
       <%= link_to "View Audit Log", "#history-section", class: "right" %>
@@ -100,7 +100,7 @@
       <% @investigation.activities.limit(3).each do |activity| %>
         <div class="activity">
           <p>
-            <span class="govuk-!-font-weight-bold"><%= activity.activity_type.titleized_name %></span>
+            <span class="govuk-!-font-weight-bold"><%= activity.activity_type.titleize %></span>
             by
             <%= activity.source.name %>
             on
