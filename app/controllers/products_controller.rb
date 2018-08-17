@@ -2,9 +2,9 @@ class ProductsController < ApplicationController
   include CountriesHelper
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
-  before_action :set_investigation, only: %i[suggested new create confirm]
-  before_action :create_product, only: %i[create confirm]
-  before_action :set_countries, only: %i[new confirm edit]
+  before_action :set_investigation, only: %i[suggested_for_investigation new create new_for_investigation]
+  before_action :create_product, only: %i[new create]
+  before_action :set_countries, only: %i[new edit new_for_investigation]
 
   # GET /products
   # GET /products.json
@@ -14,6 +14,12 @@ class ProductsController < ApplicationController
 
   # GET /products/suggested
   def suggested
+    @products = advanced_product_search(4)
+    render partial: "suggested"
+  end
+
+  # GET /investigations/1/products/suggested
+  def suggested_for_investigation
     @products = advanced_product_search(4)
     render partial: "suggested"
   end
@@ -30,19 +36,12 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/new
-  # This route can also be triggered when nested within an investigation
-  def new
-    @product = Product.new
-    @suggestions = true
-    @post_url = if @investigation.present?
-                  confirm_new_investigation_product_path(@investigation)
-                else
-                  confirm_new_product_path
-                end
-  end
+  def new; end
 
-  # POST /products/new/confirm
-  def confirm; end
+  # GET /investigations/1/products/new
+  def new_for_investigation
+    @product = Product.new
+  end
 
   # GET /products/1/edit
   def edit; end

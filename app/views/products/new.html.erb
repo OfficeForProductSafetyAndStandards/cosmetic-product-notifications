@@ -14,7 +14,7 @@
                     <%= link_to 'Investigation', @investigation %>
                 </li>
                 <li>
-                    <%= link_to 'New Product', new_investigation_product_path(@investigation) %>
+                    <%= link_to 'New Product', new_investigation_products_path(@investigation) %>
                 </li>
             <% else %>
                 <li>
@@ -32,18 +32,15 @@
     <h1 class="heading-xlarge">New product</h1>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
-            <%= form_with(model: @product, url: @post_url, local: true) do |form| %>
-                <%= render 'core_params', form: form, product: @product, countries: @countries %>
-                <div class="form-group">
-                    <%= form.submit "Create new", :class => "govuk-button" %>
-                </div>
-            <% end %>
+            <%= render 'form', product: @product, investigation: @investigation, countries: @countries %>
         </div>
         <div class="govuk-grid-column-one-half">
-            <h2 class="heading-medium">Suggested products</h2>
-            <div id="suggested-products">
-                Start filling in the form for suggestions.
-            </div>
+            <% if @investigation.nil? %>
+                <h2 class="heading-medium">Suggested products</h2>
+                <div id="suggested-products">
+                    Start filling in the form for suggestions.
+                </div>
+            <% end %>
         </div>
     </div>
     <%= link_to 'Back', products_path, :class => "link-back" %>

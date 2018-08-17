@@ -9,9 +9,11 @@ $(document).on("turbolinks:load", function() {
         adaptiveHeight: true,
     });
 
-    searchOnTextInput($('.new-product-page .search-term'), buildSuggestedUrl(), buildProductQuery, function(data) {
-        $('#suggested-products').html(data);
-    });
+    if ($("#suggested-products")) {
+        searchOnTextInput($('.new-product-page .search-term'), buildSuggestedUrl(), buildProductQuery, function(data) {
+            $('#suggested-products').html(data);
+        });
+    }
 
     // Rails date_select does not allow the setting of classes
     $('.date-select-control select').addClass("form-control");

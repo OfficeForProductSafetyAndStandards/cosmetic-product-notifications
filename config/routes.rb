@@ -9,10 +9,10 @@ Rails.application.routes.draw do
       post :add_product
     end
     resources :activities, shallow: true
-    resources :products, only: %i[new create] do
-      post :confirm, on: :new
+    resources :products, only: %i[] do
       collection do
-        get :suggested
+        get "new" => "products#new_for_investigation", as: :new
+        get "suggested" => "products#suggested_for_investigation"
       end
     end
   end
@@ -26,7 +26,6 @@ Rails.application.routes.draw do
   end
 
   resources :products do
-    post :confirm, on: :new
     collection do
       get :suggested
     end
