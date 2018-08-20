@@ -20,7 +20,8 @@ class ProductsController < ApplicationController
 
   # GET /investigations/1/products/suggested
   def suggested_for_investigation
-    @products = advanced_product_search(4)
+    @products = advanced_product_search(20)
+                .reject { |product| @investigation.product_ids.include?(product.id) }[0...4]
     render partial: "suggested"
   end
 
