@@ -1,8 +1,8 @@
 $(document).on("turbolinks:load", function() {
-    var autocomplete_element = document.getElementById('location-autocomplete');
-    if (autocomplete_element) {
+    var autocompleteElement = document.getElementById('location-autocomplete');
+    if (autocompleteElement) {
         openregisterLocationPicker({
-            selectElement: autocomplete_element,
+            selectElement: autocompleteElement,
             url: '/assets/govuk-country-and-territory-autocomplete/dist/location-autocomplete-graph.json'
         })
     }

@@ -17,8 +17,9 @@ class Investigations::ProductsController < ApplicationController
 
   # GET /investigations/1/products/suggested
   def suggested
+    excluded_product_ids = params[:excluded_products].split(",")
     @products = advanced_product_search(20)
-                .reject { |product| @investigation.product_ids.include?(product.id) }[0...4]
+                .reject { |product| excluded_product_ids.include?(product.id) }[0...4]
     render partial: "products/suggested"
   end
 
