@@ -14,7 +14,7 @@
   <div class="form-group">
     <fieldset>
       <legend><h4 class="heading-medium">Activity type</h4></legend>
-      <% Activity.activity_types.each do |(type, _)| %>
+      <% Activity.activity_types.select { |t| !automatic? t }.each do |(type, _)| %>
         <div class="multiple-choice">
           <%= form.radio_button :activity_type, type %>
           <%= form.label :activity_type, type.titleize %>

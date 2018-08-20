@@ -17,11 +17,8 @@
         <% end %>
       </span>
       <span class="right">
-        <% if @investigation.assignee.nil? %>
-          Unassigned
-        <% else %>
-          Assigned <%=link_to @investigation.assignee.email, assign_investigation_path(@investigation) %>
-        <% end %>
+          Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
+                              assign_investigation_path(@investigation) %>
       </span>
       <%= link_to "View Audit Log", "#history-section", class: "right" %>
       <%= link_to "Watch this issue", "#", class: "right" %>

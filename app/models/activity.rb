@@ -20,8 +20,4 @@ class Activity < ApplicationRecord
   accepts_nested_attributes_for :source
 
   has_paper_trail
-
-  def is_automatic?
-    activity_type == :assign
-  end
 end
