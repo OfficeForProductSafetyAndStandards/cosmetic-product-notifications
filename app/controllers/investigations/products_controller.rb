@@ -6,7 +6,6 @@ class Investigations::ProductsController < ApplicationController
   before_action :create_product, only: %i[new create]
   before_action :set_countries, only: %i[index new]
 
-  
   # GET /investigations/1/products
   def index
     @product = Product.new
