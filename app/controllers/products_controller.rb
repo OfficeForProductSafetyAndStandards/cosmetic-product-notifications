@@ -115,8 +115,12 @@ class ProductsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def create_product
-    @product = Product.new(product_params)
-    @product.source = UserSource.new(user: current_user)
+    if params[:product]
+      @product = Product.new(product_params)
+      @product.source = UserSource.new(user: current_user)
+    else
+      @product = Product.new
+    end
   end
 
   def set_product
