@@ -1,8 +1,7 @@
 require "elasticsearch/model"
 
 class Business < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include Searchable
 
   index_name [Rails.env, "businesses"].join("_")
 
