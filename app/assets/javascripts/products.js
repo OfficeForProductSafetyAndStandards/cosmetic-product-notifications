@@ -9,26 +9,7 @@ $(document).on("turbolinks:load", function() {
         adaptiveHeight: true,
     });
 
-    if ($("#suggested-products")) {
-        searchOnTextInput($('.new-product-page .search-term'), buildSuggestedUrl(), buildProductQuery, function(data) {
-            $('#suggested-products').html(data);
-        });
-    }
-
-    // Rails date_select does not allow the setting of classes
-    $('.date-select-control select').addClass("form-control");
-
-    openregisterLocationPicker({
-        selectElement: document.getElementById('location-autocomplete'),
-        url: '/assets/govuk-country-and-territory-autocomplete/dist/location-autocomplete-graph.json'
-    })
+    searchOnTextInput($('.new-product-page .search-term'), "/products/suggested", buildProductQuery, function(data) {
+        $('#suggested-products').html(data);
+    });
 });
-
-function buildSuggestedUrl() {
-    var url = "/products/suggested";
-    var investigationId = $(".new-product-page").data("investigation-id");
-    if(investigationId) {
-        url = "/investigations/" + investigationId + url;
-    }
-    return url;
-}

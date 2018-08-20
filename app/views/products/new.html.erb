@@ -6,39 +6,24 @@
             <li>
                 <a href="/">Home</a>
             </li>
-            <% if @investigation.present? %>
-                <li>
-                    <%= link_to 'Investigations', investigations_path %>
-                </li>
-                <li>
-                    <%= link_to 'Investigation', @investigation %>
-                </li>
-                <li>
-                    <%= link_to 'New Product', new_investigation_products_path(@investigation) %>
-                </li>
-            <% else %>
-                <li>
-                    <%= link_to 'Products', products_path %>
-                </li>
-                <li>
-                    <%= link_to 'New', new_product_path %>
-                </li>
-            <% end %>
+            <li>
+                <%= link_to 'Products', products_path %>
+            </li>
+            <li>
+                <%= link_to 'New', new_product_path %>
+            </li>
         </ol>
     </div>
 
-    <%= link_to 'Back', @investigation.presence || products_path, class: "govuk-back-link link-back" %>
+    <%= link_to 'Back', products_path, class: "govuk-back-link link-back" %>
 
     <h1 class="heading-xlarge">New product</h1>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
-            <%= render 'form', product: @product, investigation: @investigation, countries: @countries %>
+            <%= render 'form', product: @product, countries: @countries, form_model: @product %>
         </div>
         <div class="govuk-grid-column-one-half">
-            <% if @investigation.nil? %>
-                <%= render 'suggestions_container' %>
-            <% end %>
+            <%= render 'suggestions_container' %>
         </div>
     </div>
-    <%= link_to 'Back', products_path, :class => "link-back" %>
 </div>
