@@ -4,6 +4,10 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
+    # TODO MSPSDS_197: figure out how to move this to User model without
+    # build breaking (on db creation or docker-compose up)
+    User.import force: true
+
     sign_in_as_admin
     @address = addresses(:one)
     @address.source = sources(:address_one)
