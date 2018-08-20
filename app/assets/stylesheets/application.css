@@ -19,3 +19,20 @@
 * {
     box-sizing: border-box;
 }
+
+table th a {
+    color: black!important;
+    text-decoration: none;
+}
+
+table th .current {
+    text-decoration: underline;
+}
+
+table th .asc::after {
+    content: ' ⯆';
+}
+
+table th .desc::after {
+    content: ' ⯅';
+}

@@ -1,11 +1,11 @@
 <table class="investigation-list">
   <thead>
   <tr>
-    <th>Case ID</th>
+    <th><%= sortable "title", "Title" %></th>
     <th>Product</th>
-    <th>Status</th>
-    <th>Last updated</th>
-    <th>Assigned to</th>
+    <th><%= sortable "is_closed", "Status" %></th>
+    <th><%= sortable "updated_at", "Last updated" %></th>
+    <th><%= sortable "users.email", "Assigned to" %></th>
   </tr>
   </thead>
 

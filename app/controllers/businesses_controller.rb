@@ -1,5 +1,7 @@
 class BusinessesController < ApplicationController
   include BusinessesHelper
+  helper_method :sort_column, :sort_direction
+
   before_action :authenticate_user!
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[create]
@@ -10,11 +12,7 @@ class BusinessesController < ApplicationController
   # GET /businesses
   # GET /businesses.json
   def index
-    @businesses = if params[:q].blank?
-                    Business.paginate(page: params[:page], per_page: 20)
-                  else
-                    search_for_businesses(20)
-                  end
+    @businesses = search_for_businesses
   end
 
   # GET /businesses/1
@@ -85,6 +83,16 @@ class BusinessesController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  def search_for_businesses
+    businesses = if params[:q].blank?
+                   Business.all
+
+                 else
+                   Business.search(params[:q]).records
+                 end
+    businesses.reorder("#{sort_column} #{sort_direction}").paginate(page: params[:page], per_page: 20)
+  end
+
   def create_business
     @business = Business.new(business_params)
     set_defaults_on_primary_address if @business.addresses.any?
@@ -98,12 +106,6 @@ class BusinessesController < ApplicationController
   def update_business
     @business.assign_attributes(business_params)
     set_defaults_on_primary_address if @business.addresses.any?
-  end
-
-  def search_for_businesses(page_size)
-    Business.search(params[:q])
-            .paginate(page: params[:page], per_page: page_size)
-            .records
   end
 
   def respond_to_business_creation
@@ -125,6 +127,14 @@ class BusinessesController < ApplicationController
   def set_defaults_on_primary_address
     @business.primary_address.address_type ||= "Registered office address"
     @business.primary_address.source ||= UserSource.new(user: current_user)
+  end
+
+  def sort_column
+    Business.column_names.include?(params[:sort]) ? params[:sort] : "company_name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
   include CountriesHelper
+  helper_method :sort_column, :sort_direction
+
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
   before_action :create_product, only: %i[create]
@@ -89,11 +91,12 @@ class ProductsController < ApplicationController
   end
 
   def search_for_products
-    if params[:q].blank?
-      Product.paginate(page: params[:page], per_page: 20)
-    else
-      Product.search(params[:q]).paginate(page: params[:page], per_page: 20).records
-    end
+    products = if params[:q].blank?
+                 Product.all
+               else
+                 Product.search(params[:q]).records
+               end
+    products.reorder("#{sort_column} #{sort_direction}").paginate(page: params[:page], per_page: 20)
   end
 
   def search_for_gtin
@@ -109,6 +112,14 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  def sort_column
+    Product.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
