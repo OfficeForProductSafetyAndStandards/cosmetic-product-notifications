@@ -23,8 +23,8 @@
     <%= form.label :email, :class => "form-label" %>
     <%= form.select :email,
                     options_for_select(
-                      [ @investigation.assignee.email, User.all.collect {|u| [u.email]} ],
-                      @investigation.assignee.email
+                      [@investigation.assignee ? @investigation.assignee.email : "", User.all.collect {|u| [u.email]}],
+                      @investigation.assignee ? @investigation.assignee.email : ""
                     ),
                     { },
                     { class: "js-assignee-email form-control" }
