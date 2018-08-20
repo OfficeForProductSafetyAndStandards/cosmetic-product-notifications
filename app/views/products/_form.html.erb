@@ -1,5 +1,5 @@
 <%= form_with(model: product, local: true) do |form| %>
-  <%= hidden_field_tag "investigation_id", @investigation.id if investigation.present? %>
+  <%= hidden_field_tag "investigation_id", investigation.id if investigation.present? %>
   <%= render 'core_params', form: form, product: product, countries: countries %>
 
   <div class="govuk-form-group">
