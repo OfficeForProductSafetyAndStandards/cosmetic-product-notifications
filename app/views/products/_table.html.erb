@@ -1,10 +1,10 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Brand</th>
-      <th>Category(s)</th>
-      <th>Origin Co</th>
+      <th><%= sortable "name", "Name" %></th>
+      <th><%= sortable "brand", "Brand" %></th>
+      <th><%= sortable "category", "Category(s)" %></th>
+      <th><%= sortable "country_of_origin", "Origin Co" %></th>
       <% unless @compressed %>
         <th>Investigations</th>
       <% end %>

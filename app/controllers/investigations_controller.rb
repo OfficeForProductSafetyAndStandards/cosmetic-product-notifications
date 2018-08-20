@@ -10,9 +10,7 @@ class InvestigationsController < ApplicationController
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @investigations = Investigation.left_joins(:assignee)
-                          .reorder("#{sort_column} #{sort_direction}")
-                          .paginate(page: params[:page], per_page: 20)
+    @investigations = search_for_investigations
   end
 
   # GET /investigations/1
@@ -110,6 +108,12 @@ class InvestigationsController < ApplicationController
 
   private
 
+  def search_for_investigations
+    Investigation.left_joins(:assignee)
+                 .reorder("#{sort_column} #{sort_direction}")
+                 .paginate(page: params[:page], per_page: 20)
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def save_and_respond(notice)
     respond_to do |format|
@@ -133,8 +137,8 @@ class InvestigationsController < ApplicationController
   end
 
   def sort_column
-    Investigation.column_names.concat(User.column_names.map{|name| "users.#{name}"})
-        .include?(params[:sort]) ? params[:sort] : "updated_at"
+    allowed = Investigation.column_names.concat(User.column_names.map { |name| "users.#{name}" })
+    allowed.include?(params[:sort]) ? params[:sort] : "updated_at"
   end
 
   def sort_direction
