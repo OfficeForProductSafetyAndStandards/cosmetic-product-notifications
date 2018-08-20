@@ -24,29 +24,6 @@ $(document).on("turbolinks:load", function() {
     })
 });
 
-function buildProductQuery() {
-    var query = {};
-    var q = $('.new-product-page .search-term:not(#gtin-input)')
-        .map(function() {
-            return $(this).val();
-        })
-        .get()
-        .filter(function(searchTerm) {
-            return searchTerm;
-        })
-        .map(function(searchTerm) {
-            return searchTerm + "*"
-        }).join(" OR ");
-        var gtin = $('.new-product-page #gtin-input').val();
-    if (q) {
-        query.q = q;
-    }
-    if (gtin) {
-        query.gtin = gtin;
-    }
-    return query;
-}
-
 function buildSuggestedUrl() {
     var url = "/products/suggested";
     var investigationId = $(".new-product-page").data("investigation-id");

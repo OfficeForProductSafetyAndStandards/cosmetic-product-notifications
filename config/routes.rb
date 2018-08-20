@@ -9,10 +9,9 @@ Rails.application.routes.draw do
       post :add_product
     end
     resources :activities, shallow: true
-    resources :products, only: %i[] do
+    resources :products, only: %i[index new create], controller: "investigations/products" do
       collection do
-        get "new" => "products#new_for_investigation", as: :new
-        get "suggested" => "products#suggested_for_investigation"
+        get :suggested
       end
     end
   end
