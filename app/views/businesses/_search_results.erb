@@ -13,7 +13,14 @@
         <tr>
           <td><%= business.company_name %></td>
           <td>
-            <%= link_to "View", business %>
+            <% if @investigation.present? %>
+              <%= form_with(url: add_business_investigation_businesses_path(@investigation), local: true) do |form| %>
+                <%= form.hidden_field :business_id, value: business.id %>
+                <%= form.submit "Add", :class => "govuk-button" %>
+              <% end %>
+            <% else %>
+              <%= link_to "View", business %>
+            <% end %>
           </td>
         </tr>
       <% end %>
@@ -39,7 +46,11 @@
         <tr>
           <td><%= link_to business[:company_name], business[:url], target: "_blank" %></td>
           <td>
-            <%= form_with(url: "/businesses/companies_house", local: true) do |form| %>
+            <%= form_with(
+              url: @investigation.present? ? companies_house_investigation_businesses_path(@investigation)
+                                           : companies_house_businesses_path,
+              local: true) do |form| %>
+
               <%= form.hidden_field :company_number, value: business[:company_number] %>
               <%= form.submit "Add", :class => "govuk-button" %>
             <% end %>

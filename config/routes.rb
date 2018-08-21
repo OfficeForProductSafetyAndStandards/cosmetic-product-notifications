@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     resources :businesses, only: %i[index new create], controller: "investigations/businesses" do
       collection do
         get :suggested
+        post :add_business
+        post :companies_house
       end
     end
   end
