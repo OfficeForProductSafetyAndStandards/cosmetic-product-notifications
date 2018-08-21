@@ -1,8 +1,26 @@
 module BusinessesHelper
+  BUSINESS_SUGGESTION_LIMIT = 5
+
   def defaults_on_primary_address(business)
     business.primary_address.address_type ||= "Registered office address"
     business.primary_address.source ||= UserSource.new(user: current_user)
     business
+  end
+
+  def search_for_businesses(page_size)
+    Business.search(params[:q])
+            .paginate(page: params[:page], per_page: page_size)
+            .records
+  end
+
+  def search_companies_house(query, page_size)
+    companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(query)
+    filter_out_existing_businesses(companies_house_response)
+      .first(page_size)
+  end
+
+  def filter_out_existing_businesses(businesses)
+    businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

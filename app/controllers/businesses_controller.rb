@@ -5,8 +5,6 @@ class BusinessesController < ApplicationController
   before_action :create_business, only: %i[create]
   before_action :update_business, only: %i[update]
 
-  BUSINESS_SUGGESTION_LIMIT = 5
-
   # GET /businesses
   # GET /businesses.json
   def index
@@ -40,9 +38,7 @@ class BusinessesController < ApplicationController
   # GET /businesses/search
   def search
     @existing_businesses = search_for_businesses(BUSINESS_SUGGESTION_LIMIT)
-    companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(params[:q])
-    @companies_house_businesses = filter_out_existing_businesses(companies_house_response)
-                                  .first(BUSINESS_SUGGESTION_LIMIT)
+    @companies_house_businesses = search_companies_house(params[:q], BUSINESS_SUGGESTION_LIMIT)
     render partial: "search_results"
   end
 
@@ -100,12 +96,6 @@ class BusinessesController < ApplicationController
     defaults_on_primary_address(@business) if @business.addresses.any?
   end
 
-  def search_for_businesses(page_size)
-    Business.search(params[:q])
-            .paginate(page: params[:page], per_page: page_size)
-            .records
-  end
-
   def respond_to_business_creation
     respond_to do |format|
       if @business.save
@@ -116,9 +106,5 @@ class BusinessesController < ApplicationController
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def filter_out_existing_businesses(businesses)
-    businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
   end
 end
