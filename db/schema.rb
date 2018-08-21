@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2018_08_17_135353) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "activity_type", default: 0
+    t.integer "activity_type", null: false
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
   end
 
