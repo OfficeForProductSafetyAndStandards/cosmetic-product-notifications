@@ -8,12 +8,15 @@
   <tbody>
   <% @images.each do |image| %>
     <tr>
-      <td>
+      <td class="image-preview">
         <%= render 'image', image: image, thumbnail: "300x300" %>
       </td>
-      <td>
-        <%= link_to "Update", edit_investigation_image_path(@investigation, image), class: "govuk-button" %>
-        <%= link_to "Delete", investigation_image_path(@investigation, image), method: :delete, data: { confirm: "Are you sure?" }, class: "button-warning" %>
+      <td class="image-details">
+        <h2 class="govuk-heading-m image-title"><%= image.metadata["title"] %></h2>
+        <div class="image-updated right">Updated <%= Time.parse(image.metadata["updated"]).strftime("%d/%m/%Y") %></div>
+        <div class="image-description"><%= image.metadata["description"] %></div>
+        <%= link_to "Edit image details", edit_associated_image_path(@investigation, image), class: "edit-image-link" %>
+        <%= link_to "Delete image", associated_image_path(@investigation, image), method: :delete, data: { confirm: "Are you sure?" }, class: "delete-image-link" %>
       </td>
     </tr>
   <% end %>

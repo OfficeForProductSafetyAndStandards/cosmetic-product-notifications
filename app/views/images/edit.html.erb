@@ -1,9 +1,11 @@
-<% content_for :page_title, "Edit Image Details - Market Surveillance & Product Safety" %>
+<% content_for :page_title, "Edit image - Market Surveillance & Product Safety" %>
 
-<%= link_to 'Back', investigation_images_path(@investigation), class: "govuk-back-link" %>
+<%= link_to 'Back', associated_images_path(@investigation), class: "govuk-back-link" %>
 
-<h1 class="govuk-heading-m">Edit Image Details</h1>
+<h1 class="heading-xlarge">Edit image</h1>
 
-<%= render 'form', image: @image %>
+<% if @image.variable? && @image.metadata["safe"] %>
+  <%= image_tag @image.variant(resize: "300x200"), alt: @image.metadata["title"], class: "image-thumbnail" %>
+<% end %>
 
-<%= link_to 'Show', @image %>
+<%= render 'metadata_form', image: @image %>

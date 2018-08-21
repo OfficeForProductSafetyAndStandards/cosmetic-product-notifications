@@ -1,0 +1,9 @@
+<% if image.variable? %>
+  <% if image.metadata["safe"] %>
+    <%= image_tag image.variant(resize: thumbnail), alt: image.metadata["title"], class: "image-thumbnail" %>
+  <% else %>
+    <div class="image-processing-placeholder"><span>Processing image</span></div>
+  <% end %>
+<% else %>
+  <div class="image-without-preview"><span><%= image.metadata["title"] %></span></div>
+<% end %>

@@ -1,26 +1,9 @@
-<% content_for :page_title, "Manage Images - Market Surveillance & Product Safety" %>
+<% content_for :page_title, "Manage images - Market Surveillance & Product Safety" %>
 
-<%= link_to 'Back', investigation_path(@investigation), class: "govuk-back-link" %>
+<%= link_to 'Back', polymorphic_path(@investigation), class: "govuk-back-link" %>
 
-<h1 class="heading-xlarge">Manage Images</h1>
+<h1 class="heading-xlarge">Manage images</h1>
+
+<%= link_to 'Add new image', new_associated_image_path(@investigation) %>
 
 <%= render 'table' %>
-<br/>
-
-<h2 class="govuk-heading-m">Add Image</h2>
-
-<%= form_for :image, url: investigation_images_path(@investigation) do |form| %>
-  <div class="govuk-form-group">
-    <%= form.label :title, :class => "govuk-label" %>
-    <%= form.text_field :title, :class => "govuk-input" %>
-  </div>
-
-  <div class="govuk-form-group">
-    <%= form.label :file, :class => "govuk-label" %>
-    <%= form.file_field :file, :class => "govuk-file-upload" %>
-  </div>
-
-  <div class="govuk-form-group">
-    <%= form.submit "Add image", :class => "govuk-button" %>
-  </div>
-<% end %>
