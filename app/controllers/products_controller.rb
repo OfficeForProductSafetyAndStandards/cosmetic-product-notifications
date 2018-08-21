@@ -1,20 +1,21 @@
 class ProductsController < ApplicationController
   include CountriesHelper
+  include ProductsHelper
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
   before_action :create_product, only: %i[create]
+  before_action :set_countries, only: %i[new edit]
 
   # GET /products
   # GET /products.json
   def index
-    @products = search_for_products
+    @products = search_for_products(20)
   end
 
-  # GET /products/table
-  def table
-    @products = advanced_product_search
-    @compressed = true
-    render partial: "table"
+  # GET /products/suggested
+  def suggested
+    @products = advanced_product_search(4)
+    render partial: "suggested"
   end
 
   # GET /products/1
@@ -31,13 +32,10 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
-    @countries = all_countries
   end
 
   # GET /products/1/edit
-  def edit
-    @countries = all_countries
-  end
+  def edit; end
 
   # POST /products
   # POST /products.json
@@ -79,28 +77,6 @@ class ProductsController < ApplicationController
 
   private
 
-  # If the user supplies a barcode and it matches, then just return that.
-  # Otherwise use the general query param
-  def advanced_product_search
-    gtin_search_results = search_for_gtin if params[:gtin].present?
-    # if there was no GTIN param or there were no results for the GTIN search
-    basic_search_results = search_for_products if gtin_search_results.blank? && params[:q].present?
-    basic_search_results || gtin_search_results || []
-  end
-
-  def search_for_products
-    if params[:q].blank?
-      Product.paginate(page: params[:page], per_page: 20)
-    else
-      Product.search(params[:q]).paginate(page: params[:page], per_page: 20).records
-    end
-  end
-
-  def search_for_gtin
-    Product.search(query: { match: { gtin: params[:gtin] } })
-           .paginate(page: params[:page], per_page: 20).records
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def create_product
     @product = Product.new(product_params)
@@ -111,12 +87,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def product_params
-    params.require(:product).permit(
-      :gtin, :name, :description, :model, :batch_number, :url_reference, :brand, :serial_number,
-      :manufacturer, :country_of_origin, :date_placed_on_market, :associated_parts,
-      images_attributes: %i[id title url _destroy]
-    )
+  def set_countries
+    @countries = all_countries
   end
 end

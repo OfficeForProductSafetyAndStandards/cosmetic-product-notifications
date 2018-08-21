@@ -16,6 +16,6 @@
 
 <h1 class="heading-xlarge">Edit product</h1>
 
-<%= render 'form', product: @product, countries: @countries %>
+<%= render 'form', product: @product, countries: @countries, form_model: @product %>
 
 <%= link_to 'Back', products_path, :class => "link-back" %>
