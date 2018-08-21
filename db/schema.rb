@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_17_135353) do
+ActiveRecord::Schema.define(version: 2018_08_21_103212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,15 +70,6 @@ ActiveRecord::Schema.define(version: 2018_08_17_135353) do
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
-  create_table "images", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string "title"
-    t.string "url"
-    t.uuid "product_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_images_on_product_id"
-  end
-
   create_table "investigation_businesses", force: :cascade do |t|
     t.uuid "investigation_id", null: false
     t.uuid "business_id", null: false
@@ -121,6 +112,15 @@ ActiveRecord::Schema.define(version: 2018_08_17_135353) do
     t.string "country_of_origin"
     t.date "date_placed_on_market"
     t.string "associated_parts"
+  end
+
+  create_table "rapex_images", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "title"
+    t.string "url"
+    t.uuid "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_rapex_images_on_product_id"
   end
 
   create_table "rapex_imports", force: :cascade do |t|
@@ -200,7 +200,7 @@ ActiveRecord::Schema.define(version: 2018_08_17_135353) do
 
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
-  add_foreign_key "images", "products"
   add_foreign_key "investigations", "users", column: "assignee_id"
+  add_foreign_key "rapex_images", "products"
   add_foreign_key "sources", "users"
 end

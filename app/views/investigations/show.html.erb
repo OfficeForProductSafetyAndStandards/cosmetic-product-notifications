@@ -68,9 +68,9 @@
         <h2 class="govuk-heading-m">
           Images
         </h2>
-        <% if product.images.any? %>
-          <%= image_tag(product.images[0].url, alt: product.images[0].title, :class => "product-image") %>
-          <%= link_to "View images (#{product.images.size})", product_path(product), :class => "no-print" %>
+        <% if product.rapex_images.any? %>
+          <%= image_tag(product.rapex_images[0].url, alt: product.rapex_images[0].title, :class => "product-image") %>
+          <%= link_to "View images (#{product.rapex_images.size})", product_path(product), :class => "no-print" %>
         <% else %>
           <p>No images.</p>
         <% end %>

@@ -39,7 +39,7 @@
   </div>
 
   <div class="form-group">
-    <%= form.fields_for :images do |image| %>
+    <%= form.fields_for :rapex_images do |image| %>
       <%= render 'image_fields', f: image %>
     <% end %>
     <%= link_to_add_association 'add image', form, :images %>

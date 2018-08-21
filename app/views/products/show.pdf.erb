@@ -3,7 +3,7 @@
 </h2>
 
 <div>
-  <% @product.images.each do |image| %>
+  <% @product.rapex_images.each do |image| %>
     <%= image_tag(image.url, alt: image.title) %>
   <% end %>
 </div>

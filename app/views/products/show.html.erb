@@ -19,7 +19,7 @@
 </h1>
 
 <div class="slider-nav">
-  <% @product.images.each do |image| %>
+  <% @product.rapex_images.each do |image| %>
     <%= image_tag(image.url, alt: image.title) %>
   <% end %>
 </div>

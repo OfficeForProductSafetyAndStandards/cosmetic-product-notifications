@@ -1,7 +1,7 @@
 <% @products.each do |product| %>
   <div class="grid-row govuk-!-padding-bottom-3">
     <div class="column-third min-height-column">
-      <%= image_tag(product.images[0].url, alt: product.images[0].title, :class => "product-image") if product.images.any? %>
+      <%= image_tag(product.rapex_images[0].url, alt: product.rapex_images[0].title, :class => "product-image") if product.rapex_images.any? %>
     </div>
     <div class="column-two-thirds">
       <h4 class="heading-small"><%= product.name %></h4>
