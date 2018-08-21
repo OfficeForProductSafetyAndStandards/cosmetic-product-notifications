@@ -1,10 +1,12 @@
 class ProductsController < ApplicationController
   include CountriesHelper
+  include ProductsHelper
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
   before_action :create_product, only: %i[create]
+  before_action :set_countries, only: %i[new edit]
 
   # GET /products
   # GET /products.json
@@ -12,11 +14,10 @@ class ProductsController < ApplicationController
     @products = search_for_products
   end
 
-  # GET /products/table
-  def table
+  # GET /products/suggested
+  def suggested
     @products = advanced_product_search
-    @compressed = true
-    render partial: "table"
+    render partial: "suggested"
   end
 
   # GET /products/1
@@ -33,13 +34,10 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
-    @countries = all_countries
   end
 
   # GET /products/1/edit
-  def edit
-    @countries = all_countries
-  end
+  def edit; end
 
   # POST /products
   # POST /products.json
@@ -129,5 +127,9 @@ class ProductsController < ApplicationController
       :manufacturer, :country_of_origin, :date_placed_on_market, :associated_parts,
       images_attributes: %i[id title url _destroy]
     )
+  end
+
+  def set_countries
+    @countries = all_countries
   end
 end

@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[show edit update destroy close reopen assign update_assignee]
+  before_action :set_investigation, only: %i[show edit update destroy close reopen assign update_assignee add_product]
   before_action :create_investigation, only: %i[create]
 
   # GET /investigations
@@ -62,8 +62,15 @@ class InvestigationsController < ApplicationController
     else
       @investigation.assignee = assignee
       save_and_respond "Assignee was successfully updated."
+      record_assignment
       NotifyMailer.assigned_investigation(@investigation, assignee).deliver
     end
+  end
+
+  # POST /investigations/1/add_product
+  def add_product
+    @investigation.products << Product.find(params[:product_id])
+    redirect_to @investigation, notice: "Product was successfully added."
   end
 
   # POST /investigations
@@ -143,6 +150,14 @@ class InvestigationsController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end
+
+  def record_assignment
+    @investigation.activities.create(
+      source: UserSource.new(user: current_user),
+      activity_type: :assign,
+      notes: "Assigned to #{@investigation.assignee.email}"
+    )
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

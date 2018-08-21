@@ -17,11 +17,8 @@
         <% end %>
       </span>
       <span class="right">
-        <% if @investigation.assignee.nil? %>
-          Unassigned
-        <% else %>
-          Assigned <%=link_to @investigation.assignee.email, @investigation.assignee, class: "not-implemented"%>
-        <% end %>
+          Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
+                              assign_investigation_path(@investigation) %>
       </span>
       <%= link_to "View Audit Log", "#history-section", class: "right" %>
       <%= link_to "Watch this issue", "#", class: "right" %>
@@ -80,6 +77,8 @@
       </div>
     <% end %>
   </div>
+  <%= link_to 'Add product', investigation_products_path(@investigation), :class => "button no-print" %>
+  <br /><br />
 
   <div class="govuk-grid-row investigation-activity">
     <div class="govuk-grid-column-two-thirds">
@@ -100,9 +99,9 @@
       <% @investigation.activities.limit(3).each do |activity| %>
         <div class="activity">
           <p>
-            <span class="govuk-!-font-weight-bold"><%= activity.activity_type.titleized_name %></span>
+            <span class="govuk-!-font-weight-bold"><%= activity.activity_type.titleize %></span>
             by
-            <%= activity.source.show %>
+            <%= activity.source.name %>
             on
             <%= activity.created_at.to_s :long_ordinal %>
           </p>
@@ -184,5 +183,5 @@
     </div>
   </div>
 
-  <%= render 'history', versions: @investigation.versions%>
+  <%= render 'history', versions: @investigation.versions %>
 </div>

@@ -18,13 +18,11 @@
         <td><%= product.brand %></td>
         <td><span class="not-implemented">Some category (+10)</span></td>
         <td><%= product.country_of_origin_for_display%></td>
-        <% unless @compressed %>
         <td>
           <span class="investigations not-implemented">
             <%= link_to product.investigations.count, investigations_path %>
           </span>
         </td>
-        <% end %>
       </tr>
     <% end %>
     <% if @products.empty? %>

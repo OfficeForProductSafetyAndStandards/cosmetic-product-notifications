@@ -1,28 +1,31 @@
 <% content_for :page_title, "Users - Market Surveillance & Product Safety" %>
 
 <div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Users', users_path %>
-        </li>
-    </ol>
+  <ol role="breadcrumbs">
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <%= link_to 'Users', users_path %>
+    </li>
+  </ol>
 </div>
 
 <div class="users-page">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
-            <h1 class="heading-xlarge">Users</h1>
-            <%= link_to "Invite user", new_user_invitation_path, :class => "govuk-button" %><br /><br />
-        </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h1 class="heading-xlarge">Users</h1>
+      <%= link_to "Invite user", new_user_invitation_path, :class => "govuk-button" %><br /><br />
     </div>
-    <div class="govuk-grid-row">
-        <% @users.each do |user| %>
-            <div class="govuk-grid-column-one-half">
-                <%= render user %>
-            </div>
-        <% end %>
-    </div>
+  </div>
+  
+  <div class="govuk-grid-row">
+    <%= will_paginate @investigations %>
+    <% @users.each do |user| %>
+      <div class="govuk-grid-column-one-half">
+        <%= render user %>
+      </div>
+      <%= will_paginate @investigations %>
+    <% end %>
+  </div>
 </div>

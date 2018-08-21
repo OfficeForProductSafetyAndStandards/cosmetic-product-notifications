@@ -79,7 +79,7 @@ end
 def create_activity(notification, investigation, date)
   Activity.create(
     investigation: investigation,
-    activity_type: ActivityType.find_by(name: "notification"),
+    activity_type: :notification,
     created_at: date,
     updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
     notes: field_from_notification(notification, "measures"),

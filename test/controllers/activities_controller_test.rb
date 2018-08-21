@@ -4,6 +4,10 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
+    # TODO MSPSDS_197: figure out how to move this to User model without
+    # build breaking (on db creation or docker-compose up)
+    User.import force: true
+
     sign_in_as_admin
     @activity = activities(:one)
     @activity.source = sources(:activity_one)
@@ -23,7 +27,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Activity.count") do
       post investigation_activities_url(@activity.investigation), params: {
         activity: {
-          activity_type_id: @activity.activity_type_id,
+          activity_type: @activity.activity_type,
           investigation_id: @activity.investigation_id,
           notes: @activity.notes
         }
@@ -46,7 +50,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   test "should update activity" do
     patch activity_url(@activity), params: {
       activity: {
-        activity_type_id: @activity.activity_type_id,
+        activity_type: @activity.activity_type,
         investigation_id: @activity.investigation_id,
         notes: @activity.notes
       }
