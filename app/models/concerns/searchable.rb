@@ -18,5 +18,9 @@ module Searchable
         }
       )
     end
+
+    def self.custom_search(query)
+      __elasticsearch__.search(query)
+    end
   end
 end
