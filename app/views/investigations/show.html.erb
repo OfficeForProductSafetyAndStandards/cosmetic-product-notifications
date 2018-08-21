@@ -137,7 +137,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m">
         Business
-        <%= link_to 'Add business', edit_investigation_path(@investigation), :class => "right add-business-button govuk-button no-print" %>
+        <%= link_to 'Add business', investigation_businesses_path(@investigation), :class => "right add-business-button govuk-button no-print" %>
       </h2>
       <% if @investigation.businesses.any? %>
         <% @investigation.businesses.each do |business| %>
