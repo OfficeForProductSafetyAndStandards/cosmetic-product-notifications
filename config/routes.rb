@@ -12,7 +12,10 @@ Rails.application.routes.draw do
 
   resources :businesses do
     collection do
+      get :confirm_merge
       get :search
+
+      post :merge
       post :companies_house
     end
     resources :addresses, shallow: true

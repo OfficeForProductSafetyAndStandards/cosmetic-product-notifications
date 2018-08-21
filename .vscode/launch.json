@@ -9,7 +9,7 @@
             "type": "Ruby",
             "request": "attach",
             "cwd": "${workspaceRoot}",
-            "remoteHost": "192.168.64.5",
+            "remoteHost": "localhost",
             "remotePort": "1234",
             "remoteWorkspaceRoot": "/app",
             "showDebuggerOutput": true,

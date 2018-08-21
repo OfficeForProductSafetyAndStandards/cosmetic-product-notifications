@@ -13,6 +13,7 @@
 
 
 <h1 class="heading-xlarge">Businesses</h1>
+
 <%= link_to 'New business', new_business_path, :class => "button" %><br /><br />
 
 <%= form_with(url: businesses_path, method: :get) do |form| %>
@@ -22,25 +23,34 @@
     <%= form.submit "Go", name: nil, :class => "button" %>
   </div>
 <% end %>
+<%= form_with(url: confirm_merge_businesses_path, method: :get) do |form| %>
+  <div class="form-group">
+  
+    <%= form.submit "Merge selected", name: nil, :class => "button" %>
+    <%= will_paginate @businesses %>
+    <br />
+    <table>
+      <thead>
+        <tr>
+          <th colspan="1"></th>
+          <th>Company name</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
 
-<%= will_paginate @businesses %>
-<br />
-<table>
-  <thead>
-    <tr>
-      <th>Company name</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @businesses.each do |business| %>
-      <tr>
-        <td><%= link_to business.company_name, business %></td>
-        <td><%= link_to 'Delete', business, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<br />
-<%= will_paginate @businesses %>
+      <tbody>
+        <% @businesses.each do |business| %>
+          <tr>
+            <td>
+              <%= form.check_box :business_ids, { multiple: true }, business.id, false %>
+            </td>
+            <td><%= link_to business.company_name, business %></td>
+            <td><%= link_to 'Delete', business, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br />
+    <%= will_paginate @businesses %>
+  </div>
+<% end %>

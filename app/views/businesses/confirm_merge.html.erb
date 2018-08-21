@@ -1,0 +1,11 @@
+<% content_for :page_title, "Merge businesses - Market Surveillance & Product Safety" %>
+
+<%= form_with(url: merge_businesses_path, method: :post) do |form| %>
+    <% @businesses.each do |business| %>
+        <%= form.hidden_field :business_ids, multiple: true, value: business.id%>
+        <%= form.radio_button :selected_business_id, business.id%>
+        <%= label_tag(business.company_name) %>
+    <% end %>
+    <%= form.submit "Merge", name: nil, :class => "button", data: { confirm: 'Are you sure?' } %>
+<%end%>
+   

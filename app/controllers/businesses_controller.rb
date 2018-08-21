@@ -25,6 +25,25 @@ class BusinessesController < ApplicationController
     CompaniesHouseClient.instance.update_business_from_companies_house(@business)
   end
 
+  # GET /businesses/confirm_merge
+  def confirm_merge
+    @businesses = Business.find(params[:business_ids])
+  end
+
+  # POST /businesses/merge
+  def merge
+    selected_business = Business.find(params[:selected_business_id])
+
+    other_business_ids = params[:business_ids].select { |id| id != selected_business.id }
+    other_businesses = Business.find(other_business_ids)
+
+    other_businesses.each do |other_business|
+      selected_business.merge!(other_business, attributes: selected_business.attributes.keys, associations: %w[addresses investigation_businesses])
+    end
+
+    redirect_to businesses_url, notice: "Businesses were successfully merged."
+  end
+
   # GET /businesses/new
   def new
     @business = Business.new
