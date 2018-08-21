@@ -10,6 +10,9 @@ module ProductsHelper
 
   # If the user supplies a barcode and it matches, then just return that.
   # Otherwise use the general query param
+
+  # TODO: When doing the advanced products search, we should re-evaluate how we do the
+  # search on the product creation pages too
   def advanced_product_search(page_size)
     gtin_search_results = search_for_gtin(page_size) if params[:gtin].present?
     # if there was no GTIN param or there were no results for the GTIN search

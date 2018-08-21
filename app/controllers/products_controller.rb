@@ -39,7 +39,6 @@ class ProductsController < ApplicationController
 
   # POST /products
   # POST /products.json
-  # This route can also be triggered when nested within an investigation
   def create
     respond_to do |format|
       if @product.save

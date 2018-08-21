@@ -9,9 +9,11 @@ function buildProductQuery() {
             return searchTerm;
         })
         .map(function(searchTerm) {
+            // TODO: When doing the advanced products search, we should re-evaluate how we do the
+            // search here too
             return searchTerm + "*"
         }).join(" OR ");
-        var gtin = $('.products-search-form #gtin-input').val();
+    var gtin = $('.products-search-form #gtin-input').val();
     if (q) {
         query.q = q;
     }
