@@ -2,7 +2,7 @@ class Investigations::ProductsController < ApplicationController
   include CountriesHelper
   include ProductsHelper
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[index new create suggested add_product]
+  before_action :set_investigation, only: %i[index new create suggested add]
   before_action :create_product, only: %i[new create]
   before_action :set_countries, only: %i[index new]
 
@@ -14,8 +14,8 @@ class Investigations::ProductsController < ApplicationController
   # GET /investigations/1/products/new
   def new; end
 
-  # POST /investigations/1/products/add_product
-  def add_product
+  # POST /investigations/1/products/add
+  def add
     @investigation.products << Product.find(params[:product_id])
     redirect_to @investigation, notice: "Product was successfully added."
   end

@@ -1,7 +1,7 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[index new create suggested add_business companies_house]
+  before_action :set_investigation, only: %i[index new create suggested add companies_house]
   before_action :create_business, only: %i[new create]
   # GET /investigations/1/businesses
   def index
@@ -22,8 +22,8 @@ class Investigations::BusinessesController < ApplicationController
     render partial: "businesses/search_results"
   end
 
-  # POST /investigations/1/businesses/add_business
-  def add_business
+  # POST /investigations/1/businesses/add
+  def add
     @investigation.businesses << Business.find(params[:business_id])
     redirect_to @investigation, notice: "Business was successfully added."
   end

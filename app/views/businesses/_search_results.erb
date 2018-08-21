@@ -14,7 +14,7 @@
           <td><%= business.company_name %></td>
           <td>
             <% if @investigation.present? %>
-              <%= form_with(url: add_business_investigation_businesses_path(@investigation), local: true) do |form| %>
+              <%= form_with(url: add_investigation_businesses_path(@investigation), local: true) do |form| %>
                 <%= form.hidden_field :business_id, value: business.id %>
                 <%= form.submit "Add", :class => "govuk-button" %>
               <% end %>

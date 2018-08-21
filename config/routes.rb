@@ -11,13 +11,13 @@ Rails.application.routes.draw do
     resources :products, only: %i[index new create], controller: "investigations/products" do
       collection do
         get :suggested
-        post :add_product
+        post :add
       end
     end
     resources :businesses, only: %i[index new create], controller: "investigations/businesses" do
       collection do
         get :suggested
-        post :add_business
+        post :add
         post :companies_house
       end
     end
