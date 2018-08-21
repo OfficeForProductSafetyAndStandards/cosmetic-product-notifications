@@ -37,18 +37,45 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :mpn, "Manufacturer Part Number", :class => "form-label" %>
-    <%= form.text_field :mpn, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
     <%= form.label :batch_number, :class => "form-label" %>
     <%= form.text_field :batch_number, :class => "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :purchase_url, "Purchase URL", :class => "form-label" %>
-    <%= form.text_field :purchase_url, :class => "form-control" %>
+    <%= form.label :url_reference, "URL reference", :class => "form-label" %>
+    <%= form.text_field :url_reference, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :serial_number, :class => "form-label" %>
+    <%= form.text_field :serial_number, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :manufacturer, :class => "form-label" %>
+    <%= form.text_field :manufacturer, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :country_of_origin, :class => "form-label" %>
+    <%= form.select :country_of_origin,
+      countries,
+      { include_blank: "Unknown" },
+      {
+        class: "form-control js-product-country-of-origin",
+        id: "location-autocomplete"
+      }
+    %>
+  </div>
+
+  <div class="form-group date-select-control">
+    <%= form.label :date_placed_on_market, :class => "form-label" %>
+    <%= form.date_select :date_placed_on_market, start_year: Date.current.year, end_year: 1990 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :associated_parts, :class => "form-label" %>
+    <%= form.text_field :associated_parts, :class => "form-control" %>
   </div>
 
   <div class="form-group">
@@ -59,6 +86,6 @@
   </div>
 
   <div class="form-group">
-    <%= form.submit "Submit", :class => "button" %>
+    <%= form.submit "Submit", :class => "govuk-button" %>
   </div>
 <% end %>

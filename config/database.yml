@@ -81,4 +81,4 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("mspsds-database")["uri"] %>

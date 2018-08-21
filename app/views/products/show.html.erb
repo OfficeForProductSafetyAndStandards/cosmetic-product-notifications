@@ -46,6 +46,13 @@
 </p>
 
 <h4 class="heading-small">
+  Brand
+</h4>
+<p>
+  <%= @product.brand %>
+</p>
+
+<h4 class="heading-small">
   Description
 </h4>
 <p>
@@ -60,13 +67,6 @@
 </p>
 
 <h4 class="heading-small">
-  MPN (Manufacturer Part Number)
-</h4>
-<p>
-  <%= @product.mpn %>
-</p>
-
-<h4 class="heading-small">
   Batch number
 </h4>
 <p>
@@ -74,17 +74,45 @@
 </p>
 
 <h4 class="heading-small">
-  Purchase URL
+  Serial number
 </h4>
 <p>
-  <%= link_to(@product.purchase_url, @product.purchase_url, target: "_blank") unless @product.purchase_url.nil? %>
+  <%= @product.serial_number %>
 </p>
 
 <h4 class="heading-small">
-  Brand
+  URL reference
 </h4>
 <p>
-  <%= @product.brand %>
+  <%= link_to(@product.url_reference, @product.url_reference, target: "_blank") unless @product.url_reference.nil? %>
+</p>
+
+<h4 class="heading-small">
+  Manufacturer
+</h4>
+<p>
+  <%= @product.manufacturer %>
+</p>
+
+<h4 class="heading-small">
+  Country of origin
+</h4>
+<p>
+  <%= @product.country_of_origin_for_display %>
+</p>
+
+<h4 class="heading-small">
+  Date placed on the market
+</h4>
+<p>
+  <%= @product.date_placed_on_market&.to_s :long_ordinal %>
+</p>
+
+<h4 class="heading-small">
+  Associated parts or components
+</h4>
+<p>
+  <%= @product.associated_parts %>
 </p>
 
 <h4 class="heading-small">
@@ -102,7 +130,7 @@
 <% end -%>
 
 <div class="form-group no-print">
-  <%= link_to 'Edit', edit_product_path(@product), :class => "button" %>
+  <%= link_to 'Edit', edit_product_path(@product), :class => "govuk-button" %>
 </div>
 
 <div class="form-group no-print">

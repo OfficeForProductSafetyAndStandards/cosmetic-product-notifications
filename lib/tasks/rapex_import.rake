@@ -39,8 +39,8 @@ def create_records_from_notification(notification, date)
   return nil unless (name = name_or_product(notification))
   investigation = create_investigation notification, date, name
   product = create_product notification, name
-  create_investigation_product investigation, product
-  create_activity notification, investigation, date
+  create_investigation_product investigation, product unless investigation.nil? || investigation.id.nil? || product.nil?
+  create_activity notification, investigation, date unless investigation.nil?
 end
 
 def create_product(notification, name)
@@ -50,6 +50,7 @@ def create_product(notification, name)
     description: field_from_notification(notification, "description"),
     model: field_from_notification(notification, "type_numberOfModel"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
+    country_of_origin: field_from_notification(notification, "countryOfOrigin"),
     brand: brand(notification),
     images: all_pictures(notification),
     source: ReportSource.new(name: "RAPEX")

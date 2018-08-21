@@ -6,6 +6,6 @@
         <%= form.radio_button :selected_business_id, business.id%>
         <%= label_tag(business.company_name) %>
     <% end %>
-    <%= form.submit "Merge", name: nil, :class => "button", data: { confirm: 'Are you sure?' } %>
+    <%= form.submit "Merge", name: nil, :class => "govuk-button", data: { confirm: 'Are you sure?' } %>
 <%end%>
    

@@ -15,11 +15,11 @@
     </div>
 
     <h1 class="heading-xlarge">New product</h1>
-    <div class="grid-row">
-        <div class="column-half">
-            <%= render 'form', product: @product %>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+            <%= render 'form', product: @product, countries: @countries %>
         </div>
-        <div class="column-half">
+        <div class="govuk-grid-column-one-half">
             <h2 class="heading-medium">Have you seen these products?</h2>
             <div id="suggested-products">
                 Start filling in the form for suggestions.

@@ -28,3 +28,6 @@ Elasticsearch::Model.client = if Rails.env.production?
                               else
                                 local_elasticsearch_client
                               end
+
+# TODO re-enable PaaS elasticsearch. The contents of this file should be as follows:
+# Elasticsearch::Model.client = Elasticsearch::Client.new(Rails.application.config_for(:elasticsearch))

@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  include CountriesHelper
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
   before_action :create_product, only: %i[create]
@@ -30,10 +31,13 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+    @countries = all_countries
   end
 
   # GET /products/1/edit
-  def edit; end
+  def edit
+    @countries = all_countries
+  end
 
   # POST /products
   # POST /products.json
@@ -110,7 +114,8 @@ class ProductsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def product_params
     params.require(:product).permit(
-      :gtin, :name, :description, :model, :mpn, :batch_number, :purchase_url, :brand,
+      :gtin, :name, :description, :model, :batch_number, :url_reference, :brand, :serial_number,
+      :manufacturer, :country_of_origin, :date_placed_on_market, :associated_parts,
       images_attributes: %i[id title url _destroy]
     )
   end
