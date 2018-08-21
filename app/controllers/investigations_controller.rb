@@ -60,6 +60,7 @@ class InvestigationsController < ApplicationController
     else
       @investigation.assignee = assignee
       save_and_respond "Assignee was successfully updated."
+      record_assignment
       NotifyMailer.assigned_investigation(@investigation, assignee).deliver
     end
   end
@@ -132,6 +133,14 @@ class InvestigationsController < ApplicationController
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
+  end
+
+  def record_assignment
+    @investigation.activities.create(
+      source: UserSource.new(user: current_user),
+      activity_type: :assign,
+      notes: "Assigned to #{@investigation.assignee.email}"
+    )
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

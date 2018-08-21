@@ -48,7 +48,7 @@
     <% @investigation.activities.each do |activity| %>
       <tr>
         <td><%= activity.created_at %></td>
-        <td><%= activity.activity_type.titleized_name %></td>
+        <td><%= activity.type.titleize %></td>
         <td><%= activity.source.show %></td>
         <td><%= activity.notes %></td>
       </tr>
