@@ -1,6 +1,5 @@
 class DropActivityTypes < ActiveRecord::Migration[5.2]
   def change
-    # rename_column :activities, :activity_type, :activity_type_temp
     add_column :activities, :activity_type, :integer
     Activity.all.each { |activity|
       sql = "SELECT * FROM activity_types WHERE id = '#{activity.activity_type_id}'"
