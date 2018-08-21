@@ -1,0 +1,7 @@
+<% content_for :page_title, "Edit Image Details - Market Surveillance & Product Safety" %>
+
+<%= link_to 'Back', investigation_images_path(@investigation), class: "govuk-back-link" %>
+
+<h1 class="govuk-heading-m">New Image</h1>
+
+<%= render 'form', image: @image %>

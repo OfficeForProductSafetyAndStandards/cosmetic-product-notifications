@@ -1,0 +1,37 @@
+// Place all the styles related to the Images controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "colours";
+
+.image-with-preview {
+  background-color: $grey-1;
+  vertical-align: top;
+}
+
+.image-without-preview {
+  background-color: $grey-1;
+  display: inline-block;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: top;
+  padding: 20px;
+}
+
+.image-processing-placeholder {
+  background-color: $grey-1;
+  color: $white;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 2.5em;
+  text-align: center;
+  vertical-align: top;
+}
+
+.image-list {
+  .image-with-preview,
+  .image-without-preview,
+  .image-processing-placeholder {
+    width: 300px;
+    height: 300px;
+  }
+}

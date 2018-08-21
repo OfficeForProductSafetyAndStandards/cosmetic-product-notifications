@@ -80,6 +80,16 @@
   <%= link_to 'Add product', investigation_products_path(@investigation), :class => "button no-print" %>
   <br /><br />
 
+  <div class="govuk-grid-row investigation-photos">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">Images</h2>
+      <% @investigation.images.limit(3).each do |image|  %>
+        <%= render 'images/image', image: image, thumbnail: "200x200" %>
+      <% end %>
+      <%= link_to "Manage images", investigation_images_path(@investigation), class: "manage-images" %>
+    </div>
+  </div>
+
   <div class="govuk-grid-row investigation-activity">
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m">
@@ -120,13 +130,6 @@
         <span>View ></span>
       </div>
       <%= link_to "Upload document", "#", class: "govuk-button not-implemented", style: "width: 100%"%>
-      <%# if @investigation.image.attached? && @investigation.image.image? %>
-        <%# if @investigation.image.metadata["safe"].nil? %>
-<!--          <p>Still checking upload for viruses</p>-->
-        <%# elsif @investigation.image.metadata["safe"] %>
-          <%#= image_tag @investigation.image.variant(resize: "300x300"), alt: "Investigation", :class => "case-image" %>
-        <%# end %>
-      <%# end %>
     </div>
   </div>
 

@@ -1,0 +1,21 @@
+<table class="image-list">
+  <thead>
+  <tr>
+    <th colspan="2"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @images.each do |image| %>
+    <tr>
+      <td>
+        <%= render 'image', image: image, thumbnail: "300x300" %>
+      </td>
+      <td>
+        <%= link_to "Update", edit_investigation_image_path(@investigation, image), class: "govuk-button" %>
+        <%= link_to "Delete", investigation_image_path(@investigation, image), method: :delete, data: { confirm: "Are you sure?" }, class: "button-warning" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

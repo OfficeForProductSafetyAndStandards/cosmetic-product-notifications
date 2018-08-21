@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Back', investigation_images_path(@investigation), class: "govuk-back-link" %>
+
+<%= render 'image', image: @image, thumbnail: "300x300" %>
+
+<%= link_to 'Edit', edit_investigation_image_path(@investigation, @image), :class => "govuk-button" %>

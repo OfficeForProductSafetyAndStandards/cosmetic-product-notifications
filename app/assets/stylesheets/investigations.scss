@@ -21,8 +21,12 @@
     margin-bottom: 12px;
   }
 
-  .product-image, .case-image {
+  .product-image {
     width: 100%;
+    display: block;
+  }
+
+  .case-image {
     display: block;
   }
 
@@ -83,6 +87,15 @@
     select {
       width: 50%;
       margin-left: 0.5em;
+    }
+  }
+
+  .investigation-photos {
+    .image-with-preview,
+    .image-without-preview,
+    .image-processing-placeholder {
+      width: 200px;
+      height: 200px;
     }
   }
 

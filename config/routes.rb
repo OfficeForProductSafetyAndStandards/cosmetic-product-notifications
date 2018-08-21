@@ -1,6 +1,10 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  resources :investigations do
+  concern :image_attachable do
+    resources :images
+  end
+
+  resources :investigations, concerns: :image_attachable do
     member do
       post :close
       post :reopen
@@ -24,7 +28,7 @@ Rails.application.routes.draw do
     resources :addresses, shallow: true
   end
 
-  resources :products do
+  resources :products, concerns: :image_attachable do
     collection do
       get :suggested
     end
