@@ -1,11 +1,38 @@
 <% content_for :page_title, "Merge businesses - Market Surveillance & Product Safety" %>
-
-<%= form_with(url: merge_businesses_path, method: :post) do |form| %>
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="sign-in-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+      <h1 class="govuk-fieldset__heading">
+        Please select the business you would like to merge
+      </h1>
+    </legend>
+    <span id="merge-hint" class="govuk-hint">
+      <li>The business you select will gain all the addresses and investigations from the other businesses</li>
+      <li>The businesses not selected will be deleted</li>
+    </span>
+    <%= form_with(url: merge_businesses_path, method: :post) do |form|%>
     <% @businesses.each do |business| %>
+    <div class="govuk-radios">
+      <div class="govuk-radios__item">
         <%= form.hidden_field :business_ids, multiple: true, value: business.id%>
-        <%= form.radio_button :selected_business_id, business.id%>
+        <%= form.radio_button :selected_business_id, business.id, class: "govuk-radios__input"%>
+        <label class="govuk-label govuk-radios__label govuk-label--s" for="business">
         <%= label_tag(business.company_name) %>
-    <% end %>
-    <%= form.submit "Merge", name: nil, :class => "govuk-button", data: { confirm: 'Are you sure?' } %>
+        </label>
+        <span id="business-address" class="govuk-hint govuk-radios__hint">
+          <% if business.addresses.any? %>
+              <span>
+                <%= business.primary_address.line_1 %>,
+                <%= business.primary_address.line_2 %>,
+                <%= business.primary_address.locality %>,
+                <%= business.primary_address.country %>,
+                <%= business.primary_address.postal_code %>
+              </span>
+            <% end %>
+        </span>
+    </div>
 <%end%>
-   
+<%= form.submit "Merge", name: nil, :class => "govuk-button", data: { confirm: 'Are you sure?' } %>
+<%end%>
+</div>
+</div>
