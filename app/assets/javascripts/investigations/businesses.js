@@ -3,7 +3,7 @@ $(document).on("turbolinks:load", function() {
     var excludedBusinessIds = $(".businesses-search-form").data("business-ids");
     searchOnTextInput(
         $('.investigation-business-page .search-term'),
-        `/investigations/${investigationId}/businesses/suggested?excluded_businesses=${excludedBusinessIds}`,
+        "/investigations/" + investigationId + "/businesses/suggested?excluded_businesses=" + excludedBusinessIds,
         buildCompaniesHouseQuery,
         function(data) {
             $('#suggested-businesses').html(data);
