@@ -6,13 +6,12 @@ Rails.application.routes.draw do
       post :reopen
       get :assign
       post :update_assignee
-      post :add_product
-      post :add_business
     end
     resources :activities, shallow: true
     resources :products, only: %i[index new create], controller: "investigations/products" do
       collection do
         get :suggested
+        post :add_product
       end
     end
     resources :businesses, only: %i[index new create], controller: "investigations/businesses" do
