@@ -17,36 +17,13 @@
   </div>
 
   <div class="form-group">
+    <%= form.label :risk_notes, :class => "form-label" %>
+    <%= form.text_field :risk_notes, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= form.label :description, :class => "form-label" %>
     <%= form.text_area :description, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :risk_notes, :class => "form-label" %>
-    <%= form.text_area :risk_notes, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :image, :class => "form-label" %>
-    <%= form.file_field :image, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :product_ids, "Products", :class => "form-label" %>
-    <%= form.select :product_ids,
-      investigation.products.collect {|p| ["#{p.name} - #{p.brand}", p.id]},
-      {},
-      {:multiple => true, :class => "js-investigation-products form-control" }
-    %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :business_ids, "Businesses", :class => "form-label" %>
-    <%= form.select :business_ids,
-      investigation.businesses.collect {|p| [p.company_name, p.id]},
-      {},
-      {:multiple => true, :class => "js-investigation-businesses form-control" }
-    %>
   </div>
 
   <div class="form-group">
