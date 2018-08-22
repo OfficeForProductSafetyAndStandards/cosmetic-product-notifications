@@ -35,6 +35,8 @@
 }
 
 .not-implemented {
+  // to comply with the GDS standards, components missing functionality are hidden
+  display: none!important;
   color: $red;
   opacity: 0.2;
 }
