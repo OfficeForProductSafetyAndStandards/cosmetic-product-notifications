@@ -2,7 +2,7 @@ class ImagesController < ApplicationController
   include ImagesHelper
 
   before_action :set_parent
-  before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :set_image, only: %i[show edit update destroy]
   before_action :create_image, only: %i[create]
   before_action :update_image, only: %i[update]
 
@@ -19,16 +19,13 @@ class ImagesController < ApplicationController
 
   # GET /images/1
   # GET /images/1.json
-  def show
-  end
+  def show; end
 
   # GET /images/new
-  def new
-  end
+  def new; end
 
   # GET /images/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /images
   # POST /images.json
@@ -49,7 +46,7 @@ class ImagesController < ApplicationController
   def update
     respond_to do |format|
       if @image.blob.save
-        format.html { redirect_to action: 'index', notice: 'Image was successfully saved.' }
+        format.html { redirect_to action: "index", notice: "Image was successfully saved." }
         format.json { render :show, status: :ok, location: @image }
       else
         format.html { render :edit }
@@ -63,7 +60,7 @@ class ImagesController < ApplicationController
   def destroy
     @image.purge_later
     respond_to do |format|
-      format.html { redirect_to action: 'index', notice: 'Image was successfully deleted.' }
+      format.html { redirect_to action: "index", notice: "Image was successfully deleted." }
       format.json { head :no_content }
     end
   end
@@ -86,7 +83,7 @@ class ImagesController < ApplicationController
 
   def update_image
     @image.blob.metadata.update(image_params)
-    @image.blob.metadata["updated"] = Time.now
+    @image.blob.metadata["updated"] = Time.current
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
