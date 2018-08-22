@@ -15,112 +15,78 @@
 </div>
 
 <h1 class="heading-xlarge">
-  Product
+  <%= @product.name %>
 </h1>
-
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full company-details large-space-below">
+    <table class="company-details-table">
+      <thead>
+      <td class="company-details-header">Product Details</td>
+      <td></td>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Product ID</td>
+          <td><%= @product.id %></td>
+        </tr>
+        <tr>
+          <td>GTIN (Global Trade Item Number/Barcode)</td>
+          <td><%= @product.gtin %></td>
+        </tr>
+        <tr>
+          <td>Brand</td>
+          <td><%= @product.brand %></td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td><%= @product.description %></td>
+        </tr>
+        <tr>
+          <td>Model</td>
+          <td><%= @product.model %></td>
+        </tr>
+        <tr>
+          <td>Batch number</td>
+          <td><%= @product.batch_number %></td>
+        </tr>
+        <tr>
+          <td>Serial number</td>
+          <td><%= @product.serial_number %></td>
+        </tr>
+        <tr>
+          <td>URL reference</td>
+          <td><%= link_to(@product.url_reference, @product.url_reference, target: "_blank") unless @product.url_reference.nil? %></td>
+        </tr>
+        <tr>
+          <td>Manufacturer</td>
+          <td><%= @product.manufacturer %></td>
+        </tr>
+        <tr>
+          <td>Country of origin</td>
+          <td><%= @product.country_of_origin_for_display %></td>
+        </tr>
+        <tr>
+          <td>Date placed on the market</td>
+          <td><%= @product.date_placed_on_market&.to_s :long_ordinal %></td>
+        </tr>
+        <tr>
+          <td>Associated parts or components</td>
+          <td><%= @product.associated_parts %></td>
+        </tr>
+        <tr>
+          <td>Source</td>
+          <td><%= @product.source.show %></td>
+        </tr>
+      </tbody>
+    </table>
+    <%= link_to "Add more details", edit_product_path(@product)%>
+  </div>
+</div>
 <div class="slider-nav">
   <% @product.images.each do |image| %>
     <%= image_tag(image.url, alt: image.title) %>
   <% end %>
 </div>
-
-<h4 class="heading-small">
-  Product ID
-</h4>
-<p>
-  <%= @product.id %>
-</p>
-
-<h4 class="heading-small">
-  GTIN (Global Trade Item Number/Barcode)
-</h4>
-<p>
-  <%= @product.gtin %>
-</p>
-
-<h4 class="heading-small">
-  Name
-</h4>
-<p>
-  <%= @product.name %>
-</p>
-
-<h4 class="heading-small">
-  Brand
-</h4>
-<p>
-  <%= @product.brand %>
-</p>
-
-<h4 class="heading-small">
-  Description
-</h4>
-<p>
-  <%= @product.description %>
-</p>
-
-<h4 class="heading-small">
-  Model
-</h4>
-<p>
-  <%= @product.model %>
-</p>
-
-<h4 class="heading-small">
-  Batch number
-</h4>
-<p>
-  <%= @product.batch_number %>
-</p>
-
-<h4 class="heading-small">
-  Serial number
-</h4>
-<p>
-  <%= @product.serial_number %>
-</p>
-
-<h4 class="heading-small">
-  URL reference
-</h4>
-<p>
-  <%= link_to(@product.url_reference, @product.url_reference, target: "_blank") unless @product.url_reference.nil? %>
-</p>
-
-<h4 class="heading-small">
-  Manufacturer
-</h4>
-<p>
-  <%= @product.manufacturer %>
-</p>
-
-<h4 class="heading-small">
-  Country of origin
-</h4>
-<p>
-  <%= @product.country_of_origin_for_display %>
-</p>
-
-<h4 class="heading-small">
-  Date placed on the market
-</h4>
-<p>
-  <%= @product.date_placed_on_market&.to_s :long_ordinal %>
-</p>
-
-<h4 class="heading-small">
-  Associated parts or components
-</h4>
-<p>
-  <%= @product.associated_parts %>
-</p>
-
-<h4 class="heading-small">
-  Source
-</h4>
-<p>
-  <%= @product.source.show %>
-</p>
 
 <% if @product.investigations.any? -%>
   <h4 class="heading-small">Investigations</h4>
@@ -128,10 +94,6 @@
     <p><%= link_to investigation.id, investigation %></p>
   <% end %>
 <% end -%>
-
-<div class="form-group no-print">
-  <%= link_to 'Edit', edit_product_path(@product) %>
-</div>
 
 <div class="form-group no-print">
   <%= link_to 'Create PDF document', product_path(@product, :format => :pdf) %>
