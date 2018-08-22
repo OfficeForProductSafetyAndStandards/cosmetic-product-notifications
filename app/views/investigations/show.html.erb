@@ -1,51 +1,53 @@
 <% content_for :page_title, "View investigation - Market Surveillance & Product Safety" %>
 <div class="show-investigation">
 
-  <div class="govuk-grid-row top-details">
-    <div class="govuk-grid-column-full">
+  <div class="govuk-grid-row govuk-!-padding-top-6 top-details">
+    <div class="govuk-grid-column-one-third">
       <%= link_to 'Back to list', investigations_path, class: "govuk-back-link link-back" %>
-      <span class="right">
-        Status
-        <% if @investigation.is_closed? && policy(@investigation).reopen? %>
-          <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
-            <%= form.submit "Closed", data: { confirm: "Are you sure you want to reopen the issue?" }%>
-          <% end %>
-        <% elsif !@investigation.is_closed? %>
-          <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
-            <%= form.submit "Open", data: { confirm: "Are you sure you want to close the issue?" } %>
-          <% end %>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      Status
+      <% if @investigation.is_closed? && policy(@investigation).reopen? %>
+        <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
+          <%= form.submit "Closed", data: { confirm: "Are you sure you want to reopen the issue?" }, class: "govuk-link" %>
         <% end %>
-      </span>
-      <span class="right">
-          Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
+      <% elsif !@investigation.is_closed? %>
+        <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
+          <%= form.submit "Open", data: { confirm: "Are you sure you want to close the issue?" }, class: "govuk-link" %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
                               assign_investigation_path(@investigation) %>
-      </span>
-      <%= link_to "View Audit Log", "#history-section", class: "right" %>
-      <%= link_to "Watch this issue", "#", class: "right" %>
     </div>
   </div>
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds investigation-details">
-      <h2 class="govuk-heading-m"><%= @investigation.title%></h2>
-      <h4 class="govuk-heading-s">Issue ID: <%= @investigation.id %></h4>
-      <span class="created-at">Created: <%= @investigation.created_at.strftime("%d %B %Y") %></span>
-      <span class="risk-notes">Risk Notes: <%= @investigation.risk_overview %></span>
-      <span class="description"><%= @investigation.description %></span>
-      <span class="risk-notes">Risk Level: <%= @investigation.risk_level&.titleize %></span>
-      <span class="risk-notes">Sensitivity: <%= @investigation.sensitivity&.titleize %></span>
+    <div class="govuk-grid-column-full">
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-0">Case ID: <%= @investigation.id %></h3>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.title %></h1>
+      <span>Created: <%= @investigation.created_at.strftime("%d %B %Y") %></span>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Risk Notes: <%= @investigation.risk_overview %></h3>
+      <p><%= @investigation.description %></p>
       <%= link_to 'Edit details', edit_investigation_path(@investigation), :class => "no-print" %>
     </div>
-
-    <div class="govuk-grid-column-one-third">
-      <div class="event-summary-box not-implemented">
-        <span class="govuk-heading-l">1 Event</span>
-        <span class="govuk-heading-m">Saturday 28th July</span>
-        <span>site visit</span>
-        <span>Game limited</span>
-        <span>48 Bush Road, N1 1XQ ></span>
+    <div class="govuk-grid-column-one-half">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <h4 class="govuk-body-l govuk-!-margin-bottom-1">Risk level</h4>
+          <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.risk_level&.titleize %></span>
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <h4 class="govuk-body-l govuk-!-margin-bottom-1">Sensitivity</h4>
+          <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.sensitivity&.titleize %></span>
+        </div>
       </div>
-      <%= link_to "Add event reminder", "#", class: "govuk-button not-implemented", style: "width: 100%"%>
     </div>
   </div>
 
