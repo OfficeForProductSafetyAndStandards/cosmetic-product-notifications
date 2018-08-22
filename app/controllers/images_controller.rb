@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  include ImagesHelper
+
   before_action :set_parent
   before_action :set_image, only: [:show, :edit, :update, :destroy]
   before_action :create_image, only: %i[create]
@@ -64,22 +66,6 @@ class ImagesController < ApplicationController
       format.html { redirect_to action: 'index', notice: 'Image was successfully deleted.' }
       format.json { head :no_content }
     end
-  end
-
-  def associated_images_path(parent)
-    polymorphic_path([parent, :images])
-  end
-
-  def associated_image_path(parent, image)
-    associated_images_path(parent) + "/" + image.id.to_s
-  end
-
-  def new_associated_image_path(parent)
-    associated_images_path(parent) + "/new"
-  end
-
-  def edit_associated_image_path(parent, image)
-    associated_image_path(parent, image) + "/edit"
   end
 
   private
