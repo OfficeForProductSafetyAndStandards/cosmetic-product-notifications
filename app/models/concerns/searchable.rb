@@ -7,7 +7,7 @@ module Searchable
 
     # "prefix" may be changed to a more appropriate query. For alternatives see:
     # https://www.elastic.co/guide/en/elasticsearch/reference/current/term-level-queries.html
-    def self.search(query)
+    def self.prefix_search(query)
       __elasticsearch__.search(
         query: {
           prefix: {
@@ -17,10 +17,6 @@ module Searchable
           }
         }
       )
-    end
-
-    def self.custom_search(query)
-      __elasticsearch__.search(query)
     end
   end
 end

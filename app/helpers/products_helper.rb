@@ -24,16 +24,16 @@ module ProductsHelper
     if params[:q].blank?
       Product.paginate(page: params[:page], per_page: page_size)
     else
-      Product.search(params[:q]).paginate(page: params[:page], per_page: page_size).records
+      Product.prefix_search(params[:q]).paginate(page: params[:page], per_page: page_size).records
     end
   end
 
   def search_for_gtin(page_size)
-    Product.custom_search(query: { match: { gtin: params[:gtin] } })
+    Product.search(query: { match: { gtin: params[:gtin] } })
            .paginate(page: params[:page], per_page: page_size).records
   end
 
   def basic_search(page_size)
-    Product.custom_search(params[:q]).paginate(page: params[:page], per_page: page_size).records
+    Product.search(params[:q]).paginate(page: params[:page], per_page: page_size).records
   end
 end
