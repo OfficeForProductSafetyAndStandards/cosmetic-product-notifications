@@ -51,13 +51,20 @@
     </div>
   </div>
 
-  <div class="govuk-grid-row">
+  <div class="govuk-grid-row row-border-top">
     <div class="govuk-grid-column-one-third">
       <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h3>
+      <ul class="dashed-list">
+        <li><a href="#activities" class="govuk-!-font-size-19">Activities</a></li>
+        <li><a href="#products" class="govuk-!-font-size-19">Products</a></li>
+        <li><a href="#businesses" class="govuk-!-font-size-19">Businesses</a></li>
+        <li><a href="#images" class="govuk-!-font-size-19">Images</a></li>
+        <li><a href="#documents" class="govuk-!-font-size-19">Documents</a></li>
+      </ul>
     </div>
     <div class="govuk-grid-column-two-thirds">
 
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row" id="activities">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Activities</h2>
           <% if @investigation.activities.any? %>
@@ -82,7 +89,7 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row" id="products">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Products</h2>
           <% if @investigation.products.any? %>
@@ -96,7 +103,7 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row" id="businesses">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Businesses</h2>
           <% if @investigation.businesses.any? %>
@@ -110,14 +117,14 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row" id="images">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Images (3)</h2>
           <p>No images.</p>
         </div>
       </div>
 
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row" id="documents">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Documents</h2>
           <table class="govuk-table">

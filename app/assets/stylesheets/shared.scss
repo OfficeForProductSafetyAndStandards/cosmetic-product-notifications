@@ -11,3 +11,18 @@
     right: 0;
   }
 }
+
+// Copied from https://www.gov.uk/capital-gains-tax
+.dashed-list {
+  li {
+    margin-left: 25px;
+    padding-right: 25px;
+    padding-top: 7.5px;
+
+    &:before {
+      content: "— ";
+      margin-left: -25px;
+      padding-right: 5px;
+    }
+  }
+}
