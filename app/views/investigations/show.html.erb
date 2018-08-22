@@ -60,6 +60,25 @@
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Activities</h2>
+          <% if @investigation.activities.any? %>
+          <div class="timeline">
+            <ul>
+              <% @investigation.activities.limit(3).each do |activity| %>
+                <li>
+                  <h3 class="govuk-heading-s"><%= activity.activity_type.titleize %></h3>
+                  <p class="timeline-details">By <%= activity.source.name %>, <%= activity.created_at.to_s :long_ordinal %></p>
+                  <p><%= activity.notes %></p>
+                </li>
+              <% end %>
+              <!-- A dummy item at the end adds the end blob to the timeline -->
+              <li></li>
+            </ul>
+          </div>
+          <% else %>
+            <p>No activities.</p>
+          <% end %>
+          <%= link_to "View all activity", investigation_activities_path(@investigation), class: "govuk-!-margin-right-3" %>
+          <%= link_to "New activity", new_investigation_activity_path(@investigation) %>
         </div>
       </div>
 
@@ -124,38 +143,6 @@
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <div class="govuk-grid-row investigation-activity">
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m">
-        Case activity
-        <%= link_to 'Add activity', new_investigation_activity_path(@investigation),
-                    class: "add-activity-button right govuk-button no-print" %>
-        <%= link_to "View issue history", "#", class: "investigation-history not-implemented right" %>
-      </h2>
-      <div class="filter not-implemented">
-        Filter:
-        <select>
-          <option value="latest">Latest</option>
-          <option value="newest">Newest</option>
-          <option value="due">Due</option>
-        </select>
-      </div>
-      <% @investigation.activities.limit(3).each do |activity| %>
-        <div class="activity">
-          <p>
-            <span class="govuk-!-font-weight-bold"><%= activity.activity_type.titleize %></span>
-            by
-            <%= activity.source.name %>
-            on
-            <%= activity.created_at.to_s :long_ordinal %>
-          </p>
-          <p>Notes: <%= activity.notes %></p>
-        </div>
-      <% end %>
-      <%= link_to "+ View more activity", investigation_activities_path(@investigation) %>
     </div>
   </div>
 </div>

@@ -1,13 +1,13 @@
 .aspect-ratio-3-2-container {
-   position: relative;
-   width: 100%;
-   padding-top: 66.66%; /* 3:2 Aspect Ratio */
+  position: relative;
+  width: 100%;
+  padding-top: 66.66%; /* 3:2 Aspect Ratio */
 
-   .aspect-ratio-contents {
+  .aspect-ratio-contents {
     position:  absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-   }
+  }
 }

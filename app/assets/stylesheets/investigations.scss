@@ -45,24 +45,6 @@
       }
     }
   }
-
-  .investigation-activity {
-    .add-activity-button, .investigation-history{
-      font-size: 0.75em;
-      padding-bottom: 0.2em;
-      padding-top: 0.2em;
-    }
-
-    .filter {
-      background-color: $grey-3;
-      padding: 1em
-    }
-
-    select {
-      width: 50%;
-      margin-left: 0.5em;
-    }
-  }
 }
 
 @media print
