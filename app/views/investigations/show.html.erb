@@ -25,8 +25,8 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-0">Case ID: <%= @investigation.id %></h3>
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.title %></h1>
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Case ID: <%= @investigation.id %></h3>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-1"><%= @investigation.title %></h1>
       <span>Created: <%= @investigation.created_at.strftime("%d %B %Y") %></span>
     </div>
   </div>
@@ -51,38 +51,27 @@
     </div>
   </div>
 
-  <div class="govuk-grid-row product-details">
-    <% @investigation.products.each do |product| %>
-      <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-m">
-          Product details
-        </h2>
-      <!-- TODO MSPSDS-189 Add when adding to products -->
-        <span class="not-implemented">Category:</span>
-        <span class="not-implemented">Product: [product type]</span>
-        <span>Brand: <%= product.brand %></span>
-        <span>Name: <%= product.name %></span>
-        <span>Type / number of model: <%= product.model %></span>
-        <span>Batch number / Barcode: <%= product.gtin %></span>
-        <!-- TODO MSPSDS-189 Add when adding to products -->
-        <span class="not-implemented">Associated parts or components:</span>
-        <%= link_to 'Add or edit details', edit_product_path(product), :class => "no-print" %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h2>
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Activities</h2>
+        </div>
       </div>
-      <div class="govuk-grid-column-one-third">
-        <h2 class="govuk-heading-m">
-          Images
-        </h2>
-        <% if product.images.any? %>
-          <%= image_tag(product.images[0].url, alt: product.images[0].title, :class => "product-image") %>
-          <%= link_to "View images (#{product.images.size})", product_path(product), :class => "no-print" %>
-        <% else %>
-          <p>No images.</p>
-        <% end %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Products</h2>
+          <% @investigation.products.each do |product| %>
+            <%= render "product_summary", product: product %>
+          <% end %>
+          <%= link_to 'Add product', investigation_products_path(@investigation), :class => "no-print" %>
+        </div>
       </div>
-    <% end %>
+    </div>
   </div>
-  <%= link_to 'Add product', investigation_products_path(@investigation), :class => "button no-print" %>
-  <br /><br />
 
   <div class="govuk-grid-row investigation-activity">
     <div class="govuk-grid-column-two-thirds">
