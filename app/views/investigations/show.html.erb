@@ -25,7 +25,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Case ID: <%= @investigation.id %></h3>
+      <p class="govuk-heading-m govuk-!-margin-bottom-1">Case ID: <%= @investigation.id %></p>
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-1"><%= @investigation.title %></h1>
       <span>Created: <%= @investigation.created_at.strftime("%d %B %Y") %></span>
     </div>
@@ -40,11 +40,11 @@
     <div class="govuk-grid-column-one-half">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
-          <h4 class="govuk-body-l govuk-!-margin-bottom-1">Risk level</h4>
+          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Risk level</h4>
           <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.risk_level&.titleize %></span>
         </div>
         <div class="govuk-grid-column-one-half">
-          <h4 class="govuk-body-l govuk-!-margin-bottom-1">Sensitivity</h4>
+          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Sensitivity</h4>
           <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.sensitivity&.titleize %></span>
         </div>
       </div>
@@ -53,7 +53,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
-      <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h2>
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h3>
     </div>
     <div class="govuk-grid-column-two-thirds">
 
@@ -90,6 +90,40 @@
           <%= link_to 'Add business', investigation_businesses_path(@investigation), :class => "no-print" %>
         </div>
       </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Images (3)</h2>
+          <p>No images.</p>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Documents</h2>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">Title</th>
+                <th class="govuk-table__header" scope="col">Upload date</th>
+                <th class="govuk-table__header" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <%= render 'history', versions: @investigation.versions %>
+          <div class="govuk-!-margin-top-3 no-print">
+            <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -123,54 +157,5 @@
       <% end %>
       <%= link_to "+ View more activity", investigation_activities_path(@investigation) %>
     </div>
-    <div class="govuk-grid-column-one-third investigation-documents">
-      <h2 class="govuk-heading-m">
-
-      </h2>
-      <div class="document-block not-implemented">
-        <span>Documents</span>
-        <span class="document-number">10</span>
-        <span>View ></span>
-      </div>
-      <%= link_to "Upload document", "#", class: "govuk-button not-implemented", style: "width: 100%"%>
-      <%# if @investigation.image.attached? && @investigation.image.image? %>
-        <%# if @investigation.image.metadata["safe"].nil? %>
-<!--          <p>Still checking upload for viruses</p>-->
-        <%# elsif @investigation.image.metadata["safe"] %>
-          <%#= image_tag @investigation.image.variant(resize: "300x300"), alt: "Investigation", :class => "case-image" %>
-        <%# end %>
-      <%# end %>
-    </div>
   </div>
-
-  <div class="govuk-grid-row investigation-business">
-    <div class="govuk-grid-column-one-third">
-      <h2 class="govuk-heading-m">
-        Additional Info
-      </h2>
-      <span class="not-implemented">Primary Authority: <%= link_to "Add", "#" %></span>
-      <span class="not-implemented">Related Cases: <%= link_to "Link", "#" %></span>
-      <span class="not-implemented">Similar Products: <%= link_to "Link", "#" %></span>
-      <div class="form-group no-print">
-        <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
-      </div>
-    </div>
-  </div>
-
-  <div class="govuk-grid-row investigation-comments">
-    <div class="govuk-grid-column-full not-implemented">
-      <details class="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">Comments</span>
-        </summary>
-
-        <div class="comment">
-          <span class="comment-tag">[person] on [date]</span>
-          <span>[Some comment]</span>
-        </div>
-      </details>
-    </div>
-  </div>
-
-  <%= render 'history', versions: @investigation.versions %>
 </div>
