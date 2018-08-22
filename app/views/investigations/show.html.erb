@@ -30,7 +30,7 @@
       <h2 class="govuk-heading-m"><%= @investigation.title%></h2>
       <h4 class="govuk-heading-s">Issue ID: <%= @investigation.id %></h4>
       <span class="created-at">Created: <%= @investigation.created_at.strftime("%d %B %Y") %></span>
-      <span class="risk-notes">Risk Notes: <%= @investigation.risk_notes %></span>
+      <span class="risk-notes">Risk Notes: <%= @investigation.risk_overview %></span>
       <span class="description"><%= @investigation.description %></span>
       <%= link_to 'Edit details', edit_investigation_path(@investigation), :class => "no-print" %>
     </div>
