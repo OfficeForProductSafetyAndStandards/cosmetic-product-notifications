@@ -11,7 +11,7 @@
 <% end %>
 <br/>
 
-<%= link_to 'New product', new_product_path, class: "govuk-button right" %><br /><br />
+<%= link_to 'New product', new_product_path, class: "right" %>
 
 <%= will_paginate @products %>
 <%= render 'table', product: @products %>
