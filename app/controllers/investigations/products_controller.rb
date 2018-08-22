@@ -49,7 +49,10 @@ class Investigations::ProductsController < ApplicationController
   def destroy
     @investigation.products.delete(@product)
     respond_to do |format|
-      format.html { redirect_to investigation_products_path(@investigation), notice: "Product was successfully removed." }
+      format.html do
+        redirect_to investigation_products_path(@investigation),
+                    notice: "Product was successfully removed."
+      end
       format.json { head :no_content }
     end
   end
