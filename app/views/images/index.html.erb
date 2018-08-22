@@ -1,9 +1,9 @@
 <% content_for :page_title, "Manage images - Market Surveillance & Product Safety" %>
 
-<%= link_to 'Back', polymorphic_path(@investigation), class: "govuk-back-link" %>
+<%= link_to 'Back', polymorphic_path(@parent), class: "govuk-back-link" %>
 
 <h1 class="heading-xlarge">Manage images</h1>
 
-<%= link_to 'Add new image', new_associated_image_path(@investigation) %>
+<%= link_to 'Add new image', new_associated_image_path(@parent) %>
 
 <%= render 'table' %>

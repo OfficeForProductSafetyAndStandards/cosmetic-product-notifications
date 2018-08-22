@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :set_investigation
+  before_action :set_parent
   before_action :set_image, only: [:show, :edit, :update, :destroy]
   before_action :create_image, only: %i[create]
   before_action :update_image, only: %i[update]
@@ -12,7 +12,7 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @images = @investigation.images
+    @images = @parent.images.attachments
   end
 
   # GET /images/1
@@ -33,7 +33,7 @@ class ImagesController < ApplicationController
   def create
     respond_to do |format|
       if @image
-        format.html { redirect_to edit_associated_image_path(@investigation, @image) }
+        format.html { redirect_to edit_associated_image_path(@parent, @image) }
         format.json { render :show, status: :created, location: @image }
       else
         format.html { render :new }
@@ -66,36 +66,35 @@ class ImagesController < ApplicationController
     end
   end
 
-  def associated_images_path(investigation)
-    polymorphic_path([investigation, :images])
+  def associated_images_path(parent)
+    polymorphic_path([parent, :images])
   end
 
-  def associated_image_path(investigation, image)
-    associated_images_path(investigation) + "/" + image.id.to_s
+  def associated_image_path(parent, image)
+    associated_images_path(parent) + "/" + image.id.to_s
   end
 
-  def new_associated_image_path(investigation)
-    associated_images_path(investigation) + "/new"
+  def new_associated_image_path(parent)
+    associated_images_path(parent) + "/new"
   end
 
-  def edit_associated_image_path(investigation, image)
-    associated_image_path(investigation, image) + "/edit"
+  def edit_associated_image_path(parent, image)
+    associated_image_path(parent, image) + "/edit"
   end
 
   private
 
-  def set_investigation
-    @investigation = Investigation.find(params[:investigation_id])
+  def set_parent
+    @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
+    @parent = Product.find(params[:product_id]) if params[:product_id]
   end
 
   def set_image
-    if @investigation.present?
-      @image = @investigation.images.find(params[:id])
-    end
+    @image = @parent.images.find(params[:id]) if @parent.present?
   end
 
   def create_image
-    @images = @investigation.images.attach(image_params[:file])
+    @images = @parent.images.attach(image_params[:file])
     @image = @images.last
   end
 

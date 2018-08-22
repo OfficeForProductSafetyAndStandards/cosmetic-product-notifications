@@ -7,6 +7,7 @@ class Product < ApplicationRecord
   index_name [Rails.env, "products"].join("_")
 
   default_scope { order(created_at: :desc) }
+  has_many_attached :images
   has_many :investigation_products, dependent: :destroy
   has_many :investigations, through: :investigation_products
   has_many :rapex_images, dependent: :destroy, inverse_of: :product

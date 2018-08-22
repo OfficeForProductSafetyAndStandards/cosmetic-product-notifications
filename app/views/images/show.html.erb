@@ -1,7 +1,7 @@
-<p id="notice"><%= notice %></p>
+<% content_for :page_title, "Image details - Market Surveillance & Product Safety" %>
 
-<%= link_to 'Back', investigation_images_path(@investigation), class: "govuk-back-link" %>
+<%= link_to 'Back', associated_images_path(@parent), class: "govuk-back-link" %>
 
 <%= render 'image', image: @image, thumbnail: "300x300" %>
 
-<%= link_to 'Edit', edit_investigation_image_path(@investigation, @image), :class => "govuk-button" %>
+<%= link_to "Edit image details", edit_associated_image_path(@parent, @image), class: "edit-image-link" %>

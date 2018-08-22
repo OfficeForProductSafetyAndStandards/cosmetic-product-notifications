@@ -25,6 +25,14 @@
 </div>
 
 <h4 class="heading-small">
+  <%= "Images (#{@product.images.attachments.count})" %>
+</h4>
+<% @product.images.attachments.limit(3).each do |image| %>
+  <%= render 'images/image', image: image, thumbnail: "200x200" %>
+<% end %>
+<%= link_to "Manage images", product_images_path(@product), class: "manage-images no-print" %>
+
+<h4 class="heading-small">
   Product ID
 </h4>
 <p>

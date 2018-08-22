@@ -82,11 +82,11 @@
 
   <div class="govuk-grid-row investigation-photos">
     <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m">Images</h2>
-      <% @investigation.images.limit(3).each do |image|  %>
+      <h2 class="govuk-heading-m"><%= "Images (#{@investigation.images.attachments.count})" %></h2>
+      <% @investigation.images.attachments.limit(3).each do |image|  %>
         <%= render 'images/image', image: image, thumbnail: "200x200" %>
       <% end %>
-      <%= link_to "Manage images", investigation_images_path(@investigation), class: "manage-images" %>
+      <%= link_to "Manage images", investigation_images_path(@investigation), class: "manage-images no-print" %>
     </div>
   </div>
 
