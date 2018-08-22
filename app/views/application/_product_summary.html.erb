@@ -30,7 +30,12 @@
     <p><%= link_to "Full product details", product %></p>
     <% if allow_removing %>
       <div class="form-group">
-        <%= link_to 'Remove', investigation_product_path(@investigation, product), method: :delete, data: { confirm: 'Are you sure?' }, class: "button-warning" %>
+        <%= link_to 'Remove',
+                    investigation_product_path(@investigation, product),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' },
+                    class: "button-warning"
+        %>
       </div>
     <% end %>
   </div>

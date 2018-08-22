@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         post :add
       end
     end
-    resources :businesses, only: %i[index new create], controller: "investigations/businesses" do
+    resources :businesses, only: %i[index new create destroy], controller: "investigations/businesses" do
       collection do
         get :search
         get :suggested
