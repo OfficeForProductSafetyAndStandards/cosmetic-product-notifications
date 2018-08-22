@@ -35,7 +35,7 @@ class BusinessesController < ApplicationController
   def merge
     selected_business = Business.find(params[:selected_business_id])
 
-    other_business_ids = params[:business_ids].select { |id| id != selected_business.id }
+    other_business_ids = params[:business_ids].reject { |id| id = selected_business.id }
     other_businesses = Business.find(other_business_ids)
 
     other_businesses.each do |other_business|

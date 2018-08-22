@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     collection do
       get :confirm_merge
       get :search
-
       post :merge
       post :companies_house
     end
@@ -24,6 +23,8 @@ Rails.application.routes.draw do
   resources :products do
     collection do
       get :table
+      get :confirm_merge
+      post :merge
     end
   end
 

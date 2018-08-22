@@ -10,10 +10,14 @@
   </div>
 <% end %>
 <br/>
-
+<%= form_with(url: confirm_merge_products_path, method: :get) do |form| %>
+<%= form.submit "Merge selected", name: nil, :class => "govuk-button" %>
 <%= link_to 'New product', new_product_path, class: "govuk-button right" %><br /><br />
+<%= render 'table', product: @products, form: form %>
+<%end%>
+<%= will_paginate @products %>
+
 
 <%= will_paginate @products %>
-<%= render 'table', product: @products %>
-<%= will_paginate @products %>
+
 

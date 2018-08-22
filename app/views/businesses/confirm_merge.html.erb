@@ -1,6 +1,7 @@
 <% content_for :page_title, "Merge businesses - Market Surveillance & Product Safety" %>
+</br>
 <div class="govuk-form-group">
-  <fieldset class="govuk-fieldset" aria-describedby="sign-in-hint">
+  <fieldset class="govuk-fieldset" aria-describedby="merge-hint">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
       <h1 class="govuk-fieldset__heading">
         Please select the business you would like to merge
@@ -32,6 +33,7 @@
         </span>
     </div>
 <%end%>
+</br>
 <%= form.submit "Merge", name: nil, :class => "govuk-button", data: { confirm: 'Are you sure?' } %>
 <%end%>
 </div>
