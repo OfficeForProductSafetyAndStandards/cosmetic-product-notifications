@@ -21,16 +21,7 @@ class Investigation < ApplicationRecord
 
   has_paper_trail
 
-  enum risk_level: [
-    :low,
-    :medium,
-    :serious,
-    :severe
-  ], _suffix: true
+  enum risk_level: %i[low medium serious severe], _suffix: true
 
-  enum sensitivity: [
-    :low,
-    :medium,
-    :high
-  ], _suffix: true
+  enum sensitivity: %i[low medium high], _suffix: true
 end
