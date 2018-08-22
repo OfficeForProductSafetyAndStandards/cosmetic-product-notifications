@@ -34,7 +34,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to activity_url(Activity.first)
+    assert_redirected_to investigation_activities_url(@activity.investigation)
   end
 
   test "should show activity" do
@@ -55,7 +55,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
         notes: @activity.notes
       }
     }
-    assert_redirected_to activity_url(@activity)
+    assert_redirected_to investigation_activities_url(@activity.investigation)
   end
 
   test "should destroy activity" do

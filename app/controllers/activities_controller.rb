@@ -28,7 +28,10 @@ class ActivitiesController < ApplicationController
   def create
     respond_to do |format|
       if @activity.save
-        format.html { redirect_to @activity, notice: "Activity was successfully created." }
+        format.html do
+          redirect_to investigation_activities_path(@activity.investigation),
+                      notice: "Activity was successfully created."
+        end
         format.json { render :show, status: :created, location: @activity }
       else
         format.html { render :new }
@@ -40,10 +43,12 @@ class ActivitiesController < ApplicationController
   # PATCH/PUT /activities/1
   # PATCH/PUT /activities/1.json
   def update
-    authorize @activity
     respond_to do |format|
       if @activity.update(activity_params)
-        format.html { redirect_to @activity, notice: "Activity was successfully updated." }
+        format.html do
+          redirect_to investigation_activities_path(@activity.investigation),
+                      notice: "Activity was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @activity }
       else
         format.html { render :edit }
@@ -55,7 +60,6 @@ class ActivitiesController < ApplicationController
   # DELETE /activities/1
   # DELETE /activities/1.json
   def destroy
-    authorize @activity
     @activity.destroy
     respond_to do |format|
       format.html do
