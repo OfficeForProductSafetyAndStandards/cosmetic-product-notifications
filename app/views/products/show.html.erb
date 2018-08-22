@@ -103,6 +103,27 @@
 <% end %>
 <%= link_to "Manage images", associated_images_path(@product), class: "no-print" %>
 
+<h4 class="heading-small">Documents</h4>
+<% if @product.documents.attached? %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Title</th>
+      <th class="govuk-table__header" scope="col">Upload date</th>
+      <th class="govuk-table__header" scope="col"></th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <% @product.documents.attachments.each do |document|  %>
+      <%= render "document_summary", document: document, parent: @product %>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No documents.</p>
+<% end %>
+<%= link_to "Manage documents", associated_documents_path(@product), class: "no-print" %>
+
 <% if @product.investigations.any? -%>
   <h4 class="heading-small">Investigations</h4>
   <% @product.investigations.each do |investigation| %>
