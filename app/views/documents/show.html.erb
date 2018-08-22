@@ -1,4 +1,17 @@
-<p id="notice"><%= notice %></p>
+<% content_for :page_title, "Document details - Market Surveillance & Product Safety" %>
 
-<%= link_to 'Edit', edit_document_path(@document) %> |
-<%= link_to 'Back', documents_path %>
+<%= link_to 'Back', associated_documents_path(@parent), class: "govuk-back-link" %>
+
+<h1 class="heading-large"><%= @document.metadata["title"] %></h1>
+
+<%= link_to render("document_image", document: @document), @document, class: "document-link" %>
+
+<div class="document-type">
+  <%= @document.metadata["document_type"]&.titleize %>
+  <%= " (#{@document.metadata["other_type"].titleize})" if @document.metadata["other_type"].present? %>
+</div>
+<div class="document-filetype"><%= document_filetype_label(@document) %></div>
+
+<div class="document-description"><%= @document.metadata["description"] %></div>
+
+<%= link_to "Edit document details", edit_associated_document_path(@parent, @document), class: "edit-document-link" %>

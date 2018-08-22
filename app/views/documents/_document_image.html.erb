@@ -1,0 +1,5 @@
+<% if document.metadata["safe"] %>
+  <div class="document-without-preview"><span class="document-filetype"><%= document_file_extension(document) %></span></div>
+<% else %>
+  <div class="document-processing-placeholder"><span>Processing document</span></div>
+<% end %>

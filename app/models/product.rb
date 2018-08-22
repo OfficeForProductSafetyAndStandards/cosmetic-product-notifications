@@ -2,6 +2,7 @@ require "elasticsearch/model"
 
 class Product < ApplicationRecord
   include CountriesHelper
+  include Documentable
   include Searchable
 
   index_name [Rails.env, "products"].join("_")

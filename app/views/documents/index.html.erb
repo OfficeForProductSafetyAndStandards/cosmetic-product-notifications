@@ -1,25 +1,9 @@
-<p id="notice"><%= notice %></p>
+<% content_for :page_title, "Manage documents - Market Surveillance & Product Safety" %>
 
-<h1>Documents</h1>
+<%= link_to 'Back', polymorphic_path(@parent), class: "govuk-back-link" %>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<h1 class="heading-xlarge">Manage documents</h1>
 
-  <tbody>
-    <% @documents.each do |document| %>
-      <tr>
-        <td><%= link_to 'Show', document %></td>
-        <td><%= link_to 'Edit', edit_document_path(document) %></td>
-        <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= link_to 'Add new document', new_associated_document_path(@parent), class: "add-document-link" %>
 
-<br>
-
-<%= link_to 'New Document', new_document_path %>
+<%= render 'table' %>

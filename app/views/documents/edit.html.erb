@@ -1,6 +1,7 @@
-<h1>Editing Document</h1>
+<% content_for :page_title, "Edit document - Market Surveillance & Product Safety" %>
+
+<%= link_to 'Back', associated_documents_path(@parent), class: "govuk-back-link" %>
+
+<h1 class="heading-xlarge">Edit document</h1>
 
 <%= render 'form', document: @document %>
-
-<%= link_to 'Show', @document %> |
-<%= link_to 'Back', documents_path %>

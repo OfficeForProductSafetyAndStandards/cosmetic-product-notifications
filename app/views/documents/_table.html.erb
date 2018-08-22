@@ -1,0 +1,32 @@
+<table class="document-list">
+  <thead>
+  <tr>
+    <th colspan="2"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @documents.each do |document| %>
+    <tr>
+      <td class="document-preview">
+        <%= link_to render("document_image", document: document), document, class: "document-link" %>
+      </td>
+      <td class="document-details">
+        <h2 class="govuk-heading-m document-title"><%= document.metadata["title"] %></h2>
+        <div class="document-updated right">Updated <%= Time.parse(document.metadata["updated"]).strftime("%d/%m/%Y") if document.metadata["updated"].present? %></div>
+
+        <div class="document-type">
+          <%= document.metadata["document_type"]&.titleize %>
+          <%= " (#{document.metadata["other_type"].titleize})" if document.metadata["other_type"].present? %>
+        </div>
+        <div class="document-filetype"><%= document_filetype_label(document) %></div>
+
+        <div class="document-description"><%= document.metadata["description"] %></div>
+
+        <%= link_to "Edit document details", edit_associated_document_path(@parent, document), class: "edit-document-link" %>
+        <%= link_to "Delete document", associated_document_path(@parent, document), method: :delete, data: { confirm: "Are you sure?" }, class: "delete-document-link" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
