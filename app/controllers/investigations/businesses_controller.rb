@@ -1,10 +1,11 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[index new create suggested add companies_house]
+  before_action :set_investigation, only: %i[search new create suggested add companies_house]
   before_action :create_business, only: %i[new create]
-  # GET /investigations/1/businesses
-  def index
+
+  # GET /investigations/1/businesses/search
+  def search
     @business = Business.new
     @business.addresses.build
   end

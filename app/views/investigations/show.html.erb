@@ -83,7 +83,7 @@
           <% else %>
             <p>No products.</p>
           <% end %>
-          <%= link_to 'Add product', investigation_products_path(@investigation), :class => "no-print" %>
+          <%= link_to 'Add product', search_investigation_products_path(@investigation), :class => "no-print" %>
         </div>
       </div>
 
@@ -97,7 +97,7 @@
           <% else %>
             <p>No businesses.</p>
           <% end %>
-          <%= link_to 'Add business', investigation_businesses_path(@investigation), :class => "no-print" %>
+          <%= link_to 'Add business', search_investigation_businesses_path(@investigation), :class => "no-print" %>
         </div>
       </div>
 

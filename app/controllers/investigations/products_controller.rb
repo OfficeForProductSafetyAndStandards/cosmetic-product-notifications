@@ -2,12 +2,12 @@ class Investigations::ProductsController < ApplicationController
   include CountriesHelper
   include ProductsHelper
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[index new create suggested add]
+  before_action :set_investigation, only: %i[search new create suggested add]
   before_action :create_product, only: %i[new create]
-  before_action :set_countries, only: %i[index new]
+  before_action :set_countries, only: %i[search new]
 
-  # GET /investigations/1/products
-  def index
+  # GET /investigations/1/products/search
+  def search
     @product = Product.new
   end
 
