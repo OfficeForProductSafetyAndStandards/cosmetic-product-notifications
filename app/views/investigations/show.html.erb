@@ -25,9 +25,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <p class="govuk-heading-m govuk-!-margin-bottom-1">Case ID: <%= @investigation.id %></p>
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-1"><%= @investigation.title %></h1>
-      <span>Created: <%= @investigation.created_at.strftime("%d %B %Y") %></span>
+      <%= render "investigation_heading", investigation: @investigation %>
     </div>
   </div>
 
@@ -78,12 +76,12 @@
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Products</h2>
           <% if @investigation.products.any? %>
             <% @investigation.products.each do |product| %>
-              <%= render "product_summary", product: product %>
+              <%= render "product_summary", product: product, allow_removing: false %>
             <% end %>
           <% else %>
             <p>No products.</p>
           <% end %>
-          <%= link_to 'Add product', search_investigation_products_path(@investigation), :class => "no-print" %>
+          <%= link_to 'Manage products', investigation_products_path(@investigation), :class => "no-print" %>
         </div>
       </div>
 

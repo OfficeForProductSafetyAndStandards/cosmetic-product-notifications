@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       post :update_assignee
     end
     resources :activities, shallow: true
-    resources :products, only: %i[index new create], controller: "investigations/products" do
+    resources :products, only: %i[index new create destroy], controller: "investigations/products" do
       collection do
         get :search
         get :suggested

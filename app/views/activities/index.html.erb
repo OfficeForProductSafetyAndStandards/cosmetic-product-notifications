@@ -2,9 +2,7 @@
 
 <%= link_to 'Back to investigation', @investigation, class: "govuk-back-link" %>
 
-<p class="govuk-heading-m govuk-!-margin-bottom-1">Case ID: <%= @investigation.id %></p>
-<h1 class="govuk-heading-xl govuk-!-margin-bottom-1"><%= @investigation.title %></h1>
-<p class="govuk-!-margin-bottom-6">Created: <%= @investigation.created_at.strftime("%d %B %Y") %></p>
+<%= render "investigation_heading", investigation: @investigation %>
 
 <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Activities</h2>
 <%= render "activities_summary", activities: @activities %>
