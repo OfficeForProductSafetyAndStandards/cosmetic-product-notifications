@@ -20,4 +20,17 @@ class Investigation < ApplicationRecord
   accepts_nested_attributes_for :investigation_businesses, allow_destroy: true
 
   has_paper_trail
+
+  enum risk_level: [
+    :low,
+    :medium,
+    :serious,
+    :severe
+  ], _suffix: true
+
+  enum sensitivity: [
+    :low,
+    :medium,
+    :high
+  ], _suffix: true
 end

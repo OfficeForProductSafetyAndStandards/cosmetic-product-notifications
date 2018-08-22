@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_17_135353) do
+ActiveRecord::Schema.define(version: 2018_08_22_083615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,7 +102,9 @@ ActiveRecord::Schema.define(version: 2018_08_17_135353) do
     t.datetime "updated_at", null: false
     t.uuid "assignee_id"
     t.string "title", null: false
-    t.text "risk_notes"
+    t.string "risk_overview"
+    t.integer "risk_level"
+    t.integer "sensitivity"
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
 
