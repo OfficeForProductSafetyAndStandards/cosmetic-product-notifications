@@ -6,6 +6,15 @@ class Product < ApplicationRecord
 
   index_name [Rails.env, "products"].join("_")
 
+  settings index: { number_of_shards: 1 } do
+    mappings do
+      indexes :name, type: :keyword
+      indexes :brand, type: :keyword
+      indexes :category, type: :keyword
+      indexes :country_of_origin, type: :keyword
+    end
+  end
+
   default_scope { order(created_at: :desc) }
   has_many :investigation_products, dependent: :destroy
   has_many :investigations, through: :investigation_products

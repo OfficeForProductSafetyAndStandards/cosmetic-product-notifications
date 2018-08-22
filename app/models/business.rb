@@ -5,6 +5,15 @@ class Business < ApplicationRecord
 
   index_name [Rails.env, "businesses"].join("_")
 
+  settings index: { number_of_shards: 1 } do
+    mappings do
+      indexes :company_number, type: :keyword
+      indexes :company_name, type: :keyword
+      indexes :company_type_code, type: :keyword
+      indexes :nature_of_business_id, type: :keyword
+    end
+  end
+
   validates :company_name, presence: true
   default_scope { order(created_at: :desc) }
   has_many :investigation_businesses, dependent: :destroy

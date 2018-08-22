@@ -34,10 +34,10 @@ class UsersController < ApplicationController
   end
 
   def search_for_users
-    if params[:q].blank?
-      User.paginate(page: params[:page], per_page: 20)
-    else
-      User.search(params[:q]).paginate(page: params[:page], per_page: 20).records
-    end
+    params[:q] ||= ""
+    params[:sort] = "email"
+    params[:direction] = "asc"
+
+    User.search(params).paginate(page: params[:page], per_page: 20).records
   end
 end

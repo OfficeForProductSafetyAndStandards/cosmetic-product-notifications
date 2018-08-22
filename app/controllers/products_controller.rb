@@ -89,12 +89,11 @@ class ProductsController < ApplicationController
   end
 
   def search_for_products
-    products = if params[:q].blank?
-                 Product.all
-               else
-                 Product.search(params[:q]).records
-               end
-    products.reorder("#{sort_column} #{sort_direction}").paginate(page: params[:page], per_page: 20)
+    params[:q] ||= ""
+    params[:sort] = sort_column
+    params[:direction] = sort_direction
+
+    Product.search(params).paginate(page: params[:page], per_page: 20).records
   end
 
   def search_for_gtin

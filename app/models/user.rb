@@ -5,6 +5,12 @@ class User < ApplicationRecord
 
   index_name [Rails.env, "users"].join("_")
 
+  settings index: { number_of_shards: 1 } do
+    mappings do
+      indexes :email, type: :keywords
+    end
+  end
+
   default_scope { order(created_at: :desc) }
   has_many :user_source, dependent: :nullify
 

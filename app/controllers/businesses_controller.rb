@@ -84,13 +84,11 @@ class BusinessesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def search_for_businesses
-    businesses = if params[:q].blank?
-                   Business.all
+    params[:q] ||= ""
+    params[:sort] = sort_column
+    params[:direction] = sort_direction
 
-                 else
-                   Business.search(params[:q]).records
-                 end
-    businesses.reorder("#{sort_column} #{sort_direction}").paginate(page: params[:page], per_page: 20)
+    Business.search(params).paginate(page: params[:page], per_page: 20).records
   end
 
   def create_business

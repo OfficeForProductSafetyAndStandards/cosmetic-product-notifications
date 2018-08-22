@@ -1,4 +1,14 @@
 class Investigation < ApplicationRecord
+  include Searchable
+
+  index_name [Rails.env, "investigations"].join("_")
+
+  settings index: { number_of_shards: 1 } do
+    mappings do
+      indexes :title, type: :keyword
+    end
+  end
+
   validates :title, presence: true
   default_scope { order(updated_at: :desc) }
 
@@ -21,3 +31,5 @@ class Investigation < ApplicationRecord
 
   has_paper_trail
 end
+
+Investigation.import force: true

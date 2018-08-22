@@ -116,9 +116,10 @@ class InvestigationsController < ApplicationController
   private
 
   def search_for_investigations
-    Investigation.left_joins(:assignee)
-                 .reorder("#{sort_column} #{sort_direction}")
-                 .paginate(page: params[:page], per_page: 20)
+    params[:q] ||= ""
+    params[:sort] = sort_column
+    params[:direction] = sort_direction
+    Investigation.search(params).paginate(page: params[:page], per_page: 20).records
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -144,8 +145,7 @@ class InvestigationsController < ApplicationController
   end
 
   def sort_column
-    allowed = Investigation.column_names.concat(User.column_names.map { |name| "users.#{name}" })
-    allowed.include?(params[:sort]) ? params[:sort] : "updated_at"
+    Investigation.column_names.include?(params[:sort]) ? params[:sort] : "updated_at"
   end
 
   def sort_direction
