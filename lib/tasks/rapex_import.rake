@@ -62,7 +62,8 @@ def create_investigation(notification, date, name)
     title: name,
     description: field_from_notification(notification, "description"),
     is_closed: true,
-    risk_notes: risk_notes(notification),
+    risk_overview: risk_overview(notification),
+    # TODO consider using the "level" field to populate our risk_level
     created_at: date,
     updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
     source: ReportSource.new(name: "RAPEX")
@@ -114,7 +115,7 @@ def brand(notification)
   brand
 end
 
-def risk_notes(notification)
+def risk_overview(notification)
   [
     field_from_notification(notification, "level"),
     field_from_notification(notification, "riskType")

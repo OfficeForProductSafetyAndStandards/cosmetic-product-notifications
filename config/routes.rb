@@ -6,16 +6,24 @@ Rails.application.routes.draw do
 
   resources :investigations, concerns: :image_attachable do
     member do
-      post :close
-      post :reopen
+      get :status
       get :assign
       post :update_assignee
-      post :add_product
     end
-    resources :activities, shallow: true
-    resources :products, only: %i[index new create], controller: "investigations/products" do
+    resources :activities, only: %i[index new create]
+    resources :products, only: %i[index new create destroy], controller: "investigations/products" do
       collection do
+        get :search
         get :suggested
+        post :add
+      end
+    end
+    resources :businesses, only: %i[index new create destroy], controller: "investigations/businesses" do
+      collection do
+        get :search
+        get :suggested
+        post :add
+        post :companies_house
       end
     end
   end

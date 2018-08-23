@@ -1,21 +1,8 @@
 <% content_for :page_title, "Edit investigation - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Investigations', investigations_path %>
-        </li>
-        <li>
-            <%= link_to 'Edit', edit_investigation_path(@investigation) %>
-        </li>
-    </ol>
-</div>
+<%= link_to 'Back to investigation', @investigation, :class => "link-back" %>
 
-<h1 class="heading-xlarge">Editing investigation</h1>
+<%= render "investigation_heading", investigation: @investigation %>
+<h2 class="govuk-heading-l">Risk details</h2>
 
 <%= render 'form', investigation: @investigation %>
-
-<%= link_to 'Back', investigations_path, :class => "link-back" %>

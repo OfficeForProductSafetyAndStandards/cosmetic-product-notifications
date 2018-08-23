@@ -1,0 +1,2 @@
+module Investigations::BusinessesHelper
+end

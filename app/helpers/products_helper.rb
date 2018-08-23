@@ -16,7 +16,7 @@ module ProductsHelper
   def advanced_product_search(page_size)
     gtin_search_results = search_for_gtin(page_size) if params[:gtin].present?
     # if there was no GTIN param or there were no results for the GTIN search
-    basic_search_results = search_for_products(page_size) if gtin_search_results.blank? && params[:q].present?
+    basic_search_results = basic_search(page_size) if gtin_search_results.blank? && params[:q].present?
     basic_search_results || gtin_search_results || []
   end
 
@@ -24,12 +24,16 @@ module ProductsHelper
     if params[:q].blank?
       Product.paginate(page: params[:page], per_page: page_size)
     else
-      Product.search(params[:q]).paginate(page: params[:page], per_page: page_size).records
+      Product.prefix_search(params[:q]).paginate(page: params[:page], per_page: page_size).records
     end
   end
 
   def search_for_gtin(page_size)
     Product.search(query: { match: { gtin: params[:gtin] } })
            .paginate(page: params[:page], per_page: page_size).records
+  end
+
+  def basic_search(page_size)
+    Product.search(params[:q]).paginate(page: params[:page], per_page: page_size).records
   end
 end

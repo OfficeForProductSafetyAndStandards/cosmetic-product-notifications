@@ -4,10 +4,10 @@
       <%= image_tag(product.rapex_images[0].url, alt: product.rapex_images[0].title, :class => "product-image") if product.rapex_images.any? %>
     </div>
     <div class="column-two-thirds">
-      <h4 class="heading-small"><%= product.name %></h4>
+      <h4 class="heading-small"><%= link_to product.name, product, target: "_blank" %></h4>
       <p class="not-implemented">Category</p>
       <% if @investigation.present? %>
-        <%= form_with(url: add_product_investigation_path(@investigation), local: true) do |form| %>
+        <%= form_with(url: add_investigation_products_path(@investigation), local: true) do |form| %>
           <%= form.hidden_field :product_id, value: product.id %>
           <%= form.submit "Select", :class => "button" %>
         <% end %>
