@@ -2,11 +2,12 @@
 
 <%= link_to 'Back', associated_documents_path(@parent), class: "govuk-back-link" %>
 
-<h1 class="heading-xlarge">New document</h1>
+<%= render 'page_heading', title: "New document" %>
+<br/>
 
 <%= form_with scope: :document, url: associated_documents_path(@parent), local: true do |form| %>
   <div class="form-group">
-    <%= form.label :file, "Browse for file", :class => "govuk-label" %>
+    <%= form.label :file, "Browse for file", :class => "govuk-heading-m" %>
     <%= form.file_field :file, :class => "govuk-file-upload" %>
   </div>
 

@@ -1,9 +1,9 @@
 <% content_for :page_title, "Manage documents - Market Surveillance & Product Safety" %>
 
-<%= link_to 'Back', polymorphic_path(@parent), class: "govuk-back-link" %>
+<%= link_to "Back to #{@parent.class.name.downcase}", polymorphic_path(@parent), class: "govuk-back-link" %>
 
-<h1 class="heading-xlarge">Manage documents</h1>
+<%= render 'page_heading', title: "Manage documents" %>
 
-<%= link_to 'Add new document', new_associated_document_path(@parent), class: "add-document-link" %>
+<%= link_to 'Add new document', new_associated_document_path(@parent), class: "govuk-!-font-weight-bold govuk-!-font-size-19 add-document-link" %>
 
 <%= render 'table' %>
