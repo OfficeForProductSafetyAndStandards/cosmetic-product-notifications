@@ -4,29 +4,16 @@
     data-investigation-id=<%= @investigation.id %>
     data-product-ids=<%= @investigation.product_ids.join(",") %>
     >
-    <div class="breadcrumbs">
-        <ol role="breadcrumbs">
-            <li>
-                <a href="/">Home</a>
-            </li>
-                <li>
-                    <%= link_to 'Investigations', investigations_path %>
-                </li>
-                <li>
-                    <%= link_to 'Investigation', @investigation %>
-                </li>
-                <li>
-                    <%= link_to 'Add Product', new_investigation_product_path(@investigation) %>
-                </li>
-        </ol>
-    </div>
 
-    <%= link_to 'Back', @investigation, class: "govuk-back-link link-back" %>
+    <%= link_to 'Back to investigation', @investigation, class: "govuk-back-link link-back" %>
 
-    <h1 class="heading-xlarge">Add product to investigation</h1>
+    <%= render "investigation_heading", investigation: @investigation %>
+    <h2 class="govuk-heading-l">Add product</h2>
+
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
             <%= form_with(model: @product, url: new_investigation_product_path(@investigation), local: true, method: :get) do |form| %>
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Product details</h3>
                 <%= render 'products/core_params', form: form, product: @product, countries: @countries %>
                 <div class="form-group">
                     <%= form.submit "Create new", :class => "govuk-button" %>
