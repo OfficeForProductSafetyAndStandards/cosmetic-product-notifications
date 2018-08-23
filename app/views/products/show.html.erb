@@ -14,9 +14,8 @@
     </ol>
 </div>
 
-<h1 class="heading-xlarge">
-  <%= @product.name %>
-</h1>
+<h1 class="heading-xlarge"><%= @product.name %></h1>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full company-details large-space-below">
     <table class="company-details-table">
@@ -82,11 +81,27 @@
     <%= link_to "Add more details", edit_product_path(@product)%>
   </div>
 </div>
+
 <div class="slider-nav">
-  <% @product.images.each do |image| %>
+  <% @product.images.attachments.each do |image| %>
+    <% render "images/image_tag", image: image, dimensions: "300x200" %>
+  <% end %>
+  <% @product.rapex_images.each do |image| %>
     <%= image_tag(image.url, alt: image.title) %>
   <% end %>
 </div>
+
+<% if @product.images.attached? %>
+  <h4 class="heading-small"><%= "Images (#{@product.images.attachments.count})" %></h4>
+  <% @product.images.attachments.limit(2).each do |image| %>
+    <%= render "images/image", image: image, dimensions: "300x200" %>
+  <% end %>
+  <br/>
+<% else %>
+  <h4 class="heading-small"><%= "Images" %></h4>
+  <p>No images.</p>
+<% end %>
+<%= link_to "Manage images", associated_images_path(@product), class: "no-print" %>
 
 <% if @product.investigations.any? -%>
   <h4 class="heading-small">Investigations</h4>

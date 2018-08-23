@@ -1,0 +1,58 @@
+// Place all the styles related to the Images controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "buttons";
+@import "colours";
+
+.image-with-preview {
+  background-color: $grey-1;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.image-without-preview {
+  background-color: $grey-1;
+  display: inline-block;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: top;
+  padding: 20px;
+}
+
+.image-processing-placeholder {
+  background-color: $grey-1;
+  color: $white;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 2.5em;
+  text-align: center;
+  vertical-align: top;
+}
+
+.image-list {
+  .image-preview {
+    vertical-align: top;
+  }
+
+  .image-details {
+    vertical-align: top;
+
+    .image-title,
+    .image-updated {
+      display: inline-block;
+    }
+
+    .image-description {
+      margin-bottom: 0.5em;
+    }
+
+    .edit-image-link {
+      display: block;
+    }
+
+    .delete-image-link {
+      @extend .button-warning;
+      margin-top: 0.5em;
+    }
+  }
+}

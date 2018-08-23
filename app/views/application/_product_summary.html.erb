@@ -2,11 +2,13 @@
   <div class="govuk-grid-column-one-half">
     <div class="aspect-ratio-3-2-container">
       <div class="aspect-ratio-contents">
-      <% if product.images.any? %>
-        <%= image_tag(product.images[0].url, alt: product.images[0].title, :class => "product-image") %>
-      <% else %>
-        <p class="no-images">No images.</p>
-      <% end %>
+        <% if product.images.attached? %>
+          <%= render "images/image_tag", image: product.images.first, dimensions: "300x200", class_name: "product-image" %>
+        <% elsif product.rapex_images.any? %>
+          <%= image_tag(product.rapex_images[0].url, alt: product.rapex_images[0].title, :class => "product-image") %>
+        <% else %>
+          <p class="no-images">No images.</p>
+        <% end %>
       </div>
     </div>
   </div>

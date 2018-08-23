@@ -52,7 +52,7 @@ def create_product(notification, name)
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     country_of_origin: field_from_notification(notification, "countryOfOrigin"),
     brand: brand(notification),
-    images: all_pictures(notification),
+    rapex_images: all_pictures(notification),
     source: ReportSource.new(name: "RAPEX")
   )
 end
@@ -127,7 +127,8 @@ def all_pictures(notification)
   urls = notification.xpath("pictures/picture")
   urls.each do |url|
     clean_url = url.text.delete("\n") unless url.nil?
-    images.push(Image.create(url: clean_url))
+    # TODO MSPSDS-266: Store images as ActiveStorage attachments instead
+    images.push(RapexImage.create(url: clean_url))
   end
   images
 end

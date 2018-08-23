@@ -1,0 +1,26 @@
+<table class="image-list">
+  <thead>
+  <tr>
+    <th colspan="2"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @images.each do |image| %>
+    <tr>
+      <td class="image-preview">
+        <%= render "image", image: image, dimensions: "300x300" %>
+      </td>
+      <td class="image-details">
+        <h2 class="govuk-heading-m image-title"><%= image.metadata["title"] %></h2>
+        <div class="image-updated right">Updated <%= Time.parse(image.metadata["updated"]).strftime("%d/%m/%Y") if image.metadata["updated"].present? %></div>
+
+        <div class="image-description"><%= image.metadata["description"] %></div>
+
+        <%= link_to "Edit image details", edit_associated_image_path(@parent, image), class: "edit-image-link" %>
+        <%= link_to "Delete image", associated_image_path(@parent, image), method: :delete, data: { confirm: "Are you sure?" }, class: "delete-image-link" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

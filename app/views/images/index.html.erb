@@ -1,0 +1,9 @@
+<% content_for :page_title, "Manage images - Market Surveillance & Product Safety" %>
+
+<%= link_to "Back to #{@parent.class.name.downcase}", polymorphic_path(@parent), class: "govuk-back-link" %>
+
+<%= render 'page_heading', title: "Manage images" %>
+
+<%= link_to 'Add new image', new_associated_image_path(@parent), class: "govuk-!-font-weight-bold govuk-!-font-size-19 add-image-link" %>
+
+<%= render 'table' %>
