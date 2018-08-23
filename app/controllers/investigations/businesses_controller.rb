@@ -1,10 +1,15 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[index new create suggested add companies_house]
+  before_action :set_investigation, only: %i[index search new create suggested add companies_house destroy]
+  before_action :set_business, only: %i[destroy]
   before_action :create_business, only: %i[new create]
+
   # GET /investigations/1/businesses
-  def index
+  def index; end
+
+  # GET /investigations/1/businesses/search
+  def search
     @business = Business.new
     @business.addresses.build
   end
@@ -48,10 +53,26 @@ class Investigations::BusinessesController < ApplicationController
     end
   end
 
+  # DELETE /investigations/1/businesses
+  def destroy
+    @investigation.businesses.delete(@business)
+    respond_to do |format|
+      format.html do
+        redirect_to investigation_businesses_path(@investigation),
+                    notice: "Business was successfully removed."
+      end
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
+  end
+
+  def set_business
+    @business = Business.find(params[:id])
   end
 
   def create_business

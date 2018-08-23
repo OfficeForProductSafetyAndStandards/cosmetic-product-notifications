@@ -1,0 +1,42 @@
+<div class="govuk-grid-row product-summary govuk-!-padding-bottom-3">
+  <div class="govuk-grid-column-one-half">
+    <div class="aspect-ratio-3-2-container">
+      <div class="aspect-ratio-contents">
+      <% if product.images.any? %>
+        <%= image_tag(product.images[0].url, alt: product.images[0].title, :class => "product-image") %>
+      <% else %>
+        <p class="no-images">No images.</p>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Type</th>
+          <td class="govuk-table__cell"><%= product.name %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Brand</th>
+          <td class="govuk-table__cell"><%= product.brand %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Model</th>
+          <td class="govuk-table__cell"><%= product.model %></td>
+        </tr>
+      </tbody>
+    </table>
+    <p><%= link_to "Full product details", product %></p>
+    <% if allow_removing %>
+      <div class="form-group">
+        <%= link_to 'Remove',
+                    investigation_product_path(@investigation, product),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' },
+                    class: "button-warning"
+        %>
+      </div>
+    <% end %>
+  </div>
+</div>
