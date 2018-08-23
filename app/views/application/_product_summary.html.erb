@@ -1,4 +1,4 @@
-<div class="govuk-grid-row product-summary govuk-!-padding-bottom-3">
+<div class="govuk-grid-row product-summary govuk-!-padding-bottom-3 govuk-!-margin-bottom-3">
   <div class="govuk-grid-column-one-half">
     <div class="aspect-ratio-3-2-container">
       <div class="aspect-ratio-contents">
@@ -28,15 +28,6 @@
       </tbody>
     </table>
     <p><%= link_to "Full product details", product %></p>
-    <% if allow_removing %>
-      <div class="form-group">
-        <%= link_to 'Remove',
-                    investigation_product_path(@investigation, product),
-                    method: :delete,
-                    data: { confirm: 'Are you sure?' },
-                    class: "button-warning"
-        %>
-      </div>
-    <% end %>
+    <%= yield %>
   </div>
 </div>

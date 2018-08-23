@@ -10,7 +10,16 @@
 <div class="govuk-!-padding-top-8">
     <% if @investigation.products.any? %>
         <% @investigation.products.each do |product| %>
-            <%= render "product_summary", product: product, allow_removing: true %>
+            <%= render layout: "product_summary", locals: { product: product } do %>
+                <div class="form-group">
+                    <%= link_to 'Remove',
+                                investigation_product_path(@investigation, product),
+                                method: :delete,
+                                data: { confirm: 'Are you sure?' },
+                                class: "button-warning"
+                    %>
+                </div>
+            <% end %>
         <% end %>
     <% else %>
         <p>No products.</p>

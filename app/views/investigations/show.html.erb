@@ -67,7 +67,7 @@
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Products</h2>
           <% if @investigation.products.any? %>
             <% @investigation.products.each do |product| %>
-              <%= render "product_summary", product: product, allow_removing: false %>
+              <%= render "product_summary", product: product %>
             <% end %>
           <% else %>
             <p>No products.</p>
