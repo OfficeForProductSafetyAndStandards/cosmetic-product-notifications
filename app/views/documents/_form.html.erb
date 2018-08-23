@@ -27,7 +27,7 @@
       <% @parent.document_types.each do |type| %>
         <div class="multiple-choice">
           <%= form.radio_button :document_type, type, checked: type.to_s == document.metadata["document_type"] %>
-          <%= form.label :document_type, type.to_s.titleize %>
+          <%= form.label :document_type, document_type_label(type) %>
         </div>
       <% end %>
     </fieldset>

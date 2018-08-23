@@ -15,6 +15,25 @@ module DocumentsHelper
     associated_document_path(parent, document) + "/edit"
   end
 
+  def document_type_label(document_type)
+    case document_type
+    when :correspondence_originator
+      "Correspondence from originator"
+    when :correspondence_business
+      "Correspondence from business"
+    when :correspondence_other
+      "Correspondence from other"
+    when :tech_specs
+      "Technical specifications"
+    when :test_results
+      "Test results"
+    when :risk_assessment
+      "Risk assessment"
+    else
+      "Other"
+    end
+  end
+
   def document_filetype_label(document)
     case
     when document.audio?
