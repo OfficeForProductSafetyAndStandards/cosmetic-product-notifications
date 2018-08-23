@@ -41,11 +41,11 @@
 <br/>
 
 <%= link_to 'Assign', new_investigation_path, class: "govuk-button govuk-button--disabled not-implemented" %>
-<%= link_to 'Create investigation', new_investigation_path, class: "govuk-button right" %>
+<%= link_to 'Create investigation', new_investigation_path, class: "right" %>
 
 <%= will_paginate @investigations %>
 <%= render 'table' %>
 <%= will_paginate @investigations %>
 <br/>
-<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx), class: "govuk-button"%>
+<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx) %>
 

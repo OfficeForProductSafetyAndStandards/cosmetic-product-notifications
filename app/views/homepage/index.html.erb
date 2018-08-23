@@ -4,14 +4,14 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <h1 class="heading-xlarge">Market Surveillance &amp; Product Safety</h1>
-            <%= link_to "Visit the example page", "/pages/example", :class => "govuk-button govuk-button-start" %><br /><br />
-            <%= link_to "Products", "/products", :class => "govuk-button govuk-button-start" %><br /><br />
-            <%= link_to "Investigations", "/investigations", :class => "govuk-button govuk-button-start" %><br /><br />
-            <%= link_to "Businesses", "/businesses", :class => "govuk-button govuk-button-start" %><br /><br />
-            <%= render 'layouts/login_buttons' %><br /><br />
-            <% if signed_in? && policy(User).index? %>
+            <%= link_to "Visit the example page", "/pages/example" %><br/>
+            <%= link_to "Products", "/products" %><br/>
+            <%= link_to "Investigations", "/investigations" %><br/>
+            <%= link_to "Businesses", "/businesses" %><br/><br/>
+            <%= render 'layouts/login_buttons' %><br/>
+            <% if signed_in? && policy(User).index? %><br/>
                 <p>You're an admin, this means that you can also</p>
-                <%= link_to "Edit users", "/users", :class => "govuk-button" %>
+                <%= link_to "Edit users", "/users" %>
             <% end %>
         </div>
     </div>
