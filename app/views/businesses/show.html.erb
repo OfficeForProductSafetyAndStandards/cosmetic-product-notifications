@@ -13,7 +13,7 @@
       </span>
     </div>
     <div class="govuk-grid-column-one-third">
-      <div class="action-links">
+      <div class="action-links not-implemented">
         <span class="action-links-header">Actions</span>
         <span><%= link_to "Link Business", "#", class: "not-implemented" %></span>
         <span><%= link_to "Create New Issue", "#", class: "not-implemented" %></span>
@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full company-details">
+    <div class="govuk-grid-column-full company-details large-space-below">
       <table class="company-details-table">
         <thead>
           <td class="company-details-header">Company Details</td>
@@ -76,7 +76,7 @@
         </tr>
         </tbody>
       </table>
-      <%= link_to "Add more details", edit_business_path(@business), class: "govuk-button"%>
+      <%= link_to "Add more details", edit_business_path(@business)%>
     </div>
   </div>
 
@@ -98,11 +98,11 @@
 
       <div class="form-group no-print">
         <%= link_to 'Add Location', new_business_address_path(@business),
-                    class: "no-print govuk-button", style: "width: 100%" %>
+                    class: "no-print large-space-below", style: "width: 100%" %>
       </div>
     </div>
 
-    <div class="govuk-grid-column-one-third company-responsible-contact not-implemented">
+    <div class="govuk-grid-column-one-third company-responsible-contact large-space-below not-implemented">
       <h4 class="govuk-heading-s">
         Responsible contact
       </h4>
@@ -116,11 +116,11 @@
 
       <div class="form-group no-print">
         <%= link_to 'Add Contact', new_business_address_path(@business),
-                    class: "no-print govuk-button", style: "width: 100%"  %>
+                    class: "no-print", style: "width: 100%"  %>
       </div>
     </div>
 
-    <div class="govuk-grid-column-one-third company-other-info">
+    <div class="govuk-grid-column-one-third company-other-info not-implemented">
       <h4 class="govuk-heading-s">
         Other information
       </h4>

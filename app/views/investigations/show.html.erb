@@ -6,16 +6,7 @@
       <%= link_to 'Back to list', investigations_path, class: "govuk-back-link link-back" %>
     </div>
     <div class="govuk-grid-column-one-third">
-      Status
-      <% if @investigation.is_closed? && policy(@investigation).reopen? %>
-        <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
-          <%= form.submit "Closed", data: { confirm: "Are you sure you want to reopen the issue?" }, class: "govuk-link" %>
-        <% end %>
-      <% elsif !@investigation.is_closed? %>
-        <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
-          <%= form.submit "Open", data: { confirm: "Are you sure you want to close the issue?" }, class: "govuk-link" %>
-        <% end %>
-      <% end %>
+      Status <%= link_to @investigation.is_closed? ? "Closed" : "Open", status_investigation_path(@investigation) %>
     </div>
     <div class="govuk-grid-column-one-third">
       Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",

@@ -35,6 +35,8 @@
 }
 
 .not-implemented {
+  // TODO MSPSDS-265: to comply with the GDS standards, components missing functionality are hidden
+  display: none!important;
   color: $red;
   opacity: 0.2;
 }
@@ -50,6 +52,10 @@
 
 .small-space-below {
   margin-bottom: 0.5em;
+}
+
+.large-space-below {
+  margin-bottom: 2em;
 }
 
 .small-square-dark {
