@@ -1,6 +1,9 @@
 <table>
   <thead>
   <tr>
+    <% if form %>
+      <th colspan="1"></th>
+    <% end %>
     <th>Business name(s)</th>
     <th>Type(s)</th>
     <th>Category(s)</th>
@@ -10,8 +13,11 @@
   </thead>
 
   <tbody>
-  <% @businesses.each do |business| %>
+  <% businesses.each do |business| %>
     <tr>
+      <% if form %>
+        <td><%= form.check_box :business_ids, { multiple: true }, business.id, false %></td>
+      <% end %>
       <td><%= link_to business.company_name, business %></td>
       <td><%= business.company_type_code %> <span class="not-implemented">(+10)</span></td>
       <td><span class="not-implemented">Some category (+10)</span></td>

@@ -30,7 +30,9 @@ Rails.application.routes.draw do
 
   resources :businesses do
     collection do
+      get :confirm_merge
       get :search
+      post :merge
       post :companies_house
     end
     resources :addresses, shallow: true
@@ -38,6 +40,8 @@ Rails.application.routes.draw do
 
   resources :products, concerns: :image_attachable do
     collection do
+      get :confirm_merge
+      post :merge
       get :suggested
     end
   end
