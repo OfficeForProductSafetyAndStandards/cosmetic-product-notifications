@@ -7,15 +7,17 @@ Rails.application.routes.draw do
       get :assign
       post :update_assignee
     end
-    resources :activities, shallow: true
-    resources :products, only: %i[index new create], controller: "investigations/products" do
+    resources :activities, only: %i[index new create]
+    resources :products, only: %i[index new create destroy], controller: "investigations/products" do
       collection do
+        get :search
         get :suggested
         post :add
       end
     end
-    resources :businesses, only: %i[index new create], controller: "investigations/businesses" do
+    resources :businesses, only: %i[index new create destroy], controller: "investigations/businesses" do
       collection do
+        get :search
         get :suggested
         post :add
         post :companies_house

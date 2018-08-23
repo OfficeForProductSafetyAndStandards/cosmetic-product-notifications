@@ -1,189 +1,137 @@
 <% content_for :page_title, "View investigation - Market Surveillance & Product Safety" %>
 <div class="show-investigation">
 
-  <div class="govuk-grid-row top-details">
-    <div class="govuk-grid-column-full">
+  <div class="govuk-grid-row govuk-!-padding-top-6 top-details">
+    <div class="govuk-grid-column-one-third">
       <%= link_to 'Back to list', investigations_path, class: "govuk-back-link link-back" %>
-      <span class="right">
-        Status
-        <% if @investigation.is_closed? && policy(@investigation).reopen? %>
-          <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
-            <%= form.submit "Closed", data: { confirm: "Are you sure you want to reopen the issue?" }%>
-          <% end %>
-        <% elsif !@investigation.is_closed? %>
-          <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
-            <%= form.submit "Open", data: { confirm: "Are you sure you want to close the issue?" } %>
-          <% end %>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      Status
+      <% if @investigation.is_closed? && policy(@investigation).reopen? %>
+        <%= form_with(url: reopen_investigation_path(@investigation), local: true) do |form| %>
+          <%= form.submit "Closed", data: { confirm: "Are you sure you want to reopen the issue?" }, class: "govuk-link" %>
         <% end %>
-      </span>
-      <span class="right">
-          Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
+      <% elsif !@investigation.is_closed? %>
+        <%= form_with(url: close_investigation_path(@investigation), local: true) do |form| %>
+          <%= form.submit "Open", data: { confirm: "Are you sure you want to close the issue?" }, class: "govuk-link" %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
                               assign_investigation_path(@investigation) %>
-      </span>
-      <%= link_to "View Audit Log", "#history-section", class: "right" %>
-      <%= link_to "Watch this issue", "#", class: "right" %>
     </div>
   </div>
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds investigation-details">
-      <h2 class="govuk-heading-m"><%= @investigation.title%></h2>
-      <h4 class="govuk-heading-s">Issue ID: <%= @investigation.id %></h4>
-      <span class="created-at">Created: <%= @investigation.created_at.strftime("%d %B %Y") %></span>
-      <span class="risk-notes">Risk Notes: <%= @investigation.risk_overview %></span>
-      <span class="description"><%= @investigation.description %></span>
-      <span class="risk-notes">Risk Level: <%= @investigation.risk_level&.titleize %></span>
-      <span class="risk-notes">Sensitivity: <%= @investigation.sensitivity&.titleize %></span>
+    <div class="govuk-grid-column-full">
+      <%= render "investigation_heading", investigation: @investigation %>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Risk Notes: <%= @investigation.risk_overview %></h3>
+      <p><%= @investigation.description %></p>
       <%= link_to 'Edit details', edit_investigation_path(@investigation), :class => "no-print" %>
     </div>
-
-    <div class="govuk-grid-column-one-third">
-      <div class="event-summary-box not-implemented">
-        <span class="govuk-heading-l">1 Event</span>
-        <span class="govuk-heading-m">Saturday 28th July</span>
-        <span>site visit</span>
-        <span>Game limited</span>
-        <span>48 Bush Road, N1 1XQ ></span>
+    <div class="govuk-grid-column-one-half">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Risk level</h4>
+          <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.risk_level&.titleize %></span>
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Sensitivity</h4>
+          <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.sensitivity&.titleize %></span>
+        </div>
       </div>
-      <%= link_to "Add event reminder", "#", class: "govuk-button not-implemented", style: "width: 100%"%>
     </div>
   </div>
 
-  <div class="govuk-grid-row product-details">
-    <% @investigation.products.each do |product| %>
-      <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-m">
-          Product details
-        </h2>
-      <!-- TODO MSPSDS-189 Add when adding to products -->
-        <span class="not-implemented">Category:</span>
-        <span class="not-implemented">Product: [product type]</span>
-        <span>Brand: <%= product.brand %></span>
-        <span>Name: <%= product.name %></span>
-        <span>Type / number of model: <%= product.model %></span>
-        <span>Batch number / Barcode: <%= product.gtin %></span>
-        <!-- TODO MSPSDS-189 Add when adding to products -->
-        <span class="not-implemented">Associated parts or components:</span>
-        <%= link_to 'Add or edit details', edit_product_path(product), :class => "no-print" %>
+  <div class="govuk-grid-row row-border-top">
+    <div class="govuk-grid-column-one-third">
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h3>
+      <ul class="dashed-list">
+        <li><a href="#activities" class="govuk-!-font-size-19">Activities</a></li>
+        <li><a href="#products" class="govuk-!-font-size-19">Products</a></li>
+        <li><a href="#businesses" class="govuk-!-font-size-19">Businesses</a></li>
+        <li><a href="#images" class="govuk-!-font-size-19">Images</a></li>
+        <li><a href="#documents" class="govuk-!-font-size-19">Documents</a></li>
+      </ul>
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-grid-row" id="activities">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Activities</h2>
+          <%= render "activities_summary", activities: @investigation.activities.limit(3) %>
+          <%= link_to "View all activity", investigation_activities_path(@investigation), class: "govuk-!-margin-right-3" %>
+          <%= link_to "New activity", new_investigation_activity_path(@investigation) %>
+        </div>
       </div>
-      <div class="govuk-grid-column-one-third">
-        <h2 class="govuk-heading-m">
-          Images
-        </h2>
-        <% if product.images.any? %>
-          <%= image_tag(product.images[0].url, alt: product.images[0].title, :class => "product-image") %>
-          <%= link_to "View images (#{product.images.size})", product_path(product), :class => "no-print" %>
-        <% else %>
+
+      <div class="govuk-grid-row" id="products">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Products</h2>
+          <% if @investigation.products.any? %>
+            <% @investigation.products.each do |product| %>
+              <%= render "product_summary", product: product, allow_removing: false %>
+            <% end %>
+          <% else %>
+            <p>No products.</p>
+          <% end %>
+          <%= link_to 'Manage products', investigation_products_path(@investigation), :class => "no-print" %>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row" id="businesses">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Businesses</h2>
+          <% if @investigation.businesses.any? %>
+            <% @investigation.businesses.each do |business| %>
+              <%= render "business_summary", business: business, allow_removing: false %>
+            <% end %>
+          <% else %>
+            <p>No businesses.</p>
+          <% end %>
+          <%= link_to 'Manage businesses', investigation_businesses_path(@investigation), :class => "no-print" %>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row" id="images">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Images (3)</h2>
           <p>No images.</p>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <%= link_to 'Add product', investigation_products_path(@investigation), :class => "button no-print" %>
-  <br /><br />
-
-  <div class="govuk-grid-row investigation-activity">
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m">
-        Case activity
-        <%= link_to 'Add activity', new_investigation_activity_path(@investigation),
-                    class: "add-activity-button right govuk-button no-print" %>
-        <%= link_to "View issue history", "#", class: "investigation-history not-implemented right" %>
-      </h2>
-      <div class="filter not-implemented">
-        Filter:
-        <select>
-          <option value="latest">Latest</option>
-          <option value="newest">Newest</option>
-          <option value="due">Due</option>
-        </select>
-      </div>
-      <% @investigation.activities.limit(3).each do |activity| %>
-        <div class="activity">
-          <p>
-            <span class="govuk-!-font-weight-bold"><%= activity.activity_type.titleize %></span>
-            by
-            <%= activity.source.name %>
-            on
-            <%= activity.created_at.to_s :long_ordinal %>
-          </p>
-          <p>Notes: <%= activity.notes %></p>
         </div>
-      <% end %>
-      <%= link_to "+ View more activity", investigation_activities_path(@investigation) %>
-    </div>
-    <div class="govuk-grid-column-one-third investigation-documents">
-      <h2 class="govuk-heading-m">
-
-      </h2>
-      <div class="document-block not-implemented">
-        <span>Documents</span>
-        <span class="document-number">10</span>
-        <span>View ></span>
       </div>
-      <%= link_to "Upload document", "#", class: "govuk-button not-implemented", style: "width: 100%"%>
-      <%# if @investigation.image.attached? && @investigation.image.image? %>
-        <%# if @investigation.image.metadata["safe"].nil? %>
-<!--          <p>Still checking upload for viruses</p>-->
-        <%# elsif @investigation.image.metadata["safe"] %>
-          <%#= image_tag @investigation.image.variant(resize: "300x300"), alt: "Investigation", :class => "case-image" %>
-        <%# end %>
-      <%# end %>
-    </div>
-  </div>
 
-  <div class="govuk-grid-row investigation-business">
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m">
-        Business
-        <%= link_to 'Add business', investigation_businesses_path(@investigation), :class => "right add-business-button govuk-button no-print" %>
-      </h2>
-      <% if @investigation.businesses.any? %>
-        <% @investigation.businesses.each do |business| %>
-          <div class="business-block">
-            <span class="not-implemented">Economic operator type: [Operator Type]</span>
-            <span>Business name: <%= link_to business.company_name, business %></span>
-            <span class="not-implemented">Responsible Contact: [Contact name on Contact Number]</span>
-            <span>Main address: <%= business.addresses.any? ? business.primary_address.summary : "" %></span>
-            <%= link_to 'Edit details', edit_business_path(business), :class => "no-print" %>
+      <div class="govuk-grid-row" id="documents">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Documents</h2>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">Title</th>
+                <th class="govuk-table__header" scope="col">Upload date</th>
+                <th class="govuk-table__header" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <%= render 'history', versions: @investigation.versions %>
+          <div class="govuk-!-margin-top-3 no-print">
+            <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
           </div>
-        <% end %>
-      <% else %>
-        <h2 class="heading-small sub-heading">
-          Business
-        </h2>
-        <p>No business attached</p>
-      <% end %>
-      <br /><br />
-    </div>
-
-    <div class="govuk-grid-column-one-third">
-      <h2 class="govuk-heading-m">
-        Additional Info
-      </h2>
-      <span class="not-implemented">Primary Authority: <%= link_to "Add", "#" %></span>
-      <span class="not-implemented">Related Cases: <%= link_to "Link", "#" %></span>
-      <span class="not-implemented">Similar Products: <%= link_to "Link", "#" %></span>
-      <div class="form-group no-print">
-        <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
-      </div>
-    </div>
-  </div>
-
-  <div class="govuk-grid-row investigation-comments">
-    <div class="govuk-grid-column-full not-implemented">
-      <details class="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">Comments</span>
-        </summary>
-
-        <div class="comment">
-          <span class="comment-tag">[person] on [date]</span>
-          <span>[Some comment]</span>
         </div>
-      </details>
+      </div>
+
     </div>
   </div>
-
-  <%= render 'history', versions: @investigation.versions %>
 </div>
