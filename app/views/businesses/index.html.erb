@@ -10,7 +10,7 @@
   </div>
 <% end %>
 <br/>
-<%= link_to 'New business', new_business_path, class: "govuk-button right" %>
+<%= link_to 'New business', new_business_path, class: "right" %>
 
 <%= will_paginate @businesses %>
 <%= render 'table', business: @businesses %>
