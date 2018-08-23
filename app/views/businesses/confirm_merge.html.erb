@@ -18,23 +18,12 @@
         <%= form.hidden_field :business_ids, multiple: true, value: business.id%>
         <%= form.radio_button :selected_business_id, business.id, class: "govuk-radios__input"%>
         <label class="govuk-label govuk-radios__label govuk-label--s" for="business">
-        <%= label_tag(business.company_name) %>
+          <%= render "business_summary", business: business, allow_removing: false %>
         </label>
-        <span id="business-address" class="govuk-hint govuk-radios__hint">
-          <% if business.addresses.any? %>
-              <span>
-                <%= business.primary_address.line_1 %>,
-                <%= business.primary_address.line_2 %>,
-                <%= business.primary_address.locality %>,
-                <%= business.primary_address.country %>,
-                <%= business.primary_address.postal_code %>
-              </span>
-            <% end %>
-        </span>
+      </div>
+      <%end%>
+      </br>
+      <%= form.submit "Merge", name: nil, :class => "govuk-button", data: { confirm: 'Are you sure?' } %>
+    <%end%>
     </div>
-<%end%>
-</br>
-<%= form.submit "Merge", name: nil, :class => "govuk-button", data: { confirm: 'Are you sure?' } %>
-<%end%>
-</div>
 </div>

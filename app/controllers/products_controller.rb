@@ -41,7 +41,7 @@ class ProductsController < ApplicationController
   def merge
     selected_product = Product.find(params[:selected_product_id])
 
-    other_product_ids = params[:product_ids].reject { |id| id = selected_product.id }
+    other_product_ids = params[:product_ids].select { |id| id != selected_product.id }
     other_products = Product.find(other_product_ids)
 
     other_products.each do |other_product|
