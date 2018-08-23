@@ -13,6 +13,7 @@ class ChangeUuidsToIds < ActiveRecord::Migration[5.2]
 
     tables.each do |table|
       add_column table, :new_id, :serial
+      execute "ALTER SEQUENCE #{table}_new_id_seq RESTART 10000"
     end
 
     uuid_to_id("activities", "investigation", "investigation")
@@ -32,9 +33,12 @@ class ChangeUuidsToIds < ActiveRecord::Migration[5.2]
       execute "ALTER SEQUENCE #{table}_new_id_seq RENAME TO #{table}_id_seq;"
     end
 
-    tables.each do |table|
-
-    end
+    add_index :investigation_businesses, [ :investigation_id, :business_id ], unique: true,
+              name: "index_on_investigation_id_and_business_id"
+    add_index :investigation_products, [ :investigation_id, :product_id ], unique: true
+    add_foreign_key "activities", "investigations"
+    add_foreign_key "addresses", "businesses"
+    add_foreign_key "images", "products"
   end
 
   def uuid_to_id(table_name, relation_name, relation_class)
@@ -54,6 +58,7 @@ class ChangeUuidsToIds < ActiveRecord::Migration[5.2]
 
     remove_column table_name, foreign_key
     rename_column table_name, new_foreign_key, foreign_key
+    add_index table_name, foreign_key
   end
 
   def uuid_to_id_for_sourceable(table_name, relation_name)
@@ -109,5 +114,7 @@ class ChangeUuidsToIds < ActiveRecord::Migration[5.2]
 
     remove_column table_name, foreign_key
     rename_column table_name, new_foreign_key, foreign_key
+
+    add_index :versions, ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 end

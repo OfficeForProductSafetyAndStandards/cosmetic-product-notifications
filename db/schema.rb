@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2018_08_22_105208) do
-  
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2018_08_22_105208) do
     t.datetime "updated_at", null: false
     t.integer "activity_type", null: false
     t.integer "investigation_id"
+    t.index ["investigation_id"], name: "index_activities_on_investigation_id"
   end
 
   create_table "addresses", id: :serial, force: :cascade do |t|
@@ -55,6 +56,7 @@ ActiveRecord::Schema.define(version: 2018_08_22_105208) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "business_id"
+    t.index ["business_id"], name: "index_addresses_on_business_id"
   end
 
   create_table "businesses", id: :serial, force: :cascade do |t|
@@ -74,16 +76,23 @@ ActiveRecord::Schema.define(version: 2018_08_22_105208) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id"
+    t.index ["product_id"], name: "index_images_on_product_id"
   end
 
   create_table "investigation_businesses", force: :cascade do |t|
     t.integer "business_id"
     t.integer "investigation_id"
+    t.index ["business_id"], name: "index_investigation_businesses_on_business_id"
+    t.index ["investigation_id", "business_id"], name: "index_on_investigation_id_and_business_id", unique: true
+    t.index ["investigation_id"], name: "index_investigation_businesses_on_investigation_id"
   end
 
   create_table "investigation_products", force: :cascade do |t|
     t.integer "investigation_id"
     t.integer "product_id"
+    t.index ["investigation_id", "product_id"], name: "index_investigation_products_on_investigation_id_and_product_id", unique: true
+    t.index ["investigation_id"], name: "index_investigation_products_on_investigation_id"
+    t.index ["product_id"], name: "index_investigation_products_on_product_id"
   end
 
   create_table "investigations", id: :serial, force: :cascade do |t|
@@ -188,8 +197,12 @@ ActiveRecord::Schema.define(version: 2018_08_22_105208) do
     t.datetime "created_at"
     t.text "object_changes"
     t.integer "item_id"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "activities", "investigations"
+  add_foreign_key "addresses", "businesses"
+  add_foreign_key "images", "products"
   add_foreign_key "investigations", "users", column: "assignee_id"
   add_foreign_key "sources", "users"
 end
