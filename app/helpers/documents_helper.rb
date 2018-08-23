@@ -27,12 +27,15 @@ module DocumentsHelper
       "Text"
     when document.content_type == "application/pdf"
       "PDF"
-    when document.content_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      "Word"
-    when document.content_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      "Excel"
-    when document.content_type == "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-      "PowerPoint"
+    when document.content_type == "application/msword",
+         document.content_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      "Word Document"
+    when document.content_type == "application/vnd.ms-excel",
+         document.content_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      "Excel Document"
+    when document.content_type == "application/vnd.ms-powerpoint",
+         document.content_type == "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      "PowerPoint Document"
     when document_file_extension(document) != nil
       document_file_extension(document).upcase
     else
