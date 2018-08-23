@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   settings index: { number_of_shards: 1 } do
     mappings do
-      indexes :email, type: :keywords
+      indexes :email, type: :keyword
     end
   end
 
@@ -28,3 +28,5 @@ class User < ApplicationRecord
     add_role(:user) if roles.blank?
   end
 end
+
+User.import force: true

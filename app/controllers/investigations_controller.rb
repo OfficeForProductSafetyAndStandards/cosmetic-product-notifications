@@ -126,6 +126,7 @@ class InvestigationsController < ApplicationController
   def save_and_respond(notice)
     respond_to do |format|
       if @investigation.save
+        @investigation.__elasticsearch__.index_document
         format.html { redirect_to @investigation, notice: notice }
         format.json { render :show, status: :ok, location: @investigation }
       else
@@ -145,7 +146,7 @@ class InvestigationsController < ApplicationController
   end
 
   def sort_column
-    Investigation.column_names.include?(params[:sort]) ? params[:sort] : "updated_at"
+    (Investigation.column_names + ["assignee"]).include?(params[:sort]) ? params[:sort] : "updated_at"
   end
 
   def sort_direction
