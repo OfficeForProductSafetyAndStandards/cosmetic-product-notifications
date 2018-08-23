@@ -26,22 +26,24 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/confirm_merge
   def confirm_merge
-    #if params[:business_ids] && params[:business_ids].length > 1
+    if params[:business_ids] && params[:business_ids].length > 1
       @businesses = Business.find(params[:business_ids])
-    #else
-      #redirect_to businesses_url, notice: "Please select at least two businesses before merging."
-    #end
+    else
+      redirect_to businesses_url, notice: "Please select at least two businesses before merging."
+    end
   end
 
   # POST /businesses/merge
   def merge
     selected_business = Business.find(params[:selected_business_id])
 
-    other_business_ids = params[:business_ids].select { |id| id != selected_business.id }
+    other_business_ids = params[:business_ids].reject { |id| id == selected_business.id }
     other_businesses = Business.find(other_business_ids)
 
     other_businesses.each do |other_business|
-      selected_business.merge!(other_business, attributes: selected_business.attributes.keys, associations: %w[addresses investigation_businesses])
+      selected_business.merge!(other_business,
+                               attributes: selected_business.attributes.keys,
+                               associations: %w[addresses investigation_businesses])
     end
 
     redirect_to businesses_url, notice: "Businesses were successfully merged."
