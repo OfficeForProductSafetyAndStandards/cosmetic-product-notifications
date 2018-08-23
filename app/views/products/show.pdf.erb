@@ -3,6 +3,9 @@
 </h2>
 
 <div>
+  <% @product.images.attachments.each do |image| %>
+    <% render "images/image_tag", image: image, dimensions: "300x200" %>
+  <% end %>
   <% @product.rapex_images.each do |image| %>
     <%= image_tag(image.url, alt: image.title) %>
   <% end %>
