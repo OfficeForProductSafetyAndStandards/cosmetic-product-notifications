@@ -19,6 +19,9 @@
 </h1>
 
 <div class="slider-nav">
+  <% @product.images.attachments.each do |image| %>
+    <% render "images/image_tag", image: image, dimensions: "300x200" %>
+  <% end %>
   <% @product.rapex_images.each do |image| %>
     <%= image_tag(image.url, alt: image.title) %>
   <% end %>
@@ -27,10 +30,15 @@
 <h4 class="heading-small">
   <%= "Images (#{@product.images.attachments.count})" %>
 </h4>
-<% @product.images.attachments.limit(3).each do |image| %>
-  <%= render 'images/image', image: image, thumbnail: "200x200" %>
+<% if @product.images.attached? %>
+  <% @product.images.attachments.limit(2).each do |image| %>
+    <%= render "images/image", image: image, dimensions: "300x200" %>
+  <% end %>
+<% else %>
+  <p>No images.</p>
 <% end %>
-<%= link_to "Manage images", product_images_path(@product), class: "manage-images no-print" %>
+<br/>
+<%= link_to "Manage images", associated_images_path(@product), class: "no-print" %>
 
 <h4 class="heading-small">
   Product ID

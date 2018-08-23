@@ -9,7 +9,7 @@
   <% @images.each do |image| %>
     <tr>
       <td class="image-preview">
-        <%= render 'image', image: image, thumbnail: "300x300" %>
+        <%= render "image", image: image, dimensions: "300x300" %>
       </td>
       <td class="image-details">
         <h2 class="govuk-heading-m image-title"><%= image.metadata["title"] %></h2>
