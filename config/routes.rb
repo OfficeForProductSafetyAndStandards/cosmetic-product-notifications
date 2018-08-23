@@ -2,8 +2,7 @@
 Rails.application.routes.draw do
   resources :investigations do
     member do
-      post :close
-      post :reopen
+      get :status
       get :assign
       post :update_assignee
     end
