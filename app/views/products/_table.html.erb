@@ -1,6 +1,9 @@
 <table>
   <thead>
     <tr>
+      <% if form %>
+        <th colspan="1"></th>
+      <% end %>
       <th>Name</th>
       <th>Brand</th>
       <th>Category(s)</th>
@@ -12,6 +15,9 @@
   <tbody>
     <% @products.each do |product| %>
       <tr>
+        <% if form %>
+          <td><%= form.check_box :product_ids, { multiple: true }, product.id, false %></td>
+        <% end %>
         <td><%= link_to product.name, product %></td>
         <td><%= product.brand %></td>
         <td><span class="not-implemented">Some category (+10)</span></td>

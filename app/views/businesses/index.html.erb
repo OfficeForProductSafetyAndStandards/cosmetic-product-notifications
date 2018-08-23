@@ -9,10 +9,13 @@
     <%= form.submit ">", name: nil, :class => "govuk-button" %>
   </div>
 <% end %>
-<br/>
-<%= link_to 'New business', new_business_path, class: "right" %>
 
-<%= will_paginate @businesses %>
-<%= render 'table', business: @businesses %>
-<br />
-<%= will_paginate @businesses %>
+<br/>
+
+<%= form_with(url: confirm_merge_businesses_path, method: :get) do |form| %>
+  <%= form.submit "Merge selected", name: nil %>
+  <%= link_to 'New business', new_business_path, class: "right" %>
+  <%= will_paginate @businesses %>
+  <%= render 'table', businesses: @businesses, form: form %>
+  <%= will_paginate @businesses %>
+<% end %>
