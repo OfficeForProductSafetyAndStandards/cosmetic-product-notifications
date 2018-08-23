@@ -20,6 +20,8 @@
 // @import "url-helpers";                         // Function to output image-url, or prefixed path (Rails and Compass only)
 
 @import "govuk-elements-sass/public/sass/govuk-elements";
+
+$govuk-assets-path: "/assets/govuk-frontend/assets/";
 @import "govuk-frontend/all";
 
 .dummy-column {
