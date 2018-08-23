@@ -13,185 +13,22 @@
     margin: 0;
   }
 
-  .sub-heading, .activity {
-    border-bottom: 1px solid $grey-3;
-  }
-
-  .activity {
-    margin-bottom: 12px;
-  }
-
-  .product-image, .case-image {
-    width: 100%;
-    display: block;
+  .no-images {
+    text-align: center;
+    margin: auto;
   }
 
   .top-details {
-    font-size: 0.75em;
-    margin-bottom: 0.5em;
-
     form {
       all: unset;
 
       input {
         all: unset;
         cursor: pointer;
-        color: blue;
+        color: $link-colour;
         text-decoration: underline;
       }
     }
-  }
-
-  .investigation-details {
-    padding-top: 1.5em;
-
-    span {
-      display: block;
-      padding-top: 0.75em;
-    }
-  }
-
-  .event-summary-box {
-    background-color: $purple;
-    color: $white;
-    padding: 1em;
-    margin-bottom: 0.5em;
-
-    span {
-      display: block;
-    }
-  }
-
-  .product-details {
-    span {
-      display: block;
-    }
-  }
-
-  .investigation-activity {
-    .add-activity-button, .investigation-history{
-      font-size: 0.75em;
-      padding-bottom: 0.2em;
-      padding-top: 0.2em;
-    }
-
-    .filter {
-      background-color: $grey-3;
-      padding: 1em
-    }
-
-    select {
-      width: 50%;
-      margin-left: 0.5em;
-    }
-  }
-
-  .investigation-documents {
-    .document-block {
-      color: $white;
-      background-color: $grey-1;
-      text-align: center;
-      padding: 1em;
-      margin-bottom: 0.5em;
-
-      .document-number {
-        font-weight: bold;
-        font-size: 2.5em;
-      }
-    }
-
-    span {
-      display: block;
-    }
-  }
-
-  .investigation-business {
-    .add-business-button {
-      font-size: 0.75em;
-      padding-bottom: 0.2em;
-      padding-top: 0.2em;
-    }
-
-    .business-block {
-      margin-bottom: 1em;
-    }
-
-    span {
-      display: block;
-    }
-  }
-
-  .investigation-comments {
-    summary {
-      background-color: $grey-1;
-      color: $white;
-      font-weight: bold;
-      width: 100%;
-      size: 1.5em;
-      padding: 0.5em 2em 0.5em 2em;
-      text-decoration: unset;
-    }
-    .govuk-details__summary:before {
-      all: unset;
-    }
-
-    .govuk-details__summary:after {
-      content: "－";
-      font-weight: bolder;
-      float: right;
-    }
-
-    .govuk-details__summary-text {
-      text-decoration: unset;
-    }
-
-    .comment {
-      margin-left: 2em;
-      margin-bottom: 1em;
-
-      .comment-tag{
-        font-weight: bold;
-      }
-
-      span {
-        display: block;
-      }
-    }
-  }
-}
-
-
-.assigned-number {
-  font-size: 3em;
-  text-align: right;
-  color: $light-blue;
-}
-
-.overdue-number {
-  font-size: 3em;
-  text-align: right;
-  color: red;
-}
-
-.due-number {
-  font-size: 3em;
-  text-align: right;
-  color: $green;
-}
-
-.investigation-number-description {
-  padding-top: 0.75em;
-  padding-right: 10%;
-}
-
-.investigation-number-description::after {
-  content: " >";
-}
-
-.investigation-list {
-
-  span {
-    display: block;
   }
 }
 
