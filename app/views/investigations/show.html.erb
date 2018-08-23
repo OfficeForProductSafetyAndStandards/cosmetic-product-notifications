@@ -97,11 +97,11 @@
             <% @investigation.images.attachments.limit(2).each do |image| %>
               <%= render "images/image", image: image, dimensions: "300x200" %>
             <% end %>
+            <br/>
           <% else %>
-            <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Images></h2>
+            <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Images</h2>
             <p>No images.</p>
           <% end %>
-          <br/>
           <%= link_to "Manage images", associated_images_path(@investigation), class: "no-print" %>
         </div>
       </div>

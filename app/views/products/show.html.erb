@@ -91,15 +91,16 @@
   <% end %>
 </div>
 
-<h4 class="heading-small"><%= "Images (#{@product.images.attachments.count})" %></h4>
 <% if @product.images.attached? %>
+  <h4 class="heading-small"><%= "Images (#{@product.images.attachments.count})" %></h4>
   <% @product.images.attachments.limit(2).each do |image| %>
     <%= render "images/image", image: image, dimensions: "300x200" %>
   <% end %>
+  <br/>
 <% else %>
+  <h4 class="heading-small"><%= "Images" %></h4>
   <p>No images.</p>
 <% end %>
-<br/>
 <%= link_to "Manage images", associated_images_path(@product), class: "no-print" %>
 
 <% if @product.investigations.any? -%>
