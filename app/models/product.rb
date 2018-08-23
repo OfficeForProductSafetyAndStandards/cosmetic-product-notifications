@@ -21,6 +21,10 @@ class Product < ApplicationRecord
   def country_of_origin_for_display
     country_from_code country_of_origin
   end
+
+  def image_count
+    images.attachments.size + rapex_images.size
+  end
 end
 
 Product.import force: true # for auto sync model with elastic search

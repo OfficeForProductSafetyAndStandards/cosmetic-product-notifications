@@ -68,11 +68,15 @@
         <h2 class="govuk-heading-m">
           Images
         </h2>
-        <% if product.rapex_images.any? %>
+        <% if product.images.attached? %>
+          <%= render "images/image_tag", image: product.images.first, dimensions: "300x200", class_name: "product-image" %>
+        <% elsif product.rapex_images.any? %>
           <%= image_tag(product.rapex_images[0].url, alt: product.rapex_images[0].title, :class => "product-image") %>
-          <%= link_to "View images (#{product.rapex_images.size})", product_path(product), :class => "no-print" %>
         <% else %>
           <p>No images.</p>
+        <% end %>
+        <% if product.image_count > 0 %>
+          <%= link_to "View images (#{product.image_count})", product_path(product), :class => "no-print" %>
         <% end %>
       </div>
     <% end %>
