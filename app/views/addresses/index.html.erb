@@ -16,8 +16,8 @@
 
 
 <h1 class="heading-xlarge">Addresses</h1>
-<%= link_to 'New address', new_business_address_path(@business), :class => "govuk-button" %><br /><br />
-<p>Businesses for <%= link_to "business", business_path(@business) %>.</p>
+<%= link_to 'New address', new_business_address_path(@business) %><br /><br />
+<p>Addresses for <%= link_to "business", business_path(@business) %>.</p>
 
 <%= will_paginate @addresses %>
 <table>
