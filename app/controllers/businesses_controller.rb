@@ -5,8 +5,6 @@ class BusinessesController < ApplicationController
   before_action :create_business, only: %i[create]
   before_action :update_business, only: %i[update]
 
-  BUSINESS_SUGGESTION_LIMIT = 5
-
   # GET /businesses
   # GET /businesses.json
   def index
@@ -59,9 +57,7 @@ class BusinessesController < ApplicationController
   # GET /businesses/search
   def search
     @existing_businesses = search_for_businesses(BUSINESS_SUGGESTION_LIMIT)
-    companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(params[:q])
-    @companies_house_businesses = filter_out_existing_businesses(companies_house_response)
-                                  .first(BUSINESS_SUGGESTION_LIMIT)
+    @companies_house_businesses = search_companies_house(params[:q], BUSINESS_SUGGESTION_LIMIT)
     render partial: "search_results"
   end
 
@@ -106,7 +102,7 @@ class BusinessesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def create_business
     @business = Business.new(business_params)
-    set_defaults_on_primary_address if @business.addresses.any?
+    defaults_on_primary_address(@business) if @business.addresses.any?
     @business.source = UserSource.new(user: current_user)
   end
 
@@ -116,13 +112,7 @@ class BusinessesController < ApplicationController
 
   def update_business
     @business.assign_attributes(business_params)
-    set_defaults_on_primary_address if @business.addresses.any?
-  end
-
-  def search_for_businesses(page_size)
-    Business.search(params[:q])
-            .paginate(page: params[:page], per_page: page_size)
-            .records
+    defaults_on_primary_address(@business) if @business.addresses.any?
   end
 
   def respond_to_business_creation
@@ -135,25 +125,5 @@ class BusinessesController < ApplicationController
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def filter_out_existing_businesses(businesses)
-    businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
-  end
-
-  def set_defaults_on_primary_address
-    @business.primary_address.address_type ||= "Registered office address"
-    @business.primary_address.source ||= UserSource.new(user: current_user)
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def business_params
-    params.require(:business).permit(
-      :company_name,
-      :company_type_code,
-      :nature_of_business_id,
-      :additional_information,
-      addresses_attributes: %i[id line_1 line_2 locality country postal_code _destroy]
-    )
   end
 end

@@ -34,7 +34,7 @@
       <tr>
         <td><%= link_to activity.created_at, activity %></td>
         <td><%= activity.source.show %></td>
-        <td><%= link_to activity.activity_type.titleized_name, activity %></td>
+        <td><%= link_to activity.activity_type.titleize, activity %></td>
         <td><%= link_to 'Delete', activity, method: :delete, data: { confirm: 'Are you sure?' } if policy(activity).destroy? %></td>
       </tr>
     <% end %>

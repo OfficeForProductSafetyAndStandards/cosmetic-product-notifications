@@ -4,10 +4,6 @@
 @import 'slick';
 @import 'slick-theme';
 
-.date-select-control select {
-    margin-bottom: 12px;
-}
-
 .investigations {
   text-align: center;
   font-size: 1.5em;
@@ -19,6 +15,11 @@
     @media (min-width: 641px) {
         width: 50%;
     }
+}
+
+.product-image {
+    max-width: 100%;
+    display: block;
 }
 
 @media print

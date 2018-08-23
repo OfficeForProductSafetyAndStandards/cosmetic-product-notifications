@@ -1,0 +1,25 @@
+<% @products.each do |product| %>
+  <div class="grid-row govuk-!-padding-bottom-3">
+    <div class="column-third min-height-column">
+      <%= image_tag(product.images[0].url, alt: product.images[0].title, :class => "product-image") if product.images.any? %>
+    </div>
+    <div class="column-two-thirds">
+      <h4 class="heading-small"><%= link_to product.name, product, target: "_blank" %></h4>
+      <p class="not-implemented">Category</p>
+      <% if @investigation.present? %>
+        <%= form_with(url: add_investigation_products_path(@investigation), local: true) do |form| %>
+          <%= form.hidden_field :product_id, value: product.id %>
+          <%= form.submit "Select", :class => "button" %>
+        <% end %>
+      <% else %>
+        <%= link_to "View", product %>
+      <% end %>
+      <br /><br />
+    </div>
+  </div>
+<% end %>
+<% if @products.empty? %>
+<tr>
+  <td>No products found.</td>
+</tr>
+<% end %>

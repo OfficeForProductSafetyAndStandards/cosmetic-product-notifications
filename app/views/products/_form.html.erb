@@ -1,76 +1,36 @@
-<%= form_with(model: product, local: true) do |form| %>
-  <% if product.errors.any? %>
-    <div id="error_explanation">
-      <h2 class="heading-large"><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+<%= form_with(model: form_model, local: true) do |form| %>
+  <%= render 'products/core_params', form: form, product: product, countries: countries %>
 
-      <ul>
-      <% product.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= form.label :gtin, "GTIN (Global Trade Item Number/Barcode)", :class => "form-label" %>
-    <%= form.text_field :gtin, :class => "form-control search-term", id: "gtin-input" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :name, :class => "form-label" %>
-    <%= form.text_field :name, :class => "form-control search-term" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :brand, :class => "form-label" %>
-    <%= form.text_field :brand, :class => "form-control search-term" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :description, :class => "form-label" %>
-    <%= form.text_area :description, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :model, :class => "form-label" %>
-    <%= form.text_field :model, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :batch_number, :class => "form-label" %>
-    <%= form.text_field :batch_number, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :url_reference, "URL reference", :class => "form-label" %>
-    <%= form.text_field :url_reference, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :serial_number, :class => "form-label" %>
-    <%= form.text_field :serial_number, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :manufacturer, :class => "form-label" %>
-    <%= form.text_field :manufacturer, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :country_of_origin, :class => "form-label" %>
-    <%= form.select :country_of_origin,
-      countries,
-      { include_blank: "Unknown" },
-      {
-        class: "form-control js-product-country-of-origin",
-        id: "location-autocomplete"
-      }
-    %>
-  </div>
-
-  <div class="form-group date-select-control">
-    <%= form.label :date_placed_on_market, :class => "form-label" %>
-    <%= form.date_select :date_placed_on_market, start_year: Date.current.year, end_year: 1990 %>
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" role="group">
+      <%= form.label :date_placed_on_market, :class => "form-label" %>
+      <div class="govuk-date-input">
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="dob-day">
+              Day
+            </label>
+            <%= form.number_field "date_placed_on_market(3i)", value: product.date_placed_on_market&.day, :class => "govuk-input govuk-date-input__input govuk-input--width-2" %>
+          </div>
+        </div>
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="dob-day">
+              Month
+            </label>
+            <%= form.number_field "date_placed_on_market(2i)", value: product.date_placed_on_market&.month, :class => "govuk-input govuk-date-input__input govuk-input--width-2" %>
+          </div>
+        </div>
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="dob-day">
+              Year
+            </label>
+            <%= form.number_field "date_placed_on_market(1i)", value: product.date_placed_on_market&.year, :class => "govuk-input govuk-date-input__input govuk-input--width-4" %>
+          </div>
+        </div>
+      </div>
+    </fieldset>
   </div>
 
   <div class="form-group">

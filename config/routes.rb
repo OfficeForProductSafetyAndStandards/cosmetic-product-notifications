@@ -8,6 +8,19 @@ Rails.application.routes.draw do
       post :update_assignee
     end
     resources :activities, shallow: true
+    resources :products, only: %i[index new create], controller: "investigations/products" do
+      collection do
+        get :suggested
+        post :add
+      end
+    end
+    resources :businesses, only: %i[index new create], controller: "investigations/businesses" do
+      collection do
+        get :suggested
+        post :add
+        post :companies_house
+      end
+    end
   end
 
   resources :businesses do
@@ -22,9 +35,9 @@ Rails.application.routes.draw do
 
   resources :products do
     collection do
-      get :table
       get :confirm_merge
       post :merge
+      get :suggested
     end
   end
 

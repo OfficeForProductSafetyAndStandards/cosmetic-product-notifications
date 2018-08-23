@@ -17,11 +17,8 @@
         <% end %>
       </span>
       <span class="right">
-        <% if @investigation.assignee.nil? %>
-          Unassigned
-        <% else %>
-          Assigned <%=link_to @investigation.assignee.email, @investigation.assignee, class: "not-implemented"%>
-        <% end %>
+          Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
+                              assign_investigation_path(@investigation) %>
       </span>
       <%= link_to "View Audit Log", "#history-section", class: "right" %>
       <%= link_to "Watch this issue", "#", class: "right" %>
@@ -33,8 +30,10 @@
       <h2 class="govuk-heading-m"><%= @investigation.title%></h2>
       <h4 class="govuk-heading-s">Issue ID: <%= @investigation.id %></h4>
       <span class="created-at">Created: <%= @investigation.created_at.strftime("%d %B %Y") %></span>
-      <span class="risk-notes">Risk Notes: <%= @investigation.risk_notes %></span>
+      <span class="risk-notes">Risk Notes: <%= @investigation.risk_overview %></span>
       <span class="description"><%= @investigation.description %></span>
+      <span class="risk-notes">Risk Level: <%= @investigation.risk_level&.titleize %></span>
+      <span class="risk-notes">Sensitivity: <%= @investigation.sensitivity&.titleize %></span>
       <%= link_to 'Edit details', edit_investigation_path(@investigation), :class => "no-print" %>
     </div>
 
@@ -80,6 +79,8 @@
       </div>
     <% end %>
   </div>
+  <%= link_to 'Add product', investigation_products_path(@investigation), :class => "button no-print" %>
+  <br /><br />
 
   <div class="govuk-grid-row investigation-activity">
     <div class="govuk-grid-column-two-thirds">
@@ -100,9 +101,9 @@
       <% @investigation.activities.limit(3).each do |activity| %>
         <div class="activity">
           <p>
-            <span class="govuk-!-font-weight-bold"><%= activity.activity_type.titleized_name %></span>
+            <span class="govuk-!-font-weight-bold"><%= activity.activity_type.titleize %></span>
             by
-            <%= activity.source.show %>
+            <%= activity.source.name %>
             on
             <%= activity.created_at.to_s :long_ordinal %>
           </p>
@@ -135,7 +136,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m">
         Business
-        <%= link_to 'Add business', edit_investigation_path(@investigation), :class => "right add-business-button govuk-button no-print" %>
+        <%= link_to 'Add business', investigation_businesses_path(@investigation), :class => "right add-business-button govuk-button no-print" %>
       </h2>
       <% if @investigation.businesses.any? %>
         <% @investigation.businesses.each do |business| %>
@@ -184,5 +185,5 @@
     </div>
   </div>
 
-  <%= render 'history', versions: @investigation.versions%>
+  <%= render 'history', versions: @investigation.versions %>
 </div>

@@ -4,4 +4,8 @@ class UserSource < Source
   def show
     "Created by " + (user.present? ? user.email : "anonymous")
   end
+
+  def name
+    user.present? ? user.email : "anonymous"
+  end
 end
