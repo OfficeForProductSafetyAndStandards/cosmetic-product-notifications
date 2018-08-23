@@ -1,6 +1,6 @@
 <%= form_with model: image, scope: :image, url: associated_images_path(@parent), local: true do |form| %>
   <div class="form-group">
-    <%= form.label :file, "Browse for file", :class => "govuk-label" %>
+    <%= form.label :file, "Browse for file", :class => "govuk-heading-m" %>
     <%= form.file_field :file, :class => "govuk-file-upload" %>
   </div>
 

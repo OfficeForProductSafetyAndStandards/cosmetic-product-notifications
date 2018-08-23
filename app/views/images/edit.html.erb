@@ -2,10 +2,12 @@
 
 <%= link_to 'Back', associated_images_path(@parent), class: "govuk-back-link" %>
 
-<h1 class="heading-xlarge">Edit image</h1>
+<%= render 'page_heading', title: "Edit image details" %>
+<br/>
 
 <% if @image.variable? && @image.metadata["safe"] %>
-  <%= image_tag @image.variant(resize: "300x200"), alt: @image.metadata["title"], class: "image-thumbnail" %>
+  <%= image_tag @image.variant(resize: "300x200"), alt: @image.metadata["title"],
+                class: "govuk-!-margin-top-2 govuk-!-margin-bottom-2 image-thumbnail" %>
 <% end %>
 
 <%= render 'metadata_form', image: @image %>

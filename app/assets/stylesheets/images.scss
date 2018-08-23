@@ -30,11 +30,8 @@
 }
 
 .image-list {
-  .image-with-preview,
-  .image-without-preview,
-  .image-processing-placeholder {
-    width: 300px;
-    height: 300px;
+  .image-preview {
+    vertical-align: top;
   }
 
   .image-details {
@@ -46,7 +43,7 @@
     }
 
     .image-description {
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
     }
 
     .edit-image-link {
@@ -55,7 +52,7 @@
 
     .delete-image-link {
       @extend .button-warning;
-      margin-top: 10px;
+      margin-top: 0.5em;
     }
   }
 }

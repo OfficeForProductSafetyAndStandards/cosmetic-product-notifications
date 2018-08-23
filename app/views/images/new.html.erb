@@ -2,6 +2,7 @@
 
 <%= link_to 'Back', associated_images_path(@parent), class: "govuk-back-link" %>
 
-<h1 class="heading-xlarge">New image</h1>
+<%= render 'page_heading', title: "New image" %>
+<br/>
 
 <%= render 'form', image: @image %>
