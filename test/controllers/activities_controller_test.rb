@@ -36,33 +36,4 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to investigation_activities_url(@activity.investigation)
   end
-
-  test "should show activity" do
-    get activity_url(@activity)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_activity_url(@activity)
-    assert_response :success
-  end
-
-  test "should update activity" do
-    patch activity_url(@activity), params: {
-      activity: {
-        activity_type: @activity.activity_type,
-        investigation_id: @activity.investigation_id,
-        notes: @activity.notes
-      }
-    }
-    assert_redirected_to investigation_activities_url(@activity.investigation)
-  end
-
-  test "should destroy activity" do
-    assert_difference("Activity.count", -1) do
-      delete activity_url(@activity)
-    end
-
-    assert_redirected_to investigation_activities_url(@activity.investigation)
-  end
 end
