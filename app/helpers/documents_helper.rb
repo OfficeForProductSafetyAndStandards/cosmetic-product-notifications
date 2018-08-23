@@ -15,6 +15,9 @@ module DocumentsHelper
     associated_document_path(parent, document) + "/edit"
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+
   def document_type_label(document_type)
     case document_type
     when :correspondence_originator
@@ -35,34 +38,32 @@ module DocumentsHelper
   end
 
   def document_filetype_label(document)
-    case
-    when document.audio?
-      "Audio"
-    when document.image?
-      "Image"
-    when document.video?
-      "Video"
-    when document.text?
-      "Text"
-    when document.content_type == "application/pdf"
+    return "Audio" if document.audio?
+    return "Image" if document.image?
+    return "Video" if document.video?
+    return "Text"  if document.text?
+
+    case document.content_type
+    when "application/pdf"
       "PDF"
-    when document.content_type == "application/msword",
-         document.content_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    when "application/msword",
+         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       "Word Document"
-    when document.content_type == "application/vnd.ms-excel",
-         document.content_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    when "application/vnd.ms-excel",
+         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       "Excel Document"
-    when document.content_type == "application/vnd.ms-powerpoint",
-         document.content_type == "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    when "application/vnd.ms-powerpoint",
+         "application/vnd.openxmlformats-officedocument.presentationml.presentation"
       "PowerPoint Document"
-    when document_file_extension(document) != nil
-      document_file_extension(document).upcase
     else
-      "Other"
+      document_file_extension(document).upcase
     end
   end
 
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+
   def document_file_extension(document)
-    File.extname(document.filename.to_s)&.remove(".").upcase
+    File.extname(document.filename.to_s)&.remove(".")&.upcase
   end
 end

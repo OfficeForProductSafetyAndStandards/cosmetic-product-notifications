@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :images
   end
 
-  resources :investigations, concerns: [:document_attachable, :image_attachable] do
+  resources :investigations, concerns: %i[document_attachable image_attachable] do
     member do
       get :status
       get :assign
@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     resources :addresses, shallow: true
   end
 
-  resources :products, concerns: [:document_attachable, :image_attachable] do
+  resources :products, concerns: %i[document_attachable image_attachable] do
     collection do
       get :confirm_merge
       post :merge
