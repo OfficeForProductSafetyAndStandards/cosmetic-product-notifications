@@ -1,4 +1,4 @@
-<div class="govuk-grid-row">
+<div class="govuk-grid-row govuk-!-padding-bottom-3">
   <div class="govuk-grid-column-full">
     <table class="govuk-table">
       <tbody class="govuk-table__body">
@@ -16,15 +16,7 @@
         </tr>
       </tbody>
     </table>
-    <%= link_to "Full business details", business %>
-    <% if allow_removing %>
-      <div class="form-group govuk-!-margin-top-3">
-        <%= link_to 'Remove', investigation_business_path(@investigation, business),
-                    method: :delete,
-                    data: { confirm: 'Are you sure?' },
-                    class: "button-warning"
-        %>
-      </div>
-    <% end %>
+    <p><%= link_to "Full business details", business %></p>
+    <%= yield %>
   </div>
 </div>
