@@ -6,19 +6,18 @@ class ChangeUuidsToIds < ActiveRecord::Migration[5.2]
         "products",
         "businesses",
         "investigations",
-        "images",
+        "rapex_images",
         "addresses",
         "activities"
     ]
 
     tables.each do |table|
       add_column table, :new_id, :serial
-      execute "ALTER SEQUENCE #{table}_new_id_seq RESTART 10000"
     end
 
     uuid_to_id("activities", "investigation", "investigation")
     uuid_to_id("addresses", "business", "business")
-    uuid_to_id("images", "product", "product")
+    uuid_to_id("rapex_images", "product", "product")
     uuid_to_id("investigation_businesses", "business", "business")
     uuid_to_id("investigation_businesses", "investigation", "investigation")
     uuid_to_id("investigation_products", "investigation", "investigation")
@@ -38,7 +37,7 @@ class ChangeUuidsToIds < ActiveRecord::Migration[5.2]
     add_index :investigation_products, [ :investigation_id, :product_id ], unique: true
     add_foreign_key "activities", "investigations"
     add_foreign_key "addresses", "businesses"
-    add_foreign_key "images", "products"
+    add_foreign_key "rapex_images", "products"
   end
 
   def uuid_to_id(table_name, relation_name, relation_class)
