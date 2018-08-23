@@ -4,29 +4,16 @@
     data-investigation-id=<%= @investigation.id %>
     data-business-ids=<%= @investigation.business_ids.join(",") %>
     >
-    <div class="breadcrumbs">
-        <ol role="breadcrumbs">
-            <li>
-                <a href="/">Home</a>
-            </li>
-                <li>
-                    <%= link_to 'Investigations', investigations_path %>
-                </li>
-                <li>
-                    <%= link_to 'Investigation', @investigation %>
-                </li>
-                <li>
-                    <%= link_to 'Add Business', new_investigation_business_path(@investigation) %>
-                </li>
-        </ol>
-    </div>
 
-    <%= link_to 'Back', @investigation, class: "govuk-back-link link-back" %>
+    <%= link_to 'Back to investigation', @investigation, class: "govuk-back-link link-back" %>
 
-    <h1 class="heading-xlarge">Add business to investigation</h1>
+    <%= render "investigation_heading", investigation: @investigation %>
+    <h2 class="govuk-heading-l">Add business</h2>
+
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
             <%= form_with(model: @business, url: new_investigation_business_path(@investigation), local: true, method: :get) do |form| %>
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Business details</h3>
                 <%= render 'businesses/core_params', form: form, business: @business %>
                 <div class="form-group">
                     <%= form.submit "Create new", :class => "govuk-button" %>
