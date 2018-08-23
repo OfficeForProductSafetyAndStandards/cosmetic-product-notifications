@@ -26,7 +26,11 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/confirm_merge
   def confirm_merge
-    @businesses = Business.find(params[:business_ids])
+    if params[:business_ids] && params[:business_ids].length > 1
+      @businesses = Business.find(params[:business_ids])
+    else
+      redirect_to businesses_url, notice: "Please select at least two businesses before merging."
+    end
   end
 
   # POST /businesses/merge

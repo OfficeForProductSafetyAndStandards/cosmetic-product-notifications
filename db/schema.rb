@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(version: 2018_08_22_083615) do
 
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
-    t.uuid "item_id", null: false
+    t.integer "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object"

@@ -30,7 +30,11 @@ class ProductsController < ApplicationController
   end
   # GET /products/confirm_merge
   def confirm_merge
-    @products = Product.find(params[:product_ids])
+    if params[:product_ids] && params[:product_ids].length > 1
+      @products = Product.find(params[:product_ids])
+    else
+      redirect_to products_url, notice: "Please select at least two products before merging."
+    end
   end
 
   # POST /products/merge
