@@ -2,16 +2,18 @@
 
 <%= link_to 'Back', associated_documents_path(@parent), class: "govuk-back-link" %>
 
-<h1 class="heading-large"><%= @document.metadata["title"] %></h1>
+<%= render 'page_heading', title: @document.metadata["title"] %>
+
+<h3 class="govuk-heading-m document-type-details">
+  <span class="document-type">
+    <%= @document.metadata["document_type"]&.titleize %>
+    <%= " (#{@document.metadata["other_type"].titleize})" if @document.metadata["other_type"].present? %>
+  </span>
+  <span class="govuk-!-padding-left-2 document-filetype"><%= "(#{document_filetype_label(@document)})" %></span>
+</h3>
 
 <%= link_to render("document_image", document: @document), @document, class: "document-link" %>
 
-<div class="document-type">
-  <%= @document.metadata["document_type"]&.titleize %>
-  <%= " (#{@document.metadata["other_type"].titleize})" if @document.metadata["other_type"].present? %>
-</div>
-<div class="document-filetype"><%= document_filetype_label(@document) %></div>
-
-<div class="document-description"><%= @document.metadata["description"] %></div>
+<p class="document-description"><%= @document.metadata["description"] %></p>
 
 <%= link_to "Edit document details", edit_associated_document_path(@parent, @document), class: "edit-document-link" %>
