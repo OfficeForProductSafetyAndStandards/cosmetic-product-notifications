@@ -1,5 +1,5 @@
 module BusinessesHelper
-  BUSINESS_SUGGESTION_LIMIT = 5
+  BUSINESS_SUGGESTION_LIMIT = 3
 
   def defaults_on_primary_address(business)
     business.primary_address.address_type ||= "Registered office address"
