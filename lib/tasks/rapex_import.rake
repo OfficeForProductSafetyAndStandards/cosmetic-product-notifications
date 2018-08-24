@@ -60,10 +60,10 @@ end
 def create_investigation(notification, date, name)
   Investigation.create(
     title: name,
-    description: field_from_notification(notification, "description"),
+    description: field_from_notification(notification, "danger"),
     is_closed: true,
-    risk_overview: risk_overview(notification),
-    # TODO consider using the "level" field to populate our risk_level
+    risk_overview: field_from_notification(notification, "riskType"),
+    risk_level: risk_level(notification),
     created_at: date,
     updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
     source: ReportSource.new(name: "RAPEX")
@@ -115,11 +115,12 @@ def brand(notification)
   brand
 end
 
-def risk_overview(notification)
-  [
-    field_from_notification(notification, "level"),
-    field_from_notification(notification, "riskType")
-  ].compact.join " - "
+def risk_level(notification)
+  level_map = {
+      "Serious risk" => :serious,
+      "Other risk level" => :medium }
+  level_map.default = nil
+  level_map[field_from_notification(notification, "level")]
 end
 
 def all_pictures(notification)
@@ -135,7 +136,7 @@ end
 
 def field_from_notification(notification, field_name)
   field = notification.xpath(field_name)[0]
-  field = field.text.delete("\n") unless field.nil?
+  field = field.text.delete("\n\r") unless field.nil?
   field
 end
 
