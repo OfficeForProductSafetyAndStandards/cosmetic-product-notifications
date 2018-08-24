@@ -1,6 +1,6 @@
 <% content_for :page_title, "Manage documents - Market Surveillance & Product Safety" %>
 
-<%= link_to "Back to #{@parent.class.name.downcase}", polymorphic_path(@parent), class: "govuk-back-link" %>
+<%= link_to "Back to #{@parent.class.name == "Investigation" ? "case" : @parent.class.name.downcase}", polymorphic_path(@parent), class: "govuk-back-link" %>
 
 <%= render "page_heading", title: "Manage documents" %>
 
