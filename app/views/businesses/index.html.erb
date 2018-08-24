@@ -13,7 +13,7 @@
 <br/>
 
 <%= form_with(url: confirm_merge_businesses_path, method: :get) do |form| %>
-  <%= form.submit "Merge selected", name: nil, class: "govuk-button" %>
+  <%= form.submit "Merge selected", name: nil, class: "not-implemented" %>
   <%= link_to 'New business', new_business_path, class: "right" %>
 
   <%= will_paginate @businesses %>
