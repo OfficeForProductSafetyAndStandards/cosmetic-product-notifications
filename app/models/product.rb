@@ -13,7 +13,6 @@ class Product < ApplicationRecord
   has_many :rapex_images, dependent: :destroy, inverse_of: :product # TODO MSPSDS-266: Remove once images are migrated
   has_one :source, as: :sourceable, dependent: :destroy
 
-  accepts_nested_attributes_for :rapex_images, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :source
 
   has_paper_trail
