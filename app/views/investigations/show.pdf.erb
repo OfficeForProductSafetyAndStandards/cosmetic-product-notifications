@@ -1,9 +1,9 @@
 <h2>
-  Investigation
+  Case
 </h2>
 
 <% if @investigation.images.attached? && @investigation.images.first.metadata["safe"] && @investigation.images.first.variable? %>
-  <%= image_tag(@investigation.images.first.variant(resize: "300x200"), alt: "Investigation") %>
+  <%= image_tag(@investigation.images.first.variant(resize: "300x200"), alt: "Case") %>
 <% end %>
 
 <table style="width:100%; text-align:left">
