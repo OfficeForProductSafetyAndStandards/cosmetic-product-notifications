@@ -104,7 +104,7 @@
 <%= link_to "Manage images", associated_images_path(@product), class: "no-print" %>
 
 <% if @product.investigations.any? -%>
-  <h4 class="heading-small">Investigations</h4>
+  <h4 class="heading-small">Cases</h4>
   <% @product.investigations.each do |investigation| %>
     <p><%= link_to investigation.id, investigation %></p>
   <% end %>
