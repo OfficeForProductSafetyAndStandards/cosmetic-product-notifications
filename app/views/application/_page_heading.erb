@@ -1,4 +1,5 @@
-<% parent_name = @parent.is_a?(Investigation) ? "Case" : @parent.class.name %>
+<%= render "investigation_heading", investigation: @parent if @parent.is_a?(Investigation) %>
+<%= render "business_heading", business: @parent if @parent.is_a?(Business) %>
+<%= render "product_heading", product: @parent if @parent.is_a?(Product) %>
 
-<p class="govuk-heading-m govuk-!-margin-bottom-1"><%= "#{parent_name} ID: #{@parent.id}" %></p>
-<h1 class="govuk-heading-xl govuk-!-margin-bottom-1"><%= title %></h1>
+<h2 class="govuk-heading-l govuk-!-margin-bottom-2"><%= title %></h2>

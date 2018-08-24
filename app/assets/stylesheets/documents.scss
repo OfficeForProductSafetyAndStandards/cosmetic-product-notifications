@@ -44,10 +44,7 @@
     .document-title,
     .document-updated {
       display: inline-block;
-    }
-
-    .document-description {
-      margin-bottom: 0.5em;
+      color: inherit;
     }
 
     .edit-document-link {
@@ -56,6 +53,7 @@
 
     .delete-document-link {
       @extend .button-warning;
+      margin-bottom: 0.5em;
       margin-top: 0.5em;
     }
   }

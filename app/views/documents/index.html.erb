@@ -4,7 +4,7 @@
 
 <%= render "page_heading", title: "Manage documents" %>
 
-<%= link_to 'Add new document', new_associated_document_path(@parent), class: "govuk-!-font-weight-bold govuk-!-font-size-19 add-document-link" %>
+<%= link_to 'Add new document', new_associated_document_path(@parent), class: "add-document-link" %>
 
 <div class="govuk-!-padding-top-8">
   <% if @parent.documents.attached? %>
