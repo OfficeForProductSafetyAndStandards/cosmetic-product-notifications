@@ -3,7 +3,6 @@
 <%= link_to 'Back', associated_images_path(@parent), class: "govuk-back-link" %>
 
 <%= render 'page_heading', title: @image.metadata["title"] %>
-<br/>
 
 <%= render 'image', image: @image, dimensions: "600x400" %>
 
