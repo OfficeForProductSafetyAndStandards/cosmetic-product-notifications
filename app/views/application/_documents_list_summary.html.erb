@@ -1,0 +1,19 @@
+<% if parent.documents.attached? %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Title</th>
+      <th class="govuk-table__header" scope="col">Upload date</th>
+      <th class="govuk-table__header" scope="col"></th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <% parent.documents.attachments.each do |document|  %>
+      <%= render "document_summary", document: document, parent: parent %>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No documents.</p>
+<% end %>
+<%= link_to "Manage documents", associated_documents_path(parent), class: "no-print" %>

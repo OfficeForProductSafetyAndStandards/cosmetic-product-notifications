@@ -99,25 +99,7 @@
       <div class="govuk-grid-row govuk-!-padding-bottom-6" id="documents">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Documents</h2>
-          <% if @investigation.documents.attached? %>
-            <table class="govuk-table">
-              <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col">Title</th>
-                <th class="govuk-table__header" scope="col">Upload date</th>
-                <th class="govuk-table__header" scope="col"></th>
-              </tr>
-              </thead>
-              <tbody class="govuk-table__body">
-                <% @investigation.documents.attachments.each do |document|  %>
-                  <%= render "document_summary", document: document, parent: @investigation %>
-                <% end %>
-              </tbody>
-            </table>
-          <% else %>
-            <p>No documents.</p>
-          <% end %>
-          <%= link_to "Manage documents", associated_documents_path(@investigation), class: "no-print" %>
+          <%= render "documents_list_summary", parent: @investigation %>
         </div>
       </div>
 
