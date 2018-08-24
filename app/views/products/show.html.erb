@@ -138,7 +138,7 @@
 <% if @product.investigations.any? -%>
   <div class="govuk-grid-row" id="investigations">
     <div class="govuk-grid-column-full">
-      <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Investigations</h2>
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Cases</h2>
       <% @product.investigations.each do |investigation| %>
         <p><%= link_to investigation.id, investigation %></p>
       <% end %>

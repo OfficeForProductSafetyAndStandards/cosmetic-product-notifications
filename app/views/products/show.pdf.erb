@@ -85,7 +85,7 @@
 
 <% if @product.investigations.any? -%>
   <tr>
-    <th>Investigations</th>
+    <th>Cases</th>
     <% @product.investigations.each do |investigation| %>
       <td><%= link_to investigation.id, investigation %></td>
       </tr>

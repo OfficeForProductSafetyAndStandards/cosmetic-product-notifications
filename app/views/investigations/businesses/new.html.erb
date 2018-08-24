@@ -1,8 +1,8 @@
-<% content_for :page_title, "New business for investigation - Market Surveillance & Product Safety" %>
+<% content_for :page_title, "New business for case - Market Surveillance & Product Safety" %>
 <%# The data attribute is used by JS to determine if there is an investigation %>
 <div class="new-product-page products-search-form" data-investigation-id=<%= @investigation.id %>>
 
-    <%= link_to 'Back to investigation', @investigation, class: "govuk-back-link link-back" %>
+    <%= link_to 'Back to case', @investigation, class: "govuk-back-link link-back" %>
 
     <%= render "investigation_heading", investigation: @investigation %>
     <h2 class="govuk-heading-l">Add business</h2>
