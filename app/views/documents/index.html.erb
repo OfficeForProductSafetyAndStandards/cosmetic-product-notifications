@@ -2,8 +2,14 @@
 
 <%= link_to "Back to #{@parent.class.name.downcase}", polymorphic_path(@parent), class: "govuk-back-link" %>
 
-<%= render 'page_heading', title: "Manage documents" %>
+<%= render "page_heading", title: "Manage documents" %>
 
 <%= link_to 'Add new document', new_associated_document_path(@parent), class: "govuk-!-font-weight-bold govuk-!-font-size-19 add-document-link" %>
 
-<%= render 'table' %>
+<div class="govuk-!-padding-top-8">
+  <% if @parent.documents.attached? %>
+    <%= render "table" %>
+  <% else %>
+    <p>No documents.</p>
+  <% end %>
+</div>
