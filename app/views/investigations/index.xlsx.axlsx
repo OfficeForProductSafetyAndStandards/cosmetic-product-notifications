@@ -22,7 +22,8 @@ book.add_worksheet name: "Investigations" do |sheet_investigations|
 end
 
 book.add_worksheet name: "Products" do |sheet_products|
-  sheet_products.add_row %w[ID GTIN Name Description Model Countr_of_origin Date_placed_on_market Batch_Number Brand Source Investigation_ID]
+  sheet_products.add_row %w[ID GTIN Name Description Model Country_of_origin Date_placed_on_market
+                            Batch_Number Brand Source Investigation_ID]
 
   @investigations.each do |investigation|
     investigation.products.each do |product|
