@@ -2,7 +2,7 @@
   <thead>
   <tr>
     <% if form %>
-      <th colspan="1"></th>
+      <th class="not-implemented" colspan="1"></th>
     <% end %>
     <th>Business name(s)</th>
     <th>Type(s)</th>
@@ -16,7 +16,7 @@
   <% businesses.each do |business| %>
     <tr>
       <% if form %>
-        <td><%= form.check_box :business_ids, { multiple: true }, business.id, false %></td>
+        <td class="not-implemented"><%= form.check_box :business_ids, { multiple: true }, business.id, false %></td>
       <% end %>
       <td><%= link_to business.company_name, business %></td>
       <td><%= business.company_type_code %> <span class="not-implemented">(+10)</span></td>

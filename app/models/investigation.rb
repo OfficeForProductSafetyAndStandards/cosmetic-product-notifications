@@ -1,5 +1,8 @@
 class Investigation < ApplicationRecord
+  include Searchable
   include Documentable
+
+  index_name [Rails.env, "investigations"].join("_")
 
   validates :title, presence: true
   default_scope { order(updated_at: :desc) }
@@ -34,3 +37,5 @@ class Investigation < ApplicationRecord
     is_closed? ? "Closed" : "Open"
   end
 end
+
+Investigation.import force: true # for auto sync model with elastic search

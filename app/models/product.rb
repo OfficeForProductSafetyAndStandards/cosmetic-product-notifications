@@ -1,5 +1,3 @@
-require "elasticsearch/model"
-
 class Product < ApplicationRecord
   include CountriesHelper
   include Documentable
