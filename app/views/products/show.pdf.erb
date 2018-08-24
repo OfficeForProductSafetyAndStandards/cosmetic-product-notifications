@@ -50,21 +50,6 @@
   </tr>
 
   <tr>
-    <th>Serial number</th>
-    <td><%= @product.serial_number %></td>
-  </tr>
-
-  <tr>
-    <th>URL reference</th>
-    <td><%= link_to(@product.url_reference, @product.url_reference, target: "_blank") unless @product.url_reference.nil? %></td>
-  </tr>
-
-  <tr>
-    <th>Manufacturer</th>
-    <td><%= @product.manufacturer %></td>
-  </tr>
-
-  <tr>
     <th>Country of origin</th>
     <td><%= @product.country_of_origin_for_display %></td>
   </tr>
@@ -72,11 +57,6 @@
   <tr>
     <th>Date placed on the market</th>
     <td><%= @product.date_placed_on_market&.to_s :long_ordinal %></td>
-  </tr>
-
-  <tr>
-    <th>Associated parts or components</th>
-    <td><%= @product.associated_parts %></td>
   </tr>
 
   <tr>

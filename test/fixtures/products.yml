@@ -5,11 +5,8 @@ one:
   name: MyString
   description: MyText
   model: MyString
-  serial_number: MyString
-  manufacturer: MyString
   country_of_origin: MyString
   batch_number: MyString
-  url_reference: MyString
   brand: MyString
 
 two:
@@ -17,9 +14,6 @@ two:
   name: MyString
   description: MyText
   model: MyString
-  serial_number: MyString
-  manufacturer: MyString
   country_of_origin: MyString
   batch_number: MyString
-  url_reference: MyString
   brand: MyString

@@ -1,19 +1,6 @@
 // Place all the styles related to the products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import 'slick';
-@import 'slick-theme';
-
-.show-product {
-  .govuk-grid-row {
-    padding-bottom: 2em;
-  }
-}
-
-.investigations {
-  text-align: center;
-  font-size: 1.5em;
-}
 
 // The autocomplete form element does not use the same rules as the rest of the form elements
 // So it ends up being 100% at large screen sizes
@@ -21,11 +8,6 @@
     @media (min-width: 641px) {
         width: 50%;
     }
-}
-
-.product-image {
-    max-width: 100%;
-    display: block;
 }
 
 @media print
