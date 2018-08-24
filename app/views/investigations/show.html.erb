@@ -1,12 +1,12 @@
 <% content_for :page_title, "View investigation - Market Surveillance & Product Safety" %>
 <div class="show-investigation">
 
-  <div class="govuk-grid-row govuk-!-padding-top-6 top-details">
+  <div class="govuk-grid-row govuk-!-padding-bottom-6 govuk-!-padding-top-6 top-details">
     <div class="govuk-grid-column-one-third">
       <%= link_to 'Back to list', investigations_path, class: "govuk-back-link link-back" %>
     </div>
     <div class="govuk-grid-column-one-third">
-      Status <%= link_to @investigation.is_closed? ? "Closed" : "Open", status_investigation_path(@investigation) %>
+      Status <%= link_to @investigation.status, status_investigation_path(@investigation) %>
     </div>
     <div class="govuk-grid-column-one-third">
       Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
@@ -14,20 +14,20 @@
     </div>
   </div>
 
-  <div class="govuk-grid-row">
+  <div class="govuk-grid-row govuk-!-padding-bottom-6">
     <div class="govuk-grid-column-full">
       <%= render "investigation_heading", investigation: @investigation %>
     </div>
   </div>
 
-  <div class="govuk-grid-row">
+  <div class="govuk-grid-row govuk-!-padding-bottom-6">
     <div class="govuk-grid-column-one-half">
       <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Risk Notes: <%= @investigation.risk_overview %></h3>
       <p><%= @investigation.description %></p>
       <%= link_to 'Edit details', edit_investigation_path(@investigation), :class => "no-print" %>
     </div>
     <div class="govuk-grid-column-one-half">
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row govuk-!-padding-bottom-6">
         <div class="govuk-grid-column-one-half">
           <h3 class="govuk-body-l govuk-!-margin-bottom-1">Risk level</h3>
           <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.risk_level&.titleize %></span>
@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="govuk-grid-row row-border-top">
+  <div class="govuk-grid-row govuk-!-padding-bottom-6 row-border-top">
     <div class="govuk-grid-column-one-third">
       <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h3>
       <ul class="dashed-list">
@@ -51,9 +51,9 @@
         <li><a href="#documents" class="govuk-!-font-size-19">Documents</a></li>
       </ul>
     </div>
-
     <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-grid-row" id="activities">
+
+      <div class="govuk-grid-row govuk-!-padding-bottom-6" id="activities">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Activities</h2>
           <%= render "activities_summary", activities: @investigation.activities.limit(3) %>
@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row" id="products">
+      <div class="govuk-grid-row govuk-!-padding-bottom-6" id="products">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Products</h2>
           <% if @investigation.products.any? %>
@@ -76,7 +76,7 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row" id="businesses">
+      <div class="govuk-grid-row govuk-!-padding-bottom-6" id="businesses">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Businesses</h2>
           <% if @investigation.businesses.any? %>
@@ -90,7 +90,7 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row" id="images">
+      <div class="govuk-grid-row govuk-!-padding-bottom-6" id="images">
         <div class="govuk-grid-column-full">
           <% if @investigation.images.attached? %>
             <h2 class="govuk-heading-l govuk-!-margin-bottom-1"><%= "Images (#{@investigation.images.size})" %></h2>
@@ -106,7 +106,7 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row" id="documents">
+      <div class="govuk-grid-row govuk-!-padding-bottom-6" id="documents">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Documents</h2>
           <% if @investigation.documents.attached? %>
@@ -131,7 +131,7 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row govuk-!-padding-bottom-6">
         <div class="govuk-grid-column-full">
           <%= render 'history', versions: @investigation.versions %>
           <div class="govuk-!-margin-top-3 no-print">
