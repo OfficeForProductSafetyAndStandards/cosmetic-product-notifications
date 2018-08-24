@@ -24,4 +24,8 @@ class Investigation < ApplicationRecord
   enum risk_level: %i[low medium serious severe], _suffix: true
 
   enum sensitivity: %i[low medium high], _suffix: true
+
+  def status
+    is_closed? ? "Closed" : "Open"
+  end
 end
