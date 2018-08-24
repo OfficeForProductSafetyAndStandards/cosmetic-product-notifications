@@ -1,4 +1,4 @@
-<% content_for :page_title, "View investigation - Market Surveillance & Product Safety" %>
+<% content_for :page_title, "View case - Market Surveillance & Product Safety" %>
 <div class="show-investigation">
 
   <div class="govuk-grid-row govuk-!-padding-bottom-6 govuk-!-padding-top-6 top-details">
@@ -29,11 +29,11 @@
     <div class="govuk-grid-column-one-half">
       <div class="govuk-grid-row govuk-!-padding-bottom-6">
         <div class="govuk-grid-column-one-half">
-          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Risk level</h4>
+          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Risk level</h3>
           <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.risk_level&.titleize %></span>
         </div>
         <div class="govuk-grid-column-one-half">
-          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Sensitivity</h4>
+          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Sensitivity</h3>
           <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.sensitivity&.titleize %></span>
         </div>
       </div>
@@ -99,17 +99,25 @@
       <div class="govuk-grid-row govuk-!-padding-bottom-6" id="documents">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Documents</h2>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
+          <% if @investigation.documents.attached? %>
+            <table class="govuk-table">
+              <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col">Title</th>
                 <th class="govuk-table__header" scope="col">Upload date</th>
                 <th class="govuk-table__header" scope="col"></th>
               </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-            </tbody>
-          </table>
+              </thead>
+              <tbody class="govuk-table__body">
+                <% @investigation.documents.attachments.each do |document|  %>
+                  <%= render "document_summary", document: document, parent: @investigation %>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p>No documents.</p>
+          <% end %>
+          <%= link_to "Manage documents", associated_documents_path(@investigation), class: "no-print" %>
         </div>
       </div>
 

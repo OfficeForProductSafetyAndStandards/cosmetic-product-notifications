@@ -1,6 +1,6 @@
 book = xlsx_package.workbook
 
-book.add_worksheet name: "Investigations" do |sheet_investigations|
+book.add_worksheet name: "Cases" do |sheet_investigations|
   sheet_investigations.add_row %w[ID Status Description Assignee Source Risk_Overview Risk_Level Sensitivity
                                   Products Businesses Activities]
 

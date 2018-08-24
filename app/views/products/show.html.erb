@@ -74,8 +74,25 @@
     <div class="govuk-grid-row govuk-!-padding-bottom-6" id="documents">
       <div class="govuk-grid-column-full">
         <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Documents</h2>
-        <% # TODO: MSPSDS-230 add in documents when they are merged %>
-        <p>No documents.</p>
+        <% if @product.documents.attached? %>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="col">Title</th>
+              <th class="govuk-table__header" scope="col">Upload date</th>
+              <th class="govuk-table__header" scope="col"></th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <% @product.documents.attachments.each do |document|  %>
+              <%= render "document_summary", document: document, parent: @product %>
+            <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p>No documents.</p>
+        <% end %>
+        <%= link_to "Manage documents", associated_documents_path(@product), class: "no-print" %>
       </div>
     </div>
 

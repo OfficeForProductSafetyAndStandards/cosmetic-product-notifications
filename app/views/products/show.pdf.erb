@@ -4,7 +4,9 @@
 
 <div>
   <% @product.images.attachments.each do |image| %>
-    <% render "images/image_tag", image: image, dimensions: "300x200" %>
+    <% if image.metadata["safe"] && image.variable? %>
+      <%= image_tag(image.variant(resize: "300x200"), alt: image.metadata["title"]) %>
+    <% end %>
   <% end %>
   <% @product.rapex_images.each do |image| %>
     <%= image_tag(image.url, alt: image.title) %>
@@ -65,7 +67,7 @@
 
 <% if @product.investigations.any? -%>
   <tr>
-    <th>Investigations</th>
+    <th>Cases</th>
     <% @product.investigations.each do |investigation| %>
       <td><%= link_to investigation.id, investigation %></td>
       </tr>
