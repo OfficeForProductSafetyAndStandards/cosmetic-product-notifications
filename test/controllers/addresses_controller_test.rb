@@ -38,7 +38,7 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to address_url(Address.last)
+    assert_redirected_to business_addresses_url(@address.business)
   end
 
   test "should show address" do

@@ -32,7 +32,10 @@ class AddressesController < ApplicationController
   def create
     respond_to do |format|
       if @address.save
-        format.html { redirect_to business_addresses_url(@address.business), notice: "Address was successfully created." }
+        format.html do
+          redirect_to business_addresses_url(@address.business),
+                      notice: "Address was successfully created."
+        end
         format.json { render :show, status: :created, location: @address }
       else
         format.html { render :new }
