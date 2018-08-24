@@ -17,7 +17,7 @@ class InvestigationsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: @investigation.id
+        render pdf: @investigation.id.to_s
       end
     end
   end

@@ -2,7 +2,9 @@
   Investigation
 </h2>
 
-<%= image_tag(url_for(@investigation.image), alt: "Investigation") if @investigation.image.attached? %>
+<% if @investigation.images.attached? && @investigation.images.first.variable? %>
+  <%= image_tag(@investigation.images.first.variant(resize: "300x200"), alt: "Investigation") %>
+<% end %>
 
 <table style="width:100%; text-align:left">
   <tr>
@@ -48,7 +50,7 @@
     <% @investigation.activities.each do |activity| %>
       <tr>
         <td><%= activity.created_at %></td>
-        <td><%= activity.type.titleize %></td>
+        <td><%= activity.activity_type.titleize %></td>
         <td><%= activity.source.show %></td>
         <td><%= activity.notes %></td>
       </tr>
