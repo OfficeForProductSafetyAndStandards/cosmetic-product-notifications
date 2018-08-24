@@ -3,7 +3,7 @@
   <% parent.images.attachments.limit(2).each do |image| %>
     <%= render "images/image", image: image, dimensions: "300x200" %>
   <% end %>
-  <br/>
+  <br/><br/>
 <% else %>
   <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Images</h2>
   <p>No images.</p>
