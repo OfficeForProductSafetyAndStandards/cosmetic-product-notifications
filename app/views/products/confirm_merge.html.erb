@@ -1,5 +1,5 @@
 <% content_for :page_title, "Merge products - Market Surveillance & Product Safety" %>
-<br/>
+
 <div class="govuk-form-group">
   <fieldset class="govuk-fieldset" aria-describedby="merge-hint">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -7,24 +7,26 @@
         Please select the product you would like to merge
       </h1>
     </legend>
+
     <span id="merge-hint" class="govuk-hint">
       <li>The product you select will gain all the investigations from the other products</li>
       <li>The products not selected will be deleted</li>
     </span>
+
     <%= form_with(url: merge_products_path, method: :post) do |form|%>
-    <% @products.each do |product| %>
-    <div class="govuk-radios">
-      <div class="govuk-radios__item">
-        <%= form.hidden_field :product_ids, multiple: true, value: product.id%>
-        <%= form.radio_button :selected_product_id, product.id, class: "govuk-radios__input"%>
-        <label class="govuk-label govuk-radios__label govuk-label--s" for="product">
-          <%= render "product_summary", product: product %>
-        </label>
-      </div>
+      <% @products.each do |product| %>
+        <div class="govuk-radios">
+          <div class="govuk-radios__item">
+            <%= form.hidden_field :product_ids, multiple: true, value: product.id%>
+            <%= form.radio_button :selected_product_id, product.id, class: "govuk-radios__input"%>
+            <label class="govuk-label govuk-radios__label govuk-label--s" for="product">
+              <%= render "product_summary", product: product %>
+            </label>
+          </div>
+        </div>
       <%end%>
       <br/>
       <%= form.submit "Merge", name: nil, :class => "govuk-button", data: { confirm: 'Are you sure?' } %>
-    <%end%>
-    </div>
+    <% end %>
+  </fieldset>
 </div>
-

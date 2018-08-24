@@ -1,5 +1,3 @@
-require "elasticsearch/model"
-
 class Business < ApplicationRecord
   include Searchable
 
