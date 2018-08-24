@@ -9,8 +9,12 @@
       Status <%= link_to @investigation.is_closed? ? "Closed" : "Open", status_investigation_path(@investigation) %>
     </div>
     <div class="govuk-grid-column-one-third">
-      Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
+      <% if !@investigation.is_closed %>
+        <%= link_to @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned",
                               assign_investigation_path(@investigation) %>
+      <% else %>
+        <%= @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned" %>
+      <% end %>
     </div>
   </div>
 
@@ -29,11 +33,11 @@
     <div class="govuk-grid-column-one-half">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
-          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Risk level</h4>
+          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Risk level</h3>
           <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.risk_level&.titleize %></span>
         </div>
         <div class="govuk-grid-column-one-half">
-          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Sensitivity</h4>
+          <h3 class="govuk-body-l govuk-!-margin-bottom-1">Sensitivity</h3>
           <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @investigation.sensitivity&.titleize %></span>
         </div>
       </div>
