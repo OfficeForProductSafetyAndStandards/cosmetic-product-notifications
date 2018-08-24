@@ -3,8 +3,7 @@ module ProductsHelper
   def product_params
     params.require(:product).permit(
       :gtin, :name, :description, :model, :batch_number, :brand,
-      :country_of_origin, :date_placed_on_market,
-      images_attributes: %i[id title url _destroy]
+      :country_of_origin, :date_placed_on_market
     )
   end
 
