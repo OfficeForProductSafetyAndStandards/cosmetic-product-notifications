@@ -92,17 +92,7 @@
 
       <div class="govuk-grid-row govuk-!-padding-bottom-6" id="images">
         <div class="govuk-grid-column-full">
-          <% if @investigation.images.attached? %>
-            <h2 class="govuk-heading-l govuk-!-margin-bottom-1"><%= "Images (#{@investigation.images.size})" %></h2>
-            <% @investigation.images.attachments.limit(2).each do |image| %>
-              <%= render "images/image", image: image, dimensions: "300x200" %>
-            <% end %>
-            <br/>
-          <% else %>
-            <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Images</h2>
-            <p>No images.</p>
-          <% end %>
-          <%= link_to "Manage images", associated_images_path(@investigation), class: "no-print" %>
+          <%= render "images_summary", parent: @investigation %>
         </div>
       </div>
 

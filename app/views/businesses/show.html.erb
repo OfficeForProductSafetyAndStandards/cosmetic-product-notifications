@@ -81,30 +81,7 @@
       <div class="govuk-grid-row govuk-!-padding-bottom-6" id="cases">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Cases</h2>
-          <% if @business.investigations.any? %>
-            <table class="govuk-table">
-              <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="col">Case</th>
-                  <th class="govuk-table__header" scope="col">Status</th>
-                  <th class="govuk-table__header" scope="col">Assigned</th>
-                  <th class="govuk-table__header" scope="col">Last updated</th>
-                </tr>
-              </thead>
-              <tbody class="govuk-table__body">
-                <% @business.investigations.each do |investigation| %>
-                  <tr class="govuk-table__row">
-                    <td class="govuk-table__cell"><%= link_to investigation.title, investigation %></td>
-                    <td class="govuk-table__cell"><%= investigation.status %></td>
-                    <td class="govuk-table__cell"><%= investigation.assignee ? investigation.assignee.email : "Unassigned" %></td>
-                    <td class="govuk-table__cell"><%= investigation.updated_at.strftime("%d %B %Y") %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          <% else %>
-            No cases.
-          <% end %>
+          <%= render "investigations_summary", parent: @business %>
         </div>
       </div>
 

@@ -1,121 +1,97 @@
 <% content_for :page_title, "View product - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Products', products_path %>
-        </li>
-        <li>
-            <%= link_to 'View', @product %>
-        </li>
-    </ol>
-</div>
+<%= link_to 'Back to list', products_path, class: "govuk-back-link" %>
 
-<h1 class="heading-xlarge"><%= @product.name %></h1>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full company-details large-space-below">
-    <table class="company-details-table">
-      <thead>
-      <td class="company-details-header">Product Details</td>
-      <td></td>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Product ID</td>
-          <td><%= @product.id %></td>
-        </tr>
-        <tr>
-          <td>GTIN (Global Trade Item Number/Barcode)</td>
-          <td><%= @product.gtin %></td>
-        </tr>
-        <tr>
-          <td>Brand</td>
-          <td><%= @product.brand %></td>
-        </tr>
-        <tr>
-          <td>Description</td>
-          <td><%= @product.description %></td>
-        </tr>
-        <tr>
-          <td>Model</td>
-          <td><%= @product.model %></td>
-        </tr>
-        <tr>
-          <td>Batch number</td>
-          <td><%= @product.batch_number %></td>
-        </tr>
-        <tr>
-          <td>Serial number</td>
-          <td><%= @product.serial_number %></td>
-        </tr>
-        <tr>
-          <td>URL reference</td>
-          <td><%= link_to(@product.url_reference, @product.url_reference, target: "_blank") unless @product.url_reference.nil? %></td>
-        </tr>
-        <tr>
-          <td>Manufacturer</td>
-          <td><%= @product.manufacturer %></td>
-        </tr>
-        <tr>
-          <td>Country of origin</td>
-          <td><%= @product.country_of_origin_for_display %></td>
-        </tr>
-        <tr>
-          <td>Date placed on the market</td>
-          <td><%= @product.date_placed_on_market&.to_s :long_ordinal %></td>
-        </tr>
-        <tr>
-          <td>Associated parts or components</td>
-          <td><%= @product.associated_parts %></td>
-        </tr>
-        <tr>
-          <td>Source</td>
-          <td><%= @product.source.show %></td>
-        </tr>
-      </tbody>
-    </table>
-    <%= link_to "Add more details", edit_product_path(@product)%>
+<div class="govuk-grid-row govuk-!-padding-bottom-6">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render "product_heading", product: @product %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Cases</h3>
+    <span class="govuk-heading-xl govuk-!-margin-bottom-0"><%= @product.investigations.size %></span>
   </div>
 </div>
 
-<div class="slider-nav">
-  <% @product.images.attachments.each do |image| %>
-    <% render "images/image_tag", image: image, dimensions: "300x200" %>
-  <% end %>
-  <% @product.rapex_images.each do |image| %>
-    <%= image_tag(image.url, alt: image.title) %>
-  <% end %>
+<div class="govuk-grid-row govuk-!-padding-bottom-6 row-border-top">
+  <div class="govuk-grid-column-one-third">
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h3>
+    <ul class="dashed-list">
+      <li><a href="#details" class="govuk-!-font-size-19">Details</a></li>
+      <li><a href="#images" class="govuk-!-font-size-19">Images</a></li>
+      <li><a href="#documents" class="govuk-!-font-size-19">Documents</a></li>
+      <li><a href="#cases" class="govuk-!-font-size-19">Cases</a></li>
+      <li><a href="#history" class="govuk-!-font-size-19">History</a></li>
+    </ul>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <div class="govuk-grid-row govuk-!-padding-bottom-6" id="details">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Details</h2>
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Barcode</th>
+              <td class="govuk-table__cell"><%= @product.gtin %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Brand</th>
+              <td class="govuk-table__cell"><%= @product.brand %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Model number</th>
+              <td class="govuk-table__cell"><%= @product.model %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Batch number</th>
+              <td class="govuk-table__cell"><%= @product.batch_number %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Country of origin</th>
+              <td class="govuk-table__cell"><%= @product.country_of_origin_for_display %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Description</th>
+              <td class="govuk-table__cell"><%= @product.description %></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Date on the market</th>
+              <td class="govuk-table__cell"><%= @product.date_placed_on_market&.to_s :long_ordinal %></td>
+            </tr>
+          </tbody>
+        </table>
+        <%= link_to "Edit details", edit_product_path(@product) %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-padding-bottom-6" id="images">
+      <div class="govuk-grid-column-full">
+        <%= render "images_summary", parent: @product %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-padding-bottom-6" id="documents">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Documents</h2>
+        <% # TODO: MSPSDS-230 add in documents when they are merged %>
+        <p>No documents.</p>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-padding-bottom-6" id="cases">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Cases</h2>
+        <%= render "investigations_summary", parent: @product %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-padding-bottom-6" id="history">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-1">History</h2>
+        <%= render 'history', versions: @product.versions %>
+      </div>
+    </div>
+
+  </div>
 </div>
-
-<% if @product.images.attached? %>
-  <h4 class="heading-small"><%= "Images (#{@product.images.attachments.count})" %></h4>
-  <% @product.images.attachments.limit(2).each do |image| %>
-    <%= render "images/image", image: image, dimensions: "300x200" %>
-  <% end %>
-  <br/>
-<% else %>
-  <h4 class="heading-small"><%= "Images" %></h4>
-  <p>No images.</p>
-<% end %>
-<%= link_to "Manage images", associated_images_path(@product), class: "no-print" %>
-
-<% if @product.investigations.any? -%>
-  <h4 class="heading-small">Investigations</h4>
-  <% @product.investigations.each do |investigation| %>
-    <p><%= link_to investigation.id, investigation %></p>
-  <% end %>
-<% end -%>
-
-<div class="form-group no-print">
-  <%= link_to 'Create PDF document', product_path(@product, :format => :pdf) %>
-</div>
-
-<div class="form-group no-print">
-  <%= link_to 'Back', products_path, :class => "link-back" %>
-</div>
-
-<%= render 'history', versions: @product.versions %>
