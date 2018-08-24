@@ -4,7 +4,7 @@
   <%= link_to 'Back to list', businesses_path, class: "govuk-back-link" %>
   <div class="govuk-grid-row govuk-!-padding-bottom-6">
     <div class="govuk-grid-column-two-thirds">
-      <%= render "business_heading" %>
+      <%= render "business_heading", business: @business %>
     </div>
     <div class="govuk-grid-column-one-third">
       <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Cases</h3>
