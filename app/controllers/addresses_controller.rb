@@ -12,23 +12,27 @@ class AddressesController < ApplicationController
 
   # GET /addresses/1
   # GET /addresses/1.json
-  def show; end
+  def show
+    @business = @address.business
+  end
 
   # GET /addresses/new
   def new
-    business = Business.find(params[:business_id])
-    @address = business.addresses.build
+    @business = Business.find(params[:business_id])
+    @address = @business.addresses.build
   end
 
   # GET /addresses/1/edit
-  def edit; end
+  def edit
+    @business = @address.business
+  end
 
   # POST /addresses
   # POST /addresses.json
   def create
     respond_to do |format|
       if @address.save
-        format.html { redirect_to @address, notice: "Address was successfully created." }
+        format.html { redirect_to business_addresses_url(@address.business), notice: "Address was successfully created." }
         format.json { render :show, status: :created, location: @address }
       else
         format.html { render :new }
