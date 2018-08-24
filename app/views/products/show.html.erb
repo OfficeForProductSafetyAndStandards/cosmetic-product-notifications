@@ -1,4 +1,5 @@
 <% content_for :page_title, "View product - Market Surveillance & Product Safety" %>
+<div class="show-product">
 
 <div class="breadcrumbs">
     <ol role="breadcrumbs">
@@ -20,8 +21,10 @@
   <div class="govuk-grid-column-full company-details large-space-below">
     <table class="company-details-table">
       <thead>
-      <td class="company-details-header">Product Details</td>
-      <td></td>
+      <tr>
+        <th class="company-details-header">Product Details</th>
+        <th></th>
+      </tr>
       </thead>
       <tbody>
         <tr>
@@ -91,23 +94,56 @@
   <% end %>
 </div>
 
-<% if @product.images.attached? %>
-  <h4 class="heading-small"><%= "Images (#{@product.images.attachments.count})" %></h4>
-  <% @product.images.attachments.limit(2).each do |image| %>
-    <%= render "images/image", image: image, dimensions: "300x200" %>
-  <% end %>
-  <br/>
-<% else %>
-  <h4 class="heading-small"><%= "Images" %></h4>
-  <p>No images.</p>
-<% end %>
-<%= link_to "Manage images", associated_images_path(@product), class: "no-print" %>
+<div class="govuk-grid-row" id="images">
+  <div class="govuk-grid-column-full">
+    <% if @product.images.attached? %>
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-1"><%= "Images (#{@product.images.size})" %></h2>
+      <% @product.images.attachments.limit(2).each do |image| %>
+        <%= render "images/image", image: image, dimensions: "300x200" %>
+      <% end %>
+      <br/>
+    <% else %>
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Images</h2>
+      <p>No images.</p>
+    <% end %>
+    <%= link_to "Manage images", associated_images_path(@product), class: "no-print" %>
+  </div>
+</div>
+
+<div class="govuk-grid-row" id="documents">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Documents</h2>
+    <% if @product.documents.attached? %>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Title</th>
+          <th class="govuk-table__header" scope="col">Upload date</th>
+          <th class="govuk-table__header" scope="col"></th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <% @product.documents.attachments.each do |document|  %>
+          <%= render "document_summary", document: document, parent: @product %>
+        <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No documents.</p>
+    <% end %>
+    <%= link_to "Manage documents", associated_documents_path(@product), class: "no-print" %>
+  </div>
+</div>
 
 <% if @product.investigations.any? -%>
-  <h4 class="heading-small">Investigations</h4>
-  <% @product.investigations.each do |investigation| %>
-    <p><%= link_to investigation.id, investigation %></p>
-  <% end %>
+  <div class="govuk-grid-row" id="investigations">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Investigations</h2>
+      <% @product.investigations.each do |investigation| %>
+        <p><%= link_to investigation.id, investigation %></p>
+      <% end %>
+    </div>
+  </div>
 <% end -%>
 
 <div class="form-group no-print">
@@ -119,3 +155,5 @@
 </div>
 
 <%= render 'history', versions: @product.versions %>
+
+</div>

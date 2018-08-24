@@ -4,6 +4,12 @@
 @import 'slick';
 @import 'slick-theme';
 
+.show-product {
+  .govuk-grid-row {
+    padding-bottom: 2em;
+  }
+}
+
 .investigations {
   text-align: center;
   font-size: 1.5em;
