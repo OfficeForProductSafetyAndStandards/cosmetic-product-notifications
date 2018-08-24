@@ -9,8 +9,12 @@
       Status <%= link_to @investigation.status, status_investigation_path(@investigation) %>
     </div>
     <div class="govuk-grid-column-one-third">
-      Assigned <%=link_to @investigation.assignee ? @investigation.assignee.email: "Unassigned",
+      <% if !@investigation.is_closed %>
+        <%= link_to @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned",
                               assign_investigation_path(@investigation) %>
+      <% else %>
+        <%= @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned" %>
+      <% end %>
     </div>
   </div>
 

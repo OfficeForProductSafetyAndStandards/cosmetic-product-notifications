@@ -16,7 +16,6 @@
   <%= form.submit "Merge selected", name: nil, class: "not-implemented" %>
   <%= link_to 'New product', new_product_path, class: "right" %>
 
-  <%= will_paginate @products %>
   <%= render 'table', product: @products, form: form %>
   <%= will_paginate @products %>
 <%end%>

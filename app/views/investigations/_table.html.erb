@@ -1,7 +1,7 @@
-<table class="investigation-list">
+<table class="investigation-list govuk-!-margin-bottom-3">
   <thead>
   <tr>
-    <th>Case ID</th>
+    <th>Case</th>
     <th>Product</th>
     <th>Status</th>
     <th>Last updated</th>
@@ -12,7 +12,10 @@
   <tbody>
   <% @investigations.each do |investigation| %>
     <tr>
-      <td><%= link_to investigation.title, investigation, class: "govuk-link"%></td>
+      <td>
+        <span><%= link_to investigation.title, investigation, class: "govuk-link"%></span><br/>
+        <span>id: <%= investigation.id %></span>
+      </td>
       <td>
         <span><%= investigation.products.first ? investigation.products.first.name : "" %></span>
         <span><%= investigation.products.first ? investigation.products.first.brand : "" %></span>

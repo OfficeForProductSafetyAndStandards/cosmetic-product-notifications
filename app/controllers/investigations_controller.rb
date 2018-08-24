@@ -41,6 +41,7 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/1/assign
   def assign
+    redirect_to investigation_path(@investigation) if @investigation.is_closed
     @assignee = @investigation.assignee
   end
 
