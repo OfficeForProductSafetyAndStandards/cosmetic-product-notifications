@@ -117,8 +117,9 @@ end
 
 def risk_level(notification)
   level_map = {
-      "Serious risk" => :serious,
-      "Other risk level" => :medium }
+    "Serious risk" => :serious,
+    "Other risk level" => :medium
+  }
   level_map.default = nil
   level_map[field_from_notification(notification, "level")]
 end
