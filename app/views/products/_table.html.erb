@@ -6,7 +6,6 @@
       <% end %>
       <th>Name</th>
       <th>Brand</th>
-      <th>Category(s)</th>
       <th>Origin Co</th>
       <th>Cases</th>
     </tr>
@@ -20,11 +19,10 @@
         <% end %>
         <td><%= link_to product.name, product %></td>
         <td><%= product.brand %></td>
-        <td><span class="not-implemented">Some category (+10)</span></td>
-        <td><%= product.country_of_origin_for_display%></td>
+        <td><%= product.country_of_origin_for_display %></td>
         <td>
-          <span class="investigations not-implemented">
-            <%= link_to product.investigations.count, investigations_path %>
+          <span class="investigations">
+            <%= product.investigations.count %>
           </span>
         </td>
       </tr>

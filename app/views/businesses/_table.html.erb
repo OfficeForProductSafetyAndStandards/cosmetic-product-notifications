@@ -6,7 +6,6 @@
     <% end %>
     <th>Business name(s)</th>
     <th>Type(s)</th>
-    <th>Category(s)</th>
     <th>Location(s)</th>
     <th>Cases</th>
   </tr>
@@ -19,12 +18,11 @@
         <td class="not-implemented"><%= form.check_box :business_ids, { multiple: true }, business.id, false %></td>
       <% end %>
       <td><%= link_to business.company_name, business %></td>
-      <td><%= business.company_type_code %> <span class="not-implemented">(+10)</span></td>
-      <td><span class="not-implemented">Some category (+10)</span></td>
+      <td><%= business.company_type_code %></td>
       <td><%= business.addresses.first ? business.addresses.first.short : "" %></td>
       <td>
-          <span class="investigations not-implemented">
-            <%= link_to business.investigations.count, investigations_path %>
+          <span class="investigations">
+            <%= business.investigations.count %>
           </span>
       </td>
     </tr>
