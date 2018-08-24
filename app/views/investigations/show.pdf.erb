@@ -2,7 +2,7 @@
   Investigation
 </h2>
 
-<% if @investigation.images.attached? && @investigation.images.first.variable? %>
+<% if @investigation.images.attached? && @investigation.images.first.metadata["safe"] && @investigation.images.first.variable? %>
   <%= image_tag(@investigation.images.first.variant(resize: "300x200"), alt: "Investigation") %>
 <% end %>
 
