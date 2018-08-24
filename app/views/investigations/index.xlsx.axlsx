@@ -22,7 +22,7 @@ book.add_worksheet name: "Investigations" do |sheet_investigations|
 end
 
 book.add_worksheet name: "Products" do |sheet_products|
-  sheet_products.add_row %w[ID GTIN Name Description Model MPN Batch_Number Purchase_URL Brand Source Investigation_ID]
+  sheet_products.add_row %w[ID GTIN Name Description Model Countr_of_origin Date_placed_on_market Batch_Number Brand Source Investigation_ID]
 
   @investigations.each do |investigation|
     investigation.products.each do |product|
@@ -32,13 +32,9 @@ book.add_worksheet name: "Products" do |sheet_products|
         product.name,
         product.description,
         product.model,
-        product.serial_number,
-        product.manufacturer,
         product.country_of_origin,
         product.date_placed_on_market&.to_s(:long_ordinal),
-        product.associated_parts,
         product.batch_number,
-        product.url_reference,
         product.brand,
         product.source.show,
         investigation.id
