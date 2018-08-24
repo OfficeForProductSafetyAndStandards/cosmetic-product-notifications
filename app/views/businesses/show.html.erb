@@ -19,6 +19,7 @@
         <li><a href="#details" class="govuk-!-font-size-19">Details</a></li>
         <li><a href="#locations" class="govuk-!-font-size-19">Locations</a></li>
         <li><a href="#cases" class="govuk-!-font-size-19">Cases</a></li>
+        <li><a href="#history" class="govuk-!-font-size-19">History</a></li>
       </ul>
     </div>
 
@@ -108,6 +109,12 @@
         </div>
       </div>
 
+      <div class="govuk-grid-row govuk-!-padding-bottom-6" id="history">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">History</h2>
+          <%= render 'history', versions: @business.versions %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

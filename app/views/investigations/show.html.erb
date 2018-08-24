@@ -49,6 +49,7 @@
         <li><a href="#businesses" class="govuk-!-font-size-19">Businesses</a></li>
         <li><a href="#images" class="govuk-!-font-size-19">Images</a></li>
         <li><a href="#documents" class="govuk-!-font-size-19">Documents</a></li>
+        <li><a href="#history" class="govuk-!-font-size-19">History</a></li>
       </ul>
     </div>
     <div class="govuk-grid-column-two-thirds">
@@ -131,15 +132,15 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row govuk-!-padding-bottom-6">
+      <div class="govuk-grid-row govuk-!-padding-bottom-6" id="history">
         <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">History</h2>
           <%= render 'history', versions: @investigation.versions %>
           <div class="govuk-!-margin-top-3 no-print">
             <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
