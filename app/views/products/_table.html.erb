@@ -1,26 +1,30 @@
-<table>
+<table class="govuk-!-margin-bottom-3">
   <thead>
     <tr>
-      <th>GTIN (Barcode)</th>
+      <% if form %>
+        <th class="not-implemented"colspan="1"></th>
+      <% end %>
       <th>Name</th>
       <th>Brand</th>
-      <% unless @compressed %>
-        <th>Investigations</th>
-        <th colspan="1"></th>
-      <% end %>
+      <th>Origin Co</th>
+      <th>Cases</th>
     </tr>
   </thead>
 
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= product.gtin %></td>
+        <% if form %>
+          <td class="not-implemented"><%= form.check_box :product_ids, { multiple: true }, product.id, false %></td>
+        <% end %>
         <td><%= link_to product.name, product %></td>
         <td><%= product.brand %></td>
-        <% unless @compressed %>
-          <td><%= product.investigations.length %></td>
-          <td><%= link_to 'Delete', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+        <td><%= product.country_of_origin_for_display %></td>
+        <td>
+          <span class="investigations">
+            <%= product.investigations.count %>
+          </span>
+        </td>
       </tr>
     <% end %>
     <% if @products.empty? %>

@@ -1,46 +1,22 @@
 <% content_for :page_title, "Businesses - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Businesses', businesses_path %>
-        </li>
-    </ol>
-</div>
+<%= render "layouts/navbar" %>
 
-
-<h1 class="heading-xlarge">Businesses</h1>
-<%= link_to 'New business', new_business_path, :class => "button" %><br /><br />
-
-<%= form_with(url: businesses_path, method: :get) do |form| %>
+<%= form_with(url: businesses_path, method: :get, class: "search-background govuk-!-padding-3") do |form| %>
   <div class="form-group">
-    <%= form.label "Search", :class => "form-label" %>
+    <%= form.label "Search for business", :class => "form-label" %>
     <%= form.text_field :q, value: params[:q], :class => "form-control" %>
-    <%= form.submit "Go", name: nil, :class => "button" %>
+    <%= form.submit ">", name: nil, :class => "govuk-button" %>
   </div>
 <% end %>
 
-<%= will_paginate @businesses %>
-<br />
-<table>
-  <thead>
-    <tr>
-      <th>Company name</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
+<br/>
 
-  <tbody>
-    <% @businesses.each do |business| %>
-      <tr>
-        <td><%= link_to business.company_name, business %></td>
-        <td><%= link_to 'Delete', business, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<br />
-<%= will_paginate @businesses %>
+<%= form_with(url: confirm_merge_businesses_path, method: :get) do |form| %>
+  <%= form.submit "Merge selected", name: nil, class: "not-implemented" %>
+  <%= link_to 'New business', new_business_path, class: "right" %>
+
+  <%= will_paginate @businesses %>
+  <%= render 'table', businesses: @businesses, form: form %>
+  <%= will_paginate @businesses %>
+<% end %>

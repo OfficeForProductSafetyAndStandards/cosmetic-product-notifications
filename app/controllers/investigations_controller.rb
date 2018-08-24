@@ -1,14 +1,20 @@
 class InvestigationsController < ApplicationController
   include InvestigationsHelper
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[show edit update destroy close reopen assign update_assignee]
+  before_action :set_investigation, only: %i[show edit update destroy assign update_assignee status]
   before_action :create_investigation, only: %i[create]
 
   # GET /investigations
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @investigations = Investigation.paginate(page: params[:page], per_page: 20)
+    @investigations = if params[:q].blank?
+                        Investigation.paginate(page: params[:page], per_page: 20)
+                      else
+                        Investigation.prefix_search(params[:q])
+                                     .paginate(page: params[:page], per_page: 20)
+                                     .records
+                      end
   end
 
   # GET /investigations/1
@@ -17,7 +23,7 @@ class InvestigationsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: @investigation.id
+        render pdf: @investigation.id.to_s
       end
     end
   end
@@ -28,38 +34,26 @@ class InvestigationsController < ApplicationController
   end
 
   # GET /investigations/1/edit
-  def edit
-    authorize @investigation
-  end
+  def edit; end
 
-  # POST /investigations/1/close
-  def close
-    @investigation.is_closed = true
-    save_and_respond "Investigation was successfully closed."
-  end
-
-  # POST /investigations/1/reopen
-  def reopen
-    authorize @investigation
-    @investigation.is_closed = false
-    save_and_respond "Investigation was successfully reopened."
-  end
+  # GET /investigations/1/status
+  def status; end
 
   # GET /investigations/1/assign
   def assign
-    authorize @investigation
+    redirect_to investigation_path(@investigation) if @investigation.is_closed
     @assignee = @investigation.assignee
   end
 
   # POST /investigations/1/update_assignee
   def update_assignee
-    authorize @investigation, :assign?
     assignee = User.where("lower(email) = ?", params[:email].downcase).first
     if assignee.nil?
       redirect_to assign_investigation_path(@investigation), alert: "Assignee does not exist."
     else
       @investigation.assignee = assignee
       save_and_respond "Assignee was successfully updated."
+      record_assignment
       NotifyMailer.assigned_investigation(@investigation, assignee).deliver
     end
   end
@@ -81,7 +75,6 @@ class InvestigationsController < ApplicationController
   # PATCH/PUT /investigations/1
   # PATCH/PUT /investigations/1.json
   def update
-    authorize @investigation
     respond_to do |format|
       if @investigation.update(investigation_params)
         format.html { redirect_to @investigation, notice: "Investigation was successfully updated." }
@@ -128,10 +121,18 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.find(params[:id])
   end
 
+  def record_assignment
+    @investigation.activities.create(
+      source: UserSource.new(user: current_user),
+      activity_type: :assign,
+      notes: "Assigned to #{@investigation.assignee.email}"
+    )
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
     params.require(:investigation).permit(
-      :title, :description, :risk_notes, :image,
+      :title, :description, :risk_overview, :image, :risk_level, :sensitivity, :is_closed,
       product_ids: [],
       business_ids: []
     )

@@ -1,23 +1,11 @@
-<% content_for :page_title, "Addresses - Market Surveillance & Product Safety" %>
+<% content_for :page_title, "Business addresses - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to "Business", business_path(@business) %>
-        </li>
-        <li>
-            <%= link_to "Addresses", business_addresses_path(@business) %>
-        </li>
-    </ol>
-</div>
+<%= link_to 'Back to business', @business, class: "govuk-back-link" %>
 
+<%= render "business_heading", business: @business %>
 
-<h1 class="heading-xlarge">Addresses</h1>
-<%= link_to 'New address', new_business_address_path(@business), :class => "button" %><br /><br />
-<p>Businesses for <%= link_to "business", business_path(@business) %>.</p>
+<h2 class="govuk-heading-l govuk-!-margin-bottom-2">Addresses</h2>
+<p class="govuk-!-margin-bottom-6"><%= link_to 'New address', new_business_address_path(@business) %></p>
 
 <%= will_paginate @addresses %>
 <table>

@@ -52,7 +52,7 @@ def create_product(notification, name)
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     country_of_origin: field_from_notification(notification, "countryOfOrigin"),
     brand: brand(notification),
-    images: all_pictures(notification),
+    rapex_images: all_pictures(notification),
     source: ReportSource.new(name: "RAPEX")
   )
 end
@@ -60,9 +60,10 @@ end
 def create_investigation(notification, date, name)
   Investigation.create(
     title: name,
-    description: field_from_notification(notification, "description"),
+    description: field_from_notification(notification, "danger"),
     is_closed: true,
-    risk_notes: risk_notes(notification),
+    risk_overview: field_from_notification(notification, "riskType"),
+    risk_level: risk_level(notification),
     created_at: date,
     updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
     source: ReportSource.new(name: "RAPEX")
@@ -79,7 +80,7 @@ end
 def create_activity(notification, investigation, date)
   Activity.create(
     investigation: investigation,
-    activity_type: ActivityType.find_by(name: "notification"),
+    activity_type: :notification,
     created_at: date,
     updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
     notes: field_from_notification(notification, "measures"),
@@ -114,11 +115,13 @@ def brand(notification)
   brand
 end
 
-def risk_notes(notification)
-  [
-    field_from_notification(notification, "level"),
-    field_from_notification(notification, "riskType")
-  ].compact.join " - "
+def risk_level(notification)
+  level_map = {
+    "Serious risk" => :serious,
+    "Other risk level" => :medium
+  }
+  level_map.default = nil
+  level_map[field_from_notification(notification, "level")]
 end
 
 def all_pictures(notification)
@@ -126,14 +129,15 @@ def all_pictures(notification)
   urls = notification.xpath("pictures/picture")
   urls.each do |url|
     clean_url = url.text.delete("\n") unless url.nil?
-    images.push(Image.create(url: clean_url))
+    # TODO MSPSDS-266: Store images as ActiveStorage attachments instead
+    images.push(RapexImage.create(url: clean_url))
   end
   images
 end
 
 def field_from_notification(notification, field_name)
   field = notification.xpath(field_name)[0]
-  field = field.text.delete("\n") unless field.nil?
+  field = field.text.delete("\n\r") unless field.nil?
   field
 end
 

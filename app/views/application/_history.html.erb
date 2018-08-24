@@ -1,20 +1,23 @@
-<h3 class="heading-medium">
-    History
-</h3>
-
-<% versions.order(:created_at).reverse.each do |version| %>
-  <details>
-    <summary><span class="summary">
-        <%= version.event.upcase %>
-        on <%= version.created_at.to_formatted_s(:db) %>
-        by <%= version.whodunnit && (user = User.find_by(id: version.whodunnit)).present? ? user.email : "anonymous" %>
-    </span></summary>
-
-    <div class="panel panel-border-narrow">
-        <% version.changeset.select { |_, (old, new)| !(old.blank? && new.blank?) }.each do |field, (old, new)| %>
-            <p><%= field %>: <%= old.to_s %> => <%= new.to_s %></p>
+<div class="timeline">
+  <ul>
+    <% versions.reverse.each do |version| %>
+      <li>
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-1"><%= version.event.titleize %></h3>
+        <p class="timeline-details govuk-!-margin-bottom-1">By <%= version.whodunnit && (user = User.find_by(id: version.whodunnit)).present? ? user.email : "anonymous" %>, <%= version.created_at.to_s :long_ordinal %></p>
+        <% version.changeset.select { |_, (from, to)| !(from.blank? && to.blank?) }.each do |field, (from, to)| %>
+          <% if !["id", "created_at", "updated_at"].include?(field) &&  !to.blank? %>
+            <p>
+              Changed "<%= field.titleize %>"
+              <% if !from.blank? %>
+                from "<%= from.to_s %>"
+              <% end %>
+              to "<%= to.to_s %>"
+            </p>
+          <% end %>
         <% end %>
-    </div>
-
-  </details>
-<% end %>
+      </li>
+    <% end %>
+    <!-- A dummy item at the end adds the end blob to the timeline -->
+    <li></li>
+  </ul>
+</div>

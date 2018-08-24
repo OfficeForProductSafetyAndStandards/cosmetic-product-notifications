@@ -1,31 +1,16 @@
 <% content_for :page_title, "New business - Market Surveillance & Product Safety" %>
-<div class="new-business-page">
-    <div class="breadcrumbs">
-        <ol role="breadcrumbs">
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <%= link_to 'Businesses', businesses_path %>
-            </li>
-            <li>
-                <%= link_to 'New', new_business_path %>
-            </li>
-        </ol>
-    </div>
+<div class="new-business-page businesses-search-form">
+    <%= link_to 'Back to list', businesses_path, class: "govuk-back-link" %>
 
-    <h1 class="heading-xlarge">New Business</h1>
-    <div class="grid-row">
-        <div class="column-half">
-            <%= render 'form', business: @business %>
+    <h1 class="govuk-heading-xl">New business</h1>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Business details</h3>
+            <%= render 'form', business: @business, form_model: @business %>
         </div>
-        <div class="column-half">
-            <h2 class="heading-large">Have you seen these businesses?</h2>
-            <div id="suggested-businesses">
-                Enter the company name for suggestions.
-            </div>
+        <div class="govuk-grid-column-one-half">
+            <%= render "suggestions_container" %>
         </div>
     </div>
-
-    <%= link_to 'Back', businesses_path, :class => "link-back" %>
 </div>

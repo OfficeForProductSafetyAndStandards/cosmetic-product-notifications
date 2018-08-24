@@ -1,0 +1,31 @@
+<table class="govuk-!-margin-bottom-3">
+  <thead>
+  <tr>
+    <% if form %>
+      <th class="not-implemented" colspan="1"></th>
+    <% end %>
+    <th>Business name(s)</th>
+    <th>Type(s)</th>
+    <th>Location(s)</th>
+    <th>Cases</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% businesses.each do |business| %>
+    <tr>
+      <% if form %>
+        <td class="not-implemented"><%= form.check_box :business_ids, { multiple: true }, business.id, false %></td>
+      <% end %>
+      <td><%= link_to business.company_name, business %></td>
+      <td><%= business.company_type_code %></td>
+      <td><%= business.addresses.first ? business.addresses.first.short : "" %></td>
+      <td>
+          <span class="investigations">
+            <%= business.investigations.count %>
+          </span>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

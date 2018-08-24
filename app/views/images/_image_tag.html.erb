@@ -1,0 +1,10 @@
+<% class_name = local_assigns[:class_name] || "image-with-preview" %>
+<% if image.metadata["safe"] %>
+  <% if image.variable? %>
+    <%= image_tag image.variant(resize: dimensions), alt: image.metadata["title"], class: class_name %>
+  <% else %>
+    <div class="image-without-preview"><span><%= image.metadata["title"] %></span></div>
+  <% end %>
+<% else %>
+  <div class="image-processing-placeholder"><span>Processing image</span></div>
+<% end %>

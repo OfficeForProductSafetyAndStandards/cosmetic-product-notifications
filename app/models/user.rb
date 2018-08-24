@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  include Searchable
+
+  index_name [Rails.env, "users"].join("_")
+
   default_scope { order(created_at: :desc) }
   has_many :user_source, dependent: :nullify
 

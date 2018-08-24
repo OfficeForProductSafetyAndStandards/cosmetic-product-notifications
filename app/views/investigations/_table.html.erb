@@ -1,0 +1,32 @@
+<table class="investigation-list govuk-!-margin-bottom-3">
+  <thead>
+  <tr>
+    <th>Case</th>
+    <th>Product</th>
+    <th>Status</th>
+    <th>Last updated</th>
+    <th>Assigned to</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @investigations.each do |investigation| %>
+    <tr>
+      <td>
+        <span><%= link_to investigation.title, investigation, class: "govuk-link"%></span><br/>
+        <span>id: <%= investigation.id %></span>
+      </td>
+      <td>
+        <span><%= investigation.products.first ? investigation.products.first.name : "" %></span>
+        <span><%= investigation.products.first ? investigation.products.first.brand : "" %></span>
+      </td>
+      <td>
+        <span><%= investigation.is_closed? ? "Closed" : "Open" %></span>
+        <span class="not-implemented">Progress</span>
+      </td>
+      <td><%= investigation.updated_at.strftime("%d %B %Y") %></td>
+      <td><%= investigation.assignee ? investigation.assignee.email : "" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

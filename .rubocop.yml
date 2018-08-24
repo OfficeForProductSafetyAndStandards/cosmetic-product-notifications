@@ -40,3 +40,7 @@ Metrics/ClassLength:
 # This allows to have ticket numbers next to a 'TODO'. e.g. "TODO MSPSDS-10: Change this"
 Style/CommentAnnotation:
   Enabled: False
+
+Metrics/AbcSize:
+    Max: 20
+    

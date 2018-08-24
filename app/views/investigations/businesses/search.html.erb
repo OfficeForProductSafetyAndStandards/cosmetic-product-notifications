@@ -1,0 +1,27 @@
+<% content_for :page_title, "Add business to case - Market Surveillance & Product Safety" %>
+<%# The data attribute is used by JS to determine if there is an investigation %>
+<div class="investigation-business-page businesses-search-form"
+    data-investigation-id=<%= @investigation.id %>
+    data-business-ids=<%= @investigation.business_ids.join(",") %>
+    >
+
+    <%= link_to 'Back to case', @investigation, class: "govuk-back-link link-back" %>
+
+    <%= render "investigation_heading", investigation: @investigation %>
+    <h2 class="govuk-heading-l">Add business</h2>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+            <%= form_with(model: @business, url: new_investigation_business_path(@investigation), local: true, method: :get) do |form| %>
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Business details</h3>
+                <%= render 'businesses/core_params', form: form, business: @business %>
+                <div class="form-group">
+                    <%= form.submit "Create new", :class => "govuk-button" %>
+                </div>
+            <% end %>
+        </div>
+        <div class="govuk-grid-column-one-half">
+            <%= render 'businesses/suggestions_container' %>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,2 @@
+module Investigations::ProductsHelper
+end

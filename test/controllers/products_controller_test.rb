@@ -4,6 +4,10 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
+    # TODO MSPSDS_197: figure out how to move this to User model without
+    # build breaking (on db creation or docker-compose up)
+    User.import force: true
+
     sign_in users(:one)
     @product = products(:one)
     @product.source = sources(:product_one)
@@ -28,8 +32,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
         description: @product.description,
         gtin: @product.gtin,
         model: @product.model,
-        name: @product.name,
-        url_reference: @product.url_reference
+        name: @product.name
       } }
     end
 
@@ -53,8 +56,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       description: @product.description,
       gtin: @product.gtin,
       model: @product.model,
-      name: @product.name,
-      url_reference: @product.url_reference
+      name: @product.name
     } }
     assert_redirected_to product_url(@product)
   end
