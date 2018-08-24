@@ -13,6 +13,10 @@
 
   <div class="form-group">
     <%= form.label :title, :class => "form-label" %>
+    <span id="title-format-hint" class="govuk-hint">
+      For example, "Brand Name, Model Name, Type – Risk", <br/>
+      e.g. "Charge Works, Travel plug adaptor – Fire hazard"
+    </span>
     <%= form.text_field :title, :class => "form-control" %>
   </div>
 
