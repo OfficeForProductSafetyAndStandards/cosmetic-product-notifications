@@ -11,6 +11,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as_admin
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
+    Investigation.import
   end
 
   test "should get index" do

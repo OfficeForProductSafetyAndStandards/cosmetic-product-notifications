@@ -1,4 +1,4 @@
-<% content_for :page_title, "Investigations - Market Surveillance & Product Safety" %>
+<% content_for :page_title, "Cases - Market Surveillance & Product Safety" %>
 
 <%= render "layouts/navbar" %>
 
@@ -9,7 +9,7 @@
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
       <div class="govuk-grid-column-one-half investigation-number-description">
-        Investigations assigned to you
+        <%= "case".pluralize(@investigations.where(assignee: @current_user).count) %> assigned to you
       </div>
     </div>
     <div class="govuk-grid-column-one-third not-implemented">
@@ -38,10 +38,11 @@
     <%= form.submit ">", name: nil, class: "govuk-button" %>
   </div>
 <% end %>
+
 <br/>
 
 <%= link_to 'Assign', new_investigation_path, class: "govuk-button govuk-button--disabled not-implemented" %>
-<%= link_to 'Create investigation', new_investigation_path, class: "right" %>
+<%= link_to 'Create case', new_investigation_path, class: "right" %>
 
 <%= render 'table' %>
 <%= will_paginate @investigations %>

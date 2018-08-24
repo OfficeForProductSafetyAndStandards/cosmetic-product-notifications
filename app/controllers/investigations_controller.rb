@@ -8,7 +8,13 @@ class InvestigationsController < ApplicationController
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @investigations = Investigation.paginate(page: params[:page], per_page: 20)
+    @investigations = if params[:q].blank?
+                        Investigation.paginate(page: params[:page], per_page: 20)
+                      else
+                        Investigation.prefix_search(params[:q])
+                                     .paginate(page: params[:page], per_page: 20)
+                                     .records
+                      end
   end
 
   # GET /investigations/1
@@ -17,7 +23,7 @@ class InvestigationsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: @investigation.id
+        render pdf: @investigation.id.to_s
       end
     end
   end

@@ -1,7 +1,7 @@
 <%= form_with(model: investigation, local: true) do |form| %>
   <% if investigation.errors.any? %>
     <div id="error_explanation">
-      <h2 class="heading-large"><%= pluralize(investigation.errors.count, "error") %> prohibited this investigation from being saved:</h2>
+      <h2 class="heading-large"><%= pluralize(investigation.errors.count, "error") %> prohibited this case from being saved:</h2>
 
       <ul>
       <% investigation.errors.full_messages.each do |message| %>

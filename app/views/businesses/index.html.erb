@@ -13,8 +13,9 @@
 <br/>
 
 <%= form_with(url: confirm_merge_businesses_path, method: :get) do |form| %>
-  <%= form.submit "Merge selected", name: nil %>
+  <%= form.submit "Merge selected", name: nil, class: "not-implemented" %>
   <%= link_to 'New business', new_business_path, class: "right" %>
+
   <%= will_paginate @businesses %>
   <%= render 'table', businesses: @businesses, form: form %>
   <%= will_paginate @businesses %>

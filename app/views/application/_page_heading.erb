@@ -1,3 +1,4 @@
 <% parent_name = @parent.is_a?(Investigation) ? "Case" : @parent.class.name %>
-<p class="govuk-heading-m govuk-!-margin-top-2 govuk-!-margin-bottom-1"><%= "#{parent_name} ID: #{@parent.id}" %></p>
+
+<p class="govuk-heading-m govuk-!-margin-bottom-1"><%= "#{parent_name} ID: #{@parent.id}" %></p>
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-1"><%= title %></h1>

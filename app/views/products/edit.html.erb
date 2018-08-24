@@ -1,21 +1,7 @@
 <% content_for :page_title, "Edit product - Market Surveillance & Product Safety" %>
+<%= link_to "Back to product", @product, :class => "govuk-back-link" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Products', products_path %>
-        </li>
-        <li>
-            <%= link_to 'Edit', edit_product_path(@product) %>
-        </li>
-    </ol>
-</div>
-
-<h1 class="heading-xlarge">Edit product</h1>
+<%= render "product_heading", product: @product %>
+<h2 class="govuk-heading-l">Product details</h2>
 
 <%= render 'form', product: @product, countries: @countries, form_model: @product %>
-
-<%= link_to 'Back', products_path, :class => "link-back" %>

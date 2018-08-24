@@ -1,9 +1,9 @@
 <% content_for :page_title, "Update assignee - Market Surveillance & Product Safety" %>
 
-<%= link_to 'Back to investigation', @investigation, :class => "link-back" %>
+<%= link_to 'Back to case', @investigation, :class => "link-back" %>
 
 <%= render "investigation_heading", investigation: @investigation %>
-<h2 class="govuk-heading-l">Status</h2>
+<h2 class="govuk-heading-l">Case status</h2>
 
 <%= form_with(model: @investigation, local: true) do |form| %>
   <div class="form-group">

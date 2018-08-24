@@ -1,4 +1,9 @@
 class Investigation < ApplicationRecord
+  include Searchable
+  include Documentable
+
+  index_name [Rails.env, "investigations"].join("_")
+
   validates :title, presence: true
   default_scope { order(updated_at: :desc) }
 
@@ -10,7 +15,10 @@ class Investigation < ApplicationRecord
 
   has_many :activities, dependent: :destroy
   belongs_to :assignee, class_name: "User", optional: true
+
+  has_many_attached :documents
   has_many_attached :images
+
   has_one :source, as: :sourceable, dependent: :destroy
 
   accepts_nested_attributes_for :products
@@ -24,4 +32,10 @@ class Investigation < ApplicationRecord
   enum risk_level: %i[low medium serious severe], _suffix: true
 
   enum sensitivity: %i[low medium high], _suffix: true
+
+  def status
+    is_closed? ? "Closed" : "Open"
+  end
 end
+
+Investigation.import force: true # for auto sync model with elastic search
