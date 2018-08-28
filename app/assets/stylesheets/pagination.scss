@@ -1,17 +1,13 @@
-@import "design-patterns/buttons"; 
-@import "colours";
+@import "govuk-frontend/all";
 
 .pagination {
     a {
-        @include button($grey-3);
+        @extend %govuk-link;
     }
 
-    .current {
-        @include button($grey-1);
+    > * {
+        @include govuk-font(19);
         font-style: normal;
-    }
-
-    .previous_page, .next_page {
-        @include button;
+        margin-right: govuk-spacing(2);
     }
 }
