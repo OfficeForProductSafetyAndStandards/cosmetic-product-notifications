@@ -1,3 +1,12 @@
+function simpleAccessibleAutocomplete(id) {
+    if (document.getElementById(id)) {
+        accessibleAutocomplete.enhanceSelectElement({
+            defaultValue: "",
+            selectElement: document.getElementById(id)
+        });
+    }
+}
+
 function searchOnTextInput(inputElement, url, buildQuery, callback) {
     var debounceTimeout = null;
     var searchRequest = null;
