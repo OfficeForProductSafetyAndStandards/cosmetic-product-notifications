@@ -74,7 +74,7 @@
   <tr>
     <th>Cases</th>
     <% @product.investigations.each do |investigation| %>
-      <td><%= link_to investigation.id, investigation %></td>
+      <td><%= link_to investigation.id, polymorphic_url(investigation) %></td>
       </tr>
     <% end %>
 <% end -%>
