@@ -3,6 +3,7 @@
 one:
   gtin: MyString
   name: MyString
+  product_type: MyString
   description: MyText
   model: MyString
   country_of_origin: MyString
@@ -12,6 +13,7 @@ one:
 two:
   gtin: MyString
   name: MyString
+  product_type: MyString
   description: MyText
   model: MyString
   country_of_origin: MyString

@@ -6,7 +6,8 @@
       <% end %>
       <th>Name</th>
       <th>Brand</th>
-      <th>Origin Co</th>
+      <th>Type</th>
+      <th>Origin</th>
       <th>Cases</th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
         <% end %>
         <td><%= link_to product.name, product %></td>
         <td><%= product.brand %></td>
+        <td><%= product.product_type %></td>
         <td><%= product.country_of_origin_for_display %></td>
         <td>
           <span class="investigations">
