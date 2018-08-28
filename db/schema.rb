@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_24_101254) do
+ActiveRecord::Schema.define(version: 2018_08_28_082107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2018_08_24_101254) do
     t.datetime "updated_at", null: false
     t.string "country_of_origin"
     t.date "date_placed_on_market"
+    t.string "product_type"
   end
 
   create_table "rapex_images", id: :serial, force: :cascade do |t|

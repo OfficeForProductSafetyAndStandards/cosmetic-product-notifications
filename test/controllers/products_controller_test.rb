@@ -29,6 +29,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       post products_url, params: { product: {
         batch_number: @product.batch_number,
         brand: @product.brand,
+        product_type: @product.product_type,
         description: @product.description,
         gtin: @product.gtin,
         model: @product.model,
@@ -53,6 +54,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     patch product_url(@product), params: { product: {
       batch_number: @product.batch_number,
       brand: @product.brand,
+      product_type: @product.product_type,
       description: @product.description,
       gtin: @product.gtin,
       model: @product.model,
