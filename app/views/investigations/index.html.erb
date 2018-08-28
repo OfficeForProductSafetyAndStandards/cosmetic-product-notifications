@@ -42,7 +42,7 @@
 <br/>
 
 <%= link_to 'Assign', new_investigation_path, class: "govuk-button govuk-button--disabled not-implemented" %>
-<%= link_to 'Create case', new_investigation_path, class: "right" %>
+<p><%= link_to 'Create new case', new_investigation_path, class: "govuk-body govuk-!-font-size-19  govuk-!-font-weight-bold" %></p>
 
 <%= render 'table' %>
 <%= will_paginate @investigations %>
