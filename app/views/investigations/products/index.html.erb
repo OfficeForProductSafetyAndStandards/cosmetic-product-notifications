@@ -1,40 +1,27 @@
-<% content_for :page_title, "Add product to investigation - Market Surveillance & Product Safety" %>
-<%# The data attribute is used by JS to determine if there is an investigation %>
-<div class="investigation-product-page products-search-form"
-    data-investigation-id=<%= @investigation.id %>
-    data-product-ids=<%= @investigation.product_ids.join(",") %>
-    >
-    <div class="breadcrumbs">
-        <ol role="breadcrumbs">
-            <li>
-                <a href="/">Home</a>
-            </li>
-                <li>
-                    <%= link_to 'Investigations', investigations_path %>
-                </li>
-                <li>
-                    <%= link_to 'Investigation', @investigation %>
-                </li>
-                <li>
-                    <%= link_to 'Add Product', new_investigation_product_path(@investigation) %>
-                </li>
-        </ol>
-    </div>
+<% content_for :page_title, "Case products - Market Surveillance & Product Safety" %>
 
-    <%= link_to 'Back', @investigation, class: "govuk-back-link link-back" %>
+<%= link_to 'Back to case', @investigation, class: "govuk-back-link" %>
 
-    <h1 class="heading-xlarge">Add product to investigation</h1>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
-            <%= form_with(model: @product, url: new_investigation_product_path(@investigation), local: true, method: :get) do |form| %>
-                <%= render 'products/core_params', form: form, product: @product, countries: @countries %>
+<%= render "investigation_heading", investigation: @investigation %>
+
+<h2 class="govuk-heading-l govuk-!-margin-bottom-2">Manage products</h2>
+<%= link_to 'Add product', search_investigation_products_path(@investigation) %>
+
+<div class="govuk-!-padding-top-8">
+    <% if @investigation.products.any? %>
+        <% @investigation.products.each do |product| %>
+            <%= render layout: "product_summary", locals: { product: product } do %>
                 <div class="form-group">
-                    <%= form.submit "Create new", :class => "govuk-button" %>
+                    <%= link_to 'Remove',
+                                investigation_product_path(@investigation, product),
+                                method: :delete,
+                                data: { confirm: 'Are you sure?' },
+                                class: "button-warning"
+                    %>
                 </div>
             <% end %>
-        </div>
-        <div class="govuk-grid-column-one-half">
-            <%= render 'products/suggestions_container' %>
-        </div>
-    </div>
+        <% end %>
+    <% else %>
+        <p>No products.</p>
+    <% end %>
 </div>

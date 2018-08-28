@@ -7,7 +7,7 @@ module Searchable
 
     # "prefix" may be changed to a more appropriate query. For alternatives see:
     # https://www.elastic.co/guide/en/elasticsearch/reference/current/term-level-queries.html
-    def self.search(params)
+    def self.prefix_search(params)
       __elasticsearch__.search({
         query: {
           prefix: {

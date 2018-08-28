@@ -26,9 +26,34 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: @product.id
+        render pdf: @product.id.to_s
       end
     end
+  end
+
+  # GET /products/confirm_merge
+  def confirm_merge
+    if params[:product_ids] && params[:product_ids].length > 1
+      @products = Product.find(params[:product_ids])
+    else
+      redirect_to products_url, notice: "Please select at least two products before merging."
+    end
+  end
+
+  # POST /products/merge
+  def merge
+    selected_product = Product.find(params[:selected_product_id])
+
+    other_product_ids = params[:product_ids].reject { |id| id == selected_product.id }
+    other_products = Product.find(other_product_ids)
+
+    other_products.each do |other_product|
+      selected_product.merge!(other_product,
+                              attributes: selected_product.attributes.keys,
+                              associations: %w[investigation_products])
+    end
+
+    redirect_to products_url, notice: "Products were successfully merged."
   end
 
   # GET /products/new
@@ -96,7 +121,7 @@ class ProductsController < ApplicationController
     params[:sort] = sort_column
     params[:direction] = sort_direction
 
-    Product.search(params).paginate(page: params[:page], per_page: 20).records
+    Product.prefix_search(params).paginate(page: params[:page], per_page: 20).records
   end
 
   def search_for_gtin

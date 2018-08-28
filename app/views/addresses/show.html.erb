@@ -1,81 +1,51 @@
 <% content_for :page_title, "View address - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to "Business", business_path(@address.business) %>
-        </li>
-        <li>
-            <%= link_to "Addresses", business_addresses_path(@address.business) %>
-        </li>
-        <li>
-            <%= link_to "View", @address %>
-        </li>
-    </ol>
+<%= link_to 'Back to addresses', business_addresses_path(@business), :class => "govuk-back-link" %>
+
+<%= render "business_heading", business: @business %>
+<h2 class="govuk-heading-l"><%= @address.address_type %></h2>
+
+<div class="govuk-grid-row govuk-!-padding-bottom-6">
+  <div class="govuk-grid-column-full">
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Address details</h3>
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Source</th>
+          <td class="govuk-table__cell"><%= @address.source.show %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Line 1</th>
+          <td class="govuk-table__cell"><%= @address.line_1 %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Line 2</th>
+          <td class="govuk-table__cell"><%= @address.line_2 %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Locality</th>
+          <td class="govuk-table__cell"><%= @address.locality %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Country</th>
+          <td class="govuk-table__cell"><%= @address.country %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Postal code</th>
+          <td class="govuk-table__cell"><%= @address.postal_code %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <% if policy(@address).update? %>
+      <%= link_to 'Edit details', edit_address_path(@address) %>
+    <% end %>
+  </div>
 </div>
 
-<h1 class="heading-xlarge">
-  Address
-</h1>
-<p>Address for <%= link_to "business", business_path(@address.business) %>.</p>
-
-<h4 class="heading-small">
-  Address type
-</h4>
-<p>
-  <%= @address.address_type %>
-</p>
-
-<h4 class="heading-small">
-  Source
-</h4>
-<p>
-  <%= @address.source.show %>
-</p>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Address type</td>
-      <td><%= @address.address_type %></td>
-    </tr>
-    <tr>
-      <td>Line 1</td>
-      <td><%= @address.line_1 %></td>
-    </tr>
-    <tr>
-      <td>Line 2</td>
-      <td><%= @address.line_2 %></td>
-    </tr>
-    <tr>
-      <td>Locality</td>
-      <td><%= @address.locality %></td>
-    </tr>
-    <tr>
-      <td>Country</td>
-      <td><%= @address.country %></td>
-    </tr>
-    <tr>
-      <td>Postal code</td>
-      <td><%= @address.postal_code %></td>
-    </tr>
-    <tr>
-      <td>Source</td>
-      <td><%= @address.source.show %></td>
-    </tr>
-  </tbody>
-</table>
-<br /><br />
-
-<% if policy(@address).update? %>
-  <div class="form-group">
-    <%= link_to 'Edit', edit_address_path(@address), :class => "govuk-button" %>
+<div class="govuk-grid-row govuk-!-padding-bottom-6">
+  <div class="govuk-grid-column-full">
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-1">History</h3>
+    <%= render 'history', versions: @address.versions %>
   </div>
-<% end %>
-
-<%= link_to 'Back', business_addresses_path(@address.business), :class => "link-back" %>
-
-<%= render 'history', versions: @address.versions %>
+</div>

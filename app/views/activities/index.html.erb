@@ -1,44 +1,9 @@
 <% content_for :page_title, "Activities - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to "Investigation", investigation_path(@investigation) %>
-        </li>
-        <li>
-            <%= link_to "Activities", investigation_activities_path(@investigation) %>
-        </li>
-    </ol>
-</div>
+<%= link_to 'Back to case', @investigation, class: "govuk-back-link" %>
 
+<%= render "investigation_heading", investigation: @investigation %>
 
-<h1 class="heading-xlarge">Activities</h1>
-<%= link_to 'New activity', new_investigation_activity_path(@investigation), :class => "govuk-button" %><br /><br />
-<p>Activities for <%= link_to "investigation", investigation_path(@investigation) %>.</p>
-
-<%= will_paginate @activities %>
-<table>
-  <thead>
-    <tr>
-      <th>Time</th>
-      <th>Source</th>
-      <th>Activity type</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @activities.each do |activity| %>
-      <tr>
-        <td><%= link_to activity.created_at, activity %></td>
-        <td><%= activity.source.show %></td>
-        <td><%= link_to activity.activity_type.titleize, activity %></td>
-        <td><%= link_to 'Delete', activity, method: :delete, data: { confirm: 'Are you sure?' } if policy(activity).destroy? %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<br />
-<%= will_paginate @activities %>
+<h2 class="govuk-heading-l govuk-!-margin-bottom-2">Activities</h2>
+<%= render "activities_summary", activities: @activities %>
+<%= link_to 'New activity', new_investigation_activity_path(@investigation) %>

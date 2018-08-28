@@ -7,8 +7,6 @@ class BusinessesController < ApplicationController
   before_action :create_business, only: %i[create]
   before_action :update_business, only: %i[update]
 
-  BUSINESS_SUGGESTION_LIMIT = 5
-
   # GET /businesses
   # GET /businesses.json
   def index
@@ -22,6 +20,31 @@ class BusinessesController < ApplicationController
     return unless @business.from_companies_house?
     PaperTrail.request.whodunnit = nil # This will stop papertrail recording the current user
     CompaniesHouseClient.instance.update_business_from_companies_house(@business)
+  end
+
+  # GET /businesses/confirm_merge
+  def confirm_merge
+    if params[:business_ids] && params[:business_ids].length > 1
+      @businesses = Business.find(params[:business_ids])
+    else
+      redirect_to businesses_url, notice: "Please select at least two businesses before merging."
+    end
+  end
+
+  # POST /businesses/merge
+  def merge
+    selected_business = Business.find(params[:selected_business_id])
+
+    other_business_ids = params[:business_ids].reject { |id| id == selected_business.id }
+    other_businesses = Business.find(other_business_ids)
+
+    other_businesses.each do |other_business|
+      selected_business.merge!(other_business,
+                               attributes: selected_business.attributes.keys,
+                               associations: %w[addresses investigation_businesses])
+    end
+
+    redirect_to businesses_url, notice: "Businesses were successfully merged."
   end
 
   # GET /businesses/new
@@ -38,9 +61,7 @@ class BusinessesController < ApplicationController
   # GET /businesses/search
   def search
     @existing_businesses = search_for_businesses(BUSINESS_SUGGESTION_LIMIT)
-    companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(params[:q])
-    @companies_house_businesses = filter_out_existing_businesses(companies_house_response)
-                                  .first(BUSINESS_SUGGESTION_LIMIT)
+    @companies_house_businesses = search_companies_house(params[:q], BUSINESS_SUGGESTION_LIMIT)
     render partial: "search_results"
   end
 
@@ -91,12 +112,12 @@ class BusinessesController < ApplicationController
     params[:sort] = sort_column
     params[:direction] = sort_direction
 
-    Business.search(params).paginate(page: params[:page], per_page: 20).records
+    Business.prefix_search(params).paginate(page: params[:page], per_page: 20).records
   end
 
   def create_business
     @business = Business.new(business_params)
-    set_defaults_on_primary_address if @business.addresses.any?
+    defaults_on_primary_address(@business) if @business.addresses.any?
     @business.source = UserSource.new(user: current_user)
   end
 
@@ -106,7 +127,7 @@ class BusinessesController < ApplicationController
 
   def update_business
     @business.assign_attributes(business_params)
-    set_defaults_on_primary_address if @business.addresses.any?
+    defaults_on_primary_address(@business) if @business.addresses.any?
   end
 
   def respond_to_business_creation
@@ -121,31 +142,11 @@ class BusinessesController < ApplicationController
     end
   end
 
-  def filter_out_existing_businesses(businesses)
-    businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
-  end
-
-  def set_defaults_on_primary_address
-    @business.primary_address.address_type ||= "Registered office address"
-    @business.primary_address.source ||= UserSource.new(user: current_user)
-  end
-
   def sort_column
     Business.column_names.include?(params[:sort]) ? params[:sort] : "company_name"
   end
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def business_params
-    params.require(:business).permit(
-      :company_name,
-      :company_type_code,
-      :nature_of_business_id,
-      :additional_information,
-      addresses_attributes: %i[id line_1 line_2 locality country postal_code _destroy]
-    )
   end
 end

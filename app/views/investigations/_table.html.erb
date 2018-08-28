@@ -1,28 +1,31 @@
-<table class="investigation-list">
+<table class="investigation-list govuk-!-margin-bottom-3">
   <thead>
   <tr>
-    <th><%= sortable "title", "Title" %></th>
-    <th>Product</th>
+    <th><%= sortable "title", "Case" %></th>
     <th><%= sortable "is_closed", "Status" %></th>
-    <th><%= sortable "updated_at", "Last updated" %></th>
-    <th><%= sortable "assignee", "Assigned to" %></th>
+    <th>Risk</th>
+    <th><%= sortable "assignee", "Assigned" %></th>
+    <th><%= sortable "updated_at", "Last update" %></th>
   </tr>
   </thead>
 
   <tbody>
   <% @investigations.each do |investigation| %>
     <tr>
-      <td><%= link_to investigation.title, investigation, class: "govuk-link"%></td>
       <td>
-        <span><%= investigation.products.first ? investigation.products.first.name : "" %></span>
-        <span><%= investigation.products.first ? investigation.products.first.brand : "" %></span>
+        <%= link_to investigation, class: "govuk-link" do %>
+          <span class="govuk-!-font-size-16"><%= investigation.id %></span><br />
+          <%= investigation.title %>
+        <% end %>
       </td>
       <td>
-        <span><%= investigation.is_closed? ? "Closed" : "Open" %></span>
-        <span class="not-implemented">Progress</span>
+        <span><%= investigation.status %></span>
       </td>
-      <td><%= investigation.updated_at.strftime("%d %B %Y") %></td>
+      <td>
+        <span><%= investigation.risk_overview %></span>
+      </td>
       <td><%= investigation.assignee ? investigation.assignee.email : "" %></td>
+      <td class="govuk-!-font-weight-bold"><%= investigation.updated_at.strftime("%d/%m/%Y") %></td>
     </tr>
   <% end %>
   </tbody>

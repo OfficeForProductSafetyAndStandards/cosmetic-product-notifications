@@ -1,24 +1,10 @@
 <% content_for :page_title, "New activity - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to "Investigation", investigation_path(@activity.investigation) %>
-        </li>
-        <li>
-            <%= link_to "Activities", investigation_activities_path(@activity.investigation) %>
-        </li>
-        <li>
-            <%= link_to "New", new_investigation_activity_path(@activity.investigation) %>
-        </li>
-    </ol>
-</div>
+<%= link_to 'Back to case', @investigation, :class => "link-back" %>
 
-<h1 class="heading-xlarge">New activity</h1>
+<%= render "investigation_heading", investigation: @investigation %>
 
-<%= render 'form', activity: @activity, investigation: @activity.investigation %>
+<h2 class="govuk-heading-l">New activity</h2>
 
-<%= link_to 'Back', investigation_activities_path(@activity.investigation), :class => "link-back" %>
+<%= render 'form', activity: @activity, investigation: @investigation %>
+

@@ -1,12 +1,14 @@
-<table>
+<table class="govuk-!-margin-bottom-3">
   <thead>
     <tr>
-      <th><%= sortable "name", "Name" %></th>
-      <th><%= sortable "brand", "Brand" %></th>
-      <th><%= sortable "category", "Category(s)" %></th>
-      <th><%= sortable "country_of_origin", "Origin Co" %></th>
+      <% if form %>
+        <th class="not-implemented"colspan="1"></th>
+      <% end %>
+      <th><%= sortable "name", "Product" %></th>
+      <th><%= sortable "type", "Type" %></th>
+      <th><%= sortable "country_of_origin", "Origin" %></th>
       <% unless @compressed %>
-        <th>Investigations</th>
+        <th>Cases</th>
       <% end %>
     </tr>
   </thead>
@@ -14,13 +16,15 @@
   <tbody>
     <% @products.each do |product| %>
       <tr>
+        <% if form %>
+          <td class="not-implemented"><%= form.check_box :product_ids, { multiple: true }, product.id, false %></td>
+        <% end %>
         <td><%= link_to product.name, product %></td>
-        <td><%= product.brand %></td>
-        <td><span class="not-implemented">Some category (+10)</span></td>
-        <td><%= product.country_of_origin_for_display%></td>
+        <td><%= product.product_type %></td>
+        <td><%= product.country_of_origin_for_display %></td>
         <td>
-          <span class="investigations not-implemented">
-            <%= link_to product.investigations.count, investigations_path %>
+          <span class="govuk-!-font-size-36 govuk-!-font-weight-bold">
+            <%= product.investigations.count %>
           </span>
         </td>
       </tr>

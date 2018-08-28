@@ -20,6 +20,8 @@
 // @import "url-helpers";                         // Function to output image-url, or prefixed path (Rails and Compass only)
 
 @import "govuk-elements-sass/public/sass/govuk-elements";
+
+$govuk-assets-path: "/assets/govuk-frontend/assets/";
 @import "govuk-frontend/all";
 
 .dummy-column {
@@ -35,6 +37,8 @@
 }
 
 .not-implemented {
+  // TODO MSPSDS-265: to comply with the GDS standards, components missing functionality are hidden
+  display: none!important;
   color: $red;
   opacity: 0.2;
 }
@@ -44,12 +48,12 @@
   margin-left: 2em;
 }
 
-.navbar {
-  padding-top: 1.5em;
-}
-
 .small-space-below {
   margin-bottom: 0.5em;
+}
+
+.large-space-below {
+  margin-bottom: 2em;
 }
 
 .small-square-dark {
@@ -68,4 +72,9 @@
   text-align: center;
   color: $white;
   background-color: $grey-2;
+}
+
+.row-border-top {
+  padding-top: 2em;
+  border-top: 1px solid $grey-3;
 }

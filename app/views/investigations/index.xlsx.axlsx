@@ -1,7 +1,8 @@
 book = xlsx_package.workbook
 
-book.add_worksheet name: "Investigations" do |sheet_investigations|
-  sheet_investigations.add_row %w[ID Status Description Assignee Source Risk_Notes Products Businesses Activities]
+book.add_worksheet name: "Cases" do |sheet_investigations|
+  sheet_investigations.add_row %w[ID Status Description Assignee Source Risk_Overview Risk_Level Sensitivity
+                                  Products Businesses Activities]
 
   @investigations.each do |investigation|
     sheet_investigations.add_row [
@@ -10,7 +11,9 @@ book.add_worksheet name: "Investigations" do |sheet_investigations|
       investigation.description,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
       investigation.source.show,
-      investigation.risk_notes,
+      investigation.risk_overview,
+      investigation.risk_level&.titleize,
+      investigation.sensitivity&.titleize,
       investigation.products.count,
       investigation.businesses.count,
       investigation.activities.count
@@ -19,7 +22,8 @@ book.add_worksheet name: "Investigations" do |sheet_investigations|
 end
 
 book.add_worksheet name: "Products" do |sheet_products|
-  sheet_products.add_row %w[ID GTIN Name Description Model MPN Batch_Number Purchase_URL Brand Source Investigation_ID]
+  sheet_products.add_row %w[ID GTIN Name Type Description Model Country_of_origin Date_placed_on_market
+                            Batch_Number Brand Source Case_ID]
 
   @investigations.each do |investigation|
     investigation.products.each do |product|
@@ -27,15 +31,12 @@ book.add_worksheet name: "Products" do |sheet_products|
         product.id,
         product.gtin,
         product.name,
+        product.product_type,
         product.description,
         product.model,
-        product.serial_number,
-        product.manufacturer,
         product.country_of_origin,
         product.date_placed_on_market&.to_s(:long_ordinal),
-        product.associated_parts,
         product.batch_number,
-        product.url_reference,
         product.brand,
         product.source.show,
         investigation.id
@@ -46,7 +47,7 @@ end
 
 book.add_worksheet name: "Businesses" do |sheet_businesses|
   sheet_businesses.add_row %w[ID Company_Number Company_Name Company_Type Address_Line_1 Address_Line_2 Locality
-                              Country Postal_Code Nature_Of_Business Additional_Information Source Investigation_ID]
+                              Country Postal_Code Nature_Of_Business Additional_Information Source Case_ID]
 
   @investigations.each do |investigation|
     investigation.businesses.each do |business|
@@ -70,13 +71,13 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
 end
 
 book.add_worksheet name: "Actions" do |sheet_actions|
-  sheet_actions.add_row %w[ID Type Notes Source Investigation_ID]
+  sheet_actions.add_row %w[ID Type Notes Source Case_ID]
 
   @investigations.each do |investigation|
     investigation.activities.each do |activity|
       sheet_actions.add_row [
         activity.id,
-        activity.type || "unknown",
+        activity.activity_type || "unknown",
         activity.notes,
         activity.source.show,
         investigation.id

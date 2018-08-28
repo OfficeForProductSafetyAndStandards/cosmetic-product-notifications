@@ -1,24 +1,28 @@
-<table>
+<table class="govuk-!-margin-bottom-3">
   <thead>
   <tr>
-    <th><%= sortable "company_name", "Business name(s)" %></th>
-    <th>Type(s)</th>
-    <th>Category(s)</th>
-    <th>Location(s)</th>
-    <th>Investigations</th>
+    <% if form %>
+      <th class="not-implemented" colspan="1"></th>
+    <% end %>
+    <th><%= sortable "company_name", "Business" %></th>
+    <th>Type</th>
+    <th>Primary Loc.</th>
+    <th>Cases</th>
   </tr>
   </thead>
 
   <tbody>
-  <% @businesses.each do |business| %>
+  <% businesses.each do |business| %>
     <tr>
+      <% if form %>
+        <td class="not-implemented"><%= form.check_box :business_ids, { multiple: true }, business.id, false %></td>
+      <% end %>
       <td><%= link_to business.company_name, business %></td>
-      <td><%= business.company_type_code %> <span class="not-implemented">(+10)</span></td>
-      <td><span class="not-implemented">Some category (+10)</span></td>
+      <td><%= business.company_type_code %></td>
       <td><%= business.addresses.first ? business.addresses.first.short : "" %></td>
       <td>
-          <span class="investigations not-implemented">
-            <%= link_to business.investigations.count, investigations_path %>
+          <span class="govuk-!-font-size-36 govuk-!-font-weight-bold">
+            <%= business.investigations.count %>
           </span>
       </td>
     </tr>

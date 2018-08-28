@@ -1,0 +1,58 @@
+@import "govuk-frontend/all";
+
+// Taken from https://github.com/alphagov/govuk-design-system/blob/master/src/stylesheets/components/_navigation.scss
+.app-navigation {
+  margin-bottom: govuk-spacing(5); // Adding a margin is specific to MSPSDS
+  $navigation-height: 53px;
+  background-color: govuk-colour("grey-4");
+  @include govuk-font(19, $weight: bold);
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      box-sizing: border-box;
+      height: $navigation-height;
+      float: left;
+      line-height: $navigation-height;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+
+      &:hover {
+        border-bottom: 4px solid govuk-colour("light-blue");
+      }
+
+      &.app-navigation--current-page {
+        border-bottom: 4px solid govuk-colour("blue") !important;
+
+        a:hover {
+          color: $govuk-link-colour;
+        }
+      }
+
+      a {
+        @include govuk-typography-weight-bold; // Override .govuk-link weight
+        display: block;
+        padding: 0 govuk-spacing(3);
+        color: $govuk-link-colour;
+        text-decoration: none;
+
+        @include govuk-media-query($until: tablet) {
+          padding: 0 govuk-spacing(2);
+        }
+
+        &:visited {
+          color: $govuk-link-colour;
+        }
+
+        &:hover,
+        &:focus {
+          color: $govuk-link-hover-colour;
+          background-color: inherit;
+        }
+      }
+    }
+  }
+}

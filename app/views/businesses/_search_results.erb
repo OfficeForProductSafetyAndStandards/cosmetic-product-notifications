@@ -1,30 +1,23 @@
-<h3 class="heading-medium">Existing businesses</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Company name</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% if @existing_businesses.any? %>
-      <% @existing_businesses.each do |business| %>
-        <tr>
-          <td><%= business.company_name %></td>
-          <td>
-            <%= link_to "View", business %>
-          </td>
-        </tr>
-      <% end %>
-    <% else %>
-     <tr><td colspan="2">No matches.</td></tr>
+<h3 class="govuk-heading-s">Existing businesses</h3>
+<% if @existing_businesses.any? %>
+  <% @existing_businesses.each do |business| %>
+    <%= render layout: "business_summary", locals: { business: business } do %>
+      <% if @investigation.present? %>
+        <div class="govuk-!-margin-top-3">
+          <%= form_with(url: add_investigation_businesses_path(@investigation), local: true) do |form| %>
+            <%= form.hidden_field :business_id, value: business.id %>
+            <%= form.submit "Add", :class => "govuk-button" %>
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  <% end %>
+<% else %>
+  <p>No matches.</p>
+<% end %>
 
 
-<h3 class="heading-medium">From Companies House</h3>
+<h3 class="govuk-heading-s">From Companies House</h3>
 <table>
   <thead>
     <tr>
@@ -39,7 +32,11 @@
         <tr>
           <td><%= link_to business[:company_name], business[:url], target: "_blank" %></td>
           <td>
-            <%= form_with(url: "/businesses/companies_house", local: true) do |form| %>
+            <%= form_with(
+              url: @investigation.present? ? companies_house_investigation_businesses_path(@investigation)
+                                           : companies_house_businesses_path,
+              local: true) do |form| %>
+
               <%= form.hidden_field :company_number, value: business[:company_number] %>
               <%= form.submit "Add", :class => "govuk-button" %>
             <% end %>

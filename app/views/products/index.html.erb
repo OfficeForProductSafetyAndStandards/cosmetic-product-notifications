@@ -6,14 +6,16 @@
   <div class="form-group">
     <%= form.label "Search for Products", class: "form-label" %>
     <%= form.text_field :q, value: params[:q], class: "form-control" %>
-    <%= form.submit ">", name: nil, class: "govuk-button" %>
+    <%= form.submit "Search", name: nil, class: "govuk-button" %>
   </div>
 <% end %>
+
 <br/>
 
-<%= link_to 'New product', new_product_path, class: "govuk-button right" %><br /><br />
+<%= form_with(url: confirm_merge_products_path, method: :get) do |form| %>
+  <%= form.submit "Merge selected", name: nil, class: "not-implemented" %>
+  <p><%= link_to 'Create new product', new_product_path, class: "govuk-body govuk-!-font-size-19  govuk-!-font-weight-bold" %></p>
 
-<%= will_paginate @products %>
-<%= render 'table', product: @products %>
-<%= will_paginate @products %>
-
+  <%= render 'table', product: @products, form: form %>
+  <%= will_paginate @products %>
+<%end%>

@@ -1,5 +1,3 @@
-require "elasticsearch/model"
-
 class User < ApplicationRecord
   include Searchable
 

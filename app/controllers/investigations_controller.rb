@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
-  before_action :set_investigation, only: %i[show edit update destroy close reopen assign update_assignee add_product]
+  before_action :set_investigation, only: %i[show edit update destroy assign update_assignee status]
   before_action :create_investigation, only: %i[create]
 
   # GET /investigations
@@ -19,7 +19,7 @@ class InvestigationsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: @investigation.id
+        render pdf: @investigation.id.to_s
       end
     end
   end
@@ -30,32 +30,19 @@ class InvestigationsController < ApplicationController
   end
 
   # GET /investigations/1/edit
-  def edit
-    authorize @investigation
-  end
+  def edit; end
 
-  # POST /investigations/1/close
-  def close
-    @investigation.is_closed = true
-    save_and_respond "Investigation was successfully closed."
-  end
-
-  # POST /investigations/1/reopen
-  def reopen
-    authorize @investigation
-    @investigation.is_closed = false
-    save_and_respond "Investigation was successfully reopened."
-  end
+  # GET /investigations/1/status
+  def status; end
 
   # GET /investigations/1/assign
   def assign
-    authorize @investigation
+    redirect_to investigation_path(@investigation) if @investigation.is_closed
     @assignee = @investigation.assignee
   end
 
   # POST /investigations/1/update_assignee
   def update_assignee
-    authorize @investigation, :assign?
     assignee = User.where("lower(email) = ?", params[:email].downcase).first
     if assignee.nil?
       redirect_to assign_investigation_path(@investigation), alert: "Assignee does not exist."
@@ -65,12 +52,6 @@ class InvestigationsController < ApplicationController
       record_assignment
       NotifyMailer.assigned_investigation(@investigation, assignee).deliver
     end
-  end
-
-  # POST /investigations/1/add_product
-  def add_product
-    @investigation.products << Product.find(params[:product_id])
-    redirect_to @investigation, notice: "Product was successfully added."
   end
 
   # POST /investigations
@@ -90,7 +71,6 @@ class InvestigationsController < ApplicationController
   # PATCH/PUT /investigations/1
   # PATCH/PUT /investigations/1.json
   def update
-    authorize @investigation
     respond_to do |format|
       if @investigation.update(investigation_params)
         format.html { redirect_to @investigation, notice: "Investigation was successfully updated." }
@@ -122,7 +102,8 @@ class InvestigationsController < ApplicationController
     params[:q] ||= ""
     params[:sort] = sort_column
     params[:direction] = sort_direction
-    Investigation.search(params).paginate(page: params[:page], per_page: 20).records
+
+    Investigation.prefix_search(params).paginate(page: params[:page], per_page: 20).records
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -167,7 +148,7 @@ class InvestigationsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
     params.require(:investigation).permit(
-      :title, :description, :risk_notes, :image, :is_closed,
+      :title, :description, :risk_overview, :image, :risk_level, :sensitivity, :is_closed,
       product_ids: [],
       business_ids: []
     )

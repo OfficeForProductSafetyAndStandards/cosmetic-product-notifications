@@ -11,9 +11,3 @@ $(document).on("turbolinks:load", function() {
         }
     );
 });
-
-function buildCompaniesHouseQuery() {
-    return {
-        q: $('.new-business-page .search-term').val()
-    };
-}

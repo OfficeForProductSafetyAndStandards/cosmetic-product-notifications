@@ -29,11 +29,11 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       post products_url, params: { product: {
         batch_number: @product.batch_number,
         brand: @product.brand,
+        product_type: @product.product_type,
         description: @product.description,
         gtin: @product.gtin,
         model: @product.model,
-        name: @product.name,
-        url_reference: @product.url_reference
+        name: @product.name
       } }
     end
 
@@ -54,11 +54,11 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     patch product_url(@product), params: { product: {
       batch_number: @product.batch_number,
       brand: @product.brand,
+      product_type: @product.product_type,
       description: @product.description,
       gtin: @product.gtin,
       model: @product.model,
-      name: @product.name,
-      url_reference: @product.url_reference
+      name: @product.name
     } }
     assert_redirected_to product_url(@product)
   end

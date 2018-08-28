@@ -22,7 +22,6 @@ def create_products(products)
     Product.create(
       gtin: product["gtin_cd"],
       name: product["gtin_nm"],
-      url_reference: product["brand_link"],
       brand: product["brand_nm"] && product["brand_nm"][0] || nil,
       source: "Imported from the Open Product Database"
     )

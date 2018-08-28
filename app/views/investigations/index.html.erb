@@ -1,30 +1,30 @@
-<% content_for :page_title, "Investigations - Market Surveillance & Product Safety" %>
+<% content_for :page_title, "Cases - Market Surveillance & Product Safety" %>
 
 <%= render "layouts/navbar" %>
 
 <% if @current_user %>
-  <div class="govuk-grid-row">
+  <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-one-third">
-      <div class="govuk-grid-column-one-quarter assigned-number">
+      <div class="govuk-grid-column-one-quarter assigned-number govuk-!-font-size-36 govuk-!-font-weight-bold">
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
-      <div class="govuk-grid-column-one-half investigation-number-description">
-        Investigations assigned to you
+      <div class="govuk-grid-column-three-quarters govuk-!-font-size-19">
+        <%= "Case".pluralize(@investigations.where(assignee: @current_user).count) %> assigned to you
       </div>
     </div>
     <div class="govuk-grid-column-one-third not-implemented">
-      <div class="govuk-grid-column-one-quarter overdue-number">
+      <div class="govuk-grid-column-one-quarter govuk-!-font-size-36 govuk-!-font-weight-bold">
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
-      <div class="govuk-grid-column-one-half investigation-number-description">
+      <div class="govuk-grid-column-three-quarters govuk-!-font-size-19">
         Overdue actions
       </div>
     </div>
     <div class="govuk-grid-column-one-third not-implemented">
-      <div class="govuk-grid-column-one-quarter due-number">
+      <div class="govuk-grid-column-one-quarter govuk-!-font-size-36 govuk-!-font-weight-bold">
         <%= @investigations.where(assignee: @current_user).count %>
       </div>
-      <div class="govuk-grid-column-one-half investigation-number-description">
+      <div class="govuk-grid-column-three-quarters govuk-!-font-size-19">
         Actions due soon
       </div>
     </div>
@@ -35,17 +35,17 @@
   <div class="form-group">
     <%= form.label "Search for keywords", class: "form-label" %>
     <%= form.text_field :q, value: params[:q], class: "form-control" %>
-    <%= form.submit ">", name: nil, class: "govuk-button" %>
+    <%= form.submit "Search", name: nil, class: "govuk-button" %>
   </div>
 <% end %>
+
 <br/>
 
 <%= link_to 'Assign', new_investigation_path, class: "govuk-button govuk-button--disabled not-implemented" %>
-<%= link_to 'Create investigation', new_investigation_path, class: "govuk-button right" %>
+<p><%= link_to 'Create new case', new_investigation_path, class: "govuk-body govuk-!-font-size-19  govuk-!-font-weight-bold" %></p>
 
-<%= will_paginate @investigations %>
 <%= render 'table' %>
 <%= will_paginate @investigations %>
 <br/>
-<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx), class: "govuk-button"%>
+<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx) %>
 

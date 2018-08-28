@@ -3,23 +3,19 @@
 one:
   gtin: MyString
   name: MyString
+  product_type: MyString
   description: MyText
   model: MyString
-  serial_number: MyString
-  manufacturer: MyString
   country_of_origin: MyString
   batch_number: MyString
-  url_reference: MyString
   brand: MyString
 
 two:
   gtin: MyString
   name: MyString
+  product_type: MyString
   description: MyText
   model: MyString
-  serial_number: MyString
-  manufacturer: MyString
   country_of_origin: MyString
   batch_number: MyString
-  url_reference: MyString
   brand: MyString

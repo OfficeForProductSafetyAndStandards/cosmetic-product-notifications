@@ -35,12 +35,13 @@ class UsersController < ApplicationController
 
   def search_for_users
     if !params[:q] && !params[:sort]
-      return Investigation.all.paginate(page: params[:page], per_page: 20)
+      return User.all.paginate(page: params[:page], per_page: 20)
     end
+
     params[:q] ||= ""
     params[:sort] = "email"
     params[:direction] = "asc"
 
-    User.search(params).paginate(page: params[:page], per_page: 20).records
+    User.prefix_search(params).paginate(page: params[:page], per_page: 20).records
   end
 end

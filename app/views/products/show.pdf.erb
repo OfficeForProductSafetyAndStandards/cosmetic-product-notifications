@@ -3,7 +3,12 @@
 </h2>
 
 <div>
-  <% @product.images.each do |image| %>
+  <% @product.images.attachments.each do |image| %>
+    <% if image.metadata["safe"] && image.variable? %>
+      <%= image_tag(image.variant(resize: "300x200"), alt: image.metadata["title"]) %>
+    <% end %>
+  <% end %>
+  <% @product.rapex_images.each do |image| %>
     <%= image_tag(image.url, alt: image.title) %>
   <% end %>
 </div>
@@ -30,6 +35,11 @@
   </tr>
 
   <tr>
+    <th>Type</th>
+    <td><%= @product.product_type %></td>
+  </tr>
+
+  <tr>
     <th>Description</th>
     <td><%= @product.description %></td>
   </tr>
@@ -45,21 +55,6 @@
   </tr>
 
   <tr>
-    <th>Serial number</th>
-    <td><%= @product.serial_number %></td>
-  </tr>
-
-  <tr>
-    <th>URL reference</th>
-    <td><%= link_to(@product.url_reference, @product.url_reference, target: "_blank") unless @product.url_reference.nil? %></td>
-  </tr>
-
-  <tr>
-    <th>Manufacturer</th>
-    <td><%= @product.manufacturer %></td>
-  </tr>
-
-  <tr>
     <th>Country of origin</th>
     <td><%= @product.country_of_origin_for_display %></td>
   </tr>
@@ -70,11 +65,6 @@
   </tr>
 
   <tr>
-    <th>Associated parts or components</th>
-    <td><%= @product.associated_parts %></td>
-  </tr>
-
-  <tr>
     <th>Source</th>
     <td><%= @product.source.show %></td>
   </tr>
@@ -82,9 +72,9 @@
 
 <% if @product.investigations.any? -%>
   <tr>
-    <th>Investigations</th>
+    <th>Cases</th>
     <% @product.investigations.each do |investigation| %>
-      <td><%= link_to investigation.id, investigation %></td>
+      <td><%= link_to investigation.id, polymorphic_url(investigation) %></td>
       </tr>
     <% end %>
 <% end -%>
