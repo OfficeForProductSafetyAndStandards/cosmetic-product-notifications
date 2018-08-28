@@ -12,6 +12,7 @@
   <div class="form-group">
     <%= form.label :email, :class => "form-label" %>
     <%= form.select :email,
+                    # When there are many users, we should consider loading them with ajax using the autocomplete
                     options_for_select(
                       User.all.collect {|u| [u.email]},
                       @investigation.assignee ? @investigation.assignee.email : ""
