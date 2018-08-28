@@ -7,10 +7,6 @@
   background-color: govuk-colour("grey-4");
   @include govuk-font(19, $weight: bold);
 
-  @include govuk-media-query($until: tablet) {
-    display: none;
-  }
-
   &__list {
     margin: 0;
     padding: 0;
@@ -42,6 +38,10 @@
         padding: 0 govuk-spacing(3);
         color: $govuk-link-colour;
         text-decoration: none;
+
+        @include govuk-media-query($until: tablet) {
+          padding: 0 govuk-spacing(2);
+        }
 
         &:visited {
           color: $govuk-link-colour;
