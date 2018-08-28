@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-//= require select2
 //= require cocoon
 //= require govuk-country-and-territory-autocomplete/dist/location-autocomplete.min.js
 //= require accessible-autocomplete/dist/accessible-autocomplete.min.js
