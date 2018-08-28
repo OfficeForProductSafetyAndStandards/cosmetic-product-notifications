@@ -1,28 +1,20 @@
-<div class="govuk-tabs navbar" data-module="tabs">
-  <h2 class="govuk-tabs__title">
-    Contents
-  </h2>
-
-  <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item not-implemented">
-      <a class="govuk-tabs__tab" href="/pages/example">
-        Issues
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/investigations" aria-selected="<%= params[:controller] == 'investigations' %>" >
+<!-- Taken from https://github.com/alphagov/govuk-design-system/blob/master/views/partials/_navigation.njk -->
+<nav class="app-navigation govuk-clearfix">
+  <ul class="app-navigation__list">
+    <li class="<%= params[:controller] == "investigations" && "app-navigation--current-page" %>">
+      <a class="govuk-link" href="/investigations" aria-selected="" data-topnav="investigations">
         Cases
       </a>
     </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/businesses" aria-selected="<%= params[:controller] == 'businesses'%>" >
+    <li class="<%= params[:controller] == "businesses" && "app-navigation--current-page" %>">
+      <a class="govuk-link" href="/businesses" data-topnav="businesses">
         Businesses
       </a>
     </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="/products" aria-selected="<%= params[:controller] == 'products' %>" >
+    <li class="<%= params[:controller] == "products" && "app-navigation--current-page" %>">
+      <a class="govuk-link" href="/products" data-topnav="products">
         Products
       </a>
     </li>
   </ul>
-</div>
+</nav>
