@@ -116,6 +116,9 @@ class InvestigationsController < ApplicationController
   private
 
   def search_for_investigations
+    if !params[:q] && !params[:sort]
+      return Investigation.all.paginate(page: params[:page], per_page: 20)
+    end
     params[:q] ||= ""
     params[:sort] = sort_column
     params[:direction] = sort_direction

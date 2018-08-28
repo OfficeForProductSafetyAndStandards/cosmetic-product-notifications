@@ -34,6 +34,9 @@ class UsersController < ApplicationController
   end
 
   def search_for_users
+    if !params[:q] && !params[:sort]
+      return Investigation.all.paginate(page: params[:page], per_page: 20)
+    end
     params[:q] ||= ""
     params[:sort] = "email"
     params[:direction] = "asc"
