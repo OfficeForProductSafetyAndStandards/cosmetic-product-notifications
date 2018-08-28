@@ -1,20 +1,10 @@
 <% content_for :page_title, "Update assignee - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Case', investigation_path(@investigation) %>
-        </li>
-        <li>
-            <%= link_to 'Update assignee', assign_investigation_path(@investigation) %>
-        </li>
-    </ol>
-</div>
+<%= link_to 'Back to case', @investigation, class: "govuk-back-link" %>
 
-<h1 class="heading-xlarge">Update assignee</h1>
+<%= render "investigation_heading", investigation: @investigation %>
+<h2 class="govuk-heading-l">Update assignee</h2>
+
 <h4 class="heading-medium">Current assignee</h4>
 <p><%= @investigation.assignee.nil? ? "Unassigned" : @investigation.assignee.email %></p>
 
@@ -23,11 +13,11 @@
     <%= form.label :email, :class => "form-label" %>
     <%= form.select :email,
                     options_for_select(
-                      [@investigation.assignee ? @investigation.assignee.email : "", User.all.collect {|u| [u.email]}],
+                      User.all.collect {|u| [u.email]},
                       @investigation.assignee ? @investigation.assignee.email : ""
                     ),
-                    { },
-                    { class: "js-assignee-email form-control" }
+                    { include_blank: "Unassigned" },
+                    { class: "form-control", id: "assignee-picker" }
     %>
   </div>
   

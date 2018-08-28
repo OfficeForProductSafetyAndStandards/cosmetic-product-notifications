@@ -2,7 +2,8 @@ function simpleAccessibleAutocomplete(id) {
     if (document.getElementById(id)) {
         accessibleAutocomplete.enhanceSelectElement({
             defaultValue: "",
-            selectElement: document.getElementById(id)
+            selectElement: document.getElementById(id),
+            preserveNullOptions: true
         });
     }
 }
