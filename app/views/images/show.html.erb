@@ -7,4 +7,4 @@
 <%= render 'image', image: @image, dimensions: "600x400" %>
 
 <div class="image-description"><%= @image.metadata["description"] %></div>
-<%= link_to "Edit image details", edit_associated_image_path(@parent, @image), class: "edit-image-link" %>
+<%= link_to "Edit image details", edit_associated_image_path(@parent, @image), class: "govuk-link edit-image-link" %>
