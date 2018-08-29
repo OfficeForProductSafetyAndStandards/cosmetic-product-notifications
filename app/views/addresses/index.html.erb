@@ -5,23 +5,22 @@
 <%= render "business_heading", business: @business %>
 
 <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Addresses</h2>
-<p class="govuk-!-margin-bottom-6"><%= link_to 'New address', new_business_address_path(@business) %></p>
+<p class="govuk-!-margin-bottom-6"><%= link_to 'New address', new_business_address_path(@business), class: "govuk-link" %></p>
 
-<%= will_paginate @addresses %>
-<table>
-  <thead>
-    <tr>
-      <th>Address type</th>
-      <th>Address</th>
-      <th></th>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Address type</th>
+      <th class="govuk-table__header" scope="col">Address</th>
+      <th class="govuk-table__header" scope="col"></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="govuk-table__body">
     <% @addresses.each do |address| %>
-      <tr>
-        <td><%= address.address_type %></td>
-        <td><%= link_to address.summary, address %></td>
-        <td><%= link_to 'Delete', address, method: :delete, data: { confirm: 'Are you sure?' } if policy(address).destroy? %></td>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= address.address_type %></td>
+        <td class="govuk-table__cell"><%= link_to address.summary, address, class: "govuk-link" %></td>
+        <td class="govuk-table__cell"><%= link_to 'Delete', address, method: :delete, data: { confirm: 'Are you sure?' }, class: "govuk-link" if policy(address).destroy? %></td>
       </tr>
     <% end %>
   </tbody>
