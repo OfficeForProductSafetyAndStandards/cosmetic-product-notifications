@@ -1,25 +1,25 @@
 <% content_for :page_title, "Change password - Market Surveillance & Product Safety" %>
 
-<h1 class="heading-xlarge">Change your password</h1>
+<h1 class="govuk-heading-xl">Change your password</h1>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
-  <div class="form-group">
-    <%= f.label :password, "New password", :class => "form-label" %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "off", :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= f.label :password, "New password", :class => "govuk-label" %>
+    <%= f.password_field :password, autofocus: true, autocomplete: "off", :class => "govuk-input" %>
     <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :password_confirmation, "Confirm new password", :class => "form-label" %>
-    <%= f.password_field :password_confirmation, autocomplete: "off", :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= f.label :password_confirmation, "Confirm new password", :class => "govuk-label" %>
+    <%= f.password_field :password_confirmation, autocomplete: "off", :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
+  <div class="govuk-form-group">
     <%= f.submit "Change my password", :class => "govuk-button" %>
   </div>
 <% end %>

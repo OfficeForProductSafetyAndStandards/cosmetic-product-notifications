@@ -1,17 +1,17 @@
-<h1 class="heading-xlarge">Resend confirmation instructions</h1>
+<h1 class="govuk-heading-xl">Resend confirmation instructions</h1>
 
 <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="form-group">
-    <%= f.label :email, :class => "form-label" %>
+  <div class="govuk-form-group">
+    <%= f.label :email, :class => "govuk-label" %>
     <%= f.email_field :email, autofocus: true, autocomplete: "email",
       value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),
-      :class => "form-control"
+      :class => "govuk-input"
     %>
   </div>
 
-  <div class="form-group">
+  <div class="govuk-form-group">
     <%= f.submit "Resend confirmation instructions", :class => "govuk-button" %>
   </div>
 <% end %>

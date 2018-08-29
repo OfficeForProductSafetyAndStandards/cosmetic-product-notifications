@@ -1,14 +1,15 @@
 <% content_for :page_title, "User invitation - Market Surveillance & Product Safety" %>
 
-<h1 class="heading-xlarge"><%= t "devise.invitations.new.header" %></h1>
+<%= link_to 'Back to list', users_path, class: "govuk-back-link" %>
+<h1 class="govuk-heading-xl"><%= t "devise.invitations.new.header" %></h1>
 
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
   <%= devise_error_messages! %>
 
   <% resource.class.invite_key_fields.each do |field| -%>
-    <div class="form-group">
-      <%= f.label field, :class => "form-label" %>
-      <%= f.text_field field, :class => "form-control" %>
+    <div class="govuk-form-group">
+      <%= f.label field, :class => "govuk-label" %>
+      <%= f.text_field field, :class => "govuk-input" %>
     </div>
   <% end -%>
 

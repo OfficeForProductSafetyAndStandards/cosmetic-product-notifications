@@ -1,14 +1,14 @@
-<h1 class="heading-xlarge">Resend unlock instructions</h1>
+<h1 class="govuk-heading-xl">Resend unlock instructions</h1>
 
 <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="form-group">
-    <%= f.label :email, :class => "form-label" %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= f.label :email, :class => "govuk-label" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
+  <div class="govuk-form-group">
     <%= f.submit "Resend unlock instructions", :class => "govuk-button" %>
   </div>
 <% end %>
