@@ -7,7 +7,7 @@
 <h3 class="govuk-heading-m document-type-details">
   <span class="document-type">
     <%= @document.metadata["document_type"]&.titleize %>
-    <%= " – #{document.metadata["other_type"].titleize}" if @document.metadata["other_type"].present? %>
+    <%= " – #{@document.metadata["other_type"].titleize}" if @document.metadata["other_type"].present? %>
   </span>
   <span class="govuk-!-padding-left-2 document-filetype"><%= "(#{document_filetype_label(@document)})" %></span>
 </h3>
