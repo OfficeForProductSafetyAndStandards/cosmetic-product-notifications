@@ -3,9 +3,11 @@
 <%= render "layouts/navbar" %>
 
 <%= form_with(url: products_path, method: "get", class: "search-background govuk-!-padding-3") do |form| %>
-  <div class="form-group">
-    <%= form.label "Search for Products", class: "form-label" %>
-    <%= form.text_field :q, value: params[:q], class: "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label "Search for Products", class: "govuk-label" %>
+    <%= form.text_field :q, value: params[:q], class: "govuk-input" %>
+  </div>
+  <div class="govuk-form-group">
     <%= form.submit "Search", name: nil, class: "govuk-button" %>
   </div>
 <% end %>

@@ -1,18 +1,17 @@
-<table class="document-list">
-  <thead>
-  <tr>
-    <th colspan="2"></th>
-  </tr>
+<table class="govuk-table document-list">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col" colspan="2"></th>
+    </tr>
   </thead>
-
-  <tbody>
+  <tbody class="govuk-table__body">
   <% @documents.each do |document| %>
-    <tr>
-      <td class="document-preview">
-        <%= link_to render("document_image", document: document), document, class: "document-link" %>
+    <tr class="govuk-table__row">
+      <td class="document-preview govuk-table__cell">
+        <%= link_to render("document_image", document: document), document, class: "govuk-link document-link" %>
       </td>
-      <td class="document-details">
-        <%= link_to document do %>
+      <td class="document-details govuk-table__cell">
+        <%= link_to document, class: "govuk-link" do %>
           <h2 class="govuk-heading-m govuk-!-margin-bottom-1 document-title"><%= document.metadata["title"] %></h2>
         <% end %>
         <div class="document-updated right">Updated <%= Time.parse(document.metadata["updated"]).strftime("%d/%m/%Y") if document.metadata["updated"].present? %></div>
@@ -25,10 +24,10 @@
           <span class="govuk-!-padding-left-4 document-filetype"><%= document_filetype_label(document) %></span>
         </div>
 
-        <p class="govuk-!-margin-bottom-1 document-description"><%= document.metadata["description"] %></p>
+        <p class="govuk-body govuk-!-margin-bottom-1 document-description"><%= document.metadata["description"] %></p>
 
-        <%= link_to "Edit document details", edit_associated_document_path(@parent, document), class: "edit-document-link" %>
-        <%= link_to "Delete document", associated_document_path(@parent, document), method: :delete, data: { confirm: "Are you sure?" }, class: "delete-document-link" %>
+        <%= link_to "Edit document details", edit_associated_document_path(@parent, document), class: "govuk-link edit-document-link" %>
+        <%= link_to "Delete document", associated_document_path(@parent, document), method: :delete, data: { confirm: "Are you sure?" }, class: "govuk-link delete-document-link" %>
       </td>
     </tr>
   <% end %>

@@ -15,7 +15,7 @@
             <%= form_with(model: @product, url: new_investigation_product_path(@investigation), local: true, method: :get) do |form| %>
                 <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Product details</h3>
                 <%= render 'products/core_params', form: form, product: @product, countries: @countries %>
-                <div class="form-group">
+                <div class="govuk-form-group">
                     <%= form.submit "Create new", :class => "govuk-button" %>
                 </div>
             <% end %>

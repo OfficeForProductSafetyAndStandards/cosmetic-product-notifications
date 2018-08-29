@@ -1,9 +1,9 @@
 <%= form_with(model: [business, address], local: true) do |form| %>
   <% if address.errors.any? %>
     <div id="error_explanation">
-      <h2 class="heading-large"><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
+      <h2 class="govuk-heading-l"><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
 
-      <ul>
+      <ul class="govuk-link">
       <% address.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
@@ -11,37 +11,37 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :address_type, :class => "form-label" %>
-    <%= form.text_field :address_type, :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label :address_type, :class => "govuk-label" %>
+    <%= form.text_field :address_type, :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :line_1, :class => "form-label" %>
-    <%= form.text_field :line_1, :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label :line_1, :class => "govuk-label" %>
+    <%= form.text_field :line_1, :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :line_2, :class => "form-label" %>
-    <%= form.text_field :line_2, :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label :line_2, :class => "govuk-label" %>
+    <%= form.text_field :line_2, :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :locality, :class => "form-label" %>
-    <%= form.text_field :locality, :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label :locality, :class => "govuk-label" %>
+    <%= form.text_field :locality, :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :country, :class => "form-label" %>
-    <%= form.text_field :country, :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label :country, :class => "govuk-label" %>
+    <%= form.text_field :country, :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :postal_code, :class => "form-label" %>
-    <%= form.text_field :postal_code, :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label :postal_code, :class => "govuk-label" %>
+    <%= form.text_field :postal_code, :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
+  <div class="govuk-form-group">
     <%= form.submit "Submit", :class => "govuk-button" %>
   </div>
 <% end %>

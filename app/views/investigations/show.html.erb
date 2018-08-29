@@ -11,7 +11,7 @@
     <div class="govuk-grid-column-one-third">
       <% if !@investigation.is_closed %>
         <%= link_to @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned",
-                              assign_investigation_path(@investigation) %>
+                              assign_investigation_path(@investigation), class: "govuk-link" %>
       <% else %>
         <%= @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned" %>
       <% end %>
@@ -28,7 +28,7 @@
     <div class="govuk-grid-column-one-half">
       <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Risk Notes: <%= @investigation.risk_overview %></h3>
       <p><%= @investigation.description %></p>
-      <%= link_to 'Edit details', edit_investigation_path(@investigation), :class => "no-print" %>
+      <%= link_to 'Edit details', edit_investigation_path(@investigation), :class => "govuk-link no-print" %>
     </div>
     <div class="govuk-grid-column-one-half">
       <div class="govuk-grid-row govuk-!-padding-bottom-6">
@@ -47,13 +47,13 @@
   <div class="govuk-grid-row govuk-!-padding-bottom-6 row-border-top">
     <div class="govuk-grid-column-one-third">
       <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h3>
-      <ul class="dashed-list">
-        <li><a href="#activities" class="govuk-!-font-size-19">Activities</a></li>
-        <li><a href="#products" class="govuk-!-font-size-19">Products</a></li>
-        <li><a href="#businesses" class="govuk-!-font-size-19">Businesses</a></li>
-        <li><a href="#images" class="govuk-!-font-size-19">Images</a></li>
-        <li><a href="#documents" class="govuk-!-font-size-19">Documents</a></li>
-        <li><a href="#history" class="govuk-!-font-size-19">History</a></li>
+      <ul class="govuk-list dashed-list">
+        <li><a href="#activities" class="govuk-link govuk-!-font-size-19">Activities</a></li>
+        <li><a href="#products" class="govuk-link govuk-!-font-size-19">Products</a></li>
+        <li><a href="#businesses" class="govuk-link govuk-!-font-size-19">Businesses</a></li>
+        <li><a href="#images" class="govuk-link govuk-!-font-size-19">Images</a></li>
+        <li><a href="#documents" class="govuk-link govuk-!-font-size-19">Documents</a></li>
+        <li><a href="#history" class="govuk-link govuk-!-font-size-19">History</a></li>
       </ul>
     </div>
     <div class="govuk-grid-column-two-thirds">
@@ -62,8 +62,8 @@
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Activities</h2>
           <%= render "activities_summary", activities: @investigation.activities.limit(3) %>
-          <%= link_to "View all activity", investigation_activities_path(@investigation), class: "govuk-!-margin-right-3" %>
-          <%= link_to "New activity", new_investigation_activity_path(@investigation) %>
+          <%= link_to "View all activity", investigation_activities_path(@investigation), class: "govuk-link govuk-!-margin-right-3" %>
+          <%= link_to "New activity", new_investigation_activity_path(@investigation), class: "govuk-link" %>
         </div>
       </div>
 
@@ -75,9 +75,9 @@
               <%= render "product_summary", product: product %>
             <% end %>
           <% else %>
-            <p>No products.</p>
+            <p class="govuk-body">No products.</p>
           <% end %>
-          <%= link_to 'Manage products', investigation_products_path(@investigation), :class => "no-print" %>
+          <%= link_to 'Manage products', investigation_products_path(@investigation), :class => "govuk-link no-print" %>
         </div>
       </div>
 
@@ -89,9 +89,9 @@
               <%= render "business_summary", business: business, allow_removing: false %>
             <% end %>
           <% else %>
-            <p>No businesses.</p>
+            <p class="govuk-body">No businesses.</p>
           <% end %>
-          <%= link_to 'Manage businesses', investigation_businesses_path(@investigation), :class => "no-print" %>
+          <%= link_to 'Manage businesses', investigation_businesses_path(@investigation), :class => "govuk-link no-print" %>
         </div>
       </div>
 
@@ -113,7 +113,7 @@
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">History</h2>
           <%= render 'history', versions: @investigation.versions %>
           <div class="govuk-!-margin-top-3 no-print">
-            <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf) %>
+            <%= link_to 'Create PDF document', investigation_path(@investigation, format: :pdf), class: "govuk-link no-print" %>
           </div>
         </div>
       </div>

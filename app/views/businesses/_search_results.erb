@@ -13,38 +13,38 @@
     <% end %>
   <% end %>
 <% else %>
-  <p>No matches.</p>
+  <p class="govuk-body">No matches.</p>
 <% end %>
 
 
 <h3 class="govuk-heading-s">From Companies House</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Company name</th>
-      <th colspan="1"></th>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Company name</th>
+      <th class="govuk-table__header" scope="col"></th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class="govuk-table__body">
     <% if @companies_house_businesses.any? %>
       <% @companies_house_businesses.each do |business| %>
-        <tr>
-          <td><%= link_to business[:company_name], business[:url], target: "_blank" %></td>
-          <td>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= link_to business[:company_name], business[:url], target: "_blank" %></td>
+          <td class="govuk-table__cell">
             <%= form_with(
               url: @investigation.present? ? companies_house_investigation_businesses_path(@investigation)
                                            : companies_house_businesses_path,
               local: true) do |form| %>
 
               <%= form.hidden_field :company_number, value: business[:company_number] %>
-              <%= form.submit "Add", :class => "govuk-button" %>
+              <%= form.submit "Add", :class => "govuk-button govuk-!-margin-0" %>
             <% end %>
           </td>
         </tr>
       <% end %>
     <% else %>
-     <tr><td colspan="2">No matches.</td></tr>
+     <tr class="govuk-table__row"><td class="govuk-table__cell" colspan="2">No matches.</td></tr>
     <% end %>
   </tbody>
 </table>

@@ -1,4 +1,4 @@
-@import "colours";
+@import "govuk-frontend/helpers/colour";
 
 // Timeline take from home office digital patterns:
 // https://home-office-digital-patterns.herokuapp.com/components/timeline
@@ -26,14 +26,14 @@ $timeline-item-margin-bottom: 20px;
       margin: 4px 0 $timeline-item-margin-bottom 25px;
       position: relative;
       display: block;
-      border-bottom: 1px solid $panel-colour;
+      border-bottom: 1px solid govuk-colour("grey-3");
 
       &:last-child {
         margin-bottom: 0px;
         border: none;
         
         &:before {
-          background-color: $grey-2;
+          background-color: govuk-colour("grey-2");
         }
       }
 
@@ -44,7 +44,7 @@ $timeline-item-margin-bottom: 20px;
         height: 10px;
         border-radius: 50%;
         background-color: white;
-        border: 4px solid $grey-1;
+        border: 4px solid govuk-colour("grey-1");
         position: absolute;
         z-index: 2;
         left: -32px;
