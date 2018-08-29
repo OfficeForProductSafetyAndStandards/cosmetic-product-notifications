@@ -4,9 +4,9 @@
     <% if form %>
       <th class="not-implemented" colspan="1"></th>
     <% end %>
-    <th>Business name(s)</th>
-    <th>Type(s)</th>
-    <th>Location(s)</th>
+    <th>Business</th>
+    <th>Type</th>
+    <th>Primary Loc.</th>
     <th>Cases</th>
   </tr>
   </thead>
@@ -21,7 +21,7 @@
       <td><%= business.company_type_code %></td>
       <td><%= business.addresses.first ? business.addresses.first.short : "" %></td>
       <td>
-          <span class="investigations">
+          <span class="govuk-!-font-size-36 govuk-!-font-weight-bold">
             <%= business.investigations.count %>
           </span>
       </td>

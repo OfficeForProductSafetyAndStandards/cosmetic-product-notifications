@@ -4,9 +4,9 @@
       <% if form %>
         <th class="not-implemented"colspan="1"></th>
       <% end %>
-      <th>Name</th>
-      <th>Brand</th>
-      <th>Origin Co</th>
+      <th>Product</th>
+      <th>Type</th>
+      <th>Origin</th>
       <th>Cases</th>
     </tr>
   </thead>
@@ -18,10 +18,10 @@
           <td class="not-implemented"><%= form.check_box :product_ids, { multiple: true }, product.id, false %></td>
         <% end %>
         <td><%= link_to product.name, product %></td>
-        <td><%= product.brand %></td>
+        <td><%= product.product_type %></td>
         <td><%= product.country_of_origin_for_display %></td>
         <td>
-          <span class="investigations">
+          <span class="govuk-!-font-size-36 govuk-!-font-weight-bold">
             <%= product.investigations.count %>
           </span>
         </td>

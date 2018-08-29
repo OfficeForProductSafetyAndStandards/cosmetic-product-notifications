@@ -26,6 +26,11 @@
   </div>
 
   <div class="form-group">
+    <%= form.label :product_type, "Type", :class => "form-label" %>
+    <%= form.text_field :product_type, :class => "form-control search-term" %>
+  </div>
+
+  <div class="form-group">
     <%= form.label :description, :class => "form-label" %>
     <%= form.text_area :description, :class => "form-control" %>
   </div>

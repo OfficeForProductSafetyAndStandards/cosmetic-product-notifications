@@ -2,10 +2,10 @@
   <thead>
   <tr>
     <th>Case</th>
-    <th>Product</th>
     <th>Status</th>
-    <th>Last updated</th>
-    <th>Assigned to</th>
+    <th>Risk</th>
+    <th>Assigned</th>
+    <th>Last update</th>
   </tr>
   </thead>
 
@@ -13,19 +13,19 @@
   <% @investigations.each do |investigation| %>
     <tr>
       <td>
-        <span><%= link_to investigation.title, investigation, class: "govuk-link"%></span><br/>
-        <span>id: <%= investigation.id %></span>
+        <%= link_to investigation, class: "govuk-link" do %>
+          <span class="govuk-!-font-size-16"><%= investigation.id %></span><br />
+          <%= investigation.title %>
+        <% end %>
       </td>
       <td>
-        <span><%= investigation.products.first ? investigation.products.first.name : "" %></span>
-        <span><%= investigation.products.first ? investigation.products.first.brand : "" %></span>
+        <span><%= investigation.status %></span>
       </td>
       <td>
-        <span><%= investigation.is_closed? ? "Closed" : "Open" %></span>
-        <span class="not-implemented">Progress</span>
+        <span><%= investigation.risk_overview %></span>
       </td>
-      <td><%= investigation.updated_at.strftime("%d %B %Y") %></td>
       <td><%= investigation.assignee ? investigation.assignee.email : "" %></td>
+      <td class="govuk-!-font-weight-bold"><%= investigation.updated_at.strftime("%d/%m/%Y") %></td>
     </tr>
   <% end %>
   </tbody>
