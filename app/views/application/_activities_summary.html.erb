@@ -1,6 +1,6 @@
 <% if activities.any? %>
   <div class="timeline">
-    <ul>
+    <ul class="govuk-list">
       <% activities.each do |activity| %>
         <li>
           <h3 class="govuk-heading-s govuk-!-margin-bottom-1"><%= activity.activity_type.titleize %></h3>
