@@ -14,6 +14,6 @@
     </tbody>
   </table>
 <% else %>
-  <p>No documents.</p>
+  <p class="govuk-body">No documents.</p>
 <% end %>
-<%= link_to "Manage documents", associated_documents_path(parent), class: "no-print" %>
+<%= link_to "Manage documents", associated_documents_path(parent), class: "govuk-link no-print" %>
