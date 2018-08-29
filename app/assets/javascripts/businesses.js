@@ -1,6 +1,6 @@
 $(document).on("turbolinks:load", function() {
-    $('.js-business-company-type').select2();
-    $('.js-business-sic-codes').select2();
+    simpleAccessibleAutocomplete("company-type");
+    simpleAccessibleAutocomplete("sic-code");
 
     searchOnTextInput(
         $('.new-business-page .search-term'),
