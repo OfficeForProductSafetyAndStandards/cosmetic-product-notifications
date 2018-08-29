@@ -32,9 +32,11 @@
 <% end %>
 
 <%= form_with(url: investigations_path, method: "get", class: "search-background govuk-!-padding-3") do |form| %>
-  <div class="form-group">
-    <%= form.label "Search for keywords", class: "form-label" %>
-    <%= form.text_field :q, value: params[:q], class: "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label "Search for keywords", class: "govuk-label" %>
+    <%= form.text_field :q, value: params[:q], class: "govuk-input" %>
+  </div>
+  <div class="govuk-form-group">
     <%= form.submit "Search", name: nil, class: "govuk-button" %>
   </div>
 <% end %>
@@ -47,5 +49,5 @@
 <%= render 'table' %>
 <%= will_paginate @investigations %>
 <br/>
-<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx) %>
+<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx), class: "govuk-link" %>
 
