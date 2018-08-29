@@ -1,8 +1,6 @@
 // Place all the styles related to the Investigations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import "colours";
-
 .show-investigation {
 
   .link-back {
@@ -12,19 +10,6 @@
   .no-images {
     text-align: center;
     margin: auto;
-  }
-
-  .top-details {
-    form {
-      all: unset;
-
-      input {
-        all: unset;
-        cursor: pointer;
-        color: $link-colour;
-        text-decoration: underline;
-      }
-    }
   }
 }
 

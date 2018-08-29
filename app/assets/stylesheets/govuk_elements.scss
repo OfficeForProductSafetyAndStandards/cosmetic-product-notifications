@@ -1,26 +1,3 @@
-// Classes are defined here: http://govuk-elements.herokuapp.com/
-
-// Settings (variables)
-@import "colours";                                // Colour variables
-@import "font_stack";                             // Font family variables
-@import "measurements";                           // Widths and gutter variables
-
-// Mixins
-@import "conditionals";                           // Media query mixin
-@import "device-pixels";                          // Retina image mixin
-@import "grid_layout";                            // Basic grid layout mixin
-@import "typography";                             // Core bold and heading mixins
-@import "shims";                                  // Inline block mixin, clearfix placeholder
-
-// Mixins to generate components (chunks of UI)
-@import "design-patterns/alpha-beta";             // Only required if using _phase-banner.scss
-@import "design-patterns/buttons";                // Only required if using _buttons.scss
-
-// Functions
-// @import "url-helpers";                         // Function to output image-url, or prefixed path (Rails and Compass only)
-
-@import "govuk-elements-sass/public/sass/govuk-elements";
-
 $govuk-assets-path: "/assets/govuk-frontend/assets/";
 @import "govuk-frontend/all";
 
@@ -33,13 +10,13 @@ $govuk-assets-path: "/assets/govuk-frontend/assets/";
 }
 
 .search-background {
-  background-color: $grey-3;
+  background-color: govuk-colour("grey-3");
 }
 
 .not-implemented {
   // TODO MSPSDS-265: to comply with the GDS standards, components missing functionality are hidden
   display: none!important;
-  color: $red;
+  color: govuk-colour("red");
   opacity: 0.2;
 }
 
@@ -61,8 +38,8 @@ $govuk-assets-path: "/assets/govuk-frontend/assets/";
   width: 1.5em;
   font-size: 2em;
   text-align: center;
-  color: $white;
-  background-color: $grey-1;
+  color: govuk-colour("white");
+  background-color: govuk-colour("grey-1");;
 }
 
 .small-square-light {
@@ -70,11 +47,11 @@ $govuk-assets-path: "/assets/govuk-frontend/assets/";
   width: 1.5em;
   font-size: 2em;
   text-align: center;
-  color: $white;
-  background-color: $grey-2;
+  color: govuk-colour("white");
+  background-color: govuk-colour("grey-2");
 }
 
 .row-border-top {
   padding-top: 2em;
-  border-top: 1px solid $grey-3;
+  border-top: 1px solid govuk-colour("grey-3");
 }

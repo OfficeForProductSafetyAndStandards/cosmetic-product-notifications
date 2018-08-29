@@ -15,6 +15,5 @@
 <div class="form-group">
     <%= link_to("Delete", user_path(user),
             :data => { :confirm => "Are you sure?" },
-            :method => :delete,
-            :class => 'govuk-button-warning') unless user == current_user %>
+            :method => :delete) unless user == current_user %>
 </div>

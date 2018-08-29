@@ -1,8 +1,7 @@
 // Place all the styles related to the Documents controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import "buttons";
-@import "colours";
+@import "govuk-frontend/helpers/colour";
 
 .document-without-preview {
   position: relative;
@@ -17,7 +16,7 @@
     width: 75px;
     height: 30px;
 
-    color: $white;
+    color: govuk-colour("white");
     line-height: 30px;
     font-weight: bold;
     text-align: center;
@@ -25,8 +24,8 @@
 }
 
 .document-processing-placeholder {
-  background-color: $grey-1;
-  color: $white;
+  background-color: govuk-colour("grey-1");
+  color: govuk-colour("white");
   font-weight: bold;
   font-size: 2.5em;
   text-align: center;
@@ -52,7 +51,6 @@
     }
 
     .delete-document-link {
-      @extend .button-warning;
       margin-bottom: 0.5em;
       margin-top: 0.5em;
     }
