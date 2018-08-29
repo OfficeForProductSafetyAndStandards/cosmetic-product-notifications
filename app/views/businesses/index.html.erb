@@ -3,9 +3,11 @@
 <%= render "layouts/navbar" %>
 
 <%= form_with(url: businesses_path, method: :get, class: "search-background govuk-!-padding-3") do |form| %>
-  <div class="form-group">
-    <%= form.label "Search for business", :class => "form-label" %>
-    <%= form.text_field :q, value: params[:q], :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label "Search for business", :class => "govuk-label" %>
+    <%= form.text_field :q, value: params[:q], :class => "govuk-input" %>
+  </div>
+  <div class="govuk-form-group">
     <%= form.submit "Search", name: nil, :class => "govuk-button" %>
   </div>
 <% end %>
@@ -16,7 +18,6 @@
   <%= form.submit "Merge selected", name: nil, class: "not-implemented" %>
   <p><%= link_to 'Create new business', new_business_path, class: "govuk-body govuk-!-font-size-19  govuk-!-font-weight-bold" %></p>
 
-  <%= will_paginate @businesses %>
   <%= render 'table', businesses: @businesses, form: form %>
   <%= will_paginate @businesses %>
 <% end %>

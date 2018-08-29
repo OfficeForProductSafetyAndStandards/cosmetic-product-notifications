@@ -6,7 +6,7 @@
         <p class="timeline-details govuk-body govuk-!-margin-bottom-1">By <%= version.whodunnit && (user = User.find_by(id: version.whodunnit)).present? ? user.email : "anonymous" %>, <%= version.created_at.to_s :long_ordinal %></p>
         <% version.changeset.select { |_, (from, to)| !(from.blank? && to.blank?) }.each do |field, (from, to)| %>
           <% if !["id", "created_at", "updated_at"].include?(field) &&  !to.blank? %>
-            <p class="govuk-body">
+            <p class="govuk-body govuk-!-font-size-16">
               Changed "<%= field.titleize %>"
               <% if !from.blank? %>
                 from "<%= from.to_s %>"
