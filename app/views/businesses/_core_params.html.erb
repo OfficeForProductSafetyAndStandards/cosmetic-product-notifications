@@ -11,7 +11,7 @@
 <% end %>
 
 <% if business.from_companies_house? %>
-  <p class="govuk-body">Some data is set by companies house and is therefore non-editable</p>
+  <p>Some data is set by companies house and is therefore non-editable</p>
 <% else %>
   <div class="govuk-form-group">
     <%= form.label :company_name, :class => "govuk-label" %>
@@ -28,7 +28,7 @@
   </div>
 
   <%= form.fields_for :addresses, [business.primary_address] do |ff| %>
-    <p class="govuk-body">Registered office address</p>
+    <p>Registered office address</p>
     <div class="govuk-form-group">
       <%= ff.label :line_1, :class => "govuk-label" %>
       <%= ff.text_field :line_1, :class => "govuk-input" %>

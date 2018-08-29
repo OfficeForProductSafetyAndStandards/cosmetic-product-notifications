@@ -73,9 +73,9 @@
               <% end %>
             </div>
           <% else %>
-            <p class="govuk-body">No locations.</p>
+            <p>No locations.</p>
           <% end %>
-          <%= link_to "Manage locations", business_addresses_path(@business), class: "govuk-link" %>
+          <%= link_to "Manage locations", business_addresses_path(@business) %>
         </div>
       </div>
 

@@ -11,7 +11,7 @@
     <div class="govuk-grid-column-one-third">
       <% if !@investigation.is_closed %>
         <%= link_to @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned",
-                              assign_investigation_path(@investigation), class: "govuk-link" %>
+                              assign_investigation_path(@investigation) %>
       <% else %>
         <%= @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned" %>
       <% end %>
@@ -63,7 +63,7 @@
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Activities</h2>
           <%= render "activities_summary", activities: @investigation.activities.limit(3) %>
           <%= link_to "View all activity", investigation_activities_path(@investigation), class: "govuk-link govuk-!-margin-right-3" %>
-          <%= link_to "New activity", new_investigation_activity_path(@investigation), class: "govuk-link" %>
+          <%= link_to "New activity", new_investigation_activity_path(@investigation) %>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
               <%= render "product_summary", product: product %>
             <% end %>
           <% else %>
-            <p class="govuk-body">No products.</p>
+            <p>No products.</p>
           <% end %>
           <%= link_to 'Manage products', investigation_products_path(@investigation), :class => "govuk-link no-print" %>
         </div>
@@ -89,7 +89,7 @@
               <%= render "business_summary", business: business, allow_removing: false %>
             <% end %>
           <% else %>
-            <p class="govuk-body">No businesses.</p>
+            <p>No businesses.</p>
           <% end %>
           <%= link_to 'Manage businesses', investigation_businesses_path(@investigation), :class => "govuk-link no-print" %>
         </div>

@@ -6,7 +6,7 @@
 <h2 class="govuk-heading-l">Update assignee</h2>
 
 <h4 class="govuk-heading-m">Current assignee</h4>
-<p class="govuk-body"><%= @investigation.assignee.nil? ? "Unassigned" : @investigation.assignee.email %></p>
+<p><%= @investigation.assignee.nil? ? "Unassigned" : @investigation.assignee.email %></p>
 
 <%= form_with(url: update_assignee_investigation_path(@investigation), local: true) do |form| %>
   <div class="govuk-form-group">

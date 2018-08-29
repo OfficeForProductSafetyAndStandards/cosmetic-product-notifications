@@ -44,10 +44,10 @@
 <br/>
 
 <%= link_to 'Assign', new_investigation_path, class: "govuk-button govuk-button--disabled not-implemented" %>
-<p><%= link_to 'Create new case', new_investigation_path, class: "govuk-body govuk-!-font-size-19  govuk-!-font-weight-bold" %></p>
+<p><%= link_to 'Create new case', new_investigation_path, class: "govuk-!-font-size-19  govuk-!-font-weight-bold" %></p>
 
 <%= render 'table' %>
 <%= will_paginate @investigations %>
 <br/>
-<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx), class: "govuk-link" %>
+<%= link_to "Export as spreadsheet", investigations_path(format: :xlsx) %>
 

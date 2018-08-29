@@ -5,7 +5,7 @@
 <%= render "business_heading", business: @business %>
 
 <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Addresses</h2>
-<p class="govuk-body govuk-!-margin-bottom-6"><%= link_to 'New address', new_business_address_path(@business), class: "govuk-link" %></p>
+<p class="govuk-!-margin-bottom-6"><%= link_to 'New address', new_business_address_path(@business) %></p>
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -19,8 +19,8 @@
     <% @addresses.each do |address| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= address.address_type %></td>
-        <td class="govuk-table__cell"><%= link_to address.summary, address, class: "govuk-link" %></td>
-        <td class="govuk-table__cell"><%= link_to 'Delete', address, method: :delete, data: { confirm: 'Are you sure?' }, class: "govuk-link" if policy(address).destroy? %></td>
+        <td class="govuk-table__cell"><%= link_to address.summary, address %></td>
+        <td class="govuk-table__cell"><%= link_to 'Delete', address, method: :delete, data: { confirm: 'Are you sure?' } if policy(address).destroy? %></td>
       </tr>
     <% end %>
   </tbody>

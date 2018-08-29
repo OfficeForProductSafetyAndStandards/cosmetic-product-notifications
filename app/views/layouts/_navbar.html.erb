@@ -2,19 +2,13 @@
 <nav class="app-navigation govuk-clearfix">
   <ul class="app-navigation__list">
     <li class="<%= params[:controller] == "investigations" && "app-navigation--current-page" %>">
-      <a class="govuk-link" href="/investigations" aria-selected="" data-topnav="investigations">
-        Cases
-      </a>
+      <%= link_to "Cases", investigations_path, { "data-topnav": "investigations" }%>
     </li>
     <li class="<%= params[:controller] == "businesses" && "app-navigation--current-page" %>">
-      <a class="govuk-link" href="/businesses" data-topnav="businesses">
-        Businesses
-      </a>
+      <%= link_to "Businesses", businesses_path, { "data-topnav": "businesses" }%>
     </li>
     <li class="<%= params[:controller] == "products" && "app-navigation--current-page" %>">
-      <a class="govuk-link" href="/products" data-topnav="products">
-        Products
-      </a>
+      <%= link_to "Products", products_path, { "data-topnav": "products" }%>
     </li>
   </ul>
 </nav>

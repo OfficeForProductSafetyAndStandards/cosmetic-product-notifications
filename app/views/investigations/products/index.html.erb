@@ -5,7 +5,7 @@
 <%= render "investigation_heading", investigation: @investigation %>
 
 <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Manage products</h2>
-<%= link_to 'Add product', search_investigation_products_path(@investigation), class: "govuk-link" %>
+<%= link_to 'Add product', search_investigation_products_path(@investigation) %>
 
 <div class="govuk-!-padding-top-8">
     <% if @investigation.products.any? %>
@@ -21,6 +21,6 @@
             <% end %>
         <% end %>
     <% else %>
-        <p class="govuk-body">No products.</p>
+        <p>No products.</p>
     <% end %>
 </div>

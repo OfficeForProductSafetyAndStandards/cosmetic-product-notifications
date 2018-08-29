@@ -3,7 +3,7 @@
     <div id="error_explanation">
       <h2 class="govuk-heading-l"><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
 
-      <ul class="govuk-link">
+      <ul class="govuk-list">
       <% address.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
