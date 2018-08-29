@@ -1,26 +1,26 @@
-<table class="govuk-!-margin-bottom-3">
-  <thead>
-    <tr>
+<table class="govuk-table govuk-!-margin-bottom-3">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
       <% if form %>
-        <th class="not-implemented"colspan="1"></th>
+        <th class="govuk-table__header not-implemented" scope="col"></th>
       <% end %>
-      <th>Product</th>
-      <th>Type</th>
-      <th>Origin</th>
-      <th>Cases</th>
+      <th class="govuk-table__header" scope="col">Product</th>
+      <th class="govuk-table__header" scope="col">Type</th>
+      <th class="govuk-table__header" scope="col">Origin</th>
+      <th class="govuk-table__header" scope="col">Cases</th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class="govuk-table__body">
     <% @products.each do |product| %>
-      <tr>
+      <tr class="govuk-table__row">
         <% if form %>
-          <td class="not-implemented"><%= form.check_box :product_ids, { multiple: true }, product.id, false %></td>
+          <td class="govuk-table__cell not-implemented"><%= form.check_box :product_ids, { multiple: true }, product.id, false %></td>
         <% end %>
-        <td><%= link_to product.name, product %></td>
-        <td><%= product.product_type %></td>
-        <td><%= product.country_of_origin_for_display %></td>
-        <td>
+        <td class="govuk-table__cell"><%= link_to product.name, product, class: "govuk-link" %></td>
+        <td class="govuk-table__cell"><%= product.product_type %></td>
+        <td class="govuk-table__cell"><%= product.country_of_origin_for_display %></td>
+        <td class="govuk-table__cell">
           <span class="govuk-!-font-size-36 govuk-!-font-weight-bold">
             <%= product.investigations.count %>
           </span>
@@ -28,8 +28,8 @@
       </tr>
     <% end %>
     <% if @products.empty? %>
-    <tr>
-      <td>No products found.</td>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">No products found.</td>
     </tr>
     <% end %>
   </tbody>
