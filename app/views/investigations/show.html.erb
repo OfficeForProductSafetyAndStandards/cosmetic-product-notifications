@@ -1,23 +1,25 @@
 <% content_for :page_title, "View case - Market Surveillance & Product Safety" %>
-<div class="show-investigation">
 
-  <div class="govuk-grid-row govuk-!-padding-bottom-6 govuk-!-padding-top-6 top-details">
-    <div class="govuk-grid-column-one-third">
-      <%= link_to 'Back to list', investigations_path, class: "govuk-back-link link-back" %>
-    </div>
-    <div class="govuk-grid-column-one-third">
-      Status <%= link_to @investigation.status, status_investigation_path(@investigation) %>
-    </div>
-    <div class="govuk-grid-column-one-third">
-      <% if !@investigation.is_closed %>
-        <%= link_to @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned",
-                              assign_investigation_path(@investigation) %>
-      <% else %>
-        <%= @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned" %>
-      <% end %>
-    </div>
+<% content_for :after_header do %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <%= link_to 'Back to list', investigations_path, class: "govuk-back-link" %>
   </div>
+  <div class="govuk-grid-column-one-third">
+    Status <%= link_to @investigation.status, status_investigation_path(@investigation) %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <% if !@investigation.is_closed %>
+      <%= link_to @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned",
+                            assign_investigation_path(@investigation) %>
+    <% else %>
+      <%= @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned" %>
+    <% end %>
+  </div>
+</div>
+<% end %>
 
+<div class="show-investigation">
   <div class="govuk-grid-row govuk-!-padding-bottom-6">
     <div class="govuk-grid-column-full">
       <%= render "investigation_heading", investigation: @investigation %>

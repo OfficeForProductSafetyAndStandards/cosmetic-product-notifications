@@ -1,7 +1,10 @@
 <% content_for :page_title, "Edit business - Market Surveillance & Product Safety" %>
-<div class="edit-business-page businesses-search-form">
-    <%= link_to 'Back to business', @business, :class => "govuk-back-link" %>
 
+<% content_for :after_header do %>
+<%= link_to 'Back to business', @business, class: "govuk-back-link" %>
+<% end %>
+
+<div class="edit-business-page businesses-search-form">
     <%= render "business_heading", business: @business %>
     <h2 class="govuk-heading-l">Business details</h2>
 

@@ -1,6 +1,8 @@
 <% content_for :page_title, "Cases - Market Surveillance & Product Safety" %>
 
-<%= render "layouts/navbar" %>
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" %>
+<% end %>
 
 <% if @current_user %>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">

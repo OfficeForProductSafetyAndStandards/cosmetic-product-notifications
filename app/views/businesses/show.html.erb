@@ -1,7 +1,10 @@
 <% content_for :page_title, "View business - Market Surveillance & Product Safety" %>
 
+<% content_for :after_header do %>
+<%= link_to 'Back to list', businesses_path, class: "govuk-back-link" %>
+<% end %>
+
 <div class="show-business">
-  <%= link_to 'Back to list', businesses_path, class: "govuk-back-link" %>
   <div class="govuk-grid-row govuk-!-padding-bottom-6">
     <div class="govuk-grid-column-two-thirds">
       <%= render "business_heading", business: @business %>

@@ -1,6 +1,8 @@
 <% content_for :page_title, "Businesses - Market Surveillance & Product Safety" %>
 
-<%= render "layouts/navbar" %>
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" %>
+<% end %>
 
 <%= form_with(url: businesses_path, method: :get, class: "search-background govuk-!-padding-3") do |form| %>
   <div class="govuk-form-group">
