@@ -37,7 +37,9 @@ class UsersController < ApplicationController
     if params[:q].blank?
       User.paginate(page: params[:page], per_page: 20)
     else
-      User.prefix_search(params[:q]).paginate(page: params[:page], per_page: 20).records
+      User.prefix_search(params[:q], :email)
+          .paginate(page: params[:page], per_page: 20)
+          .records
     end
   end
 end

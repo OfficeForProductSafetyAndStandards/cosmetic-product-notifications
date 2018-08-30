@@ -23,7 +23,9 @@ module ProductsHelper
     if params[:q].blank?
       Product.paginate(page: params[:page], per_page: page_size)
     else
-      Product.prefix_search(params[:q]).paginate(page: params[:page], per_page: page_size).records
+      Product.fuzzy_search(params[:q])
+             .paginate(page: params[:page], per_page: page_size)
+             .records
     end
   end
 

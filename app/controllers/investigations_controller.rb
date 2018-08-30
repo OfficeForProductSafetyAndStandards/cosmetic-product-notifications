@@ -11,7 +11,7 @@ class InvestigationsController < ApplicationController
     @investigations = if params[:q].blank?
                         Investigation.paginate(page: params[:page], per_page: 20)
                       else
-                        Investigation.prefix_search(params[:q])
+                        Investigation.fuzzy_search(params[:q])
                                      .paginate(page: params[:page], per_page: 20)
                                      .records
                       end
