@@ -7,7 +7,7 @@
         <% elsif product.rapex_images.any? %>
           <%= image_tag(product.rapex_images[0].url, alt: product.rapex_images[0].title, :class => "product-image") %>
         <% else %>
-          <p class="no-images">No images.</p>
+          <p class="govuk-body no-images">No images.</p>
         <% end %>
       </div>
     </div>
@@ -29,7 +29,7 @@
         </tr>
       </tbody>
     </table>
-    <p><%= link_to "Full product details", product %></p>
+    <p class="govuk-body"><%= link_to "Full product details", product %></p>
     <%= yield %>
   </div>
 </div>

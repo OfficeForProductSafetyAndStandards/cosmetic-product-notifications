@@ -4,12 +4,12 @@
 
 <%= render "page_heading", title: "Manage documents" %>
 
-<%= link_to 'Add new document', new_associated_document_path(@parent), class: "add-document-link" %>
+<%= link_to 'Add new document', new_associated_document_path(@parent), class: "govuk-link add-document-link" %>
 
 <div class="govuk-!-padding-top-8">
   <% if @parent.documents.attached? %>
     <%= render "table" %>
   <% else %>
-    <p>No documents.</p>
+    <p class="govuk-body">No documents.</p>
   <% end %>
 </div>

@@ -1,9 +1,9 @@
 <%= form_with(model: [investigation, activity], local: true) do |form| %>
   <% if activity.errors.any? %>
     <div id="error_explanation">
-      <h2 class="heading-large"><%= pluralize(activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+      <h2 class="govuk-heading-l"><%= pluralize(activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
 
-      <ul>
+      <ul class="govuk-list">
       <% activity.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
@@ -11,24 +11,26 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <fieldset>
-      <legend><h4 class="form-label">Activity type</h4></legend>
-      <% Activity.activity_types.select { |t| !automatic? t }.each do |(type, _)| %>
-        <div class="multiple-choice">
-          <%= form.radio_button :activity_type, type %>
-          <%= form.label :activity_type, type.titleize %>
-        </div>
-      <% end %>
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend"><h4 class="govuk-label">Activity type</h4></legend>
+      <div class="govuk-radios">
+        <% Activity.activity_types.select { |t| !automatic? t }.each do |(type, _)| %>
+          <div class="govuk-radios__item">
+            <%= form.radio_button :activity_type, type, class: "govuk-radios__input" %>
+            <%= form.label :activity_type, type.titleize, class: "govuk-label govuk-radios__label" %>
+          </div>
+        <% end %>
+      </div>
     </fieldset>
   </div>
 
-  <div class="form-group">
-    <%= form.label :notes, :class => "form-label" %>
-    <%= form.text_area :notes, :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= form.label :notes, :class => "govuk-label" %>
+    <%= form.text_area :notes, :class => "govuk-textarea" %>
   </div>
 
-  <div class="form-group">
+  <div class="govuk-form-group">
     <%= form.submit "Submit", :class => "govuk-button" %>
   </div>
 <% end %>

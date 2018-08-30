@@ -1,3 +1,13 @@
+function simpleAccessibleAutocomplete(id) {
+    if (document.getElementById(id)) {
+        accessibleAutocomplete.enhanceSelectElement({
+            defaultValue: "",
+            selectElement: document.getElementById(id),
+            preserveNullOptions: true
+        });
+    }
+}
+
 function searchOnTextInput(inputElement, url, buildQuery, callback) {
     var debounceTimeout = null;
     var searchRequest = null;
@@ -15,27 +25,6 @@ function searchOnTextInput(inputElement, url, buildQuery, callback) {
     });
 }
 
-function addSelect2AjaxSearchToElement(selectElement, url, mapData) {
-    selectElement.select2({
-        ajax: {
-            url: url,
-            dataType: "json",
-            delay: 250,
-            data: function(params) {
-                var query = {
-                    q: params.term,
-                    page: params.page || 1
-                }
-                return query
-            },
-            processResults: function (data) {
-                return {
-                    results: data.map(mapData)
-                };
-            }
-        }
-    }).val(getIdsFromOptions(selectElement)).trigger("change");
-}
 
 function getIdsFromOptions(selectElement) {
     return selectElement.find("option").map(function() {

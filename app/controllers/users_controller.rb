@@ -42,6 +42,8 @@ class UsersController < ApplicationController
     params[:sort] = "email"
     params[:direction] = "asc"
 
-    User.prefix_search(params).paginate(page: params[:page], per_page: 20).records
+    User.prefix_search(params, :email)
+        .paginate(page: params[:page], per_page: 20)
+        .records
   end
 end

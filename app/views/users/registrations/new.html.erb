@@ -1,27 +1,27 @@
-<h1 class="heading-xlarge">Sign up</h1>
+<h1 class="govuk-heading-xl">Sign up</h1>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="form-group">
-    <%= f.label :email, :class => "form-label" %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= f.label :email, :class => "govuk-label" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :password, :class => "form-label" %>
-    <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= f.label :password, :class => "govuk-label" %>
+    <%= f.password_field :password, autocomplete: "off", :class => "govuk-input" %>
     <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :password_confirmation, :class => "form-label" %>
-    <%= f.password_field :password_confirmation, autocomplete: "off", :class => "form-control" %>
+  <div class="govuk-form-group">
+    <%= f.label :password_confirmation, :class => "govuk-label" %>
+    <%= f.password_field :password_confirmation, autocomplete: "off", :class => "govuk-input" %>
   </div>
 
-  <div class="form-group">
+  <div class="govuk-form-group">
     <%= f.submit "Sign up", :class => "govuk-button" %>
   </div>
 <% end %>

@@ -1,17 +1,16 @@
 // Place all the styles related to the Images controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import "buttons";
-@import "colours";
+@import "govuk-frontend/helpers/colour";
 
 .image-with-preview {
-  background-color: $grey-1;
+  background-color: govuk-colour("grey-1");
   display: inline-block;
   vertical-align: top;
 }
 
 .image-without-preview {
-  background-color: $grey-1;
+  background-color: govuk-colour("grey-2");
   display: inline-block;
   font-weight: bold;
   text-align: center;
@@ -20,8 +19,8 @@
 }
 
 .image-processing-placeholder {
-  background-color: $grey-1;
-  color: $white;
+  background-color: govuk-colour("grey-1");
+  color: govuk-colour("white");
   display: inline-block;
   font-weight: bold;
   font-size: 2.5em;
@@ -51,7 +50,6 @@
     }
 
     .delete-image-link {
-      @extend .button-warning;
       margin-top: 0.5em;
     }
   }

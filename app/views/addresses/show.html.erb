@@ -38,7 +38,7 @@
     </table>
 
     <% if policy(@address).update? %>
-      <%= link_to 'Edit details', edit_address_path(@address) %>
+      <%= link_to 'Edit details', edit_address_path(@address), class: "govuk-link" %>
     <% end %>
   </div>
 </div>

@@ -1,31 +1,31 @@
-<table class="investigation-list govuk-!-margin-bottom-3">
-  <thead>
-  <tr>
-    <th><%= sortable "title", "Case" %></th>
-    <th><%= sortable "is_closed", "Status" %></th>
-    <th>Risk</th>
-    <th><%= sortable "assignee", "Assigned" %></th>
-    <th><%= sortable "updated_at", "Last update" %></th>
+<table class="govuk-table investigation-list govuk-!-margin-bottom-3">
+  <thead class="govuk-table__head">
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="col"><%= sortable "title", "Case" %></th>
+    <th class="govuk-table__header" scope="col"><%= sortable "is_closed", "Status" %></th>
+    <th class="govuk-table__header" scope="col">Risk</th>
+    <th class="govuk-table__header" scope="col"><%= sortable "assignee", "Assigned" %></th>
+    <th class="govuk-table__header" scope="col"><%= sortable "updated_at", "Last update" %></th>
   </tr>
   </thead>
 
-  <tbody>
+  <tbody class="govuk-table__body">
   <% @investigations.each do |investigation| %>
-    <tr>
-      <td>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">
         <%= link_to investigation, class: "govuk-link" do %>
           <span class="govuk-!-font-size-16"><%= investigation.id %></span><br />
           <%= investigation.title %>
         <% end %>
       </td>
-      <td>
+      <td class="govuk-table__cell">
         <span><%= investigation.status %></span>
       </td>
-      <td>
+      <td class="govuk-table__cell">
         <span><%= investigation.risk_overview %></span>
       </td>
-      <td><%= investigation.assignee ? investigation.assignee.email : "" %></td>
-      <td class="govuk-!-font-weight-bold"><%= investigation.updated_at.strftime("%d/%m/%Y") %></td>
+      <td class="govuk-table__cell"><%= investigation.assignee ? investigation.assignee.email : "" %></td>
+      <td class="govuk-table__cell govuk-!-font-weight-bold"><%= investigation.updated_at.strftime("%d/%m/%Y") %></td>
     </tr>
   <% end %>
   </tbody>

@@ -1,26 +1,28 @@
-<% content_for :page_title, "Update assignee - Market Surveillance & Product Safety" %>
+<% content_for :page_title, "Update status - Market Surveillance & Product Safety" %>
 
-<%= link_to 'Back to case', @investigation, :class => "link-back" %>
+<%= link_to 'Back to case', @investigation, class: "govuk-back-link" %>
 
 <%= render "investigation_heading", investigation: @investigation %>
 <h2 class="govuk-heading-l">Case status</h2>
 
 <%= form_with(model: @investigation, local: true) do |form| %>
-  <div class="form-group">
-    <fieldset>
-      <legend><h4 class="form-label">Status</h4></legend>
-      <div class="multiple-choice">
-        <%= form.radio_button :is_closed, false %>
-        <%= form.label :is_closed, "Open" %>
-      </div>
-      <div class="multiple-choice">
-        <%= form.radio_button :is_closed, true %>
-        <%= form.label :is_closed, "Closed" %>
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend"><h4 class="govuk-label">Status</h4></legend>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <%= form.radio_button :is_closed, false, class: "govuk-radios__input" %>
+          <%= form.label :is_closed, "Open", class: "govuk-label govuk-radios__label" %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= form.radio_button :is_closed, true, class: "govuk-radios__input" %>
+          <%= form.label :is_closed, "Closed", class: "govuk-label govuk-radios__label" %>
+        </div>
       </div>
     </fieldset>
   </div>
   
-  <div class="form-group">
+  <div class="govuk-form-group">
     <%= form.submit "Save", :class => "govuk-button" %>
   </div>
 <% end %>

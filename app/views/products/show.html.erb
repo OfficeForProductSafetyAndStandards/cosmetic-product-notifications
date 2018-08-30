@@ -15,12 +15,12 @@
 <div class="govuk-grid-row govuk-!-padding-bottom-6 row-border-top">
   <div class="govuk-grid-column-one-third">
     <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h3>
-    <ul class="dashed-list">
-      <li><a href="#details" class="govuk-!-font-size-19">Details</a></li>
-      <li><a href="#images" class="govuk-!-font-size-19">Images</a></li>
-      <li><a href="#documents" class="govuk-!-font-size-19">Documents</a></li>
-      <li><a href="#cases" class="govuk-!-font-size-19">Cases</a></li>
-      <li><a href="#history" class="govuk-!-font-size-19">History</a></li>
+    <ul class="govuk-list dashed-list">
+      <li><a href="#details" class="govuk-link govuk-!-font-size-19">Details</a></li>
+      <li><a href="#images" class="govuk-link govuk-!-font-size-19">Images</a></li>
+      <li><a href="#documents" class="govuk-link govuk-!-font-size-19">Documents</a></li>
+      <li><a href="#cases" class="govuk-link govuk-!-font-size-19">Cases</a></li>
+      <li><a href="#history" class="govuk-link govuk-!-font-size-19">History</a></li>
     </ul>
   </div>
 
@@ -65,7 +65,7 @@
             </tr>
           </tbody>
         </table>
-        <%= link_to "Edit details", edit_product_path(@product) %>
+        <%= link_to "Edit details", edit_product_path(@product), class: "govuk-link" %>
       </div>
     </div>
 

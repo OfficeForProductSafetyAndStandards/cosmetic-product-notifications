@@ -1,37 +1,28 @@
 <% content_for :page_title, "Update assignee - Market Surveillance & Product Safety" %>
 
-<div class="breadcrumbs">
-    <ol role="breadcrumbs">
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <%= link_to 'Case', investigation_path(@investigation) %>
-        </li>
-        <li>
-            <%= link_to 'Update assignee', assign_investigation_path(@investigation) %>
-        </li>
-    </ol>
-</div>
+<%= link_to 'Back to case', @investigation, class: "govuk-back-link" %>
 
-<h1 class="heading-xlarge">Update assignee</h1>
-<h4 class="heading-medium">Current assignee</h4>
-<p><%= @investigation.assignee.nil? ? "Unassigned" : @investigation.assignee.email %></p>
+<%= render "investigation_heading", investigation: @investigation %>
+<h2 class="govuk-heading-l">Update assignee</h2>
+
+<h4 class="govuk-heading-m">Current assignee</h4>
+<p class="govuk-body"><%= @investigation.assignee.nil? ? "Unassigned" : @investigation.assignee.email %></p>
 
 <%= form_with(url: update_assignee_investigation_path(@investigation), local: true) do |form| %>
-  <div class="form-group">
-    <%= form.label :email, :class => "form-label" %>
+  <div class="govuk-form-group">
+    <%= form.label :email, :class => "govuk-label" %>
     <%= form.select :email,
+                    # When there are many users, we should consider loading them with ajax using the autocomplete
                     options_for_select(
-                      [@investigation.assignee ? @investigation.assignee.email : "", User.all.collect {|u| [u.email]}],
+                      User.all.collect {|u| [u.email]},
                       @investigation.assignee ? @investigation.assignee.email : ""
                     ),
-                    { },
-                    { class: "js-assignee-email form-control" }
+                    { include_blank: "Unassigned" },
+                    { class: "govuk-select", id: "assignee-picker" }
     %>
   </div>
   
-  <div class="form-group">
+  <div class="govuk-form-group">
     <%= form.submit "Update assignee", :class => "govuk-button" %>
   </div>
 <% end %>

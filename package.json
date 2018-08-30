@@ -13,8 +13,8 @@
   },
   "license": "MIT",
   "dependencies": {
+    "accessible-autocomplete": "^1.6.1",
     "govuk-country-and-territory-autocomplete": "^0.4.0",
-    "govuk-elements-sass": "^3.1.2",
     "govuk-frontend": "^1.2.0"
   }
 }

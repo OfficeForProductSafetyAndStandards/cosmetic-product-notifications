@@ -44,14 +44,10 @@ class InvestigationsController < ApplicationController
   # POST /investigations/1/update_assignee
   def update_assignee
     assignee = User.where("lower(email) = ?", params[:email].downcase).first
-    if assignee.nil?
-      redirect_to assign_investigation_path(@investigation), alert: "Assignee does not exist."
-    else
-      @investigation.assignee = assignee
-      save_and_respond "Assignee was successfully updated."
-      record_assignment
-      NotifyMailer.assigned_investigation(@investigation, assignee).deliver
-    end
+    @investigation.assignee = assignee
+    save_and_respond "Assignee was successfully updated."
+    record_assignment
+    NotifyMailer.assigned_investigation(@investigation, assignee).deliver if assignee.present?
   end
 
   # POST /investigations
@@ -103,7 +99,9 @@ class InvestigationsController < ApplicationController
     params[:sort] = sort_column
     params[:direction] = sort_direction
 
-    Investigation.prefix_search(params).paginate(page: params[:page], per_page: 20).records
+    Investigation.fuzzy_search(params)
+                 .paginate(page: params[:page], per_page: 20)
+                 .records
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -141,7 +139,7 @@ class InvestigationsController < ApplicationController
     @investigation.activities.create(
       source: UserSource.new(user: current_user),
       activity_type: :assign,
-      notes: "Assigned to #{@investigation.assignee.email}"
+      notes: "Assigned to #{@investigation.assignee.present? ? @investigation.assignee.email : 'Unassigned'}"
     )
   end
 

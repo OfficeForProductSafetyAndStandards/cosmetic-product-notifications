@@ -15,7 +15,7 @@
   <div class="govuk-grid-row govuk-!-padding-bottom-6 row-border-top">
     <div class="govuk-grid-column-one-third">
       <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Contents</h3>
-      <ul class="dashed-list">
+      <ul class="govuk-list dashed-list">
         <li><a href="#details" class="govuk-!-font-size-19">Details</a></li>
         <li><a href="#locations" class="govuk-!-font-size-19">Locations</a></li>
         <li><a href="#cases" class="govuk-!-font-size-19">Cases</a></li>
@@ -73,9 +73,9 @@
               <% end %>
             </div>
           <% else %>
-            No locations.
+            <p class="govuk-body">No locations.</p>
           <% end %>
-          <%= link_to "Manage locations", business_addresses_path(@business) %>
+          <%= link_to "Manage locations", business_addresses_path(@business), class: "govuk-link" %>
         </div>
       </div>
 

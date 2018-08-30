@@ -7,13 +7,13 @@
 <h3 class="govuk-heading-m document-type-details">
   <span class="document-type">
     <%= @document.metadata["document_type"]&.titleize %>
-    <%= " – #{document.metadata["other_type"].titleize}" if @document.metadata["other_type"].present? %>
+    <%= " – #{@document.metadata["other_type"].titleize}" if @document.metadata["other_type"].present? %>
   </span>
   <span class="govuk-!-padding-left-2 document-filetype"><%= "(#{document_filetype_label(@document)})" %></span>
 </h3>
 
-<%= link_to render("document_image", document: @document), @document, class: "document-link" %>
+<%= link_to render("document_image", document: @document), @document, class: "govuk-link document-link" %>
 
 <p class="document-description"><%= @document.metadata["description"] %></p>
 
-<%= link_to "Edit document details", edit_associated_document_path(@parent, @document), class: "edit-document-link" %>
+<%= link_to "Edit document details", edit_associated_document_path(@parent, @document), class: "govuk-link edit-document-link" %>
