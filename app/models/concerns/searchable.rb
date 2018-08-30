@@ -7,21 +7,16 @@ module Searchable
 
     # "prefix" may be changed to a more appropriate query. For alternatives see:
     # https://www.elastic.co/guide/en/elasticsearch/reference/current/term-level-queries.html
-    def self.prefix_search(query)
+    def self.prefix_search(query, field)
+      search_term = {}
+      search_term[field] = query.downcase # analyzer indexes records in lowercase
       __elasticsearch__.search(
-        # TODO-MSPSDS-298 Re-enable prefix search
-        # query: {
-        #   prefix: {
-        #     _all: {
-        #       value: query.downcase # analyzer indexes records in lowercase
-        #     }
-        #   }
-        # }
-        query
+        query: {
+          prefix: search_term
+        }
       )
     end
 
-    # "multi_match" searches across all fields, applying fuzzy matching to any text fields
     # "multi_match" searches across all fields, applying fuzzy matching to any text and keyword fields
     def self.fuzzy_search(query)
       __elasticsearch__.search(
