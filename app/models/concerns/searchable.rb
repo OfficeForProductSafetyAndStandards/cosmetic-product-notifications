@@ -20,5 +20,18 @@ module Searchable
         query
       )
     end
+
+    # "multi_match" searches across all fields, applying fuzzy matching to any text fields
+    # "multi_match" searches across all fields, applying fuzzy matching to any text and keyword fields
+    def self.fuzzy_search(query)
+      __elasticsearch__.search(
+        query: {
+          multi_match: {
+            query: query.downcase, # analyzer indexes records in lowercase
+            fuzziness: "AUTO"
+          }
+        }
+      )
+    end
   end
 end
