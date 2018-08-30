@@ -6,7 +6,7 @@ services:
     volumes:
       - postgres-volume:/var/lib/postgresql/data
   elasticsearch:
-    image: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
     environment:
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     volumes:
