@@ -16,11 +16,11 @@ module BusinessesHelper
   end
 
   def sort_column
-    Business.column_names.include?(params[:sort]) ? params[:sort] : "company_name"
+    Business.column_names.include?(params[:sort]) ? params[:sort] : "cases"
   end
 
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
   def search_companies_house(query, page_size)
