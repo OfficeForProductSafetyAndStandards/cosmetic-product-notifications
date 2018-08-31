@@ -14,4 +14,8 @@ module InvestigationsHelper
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
+
+  def filter_params
+    params.require(:filter).permit(:status)
+  end
 end

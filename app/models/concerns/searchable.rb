@@ -78,25 +78,48 @@ module Searchable
       __elasticsearch__.search(query)
     end
 
-    # "multi_match" searches across all fields, applying fuzzy matching to any text and keyword fields
     def self.fuzzy_search(params)
       query = {}
-      if params[:query].present?
-        query[:query] = {
-          multi_match: {
-            query: params[:query],
-            fuzziness: "AUTO"
-          }
-        }
-      end
+      query[:query] = query_params(params) if params[:query].present?
       query[:sort] = sort_params(params) if params[:sort].present?
 
       __elasticsearch__.search(query)
     end
 
+    def self.query_params(params)
+      if params[:filter].present?
+        filtered_query(fuzzy_match_query(params), filter_params(params))
+      else
+        fuzzy_match_query(params)
+      end
+    end
+
     def self.sort_params(params)
       sort_field = params[:sort] + ".sort"
       [{ "#{sort_field}": { order: params[:direction] } }]
+    end
+
+    def self.filter_params(params)
+      params[:filter].to_h.map { |field, value| { term: { "#{field}": value } } }
+    end
+
+    # "multi_match" searches across all fields, applying fuzzy matching to any text and keyword fields
+    def self.fuzzy_match_query(params)
+      {
+        multi_match: {
+          query: params[:query],
+          fuzziness: "AUTO"
+        }
+      }
+    end
+
+    def self.filtered_query(query_params, filter_params)
+      {
+        bool: {
+          must: [query_params],
+          filter: filter_params
+        }
+      }
     end
   end
 end

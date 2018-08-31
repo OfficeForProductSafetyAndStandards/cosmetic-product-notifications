@@ -39,6 +39,13 @@
     <%= form.text_field :q, value: params[:q], class: "govuk-input" %>
   </div>
   <div class="govuk-form-group">
+    <%= form.label "filter[status]", "Status", class: "govuk-label" %>
+    <%= form.select "filter[status]", %w[Open Closed],
+                    { include_blank: "Any", selected: params.dig(:filter, :status) },
+                    class: "govuk-select"
+    %>
+  </div>
+  <div class="govuk-form-group">
     <%= form.submit "Search", name: nil, class: "govuk-button" %>
   </div>
 <% end %>
