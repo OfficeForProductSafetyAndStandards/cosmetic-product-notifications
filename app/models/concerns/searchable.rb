@@ -23,6 +23,18 @@ module Searchable
             }
           }
         }, {
+          numbers: {
+            match_mapping_type: "long",
+            mapping: {
+              "type": "long",
+              fields: {
+                sort: {
+                  type: "long"
+                }
+              }
+            }
+          }
+        }, {
           dates: {
             match_mapping_type: "date",
             mapping: {

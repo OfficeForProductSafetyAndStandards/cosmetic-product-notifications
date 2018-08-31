@@ -20,6 +20,10 @@ class Product < ApplicationRecord
 
   has_paper_trail
 
+  def as_indexed_json(*)
+    as_json.merge(cases: investigations.size)
+  end
+
   def country_of_origin_for_display
     country_from_code country_of_origin
   end

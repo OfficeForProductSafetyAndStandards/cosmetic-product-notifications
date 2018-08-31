@@ -8,7 +8,7 @@
       <th class="govuk-table__header" scope="col"><%= sortable "product_type", "Type" %></th>
       <th class="govuk-table__header" scope="col"><%= sortable "country_of_origin", "Origin" %></th>
       <% unless @compressed %>
-        <th class="govuk-table__header" scope="col">Cases</th>
+        <th class="govuk-table__header right-aligned" scope="col"><%= sortable "cases", "Cases" %></th>
       <% end %>
     </tr>
   </thead>
@@ -22,7 +22,7 @@
         <td class="govuk-table__cell"><%= link_to product.name, product, class: "govuk-link" %></td>
         <td class="govuk-table__cell"><%= product.product_type %></td>
         <td class="govuk-table__cell"><%= product.country_of_origin_for_display %></td>
-        <td class="govuk-table__cell">
+        <td class="govuk-table__cell right-aligned">
           <span class="govuk-!-font-size-36 govuk-!-font-weight-bold">
             <%= product.investigations.count %>
           </span>
