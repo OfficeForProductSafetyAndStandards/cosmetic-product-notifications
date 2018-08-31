@@ -2,13 +2,9 @@ module UsersHelper
   include SearchHelper
 
   def search_for_users(page_size)
-    if search_params_present?
-      User.prefix_search(search_params, :email)
-          .paginate(page: params[:page], per_page: page_size)
-          .records
-    else
-      User.paginate(page: params[:page], per_page: page_size)
-    end
+    User.prefix_search(search_params, :email)
+        .paginate(page: params[:page], per_page: page_size)
+        .records
   end
 
   def sort_column

@@ -10,13 +10,9 @@ module ProductsHelper
   end
 
   def search_for_products(page_size)
-    if search_params_present?
-      Product.fuzzy_search(search_params)
-             .paginate(page: params[:page], per_page: page_size)
-             .records
-    else
-      Product.paginate(page: params[:page], per_page: page_size)
-    end
+    Product.fuzzy_search(search_params)
+           .paginate(page: params[:page], per_page: page_size)
+           .records
   end
 
   def sort_column
