@@ -1,6 +1,8 @@
 <% content_for :page_title, "Manage documents - Market Surveillance & Product Safety" %>
 
+<% content_for :after_header do %>
 <%= link_to "Back to #{@parent.class.name == "Investigation" ? "case" : @parent.class.name.downcase}", polymorphic_path(@parent), class: "govuk-back-link" %>
+<% end %>
 
 <%= render "page_heading", title: "Manage documents" %>
 
@@ -10,6 +12,6 @@
   <% if @parent.documents.attached? %>
     <%= render "table" %>
   <% else %>
-    <p class="govuk-body">No documents.</p>
+    <p>No documents.</p>
   <% end %>
 </div>

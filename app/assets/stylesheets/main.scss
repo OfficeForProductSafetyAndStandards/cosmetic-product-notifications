@@ -1,8 +1,21 @@
-$govuk-assets-path: "/assets/govuk-frontend/assets/";
+$govuk-global-styles: true;
 @import "govuk-frontend/all";
 
+@import "documents";
+@import "images";
+@import "investigations";
+@import "navbar";
+@import "pagination";
+@import "products";
+@import "shared";
+@import "timeline";
+
+* {
+  box-sizing: border-box;
+}
+
 .dummy-column {
-    height: 1px;
+  height: 1px;
 }
 
 .min-height-column {
@@ -15,7 +28,7 @@ $govuk-assets-path: "/assets/govuk-frontend/assets/";
 
 .not-implemented {
   // TODO MSPSDS-265: to comply with the GDS standards, components missing functionality are hidden
-  display: none!important;
+  display: none !important;
   color: govuk-colour("red");
   opacity: 0.2;
 }
@@ -39,7 +52,8 @@ $govuk-assets-path: "/assets/govuk-frontend/assets/";
   font-size: 2em;
   text-align: center;
   color: govuk-colour("white");
-  background-color: govuk-colour("grey-1");;
+  background-color: govuk-colour("grey-1");
+  ;
 }
 
 .small-square-light {

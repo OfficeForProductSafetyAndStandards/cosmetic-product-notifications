@@ -3,10 +3,10 @@
     <div id="error_explanation">
       <h2 class="govuk-heading-l"><%= pluralize(investigation.errors.count, "error") %> prohibited this case from being saved:</h2>
 
-      <ul class="govuk-link">
-      <% investigation.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+      <ul class="govuk-list">
+        <% investigation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

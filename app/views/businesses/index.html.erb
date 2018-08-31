@@ -1,6 +1,8 @@
 <% content_for :page_title, "Businesses - Market Surveillance & Product Safety" %>
 
-<%= render "layouts/navbar" %>
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" %>
+<% end %>
 
 <%= form_with(url: businesses_path, method: :get, class: "search-background govuk-!-padding-3") do |form| %>
   <div class="govuk-form-group">
@@ -16,7 +18,7 @@
 
 <%= form_with(url: confirm_merge_businesses_path, method: :get) do |form| %>
   <%= form.submit "Merge selected", name: nil, class: "not-implemented" %>
-  <p><%= link_to 'Create new business', new_business_path, class: "govuk-body govuk-!-font-size-19  govuk-!-font-weight-bold" %></p>
+  <p><%= link_to 'Create new business', new_business_path, class: "govuk-!-font-size-19  govuk-!-font-weight-bold" %></p>
 
   <%= render 'table', businesses: @businesses, form: form %>
   <%= will_paginate @businesses %>

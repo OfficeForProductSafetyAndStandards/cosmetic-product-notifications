@@ -1,6 +1,8 @@
 <% content_for :page_title, "Edit case - Market Surveillance & Product Safety" %>
 
+<% content_for :after_header do %>
 <%= link_to 'Back to case', @investigation, :class => "govuk-back-link" %>
+<% end %>
 
 <%= render "investigation_heading", investigation: @investigation %>
 <h2 class="govuk-heading-l">Risk details</h2>

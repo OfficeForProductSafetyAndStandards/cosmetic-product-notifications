@@ -2,7 +2,6 @@ source "https://rubygems.org"
 
 ruby "2.4.3"
 
-gem "govuk_template"
 gem "notifications-ruby-client"
 
 # Will Paginate must be installed before elasticsearch

@@ -143,8 +143,6 @@ GEM
     ffi (1.9.25)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    govuk_template (0.24.1)
-      rails (>= 3.1)
     hashie (3.5.7)
     htmlentities (4.3.4)
     i18n (1.0.1)
@@ -345,7 +343,6 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   faraday_middleware-aws-sigv4
-  govuk_template
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)

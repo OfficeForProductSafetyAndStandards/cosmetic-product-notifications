@@ -1,5 +1,8 @@
 <% content_for :page_title, "Edit address - Market Surveillance & Product Safety" %>
+
+<% content_for :after_header do %>
 <%= link_to 'Back to address', @address, :class => "govuk-back-link" %>
+<% end %>
 
 <%= render "business_heading", business: @business %>
 <h2 class="govuk-heading-l">Address details</h2>

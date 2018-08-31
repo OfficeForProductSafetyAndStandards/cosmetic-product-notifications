@@ -1,6 +1,9 @@
 <% content_for :page_title, "User invitation - Market Surveillance & Product Safety" %>
 
+<% content_for :after_header do %>
 <%= link_to 'Back to list', users_path, class: "govuk-back-link" %>
+<% end %>
+
 <h1 class="govuk-heading-xl"><%= t "devise.invitations.new.header" %></h1>
 
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>

@@ -1,6 +1,10 @@
 <% content_for :page_title, "New business - Market Surveillance & Product Safety" %>
+
+<% content_for :after_header do %>
+<%= link_to 'Back to list', businesses_path, class: "govuk-back-link" %>
+<% end %>
+
 <div class="new-business-page businesses-search-form">
-    <%= link_to 'Back to list', businesses_path, class: "govuk-back-link" %>
 
     <h1 class="govuk-heading-xl">New business</h1>
 

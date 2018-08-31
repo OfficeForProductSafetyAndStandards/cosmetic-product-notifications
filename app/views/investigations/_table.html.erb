@@ -13,7 +13,7 @@
   <% @investigations.each do |investigation| %>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">
-        <%= link_to investigation, class: "govuk-link" do %>
+        <%= link_to investigation do %>
           <span class="govuk-!-font-size-16"><%= investigation.id %></span><br />
           <%= investigation.title %>
         <% end %>
