@@ -10,7 +10,7 @@ class BusinessesController < ApplicationController
   # GET /businesses
   # GET /businesses.json
   def index
-    @businesses = search_for_businesses
+    @businesses = search_for_businesses(20)
   end
 
   # GET /businesses/1
@@ -104,17 +104,6 @@ class BusinessesController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def search_for_businesses
-    if !params[:q] && !params[:sort]
-      return Business.all.paginate(page: params[:page], per_page: 20)
-    end
-    params[:q] ||= ""
-    params[:sort] = sort_column
-    params[:direction] = sort_direction
-
-    Business.prefix_search(params).paginate(page: params[:page], per_page: 20).records
-  end
-
   def create_business
     @business = Business.new(business_params)
     defaults_on_primary_address(@business) if @business.addresses.any?

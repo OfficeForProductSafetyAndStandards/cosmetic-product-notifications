@@ -8,7 +8,15 @@ module BusinessesHelper
   end
 
   def search_for_businesses(page_size)
-    Business.fuzzy_search(params[:q])
+    if !params[:q] && !params[:sort]
+      return Business.all.paginate(page: params[:page], per_page: page_size)
+    end
+
+    params[:q] ||= ""
+    params[:sort] = sort_column
+    params[:direction] = sort_direction
+
+    Business.fuzzy_search(params)
             .paginate(page: params[:page], per_page: page_size)
             .records
   end

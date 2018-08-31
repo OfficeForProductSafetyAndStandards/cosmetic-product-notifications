@@ -11,12 +11,12 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = search_for_products
+    @products = search_for_products(20)
   end
 
   # GET /products/suggested
   def suggested
-    @products = advanced_product_search
+    @products = advanced_product_search(20)
     render partial: "suggested"
   end
 
@@ -104,31 +104,6 @@ class ProductsController < ApplicationController
 
   private
 
-  # If the user supplies a barcode and it matches, then just return that.
-  # Otherwise use the general query param
-  def advanced_product_search
-    gtin_search_results = search_for_gtin if params[:gtin].present?
-    # if there was no GTIN param or there were no results for the GTIN search
-    basic_search_results = search_for_products if gtin_search_results.blank? && params[:q].present?
-    basic_search_results || gtin_search_results || []
-  end
-
-  def search_for_products
-    if !params[:q] && !params[:sort]
-      return Product.all.paginate(page: params[:page], per_page: 20)
-    end
-    params[:q] ||= ""
-    params[:sort] = sort_column
-    params[:direction] = sort_direction
-
-    Product.prefix_search(params).paginate(page: params[:page], per_page: 20).records
-  end
-
-  def search_for_gtin
-    Product.search(query: { match: { gtin: params[:gtin] } })
-           .paginate(page: params[:page], per_page: 20).records
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def create_product
     @product = Product.new(product_params)
@@ -145,15 +120,6 @@ class ProductsController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def product_params
-    params.require(:product).permit(
-      :gtin, :name, :description, :model, :batch_number, :url_reference, :brand, :serial_number,
-      :manufacturer, :country_of_origin, :date_placed_on_market, :associated_parts,
-      images_attributes: %i[id title url _destroy]
-    )
   end
 
   def set_countries
