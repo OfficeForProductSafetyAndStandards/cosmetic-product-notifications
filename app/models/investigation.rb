@@ -4,13 +4,6 @@ class Investigation < ApplicationRecord
 
   index_name [Rails.env, "investigations"].join("_")
 
-  settings index: { number_of_shards: 1 }do
-    mappings do
-      indexes :title, type: :keyword
-      indexes :assignee, type: :keyword
-    end
-  end
-
   def as_indexed_json(options={})
     self.as_json.merge({assignee: self.assignee&.email})
   end
