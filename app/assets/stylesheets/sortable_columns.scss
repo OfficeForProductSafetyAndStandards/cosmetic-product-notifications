@@ -11,6 +11,7 @@ table.sortable {
         text-align: right;
         font-size: 0.8em;
         width: 1.2em;
+        content: '';
       }
 
       &.asc::after {
