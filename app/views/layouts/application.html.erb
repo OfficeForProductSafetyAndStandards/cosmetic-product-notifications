@@ -88,6 +88,21 @@
 
     <%= yield :after_header %>
 
+    <% if alert %>
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+          <h2 class="govuk-error-summary__title" id="error-summary-title">
+            <%= alert %>
+          </h2>
+      </div>
+    <% end %>
+    <% if notice %>
+      <div class="govuk-inset-text govuk-!-margin-0" tabindex="-1">
+          <strong class="govuk-!-font-weight-bold">
+            <%= notice %>
+          </strong>
+      </div>
+    <% end %>
+
     <main class="govuk-main-wrapper app-main-class" id="main-content" role="main">
       <%= yield %>
     </main>
