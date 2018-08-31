@@ -1,4 +1,4 @@
-$(document).on("turbolinks:load", function() {
+$(document).on("turbolinks:load", function () {
     simpleAccessibleAutocomplete("company-type");
     simpleAccessibleAutocomplete("sic-code");
 
@@ -6,7 +6,7 @@ $(document).on("turbolinks:load", function() {
         $('.new-business-page .search-term'),
         '/businesses/search',
         buildCompaniesHouseQuery,
-        function(data) {
+        function (data) {
             $('#suggested-businesses').html(data);
         }
     );
