@@ -20,5 +20,3 @@ class User < ApplicationRecord
     add_role(:user) if roles.blank?
   end
 end
-
-User.import force: true
