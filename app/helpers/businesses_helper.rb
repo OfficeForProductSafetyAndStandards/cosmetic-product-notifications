@@ -1,4 +1,6 @@
 module BusinessesHelper
+  include SearchHelper
+
   BUSINESS_SUGGESTION_LIMIT = 3
 
   def defaults_on_primary_address(business)
@@ -8,17 +10,21 @@ module BusinessesHelper
   end
 
   def search_for_businesses(page_size)
-    if !params[:q] && !params[:sort]
-      return Business.all.paginate(page: params[:page], per_page: page_size)
+    if search_params_present?
+      Business.fuzzy_search(search_params)
+              .paginate(page: params[:page], per_page: page_size)
+              .records
+    else
+      Business.paginate(page: params[:page], per_page: page_size)
     end
+  end
 
-    params[:q] ||= ""
-    params[:sort] = sort_column
-    params[:direction] = sort_direction
+  def sort_column
+    Business.column_names.include?(params[:sort]) ? params[:sort] : "company_name"
+  end
 
-    Business.fuzzy_search(params)
-            .paginate(page: params[:page], per_page: page_size)
-            .records
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
   def search_companies_house(query, page_size)

@@ -53,12 +53,14 @@ module Searchable
     # https://www.elastic.co/guide/en/elasticsearch/reference/current/term-level-queries.html
     def self.prefix_search(params, field)
       query = {}
-      if params[:q] && !params[:q].blank?
+      if params[:query].present?
         query[:query] = {
-          prefix: { "#{field}": params[:q].downcase } # analyzer indexes records in lowercase
+          prefix: {
+            "#{field}": params[:query]
+          }
         }
       end
-      if params[:sort] && !params[:sort].blank?
+      if params[:sort].present?
         query[:sort] = [{ "#{params[:sort]}.sort": { order: params[:direction] } }]
       end
 
@@ -68,15 +70,15 @@ module Searchable
     # "multi_match" searches across all fields, applying fuzzy matching to any text and keyword fields
     def self.fuzzy_search(params)
       query = {}
-      if params[:q] && !params[:q].blank?
+      if params[:query].present?
         query[:query] = {
           multi_match: {
-            query: params[:q].downcase, # analyzer indexes records in lowercase
+            query: params[:query],
             fuzziness: "AUTO"
           }
         }
       end
-      if params[:sort] && !params[:sort].blank?
+      if params[:sort].present?
         query[:sort] = [{ "#{params[:sort]}.sort": { order: params[:direction] } }]
       end
 

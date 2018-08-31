@@ -1,4 +1,6 @@
 module ProductsHelper
+  include SearchHelper
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def product_params
     params.require(:product).permit(
@@ -20,22 +22,26 @@ module ProductsHelper
   end
 
   def search_for_products(page_size)
-    if !params[:q] && !params[:sort]
-      return Product.all.paginate(page: params[:page], per_page: page_size)
+    if search_params_present?
+      Product.fuzzy_search(search_params)
+             .paginate(page: params[:page], per_page: page_size)
+             .records
+    else
+      Product.paginate(page: params[:page], per_page: page_size)
     end
-
-    params[:q] ||= ""
-    params[:sort] = sort_column
-    params[:direction] = sort_direction
-
-    Product.fuzzy_search(params)
-           .paginate(page: params[:page], per_page: page_size)
-           .records
   end
 
   def search_for_gtin(page_size)
     Product.search(query: { match: { gtin: params[:gtin] } })
            .paginate(page: params[:page], per_page: page_size)
            .records
+  end
+
+  def sort_column
+    Product.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

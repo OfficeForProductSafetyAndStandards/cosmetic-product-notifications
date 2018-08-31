@@ -10,7 +10,7 @@ class InvestigationsController < ApplicationController
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @investigations = search_for_investigations
+    @investigations = search_for_investigations(20)
   end
 
   # GET /investigations/1
@@ -91,19 +91,6 @@ class InvestigationsController < ApplicationController
 
   private
 
-  def search_for_investigations
-    if !params[:q] && !params[:sort]
-      return Investigation.all.paginate(page: params[:page], per_page: 20)
-    end
-    params[:q] ||= ""
-    params[:sort] = sort_column
-    params[:direction] = sort_direction
-
-    Investigation.fuzzy_search(params)
-                 .paginate(page: params[:page], per_page: 20)
-                 .records
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def save_and_respond(notice)
     respond_to do |format|
@@ -125,14 +112,6 @@ class InvestigationsController < ApplicationController
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
-  end
-
-  def sort_column
-    (Investigation.column_names + ["assignee"]).include?(params[:sort]) ? params[:sort] : "updated_at"
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
   def record_assignment
