@@ -1,3 +1,3 @@
-$(document).on("turbolinks:load", function() {
-    simpleAccessibleAutocomplete("assignee-picker");
+$(document).on('turbolinks:load', function () {
+  simpleAccessibleAutocomplete('assignee-picker');
 });
