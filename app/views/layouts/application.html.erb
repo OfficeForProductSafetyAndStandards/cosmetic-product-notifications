@@ -8,20 +8,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="blue" />
 
-  <!-- QQ assets -->
-  <link rel="shortcut icon" href="<%= asset_path "assets/govuk-frontend/assets/favicon.ico" %>" type="image/x-icon" />
-  <link rel="mask-icon" href="<%= asset_path "assets/govuk-frontend/assets/govuk-mask-icon.svg" %>" color="blue">
-  <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_path "assets/govuk-frontend/assets/govuk-apple-touch-icon-180x180.png" %>">
-  <link rel="apple-touch-icon" sizes="167x167" href="<%= asset_path "assets/govuk-frontend/assets/govuk-apple-touch-icon-167x167.png" %>">
-  <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_path "assets/govuk-frontend/assets/govuk-apple-touch-icon-152x152.png" %>">
-  <link rel="apple-touch-icon" href="<%= asset_path "assets/govuk-frontend/assets/govuk-apple-touch-icon.png" %>">
-
-  <!-- QQ IE8? -->
+  <link rel="shortcut icon" href="<%= asset_path "favicon.ico" %>" type="image/x-icon" />
+  <link rel="mask-icon" href="<%= asset_path "govuk-mask-icon.svg" %>" color="blue">
+  <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_path "govuk-apple-touch-icon-180x180.png" %>">
+  <link rel="apple-touch-icon" sizes="167x167" href="<%= asset_path "govuk-apple-touch-icon-167x167.png" %>">
+  <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_path "govuk-apple-touch-icon-152x152.png" %>">
+  <link rel="apple-touch-icon" href="<%= asset_path "govuk-apple-touch-icon.png" %>">
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= csrf_meta_tags %>
 
-  <meta property="og:image" content="<%= asset_path "assets/govuk-frontend/assets/govuk-opengraph-image.png" %>">
+  <meta property="og:image" content="<%= asset_path "govuk-opengraph-image.png" %>">
 </head>
 
 <body class="govuk-template__body app-body-class">
@@ -115,7 +113,6 @@
     </div>
   </footer>
 
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <script>
   window.GOVUKFrontend.initAll()
 </script>

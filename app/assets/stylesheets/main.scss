@@ -1,0 +1,71 @@
+$govuk-global-styles: true;
+@import "govuk-frontend/all";
+
+@import "documents";
+@import "images";
+@import "investigations";
+@import "navbar";
+@import "pagination";
+@import "products";
+@import "shared";
+@import "timeline";
+
+* {
+  box-sizing: border-box;
+}
+
+.dummy-column {
+  height: 1px;
+}
+
+.min-height-column {
+  min-height: 1px;
+}
+
+.search-background {
+  background-color: govuk-colour("grey-3");
+}
+
+.not-implemented {
+  // TODO MSPSDS-265: to comply with the GDS standards, components missing functionality are hidden
+  display: none !important;
+  color: govuk-colour("red");
+  opacity: 0.2;
+}
+
+.right {
+  float: right;
+  margin-left: 2em;
+}
+
+.small-space-below {
+  margin-bottom: 0.5em;
+}
+
+.large-space-below {
+  margin-bottom: 2em;
+}
+
+.small-square-dark {
+  height: 1.5em;
+  width: 1.5em;
+  font-size: 2em;
+  text-align: center;
+  color: govuk-colour("white");
+  background-color: govuk-colour("grey-1");
+  ;
+}
+
+.small-square-light {
+  height: 1.5em;
+  width: 1.5em;
+  font-size: 2em;
+  text-align: center;
+  color: govuk-colour("white");
+  background-color: govuk-colour("grey-2");
+}
+
+.row-border-top {
+  padding-top: 2em;
+  border-top: 1px solid govuk-colour("grey-3");
+}
