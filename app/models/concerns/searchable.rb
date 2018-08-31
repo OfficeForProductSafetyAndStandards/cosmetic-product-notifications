@@ -81,13 +81,11 @@ module Searchable
 
       __elasticsearch__.search(query)
     end
-  end
 
-  private
-
-  def sort_params(params)
-    sort_field = params[:sort] + ".sort"
-    [{ "#{sort_field}": { order: params[:direction] } }]
+    def self.sort_params(params)
+      sort_field = params[:sort] + ".sort"
+      [{ "#{sort_field}": { order: params[:direction] } }]
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength
