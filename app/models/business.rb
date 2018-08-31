@@ -22,6 +22,10 @@ class Business < ApplicationRecord
 
   has_paper_trail
 
+  def as_indexed_json(*)
+    as_json.merge(cases: investigations.size)
+  end
+
   def nature_of_business
     Rails.application.config.companies_house_constants["sic_descriptions"][nature_of_business_id]
   end

@@ -7,7 +7,7 @@
     <th class="govuk-table__header" scope="col"><%= sortable "company_name", "Business" %></th>
     <th class="govuk-table__header" scope="col"><%= sortable "company_type_code", "Type" %></th>
     <th class="govuk-table__header" scope="col">Primary Loc.</th>
-    <th class="govuk-table__header" scope="col">Cases</th>
+    <th class="govuk-table__header right-aligned" scope="col"><%= sortable "cases", "Cases" %></th>
   </tr>
   </thead>
 
@@ -20,7 +20,7 @@
       <td class="govuk-table__cell"><%= link_to business.company_name, business %></td>
       <td class="govuk-table__cell"><%= business.company_type_code %></td>
       <td class="govuk-table__cell"><%= business.addresses.first ? business.addresses.first.short : "" %></td>
-      <td class="govuk-table__cell">
+      <td class="govuk-table__cell right-aligned">
           <span class="govuk-!-font-size-36 govuk-!-font-weight-bold">
             <%= business.investigations.count %>
           </span>
