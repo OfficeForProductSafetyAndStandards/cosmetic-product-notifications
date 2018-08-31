@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 module Searchable
   extend ActiveSupport::Concern
 
@@ -60,9 +61,7 @@ module Searchable
           }
         }
       end
-      if params[:sort].present?
-        query[:sort] = [{ "#{params[:sort]}.sort": { order: params[:direction] } }]
-      end
+      query[:sort] = sort_params(params) if params[:sort].present?
 
       __elasticsearch__.search(query)
     end
@@ -78,11 +77,17 @@ module Searchable
           }
         }
       end
-      if params[:sort].present?
-        query[:sort] = [{ "#{params[:sort]}.sort": { order: params[:direction] } }]
-      end
+      query[:sort] = sort_params(params) if params[:sort].present?
 
       __elasticsearch__.search(query)
     end
   end
+
+  private
+
+  def sort_params(params)
+    sort_field = params[:sort] + ".sort"
+    [{ "#{sort_field}": { order: params[:direction] } }]
+  end
 end
+# rubocop:enable Metrics/BlockLength

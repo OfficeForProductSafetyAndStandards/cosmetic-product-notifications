@@ -4,10 +4,6 @@ class Investigation < ApplicationRecord
 
   index_name [Rails.env, "investigations"].join("_")
 
-  def as_indexed_json(options={})
-    self.as_json.merge({assignee: self.assignee&.email})
-  end
-
   validates :title, presence: true
   default_scope { order(updated_at: :desc) }
 
@@ -36,6 +32,10 @@ class Investigation < ApplicationRecord
   enum risk_level: %i[low medium serious severe], _suffix: true
 
   enum sensitivity: %i[low medium high], _suffix: true
+
+  def as_indexed_json(*)
+    as_json.merge(assignee: assignee&.email)
+  end
 
   def status
     is_closed? ? "Closed" : "Open"
