@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
 
   # GET /products/suggested
   def suggested
-    @products = advanced_product_search(20)
+    @products = advanced_product_search(4)
     render partial: "suggested"
   end
 
