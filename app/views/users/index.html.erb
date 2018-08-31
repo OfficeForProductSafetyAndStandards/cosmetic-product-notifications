@@ -1,12 +1,14 @@
 <% content_for :page_title, "Users - Market Surveillance & Product Safety" %>
 
+<% content_for :after_header do %>
 <%= link_to 'Back to case list', investigations_path, class: "govuk-back-link" %>
+<% end %>
 
 <div class="users-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
       <h1 class="govuk-heading-xl">Users</h1>
-      <%= link_to "Invite user", new_user_invitation_path, :class => "govuk-link" %><br /><br />
+      <%= link_to "Invite user", new_user_invitation_path %><br /><br />
     </div>
   </div>
   

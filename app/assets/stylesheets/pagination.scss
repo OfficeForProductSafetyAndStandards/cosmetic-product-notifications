@@ -1,10 +1,4 @@
-@import "govuk-frontend/all";
-
 .pagination {
-    a {
-        @extend %govuk-link;
-    }
-
     > * {
         @include govuk-font(19);
         font-style: normal;

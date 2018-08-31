@@ -1,6 +1,8 @@
 <h1 class="govuk-heading-xl">Edit <%= resource_name.to_s.humanize %></h1>
 
+<% content_for :after_header do %>
 <%= link_to "Back", :back, :class => "govuk-back-link" %>
+<% end %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
