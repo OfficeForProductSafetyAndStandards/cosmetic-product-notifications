@@ -1,6 +1,5 @@
 options:
   merge-default-rules: false
-  max-warnings: 50
 rules:
   extends-before-mixins: 2
   extends-before-declarations: 2
@@ -24,16 +23,3 @@ rules:
     - 2
     -
       size: 2
-  property-sort-order:
-    - 1
-    -
-      order:
-        - display
-        - margin
-      ignore-custom-properties: true
-  variable-for-property:
-    - 2
-    -
-      properties:
-        - margin
-        - content

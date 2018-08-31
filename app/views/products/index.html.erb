@@ -25,7 +25,7 @@
 <br/>
 
 <%= form_with(url: confirm_merge_products_path, method: :get) do |form| %>
-  <%= form.submit "Merge selected", name: nil, class: "not-implemented" %>
+  <%= form.submit "Merge selected", name: nil, class: "govuk-button right" %>
   <p><%= link_to 'Create new product', new_product_path, class: "govuk-!-font-size-19 govuk-!-font-weight-bold" %></p>
 
   <%= render 'table', product: @products, form: form %>

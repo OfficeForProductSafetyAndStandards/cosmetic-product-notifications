@@ -14,22 +14,6 @@
         <%= "Case".pluralize(@investigations.where(assignee: @current_user).count) %> assigned to you
       </div>
     </div>
-    <div class="govuk-grid-column-one-third not-implemented">
-      <div class="govuk-grid-column-one-quarter govuk-!-font-size-36 govuk-!-font-weight-bold">
-        <%= @investigations.where(assignee: @current_user).count %>
-      </div>
-      <div class="govuk-grid-column-three-quarters govuk-!-font-size-19">
-        Overdue actions
-      </div>
-    </div>
-    <div class="govuk-grid-column-one-third not-implemented">
-      <div class="govuk-grid-column-one-quarter govuk-!-font-size-36 govuk-!-font-weight-bold">
-        <%= @investigations.where(assignee: @current_user).count %>
-      </div>
-      <div class="govuk-grid-column-three-quarters govuk-!-font-size-19">
-        Actions due soon
-      </div>
-    </div>
   </div>
 <% end %>
 
@@ -58,7 +42,6 @@
 
 <br/>
 
-<%= link_to 'Assign', new_investigation_path, class: "govuk-button govuk-button--disabled not-implemented" %>
 <p><%= link_to 'Create new case', new_investigation_path, class: "govuk-!-font-size-19  govuk-!-font-weight-bold" %></p>
 
 <%= render 'table' %>

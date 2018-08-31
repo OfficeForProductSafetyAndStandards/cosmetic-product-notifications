@@ -2,7 +2,7 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <% if form %>
-        <th class="govuk-table__header not-implemented" scope="col"></th>
+        <th class="govuk-table__header" scope="col"></th>
       <% end %>
       <th class="govuk-table__header" scope="col"><%= sortable "name", "Product" %></th>
       <th class="govuk-table__header" scope="col"><%= sortable "product_type", "Type" %></th>
@@ -17,7 +17,7 @@
     <% @products.each do |product| %>
       <tr class="govuk-table__row">
         <% if form %>
-          <td class="govuk-table__cell not-implemented"><%= form.check_box :product_ids, { multiple: true }, product.id, false %></td>
+          <td class="govuk-table__cell"><%= form.check_box :product_ids, { multiple: true }, product.id, false %></td>
         <% end %>
         <td class="govuk-table__cell"><%= link_to product.name, product %></td>
         <td class="govuk-table__cell"><%= product.product_type %></td>

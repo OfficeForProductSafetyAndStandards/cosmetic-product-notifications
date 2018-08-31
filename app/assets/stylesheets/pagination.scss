@@ -1,7 +1,7 @@
 .pagination {
-    > * {
-        @include govuk-font(19);
-        font-style: normal;
-        margin-right: govuk-spacing(2);
-    }
+  >* {
+    @include govuk-font(19);
+    font-style: normal;
+    margin-right: govuk-spacing(2);
+  }
 }
