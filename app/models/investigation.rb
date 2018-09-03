@@ -33,10 +33,6 @@ class Investigation < ApplicationRecord
 
   enum sensitivity: %i[low medium high], _suffix: true
 
-  def as_indexed_json(*)
-    as_json.merge(assignee: assignee&.email)
-  end
-
   def status
     is_closed? ? "Closed" : "Open"
   end

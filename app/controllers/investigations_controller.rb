@@ -95,7 +95,6 @@ class InvestigationsController < ApplicationController
   def save_and_respond(notice)
     respond_to do |format|
       if @investigation.save
-        @investigation.__elasticsearch__.index_document
         format.html { redirect_to @investigation, notice: notice }
         format.json { render :show, status: :ok, location: @investigation }
       else
