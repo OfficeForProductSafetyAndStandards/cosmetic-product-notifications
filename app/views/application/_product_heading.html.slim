@@ -1,0 +1,8 @@
+p.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+  | Product
+h1.govuk-heading-xl[class="govuk-!-margin-bottom-1"]
+  = product.name
+p[class="govuk-!-margin-bottom-6"]
+  | Created:
+  '
+  = product.created_at.strftime("%d %B %Y")

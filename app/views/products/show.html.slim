@@ -1,0 +1,97 @@
+- content_for :page_title, "View product - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to list", products_path, class: "govuk-back-link"
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-two-thirds
+    = render "product_heading", product: @product
+  .govuk-grid-column-one-third
+    h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+      | Cases
+    span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
+      = @product.investigations.size
+.govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-one-third
+    h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+      | Contents
+    ul.govuk-list.dashed-list
+      li
+        a[class="govuk-!-font-size-19" href="#details"]
+          | Details
+      li
+        a[class="govuk-!-font-size-19" href="#images"]
+          | Images
+      li
+        a[class="govuk-!-font-size-19" href="#documents"]
+          | Documents
+      li
+        a[class="govuk-!-font-size-19" href="#cases"]
+          | Cases
+      li
+        a[class="govuk-!-font-size-19" href="#history"]
+          | History
+  .govuk-grid-column-two-thirds
+    #details.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-full
+        h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+          | Details
+        table.govuk-table
+          tbody.govuk-table__body
+            tr.govuk-table__row
+              th.govuk-table__header[scope="row"]
+                | Barcode
+              td.govuk-table__cell
+                = @product.gtin
+            tr.govuk-table__row
+              th.govuk-table__header[scope="row"]
+                | Brand
+              td.govuk-table__cell
+                = @product.brand
+            tr.govuk-table__row
+              th.govuk-table__header[scope="row"]
+                | Type
+              td.govuk-table__cell
+                = @product.product_type
+            tr.govuk-table__row
+              th.govuk-table__header[scope="row"]
+                | Model number
+              td.govuk-table__cell
+                = @product.model
+            tr.govuk-table__row
+              th.govuk-table__header[scope="row"]
+                | Batch number
+              td.govuk-table__cell
+                = @product.batch_number
+            tr.govuk-table__row
+              th.govuk-table__header[scope="row"]
+                | Country of origin
+              td.govuk-table__cell
+                = @product.country_of_origin_for_display
+            tr.govuk-table__row
+              th.govuk-table__header[scope="row"]
+                | Description
+              td.govuk-table__cell
+                = @product.description
+            tr.govuk-table__row
+              th.govuk-table__header[scope="row"]
+                | Date on the market
+              td.govuk-table__cell
+                = @product.date_placed_on_market&.to_s :long_ordinal
+        = link_to "Edit details", edit_product_path(@product)
+    #images.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-full
+        = render "images_summary", parent: @product
+    #documents.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-full
+        h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+          | Documents
+        = render "documents_list_summary", parent: @product
+    #cases.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-full
+        h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+          | Cases
+        = render "investigations_summary", parent: @product
+    #history.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-full
+        h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+          | History
+        = render "history", versions: @product.versions

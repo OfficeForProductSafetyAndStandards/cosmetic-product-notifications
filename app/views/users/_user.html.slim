@@ -1,0 +1,15 @@
+h3.govuk-heading-m
+  = user.email
+= form_for(user) do |form|
+  .govuk-form-group
+    .govuk-checkboxes
+      - Role.all.each do |role|
+        .govuk-checkboxes__item
+          = check_box_tag "user[_roles][]", role.name, user.has_role?(role.name), "aria-label": role.name, \
+              class: "govuk-checkboxes__input"
+          = label role.name, role.name, class: "govuk-label govuk-checkboxes__label"
+  .govuk-form-group
+    = form.submit "Update", class: "govuk-button"
+  - unless user == current_user
+    .govuk-form-group
+      = link_to "Delete", user_path(user), data: { confirm: "Are you sure?" }, method: :delete

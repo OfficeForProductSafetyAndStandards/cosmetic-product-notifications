@@ -1,0 +1,33 @@
+= form_with model: document, scope: :document, url: associated_document_path(@parent, document), local: true do |form|
+  - if document.errors.any?
+    #error_explanation
+      h2.govuk-heading-l
+        = pluralize(document.errors.count, "error")
+        | prohibited this document from being saved:
+      ul.govuk-list
+        - document.errors.full_messages.each do |message|
+          li
+            = message
+  .govuk-form-group
+    = form.label :title, "Document title", class: "govuk-label"
+    = form.text_field :title, value: document.metadata["title"], class: "govuk-input"
+  .govuk-form-group
+    = form.label :description, class: "govuk-label"
+    = form.text_area :description, value: document.metadata["description"], rows: 5, class: "govuk-textarea"
+  .govuk-form-group
+    fieldset.govuk-fieldset
+      legend.govuk-fieldset__legend
+      h4.govuk-heading-m
+        | Document type
+      .govuk-radios
+        - @parent.document_types.each do |type|
+          .govuk-radios__item
+            = form.radio_button :document_type, type, checked: type.to_s == document.metadata["document_type"], \
+                class: "govuk-radios__input"
+            = form.label :document_type, document_type_label(type), class: "govuk-label govuk-radios__label"
+  .govuk-form-group
+    = form.label :other_type, class: "govuk-label"
+    = form.text_field :other_type, value: document.metadata["other_type"], placeholder: "Enter a type, if relevant", \
+        class: "govuk-input"
+  .govuk-form-group
+    = form.submit "Save", class: "govuk-button"

@@ -1,0 +1,16 @@
+- content_for :page_title, "Users - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to case list", investigations_path, class: "govuk-back-link"
+.users-page
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      h1.govuk-heading-xl
+        | Users
+      = link_to "Invite user", new_user_invitation_path
+      br
+      br
+  .govuk-grid-row
+    - @users.each do |user|
+      .govuk-grid-column-one-half
+        = render user
+      = will_paginate @investigations

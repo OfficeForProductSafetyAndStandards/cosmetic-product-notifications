@@ -1,0 +1,6 @@
+= form_with model: image, scope: :image, url: associated_images_path(@parent), local: true do |form|
+  .govuk-form-group
+    = form.label :file, "Browse for file", class: "govuk-heading-m"
+    = form.file_field :file, class: "govuk-file-upload"
+  .govuk-form-group
+    = form.submit "Upload", class: "govuk-button"

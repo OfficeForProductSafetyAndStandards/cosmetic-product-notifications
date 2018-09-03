@@ -1,0 +1,71 @@
+h2
+  | Product
+div
+  - @product.images.attachments.each do |image|
+    - if image.metadata["safe"] && image.variable?
+      = image_tag(image.variant(resize: "300x200"), alt: image.metadata["title"])
+  - @product.rapex_images.each do |image|
+    = image_tag image.url, alt: image.title
+table[style="width:100%; text-align:left"]
+  tr
+    th
+      | Product ID
+    td
+      = @product.id
+  tr
+    th
+      | GTIN (Global Trade Item Number/Barcode)
+    td
+      = @product.gtin
+  tr
+    th
+      | Name
+    td
+      = @product.name
+  tr
+    th
+      | Brand
+    td
+      = @product.brand
+  tr
+    th
+      | Type
+    td
+      = @product.product_type
+  tr
+    th
+      | Description
+    td
+      = @product.description
+  tr
+    th
+      | Model
+    td
+      = @product.model
+  tr
+    th
+      | Batch number
+    td
+      = @product.batch_number
+  tr
+    th
+      | Country of origin
+    td
+      = @product.country_of_origin_for_display
+  tr
+    th
+      | Date placed on the market
+    td
+      = @product.date_placed_on_market&.to_s :long_ordinal
+  tr
+    th
+      | Source
+    td
+      = @product.source.show
+- if @product.investigations.any?
+  tr
+    th
+      | Cases
+    - @product.investigations.each do |investigation|
+      td
+        = link_to investigation.id, polymorphic_url(investigation)

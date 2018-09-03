@@ -1,0 +1,22 @@
+.govuk-grid-row[class="govuk-!-padding-bottom-3"]
+  .govuk-grid-column-full
+    table.govuk-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Name
+          td.govuk-table__cell
+            = business.company_name
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Type
+          td.govuk-table__cell
+            = business.nature_of_business
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Primary address
+          td.govuk-table__cell
+            = business.primary_address&.summary
+    p
+      = link_to "Full business details", business
+    = yield

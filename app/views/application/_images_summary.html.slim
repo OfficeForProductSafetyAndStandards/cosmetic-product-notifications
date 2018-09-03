@@ -1,0 +1,13 @@
+- if parent.images.attached?
+  h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+    = "Images (#{parent.images.size})"
+  - parent.images.attachments.limit(2).each do |image|
+    = render "images/image", image: image, dimensions: "300x200"
+  br
+  br
+- else
+  h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+    | Images
+  p
+    | No images.
+= link_to "Manage images", associated_images_path(parent), class: "no-print"

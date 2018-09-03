@@ -1,0 +1,42 @@
+h1.govuk-heading-xl
+  | Edit
+  '
+  = resource_name.to_s.humanize
+- content_for :after_header do
+  = link_to "Back", :back, class: "govuk-back-link"
+= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+  = devise_error_messages!
+  .govuk-form-group
+    = f.label :email, class: "govuk-label"
+    = f.email_field :email, autofocus: true, autocomplete: "email", class: "govuk-input"
+  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+    div
+      | Currently waiting confirmation for:
+      '
+      = resource.unconfirmed_email
+  .govuk-form-group
+    = f.label :password, class: "govuk-label"
+    i
+      | (leave blank if you don't want to change it)
+    = f.password_field :password, autocomplete: "off", class: "govuk-input"
+    - if @minimum_password_length
+      br
+      em
+        = @minimum_password_length
+        | characters minimum
+  .govuk-form-group
+    = f.label :password_confirmation, class: "govuk-label"
+    = f.password_field :password_confirmation, autocomplete: "off", class: "govuk-input"
+  .govuk-form-group
+    = f.label :current_password, class: "govuk-label"
+    i
+      | (we need your current password to confirm your changes)
+    = f.password_field :current_password, autocomplete: "off", class: "govuk-input"
+  .govuk-form-group
+    = f.submit "Update", class: "govuk-button"
+h3.govuk-heading-m
+  | Cancel my account
+p
+  | Unhappy?
+  '
+  = button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete

@@ -1,0 +1,108 @@
+- content_for :page_title, "View case - Market Surveillance & Product Safety"
+- content_for :after_header do
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      = link_to "Back to list", investigations_path, class: "govuk-back-link"
+    .govuk-grid-column-one-third
+      | Status
+      '
+      = link_to @investigation.status, status_investigation_path(@investigation)
+    .govuk-grid-column-one-third
+      - if !@investigation.is_closed
+        = link_to @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned", \
+            assign_investigation_path(@investigation)
+      - else
+        = @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned"
+div
+  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+    .govuk-grid-column-full
+      = render "investigation_heading", investigation: @investigation
+  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+    .govuk-grid-column-one-half
+      h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+        | Risk Notes:
+        '
+        = @investigation.risk_overview
+      p
+        = @investigation.description
+      = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
+    .govuk-grid-column-one-half
+      .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+        .govuk-grid-column-one-half
+          h3.govuk-body-l[class="govuk-!-margin-bottom-1"]
+            | Risk level
+          span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
+            = @investigation.risk_level&.titleize
+        .govuk-grid-column-one-half
+          h3.govuk-body-l[class="govuk-!-margin-bottom-1"]
+            | Sensitivity
+          span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
+            = @investigation.sensitivity&.titleize
+  .govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
+    .govuk-grid-column-one-third
+      h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+        | Contents
+      ul.govuk-list.dashed-list
+        li
+          a[class="govuk-!-font-size-19" href="#activities"]
+            | Activities
+        li
+          a[class="govuk-!-font-size-19" href="#products"]
+            | Products
+        li
+          a[class="govuk-!-font-size-19" href="#businesses"]
+            | Businesses
+        li
+          a[class="govuk-!-font-size-19" href="#images"]
+            | Images
+        li
+          a[class="govuk-!-font-size-19" href="#documents"]
+            | Documents
+        li
+          a[class="govuk-!-font-size-19" href="#history"]
+            | History
+    .govuk-grid-column-two-thirds
+      #activities.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+        .govuk-grid-column-full
+          h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+            | Activities
+          = render "activities_summary", activities: @investigation.activities.limit(3)
+          = link_to "View all activity", investigation_activities_path(@investigation), class: "govuk-!-margin-right-3"
+          = link_to "New activity", new_investigation_activity_path(@investigation)
+      #products.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+        .govuk-grid-column-full
+          h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+            | Products
+          - if @investigation.products.any?
+            - @investigation.products.each do |product|
+              = render "product_summary", product: product
+          - else
+            p
+              | No products.
+          = link_to "Manage products", investigation_products_path(@investigation), class: "no-print"
+      #businesses.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+        .govuk-grid-column-full
+          h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+            | Businesses
+          - if @investigation.businesses.any?
+            - @investigation.businesses.each do |business|
+              = render "business_summary", business: business, allow_removing: false
+          - else
+            p
+              | No businesses.
+          = link_to "Manage businesses", investigation_businesses_path(@investigation), class: "no-print"
+      #images.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+        .govuk-grid-column-full
+          = render "images_summary", parent: @investigation
+      #documents.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+        .govuk-grid-column-full
+          h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+            | Documents
+          = render "documents_list_summary", parent: @investigation
+      #history.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+        .govuk-grid-column-full
+          h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+            | History
+          = render "history", versions: @investigation.versions
+          .no-print[class="govuk-!-margin-top-3"]
+            = link_to "Create PDF document", investigation_path(@investigation, format: :pdf), class: "no-print"
