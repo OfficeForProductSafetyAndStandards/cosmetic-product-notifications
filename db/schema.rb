@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 2018_08_28_082107) do
 
   create_table "investigations", id: :serial, force: :cascade do |t|
     t.text "description"
-    t.boolean "is_closed"
+    t.boolean "is_closed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "assignee_id"

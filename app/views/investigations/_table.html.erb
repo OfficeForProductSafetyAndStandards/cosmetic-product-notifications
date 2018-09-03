@@ -1,11 +1,11 @@
-<table class="govuk-table investigation-list govuk-!-margin-bottom-3">
+<table class="govuk-table investigation-list sortable govuk-!-margin-bottom-3">
   <thead class="govuk-table__head">
   <tr class="govuk-table__row">
-    <th class="govuk-table__header" scope="col">Case</th>
-    <th class="govuk-table__header" scope="col">Status</th>
-    <th class="govuk-table__header" scope="col">Risk</th>
+    <th class="govuk-table__header" scope="col"><%= sortable "title", "Case" %></th>
+    <th class="govuk-table__header" scope="col"><%= sortable "is_closed", "Status" %></th>
+    <th class="govuk-table__header" scope="col"><%= sortable "risk_overview", "Risk" %></th>
     <th class="govuk-table__header" scope="col">Assigned</th>
-    <th class="govuk-table__header" scope="col">Last update</th>
+    <th class="govuk-table__header" scope="col"><%= sortable "updated_at", "Last update" %></th>
   </tr>
   </thead>
 

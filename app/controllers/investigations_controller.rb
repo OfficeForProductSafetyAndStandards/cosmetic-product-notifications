@@ -1,5 +1,7 @@
 class InvestigationsController < ApplicationController
   include InvestigationsHelper
+  helper_method :sort_column, :sort_direction
+
   before_action :authenticate_user!
   before_action :set_investigation, only: %i[show edit update destroy assign update_assignee status]
   before_action :create_investigation, only: %i[create]
@@ -8,13 +10,7 @@ class InvestigationsController < ApplicationController
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @investigations = if params[:q].blank?
-                        Investigation.paginate(page: params[:page], per_page: 20)
-                      else
-                        Investigation.fuzzy_search(params[:q])
-                                     .paginate(page: params[:page], per_page: 20)
-                                     .records
-                      end
+    @investigations = search_for_investigations(20)
   end
 
   # GET /investigations/1

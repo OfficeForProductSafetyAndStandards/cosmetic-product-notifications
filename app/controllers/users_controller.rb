@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
+  include UsersHelper
+
   before_action :authenticate_user!
   after_action :verify_authorized
 
   def index
-    @users = search_for_users
+    @users = search_for_users(20)
     authorize User
   end
 
@@ -30,16 +32,6 @@ class UsersController < ApplicationController
       elsif @user.has_role? role.name
         @user.remove_role role.name
       end
-    end
-  end
-
-  def search_for_users
-    if params[:q].blank?
-      User.paginate(page: params[:page], per_page: 20)
-    else
-      User.prefix_search(params[:q], :email)
-          .paginate(page: params[:page], per_page: 20)
-          .records
     end
   end
 end

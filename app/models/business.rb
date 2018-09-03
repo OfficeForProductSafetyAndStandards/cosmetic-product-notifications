@@ -3,6 +3,13 @@ class Business < ApplicationRecord
 
   index_name [Rails.env, "businesses"].join("_")
 
+  settings do
+    mappings do
+      indexes :company_number, type: :keyword
+      indexes :company_type_code, type: :keyword, fields: { sort: { type: "keyword" } }
+    end
+  end
+
   validates :company_name, presence: true
   default_scope { order(created_at: :desc) }
   has_many :investigation_businesses, dependent: :destroy

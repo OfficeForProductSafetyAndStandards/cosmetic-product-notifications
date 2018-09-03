@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   include CountriesHelper
   include ProductsHelper
+  helper_method :sort_column, :sort_direction
+
   before_action :authenticate_user!
   before_action :set_product, only: %i[show edit update destroy]
   before_action :create_product, only: %i[create]

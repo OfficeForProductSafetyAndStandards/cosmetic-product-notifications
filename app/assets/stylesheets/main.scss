@@ -8,6 +8,7 @@ $govuk-global-styles: true;
 @import "pagination";
 @import "products";
 @import "shared";
+@import "sortable_columns";
 @import "timeline";
 
 * {

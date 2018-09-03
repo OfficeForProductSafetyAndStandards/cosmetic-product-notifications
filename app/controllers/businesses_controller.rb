@@ -1,5 +1,7 @@
 class BusinessesController < ApplicationController
   include BusinessesHelper
+  helper_method :sort_column, :sort_direction
+
   before_action :authenticate_user!
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[create]
@@ -8,11 +10,7 @@ class BusinessesController < ApplicationController
   # GET /businesses
   # GET /businesses.json
   def index
-    @businesses = if params[:q].blank?
-                    Business.paginate(page: params[:page], per_page: 20)
-                  else
-                    search_for_businesses(20)
-                  end
+    @businesses = search_for_businesses(20)
   end
 
   # GET /businesses/1
