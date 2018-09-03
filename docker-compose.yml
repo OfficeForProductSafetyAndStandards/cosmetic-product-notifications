@@ -6,7 +6,9 @@ services:
     volumes:
       - postgres-volume:/var/lib/postgresql/data
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+    build:
+      context: .
+      dockerfile: ./docker/elasticsearch/Dockerfile
     environment:
       - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
@@ -18,7 +20,9 @@ services:
     volumes:
       - redis-volume:/data
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
     volumes:
       - bundle-cache:/usr/local/bundle
       - npm-cache:/root/.npm
@@ -29,7 +33,9 @@ services:
       - elasticsearch
       - redis
   sidekiq:
-    build: .
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
     command: bundle exec sidekiq
     volumes:
       - bundle-cache:/usr/local/bundle
