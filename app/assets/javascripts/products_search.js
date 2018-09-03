@@ -1,4 +1,4 @@
-function buildProductQuery() {
+function buildProductQuery() { // eslint-disable-line no-unused-vars
   var query = {};
   var q = $('.products-search-form .search-term:not(#gtin-input)')
     .map(function () {

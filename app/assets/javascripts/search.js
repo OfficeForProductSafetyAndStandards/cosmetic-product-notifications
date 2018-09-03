@@ -1,4 +1,4 @@
-function simpleAccessibleAutocomplete(id) {
+function simpleAccessibleAutocomplete(id) { // eslint-disable-line no-unused-vars
   if (document.getElementById(id)) {
     accessibleAutocomplete.enhanceSelectElement({
       defaultValue: '',
@@ -8,7 +8,7 @@ function simpleAccessibleAutocomplete(id) {
   }
 }
 
-function searchOnTextInput(inputElement, url, buildQuery, callback) {
+function searchOnTextInput(inputElement, url, buildQuery, callback) { // eslint-disable-line no-unused-vars
   var debounceTimeout = null;
   var searchRequest = null;
   inputElement.on('keyup change', function () {
@@ -22,12 +22,5 @@ function searchOnTextInput(inputElement, url, buildQuery, callback) {
       searchRequest = $.get(url, buildQuery())
         .done(callback);
     }, 500);
-  });
-}
-
-
-function getIdsFromOptions(selectElement) {
-  return selectElement.find('option').map(function () {
-    return $(this).val();
   });
 }

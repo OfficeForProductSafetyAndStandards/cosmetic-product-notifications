@@ -1,3 +1,4 @@
+/* globals searchOnTextInput, buildCompaniesHouseQuery */
 $(document).on('turbolinks:load', function () {
   var investigationId = $('.businesses-search-form').data('investigation-id');
   var excludedBusinessIds = $('.businesses-search-form').data('business-ids');

@@ -1,3 +1,4 @@
+/* globals searchOnTextInput, buildProductQuery */
 $(document).on('turbolinks:load', function () {
   var investigationId = $('.products-search-form').data('investigation-id');
   var excludedProductIds = $('.products-search-form').data('product-ids');
