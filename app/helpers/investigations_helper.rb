@@ -8,7 +8,7 @@ module InvestigationsHelper
   end
 
   def sort_column
-    (Investigation.column_names + ["assignee"]).include?(params[:sort]) ? params[:sort] : "updated_at"
+    (Investigation.column_names + %w[assignee]).include?(params[:sort]) ? params[:sort] : "updated_at"
   end
 
   def sort_direction

@@ -57,7 +57,7 @@ class Investigations::ProductsController < ApplicationController
     end
   end
 
-  private
+private
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])

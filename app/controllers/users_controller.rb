@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     redirect_to users_path, notice: "User deleted."
   end
 
-  private
+private
 
   def assign_roles(new_roles)
     Role.all.each do |role|

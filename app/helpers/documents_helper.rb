@@ -15,9 +15,6 @@ module DocumentsHelper
     associated_document_path(parent, document) + "/edit"
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/MethodLength
-
   def document_type_label(document_type)
     case document_type
     when :correspondence_originator
@@ -59,9 +56,6 @@ module DocumentsHelper
       document_file_extension(document).upcase
     end
   end
-
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/MethodLength
 
   def document_file_extension(document)
     File.extname(document.filename.to_s)&.remove(".")&.upcase

@@ -14,7 +14,7 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :recoverable,
          :rememberable, :trackable, :validatable
 
-  private
+private
 
   def set_default_role
     add_role(:user) if roles.blank?

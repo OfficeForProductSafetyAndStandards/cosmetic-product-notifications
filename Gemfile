@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "2.4.3"
+ruby File.read(".ruby-version").strip
 
 # Will Paginate must be installed before elasticsearch
 # https://github.com/elastic/elasticsearch-rails/issues/239
@@ -31,8 +31,8 @@ gem "rolify"
 gem "rubyzip", ">= 1.2.1"
 gem "sass-rails", "~> 5.0"
 gem "sidekiq"
-gem "slim_lint"
 gem "slim-rails"
+gem "slim_lint"
 gem "turbolinks", "~> 5"
 gem "uglifier", ">= 1.3.0"
 gem "wicked_pdf"
@@ -47,6 +47,7 @@ end
 
 group :development do
   gem "brakeman"
+  gem "govuk-lint"
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "listen", "~> 3.0.5"
   gem "rubocop"

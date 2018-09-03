@@ -65,7 +65,7 @@ class ImagesController < ApplicationController
     end
   end
 
-  private
+private
 
   def set_parent
     @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
