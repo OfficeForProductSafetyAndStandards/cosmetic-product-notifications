@@ -3,6 +3,10 @@ module SearchHelper
     @search = SearchParams.new(query_params)
   end
 
+  def search_params
+    { query: params[:q], sort: sort_column, direction: sort_direction }
+  end
+
   def search_query
     query = params[:q] if params[:q].present?
     filters = filter_params
