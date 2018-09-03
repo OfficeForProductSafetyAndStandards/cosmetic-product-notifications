@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
+  before_action :set_search_params, only: %i[index]
   before_action :set_product, only: %i[show edit update destroy]
   before_action :create_product, only: %i[create]
   before_action :set_countries, only: %i[new edit]

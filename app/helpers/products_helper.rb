@@ -10,7 +10,7 @@ module ProductsHelper
   end
 
   def search_for_products(page_size)
-    Product.fuzzy_search(search_params)
+    Product.full_search(search_query)
            .paginate(page: params[:page], per_page: page_size)
            .records
   end

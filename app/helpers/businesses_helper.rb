@@ -10,7 +10,7 @@ module BusinessesHelper
   end
 
   def search_for_businesses(page_size)
-    Business.fuzzy_search(search_params)
+    Business.full_search(search_query)
             .paginate(page: params[:page], per_page: page_size)
             .records
   end
