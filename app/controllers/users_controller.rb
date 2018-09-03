@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include UsersHelper
+
   before_action :authenticate_user!
   after_action :verify_authorized
 
