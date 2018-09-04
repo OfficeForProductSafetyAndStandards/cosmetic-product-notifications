@@ -62,6 +62,10 @@ module Searchable
       ]
     end
 
+    def self.full_search(query)
+      __elasticsearch__.search(query.build_query)
+    end
+
     # "prefix" may be changed to a more appropriate query. For alternatives see:
     # https://www.elastic.co/guide/en/elasticsearch/reference/current/term-level-queries.html
     def self.prefix_search(params, field)
@@ -70,22 +74,6 @@ module Searchable
         query[:query] = {
           prefix: {
             "#{field}": params[:query]
-          }
-        }
-      end
-      query[:sort] = sort_params(params) if params[:sort].present?
-
-      __elasticsearch__.search(query)
-    end
-
-    # "multi_match" searches across all fields, applying fuzzy matching to any text and keyword fields
-    def self.fuzzy_search(params)
-      query = {}
-      if params[:query].present?
-        query[:query] = {
-          multi_match: {
-            query: params[:query],
-            fuzziness: "AUTO"
           }
         }
       end

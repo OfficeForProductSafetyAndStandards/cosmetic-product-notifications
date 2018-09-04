@@ -3,6 +3,7 @@ class InvestigationsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
+  before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[show edit update destroy assign update_assignee status]
   before_action :create_investigation, only: %i[create]
 

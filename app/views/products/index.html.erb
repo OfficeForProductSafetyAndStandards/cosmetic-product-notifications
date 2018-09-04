@@ -4,13 +4,21 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
-<%= form_with(url: products_path, method: "get", class: "search-background govuk-!-padding-3") do |form| %>
-  <div class="govuk-form-group">
-    <%= form.label "Search for Products", class: "govuk-label" %>
-    <%= form.text_field :q, value: params[:q], class: "govuk-input" %>
+<%= form_with(model: @search, scope: "", url: products_path, method: :get, class: "search-background govuk-!-padding-3") do |form| %>
+  <% if @search.sort.present? %>
+    <%= form.hidden_field :sort %>
+    <%= form.hidden_field :direction %>
+  <% end %>
+  <div class="govuk-grid-row">
+    <div class="govuk-form-group govuk-grid-column-full">
+      <%= form.label "Search for products", class: "govuk-label" %>
+      <%= form.text_field :q, class: "govuk-input" %>
+    </div>
   </div>
-  <div class="govuk-form-group">
-    <%= form.submit "Search", name: nil, class: "govuk-button" %>
+  <div class="govuk-grid-row">
+    <div class="govuk-form-group govuk-grid-column-full govuk-!-margin-bottom-0">
+      <%= form.submit "Search", name: nil, class: "govuk-button govuk-!-margin-bottom-0" %>
+    </div>
   </div>
 <% end %>
 
