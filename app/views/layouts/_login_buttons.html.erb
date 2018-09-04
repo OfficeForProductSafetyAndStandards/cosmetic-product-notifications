@@ -1,5 +1,0 @@
-<% if user_signed_in? %>
-    <%= link_to("Logout", sessions_logout_path, method: :delete, :class => "button-warning") %>
-<% else %>
-    <%= link_to('Login', sessions_new_path, :class => "button")  %>
-<% end %>
