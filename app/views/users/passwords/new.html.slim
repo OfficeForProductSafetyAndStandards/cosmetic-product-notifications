@@ -1,0 +1,11 @@
+- content_for :page_title, "Forgot password - Market Surveillance & Product Safety"
+h1.govuk-heading-xl
+  | Forgot your password?
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+  = devise_error_messages!
+  .govuk-form-group
+    = f.label :email, class: "govuk-label"
+    = f.email_field :email, autofocus: true, autocomplete: "email", class: "govuk-input"
+  .govuk-form-group
+    = f.submit "Send me reset password instructions", class: "govuk-button"
+= render "users/shared/links"

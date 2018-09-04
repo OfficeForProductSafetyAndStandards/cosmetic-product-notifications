@@ -1,6 +1,7 @@
 // Timeline take from home office digital patterns:
 // https://home-office-digital-patterns.herokuapp.com/components/timeline
 $timeline-item-margin-bottom: 20px;
+
 .timeline {
   padding: 10px;
   margin: 0 auto $timeline-item-margin-bottom;
@@ -16,7 +17,7 @@ $timeline-item-margin-bottom: 20px;
       top: 0;
       left: 0;
       bottom: -$timeline-item-margin-bottom;
-      border-left: 4px solid #6f777b;
+      border-left: 4px solid govuk-colour("grey-1");
       height: calc(100% + #{$timeline-item-margin-bottom});
     }
 
@@ -29,7 +30,7 @@ $timeline-item-margin-bottom: 20px;
       &:last-child {
         margin-bottom: 0px;
         border: none;
-        
+
         &:before {
           background-color: govuk-colour("grey-2");
         }

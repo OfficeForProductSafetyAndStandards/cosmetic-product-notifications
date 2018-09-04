@@ -1,0 +1,12 @@
+- content_for :page_title, "Manage images - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to #{@parent.class.name == 'Investigation' ? 'case' : @parent.class.name.downcase}", \
+      polymorphic_path(@parent), class: "govuk-back-link"
+= render "page_heading", title: "Manage images"
+= link_to "Add new image", new_associated_image_path(@parent), class: "add-image-link"
+div[class="govuk-!-padding-top-8"]
+  - if @parent.images.attached?
+    = render "table"
+  - else
+    p
+      | No images.

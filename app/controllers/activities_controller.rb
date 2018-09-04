@@ -31,7 +31,7 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  private
+private
 
   def create_activity
     @activity = @investigation.activities.create(activity_params)

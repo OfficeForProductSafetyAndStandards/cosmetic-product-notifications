@@ -1,46 +1,14 @@
-Rails:
-    Enabled: true
+inherit_gem:
+  govuk-lint: configs/rubocop/all.yml
 
 AllCops:
+  Include:
+    - 'app/**/*.rb'
+    - 'lib/**/*.rb'
+    - 'spec/**/*.rb'
+  
   Exclude:
-    - 'bin/**'
-    - 'db/**/**'
+    - 'bin/*'
 
-# Since this is a prototype, strict documentation
-# is not necessary. Consider adding this back in
-# at a later date
-Style/Documentation:
-    Enabled: false
-
-# This enforces adding a lot of comments in preparation
-# for an upgrade to Ruby 3, which seems unnecessary at the moment
-Style/FrozenStringLiteralComment:
-    Enabled: false
-
-Style/StringLiterals:
-    EnforcedStyle: double_quotes
-
-# This was enforcing nested class definitions where a compact style would
-# sometimes be a better choice
-Style/ClassAndModuleChildren:
-    Enabled: false
-
-Metrics/LineLength:
-    Max: 120
-
-Metrics/MethodLength:
-    Max: 15
-
-Layout/EndOfLine:
-  EnforcedStyle: lf
-
-Metrics/ClassLength:
-    Max: 200
-    
-# This allows to have ticket numbers next to a 'TODO'. e.g. "TODO MSPSDS-10: Change this"
-Style/CommentAnnotation:
-  Enabled: False
-
-Metrics/AbcSize:
-    Max: 20
-    
+Rails:
+  Enabled: true

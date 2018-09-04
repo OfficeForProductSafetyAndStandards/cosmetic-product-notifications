@@ -28,26 +28,35 @@ jobs:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps web echo 'Gems pre-installed'
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
       - sleep 10 # wait for PostgreSQl and Elasticsearch to start
+
     script: 
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml  exec web bundle exec rubocop
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml  exec web bundle exec rake db:create db:schema:load test
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec rubocop
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec slim-lint app/views
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn eslint app/assets/javascripts
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec brakeman --no-pager
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec rake db:create db:schema:load test
+
     after_script:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
+
   - stage: deploy-to-int
     if: branch = master AND type != pull_request
     script: SPACE=int ./infrastructure/scripts/deploy-app.sh
   - if: branch = master AND type != pull_request
     script: SPACE=int ./infrastructure/scripts/deploy-sidekiq.sh
+
   - stage: deploy-to-staging
     if: branch = staging AND type != pull_request
     script: SPACE=staging ./infrastructure/scripts/deploy-app.sh
   - if: branch = staging AND type != pull_request
     script: SPACE=staging ./infrastructure/scripts/deploy-sidekiq.sh
-  - stage: deploy-to-live
-    if: branch = live AND type != pull_request
-    script: SPACE=live ./infrastructure/scripts/deploy-app.sh
-  - if: branch = live AND type != pull_request
-    script: SPACE=live ./infrastructure/scripts/deploy-sidekiq.sh
+
+  - stage: deploy-to-prod
+    if: branch = prod AND type != pull_request
+    script: SPACE=prod ./infrastructure/scripts/deploy-app.sh
+  - if: branch = prod AND type != pull_request
+    script: SPACE=prod ./infrastructure/scripts/deploy-sidekiq.sh
 
 notifications:
   email:

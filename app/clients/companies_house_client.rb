@@ -29,7 +29,7 @@ class CompaniesHouseClient
     add_companies_house_response_to_business(business, profile)
   end
 
-  private
+private
 
   def create_business_from_companies_house_response(response)
     add_companies_house_response_to_business(Business.new, response)

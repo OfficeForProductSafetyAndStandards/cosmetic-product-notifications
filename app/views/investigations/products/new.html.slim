@@ -1,0 +1,10 @@
+- content_for :page_title, "New product for case - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to case", @investigation, class: "govuk-back-link"
+.new-product-page.products-search-form[data-investigation-id=@investigation.id.to_s]
+  = render "investigation_heading", investigation: @investigation
+  h2.govuk-heading-l
+    | Add product
+  h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+    | Product details
+  = render "products/form", product: @product, countries: @countries, form_model: [@investigation, @product]

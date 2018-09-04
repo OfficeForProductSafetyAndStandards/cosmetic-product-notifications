@@ -13,7 +13,7 @@ class AntiVirusAnalyzer < ActiveStorage::Analyzer
     end
   end
 
-  private
+private
 
   def purge_blob
     attachment = ActiveStorage::Attachment.find_by blob_id: @blob.id

@@ -72,7 +72,7 @@ class AddressesController < ApplicationController
     end
   end
 
-  private
+private
 
   def create_address
     business = Business.find(params[:business_id])

@@ -1,0 +1,13 @@
+- content_for :page_title, "New product - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to list", products_path, class: "govuk-back-link"
+.new-product-page.products-search-form
+  h1.govuk-heading-xl
+    | New product
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+        | Product details
+      = render "form", product: @product, countries: @countries, form_model: @product
+    .govuk-grid-column-one-half
+      = render "suggestions_container"

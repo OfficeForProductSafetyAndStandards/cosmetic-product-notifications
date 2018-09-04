@@ -9,7 +9,7 @@ class MasterAnalyzer < ActiveStorage::Analyzer
              .reduce(:merge)
   end
 
-  private
+private
 
   def analyzers
     Rails.application.config.document_analyzers

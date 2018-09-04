@@ -1,0 +1,20 @@
+- content_for :page_title, "Change password - Market Surveillance & Product Safety"
+h1.govuk-heading-xl
+  | Change your password
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+  = devise_error_messages!
+  = f.hidden_field :reset_password_token
+  .govuk-form-group
+    = f.label :password, "New password", class: "govuk-label"
+    = f.password_field :password, autofocus: true, autocomplete: "off", class: "govuk-input"
+    - if @minimum_password_length
+      em
+        | (
+        = @minimum_password_length
+        | characters minimum)
+  .govuk-form-group
+    = f.label :password_confirmation, "Confirm new password", class: "govuk-label"
+    = f.password_field :password_confirmation, autocomplete: "off", class: "govuk-input"
+  .govuk-form-group
+    = f.submit "Change my password", class: "govuk-button"
+= render "users/shared/links"

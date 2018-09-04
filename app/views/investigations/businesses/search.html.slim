@@ -1,0 +1,19 @@
+- content_for :page_title, "Add business to case - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to case", @investigation, class: "govuk-back-link"
+.investigation-business-page.businesses-search-form{ data-investigation-id=@investigation.id
+    data-business-ids=@investigation.business_ids.join(",") }
+  = render "investigation_heading", investigation: @investigation
+  h2.govuk-heading-l
+    | Add business
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      = form_with(model: @business, url: new_investigation_business_path(@investigation), local: true, method: :get) \
+          do |form|
+        h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+          | Business details
+        = render "businesses/core_params", form: form, business: @business
+        .govuk-form-group
+          = form.submit "Create new", class: "govuk-button"
+    .govuk-grid-column-one-half
+      = render "businesses/suggestions_container"

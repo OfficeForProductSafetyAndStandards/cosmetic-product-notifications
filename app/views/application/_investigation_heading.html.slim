@@ -1,0 +1,10 @@
+p.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+  | Case ID:
+  '
+  = investigation.id
+h1.govuk-heading-xl[class="govuk-!-margin-bottom-1"]
+  = investigation.title
+p[class="govuk-!-margin-bottom-6"]
+  | Created:
+  '
+  = investigation.created_at.strftime("%d %B %Y")

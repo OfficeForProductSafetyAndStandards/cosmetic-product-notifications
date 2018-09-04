@@ -1,0 +1,13 @@
+- content_for :page_title, "New business - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to list", businesses_path, class: "govuk-back-link"
+.new-business-page.businesses-search-form
+  h1.govuk-heading-xl
+    | New business
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+        | Business details
+      = render "form", business: @business, form_model: @business
+    .govuk-grid-column-one-half
+      = render "suggestions_container"

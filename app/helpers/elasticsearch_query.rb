@@ -14,7 +14,7 @@ class ElasticsearchQuery
     search_query
   end
 
-  private
+private
 
   def query_params
     if filters.present?
