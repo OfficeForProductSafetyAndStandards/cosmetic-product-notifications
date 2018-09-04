@@ -12,7 +12,12 @@ html.govuk-template.app-html-class[lang="en"]
     link[rel="apple-touch-icon" sizes="167x167" href=asset_path("govuk-apple-touch-icon-167x167.png")]
     link[rel="apple-touch-icon" sizes="152x152" href=asset_path("govuk-apple-touch-icon-152x152.png")]
     link[rel="apple-touch-icon" href=asset_path("govuk-apple-touch-icon.png")]
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track": "reload"
+    /![if !IE 8]
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload"
+    /![endif]
+    /[if IE 8]
+      = stylesheet_link_tag "application-ie8", media: "all", "data-turbolinks-track": "reload"
+      = javascript_include_tag "html5shiv"
     = javascript_include_tag "application", "data-turbolinks-track": "reload"
     = csrf_meta_tags
     meta[property="og:image" content=asset_path("govuk-opengraph-image.png")]
