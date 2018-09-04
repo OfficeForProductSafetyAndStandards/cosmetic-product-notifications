@@ -1,8 +1,5 @@
 class User < ActiveHash::Base
   include ActiveHash::Associations
-  include Searchable
-
-  index_name [Rails.env, "users"].join("_")
 
   field :first_name
   field :last_name
