@@ -17,7 +17,7 @@ module Searchable
               type: "text",
               fields: {
                 sort: {
-                  type: "keyword"
+                  type: "icu_collation_keyword"
                 }
               }
             }
