@@ -34,7 +34,7 @@ jobs:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec slim-lint app/views
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn eslint app/assets/javascripts
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec brakeman
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec brakeman --no-pager
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec rake db:create db:schema:load test
 
     after_script:
