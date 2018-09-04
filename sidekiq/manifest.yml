@@ -5,8 +5,8 @@ applications:
   buildpacks:
     - ruby_buildpack
   instances: 1
-  path: .
-  command: bundle exec sidekiq
+  path: ../
+  command: bin/sidekiq
   no-route: true
   health-check-type: process
   services:

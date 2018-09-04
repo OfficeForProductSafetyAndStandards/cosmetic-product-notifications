@@ -10,4 +10,3 @@ services:
     command: tail -f /dev/null
     volumes:
       - ~/bundle-cache:/usr/local/bundle
-      - ~/npm-cache:/root/.npm

@@ -2,10 +2,10 @@
 set -ex
 
 # Ensure all gems are installed.
-bundle check || bundle install
+bin/bundle check || bin/bundle install
 
 # Ensure all node packages are installed.
-bin/yarn install
+yarn install
 
 # Run the passed in command
 exec "$@"

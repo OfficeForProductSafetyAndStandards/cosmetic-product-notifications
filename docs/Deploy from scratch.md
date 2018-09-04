@@ -92,4 +92,4 @@ Create the app using the current repository
 Trigger the deploy scripts on travis.
 Then seed the database
 
-    cf run-task mspsds-int "bundle exec rake db:seed" --name seed-db
+    cf run-task mspsds-int "bin/rake db:seed" --name seed-db
