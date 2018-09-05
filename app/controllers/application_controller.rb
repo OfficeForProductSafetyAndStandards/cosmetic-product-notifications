@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    redirect_to sessions_new_path unless user_signed_in? || try_refresh_token
+    redirect_to new_session_path unless user_signed_in? || try_refresh_token
   end
 
   def user_signed_in?

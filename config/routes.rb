@@ -7,11 +7,15 @@ Rails.application.routes.draw do
     resources :images
   end
 
-  get "sessions/new"
-  post "sessions/signin"
-  delete "sessions/logout"
-  get "sessions/forgot_password"
-  put "sessions/reset_password"
+  resource :session, only: %i[new] do
+    member do
+      get :new
+      post :signin
+      delete :logout
+      get :forgot_password
+      put :reset_password
+    end
+  end
 
   resources :investigations, concerns: %i[document_attachable image_attachable] do
     member do
@@ -55,7 +59,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users
+  resources :users, only: %i[index]
 
   root to: redirect(path: "/investigations")
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
