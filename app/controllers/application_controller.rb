@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_paper_trail_whodunnit
 
-  helper_method :current_user, :user_signed_in?, :keycloak_controller?
+  helper_method :current_user, :user_signed_in?, :login_page?
 
   def initialize
     Keycloak.proc_cookie_token = lambda do
@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def keycloak_controller?
+  def login_page?
     Keycloak.keycloak_controller == controller_name
   end
 end

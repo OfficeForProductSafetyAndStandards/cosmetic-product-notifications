@@ -42,7 +42,7 @@ html.govuk-template.app-html-class[lang="en"]
                 - if user_signed_in? && policy(User).index?
                   li.govuk-header__navigation-item
                     = link_to "View users", "/users", class: "govuk-header__link"
-                - if !keycloak_controller?
+                - if !login_page?
                   li.govuk-header__navigation-item
                     - if user_signed_in?
                       = link_to "Logout", sessions_logout_path, method: :delete, class: "govuk-header__link"
