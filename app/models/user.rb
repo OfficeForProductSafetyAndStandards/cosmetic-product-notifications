@@ -13,6 +13,21 @@ class User < ActiveHash::Base
     User.find_by(id: user[:id]) || User.create(user)
   end
 
+  def self.all(options={})
+    begin
+      self.data = KeycloakClient.instance.all_users
+    rescue RuntimeError => error
+      Logger.new(STDOUT).error "Failed to fetch users from Keycloak: #{error.message}"
+      self.data = nil
+    end
+
+    if options.has_key?(:conditions)
+      where(options[:conditions])
+    else
+      @records ||= []
+    end
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end
