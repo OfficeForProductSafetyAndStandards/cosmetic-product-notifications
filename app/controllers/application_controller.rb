@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     KeycloakClient.instance.user_signed_in?
   end
 
-  private
+private
 
   def find_or_create_user
     user = KeycloakClient.instance.user_info
@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   def try_refresh_token
     begin
       cookies.permanent[:keycloak_token] = KeycloakClient.instance.refresh_token
-    rescue => error
+    rescue StandardError => error
       if error.is_a? Keycloak::KeycloakException
         raise
       else

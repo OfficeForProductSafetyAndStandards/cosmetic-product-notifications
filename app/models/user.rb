@@ -13,7 +13,7 @@ class User < ActiveHash::Base
     User.find_by(id: user[:id]) || User.create(user)
   end
 
-  def self.all(options={})
+  def self.all(options = {})
     begin
       self.data = KeycloakClient.instance.all_users
     rescue RuntimeError => error

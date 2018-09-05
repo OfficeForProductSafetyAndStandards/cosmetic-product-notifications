@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
     redirect_to sessions_forgot_password_path, alert: "Failed to send reset email."
   end
 
-  private
+private
 
   def request_and_store_token(user)
     cookies.permanent[:keycloak_token] = KeycloakClient.instance.token_for_user(user)

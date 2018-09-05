@@ -1,4 +1,3 @@
-# rubocop:disable Naming/AccessorMethodName (overriding method from external library)
 module Keycloak
   module Client
     def self.get_installation
@@ -10,7 +9,6 @@ module Keycloak
     end
   end
 end
-# rubocop:enable Naming/AccessorMethodName
 
 class KeycloakClient
   include Singleton
