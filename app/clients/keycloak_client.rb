@@ -28,12 +28,12 @@ class KeycloakClient
     end
   end
 
-  def send_password_reset_email(user, redirect_uri)
-    Keycloak::Internal.forgot_password(user[:email], redirect_uri)
+  def login_url(redirect_uri)
+    @client.url_login_redirect(redirect_uri)
   end
 
-  def token_for_user(user)
-    @client.get_token(user[:email], user[:password])
+  def exchange_code_for_token(code, redirect_uri)
+    @client.get_token_by_code(code, redirect_uri)
   end
 
   def refresh_token

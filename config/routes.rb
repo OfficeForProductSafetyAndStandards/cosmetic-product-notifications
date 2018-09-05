@@ -10,10 +10,8 @@ Rails.application.routes.draw do
   resource :session, only: %i[new] do
     member do
       get :new
-      post :signin
+      get :signin
       delete :logout
-      get :forgot_password
-      put :reset_password
     end
   end
 
