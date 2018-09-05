@@ -38,6 +38,10 @@ class KeycloakClient
     @client.get_token(user[:email], user[:password])
   end
 
+  def refresh_token
+    @client.get_token_by_refresh_token
+  end
+
   def logout
     @client.logout
   end

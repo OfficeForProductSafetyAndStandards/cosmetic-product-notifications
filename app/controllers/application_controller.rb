@@ -21,11 +21,11 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    redirect_to sessions_new_path unless user_signed_in?
+    redirect_to sessions_new_path unless user_signed_in? || try_refresh_token
   end
 
   def user_signed_in?
-    KeycloakClient.instance.user_signed_in? || keycloak_controller?
+    KeycloakClient.instance.user_signed_in?
   end
 
   private
@@ -33,6 +33,18 @@ class ApplicationController < ActionController::Base
   def find_or_create_user
     user = KeycloakClient.instance.user_info
     User.find_or_create(user)
+  end
+
+  def try_refresh_token
+    begin
+      cookies.permanent[:keycloak_token] = KeycloakClient.instance.refresh_token
+    rescue => error
+      if error.is_a? Keycloak::KeycloakException
+        raise
+      else
+        false
+      end
+    end
   end
 
   def keycloak_controller?
