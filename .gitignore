@@ -234,3 +234,7 @@ $RECYCLE.BIN/
 
 
 # End of https://www.gitignore.io/api/ruby,rails,macos,windows,rubymine,visualstudiocode
+
+# Keycloak artifact and package files
+keycloak/artifacts/
+keycloak/package/
