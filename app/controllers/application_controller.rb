@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_paper_trail_whodunnit
 
-  helper_method :current_user, :user_signed_in?, :login_page?
+  helper_method :current_user, :user_signed_in?
 
   def initialize
     Keycloak.proc_cookie_token = lambda do
@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    redirect_to new_session_path unless user_signed_in? || try_refresh_token
+    redirect_to helpers.keycloak_login_url unless user_signed_in? || try_refresh_token
   end
 
   def user_signed_in?
@@ -45,9 +45,5 @@ private
         false
       end
     end
-  end
-
-  def login_page?
-    Keycloak.keycloak_controller == controller_name
   end
 end

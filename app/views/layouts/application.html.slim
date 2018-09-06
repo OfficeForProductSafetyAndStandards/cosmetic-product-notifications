@@ -47,7 +47,7 @@ html.govuk-template.app-html-class[lang="en"]
                   - if user_signed_in?
                     = link_to "Logout", logout_session_path, method: :delete, class: "govuk-header__link"
                   - else
-                    = link_to "Login", new_session_path, class: "govuk-header__link"
+                    = link_to "Login", keycloak_login_url, class: "govuk-header__link"
 
     .govuk-width-container
       .govuk-phase-banner

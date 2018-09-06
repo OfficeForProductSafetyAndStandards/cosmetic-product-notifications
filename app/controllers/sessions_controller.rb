@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
+  include LoginHelper
+
   def new
-    redirect_to login_url
+    redirect_to keycloak_login_url
   end
 
   def signin
@@ -8,7 +10,7 @@ class SessionsController < ApplicationController
     flash[:notice] = "Signed in successfully." if KeycloakClient.instance.user_signed_in?
     redirect_to root_path
   rescue RestClient::ExceptionWithResponse => error
-    redirect_to new_session_path, alert: signin_error_message(error)
+    redirect_to keycloak_login_url, alert: signin_error_message(error)
   end
 
   def logout
@@ -17,10 +19,6 @@ class SessionsController < ApplicationController
   end
 
 private
-
-  def login_url
-    KeycloakClient.instance.login_url(signin_session_url)
-  end
 
   def request_and_store_token(auth_code)
     cookies.permanent[:keycloak_token] = KeycloakClient.instance.exchange_code_for_token(auth_code, signin_session_url)
