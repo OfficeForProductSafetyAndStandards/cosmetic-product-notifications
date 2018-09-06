@@ -13,12 +13,12 @@ mkdir -p ${ARTIFACT_PATH}
 mkdir -p ${PACKAGE_PATH}
 
 # Download and unpack Keycloak
-curl -o  ${ARTIFACT_PATH}/keycloak.tar.gz https://downloads.jboss.org/keycloak/4.3.0.Final/keycloak-4.3.0.Final.tar.gz
+curl -Lo ${ARTIFACT_PATH}/keycloak.tar.gz https://downloads.jboss.org/keycloak/4.3.0.Final/keycloak-4.3.0.Final.tar.gz
 tar -xzf ${ARTIFACT_PATH}/keycloak.tar.gz --directory ${PACKAGE_PATH} --strip 1
 
 
 # Download and add PostgreSQL JDBC driver
-curl -o  ${ARTIFACT_PATH}/postgresql-42.2.5.jar https://jdbc.postgresql.org/download/postgresql-42.2.5.jar
+curl -Lo ${ARTIFACT_PATH}/postgresql-42.2.5.jar https://jdbc.postgresql.org/download/postgresql-42.2.5.jar
 
 mkdir -p ${PACKAGE_PATH}/modules/system/layers/keycloak/org/postgresql/main
 cp ${ARTIFACT_PATH}/postgresql-42.2.5.jar ${PACKAGE_PATH}/modules/system/layers/keycloak/org/postgresql/main/postgresql-42.2.5.jar
@@ -31,5 +31,5 @@ cp ${CONFIG_PATH}/standalone-ha.xml ${PACKAGE_PATH}/standalone/configuration/sta
 
 
 # Download and add the GOV.UK theme
-curl -o  ${ARTIFACT_PATH}/govuk.tar.gz https://github.com/UKHomeOffice/keycloak-theme-govuk/releases/download/v2.0.2/govuk.tar.gz
+curl -Lo ${ARTIFACT_PATH}/govuk.tar.gz https://github.com/UKHomeOffice/keycloak-theme-govuk/releases/download/v2.0.2/govuk.tar.gz
 tar -xzf ${ARTIFACT_PATH}/govuk.tar.gz --directory ${PACKAGE_PATH}/themes
