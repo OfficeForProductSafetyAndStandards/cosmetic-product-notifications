@@ -6,7 +6,6 @@ set -ex
 # The working directory should be the git root
 
 CONFIG_PATH=./keycloak/configuration
-MODULES_PATH=./keycloak/modules
 ARTIFACT_PATH=./keycloak/artifacts
 PACKAGE_PATH=./keycloak/package
 
@@ -23,7 +22,7 @@ curl -o  ${ARTIFACT_PATH}/postgresql-42.2.5.jar https://jdbc.postgresql.org/down
 
 mkdir -p ${PACKAGE_PATH}/modules/system/layers/keycloak/org/postgresql/main
 cp ${ARTIFACT_PATH}/postgresql-42.2.5.jar ${PACKAGE_PATH}/modules/system/layers/keycloak/org/postgresql/main/postgresql-42.2.5.jar
-cp ${MODULES_PATH}/postgresql-module.xml ${PACKAGE_PATH}/modules/system/layers/keycloak/org/postgresql/main/module.xml
+cp ${CONFIG_PATH}/postgresql-module.xml ${PACKAGE_PATH}/modules/system/layers/keycloak/org/postgresql/main/module.xml
 
 
 # Copy across the modified configuration files (enabling proxy address forwarding and configuring the PostgreSQL datasource)
