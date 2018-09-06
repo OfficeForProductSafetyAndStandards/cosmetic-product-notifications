@@ -15,6 +15,6 @@ WORKDIR /app
 
 COPY . .
 
-COPY ./sidekiq/docker-entrypoint.sh /
+COPY ./worker/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]

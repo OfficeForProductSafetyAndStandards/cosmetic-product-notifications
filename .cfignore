@@ -241,5 +241,5 @@ docs/
 elasticsearch/
 keycloak/
 shared/
-sidekiq/
+worker/
 web/

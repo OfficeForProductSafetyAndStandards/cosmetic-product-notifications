@@ -44,19 +44,19 @@ jobs:
     if: branch = master AND type != pull_request
     script: SPACE=int ./web/deploy.sh
   - if: branch = master AND type != pull_request
-    script: SPACE=int ./sidekiq/deploy.sh
+    script: SPACE=int ./worker/deploy.sh
 
   - stage: deploy-to-staging
     if: branch = staging AND type != pull_request
     script: SPACE=staging ./web/deploy.sh
   - if: branch = staging AND type != pull_request
-    script: SPACE=staging ./sidekiq/deploy.sh
+    script: SPACE=staging ./worker/deploy.sh
 
   - stage: deploy-to-prod
     if: branch = prod AND type != pull_request
     script: SPACE=prod ./web/deploy.sh
   - if: branch = prod AND type != pull_request
-    script: SPACE=prod ./sidekiq/deploy.sh
+    script: SPACE=prod ./worker/deploy.sh
 
 env:
   global:

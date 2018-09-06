@@ -32,10 +32,10 @@ services:
       - db
       - elasticsearch
       - redis
-  sidekiq:
+  worker:
     build:
       context: .
-      dockerfile: ./sidekiq/Dockerfile
+      dockerfile: ./worker/Dockerfile
     command: bin/sidekiq
     volumes:
       - bundle-cache:/usr/local/bundle
