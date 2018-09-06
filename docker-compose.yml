@@ -20,10 +20,18 @@ services:
     volumes:
       - redis-volume:/data
   keycloak:
-    image: jboss/keycloak
-    environment: 
+    build:
+      context: ./keycloak
+      dockerfile: Dockerfile
+    environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
+      - DB_HOSTNAME=db
+      - DB_DATABASE=keycloak
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+    depends_on:
+    - db
     ports:
       - "8080:8080"
   web:
