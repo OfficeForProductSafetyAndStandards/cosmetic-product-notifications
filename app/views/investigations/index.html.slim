@@ -6,10 +6,10 @@
   .govuk-grid-row[class="govuk-!-padding-bottom-4"]
     .govuk-grid-column-one-third
       .govuk-grid-column-one-quarter.assigned-number[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
-        = @investigations.where(assignee: @current_user).count
+        = @current_user.investigations.count
       .govuk-grid-column-three-quarters[class="govuk-!-font-size-19"]
-        = "Case".pluralize(@investigations.where(assignee: @current_user).count)
-        | assigned to you
+        = "Case".pluralize(@current_user.investigations.count)
+        |  assigned to you
 
 = form_with(model: @search, scope: "", url: investigations_path, method: :get, \
     class: "search-background govuk-!-padding-3") do |form|

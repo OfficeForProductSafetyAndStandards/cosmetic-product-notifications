@@ -1,22 +1,38 @@
-class User < ApplicationRecord
-  include Searchable
+class User < ActiveHash::Base
+  include ActiveHash::Associations
 
-  index_name [Rails.env, "users"].join("_")
+  field :first_name
+  field :last_name
+  field :email
 
-  default_scope { order(created_at: :desc) }
-  has_many :user_source, dependent: :nullify
+  has_many :activities, dependent: :nullify
+  has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
+  has_many :user_sources, dependent: :delete
 
-  rolify
-  after_create :set_default_role
+  def self.find_or_create(user)
+    User.find_by(id: user[:id]) || User.create(user)
+  end
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :invitable, :database_authenticatable, :recoverable,
-         :rememberable, :trackable, :validatable
+  def self.all(options = {})
+    begin
+      self.data = KeycloakClient.instance.all_users
+    rescue RuntimeError => error
+      Logger.new(STDOUT).error "Failed to fetch users from Keycloak: #{error.message}"
+      self.data = nil
+    end
 
-private
+    if options.has_key?(:conditions)
+      where(options[:conditions])
+    else
+      @records ||= []
+    end
+  end
 
-  def set_default_role
-    add_role(:user) if roles.blank?
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
+  def has_role?(role)
+    KeycloakClient.instance.has_role? role
   end
 end

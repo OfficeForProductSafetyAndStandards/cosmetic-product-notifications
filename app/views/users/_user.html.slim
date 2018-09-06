@@ -1,15 +1,16 @@
 h3.govuk-heading-m
-  = user.email
-= form_for(user) do |form|
-  .govuk-form-group
-    .govuk-checkboxes
-      - Role.all.each do |role|
-        .govuk-checkboxes__item
-          = check_box_tag "user[_roles][]", role.name, user.has_role?(role.name), "aria-label": role.name, \
-              class: "govuk-checkboxes__input"
-          = label role.name, role.name, class: "govuk-label govuk-checkboxes__label"
-  .govuk-form-group
-    = form.submit "Update", class: "govuk-button"
-  - unless user == current_user
-    .govuk-form-group
-      = link_to "Delete", user_path(user), data: { confirm: "Are you sure?" }, method: :delete
+  = user.full_name
+table.govuk-table[class="govuk-!-margin-bottom-3"]
+  thead.govuk-table__head
+    tr.govuk-table__row
+      th.govuk-table__header[scope="col"]
+        | Assigned Cases
+      th.govuk-table__header[scope="col"]
+        | Status
+  tbody.govuk-table__body
+    - user.investigations.each do |investigation|
+      tr.govuk-table__row
+        td.govuk-table__cell
+          = link_to investigation.title, investigation
+        td.govuk-table__cell
+          = investigation.status

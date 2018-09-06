@@ -35,6 +35,8 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_hash (2.1.0)
+      activesupport (>= 5.0.0)
     activejob (5.2.1)
       activesupport (= 5.2.1)
       globalid (>= 0.3.6)
@@ -79,7 +81,6 @@ GEM
     axlsx_rails (0.5.2)
       actionpack (>= 3.1)
       axlsx (>= 2.0.1)
-    bcrypt (3.1.12)
     bindex (0.5.0)
     bootsnap (1.3.1)
       msgpack (~> 1.0)
@@ -102,15 +103,9 @@ GEM
     debase-ruby_core_source (0.10.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
-    devise (4.5.0)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0, < 6.0)
-      responders
-      warden (~> 1.2.3)
-    devise_invitable (1.7.4)
-      actionmailer (>= 4.1.0)
-      devise (>= 4.0.0)
+    diff-lcs (1.3)
+    domain_name (0.5.20180417)
+      unf (>= 0.0.5, < 1.0.0)
     elasticsearch (5.0.5)
       elasticsearch-api (= 5.0.5)
       elasticsearch-transport (= 5.0.5)
@@ -142,6 +137,8 @@ GEM
       scss_lint
     hashie (3.6.0)
     htmlentities (4.3.4)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -150,7 +147,12 @@ GEM
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
     jmespath (1.4.0)
+    json (2.1.0)
     jwt (2.1.0)
+    keycloak (2.3.2)
+      json
+      jwt
+      rest-client
     kramdown (1.17.0)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -163,6 +165,9 @@ GEM
     marcel (0.3.2)
       mimemagic (~> 0.3.2)
     method_source (0.9.0)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
     mini_magick (4.8.0)
     mini_mime (1.0.1)
@@ -171,12 +176,12 @@ GEM
     msgpack (1.2.4)
     multi_json (1.13.1)
     multipart-post (2.0.0)
+    netrc (0.11.0)
     nio4r (2.3.1)
     nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     notifications-ruby-client (2.7.0)
       jwt (>= 1.5, < 3)
-    orm_adapter (0.5.0)
     paper_trail (10.0.1)
       activerecord (>= 4.2, < 5.3)
       request_store (~> 1.1)
@@ -225,12 +230,16 @@ GEM
     redis (4.0.2)
     request_store (1.4.1)
       rack (>= 1.4)
-    responders (2.4.0)
-      actionpack (>= 4.2.0, < 5.3)
-      railties (>= 4.2.0, < 5.3)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     reverse_markdown (1.1.0)
       nokogiri
-    rolify (5.2.0)
+    rspec-mocks (3.7.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.7.0)
+    rspec-support (3.7.1)
     rubocop (0.58.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -310,14 +319,15 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.18)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.5)
     unicode-display_width (1.4.0)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
-    warden (1.2.7)
-      rack (>= 1.0)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -335,6 +345,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_hash
   ar_merge
   aws-sdk-s3
   axlsx!
@@ -346,13 +357,12 @@ DEPENDENCIES
   clamby
   companies-house-rest
   debase
-  devise
-  devise_invitable
   elasticsearch-model
   elasticsearch-rails
   faraday_middleware-aws-sigv4
   govuk-lint
   jbuilder (~> 2.5)
+  keycloak
   listen (~> 3.0.5)
   mini_magick
   notifications-ruby-client
@@ -361,7 +371,7 @@ DEPENDENCIES
   puma (~> 3.0)
   pundit
   rails (~> 5.2)
-  rolify
+  rspec-mocks
   rubocop
   ruby-debug-ide
   rubyzip (>= 1.2.1)
@@ -384,4 +394,4 @@ RUBY VERSION
    ruby 2.4.3p205
 
 BUNDLED WITH
-   1.16.2
+   1.16.3

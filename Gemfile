@@ -6,6 +6,7 @@ ruby File.read(".ruby-version").strip
 # https://github.com/elastic/elasticsearch-rails/issues/239
 gem "will_paginate"
 
+gem "active_hash"
 gem "ar_merge"
 gem "aws-sdk-s3"
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c8ac844"
@@ -14,12 +15,11 @@ gem "bootsnap", ">= 1.1.0"
 gem "cf-app-utils"
 gem "clamby"
 gem "companies-house-rest"
-gem "devise"
-gem "devise_invitable"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 gem "faraday_middleware-aws-sigv4"
 gem "jbuilder", "~> 2.5"
+gem "keycloak"
 gem "mini_magick"
 gem "notifications-ruby-client"
 gem "paper_trail"
@@ -27,7 +27,6 @@ gem "pg", "~> 0.18"
 gem "puma", "~> 3.0"
 gem "pundit"
 gem "rails", "~> 5.2"
-gem "rolify"
 gem "rubyzip", ">= 1.2.1"
 gem "sass-rails", "~> 5.0"
 gem "sidekiq"
@@ -42,6 +41,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platform: :mri
   gem "debase"
+  gem "rspec-mocks"
   gem "ruby-debug-ide"
 end
 

@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   concern :document_attachable do
     resources :documents
@@ -6,6 +5,14 @@ Rails.application.routes.draw do
 
   concern :image_attachable do
     resources :images
+  end
+
+  resource :session, only: %i[new] do
+    member do
+      get :new
+      get :signin
+      delete :logout
+    end
   end
 
   resources :investigations, concerns: %i[document_attachable image_attachable] do
@@ -50,10 +57,8 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, controllers: { invitations: "invitations" }
-  resources :users
+  resources :users, only: %i[index]
 
   root to: redirect(path: "/investigations")
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
-# rubocop:enable Metrics/BlockLength
