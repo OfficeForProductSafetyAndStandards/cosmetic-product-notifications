@@ -12,8 +12,8 @@ USER root
 ####################
 
 COPY . ./keycloak
-RUN chmod +x ./keycloak/scripts/package-keycloak.sh
-RUN ./keycloak/scripts/package-keycloak.sh
+RUN chmod +x ./keycloak/package.sh
+RUN ./keycloak/package.sh
 RUN mv ./keycloak/package /opt/jboss/keycloak
 
 ####################
@@ -34,7 +34,7 @@ RUN chmod -R g+rw /opt/jboss/keycloak
 # Copy entrypoint #
 ###################
 
-COPY ./scripts/docker-entrypoint.sh /
+COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
 USER 1000
