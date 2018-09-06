@@ -14,5 +14,16 @@ set -ex
 ./shared/install-cf.sh
 
 cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o "beis-mspsds" -s $SPACE
-cf push mspsds-$SPACE
+
+# Circumvent the cloudfoundry asset compilation step - https://github.com/cloudfoundry/ruby-buildpack/blob/master/src/ruby/finalize/finalize.go#L213
+cp -a ./sidekiq/public/. ./public/
+
+# Copy the apt packages to be installed
+cp ./sidekiq/apt.yml ./apt.yml
+
+# Copy the clamav configuration
+cp -a ./sidekiq/clamav/. ./clamav/
+
+cf push -f ./sidekiq/manifest.yml
+
 cf logout

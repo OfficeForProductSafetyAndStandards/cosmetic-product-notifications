@@ -1,8 +1,7 @@
 ---
 applications:
-- name: mspsds
-  random-route: true
-  memory: 1G
+- name: mspsds-web
+  memory: 512M
   instances: 1
   buildpacks:
     - ruby_buildpack

@@ -1,12 +1,13 @@
 ---
 applications:
 - name: mspsds-sidekiq
-  memory: 256M
+  memory: 1G
   buildpacks:
+    - https://github.com/cloudfoundry/apt-buildpack.git
     - ruby_buildpack
   instances: 1
   path: ../
-  command: bin/sidekiq
+  command: freshclam --config-file=clamav/freshclam.conf && freshclam --config-file=clamav/freshclam.conf -d -c 2 && ../deps/0/apt/usr/sbin/clamd -c clamav/clamd.conf && bin/sidekiq
   no-route: true
   health-check-type: process
   services:
