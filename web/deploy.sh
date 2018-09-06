@@ -15,6 +15,6 @@ set -ex
 
 cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o "beis-mspsds" -s $SPACE
 
-cf push -f ./web/manifest.yml
+cf push -f ./web/manifest.yml --route-path mspsds-$SPACE
 
 cf logout
