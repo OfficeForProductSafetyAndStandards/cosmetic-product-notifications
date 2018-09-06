@@ -2,9 +2,10 @@
     "files.exclude": {
         ".git": true,
         "bin/": true,
+        "storage/": true,
         "tmp/": true,
         "**/node_modules/": true,
-        "**/package-lock.json": true
+        "**/*.lock": true
     },
     "files.autoSave": "onFocusChange",
     "ruby.lint": {

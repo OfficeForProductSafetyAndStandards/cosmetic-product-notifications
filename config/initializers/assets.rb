@@ -10,11 +10,14 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules")
 Rails.application.config.assets.paths << Rails.root.join("node_modules", "govuk-frontend")
 Rails.application.config.assets.paths << Rails.root.join("node_modules", "govuk-frontend", "assets", "images")
 Rails.application.config.assets.paths << Rails.root.join("node_modules", "govuk-frontend", "assets", "fonts")
+Rails.application.config.assets.paths << Rails.root.join("node_modules", "html5shiv", "dist")
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 Rails.application.config.assets.precompile += %w[
+  application-ie8.css
+  html5shiv.js
   favicon.ico
   govuk-mask-icon.svg
   govuk-apple-touch-icon-180x180.png
