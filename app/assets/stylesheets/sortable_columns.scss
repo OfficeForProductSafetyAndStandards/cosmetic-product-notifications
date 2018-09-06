@@ -1,9 +1,9 @@
-table.sortable {
+.sortable {
   th {
     white-space: nowrap;
 
-    a.sort-link {
-      color: black;
+    .sort-link {
+      color: govuk-colour("black");
       text-decoration: none;
 
       &::after {
@@ -24,7 +24,8 @@ table.sortable {
     }
   }
 
-  th, td {
+  th,
+  td {
     &.right-aligned {
       text-align: right;
     }

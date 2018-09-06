@@ -18,6 +18,7 @@
     "accessible-autocomplete": "^1.6.1",
     "govuk-country-and-territory-autocomplete": "^0.4.0",
     "govuk-frontend": "^1.2.0",
+    "html5shiv": "^3.7.3",
     "jquery": "^3.3.1",
     "jquery-ujs": "^1.2.2"
   }
