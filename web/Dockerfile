@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install -y \
   nodejs \
   yarn
 
-RUN mkdir /app
 WORKDIR /app
 
 COPY . .

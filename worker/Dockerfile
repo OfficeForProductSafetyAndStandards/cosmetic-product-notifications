@@ -11,7 +11,6 @@ RUN freshclam
 # Allow ClamAV to access Rails uploads in /tmp
 RUN chmod -R 777 /tmp
 
-RUN mkdir /app
 WORKDIR /app
 
 COPY . .
