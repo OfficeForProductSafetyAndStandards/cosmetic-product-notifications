@@ -22,7 +22,7 @@ class ActiveSupport::TestCase
     stub_client_config
   end
 
-  private
+private
 
   def stub_user_credentials(user:, is_admin: false)
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)

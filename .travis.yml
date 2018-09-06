@@ -9,7 +9,7 @@ branches:
   only:
   - master
   - staging
-  - live
+  - prod
 
 cache:
   directories:
@@ -30,38 +30,33 @@ jobs:
       - sleep 10 # wait for PostgreSQl and Elasticsearch to start
 
     script: 
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec rubocop
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec slim-lint app/views
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rubocop
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/slim-lint app/views
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn eslint app/assets/javascripts
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec brakeman --no-pager
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bundle exec rake db:create db:schema:load test
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/brakeman --no-pager
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rake db:create db:schema:load test
 
     after_script:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
 
   - stage: deploy-to-int
     if: branch = master AND type != pull_request
-    script: SPACE=int ./infrastructure/scripts/deploy-app.sh
+    script: SPACE=int ./web/deploy.sh
   - if: branch = master AND type != pull_request
-    script: SPACE=int ./infrastructure/scripts/deploy-sidekiq.sh
+    script: SPACE=int ./worker/deploy.sh
 
   - stage: deploy-to-staging
     if: branch = staging AND type != pull_request
-    script: SPACE=staging ./infrastructure/scripts/deploy-app.sh
+    script: SPACE=staging ./web/deploy.sh
   - if: branch = staging AND type != pull_request
-    script: SPACE=staging ./infrastructure/scripts/deploy-sidekiq.sh
+    script: SPACE=staging ./worker/deploy.sh
 
   - stage: deploy-to-prod
     if: branch = prod AND type != pull_request
-    script: SPACE=prod ./infrastructure/scripts/deploy-app.sh
+    script: SPACE=prod ./web/deploy.sh
   - if: branch = prod AND type != pull_request
-    script: SPACE=prod ./infrastructure/scripts/deploy-sidekiq.sh
-
-notifications:
-  email:
-  - anthony.pengelly@softwire.com
-  - david.broder-rogers@softwire.com
+    script: SPACE=prod ./worker/deploy.sh
 
 env:
   global:

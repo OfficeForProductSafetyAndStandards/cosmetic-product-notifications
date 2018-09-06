@@ -31,7 +31,6 @@ gem "rubyzip", ">= 1.2.1"
 gem "sass-rails", "~> 5.0"
 gem "sidekiq"
 gem "slim-rails"
-gem "slim_lint"
 gem "turbolinks", "~> 5"
 gem "uglifier", ">= 1.3.0"
 gem "wicked_pdf"
@@ -39,18 +38,19 @@ gem "wkhtmltopdf-binary"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem "brakeman"
   gem "byebug", platform: :mri
   gem "debase"
+  gem "govuk-lint"
+  gem "rubocop"
   gem "rspec-mocks"
   gem "ruby-debug-ide"
+  gem "slim_lint"
 end
 
 group :development do
-  gem "brakeman"
-  gem "govuk-lint"
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "listen", "~> 3.0.5"
-  gem "rubocop"
   gem "solargraph"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"

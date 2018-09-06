@@ -1,4 +1,4 @@
-FROM ruby:2.4.3
+FROM ruby:2.4.4
 
 ENV LANG C.UTF-8
 
@@ -8,18 +8,12 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install -y \ 
   build-essential \ 
   nodejs \
-  clamav \
-  clamav-daemon \
   yarn
 
-RUN freshclam
-RUN service clamav-daemon restart
-
-RUN mkdir /app
 WORKDIR /app
 
 COPY . .
 
-COPY ./docker-entrypoint.sh /
+COPY ./web/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
