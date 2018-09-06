@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
   clamav-daemon
 
 RUN freshclam
-RUN service clamav-daemon restart
+# Allow ClamAV to access Rails uploads in /tmp
+RUN chmod -R 777 /tmp
 
 RUN mkdir /app
 WORKDIR /app
