@@ -1,14 +1,8 @@
 require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
-
   setup do
-    # TODO MSPSDS_197: figure out how to move this to User model without
-    # build breaking (on db creation or docker-compose up)
-    User.import force: true
-
-    sign_in users(:one)
+    sign_in_as_user
     @product = products(:one)
     @product.source = sources(:product_one)
     Product.import

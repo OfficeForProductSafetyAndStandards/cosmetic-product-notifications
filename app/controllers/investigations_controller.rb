@@ -44,7 +44,7 @@ class InvestigationsController < ApplicationController
 
   # POST /investigations/1/update_assignee
   def update_assignee
-    assignee = User.where("lower(email) = ?", params[:email].downcase).first
+    assignee = User.find_by(email: params[:email].downcase)
     @investigation.assignee = assignee
     save_and_respond "Assignee was successfully updated."
     record_assignment
