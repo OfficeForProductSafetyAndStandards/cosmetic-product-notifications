@@ -2,12 +2,11 @@ version: '3'
 
 services:
   db:
-    image: postgres
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
     volumes:
       - postgres-volume:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
   elasticsearch:
     build:
       context: .
@@ -31,7 +30,7 @@ services:
       - KEYCLOAK_PASSWORD=admin
       - DB_HOSTNAME=db
       - DB_DATABASE=keycloak
-      - DB_USERNAME=postgres
+      - DB_USERNAME=keycloak
       - DB_PASSWORD=password
     depends_on:
     - db
