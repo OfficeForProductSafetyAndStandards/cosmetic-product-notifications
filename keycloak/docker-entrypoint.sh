@@ -1,12 +1,12 @@
 #!/bin/bash
 
-##################
-# Add admin user #
-##################
-
-if [ ${KEYCLOAK_USER} ] && [ ${KEYCLOAK_PASSWORD} ]; then
-  /opt/jboss/keycloak/bin/add-user-keycloak.sh --user ${KEYCLOAK_USER} --password ${KEYCLOAK_PASSWORD}
-fi
+###########################
+# Import realms and users #
+###########################
+SYS_PROPS="-Dkeycloak.migration.action=import \
+  -Dkeycloak.migration.provider=singleFile \
+  -Dkeycloak.migration.strategy=IGNORE_EXISTING \
+  -Dkeycloak.migration.file=/tmp/keycloak/initial-setup.json"
 
 ##################
 # Start Keycloak #
