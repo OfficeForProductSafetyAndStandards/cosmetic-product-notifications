@@ -1,6 +1,7 @@
 class ImagesController < ApplicationController
   include ImagesHelper
 
+  before_action :authenticate_user!
   before_action :set_parent
   before_action :set_image, only: %i[show edit update destroy]
   before_action :create_image, only: %i[create]

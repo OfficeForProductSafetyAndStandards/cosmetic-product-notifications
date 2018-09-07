@@ -1,6 +1,7 @@
 class DocumentsController < ApplicationController
   include DocumentsHelper
 
+  before_action :authenticate_user!
   before_action :set_parent
   before_action :set_document, only: %i[show edit update destroy]
   before_action :create_document, only: %i[create]
