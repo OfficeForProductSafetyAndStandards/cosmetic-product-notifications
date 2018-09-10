@@ -18,16 +18,21 @@ We're using [Slim](http://slim-lang.com/) as our HTML templating language, vanil
 
 This assumes you've followed the setup steps in [the root README](../README.md#getting-setup).
 
-Initialise the databse:
+Initialise the database:
+
     docker-compose run web bin/rake db:create db:schema:load
 
 Restart the website (which may have crashed):
+
     docker-compose restart web
 
-Visit the site on [localhost:3000](http://localhost:3000).
+Visit the site on [localhost:3000](http://localhost:3000)
+(default credentials: `user@example.com` / `password`)
 
-When pulling new changes from master, it is sometimes necesary to run:
-* `docker-compose exec web bin/rake db:migrate` if there are new migrations.
+When pulling new changes from master, it is sometimes necessary to run the following
+if there are new migrations:
+
+    docker-compose exec web bin/rake db:migrate
 
 
 ### IDE Setup
