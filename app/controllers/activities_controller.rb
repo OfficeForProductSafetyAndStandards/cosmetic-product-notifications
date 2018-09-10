@@ -1,5 +1,4 @@
 class ActivitiesController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_investigation, only: %i[index new create]
   before_action :create_activity, only: %i[create]
 
