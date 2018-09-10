@@ -767,9 +767,9 @@ govuk-country-and-territory-autocomplete@^0.4.0:
     openregister-picker-engine "^1.2.1"
     webpack-sources "^1.0.1"
 
-govuk-frontend@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-1.2.0.tgz#a741364f903534755e134c0db6ac65a63a368592"
+govuk-frontend@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.0.0.tgz#daf69eeffc60d013ad5fd14b59e5e488ac63a132"
 
 graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
