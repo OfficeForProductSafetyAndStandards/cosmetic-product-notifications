@@ -1,7 +1,7 @@
 class Investigations::ProductsController < ApplicationController
   include CountriesHelper
   include ProductsHelper
-  before_action :authenticate_user!
+
   before_action :set_investigation, only: %i[index search new create suggested add destroy]
   before_action :set_product, only: %i[destroy]
   before_action :create_product, only: %i[new create]

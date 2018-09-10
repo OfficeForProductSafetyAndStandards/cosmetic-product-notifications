@@ -1,6 +1,6 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
-  before_action :authenticate_user!
+
   before_action :set_investigation, only: %i[index search new create suggested add companies_house destroy]
   before_action :set_business, only: %i[destroy]
   before_action :create_business, only: %i[new create]
