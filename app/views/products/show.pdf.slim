@@ -4,8 +4,6 @@ div
   - @product.images.attachments.each do |image|
     - if image.metadata["safe"] && image.variable?
       = image_tag(image.variant(resize: "300x200"), alt: image.metadata["title"])
-  - @product.rapex_images.each do |image|
-    = image_tag image.url, alt: image.title
 table[style="width:100%; text-align:left"]
   tr
     th

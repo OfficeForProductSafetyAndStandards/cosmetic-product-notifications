@@ -31,17 +31,18 @@ def import_report(report)
   puts "Importing #{reference}"
   url = report.xpath("URL").text.delete("\n")
   notifications(url).each do |notification|
-    create_records_from_notification notification, date
+    create_records_from_notification(notification, date)
   end
 end
 
 def create_records_from_notification(notification, date)
   return nil unless (name = name_or_product(notification))
 
-  investigation = create_investigation notification, date, name
-  product = create_product notification, name
-  create_investigation_product investigation, product unless investigation.nil? || investigation.id.nil? || product.nil?
-  create_activity notification, investigation, date unless investigation.nil?
+  investigation = create_investigation(notification, date, name)
+  product = create_product(notification, name)
+  create_product_images(notification, product) unless product.nil?
+  create_investigation_product(investigation, product) unless investigation.nil? || investigation.id.nil? || product.nil?
+  create_activity(notification, investigation, date) unless investigation.nil?
 end
 
 def create_product(notification, name)
@@ -54,7 +55,6 @@ def create_product(notification, name)
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     country_of_origin: field_from_notification(notification, "countryOfOrigin"),
     brand: brand(notification),
-    rapex_images: all_pictures(notification),
     source: ReportSource.new(name: "RAPEX")
   )
 end
@@ -67,9 +67,20 @@ def create_investigation(notification, date, name)
     risk_overview: field_from_notification(notification, "riskType"),
     risk_level: risk_level(notification),
     created_at: date,
-    updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
+    updated_at: date,
     source: ReportSource.new(name: "RAPEX")
   )
+end
+
+def create_product_images(notification, product)
+  urls = notification.xpath("pictures/picture")
+  urls.each do |url|
+    clean_url = url.text.delete("\n") unless url.nil?
+    file = download_url(clean_url)
+    file_content_type = file.content_type_parse.first
+    file_type = file_content_type.split('/').last
+    product.images.attach(io: file, filename: "#{product.name}.#{file_type}", content_type: file_content_type)
+  end
 end
 
 def create_investigation_product(investigation, product)
@@ -84,7 +95,7 @@ def create_activity(notification, investigation, date)
     investigation: investigation,
     activity_type: :notification,
     created_at: date,
-    updated_at: date,  # TODO MSPSDS-131: confirm this is what we want instead of the current Date
+    updated_at: date,
     notes: field_from_notification(notification, "measures"),
     source: ReportSource.new(name: "RAPEX")
   )
@@ -124,17 +135,6 @@ def risk_level(notification)
   }
   level_map.default = nil
   level_map[field_from_notification(notification, "level")]
-end
-
-def all_pictures(notification)
-  images = []
-  urls = notification.xpath("pictures/picture")
-  urls.each do |url|
-    clean_url = url.text.delete("\n") unless url.nil?
-    # TODO MSPSDS-266: Store images as ActiveStorage attachments instead
-    images.push(RapexImage.create(url: clean_url))
-  end
-  images
 end
 
 def field_from_notification(notification, field_name)

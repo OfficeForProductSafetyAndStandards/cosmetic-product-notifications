@@ -2,7 +2,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
   def up
     # These are extensions that must be enabled in order to support this database
     enable_extension "plpgsql"
-    create_table "active_storage_attachments", force: :cascade do |t|
+    create_table "active_storage_attachments" do |t|
       t.bigint "blob_id", null: false
       t.datetime "created_at", null: false
       t.string "name", null: false
@@ -11,7 +11,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.index %w[blob_id], name: "index_active_storage_attachments_on_blob_id"
       t.index %w[record_type record_id name blob_id], name: "index_active_storage_attachments_uniqueness", unique: true
     end
-    create_table "active_storage_blobs", force: :cascade do |t|
+    create_table "active_storage_blobs" do |t|
       t.bigint "byte_size", null: false
       t.string "checksum", null: false
       t.string "content_type"
@@ -21,7 +21,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.text "metadata"
       t.index %w[key], name: "index_active_storage_blobs_on_key", unique: true
     end
-    create_table "activities", id: :serial, force: :cascade do |t|
+    create_table "activities", id: :serial do |t|
       t.integer "activity_type", null: false
       t.datetime "created_at", null: false
       t.integer "investigation_id"
@@ -29,7 +29,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.datetime "updated_at", null: false
       t.index %w[investigation_id], name: "index_activities_on_investigation_id"
     end
-    create_table "addresses", id: :serial, force: :cascade do |t|
+    create_table "addresses", id: :serial do |t|
       t.string "address_type", null: false
       t.integer "business_id"
       t.string "country"
@@ -41,7 +41,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.datetime "updated_at", null: false
       t.index %w[business_id], name: "index_addresses_on_business_id"
     end
-    create_table "businesses", id: :serial, force: :cascade do |t|
+    create_table "businesses", id: :serial do |t|
       t.text "additional_information"
       t.string "company_name", null: false
       t.string "company_number"
@@ -51,7 +51,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.datetime "updated_at", null: false
       t.index %w[company_number], name: "index_businesses_on_company_number", unique: true
     end
-    create_table "investigation_businesses", force: :cascade do |t|
+    create_table "investigation_businesses" do |t|
       t.integer "business_id"
       t.datetime "created_at", null: false
       t.integer "investigation_id"
@@ -60,7 +60,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.index %w[investigation_id business_id], name: "index_on_investigation_id_and_business_id", unique: true
       t.index %w[investigation_id], name: "index_investigation_businesses_on_investigation_id"
     end
-    create_table "investigation_products", force: :cascade do |t|
+    create_table "investigation_products" do |t|
       t.datetime "created_at", null: false
       t.integer "investigation_id"
       t.integer "product_id"
@@ -69,7 +69,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.index %w[investigation_id], name: "index_investigation_products_on_investigation_id"
       t.index %w[product_id], name: "index_investigation_products_on_product_id"
     end
-    create_table "investigations", id: :serial, force: :cascade do |t|
+    create_table "investigations", id: :serial do |t|
       t.uuid "assignee_id"
       t.datetime "created_at", null: false
       t.text "description"
@@ -81,7 +81,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.datetime "updated_at", null: false
       t.index %w[assignee_id], name: "index_investigations_on_assignee_id"
     end
-    create_table "products", id: :serial, force: :cascade do |t|
+    create_table "products", id: :serial do |t|
       t.string "batch_number"
       t.string "brand"
       t.string "country_of_origin"
@@ -94,7 +94,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.string "product_type"
       t.datetime "updated_at", null: false
     end
-    create_table "rapex_images", id: :serial, force: :cascade do |t|
+    create_table "rapex_images", id: :serial do |t|
       t.datetime "created_at", null: false
       t.integer "product_id"
       t.string "title"
@@ -102,12 +102,12 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.string "url"
       t.index %w[product_id], name: "index_rapex_images_on_product_id"
     end
-    create_table "rapex_imports", force: :cascade do |t|
+    create_table "rapex_imports" do |t|
       t.datetime "created_at", null: false
       t.string "reference", null: false
       t.datetime "updated_at", null: false
     end
-    create_table "sources", id: :serial, force: :cascade do |t|
+    create_table "sources", id: :serial do |t|
       t.datetime "created_at", null: false
       t.string "name"
       t.integer "sourceable_id"
@@ -117,7 +117,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.uuid "user_id"
       t.index %w[user_id], name: "index_sources_on_user_id"
     end
-    create_table "versions", force: :cascade do |t|
+    create_table "versions" do |t|
       t.datetime "created_at"
       t.string "event", null: false
       t.integer "item_id"

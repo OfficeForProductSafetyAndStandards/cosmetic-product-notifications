@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_161946) do
+ActiveRecord::Schema.define(version: 2018_09_10_145906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "active_storage_attachments", force: :cascade do |t|
+  create_table "active_storage_attachments", id: :serial, force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2018_09_07_161946) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", force: :cascade do |t|
+  create_table "active_storage_blobs", id: :serial, force: :cascade do |t|
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.string "content_type"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2018_09_07_161946) do
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
-  create_table "investigation_businesses", force: :cascade do |t|
+  create_table "investigation_businesses", id: :serial, force: :cascade do |t|
     t.integer "business_id"
     t.datetime "created_at", null: false
     t.integer "investigation_id"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2018_09_07_161946) do
     t.index ["investigation_id"], name: "index_investigation_businesses_on_investigation_id"
   end
 
-  create_table "investigation_products", force: :cascade do |t|
+  create_table "investigation_products", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "investigation_id"
     t.integer "product_id"
@@ -116,16 +116,7 @@ ActiveRecord::Schema.define(version: 2018_09_07_161946) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "rapex_images", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.integer "product_id"
-    t.string "title"
-    t.datetime "updated_at", null: false
-    t.string "url"
-    t.index ["product_id"], name: "index_rapex_images_on_product_id"
-  end
-
-  create_table "rapex_imports", force: :cascade do |t|
+  create_table "rapex_imports", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "reference", null: false
     t.datetime "updated_at", null: false
@@ -142,7 +133,7 @@ ActiveRecord::Schema.define(version: 2018_09_07_161946) do
     t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
-  create_table "versions", force: :cascade do |t|
+  create_table "versions", id: :serial, force: :cascade do |t|
     t.datetime "created_at"
     t.string "event", null: false
     t.integer "item_id"
@@ -155,5 +146,4 @@ ActiveRecord::Schema.define(version: 2018_09_07_161946) do
 
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
-  add_foreign_key "rapex_images", "products"
 end
