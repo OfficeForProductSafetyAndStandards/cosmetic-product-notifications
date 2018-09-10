@@ -4,12 +4,14 @@ inherit_gem:
 AllCops:
   Include:
     - 'app/**/*.rb'
+    - 'db/**/*.rb'
     - 'lib/**/*.rb'
     - 'lib/**/*.rake'
     - 'test/**/*.rb'
   
   Exclude:
     - 'bin/*'
+    - db/schema.rb
 
 Rails:
   Enabled: true
