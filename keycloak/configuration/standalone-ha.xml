@@ -615,6 +615,15 @@
                     </properties>
                 </provider>
             </spi>
+            <spi name="emailSender">
+                <default-provider>notify-email</default-provider>
+                <provider name="default" enabled="false"/>
+                <provider name="notify-email" enabled="true">
+                    <properties>
+                        <property name="notifyApiKey" value="${env.NOTIFY_API_KEY}"/>
+                    </properties>
+                </provider>
+            </spi>
         </subsystem>
     </profile>
     <interfaces>

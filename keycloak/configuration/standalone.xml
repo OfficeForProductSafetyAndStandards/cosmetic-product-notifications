@@ -564,6 +564,25 @@
                     </properties>
                 </provider>
             </spi>
+            <spi name="emailSender">
+                <default-provider>notify-email</default-provider>
+                <provider name="default" enabled="false"/>
+                <provider name="notify-email" enabled="true">
+                    <properties>
+                        <property name="notifyApiKey" value="${env.NOTIFY_API_KEY}"/>
+                    </properties>
+                </provider>
+            </spi>
+            <spi name="emailTemplate">
+                <default-provider>notify-email</default-provider>
+                <provider name="default" enabled="false"/>
+                <provider name="notify-email" enabled="true">
+                    <properties>
+                        <property name="invitationTemplateId" value="edab6550-eb34-4cb1-910f-41606e583076"/>
+                        <property name="passwordResetTemplateId" value="e85c3c6c-272d-4c43-b8fb-e7d266bc2bd9"/>
+                    </properties>
+                </provider>
+            </spi>
         </subsystem>
     </profile>
     <interfaces>

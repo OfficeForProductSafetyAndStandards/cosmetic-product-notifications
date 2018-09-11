@@ -7,6 +7,7 @@ set -ex
 
 CONFIG_PATH=./keycloak/configuration
 ARTIFACT_PATH=./keycloak/artifacts
+PROVIDER_PATH=./keycloak/providers
 PACKAGE_PATH=./keycloak/package
 
 mkdir -p $ARTIFACT_PATH
@@ -28,6 +29,12 @@ cp $CONFIG_PATH/postgresql-module.xml $PACKAGE_PATH/modules/system/layers/keyclo
 # Copy across the modified configuration files (enabling proxy address forwarding and configuring the PostgreSQL datasource)
 cp $CONFIG_PATH/standalone.xml $PACKAGE_PATH/standalone/configuration/standalone.xml
 cp $CONFIG_PATH/standalone-ha.xml $PACKAGE_PATH/standalone/configuration/standalone-ha.xml
+
+
+# Build and add the GOV.UK Notify email service provider
+mkdir -p $PACKAGE_PATH/providers
+#mvn -f $PROVIDER_PATH package
+cp $PROVIDER_PATH/target/notify-email-provider-jar-with-dependencies.jar $PACKAGE_PATH/providers
 
 
 # Download and add the GOV.UK theme
