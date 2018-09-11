@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return unless KeycloakClient.instance.user_signed_in?
+
     @current_user ||= find_or_create_user
   end
 

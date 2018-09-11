@@ -48,6 +48,7 @@ private
 
   def add_registered_address_to_business(business, response)
     return if response["registered_office_address"].nil?
+
     registered_office_address = business.primary_address || business.addresses.build
     registered_office_address.address_type = "Registered office address"
     registered_office_address = assign_address_details_from_response(registered_office_address, response)
