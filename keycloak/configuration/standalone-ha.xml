@@ -132,14 +132,14 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasources/KeycloakDS" pool-name="KeycloakDS" enabled="true" use-java-context="true" use-ccm="true">
-                    <connection-url>jdbc:postgresql://${env.DB_HOSTNAME}:5432/${env.DB_DATABASE}?sslmode=require</connection-url>
+                    <connection-url>jdbc:postgresql://${env.KEYCLOAK_HOSTNAME}:5432/${env.KEYCLOAK_DATABASE}?sslmode=require</connection-url>
                     <driver>postgresql</driver>
                     <pool>
                         <max-pool-size>20</max-pool-size>
                     </pool>
                     <security>
-                        <user-name>${env.DB_USERNAME}</user-name>
-                        <password>${env.DB_PASSWORD}</password>
+                        <user-name>${env.KEYCLOAK_USERNAME}</user-name>
+                        <password>${env.KEYCLOAK_PASSWORD}</password>
                     </security>
                 </datasource>
                 <drivers>

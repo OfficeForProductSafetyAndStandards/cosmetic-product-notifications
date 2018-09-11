@@ -7,6 +7,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - postgres-volume:/var/lib/postgresql/data
+    environment: &keycloak
+      - KEYCLOAK_HOSTNAME=db
+      - KEYCLOAK_DATABASE=keycloak
+      - KEYCLOAK_USERNAME=keycloak
+      - KEYCLOAK_PASSWORD=password
   elasticsearch:
     build:
       context: .
@@ -25,11 +30,7 @@ services:
     build:
       context: ./keycloak
       dockerfile: Dockerfile
-    environment:
-      - DB_HOSTNAME=db
-      - DB_DATABASE=keycloak
-      - DB_USERNAME=keycloak
-      - DB_PASSWORD=password
+    environment: *keycloak
     depends_on:
     - db
     ports:
