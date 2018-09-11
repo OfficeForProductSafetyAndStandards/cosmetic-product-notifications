@@ -2,7 +2,6 @@ class BusinessesController < ApplicationController
   include BusinessesHelper
   helper_method :sort_column, :sort_direction
 
-  before_action :authenticate_user!
   before_action :set_search_params, only: %i[index]
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[create]
@@ -19,6 +18,7 @@ class BusinessesController < ApplicationController
   def show
     @investigations = @business.investigations
     return unless @business.from_companies_house?
+
     PaperTrail.request.whodunnit = nil # This will stop papertrail recording the current user
     CompaniesHouseClient.instance.update_business_from_companies_house(@business)
   end

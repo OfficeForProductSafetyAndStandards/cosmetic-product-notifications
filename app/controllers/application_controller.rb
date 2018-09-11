@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
 
+  before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
 
   helper_method :current_user, :user_signed_in?
@@ -17,6 +18,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return unless KeycloakClient.instance.user_signed_in?
+
     @current_user ||= find_or_create_user
   end
 

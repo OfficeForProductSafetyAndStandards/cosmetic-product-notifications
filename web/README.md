@@ -20,7 +20,6 @@ This assumes you've followed the setup steps in [the root README](../README.md#g
 
 Initialise the databse:
     docker-compose run web bin/rake db:create db:schema:load
-    docker-compose run -e ADMIN_EMAIL=XXX -e ADMIN_PASSWORD=XXX web bin/rake db:seed
 
 Restart the website (which may have crashed):
     docker-compose restart web

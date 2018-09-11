@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
   include LoginHelper
 
+  skip_before_action :authenticate_user!
+
   def new
     redirect_to keycloak_login_url
   end
