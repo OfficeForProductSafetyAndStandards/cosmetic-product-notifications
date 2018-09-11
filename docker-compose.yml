@@ -2,9 +2,16 @@ version: '3'
 
 services:
   db:
-    image: postgres
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
     volumes:
       - postgres-volume:/var/lib/postgresql/data
+    environment: &keycloak
+      - KEYCLOAK_DATABASE=keycloak
+      - KEYCLOAK_DATABASE_HOSTNAME=db
+      - KEYCLOAK_DATABASE_USERNAME=keycloak
+      - KEYCLOAK_DATABASE_PASSWORD=password
   elasticsearch:
     build:
       context: .
@@ -20,10 +27,12 @@ services:
     volumes:
       - redis-volume:/data
   keycloak:
-    image: jboss/keycloak
-    environment: 
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
+    build:
+      context: ./keycloak
+      dockerfile: Dockerfile
+    environment: *keycloak
+    depends_on:
+    - db
     ports:
       - "8080:8080"
   web:
