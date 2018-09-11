@@ -10,7 +10,6 @@ services:
       context: .
       dockerfile: ./elasticsearch/Dockerfile
     environment:
-      - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     volumes:
       - elasticsearch-volume:/usr/share/elasticsearch/data
