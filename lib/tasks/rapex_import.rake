@@ -37,6 +37,7 @@ end
 
 def create_records_from_notification(notification, date)
   return nil unless (name = name_or_product(notification))
+
   investigation = create_investigation notification, date, name
   product = create_product notification, name
   create_investigation_product investigation, product unless investigation.nil? || investigation.id.nil? || product.nil?
