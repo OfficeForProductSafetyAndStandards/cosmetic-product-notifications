@@ -10,6 +10,7 @@ services:
       context: .
       dockerfile: ./elasticsearch/Dockerfile
     environment:
+      - "discovery.type=single-node"
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     volumes:
       - elasticsearch-volume:/usr/share/elasticsearch/data
