@@ -52,7 +52,7 @@ private
   def sort_params
     sorting.map do |field, direction|
       {
-        "#{field}.sort": { order: direction }
+        "#{field}.sort": { order: direction, unmapped_type: "long" }
       }
     end
   end
