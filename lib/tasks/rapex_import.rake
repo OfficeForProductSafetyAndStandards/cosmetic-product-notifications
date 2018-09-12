@@ -76,7 +76,9 @@ def create_product_images(notification, product)
   urls = notification.xpath("pictures/picture")
   urls.each do |url|
     clean_url = url.text.delete("\n") unless url.nil?
-    file = download_url(clean_url)
+    # RAPEX image URLs are generally of the form XXXs.jpg - the high res version is available at XXXf.jpg
+    fullsize_clean_url = clean_url.sub!("s.jpg", "f.jpg")
+    file = download_url(fullsize_clean_url)
     file_content_type = file.content_type_parse.first
     file_type = file_content_type.split('/').last
     product.images.attach(io: file, filename: "#{product.name}.#{file_type}", content_type: file_content_type)
