@@ -3,6 +3,14 @@ require File.expand_path("../config/environment", __dir__)
 require "rails/test_help"
 require "rspec/mocks/standalone"
 
+require 'simplecov'
+require 'simplecov-console'
+SimpleCov.formatters = [
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::Console
+]
+SimpleCov.start
+
 class ActiveSupport::TestCase
   include ::RSpec::Mocks::ExampleMethods
 

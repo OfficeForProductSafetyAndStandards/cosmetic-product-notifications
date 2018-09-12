@@ -46,6 +46,8 @@ group :development, :test do
   gem "rubocop"
   gem "rspec-mocks"
   gem "ruby-debug-ide"
+  gem "simplecov"
+  gem "simplecov-console"
   gem "slim_lint"
 end
 
