@@ -7,25 +7,35 @@
 
 Install Docker: https://docs.docker.com/install/.
 
+Increase the memory available to Docker to at least 4GB (instructions for [Mac](https://docs.docker.com/docker-for-mac/#advanced), [Windows](https://docs.docker.com/docker-for-windows/#advanced)).
+
 Copy the file in the root of the directory called `.env-template`.
 Rename the copy of the file to `.env` and fill in any environment variables.
 This `.env` file will be git ignored, so it is safe to add sensitive data.
 See the [accounts section](#accounts) below for information on how to obtain some of the optional variables.
 
+Add the following entry for Keycloak to your hosts file ([instructions](https://support.rackspace.com/how-to/modify-your-hosts-file/)):
+
+    127.0.0.1   keycloak
+
 Build and start-up the project:
+
     docker-compose up -d
 
 You'll then most likely want to run the [website setup steps](web/README.md#getting-setup).
 
-When pulling new changes from master, it is sometimes necesary to run:
-* `docker-compose down && docker-compose build && docker-compose up -d` if there are changes to the docker config.
+When pulling new changes from master, it is sometimes necessary to run the following
+if there are changes to the Docker config:
+
+    docker-compose down && docker-compose build && docker-compose up -d
 
 
 ### Windows Subsystem for Linux
 
 You will have to install the docker server on Windows, and the docker client on WSL.
 
-To make this work, make the current path look like a windows path to appease Windows Docker.
+To make this work, make the current path look like a Windows path to appease Docker for Windows:
+
     sudo ln -s /mnt/c /c
     cd /c/path/to/project
 
@@ -33,6 +43,16 @@ To make this work, make the current path look like a windows path to appease Win
 
 
 ### Accounts
+
+#### Keycloak
+
+The local developer instance of Keycloak is configured with the following default user accounts:
+* MSPSDS website: `user@example.com` / `password`
+* Admin Console: `admin` / `admin`
+
+Log in to the [Keycloak admin console](http://keycloak:8080/auth/admin) to add or edit users.
+
+Ask someone on the team to create an account for you on the Int and Staging environments.
 
 #### GOV.UK Notify
 
@@ -112,6 +132,11 @@ Larger options should be considered if required. The current worker (sidekiq) on
 #### S3
 
 Create an S3 bucket named `mspsds-SPACE-NAME`. This bucket needs public _read_ access.
+
+
+#### Keycloak
+
+See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
 
 
 #### Website

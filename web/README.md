@@ -18,16 +18,21 @@ We're using [Slim](http://slim-lang.com/) as our HTML templating language, vanil
 
 This assumes you've followed the setup steps in [the root README](../README.md#getting-setup).
 
-Initialise the databse:
+Initialise the database:
+
     docker-compose run web bin/rake db:create db:schema:load
 
 Restart the website (which may have crashed):
+
     docker-compose restart web
 
-Visit the site on [localhost:3000](http://localhost:3000).
+Visit the site on [localhost:3000](http://localhost:3000)
+(default credentials: `user@example.com` / `password`)
 
-When pulling new changes from master, it is sometimes necesary to run:
-* `docker-compose exec web bin/rake db:migrate` if there are new migrations.
+When pulling new changes from master, it is sometimes necessary to run the following
+if there are new migrations:
+
+    docker-compose exec web bin/rake db:migrate
 
 
 ### IDE Setup
@@ -50,9 +55,11 @@ Once rbenv is installed, run the following commands:
 
 ### Debugging
 
-If using VS Code, debugging is available by running `docker-compose up -f docker-compose.yml -f docker-compose.debug.yml` and then the `Docker: Attach to Ruby` configuration in VS Code.
+If using VS Code, debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up` and then the `Docker: Attach to Ruby` configuration in VS Code.
 
 You can access the [rails console](https://guides.rubyonrails.org/command_line.html#rails-console) using `docker-compose exec web bin/rails console`.
+
+If your Docker VM uses an IP other than `localhost`, you will need to change the `remoteHost` property in `launch.json` (accessed by clicking the cog icon next to the debug configuration in VS Code).
 
 
 ## Tests
