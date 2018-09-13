@@ -7,6 +7,10 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
     @address.source = sources(:address_one)
   end
 
+  teardown do
+    logout
+  end
+
   test "should get index" do
     get business_addresses_url(@address.business)
     assert_response :success

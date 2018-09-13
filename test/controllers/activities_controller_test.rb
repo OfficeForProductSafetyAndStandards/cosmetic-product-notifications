@@ -7,6 +7,10 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     @activity.source = sources(:activity_one)
   end
 
+  teardown do
+    logout
+  end
+
   test "should get index" do
     get investigation_activities_url(@activity.investigation)
     assert_response :success

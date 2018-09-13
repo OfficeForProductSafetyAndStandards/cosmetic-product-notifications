@@ -132,7 +132,7 @@ Larger options should be considered if required. The current worker (sidekiq) on
 
 #### S3
 
-Create an S3 bucket named `mspsds-SPACE-NAME`. This bucket needs public _read_ access.
+Create an S3 bucket named `mspsds-SPACE-NAME`.
 
 
 #### Keycloak

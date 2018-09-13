@@ -31,6 +31,13 @@ class ActiveSupport::TestCase
     stub_client_config
   end
 
+  def logout
+    allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
+    allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
+    allow(Keycloak::Client).to receive(:has_role?).and_call_original
+    allow(Keycloak::Client).to receive(:auth_server_url).and_call_original
+  end
+
 private
 
   def stub_user_credentials(user:, is_admin: false)
