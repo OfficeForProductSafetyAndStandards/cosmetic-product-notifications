@@ -7,7 +7,8 @@ require 'simplecov'
 require 'simplecov-console'
 SimpleCov.formatters = [
   SimpleCov::Formatter::HTMLFormatter,
-  SimpleCov::Formatter::Console
+  SimpleCov::Formatter::Console,
+  Coveralls::SimpleCov::Formatter
 ]
 SimpleCov.start
 
