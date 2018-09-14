@@ -8,6 +8,10 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     Business.import
   end
 
+  teardown do
+    logout
+  end
+
   test "should get index" do
     get businesses_url
     assert_response :success

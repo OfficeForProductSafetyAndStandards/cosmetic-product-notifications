@@ -3,6 +3,16 @@ require File.expand_path("../config/environment", __dir__)
 require "rails/test_help"
 require "rspec/mocks/standalone"
 
+require 'simplecov'
+require 'simplecov-console'
+require 'coveralls'
+SimpleCov.formatters = [
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::Console,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start
+
 class ActiveSupport::TestCase
   include ::RSpec::Mocks::ExampleMethods
 
@@ -20,6 +30,13 @@ class ActiveSupport::TestCase
     user = { sub: "user", email: "user@example.com", given_name: "First", family_name: "Last" }
     stub_user_credentials(user: user, is_admin: false)
     stub_client_config
+  end
+
+  def logout
+    allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
+    allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
+    allow(Keycloak::Client).to receive(:has_role?).and_call_original
+    allow(Keycloak::Client).to receive(:auth_server_url).and_call_original
   end
 
 private

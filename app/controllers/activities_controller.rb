@@ -19,8 +19,8 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       if @activity.save
         format.html do
-          redirect_to investigation_activities_path(@investigation),
-                      notice: "Activity was successfully created."
+          redirect_to investigation_activities_url(@investigation),
+            notice: "Activity was successfully created."
         end
         format.json { render :show, status: :created, location: @activity }
       else

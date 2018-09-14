@@ -43,4 +43,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.action_controller.default_url_options = { 
+    host: ENV['HTTP_HOST'] || "localhost",
+    port: ENV['HTTP_PORT'] || 3001
+  }
 end
