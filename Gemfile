@@ -41,11 +41,16 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "brakeman"
   gem "byebug", platform: :mri
+  gem "capybara"
+  gem "coveralls"
   gem "debase"
   gem "govuk-lint"
   gem "rubocop"
   gem "rspec-mocks"
   gem "ruby-debug-ide"
+  gem "selenium-webdriver"
+  gem "simplecov"
+  gem "simplecov-console"
   gem "slim_lint"
 end
 

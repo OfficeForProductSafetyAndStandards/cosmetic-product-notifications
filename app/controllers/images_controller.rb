@@ -32,7 +32,7 @@ class ImagesController < ApplicationController
   def create
     respond_to do |format|
       if @image
-        format.html { redirect_to edit_associated_image_path(@parent, @image) }
+        format.html { redirect_to edit_associated_image_url(@parent, @image) }
         format.json { render :show, status: :created, location: @image }
       else
         format.html { render :new }

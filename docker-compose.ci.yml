@@ -6,6 +6,12 @@ services:
     volumes:
       - ~/bundle-cache:/usr/local/bundle
       - ~/npm-cache:/root/.npm
+    environment:
+      - CI
+      - TRAVIS
+      - TRAVIS_BRANCH
+      - TRAVIS_JOB_ID
+      - TRAVIS_PULL_REQUEST
   worker:
     command: tail -f /dev/null
     volumes:

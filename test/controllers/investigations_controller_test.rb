@@ -8,6 +8,10 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     Investigation.import
   end
 
+  teardown do
+    logout
+  end
+
   test "should get index" do
     get investigations_url
     assert_response :success

@@ -1,4 +1,3 @@
-
 default: &default
   :host: 'elasticsearch'
   :transport_options:
