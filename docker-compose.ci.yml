@@ -1,6 +1,9 @@
 version: '3'
 
 services:
+  keycloak:
+    environment:
+      - NOTIFY_API_KEY
   web:
     command: tail -f /dev/null
     volumes:
