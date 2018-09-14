@@ -77,6 +77,8 @@ public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
 
     @Override
     public void sendSmtpTestEmail(Map<String, String> config, UserModel user) throws EmailException {
+        setUser(user);
+
         config.put("templateId", templateIds.get(systemTestTemplateKey));
         config.put("reference", "Smoke test");
         config.put("name", getUserName());
@@ -107,7 +109,6 @@ public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
     @Override
     public void send(String subjectFormatKey, List<Object> subjectAttributes, String bodyTemplate, Map<String, Object> bodyAttributes) throws EmailException {
         throw new EmailException("No template configured for arbitrarily formatted emails", new UnsupportedOperationException());
-        // TODO: Consider calling the built-in FreeMarkerEmailTemplateProvider to send other email templates
     }
 
     private String getUserName() {
