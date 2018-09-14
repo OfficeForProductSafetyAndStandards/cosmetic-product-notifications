@@ -16,17 +16,18 @@ import java.util.Map;
 
 public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
 
-    private final KeycloakSession session;
+    static String verifyEmailTemplateKey = "verifyEmailTemplateId";
+    static String passwordResetTemplateKey = "passwordResetTemplateId";
+    static String systemTestTemplateKey = "systemTestTemplateId";
 
-    private final String invitationTemplateId;
-    private final String passwordResetTemplateId;
+    private final KeycloakSession session;
+    private final Map<String, String> templateIds;
 
     private UserModel user;
 
-    NotifyEmailTemplateProvider(KeycloakSession session, String invitationTemplateId, String passwordResetTemplateId) {
+    NotifyEmailTemplateProvider(KeycloakSession session, Map<String, String> templateIds) {
         this.session = session;
-        this.invitationTemplateId = invitationTemplateId;
-        this.passwordResetTemplateId = passwordResetTemplateId;
+        this.templateIds = templateIds;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
     @Override
     public void sendVerifyEmail(String link, long expirationInMinutes) throws EmailException {
         Map<String, String> config = new HashMap<>();
-        config.put("templateId", invitationTemplateId);
+        config.put("templateId", templateIds.get(verifyEmailTemplateKey));
         config.put("reference", "Verify email");
         config.put("name", getUserName());
         config.put("invitation_url", link);
@@ -65,7 +66,7 @@ public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
     @Override
     public void sendPasswordReset(String link, long expirationInMinutes) throws EmailException {
         Map<String, String> config = new HashMap<>();
-        config.put("templateId", passwordResetTemplateId);
+        config.put("templateId", templateIds.get(passwordResetTemplateKey));
         config.put("reference", "Password reset");
         config.put("name", getUserName());
         config.put("reset_url", link);
@@ -76,11 +77,9 @@ public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
 
     @Override
     public void sendSmtpTestEmail(Map<String, String> config, UserModel user) throws EmailException {
-        config.put("templateId", passwordResetTemplateId);
-        config.put("reference", "Keycloak smoke test");
+        config.put("templateId", templateIds.get(systemTestTemplateKey));
+        config.put("reference", "Smoke test");
         config.put("name", getUserName());
-        config.put("reset_url", "http://www.example.com");
-        config.put("expiry_in_minutes", "0");
 
         send(config);
     }
@@ -108,9 +107,7 @@ public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
     @Override
     public void send(String subjectFormatKey, List<Object> subjectAttributes, String bodyTemplate, Map<String, Object> bodyAttributes) throws EmailException {
         throw new EmailException("No template configured for arbitrarily formatted emails", new UnsupportedOperationException());
-//        // TODO: Call built-in FreeMarkerEmailTemplateProvider to send other email templates
-//        FreeMarkerEmailTemplateProvider freeMarkerEmailTemplateProvider = new FreeMarkerEmailTemplateProvider(session, new FreeMarkerUtil());
-//        freeMarkerEmailTemplateProvider.send(subjectFormatKey, subjectAttributes, bodyTemplate, bodyAttributes);
+        // TODO: Consider calling the built-in FreeMarkerEmailTemplateProvider to send other email templates
     }
 
     private String getUserName() {

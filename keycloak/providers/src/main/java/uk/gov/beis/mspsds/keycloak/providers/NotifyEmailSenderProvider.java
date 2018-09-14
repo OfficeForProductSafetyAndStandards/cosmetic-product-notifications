@@ -18,13 +18,9 @@ public class NotifyEmailSenderProvider implements EmailSenderProvider {
 
     @Override
     public void send(Map<String, String> config, UserModel user, String subject, String textBody, String htmlBody) throws EmailException {
-        System.out.println("NOTIFY CLIENT API KEY: " + client.getApiKey());
-        System.out.println("EMAIL ADDRESS: " + user.getEmail());
-        System.out.println("CONFIGURATION: " + config.toString());
-
-        String emailAddress = user.getEmail();
         String templateId = config.remove("templateId");
         String reference = config.remove("reference");
+        String emailAddress = user.getEmail();
 
         try {
             client.sendEmail(templateId, emailAddress, config, reference);

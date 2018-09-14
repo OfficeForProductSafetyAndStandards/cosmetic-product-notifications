@@ -6,20 +6,26 @@ import org.keycloak.email.EmailTemplateProviderFactory;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static uk.gov.beis.mspsds.keycloak.providers.NotifyEmailTemplateProvider.*;
+
 public class NotifyEmailTemplateProviderFactory implements EmailTemplateProviderFactory {
 
-    private String invitationTemplateId;
-    private String passwordResetTemplateId;
+    private Map<String, String> templateIds;
 
     @Override
     public EmailTemplateProvider create(KeycloakSession session) {
-        return new NotifyEmailTemplateProvider(session, invitationTemplateId, passwordResetTemplateId);
+        return new NotifyEmailTemplateProvider(session, templateIds);
     }
 
     @Override
     public void init(Config.Scope config) {
-        invitationTemplateId = config.get("invitationTemplateId");
-        passwordResetTemplateId = config.get("passwordResetTemplateId");
+        templateIds = new HashMap<>();
+        templateIds.put(verifyEmailTemplateKey, config.get(verifyEmailTemplateKey));
+        templateIds.put(passwordResetTemplateKey, config.get(passwordResetTemplateKey));
+        templateIds.put(systemTestTemplateKey, config.get(systemTestTemplateKey));
     }
 
     @Override
