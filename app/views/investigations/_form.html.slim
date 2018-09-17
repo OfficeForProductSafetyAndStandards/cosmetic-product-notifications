@@ -1,8 +1,8 @@
 = form_with(model: investigation, local: true) do |form|
   - if investigation.errors.any?
     #error_explanation
-      h2.govuk-heading-l
-        = pluralize(investigation.errors.count, "error")
+      h2.govuk-heading-l.govuk-error-message
+        = pluralize(investigation.errors.count, "error ")
         | prohibited this case from being saved:
       ul.govuk-list
         - investigation.errors.full_messages.each do |message|

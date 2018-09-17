@@ -1,7 +1,7 @@
 - if business.errors.any?
   #error_explanation
-    h2.govuk-heading-l
-      = pluralize(business.errors.count, "error")
+    h2.govuk-heading-l.govuk-error-message
+      = pluralize(business.errors.count, "error ")
       | prohibited this business from being saved:
     ul.govuk-list
       - business.errors.full_messages.each do |message|
