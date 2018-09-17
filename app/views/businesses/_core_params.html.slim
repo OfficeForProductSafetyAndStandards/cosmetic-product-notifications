@@ -11,9 +11,15 @@
   p
     | Some data is set by companies house and is therefore non-editable
 - else
-  .govuk-form-group
-    = form.label :company_name, class: "govuk-label"
-    = form.text_field :company_name, class: "govuk-input search-term"
+  - if business.errors.any?
+    #error_explanation
+    .govuk-form-group.govuk-form-group--error
+      = form.label :company_name, class: "govuk-label"
+      = form.text_field :company_name, class: "govuk-input govuk-input--error search-term"
+  -else
+    .govuk-form-group
+      = form.label :company_name, class: "govuk-label"
+      = form.text_field :company_name, class: "govuk-input search-term"
   .govuk-form-group
     = form.label :company_type_code, class: "govuk-label"
     = form.select :company_type_code, \
