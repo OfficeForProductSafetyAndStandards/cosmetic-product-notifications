@@ -7,6 +7,7 @@ set -ex
 
 CONFIG_PATH=./keycloak/configuration
 ARTIFACT_PATH=./keycloak/artifacts
+PROVIDER_PATH=./keycloak/providers
 PACKAGE_PATH=./keycloak/package
 
 mkdir -p $ARTIFACT_PATH
@@ -30,6 +31,15 @@ cp $CONFIG_PATH/standalone.xml $PACKAGE_PATH/standalone/configuration/standalone
 cp $CONFIG_PATH/standalone-ha.xml $PACKAGE_PATH/standalone/configuration/standalone-ha.xml
 
 
+# Build and add the GOV.UK Notify email service provider
+mkdir -p $PACKAGE_PATH/providers
+mvn --settings $PROVIDER_PATH/settings.xml --file $PROVIDER_PATH/pom.xml package
+cp $PROVIDER_PATH/target/notify-email-provider-jar-with-dependencies.jar $PACKAGE_PATH/providers
+
+
 # Download and add the GOV.UK theme
 curl -Lo $ARTIFACT_PATH/govuk.tar.gz https://github.com/UKHomeOffice/keycloak-theme-govuk/releases/download/v2.0.2/govuk.tar.gz
 tar -xzf $ARTIFACT_PATH/govuk.tar.gz --directory $PACKAGE_PATH/themes
+
+# Copy across the initial setup configuration file to be imported on first launch
+cp $CONFIG_PATH/initial-setup.json $PACKAGE_PATH
