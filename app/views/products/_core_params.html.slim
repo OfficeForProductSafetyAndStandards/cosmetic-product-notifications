@@ -3,22 +3,16 @@
     h2.govuk-heading-l.govuk-error-message
       = pluralize(product.errors.count, "error ")
       | prohibited this product from being saved:
-    ul.govuk-list
+    ul.govuk-list.govuk-error-message
       - product.errors.full_messages.each do |message|
         li
           = message
 .govuk-form-group
   = form.label :gtin, "GTIN (Global Trade Item Number/Barcode)", class: "govuk-label"
   = form.text_field :gtin, class: "govuk-input search-term", id: "gtin-input"
-- if product.errors.any?
-  #error_explanation
-    .govuk-form-group.govuk-form-group--error
-      = form.label :name, class: "govuk-label"
-      = form.text_field :name, class: "govuk-input govuk-input--error search-term"
--else
-    .govuk-form-group
-      = form.label :name, class: "govuk-label"
-      = form.text_field :name, class: "govuk-input search-term"
+.govuk-form-group class=("govuk-form-group--error" if product.errors.any?)
+  = form.label :name, class: "govuk-label"
+  = form.text_field :name, class: "govuk-input search-term #{'govuk-input--error' if product.errors.any?}"
 .govuk-form-group
   = form.label :brand, class: "govuk-label"
   = form.text_field :brand, class: "govuk-input search-term"
