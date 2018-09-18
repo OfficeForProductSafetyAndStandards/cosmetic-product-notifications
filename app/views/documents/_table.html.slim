@@ -6,7 +6,7 @@ table.govuk-table.document-list
     - @documents.each do |document|
       tr.govuk-table__row
         td.document-preview.govuk-table__cell
-          = link_to render("document_image", document: document), document, class: "document-link"
+          = link_to render("document_image", document: document), document, class: "document-link", target: "_blank"
         td.document-details.govuk-table__cell
           = link_to document do
             h2.govuk-heading-m.document-title[class="govuk-!-margin-bottom-1"]

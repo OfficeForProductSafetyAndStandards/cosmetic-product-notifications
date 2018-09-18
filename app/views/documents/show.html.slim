@@ -9,7 +9,7 @@ h3.govuk-heading-m.document-type-details
     = " – #{@document.metadata['other_type'].titleize}" if @document.metadata["other_type"].present?
   span.document-filetype[class="govuk-!-padding-left-2"]
     = "(#{document_filetype_label(@document)})"
-= link_to render("document_image", document: @document), @document, class: "document-link"
+= link_to render("document_image", document: @document), @document, class: "document-link", target: "_blank"
 p.document-description
   = @document.metadata["description"]
 = link_to "Edit document details", edit_associated_document_path(@parent, @document), class: "edit-document-link"
