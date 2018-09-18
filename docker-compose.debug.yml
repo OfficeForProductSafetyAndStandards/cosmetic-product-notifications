@@ -1,8 +1,22 @@
 version: '3'
 
 services:
+  db:
+    ports:
+      - "5432:5432"
+  elasticsearch:
+    ports:
+      - "9200:9200"
+  keycloak:
+    env_file:
+      - .env
   web:
     command: bin/rdebug-ide --host 0.0.0.0 --port 1234 -- bin/rails s -p 3000 -b 0.0.0.0
     ports:
       - "1234:1234"
       - "3000:3000"
+    env_file:
+      - .env
+  worker:
+    env_file:
+      - .env
