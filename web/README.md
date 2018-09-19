@@ -35,7 +35,7 @@ if there are new migrations:
     docker-compose exec web bin/rake db:migrate
 
 
-### IDE Setup
+### VS Code Setup
 
 VS Code is the preferred IDE.
 You should install the recommended extensions when prompted.
@@ -52,10 +52,22 @@ Once rbenv is installed, run the following commands:
     # Install the project gems to enable code completion and linting
     bin/bundle install
 
+### RubyMine Setup
+If using RubyMine, you can base your Ruby SDK on the docker-compose-managed ruby installation.
+1. Go to `Settings` -> `Languages & Frameworks` -> `Ruby SDK & Gems`
+1. Click the `+` button and choose `Remote`
+1. Choose `Docker Compose` and set `Service` to `web`, click OK and select the newly created SDK
+
+RubyMine comes with db inspection tools, too. To connect to the dev db, you'll need the following config:
+`jdbc:postgresql://localhost:5432/app_development`, empty password.
+(note, RM may have created a db configuration automatically, but it'll have gotten some bits wrong, namely host)
 
 ### Debugging
 
-If using VS Code, debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up` and then the `Docker: Attach to Ruby` configuration in VS Code.
+If debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up` and then 
+- the `Docker: Attach to Ruby` configuration, if in VS Code.
+- the `Debug` configuration, if in RubyMine
+Note, that when run in this mode, the website won't launch until the debugger is connected!
 
 You can access the [rails console](https://guides.rubyonrails.org/command_line.html#rails-console) using `docker-compose exec web bin/rails console`.
 
