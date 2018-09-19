@@ -53,6 +53,7 @@ Once rbenv is installed, run the following commands:
     bin/bundle install
 
 ### RubyMine Setup
+
 If using RubyMine, you can base your Ruby SDK on the docker-compose-managed ruby installation.
 1. Go to `Settings` -> `Languages & Frameworks` -> `Ruby SDK & Gems`
 1. Click the `+` button and choose `Remote`
@@ -64,9 +65,9 @@ RubyMine comes with db inspection tools, too. To connect to the dev db, you'll n
 
 ### Debugging
 
-If debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up` and then 
+Debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up` and then 
 - the `Docker: Attach to Ruby` configuration, if in VS Code.
-- the `Debug` configuration, if in RubyMine
+- the `Remote Debug` configuration, if in RubyMine
 Note, that when run in this mode, the website won't launch until the debugger is connected!
 
 You can access the [rails console](https://guides.rubyonrails.org/command_line.html#rails-console) using `docker-compose exec web bin/rails console`.
