@@ -7,6 +7,7 @@ class Product < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
+  validates :name, presence: true
   has_many_attached :documents
   has_many_attached :images
 

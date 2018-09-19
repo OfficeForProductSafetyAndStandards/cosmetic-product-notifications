@@ -1,9 +1,9 @@
 - if business.errors.any?
   #error_explanation
-    h2.govuk-heading-l
-      = pluralize(business.errors.count, "error")
+    h2.govuk-heading-l.govuk-error-message
+      = pluralize(business.errors.count, "error ")
       | prohibited this business from being saved:
-    ul.govuk-list
+    ul.govuk-list.govuk-error-message
       - business.errors.full_messages.each do |message|
         li
           = message
@@ -11,9 +11,9 @@
   p
     | Some data is set by companies house and is therefore non-editable
 - else
-  .govuk-form-group
+  .govuk-form-group class=("govuk-form-group--error" if business.errors.any?)
     = form.label :company_name, class: "govuk-label"
-    = form.text_field :company_name, class: "govuk-input search-term"
+    = form.text_field :company_name, class: "govuk-input search-term #{'govuk-input--error' if business.errors.any?}"
   .govuk-form-group
     = form.label :company_type_code, class: "govuk-label"
     = form.select :company_type_code, \
