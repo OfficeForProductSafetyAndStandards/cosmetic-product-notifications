@@ -7,6 +7,7 @@ class Business < ApplicationRecord
     mappings do
       indexes :company_number, type: :keyword
       indexes :company_type_code, type: :keyword, fields: { sort: { type: "keyword" } }
+      indexes :company_status_code, type: :keyword, fields: { sort: { type: "keyword" } }
     end
   end
 
@@ -28,6 +29,10 @@ class Business < ApplicationRecord
 
   def company_type
     Rails.application.config.companies_house_constants["company_type"][company_type_code]
+  end
+
+  def company_status
+    Rails.application.config.companies_house_constants["company_status"][company_status_code]
   end
 
   def from_companies_house?

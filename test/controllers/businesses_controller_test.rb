@@ -30,6 +30,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
           additional_information: @business.additional_information,
           company_number: @business.company_number,
           company_type_code: @business.company_type_code,
+          company_status_code: @business.company_status_code,
           nature_of_business_id: @business.nature_of_business_id
         }
       }
@@ -68,6 +69,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
         additional_information: @business.additional_information,
         company_number: @business.company_number,
         company_type_code: @business.company_type_code,
+        company_status_code: @business.company_status_code,
         nature_of_business_id: @business.nature_of_business_id
       }
     }
