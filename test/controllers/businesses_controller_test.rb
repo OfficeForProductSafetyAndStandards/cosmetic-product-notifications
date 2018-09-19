@@ -34,8 +34,21 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
-
     assert_redirected_to business_url(Business.first)
+  end
+
+  test "should not create business if name is missing" do
+    assert_difference("Business.count", 0) do
+      post businesses_url, params: {
+        business: {
+          company_name: '',
+          additional_information: @business.additional_information,
+          company_number: @business.company_number,
+          company_type_code: @business.company_type_code,
+          nature_of_business_id: @business.nature_of_business_id
+        }
+    }
+    end
   end
 
   test "should show business" do
