@@ -37,7 +37,6 @@ if there are new migrations:
 
 ### VS Code Setup
 
-VS Code is the preferred IDE.
 You should install the recommended extensions when prompted.
 
 In order to get things like code completion and linting, it's necessary to install ruby locally.
