@@ -126,6 +126,7 @@ private
         format.html { redirect_to @business, notice: "Business was successfully created." }
         format.json { render :show, status: :created, location: @business }
       else
+        @business.addresses.build unless @business.addresses.any?
         format.html { render :new }
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end

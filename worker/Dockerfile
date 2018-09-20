@@ -7,8 +7,8 @@ RUN apt-get update && apt-get install -y \
   clamav \
   clamav-daemon
 
-# Allow ClamAV to access Rails uploads in /tmp
-RUN chmod -R 777 /tmp
+# Run ClamAV as root to avoid permissions issues
+RUN sed -i 's/User clamav/User root/g' /etc/clamav/clamd.conf
 
 WORKDIR /app
 

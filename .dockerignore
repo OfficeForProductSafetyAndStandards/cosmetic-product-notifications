@@ -1,5 +1,5 @@
 # This file should be mostly kept up to date with the .gitignore (with exceptions at the bottom after "# End of ...")
-# These are the files which will be ignored when uploading to Cloud Foundry 
+# These are the files which will be ignored when creating a Docker container
 
 # Created by https://www.gitignore.io/api/ruby,node,maven,macos,rails,windows,jetbrains+all,visualstudiocode
 
@@ -327,11 +327,4 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/ruby,node,maven,macos,rails,windows,jetbrains+all,visualstudiocode
 
-# Ignore uploaded files in development
-/storage/*
-
-elasticsearch/
-keycloak/
-shared/
-worker/
-web/
+!.env
