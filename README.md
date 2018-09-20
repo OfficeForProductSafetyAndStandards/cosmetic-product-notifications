@@ -41,6 +41,8 @@ To make this work, make the current path look like a Windows path to appease Doc
     cd /c/path/to/project
 
 (from https://medium.com/software-development-stories/developing-a-dockerized-web-app-on-windows-subsystem-for-linux-wsl-61efec965080)
+If the web container complains it can find files in the `/app` folder (e.g. `bin/bundle`), that might be sign you're in
+the wrong directory.
 
 
 ### Accounts
