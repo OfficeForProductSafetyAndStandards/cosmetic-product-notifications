@@ -1,6 +1,7 @@
 /* globals simpleAccessibleAutocomplete, searchOnTextInput, buildCompaniesHouseQuery */
 $(document).on('turbolinks:load', function () {
   simpleAccessibleAutocomplete('company-type');
+  simpleAccessibleAutocomplete('company-status');
   simpleAccessibleAutocomplete('sic-code');
 
   searchOnTextInput(
