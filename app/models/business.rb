@@ -24,18 +24,15 @@ class Business < ApplicationRecord
   has_paper_trail
 
   def nature_of_business
-    # noinspection RubyResolve
-    Rails.application.config.companies_house_constants["sic_descriptions"][nature_of_business_id]
+    companies_house_constants["sic_descriptions"][nature_of_business_id]
   end
 
   def company_type
-    # noinspection RubyResolve
-    Rails.application.config.companies_house_constants["company_type"][company_type_code]
+    companies_house_constants["company_type"][company_type_code]
   end
 
   def company_status
-    # noinspection RubyResolve
-    Rails.application.config.companies_house_constants["company_status"][company_status_code]
+    companies_house_constants["company_status"][company_status_code]
   end
 
   def from_companies_house?
@@ -56,7 +53,7 @@ class Business < ApplicationRecord
     self.company_type_code = c_h_info["type"]
     self.company_status_code = c_h_info["company_status"]
     self.source ||= ReportSource.new(name: "Companies House")
-    add_sic_code_to_business(c_h_info)
+    add_sic_code(c_h_info)
     save
 
     registered_office = c_h_info["registered_office_address"]
@@ -66,7 +63,11 @@ class Business < ApplicationRecord
 
 private
 
-  def add_sic_code_to_business(c_h_info)
+  def companies_house_constants
+    Rails.application.config.companies_house_constants
+  end
+
+  def add_sic_code(c_h_info)
     self.nature_of_business_id = c_h_info["sic_codes"][0] if c_h_info["sic_codes"].present?
   end
 
