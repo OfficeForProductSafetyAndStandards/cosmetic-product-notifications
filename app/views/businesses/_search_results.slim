@@ -27,7 +27,7 @@ table.govuk-table
           td.govuk-table__cell
             = link_to business[:company_name], business[:url], target: "_blank"
           td.govuk-table__cell
-            = Rails.application.config.companies_house_constants["company_status"][business[:company_status_code]]
+            = companies_house_constants["company_status"][business[:company_status_code]]
           td.govuk-table__cell
             = form_with(url: companies_house_new_business_form_url, local: true) do |form|
               = form.hidden_field :company_number, value: business[:company_number]
