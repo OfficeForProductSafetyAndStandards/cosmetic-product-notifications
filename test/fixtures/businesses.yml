@@ -13,3 +13,8 @@ two:
   company_status_code: dissolved
   nature_of_business_id: MyString
   additional_information: MyText
+
+active_from_companies_house:
+  company_name: MyString
+  company_number: 1
+  company_status_code: active

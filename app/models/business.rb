@@ -1,4 +1,5 @@
 class Business < ApplicationRecord
+  include BusinessesHelper
   include Searchable
 
   index_name [Rails.env, "businesses"].join("_")
@@ -62,10 +63,6 @@ class Business < ApplicationRecord
   end
 
 private
-
-  def companies_house_constants
-    Rails.application.config.companies_house_constants
-  end
 
   def add_sic_code(c_h_info)
     self.nature_of_business_id = c_h_info["sic_codes"][0] if c_h_info["sic_codes"].present?

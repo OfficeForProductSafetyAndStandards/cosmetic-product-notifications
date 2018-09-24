@@ -14,6 +14,7 @@ class CompaniesHouseClient
       {
         company_name: business["title"],
         company_number: business["company_number"],
+        company_status_code: business["company_status"],
         url: Rails.application.config.view_company_url + business["company_number"]
       }
     end
