@@ -13,7 +13,8 @@
 - else
   .govuk-form-group class=("govuk-form-group--error" if business.errors.any?)
     = form.label :company_name, class: "govuk-label"
-    = form.text_field :company_name, class: "govuk-input search-term #{'govuk-input--error' if business.errors.any?}"
+    = form.text_field :company_name, class: "govuk-input #{'govuk-input--error' if business.errors.any?}", \
+            id: "company-name"
   .govuk-form-group
     = form.label :company_type_code, class: "govuk-label"
     = form.select :company_type_code, \

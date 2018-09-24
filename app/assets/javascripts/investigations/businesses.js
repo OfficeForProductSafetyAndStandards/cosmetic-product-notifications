@@ -1,8 +1,8 @@
-/* globals searchOnTextInput, buildCompaniesHouseQuery */
+/* globals searchOnInputChange, buildCompaniesHouseQuery */
 $(document).on('turbolinks:load', function () {
   var investigationId = $('.businesses-search-form').data('investigation-id');
   var excludedBusinessIds = $('.businesses-search-form').data('business-ids');
-  searchOnTextInput(
+  searchOnInputChange(
     $('.investigation-business-page .search-term'),
     '/investigations/' + investigationId + '/businesses/suggested?excluded_businesses=' + excludedBusinessIds,
     buildCompaniesHouseQuery,

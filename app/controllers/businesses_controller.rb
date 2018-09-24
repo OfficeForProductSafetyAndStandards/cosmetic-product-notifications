@@ -4,7 +4,7 @@ class BusinessesController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_business, only: %i[show edit update destroy]
-  before_action :create_business, only: %i[create]
+  before_action :create_business, only: %i[create search]
   before_action :update_business, only: %i[update]
 
   # GET /businesses
@@ -52,6 +52,10 @@ class BusinessesController < ApplicationController
   def new
     @business = Business.new
     @business.addresses.build
+    if params[:business]
+      update_business
+      advanced_search
+    end
   end
 
   # GET /businesses/1/edit
@@ -61,8 +65,7 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/search
   def search
-    @existing_businesses = search_for_businesses(BUSINESS_SUGGESTION_LIMIT)
-    @companies_house_businesses = search_companies_house(params[:q], BUSINESS_SUGGESTION_LIMIT)
+    advanced_search
     render partial: "search_results"
   end
 
@@ -131,5 +134,10 @@ private
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def advanced_search
+    @existing_businesses = search_for_similar_businesses
+    @companies_house_businesses = search_companies_house_for_similar_businesses
   end
 end

@@ -1,4 +1,7 @@
 h3.govuk-heading-m
   | Suggested businesses
 #suggested-businesses
-  | Enter the company name for suggestions.
+  - if @business.company_name.present?
+    = render "search_results"
+  - else
+    | Enter the company name for suggestions.

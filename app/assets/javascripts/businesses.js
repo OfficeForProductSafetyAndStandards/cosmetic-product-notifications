@@ -1,11 +1,11 @@
-/* globals simpleAccessibleAutocomplete, searchOnTextInput, buildCompaniesHouseQuery */
+/* globals simpleAccessibleAutocomplete, searchOnInputChange, buildCompaniesHouseQuery */
 $(document).on('turbolinks:load', function () {
   simpleAccessibleAutocomplete('company-type');
   simpleAccessibleAutocomplete('company-status');
   simpleAccessibleAutocomplete('sic-code');
 
-  searchOnTextInput(
-    $('.new-business-page .search-term'),
+  searchOnInputChange(
+    $('.new-business-page input, .new-business-page textarea'),
     '/businesses/search',
     buildCompaniesHouseQuery,
     function (data) {

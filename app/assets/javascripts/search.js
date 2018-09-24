@@ -8,7 +8,7 @@ function simpleAccessibleAutocomplete(id) { // eslint-disable-line no-unused-var
   }
 }
 
-function searchOnTextInput(inputElement, url, buildQuery, callback) { // eslint-disable-line no-unused-vars
+function searchOnInputChange(inputElement, url, buildQuery, callback) { // eslint-disable-line no-unused-vars
   var debounceTimeout = null;
   var searchRequest = null;
   inputElement.on('keyup change', function () {

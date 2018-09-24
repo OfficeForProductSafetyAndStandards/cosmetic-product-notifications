@@ -23,7 +23,7 @@ class Investigations::BusinessesController < ApplicationController
     @existing_businesses = search_for_businesses(20)
                            .reject { |business| excluded_business_ids.include?(business.id) }
                            .first(BUSINESS_SUGGESTION_LIMIT)
-    @companies_house_businesses = search_companies_house(params[:q], BUSINESS_SUGGESTION_LIMIT)
+    @companies_house_businesses = search_companies_house(params[:q]).first(BUSINESS_SUGGESTION_LIMIT)
     render partial: "businesses/search_results"
   end
 

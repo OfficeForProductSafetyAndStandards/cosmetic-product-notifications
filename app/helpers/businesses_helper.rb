@@ -23,10 +23,9 @@ module BusinessesHelper
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
-  def search_companies_house(query, page_size)
+  def search_companies_house(query)
     companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(query)
     filter_out_existing_businesses(companies_house_response)
-      .first(page_size)
   end
 
   def filter_out_existing_businesses(businesses)
@@ -47,5 +46,27 @@ module BusinessesHelper
 
   def companies_house_constants
     Rails.application.config.companies_house_constants
+  end
+
+  def search_for_similar_businesses
+    query = [@business.company_name, @business.additional_information].join(' AND ') # this seems to be executed as an OR anyways??
+    filters = {}
+    filters[:company_type_code] = @business.company_type_code if @business.company_type_code.present?
+    filters[:company_status_code] = @business.company_status_code if @business.company_status_code.present?
+    filters[:nature_of_business_id] = @business.nature_of_business_id if @business.nature_of_business_id.present?
+    Business.full_search(ElasticsearchQuery.new(query, filters, {}))
+      .paginate(per_page: BUSINESS_SUGGESTION_LIMIT)
+      .records
+  end
+
+  def search_companies_house_for_similar_businesses
+    type_or_status_differ = lambda do |business|
+      (@business.company_type_code.present? && @business.company_type_code != business[:company_type_code]) ||
+      (@business.company_status_code.present? && @business.company_status_code != business[:company_status_code])
+      # field matched by nature_of_business_id is not available on the search models returned by companies house
+    end
+    search_companies_house(@business.company_name)
+      .reject(&type_or_status_differ)
+      .first(BUSINESS_SUGGESTION_LIMIT)
   end
 end
