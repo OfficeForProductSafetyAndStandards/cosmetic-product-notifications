@@ -18,6 +18,6 @@ mkdir -p $PACKAGE_PATH/themes/govuk
 mkdir -p $PACKAGE_PATH/themes/govuk-internal
 mkdir -p $PACKAGE_PATH/themes/govuk-social-providers
 
-cp -r $THEME_PATH/govuk $PACKAGE_PATH/themes/govuk
-cp -r $THEME_PATH/govuk-internal $PACKAGE_PATH/themes/govuk-internal
-cp -r $THEME_PATH/govuk-social-providers $PACKAGE_PATH/themes/govuk-social-providers
+cp -r $THEME_PATH/govuk $PACKAGE_PATH/themes/
+cp -r $THEME_PATH/govuk-internal $PACKAGE_PATH/themes/
+cp -r $THEME_PATH/govuk-social-providers $PACKAGE_PATH/themes/

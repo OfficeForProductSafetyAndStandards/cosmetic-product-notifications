@@ -13,9 +13,6 @@ mkdir -p $ARTIFACT_PATH
 mkdir -p $PACKAGE_PATH
 
 # Download and unpack Keycloak
-apt-get update
-apt-get install curl -y
-
 curl -Lo $ARTIFACT_PATH/keycloak.tar.gz https://downloads.jboss.org/keycloak/4.3.0.Final/keycloak-4.3.0.Final.tar.gz
 tar -xzf $ARTIFACT_PATH/keycloak.tar.gz --directory $PACKAGE_PATH --strip 1
 

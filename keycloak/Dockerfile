@@ -22,7 +22,7 @@ RUN chmod +x ./build-theme.sh
 RUN ./build-theme.sh
 
 
-FROM ubuntu:18.04 as keycloak-builder
+FROM maven as keycloak-builder
 
 WORKDIR /tmp
 
