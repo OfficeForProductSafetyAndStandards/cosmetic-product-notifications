@@ -14,9 +14,7 @@ npm install
 npm run build
 cd ../../
 
-mkdir -p $PACKAGE_PATH/themes/govuk
-mkdir -p $PACKAGE_PATH/themes/govuk-internal
-mkdir -p $PACKAGE_PATH/themes/govuk-social-providers
+mkdir -p $PACKAGE_PATH/themes
 
 cp -r $THEME_PATH/govuk $PACKAGE_PATH/themes/
 cp -r $THEME_PATH/govuk-internal $PACKAGE_PATH/themes/
