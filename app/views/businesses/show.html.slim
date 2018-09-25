@@ -46,6 +46,11 @@
                   = @business.company_type
               tr.govuk-table__row
                 th.govuk-table__header[scope="row"]
+                  | Company status
+                td.govuk-table__cell
+                  = @business.company_status
+              tr.govuk-table__row
+                th.govuk-table__header[scope="row"]
                   | Registered office address
                 td.govuk-table__cell
                   = @business.primary_address&.summary

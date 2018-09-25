@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_10_145906) do
+ActiveRecord::Schema.define(version: 2018_09_18_151724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2018_09_10_145906) do
     t.text "additional_information"
     t.string "company_name", null: false
     t.string "company_number"
+    t.string "company_status_code"
     t.string "company_type_code"
     t.datetime "created_at", null: false
     t.string "nature_of_business_id"

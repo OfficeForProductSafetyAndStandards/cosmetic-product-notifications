@@ -38,9 +38,14 @@ module BusinessesHelper
     params.require(:business).permit(
       :company_name,
       :company_type_code,
+      :company_status_code,
       :nature_of_business_id,
       :additional_information,
       addresses_attributes: %i[id line_1 line_2 locality country postal_code _destroy]
     )
+  end
+
+  def companies_house_constants
+    Rails.application.config.companies_house_constants
   end
 end

@@ -17,8 +17,13 @@
   .govuk-form-group
     = form.label :company_type_code, class: "govuk-label"
     = form.select :company_type_code, \
-        Rails.application.config.companies_house_constants["company_type"].collect { |t| [t[1], t[0]] }, \
+        companies_house_constants["company_type"].collect { |t| [t[1], t[0]] }, \
         { include_blank: "None" }, class: "govuk-select", id: "company-type"
+  .govuk-form-group
+    = form.label :company_status_code, class: "govuk-label"
+    = form.select :company_status_code, \
+        companies_house_constants["company_status"].collect { |t| [t[1], t[0]] }, \
+        { include_blank: "None" }, class: "govuk-select", id: "company-status"
   = form.fields_for :addresses, [business.primary_address] do |ff|
     p
       | Registered office address
@@ -40,5 +45,5 @@
   .govuk-form-group
     = form.label :nature_of_business_id, class: "govuk-label"
     = form.select :nature_of_business_id, \
-        Rails.application.config.companies_house_constants["sic_descriptions"].collect { |s| [s[1], s[0]] }, \
+        companies_house_constants["sic_descriptions"].collect { |s| [s[1], s[0]] }, \
         { include_blank: "None" }, class: "govuk-select", id: "sic-code"
