@@ -11,6 +11,9 @@ set -ex
 # PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
 
+./keycloak/build-notify.sh
+./keycloak/build-theme.sh
+
 # Download and configure the Keycloak package
 ./keycloak/package.sh
 
