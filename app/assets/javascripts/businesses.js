@@ -3,6 +3,7 @@ $(document).on('turbolinks:load', function () {
   simpleAccessibleAutocomplete('company-type');
   simpleAccessibleAutocomplete('company-status');
   simpleAccessibleAutocomplete('sic-code');
+  $('#search-button').hide();
 
   searchOnInputChange(
     $('.new-business-page input, .new-business-page textarea'),

@@ -4,5 +4,6 @@
     = form.label :additional_information, class: "govuk-label"
     = form.text_area :additional_information, class: "govuk-input"
   .govuk-form-group
-    = form.submit "Search businesses", class: "govuk-button", 'formmethod': "get", 'formaction': 'new'
+    - if search
+      = form.submit "Search businesses", id: "search-button", class: "govuk-button", 'formmethod': "get", 'formaction': 'new'
     = form.submit "Save business", class: "govuk-button"
