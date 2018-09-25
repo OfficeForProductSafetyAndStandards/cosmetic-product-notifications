@@ -759,13 +759,13 @@ gonzales-pe-sl@^4.2.3:
   dependencies:
     minimist "1.1.x"
 
-govuk-country-and-territory-autocomplete@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/govuk-country-and-territory-autocomplete/-/govuk-country-and-territory-autocomplete-0.4.0.tgz#9823c59098c83bb473be57f7ce60ea57da7b770f"
+govuk-country-and-territory-autocomplete@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/govuk-country-and-territory-autocomplete/-/govuk-country-and-territory-autocomplete-0.5.0.tgz#df946b1aa06815b73a7472d4ebdcdc9fe85fb615"
   dependencies:
     accessible-autocomplete "^1.6.1"
     openregister-picker-engine "^1.2.1"
-    webpack-sources "^1.0.1"
+    webpack-sources "^1.3.0"
 
 govuk-frontend@^2.0.0:
   version "2.0.0"
@@ -1488,9 +1488,9 @@ util@^0.10.3:
   dependencies:
     inherits "2.0.3"
 
-webpack-sources@^1.0.1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.1.0.tgz#a101ebae59d6507354d71d8013950a3a8b7a5a54"
+webpack-sources@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.3.0.tgz#2a28dcb9f1f45fe960d8f1493252b5ee6530fa85"
   dependencies:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
