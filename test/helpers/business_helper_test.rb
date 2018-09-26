@@ -43,12 +43,7 @@ class BusinessHelperTest < ActiveSupport::TestCase
   end
 
   test "search_companies_house returns only new companies" do
-    results = search_companies_house("company", 3)
+    results = search_companies_house("company")
     assert_equal(results.map { |company| company[:company_number] }, %w(2 3 4))
-  end
-
-  test "search_companies_house limits number of results" do
-    results = search_companies_house("company", 1)
-    assert_equal(results.length, 1)
   end
 end
