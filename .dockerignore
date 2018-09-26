@@ -200,13 +200,13 @@ typings/
 *.rbc
 capybara-*.html
 .rspec
-/log
-/tmp
-/db/*.sqlite3
-/db/*.sqlite3-journal
-/public/system
-/coverage/
-/spec/tmp
+/web/log
+/web/tmp
+/web/db/*.sqlite3
+/web/db/*.sqlite3-journal
+/web/public/system
+/web/coverage/
+/web/spec/tmp
 *.orig
 rerun.txt
 pickle-email-*.html
@@ -221,8 +221,8 @@ config/master.key
 .env
 
 ## Environment normalization:
-/.bundle
-/vendor/bundle
+/web/.bundle
+/web/vendor/bundle
 
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
@@ -231,7 +231,7 @@ config/master.key
 .rvmrc
 
 # if using bower-rails ignore default bower_components path bower.json files
-/vendor/assets/bower_components
+/web/vendor/assets/bower_components
 *.bowerrc
 bower.json
 
@@ -246,14 +246,14 @@ bower.json
 
 ### Ruby ###
 *.gem
-/.config
-/InstalledFiles
-/pkg/
-/spec/reports/
-/spec/examples.txt
-/test/tmp/
-/test/version_tmp/
-/tmp/
+/web/.config
+/web/InstalledFiles
+/web/pkg/
+/web/spec/reports/
+/web/spec/examples.txt
+/web/test/tmp/
+/web/test/version_tmp/
+/web/tmp/
 
 # Used by dotenv library to load environment variables.
 # .env
@@ -275,14 +275,14 @@ build-iPhoneSimulator/
 # vendor/Pods/
 
 ## Documentation cache and generated files:
-/.yardoc/
-/_yardoc/
-/doc/
-/rdoc/
+/web/.yardoc/
+/web/_yardoc/
+/web/doc/
+/web/rdoc/
 
 ## Environment normalization:
-/.bundle/
-/lib/bundler/man/
+/web/.bundle/
+/web/lib/bundler/man/
 
 # for a library or gem, you might want to ignore these files since the code is
 # intended to run in multiple environments; otherwise, check them in:
