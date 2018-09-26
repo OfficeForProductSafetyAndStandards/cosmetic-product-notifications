@@ -6,7 +6,7 @@ $(document).on('turbolinks:load', function () {
   $form.find('#search-button').hide();
 
   searchOnInputChange(
-    $form.find('input, textarea'),
+    $form.find('.search-trigger input, .search-trigger textarea'),
     '/investigations/' + investigationId + '/businesses/suggested?excluded_businesses=' + excludedBusinessIds,
     buildCompaniesHouseQuery,
     function (data) {

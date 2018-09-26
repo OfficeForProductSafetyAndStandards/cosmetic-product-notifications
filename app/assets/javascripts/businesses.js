@@ -6,7 +6,7 @@ $(document).on('turbolinks:load', function () {
   $('#search-button').hide();
 
   searchOnInputChange(
-    $('.new-business-page input, .new-business-page textarea'),
+    $('.new-business-page .search-trigger input, .new-business-page .search-trigger textarea'),
     '/businesses/search',
     buildCompaniesHouseQuery,
     function (data) {
