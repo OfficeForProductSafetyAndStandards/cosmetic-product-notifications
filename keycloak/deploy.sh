@@ -11,11 +11,8 @@ set -ex
 # PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
 
-./keycloak/build-notify.sh
-./keycloak/build-theme.sh
-
-# Download and configure the Keycloak package
-./keycloak/package.sh
+docker build --target keycloak-package -t keycloak-package:latest ./keycloak
+docker cp $(docker create keycloak-package):/tmp/keycloak/package ./keycloak
 
 # Install the Cloud Foundry CLI
 ./shared/install-cf.sh
