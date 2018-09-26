@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^9.0.0",
+    "babel-eslint": "^10.0.0",
     "eslint": "^5.6.0",
     "eslint-config-airbnb-es5": "^1.2.0",
     "eslint-plugin-react": "^7.11.1",
@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "accessible-autocomplete": "^1.6.1",
-    "govuk-country-and-territory-autocomplete": "^0.4.0",
-    "govuk-frontend": "^2.0.0",
+    "govuk-country-and-territory-autocomplete": "^0.5.0",
+    "govuk-frontend": "^2.1.0",
     "html5shiv": "^3.7.3",
     "jquery": "^3.3.1",
     "jquery-ujs": "^1.2.2"
