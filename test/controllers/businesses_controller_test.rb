@@ -6,10 +6,12 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     @business = businesses(:one)
     @business.source = sources(:business_one)
     Business.import
+    allow(CompaniesHouseClient.instance).to receive(:companies_house_businesses).and_return([])
   end
 
   teardown do
     logout
+    allow(CompaniesHouseClient.instance).to receive(:companies_house_businesses).and_call_original
   end
 
   test "should get index" do
@@ -48,7 +50,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
           company_type_code: @business.company_type_code,
           nature_of_business_id: @business.nature_of_business_id
         }
-    }
+      }
     end
   end
 
