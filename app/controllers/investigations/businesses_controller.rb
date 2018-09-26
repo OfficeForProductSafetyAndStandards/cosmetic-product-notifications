@@ -3,15 +3,14 @@ class Investigations::BusinessesController < ApplicationController
 
   before_action :set_investigation, only: %i[index search new create suggested add companies_house destroy]
   before_action :set_business, only: %i[destroy]
-  before_action :create_business, only: %i[new create]
+  before_action :create_business, only: %i[new create search suggested]
 
   # GET /investigations/1/businesses
   def index; end
 
   # GET /investigations/1/businesses/search
   def search
-    @business = Business.new
-    @business.addresses.build
+    advanced_search(@investigation.businesses.map{ |business| business.id })
   end
 
   # GET /investigations/1/businesses/new
@@ -19,11 +18,8 @@ class Investigations::BusinessesController < ApplicationController
 
   # GET /investigations/1/businesses/suggested
   def suggested
-    excluded_business_ids = params[:excluded_businesses].split(",")
-    @existing_businesses = search_for_businesses(20)
-                           .reject { |business| excluded_business_ids.include?(business.id) }
-                           .first(BUSINESS_SUGGESTION_LIMIT)
-    @companies_house_businesses = search_companies_house(params[:q]).first(BUSINESS_SUGGESTION_LIMIT)
+    excluded_business_ids = params[:excluded_businesses].split(",").map{ |s| s.to_i }
+    advanced_search(excluded_business_ids)
     render partial: "businesses/search_results"
   end
 
@@ -75,15 +71,4 @@ private
     @business = Business.find(params[:id])
   end
 
-  def create_business
-    if params[:business]
-      @business = Business.new(business_params)
-      @business.addresses.build unless @business.addresses.any?
-      defaults_on_primary_address(@business)
-      @business.source = UserSource.new(user: current_user)
-    else
-      @business = Business.new
-      @business.addresses.build
-    end
-  end
 end

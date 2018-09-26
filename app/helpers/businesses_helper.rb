@@ -48,15 +48,34 @@ module BusinessesHelper
     Rails.application.config.companies_house_constants
   end
 
-  def search_for_similar_businesses
-    query = [@business.company_name, @business.additional_information].join(' AND ') # this seems to be executed as an OR anyways??
+  def create_business
+    if params[:business]
+      @business = Business.new(business_params)
+      @business.addresses.build unless @business.addresses.any?
+      defaults_on_primary_address(@business)
+      @business.source = UserSource.new(user: current_user)
+    else
+      @business = Business.new
+      @business.addresses.build
+    end
+  end
+
+  def advanced_search(excluded_ids = [])
+    @existing_businesses = search_for_similar_businesses(excluded_ids)
+    @companies_house_businesses = search_companies_house_for_similar_businesses
+  end
+
+  def search_for_similar_businesses(excluded_ids)
+    query = [@business.company_name, @business.additional_information].join(' ')
     filters = {}
     filters[:company_type_code] = @business.company_type_code if @business.company_type_code.present?
     filters[:company_status_code] = @business.company_status_code if @business.company_status_code.present?
     filters[:nature_of_business_id] = @business.nature_of_business_id if @business.nature_of_business_id.present?
     Business.full_search(ElasticsearchQuery.new(query, filters, {}))
-      .paginate(per_page: BUSINESS_SUGGESTION_LIMIT)
+      .paginate(per_page: 20) # Big enough to return BUSINESS_SUGGESTION_LIMIT after filters get applied
       .records
+      .reject { |business| excluded_ids.include?(business.id) }
+      .first(BUSINESS_SUGGESTION_LIMIT)
   end
 
   def search_companies_house_for_similar_businesses

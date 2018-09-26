@@ -1,9 +1,12 @@
 /* globals searchOnInputChange, buildCompaniesHouseQuery */
 $(document).on('turbolinks:load', function () {
-  var investigationId = $('.businesses-search-form').data('investigation-id');
-  var excludedBusinessIds = $('.businesses-search-form').data('business-ids');
+  var $form = $('.investigation-business-page');
+  var investigationId = $form.data('investigation-id');
+  var excludedBusinessIds = $form.data('business-ids');
+  $form.find('#search-button').hide();
+
   searchOnInputChange(
-    $('.investigation-business-page .search-term'),
+    $form.find('input, textarea'),
     '/investigations/' + investigationId + '/businesses/suggested?excluded_businesses=' + excludedBusinessIds,
     buildCompaniesHouseQuery,
     function (data) {

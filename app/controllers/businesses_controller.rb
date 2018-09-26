@@ -4,7 +4,7 @@ class BusinessesController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_business, only: %i[show edit update destroy]
-  before_action :create_business, only: %i[create search]
+  before_action :create_business, only: %i[new create search]
   before_action :update_business, only: %i[update]
 
   # GET /businesses
@@ -50,12 +50,7 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/new
   def new
-    @business = Business.new
-    @business.addresses.build
-    if params[:business]
-      update_business
-      advanced_search
-    end
+    advanced_search
   end
 
   # GET /businesses/1/edit
@@ -108,12 +103,6 @@ class BusinessesController < ApplicationController
 private
 
   # Use callbacks to share common setup or constraints between actions.
-  def create_business
-    @business = Business.new(business_params)
-    defaults_on_primary_address(@business) if @business.addresses.any?
-    @business.source = UserSource.new(user: current_user)
-  end
-
   def set_business
     @business = Business.find(params[:id])
   end
@@ -134,10 +123,5 @@ private
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def advanced_search
-    @existing_businesses = search_for_similar_businesses
-    @companies_house_businesses = search_companies_house_for_similar_businesses
   end
 end
