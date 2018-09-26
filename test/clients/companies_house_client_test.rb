@@ -6,7 +6,7 @@ class CompaniesHouseClientTest < ActiveSupport::TestCase
   include ::RSpec::Mocks::ExampleMethods
 
   setup do
-    client_mock = instance_double("CompaniesHouse::Client", :company_search => { "items" => [
+    client_mock = instance_double("CompaniesHouse::Client", company_search: { "items" => [
       {
         "title" => "company XYZ",
         "company_number" => "123",

@@ -10,7 +10,7 @@ class Investigations::BusinessesController < ApplicationController
 
   # GET /investigations/1/businesses/search
   def search
-    advanced_search(@investigation.businesses.map{ |business| business.id })
+    advanced_search(@investigation.businesses.map(&:id))
   end
 
   # GET /investigations/1/businesses/new
@@ -18,7 +18,7 @@ class Investigations::BusinessesController < ApplicationController
 
   # GET /investigations/1/businesses/suggested
   def suggested
-    excluded_business_ids = params[:excluded_businesses].split(",").map{ |s| s.to_i }
+    excluded_business_ids = params[:excluded_businesses].split(",").map(&:to_i)
     advanced_search(excluded_business_ids)
     render partial: "businesses/search_results"
   end
@@ -70,5 +70,4 @@ private
   def set_business
     @business = Business.find(params[:id])
   end
-
 end

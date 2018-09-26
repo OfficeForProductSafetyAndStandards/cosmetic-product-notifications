@@ -79,8 +79,8 @@ class BusinessHelperTest < ActiveSupport::TestCase
     results_pu = search_for_similar_businesses(search_model_pu, [])
 
     # Assert
-    assert_includes(results_pu.map { |b| b.company_name }, "Biscuit Base")
-    assert_not_includes(results_ltd.map { |b| b.company_name }, "Biscuit Base")
+    assert_includes(results_pu.map(&:company_name), "Biscuit Base")
+    assert_not_includes(results_ltd.map(&:company_name), "Biscuit Base")
   end
 
   test "local search respects company status" do
@@ -91,7 +91,7 @@ class BusinessHelperTest < ActiveSupport::TestCase
     results_dissolved = search_for_similar_businesses(search_model_dissolved, [])
 
     # Assert
-    assert_includes(results_active.map { |b| b.company_name }, "Biscuit Base")
-    assert_not_includes(results_dissolved.map { |b| b.company_name }, "Biscuit Base")
+    assert_includes(results_active.map(&:company_name), "Biscuit Base")
+    assert_not_includes(results_dissolved.map(&:company_name), "Biscuit Base")
   end
 end

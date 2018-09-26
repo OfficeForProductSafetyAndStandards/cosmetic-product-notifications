@@ -72,7 +72,7 @@ module BusinessesHelper
   def search_companies_house_for_similar_businesses(business)
     type_or_status_differ = lambda do |candidate|
       (business.company_type_code.present? && business.company_type_code != candidate[:company_type_code]) ||
-      (business.company_status_code.present? && business.company_status_code != candidate[:company_status_code])
+        (business.company_status_code.present? && business.company_status_code != candidate[:company_status_code])
       # field matched by nature_of_business_id is not available on the search models returned by companies house
     end
     search_companies_house(business.company_name)
