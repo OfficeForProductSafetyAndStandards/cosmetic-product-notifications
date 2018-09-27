@@ -8,7 +8,7 @@
     | Add business
   .govuk-grid-row
     .govuk-grid-column-one-half
-      = form_with(model: @business, url: new_investigation_business_path(@investigation), local: true, method: :get) \
+      = form_with(model: @business, url: investigation_businesses_path(@investigation), local: true, method: :post) \
           do |form|
         h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
           | Business details
@@ -16,6 +16,6 @@
         .govuk-form-group
           = form.submit "Search businesses", id: "search-button", class: "govuk-button", \
               'formmethod': "get", 'formaction': 'search'
-          = form.submit "Create new", class: "govuk-button"
+          = form.submit "Save business", class: "govuk-button"
     .govuk-grid-column-one-half
       = render "businesses/suggestions_container"
