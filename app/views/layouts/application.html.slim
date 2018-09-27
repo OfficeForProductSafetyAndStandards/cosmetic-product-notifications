@@ -1,6 +1,23 @@
 doctype html
 html.govuk-template.app-html-class[lang="en"]
   head
+    / Google Analytics
+    - if Rails.env.production?
+      script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-1"
+      javascript:
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-126364208-1');
+
+        document.addEventListener('turbolinks:load', function (event) {
+          if (typeof gtag === 'function') {
+            gtag('config', 'UA-126364208-1', {
+              'page_location': event.data.url
+            });
+          }
+        });
+
     meta[charset="utf-8"]
     title
       = yield :page_title
@@ -97,5 +114,5 @@ html.govuk-template.app-html-class[lang="en"]
             a.govuk-footer__link.govuk-footer__copyright-logo[href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"]
               | © Crown copyright
 
-    script
-      | window.GOVUKFrontend.initAll()
+    javascript:
+      window.GOVUKFrontend.initAll()
