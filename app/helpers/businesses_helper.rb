@@ -59,39 +59,17 @@ module BusinessesHelper
   def search_for_similar_businesses(business, excluded_ids)
     return [] if business.company_name.blank?
 
-    # noinspection RubyStringKeysInHashInspection
-    match_name = {
-      match: {
-        "company_name": {
-          query: business.company_name,
-          fuzziness: "AUTO"
-        }
+    Business.search(query: {
+      bool: {
+        must: [
+          match_name(business),
+          match_additional_information(business)
+        ].compact,
+        must_not: have_excluded_id(excluded_ids),
+        filter: filters(business)
       }
-    }
-    filters_query = {
-      "company_type_code": business.company_type_code,
-      "company_status_code": business.company_status_code,
-      "nature_of_business_id": business.nature_of_business_id
-    }.
-      reject { |_, value| value.blank? }.
-      map do |field, value|
-      {
-        term: { "#{field}": value }
-      }
-    end
-    query = {
-      query: {
-        bool: {
-          must: match_name,
-          filter: filters_query
-        }
-      }
-    }
-    Business.search(query)
-      .paginate(per_page: 20) # Big enough to return BUSINESS_SUGGESTION_LIMIT after filters get applied
+    }).paginate(per_page: BUSINESS_SUGGESTION_LIMIT)
       .records
-      .reject { |candidate| excluded_ids.include?(candidate.id) }
-      .first(BUSINESS_SUGGESTION_LIMIT)
   end
 
   def search_companies_house_for_similar_businesses(business)
@@ -112,5 +90,52 @@ module BusinessesHelper
 
   def filter_out_existing_businesses(businesses)
     businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
+  end
+
+private
+
+  def filters(business)
+    {
+      "company_type_code": business.company_type_code,
+      "company_status_code": business.company_status_code,
+      "nature_of_business_id": business.nature_of_business_id
+    }.
+      reject { |_, value| value.blank? }.
+      map do |field, value|
+      {
+        term: { "#{field}": value }
+      }
+    end
+  end
+
+  def have_excluded_id(excluded_ids)
+    {
+      ids: {
+        values: excluded_ids.map(&:to_s)
+      }
+    }
+  end
+
+  def match_name(business)
+    {
+      match: {
+        "company_name": {
+          query: business.company_name,
+          fuzziness: "AUTO"
+        }
+      }
+    }
+  end
+
+  def match_additional_information(business)
+    return nil if business.additional_information.blank?
+    {
+      match: {
+        "additional_information": {
+          query: business.additional_information,
+          fuzziness: "AUTO"
+        }
+      }
+    }
   end
 end
