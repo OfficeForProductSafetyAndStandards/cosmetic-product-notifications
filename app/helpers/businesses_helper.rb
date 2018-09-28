@@ -11,8 +11,8 @@ module BusinessesHelper
 
   def search_for_businesses(page_size)
     Business.full_search(search_query)
-            .paginate(page: params[:page], per_page: page_size)
-            .records
+      .paginate(page: params[:page], per_page: page_size)
+      .records
   end
 
   def sort_column
@@ -57,12 +57,37 @@ module BusinessesHelper
   end
 
   def search_for_similar_businesses(business, excluded_ids)
-    query = [business.company_name, business.additional_information].join(' ')
-    filters = {}
-    filters[:company_type_code] = business.company_type_code if business.company_type_code.present?
-    filters[:company_status_code] = business.company_status_code if business.company_status_code.present?
-    filters[:nature_of_business_id] = business.nature_of_business_id if business.nature_of_business_id.present?
-    Business.full_search(ElasticsearchQuery.new(query, filters, {}))
+    return [] if business.company_name.blank?
+
+    # noinspection RubyStringKeysInHashInspection
+    match_name = {
+      match: {
+        "company_name": {
+          query: business.company_name,
+          fuzziness: "AUTO"
+        }
+      }
+    }
+    filters_query = {
+      "company_type_code": business.company_type_code,
+      "company_status_code": business.company_status_code,
+      "nature_of_business_id": business.nature_of_business_id
+    }.
+      reject { |_, value| value.blank? }.
+      map do |field, value|
+      {
+        term: { "#{field}": value }
+      }
+    end
+    query = {
+      query: {
+        bool: {
+          must: match_name,
+          filter: filters_query
+        }
+      }
+    }
+    Business.search(query)
       .paginate(per_page: 20) # Big enough to return BUSINESS_SUGGESTION_LIMIT after filters get applied
       .records
       .reject { |candidate| excluded_ids.include?(candidate.id) }
