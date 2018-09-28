@@ -1,15 +1,15 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
 
-  before_action :set_investigation, only: %i[index search create suggested add companies_house destroy]
+  before_action :set_investigation, only: %i[index new create suggested add companies_house destroy]
   before_action :set_business, only: %i[destroy]
-  before_action :create_business, only: %i[create search suggested]
+  before_action :create_business, only: %i[create new suggested]
 
   # GET /investigations/1/businesses
   def index; end
 
-  # GET /investigations/1/businesses/search
-  def search
+  # GET /investigations/1/businesses/new
+  def new
     advanced_search(@investigation.businesses.map(&:id))
   end
 
@@ -40,7 +40,7 @@ class Investigations::BusinessesController < ApplicationController
         format.html { redirect_to @investigation, notice: "Business was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
-        format.html { render :search }
+        format.html { render :new }
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
     end

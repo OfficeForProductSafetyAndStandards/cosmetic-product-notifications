@@ -15,7 +15,7 @@
         = render "businesses/core_params", form: form, business: @business
         .govuk-form-group
           = form.submit "Search businesses", id: "search-button", class: "govuk-button", \
-              'formmethod': "get", 'formaction': 'search'
+              'formmethod': "get", 'formaction': 'new'
           = form.submit "Save business", class: "govuk-button"
     .govuk-grid-column-one-half
       = render "businesses/suggestions_container"
