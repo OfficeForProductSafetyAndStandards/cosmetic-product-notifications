@@ -18,7 +18,7 @@ cache:
 
 jobs:
   include:
-  - stage: test
+  - stage: Test
     before_install:
       - mkdir -p ~/bundle-cache
       - mkdir -p ~/npm-cache
@@ -40,23 +40,38 @@ jobs:
     after_script:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
 
-  - stage: deploy-to-int
+  - stage: Deploy to int
+    name: Deploy web
     if: branch = master AND type != pull_request
-    script: SPACE=int ./web/deploy.sh
-  - if: branch = master AND type != pull_request
-    script: SPACE=int ./worker/deploy.sh
+    script: SPACE=int COMPONENT=web ./ci/deploy-if-changed.sh
+  - name: Deploy worker
+    if: branch = master AND type != pull_request
+    script: SPACE=int COMPONENT=worker ./ci/deploy-if-changed.sh
+  - name: Deploy keycloak
+    if: branch = master AND type != pull_request
+    script: SPACE=int COMPONENT=keycloak ./ci/deploy-if-changed.sh
 
-  - stage: deploy-to-staging
+  - stage: Deploy to staging
+    name: Deploy web
     if: branch = staging AND type != pull_request
-    script: SPACE=staging ./web/deploy.sh
-  - if: branch = staging AND type != pull_request
-    script: SPACE=staging ./worker/deploy.sh
+    script: SPACE=staging COMPONENT=web ./ci/deploy-if-changed.sh
+  - name: Deploy worker
+    if: branch = staging AND type != pull_request
+    script: SPACE=staging COMPONENT=worker ./ci/deploy-if-changed.sh
+  - name: Deploy keycloak
+    if: branch = staging AND type != pull_request
+    script: SPACE=staging COMPONENT=keycloak ./ci/deploy-if-changed.sh
 
-  - stage: deploy-to-prod
+  - stage: Deploy to production
+    name: Deploy web
     if: branch = prod AND type != pull_request
-    script: SPACE=prod ./web/deploy.sh
-  - if: branch = prod AND type != pull_request
-    script: SPACE=prod ./worker/deploy.sh
+    script: SPACE=prod COMPONENT=web ./ci/deploy-if-changed.sh
+  - name: Deploy worker
+    if: branch = prod AND type != pull_request
+    script: SPACE=prod COMPONENT=worker ./ci/deploy-if-changed.sh
+  - name: Deploy keycloak
+    if: branch = prod AND type != pull_request
+    script: SPACE=prod COMPONENT=keycloak ./ci/deploy-if-changed.sh
 
 env:
   global:
