@@ -129,6 +129,7 @@ private
 
   def match_additional_information(business)
     return nil if business.additional_information.blank?
+
     {
       match: {
         "additional_information": {
