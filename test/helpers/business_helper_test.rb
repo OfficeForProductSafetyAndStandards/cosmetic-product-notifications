@@ -6,7 +6,7 @@ class BusinessHelperTest < ActiveSupport::TestCase
   include BusinessesHelper
 
   setup do
-    Business.import
+    Business.import refresh: true
     client_instance = instance_double("CompaniesHouseClient")
     allow(CompaniesHouseClient).to receive(:instance).and_return(client_instance)
     allow(client_instance).to receive(:companies_house_businesses).with("company").and_return(
