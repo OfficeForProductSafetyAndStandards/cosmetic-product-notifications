@@ -11,8 +11,8 @@ module BusinessesHelper
 
   def search_for_businesses(page_size)
     Business.full_search(search_query)
-            .paginate(page: params[:page], per_page: page_size)
-            .records
+      .paginate(page: params[:page], per_page: page_size)
+      .records
   end
 
   def sort_column
@@ -21,16 +21,6 @@ module BusinessesHelper
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
-  def search_companies_house(query, page_size)
-    companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(query)
-    filter_out_existing_businesses(companies_house_response)
-      .first(page_size)
-  end
-
-  def filter_out_existing_businesses(businesses)
-    businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -47,5 +37,106 @@ module BusinessesHelper
 
   def companies_house_constants
     Rails.application.config.companies_house_constants
+  end
+
+  def create_business
+    if params[:business]
+      @business = Business.new(business_params)
+      @business.addresses.build unless @business.addresses.any?
+      defaults_on_primary_address(@business)
+      @business.source = UserSource.new(user: current_user)
+    else
+      @business = Business.new
+      @business.addresses.build
+    end
+  end
+
+  def advanced_search(excluded_ids = [])
+    @existing_businesses = search_for_similar_businesses(@business, excluded_ids)
+    @companies_house_businesses = search_companies_house_for_similar_businesses(@business)
+  end
+
+  def search_for_similar_businesses(business, excluded_ids)
+    return [] if business.company_name.blank?
+
+    Business.search(query: {
+      bool: {
+        must: [
+          match_name(business),
+          match_additional_information(business)
+        ].compact,
+        must_not: have_excluded_id(excluded_ids),
+        filter: filters(business)
+      }
+    }).paginate(per_page: BUSINESS_SUGGESTION_LIMIT)
+      .records
+  end
+
+  def search_companies_house_for_similar_businesses(business)
+    type_or_status_differ = lambda do |candidate|
+      (business.company_type_code.present? && business.company_type_code != candidate[:company_type_code]) ||
+        (business.company_status_code.present? && business.company_status_code != candidate[:company_status_code])
+      # field matched by nature_of_business_id is not available on the search models returned by companies house
+    end
+    search_companies_house(business.company_name)
+      .reject(&type_or_status_differ)
+      .first(BUSINESS_SUGGESTION_LIMIT)
+  end
+
+  def search_companies_house(query)
+    companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(query)
+    filter_out_existing_businesses(companies_house_response)
+  end
+
+  def filter_out_existing_businesses(businesses)
+    businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
+  end
+
+private
+
+  def filters(business)
+    {
+      "company_type_code": business.company_type_code,
+      "company_status_code": business.company_status_code,
+      "nature_of_business_id": business.nature_of_business_id
+    }.
+      reject { |_, value| value.blank? }.
+      map do |field, value|
+      {
+        term: { "#{field}": value }
+      }
+    end
+  end
+
+  def have_excluded_id(excluded_ids)
+    {
+      ids: {
+        values: excluded_ids.map(&:to_s)
+      }
+    }
+  end
+
+  def match_name(business)
+    {
+      match: {
+        "company_name": {
+          query: business.company_name,
+          fuzziness: "AUTO"
+        }
+      }
+    }
+  end
+
+  def match_additional_information(business)
+    return nil if business.additional_information.blank?
+
+    {
+      match: {
+        "additional_information": {
+          query: business.additional_information,
+          fuzziness: "AUTO"
+        }
+      }
+    }
   end
 end

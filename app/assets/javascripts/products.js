@@ -1,6 +1,6 @@
-/* globals searchOnTextInput, buildProductQuery */
+/* globals searchOnInputChange, buildProductQuery */
 $(document).on('turbolinks:load', function () {
-  searchOnTextInput($('.new-product-page .search-term'), '/products/suggested', buildProductQuery, function (data) {
+  searchOnInputChange($('.new-product-page .search-term'), '/products/suggested', buildProductQuery, function (data) {
     $('#suggested-products').html(data);
   });
 });

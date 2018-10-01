@@ -10,6 +10,8 @@ class BusinessTest < ActiveSupport::TestCase
 
   test "populates data correctly from companies house info" do
     # Arrange
+    # Entity shape definition at
+    # https://developer.companieshouse.gov.uk/api/docs/company/company_number/companyProfile-resource.html
     response = {
         "company_number" => "234",
         "company_name" => "Turbo Frogs",

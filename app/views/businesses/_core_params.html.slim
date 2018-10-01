@@ -11,15 +11,16 @@
   p
     | Some data is set by companies house and is therefore non-editable
 - else
-  .govuk-form-group class=("govuk-form-group--error" if business.errors.any?)
+  .govuk-form-group.search-trigger class=("govuk-form-group--error" if business.errors.any?)
     = form.label :company_name, class: "govuk-label"
-    = form.text_field :company_name, class: "govuk-input search-term #{'govuk-input--error' if business.errors.any?}"
-  .govuk-form-group
+    = form.text_field :company_name, class: "govuk-input #{'govuk-input--error' if business.errors.any?}", \
+            id: "company-name"
+  .govuk-form-group.search-trigger
     = form.label :company_type_code, class: "govuk-label"
     = form.select :company_type_code, \
         companies_house_constants["company_type"].collect { |t| [t[1], t[0]] }, \
         { include_blank: "None" }, class: "govuk-select", id: "company-type"
-  .govuk-form-group
+  .govuk-form-group.search-trigger
     = form.label :company_status_code, class: "govuk-label"
     = form.select :company_status_code, \
         companies_house_constants["company_status"].collect { |t| [t[1], t[0]] }, \
@@ -42,7 +43,7 @@
     .govuk-form-group
       = ff.label :postal_code, class: "govuk-label"
       = ff.text_field :postal_code, class: "govuk-input"
-  .govuk-form-group
+  .govuk-form-group.search-trigger
     = form.label :nature_of_business_id, class: "govuk-label"
     = form.select :nature_of_business_id, \
         companies_house_constants["sic_descriptions"].collect { |s| [s[1], s[0]] }, \
