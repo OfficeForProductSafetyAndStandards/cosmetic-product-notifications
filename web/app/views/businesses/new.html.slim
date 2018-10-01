@@ -8,6 +8,6 @@
     .govuk-grid-column-one-half
       h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
         | Business details
-      = render "form", business: @business, form_model: @business
+      = render "form", business: @business, form_model: @business, search: true
     .govuk-grid-column-one-half
       = render "suggestions_container"

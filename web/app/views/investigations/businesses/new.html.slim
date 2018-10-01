@@ -1,10 +1,21 @@
-- content_for :page_title, "New business for case - Market Surveillance & Product Safety"
+- content_for :page_title, "Add business to case - Market Surveillance & Product Safety"
 - content_for :after_header do
   = link_to "Back to case", @investigation, class: "govuk-back-link"
-.new-product-page.products-search-form[data-investigation-id=@investigation.id.to_s]
+.investigation-business-page.businesses-search-form{ data-investigation-id=@investigation.id
+    data-business-ids=@investigation.business_ids.join(",") }
   = render "investigation_heading", investigation: @investigation
   h2.govuk-heading-l
     | Add business
-  h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
-    | Business details
-  = render "businesses/form", business: @business, form_model: [@investigation, @business]
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      = form_with(model: @business, url: investigation_businesses_path(@investigation), local: true, method: :post) \
+          do |form|
+        h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+          | Business details
+        = render "businesses/core_params", form: form, business: @business
+        .govuk-form-group
+          = form.submit "Search businesses", id: "search-button", class: "govuk-button", \
+              'formmethod': "get", 'formaction': 'new'
+          = form.submit "Save business", class: "govuk-button"
+    .govuk-grid-column-one-half
+      = render "businesses/suggestions_container"

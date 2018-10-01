@@ -2,19 +2,26 @@
 
 one:
   company_name: MyString
-  company_type_code: MyString
+  company_type_code: ltd
   company_status_code: active
   nature_of_business_id: MyString
   additional_information: MyText
 
 two:
   company_name: MyString
-  company_type_code: MyString
+  company_type_code: ltd
   company_status_code: dissolved
   nature_of_business_id: MyString
   additional_information: MyText
 
 active_from_companies_house:
   company_name: MyString
+  company_type_code: ltd
   company_number: 1
+  company_status_code: active
+
+biscuit_base:
+  company_name: Biscuit Base
+  company_type_code: private-unlimited
+  company_number: 100
   company_status_code: active

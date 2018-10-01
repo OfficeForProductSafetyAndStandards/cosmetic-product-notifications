@@ -31,7 +31,6 @@ Rails.application.routes.draw do
     end
     resources :businesses, only: %i[index new create destroy], controller: "investigations/businesses" do
       collection do
-        get :search
         get :suggested
         post :add
         post :companies_house

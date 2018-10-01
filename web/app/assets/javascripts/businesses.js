@@ -1,13 +1,17 @@
-/* globals simpleAccessibleAutocomplete, searchOnTextInput, buildCompaniesHouseQuery */
+/* globals simpleAccessibleAutocomplete, searchOnInputChange */
 $(document).on('turbolinks:load', function () {
   simpleAccessibleAutocomplete('company-type');
   simpleAccessibleAutocomplete('company-status');
   simpleAccessibleAutocomplete('sic-code');
+  var $form = $('.new-business-page form');
+  $form.find('#search-button').remove();
 
-  searchOnTextInput(
-    $('.new-business-page .search-term'),
+  searchOnInputChange(
+    $form.find('.search-trigger input, .search-trigger textarea'),
     '/businesses/search',
-    buildCompaniesHouseQuery,
+    function () {
+      return $form.serialize();
+    },
     function (data) {
       $('#suggested-businesses').html(data);
     }

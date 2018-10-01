@@ -1,7 +1,10 @@
 = form_with(model: form_model, local: true) do |form|
   = render "businesses/core_params", form: form, business: business
-  .govuk-form-group
+  .govuk-form-group.search-trigger
     = form.label :additional_information, class: "govuk-label"
     = form.text_area :additional_information, class: "govuk-input"
   .govuk-form-group
+    - if search
+      = form.submit "Search businesses", id: "search-button", class: "govuk-button",\
+          'formmethod': "get", 'formaction': 'new'
     = form.submit "Save business", class: "govuk-button"

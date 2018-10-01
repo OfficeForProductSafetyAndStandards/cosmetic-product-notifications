@@ -16,7 +16,7 @@ RUN cp ./artifacts/postgresql-42.2.5.jar ./package/modules/system/layers/keycloa
 
 # Copy and build the GOV.UK Notify email service provider
 COPY ./providers ./providers
-RUN mvn --settings ./providers/settings.xml --file ./providers/pom.xml package
+RUN mvn -q --settings ./providers/settings.xml --file ./providers/pom.xml package
 RUN mkdir -p ./package/providers
 RUN cp ./providers/target/notify-email-provider-jar-with-dependencies.jar ./package/providers/notify-email-provider-jar-with-dependencies.jar
 

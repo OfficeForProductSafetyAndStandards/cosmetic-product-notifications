@@ -1,11 +1,16 @@
-/* globals searchOnTextInput, buildCompaniesHouseQuery */
+/* globals searchOnInputChange, buildCompaniesHouseQuery */
 $(document).on('turbolinks:load', function () {
-  var investigationId = $('.businesses-search-form').data('investigation-id');
-  var excludedBusinessIds = $('.businesses-search-form').data('business-ids');
-  searchOnTextInput(
-    $('.investigation-business-page .search-term'),
+  var $page = $('.investigation-business-page');
+  var investigationId = $page.data('investigation-id');
+  var excludedBusinessIds = $page.data('business-ids');
+  $page.find('#search-button').remove();
+
+  searchOnInputChange(
+    $page.find('.search-trigger input, .search-trigger textarea'),
     '/investigations/' + investigationId + '/businesses/suggested?excluded_businesses=' + excludedBusinessIds,
-    buildCompaniesHouseQuery,
+    function () {
+      return $page.find('form').serialize();
+    },
     function (data) {
       $('#suggested-businesses').html(data);
     }
