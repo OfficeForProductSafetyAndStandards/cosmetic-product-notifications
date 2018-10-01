@@ -42,10 +42,6 @@ See the AWS account section in [the root README](../README.md#aws) to get these 
 
 See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value.
 
-    cf set-env mspsds-worker COMPANIES_HOUSE_API_KEY XXX
-
-See the Companies House account section in [the root README](../README.md#companies-house) to get this value.
-
     cf set-env mspsds-worker MSPSDS_HOST XXX
 
 This is the URL for the website and is used for sending emails.

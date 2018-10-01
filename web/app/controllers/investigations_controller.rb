@@ -47,7 +47,7 @@ class InvestigationsController < ApplicationController
     @investigation.assignee = assignee
     save_and_respond "Assignee was successfully updated."
     record_assignment
-    NotifyMailer.assigned_investigation(@investigation, assignee).deliver if assignee.present?
+    NotifyMailer.assigned_investigation(@investigation, assignee.email).deliver_later if assignee.present?
   end
 
   # POST /investigations
