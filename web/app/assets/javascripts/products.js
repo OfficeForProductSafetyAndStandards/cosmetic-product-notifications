@@ -1,6 +1,15 @@
-/* globals searchOnInputChange, buildProductQuery */
+/* globals searchOnInputChange */
 $(document).on('turbolinks:load', function () {
-  searchOnInputChange($('.new-product-page .search-term'), '/products/suggested', buildProductQuery, function (data) {
-    $('#suggested-products').html(data);
-  });
+  var $form = $('.new-product-page form');
+  $form.find('#search-button').remove();
+  searchOnInputChange(
+    $form.find('.search-term'),
+    '/products/suggested',
+    function () {
+      return $form.serialize();
+    },
+    function (data) {
+      $('#suggested-products').html(data);
+    }
+  );
 });

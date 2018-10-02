@@ -23,4 +23,6 @@
             = form.number_field "date_placed_on_market(1i)", value: product.date_placed_on_market&.year, \
                 class: "govuk-input govuk-date-input__input govuk-input--width-4"
   .govuk-form-group
+    = form.submit "Search products", id: "search-button", class: "govuk-button", \
+              'formmethod': "get", 'formaction': 'new'
     = form.submit "Submit", class: "govuk-button"
