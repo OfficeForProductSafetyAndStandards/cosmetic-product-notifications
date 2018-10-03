@@ -34,9 +34,21 @@ module ProductsHelper
     if product.gtin.present?
       search_for_gtin(product.gtin, page_size)
     else
-      # TODO MSPSDS-491 implement advanced search matching field-to-field
-      search_fields = [product.name, product.brand, product.product_type].reject(&:blank?)
-      Product.search(search_fields.map { |field| field + "*" }.join(" "))
+      fuzzy_fields = {
+        "name": product.name,
+        "brand": product.brand,
+        "product_type": product.product_type
+      }.reject { |_, value| value.blank? }.
+        map do |field, value|
+        {
+          fuzzy: { "#{field}": value }
+        }
+      end
+      Product.search(query: {
+        bool: {
+          should: fuzzy_fields
+        }
+      })
         .paginate(per_page: page_size)
         .records
     end
