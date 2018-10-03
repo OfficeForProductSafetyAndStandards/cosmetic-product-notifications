@@ -84,7 +84,7 @@ module ProductsHelper
     @product = Product.find(params[:id])
   end
 
-  private
+private
 
   def have_excluded_id(excluded_ids)
     {
@@ -93,5 +93,4 @@ module ProductsHelper
       }
     }
   end
-
 end
