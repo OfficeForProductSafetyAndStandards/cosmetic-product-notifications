@@ -31,7 +31,7 @@ RUN curl -o /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/$CH
 
 WORKDIR /app
 
-COPY . .
+COPY ./web .
 
 COPY ./web/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh

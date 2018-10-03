@@ -51,10 +51,11 @@ Once the app has been created, add the following environment variables to specif
     cf set-env keycloak KEYCLOAK_DATABASE_HOSTNAME << see: VCAP_SERVICES.postgres.credentials.host >>
     cf set-env keycloak KEYCLOAK_DATABASE_USERNAME << see: VCAP_SERVICES.postgres.credentials.username >>
     cf set-env keycloak KEYCLOAK_DATABASE_PASSWORD << see: VCAP_SERVICES.postgres.credentials.password >>
+    cf set-env keycloak NOTIFY_API_KEY             XXX
     cf restage keycloak
 
-(The relevant values are specified as properties on the `VCAP_SERVICES` environment variable,
- which can be listed by running `cf env keycloak`)
+The relevant values are specified as properties on the `VCAP_SERVICES` environment variable, which can be listed by running `cf env keycloak`.
+See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get the API key.
 
 
 ### Initial configuration
