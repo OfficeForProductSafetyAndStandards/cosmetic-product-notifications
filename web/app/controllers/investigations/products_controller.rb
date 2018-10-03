@@ -13,8 +13,7 @@ class Investigations::ProductsController < ApplicationController
   # GET /investigations/1/products/new
   def new;
     excluded_product_ids = @investigation.products.map(&:id)
-    @products = advanced_product_search(@product, 20)# TODO MSPSDS-491 Move reject to ES query
-                  .reject { |product| excluded_product_ids.include?(product.id) }[0...4]
+    @products = advanced_product_search(@product, excluded_product_ids)
   end
 
   # POST /investigations/1/products/add
@@ -26,8 +25,7 @@ class Investigations::ProductsController < ApplicationController
   # GET /investigations/1/products/suggested
   def suggested
     excluded_product_ids = params[:excluded_products].split(",").map(&:to_i)
-    @products = advanced_product_search(@product, 20) # TODO MSPSDS-491 Move reject to ES query
-                .reject { |product| excluded_product_ids.include?(product.id) }[0...4]
+    @products = advanced_product_search(@product, excluded_product_ids)
     render partial: "products/suggested"
   end
 

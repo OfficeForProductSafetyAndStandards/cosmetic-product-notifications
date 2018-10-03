@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
 
   # GET /products/suggested
   def suggested
-    @products = advanced_product_search(@product, SUGGESTED_PRODUCTS_LIMIT)
+    @products = advanced_product_search(@product)
     render partial: "suggested"
   end
 
@@ -58,7 +58,7 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @products = advanced_product_search(@product, SUGGESTED_PRODUCTS_LIMIT)
+    @products = advanced_product_search(@product)
   end
 
   # GET /products/1/edit

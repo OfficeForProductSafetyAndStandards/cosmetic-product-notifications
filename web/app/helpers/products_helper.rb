@@ -30,9 +30,9 @@ module ProductsHelper
 
   # TODO: When doing the advanced products search, we should re-evaluate how we do the
   # search on the product creation pages too
-  def advanced_product_search(product, page_size)
+  def advanced_product_search(product, excluded_ids = [])
     if product.gtin.present?
-      search_for_gtin(product.gtin, page_size)
+      search_for_gtin(product.gtin, excluded_ids)
     else
       fuzzy_fields = {
         "name": product.name,
@@ -46,17 +46,24 @@ module ProductsHelper
       end
       Product.search(query: {
         bool: {
-          should: fuzzy_fields
+          should: fuzzy_fields,
+          must_not: have_excluded_id(excluded_ids)
         }
       })
-        .paginate(per_page: page_size)
+        .paginate(per_page: SUGGESTED_PRODUCTS_LIMIT)
         .records
     end
   end
 
-  def search_for_gtin(gtin, page_size)
-    Product.search(query: { match: { gtin: gtin } })
-      .paginate(page: params[:page], per_page: page_size)
+  def search_for_gtin(gtin, excluded_ids)
+    match_gtin = { match: { gtin: gtin } }
+    Product.search(query: {
+      bool: {
+        must: match_gtin,
+        must_not: have_excluded_id(excluded_ids),
+      }
+    })
+      .paginate(per_page: SUGGESTED_PRODUCTS_LIMIT)
       .records
   end
 
@@ -75,6 +82,16 @@ module ProductsHelper
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  private
+
+  def have_excluded_id(excluded_ids)
+    {
+      ids: {
+        values: excluded_ids.map(&:to_s)
+      }
+    }
   end
 
 end
