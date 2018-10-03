@@ -2,23 +2,20 @@ class Investigations::ProductsController < ApplicationController
   include CountriesHelper
   include ProductsHelper
 
-  before_action :set_investigation, only: %i[index search new create suggested add destroy]
+  before_action :set_investigation, only: %i[index new create suggested add destroy]
   before_action :set_product, only: %i[destroy]
-  before_action :create_product, only: %i[new create search suggested]
-  before_action :set_countries, only: %i[search new]
+  before_action :create_product, only: %i[new create suggested]
+  before_action :set_countries, only: %i[new]
 
   # GET /investigations/1/products
   def index; end
 
-  # GET /investigations/1/products/search
-  def search;
+  # GET /investigations/1/products/new
+  def new;
     excluded_product_ids = @investigation.products.map(&:id)
     @products = advanced_product_search(@product, 20)# TODO MSPSDS-491 Move reject to ES query
                   .reject { |product| excluded_product_ids.include?(product.id) }[0...4]
   end
-
-  # GET /investigations/1/products/new
-  def new; end
 
   # POST /investigations/1/products/add
   def add
