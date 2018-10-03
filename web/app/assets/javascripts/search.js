@@ -1,9 +1,17 @@
 function simpleAccessibleAutocomplete(id) { // eslint-disable-line no-unused-vars
-  if (document.getElementById(id)) {
+  var element = document.getElementById(id);
+  if (element) {
     accessibleAutocomplete.enhanceSelectElement({
       defaultValue: '',
-      selectElement: document.getElementById(id),
+      selectElement: element,
       preserveNullOptions: true
+    });
+    // In the case that the user deletes the entry from the field, we want this to be reflected in the underlying select
+    var $enhancedElement = $(element).parent().find('input');
+    $enhancedElement.on('blur', function () {
+      if ($enhancedElement.val() === '') {
+        $(element).val('');
+      }
     });
   }
 }
