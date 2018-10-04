@@ -4,4 +4,5 @@ h3.govuk-heading-m
   - if @business.company_name.present?
     = render "businesses/search_results"
   - else
-    | Enter the company name for suggestions, fill in more fields to narrow them down.
+    p
+      | Enter the company name for suggestions, fill in more fields to narrow them down.
