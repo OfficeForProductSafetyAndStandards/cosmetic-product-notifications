@@ -13,43 +13,44 @@
             assign_investigation_path(@investigation)
       - else
         = @investigation.assignee ? "Assigned to #{@investigation.assignee.email}" : "Unassigned"
-div
-  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-    .govuk-grid-column-full
-      = render "investigation_heading", investigation: @investigation
-  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-    .govuk-grid-column-one-half
-      h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-        | Risk Notes:
-        '
-        = @investigation.risk_overview
-      p
-        = @investigation.description
-      = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
-    .govuk-grid-column-one-half
-      .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-        .govuk-grid-column-one-half
-          h3.govuk-body-l[class="govuk-!-margin-bottom-1"]
-            | Risk level
-          span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
-            = @investigation.risk_level&.titleize
-        .govuk-grid-column-one-half
-          h3.govuk-body-l[class="govuk-!-margin-bottom-1"]
-            | Sensitivity
-          span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
-            = @investigation.sensitivity&.titleize
-  hr.govuk-section-break.govuk-section-break--m
-  .govuk-tabs data-module="tabs"
-    h2.govuk-tabs__title
-      | Contents
-    ul.govuk-tabs__list
-      - @tabs.each_with_index do |tab, index|
-        li.govuk-tabs__list-item
-          a.govuk-tabs__tab href="##{tab.id}" class =("govuk-tabs__tab--selected" if index == 0)
-            = tab.title
-    - for tab in @tabs
-      section.govuk-tabs__panel id=tab.id
-        h2.govuk-heading-l = tab.title
-        = render "investigations/tabs/#{tab.content}"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = render "investigation_heading", investigation: @investigation
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    h2.govuk-heading-m
+      | Risk Notes:
+      '
+      = @investigation.risk_overview
+    p.govuk-body[class="govuk-!-margin-bottom-1"]
+      = @investigation.description
+    / TODO: These exist on the design but don't lead any where yet. Add with links, or delete if changed
+    / https://mspsds-design-prototype.herokuapp.com/case
+    / p
+    /   a href="" Edit risk details
+    /   a style="margin-left: 20px" href="" View assessment
+  .govuk-grid-column-one-quarter
+    h2.govuk-heading-m class="govuk-!-font-weight-regular"
+      | Risk level
+    p.govuk-body class="govuk-!-font-size-48 govuk-!-font-weight-bold"
+      = @investigation.risk_level&.titleize
+  .govuk-grid-column-one-quarter
+    h2.govuk-heading-m class="govuk-!-font-weight-regular"
+      | Sensitivity
+    p.govuk-body class="govuk-!-font-size-48 govuk-!-font-weight-bold"
+      = @investigation.sensitivity&.titleize
+hr.govuk-section-break.govuk-section-break--m
+.govuk-tabs data-module="tabs"
+  h2.govuk-tabs__title
+    | Contents
+  ul.govuk-tabs__list
+    - @tabs.each_with_index do |tab, index|
+      li.govuk-tabs__list-item
+        a.govuk-tabs__tab href="##{tab.id}" class =("govuk-tabs__tab--selected" if index == 0)
+          = tab.title
+  - for tab in @tabs
+    section.govuk-tabs__panel id=tab.id
+      h2.govuk-heading-l = tab.title
+      = render "investigations/tabs/#{tab.content}"
 .no-print[class="govuk-!-margin-top-3"]
   = link_to "Create PDF document", investigation_path(@investigation, format: :pdf), class: "no-print"
