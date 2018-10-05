@@ -19,3 +19,31 @@ two:
   country_of_origin: MyString
   batch_number: MyString
   brand: MyString
+
+chromecast:
+  gtin: 123
+  name: Chromecast
+  brand: Google
+  model: 2015
+  product_type: tv dongle
+
+iphone:
+  gtin: 234
+  name: iPhone XS MAX
+  brand: apple
+  model: XS MAX
+  product_type: phone
+
+iphone_3g:
+  gtin: 345
+  name: iPhone
+  brand: apple
+  model: 3G
+  product_type: phone
+
+pixel:
+  gtin: 456
+  name: Pixel
+  brand: Google
+  model: 2
+  product_type: phone

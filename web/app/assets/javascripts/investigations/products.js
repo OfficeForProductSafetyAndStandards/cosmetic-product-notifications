@@ -1,11 +1,15 @@
-/* globals searchOnInputChange, buildProductQuery */
+/* globals searchOnInputChange */
 $(document).on('turbolinks:load', function () {
-  var investigationId = $('.products-search-form').data('investigation-id');
-  var excludedProductIds = $('.products-search-form').data('product-ids');
+  var $page = $('.investigation-product-page');
+  var investigationId = $page.data('investigation-id');
+  var excludedProductIds = $page.data('product-ids');
+  $page.find('#search-button').remove();
   searchOnInputChange(
-    $('.investigation-product-page .search-term'),
+    $page.find('.search-term'),
     '/investigations/' + investigationId + '/products/suggested?excluded_products=' + excludedProductIds,
-    buildProductQuery,
+    function () {
+      return $page.find('form').serialize();
+    },
     function (data) {
       $('#suggested-products').html(data);
     }
