@@ -17,9 +17,13 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1.json
   def show
     @tabs = [
-      Tab.new("past-day", "Past Day", "it's so yesterday"),
-      Tab.new("past-week", "Past week", "it's so last week"),
-      Tab.new("past-month", "Past month", "it's so last month")
+      Tab.new("activity", "Activity", "activity"),
+      Tab.new("contacts", "Contacts", "contacts"),
+      Tab.new("attachments", "Attachments", "attachments"),
+      Tab.new("products", "Products", "products"),
+      Tab.new("businesses", "Businesses", "businesses"),
+      Tab.new("related", "Related", "related"),
+      Tab.new("full-detail", "Full detail", "details")
     ]
     respond_to do |format|
       format.html
