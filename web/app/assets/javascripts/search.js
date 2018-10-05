@@ -1,9 +1,18 @@
 function simpleAccessibleAutocomplete(id) { // eslint-disable-line no-unused-vars
-  if (document.getElementById(id)) {
+  var element = document.getElementById(id);
+  if (element) {
     accessibleAutocomplete.enhanceSelectElement({
       defaultValue: '',
-      selectElement: document.getElementById(id),
+      selectElement: element,
       preserveNullOptions: true
+    });
+    // In the case that the user deletes the entry from the field, we want this to be reflected in the underlying select
+    // This is a work-around to https://github.com/alphagov/accessible-autocomplete/issues/205
+    var $enhancedElement = $(element).parent().find('input');
+    $enhancedElement.on('blur', function () {
+      if ($enhancedElement.val() === '') {
+        $(element).val('');
+      }
     });
   }
 }
