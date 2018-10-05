@@ -4,4 +4,5 @@
 = render "product_heading", product: @product
 h2.govuk-heading-l
   | Product details
-= render "form", product: @product, countries: @countries, form_model: @product
+= form_with(model: @product, local: true) do |form|
+  = render "form", form: form, product: @product, countries: @countries, search: false

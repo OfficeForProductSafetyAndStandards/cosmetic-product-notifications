@@ -24,7 +24,6 @@ Rails.application.routes.draw do
     resources :activities, only: %i[index new create]
     resources :products, only: %i[index new create destroy], controller: "investigations/products" do
       collection do
-        get :search
         get :suggested
         post :add
       end
