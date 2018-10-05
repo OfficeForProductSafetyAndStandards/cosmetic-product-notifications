@@ -1,6 +1,6 @@
 /* globals searchOnInputChange */
 $(document).on('turbolinks:load', function () {
-  let $page = $('.investigation-product-page');
+  var $page = $('.investigation-product-page');
   var investigationId = $page.data('investigation-id');
   var excludedProductIds = $page.data('product-ids');
   $page.find('#search-button').remove();
