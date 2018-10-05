@@ -1,9 +1,12 @@
-.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-  .govuk-grid-column-full
+= link_to "Add business", new_investigation_business_url(@investigation), class: "no-print mspsds-block-link"
+= link_to "Manage business links", investigation_businesses_path(@investigation), class: "no-print mspsds-block-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
     - if @investigation.businesses.any?
       - @investigation.businesses.each do |business|
+        / TODO MSPSDS-518 Add roles to businesses
+        h3.govuk-heading-m Manufacturer
         = render "business_summary", business: business, allow_removing: false
     - else
       p
         | No businesses.
-    = link_to "Manage businesses", investigation_businesses_path(@investigation), class: "no-print"
