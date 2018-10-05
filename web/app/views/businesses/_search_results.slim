@@ -13,26 +13,30 @@ h3.govuk-heading-s
     | No matches.
 h3.govuk-heading-s
   | From Companies House
-table.govuk-table
-  thead.govuk-table__head
-    tr.govuk-table__row
-      th.govuk-table__header[scope="col"]
-        | Company name
-      th.govuk-table__header[scope="col"]
-      th.govuk-table__header[scope="col"]
-  tbody.govuk-table__body
-    - if @companies_house_businesses.any?
-      - @companies_house_businesses.each do |business|
-        tr.govuk-table__row
-          td.govuk-table__cell
-            = link_to business[:company_name], business[:url], target: "_blank"
-          td.govuk-table__cell
-            = companies_house_constants["company_status"][business[:company_status_code]]
-          td.govuk-table__cell
-            = form_with(url: companies_house_new_business_form_url, local: true) do |form|
-              = form.hidden_field :company_number, value: business[:company_number]
-              = form.submit "Add", class: "govuk-button govuk-!-margin-0"
-    - else
+- if @companies_house_error
+  p
+    | We cannot reach Companies House at the moment.
+- else
+  table.govuk-table
+    thead.govuk-table__head
       tr.govuk-table__row
-        td.govuk-table__cell[colspan="2"]
-          | No matches.
+        th.govuk-table__header[scope="col"]
+          | Company name
+        th.govuk-table__header[scope="col"]
+        th.govuk-table__header[scope="col"]
+    tbody.govuk-table__body
+      - if @companies_house_businesses.any?
+        - @companies_house_businesses.each do |business|
+          tr.govuk-table__row
+            td.govuk-table__cell
+              = link_to business[:company_name], business[:url], target: "_blank"
+            td.govuk-table__cell
+              = companies_house_constants["company_status"][business[:company_status_code]]
+            td.govuk-table__cell
+              = form_with(url: companies_house_new_business_form_url, local: true) do |form|
+                = form.hidden_field :company_number, value: business[:company_number]
+                = form.submit "Add", class: "govuk-button govuk-!-margin-0"
+      - else
+        tr.govuk-table__row
+          td.govuk-table__cell[colspan="2"]
+            | No matches.

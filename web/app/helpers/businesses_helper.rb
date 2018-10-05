@@ -53,7 +53,12 @@ module BusinessesHelper
 
   def advanced_search(excluded_ids = [])
     @existing_businesses = search_for_similar_businesses(@business, excluded_ids)
-    @companies_house_businesses = search_companies_house_for_similar_businesses(@business)
+    begin
+      @companies_house_businesses = search_companies_house_for_similar_businesses(@business)
+    rescue CompaniesHouseClient::ClientException => e
+      Rails.logger.error e
+      @companies_house_error = true
+    end
   end
 
   def search_for_similar_businesses(business, excluded_ids)

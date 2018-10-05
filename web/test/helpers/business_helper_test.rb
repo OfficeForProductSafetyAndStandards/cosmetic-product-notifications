@@ -7,9 +7,9 @@ class BusinessHelperTest < ActiveSupport::TestCase
 
   setup do
     Business.import refresh: true
-    client_instance = instance_double("CompaniesHouseClient")
-    allow(CompaniesHouseClient).to receive(:instance).and_return(client_instance)
-    allow(client_instance).to receive(:companies_house_businesses).with("company").and_return(
+    @client_instance = instance_double("CompaniesHouseClient")
+    allow(CompaniesHouseClient).to receive(:instance).and_return(@client_instance)
+    allow(@client_instance).to receive(:companies_house_businesses).with("company").and_return(
       [
         {
           company_name: "company one, already in the db",
@@ -94,5 +94,20 @@ class BusinessHelperTest < ActiveSupport::TestCase
     # Assert
     assert_includes(results_active.map(&:company_name), "Biscuit Base")
     assert_not_includes(results_dissolved.map(&:company_name), "Biscuit Base")
+  end
+
+  test "companies house outage doesn't affect local search" do
+    # Assemble
+    allow(@client_instance).to receive(:companies_house_businesses).with("Hello Kitty")
+      .and_raise(CompaniesHouseClient::ClientException)
+
+    # Act + Assert
+    assert_nothing_raised do
+      @business = Business.new company_name: "Hello Kitty"
+      advanced_search
+    end
+    assert_not_nil(@existing_businesses.present?)
+    assert_nil(@companies_house_businesses)
+    assert_equal(true, @companies_house_error)
   end
 end
