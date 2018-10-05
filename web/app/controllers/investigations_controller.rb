@@ -16,6 +16,11 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1
   # GET /investigations/1.json
   def show
+    @tabs = [
+      {id: "past-day", title: "Past Day", content: "it's so yesterday"},
+      {id: "past-week", title: "Past week", content: "it's so last week"},
+      {id: "past-month", title: "Past month", content: "it's so last month"}
+    ]
     respond_to do |format|
       format.html
       format.pdf do
