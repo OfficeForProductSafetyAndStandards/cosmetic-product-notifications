@@ -45,12 +45,12 @@ div
     ul.govuk-tabs__list
       - @tabs.each_with_index do |tab, index|
         li.govuk-tabs__list-item
-          a.govuk-tabs__tab href="##{tab[:id]}" class =("govuk-tabs__tab--selected" if index == 0)
-            = tab[:title]
+          a.govuk-tabs__tab href="##{tab.id}" class =("govuk-tabs__tab--selected" if index == 0)
+            = tab.title
     - for tab in @tabs
-      section.govuk-tabs__panel id=tab[:id]
-        h2.govuk-heading-l = tab[:title]
-        = tab[:content]
+      section.govuk-tabs__panel id=tab.id
+        h2.govuk-heading-l = tab.title
+        = tab.content
   .govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-one-third
       h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
