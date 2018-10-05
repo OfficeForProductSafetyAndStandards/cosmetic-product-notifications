@@ -59,17 +59,23 @@ Ask someone on the team to create an account for you on the Int and Staging envi
 
 #### GOV.UK Notify
 
-If you want to send emails from your development instance, or update any API keys for the deployed instances, you'll need an account for [GOV.UK Notify](https://www.notifications.service.gov.uk) - ask someone on the team to invite you.
+If you want to send emails from your development instance, or update any API keys for the deployed instances,
+you'll need an account for [GOV.UK Notify](https://www.notifications.service.gov.uk)
+- ask someone on the team to invite you.
 
 
 #### Companies House
 
-If you want to pull in business information from Companies House to your development instance, or update any API keys for the deployed instances, you'll need an account for [Companies House](https://developer.companieshouse.gov.uk/api/docs/) - ask someone on the team to invite you.
+If you want to pull in business information from Companies House to your development instance,
+or update any API keys for the deployed instances, you'll need an account for
+[Companies House](https://developer.companieshouse.gov.uk/api/docs/)
+- ask someone on the team to invite you.
 
 
 #### GOV.UK Platform as a Service
 
-If you want to update any of the deployed instances, you'll need an account for [GOV.UK PaaS](https://www.cloud.service.gov.uk/) - ask someone on the team to invite you.
+If you want to update any of the deployed instances, you'll need an account for
+[GOV.UK PaaS](https://www.cloud.service.gov.uk/) - ask someone on the team to invite you.
 
 
 #### Amazon Web Services
@@ -80,15 +86,20 @@ If you want to update any of the deployed instances, you'll need an account - as
 
 ## Deployment
 
-Anything which is merged to `master` (via a Pull Request or push) will trigger the [Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds) and cause deployments of the various components to the int space ([the int website is hosted here](https://mspsds-int.cloudapps.digital/)) on GOV.UK PaaS.
+Anything which is merged to `master` (via a Pull Request or push) will trigger the
+[Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
+and cause deployments of the various components to the int space
+([the int website is hosted here](https://mspsds-int.cloudapps.digital/)) on GOV.UK PaaS.
 
-Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging space ([staging website](https://mspsds-int.cloudapps.digital/)).
+Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
+space ([staging website](https://mspsds-int.cloudapps.digital/)).
 Please only do this if you are confident that this is a stable commit.
 
 
 ### Deployment from scratch
 
-Once you have a GOV.UK PaaS account as mentioned above, you should install the Cloud Foundry CLI (`cf`) from https://github.com/cloudfoundry/cli#downloads and then run the following commands:
+Once you have a GOV.UK PaaS account as mentioned above, you should install the Cloud Foundry CLI (`cf`) from
+https://github.com/cloudfoundry/cli#downloads and then run the following commands:
 
     cf login -a api.cloud.service.gov.uk -u XXX -p XXX
     cf target -o beis-mspsds
