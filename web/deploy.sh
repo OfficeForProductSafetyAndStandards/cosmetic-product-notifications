@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -ex
 
 # This is the CI server script to deploy the site
@@ -11,9 +11,9 @@ set -ex
 # PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
 
-./shared/install-cf.sh
+./ci/install-cf.sh
 
-cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o "beis-mspsds" -s $SPACE
+cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o 'beis-mspsds' -s $SPACE
 
 cf push -f ./web/manifest.yml --route-path mspsds-$SPACE
 

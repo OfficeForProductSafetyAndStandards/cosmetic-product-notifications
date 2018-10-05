@@ -1,7 +1,0 @@
-- content_for :page_title, "Edit product - Market Surveillance & Product Safety"
-- content_for :after_header do
-  = link_to "Back to product", @product, class: "govuk-back-link"
-= render "product_heading", product: @product
-h2.govuk-heading-l
-  | Product details
-= render "form", product: @product, countries: @countries, form_model: @product
