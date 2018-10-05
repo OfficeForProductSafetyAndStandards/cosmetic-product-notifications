@@ -38,6 +38,20 @@ div
             | Sensitivity
           span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
             = @investigation.sensitivity&.titleize
+  hr.govuk-section-break.govuk-section-break--m
+  .govuk-tabs data-module="tabs"
+    h2.govuk-tabs__title
+      | Contents
+    - tabs = { "past-day": {title: "Past Day", content: "it's so yesterday"}, "past-week": {title: "Past week", content: "it's so last week"}, "past-month": {title: "Past month", content: "it's so last month"},}
+    ul.govuk-tabs__list
+      - for id, tab in tabs
+        li.govuk-tabs__list-item
+          a.govuk-tabs__tab href="##{id}" class =("govuk-tabs__tab--selected" if id == "past-day")
+            = tab[:title]
+    - for id, tab in tabs
+      section.govuk-tabs__panel id=id
+        h2.govuk-heading-l = tab[:title]
+        = tab[:content]
   .govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-one-third
       h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
