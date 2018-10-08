@@ -30,6 +30,8 @@ RUN cp ./providers/sms-authenticator/templates/sms-validation.ftl ./package/them
 RUN cp ./providers/sms-authenticator/templates/sms-validation-error.ftl ./package/themes/base/login/
 RUN cp ./providers/sms-authenticator/templates/sms-validation-mobile-number.ftl ./package/themes/base/login/
 
+RUN cat ./providers/sms-authenticator/templates/messages/messages_en.properties >> ./package/themes/base/login/messages/messages_en.properties
+
 
 FROM node as theme-build
 
