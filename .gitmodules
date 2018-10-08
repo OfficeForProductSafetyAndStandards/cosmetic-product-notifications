@@ -3,4 +3,4 @@
 	url = https://github.com/UKGovernmentBEIS/keycloak-theme-govuk.git
 [submodule "keycloak/providers/sms-authenticator"]
 	path = keycloak/providers/sms-authenticator
-	url = git@github.com:nickpack/keycloak-sms-authenticator-sns.git
+	url = https://github.com/UKGovernmentBEIS/keycloak-sms-authenticator-sns.git
