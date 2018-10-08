@@ -22,7 +22,7 @@ RUN mvn -q --settings ./providers/email/settings.xml --file ./providers/email/po
 RUN cp ./providers/email/target/notify-email-provider-jar-with-dependencies.jar ./package/providers/notify-email-provider-jar-with-dependencies.jar
 
 # Build and copy the GOV.UK Notify SMS authenticator provider
-RUN mvn -q --file ./providers/sms-authenticator/pom.xml package
+RUN mvn -q --settings ./providers/sms-authenticator/settings.xml --file ./providers/sms-authenticator/pom.xml package
 RUN cp ./providers/sms-authenticator/target/keycloak-sms-authenticator-sns-*.jar ./package/providers/
 
 # Copy the GOV.UK Notify SMS authenticator page templates
