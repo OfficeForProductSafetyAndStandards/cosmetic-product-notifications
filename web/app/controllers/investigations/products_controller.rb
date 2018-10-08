@@ -2,21 +2,19 @@ class Investigations::ProductsController < ApplicationController
   include CountriesHelper
   include ProductsHelper
 
-  before_action :set_investigation, only: %i[index search new create suggested add destroy]
+  before_action :set_investigation, only: %i[index new create suggested add destroy]
   before_action :set_product, only: %i[destroy]
-  before_action :create_product, only: %i[new create]
-  before_action :set_countries, only: %i[search new]
+  before_action :create_product, only: %i[new create suggested]
+  before_action :set_countries, only: %i[new]
 
   # GET /investigations/1/products
   def index; end
 
-  # GET /investigations/1/products/search
-  def search
-    @product = Product.new
-  end
-
   # GET /investigations/1/products/new
-  def new; end
+  def new;
+    excluded_product_ids = @investigation.products.map(&:id)
+    @products = advanced_product_search(@product, excluded_product_ids)
+  end
 
   # POST /investigations/1/products/add
   def add
@@ -26,9 +24,8 @@ class Investigations::ProductsController < ApplicationController
 
   # GET /investigations/1/products/suggested
   def suggested
-    excluded_product_ids = params[:excluded_products].split(",")
-    @products = advanced_product_search(20)
-                .reject { |product| excluded_product_ids.include?(product.id) }[0...4]
+    excluded_product_ids = params[:excluded_products].split(",").map(&:to_i)
+    @products = advanced_product_search(@product, excluded_product_ids)
     render partial: "products/suggested"
   end
 
@@ -61,22 +58,5 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
-  end
-
-  def set_countries
-    @countries = all_countries
-  end
-
-  def set_product
-    @product = Product.find(params[:id])
-  end
-
-  def create_product
-    if params[:product]
-      @product = Product.new(product_params)
-      @product.source = UserSource.new(user: current_user)
-    else
-      @product = Product.new
-    end
   end
 end

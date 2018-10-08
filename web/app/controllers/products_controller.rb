@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_product, only: %i[show edit update destroy]
-  before_action :create_product, only: %i[create]
+  before_action :create_product, only: %i[new create suggested]
   before_action :set_countries, only: %i[create new edit]
 
   # GET /products
@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
 
   # GET /products/suggested
   def suggested
-    @products = advanced_product_search(4)
+    @products = advanced_product_search(@product)
     render partial: "suggested"
   end
 
@@ -58,7 +58,7 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @product = Product.new
+    @products = advanced_product_search(@product)
   end
 
   # GET /products/1/edit
@@ -100,21 +100,5 @@ class ProductsController < ApplicationController
       format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
       format.json { head :no_content }
     end
-  end
-
-private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def create_product
-    @product = Product.new(product_params)
-    @product.source = UserSource.new(user: current_user)
-  end
-
-  def set_product
-    @product = Product.find(params[:id])
-  end
-
-  def set_countries
-    @countries = all_countries
   end
 end

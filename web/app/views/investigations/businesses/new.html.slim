@@ -12,10 +12,6 @@
           do |form|
         h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
           | Business details
-        = render "businesses/core_params", form: form, business: @business
-        .govuk-form-group
-          = form.submit "Search businesses", id: "search-button", class: "govuk-button", \
-              'formmethod': "get", 'formaction': 'new'
-          = form.submit "Save business", class: "govuk-button"
+        = render "businesses/form", form: form, business: @business, search: true
     .govuk-grid-column-one-half
       = render "businesses/suggestions_container"
