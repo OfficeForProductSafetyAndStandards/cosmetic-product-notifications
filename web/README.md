@@ -120,10 +120,6 @@ This sets the username and password for the HTTP Basic Authentication.
 
 See the AWS account section in [the root README](../README.md#aws) to get these values.
 
-    cf set-env mspsds-web NOTIFY_API_KEY XXX
-
-See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value.
-
     cf set-env mspsds-web COMPANIES_HOUSE_API_KEY XXX
 
 See the Companies House account section in [the root README](../README.md#companies-house) to get this value.

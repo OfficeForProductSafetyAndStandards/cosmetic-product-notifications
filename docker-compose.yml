@@ -52,7 +52,7 @@ services:
     build:
       context: .
       dockerfile: ./worker/Dockerfile
-    command: bin/sidekiq
+    command: bin/sidekiq -C config/sidekiq.yml
     volumes:
       - bundle-cache:/usr/local/bundle
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
