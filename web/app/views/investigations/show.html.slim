@@ -58,9 +58,9 @@ hr.govuk-section-break.govuk-section-break--m
   ul.govuk-tabs__list
     - tabs.each_with_index do |tab, index|
       li.govuk-tabs__list-item
-        a.govuk-tabs__tab href="##{tab.id}" class =("govuk-tabs__tab--selected" if index == 0)
+        a.govuk-tabs__tab href="##{tab.id}" class =("govuk-tabs__tab--selected" if index.zero?)
           = tab.title
-  - for tab in tabs
+  - tabs.each do |tab|
     section.govuk-tabs__panel id=tab.id
       h2.govuk-heading-l = tab.title
       = render tab.partial
