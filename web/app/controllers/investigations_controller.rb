@@ -16,15 +16,6 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1
   # GET /investigations/1.json
   def show
-    @tabs = [
-      Tab.new("activity", "Activity", "activity"),
-      Tab.new("contacts", "Contacts", "contacts"),
-      Tab.new("attachments", "Attachments", "attachments"),
-      Tab.new("products", "Products", "products"),
-      Tab.new("businesses", "Businesses", "businesses"),
-      Tab.new("related", "Related", "related"),
-      Tab.new("full-detail", "Full detail", "details")
-    ]
     respond_to do |format|
       format.html
       format.pdf do

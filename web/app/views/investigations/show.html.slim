@@ -24,11 +24,14 @@
       = @investigation.risk_overview
     p.govuk-body[class="govuk-!-margin-bottom-1"]
       = @investigation.description
-    / TODO: These exist on the design but don't lead any where yet. Add with links, or delete if changed
-    / https://mspsds-design-prototype.herokuapp.com/case
-    / p
-    /   a href="" Edit risk details
-    /   a style="margin-left: 20px" href="" View assessment
+  / TODO: MSPSDS-604
+  / and/or
+  / TODO: MSPSDS-532
+  / These exist on the design but don't lead any where yet. Add with links, or delete if changed
+  / https://mspsds-design-prototype.herokuapp.com/case
+  / p
+  /   a href="" Edit risk details
+  /   a style="margin-left: 20px" href="" View assessment
   .govuk-grid-column-one-quarter
     h2.govuk-heading-m class="govuk-!-font-weight-regular"
       | Risk level
@@ -40,17 +43,26 @@
     p.govuk-body class="govuk-!-font-size-48 govuk-!-font-weight-bold"
       = @investigation.sensitivity&.titleize
 hr.govuk-section-break.govuk-section-break--m
+- tabs = [\
+  tab("activity", "Activity", "investigations/tabs/activity"), \
+  tab("contacts", "Contacts", "investigations/tabs/contacts"), \
+  tab("attachments", "Attachments", "investigations/tabs/attachments"), \
+  tab("products", "Products", "investigations/tabs/products"), \
+  tab("businesses", "Businesses", "investigations/tabs/businesses"), \
+  tab("related", "Related", "investigations/tabs/related"), \
+  tab("full-detail", "Full detail", "investigations/tabs/details") \
+]
 .govuk-tabs data-module="tabs"
   h2.govuk-tabs__title
-    | Contents
+  | Contents
   ul.govuk-tabs__list
-    - @tabs.each_with_index do |tab, index|
+    - tabs.each_with_index do |tab, index|
       li.govuk-tabs__list-item
         a.govuk-tabs__tab href="##{tab.id}" class =("govuk-tabs__tab--selected" if index == 0)
           = tab.title
-  - for tab in @tabs
+  - for tab in tabs
     section.govuk-tabs__panel id=tab.id
       h2.govuk-heading-l = tab.title
-      = render "investigations/tabs/#{tab.content}"
+      = render tab.partial
 .no-print[class="govuk-!-margin-top-3"]
   = link_to "Create PDF document", investigation_path(@investigation, format: :pdf), class: "no-print"

@@ -1,4 +1,11 @@
 module ApplicationHelper
+  class Tab < Struct.new :id, :title, :partial
+  end
+
+  def tab(id, title, partial)
+    Tab.new id, title, partial
+  end
+
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : "unselected"
