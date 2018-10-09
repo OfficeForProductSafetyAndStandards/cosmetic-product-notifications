@@ -32,7 +32,7 @@ class KeycloakClient
     @client.url_login_redirect(redirect_uri)
   end
 
-  def url_user_account
+  def user_account_url
     @client.url_user_account
   end
 

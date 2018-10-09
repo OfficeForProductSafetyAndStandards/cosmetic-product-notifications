@@ -1,5 +1,5 @@
 module UserManagementHelper
-  def url_user_account
-    KeycloakClient.instance.url_user_account
+  def user_account_url
+    KeycloakClient.instance.user_account_url
   end
 end
