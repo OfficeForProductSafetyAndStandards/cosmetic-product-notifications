@@ -6,6 +6,10 @@
 
 ## Getting Setup
 
+This project includes a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules), so when running `git clone` you need to add the `--recurse-submodules` option.
+If you have already pulled, you can run `git submodule init` and then `git submodule update --recursive` instead. 
+You might also need to run `git submodule update --recursive` if the submodule is updated because of a pull.
+
 Install Docker: https://docs.docker.com/install/.
 
 Increase the memory available to Docker to at least 4GB (instructions for [Mac](https://docs.docker.com/docker-for-mac/#advanced), [Windows](https://docs.docker.com/docker-for-windows/#advanced)).
