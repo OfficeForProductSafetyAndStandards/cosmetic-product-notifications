@@ -27,6 +27,8 @@ services:
     build:
       context: ./keycloak
       dockerfile: Dockerfile
+    volumes:
+    - ./keycloak/govuk-theme/govuk/:/opt/jboss/keycloak/themes/govuk/
     env_file:
       - .env.keycloak
     depends_on:
