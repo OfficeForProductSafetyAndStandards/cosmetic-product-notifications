@@ -4,7 +4,7 @@
 = render "investigation_heading", investigation: @investigation
 h2.govuk-heading-l[class="govuk-!-margin-bottom-2"]
   | Manage products
-= link_to "Add product", search_investigation_products_path(@investigation)
+= link_to "Add product", new_investigation_product_path(@investigation)
 div[class="govuk-!-padding-top-8"]
   - if @investigation.products.any?
     - @investigation.products.each do |product|
