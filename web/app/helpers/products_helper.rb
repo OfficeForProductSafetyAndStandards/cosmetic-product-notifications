@@ -38,7 +38,14 @@ module ProductsHelper
       }
       used_search_fields = possible_search_fields.reject { |_, value| value.blank? }
       fuzzy_match = used_search_fields.map do |field, value|
-        { fuzzy: { "#{field}": value } }
+        {
+          match: {
+            "#{field}": {
+              query: value,
+              fuzziness: "AUTO"
+            }
+          }
+        }
       end
       Product.search(query: {
         bool: {
