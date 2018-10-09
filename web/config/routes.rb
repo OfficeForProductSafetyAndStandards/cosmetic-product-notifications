@@ -21,6 +21,12 @@ Rails.application.routes.draw do
       get :assign
       post :update_assignee
     end
+    collection do
+      get 'new/reporter-type', to: 'investigations#new_reporter_type', as: :new_reporter_type
+    end
+    collection do
+      get 'new/reporter', to: 'investigations#new_reporter', as: :new_reporter
+    end
     resources :activities, only: %i[index new create]
     resources :products, only: %i[index new create destroy], controller: "investigations/products" do
       collection do
