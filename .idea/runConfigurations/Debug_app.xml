@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Remote Dubug" type="RubyRemoteDebugConfigurationType" factoryName="Ruby remote debug" singleton="true">
+  <configuration default="false" name="Debug app" type="RubyRemoteDebugConfigurationType" factoryName="Ruby remote debug" singleton="true">
     <RUBY_REMOTE_DEBUG_CONFIG NAME="REMOTE_HOST" VALUE="localhost" />
     <RUBY_REMOTE_DEBUG_CONFIG NAME="PORT" VALUE="1234" />
     <RUBY_REMOTE_DEBUG_CONFIG NAME="DISPATCHER_PORT" VALUE="26162" />

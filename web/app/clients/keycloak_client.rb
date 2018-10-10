@@ -32,6 +32,10 @@ class KeycloakClient
     @client.url_login_redirect(redirect_uri)
   end
 
+  def user_account_url
+    @client.url_user_account
+  end
+
   def exchange_code_for_token(code, redirect_uri)
     @client.get_token_by_code(code, redirect_uri)
   end
