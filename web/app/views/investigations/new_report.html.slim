@@ -1,0 +1,50 @@
+- content_for :page_title, "Report unsafe product - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to list", investigations_path, class: "govuk-back-link"
+main#main-content.govuk-main-wrapper role="main"
+  h1.govuk-heading-xl
+    span.govuk-caption-xl Report an unsafe product
+    | Who’s reporting?
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_with(model: @investigation, local: true, url: new_report_details_investigations_url) do |form|
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Reporter type?
+          .govuk-form-group
+            .govuk-radios.govuk-radios--conditional data-module="radios"
+              .govuk-radios__item
+                = form.radio_button :investigation, :reporter_type, value: "Consumer", class: "govuk-radios__input"
+                = form.label :investigation, :reporter_type, value: "Consumer", class:"govuk-label govuk-radios__label"
+                  | Consumer
+              .govuk-radios__item
+                = form.radio_button :investigation, :reporter_type, value: "Business", class: "govuk-radios__input"
+                = form.label :investigation, :reporter_type, value: "Business", class:"govuk-label govuk-radios__label"
+                  | Business
+              .govuk-radios__item
+                = form.radio_button :investigation, :reporter_type, value: "Local authority (Trading standards)",\
+                        class: "govuk-radios__input"
+                = form.label :investigation, :reporter_type, value: "Local authority (Trading standards)",\
+                        class:"govuk-label govuk-radios__label"
+                  | Local authority (Trading standards)
+              .govuk-radios__item
+                = form.radio_button :investigation, :reporter_type, value: "Trade body", class: "govuk-radios__input"
+                = form.label :investigation, :reporter_type, value: "Trade body", class:"govuk-label govuk-radios__label"
+                  | Trade body
+              .govuk-radios__item
+                = form.radio_button :investigation, :reporter_type, value: "Other MSA", class: "govuk-radios__input"
+                = form.label :investigation, :reporter_type, value: "Other MSA", class:"govuk-label govuk-radios__label"
+                  | Other MSA
+              .govuk-radios__item
+                = form.radio_button :investigation, :reporter_type, value: "Other", class: "govuk-radios__input",\
+                        "data-aria-controls": "conditional-reporter-type-other"
+                = form.label :investigation, :reporter_type, value: "Other", class:"govuk-label govuk-radios__label"
+                  | Other
+              #conditional-reporter-type-other.govuk-radios__conditional.govuk-radios__conditional--hidden
+                .govuk-form-group
+                  span#other-reporter-hint.govuk-hint class:"govuk-!-width-two-thirds"
+                    | Please give details
+                  = form.text_field :other_reporter, class: "govuk-input govuk-!-width-two-thirds",\
+                    "aria-describedby":"other-reporter-hint"
+        button.govuk-button type="submit"
+          | Continue

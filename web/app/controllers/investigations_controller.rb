@@ -29,12 +29,14 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.new
   end
 
-  # GET /investigations/new/reporter-type
-  def new_reporter_type; end
-
-  # GET /investigations/new/reporter
-  def new_reporter
+  # GET /investigations/new_report
+  def new_report
     @investigation = Investigation.new
+  end
+
+  # POST /investigations/new_report_details
+  def new_report_details
+    @investigation = Investigation.new(investigation_params)
   end
 
   # GET /investigations/1/edit
