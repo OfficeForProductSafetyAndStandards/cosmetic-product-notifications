@@ -135,6 +135,7 @@ private
   def investigation_params
     params.require(:investigation).permit(
       :title, :description, :risk_overview, :image, :risk_level, :sensitivity, :is_closed,
+      :reporter_name, :reporter_phone_number, :reporter_email_address, :reporter_type, :reporter_other_details,
       product_ids: [],
       business_ids: []
     )
