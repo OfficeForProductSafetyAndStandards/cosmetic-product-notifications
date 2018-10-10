@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_18_151724) do
+ActiveRecord::Schema.define(version: 2018_10_10_105911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,11 @@ ActiveRecord::Schema.define(version: 2018_09_18_151724) do
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "is_closed", default: false
+    t.string "reporter_email_address"
+    t.string "reporter_name"
+    t.text "reporter_other_details"
+    t.string "reporter_phone_number"
+    t.string "reporter_type"
     t.integer "risk_level"
     t.string "risk_overview"
     t.integer "sensitivity"
