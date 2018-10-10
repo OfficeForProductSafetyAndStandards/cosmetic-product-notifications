@@ -34,8 +34,9 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.new
   end
 
-  # POST /investigations/new_report_details
+  # POST and GET /investigations/new_report_details
   def new_report_details
+    return redirect_to investigations_path if request.get?
     @investigation = Investigation.new(investigation_params)
   end
 

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     collection do
       get :new_report
       post :new_report_details
+      get :new_report_details
     end
     resources :activities, only: %i[index new create]
     resources :products, only: %i[index new create destroy], controller: "investigations/products" do
