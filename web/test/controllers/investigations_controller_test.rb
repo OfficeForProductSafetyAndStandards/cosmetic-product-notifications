@@ -71,7 +71,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should redirect back to select reporter type with an error param if that field is empty" do
     post new_report_details_investigations_url, params: {
-      investigation:{
+      investigation: {
         reporter_type: nil
       }
     }
@@ -80,7 +80,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not redirect back to select reporter type if that field exists" do
     post new_report_details_investigations_url, params: {
-      investigation:{
+      investigation: {
         reporter_type: 'Business'
       }
     }
@@ -91,5 +91,4 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     get new_report_details_investigations_url
     assert_redirected_to investigations_path
   end
-
 end

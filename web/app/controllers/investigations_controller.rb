@@ -39,6 +39,7 @@ class InvestigationsController < ApplicationController
   # POST and GET /investigations/new_report_details
   def new_report_details
     return redirect_to investigations_path if request.get?
+
     @investigation = Investigation.new(investigation_params)
     @investigation.validate
     if @investigation.errors[:reporter_type].any?
