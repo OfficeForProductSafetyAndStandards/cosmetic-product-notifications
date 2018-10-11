@@ -43,17 +43,6 @@
     p.govuk-body class="govuk-!-font-size-48 govuk-!-font-weight-bold"
       = @investigation.sensitivity&.titleize
 hr.govuk-section-break.govuk-section-break--m
-.govuk-tabs data-module="tabs"
-  h2.govuk-tabs__title
-  | Contents
-  ul.govuk-tabs__list
-    - @investigation.tabs.each_with_index do |tab, index|
-      li.govuk-tabs__list-item
-        a.govuk-tabs__tab href="##{tab.id}" class =("govuk-tabs__tab--selected" if index.zero?)
-          = tab.title
-  - @investigation.tabs.each do |tab|
-    section.govuk-tabs__panel id=tab.id
-      h2.govuk-heading-l = tab.title
-      = render tab.partial
+= render "tabs", tabs: @investigation.tabs
 .no-print[class="govuk-!-margin-top-3"]
   = link_to "Create PDF document", investigation_path(@investigation, format: :pdf)
