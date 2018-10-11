@@ -43,26 +43,51 @@
     p.govuk-body class="govuk-!-font-size-48 govuk-!-font-weight-bold"
       = @investigation.sensitivity&.titleize
 hr.govuk-section-break.govuk-section-break--m
-- tabs = [\
-  tab("activity", "Activity", "investigations/tabs/activity"), \
-  tab("contacts", "Contacts", "investigations/tabs/contacts"), \
-  tab("attachments", "Attachments", "investigations/tabs/attachments"), \
-  tab("products", "Products", "investigations/tabs/products"), \
-  tab("businesses", "Businesses", "investigations/tabs/businesses"), \
-  tab("related", "Related", "investigations/tabs/related"), \
-  tab("full-detail", "Full detail", "investigations/tabs/details") \
-]
 .govuk-tabs data-module="tabs"
   h2.govuk-tabs__title
   | Contents
   ul.govuk-tabs__list
-    - tabs.each_with_index do |tab, index|
-      li.govuk-tabs__list-item
-        a.govuk-tabs__tab href="##{tab.id}" class =("govuk-tabs__tab--selected" if index.zero?)
-          = tab.title
-  - tabs.each do |tab|
-    section.govuk-tabs__panel id=tab.id
-      h2.govuk-heading-l = tab.title
-      = render tab.partial
+    li.govuk-tabs__list-item
+      a.govuk-tabs__tab href="#activity" class ="govuk-tabs__tab--selected"
+        = "Activity"
+    li.govuk-tabs__list-item
+      a.govuk-tabs__tab href="#contacts"
+        = "Contacts"
+    li.govuk-tabs__list-item
+      a.govuk-tabs__tab href="#attachments"
+        = "Attachments"
+    li.govuk-tabs__list-item
+      a.govuk-tabs__tab href="#products"
+        = "Products"
+    li.govuk-tabs__list-item
+      a.govuk-tabs__tab href="#businesses"
+        = "Businesses"
+    li.govuk-tabs__list-item
+      a.govuk-tabs__tab href="#related"
+        = "Related"
+    li.govuk-tabs__list-item
+      a.govuk-tabs__tab href="#full-detail"
+        = "Full detail"
+  section.govuk-tabs__panel id="activity"
+    h2.govuk-heading-l = "Activity"
+    = render "investigations/tabs/activity"
+  section.govuk-tabs__panel id="contacts"
+    h2.govuk-heading-l = "Contacts"
+    = render "investigations/tabs/contacts"
+  section.govuk-tabs__panel id="attachments"
+    h2.govuk-heading-l = "Attachments"
+    = render "investigations/tabs/attachments"
+  section.govuk-tabs__panel id="products"
+    h2.govuk-heading-l = "Products"
+    = render "investigations/tabs/products"
+  section.govuk-tabs__panel id="businesses"
+    h2.govuk-heading-l = "Businesses"
+    = render "investigations/tabs/businesses"
+  section.govuk-tabs__panel id="related"
+    h2.govuk-heading-l = "Related"
+    = render "investigations/tabs/related"
+  section.govuk-tabs__panel id="full-detail"
+    h2.govuk-heading-l = "Full detail"
+    = render "investigations/tabs/details"
 .no-print[class="govuk-!-margin-top-3"]
   = link_to "Create PDF document", investigation_path(@investigation, format: :pdf), class: "no-print"
