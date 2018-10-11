@@ -1,0 +1,10 @@
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-full
+    = render "activities_summary", activities: @investigation.activities.limit(3)
+    = link_to "View all activity", investigation_activities_path(@investigation), class: "govuk-!-margin-right-3"
+    = link_to "New activity", new_investigation_activity_path(@investigation)
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-full
+    h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+      | History
+    = render "history", versions: @investigation.versions

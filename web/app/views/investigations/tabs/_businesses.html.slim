@@ -1,0 +1,9 @@
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-full
+    - if @investigation.businesses.any?
+      - @investigation.businesses.each do |business|
+        = render "business_summary", business: business, allow_removing: false
+    - else
+      p
+        | No businesses.
+    = link_to "Manage businesses", investigation_businesses_path(@investigation), class: "no-print"
