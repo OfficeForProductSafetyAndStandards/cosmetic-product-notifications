@@ -144,6 +144,9 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
+    if params[:investigation][:reporter_type]=='Other'
+      params[:investigation][:reporter_type] = params[:investigation][:other_reporter]
+    end
     params.require(:investigation).permit(
       :title, :description, :risk_overview, :image, :risk_level, :sensitivity, :is_closed,
       :reporter_name, :reporter_phone_number, :reporter_email_address, :reporter_type, :reporter_other_details,
