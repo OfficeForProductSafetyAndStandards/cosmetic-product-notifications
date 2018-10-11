@@ -29,7 +29,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
           title: @investigation.title,
           description: @investigation.description,
           is_closed: @investigation.is_closed,
-          source: @investigation.source
+          source: @investigation.source,
+          reporter_type: @investigation.reporter_type
         }
       }
     end
@@ -53,7 +54,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         title: @investigation.title,
         description: @investigation.description,
         is_closed: @investigation.is_closed,
-        source: @investigation.source
+        source: @investigation.source,
+        reporter_type: @investigation.reporter_type
       }
     }
     assert_redirected_to investigation_url(@investigation)
@@ -66,4 +68,28 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to investigations_url
   end
+
+  test "should redirect back to select reporter type with an error param if that field is empty" do
+    post new_report_details_investigations_url, params: {
+      investigation:{
+        reporter_type: nil
+      }
+    }
+    assert_redirected_to new_report_investigations_url(error: true)
+  end
+
+  test "should not redirect back to select reporter type if that field exists" do
+    post new_report_details_investigations_url, params: {
+      investigation:{
+        reporter_type: 'Business'
+      }
+    }
+    assert_response :success
+  end
+
+  test "should redirect to main page if user attempts to access the flow outside its beginning page" do
+    get new_report_details_investigations_url
+    assert_redirected_to investigations_path
+  end
+
 end

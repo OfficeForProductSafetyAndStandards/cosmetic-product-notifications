@@ -4,6 +4,7 @@ one:
   title: MyText
   description: MyText
   is_closed: false
+  reporter_type: Business
 
 two:
   title: MyText
