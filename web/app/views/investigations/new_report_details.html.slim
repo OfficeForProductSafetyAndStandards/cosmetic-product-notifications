@@ -4,7 +4,9 @@
 main#main-content.govuk-main-wrapper role="main"
   h1.govuk-heading-xl
     span.govuk-caption-xl Report an unsafe product
-    | undefined reporting
+    = @investigation.reporter_type
+    br
+    | reporting
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_with(model: @investigation, local: true, url: investigations_url) do |form|

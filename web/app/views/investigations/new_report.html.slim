@@ -48,7 +48,7 @@ main#main-content.govuk-main-wrapper role="main"
                   | Other
               #conditional-reporter-type-other.govuk-radios__conditional.govuk-radios__conditional--hidden
                 .govuk-form-group
-                  span#other-reporter-hint.govuk-hint class:"govuk-!-width-two-thirds"
+                  span#other-reporter-hint.govuk-hint [class="govuk-!-width-two-thirds"]
                     | Please give details
                   = form.text_field :other_reporter, class: "govuk-input govuk-!-width-two-thirds",\
                     "aria-describedby":"other-reporter-hint"
