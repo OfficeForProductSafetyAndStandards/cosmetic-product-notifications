@@ -1,9 +1,14 @@
-.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-  .govuk-grid-column-full
-    - if @investigation.products.any?
-      - @investigation.products.each do |product|
-        = render "product_summary", product: product
-    - else
-      p
-        | No products.
-    = link_to "Manage products", investigation_products_path(@investigation), class: "no-print"
+- id = "products"
+- name = "Products"
+section.govuk-tabs__panel id=id
+  h2.govuk-heading-l
+    = name
+  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+    .govuk-grid-column-full
+      - if @investigation.products.any?
+        - @investigation.products.each do |product|
+          = render "product_summary", product: product
+      - else
+        p
+          | No products.
+      = link_to "Manage products", investigation_products_path(@investigation), class: "no-print"
