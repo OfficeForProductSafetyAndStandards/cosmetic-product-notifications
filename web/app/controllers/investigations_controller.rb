@@ -32,12 +32,19 @@ class InvestigationsController < ApplicationController
   # GET /investigations/new_report
   def new_report
     @investigation = Investigation.new
+    @investigation.errors.add(:reporter_type, :invalid, message: 'Please select reporter type') if params[:error]
+    @investigation
   end
 
   # POST and GET /investigations/new_report_details
   def new_report_details
     return redirect_to investigations_path if request.get?
     @investigation = Investigation.new(investigation_params)
+    @investigation.validate
+    if @investigation.errors[:reporter_type].any?
+      redirect_to(new_report_investigations_url(error: true))
+    end
+    @investigation
   end
 
   # GET /investigations/1/edit

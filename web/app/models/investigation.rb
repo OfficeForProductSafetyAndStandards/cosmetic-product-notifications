@@ -11,6 +11,7 @@ class Investigation < ApplicationRecord
   end
 
   validates :title, presence: true
+  validates :reporter_type, presence: true
   default_scope { order(updated_at: :desc) }
 
   has_many :investigation_products, dependent: :destroy
