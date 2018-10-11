@@ -1,8 +1,4 @@
-- id = "businesses"
-- name = "Businesses"
-section.govuk-tabs__panel id=id
-  h2.govuk-heading-l
-    = name
+= render "tab", id: "businesses", name: "Businesses"
   .govuk-grid-row[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-full
       - if @investigation.businesses.any?

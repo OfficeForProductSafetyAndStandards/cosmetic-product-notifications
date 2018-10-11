@@ -1,8 +1,4 @@
-- id = "activity"
-- name = "Activity"
-section.govuk-tabs__panel id=id
-  h2.govuk-heading-l
-    = name
+= render "tab", id: "activity", name: "Activity" do
   .govuk-grid-row[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-full
       = render "activities_summary", activities: @investigation.activities.limit(3)

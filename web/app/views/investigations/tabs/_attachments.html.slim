@@ -1,8 +1,4 @@
-- id = "attachments"
-- name = "Attachments"
-section.govuk-tabs__panel id=id
-  h2.govuk-heading-l
-    = name
+= render "tab", id: "attachments", name: "Attachments" do
   .govuk-grid-row[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-full
       = render "images_summary", parent: @investigation
