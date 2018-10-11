@@ -70,6 +70,18 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
+  create_table "incidents", id: :serial, force: :cascade do |t|
+    t.string "affected_party"
+    t.datetime "created_at", null: false
+    t.date "date"
+    t.text "description"
+    t.integer "investigations_id"
+    t.string "location"
+    t.string "type"
+    t.datetime "updated_at", null: false
+    t.index ["investigations_id"], name: "index_incidents_on_investigations_id"
+  end
+
   create_table "investigation_businesses", id: :serial, force: :cascade do |t|
     t.integer "business_id"
     t.datetime "created_at", null: false
@@ -160,4 +172,5 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
   add_foreign_key "reporters", "investigations"
+  add_foreign_key "incidents", "investigations", column: "investigations_id"
 end

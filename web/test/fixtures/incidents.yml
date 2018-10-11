@@ -1,0 +1,8 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+fire:
+  type: fire
+  description: The matchstick was on fire for 9.8s
+  date: 2018-10-11
+  affected_party: The Little Match Girl
+  location: City
