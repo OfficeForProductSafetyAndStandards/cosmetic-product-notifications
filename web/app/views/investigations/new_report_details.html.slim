@@ -24,11 +24,11 @@ main#main-content.govuk-main-wrapper role="main"
               | Email address
             = form.text_field :reporter_email_address, class: "govuk-input govuk-!-width-two-thirds"
           .govuk-form-group
-            = form.label :reporter_other_detail, class: "govuk-label"
+            = form.label :reporter_other_details, class: "govuk-label"
               | Other details
             span#reporter-other-detail-hint.govuk-hint
               | Location, business/authority name, reference numbers etc
-            = form.text_area :reporter_other_detail, class: "govuk-textarea", "aria-describedby": "reporter-other-detail-hint", rows: 5
+            = form.text_area :reporter_other_details, class: "govuk-textarea", "aria-describedby": "reporter-other-detail-hint", rows: 5
           .govuk-form-group
             =form.hidden_field :reporter_type
         button.govuk-button type="submit"
