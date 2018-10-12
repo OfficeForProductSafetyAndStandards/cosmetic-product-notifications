@@ -22,7 +22,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create investigation" do
+  test "should create investigation and redirect to confirmation page" do
     assert_difference("Investigation.count") do
       post investigations_url, params: {
         investigation: {
@@ -34,7 +34,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to investigation_url(Investigation.first)
+    assert_redirected_to new_report_confirmation_investigations_path
   end
 
   test "should show investigation" do
