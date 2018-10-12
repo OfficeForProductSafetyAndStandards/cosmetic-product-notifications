@@ -91,4 +91,14 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     get new_report_details_investigations_url
     assert_redirected_to investigations_path
   end
+
+  test "should prompt to select type if receives errors" do
+    get new_report_investigations_url(error: true)
+    assert_not_empty(response.body.scan('Please select reporter type'))
+  end
+
+  test "should not prompt to select type if receives no errors" do
+    get new_report_investigations_url
+    assert_empty(response.body.scan('Please select reporter type'))
+  end
 end
