@@ -42,6 +42,11 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should generate investigation pdf" do
+    get investigation_url(@investigation) + ".pdf"
+    assert_response :success
+  end
+
   test "should get edit" do
     get edit_investigation_url(@investigation)
     assert_response :success
