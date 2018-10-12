@@ -61,9 +61,9 @@ html.govuk-template.app-html-class[lang="en"]
             | Menu
           nav
             ul#navigation.govuk-header__navigation[aria-label="Top Level Navigation"]
-              - if user_signed_in? && policy(User).index?
+              - if user_signed_in?
                 li.govuk-header__navigation-item
-                  = link_to "View users", "/users", class: "govuk-header__link"
+                  = link_to "Manage your account", user_account_url, class: "govuk-header__link", target: "_blank"
               - if !login_page?
                 li.govuk-header__navigation-item
                   - if user_signed_in?

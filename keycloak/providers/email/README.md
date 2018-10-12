@@ -31,7 +31,7 @@ To build and package the project:
 ## Deployment
 
 By default, this project is built and deployed automatically as part of the main Keycloak deployment process
-[described here](../README.md#deployment).
+[described here](../../README.md#deployment).
 
 ### Deploying manually
 
