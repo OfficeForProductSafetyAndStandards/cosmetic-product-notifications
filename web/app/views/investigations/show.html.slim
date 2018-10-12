@@ -43,6 +43,14 @@
     p.govuk-body class="govuk-!-font-size-48 govuk-!-font-weight-bold"
       = @investigation.sensitivity&.titleize
 hr.govuk-section-break.govuk-section-break--m
-= render "tabs", tabs: @investigation.tabs
+= render "tabs", tabs: [\
+  Tab.new("activity", "Activity", "investigations/tabs/activity"), \
+  Tab.new("contacts", "Contacts", "investigations/tabs/contacts"), \
+  Tab.new("attachments", "Attachments", "investigations/tabs/attachments"), \
+  Tab.new("products", "Products", "investigations/tabs/products"), \
+  Tab.new("businesses", "Businesses", "investigations/tabs/businesses"), \
+  Tab.new("related", "Related", "investigations/tabs/related"), \
+  Tab.new("full-detail", "Full detail", "investigations/tabs/details")\
+]
 .no-print[class="govuk-!-margin-top-3"]
   = link_to "Create PDF document", investigation_path(@investigation, format: :pdf)
