@@ -43,7 +43,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should generate investigation pdf" do
-    get investigation_url(@investigation) + ".pdf"
+    get investigation_url(@investigation, format: :pdf)
     assert_response :success
   end
 
