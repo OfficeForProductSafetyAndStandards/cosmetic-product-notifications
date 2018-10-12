@@ -1,0 +1,68 @@
+- content_for :page_title, "Add Incident - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+h1.govuk-heading-xl
+  span.govuk-caption-xl
+    / TODO MSPSDS-522 / MSPSDS-524 Get the case Id @investigation.caseId ??
+    = "Case: 1810-0001"
+  | Add incident
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: @incident, url: investigation_incidents_url(@investigation) do |form|
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | What happened?
+        .govuk-form-group
+          = form.label :type, "Incident type", class: "govuk-hint"
+          = form.text_field :type, class: "govuk-input govuk-!-width-two-thirds", \
+            "aria-describedby": "incident-type-hint"
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | How?
+        .govuk-form-group
+          = form.label :description, "Incident / event description", class: "govuk-hint"
+          = form.text_area :description, class: "govuk-textarea govuk-!-width-two-thirds", \
+            "aria-describedby": "incident-description-hint", rows: "5"
+      .govuk-form-group
+        fieldset.govuk-fieldset aria-describedby="incident-date-hint" role="group"
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | When did it happen?
+          span#incident-date-hint.govuk-hint
+            | For example, 31 3 2018
+          #incident-date.govuk-date-input
+            .govuk-date-input__item
+              .govuk-form-group
+                = form.label "date(3i)", "Day", class: "govuk-label govuk-date-input__label"
+                = form.text_field "date(3i)", \
+                  class: "govuk-input govuk-date-input__input govuk-input--width-2", \
+                  pattern: "[0-9]*", \
+                  type: "number"
+            .govuk-date-input__item
+              .govuk-form-group
+                = form.label "date(2i)", "Month", class: "govuk-label govuk-date-input__label"
+                = form.text_field "date(2i)", \
+                  class: "govuk-input govuk-date-input__input govuk-input--width-2", \
+                  pattern: "[0-9]*", \
+                  type: "number"
+            .govuk-date-input__item
+              .govuk-form-group
+                = form.label "date(1i)", "Year", class: "govuk-label govuk-date-input__label"
+                = form.text_field "date(1i)", \
+                  class: "govuk-input govuk-date-input__input govuk-input--width-2", \
+                  pattern: "[0-9]*", \
+                  type: "number"
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Who to?
+        .govuk-form-group
+          = form.label :affected_party, "Affected party", class: "govuk-hint"
+          = form.text_field :affected_party, class: "govuk-input govuk-!-width-two-thirds", \
+                      "aria-describedby": "incident-type-hint"
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Where did it happen?
+        .govuk-form-group
+          = form.label :location, "Location", class: "govuk-hint"
+          = form.text_field :location, class: "govuk-input govuk-!-width-two-thirds", \
+                      "aria-describedby": "incident-type-hint"
+      = form.submit "Continue", class: "govuk-button"

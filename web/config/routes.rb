@@ -38,6 +38,9 @@ Rails.application.routes.draw do
         post :companies_house
       end
     end
+
+    resources :incidents, only: %i[new create edit] do
+    end
   end
 
   resources :businesses do

@@ -21,7 +21,7 @@ class Investigation < ApplicationRecord
   has_many :activities, dependent: :destroy
   belongs_to_active_hash :assignee, class_name: "User", optional: true
 
-  has_many :incidents, depeendent: :destroy
+  has_many :incidents, dependent: :destroy
 
   has_many_attached :documents
   has_many_attached :images
