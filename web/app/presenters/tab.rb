@@ -1,9 +1,9 @@
 class Tab
-  attr_reader :id, :title, :partial
+  attr_reader :id, :title, :render
 
-  def initialize(id, title, partial)
+  def initialize(id, title, render)
     @id = id
     @title = title
-    @partial = partial
+    @render = render
   end
 end
