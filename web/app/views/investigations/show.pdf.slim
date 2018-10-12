@@ -55,8 +55,6 @@ table[style="width:100%; text-align:left"]
         td
           = activity.created_at.to_s :db
         td
-          = activity.activity_type.titleize
-        td
           = activity.source.show
         td
-          = activity.notes
+          = activity.description

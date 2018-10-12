@@ -7,6 +7,7 @@ ruby File.read(".ruby-version").strip
 gem "will_paginate"
 
 gem "active_hash"
+gem "active_record-acts_as"
 gem "ar_merge"
 gem "aws-sdk-s3"
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c8ac844"

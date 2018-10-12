@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_18_151724) do
+ActiveRecord::Schema.define(version: 2018_10_12_141713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,12 +36,14 @@ ActiveRecord::Schema.define(version: 2018_09_18_151724) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "activities", id: :serial, force: :cascade do |t|
-    t.integer "activity_type", null: false
+  create_table "activities", force: :cascade do |t|
+    t.bigint "actable_id"
+    t.string "actable_type"
     t.datetime "created_at", null: false
+    t.text "description"
     t.integer "investigation_id"
-    t.text "notes"
     t.datetime "updated_at", null: false
+    t.index ["actable_type", "actable_id"], name: "index_activities_on_actable_type_and_actable_id"
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
   end
 
@@ -68,6 +70,9 @@ ActiveRecord::Schema.define(version: 2018_09_18_151724) do
     t.string "nature_of_business_id"
     t.datetime "updated_at", null: false
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
+  end
+
+  create_table "comment_activities", force: :cascade do |t|
   end
 
   create_table "investigation_businesses", id: :serial, force: :cascade do |t|
