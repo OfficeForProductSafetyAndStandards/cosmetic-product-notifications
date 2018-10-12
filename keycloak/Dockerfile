@@ -14,11 +14,23 @@ RUN curl -Lo ./artifacts/postgresql-42.2.5.jar https://jdbc.postgresql.org/downl
 RUN mkdir -p ./package/modules/system/layers/keycloak/org/postgresql/main
 RUN cp ./artifacts/postgresql-42.2.5.jar ./package/modules/system/layers/keycloak/org/postgresql/main
 
-# Copy and build the GOV.UK Notify email service provider
 COPY ./providers ./providers
-RUN mvn -q --settings ./providers/settings.xml --file ./providers/pom.xml package
 RUN mkdir -p ./package/providers
-RUN cp ./providers/target/notify-email-provider-jar-with-dependencies.jar ./package/providers/notify-email-provider-jar-with-dependencies.jar
+
+# Build and copy the GOV.UK Notify email service provider
+RUN mvn -q --settings ./providers/email/settings.xml --file ./providers/email/pom.xml package
+RUN cp ./providers/email/target/notify-email-provider-jar-with-dependencies.jar ./package/providers/notify-email-provider-jar-with-dependencies.jar
+
+# Build and copy the GOV.UK Notify SMS authenticator provider
+RUN mvn -q --settings ./providers/sms-authenticator/settings.xml --file ./providers/sms-authenticator/pom.xml package
+RUN cp ./providers/sms-authenticator/target/keycloak-sms-authenticator-sns-*.jar ./package/providers/
+
+# Copy the GOV.UK Notify SMS authenticator page templates
+RUN cp ./providers/sms-authenticator/templates/sms-validation.ftl ./package/themes/base/login/
+RUN cp ./providers/sms-authenticator/templates/sms-validation-error.ftl ./package/themes/base/login/
+RUN cp ./providers/sms-authenticator/templates/sms-validation-mobile-number.ftl ./package/themes/base/login/
+
+RUN cat ./providers/sms-authenticator/templates/messages/messages_en.properties >> ./package/themes/base/login/messages/messages_en.properties
 
 
 FROM node as theme-build

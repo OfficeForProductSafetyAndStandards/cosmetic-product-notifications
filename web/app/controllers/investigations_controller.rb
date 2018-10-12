@@ -16,6 +16,7 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1
   # GET /investigations/1.json
   def show
+    @investigation = InvestigationPresenter.new @investigation
     respond_to do |format|
       format.html
       format.pdf do
