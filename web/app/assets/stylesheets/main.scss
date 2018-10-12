@@ -11,6 +11,7 @@ $govuk-font-url-function: 'font-url';
 @import "sortable_columns";
 @import "timeline";
 @import "form";
+@import "block-link";
 
 * {
   box-sizing: border-box;
