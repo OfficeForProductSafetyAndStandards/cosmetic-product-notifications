@@ -30,7 +30,8 @@ main#main-content.govuk-main-wrapper role="main"
               | Other details
             span#reporter-other-detail-hint.govuk-hint
               | Location, business/authority name, reference numbers etc
-            = form.text_area :reporter_other_details, class: "govuk-textarea", "aria-describedby": "reporter-other-detail-hint", rows: 5
+            = form.text_area :reporter_other_details, class: "govuk-textarea", \
+                    "aria-describedby": "reporter-other-detail-hint", rows: 5
           .govuk-form-group
             =form.hidden_field :reporter_type
         button.govuk-button type="submit"

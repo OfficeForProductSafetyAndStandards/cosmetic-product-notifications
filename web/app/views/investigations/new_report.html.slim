@@ -21,36 +21,36 @@ main#main-content.govuk-main-wrapper role="main"
             .govuk-radios.govuk-radios--conditional data-module="radios"
               .govuk-radios__item
                 = form.radio_button :reporter_type, "Consumer", class: "govuk-radios__input"
-                = form.label :reporter_type, "Consumer", class:"govuk-label govuk-radios__label"
+                = form.label :reporter_type, "Consumer", class: "govuk-label govuk-radios__label"
                   | Consumer
               .govuk-radios__item
                 = form.radio_button :reporter_type, "Business", class: "govuk-radios__input"
-                = form.label :reporter_type, "Business", class:"govuk-label govuk-radios__label"
+                = form.label :reporter_type, "Business", class: "govuk-label govuk-radios__label"
                   | Business
               .govuk-radios__item
                 = form.radio_button :reporter_type, "Local authority (Trading standards)",\
                         class: "govuk-radios__input"
                 = form.label :reporter_type, "Local authority (Trading standards)",\
-                        class:"govuk-label govuk-radios__label"
+                        class: "govuk-label govuk-radios__label"
                   | Local authority (Trading standards)
               .govuk-radios__item
                 = form.radio_button :reporter_type, "Trade body", class: "govuk-radios__input"
-                = form.label :reporter_type, "Trade body", class:"govuk-label govuk-radios__label"
+                = form.label :reporter_type, "Trade body", class: "govuk-label govuk-radios__label"
                   | Trade body
               .govuk-radios__item
                 = form.radio_button :reporter_type, "Other MSA", class: "govuk-radios__input"
-                = form.label :reporter_type, "Other MSA", class:"govuk-label govuk-radios__label"
+                = form.label :reporter_type, "Other MSA", class: "govuk-label govuk-radios__label"
                   | Other MSA
               .govuk-radios__item
                 = form.radio_button :reporter_type, "Other", class: "govuk-radios__input",\
                         "data-aria-controls": "conditional-reporter-type-other"
-                = form.label :reporter_type, "Other", class:"govuk-label govuk-radios__label"
+                = form.label :reporter_type, "Other", class: "govuk-label govuk-radios__label"
                   | Other
               #conditional-reporter-type-other.govuk-radios__conditional.govuk-radios__conditional--hidden
                 .govuk-form-group
                   span#other-reporter-hint.govuk-hint [class="govuk-!-width-two-thirds"]
                     | Please give details
                   = form.text_field :other_reporter, class: "govuk-input govuk-!-width-two-thirds",\
-                    "aria-describedby":"other-reporter-hint"
+                    "aria-describedby": "other-reporter-hint"
         button.govuk-button type="submit"
           | Continue
