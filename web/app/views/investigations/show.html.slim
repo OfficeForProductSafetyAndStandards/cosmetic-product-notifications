@@ -43,15 +43,16 @@
     p.govuk-body class="govuk-!-font-size-48 govuk-!-font-weight-bold"
       = @investigation.sensitivity&.titleize
 
-h2.govuk-heading-l
-  | There are no products attached to this case
+-if @investigation.investigation_products.length == 0
+  h2.govuk-heading-l
+    | There are no products attached to this case
 
-p.govuk-body
-  | Add a product to the case
+  p.govuk-body
+    | Add a product to the case
 
-p.govuk-body
-  = link_to "Add product", new_product_path
-  
+  p.govuk-body
+    = link_to "Add product", new_product_path
+
 hr.govuk-section-break.govuk-section-break--m
 = render "tabs", tabs: @investigation.tabs
 .no-print[class="govuk-!-margin-top-3"]
