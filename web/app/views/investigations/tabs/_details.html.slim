@@ -1,2 +1,9 @@
-| Such detail
+p
+  = 'Reporter type: ' + (@investigation.reporter_type || '')
+p
+  = 'Reporter name: ' + (@investigation.reporter_name || '')
+p
+  = 'Reporter email address: ' + (@investigation.reporter_email_address || '')
+p
+  = 'Reporter phone number: ' + (@investigation.reporter_phone_number || '')
 p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
