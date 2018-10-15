@@ -17,27 +17,48 @@ div
   .govuk-grid-row[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-full
       = render "investigation_heading", investigation: @investigation
-  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-    .govuk-grid-column-one-half
-      h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-        | Risk Notes:
-        '
-        = @investigation.risk_overview
-      p
-        = @investigation.description
-      = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
-    .govuk-grid-column-one-half
-      .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  - if !@investigation.risk_overview?
+    h2.govuk-heading-l
+      |What's the nature of the hazard?
+    p.govuk-body
+      |Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
+    .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-one-quarter
+        = link_to "Add hazard data", edit_investigation_path(@investigation), class: "no-print"
+      .govuk-grid-column-one-quarter
+        = link_to "Record an incident"
+  - else
+    .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-two-thirds
         .govuk-grid-column-one-half
-          h3.govuk-body-l[class="govuk-!-margin-bottom-1"]
-            | Risk level
-          span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
+          h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+            span.govuk-caption-m
+              |Hazard
+            = @investigation.risk_overview
+        .govuk-grid-column-one-half
+          h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+            span.govuk-caption-m
+              | Vunerable group
+            = @investigation.who_is_at_risk
+        .govuk-grid-column-full
+          p
+            = @investigation.description
+          = link_to "Edit hazard details", edit_investigation_path(@investigation), class: "no-print"
+      .govuk-grid-column-one-third
+        h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+          span.govuk-caption-m
+              | Risk Level
+          - if !@investigation.risk_level?
+            = link_to "Add risk details", class: "no-print"
+          - else
             = @investigation.risk_level&.titleize
-        .govuk-grid-column-one-half
-          h3.govuk-body-l[class="govuk-!-margin-bottom-1"]
-            | Sensitivity
-          span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
-            = @investigation.sensitivity&.titleize
+            .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+              .govuk-grid-column-one-half
+                p.govuk-body-s
+                  = link_to "Edit risk details", class: "no-print"
+              .govuk-grid-column-one-half
+                p.govuk-body-s
+                  = link_to "View assessment", class: "no-print"
   .govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-one-third
       h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]

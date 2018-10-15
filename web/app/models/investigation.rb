@@ -37,8 +37,6 @@ class Investigation < ApplicationRecord
 
   enum risk_level: %i[low medium serious severe], _suffix: true
 
-  enum sensitivity: %i[low medium high], _suffix: true
-
   def as_indexed_json(*)
     as_json.merge(status: status.downcase)
   end
