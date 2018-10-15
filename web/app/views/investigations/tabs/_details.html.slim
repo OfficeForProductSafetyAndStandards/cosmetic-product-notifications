@@ -1,10 +1,9 @@
-/TODO: ask Tim about displaying empty reporter
-- if(@investigation.reporter_type)
-  p = 'Reporter type: ' + @investigation.reporter_type
-- if(@investigation.reporter_name)
-  p = 'Reporter name: ' + @investigation.reporter_name
-- if(@investigation.reporter_email_address)
-  p = 'Reporter email address: ' + @investigation.reporter_email_address
-- if(@investigation.reporter_type)
-  p = 'Reporter phone number: ' + @investigation.reporter_phone_number
+p
+  = 'Reporter type: ' + (@investigation.reporter_type || '')
+p
+  = 'Reporter name: ' + (@investigation.reporter_name || '')
+p
+  = 'Reporter email address: ' + (@investigation.reporter_email_address || '')
+p
+  = 'Reporter phone number: ' + (@investigation.reporter_phone_number || '')
 p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
