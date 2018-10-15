@@ -52,5 +52,5 @@ main#main-content.govuk-main-wrapper role="main"
                     | Please give details
                   = form.text_field :other_reporter, class: "govuk-input govuk-!-width-two-thirds",\
                     "aria-describedby": "other-reporter-hint"
-        button.govuk-button type="submit"
-          | Continue
+        .govuk-form-group
+          = form.submit "Continue", class: "govuk-button"

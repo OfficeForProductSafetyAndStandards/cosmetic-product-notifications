@@ -41,7 +41,7 @@ class InvestigationsController < ApplicationController
   def new_report_details
     return redirect_to investigations_path if request.get?
 
-    @investigation = Investigation.new(investigation_params)
+    create_investigation
     @investigation.validate
     if @investigation.errors[:reporter_type].any?
       redirect_to(new_report_investigations_url(error: true))

@@ -15,6 +15,9 @@ module App
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     config.eager_load_paths << Rails.root.join("presenters")
+
+    # Rails cleverly surrounds fields with validation errors with a div that changes how they look
+    # Sadly it is not Digital Service Standard compliant, so we prevent it here
     config.action_view.field_error_proc = Proc.new { |html_tag, instance|
       html_tag
     }

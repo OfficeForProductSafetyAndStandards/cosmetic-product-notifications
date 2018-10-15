@@ -34,5 +34,5 @@ main#main-content.govuk-main-wrapper role="main"
                     "aria-describedby": "reporter-other-detail-hint", rows: 5
           .govuk-form-group
             =form.hidden_field :reporter_type
-        button.govuk-button type="submit"
-          | Continue
+        .govuk-form-group
+          = form.submit "Continue", class: "govuk-button"
