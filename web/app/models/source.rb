@@ -6,6 +6,6 @@ class Source < ApplicationRecord
   end
 
   def created_by
-    "Created by #{show}, #{created_at.strftime("%d/%m/%Y")}"
+    "Created by #{show}, #{created_at.strftime('%d/%m/%Y')}"
   end
 end
