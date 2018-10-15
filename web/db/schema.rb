@@ -97,7 +97,6 @@ ActiveRecord::Schema.define(version: 2018_10_12_143619) do
     t.boolean "is_closed", default: false
     t.integer "risk_level"
     t.string "risk_overview"
-    t.integer "sensitivity"
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.string "who_is_at_risk"
