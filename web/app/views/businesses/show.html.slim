@@ -12,21 +12,7 @@
         = @business.investigations.size
   .govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-one-third
-      h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-        | Contents
-      ul.govuk-list.dashed-list
-        li
-          a[class="govuk-!-font-size-19" href="#details"]
-            | Details
-        li
-          a[class="govuk-!-font-size-19" href="#locations"]
-            | Locations
-        li
-          a[class="govuk-!-font-size-19" href="#cases"]
-            | Cases
-        li
-          a[class="govuk-!-font-size-19" href="#history"]
-            | History
+      // in the prototype there is a placeholder for the product image here.
     .govuk-grid-column-two-thirds
       #details.govuk-grid-row[class="govuk-!-padding-bottom-6"]
         .govuk-grid-column-full
@@ -65,39 +51,12 @@
                 td.govuk-table__cell
                   = @business.additional_information
           = link_to "Edit details", edit_business_path(@business)
-      #locations.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-        .govuk-grid-column-full
-          h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-            | Locations (
-            = @business.addresses.size
-            | )
-          - if @business.addresses.any?
-            .govuk-grid-row[class="govuk-!-padding-bottom-4"]
-              - @business.addresses.limit(2).each do |address|
-                .govuk-grid-column-one-half
-                  h4.govuk-heading-s
-                    = address.address_type
-                  div
-                    = address.line_1
-                  div
-                    = address.line_2
-                  div
-                    = address.locality
-                  div
-                    = address.country
-                  div
-                    = address.postal_code
-          - else
-            p
-              | No locations.
-          = link_to "Manage locations", business_addresses_path(@business)
-      #cases.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-        .govuk-grid-column-full
-          h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-            | Cases
-          = render "investigations_summary", parent: @business
-      #history.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-        .govuk-grid-column-full
-          h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-            | History
-          = render "history", versions: @business.versions
+hr.govuk-section-break.govuk-section-break--m
+= render "tabs", tabs: [\
+  Tab.new("activity", "Activity", lambda { render "businesses/tabs/activity" }), \
+  Tab.new("contacts", "Contact details", lambda { render "businesses/tabs/contacts" }), \
+  Tab.new("attachments", "Attachments", lambda { render "businesses/tabs/attachments" }), \
+  Tab.new("products", "Products", lambda { render "businesses/tabs/products" }), \
+  Tab.new("related", "Related", lambda { render "businesses/tabs/related" }), \
+  Tab.new("full-detail", "Full detail", lambda { render "businesses/tabs/details" })\
+]
