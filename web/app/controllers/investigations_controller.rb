@@ -78,8 +78,6 @@ class InvestigationsController < ApplicationController
   # POST /investigations
   # POST /investigations.json
   def create
-    #'Record report originator' flow doesn't require the user to specify title, so we set it to 'Untitled case'
-    @investigation.title = 'Untitled case' if !@investigation.title
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to @investigation, notice: "Investigation was successfully created." }

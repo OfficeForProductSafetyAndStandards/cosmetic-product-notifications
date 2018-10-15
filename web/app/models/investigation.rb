@@ -10,7 +10,6 @@ class Investigation < ApplicationRecord
     end
   end
 
-  validates :title, presence: true
   validates :reporter_type, presence: { message: "Please select reporter type" }
   default_scope { order(updated_at: :desc) }
 
