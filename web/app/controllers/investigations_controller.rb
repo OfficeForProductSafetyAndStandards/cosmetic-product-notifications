@@ -32,7 +32,12 @@ class InvestigationsController < ApplicationController
   # GET /investigations/new_report
   def new_report
     @investigation = Investigation.new
-    @investigation.errors.add(:reporter_type, :invalid, message: 'Please select reporter type') if params[:error]
+    if session[:reporter_type_errors]
+      session[:reporter_type_errors].each do |error_message|
+        @investigation.errors.add(:reporter_type, :invalid, message: error_message)
+      end
+      session[:reporter_type_errors] = nil;
+    end
     @investigation
   end
 
@@ -43,7 +48,8 @@ class InvestigationsController < ApplicationController
     create_investigation
     @investigation.validate
     if @investigation.errors[:reporter_type].any?
-      redirect_to(new_report_investigations_url(error: true))
+      session[:reporter_type_errors] = @investigation.errors[:reporter_type]
+      redirect_to(new_report_investigations_url)
     end
     @investigation
   end
