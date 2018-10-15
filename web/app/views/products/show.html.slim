@@ -11,24 +11,7 @@
       = @product.investigations.size
 .govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-one-third
-    h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-      | Contents
-    ul.govuk-list.dashed-list
-      li
-        a[class="govuk-!-font-size-19" href="#details"]
-          | Details
-      li
-        a[class="govuk-!-font-size-19" href="#images"]
-          | Images
-      li
-        a[class="govuk-!-font-size-19" href="#documents"]
-          | Documents
-      li
-        a[class="govuk-!-font-size-19" href="#cases"]
-          | Cases
-      li
-        a[class="govuk-!-font-size-19" href="#history"]
-          | History
+  // in the prototype there is a placeholder for the product image here
   .govuk-grid-column-two-thirds
     #details.govuk-grid-row[class="govuk-!-padding-bottom-6"]
       .govuk-grid-column-full
@@ -77,21 +60,12 @@
               td.govuk-table__cell
                 = @product.date_placed_on_market&.to_s :long_ordinal
         = link_to "Edit details", edit_product_path(@product)
-    #images.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-      .govuk-grid-column-full
-        = render "images_summary", parent: @product
-    #documents.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-      .govuk-grid-column-full
-        h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-          | Documents
-        = render "documents_list_summary", parent: @product
-    #cases.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-      .govuk-grid-column-full
-        h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-          | Cases
-        = render "investigations_summary", parent: @product
-    #history.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-      .govuk-grid-column-full
-        h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-          | History
-        = render "history", versions: @product.versions
+hr.govuk-section-break.govuk-section-break--m
+= render "tabs", tabs: [\
+  Tab.new("activity", "Activity", lambda { render "products/tabs/activity" }), \
+  Tab.new("attachments", "Attachments", lambda { render "products/tabs/attachments" }), \
+  Tab.new("businesses", "Businesses", lambda { render "products/tabs/businesses" }), \
+  Tab.new("legislation", "Legislation", lambda { render "products/tabs/legislation" }), \
+  Tab.new("related", "Related", lambda { render "products/tabs/related" }), \
+  Tab.new("full-detail", "Full detail", lambda { render "products/tabs/details" })\
+]
