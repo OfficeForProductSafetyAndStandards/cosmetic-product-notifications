@@ -27,7 +27,8 @@ is needed because the website Docker container and host browser need to access K
 
 ## Deployment
 
-Keycloak is manually deployed by running the `./keycloak/deploy.sh` script from the root directory.
+Keycloak is automatically deployed to the relevant environment by Travis CI, as described in
+[the root README](../README.md#deployment).
 
 
 ### Deployment from scratch
@@ -42,7 +43,8 @@ To create a Keycloak database for the current space:
 
 Running the following commands from the root directory will then package and set up the Keycloak app:
 
-    ./keycloak/package.sh
+    docker build --target keycloak-package -t keycloak-package:latest ./keycloak
+    docker cp $(docker create keycloak-package):/tmp/keycloak/package ./keycloak
     cf push -f ./keycloak/manifest.yml --no-start
 
 Once the app has been created, add the following environment variables to specify the database connection properties:
@@ -52,24 +54,34 @@ Once the app has been created, add the following environment variables to specif
     cf set-env keycloak KEYCLOAK_DATABASE_USERNAME << see: VCAP_SERVICES.postgres.credentials.username >>
     cf set-env keycloak KEYCLOAK_DATABASE_PASSWORD << see: VCAP_SERVICES.postgres.credentials.password >>
     cf set-env keycloak NOTIFY_API_KEY             XXX
-    cf restage keycloak
 
-The relevant values are specified as properties on the `VCAP_SERVICES` environment variable, which can be listed by running `cf env keycloak`.
-See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get the API key.
+The relevant values are specified as properties on the `VCAP_SERVICES` environment variable, which can be listed by
+running `cf env keycloak`. See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify)
+to get the API key.
+
+Finally, start the app and check that it is running correctly:
+
+    cf start keycloak
+    cf logs keycloak --recent
 
 
 ### Initial configuration
 
-_**(This should be replaced by an initial import script run as part of the deployment.)**_
+When deploying Keycloak from scratch, an initial configuration file is imported on first launch, which creates a
+default admin user for the master realm, creates and configures the MSPSDS realm and associated client, and creates
+a default test user account for logging into the MSPSDS website.
 
-Once Keycloak is running, connect via an SSH tunnel to access the admin console and create the initial admin user:
+The relevant login credentials can be found in the accounts section of [the root README](../README.md#keycloak).
 
-    cf ssh keycloak -N -L 8080:localhost:8080
+**IMPORTANT:** *You should follow the instructions below to change the admin password and client secret from their
+default values.*
 
-Then point your browser to [http://localhost:8080/auth](http://localhost:8080/auth) and follow the instructions.
+Log into the Keycloak administration console using the default admin credentials.
 
-Create the MSPSDS realm:
-* Select realm > Add realm > Import > Select file: `keycloak/initial-setup.json`
+Set a strong password for the master admin account:
+* Select realm > Master > Users > View all users
+* Edit the admin user > Credentials
+* Enter and confirm the new password, disable the 'Temporary' option, and click 'Reset Password'
 
 Generate a new client secret for the MSPSDS app:
 * Select realm > MSPSDS > Clients > mspsds-app > Credentials > Regenerate Secret
