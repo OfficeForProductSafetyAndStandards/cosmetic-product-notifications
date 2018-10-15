@@ -12,6 +12,13 @@ services:
     env_file:
       - .env
       - .env.keycloak
+  cosmetics-web:
+    command: bin/rails s -p 3002 -b 0.0.0.0
+    ports:
+      - "3002:3002"
+    env_file:
+      - .env
+      - .env.keycloak
   worker:
     env_file:
       - .env
