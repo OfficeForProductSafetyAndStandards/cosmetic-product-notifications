@@ -9,7 +9,16 @@ main#main-content.govuk-main-wrapper role="main"
     | reporting
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = form_with(model: @reporter, local: true, url: investigations_url) do |form|
+      = form_with(model: @reporter, local: true, url: wizard_path, method: :put) do |form|
+        - if @reporter.errors.any?
+          #error_explanation
+            h2.govuk-heading-l.govuk-error-message
+              = pluralize(@reporter.errors.count, "error ")
+              | prohibited this case from being saved:
+            ul.govuk-list.govuk-error-message
+              - @reporter.errors.full_messages.each do |message|
+                li
+                  = message
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Reporter details
@@ -32,7 +41,5 @@ main#main-content.govuk-main-wrapper role="main"
               | Location, business/authority name, reference numbers etc
             = form.text_area :other_details, class: "govuk-textarea", \
                     "aria-describedby": "reporter-other-detail-hint", rows: 5
-          .govuk-form-group
-            =form.hidden_field :reporter_type
         .govuk-form-group
           = form.submit "Continue", class: "govuk-button"

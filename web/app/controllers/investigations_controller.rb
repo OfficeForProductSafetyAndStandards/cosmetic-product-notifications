@@ -4,7 +4,6 @@ class InvestigationsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[show edit update destroy assign update_assignee status]
-  before_action :create_investigation, only: %i[create]
 
   # GET /investigations
   # GET /investigations.json
@@ -16,7 +15,6 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1
   # GET /investigations/1.json
   def show
-    @reporter = Reporter.find_by(id: @investigation.reporter_id)
     respond_to do |format|
       format.html
       format.pdf do
@@ -28,31 +26,6 @@ class InvestigationsController < ApplicationController
   # GET /investigations/new
   def new
     @investigation = Investigation.new
-  end
-
-  # GET /investigations/new_report
-  def new_report
-    @reporter = Reporter.new
-    if session[:reporter_type_errors]
-      session[:reporter_type_errors].each do |error_message|
-        @reporter.errors.add(:reporter_type, :invalid, message: error_message)
-      end
-      session[:reporter_type_errors] = nil;
-    end
-    @reporter
-  end
-
-  # POST and GET /investigations/new_report_details
-  def new_report_details
-    return redirect_to investigations_path if request.get?
-
-    @reporter = Reporter.new(reporter_params)
-    @reporter.validate
-    if @reporter.errors[:reporter_type].any?
-      session[:reporter_type_errors] = @reporter.errors[:reporter_type]
-      redirect_to(new_report_investigations_url)
-    end
-    @reporter
   end
 
   # GET /investigations/1/edit
@@ -79,6 +52,8 @@ class InvestigationsController < ApplicationController
   # POST /investigations
   # POST /investigations.json
   def create
+    @investigation = Investigation.new(investigation_params)
+    @investigation.source = UserSource.new(user: current_user)
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to @investigation, notice: "Investigation was successfully created." }
@@ -130,16 +105,6 @@ private
     end
   end
 
-  def create_investigation
-    @reporter = params[:reporter] ? Reporter.new(reporter_params) : Reporter.new
-    if @reporter.save
-      @investigation = Investigation.new(reporter_id: @reporter.id)
-    else
-      @investigation = params[:investigation] ? Investigation.new(investigation_params) : Investigation.new
-    end
-    @investigation.source = UserSource.new(user: current_user)
-  end
-
   def set_investigation
     @investigation = Investigation.find(params[:id])
   end
@@ -158,15 +123,6 @@ private
       :title, :description, :risk_overview, :image, :risk_level, :sensitivity, :is_closed,
       product_ids: [],
       business_ids: []
-    )
-  end
-
-  def reporter_params
-    if params[:reporter][:reporter_type] == 'Other'
-      params[:reporter][:reporter_type] = params[:reporter][:other_reporter]
-    end
-    params.require(:reporter).permit(
-      :name, :phone_number, :email_address, :reporter_type, :other_details
     )
   end
 end

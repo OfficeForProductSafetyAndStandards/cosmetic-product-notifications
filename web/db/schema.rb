@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "is_closed", default: false
-    t.integer "reporter_id"
     t.integer "risk_level"
     t.string "risk_overview"
     t.integer "sensitivity"
@@ -126,10 +125,12 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
 
   create_table "reporters", id: :serial, force: :cascade do |t|
     t.string "email_address"
+    t.integer "investigation_id"
     t.string "name"
     t.text "other_details"
     t.string "phone_number"
     t.string "reporter_type", null: false
+    t.index ["investigation_id"], name: "index_reporters_on_investigation_id"
   end
 
   create_table "sources", id: :serial, force: :cascade do |t|
@@ -156,5 +157,5 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
 
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
-  add_foreign_key "investigations", "reporters"
+  add_foreign_key "reporters", "investigations"
 end

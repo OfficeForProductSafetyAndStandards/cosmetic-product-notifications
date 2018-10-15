@@ -22,9 +22,7 @@ Rails.application.routes.draw do
       post :update_assignee
     end
     collection do
-      get :new_report
-      post :new_report_details
-      get :new_report_details
+      resources :report, controller: "investigations/report"
     end
     resources :activities, only: %i[index new create]
     resources :products, only: %i[index new create destroy], controller: "investigations/products" do

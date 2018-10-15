@@ -1,3 +1,6 @@
 class Reporter < ApplicationRecord
-  validates :reporter_type, presence: { message: "Please select reporter type" }
+  belongs_to :investigation, required: false
+  validates :investigation, presence: true, if: -> { step != :type }
+  validates :reporter_type, presence: true
+  attr_accessor :step
 end
