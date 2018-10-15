@@ -1,4 +1,13 @@
 = form_with(model: investigation, local: true) do |form|
+  - if investigation.errors.any?
+    #error_explanation
+      h2.govuk-heading-l.govuk-error-message
+        = pluralize(investigation.errors.count, "error ")
+        | prohibited this case from being saved:
+      ul.govuk-list.govuk-error-message
+        - investigation.errors.full_messages.each do |message|
+          li
+            = message
   .govuk-form-group
     = form.label :risk_overview, "Overview", class: "govuk-label"
     span#title-format-hint.govuk-hint
@@ -8,7 +17,7 @@
     = form.label :description, "Details", class: "govuk-label"
     span#title-format-hint.govuk-hint
       | Hazard description
-    = form.text_area :description, class: "govuk-textarea govuk-!-width-two-thirds"
+    = form.text_area :description, class: "govuk-textarea govuk-!-width-two-thirds", rows: "5"
   .govuk-form-group
     = form.label :who_is_at_risk, "Who is it at risk to?", class: "govuk-label"
     span#title-format-hint.govuk-hint

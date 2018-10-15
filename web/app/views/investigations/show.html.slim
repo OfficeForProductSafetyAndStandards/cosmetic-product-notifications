@@ -43,7 +43,7 @@ div
         .govuk-grid-column-full
           p
             = @investigation.description
-          = link_to "Edit hazard details", edit_investigation_path(@investigation), class: "no-print"
+          = link_to "Edit hazard and risk details", edit_investigation_path(@investigation), class: "no-print"
       .govuk-grid-column-one-third
         h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
           span.govuk-caption-m
@@ -52,13 +52,6 @@ div
             = link_to "Add risk details", class: "no-print"
           - else
             = @investigation.risk_level&.titleize
-            .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-              .govuk-grid-column-one-half
-                p.govuk-body-s
-                  = link_to "Edit risk details", class: "no-print"
-              .govuk-grid-column-one-half
-                p.govuk-body-s
-                  = link_to "View assessment", class: "no-print"
   .govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-one-third
       h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]

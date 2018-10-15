@@ -16,20 +16,43 @@
       | e.g. "Charge Works, Travel plug adaptor – Fire hazard"
     = form.text_field :title, class: "govuk-input #{'govuk-input--error' if investigation.errors.any?}"
   .govuk-form-group
-    = form.label :risk_overview, class: "govuk-label"
-    = form.text_field :risk_overview, class: "govuk-input"
+    = form.label :risk_overview, "Overview", class: "govuk-label"
+    span#title-format-hint.govuk-hint
+      | What type of hazard is it?
+    = form.text_field :risk_overview, class: "govuk-input govuk-!-width-two-thirds"
   .govuk-form-group
-    = form.label :description, "Risk description", class: "govuk-label"
-    = form.text_area :description, class: "govuk-textarea"
+    = form.label :description, "Details", class: "govuk-label"
+    span#title-format-hint.govuk-hint
+      | Hazard description
+    = form.text_area :description, class: "govuk-textarea govuk-!-width-two-thirds"
   .govuk-form-group
-    fieldset.govuk-fieldset
-      legend.govuk-fieldset__legend
-      h4.govuk-label
-        | Risk level
-      .govuk-radios
-        - Investigation.risk_levels.each do |(level, _)|
-          .govuk-radios__item
-            = form.radio_button :risk_level, level, class: "govuk-radios__input"
-            = form.label :risk_level, level.titleize, class: "govuk-label govuk-radios__label"
+    = form.label :who_is_at_risk, "Who is it at risk to?", class: "govuk-label"
+    span#title-format-hint.govuk-hint
+      | Are there specific groups it might effect? i.e. Young children
+    = form.text_field :who_is_at_risk, class: "govuk-input govuk-!-width-two-thirds"
+  .govuk-form-group
+    h3.govuk-label
+      | Can you set a risk level?
+      p
+      .govuk-radios.govuk-radios--conditional data-module="radios" 
+        .govuk-radios__item
+          input#can-you-set-risk-level-yes.govuk-radios__input aria-controls="conditional-can-you-set-risk-level-yes" aria-expanded="false" name="set-risk-level" type="radio" /
+          label.govuk-label.govuk-radios__label for="can-you-set-risk-level-yes" 
+            | Yes
+        #conditional-can-you-set-risk-level-yes.govuk-radios__conditional.govuk-radios__conditional--hidden
+          .govuk-form-group
+            label.govuk-label for="yes"
+                h4.govuk-label
+                  | Risk level
+                  p
+                  .govuk-radios
+                  - Investigation.risk_levels.each do |(level, _)|
+                    .govuk-radios__item
+                      = form.radio_button :risk_level, level, class: "govuk-radios__input"
+                      = form.label :risk_level, level.titleize, class: "govuk-label govuk-radios__label"
+        .govuk-radios__item
+          input#can-you-set-risk-level-no.govuk-radios__input aria-controls="conditional-can-you-set-risk-level-no" aria-expanded="false" name="set-risk-level" type="radio" /
+          label.govuk-label.govuk-radios__label for="can-you-set-risk-level-no" 
+            | No
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"
