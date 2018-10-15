@@ -1,7 +1,7 @@
 class CreateIncidents < ActiveRecord::Migration[5.2]
   def change
     create_table :incidents, id: :serial do |t|
-      t.string :type
+      t.string :incident_type
       t.text :description
       t.date :date
       t.string :affected_party

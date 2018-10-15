@@ -75,9 +75,9 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
     t.datetime "created_at", null: false
     t.date "date"
     t.text "description"
+    t.string "incident_type"
     t.integer "investigation_id"
     t.string "location"
-    t.string "type"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_incidents_on_investigation_id"
   end
