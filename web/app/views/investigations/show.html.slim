@@ -43,7 +43,7 @@
     p.govuk-body class="govuk-!-font-size-48 govuk-!-font-weight-bold"
       = @investigation.sensitivity&.titleize
 
--if @investigation.investigation_products.length == 0
+-if @investigation.investigation_products.empty?
   h2.govuk-heading-l
     | There are no products attached to this case
 
