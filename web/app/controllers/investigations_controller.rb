@@ -31,27 +31,27 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/new_report
   def new_report
-    @investigation = Investigation.new
+    @reporter = Reporter.new
     if session[:reporter_type_errors]
       session[:reporter_type_errors].each do |error_message|
-        @investigation.errors.add(:reporter_type, :invalid, message: error_message)
+        @reporter.errors.add(:reporter_type, :invalid, message: error_message)
       end
       session[:reporter_type_errors] = nil;
     end
-    @investigation
+    @reporter
   end
 
   # POST and GET /investigations/new_report_details
   def new_report_details
     return redirect_to investigations_path if request.get?
 
-    create_investigation
-    @investigation.validate
-    if @investigation.errors[:reporter_type].any?
-      session[:reporter_type_errors] = @investigation.errors[:reporter_type]
+    @reporter = Reporter.new(reporter_params)
+    @reporter.validate
+    if @reporter.errors[:reporter_type].any?
+      session[:reporter_type_errors] = @reporter.errors[:reporter_type]
       redirect_to(new_report_investigations_url)
     end
-    @investigation
+    @reporter
   end
 
   # GET /investigations/1/edit
@@ -148,14 +148,19 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
-    if params[:investigation][:reporter_type] == 'Other'
-      params[:investigation][:reporter_type] = params[:investigation][:other_reporter]
-    end
     params.require(:investigation).permit(
       :title, :description, :risk_overview, :image, :risk_level, :sensitivity, :is_closed,
-      :reporter_name, :reporter_phone_number, :reporter_email_address, :reporter_type, :reporter_other_details,
       product_ids: [],
       business_ids: []
+    )
+  end
+
+  def reporter_params
+    if params[:reporter][:reporter_type] == 'Other'
+      params[:reporter][:reporter_type] = params[:reporter][:other_reporter]
+    end
+    params.require(:reporter).permit(
+      :name, :phone_number, :email_address, :reporter_type, :other_details
     )
   end
 end

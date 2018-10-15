@@ -1,11 +1,12 @@
 class AddReportersToInvestigations < ActiveRecord::Migration[5.2]
   def change
-    change_table :investigations, bulk: true do |t|
-      t.string :reporter_name
-      t.string :reporter_phone_number
-      t.string :reporter_email_address
-      t.string :reporter_type
-      t.text :reporter_other_details
+    create_table :reporters, id: :serial do |t|
+      t.string :name
+      t.string :phone_number
+      t.string :email_address
+      t.string :reporter_type, null: false
+      t.text :other_details
     end
+    add_reference :investigations, :reporter, index: false, null: true, foreign_key: true, type: :integer
   end
 end

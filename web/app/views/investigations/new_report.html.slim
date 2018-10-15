@@ -7,17 +7,17 @@ main#main-content.govuk-main-wrapper role="main"
     | Who’s reporting?
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = form_with(model: @investigation, local: true, url: new_report_details_investigations_url) do |form|
-        - if @investigation.errors[:reporter_type].any?
+      = form_with(model: @reporter, local: true, url: new_report_details_investigations_url) do |form|
+        - if @reporter.errors[:reporter_type].any?
           #error_explanation
             ul.govuk-list.govuk-error-message
-              - @investigation.errors[:reporter_type].each do |message|
+              - @reporter.errors[:reporter_type].each do |message|
                 li
                   = message
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Reporter type?
-          .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:reporter_type].any?)
+          .govuk-form-group class=("govuk-form-group--error" if @reporter.errors[:reporter_type].any?)
             .govuk-radios.govuk-radios--conditional data-module="radios"
               .govuk-radios__item
                 = form.radio_button :reporter_type, "Consumer", class: "govuk-radios__input"

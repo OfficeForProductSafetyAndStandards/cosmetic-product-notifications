@@ -10,7 +10,6 @@ class Investigation < ApplicationRecord
     end
   end
 
-  validates :reporter_type, presence: { message: "Please select reporter type" }
   default_scope { order(updated_at: :desc) }
 
   has_many :investigation_products, dependent: :destroy
@@ -26,6 +25,7 @@ class Investigation < ApplicationRecord
   has_many_attached :images
 
   has_one :source, as: :sourceable, dependent: :destroy
+  has_one :reporter
 
   accepts_nested_attributes_for :products
   accepts_nested_attributes_for :businesses
