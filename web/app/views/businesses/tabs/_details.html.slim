@@ -1,0 +1,33 @@
+table.govuk-table
+  tbody.govuk-table__body
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Company number
+      td.govuk-table__cell
+        = @business.company_number
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Company type
+      td.govuk-table__cell
+        = @business.company_type
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Company status
+      td.govuk-table__cell
+        = @business.company_status
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Registered office address
+      td.govuk-table__cell
+        = @business.primary_address&.summary
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Nature of business (SIC)
+      td.govuk-table__cell
+        = @business.nature_of_business
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Additional information
+      td.govuk-table__cell
+        = @business.additional_information
+= link_to "Edit details", edit_business_path(@business)
