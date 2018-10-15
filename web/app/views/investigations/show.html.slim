@@ -42,6 +42,17 @@
       | Sensitivity
     p.govuk-body class="govuk-!-font-size-48 govuk-!-font-weight-bold"
       = @investigation.sensitivity&.titleize
+
+-if @investigation.investigation_products.empty?
+  h2.govuk-heading-l
+    | There are no products attached to this case
+
+  p.govuk-body
+    | Add a product to the case
+
+  p.govuk-body
+    = link_to "Add product", new_product_path
+
 hr.govuk-section-break.govuk-section-break--m
 = render "tabs", tabs: [\
   Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" }), \
