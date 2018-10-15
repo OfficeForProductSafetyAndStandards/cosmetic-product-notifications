@@ -1,9 +1,11 @@
 p
-  = 'Reporter type: ' + (@investigation.reporter_type || '')
+  = 'Reporter type: ' + (@reporter.reporter_type || '')
 p
-  = 'Reporter name: ' + (@investigation.reporter_name || '')
+  = 'Reporter name: ' + (@reporter.name || '')
 p
-  = 'Reporter email address: ' + (@investigation.reporter_email_address || '')
+  = 'Reporter email address: ' + (@reporter.email_address || '')
 p
-  = 'Reporter phone number: ' + (@investigation.reporter_phone_number || '')
+  = 'Reporter phone number: ' + (@reporter.phone_number || '')
+p
+  = 'Reporter other details: ' + (@reporter.other_details || '')
 p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"

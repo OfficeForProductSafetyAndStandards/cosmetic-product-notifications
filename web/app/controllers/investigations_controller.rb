@@ -16,6 +16,7 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1
   # GET /investigations/1.json
   def show
+    @reporter = Reporter.find_by(id: @investigation.reporter_id)
     respond_to do |format|
       format.html
       format.pdf do
@@ -130,7 +131,12 @@ private
   end
 
   def create_investigation
-    @investigation = Investigation.new(investigation_params)
+    @reporter = params[:reporter] ? Reporter.new(reporter_params) : Reporter.new
+    if @reporter.save
+      @investigation = Investigation.new(reporter_id: @reporter.id)
+    else
+      @investigation = params[:investigation] ? Investigation.new(investigation_params) : Investigation.new
+    end
     @investigation.source = UserSource.new(user: current_user)
   end
 
