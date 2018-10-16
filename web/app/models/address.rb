@@ -24,7 +24,7 @@ class Address < ApplicationRecord
   end
 
   def from_companies_house?
-    source.name == "Companies House"
+    source.show == "Companies House"
   end
 
   def with_registered_office_info(registered_office)
