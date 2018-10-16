@@ -10,8 +10,8 @@
     span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
       = @product.investigations.size
 .govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
-  .govuk-grid-column-one-third
-  // in the prototype there is a placeholder for the product image here
+  - if @product.images.attached?
+    = render("images/primary_image", image: @product.get_first_image)
   .govuk-grid-column-two-thirds
     #details.govuk-grid-row[class="govuk-!-padding-bottom-6"]
       .govuk-grid-column-full
