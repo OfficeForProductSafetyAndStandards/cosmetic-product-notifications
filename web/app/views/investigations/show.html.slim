@@ -22,7 +22,7 @@
     | Add a product to the case
 
   p.govuk-body
-    = link_to "Add product", new_product_path
+    = link_to "Add product", new_investigation_product_path(@investigation)
 
 hr.govuk-section-break.govuk-section-break--m
 = render "tabs", tabs: [\
