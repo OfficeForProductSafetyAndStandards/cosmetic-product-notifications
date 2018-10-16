@@ -27,7 +27,7 @@ class Investigations::ReportController < ApplicationController
 
   def update
     update_partial_reporter
-    @reporter = Reporter.new(session[:reporter].merge({step: step}))
+    if !@reporter.valid?(:partial)
       render step
     else
       redirect_to next_wizard_path if step != steps.last
