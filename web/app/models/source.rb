@@ -4,4 +4,8 @@ class Source < ApplicationRecord
   def show
     nil
   end
+
+  def created_by
+    "Created by #{show}, #{created_at.strftime('%d/%m/%Y')}"
+  end
 end
