@@ -1,7 +1,7 @@
 class IncidentsController < ApplicationController
   before_action :set_investigation, only: %i[new create]
   before_action :build_incident, only: %i[new create]
-  before_action :set_intermediate_date_params, only: %i[create]
+
   # GET investigations/1/incidents/new
   def new
   end
@@ -15,6 +15,8 @@ class IncidentsController < ApplicationController
       if /error on assignment .* to date \((?<culprit>.*) out of range\)/ =~ e.message
         component = case culprit
                     when "argument"
+                      :day
+                    when "mday"
                       :day
                     when "mon"
                       :month
@@ -30,6 +32,7 @@ class IncidentsController < ApplicationController
     if @incident.errors.empty? && @incident.save
       redirect_to investigation_url(@investigation), notice: "Incident was successfully recorded."
     else
+      set_intermediate_params
       render :new
     end
   end
@@ -64,7 +67,17 @@ private
     parsed_params
   end
 
-  def set_intermediate_date_params
+  # The odd date-handling means that the incident creation can fail pre-validation.
+  # This leaves the model unpopulated, clearing the form.
+  # Calling this method ensures that all of the entered values remain filled in in the form
+  def set_intermediate_params
+    params_without_date = params.require(:incident).permit(
+      :type,
+      :description,
+      :affected_party,
+      :location,
+      )
+    @incident.assign_attributes(params_without_date)
     date_components = params.require(:incident).permit(
       :'date(3i)',
       :'date(2i)',

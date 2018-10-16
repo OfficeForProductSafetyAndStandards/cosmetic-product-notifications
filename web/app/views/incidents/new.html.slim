@@ -59,7 +59,7 @@ h1.govuk-heading-xl
               .govuk-form-group
                 = form.label "date(1i)", "Year", class: "govuk-label govuk-date-input__label"
                 = form.text_field "date(1i)", \
-                  class: "govuk-input govuk-date-input__input govuk-input--width-2"\
+                  class: "govuk-input govuk-date-input__input govuk-input--width-4"\
                           + (form.object.errors[:year].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
                   type: "number", \
