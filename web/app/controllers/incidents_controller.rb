@@ -1,6 +1,7 @@
 class IncidentsController < ApplicationController
   before_action :set_investigation, only: %i[new create]
   before_action :build_incident, only: %i[new create]
+  before_action :set_intermediate_date_params, only: %i[create]
   # GET investigations/1/incidents/new
   def new
   end
@@ -61,5 +62,16 @@ private
       raise MspsdsException::IncompleteDateParsedException.new missing_date_components.keys
     end
     parsed_params
+  end
+
+  def set_intermediate_date_params
+    date_components = params.require(:incident).permit(
+      :'date(3i)',
+      :'date(2i)',
+      :'date(1i)'
+    )
+    @incident.day = date_components[:'date(3i)']
+    @incident.month = date_components[:'date(2i)']
+    @incident.year = date_components[:'date(1i)']
   end
 end

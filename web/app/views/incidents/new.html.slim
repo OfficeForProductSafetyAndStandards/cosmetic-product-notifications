@@ -44,7 +44,8 @@ h1.govuk-heading-xl
                   class: "govuk-input govuk-date-input__input govuk-input--width-2" \
                          + (form.object.errors[:day].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
-                  type: "number"
+                  type: "number", \
+                  value: form.object.day
             .govuk-date-input__item
               .govuk-form-group
                 = form.label "date(2i)", "Month", class: "govuk-label govuk-date-input__label"
@@ -52,7 +53,8 @@ h1.govuk-heading-xl
                   class: "govuk-input govuk-date-input__input govuk-input--width-2"\
                           + (form.object.errors[:month].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
-                  type: "number"
+                  type: "number", \
+                  value: form.object.month
             .govuk-date-input__item
               .govuk-form-group
                 = form.label "date(1i)", "Year", class: "govuk-label govuk-date-input__label"
@@ -60,7 +62,8 @@ h1.govuk-heading-xl
                   class: "govuk-input govuk-date-input__input govuk-input--width-2"\
                           + (form.object.errors[:year].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
-                  type: "number"
+                  type: "number", \
+                  value: form.object.year
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Who to?
