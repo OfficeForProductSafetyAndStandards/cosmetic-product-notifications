@@ -23,18 +23,17 @@ h1.govuk-heading-xl
           = form.label :description, "Incident / event description", class: "govuk-hint"
           = form.text_area :description, class: "govuk-textarea govuk-!-width-two-thirds", \
             "aria-describedby": "incident-description-hint", rows: "5"
-      - date_errors = form.object.errors[:date]
-      .govuk-form-group class=("govuk-form-group--error" if date_errors.present?)
+      .govuk-form-group class=("govuk-form-group--error" if form.object.errors[:date].present?)
         fieldset.govuk-fieldset [
-            aria-describedby="incident-date-hint #{"date-error" if date_errors.present?}"
+            aria-describedby="incident-date-hint #{"date-error" if form.object.errors[:date].present?}"
             role="group"]
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | When did it happen?
           span#incident-date-hint.govuk-hint
             | For example, 31 3 2018
-          - if date_errors.present?
+          - if form.object.errors[:date].present?
             span#date-error.govuk-error-message
-              | Enter a real incident date
+              = form.object.errors[:date].first
           #incident-date.govuk-date-input
             .govuk-date-input__item
               / The ids for these fields follow a special convention to work with Active Record dates
@@ -43,22 +42,23 @@ h1.govuk-heading-xl
                 = form.label "date(3i)", "Day", class: "govuk-label govuk-date-input__label"
                 = form.text_field "date(3i)", \
                   class: "govuk-input govuk-date-input__input govuk-input--width-2" \
-                         + (date_errors.present? && date_errors.include?("day") ? " govuk-input--error" : ""), \
+                         + (form.object.errors[:day].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
                   type: "number"
             .govuk-date-input__item
-              .govuk-form-group class=("govuk-input--error" if date_errors.present? && date_errors == "month")
+              .govuk-form-group
                 = form.label "date(2i)", "Month", class: "govuk-label govuk-date-input__label"
                 = form.text_field "date(2i)", \
                   class: "govuk-input govuk-date-input__input govuk-input--width-2"\
-                          + (date_errors.present? && date_errors.include?("month") ? " govuk-input--error" : ""), \
+                          + (form.object.errors[:month].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
                   type: "number"
             .govuk-date-input__item
               .govuk-form-group
                 = form.label "date(1i)", "Year", class: "govuk-label govuk-date-input__label"
                 = form.text_field "date(1i)", \
-                  class: "govuk-input govuk-date-input__input govuk-input--width-2", \
+                  class: "govuk-input govuk-date-input__input govuk-input--width-2"\
+                          + (form.object.errors[:year].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
                   type: "number"
       fieldset.govuk-fieldset

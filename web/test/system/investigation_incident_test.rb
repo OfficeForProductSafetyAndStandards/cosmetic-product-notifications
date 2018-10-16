@@ -37,11 +37,11 @@ class InvestigationIncidentTest < ApplicationSystemTestCase
     assert_text("Enter a real incident date")
   end
 
-  # test "date with missing component shows an error" do
-  #   fill_in "Day", with: "7"
-  #   fill_in "Year", with: "1984"
-  #   click_on "Continue"
-  #
-  #   assert_text("Enter date of incident and include a day, month and year")
-  # end
+  test "date with missing component shows an error" do
+    fill_in "Day", with: "7"
+    fill_in "Year", with: "1984"
+    click_on "Continue"
+
+    assert_text("Enter date of incident and include a day, month and year")
+  end
 end

@@ -10,15 +10,20 @@ class IncidentsController < ApplicationController
     begin
       @incident = @investigation.incidents.create(incident_params)
     rescue ActiveRecord::MultiparameterAssignmentErrors => e
-      matches = /error on assignment .* to date \((?<culprit>.*) out of range\)/ =~ e.message
-      if matches
+      @incident.errors.add(:date, "Enter a real incident date")
+      if /error on assignment .* to date \((?<culprit>.*) out of range\)/ =~ e.message
         component = case culprit
                     when "argument"
-                      "day"
+                      :day
                     when "mon"
-                      "month"
+                      :month
                     end
-        @incident.errors.add(:date, component)
+        @incident.errors.add(component)
+      end
+    rescue MspsdsException::IncompleteDateParsedException => e
+      e.missing_fields.each do |component|
+        @incident.errors.add(:date, "Enter date of incident and include a day, month and year")
+        @incident.errors.add(component)
       end
     end
     if @incident.errors.empty? && @incident.save
@@ -40,12 +45,21 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def incident_params
-    params.require(:incident).permit(
+    parsed_params = params.require(:incident).permit(
       :type,
       :description,
       :affected_party,
       :location,
       :date
     )
+    missing_date_components = {
+      day: parsed_params[:'date(3i)'],
+      month: parsed_params[:'date(2i)'],
+      year: parsed_params[:'date(1i)']
+    }.select { |_, value| value.blank? }
+    if (1..2) === missing_date_components.length # Date has some components entered, but not all
+      raise MspsdsException::IncompleteDateParsedException.new missing_date_components.keys
+    end
+    parsed_params
   end
 end
