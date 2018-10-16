@@ -9,7 +9,7 @@ class IncidentsController < ApplicationController
   # POST investigations/1/incidents
   def create
     begin
-      @incident = @investigation.incidents.create(incident_params)
+      @incident = @investigation.incidents.build(incident_params)
     rescue ActiveRecord::MultiparameterAssignmentErrors => e
       @incident.errors.add(:date, "Enter a real incident date")
       if /error on assignment .* to date \((?<culprit>.*) out of range\)/ =~ e.message
