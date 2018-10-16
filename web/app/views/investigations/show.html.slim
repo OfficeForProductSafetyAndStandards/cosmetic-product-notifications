@@ -1,0 +1,38 @@
+- content_for :page_title, "View case - Market Surveillance & Product Safety"
+- content_for :after_header do
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      = link_to "Back to list", investigations_path, class: "govuk-back-link"
+
+.govuk-grid-row
+    = render "investigation_heading", investigation: @investigation
+
+/ TODO: MSPSDS-532
+/ These exist on the design but don't lead any where yet. Add with links, or delete if changed
+/ https://mspsds-design-prototype.herokuapp.com/case
+/ p
+/   a href="" Edit risk details
+/   a style="margin-left: 20px" href="" View assessment
+
+-if @investigation.investigation_products.empty?
+  h2.govuk-heading-l
+    | There are no products attached to this case
+
+  p.govuk-body
+    | Add a product to the case
+
+  p.govuk-body
+    = link_to "Add product", new_investigation_product_path(@investigation)
+
+hr.govuk-section-break.govuk-section-break--m
+= render "tabs", tabs: [\
+  Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" }), \
+  Tab.new("contacts", "Contacts", lambda { render "investigations/tabs/contacts" }), \
+  Tab.new("attachments", "Attachments", lambda { render "investigations/tabs/attachments" }), \
+  Tab.new("products", "Products", lambda { render "investigations/tabs/products" }), \
+  Tab.new("businesses", "Businesses", lambda { render "investigations/tabs/businesses" }), \
+  Tab.new("related", "Related", lambda { render "investigations/tabs/related" }), \
+  Tab.new("full-detail", "Full detail", lambda { render "investigations/tabs/details" })\
+]
+.no-print[class="govuk-!-margin-top-3"]
+  = link_to "Create PDF document", investigation_path(@investigation, format: :pdf)

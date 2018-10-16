@@ -1,0 +1,6 @@
+- content_for :page_title, "New image - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back", associated_images_path(@parent), class: "govuk-back-link"
+= render "page_heading", title: "New image"
+br
+= render "form", image: @image

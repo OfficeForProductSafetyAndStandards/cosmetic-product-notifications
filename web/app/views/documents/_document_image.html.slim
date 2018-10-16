@@ -1,0 +1,9 @@
+- if document.metadata["safe"]
+  .document-without-preview
+    = image_tag "document_placeholder.png"
+    span.document-filetype
+      = document_file_extension(document)
+- else
+  .document-processing-placeholder
+    span
+      | Processing document

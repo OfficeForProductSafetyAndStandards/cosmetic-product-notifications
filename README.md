@@ -1,78 +1,171 @@
-# BEIS - Market Surveillance & Product Safety Digital Service
+# Market Surveillance & Product Safety Digital Service
+
 [![Build Status](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds.svg?branch=master)](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
+[![Coverage Status](https://coveralls.io/repos/github/UKGovernmentBEIS/beis-mspsds/badge.svg?branch=master)](https://coveralls.io/github/UKGovernmentBEIS/beis-mspsds?branch=master)
+
 
 ## Getting Setup
-Install Docker: https://docs.docker.com/install/
 
-Install docker-compose: https://docs.docker.com/compose/install/
+This project includes [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules), so when running `git clone` you need to add the `--recurse-submodules` option.
+If you have already pulled, you can run `git submodule init` and then `git submodule update --recursive` instead. 
+You might also need to run `git submodule update --recursive` if the submodule is updated because of a pull.
+
+Install Docker: https://docs.docker.com/install/.
+
+Increase the memory available to Docker to at least 4GB (instructions for [Mac](https://docs.docker.com/docker-for-mac/#advanced), [Windows](https://docs.docker.com/docker-for-windows/#advanced)).
 
 Copy the file in the root of the directory called `.env-template`.
 Rename the copy of the file to `.env` and fill in any environment variables.
 This `.env` file will be git ignored, so it is safe to add sensitive data.
+See the [accounts section](#accounts) below for information on how to obtain some of the optional variables.
+
+Add the following entry for Keycloak to your hosts file ([instructions](https://support.rackspace.com/how-to/modify-your-hosts-file/)):
+
+    127.0.0.1   keycloak
 
 Build and start-up the project:
-```
-docker-compose build
-docker-compose up
-```
 
-Then in a different terminal initialise the DB:
-```
-docker-compose run web rake db:create
-# Run the migrations
-docker-compose run web rake db:migrate
-# Add an admin user
-docker-compose run -e ADMIN_EMAIL=XXX -e ADMIN_PASSWORD=XXX web rails db:seed
-```
+    docker-compose up -d
 
-Visit the site on [localhost:3000](http://localhost:3000) (or whatever IP docker is running on).
+You'll then most likely want to run the [website setup steps](web/README.md#getting-setup).
+
+When pulling new changes from master, it is sometimes necessary to run the following
+if there are changes to the Docker config:
+
+    docker-compose down && docker-compose build && docker-compose up -d
+
 
 ### Windows Subsystem for Linux
+
 You will have to install the docker server on Windows, and the docker client on WSL.
 
-To make this work, make the current path look like a windows path to appease Windows Docker.
-```
-sudo ln -s /mnt/c /c
-cd /c/path/to/project
-```
+To make this work, make the current path look like a Windows path to appease Docker for Windows:
+
+    sudo ln -s /mnt/c /c
+    cd /c/path/to/project
 
 (from https://medium.com/software-development-stories/developing-a-dockerized-web-app-on-windows-subsystem-for-linux-wsl-61efec965080)
+If the web container complains it can find files in the `/app` folder (e.g. `bin/bundle`), that might be sign you're in
+the wrong directory.
 
-## IDE Setup
-VS Code is the preferred IDE.
-You should install the recommended extensions when prompted.
 
-Debugging is available by running `docker-compose up -f docker-compose.yml -f docker-compose.debug.yml` and then the `Docker: Attach to Ruby` configuration in VS Code.
+### Accounts
 
-In order to get things like code completion and linting, it's necessary to install ruby locally.
+#### Keycloak
 
-To make managing ruby versions easier, you can use [rbenv](https://github.com/rbenv/rbenv).
-Once rbenv is installed, run the following commands:
-```
-# Install the version of ruby specified in `.ruby-version`.
-rbenv install
-# Install bundler
-gem install bundler
-# Install the project gems to enable code completion and linting
-bundle install
-```
+The local developer instance of Keycloak is configured with the following default user accounts:
+* MSPSDS website: `user@example.com` / `password`
+* Admin Console: `admin` / `admin`
 
-## Tests
-You can run the tests with `docker-compose run web bundle exec rake test`.
+Log in to the [Keycloak admin console](http://keycloak:8080/auth/admin) to add or edit users.
 
-You can run the linting with `docker-compose run web bundle exec rubocop` or simply `rubocop` if you installed ruby locally for the [IDE Setup section](#ide-setup) above.
-Running this with the --auto-correct flag set will cause rubocop to attempt to fix as many of the issues as it can.
+Ask someone on the team to create an account for you on the Int and Staging environments.
 
-## Styles
-This project is following the GOV UK style guides.
-We have used the GOV UK elements library to define CSS classes.
-The design guide for this is [here](http://govuk-elements.herokuapp.com/).
+#### GOV.UK Notify
+
+If you want to send emails from your development instance, or update any API keys for the deployed instances,
+you'll need an account for [GOV.UK Notify](https://www.notifications.service.gov.uk)
+- ask someone on the team to invite you.
+
+
+#### Companies House
+
+If you want to pull in business information from Companies House to your development instance,
+or update any API keys for the deployed instances, you'll need an account for
+[Companies House](https://developer.companieshouse.gov.uk/api/docs/)
+- ask someone on the team to invite you.
+
+
+#### GOV.UK Platform as a Service
+
+If you want to update any of the deployed instances, you'll need an account for
+[GOV.UK PaaS](https://www.cloud.service.gov.uk/) - ask someone on the team to invite you.
+
+
+#### Amazon Web Services
+
+We're using AWS to supplement the functionality of GOV.UK PaaS.
+If you want to update any of the deployed instances, you'll need an account - ask someone on the team to invite you.
+
 
 ## Deployment
-Anything which is pushed to `master` will trigger the [travis build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds) and cause a deployment to the INT site.
 
-Anthing pushed to the branch `staging` will cause travis to instead build to the STAGING environment. Please only do this if you are confident that this is
-stable commit.
+Anything which is merged to `master` (via a Pull Request or push) will trigger the
+[Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
+and cause deployments of the various components to the int space
+([the int website is hosted here](https://mspsds-int.cloudapps.digital/)) on GOV.UK PaaS.
+
+Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
+space ([staging website](https://mspsds-int.cloudapps.digital/)).
+Please only do this if you are confident that this is a stable commit.
+
+
+### Deployment from scratch
+
+Once you have a GOV.UK PaaS account as mentioned above, you should install the Cloud Foundry CLI (`cf`) from
+https://github.com/cloudfoundry/cli#downloads and then run the following commands:
+
+    cf login -a api.cloud.service.gov.uk -u XXX -p XXX
+    cf target -o beis-mspsds
+
+This will log you in and set the correct target organisation.
+
+If you need to create a new environment, you can run `cf create-space SPACE-NAME`, otherwise, select the correct space using `cf target -o beis-mspsds -s SPACE-NAME`.
+
+When setting up a new environment, you'll also need to create an AWS user called `mspsds-SPACE-NAME` and keep a note of the Access key ID and secret access key.
+Give this user the AmazonS3FullAccess policy.
+
+
+#### Database
+
+To create a database for the current space:
+
+    cf marketplace -s postgres
+    cf enable-service-access postgres
+    cf create-service postgres tiny-unencrypted-9.5 mspsds-database
+
+Larger database options should be considered if required.
+
+
+#### Elasticsearch
+
+To create an Elasticsearch instance for the current space:
+
+    cf marketplace -s elasticsearch
+    cf create-service elasticsearch small-ha-6.x mspsds-elasticsearch
+
+There is current only one size for Elasticsearch.
+
+
+#### Redis
+
+To create a redis instance for the current space. 
+
+    cf marketplace -s redis
+    cf create-service redis tiny-unclustered-3.2 mspsds-redis
+
+Larger options should be considered if required. The current worker (sidekiq) only works with the unclustered version.
+
+
+#### S3
+
+Create an S3 bucket named `mspsds-SPACE-NAME`.
+
+
+#### Keycloak
+
+See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
+
+
+#### Website
+
+See [web/README.md](web/README.md#deployment-from-scratch).
+
+
+#### Worker
+
+See [worker/README.md](worker/README.md#deployment-from-scratch).
+
 
 ## Licence
 

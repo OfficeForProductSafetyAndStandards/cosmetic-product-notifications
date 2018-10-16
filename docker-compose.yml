@@ -2,12 +2,19 @@ version: '3'
 
 services:
   db:
-    image: postgres
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
     volumes:
       - postgres-volume:/var/lib/postgresql/data
+    env_file:
+      - .env.keycloak
   elasticsearch:
-    image: elasticsearch
+    build:
+      context: .
+      dockerfile: ./elasticsearch/Dockerfile
     environment:
+      - "discovery.type=single-node"
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     volumes:
       - elasticsearch-volume:/usr/share/elasticsearch/data
@@ -16,25 +23,38 @@ services:
     hostname: redis
     volumes:
       - redis-volume:/data
+  keycloak:
+    build:
+      context: ./keycloak
+      dockerfile: Dockerfile
+    env_file:
+      - .env.keycloak
+    depends_on:
+    - db
+    ports:
+      - "8080:8080"
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
     volumes:
       - bundle-cache:/usr/local/bundle
       - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}:/app
+      - ${PWD-.}/web:/app
     depends_on:
       - db
       - elasticsearch
       - redis
-  sidekiq:
-    build: .
-    command: bundle exec sidekiq
+  worker:
+    build:
+      context: .
+      dockerfile: ./worker/Dockerfile
+    command: bin/sidekiq -C config/sidekiq.yml
     volumes:
       - bundle-cache:/usr/local/bundle
-      - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}:/app
+      - ${PWD-.}/web:/app
     depends_on:
       - db
       - elasticsearch

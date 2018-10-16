@@ -1,0 +1,9 @@
+extends: eslint-config-airbnb-es5
+env:
+  browser: true
+  jquery: true
+globals:
+  accessibleAutocomplete: true
+  openregisterLocationPicker: true
+rules:
+  func-names: 0

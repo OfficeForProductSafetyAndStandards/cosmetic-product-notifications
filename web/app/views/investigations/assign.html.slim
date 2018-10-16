@@ -1,0 +1,19 @@
+- content_for :page_title, "Update assignee - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to case", @investigation, class: "govuk-back-link"
+= render "investigation_heading", investigation: @investigation
+h2.govuk-heading-l
+  | Update assignee
+h4.govuk-heading-m
+  | Current assignee
+p
+  = @investigation.assignee.nil? ? "Unassigned" : @investigation.assignee.email
+= form_with(url: update_assignee_investigation_path(@investigation), local: true) do |form|
+  .govuk-form-group
+    = form.label :email, class: "govuk-label"
+    / When there are many users, we should consider loading them with ajax using the autocomplete
+    = form.select :email, options_for_select(User.all.collect { |u| [u.email] }, \
+        @investigation.assignee ? @investigation.assignee.email : ""), { include_blank: "Unassigned" }, \
+        class: "govuk-select", id: "assignee-picker"
+  .govuk-form-group
+    = form.submit "Update assignee", class: "govuk-button"

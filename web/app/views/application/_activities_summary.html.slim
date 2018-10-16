@@ -1,0 +1,20 @@
+- if activities.any?
+  .timeline
+    ul.govuk-list
+      - activities.each do |activity|
+        li
+          h3.govuk-heading-s[class="govuk-!-margin-bottom-1"]
+            = activity.activity_type.titleize
+          p.timeline-details[class="govuk-!-margin-bottom-1"]
+            | By
+            '
+            = activity.source.show
+            | ,
+            '
+            = activity.created_at.to_s :long_ordinal
+          p
+            = activity.notes
+      li
+- else
+  p
+    | No activities.

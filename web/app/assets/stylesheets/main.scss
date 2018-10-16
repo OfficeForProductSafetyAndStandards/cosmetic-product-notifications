@@ -1,0 +1,39 @@
+$govuk-global-styles: true;
+$govuk-image-url-function: 'image-url';
+$govuk-font-url-function: 'font-url';
+@import "govuk-frontend/all";
+
+@import "documents";
+@import "images";
+@import "navbar";
+@import "pagination";
+@import "shared";
+@import "sortable_columns";
+@import "timeline";
+@import "form";
+@import "block-link";
+@import "summary_table";
+
+* {
+  box-sizing: border-box;
+}
+
+@media print {
+  .no-print {
+    display: none !important; // sass-lint:disable-line no-important
+  }
+}
+
+.search-background {
+  background-color: govuk-colour("grey-3");
+}
+
+.right {
+  float: right;
+  margin-left: 2em;
+}
+
+.row-border-top {
+  padding-top: 2em;
+  border-top: 1px solid govuk-colour("grey-3");
+}

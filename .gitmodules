@@ -1,0 +1,6 @@
+[submodule "keycloak/govuk-theme"]
+	path = keycloak/govuk-theme
+	url = https://github.com/UKGovernmentBEIS/keycloak-theme-govuk.git
+[submodule "keycloak/providers/sms-authenticator"]
+	path = keycloak/providers/sms-authenticator
+	url = https://github.com/UKGovernmentBEIS/keycloak-sms-authenticator-sns.git

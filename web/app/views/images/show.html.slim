@@ -1,0 +1,8 @@
+- content_for :page_title, "Image details - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back", associated_images_path(@parent), class: "govuk-back-link"
+= render "page_heading", title: @image.metadata["title"]
+= render "image", image: @image, dimensions: "600x400"
+.image-description
+  = @image.metadata["description"]
+= link_to "Edit image details", edit_associated_image_path(@parent, @image), class: "edit-image-link"

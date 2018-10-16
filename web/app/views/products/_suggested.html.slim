@@ -1,0 +1,8 @@
+- if @products.empty?
+  | No matches.
+- @products.each do |product|
+  = render layout: "product_summary", locals: { product: product } do
+    - if @investigation.present?
+      = form_with(url: add_investigation_products_path(@investigation), local: true) do |form|
+        = form.hidden_field :product_id, value: product.id
+        = form.submit "Select", class: "govuk-button"

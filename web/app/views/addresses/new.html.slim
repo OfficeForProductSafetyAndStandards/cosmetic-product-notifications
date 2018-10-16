@@ -1,0 +1,7 @@
+- content_for :page_title, "New Address - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to addresses", business_addresses_path(@business), class: "govuk-back-link"
+= render "business_heading", business: @business
+h2.govuk-heading-l
+  | Address details
+= render "form", address: @address, business: @address.business

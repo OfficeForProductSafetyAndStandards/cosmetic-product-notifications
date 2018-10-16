@@ -1,0 +1,17 @@
+- content_for :page_title, "Add product to case - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to case", @investigation, class: "govuk-back-link"
+.investigation-product-page.products-search-form{ data-investigation-id=@investigation.id.to_s
+    data-product-ids=@investigation.product_ids.join(",") }
+  = render "investigation_heading", investigation: @investigation
+  h2.govuk-heading-l
+    | Add product
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      = form_with(model: @product, url: investigation_products_path(@investigation), local: true, method: :post) \
+          do |form|
+        h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+          | Product details
+        = render "products/form", form: form, product: @product, countries: @countries, search: true
+    .govuk-grid-column-one-half
+      = render "products/suggestions_container"

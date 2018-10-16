@@ -1,9 +1,0 @@
-<% content_for :page_title, "Activities - Market Surveillance & Product Safety" %>
-
-<%= link_to 'Back to case', @investigation, class: "govuk-back-link" %>
-
-<%= render "investigation_heading", investigation: @investigation %>
-
-<h2 class="govuk-heading-l govuk-!-margin-bottom-2">Activities</h2>
-<%= render "activities_summary", activities: @activities %>
-<%= link_to 'New activity', new_investigation_activity_path(@investigation) %>

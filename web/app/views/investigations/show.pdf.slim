@@ -1,0 +1,62 @@
+h2
+  | Case
+- if @investigation.images.attached? && @investigation.images.first.metadata["safe"] \
+    && @investigation.images.first.variable?
+  = image_tag @investigation.images.first.variant(resize: "300x200"), alt: "Case"
+  br
+  br
+table[style="width:100%; text-align:left"]
+  tr
+    th
+      | Status
+    td
+      = @investigation.is_closed? ? "Closed" : "Open"
+  tr
+    th
+      | Description
+    td
+      = @investigation.description
+  tr
+    th
+      | Assignee
+    td
+      = @investigation.assignee.nil? ? "Unassigned" : @investigation.assignee.email
+  tr
+    th
+      | Source
+    td
+      = @investigation.source.show
+  tr
+    th
+      | Risk Notes
+    td
+      = @investigation.risk_overview
+- if @investigation.products.any?
+  h3
+    | Products
+  - @investigation.products.each do |product|
+    p
+      = link_to product.name, polymorphic_url(product)
+- if @investigation.activities.any?
+  h3
+    | Activities
+  table[style="width:100%; text-align: left; -webkit-border-horizontal-spacing: 2em;"]
+    tr
+      th
+        | Date
+      th
+        | Type
+      th
+        | Source
+      th
+        | Notes
+    - @investigation.activities.each do |activity|
+      tr
+        td
+          = activity.created_at.to_s :db
+        td
+          = activity.activity_type.titleize
+        td
+          = activity.source.show
+        td
+          = activity.notes
