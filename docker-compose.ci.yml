@@ -4,8 +4,10 @@ services:
   keycloak:
     environment:
       - NOTIFY_API_KEY=${NOTIFY_API_KEY}
+    image: davidrendell/beis-mspsds-keycloak:${TRAVIS_BUILD_NUMBER}
   web:
     command: tail -f /dev/null
+    image: davidrendell/beis-mspsds-web:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
       - ~/npm-cache:/root/.npm
@@ -18,5 +20,12 @@ services:
       - COMPANIES_HOUSE_API_KEY='not-a-key-but-fools-client-into-not-exploding'
   worker:
     command: tail -f /dev/null
+    image: davidrendell/beis-mspsds-worker:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
+  cosmetics-web:
+    image: davidrendell/beis-mspsds-cosmetics-web:${TRAVIS_BUILD_NUMBER}
+  db:
+    image: davidrendell/beis-mspsds-db:${TRAVIS_BUILD_NUMBER}
+  elasticsearch:
+    image: davidrendell/beis-mspsds-elasticsearch:${TRAVIS_BUILD_NUMBER}

@@ -11,6 +11,18 @@ if [[ "$TOP_LEVEL_CHANGES" =~ keycloak ]]; then
     COMPONENTS="$COMPONENTS keycloak"
 fi
 
+if [[ "$TOP_LEVEL_CHANGES" =~ db ]]; then
+    COMPONENTS="$COMPONENTS db"
+fi
+
+if [[ "$TOP_LEVEL_CHANGES" =~ elasticseach ]]; then
+    COMPONENTS="$COMPONENTS elasticseach"
+fi
+
+if [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-web ]]; then
+    COMPONENTS="$COMPONENTS cosmetics-web"
+fi
+
 if [[ "$TOP_LEVEL_CHANGES" =~ web ]]; then
     COMPONENTS="$COMPONENTS web worker"
 elif [[ "$TOP_LEVEL_CHANGES" =~ worker ]]; then
