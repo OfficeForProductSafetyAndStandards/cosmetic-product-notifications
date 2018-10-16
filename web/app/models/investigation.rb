@@ -25,7 +25,7 @@ class Investigation < ApplicationRecord
   has_many_attached :images
 
   has_one :source, as: :sourceable, dependent: :destroy
-  has_one :reporter
+  has_one :reporter, dependent: :destroy
 
   accepts_nested_attributes_for :products
   accepts_nested_attributes_for :businesses

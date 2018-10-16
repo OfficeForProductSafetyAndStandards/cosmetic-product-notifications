@@ -1,6 +1,7 @@
 class AddReportersToInvestigations < ActiveRecord::Migration[5.2]
   def change
     create_table :reporters, id: :serial do |t|
+      t.timestamps
       t.string :name
       t.string :phone_number
       t.string :email_address

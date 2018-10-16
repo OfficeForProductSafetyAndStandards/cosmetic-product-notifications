@@ -124,12 +124,14 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
   end
 
   create_table "reporters", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.string "email_address"
     t.integer "investigation_id"
     t.string "name"
     t.text "other_details"
     t.string "phone_number"
     t.string "reporter_type", null: false
+    t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_reporters_on_investigation_id"
   end
 
