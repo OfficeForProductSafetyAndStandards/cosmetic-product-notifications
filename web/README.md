@@ -124,8 +124,4 @@ See the AWS account section in [the root README](../README.md#aws) to get these 
 
 See the Companies House account section in [the root README](../README.md#companies-house) to get this value.
 
-    cf set-env mspsds-web MSPSDS_HOST XXX
-
-This is the URL for the website and is used for sending emails.
-
 The app can then be started using `cf restart mspsds-web`.
