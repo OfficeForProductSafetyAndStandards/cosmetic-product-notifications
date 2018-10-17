@@ -1,4 +1,4 @@
-class IncidentsController < ApplicationController
+class Investigations::IncidentsController < ApplicationController
   before_action :set_investigation, only: %i[new create]
   before_action :build_incident, only: %i[new create]
 
