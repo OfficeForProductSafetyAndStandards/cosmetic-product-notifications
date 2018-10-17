@@ -35,4 +35,17 @@ class User < ActiveHash::Base
   def has_role?(role)
     KeycloakClient.instance.has_role? role
   end
+
+  def self.get_assignees_select_options
+    select_options = { '': nil }
+    self.all.each do |u|
+      display_string = u.get_assignee_display_string
+      select_options[display_string] = u.id
+    end
+    select_options
+  end
+
+  def get_assignee_display_string
+    "#{full_name} (#{email})"
+  end
 end

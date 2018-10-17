@@ -37,12 +37,18 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1/assign
   def assign
     redirect_to investigation_path(@investigation) if @investigation.is_closed
-    @assignee = @investigation.assignee
+    @investigation
   end
 
   # POST /investigations/1/update_assignee
   def update_assignee
-    assignee = User.find_by(email: params[:email].downcase)
+    return redirect_to assign_investigation_path if request.get?
+
+    assignee = User.find_by(id: params[:assignee_id])
+    if !assignee
+      @investigation.errors.add(:assignee, "must not be left blank")
+      return render :assign
+    end
     @investigation.assignee = assignee
     save_and_respond "Assignee was successfully updated."
     NotifyMailer.assigned_investigation(@investigation, assignee.email).deliver_later if assignee.present?
