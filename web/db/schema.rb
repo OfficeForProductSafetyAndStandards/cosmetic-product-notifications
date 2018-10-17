@@ -171,6 +171,6 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
 
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
+  add_foreign_key "incidents", "investigations"
   add_foreign_key "reporters", "investigations"
-  add_foreign_key "incidents", "investigations", column: "investigations_id"
 end
