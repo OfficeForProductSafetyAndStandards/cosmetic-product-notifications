@@ -4,7 +4,7 @@
       p.govuk-caption-xl
         'Case:
         = investigation.id
-      = investigation.title
+      = investigation.title || 'Untitled case'
       p.govuk-caption-m
         = investigation.source.created_by
   .govuk-grid-column-one-third
