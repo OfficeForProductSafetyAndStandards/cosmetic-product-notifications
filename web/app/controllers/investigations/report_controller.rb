@@ -14,7 +14,7 @@ class Investigations::ReportController < ApplicationController
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
     @investigation.save
-    redirect_to investigation_path(@investigation)
+    redirect_to investigation_url(@investigation)
   end
 
   # GET /investigations/report
@@ -27,7 +27,7 @@ class Investigations::ReportController < ApplicationController
 
   def update
     update_partial_reporter
-    if !@reporter.valid?(:partial)
+    if !@reporter.valid?(step)
       render step
     else
       redirect_to next_wizard_path if step != steps.last
@@ -47,8 +47,8 @@ private
   end
 
   def update_partial_reporter
-    session[:reporter] = session[:reporter].merge(reporter_params)
-    @reporter = Reporter.new(session[:reporter].merge(step: step))
+    session[:reporter] = (session[:reporter] || {}).merge(reporter_params)
+    @reporter = Reporter.new(session[:reporter])
     session[:reporter] = @reporter.attributes
   end
 end
