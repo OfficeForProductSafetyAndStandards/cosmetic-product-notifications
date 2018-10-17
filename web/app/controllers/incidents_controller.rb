@@ -3,8 +3,7 @@ class IncidentsController < ApplicationController
   before_action :build_incident, only: %i[new create]
 
   # GET investigations/1/incidents/new
-  def new
-  end
+  def new; end
 
   # POST investigations/1/incidents
   def create
@@ -24,9 +23,9 @@ class IncidentsController < ApplicationController
         @incident.errors.add(component)
       end
     rescue MspsdsException::IncompleteDateParsedException => e
-      e.missing_fields.each do |component|
+      e.missing_fields.each do |missing_component|
         @incident.errors.add(:date, "Enter date of incident and include a day, month and year")
-        @incident.errors.add(component)
+        @incident.errors.add(missing_component)
       end
     end
     if @incident.errors.empty? && @incident.save
@@ -64,6 +63,7 @@ private
     if (1..2) === missing_date_components.length # Date has some components entered, but not all
       raise MspsdsException::IncompleteDateParsedException.new missing_date_components.keys
     end
+
     parsed_params
   end
 
