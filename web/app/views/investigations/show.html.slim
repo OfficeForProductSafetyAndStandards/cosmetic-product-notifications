@@ -4,8 +4,7 @@
     .govuk-grid-column-one-third
       = link_to "Back to list", investigations_path, class: "govuk-back-link"
 
-.govuk-grid-row
-    = render "investigation_heading", investigation: @investigation
+= render "investigation_heading", investigation: @investigation
 
 / TODO: MSPSDS-532
 / These exist on the design but don't lead any where yet. Add with links, or delete if changed

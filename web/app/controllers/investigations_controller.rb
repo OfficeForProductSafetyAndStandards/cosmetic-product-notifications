@@ -4,7 +4,6 @@ class InvestigationsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[show edit update destroy assign update_assignee status]
-  before_action :create_investigation, only: %i[create]
 
   # GET /investigations
   # GET /investigations.json
@@ -53,6 +52,8 @@ class InvestigationsController < ApplicationController
   # POST /investigations
   # POST /investigations.json
   def create
+    @investigation = Investigation.new(investigation_params)
+    @investigation.source = UserSource.new(user: current_user)
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to @investigation, notice: "Investigation was successfully created." }
@@ -102,11 +103,6 @@ private
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def create_investigation
-    @investigation = Investigation.new(investigation_params)
-    @investigation.source = UserSource.new(user: current_user)
   end
 
   def set_investigation
