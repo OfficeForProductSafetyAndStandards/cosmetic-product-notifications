@@ -1,0 +1,17 @@
+p#notice = notice
+
+p
+  strong Hazard type:
+  = @hazard.hazard_type
+p
+  strong Description:
+  = @hazard.description
+p
+  strong Affected parties:
+  = @hazard.affected_parties
+p
+  strong Risk level:
+  = @hazard.risk_level
+= form_with(model: @hazard, local: true, url: investigation_hazards_path(investigation_id: @investigation&.id || 0), method: :post) do |form|
+  = form.submit "Save", class: "govuk-button"
+

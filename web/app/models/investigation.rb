@@ -26,6 +26,7 @@ class Investigation < ApplicationRecord
 
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :reporter, dependent: :destroy
+  has_one :hazard, dependent: :destroy
 
   accepts_nested_attributes_for :products
   accepts_nested_attributes_for :businesses

@@ -42,7 +42,8 @@ div
             /= @investigation.hazard.affected_parties
         .govuk-grid-column-full
           p
-            /= @investigation.description
+            = @investigation.hazard.description
+
           = link_to "Edit hazard and risk details", new_investigation_hazard_path(@investigation), class: "no-print"
       / .govuk-grid-column-one-third
       /   h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]

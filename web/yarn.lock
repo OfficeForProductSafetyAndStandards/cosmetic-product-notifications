@@ -612,6 +612,7 @@ eslint@^2.7.0:
 eslint@^5.7.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.7.0.tgz#55c326d6fb2ad45fcbd0ce17c3846f025d1d819c"
+  integrity sha512-zYCeFQahsxffGl87U2aJ7DPyH8CbWgxBC213Y8+TCanhUTf2gEvfq3EKpHmEcozTLyPmGe9LZdMAwC/CpJBM5A==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.5.3"
@@ -882,6 +883,7 @@ govuk-country-and-territory-autocomplete@^0.5.0:
 govuk-frontend@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.2.0.tgz#ef14463f8c0b4b628d5a498f8aa4f3bf6833315e"
+  integrity sha512-vNiUIp8EQACARNTyOwmE110HcQd+zJvkgbKv+gmY28QxqQGGd2DEJ35nblnjElsRJpSgbxwa85iqlNtbR3Q5tA==
 
 graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
@@ -1423,6 +1425,7 @@ readline2@^1.0.1:
 regexpp@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-2.0.1.tgz#8d19d31cf632482b589049f8281f93dbcba4d07f"
+  integrity sha512-lv0M6+TkDVniA3aD1Eg0DVpfU/booSu7Eev3TDO/mZKHBfVjgCGTV4t4buppESEYDtkArYFOxTJWv6S5C+iaNw==
 
 require-uncached@^1.0.2, require-uncached@^1.0.3:
   version "1.0.3"
@@ -1655,6 +1658,7 @@ table@^3.7.8:
 table@^5.0.2:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/table/-/table-5.1.0.tgz#69a54644f6f01ad1628f8178715b408dc6bf11f7"
+  integrity sha512-e542in22ZLhD/fOIuXs/8yDZ9W61ltF8daM88rkRNtgTIct+vI2fTnAyu/Db2TCfEcI8i7mjZz6meLq0nW7TYg==
   dependencies:
     ajv "^6.5.3"
     lodash "^4.17.10"
