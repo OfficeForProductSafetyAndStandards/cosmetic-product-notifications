@@ -13,15 +13,13 @@ class Investigation < ApplicationRecord
   validates :title, presence: true
   default_scope { order(updated_at: :desc) }
 
+  belongs_to_active_hash :assignee, class_name: "User", optional: true
+
   has_many :investigation_products, dependent: :destroy
-  accepts_nested_attributes_for :investigation_products, allow_destroy: true
   has_many :products, through: :investigation_products
-  accepts_nested_attributes_for :products
 
   has_many :investigation_businesses, dependent: :destroy
-  accepts_nested_attributes_for :investigation_businesses, allow_destroy: true
   has_many :businesses, through: :investigation_businesses
-  accepts_nested_attributes_for :businesses
 
   has_many :activities, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :investigation
 
@@ -29,9 +27,6 @@ class Investigation < ApplicationRecord
   has_many_attached :images
 
   has_one :source, as: :sourceable, dependent: :destroy
-  accepts_nested_attributes_for :source
-
-  belongs_to_active_hash :assignee, class_name: "User", optional: true
 
   has_paper_trail
 
