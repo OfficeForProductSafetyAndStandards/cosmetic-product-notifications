@@ -29,3 +29,9 @@ services:
     image: davidrendell/beis-mspsds-db:${TRAVIS_BUILD_NUMBER}
   elasticsearch:
     image: davidrendell/beis-mspsds-elasticsearch:${TRAVIS_BUILD_NUMBER}
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - elasticsearch
+      - keycloak
+    command: elasticsearch:9200 keycloak:8080

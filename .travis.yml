@@ -42,7 +42,7 @@ jobs:
     install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
     before_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
-    - sleep 30
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm start_dependencies
     script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rake
       db:create db:schema:load test
     after_script:
