@@ -47,7 +47,7 @@ class ReporterFlowTest < ApplicationSystemTestCase
   test "after submitting should go to recently created investigation page" do
     select_type_and_continue
     fill_name_and_continue
-    assert_text("Case ID: ")
+    assert_text("Case: ")
   end
 
   def select_type_and_continue
