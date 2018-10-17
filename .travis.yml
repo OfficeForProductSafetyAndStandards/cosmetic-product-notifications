@@ -20,7 +20,17 @@ jobs:
     install:
     - "./ci/build-docker-images.sh"
   - stage: Test
-    name: Rubocop
+    name: Run Tests
+    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
+    before_script:
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm start_dependencies
+    - sleep 30
+    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rake
+      db:create db:schema:load test
+    after_script:
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
+  - name: Rubocop
     install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
     script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/rubocop
   - name: Slim Lint
@@ -38,15 +48,6 @@ jobs:
     install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
     script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/brakeman
       --no-pager
-  - name: Run Tests
-    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    before_script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm start_dependencies
-    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rake
-      db:create db:schema:load test
-    after_script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
   - stage: Deploy to int
     name: Deploy web
     if: branch = master AND type != pull_request
