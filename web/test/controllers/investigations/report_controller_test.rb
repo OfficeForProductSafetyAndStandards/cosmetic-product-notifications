@@ -33,6 +33,6 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
 
   test "should redirect a get request to steps journey" do
     get new_report_url
-    assert_redirected_to report_index_path
+    assert_redirected_to report_index_path + '/type'
   end
 end

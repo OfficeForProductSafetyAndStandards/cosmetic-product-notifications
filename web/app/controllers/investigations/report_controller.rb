@@ -4,12 +4,13 @@ class Investigations::ReportController < ApplicationController
 
   # GET /investigations/report/new
   def new
-    redirect_to report_index_path if request.get?
+    redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
   # POST /investigations/report
   def create
     update_partial_reporter
+    session[:reporter] = {}
     @investigation = Investigation.new
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
