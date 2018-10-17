@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hazard_type: MyString
+  description: MyString
+  affected_parties: MyString
+  risk_level: 1
+  investigation: 
+
+two:
+  hazard_type: MyString
+  description: MyString
+  affected_parties: MyString
+  risk_level: 1
+  investigation: 

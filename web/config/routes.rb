@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :hazards
   concern :document_attachable do
     resources :documents
   end
@@ -35,6 +36,7 @@ Rails.application.routes.draw do
         post :companies_house
       end
     end
+    resources :hazards, controller: "investigations/hazards"
   end
 
   resources :businesses do

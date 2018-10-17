@@ -1,28 +1,28 @@
-= form_with(model: investigation, local: true) do |form|
-  - if investigation.errors.any?
+= form_with(model: @hazards, local: true) do |form|
+  - if @hazards&.errors&.any?
     #error_explanation
       h2.govuk-heading-l.govuk-error-message
-        = pluralize(investigation.errors.count, "error ")
+        = pluralize(@hazards.errors.count, "error ")
         | prohibited this case from being saved:
       ul.govuk-list.govuk-error-message
-        - investigation.errors.full_messages.each do |message|
+        - @hazards.errors.full_messages.each do |message|
           li
             = message
   .govuk-form-group
-    = form.label :risk_overview, "Overview", class: "govuk-label"
+    = form.label :hazard_type, "Overview", class: "govuk-label"
     span#title-format-hint.govuk-hint
       | What type of hazard is it?
-    = form.text_field :risk_overview, class: "govuk-input govuk-!-width-two-thirds"
+    = form.text_field :hazard_type, class: "govuk-input govuk-!-width-two-thirds"
   .govuk-form-group
     = form.label :description, "Details", class: "govuk-label"
     span#title-format-hint.govuk-hint
       | Hazard description
     = form.text_area :description, class: "govuk-textarea govuk-!-width-two-thirds", rows: "5"
   .govuk-form-group
-    = form.label :who_is_at_risk, "Who is it at risk to?", class: "govuk-label"
+    = form.label :affected_parties, "Who is it at risk to?", class: "govuk-label"
     span#title-format-hint.govuk-hint
       | Are there specific groups it might effect? i.e. Young children
-    = form.text_field :who_is_at_risk, class: "govuk-input govuk-!-width-two-thirds"
+    = form.text_field :affected_parties, class: "govuk-input govuk-!-width-two-thirds"
   .govuk-form-group
     h3.govuk-label
       | Can you set a risk level?
@@ -41,7 +41,7 @@
                   | Risk level
                   p
                   .govuk-radios
-                  - Investigation.risk_levels.each do |(level, _)|
+                  - Hazard.risk_levels.each do |(level, _)|
                     .govuk-radios__item
                       = form.radio_button :risk_level, level, class: "govuk-radios__input"
                       = form.label :risk_level, level.titleize, class: "govuk-label govuk-radios__label"

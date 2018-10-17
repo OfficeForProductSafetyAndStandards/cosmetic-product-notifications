@@ -124,7 +124,7 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
     params.require(:investigation).permit(
-      :title, :description, :risk_overview, :image, :risk_level, :who_is_at_risk, :is_closed,
+      :title, :description, :image, :risk_level, :is_closed,
       product_ids: [],
       business_ids: []
     )

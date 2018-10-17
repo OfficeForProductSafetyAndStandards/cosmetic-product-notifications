@@ -35,8 +35,6 @@ class Investigation < ApplicationRecord
 
   has_paper_trail
 
-  enum risk_level: %i[low medium serious severe], _suffix: true
-
   def as_indexed_json(*)
     as_json.merge(status: status.downcase)
   end

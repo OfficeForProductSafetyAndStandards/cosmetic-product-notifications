@@ -17,7 +17,7 @@ div
   .govuk-grid-row[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-full
       = render "investigation_heading", investigation: @investigation
-  - if !@investigation.risk_overview?
+  - if false
     h2.govuk-heading-l
       |What's the nature of the hazard?
     p.govuk-body
@@ -34,24 +34,24 @@ div
           h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
             span.govuk-caption-m
               |Hazard
-            = @investigation.risk_overview
+              / = @investigation.hazard.description?
         .govuk-grid-column-one-half
           h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
             span.govuk-caption-m
               | Vunerable group
-            = @investigation.who_is_at_risk
+            /= @investigation.hazard.affected_parties
         .govuk-grid-column-full
           p
-            = @investigation.description
-          = link_to "Edit hazard and risk details", edit_investigation_path(@investigation), class: "no-print"
-      .govuk-grid-column-one-third
-        h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-          span.govuk-caption-m
-              | Risk Level
-          - if !@investigation.risk_level?
-            = link_to "Add risk details", class: "no-print"
-          - else
-            = @investigation.risk_level&.titleize
+            /= @investigation.description
+          = link_to "Edit hazard and risk details", new_investigation_hazard_path(@investigation), class: "no-print"
+      / .govuk-grid-column-one-third
+      /   h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+      /     span.govuk-caption-m
+      /         | Risk Level
+      /     /- if !@investigation.hazard.risk_level?
+      /       = link_to "Add risk details", class: "no-print"
+      /     - else
+      /       = @investigation.hazard.risk_level&.titleize
   .govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-one-third
       h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]

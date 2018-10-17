@@ -76,6 +76,7 @@ class InitSchema < ActiveRecord::Migration[5.0]
       t.boolean "is_closed", default: false
       t.integer "risk_level"
       t.string "risk_overview"
+      t.integer "sensitivity"
       t.string "title", null: false
       t.datetime "updated_at", null: false
       t.index %w[assignee_id], name: "index_investigations_on_assignee_id"
