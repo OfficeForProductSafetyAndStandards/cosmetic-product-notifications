@@ -36,5 +36,3 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to report_index_path
   end
 end
-
-
