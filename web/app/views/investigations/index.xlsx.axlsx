@@ -77,6 +77,7 @@ book.add_worksheet name: "Actions" do |sheet_actions|
     investigation.activities.each do |activity|
       sheet_actions.add_row [
         activity.id,
+        activity.type.titleize,
         activity.description,
         activity.source.show,
         investigation.id

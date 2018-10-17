@@ -1,3 +1,3 @@
-class CommentActivity < ApplicationRecord
-  acts_as :activity
+class CommentActivity < Activity
+  validates :description, presence: true
 end

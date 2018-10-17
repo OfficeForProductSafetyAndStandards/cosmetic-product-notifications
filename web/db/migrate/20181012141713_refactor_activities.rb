@@ -1,16 +1,21 @@
 class RefactorActivities < ActiveRecord::Migration[5.2]
   def change
-    drop_table :activities # rubocop:disable Rails/ReversibleMigration
+    safety_assured do
+      reversible do |dir|
+        change_table :activities do |t|
+          dir.up do
+            t.rename :notes, :description
+            t.string :type, default: "CommentActivity"
+            t.remove :activity_type
+          end
 
-    create_table :activities do |t|
-      t.actable
-      t.integer "investigation_id"
-      t.text :description
-      t.timestamps
-      t.index %w[investigation_id], name: "index_activities_on_investigation_id"
+          dir.down do
+            t.rename :description, :notes
+            t.remove :type
+            t.integer :activity_type, null: false, default: 0
+          end
+        end
+      end
     end
-    add_foreign_key "activities", "investigations"
-
-    create_table :comment_activities # rubocop:disable Rails/CreateTableWithTimestamps
   end
 end

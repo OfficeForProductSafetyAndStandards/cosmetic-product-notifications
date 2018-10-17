@@ -4,7 +4,7 @@
       - activities.each do |activity|
         li
           h3.govuk-heading-s[class="govuk-!-margin-bottom-1"]
-            = activity.specific.class.to_s.titleize
+            = activity.type.titleize
           p.timeline-details[class="govuk-!-margin-bottom-1"]
             ' By
             = activity.source.show
