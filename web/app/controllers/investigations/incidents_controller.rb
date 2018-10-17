@@ -1,9 +1,31 @@
 class Investigations::IncidentsController < ApplicationController
-  before_action :set_investigation, only: %i[new create]
-  before_action :build_incident, only: %i[new create]
+  include Wicked::Wizard
+  steps :details#, :confirmation
+
+  before_action :set_investigation, only: %i[new create show]
+  before_action :build_incident, only: %i[new create show]
 
   # GET investigations/1/incidents/new
-  def new; end
+  def new;
+    redirect_to wizard_path(steps.first, request.query_parameters)
+  end
+
+  # GET investigations/1/incidents/step
+  def show
+    session[:incident] = {} if step == steps.first
+    render_wizard
+  end
+
+  def update
+    set_investigation
+    build_incident
+    if !@incident.valid?(step)
+      render step
+    else
+      redirect_to next_wizard_path if step != steps.last
+      create if step == steps.last
+    end
+  end
 
   # POST investigations/1/incidents
   def create
@@ -32,7 +54,7 @@ class Investigations::IncidentsController < ApplicationController
       redirect_to investigation_url(@investigation), notice: "Incident was successfully recorded."
     else
       set_intermediate_params
-      render :new
+      render step
     end
   end
 

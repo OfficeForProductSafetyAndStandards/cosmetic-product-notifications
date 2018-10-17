@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :incidents, controller: "investigations/incidents", only: %i[new create]
+    resources :incidents, controller: "investigations/incidents", only: %i[new create show update]
   end
 
   resources :businesses do
