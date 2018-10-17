@@ -35,7 +35,7 @@ class BusinessTest < ActiveSupport::TestCase
     assert_equal(business.company_name, "Turbo Frogs")
     assert_equal(business.company_type_code, "ltd")
     assert_equal(business.company_status_code, "active")
-    assert_equal(business.source.name, "Companies House")
+    assert_equal(business.source.show, "Companies House")
     assert_equal(business.nature_of_business_id, "SIC code")
     address = business.primary_address
     assert_equal(address.address_type, "Registered office address")
@@ -44,6 +44,6 @@ class BusinessTest < ActiveSupport::TestCase
     assert_equal(address.locality, "New York City")
     assert_equal(address.country, "USA")
     assert_equal(address.postal_code, "55555")
-    assert_equal(address.source.name, "Companies House")
+    assert_equal(address.source.show, "Companies House")
   end
 end
