@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_17_095326) do
+ActiveRecord::Schema.define(version: 2018_10_15_101745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,9 @@ ActiveRecord::Schema.define(version: 2018_10_17_095326) do
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "is_closed", default: false
+    t.integer "risk_level"
+    t.string "risk_overview"
+    t.integer "sensitivity"
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
@@ -129,6 +132,18 @@ ActiveRecord::Schema.define(version: 2018_10_17_095326) do
     t.datetime "created_at", null: false
     t.string "reference", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reporters", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email_address"
+    t.integer "investigation_id"
+    t.string "name"
+    t.text "other_details"
+    t.string "phone_number"
+    t.string "reporter_type", null: false
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_reporters_on_investigation_id"
   end
 
   create_table "sources", id: :serial, force: :cascade do |t|
@@ -155,5 +170,4 @@ ActiveRecord::Schema.define(version: 2018_10_17_095326) do
 
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
-  add_foreign_key "hazards", "investigations"
 end

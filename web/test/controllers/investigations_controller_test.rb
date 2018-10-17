@@ -29,7 +29,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
           title: @investigation.title,
           description: @investigation.description,
           is_closed: @investigation.is_closed,
-          source: @investigation.source
+          source: @investigation.source,
         }
       }
     end
@@ -39,6 +39,11 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should show investigation" do
     get investigation_url(@investigation)
+    assert_response :success
+  end
+
+  test "should generate investigation pdf" do
+    get investigation_url(@investigation, format: :pdf)
     assert_response :success
   end
 
@@ -53,7 +58,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         title: @investigation.title,
         description: @investigation.description,
         is_closed: @investigation.is_closed,
-        source: @investigation.source
+        source: @investigation.source,
       }
     }
     assert_redirected_to investigation_url(@investigation)
@@ -63,7 +68,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Investigation.count", -1) do
       delete investigation_url(@investigation)
     end
-
     assert_redirected_to investigations_url
   end
 end
