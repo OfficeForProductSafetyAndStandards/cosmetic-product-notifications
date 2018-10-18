@@ -1,6 +1,6 @@
 class Reporter < ApplicationRecord
   belongs_to :investigation, required: false
   validates :investigation, presence: true, on: %i[create update]
-  validates :reporter_type, presence: true
-  validates :name, presence: true, on: %i[create update details]
+  # To validate something on specific step pass this step as context and use on: as below
+  # validates :name, presence: true, on: %i[create update details]
 end
