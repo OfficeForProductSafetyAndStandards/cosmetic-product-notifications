@@ -39,8 +39,8 @@ h1.govuk-heading-xl
               / The ids for these fields follow a special convention to work with Active Record dates
               /https://guides.rubyonrails.org/form_helpers.html#using-date-and-time-form-helpers-model-object-helpers
               .govuk-form-group
-                = form.label "date(3i)", "Day", class: "govuk-label govuk-date-input__label"
-                = form.text_field "date(3i)", \
+                = form.label :day, "Day", class: "govuk-label govuk-date-input__label"
+                = form.text_field :day,
                   class: "govuk-input govuk-date-input__input govuk-input--width-2" \
                          + (form.object.errors[:day].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
@@ -48,8 +48,8 @@ h1.govuk-heading-xl
                   value: form.object.day
             .govuk-date-input__item
               .govuk-form-group
-                = form.label "date(2i)", "Month", class: "govuk-label govuk-date-input__label"
-                = form.text_field "date(2i)", \
+                = form.label :month, "Month", class: "govuk-label govuk-date-input__label"
+                = form.text_field :month, \
                   class: "govuk-input govuk-date-input__input govuk-input--width-2"\
                           + (form.object.errors[:month].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
@@ -57,8 +57,8 @@ h1.govuk-heading-xl
                   value: form.object.month
             .govuk-date-input__item
               .govuk-form-group
-                = form.label "date(1i)", "Year", class: "govuk-label govuk-date-input__label"
-                = form.text_field "date(1i)", \
+                = form.label :year, "Year", class: "govuk-label govuk-date-input__label"
+                = form.text_field :year, \
                   class: "govuk-input govuk-date-input__input govuk-input--width-4"\
                           + (form.object.errors[:year].present? ? " govuk-input--error" : ""), \
                   pattern: "[0-9]*", \
