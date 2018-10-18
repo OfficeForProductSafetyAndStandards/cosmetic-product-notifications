@@ -9,26 +9,26 @@
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-two-thirds
     .govuk-grid-column-one-half
-      h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+      h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
         span.govuk-caption-m
           |Hazard
         = @investigation.hazard&.hazard_type
     .govuk-grid-column-one-half
-      h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+      h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
         span.govuk-caption-m
           | Vunerable group
         = @investigation.hazard&.affected_parties
     .govuk-grid-column-full
-      p
-        = @investigation.hazard&.description
-
-      = link_to "Edit hazard and risk details", new_investigation_hazard_path(@investigation), class: "no-print"
-  .govuk-grid-column-one-third
-    h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
       span.govuk-caption-m
-        p Risk Level
-        p = @investigation.hazard&.risk_level&.titleize
-        = link_to "Add risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
+        p = @investigation.hazard&.description
+        = link_to "Edit hazard and risk details", new_investigation_hazard_path(@investigation), class: "no-print"
+
+  .govuk-grid-column-one-third
+    h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+      span.govuk-caption-m
+        | Risk Level
+      = @investigation.hazard&.risk_level&.titleize
+    = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
 
 / TODO: MSPSDS-532
 / These exist on the design but don't lead any where yet. Add with links, or delete if changed
