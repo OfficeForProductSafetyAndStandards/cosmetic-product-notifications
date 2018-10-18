@@ -35,4 +35,16 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
     get new_report_url
     assert_redirected_to report_index_path + '/type'
   end
+
+  test "should pass the data from other type field correctly" do
+    other_type = "Very very other"
+    post report_index_url, params: {
+      reporter: {
+        reporter_type: "Other",
+        other_reporter: other_type,
+        name: "Test Name"
+      }
+    }
+    assert_equal(Reporter.first.reporter_type, other_type)
+  end
 end
