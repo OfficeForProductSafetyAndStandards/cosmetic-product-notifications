@@ -4,33 +4,33 @@
     .govuk-grid-column-one-third
       = link_to "Back to list", investigations_path, class: "govuk-back-link"
 
-  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-    .govuk-grid-column-two-thirds
-      .govuk-grid-column-one-half
-        h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-          span.govuk-caption-m
-            |Hazard
-            = @investigation.hazard&.hazard_type
-      .govuk-grid-column-one-half
-        h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-          span.govuk-caption-m
-            | Vunerable group
-          = @investigation.hazard&.affected_parties
-      .govuk-grid-column-full
-        p
-          = @investigation.hazard&.description
+= render "investigation_heading", investigation: @investigation
 
-        = link_to "Edit hazard and risk details", new_investigation_hazard_path(@investigation), class: "no-print"
-    .govuk-grid-column-one-third
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-two-thirds
+    .govuk-grid-column-one-half
       h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
         span.govuk-caption-m
-            | Risk Level
-        - if !@investigation.hazard&.risk_level?
-          = link_to "Add risk details", class: "no-print"
-        - else
-          = @investigation.hazard&.risk_level&.titleize
+          |Hazard
+        = @investigation.hazard&.hazard_type
+    .govuk-grid-column-one-half
+      h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+        span.govuk-caption-m
+          | Vunerable group
+        = @investigation.hazard&.affected_parties
+    .govuk-grid-column-full
+      p
+        = @investigation.hazard&.description
 
-= render "investigation_heading", investigation: @investigation
+      = link_to "Edit hazard and risk details", new_investigation_hazard_path(@investigation), class: "no-print"
+  .govuk-grid-column-one-third
+    h1.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+      span.govuk-caption-m
+        | Risk Level
+      - if !@investigation.hazard&.risk_level?
+        = link_to "Add risk details", class: "no-print"
+      - else
+        = @investigation.hazard&.risk_level&.titleize
 
 / TODO: MSPSDS-532
 / These exist on the design but don't lead any where yet. Add with links, or delete if changed

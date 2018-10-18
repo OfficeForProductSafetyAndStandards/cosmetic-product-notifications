@@ -1,14 +1,12 @@
-p
-  = "Reporter type: #{@investigation.reporter&.reporter_type}"
-p
-  = "Reporter name: #{@investigation.reporter&.name}"
-p
-  = "Reporter email address: #{@investigation.reporter&.email_address}"
-p
-  = "Reporter phone number: #{@investigation.reporter&.phone_number}"
-p
-  = "Reporter other details: #{@investigation.reporter&.other_details}"
-p
-  = "Hazard type: #{@investigation.hazard&.hazard_type}"
+p = "Reporter type: #{@investigation.reporter&.reporter_type}"
+p = "Reporter name: #{@investigation.reporter&.name}"
+p = "Reporter email address: #{@investigation.reporter&.email_address}"
+p = "Reporter phone number: #{@investigation.reporter&.phone_number}"
+p = "Reporter other details: #{@investigation.reporter&.other_details}"
+
+p = "Hazard type: #{@investigation.hazard&.hazard_type}"
+p = "Hazard type: #{@investigation.hazard&.risk_level}"
+p = "Hazard type: #{@investigation.hazard&.description}"
+p = "Hazard type: #{@investigation.hazard&.affected_parties}"
 
 p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"

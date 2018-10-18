@@ -2,13 +2,6 @@ class Investigations::HazardsController < ApplicationController
   include Wicked::Wizard
   steps :details, :summary
 
-  # GET /hazards/1
-  # GET /hazards/1.json
-  def show
-    @hazard = Hazard.new(session[:hazard])
-    render_wizard
-  end
-
   # GET /hazards/new
   def new
     save_investigation
@@ -16,11 +9,18 @@ class Investigations::HazardsController < ApplicationController
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
+  # GET /hazards/1
+  # GET /hazards/1.json
+  def show
+    @hazard = Hazard.new(session[:hazard])
+    render_wizard
+  end
+
   # POST /hazards
   # POST /hazards.json
   def create
-    @investigation = Investigation.find_by(id: session[:invesigation_id])
     @hazard = Hazard.new(hazard_params)
+    @investigation = Investigation.find_by(id: session[:invesigation_id])
     @investigation.hazard = @hazard
     @investigation.save
     session[:hazard] = {}
