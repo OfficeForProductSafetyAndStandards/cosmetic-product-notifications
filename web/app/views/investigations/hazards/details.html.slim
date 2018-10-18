@@ -8,22 +8,26 @@
         - @hazards.errors.full_messages.each do |message|
           li
             = message
+
   fieldset.govuk-fieldset
     .govuk-form-group
       = form.label :hazard_type, "Overview", class: "govuk-label"
       span#title-format-hint.govuk-hint
         | What type of hazard is it?
       = form.text_field :hazard_type, class: "govuk-input govuk-!-width-two-thirds"
+
     .govuk-form-group
       = form.label :description, "Details", class: "govuk-label"
       span#title-format-hint.govuk-hint
         | Hazard description
       = form.text_area :description, class: "govuk-textarea govuk-!-width-two-thirds", rows: "5"
+
     .govuk-form-group
       = form.label :affected_parties, "Who is it at risk to?", class: "govuk-label"
       span#title-format-hint.govuk-hint
         | Are there specific groups it might effect? i.e. Young children
       = form.text_field :affected_parties, class: "govuk-input govuk-!-width-two-thirds"
+
     .govuk-form-group
       h3.govuk-label
         | Can you set a risk level?
@@ -35,6 +39,12 @@
               aria-expanded="false" name="set-risk-level" type="radio"]
             label.govuk-label.govuk-radios__label for="can-you-set-risk-level-yes"
               | Yes
+          .govuk-radios__item
+            input#can-you-set-risk-level-no.govuk-radios__input[
+              aria-controls="conditional-can-you-set-risk-level-no"
+              aria-expanded="false" name="set-risk-level" type="radio"]
+            label.govuk-label.govuk-radios__label for="can-you-set-risk-level-no"
+              | No
           #conditional-can-you-set-risk-level-yes.govuk-radios__conditional.govuk-radios__conditional--hidden
             .govuk-form-group
               label.govuk-label for="yes"
