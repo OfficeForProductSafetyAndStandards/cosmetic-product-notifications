@@ -2,8 +2,8 @@ class Investigations::IncidentsController < ApplicationController
   include Wicked::Wizard
   steps :details, :confirmation
 
-  before_action :set_investigation, only: %i[new create show update]
-  before_action :build_incident, only: %i[new create update]
+  before_action :set_investigation
+  before_action :build_incident
 
   # GET investigations/1/incidents/new
   def new;
@@ -12,11 +12,11 @@ class Investigations::IncidentsController < ApplicationController
 
   # GET investigations/1/incidents/step
   def show
-    session[:incident] = {} if step == steps.first
-    @incident = @investigation.incidents.build(session[:incident])
+    @incident = @investigation.incidents.build(session[:incident]) if session.include? :incident
     render_wizard
   end
 
+  # PUT investigations/1/incidents/step
   def update
     session[:incident] = @incident.attributes
     if !@incident.valid?(step)
@@ -33,7 +33,6 @@ class Investigations::IncidentsController < ApplicationController
     if @incident.errors.empty? && @incident.save
       redirect_to investigation_url(@investigation), notice: "Incident was successfully recorded."
     else
-      set_intermediate_params
       render step
     end
   end

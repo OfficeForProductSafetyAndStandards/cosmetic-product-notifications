@@ -19,7 +19,7 @@ h1.govuk-heading-xl
             td.govuk-table__cell = @incident.description
           tr.govuk-table__row
             th.govuk-table__header scope="row" Date
-            td.govuk-table__cell = @incident.date
+            td.govuk-table__cell = @incident.date.strftime("%d/%m/%Y") if @incident.date.present?
           tr.govuk-table__row
             th.govuk-table__header scope="row" Affected Party
             td.govuk-table__cell = @incident.affected_party

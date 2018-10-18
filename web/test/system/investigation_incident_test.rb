@@ -40,6 +40,30 @@ class InvestigationIncidentTest < ApplicationSystemTestCase
     assert_current_path(/investigations\/\d+/)
   end
 
+  test "can go back to the editing page from the confirmation page and not loose data" do
+    fill_in "Incident type", with: "Bad Stuff TM"
+    fill_in "Incident / event description", with: "Oh, it was horrible"
+    fill_in "Day", with: "7"
+    fill_in "Month", with: "12"
+    fill_in "Year", with: "1984"
+    click_on "Continue"
+
+    # Assert all of the data is still here
+    assert_text "Confirm incident details"
+    assert_text "Bad Stuff TM"
+    assert_text "Oh, it was horrible"
+    assert_text "07/12/1984"
+    click_on "Edit details"
+
+    # Assert we're back on the edit page and haven't lost data
+    assert_text "Add incident"
+    assert_field with: "Bad Stuff TM"
+    assert_field with: "Oh, it was horrible"
+    assert_field with: "7"
+    assert_field with: "12"
+    assert_field with: "1984"
+  end
+
   test "wrongly formatted date shows an error" do
     fill_in "Day", with: "7"
     fill_in "Month", with: "13"
