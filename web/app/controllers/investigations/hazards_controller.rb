@@ -34,16 +34,11 @@ class Investigations::HazardsController < ApplicationController
     @investigation = Investigation.find_by(id: session[:invesigation_id])
     @hazard = Hazard.new(hazard_params)
     @investigation.hazard = @hazard
-    respond_to do |format|
-      if @investigation.save
-        format.html { redirect_to @hazard, notice: 'Hazard was successfully created.' }
-        format.json { render :show, status: :created, location: @hazard }
-      else
-        format.html { render :new }
-        format.json { render json: @hazard.errors, status: :unprocessable_entity }
-      end
-    end
+     @investigation.save
+
     session[:hazard] = {}
+    redirect_to @investigation, notice: 'Hazard was successfully created.'
+
   end
 
   # PATCH/PUT /hazards/1

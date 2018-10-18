@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_101745) do
+ActiveRecord::Schema.define(version: 2018_10_17_095326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,10 +106,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "is_closed", default: false
-    t.integer "risk_level"
-    t.string "risk_overview"
-    t.integer "sensitivity"
-    t.string "title", null: false
+    t.string "title"
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
@@ -170,4 +167,6 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
 
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
+  add_foreign_key "hazards", "investigations"
+  add_foreign_key "reporters", "investigations"
 end

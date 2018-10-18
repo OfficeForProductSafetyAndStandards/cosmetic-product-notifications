@@ -1,7 +1,7 @@
 class CreateHazards < ActiveRecord::Migration[5.2]
   def change
     safety_assured { change_table :investigations do |t|
-      t.remove :risk_level, :risk_overview, :sensitivity, :who_is_at_risk
+      t.remove :risk_level, :risk_overview, :sensitivity
     end }
   
     create_table :hazards do |t|

@@ -8,4 +8,7 @@ p
   = "Reporter phone number: #{@investigation.reporter&.phone_number}"
 p
   = "Reporter other details: #{@investigation.reporter&.other_details}"
+p
+  = "Hazard type: #{@investigation.hazard&.hazard_type}"
+
 p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
