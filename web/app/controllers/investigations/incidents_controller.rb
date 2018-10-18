@@ -1,6 +1,6 @@
 class Investigations::IncidentsController < ApplicationController
   include Wicked::Wizard
-  steps :details#, :confirmation
+  steps :details, :confirmation
 
   before_action :set_investigation, only: %i[new create show]
   before_action :build_incident, only: %i[new create show]
@@ -13,12 +13,14 @@ class Investigations::IncidentsController < ApplicationController
   # GET investigations/1/incidents/step
   def show
     session[:incident] = {} if step == steps.first
+    @incident = @investigation.incidents.build(session[:incident])
     render_wizard
   end
 
   def update
     set_investigation
     build_incident
+    session[:incident] = @incident.attributes
     if !@incident.valid?(step)
       render step
     else
@@ -29,8 +31,23 @@ class Investigations::IncidentsController < ApplicationController
 
   # POST investigations/1/incidents
   def create
+    @incident = @investigation.incidents.build(session[:incident])
+    if @incident.errors.empty? && @incident.save
+      redirect_to investigation_url(@investigation), notice: "Incident was successfully recorded."
+    else
+      set_intermediate_params
+      render step
+    end
+  end
+
+private
+
+  def build_incident
     begin
-      @incident = @investigation.incidents.build(incident_params)
+      @incident = @investigation.incidents.build
+      if params.include? :incident
+        @incident = @investigation.incidents.build(incident_params)
+      end
     rescue ActiveRecord::MultiparameterAssignmentErrors => e
       @incident.errors.add(:date, "Enter a real incident date")
       if /error on assignment .* to date \((?<culprit>.*) out of range\)/ =~ e.message
@@ -50,18 +67,6 @@ class Investigations::IncidentsController < ApplicationController
         @incident.errors.add(missing_component)
       end
     end
-    if @incident.errors.empty? && @incident.save
-      redirect_to investigation_url(@investigation), notice: "Incident was successfully recorded."
-    else
-      set_intermediate_params
-      render step
-    end
-  end
-
-private
-
-  def build_incident
-    @incident = @investigation.incidents.build
   end
 
   def set_investigation
@@ -71,7 +76,7 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def incident_params
     parsed_params = params.require(:incident).permit(
-      :type,
+      :incident_type,
       :description,
       :affected_party,
       :location,
@@ -94,11 +99,11 @@ private
   # Calling this method ensures that all of the entered values remain filled in in the form
   def set_intermediate_params
     params_without_date = params.require(:incident).permit(
-      :type,
+      :incident_type,
       :description,
       :affected_party,
       :location,
-      )
+    )
     @incident.assign_attributes(params_without_date)
     date_components = params.require(:incident).permit(
       :'date(3i)',
