@@ -25,7 +25,6 @@ class Investigations::HazardsController < ApplicationController
     @investigation.save
     session[:hazard] = {}
     redirect_to @investigation, notice: 'Hazard was successfully created.'
-
   end
 
   # PATCH/PUT /hazards/1
@@ -41,14 +40,19 @@ class Investigations::HazardsController < ApplicationController
     end
   end
 
-  # DELETE /hazards/1
-  # DELETE /hazards/1.json
-  def destroy
-    @hazard.destroy
-    respond_to do |format|
-      format.html {redirect_to hazards_url, notice: 'Hazard was successfully destroyed.'}
-      format.json {head :no_content}
-    end
+  def risk_level
+    save_investigation
+    load_hazard
+    @hazard = Hazard.new(session[:hazard])
+  end
+
+  def update_risk_level
+    load_hazard
+    @investigation.hazard = Hazard.new(session[:hazard])
+    @investigation.save
+    redirect_to @investigation, notice: 'Hazard was successfully updated.'
+    session[:hazard] = {}
+    session[:invesigation_id] = {}
   end
 
   private
@@ -56,10 +60,9 @@ class Investigations::HazardsController < ApplicationController
   def load_hazard
     session[:hazard] = {}
     @investigation = Investigation.find_by(id: session[:invesigation_id])
-
     hazard_data = {}
-    hazard_data = hazard_data.merge(params[:hazard]) if (params[:hazard])
     hazard_data = hazard_data.merge(@investigation.hazard.attributes) if (@investigation.hazard)
+    hazard_data = hazard_data.merge(params[:hazard].permit!) if (params[:hazard])
     if (hazard_data!= {})
       params[:hazard] = hazard_data
       session[:hazard] = hazard_params

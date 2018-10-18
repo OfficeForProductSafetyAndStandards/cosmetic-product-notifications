@@ -39,7 +39,12 @@ Rails.application.routes.draw do
         post :companies_house
       end
     end
-    resources :hazards, controller: "investigations/hazards"
+    resources :hazards, controller: "investigations/hazards" do
+      collection do
+        get :risk_level
+        post :update_risk_level
+      end
+    end
   end
 
   resources :businesses do

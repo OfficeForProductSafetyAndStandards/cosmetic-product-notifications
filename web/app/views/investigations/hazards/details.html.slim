@@ -1,14 +1,4 @@
 = form_with(model: @hazard, local: true, url: wizard_path, method: :put) do |form|
-  - if @hazards&.errors&.any?
-    #error_explanation
-      h2.govuk-heading-l.govuk-error-message
-        = pluralize(@hazards.errors.count, "error ")
-        | prohibited this case from being saved:
-      ul.govuk-list.govuk-error-message
-        - @hazards.errors.full_messages.each do |message|
-          li
-            = message
-
   fieldset.govuk-fieldset
     .govuk-form-group
       = form.label :hazard_type, "Overview", class: "govuk-label"
