@@ -28,12 +28,8 @@ class Investigations::ReportController < ApplicationController
 
   def update
     update_partial_reporter
-    if !@reporter.valid?(step)
-      render step
-    else
-      redirect_to next_wizard_path if step != steps.last
-      create if step == steps.last
-    end
+    redirect_to next_wizard_path if step != steps.last
+    create if step == steps.last
   end
 
 private
