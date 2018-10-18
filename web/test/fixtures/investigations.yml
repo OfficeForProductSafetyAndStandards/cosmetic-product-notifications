@@ -9,3 +9,8 @@ two:
   title: MyText
   description: MyText
   is_closed: false
+
+three:
+  title: MyText
+  description: MyText
+  is_closed: true
