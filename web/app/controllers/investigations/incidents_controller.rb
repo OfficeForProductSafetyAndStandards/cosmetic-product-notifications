@@ -3,7 +3,9 @@ class Investigations::IncidentsController < ApplicationController
   steps :details, :confirmation
 
   before_action :set_investigation
-  before_action :build_incident
+  before_action :build_incident_from_params, only: %i[update]
+  before_action :store_incident, only: %i[update]
+  before_action :restore_incident, only: %i[show create]
 
   # GET investigations/1/incidents/new
   def new;
@@ -13,13 +15,11 @@ class Investigations::IncidentsController < ApplicationController
 
   # GET investigations/1/incidents/step
   def show
-    @incident = @investigation.incidents.build(session[:incident])
     render_wizard
   end
 
   # PUT investigations/1/incidents/step
   def update
-    session[:incident] = @incident.attributes
     if !@incident.valid?(step)
       render step
     else
@@ -30,8 +30,7 @@ class Investigations::IncidentsController < ApplicationController
 
   # POST investigations/1/incidents
   def create
-    @incident = @investigation.incidents.build(session[:incident])
-    if @incident.errors.empty? && @incident.save
+    if @incident.save
       redirect_to investigation_url(@investigation), notice: "Incident was successfully recorded."
     else
       render step
@@ -40,7 +39,11 @@ class Investigations::IncidentsController < ApplicationController
 
 private
 
-  def build_incident
+  def set_investigation
+    @investigation = Investigation.find(params[:investigation_id])
+  end
+
+  def build_incident_from_params
     if params.include? :incident
       @incident = @investigation.incidents.build(incident_params)
     else
@@ -48,8 +51,12 @@ private
     end
   end
 
-  def set_investigation
-    @investigation = Investigation.find(params[:investigation_id])
+  def store_incident
+    session[:incident] = @incident.attributes
+  end
+
+  def restore_incident
+    @incident = @investigation.incidents.build(session[:incident])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
