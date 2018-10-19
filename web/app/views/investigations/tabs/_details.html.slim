@@ -1,11 +1,45 @@
-p
-  = "Reporter type: #{@investigation.reporter&.reporter_type}"
-p
-  = "Reporter name: #{@investigation.reporter&.name}"
-p
-  = "Reporter email address: #{@investigation.reporter&.email_address}"
-p
-  = "Reporter phone number: #{@investigation.reporter&.phone_number}"
-p
-  = "Reporter other details: #{@investigation.reporter&.other_details}"
+table.govuk-table
+  tbody.govuk-table__body
+    - @investigation.incidents.each do |incident|
+      - if incident.incident_type.present?
+        tr.govuk-table__row
+          th.govuk-table__header scope="row" Incident type
+          td.govuk-table__cell = incident.incident_type
+      - if incident.description.present?
+        tr.govuk-table__row
+          th.govuk-table__header scope="row" Incident Description
+          td.govuk-table__cell = incident.description
+      - if incident.date.present?
+        tr.govuk-table__row
+          th.govuk-table__header scope="row" Incident Date
+          td.govuk-table__cell = incident.date.strftime("%d/%m/%Y")
+      - if incident.affected_party.present?
+        tr.govuk-table__row
+          th.govuk-table__header scope="row" Incident Affected Party
+          td.govuk-table__cell = incident.affected_party
+      - if incident.location.present?
+        tr.govuk-table__row
+          th.govuk-table__header scope="row" Incident Location
+          td.govuk-table__cell = incident.location
+    - if @investigation.reporter&.reporter_type.present?
+      tr.govuk-table__row
+        th.govuk-table__header scope="row" Reporter type
+        td.govuk-table__cell = @investigation.reporter&.reporter_type
+    - if @investigation.reporter&.name.present?
+      tr.govuk-table__row
+        th.govuk-table__header scope="row" Reporter name
+        td.govuk-table__cell = @investigation.reporter&.name
+    - if @investigation.reporter&.email_address.present?
+      tr.govuk-table__row
+        th.govuk-table__header scope="row" Reporter email address
+        td.govuk-table__cell = @investigation.reporter&.email_address
+    - if @investigation.reporter&.phone_number.present?
+      tr.govuk-table__row
+        th.govuk-table__header scope="row" Reporter phone number
+        td.govuk-table__cell = @investigation.reporter&.phone_number
+    - if @investigation.reporter&.other_details.present?
+      tr.govuk-table__row
+        th.govuk-table__header scope="row" Reporter other details
+        td.govuk-table__cell = @investigation.reporter&.other_details
+p = link_to "Record an incident", new_investigation_incident_path(@investigation), class: "no-print"
 p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
