@@ -29,6 +29,8 @@ class InvestigationIncidentTest < ApplicationSystemTestCase
     fill_in "Day", with: "7"
     fill_in "Month", with: "12"
     fill_in "Year", with: "1984"
+    fill_in "Affected party", with: "Unsuspecting citizens"
+    fill_in "Location", with: "Kingston Falls"
     click_on "Continue"
 
     assert_text "Confirm incident details"
@@ -38,6 +40,12 @@ class InvestigationIncidentTest < ApplicationSystemTestCase
     # For whatever reason, this doesn't seem to show up in test (confirmed by inspecting failure screenshots)
     # assert_text "Incident was successfully recorded."
     assert_current_path(/investigations\/\d+/)
+    click_on "Full detail"
+    assert_text "Bad Stuff TM"
+    assert_text "Oh, it was horrible"
+    assert_text "07/12/1984"
+    assert_text "Unsuspecting citizens"
+    assert_text "Kingston Falls"
   end
 
   test "can go back to the editing page from the confirmation page and not loose data" do
