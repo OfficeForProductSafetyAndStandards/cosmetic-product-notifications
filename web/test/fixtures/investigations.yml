@@ -9,3 +9,8 @@ two:
   title: MyText
   description: MyText
   is_closed: false
+
+three:
+  title: Product Investigation
+  description: Investigation into faulty toys
+  is_closed: true

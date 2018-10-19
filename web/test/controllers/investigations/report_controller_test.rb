@@ -14,7 +14,7 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
       post report_index_url, params: {
         reporter: {
           reporter_type: "Business",
-          name: "Test Name"
+          name: "Softwire"
         }
       }
     end
@@ -25,7 +25,7 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
       post report_index_url, params: {
         reporter: {
           reporter_type: "Business",
-          name: "Test Name"
+          name: "Softwire"
         }
       }
     end
@@ -34,5 +34,16 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
   test "should redirect a get request to steps journey" do
     get new_report_url
     assert_redirected_to report_index_path + '/type'
+  end
+
+  test "should pass the data from other type field correctly" do
+    other_type = "Product regulator"
+    post report_index_url, params: {
+      reporter: {
+        reporter_type: "Other",
+        other_reporter: other_type,
+      }
+    }
+    assert_equal(Reporter.first.reporter_type, other_type)
   end
 end
