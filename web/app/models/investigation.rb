@@ -10,7 +10,7 @@ class Investigation < ApplicationRecord
     end
   end
 
-  default_scope { order(updated_at: :desc) }
+  default_scope {order(updated_at: :desc)}
 
   has_many :investigation_products, dependent: :destroy
   has_many :products, through: :investigation_products
@@ -39,7 +39,16 @@ class Investigation < ApplicationRecord
 
   enum sensitivity: %i[low medium high], _suffix: true
 
-  enum types: %i[case policy_question legislation_question testing_question enforcement_question other_question], _suffix: true
+  def types
+    {
+      case: "case",
+      policy_question: "policy_question",
+      legislation_question: "legislation_question",
+      testing_question: "testing_question",
+      enforcement_question: "enforcement_question",
+      other_question: "other_question"
+    }
+  end
 
   def as_indexed_json(*)
     as_json.merge(status: status.downcase)
@@ -50,18 +59,17 @@ class Investigation < ApplicationRecord
   end
 
   def is_question
-    object_type == Investigation.types[:question]
+    object_type.include? "question"
   end
 
   def is_case
-    object_type == Investigation.types[:case]
+    object_type == types[:case]
   end
 
   def pretty_type
-    case object_type
-    when types[:policy_question]..types[:other_question]
+    if object_type.include? "question"
       "question"
-    when types[:case]
+    else
       "case"
     end
   end

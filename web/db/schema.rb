@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 2018_10_19_091031) do
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "is_closed", default: false
-    t.integer "object_type"
+    t.string "object_type"
     t.integer "risk_level"
     t.string "risk_overview"
     t.integer "sensitivity"
