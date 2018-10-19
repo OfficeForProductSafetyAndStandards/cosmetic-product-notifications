@@ -37,10 +37,10 @@ ActiveRecord::Schema.define(version: 2018_10_18_110130) do
   end
 
   create_table "activities", id: :serial, force: :cascade do |t|
-    t.integer "activity_type", null: false
     t.datetime "created_at", null: false
+    t.text "description"
     t.integer "investigation_id"
-    t.text "notes"
+    t.string "type", default: "CommentActivity"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
   end
