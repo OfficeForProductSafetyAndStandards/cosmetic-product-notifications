@@ -1,0 +1,45 @@
+- content_for :page_title, "Report unsafe product - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to list", investigations_path, class: "govuk-back-link"
+main#main-content.govuk-main-wrapper role="main"
+  h1.govuk-heading-xl
+    span.govuk-caption-xl Report an unsafe product
+    = @reporter.reporter_type
+    br
+    | reporting
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_with(model: @reporter, local: true, url: wizard_path, method: :put) do |form|
+        - if @reporter.errors.any?
+          #error_explanation
+            h2.govuk-heading-l.govuk-error-message
+              = pluralize(@reporter.errors.count, "error ")
+              | prohibited this case from being saved:
+            ul.govuk-list.govuk-error-message
+              - @reporter.errors.full_messages.each do |message|
+                li
+                  = message
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Reporter details
+          .govuk-form-group
+            = form.label :name, class: "govuk-label"
+              | Name
+            = form.text_field :name, class: "govuk-input govuk-!-width-two-thirds"
+          .govuk-form-group
+            = form.label :phone_number, class: "govuk-label"
+              | Phone number
+            = form.text_field :phone_number, class: "govuk-input govuk-!-width-two-thirds"
+          .govuk-form-group
+            = form.label :email_address, class: "govuk-label"
+              | Email address
+            = form.text_field :email_address, class: "govuk-input govuk-!-width-two-thirds"
+          .govuk-form-group
+            = form.label :other_details, class: "govuk-label"
+              | Other details
+            span#reporter-other-detail-hint.govuk-hint
+              | Location, business/authority name, reference numbers etc
+            = form.text_area :other_details, class: "govuk-textarea", \
+                    "aria-describedby": "reporter-other-detail-hint", rows: 5
+        .govuk-form-group
+          = form.submit "Continue", class: "govuk-button"

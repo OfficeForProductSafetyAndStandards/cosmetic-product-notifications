@@ -1,35 +1,36 @@
-.govuk-grid-column-two-thirds
-  h1.govuk-heading-xl
-    p.govuk-caption-xl
-      'Case:
-      = investigation.id
-    = investigation.title
-    p.govuk-caption-m
-      = @investigation.source.created_by
-.govuk-grid-column-one-third
-  table.govuk-table.summary-table
-    tbody.govuk-table__body
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      p.govuk-caption-xl
+        'Case:
+        = investigation.id
+      = investigation.title || 'Untitled case'
+      p.govuk-caption-m
+        = investigation.source.created_by
+  .govuk-grid-column-one-third
+    table.govuk-table.summary-table
+      tbody.govuk-table__body
 
-      tr.govuk-table__row
-        th.govuk-table__header[scope="row"]
-          span.govuk-caption-m[class="govuk-!-font-size-16"]
-            | Status
-          = @investigation.status
-        td.govuk-table__cell [class="govuk-!-font-size-16"]
-          = link_to "Change", status_investigation_path(@investigation)
-
-      tr.govuk-table__row
-        th.govuk-table__header[scope="row"]
-          span.govuk-caption-m[class="govuk-!-font-size-16"]
-            | Assigned to
-          = @investigation.assignee ? @investigation.assignee.full_name.to_s : "Unassigned"
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            span.govuk-caption-m[class="govuk-!-font-size-16"]
+              | Status
+            = investigation.status
           td.govuk-table__cell [class="govuk-!-font-size-16"]
-            = link_to "Change", assign_investigation_path(@investigation)
+            = link_to "Change", status_investigation_path(investigation)
 
-      tr.govuk-table__row
-        th.govuk-table__header[scope="row"]
-          span.govuk-caption-m[class="govuk-!-font-size-16"]
-            | Priority
-          | Not set
-          td.govuk-table__cell [class="govuk-!-font-size-16"]
-            = link_to "Change"
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            span.govuk-caption-m[class="govuk-!-font-size-16"]
+              | Assigned to
+            = investigation.assignee ? investigation.assignee.full_name.to_s : "Unassigned"
+            td.govuk-table__cell [class="govuk-!-font-size-16"]
+              = link_to "Change", assign_investigation_path(investigation)
+
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            span.govuk-caption-m[class="govuk-!-font-size-16"]
+              | Priority
+            | Not set
+            td.govuk-table__cell [class="govuk-!-font-size-16"]
+              = link_to "Change"
