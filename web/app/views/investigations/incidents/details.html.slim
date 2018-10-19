@@ -3,8 +3,8 @@
   = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
 h1.govuk-heading-xl
   span.govuk-caption-xl
-    / TODO MSPSDS-522 / MSPSDS-524 Get the case Id @investigation.caseId ??
-    = "Case: 1810-0001"
+    ' Case:
+    = @investigation.id
   | Add incident
 .govuk-grid-row
   .govuk-grid-column-two-thirds
