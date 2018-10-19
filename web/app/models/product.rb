@@ -21,6 +21,10 @@ class Product < ApplicationRecord
   def country_of_origin_for_display
     country_from_code(country_of_origin) || country_of_origin
   end
+
+  def get_first_image
+    images.attachments.first
+  end
 end
 
 Product.import force: true # for auto sync model with elastic search

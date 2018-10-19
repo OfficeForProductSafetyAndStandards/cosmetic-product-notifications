@@ -1,0 +1,39 @@
+- content_for :page_title, "New product safety report - Case created"
+- content_for :after_header do
+  = link_to "Back to list", investigations_path, class: "govuk-back-link"
+main#main-content.govuk-main-wrapper role="main"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .govuk-panel.govuk-panel--confirmation
+        h2.govuk-panel__title
+          | Case created
+        .govuk-panel__body
+          | Your reference number
+          br
+          strong
+            = get_pretty_id(session[:id])
+      p
+        | You have been sent a confirmation email.
+      hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+  .govuk-grid-row.mspsds-panel
+    .govuk-grid-column-two-thirds
+      h2.govuk-heading-l
+        | Do you have report correspondance?
+      p.govuk-body
+        | If the report came by email, or you've notes / transcript from a call, add them now.
+      p.govuk-body
+        // TODO MSPSDS-516 implement add reporter correspondance functionality
+        a.govuk-link.mspsds-block-link href="/flows/add-correspondance/01-add-correspondance-context"
+          | Add reporter correspondance
+      hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+  .govuk-grid-row.mspsds-panelq
+    .govuk-grid-column-two-thirds
+      h2.govuk-heading-l
+        | If you're on the phone right now
+      p.govuk-body
+        | or, if correspondance isn't available right now, don't forget to add it later.
+      p.govuk-body
+        = link_to(\
+          "View the case you've just created",\
+          investigation_path(id: session[:id]),\
+          class: "govuk-link mspsds-block-link ")
