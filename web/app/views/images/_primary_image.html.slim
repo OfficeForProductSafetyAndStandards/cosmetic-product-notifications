@@ -1,0 +1,7 @@
+.govuk-grid-column-one-third
+  - if image.metadata["safe"]
+    = image_tag image, alt: image.metadata["title"], class: "primary-image"
+  - else
+    .image-processing-placeholder
+      span
+        | Processing image

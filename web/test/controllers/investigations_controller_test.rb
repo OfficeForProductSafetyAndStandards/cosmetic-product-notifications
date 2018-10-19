@@ -22,19 +22,18 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create investigation" do
+  test "should create investigation and redirect to investigation page" do
+    new_investigation_title = "new_investigation_title"
     assert_difference("Investigation.count") do
       post investigations_url, params: {
         investigation: {
-          title: @investigation.title,
-          description: @investigation.description,
-          is_closed: @investigation.is_closed,
-          source: @investigation.source,
+          title: new_investigation_title,
         }
       }
     end
 
-    assert_redirected_to investigation_url(Investigation.first)
+    new_investigation = Investigation.find_by(title: new_investigation_title)
+    assert_redirected_to investigation_path(new_investigation)
   end
 
   test "should show investigation" do
@@ -69,5 +68,11 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       delete investigation_url(@investigation)
     end
     assert_redirected_to investigations_url
+  end
+
+  test "redirect to investigation path if attempted to assign a person to closed investigation" do
+    investigation = investigations(:three)
+    get assign_investigation_url(investigation)
+    assert_redirected_to investigation_path(investigation)
   end
 end

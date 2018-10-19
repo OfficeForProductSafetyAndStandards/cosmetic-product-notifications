@@ -45,7 +45,6 @@ class InvestigationsController < ApplicationController
     assignee = User.find_by(email: params[:email].downcase)
     @investigation.assignee = assignee
     save_and_respond "Assignee was successfully updated."
-    record_assignment
     NotifyMailer.assigned_investigation(@investigation, assignee.email).deliver_later if assignee.present?
   end
 
@@ -56,7 +55,7 @@ class InvestigationsController < ApplicationController
     @investigation.source = UserSource.new(user: current_user)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "Investigation was successfully created." }
+        format.html { redirect_to investigation_path(@investigation) }
         format.json { render :show, status: :created, location: @investigation }
       else
         format.html { render :new }
@@ -107,14 +106,6 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
-  end
-
-  def record_assignment
-    @investigation.activities.create(
-      source: UserSource.new(user: current_user),
-      activity_type: :assign,
-      notes: "Assigned to #{@investigation.assignee.present? ? @investigation.assignee.email : 'Unassigned'}"
-    )
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

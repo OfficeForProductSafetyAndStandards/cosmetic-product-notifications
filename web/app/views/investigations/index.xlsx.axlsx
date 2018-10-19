@@ -71,14 +71,14 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
 end
 
 book.add_worksheet name: "Actions" do |sheet_actions|
-  sheet_actions.add_row %w[ID Type Notes Source Case_ID]
+  sheet_actions.add_row %w[ID Type Description Source Case_ID]
 
   @investigations.each do |investigation|
     investigation.activities.each do |activity|
       sheet_actions.add_row [
         activity.id,
-        activity.activity_type || "unknown",
-        activity.notes,
+        activity.type.titleize,
+        activity.description,
         activity.source.show,
         investigation.id
       ]

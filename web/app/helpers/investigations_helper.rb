@@ -22,4 +22,9 @@ module InvestigationsHelper
   def query_params
     params.permit(:q, :sort, :direction, :status)
   end
+
+  def get_pretty_id(investigation_id)
+    id_string = investigation_id.to_s.rjust(8, '0')
+    id_string.insert(4, "-")
+  end
 end
