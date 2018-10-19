@@ -75,4 +75,14 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     get assign_investigation_url(investigation)
     assert_redirected_to investigation_path(investigation)
   end
+
+  test "should assign user to investigation" do
+    id = "user_id"
+    assert_changes(@investigation.assignee, to: id) do
+      post update_assignee_investigation_url @investigation, params: {
+        assignee_id: id
+      }
+    end
+    assert_response :success
+  end
 end

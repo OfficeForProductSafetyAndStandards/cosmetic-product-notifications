@@ -49,6 +49,9 @@ class InvestigationsController < ApplicationController
       @investigation.errors.add(:assignee, "must not be left blank")
       return render :assign
     end
+    p "@ assignee"
+    p assignee
+    p @investigation.assignee
     @investigation.assignee = assignee
     save_and_respond "Assignee was successfully updated."
     NotifyMailer.assigned_investigation(@investigation, assignee.email).deliver_later if assignee.present?
