@@ -35,6 +35,7 @@ gem "strong_migrations"
 gem "turbolinks", "~> 5"
 gem "uglifier", ">= 1.3.0"
 gem "wicked_pdf"
+gem "wicked"
 gem "wkhtmltopdf-binary"
 
 group :development, :test do

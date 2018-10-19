@@ -10,7 +10,6 @@ class Investigation < ApplicationRecord
     end
   end
 
-  validates :title, presence: true
   default_scope { order(updated_at: :desc) }
 
   belongs_to_active_hash :assignee, class_name: "User", optional: true
@@ -27,6 +26,7 @@ class Investigation < ApplicationRecord
   has_many_attached :images
 
   has_one :source, as: :sourceable, dependent: :destroy
+  has_one :reporter, dependent: :destroy
 
   has_paper_trail
 
