@@ -13,6 +13,11 @@
   padding: 20px;
 }
 
+.primary-image {
+  max-width: 100%;
+  height: auto;
+}
+
 .image-processing-placeholder {
   background-color: govuk-colour("grey-1");
   color: govuk-colour("white");

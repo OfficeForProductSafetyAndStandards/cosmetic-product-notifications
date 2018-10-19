@@ -15,13 +15,7 @@ class ReporterFlowTest < ApplicationSystemTestCase
     assert_text("Reporter type")
   end
 
-  test "type should be invalid if empty" do
-    click_button "Continue"
-    assert_text("Reporter type")
-    assert_text("prohibited this case from being saved")
-  end
-
-  test "type should be valid if an option is selected" do
+  test "should be able to select option" do
     select_type_and_continue
     assert_no_text("prohibited this case from being saved")
   end
@@ -31,14 +25,7 @@ class ReporterFlowTest < ApplicationSystemTestCase
     assert_text("Reporter details")
   end
 
-  test "name in details should not be empty" do
-    select_type_and_continue
-    click_button "Continue"
-    assert_text("Reporter details")
-    assert_text("prohibited this case from being saved")
-  end
-
-  test "details should be valid if name is not empty" do
+  test "should be able to fill name" do
     select_type_and_continue
     fill_name_and_continue
     assert_no_text("prohibited this case from being saved")
