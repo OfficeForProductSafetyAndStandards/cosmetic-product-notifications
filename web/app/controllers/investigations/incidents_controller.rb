@@ -7,12 +7,13 @@ class Investigations::IncidentsController < ApplicationController
 
   # GET investigations/1/incidents/new
   def new;
+    session[:incident] = {}
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
   # GET investigations/1/incidents/step
   def show
-    @incident = @investigation.incidents.build(session[:incident]) if session.include? :incident
+    @incident = @investigation.incidents.build(session[:incident])
     render_wizard
   end
 

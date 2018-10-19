@@ -64,6 +64,23 @@ class InvestigationIncidentTest < ApplicationSystemTestCase
     assert_field with: "1984"
   end
 
+  test "wizard data doesn't persist between reloads" do
+    fill_in "Incident type", with: "Bad Stuff TM"
+    click_on "Continue"
+    visit new_investigation_incident_path(investigations(:one))
+
+    assert_no_field with: "Bad Stuff TM"
+  end
+
+  test "wizard data gets clear after completion" do
+    fill_in "Incident type", with: "Bad Stuff TM"
+    click_on "Continue"
+    click_on "Continue"
+    visit new_investigation_incident_path(investigations(:one))
+
+    assert_no_field with: "Bad Stuff TM"
+  end
+
   test "wrongly formatted date shows an error" do
     fill_in "Day", with: "7"
     fill_in "Month", with: "13"
