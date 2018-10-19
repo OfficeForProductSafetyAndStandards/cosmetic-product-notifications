@@ -51,18 +51,18 @@ private
 
   def investigation_params
     return {} if !params[:investigation]
+    if params[:investigation][:question_type] == 'other_question'
+      params[:investigation][:question_type] = 'other_question: ' + params[:investigation][:other_question_type]
+    end
     params.require(:investigation).permit(
-      :title, :description, :object_type
+      :title, :description, :question_type
     )
   end
 
   def load_reporter_and_investigation
     load_investigation
     load_reporter
-
-    @investigation = Investigation.new(investigation_params)
   end
-
 
   def load_reporter
     data_from_database = @investigation.reporter&.attributes || {}
@@ -74,7 +74,9 @@ private
   end
 
   def load_investigation
+    # TODO figure out if we ever need more than that here, as in, is this controller going to be used to edit question
     @investigation = Investigation.new(investigation_params)
+    @investigation.is_case = false
   end
 
 end

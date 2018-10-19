@@ -13,7 +13,7 @@
 /   a href="" Edit risk details
 /   a style="margin-left: 20px" href="" View assessment
 
--if @investigation.is_question
+-if !@investigation.is_case
   .govuk-grid-row
     .govuk-grid-column-one-third
       h2.govuk-heading-l

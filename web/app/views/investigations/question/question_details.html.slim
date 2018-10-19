@@ -23,21 +23,21 @@ main#main-content.govuk-main-wrapper role="main"
           .govuk-form-group class=("govuk-form-group--error" if @reporter.errors[:reporter_type].any?)
             .govuk-radios.govuk-radios--conditional data-module="radios"
               .govuk-radios__item
-                = form.radio_button :object_type, "policy_question", class: "govuk-radios__input"
-                = form.label :object_type, "Policy", class: "govuk-label govuk-radios__label"
+                = form.radio_button :question_type, "policy_question", class: "govuk-radios__input"
+                = form.label :question_type, "Policy", class: "govuk-label govuk-radios__label"
               .govuk-radios__item
-                = form.radio_button :object_type, "legislation_question", class: "govuk-radios__input"
-                = form.label :object_type, "Legislation", class: "govuk-label govuk-radios__label"
+                = form.radio_button :question_type, "legislation_question", class: "govuk-radios__input"
+                = form.label :question_type, "Legislation", class: "govuk-label govuk-radios__label"
               .govuk-radios__item
-                = form.radio_button :object_type, "testing_question", class: "govuk-radios__input"
-                = form.label :object_type, "Testing", class: "govuk-label govuk-radios__label"
+                = form.radio_button :question_type, "testing_question", class: "govuk-radios__input"
+                = form.label :question_type, "Testing", class: "govuk-label govuk-radios__label"
               .govuk-radios__item
-                = form.radio_button :object_type, "enforcement_question", class: "govuk-radios__input"
-                = form.label :object_type, "Enforcement", class: "govuk-label govuk-radios__label"
+                = form.radio_button :question_type, "enforcement_question", class: "govuk-radios__input"
+                = form.label :question_type, "Enforcement", class: "govuk-label govuk-radios__label"
               .govuk-radios__item
-                = form.radio_button :object_type, "other_question", class: "govuk-radios__input", \
+                = form.radio_button :question_type, "other_question", class: "govuk-radios__input", \
                                   "data-aria-controls": "conditional-reporter-type-other"
-                = form.label :object_type, "Other", class: "govuk-label govuk-radios__label"
+                = form.label :question_type, "Other", class: "govuk-label govuk-radios__label"
               #conditional-other-question-type-other.govuk-radios__conditional.govuk-radios__conditional--hidden
                 .govuk-form-group
                   span#other-question-type-hint.govuk-hint [class="govuk-!-width-two-thirds"]

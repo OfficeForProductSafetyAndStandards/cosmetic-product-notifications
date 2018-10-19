@@ -39,39 +39,12 @@ class Investigation < ApplicationRecord
 
   enum sensitivity: %i[low medium high], _suffix: true
 
-  def types
-    {
-      case: "case",
-      policy_question: "policy_question",
-      legislation_question: "legislation_question",
-      testing_question: "testing_question",
-      enforcement_question: "enforcement_question",
-      other_question: "other_question"
-    }
-  end
-
   def as_indexed_json(*)
     as_json.merge(status: status.downcase)
   end
 
   def status
     is_closed? ? "Closed" : "Open"
-  end
-
-  def is_question
-    object_type.include? "question"
-  end
-
-  def is_case
-    object_type == types[:case]
-  end
-
-  def pretty_type
-    if object_type.include? "question"
-      "question"
-    else
-      "case"
-    end
   end
 end
 
