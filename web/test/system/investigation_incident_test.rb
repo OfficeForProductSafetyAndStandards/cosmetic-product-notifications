@@ -48,7 +48,7 @@ class InvestigationIncidentTest < ApplicationSystemTestCase
     assert_text "Kingston Falls"
   end
 
-  test "can go back to the editing page from the confirmation page and not loose data" do
+  test "can go back to the editing page from the confirmation page and not lose data" do
     fill_in "Incident type", with: "Bad Stuff TM"
     fill_in "Incident / event description", with: "Oh, it was horrible"
     fill_in "Day", with: "7"
@@ -80,7 +80,7 @@ class InvestigationIncidentTest < ApplicationSystemTestCase
     assert_no_field with: "Bad Stuff TM"
   end
 
-  test "wizard data gets clear after completion" do
+  test "wizard data gets cleared after completion" do
     fill_in "Incident type", with: "Bad Stuff TM"
     click_on "Continue"
     click_on "Continue"
