@@ -22,6 +22,8 @@ class Investigation < ApplicationRecord
 
   has_many :activities, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :investigation
 
+  has_many :incidents, dependent: :destroy
+
   has_many_attached :documents
   has_many_attached :images
 
