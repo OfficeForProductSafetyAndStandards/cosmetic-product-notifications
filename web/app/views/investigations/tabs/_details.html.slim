@@ -29,14 +29,14 @@ table.govuk-table
       tr.govuk-table__row
         th.govuk-table__header scope="row" Reporter name
         td.govuk-table__cell = @investigation.reporter&.name
-    - if @investigation.reporter&.email_address.present?
-      tr.govuk-table__row
-        th.govuk-table__header scope="row" Reporter email address
-        td.govuk-table__cell = @investigation.reporter&.email_address
     - if @investigation.reporter&.phone_number.present?
       tr.govuk-table__row
         th.govuk-table__header scope="row" Reporter phone number
         td.govuk-table__cell = @investigation.reporter&.phone_number
+    - if @investigation.reporter&.email_address.present?
+      tr.govuk-table__row
+        th.govuk-table__header scope="row" Reporter email address
+        td.govuk-table__cell = @investigation.reporter&.email_address
     - if @investigation.reporter&.other_details.present?
       tr.govuk-table__row
         th.govuk-table__header scope="row" Reporter other details
