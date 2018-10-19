@@ -56,7 +56,7 @@ class InvestigationsController < ApplicationController
     @investigation.source = UserSource.new(user: current_user)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "Investigation was successfully created." }
+        format.html { redirect_to investigation_path(@investigation) }
         format.json { render :show, status: :created, location: @investigation }
       else
         format.html { render :new }

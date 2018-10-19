@@ -103,4 +103,20 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to businesses_url, notice: "Businesses were successfully merged."
   end
+
+  test "GET confirm_merge should redirect to businesses_url if two businesses are not provided" do
+    get confirm_merge_businesses_url, params: {
+        business_ids: [@business_one.id]
+    }
+
+    assert_redirected_to businesses_url, notice: "Please select at least two businesses before merging."
+  end
+
+  test "GET confirm_merge should get businesses/confirm_merge if two businesses provided" do
+    get confirm_merge_businesses_url, params: {
+        business_ids: [@business_one.id, @business_two.id]
+    }
+
+    assert_response :success
+  end
 end
