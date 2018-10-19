@@ -11,6 +11,6 @@ two:
   is_closed: false
 
 three:
-  title: MyText
-  description: MyText
+  title: Product Investigation
+  description: Investigation into faulty toys
   is_closed: true

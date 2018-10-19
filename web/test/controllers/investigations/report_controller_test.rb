@@ -14,7 +14,7 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
       post report_index_url, params: {
         reporter: {
           reporter_type: "Business",
-          name: "Test Name"
+          name: "Softwire"
         }
       }
     end
@@ -25,7 +25,7 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
       post report_index_url, params: {
         reporter: {
           reporter_type: "Business",
-          name: "Test Name"
+          name: "Softwire"
         }
       }
     end
@@ -37,12 +37,11 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should pass the data from other type field correctly" do
-    other_type = "Very very other"
+    other_type = "Product regulator"
     post report_index_url, params: {
       reporter: {
         reporter_type: "Other",
         other_reporter: other_type,
-        name: "Test Name"
       }
     }
     assert_equal(Reporter.first.reporter_type, other_type)
