@@ -1,9 +1,9 @@
 class Address < ApplicationRecord
   validates :address_type, presence: true
   default_scope { order(created_at: :asc) }
-  
+
   belongs_to :business
-  
+
   has_one :source, as: :sourceable, dependent: :destroy
 
   has_paper_trail
