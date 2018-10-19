@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_101745) do
+ActiveRecord::Schema.define(version: 2018_10_19_091031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_101745) do
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "is_closed", default: false
+    t.integer "object_type"
     t.integer "risk_level"
     t.string "risk_overview"
     t.integer "sensitivity"

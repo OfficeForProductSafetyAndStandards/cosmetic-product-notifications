@@ -6,6 +6,12 @@
 
 = render "investigation_heading", investigation: @investigation
 
+- if @investigation.is_question
+  | This is a question yo!
+
+- if @investigation.is_case
+  | This is a case yo!
+
 / TODO: MSPSDS-532
 / These exist on the design but don't lead any where yet. Add with links, or delete if changed
 / https://mspsds-design-prototype.herokuapp.com/case

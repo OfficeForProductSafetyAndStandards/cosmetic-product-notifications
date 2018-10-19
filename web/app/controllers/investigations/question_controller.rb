@@ -1,6 +1,6 @@
-class Investigations::ReportController < ApplicationController
+class Investigations::QuestionController < ApplicationController
   include Wicked::Wizard
-  steps :type, :details
+  steps :questioner_type, :questioner_details, :question_details
 
   # GET /investigations/report/new
   def new

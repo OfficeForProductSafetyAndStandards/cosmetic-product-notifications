@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     collection do
       resources :report, controller: "investigations/report", only: %i[show new create update]
     end
+    collection do
+      resources :question, controller: "investigations/question", only: %i[show new create update]
+    end
     resources :activities, only: %i[index new create]
     resources :products, only: %i[index new create destroy], controller: "investigations/products" do
       collection do
