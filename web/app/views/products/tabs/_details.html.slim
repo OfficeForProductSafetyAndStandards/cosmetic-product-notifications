@@ -1,0 +1,45 @@
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-full
+    table.govuk-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Barcode
+          td.govuk-table__cell
+            = @product.gtin
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Brand
+          td.govuk-table__cell
+            = @product.brand
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Type
+          td.govuk-table__cell
+            = @product.product_type
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Model number
+          td.govuk-table__cell
+            = @product.model
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Batch number
+          td.govuk-table__cell
+            = @product.batch_number
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Country of origin
+          td.govuk-table__cell
+            = @product.country_of_origin_for_display
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Description
+          td.govuk-table__cell
+            = @product.description
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Date on the market
+          td.govuk-table__cell
+            = @product.date_placed_on_market&.to_s :long_ordinal
+    = link_to "Edit details", edit_product_path(@product)
