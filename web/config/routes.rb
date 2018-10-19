@@ -41,6 +41,8 @@ Rails.application.routes.draw do
         post :companies_house
       end
     end
+
+    resources :incidents, controller: "investigations/incidents", only: %i[new create show update]
   end
 
   resources :businesses do

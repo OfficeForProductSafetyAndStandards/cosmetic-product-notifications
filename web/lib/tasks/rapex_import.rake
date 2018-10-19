@@ -93,12 +93,12 @@ def create_investigation_product(investigation, product)
 end
 
 def create_activity(notification, investigation, date)
-  Activity.create(
+  # TODO: update this to be a CorrectiveActionActivity
+  CommentActivity.create(
     investigation: investigation,
-    activity_type: :notification,
     created_at: date,
     updated_at: date,
-    notes: field_from_notification(notification, "measures"),
+    description: field_from_notification(notification, "measures"),
     source: ReportSource.new(name: "RAPEX")
   )
 end

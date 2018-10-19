@@ -2,10 +2,8 @@
 
 one:
   investigation: one
-  activity_type: "visit"
-  notes: MyText
+  description: MyText
 
 two:
   investigation: two
-  activity_type: "visit"
-  notes: MyText
+  description: MyText
