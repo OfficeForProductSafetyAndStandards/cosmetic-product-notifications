@@ -9,6 +9,12 @@ class Investigations::HazardsController < ApplicationController
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
+  def edit
+    save_investigation
+    load_hazard_and_investigation
+    redirect_to previous_wizard_path
+  end
+
   # GET /hazards/1
   # GET /hazards/1.json
   def show
@@ -47,12 +53,10 @@ class Investigations::HazardsController < ApplicationController
     load_hazard_and_investigation
     @investigation.hazard = @hazard
     @investigation.save
-    redirect_to @investigation, notice: 'Hazard was successfully updated.'
-    session[:hazard] = {}
-    session[:invesigation_id] = {}
+    redirect_to @investigation, notice: 'Risk was successfully updated.'
   end
 
-  private
+private
 
   def load_hazard_and_investigation
     @investigation = Investigation.find_by(id: session[:invesigation_id])
@@ -61,14 +65,13 @@ class Investigations::HazardsController < ApplicationController
   end
 
   def load_hazard_data
-    hazard_data_from_database = @investigation.hazard.attributes || {}
+    hazard_data_from_database = {} || @investigation.hazard.attributes
     hazard_data_from_previous_steps = hazard_data_from_database.merge(session[:hazard] || {})
     hazard_data_after_last_step = hazard_data_from_previous_steps.merge(params[:hazard]&.permit! || {})
-    if (hazard_data_after_last_step != {})
+    if hazard_data_after_last_step != {}
       params[:hazard] = hazard_data_after_last_step
       session[:hazard] = hazard_params
     end
-
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

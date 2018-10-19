@@ -5,30 +5,43 @@
       = link_to "Back to list", investigations_path, class: "govuk-back-link"
 
 = render "investigation_heading", investigation: @investigation
-
-.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-  .govuk-grid-column-two-thirds
-    .govuk-grid-column-one-half
-      h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-        span.govuk-caption-m
-          |Hazard
-        = @investigation.hazard&.hazard_type
-    .govuk-grid-column-one-half
-      h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-        span.govuk-caption-m
-          | Vunerable group
-        = @investigation.hazard&.affected_parties
-    .govuk-grid-column-full
-      span.govuk-caption-m
-        p = @investigation.hazard&.description
-        = link_to "Edit hazard and risk details", new_investigation_hazard_path(@investigation), class: "no-print"
-
-  .govuk-grid-column-one-third
-    h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-      span.govuk-caption-m
-        | Risk Level
-      = @investigation.hazard&.risk_level&.titleize
-    = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
+.govuk-body
+  - if @investigation.hazard&.hazard_type? || @investigation.hazard&.risk_level?
+    .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-two-thirds
+        .govuk-grid-column-one-half
+          h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+            span.govuk-caption-m
+              |Hazard
+            = @investigation.hazard.hazard_type
+        .govuk-grid-column-one-half
+          h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+            span.govuk-caption-m
+              | Vunerable group
+            = @investigation.hazard.affected_parties
+        .govuk-grid-column-full
+          p
+            = @investigation.hazard.description
+          = link_to "Edit hazard and risk details", new_investigation_hazard_path(@investigation), class: "no-print"
+      .govuk-grid-column-one-third
+        h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+          span.govuk-caption-m
+            | Risk Level
+          - if @investigation.hazard.risk_level?
+            = @investigation.hazard.risk_level.humanize.capitalize
+        = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
+  - else
+      .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-full
+        h2.govuk-heading-l
+          |What's the nature of the hazard?
+        p.govuk-body
+          |Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
+        .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+          p.govuk-grid-column-one-quarter
+            = link_to "Add hazard data", new_investigation_hazard_path(@investigation), class: "no-print"
+          p.govuk-grid-column-one-quarter
+            = link_to "Record an incident"
 
 / TODO: MSPSDS-532
 / These exist on the design but don't lead any where yet. Add with links, or delete if changed

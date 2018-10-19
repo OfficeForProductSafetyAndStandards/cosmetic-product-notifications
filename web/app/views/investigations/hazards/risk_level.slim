@@ -1,3 +1,6 @@
+- content_for :page_title, "Edit risk level - Market Surveillance & Product Safety"
+- content_for :after_header do
+= render "investigation_heading", investigation: @investigation
 = form_with(model: @hazard, local: true, url: update_risk_level_investigation_hazards_path, method: :post) do |form|
   fieldset.govuk-fieldset
     .govuk-form-group
@@ -7,7 +10,7 @@
         - Hazard.risk_levels.each do |(level, _)|
           .govuk-radios__item
             = form.radio_button :risk_level, level, class: "govuk-radios__input"
-            = form.label :risk_level, level.titleize, class: "govuk-label govuk-radios__label"
+            = form.label :risk_level, level.humanize.capitalize, class: "govuk-label govuk-radios__label"
 
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"

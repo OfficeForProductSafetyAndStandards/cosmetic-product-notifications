@@ -44,6 +44,10 @@ Rails.application.routes.draw do
         get :risk_level
         post :update_risk_level
       end
+      collection do
+        get :edit
+        post :update_hazard
+      end
     end
   end
 

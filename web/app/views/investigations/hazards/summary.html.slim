@@ -1,17 +1,34 @@
-p#notice = notice
-
-p
-  strong Hazard type:
-  = @hazard.hazard_type
-p
-  strong Description:
-  = @hazard.description
-p
-  strong Affected parties:
-  = @hazard.affected_parties
-p
-  strong Risk level:
-  = @hazard.risk_level
-= form_with(model: @hazard, local: true, url: investigation_hazards_path(investigation_id: @investigation&.id || 0), method: :post) do |form|
-  = form.submit "Save", class: "govuk-button"
-
+- content_for :page_title, "Add hazard details - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to case", @investigation, class: "govuk-back-link"
+= render "investigation_heading", investigation: @investigation
+h2.govuk-heading-l
+  | Summary
+.govuk-grid-column
+  table.govuk-table
+    tbody.govuk-table__body
+      tr.govuk-table__row
+        th.govuk-table__header
+          | Hazard type
+        td.govuk-table__cell
+          = @hazard.hazard_type
+      tr.govuk-table__row
+        th.govuk-table__header
+          | Description
+        td.govuk-table__cell
+          = @hazard.description
+      tr.govuk-table__row
+        th.govuk-table__header
+          | Affected parties
+        td.govuk-table__cell
+          = @hazard.affected_parties
+      tr.govuk-table__row
+        th.govuk-table__header
+          | Risk level
+        td.govuk-table__cell
+          -if @hazard.risk_level?
+            = @hazard.risk_level.humanize.capitalize
+  = form_with(model: @hazard, local: true,
+              url: investigation_hazards_path(investigation_id: @investigation&.id || 0), method: :post) do |form|
+    = form.submit "Save", class: "govuk-button"
+  = link_to "Edit details", edit_investigation_hazard_path
