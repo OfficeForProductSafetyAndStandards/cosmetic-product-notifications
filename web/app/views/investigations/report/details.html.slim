@@ -4,9 +4,7 @@
 main#main-content.govuk-main-wrapper role="main"
   h1.govuk-heading-xl
     span.govuk-caption-xl Report an unsafe product
-    = @reporter.reporter_type
-    br
-    | reporting
+    = "#{@reporter.reporter_type} reporting" if @reporter.reporter_type
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_with(model: @reporter, local: true, url: wizard_path, method: :put) do |form|

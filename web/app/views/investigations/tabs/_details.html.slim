@@ -3,9 +3,9 @@ p
 p
   = "Reporter name: #{@investigation.reporter&.name}"
 p
-  = "Reporter email address: #{@investigation.reporter&.email_address}"
-p
   = "Reporter phone number: #{@investigation.reporter&.phone_number}"
+p
+  = "Reporter email address: #{@investigation.reporter&.email_address}"
 p
   = "Reporter other details: #{@investigation.reporter&.other_details}"
 p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
