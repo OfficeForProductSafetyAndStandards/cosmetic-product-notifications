@@ -44,11 +44,11 @@ private
   end
 
   def build_incident_from_params
-    if params.include? :incident
-      @incident = @investigation.incidents.build(incident_params)
-    else
-      @incident = @investigation.incidents.build
-    end
+    @incident = if params.include? :incident
+                  @investigation.incidents.build(incident_params)
+                else
+                  @investigation.incidents.build
+                end
   end
 
   def store_incident

@@ -9,12 +9,12 @@ class Incident < ApplicationRecord
 
   after_initialize do
     date_component_strings = [year, month, day]
-    unless date_component_strings.any? &:blank?
+    unless date_component_strings.any?(&:blank?)
       date_components = date_component_strings.map(&:to_i)
-      if Date.valid_civil? *date_components
+      if Date.valid_civil?(*date_components)
         # This sets it if it makes sense. Validation then can compare the presence of
         # date and its components to know if the date parsed correctly
-        self.date = Date.civil *date_components
+        self.date = Date.civil(*date_components)
       end
     end
   end
@@ -30,14 +30,12 @@ class Incident < ApplicationRecord
         errors.add(missing_component)
       end
     when 0
-      unless date.present?
+      if date.blank?
         errors.add(:date, "Enter a real incident date")
         errors.add(:day)
         errors.add(:month)
         errors.add(:year)
       end
-    else
-      # No date is OK!
     end
   end
 end
