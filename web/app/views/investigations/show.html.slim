@@ -6,18 +6,28 @@
 
 = render "investigation_heading", investigation: @investigation
 
-- if @investigation.is_question
-  | This is a question yo!
-
-- if @investigation.is_case
-  | This is a case yo!
-
 / TODO: MSPSDS-532
 / These exist on the design but don't lead any where yet. Add with links, or delete if changed
 / https://mspsds-design-prototype.herokuapp.com/case
 / p
 /   a href="" Edit risk details
 /   a style="margin-left: 20px" href="" View assessment
+
+-if @investigation.is_question
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      h2.govuk-heading-l
+        span.govuk-caption-m Asked by
+        - if @investigation.reporter&.name && @investigation.reporter.name.length > 0
+          = @investigation.reporter.name
+        - else
+          = 'Anonymous'
+    .govuk-grid-column-two-thirds
+      p.govuk-body
+        - if @investigation.description && @investigation.description.length > 0
+          = @investigation.description
+        - else
+          = 'No description was provided'
 
 -if @investigation.investigation_products.empty?
   h2.govuk-heading-l

@@ -2,9 +2,12 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       p.govuk-caption-xl
-        'Case:
+        = investigation.is_case ? 'Case: ' : 'Question: '
         = investigation.id
-      = investigation.title || 'Untitled case'
+      - if investigation.title && investigation.title.length > 0
+          = investigation.title
+      - else
+          = investigation.is_case ? 'Untitled case' : 'Untitled question'
       p.govuk-caption-m
         = investigation.source.created_by
   .govuk-grid-column-one-third

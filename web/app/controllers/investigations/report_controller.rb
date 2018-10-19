@@ -12,7 +12,7 @@ class Investigations::ReportController < ApplicationController
     update_partial_reporter
     session[:reporter] = {}
     @investigation = Investigation.new
-    @investigation.object_type = Investigation.types[:case]
+    @investigation.object_type = @investigation.types[:case]
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
     @investigation.save
