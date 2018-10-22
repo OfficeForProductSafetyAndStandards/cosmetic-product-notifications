@@ -22,5 +22,8 @@ module App
       html_tag
     }
     config.action_view.form_with_generates_ids = true
+
+    # This changes Rails timezone, but keeps ActiveRecord in UTC
+    config.time_zone = "Europe/London"
   end
 end
