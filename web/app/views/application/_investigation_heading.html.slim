@@ -3,7 +3,7 @@
     h1.govuk-heading-xl
       p.govuk-caption-xl
         'Case:
-        = investigation.id
+        = get_pretty_id(investigation.id)
       = investigation.title || 'Untitled case'
       p.govuk-caption-m
         = investigation.source.created_by
