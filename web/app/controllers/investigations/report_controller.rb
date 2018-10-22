@@ -1,5 +1,5 @@
 class Investigations::ReportController < ApplicationController
-  include FlowHelper
+  include InvestigationFlowHelper
   include Wicked::Wizard
   steps :type, :details, :confirmation
 
@@ -15,6 +15,7 @@ class Investigations::ReportController < ApplicationController
   end
 
 private
+
   def default_investigation
     Investigation.new(is_case: true)
   end

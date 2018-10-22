@@ -8,7 +8,7 @@ main#main-content.govuk-main-wrapper role="main"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_with(model: @investigation, local: true, url: wizard_path, method: :put) do |form|
-        = render "form_validation_display", validated_object: @reporter
+        = render "form_validation_display", validated_object: @investigation
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | What type of question is it?
@@ -39,7 +39,7 @@ main#main-content.govuk-main-wrapper role="main"
 
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | What's the question?
-          .govuk-form-group
+          .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:title].any?)
             = form.label :title, "Question overview", class: "govuk-label"
             span#question-overview-hint.govuk-hint [class="govuk-!-width-two-thirds"]
               | The short version of the question, for viewing in lists etc

@@ -1,19 +1,24 @@
 class Investigations::QuestionController < ApplicationController
-  include FlowHelper
+  include InvestigationFlowHelper
   include Wicked::Wizard
   steps :questioner_type, :questioner_details, :question_details, :confirmation
 
   def update
     load_reporter_and_investigation
-    create if next_step? :confirmation
-    clear_session if step == :confirmation
-    redirect_to next_wizard_path
+    if @reporter.invalid?(step) || @investigation.invalid?(step)
+      render step
+    else
+      create if next_step? :confirmation
+      clear_session if step == :confirmation
+      redirect_to next_wizard_path
+    end
   end
 
 private
 
   def investigation_params
     return {} if !params[:investigation]
+
     if params[:investigation][:question_type] == 'other_question'
       params[:investigation][:question_type] = 'other_question: ' + params[:investigation][:other_question_type]
     end
@@ -23,6 +28,6 @@ private
   end
 
   def default_investigation
-    Investigation.new(investigation_params.merge({is_case: false}))
+    Investigation.new(investigation_params.merge(is_case: false))
   end
 end

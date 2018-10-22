@@ -4,7 +4,7 @@
       p.govuk-caption-xl
         = investigation.is_case ? 'Case: ' : 'Question: '
         = investigation.id
-      - if investigation.title && investigation.title.length > 0
+      - if investigation.title.present?
           = investigation.title
       - else
           = investigation.is_case ? 'Untitled case' : 'Untitled question'

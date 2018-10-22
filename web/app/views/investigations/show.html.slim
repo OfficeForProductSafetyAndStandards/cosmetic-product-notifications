@@ -18,16 +18,10 @@
     .govuk-grid-column-one-third
       h2.govuk-heading-l
         span.govuk-caption-m Asked by
-        - if @investigation.reporter&.name && @investigation.reporter.name.length > 0
-          = @investigation.reporter.name
-        - else
-          = 'Anonymous'
+        = @investigation.reporter&.name&.presence || 'Anonymous'
     .govuk-grid-column-two-thirds
       p.govuk-body
-        - if @investigation.description && @investigation.description.length > 0
-          = @investigation.description
-        - else
-          = 'No description was provided'
+        = @investigation.description.presence || 'No description was provided'
 
 / TODO: MSPSDS-522 / MSPSDS-528 Merge this into the hazard prompt
 - if @investigation.incidents.empty?

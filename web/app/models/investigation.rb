@@ -2,6 +2,8 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
 
+  validates :title, presence: true, on: :question_details
+
   index_name [Rails.env, "investigations"].join("_")
 
   settings do
@@ -10,7 +12,7 @@ class Investigation < ApplicationRecord
     end
   end
 
-  default_scope {order(updated_at: :desc)}
+  default_scope { order(updated_at: :desc) }
 
   belongs_to_active_hash :assignee, class_name: "User", optional: true
 

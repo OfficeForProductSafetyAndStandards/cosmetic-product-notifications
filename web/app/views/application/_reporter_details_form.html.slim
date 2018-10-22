@@ -1,14 +1,14 @@
 main#main-content.govuk-main-wrapper role="main"
   h1.govuk-heading-xl
     span.govuk-caption-xl = is_case ? "Report an unsafe product" : "Ask a question"
-    = "#{reporter.reporter_type} #{is_case ? "reporting" : "asking"}" if reporter.reporter_type
+    = "#{reporter.reporter_type} #{is_case ? 'reporting' : 'asking'}" if reporter.reporter_type
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_with(model: reporter, local: true, url: wizard_path, method: :put) do |form|
         = render "form_validation_display", validated_object: reporter
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            = "#{is_case ? "Reporter" : "Questioner"} details"
+            = "#{is_case ? 'Reporter' : 'Questioner'} details"
           .govuk-form-group
             = form.label :name, class: "govuk-label"
             = form.text_field :name, class: "govuk-input govuk-!-width-two-thirds"

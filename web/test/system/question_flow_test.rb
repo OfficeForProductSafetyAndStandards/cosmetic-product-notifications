@@ -25,24 +25,43 @@ class QuestionFlowTest < ApplicationSystemTestCase
     assert_text("Questioner details")
   end
 
-  test "should be able to fill name" do
+  test "second step should validate email" do
     select_type_and_continue
-    fill_name_and_continue
+    fill_in("reporter[email_address]", with: "invalid_email_address")
+    click_button "Continue"
+    assert_text("prohibited this case from being saved")
+  end
+
+  test "second step should allow empty email" do
+    select_type_and_continue
+    click_button "Continue"
+    assert_no_text("prohibited this case from being saved")
+  end
+
+  test "second step should allow valid email" do
+    select_type_and_continue
+    fill_email_and_continue
     assert_no_text("prohibited this case from being saved")
   end
 
   test "third step should be question details" do
     select_type_and_continue
-    fill_name_and_continue
+    fill_email_and_continue
     assert_text("What type of question is it?")
     assert_text("What's the question?")
   end
 
+  test "third step should require question summary" do
+    select_type_and_continue
+    fill_email_and_continue
+    click_button "Continue"
+    assert_text("prohibited this case from being saved")
+  end
+
   test "last step should be confirmation" do
     select_type_and_continue
-    fill_name_and_continue
-
-    click_button "Continue"
+    fill_email_and_continue
+    fill_question_summary_and_continue
     assert_text("Question created\nYour reference number")
   end
 
@@ -51,8 +70,13 @@ class QuestionFlowTest < ApplicationSystemTestCase
     click_button "Continue"
   end
 
-  def fill_name_and_continue
-    fill_in("reporter[name]", with: "Ben")
+  def fill_email_and_continue
+    fill_in("reporter[email_address]", with: "aa@aa.aa")
+    click_button "Continue"
+  end
+
+  def fill_question_summary_and_continue
+    fill_in("investigation[title]", with: "some nice question")
     click_button "Continue"
   end
 end

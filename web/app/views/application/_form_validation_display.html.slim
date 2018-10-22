@@ -1,4 +1,4 @@
-- if validated_object&.errors.any?
+- if validated_object&.errors&.any?
   #error_explanation
     h2.govuk-heading-l.govuk-error-message
       = pluralize(validated_object.errors.count, "error ")

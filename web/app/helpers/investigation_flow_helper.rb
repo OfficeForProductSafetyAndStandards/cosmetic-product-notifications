@@ -1,4 +1,4 @@
-module FlowHelper
+module InvestigationFlowHelper
   # GET /investigations/xxx/new
   def new
     clear_session
@@ -26,12 +26,12 @@ module FlowHelper
     load_reporter
   end
 
-  private
+private
 
   def load_reporter
     data_from_database = @investigation&.reporter&.attributes || {}
     data_from_previous_steps = data_from_database.merge(session[:reporter] || {})
-    data_after_last_step = data_from_previous_steps.merge(params[:reporter]&.permit! || {})
+    data_after_last_step = data_from_previous_steps.merge(reporter_params || {})
     params[:reporter] = data_after_last_step
     session[:reporter] = reporter_params
     @reporter = Reporter.new(session[:reporter])
@@ -39,6 +39,7 @@ module FlowHelper
 
   def reporter_params
     return {} if !params[:reporter] || params[:reporter] == {}
+
     if params[:reporter][:reporter_type] == 'Other'
       params[:reporter][:reporter_type] = params[:reporter][:other_reporter]
     end
@@ -53,6 +54,7 @@ module FlowHelper
   end
 
   def load_investigation
-      @investigation = Investigation.find_by(id: session[:investigation_id]) || default_investigation
+    # TODO: add loading from params if we use the same flow to edit its details
+    @investigation = Investigation.find_by(id: session[:investigation_id]) || default_investigation
   end
 end
