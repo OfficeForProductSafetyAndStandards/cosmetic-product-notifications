@@ -4,13 +4,13 @@ class Investigations::HazardsController < ApplicationController
 
   # GET /hazards/new
   def new
-    save_investigation
+    store_investigation
     load_hazard_and_investigation
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
   def edit
-    save_investigation
+    store_investigation
     load_hazard_and_investigation
     redirect_to previous_wizard_path
   end
@@ -45,7 +45,7 @@ class Investigations::HazardsController < ApplicationController
   end
 
   def risk_level
-    save_investigation
+    store_investigation
     load_hazard_and_investigation
   end
 
@@ -83,7 +83,7 @@ private
     end
   end
 
-  def save_investigation
+  def store_investigation
     session[:invesigation_id] = params[:investigation_id]
   end
 end

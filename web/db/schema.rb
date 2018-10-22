@@ -106,10 +106,7 @@ ActiveRecord::Schema.define(version: 2018_10_18_110130) do
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "is_closed", default: false
-    t.integer "risk_level"
-    t.string "risk_overview"
-    t.integer "sensitivity"
-    t.string "title", null: false
+    t.string "title"
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
@@ -170,4 +167,6 @@ ActiveRecord::Schema.define(version: 2018_10_18_110130) do
 
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
+  add_foreign_key "hazards", "investigations"
+  add_foreign_key "reporters", "investigations"
 end
