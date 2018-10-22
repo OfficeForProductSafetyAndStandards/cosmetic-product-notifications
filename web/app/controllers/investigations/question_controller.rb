@@ -1,6 +1,6 @@
 class Investigations::QuestionController < ApplicationController
   include Wicked::Wizard
-  steps :questioner_type, :questioner_details, :question_details
+  steps :questioner_type, :questioner_details, :question_details, :confirmation
 
   # GET /investigations/report/new
   def new
@@ -15,7 +15,7 @@ class Investigations::QuestionController < ApplicationController
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
     @investigation.save
-    redirect_to investigation_url(@investigation)
+    session[:id] = @investigation.id
   end
 
   # GET /investigations/report
@@ -30,11 +30,11 @@ class Investigations::QuestionController < ApplicationController
     case step
     when :questioner_type, :questioner_details
       return render step if !@reporter.valid?(step)
-      redirect_to next_wizard_path
     when :question_details
       return render step if !@investigation.valid?(step)
       create
     end
+    redirect_to next_wizard_path
   end
 
 private
