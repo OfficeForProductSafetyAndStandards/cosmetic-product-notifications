@@ -20,10 +20,10 @@
               '
               - if from.present?
                 | from "
-                = from.to_s
+                = get_history_field_display_format field, from
                 | "
                 '
               | to "
-              = to.to_s
+              = get_history_field_display_format field, to
               | "
     li
