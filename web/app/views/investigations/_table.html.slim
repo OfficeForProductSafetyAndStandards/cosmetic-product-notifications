@@ -19,7 +19,7 @@ table.govuk-table.investigation-list.sortable[class="govuk-!-margin-bottom-3"]
             span[class="govuk-!-font-size-16"]
               = investigation.pretty_id
             br
-            = investigation.title
+            = investigation.get_title
         td.govuk-table__cell
           span
             = investigation.status
