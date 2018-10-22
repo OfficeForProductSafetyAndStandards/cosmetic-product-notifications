@@ -1,56 +1,54 @@
 class Investigations::ReportController < ApplicationController
+  include ReporterHelper
   include Wicked::Wizard
   steps :type, :details, :confirmation
 
   # GET /investigations/report/new
   def new
+    clear_session
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
   # POST /investigations/report
   def create
-    update_partial_reporter
-    session[:reporter] = {}
-    @investigation = Investigation.new
-    @investigation.is_case = true
+    load_reporter_and_investigation
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
     @investigation.save
-    session[:id] = @investigation.id
+    session[:investigation_id] = @investigation.id
   end
 
   # GET /investigations/report
   # GET /investigations/report/step
   def show
-    session[:reporter] = {} if step == steps.first
-    @reporter = Reporter.new(session[:reporter])
+    load_reporter_and_investigation
     render_wizard
   end
 
   def update
-    update_partial_reporter
+    load_reporter_and_investigation
     if !@reporter.valid?(step)
       render step
     else
       create if next_step? :confirmation
+      clear_session if step == :confirmation
       redirect_to next_wizard_path
     end
   end
 
 private
 
-  def reporter_params
-    if params[:reporter][:reporter_type] == 'Other'
-      params[:reporter][:reporter_type] = params[:reporter][:other_reporter]
+  def load_investigation
+    if session[:investigation_id]
+      @investigation = Investigation.find_by(id: session[:investigation_id])
+    else
+      @investigation = Investigation.new
+      @investigation.is_case = true
     end
-    params.require(:reporter).permit(
-      :name, :phone_number, :email_address, :reporter_type, :other_details
-    )
   end
 
-  def update_partial_reporter
-    session[:reporter] = (session[:reporter] || {}).merge(reporter_params)
-    @reporter = Reporter.new(session[:reporter])
-    session[:reporter] = @reporter.attributes
+  def clear_session
+    session[:reporter] = {}
+    session[:investigation_id] = nil
   end
 end

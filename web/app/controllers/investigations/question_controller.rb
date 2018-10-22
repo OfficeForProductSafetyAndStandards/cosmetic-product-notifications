@@ -1,21 +1,21 @@
 class Investigations::QuestionController < ApplicationController
+  include ReporterHelper
   include Wicked::Wizard
   steps :questioner_type, :questioner_details, :question_details, :confirmation
 
   # GET /investigations/report/new
   def new
-    session[:reporter] = {}
+    clear_session
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
   # POST /investigations/report
   def create
     load_reporter_and_investigation
-    session[:reporter] = {}
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
     @investigation.save
-    session[:id] = @investigation.id
+    session[:investigation_id] = @investigation.id
   end
 
   # GET /investigations/report
@@ -27,27 +27,12 @@ class Investigations::QuestionController < ApplicationController
 
   def update
     load_reporter_and_investigation
-    case step
-    when :questioner_type, :questioner_details
-      return render step if !@reporter.valid?(step)
-    when :question_details
-      return render step if !@investigation.valid?(step)
-      create
-    end
+    create if next_step? :confirmation
+    clear_session if step == :confirmation
     redirect_to next_wizard_path
   end
 
 private
-
-  def reporter_params
-    return {} if !params[:reporter] || params[:reporter] == {}
-    if params[:reporter][:reporter_type] == 'Other'
-      params[:reporter][:reporter_type] = params[:reporter][:other_reporter]
-    end
-    params.require(:reporter).permit(
-      :name, :phone_number, :email_address, :reporter_type, :other_details
-    )
-  end
 
   def investigation_params
     return {} if !params[:investigation]
@@ -59,24 +44,18 @@ private
     )
   end
 
-  def load_reporter_and_investigation
-    load_investigation
-    load_reporter
-  end
-
-  def load_reporter
-    data_from_database = @investigation.reporter&.attributes || {}
-    data_from_previous_steps = data_from_database.merge(session[:reporter] || {})
-    data_after_last_step = data_from_previous_steps.merge(params[:reporter]&.permit! || {})
-    params[:reporter] = data_after_last_step
-    session[:reporter] = reporter_params
-    @reporter = Reporter.new(session[:reporter])
-  end
-
   def load_investigation
-    # TODO figure out if we ever need more than that here, as in, is this controller going to be used to edit question
-    @investigation = Investigation.new(investigation_params)
-    @investigation.is_case = false
+    if session[:investigation_id]
+      @investigation = Investigation.find_by(id: session[:investigation_id])
+    else
+      @investigation = Investigation.new(investigation_params)
+      @investigation.is_case = false
+    end
+  end
+
+  def clear_session
+    session[:reporter] = {}
+    session[:investigation_id] = nil
   end
 
 end
