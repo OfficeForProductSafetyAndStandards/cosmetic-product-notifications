@@ -1,10 +1,10 @@
 require "application_system_test_case"
 
-class ReporterFlowTest < ApplicationSystemTestCase
+class QuestionFlowTest < ApplicationSystemTestCase
   setup do
     sign_in_as_admin
     visit root_path
-    click_on "Report an unsafe product"
+    click_on "Ask a question"
   end
 
   teardown do
@@ -12,7 +12,7 @@ class ReporterFlowTest < ApplicationSystemTestCase
   end
 
   test "first step should be type" do
-    assert_text("Reporter type")
+    assert_text("Questioner type")
   end
 
   test "should be able to select option" do
@@ -22,7 +22,7 @@ class ReporterFlowTest < ApplicationSystemTestCase
 
   test "second step should be details" do
     select_type_and_continue
-    assert_text("Reporter details")
+    assert_text("Questioner details")
   end
 
   test "should be able to fill name" do
@@ -31,10 +31,19 @@ class ReporterFlowTest < ApplicationSystemTestCase
     assert_no_text("prohibited this case from being saved")
   end
 
+  test "third step should be question details" do
+    select_type_and_continue
+    fill_name_and_continue
+    assert_text("What type of question is it?")
+    assert_text("What's the question?")
+  end
+
   test "last step should be confirmation" do
     select_type_and_continue
     fill_name_and_continue
-    assert_text("Case created\nYour reference number")
+
+    click_button "Continue"
+    assert_text("Question created\nYour reference number")
   end
 
   def select_type_and_continue
