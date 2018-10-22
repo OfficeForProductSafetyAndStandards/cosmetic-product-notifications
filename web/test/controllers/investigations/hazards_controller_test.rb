@@ -2,6 +2,14 @@ require 'test_helper'
 
 class HazardsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in_as_admin
+  end
+
+  teardown do
+    logout
+  end
+  
+  setup do
     @hazard = hazards(:one)
     @investigation = Investigation.new
     @investigation.save
