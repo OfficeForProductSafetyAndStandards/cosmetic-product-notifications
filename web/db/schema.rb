@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_18_110130) do
+ActiveRecord::Schema.define(version: 2018_10_23_102910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,11 +37,15 @@ ActiveRecord::Schema.define(version: 2018_10_18_110130) do
   end
 
   create_table "activities", id: :serial, force: :cascade do |t|
+    t.bigint "business_id"
     t.datetime "created_at", null: false
     t.text "description"
     t.integer "investigation_id"
+    t.string "subtitle_slug"
+    t.string "title"
     t.string "type", default: "CommentActivity"
     t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_activities_on_business_id"
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
   end
 
@@ -169,6 +173,7 @@ ActiveRecord::Schema.define(version: 2018_10_18_110130) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "activities", "businesses"
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
   add_foreign_key "incidents", "investigations"
