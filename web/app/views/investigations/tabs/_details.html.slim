@@ -43,3 +43,16 @@ table.govuk-table
         td.govuk-table__cell = @investigation.reporter&.other_details
 p = link_to "Record an incident", new_investigation_incident_path(@investigation), class: "no-print"
 p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
+
+- if @investigation.correspondences.any?
+    h2.govuk-heading-m Correspondence
+    ul.govuk-list
+      - @investigation.correspondences.each do |correspondence|
+        | Correspondence details: 
+        p.govuk-body = correspondence.correspondent_name
+        p.govuk-body = correspondence.correspondent_type
+        p.govuk-body = correspondence.contact_method
+        p.govuk-body = correspondence.email_address if correspondence.contact_method == 'Email'
+        p.govuk-body = correspondence.phone_number if correspondence.contact_method == 'Phone call'
+        p.govuk-body = correspondence.overview
+        p.govuk-body = correspondence.details
