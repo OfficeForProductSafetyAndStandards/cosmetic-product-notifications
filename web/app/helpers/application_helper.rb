@@ -5,4 +5,9 @@ module ApplicationHelper
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     link_to title, query_params.merge(sort: column, direction: direction), class: "sort-link #{css_class}"
   end
+
+  def markdown(text)
+    rc = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+    rc.render(text).html_safe
+  end
 end
