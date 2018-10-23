@@ -3,16 +3,18 @@
     ul.govuk-list
       - activities.each do |activity|
         li
-          h3.govuk-heading-s[class="govuk-!-margin-bottom-1"]
-            = activity.type.titleize
-          p.timeline-details[class="govuk-!-margin-bottom-1"]
-            ' By
+          h3.govuk-heading-s
+            = activity.title.titleize
+          p.govuk-body-s.timeline-details
+            = activity.subtitle_slug
+            '  by
             = activity.source.show
             ' ,
-            = activity.created_at.to_s :long_ordinal
+            = activity.created_at.strftime('%C %B %Y')
           p
-            = activity.description
+            = markdown activity.description
       li
+
 - else
   p
     | No activities.
