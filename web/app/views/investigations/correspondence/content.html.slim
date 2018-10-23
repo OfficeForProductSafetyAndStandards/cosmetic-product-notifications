@@ -1,0 +1,29 @@
+- content_for :page_title, "Report unsafe product - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back to list", investigations_path, class: "govuk-back-link"
+= 'Case ' + session[:investigation_id]
+main#main-content.govuk-main-wrapper role="main"
+  h1.govuk-heading-xl
+    | Record correspondence
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Subject
+          .govuk-form-group
+            span.govuk-hint Give an overview of the correspondance
+            = form.text_field :overview, class: "govuk-input govuk-!-width-two-thirds"
+
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Email body, transcript or notes
+          .govuk-form-group
+            = form.text_area :details, class: "govuk-textarea", \
+                    "aria-describedby": "reporter-other-detail-hint", rows: 5
+
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | And/or, upload a file if you have one
+          .govuk-form-group
+            = form.file_field :file, class: "govuk-file-upload"
+        .govuk-form-group
+          = form.submit "Continue", class: "govuk-button"

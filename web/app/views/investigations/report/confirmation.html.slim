@@ -23,8 +23,10 @@ main#main-content.govuk-main-wrapper role="main"
         | If the report came by email, or you've notes / transcript from a call, add them now.
       p.govuk-body
         // TODO MSPSDS-516 implement add reporter correspondance functionality
-        a.govuk-link.mspsds-block-link href="/flows/add-correspondance/01-add-correspondance-context"
-          | Add reporter correspondance
+        = link_to(\
+                  "Add reporter correspondance", \
+                  new_investigation_correspondence_url(investigation_id: session[:id]), \
+                  class: "govuk-link mspsds-block-link ")
       hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
   .govuk-grid-row.mspsds-panelq
     .govuk-grid-column-two-thirds
