@@ -19,8 +19,8 @@ private
   def investigation_params
     return {} if !params[:investigation]
 
-    if params[:investigation][:question_type] == 'other_question'
-      params[:investigation][:question_type] = 'other_question: ' + params[:investigation][:other_question_type]
+    if params[:investigation][:question_type] == 'Other'
+      params[:investigation][:question_type] = params[:investigation][:other_question_type]
     end
     params.require(:investigation).permit(
       :title, :description, :question_type

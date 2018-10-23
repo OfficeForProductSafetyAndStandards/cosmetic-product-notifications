@@ -17,8 +17,15 @@
   .govuk-grid-row
     .govuk-grid-column-one-third
       h2.govuk-heading-l
-        span.govuk-caption-m Asked by
-        = @investigation.reporter&.name&.presence || 'Anonymous'
+        span.govuk-caption-m = 'Asked by ' + (@investigation.reporter&.reporter_type&.presence || 'Anonymous')
+        - if @investigation.reporter
+          p.govuk-body = 'Questionner details:'
+          - reporter = @investigation.reporter
+          p.govuk-body = ('Name: ' + reporter.name) if reporter.name.present?
+          p.govuk-body = ('Email: ' + reporter.email_address) if reporter.email_address.present?
+          p.govuk-body = ('Phone number: ' + reporter.phone_number) if reporter.phone_number.present?
+          p.govuk-body = ('Other details: ' + reporter.other_details) if reporter.other_details.present?
+
     .govuk-grid-column-two-thirds
       p.govuk-body
         = @investigation.description.presence || 'No description was provided'
