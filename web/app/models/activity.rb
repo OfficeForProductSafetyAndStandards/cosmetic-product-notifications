@@ -3,5 +3,6 @@ class Activity < ApplicationRecord
 
   has_one :source, as: :sourceable, dependent: :destroy
   belongs_to :business
+  belongs_to :product
 
 end
