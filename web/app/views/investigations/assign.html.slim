@@ -17,7 +17,7 @@ p
         - @investigation.errors.full_messages.each do |message|
           li
             = message
-  .govuk-form-group class=("govuk-form-group--error" unless @investigation.errors[:assignee].empty?)
+  .govuk-form-group.govuk-body class=("govuk-form-group--error" unless @investigation.errors[:assignee].empty?)
     = form.label :assignee_id, class: "govuk-label"
     / When there are many users, we should consider loading them with ajax using the autocomplete
     = form.select :assignee_id, options_for_select(\
