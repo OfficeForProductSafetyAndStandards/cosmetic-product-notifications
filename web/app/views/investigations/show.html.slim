@@ -12,8 +12,10 @@
 / p
 /   a href="" Edit risk details
 /   a style="margin-left: 20px" href="" View assessment
-
--if @investigation.investigation_products.empty?
+/ TODO: MSPSDS-522 / MSPSDS-528 Merge this into the hazard prompt
+- if @investigation.incidents.empty?
+  p = link_to "Record an incident", new_investigation_incident_path(@investigation), class: "no-print"
+- if @investigation.investigation_products.empty?
   h2.govuk-heading-l
     | There are no products attached to this case
 
