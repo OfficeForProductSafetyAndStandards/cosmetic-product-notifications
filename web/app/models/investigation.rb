@@ -43,6 +43,11 @@ class Investigation < ApplicationRecord
   def status
     is_closed? ? "Closed" : "Open"
   end
+
+  def pretty_id
+    id_string = id.to_s.rjust(8, '0')
+    id_string.insert(4, "-")
+  end
 end
 
 Investigation.import force: true # for auto sync model with elastic search

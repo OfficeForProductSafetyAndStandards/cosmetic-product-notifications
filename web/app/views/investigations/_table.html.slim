@@ -17,7 +17,7 @@ table.govuk-table.investigation-list.sortable[class="govuk-!-margin-bottom-3"]
         td.govuk-table__cell
           = link_to investigation do
             span[class="govuk-!-font-size-16"]
-              = get_pretty_id(investigation.id)
+              = investigation.pretty_id
             br
             = investigation.title
         td.govuk-table__cell
