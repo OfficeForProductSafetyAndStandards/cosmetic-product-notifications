@@ -4,7 +4,6 @@ class Investigations::CorrespondenceController < ApplicationController
 
   def new
     clear_session
-    session[:investigation_id] = params[:investigation_id]
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
@@ -18,7 +17,6 @@ class Investigations::CorrespondenceController < ApplicationController
 
   def show
     load_investigation_and_correspondence
-    @correspondence = Correspondence.new(session[:correspondence])
     render_wizard
   end
 
@@ -59,7 +57,7 @@ private
   end
 
   def load_investigation_and_correspondence
-    @investigation = Investigation.find_by(id: session[:investigation_id])
+    @investigation = Investigation.find_by(id: params[:investigation_id])
     load_correspondence
   end
 
@@ -97,6 +95,5 @@ private
 
   def clear_session
     session[:correspondence] = nil
-    session[:investigation_id] = nil
   end
 end

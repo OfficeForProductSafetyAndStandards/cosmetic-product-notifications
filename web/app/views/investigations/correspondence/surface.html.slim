@@ -1,8 +1,8 @@
 - content_for :page_title, "Report unsafe product - Market Surveillance & Product Safety"
 - content_for :after_header do
   = link_to "Back to list", investigations_path, class: "govuk-back-link"
-= 'Case ' + session[:investigation_id]
 main#main-content.govuk-main-wrapper role="main"
+  span.govuk-caption-xl = 'Case ' + get_pretty_id(@investigation.id)
   h1.govuk-heading-xl
     | Record correspondence
   .govuk-grid-row
@@ -33,7 +33,8 @@ main#main-content.govuk-main-wrapper role="main"
                 = form.label :correspondent_type, "Retailer", class: "govuk-label govuk-radios__label"
               .govuk-radios__item
                 = form.radio_button :correspondent_type, "Trading Standards / Other MSA", class: "govuk-radios__input"
-                = form.label :correspondent_type, "Trading Standards / Other MSA", class: "govuk-label govuk-radios__label"
+                = form.label :correspondent_type, "Trading Standards / Other MSA",\
+                        class: "govuk-label govuk-radios__label"
               .govuk-radios__item
                 = form.radio_button :correspondent_type, "Other", class: "govuk-radios__input",\
                         "data-aria-controls": "conditional-correspondent-type-other"
