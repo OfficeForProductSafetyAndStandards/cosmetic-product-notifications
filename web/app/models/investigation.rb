@@ -30,8 +30,6 @@ class Investigation < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :reporter, dependent: :destroy
 
-  has_paper_trail
-
   enum risk_level: %i[low medium serious severe], _suffix: true
 
   enum sensitivity: %i[low medium high], _suffix: true
