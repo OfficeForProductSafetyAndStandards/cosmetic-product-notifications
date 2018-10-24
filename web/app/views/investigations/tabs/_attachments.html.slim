@@ -1,5 +1,10 @@
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
+    = link_to "Add new image", new_associated_image_path(@investigation), class: "govuk-link mspsds-block-link"
+    = link_to "Add new document", new_associated_image_path(@investigation), class: "govuk-link mspsds-block-link"
+
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-full
     = render "images_summary", parent: @investigation
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full

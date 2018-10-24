@@ -1,8 +1,20 @@
 - if parent.images.attached?
-  h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-    = "Images (#{parent.images.size})"
   - parent.images.attachments.limit(2).each do |image|
-    = render "images/image", image: image, dimensions: "300x200"
+    .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-one-third
+        = render "images/image", image: image, dimensions: "300x200"
+      .govuk-grid-column-two-thirds
+        h2.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+          = image.blob.metadata[:title]
+        span.govuk-caption-m[class="govuk-!-font-size-16"]
+          = image.blob.metadata[:updated]
+        br
+        p.govuk-body = image.blob.metadata[:description]
+        / = link_to render "images/image_tag", dimensions: "#{image.blob.metadata[:height].to_s} x #{image.blob.metadata[:width].to_s}", image: image
+        = image.blob.attributes
+        /= link_to "View full image", image_path, class: "govuk-link mspsds-block-link"
+        = link_to "Edit image details or delete", new_associated_image_path(@investigation), class: "govuk-link mspsds-block-link"
+
   br
   br
 - else
