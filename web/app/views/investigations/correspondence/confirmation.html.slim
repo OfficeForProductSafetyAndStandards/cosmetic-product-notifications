@@ -1,9 +1,8 @@
 - content_for :page_title, "Report unsafe product - Market Surveillance & Product Safety"
 - content_for :after_header do
-  = link_to "Back to list", investigations_path, class: "govuk-back-link"
 main#main-content.govuk-main-wrapper role="main"
   h1.govuk-heading-xl
-    span.govuk-caption-xl = 'Case: ' + @investigation.id.to_s
+    span.govuk-caption-xl = 'Case: ' + get_pretty_id(@investigation.id)
     | Confirm correspondance details
   .govuk-grid-row
     .govuk-grid-column-two-thirds
@@ -28,6 +27,6 @@ main#main-content.govuk-main-wrapper role="main"
             tr.govuk-table__row
               th.govuk-table__header scope="row"  File
               td.govuk-table__cell
-        button.govuk-button type="submit" url=investigation_correspondence_url
+        button.govuk-button type="submit"
           | Continue
-        a.govuk-link.mspsds-block-link href="/flows/add-correspondance/01-add-correspondance-context"  Edit details
+        a.govuk-link.mspsds-block-link href=wizard_path(:surface)  Edit details

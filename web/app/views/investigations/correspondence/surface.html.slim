@@ -75,7 +75,6 @@ main#main-content.govuk-main-wrapper role="main"
             | When?
           .govuk-form-group
             fieldset.govuk-fieldset[role="group"]
-              = form.label :correspondence_date, hidden: true
               span.govuk-hint [class="govuk-!-width-two-thirds"]
                 | For example, 31 3 2018
               .govuk-date-input
@@ -83,19 +82,19 @@ main#main-content.govuk-main-wrapper role="main"
                   .govuk-form-group
                     label.govuk-label.govuk-date-input__label[for="dob-day"]
                       | Day
-                    = form.number_field "date_placed_on_market(3i)", \
+                    = form.number_field :correspondence_date_day, value: @correspondence.correspondence_date&.day, \
                           class: "govuk-input govuk-date-input__input govuk-input--width-2"
                 .govuk-date-input__item
                   .govuk-form-group
                     label.govuk-label.govuk-date-input__label[for="dob-day"]
                       | Month
-                    = form.number_field "date_placed_on_market(2i)", \
+                    = form.number_field :correspondence_date_month, value: @correspondence.correspondence_date&.month, \
                           class: "govuk-input govuk-date-input__input govuk-input--width-2"
                 .govuk-date-input__item
                   .govuk-form-group
                     label.govuk-label.govuk-date-input__label[for="dob-day"]
                       | Year
-                    = form.number_field "date_placed_on_market(1i)", \
+                    = form.number_field :correspondence_date_year, value: @correspondence.correspondence_date&.year, \
                           class: "govuk-input govuk-date-input__input govuk-input--width-4"
         .govuk-form-group
           = form.submit "Continue", class: "govuk-button"
