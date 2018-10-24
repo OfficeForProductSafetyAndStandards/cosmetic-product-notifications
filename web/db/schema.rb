@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_102910) do
+ActiveRecord::Schema.define(version: 2018_10_24_093836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,17 +160,6 @@ ActiveRecord::Schema.define(version: 2018_10_23_102910) do
     t.datetime "updated_at", null: false
     t.uuid "user_id"
     t.index ["user_id"], name: "index_sources_on_user_id"
-  end
-
-  create_table "versions", id: :serial, force: :cascade do |t|
-    t.datetime "created_at"
-    t.string "event", null: false
-    t.integer "item_id"
-    t.string "item_type", null: false
-    t.text "object"
-    t.text "object_changes"
-    t.string "whodunnit"
-    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "activities", "businesses"
