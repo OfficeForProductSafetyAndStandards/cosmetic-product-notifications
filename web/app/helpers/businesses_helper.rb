@@ -145,7 +145,7 @@ private
     }
   end
 
-  def create_audit_activity_for_adding_business (business)
+  def create_audit_activity_for_adding_business(business)
     AuditActivity.create(
         title: business.company_name,
         subtitle_slug: "Business added",

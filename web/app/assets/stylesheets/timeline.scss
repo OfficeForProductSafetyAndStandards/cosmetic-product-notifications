@@ -26,7 +26,10 @@ $timeline-item-margin-bottom: 20px;
       position: relative;
       display: block;
       border-bottom: 1px solid govuk-colour("grey-3");
-      @include govuk-responsive-padding(4, "bottom");
+
+      &:not(:last-child) {
+        @include govuk-responsive-padding(4, "bottom");
+      }
 
       &:last-child {
         margin-bottom: 0;
