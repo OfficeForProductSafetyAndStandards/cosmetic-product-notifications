@@ -25,7 +25,7 @@ jobs:
     before_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm start_dependencies
-    - sleep 30
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://elasticsearch:9200/_cat/health?h=st)" != "200" ]]; do sleep 5; done'
     script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rake
       db:create db:schema:load test
     after_script:
