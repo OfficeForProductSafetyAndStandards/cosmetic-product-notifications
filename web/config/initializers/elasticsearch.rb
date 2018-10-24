@@ -16,7 +16,7 @@ def local_elasticsearch_client
   config = {
     host: "elasticsearch",
     transport_options: {
-      request: { timeout: 5 }
+      request: { timeout: 3000 }
     }
   }
 
