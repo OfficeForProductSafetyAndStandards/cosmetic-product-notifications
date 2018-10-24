@@ -6,7 +6,7 @@ main#main-content.govuk-main-wrapper role="main"
     | Confirm correspondance details
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = form_with(local: true, url: investigation_correspondences_path(@investigation), method: :post) do |form|
+      = form_with(local: true, url: investigation_correspondences_path(@investigation), method: :post) do
         table.govuk-table
           tbody.govuk-table__body
             tr.govuk-table__row

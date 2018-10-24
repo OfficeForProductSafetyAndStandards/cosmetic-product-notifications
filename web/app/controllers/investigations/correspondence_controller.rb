@@ -32,7 +32,8 @@ class Investigations::CorrespondenceController < ApplicationController
 private
 
   def correspondence_params
-    return {} if !params[:correspondence].present?
+    return {} if params[:correspondence].blank?
+
     handle_type_params
     handle_date_params
     params.require(:correspondence).permit(
@@ -71,25 +72,25 @@ private
   end
 
   def values_from_flow
-    values = { correspondence_date: Date.today }
+    values = { correspondence_date: Time.zone.today }
 
     @reporter = @investigation.reporter
-    values = values.merge({
-      correspondent_name: @reporter.name,
-      contact_method: get_contact_method,
-      phone_number: @reporter.phone_number,
-      email_address: @reporter.email_address
-    }) if @reporter
+    if @reporter
+      values = values.merge(
+        correspondent_name: @reporter.name,
+        contact_method: get_contact_method,
+        phone_number: @reporter.phone_number,
+        email_address: @reporter.email_address
+      )
+    end
     values
   end
 
   def get_contact_method
     if @reporter.email_address.present?
-      return "Email"
+      "Email"
     elsif @reporter.phone_number.present?
-      return "Phone call"
-    else
-      return nil
+      "Phone call"
     end
   end
 

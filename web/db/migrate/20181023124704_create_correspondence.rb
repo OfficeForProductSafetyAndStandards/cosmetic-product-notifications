@@ -10,6 +10,8 @@ class CreateCorrespondence < ActiveRecord::Migration[5.2]
       t.string "overview"
       t.text "details"
       t.belongs_to :investigation, foreign_key: true, type: :integer
+
+      t.timestamps
     end
   end
 end
