@@ -1,8 +1,8 @@
 class AddQuestionAsPartOfCase < ActiveRecord::Migration[5.2]
-  def change
+  safety_assured do
     change_table :investigations, bulk: true do |t|
-      t.column :is_case, :boolean
-      t.column :question_type, :string
+      t.boolean :is_case, null: false, default: true
+      t.string :question_type
     end
   end
 end

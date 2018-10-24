@@ -9,7 +9,6 @@ class Investigations::ReportController < ApplicationController
       render step
     else
       create if next_step? :confirmation
-      clear_session if step == :confirmation
       redirect_to next_wizard_path
     end
   end

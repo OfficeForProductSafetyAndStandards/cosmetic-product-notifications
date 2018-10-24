@@ -1,4 +1,7 @@
 module InvestigationFlowHelper
+  # Commonises report_controller and question_controller
+  # xxx in paths can be 'report' or 'question'
+
   # GET /investigations/xxx/new
   def new
     clear_session
@@ -29,16 +32,14 @@ module InvestigationFlowHelper
 private
 
   def load_reporter
-    data_from_database = @investigation&.reporter&.attributes || {}
-    data_from_previous_steps = data_from_database.merge(session[:reporter] || {})
-    data_after_last_step = data_from_previous_steps.merge(reporter_params || {})
-    params[:reporter] = data_after_last_step
-    session[:reporter] = reporter_params
+    data_from_the_past = session[:reporter] || {}
+    data_after_last_step = data_from_the_past.merge(reporter_params)
+    session[:reporter] = data_after_last_step
     @reporter = Reporter.new(session[:reporter])
   end
 
   def reporter_params
-    return {} if !params[:reporter] || params[:reporter] == {}
+    return {} if !params[:reporter].present?
 
     if params[:reporter][:reporter_type] == 'Other'
       params[:reporter][:reporter_type] = params[:reporter][:other_reporter]
@@ -49,7 +50,7 @@ private
   end
 
   def clear_session
-    session[:reporter] = {}
+    session[:reporter] = nil
     session[:investigation_id] = nil
   end
 
