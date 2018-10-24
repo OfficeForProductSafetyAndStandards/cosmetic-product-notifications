@@ -13,7 +13,9 @@
             = activity.created_at.strftime('%C %B %Y')
           p
             = markdown activity.description
-          = link_to "View business details", business_url(activity.business_id)
+            = link_to "View business details", business_url(activity.business_id) if activity.business_id
+            = link_to "View product details", product_url(activity.product_id) if activity.product_id
+      li
 - else
   p
     | No activities.
