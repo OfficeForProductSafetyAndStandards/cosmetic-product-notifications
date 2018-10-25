@@ -4,13 +4,9 @@
       - activities.each do |activity|
         li
           h3.govuk-heading-s
-            = activity.title.titleize
+            = activity.title
           p.govuk-body-s.timeline-details
-            = activity.subtitle_slug
-            '  by
-            = activity.source.show
-            ' ,
-            = activity.created_at.strftime('%C %B %Y')
+            = build_subtitle(activity)
           p
             = markdown activity.description if activity.description
             = link_to "View business details", business_url(activity.business_id) if activity.business_id
