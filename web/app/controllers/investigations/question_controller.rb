@@ -1,12 +1,14 @@
 class Investigations::QuestionController < Investigations::FlowController
-  steps :questioner_type, :questioner_details, :question_details, :confirmation
+  steps :questioner_type, :questioner_details, :question_details
 
   def update
     load_reporter_and_investigation
     if @reporter.invalid?(step) || @investigation.invalid?(step)
       render step
+    elsif step == steps.last
+      create
+      redirect_to confirmation_investigation_path(@investigation)
     else
-      create if next_step? :confirmation
       redirect_to next_wizard_path
     end
   end

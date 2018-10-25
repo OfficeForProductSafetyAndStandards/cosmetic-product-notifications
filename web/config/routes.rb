@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     member do
       get :status
       get :assign
+      get :confirmation
       post :update_assignee
     end
     collection do

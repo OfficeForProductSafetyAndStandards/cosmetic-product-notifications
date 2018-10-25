@@ -15,7 +15,6 @@ class Investigations::FlowController < ApplicationController
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
     @investigation.save
-    session[:investigation_id] = @investigation.id
   end
 
   # GET /investigations/xxx
@@ -30,7 +29,7 @@ class Investigations::FlowController < ApplicationController
     load_reporter
   end
 
-  private
+private
 
   def load_reporter
     data_from_the_past = session[:reporter] || {}
@@ -52,13 +51,12 @@ class Investigations::FlowController < ApplicationController
 
   def clear_session
     session[:reporter] = nil
-    session[:investigation_id] = nil
   end
 
   def load_investigation
     # default_investigation can be provided by the class using this helper
     # If it's not, then the one below is used
-    @investigation = Investigation.find_by(id: session[:investigation_id]) || default_investigation
+    @investigation = default_investigation
   end
 
   def default_investigation

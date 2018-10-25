@@ -1,4 +1,4 @@
-- content_for :page_title, "New product safety report - Case created"
+- content_for :page_title, "New product safety report - #{case_question_text(@investigation).titleize} created"
 - content_for :after_header do
   = link_to "Back to list", investigations_path, class: "govuk-back-link"
 = render "case_confirmation", investigation: @investigation
