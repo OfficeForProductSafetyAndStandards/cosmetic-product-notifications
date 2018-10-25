@@ -1,6 +1,10 @@
 - content_for :page_title, "Add hazard details - Market Surveillance & Product Safety"
 - content_for :after_header do
-= render "investigation_heading", investigation: @investigation
+h1.govuk-heading-xl
+  span.govuk-caption-xl
+    ' Case:
+    = @investigation.id
+  | Add incident
 = form_with(model: @hazard, local: true, url: wizard_path, method: :put) do |form|
   fieldset.govuk-fieldset
     .govuk-form-group

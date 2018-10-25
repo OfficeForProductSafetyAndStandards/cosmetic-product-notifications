@@ -34,7 +34,7 @@
   p
     = @investigation.hazard&.description
   - if !@investigation.hazard
-    = link_to "New hazard", new_investigation_hazard_path(@investigation),
+    = link_to "Add hazard details", new_investigation_hazard_path(@investigation),
               class: "govuk-link mspsds-block-link no-print"
   - else
     = link_to "Edit hazard details", new_investigation_hazard_path(@investigation),

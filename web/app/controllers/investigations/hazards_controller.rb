@@ -4,7 +4,7 @@ class Investigations::HazardsController < ApplicationController
 
   # GET /hazards/new
   def new
-    session[:hazard] = {}
+    session[:hazards] = {}
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
@@ -58,7 +58,7 @@ class Investigations::HazardsController < ApplicationController
 private
 
   def load_hazard_and_investigation
-    @investigation = Investigation.find_by(id: session[:invesigation_id])
+    @investigation = Investigation.find_by(id: params[:investigation_id])
     load_hazard_data
     @hazard = Hazard.new(session[:hazard])
   end
