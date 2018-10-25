@@ -4,8 +4,7 @@ class Investigations::HazardsController < ApplicationController
 
   # GET /hazards/new
   def new
-    store_investigation
-    load_hazard_and_investigation
+    session[:hazard] = {}
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
@@ -65,7 +64,7 @@ private
   end
 
   def load_hazard_data
-    hazard_data_from_database = {} || @investigation.hazard.attributes
+    hazard_data_from_database = @investigation.hazard&.attributes || {}
     hazard_data_from_previous_steps = hazard_data_from_database.merge(session[:hazard] || {})
     hazard_data_after_last_step = hazard_data_from_previous_steps.merge(params[:hazard]&.permit! || {})
     if hazard_data_after_last_step != {}

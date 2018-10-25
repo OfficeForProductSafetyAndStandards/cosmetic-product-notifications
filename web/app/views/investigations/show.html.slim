@@ -8,21 +8,16 @@
 .govuk-body
   - if @investigation.hazard&.hazard_type? || @investigation.hazard&.risk_level?
     .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-      .govuk-grid-column-two-thirds
-        .govuk-grid-column-one-half
-          h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-            span.govuk-caption-m
-              |Hazard
-            = @investigation.hazard.hazard_type
-        .govuk-grid-column-one-half
+      .govuk-grid-column-one-third
+        h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+          span.govuk-caption-m
+            |Hazard
+          = @investigation.hazard.hazard_type
+      .govuk-grid-column-one-third
           h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
             span.govuk-caption-m
               | Vunerable group
             = @investigation.hazard.affected_parties
-        .govuk-grid-column-full
-          p
-            = @investigation.hazard.description
-          = link_to "Edit hazard and risk details", new_investigation_hazard_path(@investigation), class: "no-print"
       .govuk-grid-column-one-third
         h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
           span.govuk-caption-m
@@ -31,17 +26,22 @@
             = @investigation.hazard.risk_level.titleize
         = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
   - else
-      .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-      .govuk-grid-column-full
-        h2.govuk-heading-l
-          |What's the nature of the hazard?
-        p.govuk-body
-          |Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
-        .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-          p.govuk-grid-column-one-quarter
-            = link_to "Add hazard data", new_investigation_hazard_path(@investigation), class: "no-print"
-          p.govuk-grid-column-one-quarter
-            = link_to "Record an incident"
+    h2.govuk-heading-l
+      | What's the nature of the hazard?
+    p.govuk-body
+      | Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
+
+  p
+    = @investigation.hazard&.description
+  - if !@investigation.hazard
+    = link_to "New hazard", new_investigation_hazard_path(@investigation),
+              class: "govuk-link mspsds-block-link no-print"
+  - else
+    = link_to "Edit hazard details", new_investigation_hazard_path(@investigation),
+              class: "govuk-link mspsds-block-link no-print"
+  - if @investigation.incidents.empty?
+      = link_to "Record an incident", new_investigation_incident_path(@investigation),
+              class: "govuk-link mspsds-block-link no-print"
 
 / TODO: MSPSDS-532
 / These exist on the design but don't lead any where yet. Add with links, or delete if changed
@@ -50,16 +50,6 @@
 /   a href="" Edit risk details
 /   a style="margin-left: 20px" href="" View assessment
 / TODO: MSPSDS-522 / MSPSDS-528 Merge this into the hazard prompt
-- if @investigation.incidents.empty?
-  .govuk-grid-row.mspsds-product-panel.mspsds-product-panel__empty
-    .govuk-grid-column-full
-      h2.govuk-heading-l What's the nature of the hazard?
-      p.govuk-body
-        | Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
-      p.govuk-body
-        a.govuk-link.mspsds-block-link href="" Add hazard data
-        = link_to "Record an incident", new_investigation_incident_path(@investigation),
-                class: "govuk-link mspsds-block-link no-print"
 - if @investigation.investigation_products.empty?
   h2.govuk-heading-l
     | There are no products attached to this case

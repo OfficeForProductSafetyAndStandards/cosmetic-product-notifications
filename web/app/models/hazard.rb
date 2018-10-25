@@ -1,4 +1,4 @@
 class Hazard < ApplicationRecord
-  has_one :invesigation
+  belongs_to :investigation
   enum risk_level: %i[none low medium serious severe], _suffix: true
 end
