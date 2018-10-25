@@ -11,7 +11,7 @@ main#main-content.govuk-main-wrapper role="main"
           | Your reference number
           br
           strong
-            = get_pretty_id(session[:id])
+            = @investigation.pretty_id
       p
         | You have been sent a confirmation email.
       hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
@@ -35,5 +35,5 @@ main#main-content.govuk-main-wrapper role="main"
       p.govuk-body
         = link_to(\
           "View the case you've just created",\
-          investigation_path(id: session[:id]),\
+          investigation_path(@investigation),\
           class: "govuk-link mspsds-block-link ")
