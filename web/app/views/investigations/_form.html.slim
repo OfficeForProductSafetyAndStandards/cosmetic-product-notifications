@@ -1,13 +1,5 @@
 = form_with(model: investigation, local: true) do |form|
-  - if investigation.errors.any?
-    #error_explanation
-      h2.govuk-heading-l.govuk-error-message
-        = pluralize(investigation.errors.count, "error ")
-        | prohibited this case from being saved:
-      ul.govuk-list.govuk-error-message
-        - investigation.errors.full_messages.each do |message|
-          li
-            = message
+  = render "form_validation_display", validated_object: investigation
   .govuk-form-group class=("govuk-form-group--error" if investigation.errors.any?)
     = form.label :title, class: "govuk-label"
     span#title-format-hint.govuk-hint

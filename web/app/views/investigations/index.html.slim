@@ -33,7 +33,7 @@ br
       = link_to "Report an unsafe product", new_report_path, class: "govuk-link mspsds-block-link"
       /TODO refer the links below to correct pages when they are created
       = link_to "Begin an investigation", new_investigation_path, class: "govuk-link mspsds-block-link"
-      = link_to "Ask a question", "/", class: "govuk-link mspsds-block-link"
+      = link_to "Ask a question", new_question_path, class: "govuk-link mspsds-block-link"
 = render "table", investigations: @investigations
 = will_paginate @investigations
 br

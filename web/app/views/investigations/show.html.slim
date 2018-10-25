@@ -49,7 +49,17 @@
 / p
 /   a href="" Edit risk details
 /   a style="margin-left: 20px" href="" View assessment
-/ TODO: MSPSDS-522 / MSPSDS-528 Merge this into the hazard prompt
+
+-if !@investigation.is_case
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      h2.govuk-heading-m
+        span.govuk-caption-m Asked by
+        = (@investigation.reporter&.name&.presence || 'Anonymous')
+    .govuk-grid-column-two-thirds
+      p.govuk-body
+        = @investigation.description.presence || 'No description was provided'
+
 - if @investigation.investigation_products.empty?
   h2.govuk-heading-l
     | There are no products attached to this case

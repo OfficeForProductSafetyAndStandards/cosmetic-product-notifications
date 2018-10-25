@@ -2,6 +2,8 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
 
+  validates :title, presence: true, on: :question_details
+
   index_name [Rails.env, "investigations"].join("_")
 
   settings do
