@@ -89,6 +89,10 @@ class InvestigationsController < ApplicationController
     end
   end
 
+  def confirmation
+    set_investigation
+  end
+
 private
 
   # Use callbacks to share common setup or constraints between actions.
