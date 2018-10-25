@@ -2,7 +2,7 @@
 - content_for :after_header do
   = link_to "Back to list", investigations_path, class: "govuk-back-link"
 main#main-content.govuk-main-wrapper role="main"
-  span.govuk-caption-xl = 'Case ' + get_pretty_id(@investigation.id)
+  span.govuk-caption-xl = 'Case ' + @investigation.pretty_id
   h1.govuk-heading-xl
     | Record correspondence
   .govuk-grid-row

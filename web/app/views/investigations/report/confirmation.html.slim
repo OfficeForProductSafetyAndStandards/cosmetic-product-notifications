@@ -25,7 +25,7 @@ main#main-content.govuk-main-wrapper role="main"
         // TODO MSPSDS-516 implement add reporter correspondance functionality
         = link_to(\
                   "Add reporter correspondance", \
-                  new_investigation_correspondence_url(investigation_id: session[:id]), \
+                  new_investigation_correspondence_url(@investigation), \
                   class: "govuk-link mspsds-block-link ")
       hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
   .govuk-grid-row.mspsds-panelq

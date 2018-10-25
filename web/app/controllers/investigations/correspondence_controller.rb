@@ -29,31 +29,24 @@ class Investigations::CorrespondenceController < ApplicationController
     end
   end
 
-private
+  private
 
   def correspondence_params
     return {} if params[:correspondence].blank?
 
     handle_type_params
-    handle_date_params
     params.require(:correspondence).permit(
-      :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :correspondence_date,
-      :overview, :details
+      :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address,
+      :overview, :details,
+      :day,
+      :month,
+      :year
     )
   end
 
   def handle_type_params
     if params[:correspondence][:correspondent_type] == 'Other'
       params[:correspondence][:correspondent_type] = params[:correspondence][:other_correspondent_type]
-    end
-  end
-
-  def handle_date_params
-    year = params[:correspondence][:correspondence_date_year]
-    month = params[:correspondence][:correspondence_date_month]
-    day = params[:correspondence][:correspondence_date_day]
-    if(year.present? && month.present? && day.present?)
-      params[:correspondence][:correspondence_date] = Date.new(year.to_i, month.to_i, day.to_i)
     end
   end
 
@@ -72,7 +65,11 @@ private
   end
 
   def values_from_flow
-    values = { correspondence_date: Time.zone.today }
+    values = {
+      day: Time.zone.today.day,
+      month: Time.zone.today.month,
+      year: Time.zone.today.year
+    }
 
     @reporter = @investigation.reporter
     if @reporter

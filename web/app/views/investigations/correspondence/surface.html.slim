@@ -2,7 +2,7 @@
 - content_for :after_header do
   = link_to "Back to list", investigations_path, class: "govuk-back-link"
 main#main-content.govuk-main-wrapper role="main"
-  span.govuk-caption-xl = 'Case ' + get_pretty_id(@investigation.id)
+  span.govuk-caption-xl = 'Case ' + @investigation.pretty_id
   h1.govuk-heading-xl
     | Record correspondence
   .govuk-grid-row
@@ -74,28 +74,6 @@ main#main-content.govuk-main-wrapper role="main"
 
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | When?
-          .govuk-form-group
-            fieldset.govuk-fieldset[role="group"]
-              span.govuk-hint [class="govuk-!-width-two-thirds"]
-                | For example, 31 3 2018
-              .govuk-date-input
-                .govuk-date-input__item
-                  .govuk-form-group
-                    label.govuk-label.govuk-date-input__label[for="dob-day"]
-                      | Day
-                    = form.number_field :correspondence_date_day, value: @correspondence.correspondence_date&.day, \
-                          class: "govuk-input govuk-date-input__input govuk-input--width-2"
-                .govuk-date-input__item
-                  .govuk-form-group
-                    label.govuk-label.govuk-date-input__label[for="dob-day"]
-                      | Month
-                    = form.number_field :correspondence_date_month, value: @correspondence.correspondence_date&.month, \
-                          class: "govuk-input govuk-date-input__input govuk-input--width-2"
-                .govuk-date-input__item
-                  .govuk-form-group
-                    label.govuk-label.govuk-date-input__label[for="dob-day"]
-                      | Year
-                    = form.number_field :correspondence_date_year, value: @correspondence.correspondence_date&.year, \
-                          class: "govuk-input govuk-date-input__input govuk-input--width-4"
+          = render "date_input", form: form
         .govuk-form-group
           = form.submit "Continue", class: "govuk-button"
