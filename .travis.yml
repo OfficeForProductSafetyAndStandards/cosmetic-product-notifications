@@ -18,25 +18,29 @@ jobs:
     - mkdir -p ~/bundle-cache
     - mkdir -p ~/npm-cache
     install:
-    - "./ci/build-docker-images.sh"
+    - BRANCH=${TRAVIS_BRANCH} ./ci/build-docker-images.sh
   - stage: Test
     name: Run Tests
     install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
     before_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm start_dependencies
-    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rake
-      db:create db:schema:load test
+    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web
+      bin/rake db:create db:schema:load test
     after_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
   - name: Static Analysis
     install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    script: 
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/rubocop
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/slim-lint app/views
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn eslint app/assets/javascripts
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/brakeman --no-pager
+    script:
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/rubocop
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/slim-lint
+      app/views
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn eslint
+      app/assets/javascripts
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn sass-lint
+      -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/brakeman
+      --no-pager
   - stage: Deploy to int
     name: Deploy web
     if: branch = master AND type != pull_request
@@ -81,5 +85,5 @@ env:
   - secure: F8eVV8PG7rO0LLOpVfPd0EB30EHhYtImiYpbqgRCgqJcSoOy1QpjVu1tLSVUQGaOmcJ8Lp8B5eW08v1Al3EUdsAZilPwaT8R5IKdPZ//du+xTUI6EnPAzvOqvs5VBdRrZIDX/gZH8lVHuaxXAdCC0/DXdyInalvK/tlHhViq/EhQj5sHfllnWT7RcuBJD2jlbXHrV2J5Ycq+sU9Wz8agRI3IT4QpAA4RYLBiIY1tsj8mokVZHa4h1XVKGziRXN/+FNf2N8v2MbO1Yjia6QmwhEOeaWxKxI56tG2CvXia1hNI7uqqNmAbjgpybBzCQwsMgCJZ0cL+0yfX8tYS4VDhmOgs3O4Npkj3IR9/6WY0wwiVYAR/GwT8TxNfczutmFwkMA9oHHZFWX0AlLpJTUUpmDadV08EhN9gknPNBCVuTBtpny0TK73vvaaBxc1PMiCU5082dbeocT447d0vaWfitJqAu4Mlq92Vw/6BVafQAx0/bmn5zKTkyNeVPRBq6sW+fwBhHYQdQLiJwlw3K4a08H3SCI7t2JO6jiqrT0VlYUj44ZAd3Xct2xl+RXb92GP2W5hkgnm1I+OmNS4TknTy4IlPlWo1116UeiSEz3R0bldW+jzCbkR+Tfge9NyYEISBXEdgr6NWGpTmuQil/SDCXwAqn71/+aPWDfpAzI2UMB8=
   - secure: OMqDkgIijuZvIDd8UNnOXeIx/WlIXs+JFvNLwE+gRezN9jr7BkGj/XwDJKKg4iUguAHu+d2r9pQ4lz3vy41Y0Lz9yIrUCUtL8/g/I+O9Ijf4k7oEpxMgpo5ZLRTbw0WfBr1m4q1kTPYjk88jpjzVZnqu0BoG1yzufzzxqAL03grcE/ro2sgQuipnRNNu1r8cW7sSCDOxWM4uNsBNELJbtbpZ7dceKpIcoFf7otJyRl+fCaiNeD1yoa5JlIUWVs+yNQUM9ZKMrNwNb52y1xjSXjTs4yAVYN8Bbp0k9qyGzUeRtPXLwoBsbmjaR8aBKwuEYGf+VJ29J24bagnhb2S/2+P2en03qBH0V+WvKWbH0ftGkdELXLf+iA/hEnQV0R9plmHV57thm+OPCbIxkHo6WkGoocMmPQGkW9Xh/0LZfaeZIESqQOIA8uoMfhH7jQIMv4Iqv9VIbw0onw2JM4HtuSfUQz23Zk65s6wqKsnIiBfZK5SnZ34j3OgOnhwPQx67HbfyhspP+Nw+7yqMWa4EIXRZxVD343w9//qUMjC/b+24jxFEn16xC0cdwX59rEqDszTtcu2di1ayKUFjNPGOEgOvNPDaVOIWDxYoimhlVlK6q5fjEK/GIknbJwpAH1G6BC1XV2IxllwLT/CORmFrqxaGMPQu5YXDDzBEKX4Fjt0=
   - secure: bHivYfeMq6yjIXnT0merZDgbUd0PK4CYvXRNr1ZJE+0F0fYgwETHuRQUvMfAcVzlK6ZtjsZ+fJgQKqLAoOGuZqFrRdoO1tPCz7NmVezq9bKIHDspTJRgeQutQfvNAVlfk0m3pzkF1zG1wBJXEU0eumk77Ng1qW/km1PixYU9duJ8P0pAdZ4FVmb+THQwe7kGqFfnRrwY3Cbr2zJYi26voYNjUdRw0fO9yTFdVEMiCN3y9Xq4stn/ok/nvjUB/89W0JxXIbPZQf6YSNZrv/sPa6P/xpUP+BdDe6iNe0PRr3N0eAMuxTP+4wpgcMyspB5hPqVp14fptK71zQpCePOoGaOu6wCdZKN0G6UDodh0It/rtw6PXfgNts9FD3pui5nQVTTlv2GPfzwE7AfpAfw3RL2OLXvHuL9Car6rL2apzT5kXs73phHIh5VPUgTR3HDFw/Tl09omJ/8HmJDWvPX5uOIHQRyIP9UkSS0Y1v7rhXrtxu+83TIHOOKc3DGlkb9J5X1NHzAgqgCjrByoeAvVR+zO9LdHmOwdQT8xHa954RGQYABoz3fThEuGK9HzE+7ZS1QHj3Olu1y5OW7dmMI6RAhLl94mzxKtcgyr8ReHhYyvcRejU38CkRPeAwWbi/h6X2+WI1aMuO6z335NZPsf+qAnDg+hOq5C1sI6GmQpABY=
-  - secure: DIhtoqx2vRXuDkpFWBc3Qj+WHKQGS8WsyGm9aK2WFRiiIKTb5nmtAtaPeA7XFl9dFbYN4UHeusuS9Ed9iaVTRADLDmNffbZV5S4cLruxUrDs1KwxjB16usgEXF6l+NJeHF/bT9n8/h9oOOXyKFlD9lX+98ux1gIAuojDQu3zFDAbnB6Hst2A+cTUWYZOJU3owqIGLxf5oiswsqC7v/E+UCtXGgCBb0flhhUCfyZma/1q/J3t+jdwS6f8brySyhVc7ueCIBfJIigyqrwt1GNrOxz4KbDRkpFqVhQ7ve6qS7vWo6bXH6Pf7JdLC8SM9Zw5EfuXiod6a3ZiR2nbYaoPbTMZ3Tp3UoKXR6fFHa3ePK7xe61ao3SWDGzYfpZlNcs0w6jKYgUdbpoGIRXUee+qRRfADoOsTHBSVS0iV/YWLkf/sQCpuRgVwko2k2knKmiSqUtFHvOkkf7QlUVyvFtst5IUqjDEALpqkVE2pretzS8opwGhAqh6CxOrhtrp0X8J4rlwLw6eMWkG1ai8Cqg5riKc0GpFkv0T5pMs+r3guEMK3ypN19aCfs7zzABbQK+i5NmOG4ItUP9EwQiWvKQscoiEG/O/FH4NLTvGYgSIszTZnpCT8RwQwiOOjINT2menZyK1lvDie+yyPIX+td9pmvcrzUfnOXmidHD+Vv6ogUo=
-  - secure: MfYzWK3WIme6oVE653TzavS0iV7IBpmte+eBoN5m7ONAPiemETgw4PkEyTGKlr7vDKQpzwuv1onGivXrIKdUmFiG3VxmEZOngJTuvjbv4j0VWgjsHDQsVwJrsaxcP0GS7toY9oDFuJLYwEwrbJ6jnKdGu40ARfP1PGZUXZY0VEhfkGNaJfS4xTEk+eLIpy9JPbhLpwCCk27rkOnSCPjF/PbBG4dUZXza9CknO1IHrvfH7tHpHcZHjJkecAjHJt82JpM3SuqjSG0BpD5zAaodwjOBk6+mRze7FZNvAjHqrn6SvLX5OyNj7wjcaN+FHOjM4OpvpNyNo//5TZot+FvwxqtWlA/WK72oAk3KlHcUTHiPWVbRmvr0deAS4lIxUoi9DzCsz+IqlMr8RyjmF3DoodM6dYhsfCB1mImcLqMZxgyBieLZokUJAubgkheyU6b3XFfX3HGoPJ/XQ6rZEgFhqWNsXby5UAT1djvWP0XR/8RtRHfIVhkc83myw1Vr1nOT9X2zW2kywJQv0SmVBYmu76BBlZYM+GSkWli4zC7A/elv6YxHEcZBinfLEHozuyibb4g4abRNQq8YkCC7Sylgg9xR1Tb4G6qNqNzgqhViyMXXEY6TU3iET4aKesixuN8tAckkVeD18luY+XWnmOFEoLBuQEkyQl5yVCQ007IH8ZE=
+  - secure: PP1MBuv5m3nsdgVS0UaX2CZPh1Ar8s6k+OZOaNn0oq4JSbvZXm/aEOX50D2AA9pxhXJBC+4NC54pWse9bRIt0etmmC+coYetjVI91xOgH2QgLbEkkfRKE/RKmtKqLAOyvVAB+HvVO/YNetIRGgTQwTnhvmsGL2uj/YFntTLRm/oHZy2vc7leN0gFSzS6oNK4a2L2+Tvl/Ytqhn2f2GUZnVTGJZoDYJKBRdlXZ/ffOsyaLXE8a1mgnuAx/7IUBkvtFKPcXOOtoe0mCU8O1AWszkfSv8GI5OtM54DLrM1b9bU8erkkCzDDSNBj+qDbvaTeGeDf2TH6fmtXSOBZhGpCkAOmaxzqt8RbpemnxM+ij40bXSPrOVGOspn6aPBli/vOxcCzchhl13aYSsRwf1AV+0uViX5Mve3sJnIvIEPH6bblzkRtGjLEWLyqGLU9Gb9l4Fxhxwx0kPmjkNqyhHjSBwTDd7FyDNKQ2k0DRU8hxUqUcKkHliQepN1Ri0manztiS/pf0JF2HDmovLEKC3Ag1EniR9sD74d1TH2lsm70t+Gk/8DGOh2Lbwy94pjUD/GDp0opdGRB5BynsW8TFCehnw/GlWQe7f/U2/X+jZ2oO7jw0eGlC1E9stGfcct8YnENrvrc1iHVQ9JJ78ZzIhnJ3GfD4A7ZKCmXIqucYlrgWSw=
+  - secure: QF+c/OQR3qP+08J5dffdOFWypUIbYsHEeAZxl46AbR9iSaFxbCCltDAESdectTBN5I/RsVNezRfaZ1rtTCSo+F36qbpexwRkNQ/2B9+pnPr9pWkwvKvqlMAtotz8EkCjzG/DQvgMkaBxO8Q/bMv7/rCjv4Fvpmkb6k/MtyGgCcuhknK4kd2BhCEmJLcRr1Oin/SGgaZTRmlhhdZyzveO5Z5Y/8WyoMW6nXfGHOEv0JDcOQmURg2JN2vEhVKXkHlJ+Ij0ZDlL9ZCwuwCKcxe8BmgHMW1XidJwsHKPB/+q2AD8rHefKTU+CkKd55iNKZzD5p4Y8bqSJ1SbUQYaq6UaueqV1KKW7fXMmG8HLUP+rq28ZwnaMbTqdHlZeJHIkaKKS3ACgLOaCJN8lW13WTrHQBGgxE0PXpaSQCXhW9p7Dt0PEz4emsWarC3w0+Fx3t9yI5Zi6nTpEPIkGRgJQQXO6tW7wEzGlnPtQ0O+3kHb903DuwfKJPjmZ8MmTQsz7eP6qs07sKSMaCQ5eeDmAoKRcySM0iIMdgckGpDtYuZcgoGCuHxsGCOeVOjFsme+gPm7teHFRiH0pg0caNjLnTZer5UQBLGNLGSU4yTEgHjVmgZETEyh0fTAkBqiEfondGhCaoNUIrba5KFmC1tRDWyMsn8hr2H4Xyhmqi+OCqtc0L4=
