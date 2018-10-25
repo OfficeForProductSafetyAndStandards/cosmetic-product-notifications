@@ -1,6 +1,4 @@
-class Investigations::ReportController < ApplicationController
-  include InvestigationFlowHelper
-  include Wicked::Wizard
+class Investigations::QuestionController < Investigations::FlowController
   steps :type, :details, :confirmation
 
   def update

@@ -1,4 +1,5 @@
-module InvestigationFlowHelper
+class Investigations::FlowController < ApplicationController
+  include Wicked::Wizard
   # Commonises report_controller and question_controller
   # xxx in paths can be 'report' or 'question'
 
@@ -29,7 +30,7 @@ module InvestigationFlowHelper
     load_reporter
   end
 
-private
+  private
 
   def load_reporter
     data_from_the_past = session[:reporter] || {}
