@@ -39,7 +39,7 @@ private
   end
 
   def reporter_params
-    return {} if !params[:reporter].present?
+    return {} if params[:reporter].blank?
 
     if params[:reporter][:reporter_type] == 'Other'
       params[:reporter][:reporter_type] = params[:reporter][:other_reporter]
@@ -55,7 +55,12 @@ private
   end
 
   def load_investigation
-    # TODO: add loading from params if we use the same flow to edit its details
+    # default_investigation can be provided by the class using this helper
+    # If it's not, then the one below is used
     @investigation = Investigation.find_by(id: session[:investigation_id]) || default_investigation
+  end
+
+  def default_investigation
+    Investigation.new
   end
 end

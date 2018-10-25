@@ -12,10 +12,4 @@ class Investigations::ReportController < ApplicationController
       redirect_to next_wizard_path
     end
   end
-
-private
-
-  def default_investigation
-    Investigation.new(is_case: true)
-  end
 end

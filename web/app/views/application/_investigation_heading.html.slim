@@ -2,12 +2,10 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       p.govuk-caption-xl
-        = investigation.is_case ? 'Case: ' : ((investigation.question_type || '') + ' Question: ')
-        = investigation.id
-      - if investigation.title.present?
-          = investigation.title
-      - else
-          = investigation.is_case ? 'Untitled case' : 'Untitled question'
+        = investigation.question_type && !investigation.is_case ? investigation.question_type + ' ' : ''
+        = case_question_upper_case_text(investigation) + ': '
+        = get_pretty_id(investigation.id)
+      = investigation.title.presence || 'Untitled ' + case_question_lower_case_text(investigation)
       p.govuk-caption-m
         = investigation.source.created_by
   .govuk-grid-column-one-third
