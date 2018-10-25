@@ -1,5 +1,4 @@
 module DateHelper
-
   def set_keys(date_key)
     # TODO: remove if we enforce convention of storing all data inputs as 'date'
     @date_key = date_key

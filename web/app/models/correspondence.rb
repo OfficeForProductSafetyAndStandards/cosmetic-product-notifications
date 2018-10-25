@@ -11,4 +11,9 @@ class Correspondence < ApplicationRecord
     set_keys(:correspondence_date)
     helper_after_initialize
   end
+
+  enum contact_method: {
+    email: "Email",
+    phone: "Phone call"
+  }, _suffix: true
 end

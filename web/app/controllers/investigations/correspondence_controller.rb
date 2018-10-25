@@ -1,6 +1,6 @@
 class Investigations::CorrespondenceController < ApplicationController
   include Wicked::Wizard
-  steps :surface, :content, :confirmation
+  steps :general_info, :content, :confirmation
 
   def new
     clear_session
@@ -29,7 +29,7 @@ class Investigations::CorrespondenceController < ApplicationController
     end
   end
 
-  private
+private
 
   def correspondence_params
     return {} if params[:correspondence].blank?
@@ -53,34 +53,37 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def load_correspondence
-    data_from_previous_steps = session[:correspondence] || values_from_flow
+    data_from_previous_steps = session[:correspondence] || suggested_values
     session[:correspondence] = data_from_previous_steps.merge(correspondence_params || {})
     @correspondence = Correspondence.new(session[:correspondence])
   end
 
-  def values_from_flow
+  def suggested_values
     values = {
       day: Time.zone.today.day,
       month: Time.zone.today.month,
       year: Time.zone.today.year
     }
 
-    @reporter = @investigation.reporter
-    values = values.merge(
-      correspondent_name: @reporter.name,
-      contact_method: get_contact_method,
-      phone_number: @reporter.phone_number,
-      email_address: @reporter.email_address
-    ) if @reporter
+    reporter = @investigation.reporter
+    if reporter
+      values = values.merge(
+        correspondent_name: reporter.name,
+        contact_method: get_contact_method,
+        phone_number: reporter.phone_number,
+        email_address: reporter.email_address
+      )
+    end
 
     values
   end
 
   def get_contact_method
-    if @reporter.email_address.present?
-      "Email"
-    elsif @reporter.phone_number.present?
-      "Phone call"
+    reporter = @investigation.reporter
+    if reporter.email_address.present?
+      Correspondence.contact_methods[:email]
+    elsif reporter.phone_number.present?
+      Correspondence.contact_methods[:phone]
     end
   end
 

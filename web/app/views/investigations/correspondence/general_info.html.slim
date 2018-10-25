@@ -51,7 +51,7 @@ main#main-content.govuk-main-wrapper role="main"
           .govuk-form-group class=("govuk-form-group--error" if @correspondence.errors[:correspondent_type].any?)
             .govuk-radios.govuk-radios--conditional data-module="radios"
               .govuk-radios__item
-                = form.radio_button :contact_method, "Phone call", class: "govuk-radios__input", \
+                = form.radio_button :contact_method, "phone", class: "govuk-radios__input", \
                                       "data-aria-controls": "conditional-contact-phone"
                 = form.label :contact_method, "Phone call", class: "govuk-label govuk-radios__label"
               #conditional-contact-phone.govuk-radios__conditional.govuk-radios__conditional--hidden
@@ -63,7 +63,7 @@ main#main-content.govuk-main-wrapper role="main"
                                 "aria-describedby": "other-correspondent-hint"
 
               .govuk-radios__item
-                = form.radio_button :contact_method, "Email", class: "govuk-radios__input", \
+                = form.radio_button :contact_method, "email", class: "govuk-radios__input", \
                                                   "data-aria-controls": "conditional-contact-email"
                 = form.label :contact_method, "Email", class: "govuk-label govuk-radios__label"
               #conditional-contact-email.govuk-radios__conditional.govuk-radios__conditional--hidden
