@@ -28,7 +28,7 @@
           span.govuk-caption-m
             | Risk Level
           - if @investigation.hazard.risk_level?
-            = @investigation.hazard.risk_level.humanize.capitalize
+            = @investigation.hazard.risk_level.titleize
         = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
   - else
       .govuk-grid-row[class="govuk-!-padding-bottom-6"]
