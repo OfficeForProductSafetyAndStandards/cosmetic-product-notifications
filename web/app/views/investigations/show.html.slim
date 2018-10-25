@@ -14,7 +14,15 @@
 /   a style="margin-left: 20px" href="" View assessment
 / TODO: MSPSDS-522 / MSPSDS-528 Merge this into the hazard prompt
 - if @investigation.incidents.empty?
-  p = link_to "Record an incident", new_investigation_incident_path(@investigation), class: "no-print"
+  .govuk-grid-row.mspsds-product-panel.mspsds-product-panel__empty
+    .govuk-grid-column-full
+      h2.govuk-heading-l What's the nature of the hazard?
+      p.govuk-body
+        | Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
+      p.govuk-body
+        a.govuk-link.mspsds-block-link href="" Add hazard data
+        = link_to "Record an incident", new_investigation_incident_path(@investigation),
+                class: "govuk-link mspsds-block-link no-print"
 - if @investigation.investigation_products.empty?
   h2.govuk-heading-l
     | There are no products attached to this case
