@@ -1,7 +1,0 @@
-- content_for :page_title, "Edit case - Market Surveillance & Product Safety"
-- content_for :after_header do
-  = link_to "Back to case", @investigation, class: "govuk-back-link"
-= render "investigation_heading", investigation: @investigation
-h2.govuk-heading-l
-  | Hazard and risk information
-= render "editform", investigation: @investigation

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :hazards
   concern :document_attachable do
     resources :documents
   end
@@ -41,14 +40,10 @@ Rails.application.routes.draw do
         post :companies_house
       end
     end
-    resources :hazards, controller: "investigations/hazards" do
+    resources :hazards, controller: "investigations/hazards", only: %i[new create show update] do
       collection do
         get :risk_level
         post :update_risk_level
-      end
-      collection do
-        get :edit
-        post :update_hazard
       end
     end
 

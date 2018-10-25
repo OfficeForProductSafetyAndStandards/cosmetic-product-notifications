@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show edit update destroy assign update_assignee status]
+  before_action :set_investigation, only: %i[show assign update_assignee status confirmation]
 
   # GET /investigations
   # GET /investigations.json
@@ -15,6 +15,7 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1
   # GET /investigations/1.json
   def show
+    p @investigation.hazard
     respond_to do |format|
       format.html
       format.pdf do
@@ -27,9 +28,6 @@ class InvestigationsController < ApplicationController
   def new
     @investigation = Investigation.new
   end
-
-  # GET /investigations/1/edit
-  def edit; end
 
   # GET /investigations/1/status
   def status; end
@@ -64,34 +62,7 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /investigations/1
-  # PATCH/PUT /investigations/1.json
-  def update
-    respond_to do |format|
-      if @investigation.update(investigation_params)
-        format.html { redirect_to @investigation, notice: "Investigation was successfully updated." }
-        format.json { render :show, status: :ok, location: @investigation }
-      else
-        format.html { render :edit }
-        format.json { render json: @investigation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /investigations/1
-  # DELETE /investigations/1.json
-  def destroy
-    authorize @investigation
-    @investigation.destroy
-    respond_to do |format|
-      format.html { redirect_to investigations_url, notice: "Investigation was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
-
-  def confirmation
-    set_investigation
-  end
+  def confirmation; end
 
 private
 

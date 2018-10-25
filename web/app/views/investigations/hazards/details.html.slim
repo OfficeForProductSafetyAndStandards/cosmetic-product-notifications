@@ -3,8 +3,7 @@
   = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
 h1.govuk-heading-xl
   span.govuk-caption-xl
-    ' Case:
-    = @investigation.id
+    = "Case: #{@investigation.id}"
   | Add hazard
 = form_with(model: @hazard, local: true, url: wizard_path, method: :put) do |form|
   fieldset.govuk-fieldset
@@ -27,7 +26,6 @@ h1.govuk-heading-xl
     .govuk-form-group
       h3.govuk-label
         | Can you set a risk level?
-        p
         .govuk-radios.govuk-radios--conditional data-module="radios"
           .govuk-radios__item
             input#can-you-set-risk-level-yes.govuk-radios__input[
@@ -40,7 +38,6 @@ h1.govuk-heading-xl
               label.govuk-label for="yes"
                   h4.govuk-label
                     | Risk level
-                    p
                     .govuk-radios
                     - Hazard.risk_levels.drop(1).each do |(level, _)|
                       .govuk-radios__item

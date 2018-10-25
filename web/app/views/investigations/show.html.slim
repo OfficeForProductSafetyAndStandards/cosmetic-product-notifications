@@ -6,7 +6,7 @@
 
 = render "investigation_heading", investigation: @investigation
 .govuk-body
-  - if @investigation.hazard&.hazard_type? || @investigation.hazard&.risk_level?
+  - if @investigation.hazard
     .govuk-grid-row[class="govuk-!-padding-bottom-6"]
       .govuk-grid-column-one-third
         h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
@@ -25,23 +25,25 @@
           - if @investigation.hazard.risk_level?
             = @investigation.hazard.risk_level.titleize
         = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
+    p
+      = @investigation.hazard&.description
+    p
+      = link_to "Edit hazard details", new_investigation_hazard_path(@investigation),
+                class: "govuk-link mspsds-block-link no-print"
+      - if @investigation.incidents.empty?
+        = link_to "Record an incident", new_investigation_incident_path(@investigation),
+                class: "govuk-link mspsds-block-link no-print"
   - else
     h2.govuk-heading-l
       | What's the nature of the hazard?
-    p.govuk-body
+    p
       | Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
-
-  p
-    = @investigation.hazard&.description
-  - if !@investigation.hazard
-    = link_to "Add hazard details", new_investigation_hazard_path(@investigation),
-              class: "govuk-link mspsds-block-link no-print"
-  - else
-    = link_to "Edit hazard details", new_investigation_hazard_path(@investigation),
-              class: "govuk-link mspsds-block-link no-print"
-  - if @investigation.incidents.empty?
-      = link_to "Record an incident", new_investigation_incident_path(@investigation),
-              class: "govuk-link mspsds-block-link no-print"
+    p
+      = link_to "Add hazard details", new_investigation_hazard_path(@investigation),
+                class: "govuk-link mspsds-block-link no-print"
+      - if @investigation.incidents.empty?
+        = link_to "Record an incident", new_investigation_incident_path(@investigation),
+                  class: "govuk-link mspsds-block-link no-print"
 
 / TODO: MSPSDS-532
 / These exist on the design but don't lead any where yet. Add with links, or delete if changed
