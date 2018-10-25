@@ -121,7 +121,9 @@ ActiveRecord::Schema.define(version: 2018_10_23_124704) do
     t.uuid "assignee_id"
     t.datetime "created_at", null: false
     t.text "description"
+    t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
+    t.string "question_type"
     t.integer "risk_level"
     t.string "risk_overview"
     t.integer "sensitivity"

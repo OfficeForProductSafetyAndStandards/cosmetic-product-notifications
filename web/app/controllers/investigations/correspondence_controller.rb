@@ -36,11 +36,8 @@ class Investigations::CorrespondenceController < ApplicationController
 
     handle_type_params
     params.require(:correspondence).permit(
-      :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address,
-      :overview, :details,
-      :day,
-      :month,
-      :year
+      :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
+      :overview, :details
     )
   end
 
@@ -56,11 +53,8 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def load_correspondence
-    data_from_database = values_from_flow || {}
-    data_from_previous_steps = data_from_database.merge(session[:correspondence] || {})
-    data_after_last_step = data_from_previous_steps.merge(correspondence_params || {})
-    params[:correspondence] = data_after_last_step
-    session[:correspondence] = correspondence_params
+    data_from_previous_steps = session[:correspondence] || values_from_flow
+    session[:correspondence] = data_from_previous_steps.merge(correspondence_params || {})
     @correspondence = Correspondence.new(session[:correspondence])
   end
 
@@ -72,14 +66,13 @@ class Investigations::CorrespondenceController < ApplicationController
     }
 
     @reporter = @investigation.reporter
-    if @reporter
-      values = values.merge(
-        correspondent_name: @reporter.name,
-        contact_method: get_contact_method,
-        phone_number: @reporter.phone_number,
-        email_address: @reporter.email_address
-      )
-    end
+    values = values.merge(
+      correspondent_name: @reporter.name,
+      contact_method: get_contact_method,
+      phone_number: @reporter.phone_number,
+      email_address: @reporter.email_address
+    ) if @reporter
+
     values
   end
 
