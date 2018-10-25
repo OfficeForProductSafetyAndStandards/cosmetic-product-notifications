@@ -15,7 +15,7 @@ class Investigations::ReportController < ApplicationController
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
     @investigation.save
-    session[:id] = @investigation.id
+    session[:investigation_id] = @investigation.id
   end
 
   # GET /investigations/report
@@ -23,6 +23,7 @@ class Investigations::ReportController < ApplicationController
   def show
     session[:reporter] = {} if step == steps.first
     @reporter = Reporter.new(session[:reporter])
+    @investigation = Investigation.find_by(id: session[:investigation_id]) if session[:investigation_id].present?
     render_wizard
   end
 
