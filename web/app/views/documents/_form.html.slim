@@ -1,13 +1,5 @@
 = form_with model: document, scope: :document, url: associated_document_path(@parent, document), local: true do |form|
-  - if document.errors.any?
-    #error_explanation
-      h2.govuk-heading-l
-        = pluralize(document.errors.count, "error")
-        | prohibited this document from being saved:
-      ul.govuk-list
-        - document.errors.full_messages.each do |message|
-          li
-            = message
+  = render "form_validation_display", validated_object: document
   .govuk-form-group
     = form.label :title, "Document title", class: "govuk-label"
     = form.text_field :title, value: document.metadata["title"], class: "govuk-input"

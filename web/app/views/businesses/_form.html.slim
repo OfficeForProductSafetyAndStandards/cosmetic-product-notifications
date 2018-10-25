@@ -1,12 +1,4 @@
-- if business.errors.any?
-  #error_explanation
-    h2.govuk-heading-l.govuk-error-message
-      = pluralize(business.errors.count, "error ")
-      | prohibited this business from being saved:
-    ul.govuk-list.govuk-error-message
-      - business.errors.full_messages.each do |message|
-        li
-          = message
+= render "form_validation_display", validated_object: business
 - if business.from_companies_house?
   p
     | Some data is set by companies house and is therefore non-editable
