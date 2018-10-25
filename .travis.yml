@@ -25,29 +25,18 @@ jobs:
     before_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm start_dependencies
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://elasticsearch:9200/_cat/health?h=st)" != "200" ]]; do sleep 5; done'
     script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rake
       db:create db:schema:load test
     after_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
-  - name: Rubocop
+  - name: Static Analysis
     install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/rubocop
-  - name: Slim Lint
-    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/slim-lint app/views
-  - name: ESLint
-    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn
-      eslint app/assets/javascripts
-  - name: SASS Lint
-    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn
-      sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
-  - name: Brakeman
-    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/brakeman
-      --no-pager
+    script: 
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/rubocop
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/slim-lint app/views
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn eslint app/assets/javascripts
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/brakeman --no-pager
   - stage: Deploy to int
     name: Deploy web
     if: branch = master AND type != pull_request
