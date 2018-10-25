@@ -4,7 +4,7 @@
       p.govuk-caption-xl
         = investigation.question_type && !investigation.is_case ? investigation.question_type + ' ' : ''
         = case_question_upper_case_text(investigation) + ': '
-        = get_pretty_id(investigation.id)
+        = investigation.pretty_id
       = investigation.title.presence || 'Untitled ' + case_question_lower_case_text(investigation)
       p.govuk-caption-m
         = investigation.source.created_by

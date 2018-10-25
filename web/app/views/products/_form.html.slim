@@ -25,7 +25,7 @@
   = form.select :country_of_origin, countries, { include_blank: "Unknown" }, \
         class: "govuk-select js-product-country-of-origin", id: "location-autocomplete"
 .govuk-form-group
-  fieldset.govuk-fieldset[role="group"]
+  fieldset.govuk-fieldset[role="group", class="govuk-body"]
     = form.label :date_placed_on_market, class: "form-label"
     .govuk-date-input
       .govuk-date-input__item
