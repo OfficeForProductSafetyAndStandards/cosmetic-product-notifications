@@ -1,3 +1,3 @@
 class AuditActivity < Activity
-  validates :description, presence: true
+  # validates :description, presence: true
 end
