@@ -38,7 +38,8 @@ class User < ActiveHash::Base
 
   def self.get_assignees_select_options
     select_options = { '': nil }
-    self.all.each do |u|
+
+    self.all.each do |u| # rubocop:disable Rails/FindEach
       display_string = u.get_assignee_display_string
       select_options[display_string] = u.id
     end
