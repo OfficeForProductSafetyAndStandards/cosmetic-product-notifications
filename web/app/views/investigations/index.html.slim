@@ -5,9 +5,9 @@
 - if @current_user
   .govuk-grid-row[class="govuk-!-padding-bottom-4"]
     .govuk-grid-column-one-third
-      .govuk-grid-column-one-quarter.assigned-number[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
+      .govuk-grid-column-one-quarter.assigned-number[class="govuk-body govuk-!-font-size-36 govuk-!-font-weight-bold"]
         = @current_user.investigations.count
-      .govuk-grid-column-three-quarters[class="govuk-!-font-size-19"]
+      .govuk-grid-column-three-quarters[class="govuk-body govuk-!-font-size-24"]
         = "Case".pluralize(@current_user.investigations.count)
         |  assigned to you
 

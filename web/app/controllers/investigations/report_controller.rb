@@ -1,6 +1,6 @@
 class Investigations::ReportController < ApplicationController
   include Wicked::Wizard
-  steps :type, :details
+  steps :type, :details, :confirmation
 
   # GET /investigations/report/new
   def new
@@ -15,7 +15,7 @@ class Investigations::ReportController < ApplicationController
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
     @investigation.save
-    redirect_to investigation_url(@investigation)
+    session[:investigation_id] = @investigation.id
   end
 
   # GET /investigations/report
@@ -23,13 +23,18 @@ class Investigations::ReportController < ApplicationController
   def show
     session[:reporter] = {} if step == steps.first
     @reporter = Reporter.new(session[:reporter])
+    @investigation = Investigation.find_by(id: session[:investigation_id]) if session[:investigation_id].present?
     render_wizard
   end
 
   def update
     update_partial_reporter
-    redirect_to next_wizard_path if step != steps.last
-    create if step == steps.last
+    if !@reporter.valid?(step)
+      render step
+    else
+      create if next_step? :confirmation
+      redirect_to next_wizard_path
+    end
   end
 
 private

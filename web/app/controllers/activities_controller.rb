@@ -10,7 +10,7 @@ class ActivitiesController < ApplicationController
 
   # GET /activities/new
   def new
-    @activity = @investigation.activities.build
+    @activity = CommentActivity.new
   end
 
   # POST /activities
@@ -33,7 +33,8 @@ class ActivitiesController < ApplicationController
 private
 
   def create_activity
-    @activity = @investigation.activities.create(activity_params)
+    @activity = CommentActivity.new(activity_params)
+    @investigation.activities << @activity
     @activity.source = UserSource.new(user: current_user)
   end
 
@@ -43,6 +44,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def activity_params
-    params.require(:activity).permit(:investigation_id, :activity_type, :notes)
+    params.require(:activity).permit(:description)
   end
 end

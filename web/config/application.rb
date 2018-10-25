@@ -18,8 +18,12 @@ module App
 
     # Rails cleverly surrounds fields with validation errors with a div that changes how they look
     # Sadly it is not Digital Service Standard compliant, so we prevent it here
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+    config.action_view.field_error_proc = Proc.new { |html_tag, _|
       html_tag
     }
+    config.action_view.form_with_generates_ids = true
+
+    # This changes Rails timezone, but keeps ActiveRecord in UTC
+    config.time_zone = "Europe/London"
   end
 end

@@ -5,9 +5,9 @@ class Product < ApplicationRecord
 
   index_name [Rails.env, "products"].join("_")
 
+  validates :name, presence: true
   default_scope { order(created_at: :desc) }
 
-  validates :name, presence: true
   has_many_attached :documents
   has_many_attached :images
 
@@ -15,8 +15,6 @@ class Product < ApplicationRecord
   has_many :investigations, through: :investigation_products
 
   has_one :source, as: :sourceable, dependent: :destroy
-
-  accepts_nested_attributes_for :source
 
   has_paper_trail
 
