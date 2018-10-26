@@ -1,5 +1,5 @@
 class Correspondence < ApplicationRecord
-  include DateHelper
+  include DateConcern
   belongs_to :investigation, required: false
 
   attribute :day, :integer
@@ -7,9 +7,8 @@ class Correspondence < ApplicationRecord
   attribute :year, :integer
   validate :date_from_components
 
-  after_initialize do
-    set_date_key(:correspondence_date)
-    helper_after_initialize
+  def get_date_key
+    :correspondence_date
   end
 
   enum contact_method: {
