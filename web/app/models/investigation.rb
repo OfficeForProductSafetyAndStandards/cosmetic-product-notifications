@@ -16,10 +16,10 @@ class Investigation < ApplicationRecord
   belongs_to_active_hash :assignee, class_name: "User", optional: true
 
   has_many :investigation_products, dependent: :destroy
-  has_many :products, through: :investigation_products, after_add: :create_audit_activity
+  has_many :products, through: :investigation_products, after_add: :create_audit_activity_for_product
 
   has_many :investigation_businesses, dependent: :destroy
-  has_many :businesses, through: :investigation_businesses
+  has_many :businesses, through: :investigation_businesses, after_add: :create_audit_activity_for_business
 
   has_many :activities, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :investigation
 
@@ -48,12 +48,22 @@ class Investigation < ApplicationRecord
     id_string.insert(4, "-")
   end
 
-  def create_audit_activity product
+  def create_audit_activity_for_product product
     AuditActivity.create(
         title: product.name,
         subtitle_slug: "Product added",
         product: product,
         description: "Product desc",
+        source: UserSource.new(user: current_user),
+        investigation: self)
+  end
+
+  def create_audit_activity_for_business business
+    AuditActivity.create(
+        title: business.company_name,
+        subtitle_slug: "Business added",
+        description: "Role: **Distributor**",
+        business: business,
         source: UserSource.new(user: current_user),
         investigation: self)
   end

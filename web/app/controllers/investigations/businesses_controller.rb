@@ -24,7 +24,6 @@ class Investigations::BusinessesController < ApplicationController
   def add
     business = Business.find(params[:business_id])
     @investigation.businesses << business
-    create_audit_activity_for_adding_business business
     redirect_to @investigation, notice: "Business was successfully added."
   end
 
@@ -32,7 +31,6 @@ class Investigations::BusinessesController < ApplicationController
   def companies_house
     @business = CompaniesHouseClient.instance.create_business_from_companies_house_number params[:company_number]
     @investigation.businesses << @business
-    create_audit_activity_for_adding_business @business
     redirect_to @investigation, notice: "Business was successfully added."
   end
 
@@ -40,7 +38,6 @@ class Investigations::BusinessesController < ApplicationController
   def create
     respond_to do |format|
       if @investigation.businesses << @business
-        create_audit_activity_for_adding_business @business
         format.html { redirect_to @investigation, notice: "Business was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
