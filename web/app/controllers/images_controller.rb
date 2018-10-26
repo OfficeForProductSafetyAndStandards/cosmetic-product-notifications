@@ -32,6 +32,7 @@ class ImagesController < ApplicationController
   def create
     respond_to do |format|
       if @image
+        create_audit_activity_for_add_image_to_investigation if @parent.class == Investigation
         format.html { redirect_to edit_associated_image_path(@parent, @image) }
         format.json { render :show, status: :created, location: @image }
       else
@@ -46,6 +47,7 @@ class ImagesController < ApplicationController
   def update
     respond_to do |format|
       if @image.blob.save
+        create_audit_activity_for_add_image_to_investigation if @parent.class == Investigation
         format.html { redirect_to action: "index", notice: "Image was successfully saved." }
         format.json { render :show, status: :ok, location: @image }
       else
@@ -89,5 +91,13 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def image_params
     params.require(:image).permit(:file, :title, :description)
+  end
+
+  def create_audit_activity_for_add_image_to_investigation
+    activity = AddImageAuditActivity.create(
+        description: @image.metadata[:description],
+        source: UserSource.new(user: current_user),
+        investigation: @parent)
+    activity.image.attach @image.blob
   end
 end
