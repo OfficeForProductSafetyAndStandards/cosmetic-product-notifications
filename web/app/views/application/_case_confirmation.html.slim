@@ -21,7 +21,9 @@ main#main-content.govuk-main-wrapper role="main"
          add them now."
       p.govuk-body
         // TODO MSPSDS-516 implement add reporter correspondance functionality
-        a.govuk-link.mspsds-block-link = "Add #{report_question_text(investigation)}er correspondance"
+        = link_to("Add #{report_question_text(investigation)}er correspondance",
+                  new_investigation_correspondence_url(@investigation),
+                  class: "govuk-link mspsds-block-link")
       hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
   .govuk-grid-row.mspsds-panelq
     .govuk-grid-column-two-thirds
@@ -30,7 +32,6 @@ main#main-content.govuk-main-wrapper role="main"
       p.govuk-body
         | or, if correspondance isn't available right now, don't forget to add it later.
       p.govuk-body
-        = link_to(\
-          "View the #{case_question_text(investigation)} you've just created",\
-          investigation_path(investigation),\
-          class: "govuk-link mspsds-block-link ")
+        = link_to("View the #{case_question_text(investigation)} you've just created",
+                investigation_path(investigation),
+                class: "govuk-link mspsds-block-link ")

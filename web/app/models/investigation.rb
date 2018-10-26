@@ -26,6 +26,8 @@ class Investigation < ApplicationRecord
 
   has_many :incidents, dependent: :destroy
 
+  has_many :correspondences, dependent: :destroy
+
   has_many_attached :documents
   has_many_attached :images
 
