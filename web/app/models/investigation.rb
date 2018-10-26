@@ -1,6 +1,7 @@
 class Investigation < ApplicationRecord
   include Searchable
   include Documentable
+  include UserService
 
   index_name [Rails.env, "investigations"].join("_")
 
@@ -48,14 +49,12 @@ class Investigation < ApplicationRecord
   end
 
   def create_audit_activity product
-    user_info = KeycloakClient.instance.user_info
-    user = User.find_or_create(user_info)
     AuditActivity.create(
         title: product.name,
         subtitle_slug: "Product added",
         product: product,
         description: "Product desc",
-        source: UserSource.new(user: user),
+        source: UserSource.new(user: current_user),
         investigation: self)
   end
 end
