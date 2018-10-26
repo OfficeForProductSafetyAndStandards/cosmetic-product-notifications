@@ -51,19 +51,13 @@ class Investigation < ApplicationRecord
   end
 
   def create_audit_activity_for_case
-    AuditActivity.create(
-        title: "Case created",
-        subtitle_slug: "",
-        product: nil,
-        description: nil,
+    AddCaseAuditActivity.create(
         source: UserSource.new(user: current_user),
         investigation: self)
   end
 
   def create_audit_activity_for_product product
-    AuditActivity.create(
-        title: product.name,
-        subtitle_slug: "Product added",
+    AddProductAuditActivity.create(
         product: product,
         description: "Product desc",
         source: UserSource.new(user: current_user),
@@ -71,9 +65,7 @@ class Investigation < ApplicationRecord
   end
 
   def create_audit_activity_for_business business
-    AuditActivity.create(
-        title: business.company_name,
-        subtitle_slug: "Business added",
+    AddBusinessAuditActivity.create(
         description: "Role: **Distributor**",
         business: business,
         source: UserSource.new(user: current_user),
