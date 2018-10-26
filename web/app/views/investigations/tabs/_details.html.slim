@@ -58,9 +58,9 @@ p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-
             tr.govuk-table__row
               th.govuk-table__header scope="row" Contact method
               - if correspondence.contact_method == 'Email'
-                td.govuk-table__cell = correspondence.contact_method + ': ' + correspondence.email_address
+                td.govuk-table__cell = "#{correspondence.contact_method}: #{correspondence.email_address}"
               - if correspondence.contact_method == 'Phone call'
-                td.govuk-table__cell = correspondence.contact_method + ': ' + correspondence.phone_number
+                td.govuk-table__cell = "#{correspondence.contact_method}: #{correspondence.phone_number}"
             tr.govuk-table__row
               th.govuk-table__header scope="row" Correspondent name
               td.govuk-table__cell = correspondence.correspondence_date

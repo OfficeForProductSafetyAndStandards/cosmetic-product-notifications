@@ -1,5 +1,14 @@
 module DateHelper
-  def set_keys(date_key)
+
+  # extend ActiveSupport::Concern
+  #
+  # included do
+  #   after_initialize do
+  #     # contents from helper_after_initialize
+  #   end
+  # end
+
+  def set_date_key(date_key)
     # TODO: remove if we enforce convention of storing all data inputs as 'date'
     @date_key = date_key
   end

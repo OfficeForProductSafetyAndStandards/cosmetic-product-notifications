@@ -8,7 +8,7 @@ class Correspondence < ApplicationRecord
   validate :date_from_components
 
   after_initialize do
-    set_keys(:correspondence_date)
+    set_date_key(:correspondence_date)
     helper_after_initialize
   end
 

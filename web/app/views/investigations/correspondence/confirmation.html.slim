@@ -29,4 +29,4 @@ main#main-content.govuk-main-wrapper role="main"
               td.govuk-table__cell
         button.govuk-button type="submit"
           | Continue
-        a.govuk-link.mspsds-block-link href=wizard_path(:general_info)  Edit details
+        = link_to("Edit details", wizard_path(:general_info), class: "govuk-link mspsds-block-link ")
