@@ -20,13 +20,6 @@ class Investigations::ProductsController < ApplicationController
   def add
     product = Product.find(params[:product_id])
     @investigation.products << product
-    AuditActivity.create(
-        title: product.name,
-        subtitle_slug: "Product added",
-        product: product,
-        description: "Product desc",
-        source: UserSource.new(user: current_user),
-        investigation: @investigation)
     redirect_to @investigation, notice: "Product was successfully added."
   end
 
@@ -41,13 +34,6 @@ class Investigations::ProductsController < ApplicationController
   def create
     respond_to do |format|
       if @investigation.products << @product
-        AuditActivity.create(
-            title: @product.name,
-            subtitle_slug: "Product added",
-            product: @product,
-            description: "Product desc",
-            source: UserSource.new(user: current_user),
-            investigation: @investigation)
         format.html { redirect_to @investigation, notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else

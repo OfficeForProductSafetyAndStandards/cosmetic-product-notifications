@@ -15,7 +15,7 @@ class Investigation < ApplicationRecord
   belongs_to_active_hash :assignee, class_name: "User", optional: true
 
   has_many :investigation_products, dependent: :destroy
-  has_many :products, through: :investigation_products
+  has_many :products, through: :investigation_products, after_add: :create_audit_activity
 
   has_many :investigation_businesses, dependent: :destroy
   has_many :businesses, through: :investigation_businesses
@@ -45,6 +45,18 @@ class Investigation < ApplicationRecord
   def pretty_id
     id_string = id.to_s.rjust(8, '0')
     id_string.insert(4, "-")
+  end
+
+  def create_audit_activity product
+    user_info = KeycloakClient.instance.user_info
+    user = User.find_or_create(user_info)
+    AuditActivity.create(
+        title: product.name,
+        subtitle_slug: "Product added",
+        product: product,
+        description: "Product desc",
+        source: UserSource.new(user: user),
+        investigation: self)
   end
 end
 
