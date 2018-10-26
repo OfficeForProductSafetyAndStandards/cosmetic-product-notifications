@@ -1,6 +1,7 @@
 class Investigations::CorrespondenceController < ApplicationController
   include Wicked::Wizard
   steps :general_info, :content, :confirmation
+  before_action :load_investigation_and_correspondence, only: %i[show update create]
 
   def new
     clear_session
@@ -8,20 +9,16 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def create
-    load_investigation_and_correspondence
     @investigation.correspondences << @correspondence
     @investigation.save
-    clear_session
     redirect_to investigation_path(@investigation)
   end
 
   def show
-    load_investigation_and_correspondence
     render_wizard
   end
 
   def update
-    load_investigation_and_correspondence
     if !@correspondence.valid?(step)
       render step
     else
