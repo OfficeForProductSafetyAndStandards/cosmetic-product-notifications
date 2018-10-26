@@ -185,5 +185,3 @@ build-iPhoneSimulator/
 apt.yml
 clamav/
 public/assets/.sprockets-manifest-qq.json
-
-config/secrets.yml

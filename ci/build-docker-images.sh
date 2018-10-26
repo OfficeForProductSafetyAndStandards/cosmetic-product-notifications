@@ -17,7 +17,7 @@ function docker_tag_exists {
 }
 
 echo "Logging into DockerHub"
-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
 CHANGED_COMPONENTS="$(./ci/get-changed-components.sh)"
 
@@ -28,13 +28,13 @@ for COMPONENT in "${COMPONENTS[@]}"; do
     elif docker_tag_exists $DOCKER_USERNAME/$COMPONENT $BRANCH; then
         echo "No changes for component $COMPONENT, pulling $BRANCH image"
         docker pull $DOCKER_USERNAME/$COMPONENT:$BRANCH
-        docker tag $DOCKER_USERNAME/$COMPONENT:$BRANCH $DOCKER_USERNAME/$COMPONENT:$TRAVIS_BUILD_NUMBER
+        docker tag $DOCKER_USERNAME/$COMPONENT:$BRANCH $DOCKER_USERNAME/$COMPONENT:$BUILD_ID
     else
         echo "No changes for component $COMPONENT, but $BRANCH image does not exist in repo"
         echo "Building component $COMPONENT"
         docker-compose -f docker-compose.yml -f docker-compose.ci.yml build $COMPONENT
     fi
 
-    echo "Pushing image for component $COMPONENT with tag $TRAVIS_BUILD_NUMBER"
-    docker push $DOCKER_USERNAME/$COMPONENT:$TRAVIS_BUILD_NUMBER
+    echo "Pushing image for component $COMPONENT with tag $BUILD_ID"
+    docker push $DOCKER_USERNAME/$COMPONENT:$BUILD_ID
 done

@@ -18,7 +18,7 @@ jobs:
     - mkdir -p ~/bundle-cache
     - mkdir -p ~/npm-cache
     install:
-    - BRANCH=${TRAVIS_BRANCH} ./ci/build-docker-images.sh
+    - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./ci/build-docker-images.sh
   - stage: Test
     name: Run Tests
     install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
@@ -32,6 +32,7 @@ jobs:
   - name: Static Analysis
     install: 
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps web echo 'Gems pre-installed'
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d web
     script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rubocop
@@ -46,42 +47,42 @@ jobs:
   - stage: Deploy to int
     name: Deploy web
     if: branch = master AND type != pull_request
-    script: SPACE=int COMPONENT=web ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=web ./ci/deploy-if-changed.sh
   - name: Deploy worker
     if: branch = master AND type != pull_request
-    script: SPACE=int COMPONENT=worker ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=worker ./ci/deploy-if-changed.sh
   - name: Deploy keycloak
     if: branch = master AND type != pull_request
-    script: SPACE=int COMPONENT=keycloak ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=keycloak ./ci/deploy-if-changed.sh
   - name: Deploy cosmetics
     if: branch = master AND type != pull_request
-    script: SPACE=int COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
   - stage: Deploy to staging
     name: Deploy web
     if: branch = staging AND type != pull_request
-    script: SPACE=staging COMPONENT=web ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=web ./ci/deploy-if-changed.sh
   - name: Deploy worker
     if: branch = staging AND type != pull_request
-    script: SPACE=staging COMPONENT=worker ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=worker ./ci/deploy-if-changed.sh
   - name: Deploy keycloak
     if: branch = staging AND type != pull_request
-    script: SPACE=staging COMPONENT=keycloak ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=keycloak ./ci/deploy-if-changed.sh
   - name: Deploy cosmetics
     if: branch = staging AND type != pull_request
-    script: SPACE=staging COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
   - stage: Deploy to production
     name: Deploy web
     if: branch = prod AND type != pull_request
-    script: SPACE=prod COMPONENT=web ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=web ./ci/deploy-if-changed.sh
   - name: Deploy worker
     if: branch = prod AND type != pull_request
-    script: SPACE=prod COMPONENT=worker ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=worker ./ci/deploy-if-changed.sh
   - name: Deploy keycloak
     if: branch = prod AND type != pull_request
-    script: SPACE=prod COMPONENT=keycloak ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=keycloak ./ci/deploy-if-changed.sh
   - name: Deploy cosmetics
     if: branch = prod AND type != pull_request
-    script: SPACE=prod COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
 env:
   global:
   - secure: F8eVV8PG7rO0LLOpVfPd0EB30EHhYtImiYpbqgRCgqJcSoOy1QpjVu1tLSVUQGaOmcJ8Lp8B5eW08v1Al3EUdsAZilPwaT8R5IKdPZ//du+xTUI6EnPAzvOqvs5VBdRrZIDX/gZH8lVHuaxXAdCC0/DXdyInalvK/tlHhViq/EhQj5sHfllnWT7RcuBJD2jlbXHrV2J5Ycq+sU9Wz8agRI3IT4QpAA4RYLBiIY1tsj8mokVZHa4h1XVKGziRXN/+FNf2N8v2MbO1Yjia6QmwhEOeaWxKxI56tG2CvXia1hNI7uqqNmAbjgpybBzCQwsMgCJZ0cL+0yfX8tYS4VDhmOgs3O4Npkj3IR9/6WY0wwiVYAR/GwT8TxNfczutmFwkMA9oHHZFWX0AlLpJTUUpmDadV08EhN9gknPNBCVuTBtpny0TK73vvaaBxc1PMiCU5082dbeocT447d0vaWfitJqAu4Mlq92Vw/6BVafQAx0/bmn5zKTkyNeVPRBq6sW+fwBhHYQdQLiJwlw3K4a08H3SCI7t2JO6jiqrT0VlYUj44ZAd3Xct2xl+RXb92GP2W5hkgnm1I+OmNS4TknTy4IlPlWo1116UeiSEz3R0bldW+jzCbkR+Tfge9NyYEISBXEdgr6NWGpTmuQil/SDCXwAqn71/+aPWDfpAzI2UMB8=
