@@ -19,8 +19,10 @@ function docker_tag_exists {
 echo "Logging into DockerHub"
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
+CHANGED_COMPONENTS="$(./ci/get-changed-components.sh)"
+
 for COMPONENT in "${COMPONENTS[@]}"; do
-    if [[ $(./ci/get-changed-components.sh) =~ ((^| )werwerwe($| )) ]]; then
+    if [[ $CHANGED_COMPONENTS =~ ((^| )$COMPONENT($| )) ]]; then
         echo "Building component $COMPONENT"
         docker-compose -f docker-compose.yml -f docker-compose.ci.yml build $COMPONENT
     elif docker_tag_exists $DOCKER_USERNAME/$COMPONENT $BRANCH; then
