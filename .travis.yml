@@ -30,16 +30,18 @@ jobs:
     after_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
   - name: Static Analysis
-    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
+    install: 
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
+      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d web
     script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/rubocop
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/slim-lint
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rubocop
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/slim-lint
       app/views
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn eslint
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn eslint
       app/assets/javascripts
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web yarn sass-lint
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn sass-lint
       -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run web bin/brakeman
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/brakeman
       --no-pager
   - stage: Deploy to int
     name: Deploy web
