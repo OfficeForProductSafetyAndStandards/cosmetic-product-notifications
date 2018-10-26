@@ -12,6 +12,17 @@
 / p
 /   a href="" Edit risk details
 /   a style="margin-left: 20px" href="" View assessment
+
+-if !@investigation.is_case
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      h2.govuk-heading-m
+        span.govuk-caption-m Asked by
+        = (@investigation.reporter&.name&.presence || 'Anonymous')
+    .govuk-grid-column-two-thirds
+      p.govuk-body
+        = @investigation.description.presence || 'No description was provided'
+
 / TODO: MSPSDS-522 / MSPSDS-528 Merge this into the hazard prompt
 - if @investigation.incidents.empty?
   .govuk-grid-row.mspsds-product-panel.mspsds-product-panel__empty
@@ -23,6 +34,7 @@
         a.govuk-link.mspsds-block-link href="" Add hazard data
         = link_to "Record an incident", new_investigation_incident_path(@investigation),
                 class: "govuk-link mspsds-block-link no-print"
+
 - if @investigation.investigation_products.empty?
   h2.govuk-heading-l
     | There are no products attached to this case

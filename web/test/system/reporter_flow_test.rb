@@ -31,7 +31,7 @@ class ReporterFlowTest < ApplicationSystemTestCase
     assert_no_text("prohibited this case from being saved")
   end
 
-  test "after submitting should go to confirmation page" do
+  test "last step should be confirmation" do
     select_type_and_continue
     fill_name_and_continue
     assert_text("Case created\nYour reference number")
