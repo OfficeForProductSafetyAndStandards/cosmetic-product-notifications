@@ -31,6 +31,8 @@ class Investigation < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :reporter, dependent: :destroy
 
+  after_create :create_audit_activity_for_case
+
   enum risk_level: %i[low medium serious severe], _suffix: true
 
   enum sensitivity: %i[low medium high], _suffix: true
@@ -46,6 +48,16 @@ class Investigation < ApplicationRecord
   def pretty_id
     id_string = id.to_s.rjust(8, '0')
     id_string.insert(4, "-")
+  end
+
+  def create_audit_activity_for_case
+    AuditActivity.create(
+        title: "Case created",
+        subtitle_slug: "",
+        product: nil,
+        description: nil,
+        source: UserSource.new(user: current_user),
+        investigation: self)
   end
 
   def create_audit_activity_for_product product

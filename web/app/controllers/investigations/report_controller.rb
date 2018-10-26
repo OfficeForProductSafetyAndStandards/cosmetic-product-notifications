@@ -14,16 +14,7 @@ class Investigations::ReportController < ApplicationController
     @investigation = Investigation.new
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
-    if @investigation.save
-      AuditActivity.create(
-          title: "Case created",
-          subtitle_slug: "",
-          product: nil,
-          description: nil,
-          source: UserSource.new(user: current_user),
-          investigation: @investigation
-      )
-    end
+    @investigation.save
     session[:investigation_id] = @investigation.id
   end
 
