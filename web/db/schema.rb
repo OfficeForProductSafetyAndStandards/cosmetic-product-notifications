@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2018_10_26_141531) do
     t.text "description"
     t.integer "investigation_id"
     t.bigint "product_id"
+    t.string "title"
     t.string "type", default: "CommentActivity"
     t.datetime "updated_at", null: false
     t.index ["business_id"], name: "index_activities_on_business_id"

@@ -47,7 +47,7 @@ class ImagesController < ApplicationController
   def update
     respond_to do |format|
       if @image.blob.save
-        create_audit_activity_for_add_image_to_investigation if @parent.class == Investigation
+        create_audit_activity_for_update_image_in_investigation if @parent.class == Investigation
         format.html { redirect_to action: "index", notice: "Image was successfully saved." }
         format.json { render :show, status: :ok, location: @image }
       else
@@ -84,6 +84,7 @@ private
   end
 
   def update_image
+    @previous_title = @image.metadata[:title]
     @image.blob.metadata.update(image_params)
     @image.blob.metadata["updated"] = Time.current
   end
@@ -94,10 +95,22 @@ private
   end
 
   def create_audit_activity_for_add_image_to_investigation
+    title = @image.metadata[:title] || "Untitled image"
     activity = AddImageAuditActivity.create(
         description: @image.metadata[:description],
         source: UserSource.new(user: current_user),
-        investigation: @parent)
+        investigation: @parent,
+        title: title)
+    activity.image.attach @image.blob
+  end
+
+  def create_audit_activity_for_update_image_in_investigation
+    title = "Updated: #{@image.metadata[:title] || "Untitled image"} (was: #{@previous_title || "Untitled image"})"
+    activity = UpdateImageAuditActivity.create(
+        description: @image.metadata[:description],
+        source: UserSource.new(user: current_user),
+        investigation: @parent,
+        title: title)
     activity.image.attach @image.blob
   end
 end

@@ -1,17 +1,27 @@
-- if activities.any?
-  .timeline
-    ul.govuk-list
-      - activities.each do |activity|
-        li
-          h3.govuk-heading-s
-            = activity.title
-          p.govuk-body-s.timeline-details
-            = build_subtitle(activity)
-          p
-            = markdown activity.description if activity.description
-            = link_to "View business details", business_url(activity.business_id) if activity.business_id
-            = link_to "View product details", product_url(activity.product_id) if activity.product_id
-      li
-- else
-  p
-    | No activities.
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - if activities.any?
+      .timeline
+        ul.govuk-list
+          - activities.each do |activity|
+            li
+              h3.govuk-heading-s
+                = activity.title
+              p.govuk-body-s.timeline-details
+                = build_subtitle(activity)
+              - if activity.type == "AddImageAuditActivity"
+                  .govuk-grid-row
+                    .govuk-grid-column-one-third
+                      = image_tag activity.image.variant(resize: "100x100"), alt: activity.image.metadata["title"]
+                    .govuk-grid-colun-two-thirds
+                      .govuk-body
+                        = markdown activity.description if activity.description
+              - else
+                p
+                  = markdown activity.description if activity.description
+                  = link_to "View business details", business_url(activity.business_id) if activity.business_id
+                  = link_to "View product details", product_url(activity.product_id) if activity.product_id
+          li
+    - else
+      p
+        | No activities.
