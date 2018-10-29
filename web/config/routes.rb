@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :correspondences, only: %i[show new create update], controller: "investigations/correspondence"
     resources :incidents, controller: "investigations/incidents", only: %i[new create show update]
   end
 

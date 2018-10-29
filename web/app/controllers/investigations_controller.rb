@@ -35,15 +35,22 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1/assign
   def assign
     redirect_to investigation_path(@investigation) if @investigation.is_closed
-    @assignee = @investigation.assignee
   end
 
   # POST /investigations/1/update_assignee
   def update_assignee
-    assignee = User.find_by(email: params[:email].downcase)
-    @investigation.assignee = assignee
-    save_and_respond "Assignee was successfully updated."
-    NotifyMailer.assigned_investigation(@investigation, assignee.email).deliver_later if assignee.present?
+    @investigation.assignee = User.find_by(id: params[:assignee_id])
+    respond_to do |format|
+      if @investigation.assignee && @investigation.save
+        format.html { redirect_to @investigation, notice: "Assignee was successfully updated." }
+        format.json { render :show, status: :ok, location: @investigation }
+        NotifyMailer.assigned_investigation(@investigation, @investigation.assignee.full_name, @investigation.assignee.email).deliver_later
+      else
+        @investigation.errors.add(:assignee, "must not be left blank")
+        format.html { render :assign }
+        format.json { render json: @investigation.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /investigations
