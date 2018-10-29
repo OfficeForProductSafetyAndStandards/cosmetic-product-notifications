@@ -9,13 +9,13 @@
                 = activity.title
               p.govuk-body-s.timeline-details
                 = build_subtitle(activity)
-              - if activity.type == "AddImageAuditActivity"
-                  .govuk-grid-row
-                    .govuk-grid-column-one-third
-                      = image_tag activity.image.variant(resize: "100x100"), alt: activity.image.metadata["title"]
-                    .govuk-grid-colun-two-thirds
-                      .govuk-body
-                        = markdown activity.description if activity.description
+              - if activity.attached_image?
+                .govuk-grid-row
+                  .govuk-grid-column-one-third
+                    = image_tag activity.image.variant(resize: "100x100"), alt: activity.image.metadata["title"]
+                  .govuk-grid-colun-two-thirds
+                    .govuk-body
+                      = markdown activity.description if activity.description
               - else
                 p
                   = markdown activity.description if activity.description

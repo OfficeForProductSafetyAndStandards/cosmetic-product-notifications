@@ -60,8 +60,9 @@ class ImagesController < ApplicationController
   # DELETE /images/1
   # DELETE /images/1.json
   def destroy
-    @image.purge_later
+    @image.delete #note this is a soft delete to preserve the image for case history
     respond_to do |format|
+      create_audit_activity_for_destroy_image_in_investigation if @parent.class == Investigation
       format.html { redirect_to action: "index", notice: "Image was successfully deleted." }
       format.json { head :no_content }
     end
@@ -84,7 +85,10 @@ private
   end
 
   def update_image
-    @previous_title = @image.metadata[:title]
+    @previous_data = {
+        title: @image.metadata[:title],
+        description: @image.metadata[:description]
+    }
     @image.blob.metadata.update(image_params)
     @image.blob.metadata["updated"] = Time.current
   end
@@ -105,12 +109,25 @@ private
   end
 
   def create_audit_activity_for_update_image_in_investigation
-    title = "Updated: #{@image.metadata[:title] || "Untitled image"} (was: #{@previous_title || "Untitled image"})"
+    if @image.metadata[:title] != @previous_title
+      title = "Updated: #{@image.metadata[:title] || "Untitled image"} (was: #{@previous_data[:title] || "Untitled image"})"
+    elsif @image.metadata[:description] != @previous_data[:description]
+      title = "Updated: Description for #{@image.metadata[:title]}"
+    end
     activity = UpdateImageAuditActivity.create(
         description: @image.metadata[:description],
         source: UserSource.new(user: current_user),
         investigation: @parent,
         title: title)
+    activity.image.attach @image.blob
+  end
+
+  def create_audit_activity_for_destroy_image_in_investigation
+    activity = DestroyImageAuditActivity.create(
+        description: @image.metadata[:description],
+        source: UserSource.new(user: current_user),
+        investigation: @parent,
+        title: "Deleted: #{@image.metadata[:title]}")
     activity.image.attach @image.blob
   end
 end
