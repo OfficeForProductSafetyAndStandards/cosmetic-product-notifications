@@ -4,7 +4,7 @@
 h1.govuk-heading-xl
   span.govuk-caption-xl
     = "Case: #{@investigation.id}"
-  | Add hazard
+  | Hazard information
 = form_with(model: @hazard, local: true, url: wizard_path, method: :put) do |form|
   fieldset.govuk-fieldset
     .govuk-form-group

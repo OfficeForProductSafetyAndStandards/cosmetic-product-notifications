@@ -1,9 +1,10 @@
 - content_for :page_title, "Add hazard details - Market Surveillance & Product Safety"
 - content_for :after_header do
   = link_to "Back to case", @investigation, class: "govuk-back-link"
-= render "investigation_heading", investigation: @investigation
-h2.govuk-heading-l
-  | Summary
+h1.govuk-heading-xl
+  span.govuk-caption-xl
+    = "Case: #{@investigation.id}"
+  | Confirm hazard details
 .govuk-grid-column
   table.govuk-table
     tbody.govuk-table__body

@@ -47,25 +47,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should update investigation" do
-    patch investigation_url(@investigation), params: {
-      investigation: {
-        title: @investigation.title,
-        description: @investigation.description,
-        is_closed: @investigation.is_closed,
-        source: @investigation.source,
-      }
-    }
-    assert_redirected_to investigation_url(@investigation)
-  end
-
-  test "should destroy investigation" do
-    assert_difference("Investigation.count", -1) do
-      delete investigation_url(@investigation)
-    end
-    assert_redirected_to investigations_url
-  end
-
   test "redirect to investigation path if attempted to assign a person to closed investigation" do
     investigation = investigations(:three)
     get assign_investigation_url(investigation)
