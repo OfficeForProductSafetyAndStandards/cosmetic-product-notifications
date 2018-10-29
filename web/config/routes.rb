@@ -4,11 +4,7 @@ Rails.application.routes.draw do
   end
 
   concern :image_attachable do
-    resources :images, only: %i[show new create update edit] do
-      member do
-        get :soft_delete
-      end
-    end
+    resources :images
   end
 
   resource :session, only: %i[new] do

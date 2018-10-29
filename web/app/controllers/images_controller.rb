@@ -2,8 +2,8 @@ class ImagesController < ApplicationController
   include ImagesHelper
   include Wicked::Wizard
   steps :step_upload, :step_metadata
-  skip_before_action :setup_wizard, only: :edit
-  skip_before_action :verify_authenticity_token, :only => :create
+  skip_before_action :setup_wizard, only: %i[edit destroy]
+  skip_before_action :verify_authenticity_token, only: :create
 
   before_action :set_parent
   before_action :set_image, only: %i[show update edit create destroy]
@@ -45,25 +45,16 @@ class ImagesController < ApplicationController
   # PATCH/PUT /images/1
   # PATCH/PUT /images/1.json
   def update
-    create_image if step == :step_upload
-    set_image if step == :step_metadata
     update_image
-    @image.blob.save
-    redirect_to next_wizard_path(image_id: @image.id) if step == :step_upload
-    redirect_to @parent if step == :step_metadata || step == :edit_metadata
-  end
-
-  def soft_delete
+    redirect_to next_wizard_path if step == :step_upload
+    redirect_to @parent if step == :step_metadata
   end
 
   # DELETE /images/1
   # DELETE /images/1.json
   def destroy
     @image.purge_later
-    respond_to do |format|
-      format.html { redirect_to action: "index", notice: "Image was successfully deleted." }
-      format.json { head :no_content }
-    end
+    redirect_to @parent
   end
 
 private
@@ -74,21 +65,26 @@ private
   end
 
   def set_image
-    @image = @parent.images.find(params[:id]) if @parent.present? && is_number?(params[:id])
-    @image = @image || @parent.images.find(params[:image_id]) if @parent.present? && params[:image_id]
-    @image = @image || @parent.images.find(session[:image_id]) if session[:image_id]
-    session[:image_id] = @image&.id
-    create_image if !@image
+    if @parent.present? && is_number?(params[:id])
+      @image = @parent.images.find(params[:id])
+      session[:image_id] = @image&.id
+    elsif session[:image_id]
+      @image = @parent.images.find(session[:image_id])
+    else
+      create_image
+    end
   end
 
   def is_number? string
+    # Sadly Wizard uses id param as a means of distinguishing its steps
+    # This means we need to make sure id is a number before we try to find an image by it
     return false if string.blank?
 
     true if Integer(string) rescue false
   end
 
   def create_image
-    if !image_params.blank?
+    if image_params.present?
       @images = @parent.images.attach(image_params[:file])
       @image = @images.last
       session[:image_id] = @image.id

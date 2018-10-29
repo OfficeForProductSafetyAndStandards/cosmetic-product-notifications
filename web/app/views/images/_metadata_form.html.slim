@@ -1,8 +1,8 @@
 = render "page_heading", title: edit ? "Edit image details" : "Enter image details"
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-two-thirds
-    - if @image.variable? && @image.metadata["safe"]
-      = image_tag @image.variant(resize: "480x320"), alt: @image.metadata["title"], \
+    - if image.variable? && image.metadata["safe"]
+      = image_tag image.variant(resize: "480x320"), alt: image.metadata["title"], \
           class: "govuk-!-margin-top-2 govuk-!-margin-bottom-2 image-thumbnail"
     = form_with model: image, scope: :image, url: associated_images_path(@parent), method: :post, local: true do |form|
       = render "form_validation_display", validated_object: image
@@ -15,7 +15,4 @@
       .govuk-form-group
         = form.submit "Save", class: "govuk-button"
         - if edit
-          - if @parent.instance_of? Investigation
-            = button_to "Delete", soft_delete_investigation_image_path(@parent, image), class: "govuk-button"
-          - if @parent.instance_of? Product
-            = button_to "Delete", soft_delete_product_image_path(@parent, image), class: "govuk-button"
+          = link_to "Delete", associated_image_path(@parent, image), method: :delete, class: "govuk-button"
