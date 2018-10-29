@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   concern :document_attachable do
     resources :documents
@@ -74,3 +75,4 @@ Rails.application.routes.draw do
 
   root to: redirect(path: "/investigations")
 end
+# rubocop:enable Metrics/BlockLength
