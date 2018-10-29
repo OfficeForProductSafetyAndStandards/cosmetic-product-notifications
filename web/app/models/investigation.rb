@@ -2,6 +2,8 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
 
+  validates :title, presence: true, on: :question_details
+
   index_name [Rails.env, "investigations"].join("_")
 
   settings do
@@ -24,6 +26,8 @@ class Investigation < ApplicationRecord
 
   has_many :incidents, dependent: :destroy
 
+  has_many :correspondences, dependent: :destroy
+
   has_many_attached :documents
   has_many_attached :images
 
@@ -42,6 +46,11 @@ class Investigation < ApplicationRecord
 
   def status
     is_closed? ? "Closed" : "Open"
+  end
+
+  def pretty_id
+    id_string = id.to_s.rjust(8, '0')
+    id_string.insert(4, "-")
   end
 end
 

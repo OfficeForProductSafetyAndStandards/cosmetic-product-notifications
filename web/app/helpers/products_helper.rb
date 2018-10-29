@@ -7,7 +7,7 @@ module ProductsHelper
   def product_params
     params.require(:product).permit(
       :gtin, :name, :description, :model, :batch_number, :brand, :product_type,
-      :country_of_origin, :date_placed_on_market
+      :country_of_origin, :day, :month, :year
     )
   end
 

@@ -5,9 +5,9 @@
 - if @current_user
   .govuk-grid-row[class="govuk-!-padding-bottom-4"]
     .govuk-grid-column-one-third
-      .govuk-grid-column-one-quarter.assigned-number[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
+      .govuk-grid-column-one-quarter.assigned-number[class="govuk-body govuk-!-font-size-36 govuk-!-font-weight-bold"]
         = @current_user.investigations.count
-      .govuk-grid-column-three-quarters[class="govuk-!-font-size-19"]
+      .govuk-grid-column-three-quarters[class="govuk-body govuk-!-font-size-24"]
         = "Case".pluralize(@current_user.investigations.count)
         |  assigned to you
 
@@ -33,7 +33,7 @@ br
       = link_to "Report an unsafe product", new_report_path, class: "govuk-link mspsds-block-link"
       /TODO refer the links below to correct pages when they are created
       = link_to "Begin an investigation", "/", class: "govuk-link mspsds-block-link"
-      = link_to "Ask a question", "/", class: "govuk-link mspsds-block-link"
+      = link_to "Ask a question", new_question_path, class: "govuk-link mspsds-block-link"
 = render "table", investigations: @investigations
 = will_paginate @investigations
 br
