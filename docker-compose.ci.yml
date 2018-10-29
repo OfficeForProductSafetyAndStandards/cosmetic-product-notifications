@@ -3,7 +3,7 @@ version: '3'
 services:
   keycloak:
     environment:
-      - NOTIFY_API_KEY=${NOTIFY_API_KEY}
+      - NOTIFY_API_KEY='fake-key'
     image: ${DOCKER_USERNAME}/keycloak:${TRAVIS_BUILD_NUMBER}
   web:
     command: tail -f /dev/null
@@ -17,7 +17,7 @@ services:
       - TRAVIS_BRANCH
       - TRAVIS_JOB_ID
       - TRAVIS_PULL_REQUEST
-      - COMPANIES_HOUSE_API_KEY='not-a-key-but-fools-client-into-not-exploding'
+      - COMPANIES_HOUSE_API_KEY='fake-key'
   worker:
     command: tail -f /dev/null
     image: ${DOCKER_USERNAME}/worker:${TRAVIS_BUILD_NUMBER}

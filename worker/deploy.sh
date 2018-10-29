@@ -7,8 +7,8 @@ set -ex
 #
 # The caller should have the following environment variables set:
 #
-# USERNAME: cloudfoundry username
-# PASSWORD: cloudfoundry password
+# CF_USERNAME: cloudfoundry username
+# CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
 
 # Circumvent the cloudfoundry asset compilation step - https://github.com/cloudfoundry/ruby-buildpack/blob/master/src/ruby/finalize/finalize.go#L213
@@ -22,7 +22,7 @@ cp -a ./worker/clamav/. ./web/clamav/
 
 ./ci/install-cf.sh
 
-cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o 'beis-mspsds' -s $SPACE
+cf login -a api.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
 
 cf push -f ./worker/manifest.yml
 
