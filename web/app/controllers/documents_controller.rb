@@ -32,6 +32,7 @@ class DocumentsController < ApplicationController
   def create
     respond_to do |format|
       if @document
+        create_audit_activity_for_add_document_to_investigation if @parent.class == Investigation
         format.html { redirect_to edit_associated_document_path(@parent, @document) }
         format.json { render :show, status: :created, location: @document }
       else
@@ -46,6 +47,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.blob.save
+        create_audit_activity_for_update_document_in_investigation if @parent.class == Investigation
         format.html { redirect_to action: "index", notice: "Document was successfully saved." }
         format.json { render :show, status: :ok, location: @document }
       else
@@ -58,8 +60,9 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy
-    @document.purge_later
+    @parent.documents.find(params[:id]).delete
     respond_to do |format|
+      create_audit_activity_for_destroy_document_in_investigation if @parent.class == Investigation
       format.html { redirect_to action: "index", notice: "Document was successfully deleted." }
       format.json { head :no_content }
     end
@@ -82,6 +85,10 @@ private
   end
 
   def update_document
+    @previous_data = {
+        title: @document.metadata[:title],
+        description: @document.metadata[:description]
+    }
     @document.blob.metadata.update(document_params)
     @document.blob.metadata["updated"] = Time.current
   end
@@ -89,5 +96,38 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def document_params
     params.require(:document).permit(:file, :title, :description, :document_type, :other_type)
+  end
+
+  def create_audit_activity_for_add_document_to_investigation
+    title = @document.metadata[:title] || "Untitled document"
+    activity = AddDocumentAuditActivity.create(
+        description: @document.metadata[:description],
+        source: UserSource.new(user: current_user),
+        investigation: @parent,
+        title: title)
+    activity.document.attach @document.blob
+  end
+
+  def create_audit_activity_for_update_document_in_investigation
+    if @document.metadata[:title] != @previous_title
+      title = "Updated: #{@document.metadata[:title] || "Untitled document"} (was: #{@previous_data[:title] || "Untitled document"})"
+    elsif @document.metadata[:description] != @previous_data[:description]
+      title = "Updated: Description for #{@document.metadata[:title]}"
+    end
+    activity = UpdateDocumentAuditActivity.create(
+        description: @document.metadata[:description],
+        source: UserSource.new(user: current_user),
+        investigation: @parent,
+        title: title)
+    activity.document.attach @document.blob
+  end
+
+  def create_audit_activity_for_destroy_document_in_investigation
+    activity = DestroyDocumentAuditActivity.create(
+        description: @document.metadata[:description],
+        source: UserSource.new(user: current_user),
+        investigation: @parent,
+        title: "Deleted: #{@document.metadata[:title]}")
+    activity.document.attach @document.blob
   end
 end
