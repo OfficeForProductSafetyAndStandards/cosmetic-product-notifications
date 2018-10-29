@@ -1,10 +1,21 @@
-= form_with model: image, scope: :image, url: associated_image_path(@parent, image), local: true do |form|
-  = render "form_validation_display", validated_object: image
-  .govuk-form-group
-    = form.label :title, "Image title", class: "govuk-label"
-    = form.text_field :title, value: image.metadata["title"], class: "govuk-input"
-  .govuk-form-group
-    = form.label :description, class: "govuk-label"
-    = form.text_area :description, value: image.metadata["description"], rows: 5, class: "govuk-textarea"
-  .govuk-form-group
-    = form.submit "Save", class: "govuk-button"
+= render "page_heading", title: edit ? "Edit image details" : "Enter image details"
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-two-thirds
+    - if @image.variable? && @image.metadata["safe"]
+      = image_tag @image.variant(resize: "480x320"), alt: @image.metadata["title"], \
+          class: "govuk-!-margin-top-2 govuk-!-margin-bottom-2 image-thumbnail"
+    = form_with model: image, scope: :image, url: associated_images_path(@parent), method: :post, local: true do |form|
+      = render "form_validation_display", validated_object: image
+      .govuk-form-group
+        = form.label :title, "Image title", class: "govuk-label"
+        = form.text_field :title, value: image.metadata["title"], class: "govuk-input"
+      .govuk-form-group
+        = form.label :description, class: "govuk-label"
+        = form.text_area :description, value: image.metadata["description"], rows: 5, class: "govuk-textarea"
+      .govuk-form-group
+        = form.submit "Save", class: "govuk-button"
+        - if edit
+          - if @parent.instance_of? Investigation
+            = button_to "Delete", soft_delete_investigation_image_path(@parent, image), class: "govuk-button"
+          - if @parent.instance_of? Product
+            = button_to "Delete", soft_delete_product_image_path(@parent, image), class: "govuk-button"

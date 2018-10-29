@@ -1,0 +1,11 @@
+- content_for :page_title, "New image - Market Surveillance & Product Safety"
+- content_for :after_header do
+  = link_to "Back", associated_images_path(@parent), class: "govuk-back-link"
+= render "page_heading", title: "New image"
+br
+= form_with model: @image, scope: :image, url: wizard_path, method: :put, local: true do |form|
+  .govuk-form-group
+    = form.label :file, "Browse for file", class: "govuk-heading-m"
+    = form.file_field :file, class: "govuk-file-upload"
+  .govuk-form-group
+    = form.submit "Upload", class: "govuk-button"
