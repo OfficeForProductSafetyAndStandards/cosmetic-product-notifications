@@ -3,7 +3,7 @@
   = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
 h1.govuk-heading-xl
   span.govuk-caption-xl
-    = "Case: #{@investigation.id}"
+    = "Case: #{@investigation.pretty_id}"
   | Hazard information
 = form_with(model: @hazard, local: true, url: wizard_path, method: :put) do |form|
   fieldset.govuk-fieldset

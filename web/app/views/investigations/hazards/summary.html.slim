@@ -3,7 +3,7 @@
   = link_to "Back to case", @investigation, class: "govuk-back-link"
 h1.govuk-heading-xl
   span.govuk-caption-xl
-    = "Case: #{@investigation.id}"
+    = "Case: #{@investigation.pretty_id}"
   | Confirm hazard details
 .govuk-grid-column
   table.govuk-table
