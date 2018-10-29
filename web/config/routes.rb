@@ -19,10 +19,12 @@ Rails.application.routes.draw do
     member do
       get :status
       get :assign
+      get :confirmation
       post :update_assignee
     end
     collection do
       resources :report, controller: "investigations/report", only: %i[show new create update]
+      resources :question, controller: "investigations/question", only: %i[show new create update]
     end
     resources :activities, only: %i[index new create]
     resources :products, only: %i[index new create destroy], controller: "investigations/products" do
@@ -38,7 +40,7 @@ Rails.application.routes.draw do
         post :companies_house
       end
     end
-
+    resources :correspondences, only: %i[show new create update], controller: "investigations/correspondence"
     resources :incidents, controller: "investigations/incidents", only: %i[new create show update]
   end
 

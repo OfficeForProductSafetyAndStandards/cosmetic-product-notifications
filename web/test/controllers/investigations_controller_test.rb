@@ -75,4 +75,15 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     get assign_investigation_url(investigation)
     assert_redirected_to investigation_path(investigation)
   end
+
+  test "should assign user to investigation" do
+    id = User.first.id
+    investigation_assignee_id = lambda { Investigation.find(@investigation.id).assignee_id }
+    assert_changes investigation_assignee_id, from: nil, to: id do
+      post update_assignee_investigation_url @investigation, params: {
+        assignee_id: id
+      }
+    end
+    assert_redirected_to investigation_url(@investigation)
+  end
 end
