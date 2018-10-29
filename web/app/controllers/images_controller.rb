@@ -32,22 +32,28 @@ class ImagesController < ApplicationController
   end
 
   # GET /images/1/edit
-  def edit; end
+  def edit;
+  end
 
   # POST /images
   # POST /images.json
   def create
     update_image
-    @image.blob.save
-    redirect_to @parent
+    if session[:errors].present?
+      redirect_to wizard_path(steps.last)
+    else
+      @image.blob.save
+      redirect_to @parent
+    end
   end
 
   # PATCH/PUT /images/1
   # PATCH/PUT /images/1.json
   def update
     update_image
+    return render step if session[:errors].present?
+
     redirect_to next_wizard_path if step == :step_upload
-    redirect_to @parent if step == :step_metadata
   end
 
   # DELETE /images/1
@@ -57,7 +63,7 @@ class ImagesController < ApplicationController
     redirect_to @parent
   end
 
-private
+  private
 
   def set_parent
     @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
@@ -92,8 +98,13 @@ private
   end
 
   def update_image
-    @image.blob.metadata.update(image_params)
-    @image.blob.metadata["updated"] = Time.current
+    session[:errors] = nil
+    if (image_params[:title].blank? && step != :step_upload)
+      session[:errors] = (session[:errors] || {}).merge(title: true)
+    else
+      @image.blob.metadata.update(image_params)
+      @image.blob.metadata["updated"] = Time.current
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
