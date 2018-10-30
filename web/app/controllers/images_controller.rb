@@ -99,35 +99,14 @@ private
   end
 
   def create_audit_activity_for_add_image_to_investigation
-    title = @image.metadata[:title] || "Untitled image"
-    activity = AddImageAuditActivity.create(
-        description: @image.metadata[:description],
-        source: UserSource.new(user: current_user),
-        investigation: @parent,
-        title: title)
-    activity.image.attach @image.blob
+    AddImageAuditActivity.from(@image, @parent)
   end
 
   def create_audit_activity_for_update_image_in_investigation
-    if @image.metadata[:title] != @previous_title
-      title = "Updated: #{@image.metadata[:title] || "Untitled image"} (was: #{@previous_data[:title] || "Untitled image"})"
-    elsif @image.metadata[:description] != @previous_data[:description]
-      title = "Updated: Description for #{@image.metadata[:title]}"
-    end
-    activity = UpdateImageAuditActivity.create(
-        description: @image.metadata[:description],
-        source: UserSource.new(user: current_user),
-        investigation: @parent,
-        title: title)
-    activity.image.attach @image.blob
+    UpdateImageAuditActivity.from(@image, @parent, @previous_data)
   end
 
   def create_audit_activity_for_destroy_image_in_investigation
-    activity = DestroyImageAuditActivity.create(
-        description: @image.metadata[:description],
-        source: UserSource.new(user: current_user),
-        investigation: @parent,
-        title: "Deleted: #{@image.metadata[:title]}")
-    activity.image.attach @image.blob
+    DestroyImageAuditActivity.from(@image, @parent)
   end
 end

@@ -22,8 +22,7 @@ class Investigations::BusinessesController < ApplicationController
 
   # POST /investigations/1/businesses/add
   def add
-    business = Business.find(params[:business_id])
-    @investigation.businesses << business
+    @investigation.businesses << Business.find(params[:business_id])
     redirect_to @investigation, notice: "Business was successfully added."
   end
 
