@@ -48,6 +48,10 @@ class Investigation < ApplicationRecord
     id_string = id.to_s.rjust(8, '0')
     id_string.insert(4, "-")
   end
+
+  def new_assignee? new_assignee
+    new_assignee != @assignee
+  end
 end
 
 Investigation.import force: true # for auto sync model with elastic search
