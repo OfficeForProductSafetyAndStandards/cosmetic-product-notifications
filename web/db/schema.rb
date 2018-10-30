@@ -70,6 +70,17 @@ ActiveRecord::Schema.define(version: 2018_10_23_124704) do
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
+  create_table "hazards", force: :cascade do |t|
+    t.string "affected_parties"
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.string "hazard_type"
+    t.integer "investigation_id"
+    t.integer "risk_level"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_hazards_on_investigation_id"
+  end
+
   create_table "correspondences", force: :cascade do |t|
     t.string "contact_method"
     t.date "correspondence_date"
@@ -124,9 +135,6 @@ ActiveRecord::Schema.define(version: 2018_10_23_124704) do
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
     t.string "question_type"
-    t.integer "risk_level"
-    t.string "risk_overview"
-    t.integer "sensitivity"
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
@@ -188,6 +196,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_124704) do
 
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
+  add_foreign_key "hazards", "investigations"
   add_foreign_key "correspondences", "investigations"
   add_foreign_key "incidents", "investigations"
   add_foreign_key "reporters", "investigations"
