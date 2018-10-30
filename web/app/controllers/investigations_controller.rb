@@ -39,9 +39,10 @@ class InvestigationsController < ApplicationController
 
   # POST /investigations/1/update_assignee
   def update_assignee
-    @investigation.assignee = User.find_by(id: params[:assignee_id])
+    new_assignee = User.find_by(id: params[:assignee_id])
+    @investigation.assignee = new_assignee if new_assignee
     respond_to do |format|
-      if @investigation.assignee && @investigation.save
+      if new_assignee && @investigation.save
         format.html { redirect_to @investigation, notice: "Assignee was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
         NotifyMailer.assigned_investigation(@investigation, @investigation.assignee.full_name, @investigation.assignee.email).deliver_later
