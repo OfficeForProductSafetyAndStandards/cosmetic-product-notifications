@@ -1,5 +1,6 @@
 - if parent.images.attached?
-  - parent.images.attachments.limit(5).each do |image|
+  / TODO: Pagination if we decide it's needed
+  - parent.images.attachments.each do |image|
     .govuk-grid-row[class="govuk-!-padding-bottom-6"]
       .govuk-grid-column-one-third
         = render "images/image", image: image, dimensions: "300x200"
