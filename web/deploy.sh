@@ -7,13 +7,13 @@ set -ex
 #
 # The caller should have the following environment variables set:
 #
-# USERNAME: cloudfoundry username
-# PASSWORD: cloudfoundry password
+# CF_USERNAME: cloudfoundry username
+# CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
 
 ./ci/install-cf.sh
 
-cf login -a api.cloud.service.gov.uk -u $USERNAME -p $PASSWORD -o 'beis-mspsds' -s $SPACE
+cf login -a api.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
 
 cf push -f ./web/manifest.yml --hostname mspsds-$SPACE
 
