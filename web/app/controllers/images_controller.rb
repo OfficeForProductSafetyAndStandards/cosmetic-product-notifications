@@ -32,8 +32,7 @@ class ImagesController < ApplicationController
   end
 
   # GET /images/1/edit
-  def edit;
-  end
+  def edit; end
 
   # POST /images
   # POST /images.json
@@ -65,7 +64,7 @@ class ImagesController < ApplicationController
     redirect_to @parent
   end
 
-  private
+private
 
   def set_parent
     @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
@@ -106,8 +105,8 @@ class ImagesController < ApplicationController
 
   def validate
     session[:errors] = nil
-    if (image_params[:title].blank? && step != :step_upload)
-      session[:errors] = (session[:errors] || []).push({field: "title", message: "Title can't be blank"})
+    if image_params[:title].blank? && step != :step_upload
+      session[:errors] = (session[:errors] || []).push(field: "title", message: "Title can't be blank")
     end
   end
 
