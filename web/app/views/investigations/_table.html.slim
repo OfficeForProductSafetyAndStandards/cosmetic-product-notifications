@@ -25,7 +25,7 @@ table.govuk-table.investigation-list.sortable[class="govuk-!-margin-bottom-3"]
             = investigation.status
         td.govuk-table__cell
           span
-            = investigation.risk_overview
+            = investigation.hazard&.risk_level
         td.govuk-table__cell
           = investigation.assignee ? investigation.assignee.email : ""
         td.govuk-table__cell[class="govuk-!-font-weight-bold"]

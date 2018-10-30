@@ -1,6 +1,9 @@
 version: '3'
 
 services:
+  db:
+    ports:
+      - "5433:5432"
   keycloak:
     env_file:
       - .env
