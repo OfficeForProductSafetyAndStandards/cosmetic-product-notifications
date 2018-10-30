@@ -99,35 +99,14 @@ private
   end
 
   def create_audit_activity_for_add_document_to_investigation
-    title = @document.metadata[:title] || "Untitled document"
-    activity = AddDocumentAuditActivity.create(
-        description: @document.metadata[:description],
-        source: UserSource.new(user: current_user),
-        investigation: @parent,
-        title: title)
-    activity.document.attach @document.blob
+    AddDocumentAuditActivity.from(@document, @parent)
   end
 
   def create_audit_activity_for_update_document_in_investigation
-    if @document.metadata[:title] != @previous_title
-      title = "Updated: #{@document.metadata[:title] || "Untitled document"} (was: #{@previous_data[:title] || "Untitled document"})"
-    elsif @document.metadata[:description] != @previous_data[:description]
-      title = "Updated: Description for #{@document.metadata[:title]}"
-    end
-    activity = UpdateDocumentAuditActivity.create(
-        description: @document.metadata[:description],
-        source: UserSource.new(user: current_user),
-        investigation: @parent,
-        title: title)
-    activity.document.attach @document.blob
+    UpdateDocumentAuditActivity.from(@document, @parent, @previous_data)
   end
 
   def create_audit_activity_for_destroy_document_in_investigation
-    activity = DestroyDocumentAuditActivity.create(
-        description: @document.metadata[:description],
-        source: UserSource.new(user: current_user),
-        investigation: @parent,
-        title: "Deleted: #{@document.metadata[:title]}")
-    activity.document.attach @document.blob
+    DestroyDocumentAuditActivity.from(@document, @parent)
   end
 end
