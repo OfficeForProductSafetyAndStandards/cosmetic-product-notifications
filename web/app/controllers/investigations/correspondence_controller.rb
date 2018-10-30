@@ -1,4 +1,5 @@
 class Investigations::CorrespondenceController < ApplicationController
+  include FileHelper
   include Wicked::Wizard
   steps :general_info, :content, :confirmation
   before_action :load_investigation_and_correspondence, only: %i[show update create]
@@ -34,6 +35,7 @@ private
     handle_type_params
     params.require(:correspondence).permit(
       :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
+      :file,
       :overview, :details
     )
   end
@@ -53,6 +55,7 @@ private
     data_from_previous_steps = session[:correspondence] || suggested_values
     session[:correspondence] = data_from_previous_steps.merge(correspondence_params || {})
     @correspondence = Correspondence.new(session[:correspondence])
+    handle_file_attachment
   end
 
   def suggested_values
@@ -86,5 +89,6 @@ private
 
   def clear_session
     session[:correspondence] = nil
+    session[:file_id] = nil
   end
 end
