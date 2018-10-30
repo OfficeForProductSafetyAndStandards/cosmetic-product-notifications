@@ -7,7 +7,7 @@
         h2.govuk-heading-m[class="govuk-!-margin-bottom-1"]
           = image.blob.metadata[:title]
         span.govuk-caption-m[class="govuk-!-font-size-16"]
-          = image.blob.metadata[:updated]
+          = "Updated #{image.blob.metadata[:updated].to_date}"
         br
         p.govuk-body
           = image.blob.metadata[:description]

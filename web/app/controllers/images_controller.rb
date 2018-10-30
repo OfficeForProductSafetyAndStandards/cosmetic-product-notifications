@@ -38,10 +38,11 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    update_image
+    validate
     if session[:errors].present?
-      redirect_to wizard_path(steps.last)
+      redirect_to request.referer
     else
+      update_image
       @image.blob.save
       redirect_to @parent
     end
@@ -50,9 +51,10 @@ class ImagesController < ApplicationController
   # PATCH/PUT /images/1
   # PATCH/PUT /images/1.json
   def update
-    update_image
+    validate
     return render step if session[:errors].present?
 
+    update_image
     redirect_to next_wizard_path if step == :step_upload
   end
 
@@ -98,12 +100,14 @@ class ImagesController < ApplicationController
   end
 
   def update_image
+    @image.blob.metadata.update(image_params)
+    @image.blob.metadata["updated"] = Time.current
+  end
+
+  def validate
     session[:errors] = nil
     if (image_params[:title].blank? && step != :step_upload)
-      session[:errors] = (session[:errors] || {}).merge(title: true)
-    else
-      @image.blob.metadata.update(image_params)
-      @image.blob.metadata["updated"] = Time.current
+      session[:errors] = (session[:errors] || []).push({field: "title", message: "Title can't be blank"})
     end
   end
 

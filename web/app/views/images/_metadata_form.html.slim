@@ -5,8 +5,8 @@
       = image_tag image.variant(resize: "480x320"), alt: image.metadata["title"], \
           class: "govuk-!-margin-top-2 govuk-!-margin-bottom-2 image-thumbnail"
     = form_with model: image, scope: :image, url: associated_images_path(@parent), method: :post, local: true do |form|
-      = render "form_validation_display", validated_object: image
-      .govuk-form-group class=("govuk-form-group--error" if session[:errors] && session[:errors]["title"])
+      = render "form_validation_display", errors: session[:errors]
+      .govuk-form-group class=("govuk-form-group--error" if session[:errors])
         = form.label :title, "Image title", class: "govuk-label"
         = form.text_field :title, value: image.metadata["title"], class: "govuk-input"
       .govuk-form-group
