@@ -6,8 +6,8 @@
           class: "govuk-!-margin-top-2 govuk-!-margin-bottom-2 image-thumbnail"
     - else
       / Not sure we have designs for it, sounds reasonable to include something like that
-      span.govuk-caption-m[class="govuk-!-font-size-16"]
-        = image.variable? ? "Image not available for preview" : "Image is being processed"
+      span.govuk-caption-l
+        = image.variable? ? "Image is being processed" : "Image not available for preview"
 
     = form_with model: image, scope: :image, url: associated_images_path(@parent), method: :post, local: true do |form|
       = render "form_validation_display", errors: session[:errors]
