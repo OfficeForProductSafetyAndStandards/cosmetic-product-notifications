@@ -33,13 +33,6 @@ module ImagesHelper
     @image.blob.metadata["updated"] = Time.current
   end
 
-  def validate
-    session[:errors] = nil
-    if image_params[:title].blank? && step != :upload
-      session[:errors] = (session[:errors] || []).push(field: "title", message: "Title can't be blank")
-    end
-  end
-
   # Never trust parameters from the scary internet, only allow the white list through.
   def image_params
     return {} if params[:image].blank?

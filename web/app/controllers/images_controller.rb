@@ -39,4 +39,11 @@ private
       create_image
     end
   end
+
+  def validate
+    session[:errors] = nil
+    if image_params[:title].blank?
+      session[:errors] = (session[:errors] || []).push(field: "title", message: "Title can't be blank")
+    end
+  end
 end
