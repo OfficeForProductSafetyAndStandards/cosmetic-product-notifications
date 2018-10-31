@@ -9,9 +9,9 @@ function simpleAccessibleAutocomplete(id) { // eslint-disable-line no-unused-var
     // In the case that the user deletes the entry from the field, we want this to be reflected in the underlying select
     // This is a work-around to https://github.com/alphagov/accessible-autocomplete/issues/205
     var $enhancedElement = $(element).parent().find('input');
-    $enhancedElement.on('blur keyup', function () {
-      if ($enhancedElement.val() === '') {
-        $(element).val('');
+    $enhancedElement.on('keyup', function () {
+      if ($enhancedElement.val() !== $(element).find('option:selected').text()) {
+          $(element).val('');
       }
     });
   }
