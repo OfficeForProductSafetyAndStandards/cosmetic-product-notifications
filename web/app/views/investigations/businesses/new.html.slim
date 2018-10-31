@@ -8,8 +8,8 @@
     | Add business
   .govuk-grid-row
     .govuk-grid-column-one-half
-      = form_with(model: @business, url: investigation_businesses_path(@investigation), local: true, method: :post) \
-          do |form|
+      = form_with(model: @business, url: investigation_businesses_path(@investigation), local: true, method: :post,
+              html: { autocomplete: :off }) do |form|
         h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
           | Business details
         = render "businesses/form", form: form, business: @business, search: true
