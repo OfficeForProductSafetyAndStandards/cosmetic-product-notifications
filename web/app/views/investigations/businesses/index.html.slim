@@ -8,13 +8,13 @@ p
   = link_to "Add business", new_investigation_business_path(@investigation)
 div[class="govuk-!-padding-top-8"]
   - if @investigation.businesses.any?
-    - @investigation.businesses.each do |business|
+    - @investigation.investigation_businesses.each do |ib|
       h3.govuk-heading-m
-        = business.investigation_businesses.find_by(investigation_id: @investigation.id).relationship.titleize
-      = render layout: "business_summary", locals: { business: business } do
+        = ib.relationship.titleize
+      = render layout: "business_summary", locals: { business: ib.business } do
         .govuk-form-group
           p
-            = link_to "Remove", investigation_business_path(@investigation, business), method: :delete, \
+            = link_to "Remove", investigation_business_path(@investigation, ib.business), method: :delete, \
                 data: { confirm: "Are you sure?" }, class: "govuk-link"
   - else
     p
