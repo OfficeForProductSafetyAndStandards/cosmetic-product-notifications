@@ -28,6 +28,7 @@ class ImagesController < ApplicationController
   end
 
 private
+
   def set_image
     if @parent.present? && params[:id].present?
       @image = @parent.images.find(params[:id])

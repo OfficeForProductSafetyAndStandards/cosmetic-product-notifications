@@ -28,6 +28,7 @@ class ImagesFlowController < ApplicationController
   end
 
 private
+
   def set_image
     if session[:image_id]
       @image = @parent.images.find(session[:image_id])
