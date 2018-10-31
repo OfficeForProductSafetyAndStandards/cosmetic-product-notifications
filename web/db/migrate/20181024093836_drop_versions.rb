@@ -12,7 +12,7 @@ class DropVersions < ActiveRecord::Migration[5.2]
       t.text "object"
       t.text "object_changes"
       t.string "whodunnit"
-      t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+      t.index %w[item_type item_id], name: "index_versions_on_item_type_and_item_id"
     end
   end
 end

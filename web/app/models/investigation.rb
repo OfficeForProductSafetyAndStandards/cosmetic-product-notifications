@@ -52,26 +52,29 @@ class Investigation < ApplicationRecord
 
   def create_audit_activity_for_case
     AddCaseAuditActivity.create(
-        source: UserSource.new(user: current_user),
-        investigation: self)
+      source: UserSource.new(user: current_user),
+      investigation: self
+)
   end
 
   def create_audit_activity_for_product product
     AddProductAuditActivity.create(
-        product: product,
-        body: product.description,
-        source: UserSource.new(user: current_user),
-        investigation: self,
-        title: product.name)
+      product: product,
+      body: product.description,
+      source: UserSource.new(user: current_user),
+      investigation: self,
+      title: product.name
+)
   end
 
   def create_audit_activity_for_business business
     AddBusinessAuditActivity.create(
-        body: "Role: **Distributor**",
-        business: business,
-        source: UserSource.new(user: current_user),
-        investigation: self,
-        title: business.company_name)
+      body: "Role: **Distributor**",
+      business: business,
+      source: UserSource.new(user: current_user),
+      investigation: self,
+      title: business.company_name
+)
   end
 end
 
