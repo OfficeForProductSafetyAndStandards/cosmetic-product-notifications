@@ -11,8 +11,6 @@ class Correspondence < ApplicationRecord
     :correspondence_date
   end
 
-  attribute :file
-
   has_many_attached :documents
 
   enum contact_method: {

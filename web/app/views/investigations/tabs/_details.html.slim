@@ -75,4 +75,5 @@ p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-
               td.govuk-table__cell
                 - correspondence.documents&.each { |doc|
                 = doc.filename
+                = link_to render("documents/document_image", document: doc), doc, class: "document-link", target: "_blank"
                 - }

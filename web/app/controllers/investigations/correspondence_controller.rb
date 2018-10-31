@@ -1,5 +1,5 @@
 class Investigations::CorrespondenceController < ApplicationController
-  include FileHelper
+  include FileConcern
   include Wicked::Wizard
   steps :general_info, :content, :confirmation
   before_action :load_investigation_and_correspondence, only: %i[show update create]
@@ -35,7 +35,6 @@ private
     handle_type_params
     params.require(:correspondence).permit(
       :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
-      :file,
       :overview, :details
     )
   end
