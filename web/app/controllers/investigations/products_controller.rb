@@ -18,8 +18,7 @@ class Investigations::ProductsController < ApplicationController
 
   # POST /investigations/1/products/add
   def add
-    product = Product.find(params[:product_id])
-    @investigation.products << product
+    @investigation.products << Product.find(params[:product_id])
     redirect_to @investigation, notice: "Product was successfully added."
   end
 

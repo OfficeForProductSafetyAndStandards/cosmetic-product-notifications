@@ -60,7 +60,7 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy
-    @parent.documents.find(params[:id]).delete
+    @document.delete
     respond_to do |format|
       AuditActivity::Document::Destroy.from(@document, @parent) if @parent.class == Investigation
       format.html { redirect_to action: "index", notice: "Document was successfully deleted." }
