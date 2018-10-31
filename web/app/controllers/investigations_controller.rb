@@ -15,7 +15,6 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1
   # GET /investigations/1.json
   def show
-    p @investigation.hazard
     respond_to do |format|
       format.html
       format.pdf do

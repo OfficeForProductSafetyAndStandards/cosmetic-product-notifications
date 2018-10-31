@@ -11,7 +11,7 @@ function simpleAccessibleAutocomplete(id) { // eslint-disable-line no-unused-var
     var $enhancedElement = $(element).parent().find('input');
     $enhancedElement.on('keyup', function () {
       if ($enhancedElement.val() !== $(element).find('option:selected').text()) {
-          $(element).val('');
+        $(element).val('');
       }
     });
   }

@@ -53,7 +53,7 @@ class Investigation < ApplicationRecord
     id_string.insert(4, "-")
   end
 
-  private
+private
 
   def validate_assignment
     if !new_record? && !assignee
