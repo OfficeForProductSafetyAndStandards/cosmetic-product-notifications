@@ -1,4 +1,4 @@
-class DestroyImageAuditActivity < ImageAuditActivity
+class AuditActivity::Image::Destroy < AuditActivity::Image
   def self.from(image, investigation)
     title = "Deleted: #{image.metadata[:title]}"
     super(image, investigation, title)

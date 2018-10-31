@@ -32,7 +32,7 @@ class DocumentsController < ApplicationController
   def create
     respond_to do |format|
       if @document
-        create_audit_activity_for_add_document_to_investigation if @parent.class == Investigation
+        AuditActivity::Document::Add.from(@document, @parent) if @parent.class == Investigation
         format.html { redirect_to edit_associated_document_path(@parent, @document) }
         format.json { render :show, status: :created, location: @document }
       else
@@ -47,7 +47,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.blob.save
-        create_audit_activity_for_update_document_in_investigation if @parent.class == Investigation
+        AuditActivity::Document::Update.from(@document, @parent, @previous_data) if @parent.class == Investigation
         format.html { redirect_to action: "index", notice: "Document was successfully saved." }
         format.json { render :show, status: :ok, location: @document }
       else
@@ -62,7 +62,7 @@ class DocumentsController < ApplicationController
   def destroy
     @parent.documents.find(params[:id]).delete
     respond_to do |format|
-      create_audit_activity_for_destroy_document_in_investigation if @parent.class == Investigation
+      AuditActivity::Document::Destroy.from(@document, @parent) if @parent.class == Investigation
       format.html { redirect_to action: "index", notice: "Document was successfully deleted." }
       format.json { head :no_content }
     end
@@ -96,17 +96,5 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def document_params
     params.require(:document).permit(:file, :title, :description, :document_type, :other_type)
-  end
-
-  def create_audit_activity_for_add_document_to_investigation
-    AddDocumentAuditActivity.from(@document, @parent)
-  end
-
-  def create_audit_activity_for_update_document_in_investigation
-    UpdateDocumentAuditActivity.from(@document, @parent, @previous_data)
-  end
-
-  def create_audit_activity_for_destroy_document_in_investigation
-    DestroyDocumentAuditActivity.from(@document, @parent)
   end
 end

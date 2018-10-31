@@ -32,7 +32,7 @@ class ImagesController < ApplicationController
   def create
     respond_to do |format|
       if @image
-        create_audit_activity_for_add_image_to_investigation if @parent.class == Investigation
+        AuditActivity::Image::Add.from(@image, @parent) if @parent.class == Investigation
         format.html { redirect_to edit_associated_image_path(@parent, @image) }
         format.json { render :show, status: :created, location: @image }
       else
@@ -47,7 +47,7 @@ class ImagesController < ApplicationController
   def update
     respond_to do |format|
       if @image.blob.save
-        create_audit_activity_for_update_image_in_investigation if @parent.class == Investigation
+        AuditActivity::Image::Update.from(@image, @parent, @previous_data) if @parent.class == Investigation
         format.html { redirect_to action: "index", notice: "Image was successfully saved." }
         format.json { render :show, status: :ok, location: @image }
       else
@@ -62,7 +62,7 @@ class ImagesController < ApplicationController
   def destroy
     @image.delete #note this is a soft delete to preserve the image for case history
     respond_to do |format|
-      create_audit_activity_for_destroy_image_in_investigation if @parent.class == Investigation
+      AuditActivity::Image::Destroy.from(@image, @parent) if @parent.class == Investigation
       format.html { redirect_to action: "index", notice: "Image was successfully deleted." }
       format.json { head :no_content }
     end
@@ -96,17 +96,5 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def image_params
     params.require(:image).permit(:file, :title, :description)
-  end
-
-  def create_audit_activity_for_add_image_to_investigation
-    AddImageAuditActivity.from(@image, @parent)
-  end
-
-  def create_audit_activity_for_update_image_in_investigation
-    UpdateImageAuditActivity.from(@image, @parent, @previous_data)
-  end
-
-  def create_audit_activity_for_destroy_image_in_investigation
-    DestroyImageAuditActivity.from(@image, @parent)
   end
 end

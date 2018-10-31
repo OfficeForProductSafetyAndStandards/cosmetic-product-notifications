@@ -1,4 +1,4 @@
-class UpdateImageAuditActivity < ImageAuditActivity
+class AuditActivity::Image::Update < AuditActivity::Image
   def self.from(image, investigation, previous_data)
     return if self.no_change?(image, previous_data)
     if image.metadata[:title] != previous_data[:title]
