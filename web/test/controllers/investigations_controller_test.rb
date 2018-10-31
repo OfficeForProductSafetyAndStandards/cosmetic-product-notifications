@@ -5,6 +5,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as_admin
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
+    @investigation.hazard = hazards(:one)
     Investigation.import
   end
 
@@ -44,30 +45,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should generate investigation pdf" do
     get investigation_url(@investigation, format: :pdf)
     assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_investigation_url(@investigation)
-    assert_response :success
-  end
-
-  test "should update investigation" do
-    patch investigation_url(@investigation), params: {
-      investigation: {
-        title: @investigation.title,
-        description: @investigation.description,
-        is_closed: @investigation.is_closed,
-        source: @investigation.source,
-      }
-    }
-    assert_redirected_to investigation_url(@investigation)
-  end
-
-  test "should destroy investigation" do
-    assert_difference("Investigation.count", -1) do
-      delete investigation_url(@investigation)
-    end
-    assert_redirected_to investigations_url
   end
 
   test "redirect to investigation path if attempted to assign a person to closed investigation" do
