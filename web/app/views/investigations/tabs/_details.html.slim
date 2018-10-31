@@ -57,10 +57,10 @@ p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-
               td.govuk-table__cell = correspondence.correspondent_name
             tr.govuk-table__row
               th.govuk-table__header scope="row" Contact method
-              - if correspondence.contact_method == 'Email'
-                td.govuk-table__cell = "#{correspondence.contact_method}: #{correspondence.email_address}"
-              - if correspondence.contact_method == 'Phone call'
-                td.govuk-table__cell = "#{correspondence.contact_method}: #{correspondence.phone_number}"
+              - if correspondence.contact_method == 'email'
+                td.govuk-table__cell = "Email: #{correspondence.email_address}"
+              - if correspondence.contact_method == 'phone'
+                td.govuk-table__cell = "Phone call: #{correspondence.phone_number}"
             tr.govuk-table__row
               th.govuk-table__header scope="row" Correspondent date
               td.govuk-table__cell = correspondence.correspondence_date
@@ -75,5 +75,6 @@ p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-
               td.govuk-table__cell
                 - correspondence.documents&.each { |doc|
                 = doc.filename
-                = link_to render("documents/document_image", document: doc), doc, class: "document-link", target: "_blank"
+                = link_to render("documents/document_image", document: doc), doc, class: "document-link",
+                        target: "_blank"
                 - }

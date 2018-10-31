@@ -10,7 +10,7 @@ main#main-content.govuk-main-wrapper role="main"
       = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            | Who is the correspondance with?
+            | Who is the correspondence with?
           .govuk-form-group [class="govuk-!-width-two-thirds"]
             = form.label :correspondent_name, "Name", class: "govuk-label"
             = form.text_field :correspondent_name, class: "govuk-input"
@@ -33,44 +33,44 @@ main#main-content.govuk-main-wrapper role="main"
                 = form.label :correspondent_type, "Retailer", class: "govuk-label govuk-radios__label"
               .govuk-radios__item
                 = form.radio_button :correspondent_type, "Trading Standards / Other MSA", class: "govuk-radios__input"
-                = form.label :correspondent_type, "Trading Standards / Other MSA",\
+                = form.label :correspondent_type, "Trading Standards / Other MSA",
                         class: "govuk-label govuk-radios__label"
               .govuk-radios__item
-                = form.radio_button :correspondent_type, "Other", class: "govuk-radios__input",\
+                = form.radio_button :correspondent_type, "Other", class: "govuk-radios__input",
                         "data-aria-controls": "conditional-correspondent-type-other"
                 = form.label :correspondent_type, "Other", class: "govuk-label govuk-radios__label"
               #conditional-correspondent-type-other.govuk-radios__conditional.govuk-radios__conditional--hidden
                 .govuk-form-group
                   span#other-correspondent-hint.govuk-hint [class="govuk-!-width-two-thirds"]
                     | Please give details
-                  = form.text_field :other_correspondent_type, class: "govuk-input govuk-!-width-two-thirds",\
-                    "aria-describedby": "other-correspondent-hint"
+                  = form.text_field :other_correspondent_type, class: "govuk-input govuk-!-width-two-thirds",
+                          "aria-describedby": "other-correspondent-hint"
 
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | How?
           .govuk-form-group class=("govuk-form-group--error" if @correspondence.errors[:correspondent_type].any?)
             .govuk-radios.govuk-radios--conditional data-module="radios"
               .govuk-radios__item
-                = form.radio_button :contact_method, :phone, class: "govuk-radios__input", \
-                                      "data-aria-controls": "conditional-contact-phone"
+                = form.radio_button :contact_method, "phone", class: "govuk-radios__input",
+                        "data-aria-controls": "conditional-contact-phone"
                 = form.label :contact_method, "Phone call", class: "govuk-label govuk-radios__label"
               #conditional-contact-phone.govuk-radios__conditional.govuk-radios__conditional--hidden
                 .govuk-form-group
                   = form.label :phone_number, "Phone number", class: "govuk-label govuk-!-width-two-thirds"
                   span#conditional-contact-phone-hint.govuk-hint [class="govuk-!-width-two-thirds"]
                     | Please include any dialing codes etc
-                  = form.text_field :phone_number, class: "govuk-input govuk-!-width-two-thirds", \
-                                "aria-describedby": "other-correspondent-hint"
+                  = form.text_field :phone_number, class: "govuk-input govuk-!-width-two-thirds",
+                          "aria-describedby": "other-correspondent-hint"
 
               .govuk-radios__item
-                = form.radio_button :contact_method, :email, class: "govuk-radios__input", \
-                                                  "data-aria-controls": "conditional-contact-email"
+                = form.radio_button :contact_method, "email", class: "govuk-radios__input",
+                        "data-aria-controls": "conditional-contact-email"
                 = form.label :contact_method, "Email", class: "govuk-label govuk-radios__label"
               #conditional-contact-email.govuk-radios__conditional.govuk-radios__conditional--hidden
                 .govuk-form-group
                   = form.label :email_address, "Email address", class: "govuk-label govuk-!-width-two-thirds"
-                  = form.text_field :email_address, class: "govuk-input govuk-!-width-two-thirds", \
-                                            "aria-describedby": "other-correspondent-hint"
+                  = form.text_field :email_address, class: "govuk-input govuk-!-width-two-thirds",
+                          "aria-describedby": "other-correspondent-hint"
 
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | When?

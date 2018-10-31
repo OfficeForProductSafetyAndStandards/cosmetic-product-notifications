@@ -11,8 +11,8 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     logout
   end
 
-  test "first step should be type" do
-    assert_text("Who is the correspondance with?")
+  test "first step should be general info" do
+    assert_text("Who is the correspondence with?")
   end
 
   test "first step should be populated with reporter name from the flow" do
@@ -20,7 +20,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     click_on "Report an unsafe product"
     select_type_and_continue
     fill_name_and_continue
-    click_on "Add reporter correspondance"
+    click_on "Add reporter correspondence"
     assert_equal('Ben', find_field('correspondence[correspondent_name]').value)
   end
 
@@ -29,8 +29,8 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     click_on "Report an unsafe product"
     select_type_and_continue
     fill_email_and_continue
-    click_on "Add reporter correspondance"
-    assert_equal('aa@aa.aa', find_field('correspondence[email_address]').value)
+    click_on "Add reporter correspondence"
+    assert_equal('aa@aa.aa', find_field('correspondence[email_address]').value, visible: false)
   end
 
   test "first step should be populated with phone from the flow" do
@@ -38,8 +38,10 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     click_on "Report an unsafe product"
     select_type_and_continue
     fill_phone_and_continue
-    click_on "Add reporter correspondance"
-    assert_equal('12345678900', find_field('correspondence[phone_number]').value)
+    click_on "Add reporter correspondence"
+    assert_text("Who is the correspondence with?")
+
+    assert_equal('12345678900', find_field('correspondence[phone_number]').value, visible: false)
   end
 
   test "second step should be correspondence details" do
@@ -50,7 +52,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   test "third step should be confirmation" do
     click_button "Continue"
     click_button "Continue"
-    assert_text("Correspondant")
+    assert_text("Correspondent")
     assert_text("Method")
   end
 
@@ -58,7 +60,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     click_button "Continue"
     click_button "Continue"
     click_on "Edit details"
-    assert_text("Who is the correspondance with?")
+    assert_text("Who is the correspondence with?")
   end
 
   test "edit details should retain changed values" do
