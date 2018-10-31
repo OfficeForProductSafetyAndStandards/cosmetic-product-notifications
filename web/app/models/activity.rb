@@ -6,4 +6,9 @@ class Activity < ApplicationRecord
   def attached_image?
     nil
   end
+
+  def build_subtitle
+    p source
+    "#{subtitle_slug} by #{source.show}, #{created_at.strftime('%d %B %Y')}"
+  end
 end

@@ -8,7 +8,7 @@
               h3.govuk-heading-s
                 = activity.title
               p.govuk-body-s.timeline-details
-                = build_subtitle(activity)
+                = activity.build_subtitle
               - if activity.attached_image?
                 .govuk-grid-row
                   .govuk-grid-column-one-third
