@@ -15,13 +15,31 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     assert_text("Who is the correspondance with?")
   end
 
-  test "first step should be populated with reporter details from the flow" do
+  test "first step should be populated with reporter name from the flow" do
     visit root_path
     click_on "Report an unsafe product"
     select_type_and_continue
     fill_name_and_continue
     click_on "Add reporter correspondance"
     assert_equal('Ben', find_field('correspondence[correspondent_name]').value)
+  end
+
+  test "first step should be populated with email from the flow" do
+    visit root_path
+    click_on "Report an unsafe product"
+    select_type_and_continue
+    fill_email_and_continue
+    click_on "Add reporter correspondance"
+    assert_equal('aa@aa.aa', find_field('correspondence[email_address]').value)
+  end
+
+  test "first step should be populated with phone from the flow" do
+    visit root_path
+    click_on "Report an unsafe product"
+    select_type_and_continue
+    fill_phone_and_continue
+    click_on "Add reporter correspondance"
+    assert_equal('12345678900', find_field('correspondence[phone_number]').value)
   end
 
   test "second step should be correspondence details" do
@@ -75,6 +93,16 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
 
   def fill_name_and_continue
     fill_in("reporter[name]", with: "Ben")
+    click_button "Continue"
+  end
+
+  def fill_email_and_continue
+    fill_in("reporter[email_address]", with: "aa@aa.aa")
+    click_button "Continue"
+  end
+
+  def fill_phone_and_continue
+    fill_in("reporter[phone_number]", with: "12345678900")
     click_button "Continue"
   end
 end

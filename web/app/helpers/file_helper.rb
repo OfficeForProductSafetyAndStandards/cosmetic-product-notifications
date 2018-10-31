@@ -7,12 +7,14 @@ module FileHelper
   def save_file
     documents = @correspondence.documents.attach(correspondence_params[:file])
     @document = documents.last
+    @document.blob.metadata["updated"] = Time.current
     @document.blob.save
     session[:file_id] = @document.blob_id
   end
 
   def load_file_by_id
     @document = ActiveStorage::Blob.find_by(id: session[:file_id])
-    @correspondence.documents.attach(@document)
+    documents=@correspondence.documents.attach(@document)
+    @document = documents.last
   end
 end
