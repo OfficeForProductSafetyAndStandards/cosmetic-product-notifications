@@ -1,9 +1,8 @@
 class ImagesController < ApplicationController
   include ImagesHelper
   include Wicked::Wizard
-  steps :step_upload, :step_metadata
+  steps :upload, :metadata
   skip_before_action :setup_wizard, only: %i[edit destroy]
-  skip_before_action :verify_authenticity_token, only: :create
 
   before_action :set_parent
   before_action :set_image, only: %i[show update edit create destroy]
@@ -54,7 +53,7 @@ class ImagesController < ApplicationController
     return render step if session[:errors].present?
 
     update_image
-    redirect_to next_wizard_path if step == :step_upload
+    redirect_to next_wizard_path if step == :upload
   end
 
   # DELETE /images/1
@@ -105,7 +104,7 @@ private
 
   def validate
     session[:errors] = nil
-    if image_params[:title].blank? && step != :step_upload
+    if image_params[:title].blank? && step != :upload
       session[:errors] = (session[:errors] || []).push(field: "title", message: "Title can't be blank")
     end
   end

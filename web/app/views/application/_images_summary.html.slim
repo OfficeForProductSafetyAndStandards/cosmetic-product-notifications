@@ -1,5 +1,4 @@
 - if parent.images.attached?
-  / TODO: Pagination if we decide it's needed
   - parent.images.attachments.each do |image|
     .govuk-grid-row[class="govuk-!-padding-bottom-6"]
       .govuk-grid-column-one-third
@@ -10,9 +9,9 @@
         span.govuk-caption-m[class="govuk-!-font-size-16"]
           = "Updated #{image.blob.metadata[:updated]&.to_date}"
         br
-        p.govuk-body
+        p
           = image.blob.metadata[:description]
-        p.govuk-body
+        p
           = link_to "View full image", image, class: "govuk-link mspsds-block-link", target: '_blank'
           = link_to "Edit image details or delete", edit_associated_image_path(parent, image),
                   class: "govuk-link mspsds-block-link"
