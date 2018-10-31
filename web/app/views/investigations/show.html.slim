@@ -23,7 +23,13 @@
           | Risk Level
         - if @investigation.hazard.risk_level?
           = @investigation.hazard.risk_level.titleize
+      .govuk-grid-column-half
       = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
+      .govuk-grid-column-half
+      - if @investigation.hazard.risk_assessment.attached?
+        = link_to "View assessment", @investigation.hazard.risk_assessment, target: "_blank"
+      - else
+        | Add risk assessment
   p
     = @investigation.hazard&.description
 - else

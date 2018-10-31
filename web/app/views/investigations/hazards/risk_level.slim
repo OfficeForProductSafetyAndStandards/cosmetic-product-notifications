@@ -7,14 +7,16 @@ h1.govuk-heading-xl
   | Update risk level
 = form_with(model: @hazard, local: true, url: update_risk_level_investigation_hazards_path, method: :post) do |form|
   fieldset.govuk-fieldset
+    h4.govuk-fieldset__legend--l
+      | Risk level
     .govuk-form-group
-      h4.govuk-label
-        | Risk level
-        .govuk-radios
+      .govuk-radios
         - Hazard.risk_levels.each do |(level, _)|
           .govuk-radios__item
             = form.radio_button :risk_level, level, class: "govuk-radios__input"
             = form.label :risk_level, level.humanize.capitalize, class: "govuk-label govuk-radios__label"
-
+        h4.govuk-fieldset__legend--l
+          | Add risk assessment
+        = form.file_field :risk_assessment, class: "govuk-file-upload"
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"

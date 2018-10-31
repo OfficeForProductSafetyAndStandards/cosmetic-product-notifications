@@ -63,7 +63,7 @@ private
     return {} if params[:hazard].blank?
 
     params.require(:hazard).permit(
-      :hazard_type, :description, :affected_parties, :risk_level
+      :hazard_type, :description, :affected_parties, :risk_level, :risk_assessment
     )
   end
 end
