@@ -2,16 +2,14 @@ inherit_gem:
   govuk-lint: configs/rubocop/all.yml
 
 AllCops:
-  Include:
-    - 'app/**/*.rb'
-    - 'db/**/*.rb'
-    - 'lib/**/*.rb'
-    - 'lib/**/*.rake'
-    - 'test/**/*.rb'
-  
   Exclude:
-    - 'bin/*'
-    - db/schema.rb
+    - 'app/**/*.axlsx'
+    - 'bin/**/*'
+    - 'coverage/**/*'
+    - 'db/schema.rb'
+    - 'log/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
 
 Rails:
   Enabled: true

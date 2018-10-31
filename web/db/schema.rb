@@ -70,17 +70,6 @@ ActiveRecord::Schema.define(version: 2018_10_29_160253) do
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
-  create_table "hazards", force: :cascade do |t|
-    t.string "affected_parties"
-    t.datetime "created_at", null: false
-    t.string "description"
-    t.string "hazard_type"
-    t.integer "investigation_id"
-    t.integer "risk_level"
-    t.datetime "updated_at", null: false
-    t.index ["investigation_id"], name: "index_hazards_on_investigation_id"
-  end
-
   create_table "correspondences", force: :cascade do |t|
     t.string "contact_method"
     t.date "correspondence_date"
@@ -94,6 +83,17 @@ ActiveRecord::Schema.define(version: 2018_10_29_160253) do
     t.string "phone_number"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_correspondences_on_investigation_id"
+  end
+
+  create_table "hazards", force: :cascade do |t|
+    t.string "affected_parties"
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.string "hazard_type"
+    t.integer "investigation_id"
+    t.integer "risk_level"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_hazards_on_investigation_id"
   end
 
   create_table "incidents", id: :serial, force: :cascade do |t|
@@ -197,8 +197,8 @@ ActiveRecord::Schema.define(version: 2018_10_29_160253) do
 
   add_foreign_key "activities", "investigations"
   add_foreign_key "addresses", "businesses"
-  add_foreign_key "hazards", "investigations"
   add_foreign_key "correspondences", "investigations"
+  add_foreign_key "hazards", "investigations"
   add_foreign_key "incidents", "investigations"
   add_foreign_key "reporters", "investigations"
 end

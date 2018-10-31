@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   concern :document_attachable do
     resources :documents
@@ -69,8 +70,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: %i[index]
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
 
   root to: redirect(path: "/investigations")
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
+# rubocop:enable Metrics/BlockLength
