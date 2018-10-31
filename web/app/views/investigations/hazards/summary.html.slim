@@ -32,7 +32,8 @@ h1.govuk-heading-xl
         th.govuk-table__header
           | Risk assessment
         td.govuk-table__cell
-          = @hazard.risk_assessment.filename
+          - if @hazard.risk_assessment.attached?
+            = @hazard&.risk_assessment.filename
   = form_with(model: @hazard, local: true,
               url: investigation_hazards_path(@investigation), method: :post) do |form|
     = form.submit "Save", class: "govuk-button"
