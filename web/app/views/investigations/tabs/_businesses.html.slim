@@ -4,9 +4,9 @@
   .govuk-grid-column-two-thirds
     - if @investigation.businesses.any?
       - @investigation.businesses.each do |business|
-        / TODO MSPSDS-518 Add roles to businesses
-        h3.govuk-heading-m Manufacturer
-        = render "business_summary", business: business, allow_removing: false
+        h3.govuk-heading-m
+          = business.investigation_businesses.find_by(investigation_id: @investigation.id).relationship.titleize
+        = render "business_summary", business: business
     - else
       p
         | No businesses.

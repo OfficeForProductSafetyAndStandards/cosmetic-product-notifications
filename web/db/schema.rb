@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_124704) do
+ActiveRecord::Schema.define(version: 2018_10_29_160253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_124704) do
     t.integer "business_id"
     t.datetime "created_at", null: false
     t.integer "investigation_id"
+    t.integer "relationship", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["business_id"], name: "index_investigation_businesses_on_business_id"
     t.index ["investigation_id", "business_id"], name: "index_on_investigation_id_and_business_id", unique: true

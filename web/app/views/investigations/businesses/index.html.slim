@@ -9,6 +9,8 @@ p
 div[class="govuk-!-padding-top-8"]
   - if @investigation.businesses.any?
     - @investigation.businesses.each do |business|
+      h3.govuk-heading-m
+        = business.investigation_businesses.find_by(investigation_id: @investigation.id).relationship.titleize
       = render layout: "business_summary", locals: { business: business } do
         .govuk-form-group
           p
