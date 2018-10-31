@@ -7,8 +7,7 @@ class Activity < ApplicationRecord
     nil
   end
 
-  def build_subtitle
-    p source
+  def subtitle
     "#{subtitle_slug} by #{source.show}, #{created_at.strftime('%d %B %Y')}"
   end
 end
