@@ -39,18 +39,13 @@ class InvestigationsController < ApplicationController
 
   # POST /investigations/1/update_assignee
   def update_assignee
-    new_assignee = User.find_by(id: params[:assignee_id])
-    assignee_changed = @investigation.new_assignee? new_assignee
-    @investigation.assignee = new_assignee if assignee_changed
+    @investigation.assignee = User.find_by(id: params[:assignee_id])
     respond_to do |format|
-      if new_assignee && @investigation.save
+      if @investigation.save
         format.html { redirect_to @investigation, notice: "Assignee was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
-        if assignee_changed
-          NotifyMailer.assigned_investigation(@investigation, @investigation.assignee.full_name, @investigation.assignee.email).deliver_later
-        end
       else
-        @investigation.errors.add(:assignee, "must not be left blank")
+        @investigation.restore_attributes
         format.html { render :assign }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end
