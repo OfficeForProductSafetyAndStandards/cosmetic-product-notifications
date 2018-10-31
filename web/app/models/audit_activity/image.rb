@@ -3,7 +3,7 @@ class AuditActivity::Image < AuditActivity
 
   private_class_method def self.from(image, investigation, title)
                          activity = self.create(
-                             description: image.metadata[:description],
+                             body: image.metadata[:description],
                              source: UserSource.new(user: current_user),
                              investigation: investigation,
                              title: title)

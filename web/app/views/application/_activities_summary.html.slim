@@ -14,10 +14,10 @@
                   .govuk-grid-column-one-third
                     = image_tag activity.image.variant(resize: "100x100"), alt: activity.image.metadata["title"]
                   .govuk-grid-colun-two-thirds
-                    = markdown activity.description if activity.description
+                    = markdown activity.body if activity.body
               - else
                 p
-                  = markdown activity.description if activity.description
+                  = markdown activity.body if activity.body
                   = link_to "View business details", business_url(activity.business_id) if activity.business_id
                   = link_to "View product details", product_url(activity.product_id) if activity.product_id
           li

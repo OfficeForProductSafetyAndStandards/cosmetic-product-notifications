@@ -59,7 +59,7 @@ class Investigation < ApplicationRecord
   def create_audit_activity_for_product product
     AddProductAuditActivity.create(
         product: product,
-        description: product.description,
+        body: product.description,
         source: UserSource.new(user: current_user),
         investigation: self,
         title: product.name)
@@ -67,7 +67,7 @@ class Investigation < ApplicationRecord
 
   def create_audit_activity_for_business business
     AddBusinessAuditActivity.create(
-        description: "Role: **Distributor**",
+        body: "Role: **Distributor**",
         business: business,
         source: UserSource.new(user: current_user),
         investigation: self,

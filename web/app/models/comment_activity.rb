@@ -1,3 +1,3 @@
 class CommentActivity < Activity
-  validates :description, presence: true
+  validates :body, presence: true
 end
