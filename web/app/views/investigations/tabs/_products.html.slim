@@ -1,9 +1,13 @@
+= link_to "Add product", new_investigation_product_url(@investigation), class: "no-print mspsds-block-link"
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
     - if @investigation.products.any?
       - @investigation.products.each do |product|
-        = render "product_summary", product: product
+        = render "product_summary", product: product do
+          p
+            = link_to "View product", product, class: "govuk-link mspsds-block-link"
+            = link_to "Remove from this case", investigation_product_path(@investigation, product), method: :delete, \
+                data: { confirm: "Are you sure?" }, class: "govuk-button"
     - else
       p
         | No products.
-    = link_to "Manage products", investigation_products_path(@investigation), class: "no-print"

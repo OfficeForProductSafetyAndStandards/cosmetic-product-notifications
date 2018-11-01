@@ -2,13 +2,10 @@ class Investigations::ProductsController < ApplicationController
   include CountriesHelper
   include ProductsHelper
 
-  before_action :set_investigation, only: %i[index new create suggested add destroy]
-  before_action :set_product, only: %i[destroy]
+  before_action :set_investigation, only: %i[new create suggested link destroy]
+  before_action :set_product, only: %i[destroy link]
   before_action :create_product, only: %i[new create suggested]
   before_action :set_countries, only: %i[new]
-
-  # GET /investigations/1/products
-  def index; end
 
   # GET /investigations/1/products/new
   def new;
@@ -16,10 +13,10 @@ class Investigations::ProductsController < ApplicationController
     @products = advanced_product_search(@product, excluded_product_ids)
   end
 
-  # POST /investigations/1/products/add
-  def add
-    @investigation.products << Product.find(params[:product_id])
-    redirect_to @investigation, notice: "Product was successfully added."
+  # PUT /investigations/1/products/2/link
+  def link
+    @investigation.products << @product
+    redirect_to @investigation, notice: "Product was successfully linked."
   end
 
   # GET /investigations/1/products/suggested
