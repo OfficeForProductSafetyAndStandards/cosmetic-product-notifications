@@ -51,10 +51,8 @@ private
       @hazard = Hazard.new
       @hazard.investigation = @investigation
     end
-
     @hazard.assign_attributes(session[:hazard] || {})
     @hazard.assign_attributes(hazard_params || {})
-
     session[:hazard] = @hazard.attributes
   end
 
@@ -62,8 +60,11 @@ private
   def hazard_params
     return {} if params[:hazard].blank?
 
+    if params[:hazard][:set_risk_level] == "none"
+      params[:hazard][:risk_level] = params[:hazard][:set_risk_level]
+    end
     params.require(:hazard).permit(
-      :hazard_type, :description, :affected_parties, :risk_level, :risk_assessment
+      :hazard_type, :description, :affected_parties, :risk_level, :risk_assessment, :set_risk_level
     )
   end
 end
