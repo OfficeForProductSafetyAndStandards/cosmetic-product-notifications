@@ -75,6 +75,32 @@ ActiveRecord::Schema.define(version: 2018_10_31_152617) do
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
+  create_table "correspondences", force: :cascade do |t|
+    t.string "contact_method"
+    t.date "correspondence_date"
+    t.string "correspondent_name"
+    t.string "correspondent_type"
+    t.datetime "created_at", null: false
+    t.text "details"
+    t.string "email_address"
+    t.integer "investigation_id"
+    t.string "overview"
+    t.string "phone_number"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_correspondences_on_investigation_id"
+  end
+
+  create_table "hazards", force: :cascade do |t|
+    t.string "affected_parties"
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.string "hazard_type"
+    t.integer "investigation_id"
+    t.integer "risk_level"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_hazards_on_investigation_id"
+  end
+
   create_table "incidents", id: :serial, force: :cascade do |t|
     t.string "affected_party"
     t.datetime "created_at", null: false
@@ -91,6 +117,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_152617) do
     t.integer "business_id"
     t.datetime "created_at", null: false
     t.integer "investigation_id"
+    t.integer "relationship", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["business_id"], name: "index_investigation_businesses_on_business_id"
     t.index ["investigation_id", "business_id"], name: "index_on_investigation_id_and_business_id", unique: true
@@ -111,10 +138,9 @@ ActiveRecord::Schema.define(version: 2018_10_31_152617) do
     t.uuid "assignee_id"
     t.datetime "created_at", null: false
     t.text "description"
+    t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
-    t.integer "risk_level"
-    t.string "risk_overview"
-    t.integer "sensitivity"
+    t.string "question_type"
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
@@ -167,6 +193,8 @@ ActiveRecord::Schema.define(version: 2018_10_31_152617) do
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "products"
   add_foreign_key "addresses", "businesses"
+  add_foreign_key "correspondences", "investigations"
+  add_foreign_key "hazards", "investigations"
   add_foreign_key "incidents", "investigations"
   add_foreign_key "reporters", "investigations"
 end

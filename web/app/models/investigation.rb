@@ -3,6 +3,11 @@ class Investigation < ApplicationRecord
   include Documentable
   include UserService
 
+  validates :title, presence: true, on: :question_details
+  validate :validate_assignment
+
+  after_save :send_assignee_email
+
   index_name [Rails.env, "investigations"].join("_")
 
   settings do
@@ -25,17 +30,16 @@ class Investigation < ApplicationRecord
 
   has_many :incidents, dependent: :destroy
 
+  has_many :correspondences, dependent: :destroy
+
   has_many_attached :documents
   has_many_attached :images
 
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :reporter, dependent: :destroy
+  has_one :hazard, dependent: :destroy
 
   after_create :create_audit_activity_for_case
-
-  enum risk_level: %i[low medium serious severe], _suffix: true
-
-  enum sensitivity: %i[low medium high], _suffix: true
 
   def as_indexed_json(*)
     as_json.merge(status: status.downcase)
@@ -54,7 +58,7 @@ class Investigation < ApplicationRecord
     AddCaseAuditActivity.create(
       source: UserSource.new(user: current_user),
       investigation: self
-)
+    )
   end
 
   def create_audit_activity_for_product product
@@ -64,7 +68,7 @@ class Investigation < ApplicationRecord
       source: UserSource.new(user: current_user),
       investigation: self,
       title: product.name
-)
+    )
   end
 
   def create_audit_activity_for_business business
@@ -74,7 +78,21 @@ class Investigation < ApplicationRecord
       source: UserSource.new(user: current_user),
       investigation: self,
       title: business.company_name
-)
+    )
+  end
+
+private
+
+  def validate_assignment
+    if !new_record? && !assignee
+      errors.add(:investigation, "cannot be unassigned")
+    end
+  end
+
+  def send_assignee_email
+    if saved_changes.key? :assignee_id
+      NotifyMailer.assigned_investigation(self, assignee.full_name, assignee.email).deliver_later
+    end
   end
 end
 

@@ -3,9 +3,11 @@ version: '3'
 services:
   keycloak:
     environment:
-      - NOTIFY_API_KEY=${NOTIFY_API_KEY}
+      - NOTIFY_API_KEY='fake-key'
+    image: ${DOCKER_USERNAME}/keycloak:${TRAVIS_BUILD_NUMBER}
   web:
     command: tail -f /dev/null
+    image: ${DOCKER_USERNAME}/web:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
       - ~/npm-cache:/root/.npm
@@ -15,8 +17,21 @@ services:
       - TRAVIS_BRANCH
       - TRAVIS_JOB_ID
       - TRAVIS_PULL_REQUEST
-      - COMPANIES_HOUSE_API_KEY='not-a-key-but-fools-client-into-not-exploding'
+      - COMPANIES_HOUSE_API_KEY='fake-key'
   worker:
     command: tail -f /dev/null
+    image: ${DOCKER_USERNAME}/worker:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
+  cosmetics-web:
+    image: ${DOCKER_USERNAME}/cosmetics-web:${TRAVIS_BUILD_NUMBER}
+  db:
+    image: ${DOCKER_USERNAME}/db:${TRAVIS_BUILD_NUMBER}
+  elasticsearch:
+    image: ${DOCKER_USERNAME}/elasticsearch:${TRAVIS_BUILD_NUMBER}
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - elasticsearch
+      - keycloak
+    command: elasticsearch:9200 keycloak:8080

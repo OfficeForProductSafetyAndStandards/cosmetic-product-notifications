@@ -12,22 +12,10 @@ def aws_elasticsearch_client
   end
 end
 
-def local_elasticsearch_client
-  config = {
-    host: "elasticsearch",
-    transport_options: {
-      request: { timeout: 5 }
-    }
-  }
-
-  Elasticsearch::Client.new(config)
-end
-
+# TODO re-enable PaaS elasticsearch.
+# We should remove the aws_elasticsearch_client method and just use the values from elasticsearch.yml for all environments
 Elasticsearch::Model.client = if Rails.env.production?
                                 aws_elasticsearch_client
                               else
-                                local_elasticsearch_client
+                                Elasticsearch::Client.new(Rails.application.config_for(:elasticsearch))
                               end
-
-# TODO re-enable PaaS elasticsearch. The contents of this file should be as follows:
-# Elasticsearch::Model.client = Elasticsearch::Client.new(Rails.application.config_for(:elasticsearch))

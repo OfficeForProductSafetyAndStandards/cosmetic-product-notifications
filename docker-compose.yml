@@ -46,6 +46,17 @@ services:
       - db
       - elasticsearch
       - redis
+  cosmetics-web:
+    build:
+      context: .
+      dockerfile: ./cosmetics-web/Dockerfile
+    volumes:
+      - bundle-cache:/usr/local/bundle
+      - npm-cache:/root/.npm
+      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+      - ${PWD-.}/cosmetics-web:/app
+    depends_on:
+      - db
   worker:
     build:
       context: .

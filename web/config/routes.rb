@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   concern :document_attachable do
     resources :documents
@@ -19,10 +20,12 @@ Rails.application.routes.draw do
     member do
       get :status
       get :assign
+      get :confirmation
       post :update_assignee
     end
     collection do
       resources :report, controller: "investigations/report", only: %i[show new create update]
+      resources :question, controller: "investigations/question", only: %i[show new create update]
     end
     resources :activities, only: %i[index new create]
     resources :products, only: %i[index new create destroy], controller: "investigations/products" do
@@ -38,7 +41,14 @@ Rails.application.routes.draw do
         post :companies_house
       end
     end
+    resources :hazards, controller: "investigations/hazards", only: %i[new create show update] do
+      collection do
+        get :risk_level
+        post :update_risk_level
+      end
+    end
 
+    resources :correspondences, only: %i[show new create update], controller: "investigations/correspondence"
     resources :incidents, controller: "investigations/incidents", only: %i[new create show update]
   end
 
@@ -60,8 +70,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: %i[index]
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
 
   root to: redirect(path: "/investigations")
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
+# rubocop:enable Metrics/BlockLength

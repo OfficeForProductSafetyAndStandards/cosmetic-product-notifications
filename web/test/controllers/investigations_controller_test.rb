@@ -5,6 +5,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as_admin
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
+    @investigation.hazard = hazards(:one)
     Investigation.import
   end
 
@@ -46,33 +47,20 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_investigation_url(@investigation)
-    assert_response :success
-  end
-
-  test "should update investigation" do
-    patch investigation_url(@investigation), params: {
-      investigation: {
-        title: @investigation.title,
-        description: @investigation.description,
-        is_closed: @investigation.is_closed,
-        source: @investigation.source,
-      }
-    }
-    assert_redirected_to investigation_url(@investigation)
-  end
-
-  test "should destroy investigation" do
-    assert_difference("Investigation.count", -1) do
-      delete investigation_url(@investigation)
-    end
-    assert_redirected_to investigations_url
-  end
-
   test "redirect to investigation path if attempted to assign a person to closed investigation" do
     investigation = investigations(:three)
     get assign_investigation_url(investigation)
     assert_redirected_to investigation_path(investigation)
+  end
+
+  test "should assign user to investigation" do
+    id = User.first.id
+    investigation_assignee_id = lambda { Investigation.find(@investigation.id).assignee_id }
+    assert_changes investigation_assignee_id, from: nil, to: id do
+      post update_assignee_investigation_url @investigation, params: {
+        assignee_id: id
+      }
+    end
+    assert_redirected_to investigation_url(@investigation)
   end
 end

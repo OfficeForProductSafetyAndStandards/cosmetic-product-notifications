@@ -43,3 +43,30 @@ table.govuk-table
         td.govuk-table__cell = @investigation.reporter&.other_details
 p = link_to "Record an incident", new_investigation_incident_path(@investigation), class: "no-print"
 p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
+
+/ TODO: MSPSDS-620, make sure this display is compliant with designs
+- if @investigation.correspondences.any?
+    h2.govuk-heading-m Correspondence
+    ul.govuk-list
+      - @investigation.correspondences.each do |correspondence|
+        table.govuk-table
+          tbody.govuk-table__body
+            | Correspondence details:
+            tr.govuk-table__row
+              th.govuk-table__header scope="row" Correspondent name
+              td.govuk-table__cell = correspondence.correspondent_name
+            tr.govuk-table__row
+              th.govuk-table__header scope="row" Contact method
+              - if correspondence.contact_method == 'Email'
+                td.govuk-table__cell = "#{correspondence.contact_method}: #{correspondence.email_address}"
+              - if correspondence.contact_method == 'Phone call'
+                td.govuk-table__cell = "#{correspondence.contact_method}: #{correspondence.phone_number}"
+            tr.govuk-table__row
+              th.govuk-table__header scope="row" Correspondent name
+              td.govuk-table__cell = correspondence.correspondence_date
+            tr.govuk-table__row
+              th.govuk-table__header scope="row" Overview
+              td.govuk-table__cell = correspondence.overview
+            tr.govuk-table__row
+              th.govuk-table__header scope="row" Details
+              td.govuk-table__cell = correspondence.details
