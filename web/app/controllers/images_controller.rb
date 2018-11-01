@@ -47,9 +47,9 @@ private
   end
 
   def validate
-    @errors = nil
+    @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
     if image_params[:title].blank?
-      @errors = (@errors || []).push(field: "title", message: "Title can't be blank")
+      @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
   end
 end
