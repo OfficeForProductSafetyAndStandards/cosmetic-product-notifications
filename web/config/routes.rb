@@ -34,11 +34,13 @@ Rails.application.routes.draw do
         post :add
       end
     end
-    resources :businesses, only: %i[index new create destroy], controller: "investigations/businesses" do
+    resources :businesses, only: %i[new create destroy], controller: "investigations/businesses" do
       collection do
         get :suggested
-        post :add
         post :companies_house
+      end
+      member do
+        put :link
       end
     end
     resources :hazards, controller: "investigations/hazards", only: %i[new create show update] do
@@ -55,8 +57,8 @@ Rails.application.routes.draw do
   resources :businesses do
     collection do
       get :confirm_merge
-      get :search
       post :merge
+      get :suggested
       post :companies_house
     end
     resources :addresses, shallow: true

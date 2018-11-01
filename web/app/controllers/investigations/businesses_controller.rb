@@ -1,12 +1,9 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
 
-  before_action :set_investigation, only: %i[index new create suggested add companies_house destroy]
-  before_action :set_business, only: %i[destroy]
+  before_action :set_investigation, only: %i[new create suggested link companies_house destroy]
+  before_action :set_business, only: %i[destroy link]
   before_action :create_business, only: %i[create new suggested]
-
-  # GET /investigations/1/businesses
-  def index; end
 
   # GET /investigations/1/businesses/new
   def new
@@ -17,13 +14,13 @@ class Investigations::BusinessesController < ApplicationController
   def suggested
     excluded_business_ids = params[:excluded_businesses].split(",").map(&:to_i)
     advanced_search(excluded_business_ids)
-    render partial: "businesses/search_results"
+    render partial: "businesses/suggested"
   end
 
-  # POST /investigations/1/businesses/add
-  def add
-    @investigation.businesses << Business.find(params[:business_id])
-    redirect_to_investigation_businesses_tab "Business was successfully added."
+  # PUT /investigations/1/businesses/2/link
+  def link
+    @investigation.businesses << @business
+    redirect_to_investigation_businesses_tab "Business was successfully linked."
   end
 
   # POST /businesses/companies_house
