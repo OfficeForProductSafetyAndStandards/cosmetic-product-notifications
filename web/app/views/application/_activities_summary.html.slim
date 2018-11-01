@@ -12,7 +12,7 @@
               - if activity.attached_image?
                 .govuk-grid-row
                   .govuk-grid-column-one-third
-                    = image_tag activity.image.variant(resize: "100x100"), alt: activity.image.metadata["title"]
+                    = render "images/image_tag", image: activity.image, dimensions: "100x100", alt: activity.image.metadata["title"], class_name: "product-image"
                   .govuk-grid-colun-two-thirds
                     = markdown activity.body if activity.body
               - else
