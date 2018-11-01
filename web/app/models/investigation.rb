@@ -1,3 +1,5 @@
+require_dependency 'audit_activity/business'
+
 class Investigation < ApplicationRecord
   include Searchable
   include Documentable
@@ -72,14 +74,7 @@ class Investigation < ApplicationRecord
   end
 
   def create_audit_activity_for_business business
-    relationship = investigation_businesses.find_by(business_id: business.id).relationship
-    AddBusinessAuditActivity.create(
-      body: "Role: **#{relationship.titleize}**",
-      business: business,
-      source: UserSource.new(user: current_user),
-      investigation: self,
-      title: business.company_name
-    )
+    ::AuditActivity::Business::Add.from(business, self)
   end
 
 private

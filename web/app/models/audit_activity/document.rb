@@ -4,9 +4,9 @@ class AuditActivity::Document < AuditActivity
   private_class_method def self.from(document, investigation, title)
     activity = self.create(
       body: document.metadata[:description],
-        source: UserSource.new(user: current_user),
-        investigation: investigation,
-        title: title
+      source: UserSource.new(user: current_user),
+      investigation: investigation,
+      title: title
     )
     activity.document.attach document.blob
   end
