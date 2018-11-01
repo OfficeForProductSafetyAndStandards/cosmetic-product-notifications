@@ -14,7 +14,7 @@ class ImagesFlowController < ApplicationController
 
   # GET /images/new
   def new;
-    session[:image_id] = nil
+    clear_session
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
@@ -30,8 +30,8 @@ class ImagesFlowController < ApplicationController
 private
 
   def set_image
-    if session[:image_id]
-      @image = @parent.images.find(session[:image_id])
+    if session[:image_blob_id]
+      @image_blob = ActiveStorage::Blob.find_by(id: session[:image_blob_id])
     else
       create_image
     end

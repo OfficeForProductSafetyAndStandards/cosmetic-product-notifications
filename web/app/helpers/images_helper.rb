@@ -22,15 +22,19 @@ module ImagesHelper
 
   def create_image
     if image_params.present?
-      @images = @parent.images.attach(image_params[:file])
-      @image = @images.last
-      session[:image_id] = @image.id
+      @image_blob = ActiveStorage::Blob.create_after_upload!(
+        io: image_params[:file],
+        filename: image_params[:file].original_filename,
+        content_type: image_params[:file].content_type
+      )
+      session[:image_blob_id] = @image_blob.id
+      @image_blob.analyze_later
     end
   end
 
   def update_image
-    @image.blob.metadata.update(image_params)
-    @image.blob.metadata["updated"] = Time.current
+    @image_blob.metadata.update(image_params)
+    @image_blob.metadata["updated"] = Time.current
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -38,5 +42,9 @@ module ImagesHelper
     return {} if params[:image].blank?
 
     params.require(:image).permit(:file, :title, :description)
+  end
+
+  def clear_session
+    session[:image_blob_id] = nil
   end
 end
