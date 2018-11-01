@@ -23,21 +23,21 @@ class Investigations::BusinessesController < ApplicationController
   # POST /investigations/1/businesses/add
   def add
     @investigation.businesses << Business.find(params[:business_id])
-    redirect_to @investigation, notice: "Business was successfully added."
+    redirect_to_investigation_businesses_tab "Business was successfully added."
   end
 
   # POST /businesses/companies_house
   def companies_house
     @business = CompaniesHouseClient.instance.create_business_from_companies_house_number params[:company_number]
     @investigation.businesses << @business
-    redirect_to @investigation, notice: "Business was successfully added."
+    redirect_to_investigation_businesses_tab "Business was successfully added."
   end
 
   # POST /investigations/1/businesses
   def create
     respond_to do |format|
       if @investigation.businesses << @business
-        format.html { redirect_to @investigation, notice: "Business was successfully created." }
+        format.html { redirect_to_investigation_businesses_tab "Business was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
         format.html { render :new }
@@ -59,6 +59,10 @@ class Investigations::BusinessesController < ApplicationController
   end
 
 private
+
+  def redirect_to_investigation_businesses_tab(notice)
+    redirect_to investigation_path(@investigation, anchor: "businesses"), notice: notice
+  end
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])

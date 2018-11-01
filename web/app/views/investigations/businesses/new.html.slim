@@ -1,4 +1,4 @@
-- content_for :page_title, "Add business to case - Market Surveillance & Product Safety"
+- content_for :page_title, "Add business to case"
 - content_for :after_header do
   = link_to "Back to case", @investigation, class: "govuk-back-link"
 .investigation-business-page.businesses-search-form{ data-investigation-id=@investigation.id
@@ -8,8 +8,8 @@
     | Add business
   .govuk-grid-row
     .govuk-grid-column-one-half
-      = form_with(model: @business, url: investigation_businesses_path(@investigation), local: true, method: :post) \
-          do |form|
+      = form_with(model: @business, url: investigation_businesses_path(@investigation), local: true, method: :post,
+              html: { autocomplete: :off }) do |form|
         h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
           | Business details
         = render "businesses/form", form: form, business: @business, search: true
