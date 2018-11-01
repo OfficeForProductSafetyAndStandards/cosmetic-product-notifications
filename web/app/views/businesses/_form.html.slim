@@ -1,4 +1,4 @@
-= render "form_validation_display", validated_object: business
+= render "form_validation_display", errors: business.errors
 - if business.from_companies_house?
   p
     | Some data is set by companies house and is therefore non-editable

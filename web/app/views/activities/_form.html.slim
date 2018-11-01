@@ -1,6 +1,6 @@
 = form_with(model: [investigation, activity], url: investigation_activities_path(investigation, activity), \
     scope: :activity, local: true) do |form|
-  = render "form_validation_display", validated_object: activity
+  = render "form_validation_display", errors: activity.errors
   .govuk-form-group
     = form.label :description, class: "govuk-label"
     = form.text_area :description, class: "govuk-textarea"

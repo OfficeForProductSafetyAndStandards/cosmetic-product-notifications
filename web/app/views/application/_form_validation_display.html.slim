@@ -1,21 +1,10 @@
 / For active record validation
-- if defined?(validated_object) && validated_object&.errors&.any?
-  #error_explanation
-    h2.govuk-heading-l.govuk-error-message
-      = pluralize(validated_object.errors.count, "error ")
-      | prohibited this case from being saved:
-    ul.govuk-list.govuk-error-message
-      - validated_object.errors.full_messages.each do |message|
-        li
-          = message
-
-/ For our own validation, active storage doesn't allow us to add errors to its objects
-- elsif defined?(errors) && errors&.any?
+- if errors&.any?
   #error_explanation
     h2.govuk-heading-l.govuk-error-message
       = pluralize(errors.count, "error ")
       | prohibited this case from being saved:
     ul.govuk-list.govuk-error-message
-      - errors.each do |error|
+      - errors.full_messages.each do |message|
         li
-          = error["message"]
+          = message
