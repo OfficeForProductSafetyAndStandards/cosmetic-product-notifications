@@ -2,21 +2,29 @@ class ImagesController < ApplicationController
   include ImagesHelper
 
   before_action :set_parent
-  before_action :set_image, only: %i[edit create]
+  before_action :set_image, only: %i[edit update create]
 
   # GET /images/1/edit
   def edit; end
+
+  # PATCH/PUT /images/1
+  # PATCH/PUT /images/1.json
+  def update
+    validate
+    return render if @errors.present?
+
+    update_image
+    @image_blob.save
+    redirect_to @parent
+  end
 
   # POST /images
   # POST /images.json
   def create
     validate
-    return redirect_to request.referer if session[:errors].present?
+    return redirect_to request.referer if @errors.present?
 
-    update_image
-    attach_if_new
-    @image_blob.save
-    redirect_to @parent
+    save_image
   end
 
   # DELETE /images/1
@@ -39,15 +47,9 @@ private
   end
 
   def validate
-    session[:errors] = nil
+    @errors = nil
     if image_params[:title].blank?
-      session[:errors] = (session[:errors] || []).push(field: "title", message: "Title can't be blank")
-    end
-  end
-
-  def attach_if_new
-    if @parent.images.attachments.map(&:blob_id).exclude?(@image_blob.id)
-      @parent.images.attach(@image_blob)
+      @errors = (@errors || []).push(field: "title", message: "Title can't be blank")
     end
   end
 end

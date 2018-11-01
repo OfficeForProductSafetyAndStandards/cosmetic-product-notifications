@@ -1,9 +1,10 @@
 require "application_system_test_case"
 
 class ImageTest < ApplicationSystemTestCase
+  include ImagesHelper
   setup do
     sign_in_as_user
-    visit new_investigation_image_path(investigations(:one))
+    visit new_image_flow_path(investigations(:one))
   end
 
   teardown do

@@ -11,6 +11,10 @@ module ImagesHelper
     associated_images_path(parent) + "/new"
   end
 
+  def new_image_flow_path(parent)
+    associated_images_path(parent) + "/image_flow/new"
+  end
+
   def edit_associated_image_path(parent, image)
     associated_image_path(parent, image) + "/edit"
   end
@@ -35,6 +39,13 @@ module ImagesHelper
   def update_image
     @image_blob.metadata.update(image_params)
     @image_blob.metadata["updated"] = Time.current
+  end
+
+  def save_image
+    update_image
+    @parent.images.attach(@image_blob)
+    @image_blob.save
+    redirect_to @parent
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

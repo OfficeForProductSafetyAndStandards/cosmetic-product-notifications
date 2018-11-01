@@ -6,25 +6,22 @@ class ImagesFlowController < ApplicationController
   before_action :set_parent
   before_action :set_image, only: %i[show update]
 
-  # GET /images/1
-  # GET /images/1.json
   def show;
     render_wizard
   end
 
-  # GET /images/new
   def new;
     clear_session
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
-  # PATCH/PUT /images/1
-  # PATCH/PUT /images/1.json
   def update
     validate
-    return render step if session[:errors].present?
+    return render step if @errors.present?
 
-    redirect_to next_wizard_path if step == :upload
+    return redirect_to next_wizard_path if step != steps.last
+
+    save_image
   end
 
 private
@@ -38,9 +35,9 @@ private
   end
 
   def validate
-    session[:errors] = nil
+    @errors = nil
     if image_params[:title].blank? && step != :upload
-      session[:errors] = (session[:errors] || []).push(field: "title", message: "Title can't be blank")
+      @errors = (@errors || []).push(field: "title", message: "Title can't be blank")
     end
   end
 end
