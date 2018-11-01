@@ -72,8 +72,9 @@ class Investigation < ApplicationRecord
   end
 
   def create_audit_activity_for_business business
+    relationship = investigation_businesses.find_by(business_id: business.id).relationship
     AddBusinessAuditActivity.create(
-      body: "Role: **Distributor**",
+      body: "Role: **#{relationship.titleize}**",
       business: business,
       source: UserSource.new(user: current_user),
       investigation: self,
