@@ -1,4 +1,5 @@
 require_dependency 'audit_activity/business'
+require_dependency 'audit_activity/product'
 
 class Investigation < ApplicationRecord
   include Searchable
@@ -64,13 +65,7 @@ class Investigation < ApplicationRecord
   end
 
   def create_audit_activity_for_product product
-    AddProductAuditActivity.create(
-      product: product,
-      body: product.description,
-      source: UserSource.new(user: current_user),
-      investigation: self,
-      title: product.name
-    )
+    ::AuditActivity::Product::Add.from(product, self)
   end
 
   def create_audit_activity_for_business business
