@@ -3,6 +3,9 @@ class Investigation < ApplicationRecord
   include Documentable
 
   validates :title, presence: true, on: :question_details
+  validate :validate_assignment
+
+  after_save :send_assignee_email
 
   index_name [Rails.env, "investigations"].join("_")
 
@@ -48,6 +51,20 @@ class Investigation < ApplicationRecord
   def pretty_id
     id_string = id.to_s.rjust(8, '0')
     id_string.insert(4, "-")
+  end
+
+private
+
+  def validate_assignment
+    if !new_record? && !assignee
+      errors.add(:investigation, "cannot be unassigned")
+    end
+  end
+
+  def send_assignee_email
+    if saved_changes.key? :assignee_id
+      NotifyMailer.assigned_investigation(self, assignee.full_name, assignee.email).deliver_later
+    end
   end
 end
 
