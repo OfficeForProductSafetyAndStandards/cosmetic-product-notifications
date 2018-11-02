@@ -33,7 +33,7 @@ Rails.application.routes.draw do
         get :suggested
       end
       member do
-        put :link
+        put :link, path: ''
       end
     end
     resources :businesses, only: %i[new create destroy], controller: "investigations/businesses" do
@@ -42,7 +42,7 @@ Rails.application.routes.draw do
         post :companies_house
       end
       member do
-        put :link
+        put :link, path: ''
       end
     end
     resources :hazards, controller: "investigations/hazards", only: %i[new create show update] do
