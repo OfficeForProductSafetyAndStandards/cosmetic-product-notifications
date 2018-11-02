@@ -1,5 +1,3 @@
-= render "page_heading", title: edit ? "Edit image details" : "Enter image details"
-- url = edit ? associated_image_path(@parent, image) : wizard_path
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-two-thirds
     - if image.variable? && image.metadata["safe"]
@@ -9,7 +7,7 @@
       span.govuk-caption-l
         = image.variable? ? "Image is being processed" : "Image not available for preview"
 
-    = form_with model: image, scope: :image, url: url, method: :put, local: true do |form|
+    = form_with model: image, scope: :image, url: target_url, method: :put, local: true do |form|
       = render "form_validation_display", errors: @errors
       .govuk-form-group class=("govuk-form-group--error" if @errors)
         = form.label :title, "Image title", class: "govuk-label"
@@ -19,5 +17,5 @@
         = form.text_area :description, value: image.metadata["description"], rows: 5, class: "govuk-textarea"
       .govuk-form-group
         = form.submit "Save", class: "govuk-button"
-        - if edit
+        - if show_delete
           = link_to "Delete", associated_image_path(@parent, image), method: :delete, class: "govuk-button"

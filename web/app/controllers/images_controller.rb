@@ -11,7 +11,7 @@ class ImagesController < ApplicationController
   # PATCH/PUT /images/1.json
   def update
     validate
-    return render if @errors.present?
+    return render :edit if @errors.present?
 
     update_image
     @image_blob.save
@@ -40,9 +40,6 @@ private
     if params[:id].present?
       @image = @parent.images.find(params[:id])
       @image_blob = @image.blob
-      session[:image_blob_id] = @image_blob.id
-    elsif session[:image_blob_id]
-      @image_blob = ActiveStorage::Blob.find_by(id: session[:image_blob_id])
     end
   end
 

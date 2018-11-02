@@ -34,10 +34,26 @@ private
     end
   end
 
+  def create_image
+    if image_params.present?
+      @image_blob = ActiveStorage::Blob.create_after_upload!(
+        io: image_params[:file],
+        filename: image_params[:file].original_filename,
+        content_type: image_params[:file].content_type
+      )
+      session[:image_blob_id] = @image_blob.id
+      @image_blob.analyze_later
+    end
+  end
+
   def validate
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
     if image_params[:title].blank? && step != :upload
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
+  end
+
+  def clear_session
+    session[:image_blob_id] = nil
   end
 end
