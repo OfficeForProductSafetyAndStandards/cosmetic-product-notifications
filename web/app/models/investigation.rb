@@ -1,4 +1,5 @@
 require_dependency 'audit_activity/business'
+require_dependency 'audit_activity/investigation'
 require_dependency 'audit_activity/product'
 
 class Investigation < ApplicationRecord
@@ -58,10 +59,7 @@ class Investigation < ApplicationRecord
   end
 
   def create_audit_activity_for_case
-    AddCaseAuditActivity.create(
-      source: UserSource.new(user: current_user),
-      investigation: self
-    )
+    ::AuditActivity::Investigation::Add.from(self)
   end
 
   def create_audit_activity_for_product product

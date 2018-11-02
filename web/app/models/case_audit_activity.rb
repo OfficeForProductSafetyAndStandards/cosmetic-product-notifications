@@ -1,2 +1,0 @@
-class CaseAuditActivity < AuditActivity
-end
