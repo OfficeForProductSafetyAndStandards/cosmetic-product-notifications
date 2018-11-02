@@ -101,11 +101,6 @@ class BusinessesController < ApplicationController
 
 private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_business
-    @business = Business.find(params[:id])
-  end
-
   def update_business
     @business.assign_attributes(business_params)
     defaults_on_primary_address(@business) if @business.addresses.any?
