@@ -23,8 +23,6 @@ class Business < ApplicationRecord
 
   has_one :source, as: :sourceable, dependent: :destroy
 
-  has_paper_trail
-
   def nature_of_business
     companies_house_constants["sic_descriptions"][nature_of_business_id]
   end

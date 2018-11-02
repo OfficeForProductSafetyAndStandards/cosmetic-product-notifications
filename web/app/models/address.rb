@@ -6,8 +6,6 @@ class Address < ApplicationRecord
 
   has_one :source, as: :sourceable, dependent: :destroy
 
-  has_paper_trail
-
   def summary
     [
       line_1,
