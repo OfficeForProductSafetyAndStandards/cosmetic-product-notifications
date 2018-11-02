@@ -8,6 +8,7 @@ module ApplicationHelper
 
   def markdown(text)
     rc = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-    rc.render(text).html_safe
+    sanitized_input = sanitize(text)
+    rc.render(sanitized_input).html_safe # rubocop:disable Rails/OutputSafety
   end
 end

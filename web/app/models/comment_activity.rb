@@ -2,6 +2,6 @@ class CommentActivity < Activity
   validates :body, presence: true
 
   def subtitle_slug
-    "Comment added "
+    "Comment added"
   end
 end
