@@ -2,7 +2,7 @@
     scope: :activity, local: true) do |form|
   = render "form_validation_display", errors: activity.errors
   .govuk-form-group
-    = form.label :description, class: "govuk-label"
-    = form.text_area :description, class: "govuk-textarea"
+    = form.label :body, class: "govuk-label"
+    = form.text_area :body, class: "govuk-textarea"
   .govuk-form-group
     = form.submit "Submit", class: "govuk-button"

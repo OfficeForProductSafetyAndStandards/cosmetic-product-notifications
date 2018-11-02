@@ -25,13 +25,15 @@ module ImagesHelper
   end
 
   def save_image
-    update_image
+    update_image_details
     images = @parent.images.attach(@image_blob)
-    images.last.blob.save
+    image = images.last
+    AuditActivity::Image::Add.from(image, @parent) if @parent.class == Investigation
+    image.blob.save
     redirect_to @parent
   end
 
-  def update_image
+  def update_image_details
     @image_blob.metadata.update(image_params)
     @image_blob.metadata["updated"] = Time.current
   end

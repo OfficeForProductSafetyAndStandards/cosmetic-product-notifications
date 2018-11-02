@@ -2,7 +2,16 @@ class ImagesController < ApplicationController
   include ImagesHelper
 
   before_action :set_parent
-  before_action :set_image, only: %i[edit update create]
+  before_action :set_image, only: %i[edit update create destroy]
+
+  # POST /images
+  # POST /images.json
+  def create
+    validate
+    return redirect_to request.referer if @errors.present?
+
+    save_image
+  end
 
   # GET /images/1/edit
   def edit; end
@@ -14,23 +23,14 @@ class ImagesController < ApplicationController
     return render :edit if @errors.present?
 
     update_image
-    @image_blob.save
     redirect_to @parent
-  end
-
-  # POST /images
-  # POST /images.json
-  def create
-    validate
-    return redirect_to request.referer if @errors.present?
-
-    save_image
   end
 
   # DELETE /images/1
   # DELETE /images/1.json
   def destroy
-    @parent.images.find(params[:id]).purge_later
+    @image.destroy
+    AuditActivity::Image::Destroy.from(@image, @parent) if @parent.class == Investigation
     redirect_to @parent
   end
 
@@ -48,5 +48,15 @@ private
     if image_params[:title].blank?
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
+  end
+
+  def update_image
+    @previous_data = {
+      title: @image.metadata[:title],
+      description: @image.metadata[:description]
+    }
+    update_image_details
+    AuditActivity::Image::Update.from(@image, @parent, @previous_data) if @parent.class == Investigation
+    @image_blob.save
   end
 end
