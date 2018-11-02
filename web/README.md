@@ -92,7 +92,8 @@ You can run the security vulnerability static analysis with `bin/brakeman --no-p
 
 ## Deployment
 
-The website code is automatically deployed to the relevant environment by Travis CI as described in [the root README](../README.md#deployment).
+The website code is automatically deployed to the relevant environment by Travis
+CI as described in [the root README](../README.md#deployment).
 
 
 ### Deployment from scratch
@@ -100,7 +101,7 @@ The website code is automatically deployed to the relevant environment by Travis
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the website app:
 
-    cf push -f ./web/manifest.yml --no-start
+    cf push -f ./web/manifest.yml --no-start --hostname mspsds-<SPACE>
 
 This provisions the app in Cloud Foundry.
 
