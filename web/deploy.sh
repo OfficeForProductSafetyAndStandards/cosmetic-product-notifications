@@ -11,6 +11,8 @@ set -ex
 # CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
 
+cp ./shared-web ./web/vendor/shared-web 
+
 ./ci/install-cf.sh
 
 cf login -a api.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE

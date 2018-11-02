@@ -20,6 +20,7 @@
     "govuk-frontend": "^2.4.0",
     "html5shiv": "^3.7.3",
     "jquery": "^3.3.1",
-    "jquery-ujs": "^1.2.2"
+    "jquery-ujs": "^1.2.2",
+    "shared-web": "../shared-web"
   }
 }

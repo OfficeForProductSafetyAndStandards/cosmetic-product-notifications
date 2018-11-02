@@ -9,6 +9,12 @@ GIT
       nokogiri (>= 1.6.6)
       rubyzip (>= 1.2.1)
 
+PATH
+  remote: ../shared-web
+  specs:
+    shared-web (0.1.0)
+      rails (~> 5.2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -183,7 +189,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rubyzip (1.2.2)
-    sass (3.6.0)
+    sass (3.7.2)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -266,6 +272,7 @@ DEPENDENCIES
   rails (~> 5.2)
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.0)
+  shared-web!
   sidekiq
   slim-rails
   spring
@@ -281,4 +288,4 @@ RUBY VERSION
    ruby 2.4.4p296
 
 BUNDLED WITH
-   1.17.1
+   1.16.6
