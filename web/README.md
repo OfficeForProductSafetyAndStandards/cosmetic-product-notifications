@@ -109,11 +109,6 @@ This provisions the app in Cloud Foundry.
 
 This configures rails to use the production database amongst other things.
 
-    cf set-env mspsds-web USERNAME XXX
-    cf set-env mspsds-web PASSWORD XXX
-
-This sets the username and password for the HTTP Basic Authentication.
-
     cf set-env mspsds-web AWS_ACCESS_KEY_ID XXX
     cf set-env mspsds-web AWS_SECRET_ACCESS_KEY XXX
     cf set-env mspsds-web AWS_REGION XXX
