@@ -26,7 +26,7 @@ main#main-content.govuk-main-wrapper role="main"
               td.govuk-table__cell = @correspondence.details
             tr.govuk-table__row
               th.govuk-table__header scope="row"  File
-              td.govuk-table__cell = @document&.filename
+              td.govuk-table__cell = @file&.filename
         button.govuk-button type="submit"
           | Continue
         = link_to("Edit details", wizard_path(:general_info), class: "govuk-link mspsds-block-link ")

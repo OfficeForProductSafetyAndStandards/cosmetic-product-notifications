@@ -1,38 +1,59 @@
 module FileConcern
   extend ActiveSupport::Concern
 
+  def initialize_file_attachment
+    session[get_file_session_key] = nil
+  end
+
   def load_file_attachment
-    load_file_by_id if session[:file_id].present?
-    save_and_store_blob if file_params[:file].present?
+    return save_and_store_blob if file_params[:file].present?
+    return load_file_by_id if session[get_file_session_key].present?
   end
 
   def save_and_store_blob
-    @document = ActiveStorage::Blob.create_after_upload!(
+    file = ActiveStorage::Blob.create_after_upload!(
       io: file_params[:file],
       filename: file_params[:file].original_filename,
       content_type: file_params[:file].content_type
     )
-    session[:file_id] = @document.id
-    @document.analyze_later
+    session[get_file_session_key] = file.id
+    file.analyze_later
+    file
   end
 
   def load_file_by_id
-    @document = ActiveStorage::Blob.find_by(id: session[:file_id])
+    ActiveStorage::Blob.find_by(id: session[get_file_session_key])
   end
 
-  def handle_file_attachment
-    if @document
-      @document.metadata.update(file_params)
-      @document.metadata["updated"] = Time.current
-      documents = @correspondence.documents.attach(@document)
-      document_attachment = documents.last
-      document_attachment.blob.save
+  def attach_file_to_list(file, attachment_list)
+    if file
+      update_file_details(file)
+      attachments = attachment_list.attach(file)
+      attachment = attachments.last
+      attachment.blob.save
+      attachment
     end
   end
 
-  def file_params
-    return {} if params[:correspondence].blank?
+  def update_file_details(file)
+    file.metadata.update(file_params)
+    file.metadata["updated"] = Time.current
+  end
 
-    params.require(:correspondence).permit(:file, :title, :description, :document_type)
+  def get_file_params_key
+    # If file upload is part of a bigger form, like correspondence, you need to override this with the key used to get
+    # the relevant parameters from params(e.g. :correspondence)
+    :file
+  end
+
+  def get_file_session_key
+    # If for some reason you need to control where in session you store the id of your file, override this
+    :file_id
+  end
+
+  def file_params
+    return {} if params[get_file_params_key].blank?
+
+    params.require(get_file_params_key).permit(:file, :title, :description, :document_type)
   end
 end
