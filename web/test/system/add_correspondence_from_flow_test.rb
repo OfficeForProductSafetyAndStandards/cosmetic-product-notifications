@@ -53,6 +53,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   end
 
   test "confirmation continue should go to case page" do
+    visit new_investigation_correspondence_url(investigations(:no_products))
     click_button "Continue"
     click_button "Continue"
     click_button "Continue"

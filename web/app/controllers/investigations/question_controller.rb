@@ -22,7 +22,7 @@ private
       params[:investigation][:question_type] = params[:investigation][:other_question_type]
     end
     params.require(:investigation).permit(
-      :title, :description, :question_type
+      :question_title, :description, :question_type
     )
   end
 
