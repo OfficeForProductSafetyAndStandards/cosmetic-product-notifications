@@ -1,9 +1,9 @@
 {
     "files.exclude": {
         ".git": true,
-        "bin/": true,
-        "storage/": true,
-        "tmp/": true,
+        "**/bin/": true,
+        "**/storage/": true,
+        "**/tmp/": true,
         "**/node_modules/": true,
         "**/*.lock": true
     },

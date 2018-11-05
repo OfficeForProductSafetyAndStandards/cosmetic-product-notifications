@@ -32,6 +32,7 @@ class ImagesController < ApplicationController
   def create
     respond_to do |format|
       if @image
+        AuditActivity::Image::Add.from(@image, @parent) if @parent.class == Investigation
         format.html { redirect_to edit_associated_image_path(@parent, @image) }
         format.json { render :show, status: :created, location: @image }
       else
@@ -46,6 +47,7 @@ class ImagesController < ApplicationController
   def update
     respond_to do |format|
       if @image.blob.save
+        AuditActivity::Image::Update.from(@image, @parent, @previous_data) if @parent.class == Investigation
         format.html { redirect_to action: "index", notice: "Image was successfully saved." }
         format.json { render :show, status: :ok, location: @image }
       else
@@ -58,8 +60,9 @@ class ImagesController < ApplicationController
   # DELETE /images/1
   # DELETE /images/1.json
   def destroy
-    @image.purge_later
+    @image.delete #note this is a soft delete to preserve the image for case history
     respond_to do |format|
+      AuditActivity::Image::Destroy.from(@image, @parent) if @parent.class == Investigation
       format.html { redirect_to action: "index", notice: "Image was successfully deleted." }
       format.json { head :no_content }
     end
@@ -82,6 +85,10 @@ private
   end
 
   def update_image
+    @previous_data = {
+        title: @image.metadata[:title],
+        description: @image.metadata[:description]
+    }
     @image.blob.metadata.update(image_params)
     @image.blob.metadata["updated"] = Time.current
   end

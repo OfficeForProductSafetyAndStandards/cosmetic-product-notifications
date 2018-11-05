@@ -1,18 +1,27 @@
-- if activities.any?
-  .timeline
-    ul.govuk-list
-      - activities.each do |activity|
-        li
-          h3.govuk-heading-s[class="govuk-!-margin-bottom-1"]
-            = activity.type.titleize
-          p.timeline-details[class="govuk-!-margin-bottom-1"]
-            ' By
-            = activity.source.show
-            ' ,
-            = activity.created_at.to_s :long_ordinal
-          p
-            = activity.description
-      li
-- else
-  p
-    | No activities.
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - if activities.any?
+      .timeline
+        ul.govuk-list
+          - activities.each do |activity|
+            li
+              h3.govuk-heading-s
+                = activity.title
+              p.govuk-body-s.timeline-details
+                = activity.subtitle
+              - if activity.attached_image?
+                .govuk-grid-row
+                  .govuk-grid-column-one-third
+                    = render "images/image_tag", image: activity.image, dimensions: "100x100", \
+                        alt: activity.image.metadata["title"], class_name: "product-image"
+                  .govuk-grid-colun-two-thirds
+                    = markdown activity.body if activity.body
+              - else
+                p
+                  = markdown activity.body if activity.body
+                  = link_to "View business details", business_url(activity.business_id) if activity.business_id
+                  = link_to "View product details", product_url(activity.product_id) if activity.product_id
+          li
+    - else
+      p
+        | No activities.

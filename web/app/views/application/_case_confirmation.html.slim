@@ -15,13 +15,13 @@ main#main-content.govuk-main-wrapper role="main"
   .govuk-grid-row.mspsds-panel
     .govuk-grid-column-two-thirds
       h2.govuk-heading-l
-        = "Do you have #{report_question_text(investigation)} correspondence"
-      p.govuk-body
+        = "Do you have #{report_question_text(investigation)} correspondance"
+      p
         = "If the #{report_question_text(investigation)} came by email, or you've notes / transcript from a call,
          add them now."
-      p.govuk-body
-        // TODO MSPSDS-516 implement add reporter correspondence functionality
-        = link_to("Add #{report_question_text(investigation)}er correspondence",
+      p
+        // TODO MSPSDS-516 implement add reporter correspondance functionality
+        = link_to("Add #{report_question_text(investigation)}er correspondance",
                   new_investigation_correspondence_url(@investigation),
                   class: "govuk-link mspsds-block-link")
       hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
@@ -29,9 +29,9 @@ main#main-content.govuk-main-wrapper role="main"
     .govuk-grid-column-two-thirds
       h2.govuk-heading-l
         | If you're on the phone right now
-      p.govuk-body
-        | or, if correspondence isn't available right now, don't forget to add it later.
-      p.govuk-body
+      p
+        | or, if correspondance isn't available right now, don't forget to add it later.
+      p
         = link_to("View the #{case_question_text(investigation)} you've just created",
                 investigation_path(investigation),
-                class: "govuk-link mspsds-block-link ")
+                class: "govuk-link mspsds-block-link")

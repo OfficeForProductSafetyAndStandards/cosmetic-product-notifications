@@ -2,11 +2,13 @@ require "test_helper"
 
 class ReporterTest < ActiveSupport::TestCase
   setup do
+    sign_in_as_user
     @reporter = Reporter.new
   end
 
   teardown do
     @reporter = nil
+    logout
   end
 
   test "should not allow reporter without an investigation" do
