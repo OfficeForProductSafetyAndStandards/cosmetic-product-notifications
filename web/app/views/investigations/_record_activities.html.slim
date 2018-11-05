@@ -1,0 +1,28 @@
+h2.govuk-heading-l
+  | Add new activity
+.govuk-grid-row.mspsds-record-action-panel
+  .govuk-grid-column-two-thirds
+    span.govuk-hint
+      | Record an activity
+    .govuk-grid-row
+      .govuk-grid-column-one-third
+        p
+          = link_to "Record email", '#', class: "mspsds-block-link"
+          br
+          = link_to "Record phonecall", '#', class: "mspsds-block-link"
+          br
+          = link_to "Record meeting", '#', class: "mspsds-block-link"
+      .govuk-grid-column-two-thirds
+        p
+          = link_to "Record testing request", '#', class: "mspsds-block-link"
+          br
+          = link_to "Record test result", '#', class: "mspsds-block-link"
+          br
+          = link_to "Record corrective action", '#', class: "mspsds-block-link"
+  .govuk-grid-column-one-third
+    .govuk-form-group
+      span#action__comment-hint.govuk-hint class="govuk-!-width-full"
+        | Or enter a comment
+      textarea#action__comment.govuk-textarea aria-describedby="action__comment-hint" class="govuk-!-width-full" name="action__comment" rows="5"
+    button.govuk-button type="submit"
+      | Add comment
