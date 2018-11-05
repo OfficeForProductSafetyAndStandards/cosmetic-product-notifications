@@ -1,5 +1,4 @@
 require_dependency 'audit_activity/investigation'
-require_dependency 'audit_activity/product'
 
 class Investigation < ApplicationRecord
   include Searchable
