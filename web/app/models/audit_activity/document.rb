@@ -1,4 +1,4 @@
-class AuditActivity::Document < AuditActivity
+class AuditActivity::Document < AuditActivity::Base
   has_one_attached :document
 
   private_class_method def self.from(document, investigation, title)
