@@ -1,3 +1,5 @@
+require_dependency 'audit_activity/incident'
+
 class Investigations::IncidentsController < ApplicationController
   include Wicked::Wizard
   steps :details, :confirmation
@@ -31,6 +33,7 @@ class Investigations::IncidentsController < ApplicationController
   # POST investigations/1/incidents
   def create
     if @incident.save
+      ::AuditActivity::Incident::Add.from(@incident, @investigation)
       redirect_to investigation_url(@investigation), notice: "Incident was successfully recorded."
     else
       render step
