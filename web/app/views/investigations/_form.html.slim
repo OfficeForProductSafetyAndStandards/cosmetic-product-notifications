@@ -1,11 +1,16 @@
-= form_with(model: investigation, local: true) do |form|
-  = render "form_validation_display", errors: investigation.errors
-  .govuk-form-group class=("govuk-form-group--error" if investigation.errors.any?)
-    = form.label :title, class: "govuk-label"
-    span#title-format-hint.govuk-hint
-      | For example, "Brand Name, Model Name, Type – Risk",
-      br
-      | e.g. "Charge Works, Travel plug adaptor – Fire hazard"
-    = form.text_field :title, class: "govuk-input #{'govuk-input--error' if investigation.errors.any?}"
-  .govuk-form-group
-    = form.submit "Save", class: "govuk-button"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with(model: investigation, local: true) do |form|
+      fieldset.govuk-fieldset
+        legend class=("govuk-fieldset__legend govuk-fieldset__legend--l")
+          | Creation details
+      - if investigation.errors.any?
+        .govuk-form-group.govuk-form-group--error
+        = render "form_validation_display", errors: investigation.errors
+      = form.label :decription, class: "govuk-label"
+        span#title-format-hint.govuk-hint
+          |Overview of intelligence etc
+        = form.text_area :description, rows: 5,
+          class: "govuk-textarea #{'govuk-input--error' if investigation.errors.any?}"
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

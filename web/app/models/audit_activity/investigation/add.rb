@@ -4,6 +4,6 @@ class AuditActivity::Investigation::Add < AuditActivity::Investigation
   end
 
   def subtitle_slug
-    nil
+    body
   end
 end

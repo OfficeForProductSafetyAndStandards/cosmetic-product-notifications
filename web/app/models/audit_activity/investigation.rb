@@ -4,6 +4,7 @@ class AuditActivity::Investigation < AuditActivity
       source: UserSource.new(user: current_user),
         investigation: investigation,
         title: title,
+        body: investigation.description
     )
   end
 end
