@@ -1,5 +1,5 @@
 = form_with(model: [business, address], local: true) do |form|
-  = render "form_validation_display", validated_object: address
+  = render "form_validation_display", errors: address.errors
   .govuk-form-group
     = form.label :address_type, class: "govuk-label"
     = form.text_field :address_type, class: "govuk-input"

@@ -1,8 +1,18 @@
-p.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-  | Product
-h1.govuk-heading-xl[class="govuk-!-margin-bottom-1"]
-  = product.name
-p[class="govuk-!-margin-bottom-6"]
-  | Created:
-  '
-  = product.created_at.strftime("%d %B %Y")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      p.govuk-caption-xl
+        | Product
+      = product.name
+      p.gov-uk-caption-m
+        = product.created_at.strftime("%d %B %Y")
+  .govuk-grid-column-one-third
+    table.govuk-table.summary-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            span.govuk-caption-m[class="govuk-!-font-size-16"]
+              | Cases
+            = product.investigations.count
+          td.govuk-table__cell [class="govuk-!-font-size-16"]
+            = link_to "View", "#related"
