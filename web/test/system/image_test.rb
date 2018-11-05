@@ -15,6 +15,11 @@ class ImageTest < ApplicationSystemTestCase
     assert_text("Browse for file")
   end
 
+  test "First step should require file attachment" do
+    click_on "Upload"
+    assert_text "prohibited this case from being saved:"
+  end
+
   test "Second step should be details" do
     attach_file_and_upload
     assert_text "Enter image details"

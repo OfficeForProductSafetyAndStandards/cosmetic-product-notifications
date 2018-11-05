@@ -51,6 +51,9 @@ private
     if image_params[:title].blank? && step != :upload
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
+    if image_params[:file].blank? && step == :upload
+      @errors.add(:base, :file_not_implemented, message: "File can't be blank")
+    end
   end
 
   def clear_session
