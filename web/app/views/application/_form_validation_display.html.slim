@@ -1,9 +1,9 @@
-- if validated_object&.errors&.any?
+- if errors&.any?
   #error_explanation
     h2.govuk-heading-l.govuk-error-message
-      = pluralize(validated_object.errors.count, "error ")
+      = pluralize(errors.count, "error ")
       | prohibited this case from being saved:
     ul.govuk-list.govuk-error-message
-      - validated_object.errors.full_messages.each do |message|
+      - errors.full_messages.each do |message|
         li
           = message

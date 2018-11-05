@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   end
 
   concern :image_attachable do
-    resources :images
+    resources :images, controller: "images" do
+      collection do
+        resources :new, controller: "images_flow", only: %i[show new create update]
+      end
+    end
   end
 
   resource :session, only: %i[new] do

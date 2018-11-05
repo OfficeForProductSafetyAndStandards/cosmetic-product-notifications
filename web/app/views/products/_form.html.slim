@@ -1,4 +1,4 @@
-= render "form_validation_display", validated_object: product
+= render "form_validation_display", errors: product.errors
 .govuk-form-group
   = form.label :gtin, "GTIN (Global Trade Item Number/Barcode)", class: "govuk-label"
   = form.text_field :gtin, class: "govuk-input search-term", id: "gtin-input"
