@@ -78,10 +78,8 @@ class Investigation < ApplicationRecord
 private
 
   def case_title
-    build_string_from_array(
-      [build_title_products_portion, build_title_hazard_portion],
-        " - "
-    ).presence || "Untitled case"
+    title = [build_title_products_portion, build_title_hazard_portion].reject(&:blank?).join(" - ")
+    title.presence || "Untitled case"
   end
 
   def validate_assignment
@@ -100,7 +98,7 @@ private
     return "" if products.empty?
 
     shared_property_values = %w(brand model product_type).map { |property| get_property_value_if_shared property }
-    title = build_string_from_array(shared_property_values, ", ")
+    title = shared_property_values.reject(&:blank?).join(", ")
     products.length > 1 ? "#{products.length} Products, ".concat(title) : title
   end
 
@@ -113,10 +111,6 @@ private
     if products.all? { |product| product[property_name] == first_product[property_name] }
       first_product[property_name]
     end
-  end
-
-  def build_string_from_array array, separator
-    array.reject(&:blank?).join(separator)
   end
 end
 
