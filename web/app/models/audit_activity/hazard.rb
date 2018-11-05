@@ -10,8 +10,8 @@ class AuditActivity::Hazard < AuditActivity
    end
 
   def self.build_body(hazard)
-    "#{hazard.description} <br><br>
-    Risk level: **#{hazard.risk_level}** <br>
-    Vulnerable group: **#{hazard.affected_parties}** <br>"
+    "#{hazard.description}<br><br>
+    Risk level: **#{hazard.risk_level}**<br>
+    Vulnerable group: **#{hazard.affected_parties}**"
   end
 end
