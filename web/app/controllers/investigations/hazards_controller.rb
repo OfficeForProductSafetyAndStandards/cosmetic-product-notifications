@@ -64,7 +64,7 @@ private
       params[:hazard][:risk_level] = params[:hazard][:set_risk_level]
     end
     params.require(:hazard).permit(
-      :hazard_type, :description, :affected_parties, :risk_level, :risk_assessment, :set_risk_level
+      :hazard_type, :description, :affected_parties, :risk_level, :risk_assessment,
     )
   end
 end
