@@ -71,9 +71,11 @@ class Investigation < ApplicationRecord
     ::AuditActivity::Business::Add.from(business, self)
   end
 
-  def get_title
-    #TODO Once MSPSDS-528 is merged, add Hazard part of title. Format is "#{products portion} - #{hazard overview}"
-    build_title_products_portion.presence || "Untitled #{case_question_text(self)}"
+  def title
+    build_string_from_array(
+      [build_title_products_portion, build_title_hazard_portion],
+" - "
+    ).presence || "Untitled case"
   end
 
 private
@@ -91,24 +93,26 @@ private
   end
 
   def build_title_products_portion
-    case products.length
-    when 0
-      ''
-    when 1
-      product = products[0]
-      [product.brand, product.model, product.product_type].compact.join(", ")
-    else
-      count = "#{products.length} Products"
-      shared_property_values = %w(brand model type).map { |property| get_product_property_value_if_shared(property) }
-      shared_property_values.unshift(count).compact.join(", ")
-    end
+    return "" if products.empty?
+
+    shared_property_values = %w(brand model product_type).map { |property| get_property_value_if_shared property }
+    title = build_string_from_array(shared_property_values, ", ")
+    products.length > 1 ? "#{products.length} Products, ".concat(title) : title
   end
 
-  def get_product_property_value_if_shared property_name
+  def build_title_hazard_portion
+    hazard&.hazard_type if hazard&.hazard_type.present?
+  end
+
+  def get_property_value_if_shared property_name
     first_product = products.first
     if products.all? { |product| product[property_name] == first_product[property_name] }
       first_product[property_name]
     end
+  end
+
+  def build_string_from_array array, separator
+    array.reject(&:blank?).join(separator)
   end
 end
 
