@@ -1,4 +1,4 @@
-class AuditActivity::Investigation::Add < AuditActivity::Investigation
+class AuditActivity::Investigation::Add < AuditActivity::Investigation::Base
   def self.from(investigation)
     super(investigation, "Case created")
   end

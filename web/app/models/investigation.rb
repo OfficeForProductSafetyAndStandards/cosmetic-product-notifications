@@ -1,5 +1,3 @@
-require_dependency 'audit_activity/investigation'
-
 class Investigation < ApplicationRecord
   include Searchable
   include Documentable

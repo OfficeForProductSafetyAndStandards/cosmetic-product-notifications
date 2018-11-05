@@ -1,4 +1,4 @@
-class AuditActivity::Image < AuditActivity::Base
+class AuditActivity::Image::Base < AuditActivity::Base
   has_one_attached :image
 
   private_class_method def self.from(image, investigation, title)
