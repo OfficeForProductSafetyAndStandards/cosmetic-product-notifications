@@ -1,4 +1,4 @@
-class AuditActivity::Incident < AuditActivity
+class AuditActivity::Incident < AuditActivity::Base
   private_class_method def self.from(incident, investigation)
     body = self.build_body(incident)
     self.create(
