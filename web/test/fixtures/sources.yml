@@ -16,6 +16,10 @@ investigation_two:
   type:
   sourceable: two (Investigation)
 
+investigation_no_products:
+  type:
+  sourceable: no_products (Investigation)
+
 business_one:
   type:
   sourceable: one (Business)

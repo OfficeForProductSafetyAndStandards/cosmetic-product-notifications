@@ -8,7 +8,7 @@ class Investigation < ApplicationRecord
   include UserService
   include Investigations::DisplayTextHelper
 
-  validates :title, presence: true, on: :question_details
+  validates :question_title, presence: true, on: :question_details
   validate :validate_assignment
 
   after_save :send_assignee_email
@@ -72,13 +72,17 @@ class Investigation < ApplicationRecord
   end
 
   def title
-    build_string_from_array(
-      [build_title_products_portion, build_title_hazard_portion],
-" - "
-    ).presence || "Untitled case"
+    self.is_case ? case_title : question_title
   end
 
 private
+
+  def case_title
+    build_string_from_array(
+      [build_title_products_portion, build_title_hazard_portion],
+        " - "
+    ).presence || "Untitled case"
+  end
 
   def validate_assignment
     if !new_record? && !assignee
@@ -101,7 +105,7 @@ private
   end
 
   def build_title_hazard_portion
-    hazard&.hazard_type if hazard&.hazard_type.present?
+    hazard&.hazard_type.presence
   end
 
   def get_property_value_if_shared property_name
