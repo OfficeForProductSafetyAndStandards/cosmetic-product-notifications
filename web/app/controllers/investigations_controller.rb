@@ -15,7 +15,6 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1
   # GET /investigations/1.json
   def show
-    p @investigation.hazard
     respond_to do |format|
       format.html
       format.pdf do
@@ -41,12 +40,11 @@ class InvestigationsController < ApplicationController
   def update_assignee
     @investigation.assignee = User.find_by(id: params[:assignee_id])
     respond_to do |format|
-      if @investigation.assignee && @investigation.save
+      if @investigation.save
         format.html { redirect_to @investigation, notice: "Assignee was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
-        NotifyMailer.assigned_investigation(@investigation, @investigation.assignee.full_name, @investigation.assignee.email).deliver_later
       else
-        @investigation.errors.add(:assignee, "must not be left blank")
+        @investigation.restore_attributes
         format.html { render :assign }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end

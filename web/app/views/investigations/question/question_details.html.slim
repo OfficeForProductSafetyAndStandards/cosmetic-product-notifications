@@ -1,4 +1,4 @@
-- content_for :page_title, "Report unsafe product - Market Surveillance & Product Safety"
+- content_for :page_title, "Report unsafe product"
 - content_for :after_header do
   = link_to "Back to list", investigations_path, class: "govuk-back-link"
 main#main-content.govuk-main-wrapper role="main"
@@ -8,7 +8,7 @@ main#main-content.govuk-main-wrapper role="main"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_with(model: @investigation, local: true, url: wizard_path, method: :put) do |form|
-        = render "form_validation_display", validated_object: @investigation
+        = render "form_validation_display", errors: @investigation.errors
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | What type of question is it?

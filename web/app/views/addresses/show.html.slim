@@ -1,4 +1,4 @@
-- content_for :page_title, "View address - Market Surveillance & Product Safety"
+- content_for :page_title, "View address"
 - content_for :after_header do
   = link_to "Back to addresses", business_addresses_path(@business), class: "govuk-back-link"
 = render "business_heading", business: @business
@@ -42,8 +42,3 @@ h2.govuk-heading-l
             = @address.postal_code
     - if policy(@address).update?
       = link_to "Edit details", edit_address_path(@address)
-.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-  .govuk-grid-column-full
-    h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-      | History
-    = render "history", versions: @address.versions

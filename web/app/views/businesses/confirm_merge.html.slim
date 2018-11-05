@@ -1,4 +1,4 @@
-- content_for :page_title, "Merge businesses - Market Surveillance & Product Safety"
+- content_for :page_title, "Merge businesses"
 .govuk-form-group
   fieldset.govuk-fieldset[aria-describedby="merge-hint"]
     legend.govuk-fieldset__legend.govuk-fieldset__legend--xl
@@ -17,6 +17,8 @@
             = form.hidden_field :business_ids, multiple: true, value: business.id
             = form.radio_button :selected_business_id, business.id, class: "govuk-radios__input"
             label.govuk-label.govuk-radios__label.govuk-label--s[for="business"]
-              = render "business_summary", business: business
+              = render "business_summary", business: business do
+                p
+                  = link_to "View business", business, class: "govuk-link mspsds-block-link"
       br
       = form.submit "Merge", name: nil, class: "govuk-button", data: { confirm: "Are you sure?" }

@@ -12,10 +12,10 @@ def aws_elasticsearch_client
   end
 end
 
-# TODO re-enable PaaS elasticsearch. 
+# TODO re-enable PaaS elasticsearch.
 # We should remove the aws_elasticsearch_client method and just use the values from elasticsearch.yml for all environments
 Elasticsearch::Model.client = if Rails.env.production?
-  aws_elasticsearch_client
-else
-  Elasticsearch::Client.new(Rails.application.config_for(:elasticsearch))
-end
+                                aws_elasticsearch_client
+                              else
+                                Elasticsearch::Client.new(Rails.application.config_for(:elasticsearch))
+                              end

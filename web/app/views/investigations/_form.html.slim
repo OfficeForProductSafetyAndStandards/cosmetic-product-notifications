@@ -1,5 +1,5 @@
 = form_with(model: investigation, local: true) do |form|
-  = render "form_validation_display", validated_object: investigation
+  = render "form_validation_display", errors: investigation.errors
   .govuk-form-group class=("govuk-form-group--error" if investigation.errors.any?)
     = form.label :title, class: "govuk-label"
     span#title-format-hint.govuk-hint

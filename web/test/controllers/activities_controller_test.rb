@@ -25,7 +25,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Activity.count") do
       post investigation_activities_url(@activity.investigation), params: {
         activity: {
-          description: @activity.description
+          body: @activity.body
         }
       }
     end

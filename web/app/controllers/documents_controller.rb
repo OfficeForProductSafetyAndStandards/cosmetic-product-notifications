@@ -32,6 +32,7 @@ class DocumentsController < ApplicationController
   def create
     respond_to do |format|
       if @document
+        AuditActivity::Document::Add.from(@document, @parent) if @parent.class == Investigation
         format.html { redirect_to edit_associated_document_path(@parent, @document) }
         format.json { render :show, status: :created, location: @document }
       else
@@ -46,6 +47,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.blob.save
+        AuditActivity::Document::Update.from(@document, @parent, @previous_data) if @parent.class == Investigation
         format.html { redirect_to action: "index", notice: "Document was successfully saved." }
         format.json { render :show, status: :ok, location: @document }
       else
@@ -58,8 +60,9 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy
-    @document.purge_later
+    @document.delete
     respond_to do |format|
+      AuditActivity::Document::Destroy.from(@document, @parent) if @parent.class == Investigation
       format.html { redirect_to action: "index", notice: "Document was successfully deleted." }
       format.json { head :no_content }
     end
@@ -82,6 +85,10 @@ private
   end
 
   def update_document
+    @previous_data = {
+        title: @document.metadata[:title],
+        description: @document.metadata[:description]
+    }
     @document.blob.metadata.update(document_params)
     @document.blob.metadata["updated"] = Time.current
   end

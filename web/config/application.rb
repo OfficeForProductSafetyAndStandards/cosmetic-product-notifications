@@ -25,5 +25,7 @@ module App
 
     # This changes Rails timezone, but keeps ActiveRecord in UTC
     config.time_zone = "Europe/London"
+
+    config.exceptions_app = self.routes
   end
 end

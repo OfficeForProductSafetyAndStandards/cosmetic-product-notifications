@@ -1,4 +1,4 @@
-- content_for :page_title, "Add product to case - Market Surveillance & Product Safety"
+- content_for :page_title, "Add product to case"
 - content_for :after_header do
   = link_to "Back to case", @investigation, class: "govuk-back-link"
 .investigation-product-page.products-search-form{ data-investigation-id=@investigation.id.to_s
@@ -14,4 +14,4 @@
           | Product details
         = render "products/form", form: form, product: @product, countries: @countries, search: true
     .govuk-grid-column-one-half
-      = render "products/suggestions_container"
+      = render "products/suggested_container"

@@ -1,65 +1,10 @@
-- content_for :page_title, "View product - Market Surveillance & Product Safety"
+- content_for :page_title, "View product"
 - content_for :after_header do
   = link_to "Back to list", products_path, class: "govuk-back-link"
-.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-  .govuk-grid-column-two-thirds
-    = render "product_heading", product: @product
-  .govuk-grid-column-one-third
-    h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-      | Cases
-    span.govuk-heading-xl[class="govuk-!-margin-bottom-0"]
-      = @product.investigations.size
-.govuk-grid-row.row-border-top[class="govuk-!-padding-bottom-6"]
-  - if @product.images.attached?
-    = render("images/primary_image", image: @product.get_first_image)
-  .govuk-grid-column-two-thirds
-    #details.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-      .govuk-grid-column-full
-        h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-          | Details
-        table.govuk-table
-          tbody.govuk-table__body
-            tr.govuk-table__row
-              th.govuk-table__header[scope="row"]
-                | Barcode
-              td.govuk-table__cell
-                = @product.gtin
-            tr.govuk-table__row
-              th.govuk-table__header[scope="row"]
-                | Brand
-              td.govuk-table__cell
-                = @product.brand
-            tr.govuk-table__row
-              th.govuk-table__header[scope="row"]
-                | Type
-              td.govuk-table__cell
-                = @product.product_type
-            tr.govuk-table__row
-              th.govuk-table__header[scope="row"]
-                | Model number
-              td.govuk-table__cell
-                = @product.model
-            tr.govuk-table__row
-              th.govuk-table__header[scope="row"]
-                | Batch number
-              td.govuk-table__cell
-                = @product.batch_number
-            tr.govuk-table__row
-              th.govuk-table__header[scope="row"]
-                | Country of origin
-              td.govuk-table__cell
-                = @product.country_of_origin_for_display
-            tr.govuk-table__row
-              th.govuk-table__header[scope="row"]
-                | Description
-              td.govuk-table__cell
-                = @product.description
-            tr.govuk-table__row
-              th.govuk-table__header[scope="row"]
-                | Date on the market
-              td.govuk-table__cell
-                = @product.date_placed_on_market&.to_s :long_ordinal
-        = link_to "Edit details", edit_product_path(@product)
+
+= render "product_heading", product: @product
+= render "product_summary", product: @product
+
 hr.govuk-section-break.govuk-section-break--m
 = render "tabs", tabs: [\
   Tab.new("activity", "Activity", lambda { render "products/tabs/activity" }), \
