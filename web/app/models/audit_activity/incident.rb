@@ -7,7 +7,7 @@ class AuditActivity::Incident < AuditActivity
       investigation: investigation,
       title: incident.incident_type,
     )
-   end
+  end
 
   def self.build_body(incident)
     "#{incident.description}<br><br>
