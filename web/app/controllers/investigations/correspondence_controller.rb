@@ -10,8 +10,10 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def create
+    handle_file_attachment
     @investigation.correspondences << @correspondence
     @investigation.save
+    AuditActivity::Correspondence::Add.from(@correspondence, @investigation)
     redirect_to investigation_path(@investigation)
   end
 
@@ -54,7 +56,7 @@ private
     data_from_previous_steps = session[:correspondence] || suggested_values
     session[:correspondence] = data_from_previous_steps.merge(correspondence_params || {})
     @correspondence = Correspondence.new(session[:correspondence])
-    handle_file_attachment
+    load_file_attachment
   end
 
   def suggested_values
