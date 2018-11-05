@@ -1,4 +1,4 @@
-class AuditActivity::Document::Destroy < AuditActivity::Document
+class AuditActivity::Document::Destroy < AuditActivity::Document::Base
   def self.from(document, investigation)
     title = "Deleted: #{document.metadata[:title]}"
     super(document, investigation, title)
