@@ -4,7 +4,7 @@ class BusinessesController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_business, only: %i[show edit update destroy]
-  before_action :create_business, only: %i[new create search]
+  before_action :create_business, only: %i[new create suggested]
   before_action :update_business, only: %i[update]
 
   # GET /businesses
@@ -57,10 +57,10 @@ class BusinessesController < ApplicationController
     @business.addresses.build unless @business.addresses.any?
   end
 
-  # GET /businesses/search
-  def search
+  # GET /businesses/suggested
+  def suggested
     advanced_search
-    render partial: "search_results"
+    render partial: "suggested"
   end
 
   # POST /businesses/companies_house
@@ -100,11 +100,6 @@ class BusinessesController < ApplicationController
   end
 
 private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_business
-    @business = Business.find(params[:id])
-  end
 
   def update_business
     @business.assign_attributes(business_params)

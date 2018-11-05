@@ -19,6 +19,8 @@
             = form.hidden_field :product_ids, multiple: true, value: product.id
             = form.radio_button :selected_product_id, product.id, class: "govuk-radios__input"
             label.govuk-label.govuk-radios__label.govuk-label--s[for="product"]
-              = render "product_summary", product: product
+              = render "product_summary", product: product do
+                p
+                  = link_to "View product", product, class: "govuk-link"
       br
       = form.submit "Merge", name: nil, class: "govuk-button", data: { confirm: "Are you sure?" }

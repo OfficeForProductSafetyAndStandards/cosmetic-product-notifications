@@ -4,9 +4,9 @@
       tbody.govuk-table__body
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
-            | Barcode
+            | Type
           td.govuk-table__cell
-            = @product.gtin
+            = @product.product_type
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Brand
@@ -14,12 +14,7 @@
             = @product.brand
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
-            | Type
-          td.govuk-table__cell
-            = @product.product_type
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Model number
+            | Model
           td.govuk-table__cell
             = @product.model
         tr.govuk-table__row
@@ -27,6 +22,11 @@
             | Batch number
           td.govuk-table__cell
             = @product.batch_number
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Barcode
+          td.govuk-table__cell
+            = @product.gtin
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Country of origin

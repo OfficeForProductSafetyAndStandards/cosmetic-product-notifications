@@ -1,20 +1,15 @@
 .govuk-grid-row.product-summary[class="govuk-!-padding-bottom-3 govuk-!-margin-bottom-3"]
-  .govuk-grid-column-one-half
+  .govuk-grid-column-one-third
     .aspect-ratio-3-2-container
       .aspect-ratio-contents
         - if product.images.attached?
           = render "images/image_tag", image: product.images.first, dimensions: "300x200", class_name: "product-image"
         - else
-          p.no-images
+          p
             | No images.
-  .govuk-grid-column-one-half
+  .govuk-grid-column-two-thirds
     table.govuk-table
       tbody.govuk-table__body
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Name
-          td.govuk-table__cell
-            = product.name
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Brand
@@ -25,6 +20,9 @@
             | Model
           td.govuk-table__cell
             = product.model
-    p
-      = link_to "Full product details", product
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Description
+          td.govuk-table__cell
+            = product.description
     = yield

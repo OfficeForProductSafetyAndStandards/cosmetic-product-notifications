@@ -32,17 +32,23 @@ Rails.application.routes.draw do
       resources :question, controller: "investigations/question", only: %i[show new create update]
     end
     resources :activities, only: %i[index new create]
-    resources :products, only: %i[index new create destroy], controller: "investigations/products" do
+    resources :products, only: %i[new create], controller: "investigations/products" do
       collection do
         get :suggested
-        post :add
+      end
+      member do
+        put :link, path: ''
+        delete :unlink, path: ''
       end
     end
-    resources :businesses, only: %i[index new create destroy], controller: "investigations/businesses" do
+    resources :businesses, only: %i[new create], controller: "investigations/businesses" do
       collection do
         get :suggested
-        post :add
         post :companies_house
+      end
+      member do
+        put :link, path: ''
+        delete :unlink, path: ''
       end
     end
     resources :hazards, controller: "investigations/hazards", only: %i[new create show update] do
@@ -59,8 +65,8 @@ Rails.application.routes.draw do
   resources :businesses do
     collection do
       get :confirm_merge
-      get :search
       post :merge
+      get :suggested
       post :companies_house
     end
     resources :addresses, shallow: true
