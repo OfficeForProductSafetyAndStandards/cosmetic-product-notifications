@@ -8,6 +8,10 @@ product_two:
   type:
   sourceable: two (Product)
 
+product_iphone:
+  type:
+  sourceable: iphone (Product)
+
 investigation_one:
   type:
   sourceable: one (Investigation)
