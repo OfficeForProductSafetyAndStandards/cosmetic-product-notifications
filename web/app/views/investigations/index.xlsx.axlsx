@@ -8,7 +8,7 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
     sheet_investigations.add_row [
       investigation.id,
       investigation.is_closed? ? "Closed" : "Open",
-      investigation.get_title,
+      investigation.title,
       investigation.description,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
       investigation.source.show,

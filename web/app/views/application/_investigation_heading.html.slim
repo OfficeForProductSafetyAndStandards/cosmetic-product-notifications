@@ -5,7 +5,7 @@
         = investigation.question_type && !investigation.is_case ? investigation.question_type + ' ' : ''
         = case_question_text(investigation).titleize + ': '
         = investigation.pretty_id
-      = investigation.get_title
+      = investigation.title
       p.govuk-caption-m
         = investigation.source.created_by
   .govuk-grid-column-one-third
