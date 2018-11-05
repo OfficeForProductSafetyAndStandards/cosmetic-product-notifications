@@ -15,6 +15,12 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     assert_text("Who is the correspondence with?")
   end
 
+  test "first step should validate date" do
+    fill_in("correspondence[day]", with: "333")
+    click_on "Continue"
+    assert_text("prohibited this case from being saved")
+  end
+
   test "first step should be populated with reporter name from the flow" do
     visit root_path
     click_on "Report an unsafe product"
@@ -87,6 +93,17 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     click_on "Full detail"
     assert_text("Harry Potter")
   end
+
+  test "should allow to attach file" do
+    click_button "Continue"
+    attach_file("correspondence[file]", Rails.root + "test/fixtures/files/testImage.png")
+    click_button "Continue"
+    assert_text("testImage")
+    click_button "Continue"
+    click_on "Full detail"
+    assert_text("testImage")
+  end
+
 
   def select_type_and_continue
     choose("reporter[reporter_type]", visible: false, match: :first)
