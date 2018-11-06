@@ -108,7 +108,7 @@ GEM
     companies-house-rest (0.4.3)
       activesupport (>= 4.2, < 6)
       virtus (~> 1.0, >= 1.0.5)
-    concurrent-ruby (1.0.5)
+    concurrent-ruby (1.1.2)
     connection_pool (2.2.2)
     coveralls (0.8.22)
       json (>= 1.8, < 3)
@@ -167,7 +167,7 @@ GEM
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     jaro_winkler (1.5.1)
-    jbuilder (2.7.0)
+    jbuilder (2.8.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
     jmespath (1.4.0)
@@ -409,7 +409,7 @@ DEPENDENCIES
   faraday_middleware-aws-sigv4
   govuk-lint
   govuk_notify_rails
-  jbuilder (~> 2.5)
+  jbuilder (~> 2.8)
   keycloak
   listen (~> 3.1.5)
   mini_magick
