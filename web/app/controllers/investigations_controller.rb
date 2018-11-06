@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show assign update_assignee status confirmation]
+  before_action :set_investigation, only: %i[show assign update_assignee status confirmation, priority]
 
   # GET /investigations
   # GET /investigations.json
@@ -68,6 +68,16 @@ class InvestigationsController < ApplicationController
   end
 
   def confirmation; end
+
+  # get /investigations/id/priority
+  def priority
+    p 'in priority'
+  end
+
+  # POST /investigation/id/update_priority
+  def update_priority
+    p 'in update proirity'
+  end
 
 private
 
