@@ -1,5 +1,3 @@
-require_dependency 'audit_activity/incident'
-
 class Investigations::IncidentsController < ApplicationController
   include Wicked::Wizard
   steps :details, :confirmation

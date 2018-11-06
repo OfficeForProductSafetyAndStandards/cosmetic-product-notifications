@@ -1,4 +1,4 @@
-class AuditActivity::Incident::Add < AuditActivity::Incident
+class AuditActivity::Incident::Add < AuditActivity::Incident::Base
   def self.from(incident, investigation)
     super(incident, investigation)
   end
