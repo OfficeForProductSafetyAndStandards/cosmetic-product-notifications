@@ -5,7 +5,6 @@ class ImagesController < ApplicationController
   before_action :set_image, only: %i[edit update create destroy]
 
   # POST /images
-  # POST /images.json
   def create
     validate
     return redirect_to request.referer if @errors.present?
@@ -17,7 +16,6 @@ class ImagesController < ApplicationController
   def edit; end
 
   # PATCH/PUT /images/1
-  # PATCH/PUT /images/1.json
   def update
     validate
     return render :edit if @errors.present?
@@ -27,7 +25,6 @@ class ImagesController < ApplicationController
   end
 
   # DELETE /images/1
-  # DELETE /images/1.json
   def destroy
     @image.destroy
     AuditActivity::Image::Destroy.from(@image, @parent) if @parent.class == Investigation

@@ -3,4 +3,5 @@
   = link_to "Back", associated_documents_path(@parent), class: "govuk-back-link"
 = render "page_heading", title: "Edit document details"
 br
-= render "form", document: @document
+= render "metadata_form", document: @document, show_delete: true,
+        target_url: associated_document_path(@parent, @document)

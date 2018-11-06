@@ -1,16 +1,22 @@
 - if parent.documents.attached?
-  table.govuk-table
-    thead.govuk-table__head
-      tr.govuk-table__row
-        th.govuk-table__header[scope="col"]
-          | Title
-        th.govuk-table__header[scope="col"]
-          | Upload date
-        th.govuk-table__header[scope="col"]
-    tbody.govuk-table__body
-      - parent.documents.attachments.each do |document|
-        = render "document_summary", document: document, parent: parent
+  - parent.documents.attachments.each do |document|
+    .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-one-third
+        = render "documents/document_image", document: document
+      .govuk-grid-column-two-thirds
+        h2.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+          = document.blob.metadata[:title]
+        span.govuk-caption-m[class="govuk-!-font-size-16"]
+          = "Updated #{document.blob.metadata[:updated]&.to_date}"
+        br
+        p
+          = document.blob.metadata[:description]
+        p
+          = link_to "View PDF document", document, class: "govuk-link mspsds-block-link", target: '_blank'
+          = link_to "Edit document details or delete", edit_associated_document_path(parent, document),
+                  class: "govuk-link mspsds-block-link"
 - else
+  h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+    | Documents
   p
     | No documents.
-= link_to "Manage documents", associated_documents_path(parent), class: "no-print"

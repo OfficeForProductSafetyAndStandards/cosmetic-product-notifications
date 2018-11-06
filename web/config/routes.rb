@@ -1,7 +1,11 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   concern :document_attachable do
-    resources :documents
+    resources :documents, controller: "documents" do
+      collection do
+        resources :new, controller: "documents_flow", only: %i[show new create update]
+      end
+    end
   end
 
   concern :image_attachable do

@@ -1,4 +1,4 @@
-= form_with model: document, scope: :document, url: associated_document_path(@parent, document), local: true do |form|
+= form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
   = render "form_validation_display", errors: document.errors
   .govuk-form-group
     = form.label :title, "Document title", class: "govuk-label"
@@ -23,3 +23,5 @@
         class: "govuk-input"
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"
+  - if show_delete
+    = link_to "Delete", associated_document_path(@parent, document), method: :delete, class: "govuk-button"
