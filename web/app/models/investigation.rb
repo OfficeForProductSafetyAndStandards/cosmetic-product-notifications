@@ -6,7 +6,6 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
   include UserService
-  include Investigations::DisplayTextHelper
 
   validates :question_title, presence: true, on: :question_details
   validate :validate_assignment

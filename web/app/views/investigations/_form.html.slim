@@ -4,8 +4,6 @@
       fieldset.govuk-fieldset
         legend class=("govuk-fieldset__legend govuk-fieldset__legend--l")
           | Creation details
-      - if investigation.errors.any?
-        .govuk-form-group.govuk-form-group--error
         = render "form_validation_display", errors: investigation.errors
       = form.label :decription, class: "govuk-label"
         span#title-format-hint.govuk-hint
