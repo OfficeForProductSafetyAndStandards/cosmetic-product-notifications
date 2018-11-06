@@ -1,4 +1,4 @@
-class AuditActivity::Document::Update < AuditActivity::Document
+class AuditActivity::Document::Update < AuditActivity::Document::Base
   def self.from(document, investigation, previous_data)
     return if self.no_change?(document, previous_data)
 

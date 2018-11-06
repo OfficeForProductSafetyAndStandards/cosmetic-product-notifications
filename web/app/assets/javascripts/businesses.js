@@ -8,7 +8,7 @@ $(document).on('turbolinks:load', function () {
 
   searchOnInputChange(
     $form.find('.search-trigger input, .search-trigger textarea'),
-    '/businesses/search',
+    '/businesses/suggested',
     function () {
       return $form.serialize();
     },

@@ -5,47 +5,42 @@
       = link_to "Back to list", investigations_path, class: "govuk-back-link"
 
 = render "investigation_heading", investigation: @investigation
-- if @investigation.hazard
-  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-    .govuk-grid-column-one-third
-      h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-        span.govuk-caption-m
-          |Hazard
-        = @investigation.hazard.hazard_type
-    .govuk-grid-column-one-third
+
+- if @investigation.is_case
+  - if @investigation.hazard
+    .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+      .govuk-grid-column-one-third
         h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
           span.govuk-caption-m
-            | Vunerable group
-          = @investigation.hazard.affected_parties
-    .govuk-grid-column-one-third
-      h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-        span.govuk-caption-m
-          | Risk Level
-        - if @investigation.hazard.risk_level?
-          = @investigation.hazard.risk_level.titleize
-      = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
+            | Hazard
+          = @investigation.hazard.hazard_type
+      .govuk-grid-column-one-third
+          h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+            span.govuk-caption-m
+              | Vulnerable group
+            = @investigation.hazard.affected_parties
+      .govuk-grid-column-one-third
+        h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+          span.govuk-caption-m
+            | Risk Level
+          - if @investigation.hazard.risk_level?
+            = @investigation.hazard.risk_level.titleize
+        = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
+    p
+      = @investigation.hazard&.description
+  - else
+    h2.govuk-heading-l
+      | What's the nature of the hazard?
+    p
+      | Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
   p
-    = @investigation.hazard&.description
-- else
-  h2.govuk-heading-l
-    | What's the nature of the hazard?
-  p
-    | Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
-p
-  = link_to "#{@investigation.hazard ? 'Edit' : 'Add'} hazard details", new_investigation_hazard_path(@investigation),
-      class: "govuk-link mspsds-block-link no-print"
-  - if @investigation.incidents.empty?
-    = link_to "Record an incident", new_investigation_incident_path(@investigation),
+    = link_to "#{@investigation.hazard ? 'Edit' : 'Add'} hazard details", new_investigation_hazard_path(@investigation),
         class: "govuk-link mspsds-block-link no-print"
+    - if @investigation.incidents.empty?
+      = link_to "Record an incident", new_investigation_incident_path(@investigation),
+          class: "govuk-link mspsds-block-link no-print"
 
-/ TODO: MSPSDS-532
-/ These exist on the design but don't lead any where yet. Add with links, or delete if changed
-/ https://mspsds-design-prototype.herokuapp.com/case
-/ p
-/   a href="" Edit risk details
-/   a style="margin-left: 20px" href="" View assessment
-
--if !@investigation.is_case
+- else
   .govuk-grid-row
     .govuk-grid-column-one-third
       h2.govuk-heading-m
@@ -55,17 +50,21 @@ p
       p
         = @investigation.description.presence || 'No description was provided'
 
-- if @investigation.investigation_products.empty?
+- if @investigation.products.first
+  = render "product_summary", product: @investigation.products.first do
+    p
+      = link_to "View product", @investigation.products.first, class: "govuk-link"
+
+- else
   h2.govuk-heading-l
     | There are no products attached to this case
-
   p
     | Add a product to the case
-
   p
     = link_to "Add product", new_investigation_product_path(@investigation)
 
 hr.govuk-section-break.govuk-section-break--m
+
 = render "tabs", tabs: [\
   Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" }), \
   Tab.new("contacts", "Contacts", lambda { render "investigations/tabs/contacts" }), \
@@ -75,5 +74,6 @@ hr.govuk-section-break.govuk-section-break--m
   Tab.new("related", "Related", lambda { render "investigations/tabs/related" }), \
   Tab.new("full-detail", "Full detail", lambda { render "investigations/tabs/details" })\
 ]
+
 .no-print[class="govuk-!-margin-top-3"]
   = link_to "Create PDF document", investigation_path(@investigation, format: :pdf)
