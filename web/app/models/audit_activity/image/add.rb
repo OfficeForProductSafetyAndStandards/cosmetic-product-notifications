@@ -1,4 +1,4 @@
-class AuditActivity::Image::Add < AuditActivity::Image
+class AuditActivity::Image::Add < AuditActivity::Image::Base
   def self.from(image, investigation)
     title = image.metadata[:title] || "Untitled image"
     super(image, investigation, title)
