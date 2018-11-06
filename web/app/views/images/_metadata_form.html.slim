@@ -1,18 +1,21 @@
-= form_with model: image, scope: :image, url: associated_image_path(@parent, image), local: true do |form|
-  - if image.errors.any?
-    #error_explanation
-      h2.govuk-heading-l
-        = pluralize(image.errors.count, "error")
-        | prohibited this image from being saved:
-      ul.govuk-list
-        - image.errors.full_messages.each do |message|
-          li
-            = message
-  .govuk-form-group
-    = form.label :title, "Image title", class: "govuk-label"
-    = form.text_field :title, value: image.metadata["title"], class: "govuk-input"
-  .govuk-form-group
-    = form.label :description, class: "govuk-label"
-    = form.text_area :description, value: image.metadata["description"], rows: 5, class: "govuk-textarea"
-  .govuk-form-group
-    = form.submit "Save", class: "govuk-button"
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-two-thirds
+    - if image.variable? && image.metadata["safe"]
+      = image_tag image.variant(resize: "480x320"), alt: image.metadata["title"], \
+          class: "govuk-!-margin-top-2 govuk-!-margin-bottom-2 image-thumbnail"
+    - else
+      span.govuk-caption-l
+        = image.variable? ? "Image is being processed" : "Image not available for preview"
+
+    = form_with model: image, scope: :image, url: target_url, method: :put, local: true do |form|
+      = render "form_validation_display", errors: @errors
+      .govuk-form-group class=("govuk-form-group--error" if @errors)
+        = form.label :title, "Image title", class: "govuk-label"
+        = form.text_field :title, value: image.metadata["title"], class: "govuk-input"
+      .govuk-form-group
+        = form.label :description, class: "govuk-label"
+        = form.text_area :description, value: image.metadata["description"], rows: 5, class: "govuk-textarea"
+      .govuk-form-group
+        = form.submit "Save", class: "govuk-button"
+        - if show_delete
+          = link_to "Delete", associated_image_path(@parent, image), method: :delete, class: "govuk-button"

@@ -5,6 +5,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as_admin
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
+    @investigation.hazard = hazards(:one)
     Investigation.import
   end
 
@@ -22,19 +23,18 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create investigation" do
+  test "should create investigation and redirect to investigation page" do
+    new_investigation_title = "new_investigation_title"
     assert_difference("Investigation.count") do
       post investigations_url, params: {
         investigation: {
-          title: @investigation.title,
-          description: @investigation.description,
-          is_closed: @investigation.is_closed,
-          source: @investigation.source
+          title: new_investigation_title,
         }
       }
     end
 
-    assert_redirected_to investigation_url(Investigation.first)
+    new_investigation = Investigation.find_by(title: new_investigation_title)
+    assert_redirected_to investigation_path(new_investigation)
   end
 
   test "should show investigation" do
@@ -47,28 +47,20 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_investigation_url(@investigation)
-    assert_response :success
+  test "redirect to investigation path if attempted to assign a person to closed investigation" do
+    investigation = investigations(:three)
+    get assign_investigation_url(investigation)
+    assert_redirected_to investigation_path(investigation)
   end
 
-  test "should update investigation" do
-    patch investigation_url(@investigation), params: {
-      investigation: {
-        title: @investigation.title,
-        description: @investigation.description,
-        is_closed: @investigation.is_closed,
-        source: @investigation.source
+  test "should assign user to investigation" do
+    id = User.first.id
+    investigation_assignee_id = lambda { Investigation.find(@investigation.id).assignee_id }
+    assert_changes investigation_assignee_id, from: nil, to: id do
+      post update_assignee_investigation_url @investigation, params: {
+        assignee_id: id
       }
-    }
-    assert_redirected_to investigation_url(@investigation)
-  end
-
-  test "should destroy investigation" do
-    assert_difference("Investigation.count", -1) do
-      delete investigation_url(@investigation)
     end
-
-    assert_redirected_to investigations_url
+    assert_redirected_to investigation_url(@investigation)
   end
 end

@@ -1,0 +1,8 @@
+h3.govuk-heading-m
+  | Suggested products
+#suggested-products
+  - if [@product.gtin, @product.name, @product.brand, @product.product_type].compact.any?
+    = render "products/suggested"
+  - else
+    p
+      | Start filling in the form for suggestions.

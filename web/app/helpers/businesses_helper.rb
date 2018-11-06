@@ -39,6 +39,10 @@ module BusinessesHelper
     Rails.application.config.companies_house_constants
   end
 
+  def companies_house_new_business_form_url
+    @investigation.present? ? companies_house_investigation_businesses_path(@investigation) : companies_house_businesses_path
+  end
+
   def create_business
     if params[:business]
       @business = Business.new(business_params)
@@ -95,6 +99,10 @@ module BusinessesHelper
 
   def filter_out_existing_businesses(businesses)
     businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
+  end
+
+  def set_business
+    @business = Business.find(params[:id])
   end
 
 private

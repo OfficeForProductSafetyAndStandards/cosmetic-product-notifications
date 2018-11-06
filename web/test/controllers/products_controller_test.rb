@@ -6,6 +6,10 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     @product = products(:one)
     @product.source = sources(:product_one)
     Product.import
+    test_image1 = Rails.root.join('test', 'fixtures', 'files', 'testImage.png')
+    test_image2 = Rails.root.join('test', 'fixtures', 'files', 'testImage2.png')
+    @product.images.attach(io: File.open(test_image1), filename: 'testImage.png')
+    @product.images.attach(io: File.open(test_image2), filename: 'testImage2.png')
   end
 
   teardown do

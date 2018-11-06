@@ -1,10 +1,15 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   concern :document_attachable do
     resources :documents
   end
 
   concern :image_attachable do
-    resources :images
+    resources :images, controller: "images" do
+      collection do
+        resources :new, controller: "images_flow", only: %i[show new create update]
+      end
+    end
   end
 
   resource :session, only: %i[new] do
@@ -19,29 +24,50 @@ Rails.application.routes.draw do
     member do
       get :status
       get :assign
+      get :confirmation
       post :update_assignee
     end
+    collection do
+      resources :report, controller: "investigations/report", only: %i[show new create update]
+      resources :question, controller: "investigations/question", only: %i[show new create update]
+    end
     resources :activities, only: %i[index new create]
-    resources :products, only: %i[index new create destroy], controller: "investigations/products" do
+    resources :products, only: %i[new create], controller: "investigations/products" do
       collection do
         get :suggested
-        post :add
+      end
+      member do
+        put :link, path: ''
+        delete :unlink, path: ''
       end
     end
-    resources :businesses, only: %i[index new create destroy], controller: "investigations/businesses" do
+    resources :businesses, only: %i[new create], controller: "investigations/businesses" do
       collection do
         get :suggested
-        post :add
         post :companies_house
       end
+      member do
+        put :link, path: ''
+        delete :unlink, path: ''
+      end
     end
+    resources :hazards, controller: "investigations/hazards", only: %i[new create show update] do
+      collection do
+        get :risk_level
+        post :update_risk_level
+      end
+    end
+
+    resources :correspondences, only: %i[show new create update], controller: "investigations/correspondence",
+              concerns: %i[document_attachable]
+    resources :incidents, controller: "investigations/incidents", only: %i[new create show update]
   end
 
   resources :businesses do
     collection do
       get :confirm_merge
-      get :search
       post :merge
+      get :suggested
       post :companies_house
     end
     resources :addresses, shallow: true
@@ -55,8 +81,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: %i[index]
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
 
   root to: redirect(path: "/investigations")
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
+# rubocop:enable Metrics/BlockLength

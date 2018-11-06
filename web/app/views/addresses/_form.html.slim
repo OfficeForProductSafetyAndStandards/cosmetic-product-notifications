@@ -1,13 +1,5 @@
 = form_with(model: [business, address], local: true) do |form|
-  - if address.errors.any?
-    #error_explanation
-      h2.govuk-heading-l
-        = pluralize(address.errors.count, "error")
-        | prohibited this address from being saved:
-      ul.govuk-list
-        - address.errors.full_messages.each do |message|
-          li
-            = message
+  = render "form_validation_display", errors: address.errors
   .govuk-form-group
     = form.label :address_type, class: "govuk-label"
     = form.text_field :address_type, class: "govuk-input"

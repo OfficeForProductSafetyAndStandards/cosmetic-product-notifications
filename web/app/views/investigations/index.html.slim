@@ -1,15 +1,16 @@
-- content_for :page_title, "Cases - Market Surveillance & Product Safety"
+- content_for :page_title, "Cases"
 - content_for :after_header do
   = render "layouts/navbar"
 
 - if @current_user
   .govuk-grid-row[class="govuk-!-padding-bottom-4"]
     .govuk-grid-column-one-third
-      .govuk-grid-column-one-quarter.assigned-number[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
-        = @current_user.investigations.count
-      .govuk-grid-column-three-quarters[class="govuk-!-font-size-19"]
-        = "Case".pluralize(@current_user.investigations.count)
-        |  assigned to you
+      .govuk-grid-column-one-quarter
+        p[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
+          = @current_user.investigations.count
+      .govuk-grid-column-three-quarters
+        p[class="govuk-!-font-size-24"]
+          = "#{'Case'.pluralize(@current_user.investigations.count)} assigned to you"
 
 = form_with(model: @search, scope: "", url: investigations_path, method: :get, \
     class: "search-background govuk-!-padding-3") do |form|
@@ -29,11 +30,11 @@
 br
 .govuk-grid-row
   .govuk-grid-column-full
-    .p-govuk-body
-      = link_to "Report an unsafe product", new_investigation_path, class: "govuk-link mspsds-block-link"
+    p
+      = link_to "Report an unsafe product", new_report_path, class: "govuk-link mspsds-block-link"
       /TODO refer the links below to correct pages when they are created
-      = link_to "Begin an investigation", "/", class: "govuk-link mspsds-block-link"
-      = link_to "Ask a question", "/", class: "govuk-link mspsds-block-link"
+      = link_to "Begin an investigation", new_investigation_path, class: "govuk-link mspsds-block-link"
+      = link_to "Ask a question", new_question_path, class: "govuk-link mspsds-block-link"
 = render "table", investigations: @investigations
 = will_paginate @investigations
 br

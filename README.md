@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds.svg?branch=master)](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
 [![Coverage Status](https://coveralls.io/repos/github/UKGovernmentBEIS/beis-mspsds/badge.svg?branch=master)](https://coveralls.io/github/UKGovernmentBEIS/beis-mspsds?branch=master)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=UKGovernmentBEIS/beis-mspsds)](https://dependabot.com)
 
 
 ## Getting Setup
@@ -99,6 +100,9 @@ Anything merged into the branch `staging` (only via a Pull Request) will cause T
 space ([staging website](https://mspsds-int.cloudapps.digital/)).
 Please only do this if you are confident that this is a stable commit.
 
+Anything merged into the branch `prod` (only via a Pull Request) will cause Travis CI to instead build to the prod
+space ([staging website](https://mspsds-int.cloudapps.digital/)).
+Please only do this if you are confident that this is a stable commit.
 
 ### Deployment from scratch
 
@@ -146,26 +150,21 @@ To create a redis instance for the current space.
 
 Larger options should be considered if required. The current worker (sidekiq) only works with the unclustered version.
 
-
 #### S3
 
 Create an S3 bucket named `mspsds-SPACE-NAME`.
-
-
-#### Keycloak
-
-See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
-
 
 #### Website
 
 See [web/README.md](web/README.md#deployment-from-scratch).
 
-
 #### Worker
 
 See [worker/README.md](worker/README.md#deployment-from-scratch).
 
+#### Keycloak
+
+See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
 
 ## Licence
 

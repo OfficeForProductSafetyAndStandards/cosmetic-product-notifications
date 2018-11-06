@@ -1,12 +1,4 @@
-- if product.errors.any?
-  #error_explanation
-    h2.govuk-heading-l.govuk-error-message
-      = pluralize(product.errors.count, "error ")
-      | prohibited this product from being saved:
-    ul.govuk-list.govuk-error-message
-      - product.errors.full_messages.each do |message|
-        li
-          = message
+= render "form_validation_display", errors: product.errors
 .govuk-form-group
   = form.label :gtin, "GTIN (Global Trade Item Number/Barcode)", class: "govuk-label"
   = form.text_field :gtin, class: "govuk-input search-term", id: "gtin-input"
@@ -32,28 +24,7 @@
   = form.label :country_of_origin, class: "govuk-label"
   = form.select :country_of_origin, countries, { include_blank: "Unknown" }, \
         class: "govuk-select js-product-country-of-origin", id: "location-autocomplete"
-.govuk-form-group
-  fieldset.govuk-fieldset[role="group"]
-    = form.label :date_placed_on_market, class: "form-label"
-    .govuk-date-input
-      .govuk-date-input__item
-        .govuk-form-group
-          label.govuk-label.govuk-date-input__label[for="dob-day"]
-            | Day
-          = form.number_field "date_placed_on_market(3i)", value: product.date_placed_on_market&.day, \
-                class: "govuk-input govuk-date-input__input govuk-input--width-2"
-      .govuk-date-input__item
-        .govuk-form-group
-          label.govuk-label.govuk-date-input__label[for="dob-day"]
-            | Month
-          = form.number_field "date_placed_on_market(2i)", value: product.date_placed_on_market&.month, \
-                class: "govuk-input govuk-date-input__input govuk-input--width-2"
-      .govuk-date-input__item
-        .govuk-form-group
-          label.govuk-label.govuk-date-input__label[for="dob-day"]
-            | Year
-          = form.number_field "date_placed_on_market(1i)", value: product.date_placed_on_market&.year, \
-                class: "govuk-input govuk-date-input__input govuk-input--width-4"
+= render "date_input", form: form
 .govuk-form-group
   - if search
     = form.submit "Search products", id: "search-button", class: "govuk-button", \
