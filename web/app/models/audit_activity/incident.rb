@@ -11,7 +11,7 @@ class AuditActivity::Incident < AuditActivity
 
   def self.build_body(incident)
     "#{incident.description}<br><br>
-    Occurred: **#{incident.date}**<br>
+    Occurred: **#{incident.date.strftime('%d/%m/%Y')}**<br>
     Affected party: **#{incident.affected_party}**<br>
     Location: **#{incident.location}**"
   end
