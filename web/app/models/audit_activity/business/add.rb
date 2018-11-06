@@ -1,4 +1,4 @@
-class AuditActivity::Business::Add < AuditActivity::Business
+class AuditActivity::Business::Add < AuditActivity::Business::Base
   def self.from(business, investigation)
     super(business, investigation)
   end

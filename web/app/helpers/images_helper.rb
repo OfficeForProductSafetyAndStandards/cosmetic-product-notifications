@@ -1,4 +1,6 @@
 module ImagesHelper
+  include FileConcern
+
   def associated_images_path(parent)
     polymorphic_path([parent, :images])
   end
@@ -25,23 +27,12 @@ module ImagesHelper
   end
 
   def save_image
-    update_image_details
-    images = @parent.images.attach(@image_blob)
-    image = images.last
+    image = attach_file_to_list(@image_blob, @parent.images)
     AuditActivity::Image::Add.from(image, @parent) if @parent.class == Investigation
-    image.blob.save
     redirect_to @parent
   end
 
-  def update_image_details
-    @image_blob.metadata.update(image_params)
-    @image_blob.metadata["updated"] = Time.current
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def image_params
-    return {} if params[:image].blank?
-
-    params.require(:image).permit(:file, :title, :description)
+  def get_file_params_key
+    :image
   end
 end

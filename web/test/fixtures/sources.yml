@@ -47,3 +47,7 @@ address_one:
 address_one:
   type:
   sourceable: two (Address)
+
+corresopndence_one:
+  type:
+  sourceable: one (Correspondence)
