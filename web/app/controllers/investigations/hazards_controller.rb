@@ -28,6 +28,7 @@ class Investigations::HazardsController < ApplicationController
   # POST /hazards.json
   def create
     @hazard.save
+    AuditActivity::Hazard::Add.from(@hazard, @investigation)
     redirect_to @investigation, notice: 'Hazard details were updated.'
   end
 
