@@ -1,7 +1,7 @@
 require "application_system_test_case"
 
 class DocumentTest < ApplicationSystemTestCase
-  include DocumentsHelper
+  include UrlHelper
   setup do
     sign_in_as_user
     visit new_document_flow_path(investigations(:one))

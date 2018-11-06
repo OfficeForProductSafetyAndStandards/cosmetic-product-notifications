@@ -1,24 +1,27 @@
 module DocumentsHelper
   include FileConcern
 
-  def associated_documents_path(parent)
-    polymorphic_path([parent, :documents])
+  def set_parent
+    @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
+    @parent = Product.find(params[:product_id]) if params[:product_id]
   end
 
-  def associated_document_path(parent, document)
-    associated_documents_path(parent) + "/" + document.id.to_s
+  def save_file
+    file = attach_file_to_list(@file_blob, file_collection)
+    audit_class::Add.from(file, @parent) if @parent.class == Investigation
+    redirect_to @parent
   end
 
-  def new_associated_document_path(parent)
-    associated_documents_path(parent) + "/new"
+  def get_file_params_key
+    :document
   end
 
-  def new_document_flow_path(parent)
-    associated_documents_path(parent) + "/new/new"
+  def audit_class
+    AuditActivity::Document
   end
 
-  def edit_associated_document_path(parent, document)
-    associated_document_path(parent, document) + "/edit"
+  def file_collection
+    @parent.documents
   end
 
   def document_type_label(document_type)
@@ -65,20 +68,5 @@ module DocumentsHelper
 
   def document_file_extension(document)
     File.extname(document.filename.to_s)&.remove(".")&.upcase
-  end
-
-  def set_parent
-    @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
-    @parent = Product.find(params[:product_id]) if params[:product_id]
-  end
-
-  def save_document
-    document = attach_file_to_list(@document_blob, @parent.documents)
-    AuditActivity::Document::Add.from(document, @parent) if @parent.class == Investigation
-    redirect_to @parent
-  end
-
-  def get_file_params_key
-    :document
   end
 end

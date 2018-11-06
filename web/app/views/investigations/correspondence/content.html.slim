@@ -23,8 +23,8 @@ main#main-content.govuk-main-wrapper role="main"
 
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | And/or, upload a file if you have one
-          - if @document
-            p = "Currently selected file: #{@document.filename}, selecting a different one will override it"
+          - if @file
+            p = "Currently selected file: #{@file.filename}, selecting a different one will override it"
           .govuk-form-group
             = form.file_field :file, class: "govuk-file-upload"
         .govuk-form-group
