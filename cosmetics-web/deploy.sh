@@ -11,7 +11,7 @@ set -ex
 # CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
 
-cp ./shared-web ./cosmetics-web/vendor/shared-web 
+cp -R ./shared-web ./cosmetics-web/vendor/shared-web
 
 ./ci/install-cf.sh
 

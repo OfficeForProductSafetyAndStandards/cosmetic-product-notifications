@@ -20,7 +20,7 @@ cp ./worker/apt.yml ./web/apt.yml
 # Copy the clamav configuration
 cp -a ./worker/clamav/. ./web/clamav/
 
-cp ./shared-web ./cosmetics-web/vendor/shared-web 
+cp -R ./shared-web ./worker/vendor/shared-web
 
 ./ci/install-cf.sh
 
