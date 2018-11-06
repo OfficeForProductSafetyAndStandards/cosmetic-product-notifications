@@ -10,5 +10,3 @@ Keycloak.realm = "mspsds"
 Keycloak.auth_server_url = ""
 # To load users on app startup
 User.all unless Rails.env.test?
-
-
