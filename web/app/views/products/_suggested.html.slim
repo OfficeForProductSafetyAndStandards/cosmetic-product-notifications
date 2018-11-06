@@ -2,8 +2,8 @@
   p
     | No matches.
 - @products.each do |product|
-  = render layout: "product_summary", locals: { product: product } do
-    - if @investigation.present?
-      = form_with(url: add_investigation_products_path(@investigation), local: true) do |form|
-        = form.hidden_field :product_id, value: product.id
-        = form.submit "Select", class: "govuk-button"
+  = render "product_summary", product: product do
+    p
+      = link_to "View product", product, class: "govuk-link mspsds-block-link"
+      - if @investigation.present?
+        = link_to "Add", link_investigation_product_path(@investigation, product), method: :put, class: "govuk-button"

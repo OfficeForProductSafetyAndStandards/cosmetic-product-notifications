@@ -1,4 +1,4 @@
-class AuditActivity::Image::Update < AuditActivity::Image
+class AuditActivity::Image::Update < AuditActivity::Image::Base
   def self.from(image, investigation, previous_data)
     return if self.no_change?(image, previous_data)
 

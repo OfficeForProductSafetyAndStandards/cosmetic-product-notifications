@@ -1,4 +1,4 @@
-class AuditActivity::Document::Add < AuditActivity::Document
+class AuditActivity::Document::Add < AuditActivity::Document::Base
   def self.from(document, investigation)
     title = document.metadata[:title] || "Untitled document"
     super(document, investigation, title)
