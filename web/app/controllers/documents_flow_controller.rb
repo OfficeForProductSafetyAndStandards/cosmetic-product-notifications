@@ -39,8 +39,4 @@ private
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end
   end
-
-  def document_params
-    params.require(:document).permit(:file, :title, :description, :document_type, :other_type)
-  end
 end

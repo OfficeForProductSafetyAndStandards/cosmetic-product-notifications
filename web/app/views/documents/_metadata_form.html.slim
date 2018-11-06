@@ -23,5 +23,5 @@
             class: "govuk-input"
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"
-  - if show_delete
-    = link_to "Delete", associated_document_path(@parent, document), method: :delete, class: "govuk-button"
+    - if show_delete
+      = link_to "Delete", associated_document_path(@parent, document), method: :delete, class: "govuk-button"

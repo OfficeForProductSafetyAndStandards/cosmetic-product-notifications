@@ -4,11 +4,6 @@ class DocumentsController < ApplicationController
   before_action :set_parent
   before_action :set_document, only: %i[edit update create destroy] # TODO: do we need it for create?
 
-  helper_method :associated_document_path
-  helper_method :associated_documents_path
-  helper_method :new_associated_document_path
-  helper_method :edit_associated_document_path
-
   # GET /documents/1/edit
   def edit; end
 
@@ -50,6 +45,9 @@ private
     if file_params[:title].blank?
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
+    if file_params[:file].blank?
+      @errors.add(:base, :file_not_implemented, message: "File can't be blank")
+    end
   end
 
   def update_document
@@ -60,13 +58,5 @@ private
     update_file_details(@document_blob)
     AuditActivity::Document::Update.from(@document, @parent, @previous_data) if @parent.class == Investigation
     @document_blob.save
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  # TODO: handle document type and other type somehow
-  # is it better to have an overridable file_params?
-  # or to handle all the logic inside of file concern?
-  def document_params
-    params.require(:document).permit(:file, :title, :description, :document_type, :other_type)
   end
 end

@@ -45,6 +45,9 @@ private
     if file_params[:title].blank?
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
+    if file_params[:file].blank?
+      @errors.add(:base, :file_not_implemented, message: "File can't be blank")
+    end
   end
 
   def update_image

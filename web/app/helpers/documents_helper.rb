@@ -67,7 +67,6 @@ module DocumentsHelper
     File.extname(document.filename.to_s)&.remove(".")&.upcase
   end
 
-
   def set_parent
     @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
     @parent = Product.find(params[:product_id]) if params[:product_id]
