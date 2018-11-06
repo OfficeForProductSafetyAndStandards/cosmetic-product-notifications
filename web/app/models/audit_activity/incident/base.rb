@@ -10,9 +10,11 @@ class AuditActivity::Incident::Base < AuditActivity::Base
   end
 
   def self.build_body(incident)
-    "#{incident.description}<br><br>
-    Occurred: **#{incident.date.strftime('%d/%m/%Y')}**<br>
-    Affected party: **#{incident.affected_party}**<br>
-    Location: **#{incident.location}**"
+    body = ""
+    body += "#{incident.description}\n\n" if incident.description.present?
+    body += "Occurred: **#{incident.date.strftime('%d/%m/%Y')}**<br>" if incident.date.present?
+    body += "Affected party: **#{incident.affected_party}**<br>" if incident.affected_party.present?
+    body += "Location: **#{incident.location}**" if incident.location.present?
+    body
   end
 end

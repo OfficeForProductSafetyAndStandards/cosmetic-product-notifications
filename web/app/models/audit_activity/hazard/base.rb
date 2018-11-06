@@ -10,8 +10,10 @@ class AuditActivity::Hazard::Base < AuditActivity::Base
   end
 
   def self.build_body(hazard)
-    "#{hazard.description}<br><br>
-    Risk level: **#{hazard.risk_level}**<br>
-    Vulnerable group: **#{hazard.affected_parties}**"
+    body = ""
+    body += "#{hazard.description}\n\n" if hazard.description.present?
+    body += "Risk level: **#{hazard.risk_level}**<br>" if hazard.risk_level.present?
+    body += "Vulnerable group: **#{hazard.affected_parties}**" if hazard.affected_parties.present?
+    body
   end
 end
