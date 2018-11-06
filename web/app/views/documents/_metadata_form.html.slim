@@ -1,5 +1,5 @@
 = form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
-  = render "form_validation_display", errors: document.errors
+  = render "form_validation_display", errors: @errors
   .govuk-form-group
     = form.label :title, "Document title", class: "govuk-label"
     = form.text_field :title, value: document.metadata["title"], class: "govuk-input"
@@ -14,13 +14,13 @@
       .govuk-radios
         - @parent.document_types.each do |type|
           .govuk-radios__item
-            = form.radio_button :document_type, type, checked: type.to_s == document.metadata["document_type"], \
-                class: "govuk-radios__input"
+            = form.radio_button :document_type, type, checked: type.to_s == document.metadata["document_type"],
+                    class: "govuk-radios__input"
             = form.label :document_type, document_type_label(type), class: "govuk-label govuk-radios__label"
   .govuk-form-group
     = form.label :other_type, class: "govuk-label"
-    = form.text_field :other_type, value: document.metadata["other_type"], placeholder: "Enter a type, if relevant", \
-        class: "govuk-input"
+    = form.text_field :other_type, value: document.metadata["other_type"], placeholder: "Enter a type, if relevant",
+            class: "govuk-input"
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"
   - if show_delete

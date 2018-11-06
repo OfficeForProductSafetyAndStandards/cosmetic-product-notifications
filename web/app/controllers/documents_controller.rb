@@ -26,7 +26,6 @@ class DocumentsController < ApplicationController
     return render :edit if @errors.present?
 
     update_document
-    AuditActivity::Document::Update.from(@document, @parent, @previous_data) if @parent.class == Investigation
     redirect_to @parent
   end
 
@@ -46,19 +45,27 @@ private
     end
   end
 
+  def validate
+    @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
+    if file_params[:title].blank?
+      @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
+    end
+  end
+
   def update_document
     @previous_data = {
         title: @document.metadata[:title],
         description: @document.metadata[:description]
     }
-    @document.blob.metadata.update(document_params)
-    @document.blob.metadata["updated"] = Time.current
+    update_file_details(@document_blob)
+    AuditActivity::Document::Update.from(@document, @parent, @previous_data) if @parent.class == Investigation
+    @document_blob.save
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   # TODO: handle document type and other type somehow
   # is it better to have an overridable file_params?
-  # or to handle all the logic inside of file concern? 
+  # or to handle all the logic inside of file concern?
   def document_params
     params.require(:document).permit(:file, :title, :description, :document_type, :other_type)
   end
