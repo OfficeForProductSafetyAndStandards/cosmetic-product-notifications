@@ -44,6 +44,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def activity_params
-    params.require(:activity).permit(:body)
+    params.require(:comment_activity).permit(:body)
   end
 end
