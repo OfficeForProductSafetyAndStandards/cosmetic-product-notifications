@@ -13,3 +13,4 @@ applications:
   services:
     - mspsds-redis
     - mspsds-database
+    - mspsds-elasticsearch
