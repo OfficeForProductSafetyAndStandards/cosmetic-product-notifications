@@ -40,10 +40,9 @@ module FileConcern
     file.metadata["updated"] = Time.current
   end
 
-  def validate_blob_size(blob, errors)
-    # TODO: ADD TESTS FOR IT !!!
-    if blob && (blob.byte_size > max_file_byte_size)
-      errors.add(:base, :file_too_large, message: "File is too big, max size is #{max_file_byte_size / 1000000}MB")
+  def validate_blob_size(blob, errors, allowed_size = max_file_byte_size)
+    if blob && (blob.byte_size > allowed_size)
+      errors.add(:base, :file_too_large, message: "File is too big, allowed size is #{allowed_size / 1000000}MB")
     end
   end
 
