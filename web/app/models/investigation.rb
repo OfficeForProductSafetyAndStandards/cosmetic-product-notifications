@@ -6,7 +6,7 @@ class Investigation < ApplicationRecord
   attr_accessor :priority_rationale
 
   validates :question_title, presence: true, on: :question_details
-  validate :validate_assignment
+  validate :validate_assignment, :validate_priority
 
   after_save :send_assignee_email, :create_audit_activity_for_priority
 
@@ -88,6 +88,12 @@ private
   def validate_assignment
     if assignee_id_was.present? && !assignee
       errors.add(:investigation, "cannot be unassigned")
+    end
+  end
+
+  def validate_priority
+    if !priority && priority_rationale
+      errors.add(:priority, "has not been selected")
     end
   end
 

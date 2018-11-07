@@ -8,19 +8,31 @@ h2.govuk-heading-l
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with(url: update_priority_investigation_url(@investigation), local: true) do |form|
+      - if @investigation.errors.any?
+        #error_explanation
+          h2.govuk-heading-l.govuk-error-message
+            = pluralize(@investigation.errors.count, "error ")
+            | prohibited this case from being saved:
+          ul.govuk-list.govuk-error-message
+            - @investigation.errors.full_messages.each do |message|
+              li
+                = message
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Priority
         .govuk-form-group
           .govuk-radios
             .govuk-radios__item
-              = form.radio_button :priority, "Low", class: "govuk-radios__input"
+              = form.radio_button :priority, "Low",
+                      checked: (@investigation.priority == "Low"), class: "govuk-radios__input"
               = form.label :priority, "Low", class: "govuk-label govuk-radios__label"
             .govuk-radios__item
-              = form.radio_button :priority, "Medium", class: "govuk-radios__input"
+              = form.radio_button :priority, "Medium",
+                      checked: (@investigation.priority == "Medium"), class: "govuk-radios__input"
               = form.label :priority, "Medium", class: "govuk-label govuk-radios__label"
             .govuk-radios__item
-              = form.radio_button :priority, "High", class: "govuk-radios__input"
+              = form.radio_button :priority, "High",
+                      checked: (@investigation.priority == "High"), class: "govuk-radios__input"
               = form.label :priority, "High", class: "govuk-label govuk-radios__label"
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
