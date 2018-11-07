@@ -1,8 +1,8 @@
 - content_for :page_title, "New case"
 - content_for :after_header do
   = link_to "Back to list", investigations_path, class: "govuk-back-link"
-p.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-  | New case:
+span.govuk-caption-xl
+  | Begin an investigation
 h1.govuk-heading-xl
-  | Risk details
+  | Why are you beginning an investigation?
 = render "form", investigation: @investigation
