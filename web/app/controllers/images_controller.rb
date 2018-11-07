@@ -45,7 +45,7 @@ private
 
   def validate
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
-    if image_params[:title].blank?
+    if file_params[:title].blank?
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
   end
@@ -55,7 +55,7 @@ private
       title: @image.metadata[:title],
       description: @image.metadata[:description]
     }
-    update_image_details
+    update_file_details(@image_blob)
     AuditActivity::Image::Update.from(@image, @parent, @previous_data) if @parent.class == Investigation
     @image_blob.save
   end

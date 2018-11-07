@@ -1,16 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyText
   description: MyText
   is_closed: false
 
 two:
-  title: MyText
   description: MyText
   is_closed: false
 
 three:
-  title: Product Investigation
   description: Investigation into faulty toys
   is_closed: true
+
+no_products:
+  description: Investigation with no product
+  is_closed: false

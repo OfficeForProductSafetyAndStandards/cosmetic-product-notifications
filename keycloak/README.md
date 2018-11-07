@@ -45,7 +45,7 @@ Running the following commands from the root directory will then package and set
 
     docker build --target keycloak-package -t keycloak-package:latest ./keycloak
     docker cp $(docker create keycloak-package):/tmp/keycloak/package ./keycloak
-    cf push -f ./keycloak/manifest.yml --no-start
+    cf push -f ./keycloak/manifest.yml --no-start --hostname keycloak-<<SPACE>>
 
 Once the app has been created, add the following environment variables to specify the database connection properties:
 
@@ -94,3 +94,7 @@ Set the client credentials for the MSPSDS app:
     cf restage mspsds-web
 
 (The client secret is listed on the Keycloak admin console: Clients > mspsds-app > Credentials)
+
+Allow keycloak to redirect back to the app after login
+* Select realm > MSPSDS > Clients > mspsds-app
+* Add `https://mspsds-<<SPACE>>.cloudapps.ditial/*` to the Valid Redirect URIs section and click save
