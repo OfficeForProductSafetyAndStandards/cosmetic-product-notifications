@@ -142,8 +142,8 @@ ActiveRecord::Schema.define(version: 2018_11_05_134010) do
     t.text "description"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
+    t.string "question_title"
     t.string "question_type"
-    t.string "title"
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
