@@ -63,4 +63,42 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to investigation_url(@investigation)
   end
+
+  test "should set priority" do
+    priority = "High"
+    investigation_priority = lambda { Investigation.find(@investigation.id).priority }
+    assert_changes investigation_priority, from: nil, to: priority do
+      post update_priority_investigation_url(@investigation), params: {
+          priority: priority,
+          priority_rationale: "some rationale"
+      }
+    end
+
+    assert_redirected_to investigation_url(@investigation)
+  end
+
+  test "should set priority rationale" do
+    rationale = "Set to high because of risk level"
+    investigation_rationale = lambda { Investigation.find(@investigation.id).priority_rationale }
+    assert_changes investigation_rationale, from: nil, to: rationale do
+      post update_priority_investigation_url(@investigation), params: {
+          priority: "Medium",
+          priority_rationale: rationale
+      }
+    end
+
+    assert_redirected_to investigation_url(@investigation)
+  end
+
+  test "should not save priority_rationale if priority is nil" do
+    investigation = investigations(:two)
+    investigation.source = sources(:investigation_two)
+    investigation_priority = lambda { Investigation.find(@investigation.id).priority }
+    assert_no_changes investigation_priority do
+      post update_priority_investigation_url(investigation), params: {
+          priority: nil,
+          priority_rationale: "some rational"
+      }
+    end
+  end
 end
