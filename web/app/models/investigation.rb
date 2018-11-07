@@ -8,7 +8,7 @@ class Investigation < ApplicationRecord
   validates :question_title, presence: true, on: :question_details
   validate :validate_assignment
 
-  after_save :send_assignee_email
+  after_save :send_assignee_email, :create_audit_activity_for_priority
 
   index_name [Rails.env, "investigations"].join("_")
 
@@ -58,6 +58,12 @@ class Investigation < ApplicationRecord
 
   def create_audit_activity_for_case
     ::AuditActivity::Investigation::Add.from(self)
+  end
+
+  def create_audit_activity_for_priority
+    if saved_changes.key?(:priority) || saved_changes.key?(:priority_rationale)
+      ::AuditActivity::Investigation::UpdatePriority.from(self)
+    end
   end
 
   def create_audit_activity_for_product product
