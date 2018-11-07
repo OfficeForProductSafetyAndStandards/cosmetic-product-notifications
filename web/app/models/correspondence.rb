@@ -11,6 +11,8 @@ class Correspondence < ApplicationRecord
     :correspondence_date
   end
 
+  has_many_attached :documents
+
   enum contact_method: {
     email: "Email",
     phone: "Phone call"

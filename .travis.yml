@@ -30,7 +30,7 @@ jobs:
     after_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
   - name: Static Analysis
-    install: 
+    install:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps web echo 'Gems pre-installed'
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d web
@@ -67,9 +67,9 @@ jobs:
   - name: Deploy keycloak
     if: branch = staging AND type != pull_request
     script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=keycloak ./ci/deploy-if-changed.sh
-  - name: Deploy cosmetics
-    if: branch = staging AND type != pull_request
-    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
+#  - name: Deploy cosmetics
+#    if: branch = staging AND type != pull_request
+#    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
   - stage: Deploy to production
     name: Deploy web
     if: branch = prod AND type != pull_request
@@ -80,9 +80,9 @@ jobs:
   - name: Deploy keycloak
     if: branch = prod AND type != pull_request
     script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=keycloak ./ci/deploy-if-changed.sh
-  - name: Deploy cosmetics
-    if: branch = prod AND type != pull_request
-    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
+#  - name: Deploy cosmetics
+#    if: branch = prod AND type != pull_request
+#    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
 env:
   global:
   - secure: PP1MBuv5m3nsdgVS0UaX2CZPh1Ar8s6k+OZOaNn0oq4JSbvZXm/aEOX50D2AA9pxhXJBC+4NC54pWse9bRIt0etmmC+coYetjVI91xOgH2QgLbEkkfRKE/RKmtKqLAOyvVAB+HvVO/YNetIRGgTQwTnhvmsGL2uj/YFntTLRm/oHZy2vc7leN0gFSzS6oNK4a2L2+Tvl/Ytqhn2f2GUZnVTGJZoDYJKBRdlXZ/ffOsyaLXE8a1mgnuAx/7IUBkvtFKPcXOOtoe0mCU8O1AWszkfSv8GI5OtM54DLrM1b9bU8erkkCzDDSNBj+qDbvaTeGeDf2TH6fmtXSOBZhGpCkAOmaxzqt8RbpemnxM+ij40bXSPrOVGOspn6aPBli/vOxcCzchhl13aYSsRwf1AV+0uViX5Mve3sJnIvIEPH6bblzkRtGjLEWLyqGLU9Gb9l4Fxhxwx0kPmjkNqyhHjSBwTDd7FyDNKQ2k0DRU8hxUqUcKkHliQepN1Ri0manztiS/pf0JF2HDmovLEKC3Ag1EniR9sD74d1TH2lsm70t+Gk/8DGOh2Lbwy94pjUD/GDp0opdGRB5BynsW8TFCehnw/GlWQe7f/U2/X+jZ2oO7jw0eGlC1E9stGfcct8YnENrvrc1iHVQ9JJ78ZzIhnJ3GfD4A7ZKCmXIqucYlrgWSw= # DOCKER_USERNAME

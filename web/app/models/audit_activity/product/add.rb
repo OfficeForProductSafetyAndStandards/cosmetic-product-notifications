@@ -1,4 +1,4 @@
-class AuditActivity::Product::Add < AuditActivity::Product
+class AuditActivity::Product::Add < AuditActivity::Product::Base
   def self.from(product, investigation)
     super(product, investigation)
   end

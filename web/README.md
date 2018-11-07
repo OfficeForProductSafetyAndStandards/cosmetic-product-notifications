@@ -92,7 +92,8 @@ You can run the security vulnerability static analysis with `bin/brakeman --no-p
 
 ## Deployment
 
-The website code is automatically deployed to the relevant environment by Travis CI as described in [the root README](../README.md#deployment).
+The website code is automatically deployed to the relevant environment by Travis
+CI as described in [the root README](../README.md#deployment).
 
 
 ### Deployment from scratch
@@ -100,18 +101,13 @@ The website code is automatically deployed to the relevant environment by Travis
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the website app:
 
-    cf push -f ./web/manifest.yml --no-start
+    cf push -f ./web/manifest.yml --no-start --hostname mspsds-<SPACE>
 
 This provisions the app in Cloud Foundry.
 
     cf set-env mspsds-web RAILS_ENV production
 
 This configures rails to use the production database amongst other things.
-
-    cf set-env mspsds-web USERNAME XXX
-    cf set-env mspsds-web PASSWORD XXX
-
-This sets the username and password for the HTTP Basic Authentication.
 
     cf set-env mspsds-web AWS_ACCESS_KEY_ID XXX
     cf set-env mspsds-web AWS_SECRET_ACCESS_KEY XXX

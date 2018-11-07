@@ -2,12 +2,12 @@ h3.govuk-heading-s
   | Existing businesses
 - if @existing_businesses.any?
   - @existing_businesses.each do |business|
-    = render layout: "business_summary", locals: { business: business } do
-      - if @investigation.present?
-        div[class="govuk-!-margin-top-3"]
-          = form_with(url: add_investigation_businesses_path(@investigation), local: true) do |form|
-            = form.hidden_field :business_id, value: business.id
-            = form.submit "Add", class: "govuk-button"
+    = render "business_summary", business: business do
+      p
+        = link_to "View business", business, class: "govuk-link mspsds-block-link"
+        - if @investigation.present?
+          = link_to "Add", link_investigation_business_path(@investigation, business), method: :put, \
+              class: "govuk-button"
 - else
   p
     | No matches.

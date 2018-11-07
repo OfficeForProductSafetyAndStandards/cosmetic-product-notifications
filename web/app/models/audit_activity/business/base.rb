@@ -1,4 +1,4 @@
-class AuditActivity::Business < AuditActivity
+class AuditActivity::Business::Base < AuditActivity::Base
   belongs_to :business
 
   private_class_method def self.from(business, investigation)
