@@ -44,7 +44,11 @@ private
     @investigation = Investigation.find_by(id: params[:investigation_id])
     @file = load_file_attachment
     set_hazard_data
+    if @file.blank? && @hazard.risk_assessment.attached?
+      @file = @hazard.risk_assessment.blob
+    end
   end
+
 
   def set_hazard_data
     if @investigation.hazard
@@ -63,7 +67,7 @@ private
 
     handle_type_params
     params.require(:hazard).permit(
-        :hazard_type, :description, :affected_parties, :risk_level,
+      :hazard_type, :description, :affected_parties, :risk_level,
         )
   end
 
