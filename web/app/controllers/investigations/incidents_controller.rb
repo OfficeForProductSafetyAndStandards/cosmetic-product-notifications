@@ -31,6 +31,7 @@ class Investigations::IncidentsController < ApplicationController
   # POST investigations/1/incidents
   def create
     if @incident.save
+      ::AuditActivity::Incident::Add.from(@incident, @investigation)
       redirect_to investigation_url(@investigation), notice: "Incident was successfully recorded."
     else
       render step

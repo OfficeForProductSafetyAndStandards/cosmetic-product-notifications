@@ -3,7 +3,7 @@ class Investigation < ApplicationRecord
   include Documentable
   include UserService
 
-  validates :title, presence: true, on: :question_details
+  validates :question_title, presence: true, on: :question_details
   validate :validate_assignment
 
   after_save :send_assignee_email
@@ -66,7 +66,16 @@ class Investigation < ApplicationRecord
     ::AuditActivity::Business::Add.from(business, self)
   end
 
+  def title
+    self.is_case ? case_title : question_title
+  end
+
 private
+
+  def case_title
+    title = [build_title_products_portion, build_title_hazard_portion].reject(&:blank?).join(" - ")
+    title.presence || "Untitled case"
+  end
 
   def validate_assignment
     if !new_record? && !assignee
@@ -77,6 +86,25 @@ private
   def send_assignee_email
     if saved_changes.key? :assignee_id
       NotifyMailer.assigned_investigation(self, assignee.full_name, assignee.email).deliver_later
+    end
+  end
+
+  def build_title_products_portion
+    return "" if products.empty?
+
+    shared_property_values = %w(brand model product_type).map { |property| get_property_value_if_shared property }
+    title = shared_property_values.reject(&:blank?).join(", ")
+    products.length > 1 ? "#{products.length} Products, ".concat(title) : title
+  end
+
+  def build_title_hazard_portion
+    hazard&.hazard_type.presence
+  end
+
+  def get_property_value_if_shared property_name
+    first_product = products.first
+    if products.all? { |product| product[property_name] == first_product[property_name] }
+      first_product[property_name]
     end
   end
 end

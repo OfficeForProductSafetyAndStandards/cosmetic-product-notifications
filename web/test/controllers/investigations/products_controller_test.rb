@@ -4,8 +4,9 @@ class Investigations::ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_admin
     @investigation = investigations(:one)
-    @product = products(:one)
-    @product.source = sources(:product_one)
+    @investigation.source = sources(:investigation_one)
+    @product = products(:iphone)
+    @product.source = sources(:product_iphone)
     Product.import
   end
 
