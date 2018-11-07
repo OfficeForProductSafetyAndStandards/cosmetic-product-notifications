@@ -1,0 +1,33 @@
+- content_for :page_title, "Update priority"
+- content_for :after_header do
+  = link_to "Back to case", @investigation, class: "govuk-back-link"
+= render "investigation_heading", investigation: @investigation
+h2.govuk-heading-l
+  | Case status
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with(model: @investigation, local: true) do |form|
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Priority
+        .govuk-form-group
+          .govuk-radios
+            .govuk-radios__item
+              = form.radio_button :priority, false, class: "govuk-radios__input"
+              = form.label :priority, "Low", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :priority, false, class: "govuk-radios__input"
+              = form.label :priority, "Medium", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :priority, false, class: "govuk-radios__input"
+              = form.label :priority, "High", class: "govuk-label govuk-radios__label"
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Comment / rationale
+          .govuk-form-group
+            span.govuk-hint
+              | Why are you setting it to this level?
+            = form.text_area :description, aria-describedby="priority-description-hint" class="govuk-textarea govuk-!-width-two-thirds" name="priority-description" rows="5"
+      .govuk-form-group
+        = form.submit "Save", class: "govuk-button"
