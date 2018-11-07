@@ -78,7 +78,7 @@ private
   end
 
   def validate_assignment
-    if !new_record? && !assignee
+    if assignee_id_was.present? && !assignee
       errors.add(:investigation, "cannot be unassigned")
     end
   end
