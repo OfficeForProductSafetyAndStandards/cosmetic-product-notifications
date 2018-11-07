@@ -76,7 +76,7 @@ class QuestionFlowTest < ApplicationSystemTestCase
   end
 
   def fill_question_summary_and_continue
-    fill_in("investigation[title]", with: "some nice question")
+    fill_in("investigation[question_title]", with: "some nice question")
     click_button "Continue"
   end
 end
