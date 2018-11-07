@@ -29,6 +29,8 @@ class Investigations::HazardsController < ApplicationController
   # POST /hazards
   # POST /hazards.json
   def create
+    @hazard.save
+    AuditActivity::Hazard::Add.from(@hazard, @investigation)
     attach_file_to_list(@file, @hazard.documents)
     @investigation.hazards << @hazards
     @investigation.save
