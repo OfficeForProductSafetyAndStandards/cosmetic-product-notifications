@@ -12,7 +12,7 @@ main#main-content.govuk-main-wrapper role="main"
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Subject
           .govuk-form-group
-            span.govuk-hint Give an overview of the correspondance
+            span.govuk-hint Give an overview of the correspondence
             = form.text_field :overview, class: "govuk-input govuk-!-width-two-thirds"
 
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -23,6 +23,8 @@ main#main-content.govuk-main-wrapper role="main"
 
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | And/or, upload a file if you have one
+          - if @document
+            p = "Currently selected file: #{@document.filename}, selecting a different one will override it"
           .govuk-form-group
             = form.file_field :file, class: "govuk-file-upload"
         .govuk-form-group

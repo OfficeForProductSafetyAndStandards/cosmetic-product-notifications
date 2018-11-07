@@ -8,3 +8,5 @@ Keycloak.keycloak_controller = "sessions"
 Keycloak.realm = "mspsds"
 # Realm url (only used if the installation file is not present)
 Keycloak.auth_server_url = ""
+# To load users on app startup
+User.all unless Rails.env.test? || Sidekiq.server?

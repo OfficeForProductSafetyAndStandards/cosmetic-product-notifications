@@ -24,16 +24,16 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create investigation and redirect to investigation page" do
-    new_investigation_title = "new_investigation_title"
+    new_investigation_description = "new_investigation_description"
     assert_difference("Investigation.count") do
       post investigations_url, params: {
         investigation: {
-          title: new_investigation_title,
+            description: new_investigation_description
         }
       }
     end
 
-    new_investigation = Investigation.find_by(title: new_investigation_title)
+    new_investigation = Investigation.find_by(description: new_investigation_description)
     assert_redirected_to investigation_path(new_investigation)
   end
 
