@@ -1,13 +1,14 @@
 book = xlsx_package.workbook
 
 book.add_worksheet name: "Cases" do |sheet_investigations|
-  sheet_investigations.add_row %w[ID Status Description Assignee Source Risk_Overview Risk_Level
+  sheet_investigations.add_row %w[ID Status Title Description Assignee Source Risk_Overview Risk_Level
                                   Products Businesses Activities]
 
   @investigations.each do |investigation|
     sheet_investigations.add_row [
       investigation.id,
       investigation.is_closed? ? "Closed" : "Open",
+      investigation.title,
       investigation.description,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
       investigation.source.show,

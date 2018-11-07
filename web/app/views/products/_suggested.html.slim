@@ -1,5 +1,6 @@
 - if @products.empty?
-  | No matches.
+  p
+    | No matches.
 - @products.each do |product|
   = render "product_summary", product: product do
     p
