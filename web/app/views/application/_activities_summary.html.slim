@@ -21,6 +21,9 @@
                   = markdown activity.body if activity.body
                   = link_to "View business details", business_url(activity.business_id) if activity.business_id
                   = link_to "View product details", product_url(activity.product_id) if activity.product_id
+                  - if activity.is_a?(AuditActivity::Hazard::Base) && activity&.risk_assessment&.attached?
+                                      = link_to "View risk assessment document",
+                            activity.risk_assessment, target: "_blank"
           li
     - else
       p

@@ -35,6 +35,17 @@ module FileConcern
     end
   end
 
+  def attach_file_to_attachment_slot(file, attachment_slot)
+    if file
+      update_file_details(file)
+      if attachment_slot.attached?
+        attachment_slot.detach
+      end
+      attachment_slot.attach(file)
+      attachment_slot.blob.save
+    end
+  end
+
   def update_file_details(file)
     file.metadata.update(file_params)
     file.metadata["updated"] = Time.current

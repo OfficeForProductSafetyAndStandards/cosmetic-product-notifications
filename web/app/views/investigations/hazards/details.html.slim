@@ -6,6 +6,7 @@ h1.govuk-heading-xl
     = "Case: #{@investigation.pretty_id}"
   | Hazard information
 = form_with(model: @hazard, local: true, url: wizard_path, method: :put) do |form|
+  = render "form_validation_display", errors: @hazard.errors
   fieldset.govuk-fieldset
     .govuk-form-group
       = form.label :hazard_type, "Overview", class: "govuk-fieldset__legend--l"
@@ -43,7 +44,7 @@ h1.govuk-heading-xl
                         = form.label :risk_level, level.titleize, class: "govuk-label govuk-radios__label"
             h4.govuk-fieldset__legend--l
               | Add risk assessment
-            = form.file_field :risk_assessment, class: "govuk-file-upload"
+            = form.file_field :file, class: "govuk-file-upload"
           .govuk-radios__item
             = form.radio_button :set_risk_level, "none", class: "govuk-radios__input"
             = form.label :risk_level, "No", class: "govuk-label govuk-radios__label"

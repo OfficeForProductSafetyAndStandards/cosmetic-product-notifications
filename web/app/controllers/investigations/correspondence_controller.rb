@@ -23,7 +23,7 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def update
-    if !@correspondence.valid?(step)
+    if @correspondence.invalid?(step)
       render step
     else
       redirect_to next_wizard_path

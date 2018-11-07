@@ -1,4 +1,6 @@
 class AuditActivity::Hazard::Base < AuditActivity::Base
+  has_one_attached :risk_assessment
+
   private_class_method def self.from(hazard, investigation)
     body = self.build_body(hazard)
     self.create(
