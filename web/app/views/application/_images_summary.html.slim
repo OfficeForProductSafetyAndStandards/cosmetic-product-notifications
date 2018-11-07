@@ -8,7 +8,7 @@
           = image.blob.metadata[:title]
         span.govuk-caption-m[class="govuk-!-font-size-16"]
           - if image.blob.metadata[:updated]
-            = "Updated #{Time.zone.parse(image.blob.metadata[:updated]).strftime("%d/%m/%Y")}"
+            = "Updated #{Time.zone.parse(image.blob.metadata[:updated]).strftime('%d/%m/%Y')}"
         br
         p
           = image.blob.metadata[:description]

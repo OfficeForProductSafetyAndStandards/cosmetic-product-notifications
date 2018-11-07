@@ -40,6 +40,13 @@ module FileConcern
     file.metadata["updated"] = Time.current
   end
 
+  def validate_blob_size(blob, errors)
+    # TODO: ADD TESTS FOR IT !!!
+    if blob && (blob.byte_size > max_file_byte_size)
+      errors.add(:base, :file_too_large, message: "File is too big, max size is #{max_file_byte_size / 1000000}MB")
+    end
+  end
+
   def get_file_params_key
     # If file upload is part of a bigger form, like correspondence, you need to override this with the key used to get
     # the relevant parameters from params(e.g. :correspondence)
@@ -49,6 +56,11 @@ module FileConcern
   def get_file_session_key
     # If for some reason you need to control where in session you store the id of your file, override this
     :file_id
+  end
+
+  def max_file_byte_size
+    # If you want your controller to allow different max size, override this
+    1000000000
   end
 
   def file_params

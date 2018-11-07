@@ -29,7 +29,7 @@ class FilesController < ApplicationController
     redirect_to @parent
   end
 
-  private
+private
 
   def set_file
     if params[:id].present?
@@ -46,6 +46,7 @@ class FilesController < ApplicationController
     if file_params[:file].blank? && !@file
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end
+    validate_blob_size(@file_blob, @errors)
   end
 
   def update_file

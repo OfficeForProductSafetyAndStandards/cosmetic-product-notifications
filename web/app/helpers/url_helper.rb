@@ -1,5 +1,4 @@
 module UrlHelper
-
   # IMAGES
   def associated_images_path(parent)
     polymorphic_path([parent, :images])
@@ -41,5 +40,4 @@ module UrlHelper
   def edit_associated_document_path(parent, document)
     associated_document_path(parent, document) + "/edit"
   end
-
 end
