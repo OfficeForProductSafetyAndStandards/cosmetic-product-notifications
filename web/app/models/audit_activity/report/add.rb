@@ -4,6 +4,6 @@ class AuditActivity::Report::Add < AuditActivity::Report::Base
   end
 
   def subtitle_slug
-    "Report added"
+    "Report details added"
   end
 end
