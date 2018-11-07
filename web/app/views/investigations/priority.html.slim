@@ -7,20 +7,20 @@ h2.govuk-heading-l
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with(model: @investigation, local: true) do |form|
+    = form_with(url: update_priority_investigation_url(@investigation), local: true) do |form|
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Priority
         .govuk-form-group
           .govuk-radios
             .govuk-radios__item
-              = form.radio_button :priority, false, class: "govuk-radios__input"
+              = form.radio_button :priority, "Low", class: "govuk-radios__input"
               = form.label :priority, "Low", class: "govuk-label govuk-radios__label"
             .govuk-radios__item
-              = form.radio_button :priority, false, class: "govuk-radios__input"
+              = form.radio_button :priority, "Medium", class: "govuk-radios__input"
               = form.label :priority, "Medium", class: "govuk-label govuk-radios__label"
             .govuk-radios__item
-              = form.radio_button :priority, false, class: "govuk-radios__input"
+              = form.radio_button :priority, "High", class: "govuk-radios__input"
               = form.label :priority, "High", class: "govuk-label govuk-radios__label"
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -28,6 +28,8 @@ h2.govuk-heading-l
           .govuk-form-group
             span.govuk-hint
               | Why are you setting it to this level?
-            = form.text_area :description, aria-describedby="priority-description-hint" class="govuk-textarea govuk-!-width-two-thirds" name="priority-description" rows="5"
+            = form.text_area :priority_rationale, value: flash[:priority_rationale],
+                    aria_describedby: "priority-rationale-hint", class: "govuk-textarea govuk-!-width-two-thirds",
+                    name: "priority_rationale", rows: 5
       .govuk-form-group
         = form.submit "Save", class: "govuk-button"

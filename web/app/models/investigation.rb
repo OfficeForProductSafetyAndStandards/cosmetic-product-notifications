@@ -3,6 +3,8 @@ class Investigation < ApplicationRecord
   include Documentable
   include UserService
 
+  attr_accessor :priority_rationale
+
   validates :question_title, presence: true, on: :question_details
   validate :validate_assignment
 

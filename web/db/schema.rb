@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_05_134010) do
+ActiveRecord::Schema.define(version: 2018_11_07_102901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,8 @@ ActiveRecord::Schema.define(version: 2018_11_05_134010) do
     t.text "description"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
+    t.string "priority"
+    t.string "priority_rationale"
     t.string "question_title"
     t.string "question_type"
     t.datetime "updated_at", null: false
