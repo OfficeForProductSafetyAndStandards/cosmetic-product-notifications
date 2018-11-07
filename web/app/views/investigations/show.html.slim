@@ -64,13 +64,6 @@
     = link_to "Add product", new_investigation_product_path(@investigation)
 = render "investigations/record_activities"
 
-.govuk-form-group
-  = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|
-    span#action__comment-hint.govuk-hint class="govuk-!-width-full"
-      | Or enter a comment
-    = form.text_area :body, class: "govuk-textarea govuk-!-width-full", aria_describedby: "action__comment-hint", rows: 5
-    = form.submit "Add comment", class: "govuk-button"
-
 hr.govuk-section-break.govuk-section-break--m
 
 = render "tabs", tabs: [\
