@@ -49,7 +49,6 @@ private
     end
   end
 
-
   def set_hazard_data
     if @investigation.hazard
       @hazard = @investigation.hazard
