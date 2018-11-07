@@ -4,7 +4,7 @@ class ImageTest < ApplicationSystemTestCase
   include ImagesHelper
   setup do
     sign_in_as_user
-    visit new_image_flow_path(investigations(:one))
+    visit new_image_flow_path(investigations(:no_products))
   end
 
   teardown do
