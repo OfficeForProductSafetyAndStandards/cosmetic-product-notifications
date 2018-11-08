@@ -47,19 +47,19 @@ module DocumentsHelper
     return "Audio" if document.audio?
     return "Image" if document.image?
     return "Video" if document.video?
-    return "Text"  if document.text?
+    return "Text" if document.text?
 
     case document.content_type
     when "application/pdf"
       "PDF"
     when "application/msword",
-         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       "Word Document"
     when "application/vnd.ms-excel",
-         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       "Excel Document"
     when "application/vnd.ms-powerpoint",
-         "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation"
       "PowerPoint Document"
     else
       document_file_extension(document).upcase
@@ -68,5 +68,11 @@ module DocumentsHelper
 
   def document_file_extension(document)
     File.extname(document.filename.to_s)&.remove(".")&.upcase
+  end
+
+  def formatted_file_updated_date(file)
+    if file.blob.metadata[:updated]
+      return "Updated #{Time.zone.parse(file.blob.metadata[:updated]).strftime('%d/%m/%Y')}"
+    end
   end
 end

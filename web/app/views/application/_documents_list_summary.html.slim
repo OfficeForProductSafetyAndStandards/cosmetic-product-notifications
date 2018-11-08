@@ -7,8 +7,7 @@
         h2.govuk-heading-m[class="govuk-!-margin-bottom-1"]
           = document.blob.metadata[:title]
         span.govuk-caption-m[class="govuk-!-font-size-16"]
-          - if document.blob.metadata[:updated]
-            = "Updated #{Time.zone.parse(document.blob.metadata[:updated]).strftime('%d/%m/%Y')}"
+          = formatted_file_updated_date(document)
         br
         p
           = document.blob.metadata[:description]
