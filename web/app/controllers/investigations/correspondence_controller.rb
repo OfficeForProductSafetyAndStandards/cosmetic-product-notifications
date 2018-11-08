@@ -23,7 +23,9 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def update
-    if @correspondence.invalid?(step)
+    @correspondence.validate(step)
+    validate_blob_size(@file, @correspondence.errors)
+    if @correspondence.errors.any?
       render step
     else
       redirect_to next_wizard_path

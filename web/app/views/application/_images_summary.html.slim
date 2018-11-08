@@ -7,7 +7,7 @@
         h2.govuk-heading-m[class="govuk-!-margin-bottom-1"]
           = image.blob.metadata[:title]
         span.govuk-caption-m[class="govuk-!-font-size-16"]
-          = "Updated #{image.blob.metadata[:updated]&.to_date}"
+          = formatted_file_updated_date(image)
         br
         p
           = image.blob.metadata[:description]
@@ -15,10 +15,3 @@
           = link_to "View full image", image, class: "govuk-link mspsds-block-link", target: '_blank'
           = link_to "Edit image details or delete", edit_associated_image_path(parent, image),
                   class: "govuk-link mspsds-block-link"
-  br
-  br
-- else
-  h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-    | Images
-  p
-    | No images.
