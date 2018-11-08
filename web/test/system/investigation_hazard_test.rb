@@ -93,7 +93,7 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     choose("hazard[risk_level]", visible: false, match: :first)
     attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage2.png")
     click_on "Continue"
-    
+
     assert_text "testImage2"
     click_on "Save"
     # assert_text "Hazard edited"

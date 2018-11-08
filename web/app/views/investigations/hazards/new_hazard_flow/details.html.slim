@@ -1,0 +1,52 @@
+- content_for :page_title, "Add hazard details"
+- content_for :after_header do
+  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+h1.govuk-heading-xl
+  span.govuk-caption-xl
+    = "Case: #{@investigation.pretty_id}"
+  | Hazard information
+= form_with(model: @hazard, local: true, url: wizard_path, method: :put) do |form|
+  = render "form_validation_display", errors: @hazard.errors
+  fieldset.govuk-fieldset
+    .govuk-form-group
+      = form.label :hazard_type, "Overview", class: "govuk-fieldset__legend--l"
+      span#title-format-hint.govuk-hint
+        | What type of hazard is it?
+      = form.text_field :hazard_type, class: "govuk-input govuk-!-width-two-thirds"
+    .govuk-form-group
+      = form.label :description, "Details", class: "govuk-fieldset__legend--l"
+      span#title-format-hint.govuk-hint
+        | Hazard description
+      = form.text_area :description, class: "govuk-textarea govuk-!-width-two-thirds", rows: "5"
+
+    .govuk-form-group
+      = form.label :affected_parties, "Who is it at risk to?", class: "govuk-fieldset__legend--l"
+      span#title-format-hint.govuk-hint
+        | Are there specific groups it might effect? i.e. Young children
+      = form.text_field :affected_parties, class: "govuk-input govuk-!-width-two-thirds"
+    h3.govuk-fieldset__legend--l
+      | Can you set a risk level?
+    .govuk-form-group
+        .govuk-radios.govuk-radios--conditional data-module="radios"
+          .govuk-radios__item
+            = form.radio_button :set_risk_level, "yes", class: "govuk-radios__input",\
+                  "data-aria-controls": "conditional-can-you-set-risk-level-yes"
+            = form.label :set_risk_level, "Yes", class: "govuk-label govuk-radios__label"
+          #conditional-can-you-set-risk-level-yes.govuk-radios__conditional.govuk-radios__conditional--hidden
+            h3.govuk-fieldset__legend--l
+              | Risk level
+            .govuk-form-group
+              label.govuk-label for="yes"
+                    .govuk-radios
+                    - Hazard.risk_levels.drop(1).each do |(level, _)|
+                      .govuk-radios__item
+                        = form.radio_button :risk_level, level, class: "govuk-radios__input"
+                        = form.label :risk_level, level.titleize, class: "govuk-label govuk-radios__label"
+            h4.govuk-fieldset__legend--l
+              | Add risk assessment
+            = form.file_field :file, class: "govuk-file-upload"
+          .govuk-radios__item
+            = form.radio_button :set_risk_level, "none", class: "govuk-radios__input"
+            = form.label :risk_level, "No", class: "govuk-label govuk-radios__label"
+  .govuk-form-group
+    = form.submit "Continue", class: "govuk-button"
