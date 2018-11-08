@@ -30,7 +30,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     assert_equal('Ben', find_field('correspondence[correspondent_name]').value)
   end
 
-  test "first step should be populated with email from the flow" do
+  test "first step should be populated with reporter's email" do
     visit root_path
     click_on "Report an unsafe product"
     select_type_and_continue
