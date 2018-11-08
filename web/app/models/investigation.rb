@@ -5,6 +5,8 @@ class Investigation < ApplicationRecord
 
   attr_accessor :priority_rationale
 
+  enum priority: %i[Low Medium High]
+
   validates :question_title, presence: true, on: :question_details
   validate :validate_assignment, :validate_priority
 
@@ -57,21 +59,21 @@ class Investigation < ApplicationRecord
   end
 
   def create_audit_activity_for_case
-    ::AuditActivity::Investigation::Add.from(self)
+    AuditActivity::Investigation::Add.from(self)
   end
 
   def create_audit_activity_for_priority
-    if saved_changes.key?(:priority) || saved_changes.key?(:priority_rationale)
-      ::AuditActivity::Investigation::UpdatePriority.from(self)
+    if saved_changes.key?(:priority) || priority_rationale.present?
+      AuditActivity::Investigation::UpdatePriority.from(self)
     end
   end
 
   def create_audit_activity_for_product product
-    ::AuditActivity::Product::Add.from(product, self)
+    AuditActivity::Product::Add.from(product, self)
   end
 
   def create_audit_activity_for_business business
-    ::AuditActivity::Business::Add.from(business, self)
+    AuditActivity::Business::Add.from(business, self)
   end
 
   def title

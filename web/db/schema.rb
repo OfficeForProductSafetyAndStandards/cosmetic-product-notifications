@@ -142,8 +142,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_102901) do
     t.text "description"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
-    t.string "priority"
-    t.string "priority_rationale"
+    t.integer "priority"
     t.string "question_title"
     t.string "question_type"
     t.datetime "updated_at", null: false
