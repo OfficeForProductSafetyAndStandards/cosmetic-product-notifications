@@ -1,0 +1,8 @@
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      p.govuk-caption-xl
+        = investigation.question_type && !investigation.is_case ? investigation.question_type + ' ' : ''
+        = case_question_text(investigation).titleize + ': '
+        = investigation.pretty_id
+      = title

@@ -1,10 +1,7 @@
 - content_for :page_title, "Update priority"
 - content_for :after_header do
   = link_to "Back to case", @investigation, class: "govuk-back-link"
-= render "investigation_heading", investigation: @investigation
-h2.govuk-heading-l
-  | Case status
-
+= render "minimal_investigation_heading", investigation: @investigation, title: "Priority information"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with(url: update_priority_investigation_url(@investigation), local: true) do |form|
