@@ -4,6 +4,9 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   setup do
     sign_in_as_admin
     @investigation = investigations(:one)
+    @investigation.source = sources(:investigation_one)
+    @activity = activities(:one)
+    @activity.source = sources(:activity_one)
     visit new_investigation_correspondence_url(@investigation)
   end
 

@@ -44,11 +44,11 @@ class ActiveSupport::TestCase
 private
 
   def admin_user
-    { id: SecureRandom.uuid, email: "admin@example.com", first_name: "First", last_name: "Last" }
+    { id: "09994ae6-af06-44b8-9c58-5c8829367c6f", email: "admin@example.com", first_name: "First", last_name: "Last" }
   end
 
   def test_user
-    { id: SecureRandom.uuid, email: "user@example.com", first_name: "First", last_name: "Last" }
+    { id: "e54a3d29-5714-4232-b66a-1e0c0c6fdebc", email: "user@example.com", first_name: "First", last_name: "Last" }
   end
 
   def stub_user_credentials(user:, is_admin: false)

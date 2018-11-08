@@ -51,3 +51,13 @@ address_one:
 corresopndence_one:
   type:
   sourceable: one (Correspondence)
+
+activity_one:
+  user_id: e54a3d29-5714-4232-b66a-1e0c0c6fdebc
+  type: UserSource
+  sourceable: one (Activity)
+
+activity_two:
+  user_id: 09994ae6-af06-44b8-9c58-5c8829367c6f
+  type: UserSource
+  sourceable: two (Activity)

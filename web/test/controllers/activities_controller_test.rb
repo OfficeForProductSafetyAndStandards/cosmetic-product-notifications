@@ -24,7 +24,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   test "should create activity" do
     assert_difference("Activity.count") do
       post investigation_activities_url(@activity.investigation), params: {
-        activity: {
+        comment_activity: {
           body: @activity.body
         }
       }
