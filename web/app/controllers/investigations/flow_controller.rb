@@ -51,7 +51,7 @@ private
     if params[:reporter][:reporter_type] == 'Other'
       params[:reporter][:reporter_type] = params[:reporter][:other_reporter].presence || 'Other'
     end
-    if params[:reporter][:reporter_type].blank?
+    if params[:reporter][:reporter_type].blank? && session[:reporter].blank?
       params[:reporter][:reporter_type] = 'Person'
     end
   end

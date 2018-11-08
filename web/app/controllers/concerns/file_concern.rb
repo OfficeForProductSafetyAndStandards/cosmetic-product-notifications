@@ -40,6 +40,12 @@ module FileConcern
     file.metadata["updated"] = Time.current
   end
 
+  def validate_blob_size(blob, errors, allowed_size = max_file_byte_size)
+    if blob && (blob.byte_size > allowed_size)
+      errors.add(:base, :file_too_large, message: "File is too big, allowed size is #{allowed_size / 1.megabyte}MB")
+    end
+  end
+
   def get_file_params_key
     # If file upload is part of a bigger form, like correspondence, you need to override this with the key used to get
     # the relevant parameters from params(e.g. :correspondence)
@@ -51,9 +57,14 @@ module FileConcern
     :file_id
   end
 
+  def max_file_byte_size
+    # If you want your controller to allow different max size, override this
+    1.gigabyte
+  end
+
   def file_params
     return {} if params[get_file_params_key].blank?
 
-    params.require(get_file_params_key).permit(:file, :title, :description, :document_type)
+    params.require(get_file_params_key).permit(:file, :title, :description, :document_type, :other_type)
   end
 end

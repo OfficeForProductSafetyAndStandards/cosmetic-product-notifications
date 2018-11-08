@@ -12,8 +12,14 @@ class Activity < ApplicationRecord
   end
 
   def subtitle
-    "#{subtitle_slug} by #{source.show}, #{created_at.strftime('%d %B %Y')}"
+    "#{subtitle_slug} by #{source.show}, #{pretty_date_stamp}"
   end
 
   def subtitle_slug; end
+
+private
+
+  def pretty_date_stamp
+    created_at.strftime('%d %B %Y')
+  end
 end
