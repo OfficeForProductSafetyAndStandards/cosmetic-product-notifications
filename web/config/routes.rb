@@ -86,6 +86,8 @@ Rails.application.routes.draw do
   # This is the page that will show for timeouts, currently showing the same as an internal error
   match "/503", to: "errors#internal_server_error", via: :all
 
+  mount PgHero::Engine, at: "pghero"
+
   root to: redirect(path: "/investigations")
 end
 # rubocop:enable Metrics/BlockLength
