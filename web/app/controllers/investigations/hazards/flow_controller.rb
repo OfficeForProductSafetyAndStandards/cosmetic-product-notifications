@@ -30,13 +30,16 @@ class Investigations::Hazards::FlowController < ApplicationController
     end
   end
 
-  private
+private
 
   def set_hazard_data(investigation)
     preload_hazard(investigation)
     @hazard.assign_attributes(session[:hazard] || {})
     @hazard.assign_attributes(hazard_params || {})
     session[:hazard] = @hazard.attributes
+    if @hazard.risk_level.present?
+      @hazard.set_risk_level = @hazard.risk_level == "none" ? "none" : "yes"
+    end
   end
 
   def clear_session
@@ -44,8 +47,12 @@ class Investigations::Hazards::FlowController < ApplicationController
   end
 
   def success_notice; end
+
   def create_hazard_audit_activity; end
+
   def perform_additional_loads; end
+
   def preload_hazard(investigation); end
+
   def update_investigation_hazard; end
 end

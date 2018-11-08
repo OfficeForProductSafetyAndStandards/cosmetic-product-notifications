@@ -1,6 +1,5 @@
 class Investigations::Hazards::EditHazardFlowController < Investigations::Hazards::FlowController
-
-  private
+private
 
   def preload_hazard(investigation)
     @hazard = investigation.hazard
@@ -17,6 +16,6 @@ class Investigations::Hazards::EditHazardFlowController < Investigations::Hazard
   end
 
   def update_investigation_hazard
-    @investigation.hazard.update_attributes(@hazard.attributes.tap { |h| h.delete('id')})
+    @investigation.hazard.update(@hazard.attributes.tap { |h| h.delete('id') })
   end
 end

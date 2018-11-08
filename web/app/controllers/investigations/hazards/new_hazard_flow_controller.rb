@@ -1,6 +1,6 @@
 class Investigations::Hazards::NewHazardFlowController < Investigations::Hazards::FlowController
+private
 
-  private
   def preload_hazard(investigation)
     @hazard = Hazard.new
     @hazard.investigation = investigation
