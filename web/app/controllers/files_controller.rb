@@ -33,7 +33,7 @@ class FilesController < ApplicationController
   def destroy
     @file.destroy
     audit_class::Destroy.from(@file, @parent) if @parent.class == Investigation
-    redirect_to @parent
+    redirect_to @parent, notice: "File was successfully removed from this case"
   end
 
 private
