@@ -1,16 +1,11 @@
 class Investigations::Hazards::EditHazardFlowController < Investigations::Hazards::FlowController
 
   private
-  def load_relevant_objects
-    super.load_relevant_objects
-    if @file.blank? && @hazard.risk_assessment.attached?
-      @file = @hazard.risk_assessment.blob
-    end
-  end
 
-  def set_hazard_data(investigation)
-    super.set_hazard_data
-    session[:hazard] = @hazard.attributes
+  def preload_hazard(investigation)
+    @hazard = investigation.hazard
+    @hazard = Hazard.new if @hazard.blank?
+    session[:hazard] = (@hazard&.attributes || {}).merge(session[:hazard] || {})
   end
 
   def create_hazard_audit_activity
@@ -19,5 +14,9 @@ class Investigations::Hazards::EditHazardFlowController < Investigations::Hazard
 
   def success_notice
     'Hazard details were updated.'
+  end
+
+  def update_investigation_hazard
+    @investigation.hazard.update_attributes(@hazard.attributes.tap { |h| h.delete('id')})
   end
 end

@@ -17,6 +17,6 @@ h1.govuk-heading-xl
             = form.label :risk_level, level.humanize.capitalize, class: "govuk-label govuk-radios__label"
         h4.govuk-fieldset__legend--l
           | Add risk assessment
-        = form.file_field :risk_assessment, class: "govuk-file-upload"
+        = form.file_field :file, class: "govuk-file-upload"
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"

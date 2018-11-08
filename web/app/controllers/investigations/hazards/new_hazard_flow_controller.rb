@@ -1,10 +1,9 @@
 class Investigations::Hazards::NewHazardFlowController < Investigations::Hazards::FlowController
 
   private
-  def set_hazard_data(investigation)
+  def preload_hazard(investigation)
     @hazard = Hazard.new
     @hazard.investigation = investigation
-    super.set_hazard_data
   end
 
   def create_hazard_audit_activity
@@ -13,5 +12,9 @@ class Investigations::Hazards::NewHazardFlowController < Investigations::Hazards
 
   def success_notice
     'Hazard details were saved.'
+  end
+
+  def update_investigation_hazard
+    @investigation.hazard = @hazard
   end
 end

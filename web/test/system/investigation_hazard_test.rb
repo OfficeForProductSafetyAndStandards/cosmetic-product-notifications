@@ -3,7 +3,7 @@ require "application_system_test_case"
 class InvestigationHazardTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
-    visit new_investigation_hazard_path(investigations(:one))
+    visit new_investigation_new_hazard_path(investigations(:one))
     assert_selector "h1", text: "Hazard information"
   end
 
@@ -65,7 +65,7 @@ class InvestigationHazardTest < ApplicationSystemTestCase
   test "wizard data doesn't persist between reloads" do
     fill_in "Overview", with: "A fire"
     click_on "Continue"
-    visit new_investigation_hazard_path(investigations(:one))
+    visit new_investigation_new_hazard_path(investigations(:one))
 
     assert_no_field with: "A fire"
   end
@@ -74,12 +74,12 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     fill_in "Overview", with: "A fire"
     click_on "Continue"
     click_on "Save"
-    visit new_investigation_incident_path(investigations(:one))
+    visit new_investigation_new_hazard_path(investigations(:one))
 
     assert_no_field with: "A fire"
   end
 
-  test "can upload a new file file" do
+  test "can upload a new file" do
     choose("hazard[set_risk_level]", visible: false, match: :first)
     choose("hazard[risk_level]", visible: false, match: :first)
     attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage.png")
@@ -96,6 +96,6 @@ class InvestigationHazardTest < ApplicationSystemTestCase
 
     assert_text "testImage2"
     click_on "Save"
-    # assert_text "Hazard edited"
+    assert_text "Hazard updated"
   end
 end

@@ -27,7 +27,7 @@
             = @investigation.hazard.risk_level.titleize
         .govuk-grid-row
           .govuk-grid-column-one-half
-            = link_to "Edit risk details", new_investigation_edit_hazard_path(@investigation), class: "no-print"
+            = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
           .govuk-grid-column-one-half
             - if @investigation.hazard.risk_assessment.attached?
               = link_to "View assessment", @investigation.hazard.risk_assessment, target: "_blank"
