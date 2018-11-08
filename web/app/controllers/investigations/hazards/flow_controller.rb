@@ -11,7 +11,12 @@ class Investigations::Hazards::FlowController < ApplicationController
   end
 
   def create
-
+    attach_file_to_attachment_slot(@file, @hazard.risk_assessment)
+    @investigation.hazard = @hazard
+    @investigation.save
+    activity = create_hazard_audit_activity
+    attach_file_to_attachment_slot(@file, activity.risk_assessment)
+    redirect_to @investigation, notice: success_notice
   end
 
   def show
@@ -29,11 +34,15 @@ class Investigations::Hazards::FlowController < ApplicationController
   private
 
   def load_relevant_objects
-
+    @investigation = Investigation.find_by(id: params[:investigation_id])
+    @file = load_file_attachment
+    set_hazard_data(@investigation)
   end
 
   def set_hazard_data(investigation)
-
+    @hazard.assign_attributes(session[:hazard] || {})
+    @hazard.assign_attributes(hazard_params || {})
+    session[:hazard] = @hazard.attributes
   end
 
   def hazard_params
@@ -58,4 +67,7 @@ class Investigations::Hazards::FlowController < ApplicationController
   def get_file_params_key
     :hazard
   end
+
+  def success_notice; end
+  def create_hazard_audit_activity; end
 end
