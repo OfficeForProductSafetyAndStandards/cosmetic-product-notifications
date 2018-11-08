@@ -1,5 +1,5 @@
 = form_with model: document, scope: :document, url: associated_document_path(@parent, document), local: true do |form|
-  = render "form_validation_display", validated_object: document
+  = render "form_validation_display", errors: document.errors
   .govuk-form-group
     = form.label :title, "Document title", class: "govuk-label"
     = form.text_field :title, value: document.metadata["title"], class: "govuk-input"

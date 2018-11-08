@@ -6,7 +6,8 @@ The codebase is shared with the website.
 
 ## Overview
 
-We're using [Sidekiq](https://github.com/mperham/sidekiq) as our background processor to do things like send emails and handle attachments.
+We're using [Sidekiq](https://github.com/mperham/sidekiq) as our background processor to do things like send emails and
+handle attachments.
 
 We're processing attachments using [ClamAV](http://www.clamav.net/) for antivirus checking and [Imagemagick](http://imagemagick.org) for thumbnailing.
 Due to how Cloud Foundry installs apt packages, there is some configuration to get ClamAV to run on GOV.UK PaaS.
@@ -15,7 +16,8 @@ This configuration is visible in [clamav](./clamav/), [deploy.sh](./deploy.sh) a
 
 ## Deployment
 
-The worker code is automatically deployed to the relevant environment by Travis CI as described in [the root README](../README.md#deployment).
+The worker code is automatically deployed to the relevant environment by Travis CI as
+described in [the root README](../README.md#deployment).
 
 
 ### Deployment from scratch
@@ -23,6 +25,9 @@ The worker code is automatically deployed to the relevant environment by Travis 
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the worker app.
 
+    cp -a ./worker/public/. ./web/public/
+    cp ./worker/apt.yml ./web/apt.yml
+    cp -a ./worker/clamav/. ./web/clamav/
     cf push -f ./worker/manifest.yml --no-start
 
 This provisions the app in Cloud Foundry.

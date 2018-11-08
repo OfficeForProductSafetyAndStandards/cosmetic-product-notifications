@@ -1,10 +1,8 @@
 class ApplicationController < ActionController::Base
-  include HttpAuthConcern
   include Pundit
   protect_from_forgery with: :exception
 
   before_action :authenticate_user!
-  before_action :set_paper_trail_whodunnit
 
   helper_method :current_user, :user_signed_in?
 

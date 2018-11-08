@@ -2,8 +2,8 @@
 
 one:
   investigation: one
-  description: MyText
+  body: MyText
 
 two:
   investigation: two
-  description: MyText
+  body: MyText
