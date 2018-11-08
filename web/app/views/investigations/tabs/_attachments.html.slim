@@ -6,6 +6,10 @@
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
     = render "images_summary", parent: @investigation
+
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
     = render "documents_list_summary", parent: @investigation
+
+- if @investigation.images.empty? && @investigation.documents.empty?
+  p = "No attachments yet."

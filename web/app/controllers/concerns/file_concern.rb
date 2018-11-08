@@ -42,7 +42,7 @@ module FileConcern
 
   def validate_blob_size(blob, errors, allowed_size = max_file_byte_size)
     if blob && (blob.byte_size > allowed_size)
-      errors.add(:base, :file_too_large, message: "File is too big, allowed size is #{allowed_size / 1000000}MB")
+      errors.add(:base, :file_too_large, message: "File is too big, allowed size is #{allowed_size / 1.megabyte}MB")
     end
   end
 
@@ -59,7 +59,7 @@ module FileConcern
 
   def max_file_byte_size
     # If you want your controller to allow different max size, override this
-    1000000000
+    1.gigabyte
   end
 
   def file_params

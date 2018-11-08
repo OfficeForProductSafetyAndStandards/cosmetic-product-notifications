@@ -4,10 +4,17 @@ class FilesController < ApplicationController
 
   # POST /documents
   def create
-    validate
-    return redirect_to request.referer if @errors.present?
-
-    save_file
+    respond_to do |format|
+      validate
+      if @errors.present?
+        format.html { redirect_to @investigation, notice: "Failed to attach file" }
+        format.json { render json: @errors, status: :unprocessable_entity }
+      else
+        save_file
+        format.html { redirect_to @investigation, notice: "File was successfully attached." }
+        format.json { render :show, status: :created, location: @activity }
+      end
+    end
   end
 
   # GET /documents/1/edit
