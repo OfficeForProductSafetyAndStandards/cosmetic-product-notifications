@@ -10,8 +10,7 @@ h3.govuk-fieldset__legend--l
       h4.govuk-fieldset__legend--l
         | Update risk assessment
         p = link_to "View current risk assessment", file, target: "_blank"
-      = form.file_field :file, class: "govuk-file-upload"
     - else
       h4.govuk-fieldset__legend--l
         | Add risk assessment
-      = form.file_field :file, class: "govuk-file-upload"
+    = form.file_field :file, class: "govuk-file-upload"

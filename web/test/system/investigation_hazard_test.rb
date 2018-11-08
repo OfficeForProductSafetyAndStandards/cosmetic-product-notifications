@@ -79,14 +79,8 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     assert_no_field with: "A fire"
   end
 
-  test "can upload a new file" do
-    choose("hazard[set_risk_level]", visible: false, match: :first)
-    choose("hazard[risk_level]", visible: false, match: :first)
-    attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage.png")
-    click_on "Continue"
-
-    assert_text "testImage"
-    click_on "Save"
+  test "can override risk assessment file via normal edit flow" do
+    upload_file_and_confirm
     click_on "Edit hazard details"
 
     choose("hazard[set_risk_level]", visible: false, match: :first)
@@ -97,5 +91,30 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     assert_text "testImage2"
     click_on "Save"
     assert_text "Hazard updated"
+  end
+
+  test "can override risk assessment file via quick risk assessment flow" do
+    upload_file_and_confirm
+    click_on "Edit risk details"
+
+    choose("hazard[risk_level]", visible: false, match: :first)
+    attach_file("hazard[file]", Rails.root + "test/fixtures/files/risk_assessment.txt")
+    click_on "Save"
+
+    assert_text "Hazard updated"
+    new_window = window_opened_by { click_on "View risk assessment document", match: :first }
+    within_window new_window do
+      assert_text "Updated risk assessment"
+    end
+  end
+
+  def upload_file_and_confirm
+    choose("hazard[set_risk_level]", visible: false, match: :first)
+    choose("hazard[risk_level]", visible: false, match: :first)
+    attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage.png")
+    click_on "Continue"
+
+    assert_text "testImage"
+    click_on "Save"
   end
 end
