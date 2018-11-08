@@ -56,6 +56,7 @@ class Investigation < ApplicationRecord
 
   def create_audit_activity_for_case
     ::AuditActivity::Investigation::Add.from(self)
+    ::AuditActivity::Report::Add.from(self.reporter, self) if self.reporter
   end
 
   def create_audit_activity_for_product product
