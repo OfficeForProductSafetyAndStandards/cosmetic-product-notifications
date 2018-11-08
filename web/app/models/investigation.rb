@@ -5,12 +5,12 @@ class Investigation < ApplicationRecord
 
   attr_accessor :priority_rationale
 
-  enum priority: %i[Low Medium High]
+  enum priority: %i[low medium high]
 
   validates :question_title, presence: true, on: :question_details
   validate :validate_assignment, :validate_priority
 
-  after_save :send_assignee_email, :create_audit_activity_for_priority
+  after_save :send_assignee_email, :create_audit_activity_for_priority, :create_audit_activity_for_assignee
 
   index_name [Rails.env, "investigations"].join("_")
 
@@ -58,6 +58,16 @@ class Investigation < ApplicationRecord
     id_string.insert(4, "-")
   end
 
+  def title
+    self.is_case ? case_title : question_title
+  end
+
+  def display_priority
+    priority&.capitalize
+  end
+
+private
+
   def create_audit_activity_for_case
     AuditActivity::Investigation::Add.from(self)
   end
@@ -68,6 +78,12 @@ class Investigation < ApplicationRecord
     end
   end
 
+  def create_audit_activity_for_assignee
+    if saved_changes.key? :assignee_id
+      AuditActivity::Investigation::UpdateAssignee.from(self)
+    end
+  end
+
   def create_audit_activity_for_product product
     AuditActivity::Product::Add.from(product, self)
   end
@@ -75,12 +91,6 @@ class Investigation < ApplicationRecord
   def create_audit_activity_for_business business
     AuditActivity::Business::Add.from(business, self)
   end
-
-  def title
-    self.is_case ? case_title : question_title
-  end
-
-private
 
   def case_title
     title = [build_title_products_portion, build_title_hazard_portion].reject(&:blank?).join(" - ")
