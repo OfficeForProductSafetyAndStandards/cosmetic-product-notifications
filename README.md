@@ -136,7 +136,7 @@ Larger database options should be considered if required.
 To create an Elasticsearch instance for the current space:
 
     cf marketplace -s elasticsearch
-    cf create-service elasticsearch small-ha-6.x mspsds-elasticsearch
+    cf create-service elasticsearch tiny-6.x mspsds-elasticsearch
 
 There is current only one size for Elasticsearch.
 
@@ -149,6 +149,16 @@ To create a redis instance for the current space.
     cf create-service redis tiny-unclustered-3.2 mspsds-redis
 
 Larger options should be considered if required. The current worker (sidekiq) only works with the unclustered version.
+
+
+#### Logging
+
+To enable logging to Logit for the current space:
+
+    cf cups logit-ssl-drain -l syslog-tls://ENDPOINT:PORT
+
+Where the endpoint can be obtained from Logit.
+
 
 #### S3
 
