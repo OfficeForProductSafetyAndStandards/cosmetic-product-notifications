@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2018-11-08
+  details: MyText
+  legislation: MyString
+  status: 1
+  investigation: one
+  product: one
+
+two:
+  date: 2018-11-08
+  details: MyText
+  legislation: MyString
+  status: 1
+  investigation: two
+  product: two

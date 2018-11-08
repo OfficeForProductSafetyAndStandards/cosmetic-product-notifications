@@ -1,0 +1,31 @@
+h1 Listing tests
+
+table
+  thead
+    tr
+      th Date
+      th Details
+      th Legislation
+      th Status
+      th Investigation
+      th Product
+      th
+      th
+      th
+
+  tbody
+    - @tests.each do |test|
+      tr
+        td = test.date
+        td = test.details
+        td = test.legislation
+        td = test.status
+        td = test.investigation
+        td = test.product
+        td = link_to 'Show', test
+        td = link_to 'Edit', edit_test_path(test)
+        td = link_to 'Destroy', test, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Test', new_test_path
