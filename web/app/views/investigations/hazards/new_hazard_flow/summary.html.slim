@@ -1,4 +1,1 @@
-- content_for :page_title, "Confirm hazard details"
-- content_for :after_header do
-  = link_to "Back to case", @investigation, class: "govuk-back-link"
 = render "investigations/hazards/summary", target_url: investigation_new_hazard_index_path(@investigation)

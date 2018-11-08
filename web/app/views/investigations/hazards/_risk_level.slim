@@ -1,0 +1,17 @@
+h3.govuk-fieldset__legend--l
+  | Risk level
+.govuk-form-group
+  .govuk-radios
+    - Hazard.risk_levels.each do |(level, _)|
+      .govuk-radios__item
+        = form.radio_button :risk_level, level, class: "govuk-radios__input"
+        = form.label :risk_level, level.humanize.capitalize, class: "govuk-label govuk-radios__label"
+    - if file.present?
+      h4.govuk-fieldset__legend--l
+        | Update risk assessment
+        p = link_to "View current risk assessment", file, target: "_blank"
+      = form.file_field :file, class: "govuk-file-upload"
+    - else
+      h4.govuk-fieldset__legend--l
+        | Add risk assessment
+      = form.file_field :file, class: "govuk-file-upload"

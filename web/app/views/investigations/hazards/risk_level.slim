@@ -3,20 +3,10 @@
   = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
 h1.govuk-heading-xl
   span.govuk-caption-xl
-    = "Case: #{@investigation.id}"
+    = "Case: #{@investigation.pretty_id}"
   | Update risk level
 = form_with(model: @hazard, local: true, url: update_risk_level_investigation_hazards_path, method: :post) do |form|
   fieldset.govuk-fieldset
-    h4.govuk-fieldset__legend--l
-      | Risk level
-    .govuk-form-group
-      .govuk-radios
-        - Hazard.risk_levels.each do |(level, _)|
-          .govuk-radios__item
-            = form.radio_button :risk_level, level, class: "govuk-radios__input"
-            = form.label :risk_level, level.humanize.capitalize, class: "govuk-label govuk-radios__label"
-        h4.govuk-fieldset__legend--l
-          | Add risk assessment
-        = form.file_field :file, class: "govuk-file-upload"
+    = render "investigations/hazards/risk_level", file: @file, form: form
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"

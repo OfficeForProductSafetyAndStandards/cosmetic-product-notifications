@@ -27,6 +27,7 @@ module FileConcern
 
   def attach_file_to_list(file, attachment_list)
     return unless file
+
     update_file_details(file)
     attachments = attachment_list.attach(file)
     attachment = attachments.last
@@ -36,6 +37,7 @@ module FileConcern
 
   def attach_file_to_attachment_slot(file, attachment_slot)
     return unless file
+
     update_file_details(file)
     attachment_slot.detach if attachment_slot.attached?
     attachment_slot.attach(file)
