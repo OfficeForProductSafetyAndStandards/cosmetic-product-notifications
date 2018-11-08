@@ -41,12 +41,19 @@ private
   def reporter_params
     return {} if params[:reporter].blank?
 
-    if params[:reporter][:reporter_type] == 'Other'
-      params[:reporter][:reporter_type] = params[:reporter][:other_reporter]
-    end
+    handle_reporter_type
     params.require(:reporter).permit(
       :name, :phone_number, :email_address, :reporter_type, :other_details
     )
+  end
+
+  def handle_reporter_type
+    if params[:reporter][:reporter_type] == 'Other'
+      params[:reporter][:reporter_type] = params[:reporter][:other_reporter].presence || 'Other'
+    end
+    if params[:reporter][:reporter_type].blank? && session[:reporter].blank?
+      params[:reporter][:reporter_type] = 'Person'
+    end
   end
 
   def clear_session
