@@ -15,7 +15,6 @@ class Investigations::FlowController < ApplicationController
     @investigation.reporter = @reporter
     @investigation.source = UserSource.new(user: current_user)
     @investigation.save
-    AuditActivity::Report::Add.from(@reporter, @investigation)
   end
 
   # GET /investigations/xxx
