@@ -1,9 +1,7 @@
 /* globals simpleAccessibleAutocomplete */
 $(document).on('turbolinks:load', function () {
   simpleAccessibleAutocomplete('assignee-picker');
-});
 
-$(document).ready(function () {
   var commentSubmitButton = $('#action_comment_submit').attr('disabled', true);
 
   $('#action_comment').keyup(function () {
