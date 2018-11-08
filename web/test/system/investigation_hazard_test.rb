@@ -21,12 +21,16 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     # For whatever reason, this doesn't seem to show up in test (confirmed by inspecting failure screenshots)
     # assert_text "Hazard details were updated."
     assert_current_path(/investigations\/\d+/)
+    assert_text "Hazard added by"
   end
 
   test "can add filled in hazard to investigation" do
     fill_in "Overview", with: "A fire"
     fill_in "Details", with: "A big blaze"
     fill_in "Who is it at risk to?", with: "Young people"
+    choose("hazard[set_risk_level]", visible: false, match: :first)
+    choose("hazard[risk_level]", visible: false, match: :first)
+    attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage.png")
     click_on "Continue"
 
     # The better assertion here would be to look for the flash message confirming successful incident submission
@@ -36,6 +40,7 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     assert_text "A fire"
     assert_text "A big blaze"
     assert_text "Young people"
+    assert_text "testImage"
   end
 
   test "can go back to the editing page from the confirmation page and not lose data" do
@@ -72,5 +77,25 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     visit new_investigation_incident_path(investigations(:one))
 
     assert_no_field with: "A fire"
+  end
+
+  test "can upload a new file file" do
+    choose("hazard[set_risk_level]", visible: false, match: :first)
+    choose("hazard[risk_level]", visible: false, match: :first)
+    attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage.png")
+    click_on "Continue"
+
+    assert_text "testImage"
+    click_on "Save"
+    click_on "Edit hazard details"
+
+    choose("hazard[set_risk_level]", visible: false, match: :first)
+    choose("hazard[risk_level]", visible: false, match: :first)
+    attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage2.png")
+    click_on "Continue"
+    
+    assert_text "testImage2"
+    click_on "Save"
+    # assert_text "Hazard edited"
   end
 end
