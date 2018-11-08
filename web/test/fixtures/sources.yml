@@ -48,3 +48,10 @@ address_one:
   type:
   sourceable: two (Address)
 
+activity_one:
+  type: UserSource
+  sourceable: one (Activity)
+
+activity_two:
+  type: UserSource
+  sourceable: two (Activity)
