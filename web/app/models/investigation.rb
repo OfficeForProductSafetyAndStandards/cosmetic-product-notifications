@@ -66,10 +66,6 @@ class Investigation < ApplicationRecord
     self.is_case ? case_title : question_title
   end
 
-  def display_priority
-    priority&.capitalize
-  end
-
 private
 
   def create_audit_activity_for_case
