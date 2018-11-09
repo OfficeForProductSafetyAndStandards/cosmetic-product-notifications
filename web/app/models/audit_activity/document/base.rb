@@ -1,5 +1,5 @@
 class AuditActivity::Document::Base < AuditActivity::Base
-  has_one_attached :document
+  include ActivityAttachable
 
   private_class_method def self.from(document, investigation, title)
     activity = self.create(
@@ -8,10 +8,6 @@ class AuditActivity::Document::Base < AuditActivity::Base
       investigation: investigation,
       title: title
     )
-    activity.document.attach document.blob
-  end
-
-  def attached_document?
-    self.document.attached?
+    attach_to_activity(activity, document)
   end
 end

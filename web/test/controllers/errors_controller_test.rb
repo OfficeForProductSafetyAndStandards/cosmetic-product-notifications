@@ -18,4 +18,9 @@ class ErrorsControllerTest < ActionDispatch::IntegrationTest
     get "/500"
     assert_response :internal_server_error
   end
+
+  test "should get service_unavailable" do
+    get "/503"
+    assert_response :service_unavailable
+  end
 end

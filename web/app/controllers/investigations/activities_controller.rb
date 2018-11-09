@@ -1,17 +1,8 @@
-class ActivitiesController < ApplicationController
-  before_action :set_investigation, only: %i[index new create]
+class Investigations::ActivitiesController < ApplicationController
+  include ActionView::Helpers::SanitizeHelper
+
+  before_action :set_investigation, only: %i[create]
   before_action :create_activity, only: %i[create]
-
-  # GET /activities
-  # GET /activities.json
-  def index
-    @activities = @investigation.activities.paginate(page: params[:page], per_page: 20)
-  end
-
-  # GET /activities/new
-  def new
-    @activity = CommentActivity.new
-  end
 
   # POST /activities
   # POST /activities.json
@@ -19,12 +10,13 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       if @activity.save
         format.html do
-          redirect_to investigation_activities_url(@investigation),
-            notice: "Activity was successfully created."
+          redirect_to investigation_url(@investigation), notice: "Comment was successfully added."
         end
         format.json { render :show, status: :created, location: @activity }
       else
-        format.html { render :new }
+        format.html do
+          redirect_to investigation_url(@investigation), notice: "Comment was not successfully added."
+        end
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
     end
@@ -44,6 +36,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def activity_params
-    params.require(:activity).permit(:body)
+    params.require(:comment_activity).permit(:body)
   end
 end

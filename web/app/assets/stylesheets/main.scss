@@ -3,6 +3,7 @@ $govuk-image-url-function: 'image-url';
 $govuk-font-url-function: 'font-url';
 @import "govuk-frontend/all";
 
+@import "autocomplete";
 @import "documents";
 @import "images";
 @import "navbar";

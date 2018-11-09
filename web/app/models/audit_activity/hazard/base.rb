@@ -1,12 +1,15 @@
 class AuditActivity::Hazard::Base < AuditActivity::Base
+  include ActivityAttachable
+
   private_class_method def self.from(hazard, investigation)
     body = self.build_body(hazard)
-    self.create(
+    activity = self.create(
       body: body,
       source: UserSource.new(user: current_user),
       investigation: investigation,
       title: hazard.hazard_type,
     )
+    attach_to_activity(activity, hazard.risk_assessment) if hazard.risk_assessment.attached?
   end
 
   def self.build_body(hazard)

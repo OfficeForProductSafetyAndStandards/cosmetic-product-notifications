@@ -6,4 +6,8 @@ class ErrorsController < ApplicationController
   def internal_server_error
     render status: :internal_server_error
   end
+
+  def timeout
+    render :internal_server_error, status: :service_unavailable
+  end
 end

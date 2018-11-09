@@ -1,7 +1,7 @@
 - content_for :page_title, "Update status"
 - content_for :after_header do
   = link_to "Back to case", @investigation, class: "govuk-back-link"
-= render "investigation_heading", investigation: @investigation
+= render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
 h2.govuk-heading-l
   | Case status
 = form_with(model: @investigation, local: true) do |form|
