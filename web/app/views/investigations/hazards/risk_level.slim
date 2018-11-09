@@ -7,6 +7,6 @@ h1.govuk-heading-xl
   | Update risk level
 = form_with(model: @hazard, local: true, url: update_risk_level_investigation_hazards_path, method: :post) do |form|
   fieldset.govuk-fieldset
-    = render "investigations/hazards/risk_level", file: @file, form: form
+    = render "investigations/hazards/risk_level", file: @file, form: form, risk_levels: Hazard.risk_levels
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"
