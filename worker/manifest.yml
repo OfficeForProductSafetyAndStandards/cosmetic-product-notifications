@@ -14,3 +14,4 @@ applications:
     - mspsds-redis
     - mspsds-database
     - mspsds-elasticsearch
+    - logit-ssl-drain
