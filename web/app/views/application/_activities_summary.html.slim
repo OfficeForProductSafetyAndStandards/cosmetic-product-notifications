@@ -14,7 +14,7 @@
                   .govuk-grid-column-one-third
                     = render "images/image_tag", image: activity.image, dimensions: "100x100", \
                         alt: activity.image.metadata["title"], class_name: "product-image"
-                  .govuk-grid-colun-two-thirds
+                  .govuk-grid-column-two-thirds
                     = markdown activity.body if activity.body
               - else
                 p
