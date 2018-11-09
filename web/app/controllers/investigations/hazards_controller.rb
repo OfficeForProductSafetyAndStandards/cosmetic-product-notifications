@@ -19,8 +19,4 @@ private
     @hazard = investigation.hazard
     @hazard.assign_attributes(hazard_params || {})
   end
-
-  def create_hazard_audit_activity
-    AuditActivity::Hazard::Update.from(@hazard, @investigation)
-  end
 end

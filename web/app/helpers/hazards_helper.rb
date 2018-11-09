@@ -3,8 +3,6 @@ module HazardsHelper
 
   def update_risk_assessment
     attach_file_to_attachment_slot(@file, @hazard.risk_assessment)
-    activity = create_hazard_audit_activity
-    attach_file_to_attachment_slot(@file, activity.risk_assessment)
   end
 
   def load_relevant_objects

@@ -48,8 +48,6 @@ private
 
   def success_notice; end
 
-  def create_hazard_audit_activity; end
-
   def perform_additional_loads; end
 
   def preload_hazard(investigation); end

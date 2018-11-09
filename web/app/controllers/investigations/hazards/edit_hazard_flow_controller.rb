@@ -7,10 +7,6 @@ private
     session[:hazard] = (@hazard&.attributes || {}).merge(session[:hazard] || {})
   end
 
-  def create_hazard_audit_activity
-    AuditActivity::Hazard::Update.from(@hazard, @investigation)
-  end
-
   def success_notice
     'Hazard details were updated.'
   end

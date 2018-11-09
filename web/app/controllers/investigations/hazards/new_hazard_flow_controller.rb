@@ -6,10 +6,6 @@ private
     @hazard.investigation = investigation
   end
 
-  def create_hazard_audit_activity
-    AuditActivity::Hazard::Add.from(@hazard, @investigation)
-  end
-
   def success_notice
     'Hazard details were saved.'
   end
