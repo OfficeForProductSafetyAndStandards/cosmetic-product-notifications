@@ -1,7 +1,7 @@
 class Investigations::EmailsController < ApplicationController
   include Wicked::Wizard
   steps :context, :content, :confirmation
-  before_action :load_relevent_objects, only: %i[show]
+  before_action :load_relevant_objects, only: %i[show update]
 
   def new
     clear_session
@@ -12,9 +12,19 @@ class Investigations::EmailsController < ApplicationController
     render_wizard
   end
 
+  def update
+    @correspondence.validate(step)
+    # validate_blob_size(@file, @correspondence.errors)
+    if @correspondence.errors.any?
+      render step
+    else
+      redirect_to next_wizard_path
+    end
+  end
+
 private
 
-  def load_relevent_objects
+  def load_relevant_objects
     @investigation = Investigation.find(params[:investigation_id])
     load_correspondence
   end
@@ -28,7 +38,6 @@ private
   def correspondence_params
     return {} if params[:correspondence].blank?
 
-    handle_type_params
     params.require(:correspondence).permit(
         :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
         :overview, :details
