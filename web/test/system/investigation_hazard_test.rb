@@ -30,7 +30,7 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     fill_in "Who is it at risk to?", with: "Young people"
     choose("hazard[set_risk_level]", visible: false, match: :first)
     choose("hazard[risk_level]", visible: false, match: :first)
-    attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("hazard[file]", Rails.root + "test/fixtures/files/old_risk_assessment.txt")
     click_on "Continue"
 
     # The better assertion here would be to look for the flash message confirming successful incident submission
@@ -40,7 +40,7 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     assert_text "A fire"
     assert_text "A big blaze"
     assert_text "Young people"
-    assert_text "testImage"
+    assert_text "old_risk_assessment"
   end
 
   test "can go back to the editing page from the confirmation page and not lose data" do
@@ -85,12 +85,22 @@ class InvestigationHazardTest < ApplicationSystemTestCase
 
     choose("hazard[set_risk_level]", visible: false, match: :first)
     choose("hazard[risk_level]", visible: false, match: :first)
-    attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage2.png")
+    attach_file("hazard[file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt")
     click_on "Continue"
 
-    assert_text "testImage2"
+    assert_text "new_risk_assessment"
     click_on "Save"
     assert_text "Hazard updated"
+
+    new_window = window_opened_by { click_on "View risk assessment document", match: :first }
+    within_window new_window do
+      assert_text "Updated risk assessment"
+    end
+
+    new_window = window_opened_by { all("a", text: "View risk assessment document").last.click }
+    within_window new_window do
+      assert_text "Obsolete risk assessment"
+    end
   end
 
   test "can override risk assessment file via quick risk assessment flow" do
@@ -98,7 +108,7 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     click_on "Edit risk details"
 
     choose("hazard[risk_level]", visible: false, match: :first)
-    attach_file("hazard[file]", Rails.root + "test/fixtures/files/risk_assessment.txt")
+    attach_file("hazard[file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt")
     click_on "Save"
 
     assert_text "Hazard updated"
@@ -111,10 +121,10 @@ class InvestigationHazardTest < ApplicationSystemTestCase
   def upload_file_and_confirm
     choose("hazard[set_risk_level]", visible: false, match: :first)
     choose("hazard[risk_level]", visible: false, match: :first)
-    attach_file("hazard[file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("hazard[file]", Rails.root + "test/fixtures/files/old_risk_assessment.txt")
     click_on "Continue"
 
-    assert_text "testImage"
+    assert_text "old_risk_assessment"
     click_on "Save"
   end
 end
