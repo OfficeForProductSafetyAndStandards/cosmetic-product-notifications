@@ -13,6 +13,11 @@ class Correspondence < ApplicationRecord
 
   has_many_attached :documents
 
+  enum email_direction: {
+      outbound: "Outbound",
+      inbound: "Inbound"
+  }
+
   enum contact_method: {
     email: "Email",
     phone: "Phone call"
