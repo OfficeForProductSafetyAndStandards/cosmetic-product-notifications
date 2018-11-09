@@ -47,18 +47,14 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "redirect to investigation path if attempted to assign a person to closed investigation" do
-    investigation = investigations(:three)
-    get assign_investigation_url(investigation)
-    assert_redirected_to investigation_path(investigation)
-  end
-
   test "should assign user to investigation" do
     id = User.first.id
     investigation_assignee_id = lambda { Investigation.find(@investigation.id).assignee_id }
     assert_changes investigation_assignee_id, from: nil, to: id do
-      post update_assignee_investigation_url @investigation, params: {
-        assignee_id: id
+      put investigation_url(@investigation), params: {
+        investigation: {
+          assignee_id: id
+        }
       }
     end
     assert_redirected_to investigation_url(@investigation)
@@ -68,9 +64,11 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     priority = "high"
     investigation_priority = lambda { Investigation.find(@investigation.id).priority }
     assert_changes investigation_priority, from: nil, to: priority do
-      post update_priority_investigation_url(@investigation), params: {
+      put investigation_url(@investigation), params: {
+        investigation: {
           priority: priority,
           priority_rationale: "some rationale"
+        }
       }
     end
 
@@ -82,9 +80,11 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     investigation.source = sources(:investigation_two)
     investigation_priority = lambda { Investigation.find(investigation.id).priority }
     assert_no_changes investigation_priority do
-      post update_priority_investigation_url(investigation), params: {
+      put investigation_url(@investigation), params: {
+        investigation: {
           priority: nil,
           priority_rationale: "some rational"
+        }
       }
     end
   end

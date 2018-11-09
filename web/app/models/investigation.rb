@@ -100,7 +100,7 @@ private
 
   def validate_assignment
     if assignee_id_was.present? && !assignee
-      errors.add(:investigation, "cannot be unassigned")
+      errors.add(:assignee, "cannot be blank")
     end
   end
 

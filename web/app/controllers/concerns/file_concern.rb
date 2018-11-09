@@ -68,7 +68,7 @@ module FileConcern
 
   def max_file_byte_size
     # If you want your controller to allow different max size, override this
-    1.gigabyte
+    100.megabytes
   end
 
   def file_params
