@@ -1,0 +1,51 @@
+- content_for :page_title, "Record test"
+- content_for :after_header do
+  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+h1.govuk-heading-xl
+  span.govuk-caption-xl
+    | Case: #{@investigation.pretty_id}
+  | Record test
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: @test, local: true, url: wizard_path, method: :put do |form|
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Which product should be tested?
+        .govuk-form-group
+          span.govuk-hint
+            | Only products already added to the case are listed.
+            = link_to "Add a product", new_investigation_product_path(@investigation)
+          = form.collection_select :product_id, @investigation.products, :id, :name, class: "govuk-select", id: "test_product"
+
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Against which legislation?
+        .govuk-form-group
+          span.govuk-hint
+            | Select the relevant legislation from the list, or enter a different one.
+          #legislation-autocomplete-container data-options=legislation_constants["legislation"] data-value=@test.legislation
+          / = form.text_field :legislation, data: {legislation: legislation_constants["legislation"]}, class: "govuk-input", id: "test_legislation"
+          / = form.select :legislation, legislation_constants["legislation"], class: "govuk-select", id: "legislation"
+
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | When did you request testing?
+        = render "date_input", form: form
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Further details
+        .govuk-form-group
+          = form.text_area :details, class: "govuk-textarea", rows: 5
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Related attachments
+        - if @file
+          p = "Currently selected file: #{@file.filename}, selecting a different one will replace it"
+        .govuk-form-group
+          = form.file_field :file, class: "govuk-file-upload"
+        .govuk-form-group
+          = form.label :description, "Attachment description", class: "govuk-label"
+          = form.text_area :description, class: "govuk-textarea", rows: 5, value: @file&.metadata&.fetch(:description)
+
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"
