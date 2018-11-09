@@ -1,6 +1,5 @@
 class AuditActivity::Hazard::Base < AuditActivity::Base
-  include FileConcern
-  has_one_attached :risk_assessment
+  include ActivityAttachable
 
   private_class_method def self.from(hazard, investigation)
     body = self.build_body(hazard)
@@ -10,7 +9,7 @@ class AuditActivity::Hazard::Base < AuditActivity::Base
       investigation: investigation,
       title: hazard.hazard_type,
     )
-    activity.handle_file_attachment(hazard)
+    attach_to_activity(activity, hazard.risk_assessment) if hazard.risk_assessment.attached?
   end
 
   def self.build_body(hazard)
@@ -19,11 +18,5 @@ class AuditActivity::Hazard::Base < AuditActivity::Base
     body += "Risk level: **#{hazard.risk_level}**<br>" if hazard.risk_level.present?
     body += "Vulnerable group: **#{hazard.affected_parties}**" if hazard.affected_parties.present?
     body
-  end
-
-  def handle_file_attachment(hazard)
-    return unless hazard.risk_assessment.attached?
-
-    attach_file_to_attachment_slot(hazard.risk_assessment.blob, risk_assessment)
   end
 end

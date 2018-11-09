@@ -72,7 +72,7 @@ module FileConcern
   end
 
   def file_params
-    return {} if !defined?(params) || params[get_file_params_key].blank?
+    return {} if params[get_file_params_key].blank?
 
     params.require(get_file_params_key).permit(:file, :title, :description, :document_type, :other_type)
   end
