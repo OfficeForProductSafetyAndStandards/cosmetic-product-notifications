@@ -11,18 +11,11 @@
           | Priority
         .govuk-form-group
           .govuk-radios
-            .govuk-radios__item
-              = form.radio_button :priority, "low",
-                      checked: (@investigation.priority == "low"), class: "govuk-radios__input"
-              = form.label :priority, "Low", class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :priority, "medium",
-                      checked: (@investigation.priority == "medium"), class: "govuk-radios__input"
-              = form.label :priority, "Medium", class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :priority, "high",
-                      checked: (@investigation.priority == "high"), class: "govuk-radios__input"
-              = form.label :priority, "High", class: "govuk-label govuk-radios__label"
+            - Investigation.priorities.each do |(priority, _)|
+              .govuk-radios__item
+                = form.radio_button :priority, priority,
+                        checked: (@investigation.priority == priority), class: "govuk-radios__input"
+                = form.label :priority, priority.titleize, class: "govuk-label govuk-radios__label"
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Comment / rationale
