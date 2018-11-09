@@ -29,7 +29,9 @@ Rails.application.routes.draw do
       get :status
       get :assign
       get :confirmation
+      get :priority
       post :update_assignee
+      post :update_priority
     end
     collection do
       resources :report, controller: "investigations/report", only: %i[show new create update]
