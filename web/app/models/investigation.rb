@@ -66,6 +66,20 @@ class Investigation < ApplicationRecord
     self.is_case ? case_title : question_title
   end
 
+  def past_assignees
+    activities = Activity.where(investigation_id: id, type: "AuditActivity::Investigation::UpdateAssignee")
+    users = User.all
+    users = users.select do |user|
+      found = false
+      activities.each do |activity|
+        found = true if activity.title.include? user.full_name
+      end
+      found = found && (assignee.id != user.id)
+      found
+    end
+    users
+  end
+
 private
 
   def create_audit_activity_for_case

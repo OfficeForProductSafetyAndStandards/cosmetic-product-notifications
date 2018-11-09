@@ -2,29 +2,57 @@
 - content_for :after_header do
   = link_to "Back to case", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Assign case"
-h2.govuk-heading-l
-  | Update assignee
-h4.govuk-heading-m
-  | Current assignee
-p
+
 = form_with(url: update_assignee_investigation_path(@investigation), local: true) do |form|
-  - if @investigation.errors.any?
-    #error_explanation
-      h2.govuk-heading-l.govuk-error-message
-        = pluralize(@investigation.errors.count, "error ")
-        | prohibited this case from being saved:
-      ul.govuk-list.govuk-error-message
-        - @investigation.errors.full_messages.each do |message|
-          li
-            = message
-  .govuk-form-group class=("govuk-form-group--error" unless @investigation.errors[:assignee].empty?)
-    = form.label :assignee_id, class: "govuk-label"
-    / When there are many users, we should consider loading them with ajax using the autocomplete
-    = form.select :assignee_id, options_for_select(\
-        User.get_assignees_select_options,\
-        @investigation.assignee ? @investigation.assignee.id : ''\
-      ), \
-      {}, \
-      class: "govuk-select", id: "assignee-picker"
+  h2.govuk-heading-l
+    | Current assignee
+  - if @investigation.assignee.present?
+    p = "#{@investigation.assignee.get_assignee_display_string}"
+  - else
+    p = "Nobody is assigned yet"
+  hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible"]
+
+  h2.govuk-heading-l
+    | New assignee
+
+  = render "form_validation_display", errors: @investigation.errors
+
+  - if @investigation.past_assignees.present?
+    .govuk-form-group class=("govuk-form-group--error" unless @investigation.errors[:assignee].empty?)
+      .govuk-radios.govuk-radios--conditional data-module="radios"
+        - @investigation.past_assignees.each do |past_assignee|
+          .govuk-radios__item
+            = form.radio_button :assignee_id, past_assignee&.id, class: "govuk-radios__input"
+            = form.label :assignee_id,
+                    "#{past_assignee.get_assignee_display_string}",
+                    class: "govuk-label govuk-radios__label"
+        .govuk-radios__divider = "or"
+        .govuk-radios__item
+          = form.radio_button :assignee_id, "Other", class: "govuk-radios__input",
+                  "data-aria-controls": "conditional-other-assignee-other"
+          = form.label :assignee_id, "Other", class: "govuk-label govuk-radios__label"
+        #conditional-other-assignee-other.govuk-radios__conditional.govuk-radios__conditional--hidden
+          .govuk-form-group
+            span#other-assignee-hint.govuk-hint [class="govuk-!-width-two-thirds"]
+              | Name / Email address
+            = form.label :assignee_id, class: "govuk-label"
+            / When there are many users, we should consider loading them with ajax using the autocomplete
+            = form.select :assignee_id,
+                    options_for_select(User.get_assignees_select_options(@investigation.past_assignees),
+                    @investigation.assignee ? @investigation.assignee.id : ''),
+                    {},
+                    class: "govuk-select", id: "assignee-picker"
+
+  - else
+    .govuk-form-group
+      span#other-assignee-hint.govuk-hint [class="govuk-!-width-two-thirds"]
+        | Name / Email address
+      = form.label :assignee_id, class: "govuk-label"
+      / When there are many users, we should consider loading them with ajax using the autocomplete
+      = form.select :assignee_id, options_for_select(User.get_assignees_select_options(@investigation.past_assignees),
+              @investigation.assignee ? @investigation.assignee.id : ''),
+              {},
+              { class: "govuk-select", id: "assignee-picker" }
+
   .govuk-form-group
-    = form.submit "Update assignee", class: "govuk-button"
+    = form.submit "Assign", class: "govuk-button"
