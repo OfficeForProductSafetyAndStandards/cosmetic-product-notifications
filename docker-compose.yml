@@ -47,6 +47,8 @@ services:
       - elasticsearch
       - keycloak
       - redis
+    environment:
+      - "MIGRATION_STATEMENT_TIMEOUT=60000"
   cosmetics-web:
     build:
       context: .
