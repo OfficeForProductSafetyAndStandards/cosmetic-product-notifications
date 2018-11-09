@@ -45,6 +45,7 @@ services:
     depends_on:
       - db
       - elasticsearch
+      - keycloak
       - redis
   cosmetics-web:
     build:
