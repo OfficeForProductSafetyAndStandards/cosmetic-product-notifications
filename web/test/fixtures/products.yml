@@ -1,24 +1,24 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  gtin: MyString
-  name: MyString
-  product_type: MyString
-  description: MyText
-  model: MyString
-  country_of_origin: MyString
-  batch_number: MyString
-  brand: MyString
+  gtin: product one gtin
+  name: product one name
+  product_type: product one type
+  description: product one description
+  model: product one model
+  country_of_origin: product one country
+  batch_number: product one batch
+  brand: product one brand
 
 two:
-  gtin: MyString
-  name: MyString
-  product_type: MyString
-  description: MyText
-  model: MyString
-  country_of_origin: MyString
-  batch_number: MyString
-  brand: MyString
+  gtin: product two gtin
+  name: product two name
+  product_type: product two type
+  description: product two description
+  model: product two model
+  country_of_origin: product two country
+  batch_number: product two batch
+  brand: product two brand
 
 chromecast:
   gtin: 123
