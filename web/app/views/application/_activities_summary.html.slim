@@ -12,8 +12,8 @@
               - if activity.attached_image?
                 .govuk-grid-row
                   .govuk-grid-column-one-third
-                    = render "images/image_tag", image: activity.image, dimensions: "100x100", \
-                        alt: activity.image.metadata["title"], class_name: "product-image"
+                    = render "images/image_tag", image: activity.image, dimensions: "100x100",
+                            alt: activity.image.metadata["title"], class_name: "product-image"
                   .govuk-grid-column-two-thirds
                     = markdown activity.body if activity.body
               - else
@@ -22,7 +22,9 @@
                   = link_to "View business details", business_url(activity.business_id) if activity.business_id
                   = link_to "View product details", product_url(activity.product_id) if activity.product_id
                   - if activity.respond_to?(:attachment) && activity.attachment.attached?
-                    = link_to "View document",
+                    - link_text = "View document"
+                    - link_text = "View risk assessment document" if activity.is_a?(AuditActivity::Hazard::Base)
+                    = link_to link_text,
                             activity.attachment, target: "_blank"
           li
     - else

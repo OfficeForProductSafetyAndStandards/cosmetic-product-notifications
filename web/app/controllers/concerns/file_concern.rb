@@ -26,13 +26,22 @@ module FileConcern
   end
 
   def attach_file_to_list(file, attachment_list)
-    if file
-      update_file_details(file)
-      attachments = attachment_list.attach(file)
-      attachment = attachments.last
-      attachment.blob.save
-      attachment
-    end
+    return unless file
+
+    update_file_details(file)
+    attachments = attachment_list.attach(file)
+    attachment = attachments.last
+    attachment.blob.save
+    attachment
+  end
+
+  def attach_file_to_attachment_slot(file, attachment_slot)
+    return unless file
+
+    update_file_details(file)
+    attachment_slot.detach if attachment_slot.attached?
+    attachment_slot.attach(file)
+    attachment_slot.blob.save
   end
 
   def update_file_details(file)
