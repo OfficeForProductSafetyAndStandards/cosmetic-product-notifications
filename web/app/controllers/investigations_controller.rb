@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show assign update_assignee status confirmation]
+  before_action :set_investigation, only: %i[show assign update_assignee status confirmation priority update_priority]
 
   # GET /investigations
   # GET /investigations.json
@@ -69,6 +69,25 @@ class InvestigationsController < ApplicationController
 
   def confirmation; end
 
+  # get /investigations/id/priority
+  def priority; end
+
+  # POST /investigation/id/update_priority
+  def update_priority
+    @investigation.priority = params[:priority]
+    @investigation.priority_rationale = params[:priority_rationale]
+    respond_to do |format|
+      if @investigation.save
+        format.html { redirect_to @investigation, notice: "Priority set to #{params[:priority]}" }
+        format.json { render :show, status: :ok, location: @investigation }
+      else
+        flash[:priority_rationale] = params[:priority_rationale]
+        format.html { render :priority }
+        format.json { render json: @investigation.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -91,7 +110,7 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def investigation_params
     params.require(:investigation).permit(
-      :description, :is_closed,
+      :description, :is_closed, :priority, :priority_rationale
     )
   end
 end

@@ -1,7 +1,11 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   concern :document_attachable do
-    resources :documents
+    resources :documents, controller: "documents" do
+      collection do
+        resources :new, controller: "documents_flow", only: %i[show new create update]
+      end
+    end
   end
 
   concern :image_attachable do
@@ -25,7 +29,9 @@ Rails.application.routes.draw do
       get :status
       get :assign
       get :confirmation
+      get :priority
       post :update_assignee
+      post :update_priority
     end
     collection do
       resources :report, controller: "investigations/report", only: %i[show new create update]
@@ -53,6 +59,9 @@ Rails.application.routes.draw do
     end
     resources :hazards, controller: "investigations/hazards", only: %i[new create show update] do
       collection do
+        resources :new_hazard, controller: "investigations/hazards/new_hazard_flow", only: %i[show new create update]
+        resources :edit_hazard, controller: "investigations/hazards/edit_hazard_flow", only: %i[show new create update]
+
         get :risk_level
         post :update_risk_level
       end

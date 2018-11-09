@@ -3,10 +3,14 @@ class Investigation < ApplicationRecord
   include Documentable
   include UserService
 
-  validates :question_title, presence: true, on: :question_details
-  validate :validate_assignment
+  attr_accessor :priority_rationale
 
-  after_save :send_assignee_email
+  enum priority: %i[low medium high]
+
+  validates :question_title, presence: true, on: :question_details
+  validate :validate_assignment, :validate_priority
+
+  after_save :send_assignee_email, :create_audit_activity_for_priority, :create_audit_activity_for_assignee
 
   index_name [Rails.env, "investigations"].join("_")
 
@@ -54,16 +58,8 @@ class Investigation < ApplicationRecord
     id_string.insert(4, "-")
   end
 
-  def create_audit_activity_for_case
-    ::AuditActivity::Investigation::Add.from(self)
-  end
-
-  def create_audit_activity_for_product product
-    ::AuditActivity::Product::Add.from(product, self)
-  end
-
-  def create_audit_activity_for_business business
-    ::AuditActivity::Business::Add.from(business, self)
+  def question_title_prefix
+    question_type && !is_case ? question_type + ' ' : ''
   end
 
   def title
@@ -72,14 +68,45 @@ class Investigation < ApplicationRecord
 
 private
 
+  def create_audit_activity_for_case
+    AuditActivity::Investigation::Add.from(self)
+    AuditActivity::Report::Add.from(self.reporter, self) if self.reporter
+  end
+
+  def create_audit_activity_for_priority
+    if saved_changes.key?(:priority) || priority_rationale.present?
+      AuditActivity::Investigation::UpdatePriority.from(self)
+    end
+  end
+
+  def create_audit_activity_for_assignee
+    if saved_changes.key? :assignee_id
+      AuditActivity::Investigation::UpdateAssignee.from(self)
+    end
+  end
+
+  def create_audit_activity_for_product product
+    AuditActivity::Product::Add.from(product, self)
+  end
+
+  def create_audit_activity_for_business business
+    AuditActivity::Business::Add.from(business, self)
+  end
+
   def case_title
     title = [build_title_products_portion, build_title_hazard_portion].reject(&:blank?).join(" - ")
     title.presence || "Untitled case"
   end
 
   def validate_assignment
-    if !new_record? && !assignee
+    if assignee_id_was.present? && !assignee
       errors.add(:investigation, "cannot be unassigned")
+    end
+  end
+
+  def validate_priority
+    if !priority && priority_rationale
+      errors.add(:priority, "has not been selected")
     end
   end
 

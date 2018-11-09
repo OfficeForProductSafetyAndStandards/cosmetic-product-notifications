@@ -1,7 +1,7 @@
 require "application_system_test_case"
 
 class ImageTest < ApplicationSystemTestCase
-  include ImagesHelper
+  include UrlHelper
   setup do
     sign_in_as_user
     visit new_image_flow_path(investigations(:no_products))

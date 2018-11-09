@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  description: MyText
+  description: Investigation one description
   is_closed: false
 
 two:
-  description: MyText
+  description: Investigation two description
   is_closed: false
 
 three:
