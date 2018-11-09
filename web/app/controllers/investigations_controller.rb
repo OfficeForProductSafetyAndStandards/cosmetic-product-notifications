@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show assign update_assignee status confirmation priority update_priority]
+  before_action :set_investigation, only: %i[show update assign status confirmation priority]
 
   # GET /investigations
   # GET /investigations.json
@@ -32,20 +32,36 @@ class InvestigationsController < ApplicationController
   def status; end
 
   # GET /investigations/1/assign
-  def assign
-    redirect_to investigation_path(@investigation) if @investigation.is_closed
-  end
+  def assign; end
 
-  # POST /investigations/1/update_assignee
-  def update_assignee
-    @investigation.assignee = User.find_by(id: params[:assignee_id])
+  # GET /investigations/1/confirmation
+  def confirmation; end
+
+  # GET /investigations/1/priority
+  def priority; end
+
+  # PATCH/PUT /investigations/1
+  # PATCH/PUT /investigations/1.json
+  def update
+    ps = investigation_update_params
+    @investigation.is_closed = ps[:is_closed] if ps[:is_closed]
+    @investigation.priority = ps[:priority] if ps[:priority]
+    @investigation.priority_rationale = ps[:priority_rationale] if ps[:priority_rationale]
+    @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "Assignee was successfully updated." }
+        format.html { redirect_to @investigation, notice: "Investigation was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes
-        format.html { render :assign }
+        origin = if ps[:is_closed]
+                   :status
+                 elsif ps[:priority]
+                   :priority
+                 else
+                   :assign
+                 end
+        format.html { render origin }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end
     end
@@ -54,7 +70,7 @@ class InvestigationsController < ApplicationController
   # POST /investigations
   # POST /investigations.json
   def create
-    @investigation = Investigation.new(investigation_params)
+    @investigation = Investigation.new(investigation_create_params)
     @investigation.source = UserSource.new(user: current_user)
     respond_to do |format|
       if @investigation.save
@@ -67,50 +83,18 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  def confirmation; end
-
-  # get /investigations/id/priority
-  def priority; end
-
-  # POST /investigation/id/update_priority
-  def update_priority
-    @investigation.priority = params[:priority]
-    @investigation.priority_rationale = params[:priority_rationale]
-    respond_to do |format|
-      if @investigation.save
-        format.html { redirect_to @investigation, notice: "Priority set to #{params[:priority]}" }
-        format.json { render :show, status: :ok, location: @investigation }
-      else
-        flash[:priority_rationale] = params[:priority_rationale]
-        format.html { render :priority }
-        format.json { render json: @investigation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
 private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def save_and_respond(notice)
-    respond_to do |format|
-      if @investigation.save
-        format.html { redirect_to @investigation, notice: notice }
-        format.json { render :show, status: :ok, location: @investigation }
-      else
-        format.html { render :show }
-        format.json { render json: @investigation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
-  def investigation_params
-    params.require(:investigation).permit(
-      :description, :is_closed, :priority, :priority_rationale
-    )
+  def investigation_create_params
+    params.require(:investigation).permit(:description)
+  end
+
+  def investigation_update_params
+    params.require(:investigation).permit(:is_closed, :assignee_id, :priority, :priority_rationale)
   end
 end
