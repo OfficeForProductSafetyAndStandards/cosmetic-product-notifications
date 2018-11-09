@@ -138,8 +138,6 @@ To create an Elasticsearch instance for the current space:
     cf marketplace -s elasticsearch
     cf create-service elasticsearch tiny-6.x mspsds-elasticsearch
 
-There is current only one size for Elasticsearch.
-
 
 #### Redis
 
