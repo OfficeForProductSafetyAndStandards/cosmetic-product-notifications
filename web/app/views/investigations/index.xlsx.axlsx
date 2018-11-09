@@ -12,8 +12,8 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
       investigation.description,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
       investigation.source.show,
-      investigation.hazard&.risk_level
-      investigation.risk_level&.titleize,
+      investigation.hazard&.description,
+      investigation.hazard&.risk_level,
       investigation.products.count,
       investigation.businesses.count,
       investigation.activities.count
