@@ -4,7 +4,7 @@
 = render "minimal_investigation_heading", investigation: @investigation, title: "Priority information"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with(url: update_priority_investigation_url(@investigation), local: true) do |form|
+    = form_with(model: @investigation, local: true) do |form|
       = render "form_validation_display", errors: @investigation.errors
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -13,8 +13,7 @@
           .govuk-radios
             - Investigation.priorities.each do |(priority, _)|
               .govuk-radios__item
-                = form.radio_button :priority, priority,
-                        checked: (@investigation.priority == priority), class: "govuk-radios__input"
+                = form.radio_button :priority, priority, class: "govuk-radios__input"
                 = form.label :priority, priority.titleize, class: "govuk-label govuk-radios__label"
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -22,8 +21,6 @@
           .govuk-form-group
             span.govuk-hint
               | Why are you setting it to this level?
-            = form.text_area :priority_rationale, value: flash[:priority_rationale],
-                    aria_describedby: "priority-rationale-hint", class: "govuk-textarea govuk-!-width-two-thirds",
-                    name: "priority_rationale", rows: 5
+            = form.text_area :priority_rationale, class: "govuk-textarea govuk-!-width-two-thirds", rows: 5
       .govuk-form-group
         = form.submit "Save", class: "govuk-button"
