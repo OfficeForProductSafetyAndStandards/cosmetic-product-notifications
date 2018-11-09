@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_08_172853) do
+ActiveRecord::Schema.define(version: 2018_11_09_145423) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", id: :serial, force: :cascade do |t|
@@ -79,6 +78,7 @@ ActiveRecord::Schema.define(version: 2018_11_08_172853) do
   end
 
   create_table "correspondences", force: :cascade do |t|
+    t.text "attachment_description"
     t.string "contact_method"
     t.date "correspondence_date"
     t.string "correspondent_name"
@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 2018_11_08_172853) do
     t.datetime "created_at", null: false
     t.text "details"
     t.string "email_address"
+    t.string "email_direction"
+    t.string "email_subject"
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"

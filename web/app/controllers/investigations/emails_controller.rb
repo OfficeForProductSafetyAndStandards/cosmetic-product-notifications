@@ -1,11 +1,17 @@
 class Investigations::EmailsController < ApplicationController
   include Wicked::Wizard
   steps :context, :content, :confirmation
-  before_action :load_relevant_objects, only: %i[show update]
+  before_action :load_relevant_objects, only: %i[show update create]
 
   def new
     clear_session
     redirect_to wizard_path(steps.first)
+  end
+
+  def create
+    @investigation.correspondences << @correspondence
+    @investigation.save
+    redirect_to investigation_path(@investigation)
   end
 
   def show
@@ -49,22 +55,10 @@ private
   end
 
   def suggested_values
-    values = {
+    {
         day: Time.zone.today.day,
         month: Time.zone.today.month,
         year: Time.zone.today.year
     }
-
-    reporter = @investigation.reporter
-    if reporter
-      values = values.merge(
-          correspondent_name: reporter.name,
-          contact_method: :email,
-          phone_number: reporter.phone_number,
-          email_address: reporter.email_address
-      )
-    end
-
-    values
   end
 end
