@@ -1,7 +1,0 @@
-tr.govuk-table__row
-  td.govuk-table__cell[class="govuk-!-font-weight-bold"]
-    = document.metadata["title"]
-  td.govuk-table__cell
-    = Time.zone.parse(document.metadata["updated"]).strftime("%d/%m/%Y") if document.metadata["updated"].present?
-  td.govuk-table__cell
-    = link_to "View", associated_document_path(parent, document), class: "document-link"

@@ -120,4 +120,9 @@ See the AWS account section in [the root README](../README.md#aws) to get these 
 
 See the Companies House account section in [the root README](../README.md#companies-house) to get this value.
 
+    cf set-env mspsds-web PGHERO_USERNAME XXX
+    cf set-env mspsds-web PGHERO_PASSWORD XXX
+
+This sets the http auth username and password for access to the pgHero dashboard. See confluence for values. 
+
 The app can then be started using `cf restart mspsds-web`.

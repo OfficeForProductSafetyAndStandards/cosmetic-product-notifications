@@ -2,8 +2,9 @@
 
 one:
   investigation: one
-  body: MyText
+  body: activity one body
+
 
 two:
   investigation: two
-  body: MyText
+  body: activity two body

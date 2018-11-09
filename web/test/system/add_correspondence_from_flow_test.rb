@@ -4,6 +4,9 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   setup do
     sign_in_as_admin
     @investigation = investigations(:one)
+    @investigation.source = sources(:investigation_one)
+    @activity = activities(:one)
+    @activity.source = sources(:activity_one)
     visit new_investigation_correspondence_url(@investigation)
   end
 
@@ -30,7 +33,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     assert_equal('Ben', find_field('correspondence[correspondent_name]').value)
   end
 
-  test "first step should be populated with email from the flow" do
+  test "first step should be populated with reporter's email" do
     visit root_path
     click_on "Report an unsafe product"
     select_type_and_continue

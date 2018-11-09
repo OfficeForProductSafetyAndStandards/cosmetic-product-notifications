@@ -21,6 +21,9 @@ default: &default
   username: postgres
   password:
   pool: 5
+  connect_timeout: 2
+  variables:
+    statement_timeout: 250
 
 
 development:

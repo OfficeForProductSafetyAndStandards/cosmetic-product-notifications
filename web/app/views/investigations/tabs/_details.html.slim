@@ -25,7 +25,6 @@ table.govuk-table
 = render "report_summary", investigation: @investigation
 
 p = link_to "Record an incident", new_investigation_incident_path(@investigation), class: "no-print"
-p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-print"
 
 / TODO: MSPSDS-620, make sure this display is compliant with designs
 - if @investigation.correspondences.any?
@@ -46,7 +45,7 @@ p = link_to "Edit details", edit_investigation_path(@investigation), class: "no-
                 - if correspondence.contact_method == 'phone'
                   = "Phone call: #{correspondence.phone_number}"
             tr.govuk-table__row
-              th.govuk-table__header scope="row" Correspondent date
+              th.govuk-table__header scope="row" Correspondence date
               td.govuk-table__cell = correspondence.correspondence_date
             tr.govuk-table__row
               th.govuk-table__header scope="row" Overview

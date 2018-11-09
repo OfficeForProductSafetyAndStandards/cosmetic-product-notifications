@@ -25,7 +25,12 @@
             | Risk Level
           - if @investigation.hazard.risk_level?
             = @investigation.hazard.risk_level.titleize
-        = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
+        .govuk-grid-row
+          .govuk-grid-column-one-half
+            = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
+          .govuk-grid-column-one-half
+            - if @investigation.hazard.risk_assessment.attached?
+              = link_to "View assessment", @investigation.hazard.risk_assessment, target: "_blank"
     p
       = @investigation.hazard&.description
   - else
@@ -34,8 +39,14 @@
     p
       | Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
   p
-    = link_to "#{@investigation.hazard ? 'Edit' : 'Add'} hazard details", new_investigation_hazard_path(@investigation),
-        class: "govuk-link mspsds-block-link no-print"
+    - if @investigation.hazard
+      = link_to "Edit hazard details",
+              new_investigation_edit_hazard_path(@investigation),
+              class: "govuk-link mspsds-block-link no-print"
+    -else
+      = link_to "Add hazard details",
+            new_investigation_new_hazard_path(@investigation),
+            class: "govuk-link mspsds-block-link no-print"
     - if @investigation.incidents.empty?
       = link_to "Record an incident", new_investigation_incident_path(@investigation),
           class: "govuk-link mspsds-block-link no-print"
