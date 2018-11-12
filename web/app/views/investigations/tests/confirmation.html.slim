@@ -26,7 +26,7 @@ h1.govuk-heading-xl
           td.govuk-table__cell = @file&.filename
         tr.govuk-table__row
           th.govuk-table__header scope="row" Attachment description
-          td.govuk-table__cell = @file&.metadata&.fetch(:description)
+          td.govuk-table__cell = @file&.metadata&.dig(:description)
     = form_with model: @test, url: investigation_tests_path(@investigation), method: :post do |form|
       = form.submit "Continue", class: "govuk-button"
       = link_to "Edit details", previous_wizard_path, class: "govuk-link mspsds-block-link"

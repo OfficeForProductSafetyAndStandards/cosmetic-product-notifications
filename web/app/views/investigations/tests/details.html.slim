@@ -45,7 +45,7 @@ h1.govuk-heading-xl
           = form.file_field :file, class: "govuk-file-upload"
         .govuk-form-group
           = form.label :description, "Attachment description", class: "govuk-label"
-          = form.text_area :description, class: "govuk-textarea", rows: 5, value: @file&.metadata&.fetch(:description)
+          = form.text_area :description, class: "govuk-textarea", rows: 5, value: @file&.metadata&.dig(:description)
 
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

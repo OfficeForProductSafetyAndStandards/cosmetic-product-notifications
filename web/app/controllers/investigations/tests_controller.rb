@@ -25,6 +25,8 @@ class Investigations::TestsController < ApplicationController
   # POST /tests.json
   def create
     if @test.save
+      attach_file_to_list(@file, @test.documents)
+      attach_file_to_list(@file, @investigation.documents)
       AuditActivity::Test::Add.from(@test, @investigation)
       redirect_to investigation_url(@investigation), notice: "Test was successfully recorded."
     else

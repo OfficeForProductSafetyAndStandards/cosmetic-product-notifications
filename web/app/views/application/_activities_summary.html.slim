@@ -19,13 +19,13 @@
               - else
                 p
                   = markdown activity.body if activity.body
-                  = link_to "View business details", business_url(activity.business_id) if activity.business_id
-                  = link_to "View product details", product_url(activity.product_id) if activity.product_id
+                  = link_to "View business details", business_url(activity.business_id), class: "mspsds-block-link" if activity.business_id
+                  = link_to "View product details", product_url(activity.product_id), class: "mspsds-block-link" if activity.product_id
                   - if activity.respond_to?(:attachment) && activity.attachment.attached?
-                    - link_text = "View document"
+                    - link_text = "View attachment"
+                    - link_text = "View document" if activity.is_a?(AuditActivity::Document::Base)
                     - link_text = "View risk assessment document" if activity.is_a?(AuditActivity::Hazard::Base)
-                    = link_to link_text,
-                            activity.attachment, target: "_blank"
+                    = link_to link_text, activity.attachment, class: "mspsds-block-link", target: "_blank"
           li
     - else
       p

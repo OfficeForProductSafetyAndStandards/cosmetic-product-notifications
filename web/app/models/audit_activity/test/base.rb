@@ -1,11 +1,13 @@
 class AuditActivity::Test::Base < AuditActivity::Base
+  include ActivityAttachable
+
   belongs_to :test
   belongs_to :product
 
   private_class_method def self.from(test, investigation)
     body = self.build_body(test)
     title = self.build_title(test)
-    self.create(
+    activity = self.create(
       body: body,
       title: title,
       source: UserSource.new(user: current_user),
@@ -13,6 +15,7 @@ class AuditActivity::Test::Base < AuditActivity::Base
       product: test.product,
       test: test
     )
+    attach_to_activity(activity, test.documents.first) if test.documents.attached?
   end
 
 private
