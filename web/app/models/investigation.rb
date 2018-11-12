@@ -109,7 +109,7 @@ private
   def assign_current_user_to_case
     return if current_user.blank?
 
-    self.source = UserSource.new(user: current_user)
+    self.source = UserSource.new(user: current_user) if self.source.blank?
     self.assignee = current_user
   end
 
