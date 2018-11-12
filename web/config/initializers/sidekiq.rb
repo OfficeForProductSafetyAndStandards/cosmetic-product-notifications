@@ -7,8 +7,8 @@ Sidekiq.configure_server do |config|
   )
 
   unless pg_hero_stats_capture_job.save
-    puts "***** WARNING - pgHero stats capture job was not saved! *****"
-    puts pg_hero_stats_capture_job.errors
+    Rails.logger.error "***** WARNING - pgHero stats capture job was not saved! *****"
+    Rails.logger.error pg_hero_stats_capture_job.errors
   end
 end
 
