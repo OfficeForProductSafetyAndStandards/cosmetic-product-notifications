@@ -38,7 +38,8 @@ class InvestigationsController < ApplicationController
 
   # POST /investigations/1/update_assignee
   def update_assignee
-    @investigation.assignee = User.find_by(id: params[:assignee_id])
+    new_assignee_id = params[:assignee_id] || params[:assignee_id_radio]
+    @investigation.assignee = User.find_by(id: new_assignee_id)
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to @investigation, notice: "Assignee was successfully updated." }
@@ -55,7 +56,6 @@ class InvestigationsController < ApplicationController
   # POST /investigations.json
   def create
     @investigation = Investigation.new(investigation_params)
-    @investigation.source = UserSource.new(user: current_user)
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to investigation_path(@investigation) }

@@ -7,7 +7,7 @@
   h2.govuk-heading-l
     | Current assignee
   - if @investigation.assignee.present?
-    p = "#{@investigation.assignee.get_assignee_display_string}"
+    p = @investigation.assignee.get_assignee_display_string
   - else
     p = "Nobody is assigned yet"
   hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible"]
@@ -22,15 +22,15 @@
       .govuk-radios.govuk-radios--conditional data-module="radios"
         - @investigation.past_assignees_except_current.each do |past_assignee|
           .govuk-radios__item
-            = form.radio_button :assignee_id, past_assignee&.id, class: "govuk-radios__input"
-            = form.label :assignee_id,
-                    "#{past_assignee.get_assignee_display_string}",
+            = form.radio_button :assignee_id_radio, past_assignee&.id, class: "govuk-radios__input"
+            = form.label :assignee_id_radio,
+                    past_assignee.get_assignee_display_string,
                     class: "govuk-label govuk-radios__label"
         .govuk-radios__divider = "or"
         .govuk-radios__item
-          = form.radio_button :assignee_id, "Other", class: "govuk-radios__input",
+          = form.radio_button :assignee_id_radio, "Other", class: "govuk-radios__input",
                   "data-aria-controls": "conditional-other-assignee-other"
-          = form.label :assignee_id, "Other", class: "govuk-label govuk-radios__label"
+          = form.label :assignee_id_radio, "Other", class: "govuk-label govuk-radios__label"
         #conditional-other-assignee-other.govuk-radios__conditional.govuk-radios__conditional--hidden
           .govuk-form-group
             span#other-assignee-hint.govuk-hint [class="govuk-!-width-two-thirds"]
@@ -52,7 +52,7 @@
       = form.select :assignee_id, options_for_select(User.get_assignees_select_options,
               @investigation.assignee ? @investigation.assignee.id : ''),
               {},
-              { class: "govuk-select", id: "assignee-picker" }
+              class: "govuk-select", id: "assignee-picker"
 
   .govuk-form-group
     = form.submit "Assign", class: "govuk-button"

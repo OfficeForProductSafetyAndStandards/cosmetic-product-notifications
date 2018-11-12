@@ -43,6 +43,8 @@ class Investigation < ApplicationRecord
   has_one :reporter, dependent: :destroy
   has_one :hazard, dependent: :destroy
 
+  before_create :assign_current_user_to_case
+
   after_create :create_audit_activity_for_case
 
   def as_indexed_json(*)
@@ -68,12 +70,13 @@ class Investigation < ApplicationRecord
 
   def past_assignees
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
-    users = User.where(id: activities.map {|activity| activity.assignee_id})
+    user_id_list = activities.map(&:assignee_id)
+    users = User.where(id: user_id_list.uniq)
     users
   end
 
   def past_assignees_except_current
-    past_assignees.reject{ |user| user.id == assignee.id}
+    past_assignees.reject { |user| user.id == assignee.id }
   end
 
 private
@@ -101,6 +104,11 @@ private
 
   def create_audit_activity_for_business business
     AuditActivity::Business::Add.from(business, self)
+  end
+
+  def assign_current_user_to_case
+    self.source = UserSource.new(user: current_user)
+    self.assignee = current_user
   end
 
   def case_title

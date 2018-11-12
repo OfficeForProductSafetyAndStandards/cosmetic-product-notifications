@@ -13,7 +13,6 @@ class Investigations::FlowController < ApplicationController
   def create
     load_reporter_and_investigation
     @investigation.reporter = @reporter
-    @investigation.source = UserSource.new(user: current_user)
     @investigation.save
   end
 

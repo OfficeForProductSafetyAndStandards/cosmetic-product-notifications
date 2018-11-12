@@ -1,6 +1,6 @@
 class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigation::Base
   def self.from(investigation)
-    title = "#{investigation.assignee.id}"
+    title = investigation.assignee.id.to_s
     super(investigation, title)
   end
 
@@ -14,6 +14,6 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
   end
 
   def title
-    return "Assigned to #{User.find_by(id: assignee_id)&.get_assignee_display_string}"
+    "Assigned to #{User.find_by(id: assignee_id)&.get_assignee_display_string}"
   end
 end
