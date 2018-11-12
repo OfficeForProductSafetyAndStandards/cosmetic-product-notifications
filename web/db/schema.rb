@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_08_154235) do
+ActiveRecord::Schema.define(version: 2018_11_09_165650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2018_11_08_154235) do
     t.datetime "created_at", null: false
     t.integer "investigation_id"
     t.bigint "product_id"
+    t.bigint "test_id"
     t.string "title"
     t.string "type", default: "CommentActivity"
     t.datetime "updated_at", null: false
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 2018_11_08_154235) do
     t.index ["correspondence_id"], name: "index_activities_on_correspondence_id"
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
     t.index ["product_id"], name: "index_activities_on_product_id"
+    t.index ["test_id"], name: "index_activities_on_test_id"
   end
 
   create_table "addresses", id: :serial, force: :cascade do |t|
@@ -209,6 +211,7 @@ ActiveRecord::Schema.define(version: 2018_11_08_154235) do
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "products"
+  add_foreign_key "activities", "tests"
   add_foreign_key "addresses", "businesses"
   add_foreign_key "correspondences", "investigations"
   add_foreign_key "hazards", "investigations"
