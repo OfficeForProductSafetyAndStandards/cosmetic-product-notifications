@@ -65,6 +65,12 @@ Finally, start the app and check that it is running correctly:
     cf logs keycloak --recent
 
 
+Follow the steps in [the SMS autheticator README](keycloak/providers/sms-authenticator/README.md) to enable SMS two
+factor authentication. The following environment variable will also need to be set:
+
+    cf set-env keycloak NOTIFY_SMS_TEMPLATE_ID     XXX
+
+
 ### Initial configuration
 
 When deploying Keycloak from scratch, an initial configuration file is imported on first launch, which creates a

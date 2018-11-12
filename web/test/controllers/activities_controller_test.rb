@@ -11,16 +11,6 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     logout
   end
 
-  test "should get index" do
-    get investigation_activities_url(@activity.investigation)
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_investigation_activity_url(@activity.investigation)
-    assert_response :success
-  end
-
   test "should create activity" do
     assert_difference("Activity.count") do
       post investigation_activities_url(@activity.investigation), params: {
@@ -30,6 +20,6 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to investigation_activities_url(@activity.investigation)
+    assert_redirected_to investigation_url(@activity.investigation)
   end
 end
