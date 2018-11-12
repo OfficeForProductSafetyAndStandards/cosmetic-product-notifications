@@ -1,14 +1,19 @@
 class Investigations::EmailsController < ApplicationController
+  include FileConcern
   include Wicked::Wizard
   steps :context, :content, :confirmation
   before_action :load_relevant_objects, only: %i[show update create]
 
   def new
     clear_session
-    redirect_to wizard_path(steps.first)
+    initialize_file_attachment :email_file
+    initialize_file_attachment :email_attachment
+    redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
   def create
+    attach_file_to_list(@email_file, :email_file, @correspondence.documents)
+    attach_file_to_list(@email_attachment, :email_attachment, @correspondence.documents)
     @investigation.correspondences << @correspondence
     @investigation.save
     redirect_to investigation_path(@investigation)
@@ -20,7 +25,8 @@ class Investigations::EmailsController < ApplicationController
 
   def update
     @correspondence.validate(step)
-    # validate_blob_size(@file, @correspondence.errors)
+    validate_blob_size(@email_file, @correspondence.errors, :email_file)
+    validate_blob_size(@email_attachment, @correspondence.errors, :email_attachment)
     if @correspondence.errors.any?
       render step
     else
@@ -32,6 +38,8 @@ private
 
   def load_relevant_objects
     @investigation = Investigation.find(params[:investigation_id])
+    @email_file = load_file_attachment :email_file
+    @email_attachment = load_file_attachment :email_attachment
     load_correspondence
   end
 
@@ -52,6 +60,14 @@ private
 
   def clear_session
     session[:correspondence] = nil
+  end
+
+  def get_file_params_key
+    :correspondence
+  end
+
+  def get_file_session_key
+    :email_file_id
   end
 
   def suggested_values
