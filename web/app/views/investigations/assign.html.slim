@@ -17,7 +17,7 @@
 
   = render "form_validation_display", errors: @investigation.errors
 
-  - if @investigation.past_assignees.present?
+  - if @investigation.past_assignees_except_current.present?
     .govuk-form-group class=("govuk-form-group--error" unless @investigation.errors[:assignee].empty?)
       .govuk-radios.govuk-radios--conditional data-module="radios"
         - @investigation.past_assignees_except_current.each do |past_assignee|
@@ -49,7 +49,7 @@
         | Name / Email address
       = form.label :assignee_id, class: "govuk-label"
       / When there are many users, we should consider loading them with ajax using the autocomplete
-      = form.select :assignee_id, options_for_select(User.get_assignees_select_options,
+      = form.select :assignee_id, options_for_select(User.get_assignees_select_options(@investigation.past_assignees),
               @investigation.assignee ? @investigation.assignee.id : ''),
               {},
               class: "govuk-select", id: "assignee-picker"

@@ -39,7 +39,7 @@ class User < ActiveHash::Base
   def self.get_assignees_select_options(except_those_users = [])
     select_options = { '': nil }
 
-    (self.all - except_those_users).each do |user|
+    (self.all - (except_those_users || [])).each do |user|
       display_string = user.get_assignee_display_string
       select_options[display_string] = user.id
     end
