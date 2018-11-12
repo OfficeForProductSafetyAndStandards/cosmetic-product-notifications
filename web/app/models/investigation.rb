@@ -67,17 +67,13 @@ class Investigation < ApplicationRecord
   end
 
   def past_assignees
-    activities = Activity.where(investigation_id: id, type: "AuditActivity::Investigation::UpdateAssignee")
-    users = User.all
-    users = users.select do |user|
-      found = false
-      activities.each do |activity|
-        found = true if activity.title.include? user.full_name
-      end
-      found = found && (assignee.id != user.id)
-      found
-    end
+    activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
+    users = User.where(id: activities.map {|activity| activity.assignee_id})
     users
+  end
+
+  def past_assignees_except_current
+    past_assignees.reject{ |user| user.id == assignee.id}
   end
 
 private

@@ -1,10 +1,19 @@
 class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigation::Base
   def self.from(investigation)
-    title = "Assigned to #{investigation.assignee.full_name}"
+    title = "#{investigation.assignee.id}"
     super(investigation, title)
   end
 
   def subtitle_slug
     "Assigned"
+  end
+
+  def assignee_id
+    # Using alias for accessing parent method causes errors elsewhere :(
+    AuditActivity::Investigation::Base.instance_method(:title).bind(self).call
+  end
+
+  def title
+    return "Assigned to #{User.find_by(id: assignee_id)&.get_assignee_display_string}"
   end
 end

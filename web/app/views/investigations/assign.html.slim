@@ -20,7 +20,7 @@
   - if @investigation.past_assignees.present?
     .govuk-form-group class=("govuk-form-group--error" unless @investigation.errors[:assignee].empty?)
       .govuk-radios.govuk-radios--conditional data-module="radios"
-        - @investigation.past_assignees.each do |past_assignee|
+        - @investigation.past_assignees_except_current.each do |past_assignee|
           .govuk-radios__item
             = form.radio_button :assignee_id, past_assignee&.id, class: "govuk-radios__input"
             = form.label :assignee_id,
@@ -49,7 +49,7 @@
         | Name / Email address
       = form.label :assignee_id, class: "govuk-label"
       / When there are many users, we should consider loading them with ajax using the autocomplete
-      = form.select :assignee_id, options_for_select(User.get_assignees_select_options(@investigation.past_assignees),
+      = form.select :assignee_id, options_for_select(User.get_assignees_select_options,
               @investigation.assignee ? @investigation.assignee.id : ''),
               {},
               { class: "govuk-select", id: "assignee-picker" }

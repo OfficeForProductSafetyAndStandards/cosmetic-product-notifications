@@ -36,19 +36,13 @@ class User < ActiveHash::Base
     KeycloakClient.instance.has_role? role
   end
 
-  def self.get_assignees_select_options(except_those)
+  def self.get_assignees_select_options(except_those_users = [])
     select_options = { '': nil }
 
-    self.all.each do |user| # rubocop:disable Rails/FindEach
+    (self.all - except_those_users).each do |user|
       display_string = user.get_assignee_display_string
       select_options[display_string] = user.id
     end
-    select_options = select_options.reject do |user|
-      except_those.any? do |bad_user|
-        select_options[user] == bad_user.id
-      end
-    end
-
     select_options
   end
 
