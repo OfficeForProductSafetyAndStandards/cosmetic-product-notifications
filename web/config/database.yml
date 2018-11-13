@@ -23,7 +23,7 @@ default: &default
   pool: 5
   connect_timeout: 2
   variables:
-    statement_timeout: 250
+    statement_timeout: 500
 
 
 development:
