@@ -12,8 +12,6 @@ class Correspondence < ApplicationRecord
   end
 
   has_many_attached :documents
-  has_one_attached :email_files
-  has_many_attached :email_attachments
 
   enum email_direction: {
       outbound: "Outbound",

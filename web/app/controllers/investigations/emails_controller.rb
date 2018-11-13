@@ -16,6 +16,7 @@ class Investigations::EmailsController < ApplicationController
     attach_file_to_list(@email_attachment, :email_attachment, @correspondence.documents)
     @investigation.correspondences << @correspondence
     @investigation.save
+    AuditActivity::Correspondence::AddEmail.from(@correspondence, @investigation)
     redirect_to investigation_path(@investigation)
   end
 
@@ -54,7 +55,7 @@ private
 
     params.require(:correspondence).permit(
         :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
-        :overview, :details
+        :overview, :details, :email_direction, :email_subject
     )
   end
 
