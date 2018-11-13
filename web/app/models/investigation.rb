@@ -25,10 +25,12 @@ class Investigation < ApplicationRecord
   belongs_to_active_hash :assignee, class_name: "User", optional: true
 
   has_many :investigation_products, dependent: :destroy
-  has_many :products, through: :investigation_products, after_add: :create_audit_activity_for_product
+  has_many :products, through: :investigation_products, after_add: :create_audit_activity_for_product,
+           after_remove: :create_audit_activity_for_removing_product
 
   has_many :investigation_businesses, dependent: :destroy
-  has_many :businesses, through: :investigation_businesses, after_add: :create_audit_activity_for_business
+  has_many :businesses, through: :investigation_businesses, after_add: :create_audit_activity_for_business,
+           after_remove: :create_audit_activity_for_removing_business
 
   has_many :activities, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :investigation
 
@@ -102,8 +104,16 @@ private
     AuditActivity::Product::Add.from(product, self)
   end
 
+  def create_audit_activity_for_removing_product product
+    AuditActivity::Product::Destroy.from(product, self)
+  end
+
   def create_audit_activity_for_business business
     AuditActivity::Business::Add.from(business, self)
+  end
+
+  def create_audit_activity_for_removing_business business
+    AuditActivity::Business::Destroy.from(business, self)
   end
 
   def assign_current_user_to_case
