@@ -61,6 +61,14 @@ class ImageTest < ApplicationSystemTestCase
     assert_text "Ugly picture"
   end
 
+  test "should allow to edit file description" do
+    get_to_edit
+    fill_in "Description", with: "This is a large image"
+    click_on "Save"
+    click_on "Attachments"
+    assert_text "This is a large image"
+  end
+
   test "should allow to delete a picture" do
     get_to_edit
     click_on "Delete"
@@ -71,6 +79,7 @@ class ImageTest < ApplicationSystemTestCase
   def get_to_edit
     attach_file_and_upload
     fill_in "Image title", with: "Beautiful picture"
+    fill_in "Description", with: "description"
     click_on "Save"
     click_on "Attachments"
     click_on "Edit image details or delete"
