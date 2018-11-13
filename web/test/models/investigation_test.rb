@@ -9,8 +9,8 @@ class InvestigationTest < ActiveSupport::TestCase
     logout
   end
 
-  test "should create an activity when investigation is created" do
-    assert_difference("Activity.count") do
+  test "should create activities when investigation is created" do
+    assert_difference"Activity.count" do
       add_investigation
       @investigation.save
     end

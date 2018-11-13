@@ -88,4 +88,24 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       }
     end
   end
+
+  test "should update assignee from selectable list" do
+    assignee = User.first
+    put investigation_url(@investigation), params: {
+      investigation: {
+        assignee_id: assignee.id
+      }
+    }
+    assert_equal(Investigation.find(@investigation.id).assignee.id, assignee.id)
+  end
+
+  test "should update assignee from radio boxes" do
+    assignee = User.first
+    put investigation_url(@investigation), params: {
+      investigation: {
+        assignee_id_radio: assignee.id
+      }
+    }
+    assert_equal(Investigation.find(@investigation.id).assignee.id, assignee.id)
+  end
 end
