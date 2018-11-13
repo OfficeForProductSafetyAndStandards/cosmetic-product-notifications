@@ -61,6 +61,14 @@ class DocumentTest < ApplicationSystemTestCase
     assert_text "short document"
   end
 
+  test "should allow to edit file description" do
+    get_to_edit
+    fill_in "Description", with: "This is a long document"
+    click_on "Save"
+    click_on "Attachments"
+    assert_text "This is a long document"
+  end
+
   test "should allow to delete a document" do
     get_to_edit
     click_on "Delete"
@@ -71,6 +79,7 @@ class DocumentTest < ApplicationSystemTestCase
   def get_to_edit
     attach_file_and_upload
     fill_in "Document title", with: "long document"
+    fill_in "Description", with: "description"
     click_on "Save"
     click_on "Attachments"
     click_on "Edit document details or delete"
@@ -78,7 +87,7 @@ class DocumentTest < ApplicationSystemTestCase
   end
 
   def attach_file_and_upload
-    attach_file("Browse for file", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("Browse for file", Rails.root + "test/fixtures/files/old_risk_assessment.txt")
     click_on "Upload"
   end
 end
