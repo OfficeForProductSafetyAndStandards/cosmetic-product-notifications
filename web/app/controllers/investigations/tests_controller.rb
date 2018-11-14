@@ -78,7 +78,8 @@ private
   end
 
   def restore_test
-    @test = @investigation.tests.build(session[:test])
+    session_params = session[:test] || {}
+    @test = @investigation.tests.build(session_params.merge(test_params))
   end
 
   def attach_files
@@ -88,6 +89,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def test_params
+    return {} if params[:test].blank?
     params.require(:test).permit(:product_id,
                                  :legislation,
                                  :type,

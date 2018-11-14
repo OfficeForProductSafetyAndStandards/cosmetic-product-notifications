@@ -2,7 +2,7 @@
 - if errors&.any?
   #error_explanation
     h2.govuk-heading-l.govuk-error-message
-      = "#{pluralize(errors.count, "error")} prevented this #{model_name} from being saved:"
+      = "#{pluralize(errors.count, "error")} prohibited this #{model_name} from being saved:"
     ul.govuk-list.govuk-error-message
       - errors.full_messages.each do |message|
         li

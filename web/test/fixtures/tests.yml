@@ -2,16 +2,17 @@
 
 one:
   date: 2018-11-08
-  details: MyText
-  legislation: MyString
-  status: 1
+  details: Test request details
+  legislation: General Product Safety Regulations 2005
   investigation: one
   product: one
+  type: Test::Request
 
 two:
-  date: 2018-11-08
-  details: MyText
-  legislation: MyString
-  status: 1
+  date: 2018-11-12
+  details: Test result details
+  legislation: Toys Safety Regulations 2011
   investigation: two
   product: two
+  result: Fail
+  type: Test::Result

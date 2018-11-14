@@ -2,47 +2,64 @@ require 'test_helper'
 
 class TestsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @test = tests(:one)
+    @investigation = investigations(:one)
+    @product = products(:one)
+    sign_in_as_user
   end
 
-  test "should get index" do
-    get tests_url
-    assert_response :success
+  teardown do
+    logout
   end
 
-  test "should get new" do
-    get new_test_url
-    assert_response :success
+  test "should redirect new test request to first wizard step" do
+    get new_request_investigation_tests_path(@investigation)
+    assert_redirected_to investigation_tests_path(@investigation) + '/details'
   end
 
-  test "should create test" do
-    assert_difference('Test.count') do
-      post tests_url, params: { test: { date: @test.date, details: @test.details, investigation_id: @test.investigation_id, legislation: @test.legislation, product_id: @test.product_id, status: @test.status } }
+  test "should create test request" do
+    assert_difference("Test.count") do
+      post investigation_tests_path(@investigation), params: {
+        test: {
+          type: "Test::Request",
+          product_id: @product.id,
+          legislation: "Test Legislation",
+          details: "Test Details",
+          date: "12/11/2018"
+        }
+    }
     end
 
-    assert_redirected_to test_url(Test.last)
+    assert_redirected_to investigation_url(@investigation)
   end
 
-  test "should show test" do
-    get test_url(@test)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_test_url(@test)
-    assert_response :success
-  end
-
-  test "should update test" do
-    patch test_url(@test), params: { test: { date: @test.date, details: @test.details, investigation_id: @test.investigation_id, legislation: @test.legislation, product_id: @test.product_id, status: @test.status } }
-    assert_redirected_to test_url(@test)
-  end
-
-  test "should destroy test" do
-    assert_difference('Test.count', -1) do
-      delete test_url(@test)
+  test "should create test result" do
+    assert_difference("Test.count") do
+      post investigation_tests_path(@investigation), params: {
+          test: {
+              type: "Test::Result",
+              product_id: @product.id,
+              legislation: "Test Legislation",
+              details: "Test Details",
+              date: "12/11/2018",
+              result: "Fail"
+          }
+      }
     end
 
-    assert_redirected_to tests_url
+    assert_redirected_to investigation_url(@investigation)
+  end
+
+  test "should add test record to investigation" do
+    post investigation_tests_path(@investigation), params: {
+        test: {
+            type: "Test::Request",
+            product_id: @product.id,
+            legislation: "Test Legislation",
+            details: "Test Details",
+            date: "12/11/2018"
+        }
+    }
+
+    assert_equal(Investigation.first.tests.last.legislation, "Test Legislation")
   end
 end
