@@ -46,6 +46,15 @@ class User < ActiveHash::Base
     select_options
   end
 
+  def self.get_assignees_select_options_short
+    select_options = { '': nil }
+    self.all.each do |user|
+      display_string = user.full_name
+      select_options[display_string] = user.id
+    end
+    select_options
+  end
+
   def get_assignee_display_string
     "#{full_name} (#{email})"
   end
