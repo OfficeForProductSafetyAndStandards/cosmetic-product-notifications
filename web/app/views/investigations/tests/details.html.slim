@@ -19,7 +19,7 @@ h1.govuk-heading-xl
             | Which product was tested?
         .govuk-form-group class=("govuk-form-group--error" if @test.errors[:product].any?)
           span.govuk-hint
-            | Only products already added to the case are listed.
+            | Only products already added to the case are listed. 
             = link_to "Add a product", new_investigation_product_path(@investigation)
           = form.collection_select :product_id, @investigation.products, :id, :name, class: "govuk-select", id: "test_product"
 
@@ -58,10 +58,13 @@ h1.govuk-heading-xl
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Related attachments
         - if @file
-          p = "Currently selected file: #{@file.filename}, selecting a different one will replace it"
+          p#current-attachment-details
+            = "Currently selected file: #{@file.filename}"
+            br
+            | Selecting a different one will replace it
         .govuk-form-group
-          = form.file_field :file, class: "govuk-file-upload"
-        .govuk-form-group
+          = form.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
+        #attachment-description.govuk-form-group
           = form.label :description, "Attachment description", class: "govuk-label"
           = form.text_area :description, class: "govuk-textarea", rows: 5, value: @file&.metadata&.dig(:description)
 
