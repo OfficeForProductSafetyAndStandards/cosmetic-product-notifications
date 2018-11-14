@@ -47,7 +47,7 @@ module FileConcern
   end
 
   def update_file_details(file, attachment_category)
-    file_metadata = file_params(attachment_category).merge({attachment_category: attachment_category})
+    file_metadata = file_params(attachment_category).merge(attachment_category: attachment_category)
     file.metadata.update(file_metadata)
     file.metadata["updated"] = Time.current
   end
@@ -76,6 +76,7 @@ module FileConcern
 
   def file_params attachment_category
     return {} if params[get_file_params_key].blank?
+
     params.require(get_file_params_key).permit(:file, attachment_category, :title, :description, :document_type, :other_type)
   end
 end

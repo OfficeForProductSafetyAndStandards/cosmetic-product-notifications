@@ -54,7 +54,7 @@ private
     return {} if params[:correspondence].blank?
 
     params.require(:correspondence).permit(
-        :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
+      :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
         :overview, :details, :email_direction, :email_subject
     )
   end

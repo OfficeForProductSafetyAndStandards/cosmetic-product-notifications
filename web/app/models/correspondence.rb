@@ -24,6 +24,6 @@ class Correspondence < ApplicationRecord
   }, _suffix: true
 
   def find_attachment_by_category category
-    documents.find { |attachment| attachment.metadata[:attachment_category] == category}
+    documents.find { |attachment| attachment.metadata[:attachment_category] == category }
   end
 end

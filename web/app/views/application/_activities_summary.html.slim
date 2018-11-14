@@ -26,6 +26,9 @@
                     - link_text = "View risk assessment document" if activity.is_a?(AuditActivity::Hazard::Base)
                     = link_to link_text,
                             activity.attachment, target: "_blank"
+                  - if activity.respond_to?(:attachments) && !activity.attachments.empty?
+                    = link_to "View email", url_for(activity.email_file), class: "govuk-!-margin-right-3" if activity.is_a?(AuditActivity::Correspondence::AddEmail)
+                    = link_to "View email attachment", url_for(activity.email_attachment), class: "govuk-!-margin-right-3" if activity.is_a?(AuditActivity::Correspondence::AddEmail)
           li
     - else
       p
