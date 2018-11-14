@@ -9,6 +9,7 @@ h1.govuk-heading-xl
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with model: @test, scope: :test, local: true, url: wizard_path, method: :put do |form|
+      = render "form_validation_display", errors: @test.errors, model_name: @test.pretty_name
       = form.hidden_field :type
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -16,7 +17,7 @@ h1.govuk-heading-xl
             | Which product should be tested?
           - else
             | Which product was tested?
-        .govuk-form-group
+        .govuk-form-group class=("govuk-form-group--error" if @test.errors[:product].any?)
           span.govuk-hint
             | Only products already added to the case are listed.
             = link_to "Add a product", new_investigation_product_path(@investigation)
@@ -24,7 +25,7 @@ h1.govuk-heading-xl
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Against which legislation?
-        .govuk-form-group
+        .govuk-form-group class=("govuk-form-group--error" if @test.errors[:legislation].any?)
           span.govuk-hint
             | Select the relevant legislation from the list, or enter a different one.
           #legislation-autocomplete-container data-value=@test.legislation data-options=legislation_constants["legislation"]
@@ -40,7 +41,7 @@ h1.govuk-heading-xl
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | What was the test result?
-          .govuk-form-group
+          .govuk-form-group class=("govuk-form-group--error" if @test.errors[:result].any?)
             .govuk-radios
               - Test.results.each do |(result, label)|
                 .govuk-radios__item

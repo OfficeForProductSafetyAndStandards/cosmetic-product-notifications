@@ -13,6 +13,10 @@ class Test < ApplicationRecord
   attribute :year, :integer
   validate :date_from_components
 
+  validates :investigation, presence: true
+  validates :legislation, presence: true
+  validates :product, presence: true
+
   def initialize(*args)
     raise "Cannot directly instantiate a Test record" if self.class == Test
     super
