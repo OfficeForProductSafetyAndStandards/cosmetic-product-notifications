@@ -25,11 +25,11 @@ main#main-content.govuk-main-wrapper role="main"
                 | Assigned to
               .govuk-checkboxes
                 .govuk-checkboxes__item
-                  = form.check_box :assigned_to, {multiple: true, class: "govuk-checkboxes__input"}, "me", true
+                  = form.check_box :assigned_to, { multiple: true, class: "govuk-checkboxes__input" }, "me", true
                   = form.label :assigned_to, "Me", class: "govuk-checkboxes__label"
                 .govuk-checkboxes__item
-                  = form.check_box :assigned_to, {multiple: true, class: "govuk-checkboxes__input",
-                          "data-aria-controls": "conditional-Assignee-2"}, "other", true
+                  = form.check_box :assigned_to, { multiple: true, class: "govuk-checkboxes__input",
+                          "data-aria-controls": "conditional-Assignee-2" }, "other", true
                   = form.label :assigned_to, "Someone else", class: "govuk-checkboxes__label"
                 #conditional-Assignee-2.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
                   = form.label :assigned_to, "Name / Team", class: "govuk-label"
@@ -44,10 +44,10 @@ main#main-content.govuk-main-wrapper role="main"
                 | Status
               .govuk-checkboxes
                 .govuk-checkboxes__item
-                  = form.check_box :status_open, {class: "govuk-checkboxes__input"}, "checked", "unchecked"
+                  = form.check_box :status_open, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
                   = form.label :status_open, "Open", class: "govuk-checkboxes__label"
                 .govuk-checkboxes__item
-                  = form.check_box :status_closed, {class: "govuk-checkboxes__input"}, "checked", "unchecked"
+                  = form.check_box :status_closed, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
                   = form.label :status_closed, "Closed", class: "govuk-checkboxes__label"
           .govuk-form-group
             fieldset.govuk-fieldset
@@ -75,7 +75,6 @@ main#main-content.govuk-main-wrapper role="main"
       = will_paginate @investigations
       br
       = link_to "Export as spreadsheet", investigations_path(format: :xlsx)
-
 
 - if @current_user
   .govuk-grid-row[class="govuk-!-padding-bottom-4"]

@@ -24,8 +24,9 @@ module InvestigationsHelper
     return {} if params[:status_open].blank? && params[:status_closed].blank?
     return {} if params[:status_open] == "checked" && params[:status_closed] == "checked"
     return {} if params[:status_open] == "unchecked" && params[:status_closed] == "unchecked"
-    return {status: 'open'} if params[:status_open] == "checked"
-    {status: 'closed'}
+    return { status: 'open' } if params[:status_open] == "checked"
+
+    { status: 'closed' }
   end
 
   def query_params
@@ -36,5 +37,4 @@ module InvestigationsHelper
   def handle_status_params
     params[:status_open] = "checked" if params[:status_open].blank?
   end
-
 end
