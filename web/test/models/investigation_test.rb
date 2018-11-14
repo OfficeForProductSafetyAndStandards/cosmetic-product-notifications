@@ -49,6 +49,14 @@ class InvestigationTest < ActiveSupport::TestCase
     end
   end
 
+  test "should create an activity when status is updated on investigation" do
+    create_investigation
+    assert_difference "Activity.count" do
+      @investigation.is_closed = !@investigation.is_closed
+      @investigation.save
+    end
+  end
+
   def create_investigation
     @investigation = Investigation.create
   end
