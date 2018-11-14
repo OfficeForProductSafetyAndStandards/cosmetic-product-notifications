@@ -34,7 +34,6 @@ class Investigations::TestsController < ApplicationController
   def create
     attach_files
     if @test.save
-      record_activity
       redirect_to investigation_url(@investigation), notice: "#{@test.pretty_name.capitalize} was successfully recorded."
     else
       render step
@@ -85,14 +84,6 @@ private
   def attach_files
     attach_file_to_list(@file, @test.documents)
     attach_file_to_list(@file, @investigation.documents)
-  end
-
-  def record_activity
-    if @test.requested?
-      AuditActivity::Test::Request.from(@test, @investigation)
-    else
-      AuditActivity::Test::Result.from(@test, @investigation)
-    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
