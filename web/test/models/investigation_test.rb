@@ -11,21 +11,21 @@ class InvestigationTest < ActiveSupport::TestCase
 
   test "should create activities when investigation is created" do
     assert_difference"Activity.count" do
-      create_investigation
+      @investigation = Investigation.create
     end
   end
 
   test "should create an activity when business is added to investigation" do
-    create_investigation
+    @investigation = Investigation.create
     assert_difference"Activity.count" do
-      create_business
+      @business = Business.new(company_name: 'Test Company')
       @investigation.businesses << @business
     end
   end
 
   test "should create an activity when business is removed from investigation" do
-    create_investigation
-    create_business
+    @investigation = Investigation.create
+    @business = Business.new(company_name: 'Test Company')
     @investigation.businesses << @business
     assert_difference"Activity.count" do
       @investigation.businesses.delete(@business)
@@ -33,16 +33,16 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when product is added to investigation" do
-    create_investigation
+    @investigation = Investigation.create
     assert_difference"Activity.count" do
-      create_product
+      @product = Product.new(name: 'Test Product')
       @investigation.products << @product
     end
   end
 
   test "should create an activity when product is removed from investigation" do
-    create_investigation
-    create_product
+    @investigation = Investigation.create
+    @product = Product.new(name: 'Test Product')
     @investigation.products << @product
     assert_difference"Activity.count" do
       @investigation.products.delete(@product)
@@ -50,24 +50,10 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when status is updated on investigation" do
-    create_investigation
+    @investigation = Investigation.create
     assert_difference "Activity.count" do
       @investigation.is_closed = !@investigation.is_closed
       @investigation.save
     end
-  end
-
-  def create_investigation
-    @investigation = Investigation.create
-  end
-
-  def create_business
-    @business = Business.new
-    @business.company_name = 'TestCompany'
-  end
-
-  def create_product
-    @product = Product.new
-    @product.name = 'TestProduct'
   end
 end
