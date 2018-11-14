@@ -23,19 +23,18 @@ main#main-content.govuk-main-wrapper role="main"
             fieldset.govuk-fieldset
               legend.govuk-fieldset__legend--s
                 | Assigned to
-              .govuk-checkboxes
+              .govuk-checkboxes data-module="checkboxes"
                 .govuk-checkboxes__item
                   = form.check_box :assigned_to, { multiple: true, class: "govuk-checkboxes__input" }, "me", true
                   = form.label :assigned_to, "Me", class: "govuk-checkboxes__label"
                 .govuk-checkboxes__item
                   = form.check_box :assigned_to, { multiple: true, class: "govuk-checkboxes__input",
-                          "data-aria-controls": "conditional-Assignee-2" }, "other", true
+                          "data-aria-controls": "conditional-other-assignee" }, "other", true
                   = form.label :assigned_to, "Someone else", class: "govuk-checkboxes__label"
-                #conditional-Assignee-2.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
-                  = form.label :assigned_to, "Name / Team", class: "govuk-label"
-                  = form.text_field :assigned_to, class: "govuk-input"
+                #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
+                  = form.label :assigned_to, "Name", class: "govuk-label"
                   = form.select :assigned_to,
-                          options_for_select(User.get_assignees_select_options_short),
+                          options_for_select(User.get_assignees_select_options_short([current_user])),
                           {},
                           class: "govuk-select", id: "assignee-picker"
           .govuk-form-group

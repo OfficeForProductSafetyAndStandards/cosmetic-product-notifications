@@ -46,9 +46,9 @@ class User < ActiveHash::Base
     select_options
   end
 
-  def self.get_assignees_select_options_short
+  def self.get_assignees_select_options_short(except_those_users = [])
     select_options = { '': nil }
-    self.all.each do |user| # rubocop:disable Rails/FindEach
+    (self.all - (except_those_users || [])).each do |user|
       display_string = user.full_name
       select_options[display_string] = user.id
     end
