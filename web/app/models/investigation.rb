@@ -3,14 +3,15 @@ class Investigation < ApplicationRecord
   include Documentable
   include UserService
 
-  attr_accessor :priority_rationale
+  attr_accessor :priority_rationale, :status_rationale
 
   enum priority: %i[low medium high]
 
   validates :question_title, presence: true, on: :question_details
   validate :validate_assignment, :validate_priority
 
-  after_save :send_assignee_email, :create_audit_activity_for_priority, :create_audit_activity_for_assignee
+  after_save :send_assignee_email, :create_audit_activity_for_priority, :create_audit_activity_for_assignee,
+             :create_audit_activity_for_status
 
   index_name [Rails.env, "investigations"].join("_")
 
@@ -91,6 +92,12 @@ private
   def create_audit_activity_for_priority
     if saved_changes.key?(:priority) || priority_rationale.present?
       AuditActivity::Investigation::UpdatePriority.from(self)
+    end
+  end
+
+  def create_audit_activity_for_status
+    if saved_changes.key?(:is_closed) || status_rationale.present?
+      AuditActivity::Investigation::UpdateStatus.from(self)
     end
   end
 
