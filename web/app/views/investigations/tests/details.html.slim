@@ -1,16 +1,21 @@
-- content_for :page_title, "Record test"
+- page_title = "Record #{@test.pretty_name}"
+- content_for :page_title, page_title
 - content_for :after_header do
   = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
 h1.govuk-heading-xl
   span.govuk-caption-xl
     | Case: #{@investigation.pretty_id}
-  | Record test
+  = page_title
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with model: @test, local: true, url: wizard_path, method: :put do |form|
+    = form_with model: @test, scope: :test, local: true, url: wizard_path, method: :put do |form|
+      = form.hidden_field :type
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Which product should be tested?
+          - if @test.requested?
+            | Which product should be tested?
+          - else
+            | Which product was tested?
         .govuk-form-group
           span.govuk-hint
             | Only products already added to the case are listed.
@@ -22,13 +27,25 @@ h1.govuk-heading-xl
         .govuk-form-group
           span.govuk-hint
             | Select the relevant legislation from the list, or enter a different one.
-          #legislation-autocomplete-container data-options=legislation_constants["legislation"] data-value=@test.legislation
-          / = form.text_field :legislation, data: {legislation: legislation_constants["legislation"]}, class: "govuk-input", id: "test_legislation"
-          / = form.select :legislation, legislation_constants["legislation"], class: "govuk-select", id: "legislation"
+          #legislation-autocomplete-container data-value=@test.legislation data-options=legislation_constants["legislation"]
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | When did you request testing?
+          - if @test.requested?
+            | When did you request testing?
+          - else
+            | When was the test conducted?
         = render "date_input", form: form
+
+      - if !@test.requested?
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | What was the test result?
+          .govuk-form-group
+            .govuk-radios
+              - Test.results.each do |(result, label)|
+                .govuk-radios__item
+                  = form.radio_button :result, result, class: "govuk-radios__input"
+                  = form.label :result, label, class: "govuk-label govuk-radios__label"
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l

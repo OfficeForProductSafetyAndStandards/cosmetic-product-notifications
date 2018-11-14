@@ -201,7 +201,8 @@ ActiveRecord::Schema.define(version: 2018_11_09_165650) do
     t.integer "investigation_id"
     t.string "legislation"
     t.integer "product_id"
-    t.string "status"
+    t.string "result"
+    t.string "type"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_tests_on_investigation_id"
     t.index ["product_id"], name: "index_tests_on_product_id"

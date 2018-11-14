@@ -15,9 +15,17 @@ class Investigations::TestsController < ApplicationController
     render_wizard
   end
 
-  # GET /tests/new
-  def new
+  # GET /tests/new_request
+  def new_request
     clear_session
+    session[:test] = { type: Test::Request.name }
+    redirect_to wizard_path(steps.first, request.query_parameters)
+  end
+
+  # GET /tests/new_result
+  def new_result
+    clear_session
+    session[:test] = { type: Test::Result.name }
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
@@ -25,10 +33,9 @@ class Investigations::TestsController < ApplicationController
   # POST /tests.json
   def create
     if @test.save
-      attach_file_to_list(@file, @test.documents)
-      attach_file_to_list(@file, @investigation.documents)
-      AuditActivity::Test::Add.from(@test, @investigation)
-      redirect_to investigation_url(@investigation), notice: "Test was successfully recorded."
+      attach_files
+      record_activity
+      redirect_to investigation_url(@investigation), notice: "#{@test.pretty_name.capitalize} was successfully recorded."
     else
       render step
     end
@@ -75,11 +82,25 @@ private
     @test = @investigation.tests.build(session[:test])
   end
 
+  def attach_files
+    attach_file_to_list(@file, @test.documents)
+    attach_file_to_list(@file, @investigation.documents)
+  end
+
+  def record_activity
+    if @test.requested?
+      AuditActivity::Test::Request.from(@test, @investigation)
+    else
+      AuditActivity::Test::Result.from(@test, @investigation)
+    end
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def test_params
     params.require(:test).permit(:product_id,
                                  :legislation,
-                                 :status,
+                                 :type,
+                                 :result,
                                  :details,
                                  :day,
                                  :month,

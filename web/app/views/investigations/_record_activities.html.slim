@@ -14,9 +14,9 @@ h2.govuk-heading-l
           = link_to "Record meeting", '#', class: "mspsds-block-link"
       .govuk-grid-column-two-thirds
         p
-          = link_to "Record testing request", new_investigation_test_path(@investigation), class: "mspsds-block-link"
+          = link_to "Record testing request", new_request_investigation_tests_path(@investigation), class: "mspsds-block-link"
         p
-          = link_to "Record test result", new_investigation_test_path(@investigation), class: "mspsds-block-link"
+          = link_to "Record test result", new_result_investigation_tests_path(@investigation), class: "mspsds-block-link"
         p
           = link_to "Record corrective action", '#', class: "mspsds-block-link"
   .govuk-grid-column-one-third
