@@ -34,7 +34,7 @@ main#main-content.govuk-main-wrapper role="main"
             | Attachments
           .govuk-form-group
             = form.file_field :email_attachment, class: "govuk-file-upload"
-          .govuk-form-group
+          .govuk-form-group#attachement-description value = ("")
             = form.label :attachment_description, "Attachment description", class: "govuk-label"
             = form.text_area :attachment_description, rows: 5, class: "govuk-textarea"
           = form.submit "Continue", class: "govuk-button"
