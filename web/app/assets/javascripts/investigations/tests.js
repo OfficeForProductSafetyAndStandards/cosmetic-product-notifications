@@ -4,6 +4,8 @@ $(document).on('turbolinks:load', function () {
 
   var legislationContainer = document.getElementById('legislation-autocomplete-container');
   if (legislationContainer) {
+    $('#test_legislation').remove();
+
     var value = $(legislationContainer).data('value');
     var source = $(legislationContainer).data('options');
 

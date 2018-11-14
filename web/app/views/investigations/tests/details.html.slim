@@ -29,6 +29,7 @@ h1.govuk-heading-xl
           span.govuk-hint
             | Select the relevant legislation from the list, or enter a different one.
           #legislation-autocomplete-container data-value=@test.legislation data-options=legislation_constants["legislation"]
+            = form.text_field :legislation, class: "govuk-input"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           - if @test.requested?
