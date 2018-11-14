@@ -4,10 +4,10 @@ class Investigations::TestsController < ApplicationController
   steps :details, :confirmation
 
   before_action :set_investigation
-  before_action :set_attachment, only: %i[show update create]
   before_action :build_test_from_params, only: %i[update]
   before_action :store_test, only: %i[update]
   before_action :restore_test, only: %i[show create]
+  before_action :set_attachment, only: %i[show update create]
 
   # GET /tests/1
   # GET /tests/1.json
@@ -32,8 +32,8 @@ class Investigations::TestsController < ApplicationController
   # POST /tests
   # POST /tests.json
   def create
+    attach_files
     if @test.save
-      attach_files
       record_activity
       redirect_to investigation_url(@investigation), notice: "#{@test.pretty_name.capitalize} was successfully recorded."
     else
@@ -109,5 +109,16 @@ private
 
   def get_file_params_key
     :test
+  end
+
+  def file_metadata_params
+    if @test.requested?
+      title = "Test requested: #{@test.product.name}"
+      document_type = "test_request"
+    else
+      title = "#{@test.result.capitalize} test: #{@test.product.name}"
+      document_type = "test_results"
+    end
+    super.merge(title: title, document_type: document_type)
   end
 end

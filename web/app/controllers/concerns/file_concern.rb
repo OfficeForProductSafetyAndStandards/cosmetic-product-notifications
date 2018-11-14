@@ -15,7 +15,7 @@ module FileConcern
       io: file_params[:file],
       filename: file_params[:file].original_filename,
       content_type: file_params[:file].content_type,
-      metadata: metadata_params.to_h
+      metadata: file_metadata_params.to_h
     )
     session[get_file_session_key] = file.id
     file.analyze_later
@@ -46,7 +46,7 @@ module FileConcern
   end
 
   def update_file_details(file)
-    file.metadata.update(metadata_params)
+    file.metadata.update(file_metadata_params)
     file.metadata["updated"] = Time.current
   end
 
@@ -78,7 +78,7 @@ module FileConcern
     params.require(get_file_params_key).permit(:file, :title, :description, :document_type, :other_type)
   end
 
-  def metadata_params
+  def file_metadata_params
     file_params.except(:file)
   end
 end
