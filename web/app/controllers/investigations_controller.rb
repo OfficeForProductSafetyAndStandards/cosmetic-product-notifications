@@ -71,7 +71,6 @@ class InvestigationsController < ApplicationController
   # POST /investigations.json
   def create
     @investigation = Investigation.new(investigation_create_params)
-    @investigation.source = UserSource.new(user: current_user)
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to investigation_path(@investigation) }
@@ -95,6 +94,9 @@ private
   end
 
   def investigation_update_params
+    if params[:investigation][:assignee_id].blank?
+      params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
+    end
     params.require(:investigation).permit(:is_closed, :assignee_id, :priority, :priority_rationale)
   end
 end
