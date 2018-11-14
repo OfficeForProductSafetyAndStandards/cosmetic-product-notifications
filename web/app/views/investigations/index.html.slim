@@ -44,10 +44,10 @@ main#main-content.govuk-main-wrapper role="main"
                 | Status
               .govuk-checkboxes
                 .govuk-checkboxes__item
-                  = form.check_box :status_open, {class: "govuk-checkboxes__input"}, 1, 0
+                  = form.check_box :status_open, {class: "govuk-checkboxes__input"}, "checked", "unchecked"
                   = form.label :status_open, "Open", class: "govuk-checkboxes__label"
                 .govuk-checkboxes__item
-                  = form.check_box :status_closed, {class: "govuk-checkboxes__input"}, 1, 0
+                  = form.check_box :status_closed, {class: "govuk-checkboxes__input"}, "checked", "unchecked"
                   = form.label :status_closed, "Closed", class: "govuk-checkboxes__label"
           .govuk-form-group
             fieldset.govuk-fieldset

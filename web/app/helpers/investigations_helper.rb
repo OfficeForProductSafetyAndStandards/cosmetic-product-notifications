@@ -16,10 +16,25 @@ module InvestigationsHelper
   end
 
   def filter_params
-    { status: params[:status] } if params[:status].present?
+    filters = {}
+    filters.merge(get_status_filter)
+  end
+
+  def get_status_filter
+    return {} if params[:status_open].blank? && params[:status_closed].blank?
+    return {} if params[:status_open] == "checked" && params[:status_closed] == "checked"
+    return {} if params[:status_open] == "unchecked" && params[:status_closed] == "unchecked"
+    return {status: 'open'} if params[:status_open] == "checked"
+    {status: 'closed'}
   end
 
   def query_params
-    params.permit(:q, :sort, :direction, :status)
+    handle_status_params
+    params.permit(:q, :sort, :direction, :status_open, :status_closed)
   end
+
+  def handle_status_params
+    params[:status_open] = "checked" if params[:status_open].blank?
+  end
+
 end
