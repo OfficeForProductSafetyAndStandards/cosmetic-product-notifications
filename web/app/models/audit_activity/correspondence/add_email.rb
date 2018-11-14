@@ -1,6 +1,12 @@
 class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::Base
+  include ActivityManyAttachable
+
   def self.from(correspondence, investigation)
-    super(correspondence, investigation, self.build_body(correspondence))
+    activity = super(correspondence, investigation, self.build_body(correspondence))
+    email_file = correspondence.find_attachment_by_category "email_file"
+    email_attachment = correspondence.find_attachment_by_category "email_attachment"
+    attach_to_activity(activity, email_file) if email_file
+    attach_to_activity(activity, email_attachment) if email_file
   end
 
   def subtitle_slug
@@ -19,8 +25,8 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
   end
 
   def self.build_correspondent_details correspondence
+    return "" unless correspondence.correspondent_name || correspondence.email_address
     output = ""
-    return output unless correspondence.correspondent_name || correspondence.email_address
     output += "#{correspondence.email_direction}: " if correspondence.email_direction.present?
     output += "**#{correspondence.correspondent_name}** " if correspondence.correspondent_name.present?
     output += "(#{correspondence.email_address})<br>" if correspondence.email_address.present?
