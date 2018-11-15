@@ -11,4 +11,8 @@ class CorrectiveAction < ApplicationRecord
   attribute :month, :integer
   attribute :year, :integer
   validate :date_from_components
+
+  def get_date_key
+    :date_decided
+  end
 end
