@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date_decided: 2018-11-15
+  details: MyText
+  legislation: MyString
+  summary: MyText
+  investigation: one
+  product: one
+  business: one
+
+two:
+  date_decided: 2018-11-15
+  details: MyText
+  legislation: MyString
+  summary: MyText
+  investigation: two
+  product: two
+  business: two

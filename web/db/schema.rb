@@ -77,6 +77,21 @@ ActiveRecord::Schema.define(version: 2018_11_15_165509) do
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
+  create_table "corrective_actions", id: :serial, force: :cascade do |t|
+    t.integer "business_id"
+    t.datetime "created_at", null: false
+    t.date "date_decided"
+    t.text "details"
+    t.integer "investigation_id"
+    t.string "legislation"
+    t.integer "product_id"
+    t.text "summary"
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_corrective_actions_on_business_id"
+    t.index ["investigation_id"], name: "index_corrective_actions_on_investigation_id"
+    t.index ["product_id"], name: "index_corrective_actions_on_product_id"
+  end
+
   create_table "correspondences", force: :cascade do |t|
     t.string "contact_method"
     t.date "correspondence_date"
@@ -211,6 +226,9 @@ ActiveRecord::Schema.define(version: 2018_11_15_165509) do
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "products"
   add_foreign_key "addresses", "businesses"
+  add_foreign_key "corrective_actions", "businesses"
+  add_foreign_key "corrective_actions", "investigations"
+  add_foreign_key "corrective_actions", "products"
   add_foreign_key "correspondences", "investigations"
   add_foreign_key "hazards", "investigations"
   add_foreign_key "incidents", "investigations"
