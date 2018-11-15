@@ -11,8 +11,13 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
     logout
   end
 
-  test "should redirect new test request to first wizard step" do
+  test "should redirect new test request action to first wizard step" do
     get new_request_investigation_tests_path(@investigation)
+    assert_redirected_to investigation_tests_path(@investigation) + '/details'
+  end
+
+  test "should redirect new test result action to first wizard step" do
+    get new_result_investigation_tests_path(@investigation)
     assert_redirected_to investigation_tests_path(@investigation) + '/details'
   end
 

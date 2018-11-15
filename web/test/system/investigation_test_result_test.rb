@@ -1,37 +1,38 @@
 require "application_system_test_case"
 
-class InvestigationTestRequestTest < ApplicationSystemTestCase
+class InvestigationTestResultTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
 
     @investigation = investigations(:one)
     @test = tests(:one)
 
-    visit new_request_investigation_tests_path(@investigation)
-    assert_selector "h1", text: "Record testing request"
+    visit new_result_investigation_tests_path(@investigation)
+    assert_selector "h1", text: "Record test result"
   end
 
   teardown do
     logout
   end
 
-  test "cannot add test request without legislation" do
+  test "cannot add test result without legislation or result" do
     click_button "Continue"
 
-    assert_text("1 error prohibited this testing request from being saved")
-    assert_text("Legislation can't be blank")
+    assert_text "2 errors prohibited this test result from being saved"
+    assert_text "Legislation can't be blank"
+    assert_text "Result can't be blank"
   end
 
-  test "can add filled in test request to investigation" do
+  test "can add filled in test result to investigation" do
     fill_in_basic_details
     click_on "Continue"
 
-    assert_text "Confirm testing request details"
+    assert_text "Confirm test result details"
     click_on "Continue"
 
     assert_current_path(/investigations\/\d+/)
-    assert_text "Test requested: #{@test.product.name}"
-    assert_text "Testing requested"
+    assert_text "Passed test: #{@test.product.name}"
+    assert_text "Test result recorded"
   end
 
   test "can go back to the edit page from the confirmation page and not lose data" do
@@ -45,7 +46,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     click_on "Edit details"
 
     # Assert we're back on the details page and haven't lost data
-    assert_text "Record testing request"
+    assert_text "Record test result"
     assert_field with: @test.legislation
     assert_field with: @test.details
     assert_field with: @test.date.day
@@ -55,7 +56,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
 
   test "session data doesn't persist between reloads" do
     fill_in_basic_details
-    visit new_request_investigation_tests_path(@investigation)
+    visit new_result_investigation_tests_path(@investigation)
 
     assert_no_field with: @test.legislation
   end
@@ -65,7 +66,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     click_on "Continue"
     click_on "Continue"
 
-    visit new_request_investigation_tests_path(@investigation)
+    visit new_result_investigation_tests_path(@investigation)
 
     assert_no_field with: @test.legislation
   end
@@ -76,7 +77,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Enter a real incident date")
+    assert_text "Enter a real incident date"
   end
 
   test "date with missing component shows an error" do
@@ -84,10 +85,10 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Enter date of incident and include a day, month and year")
+    assert_text "Enter date of incident and include a day, month and year"
   end
 
-  test "can add an attachment to the test request" do
+  test "can add an attachment to the test result" do
     attachment_filename = "new_risk_assessment.txt"
     attachment_description = "Test attachment description"
 
@@ -96,7 +97,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     fill_in "Attachment description", with: attachment_description
     click_on "Continue"
 
-    assert_text "Confirm testing request details"
+    assert_text "Confirm test result details"
     assert_text attachment_filename
     assert_text attachment_description
     click_on "Continue"
@@ -122,5 +123,6 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     fill_in "Day", with: @test.date.day
     fill_in "Month", with: @test.date.month
     fill_in "Year", with: @test.date.year
+    choose "test[result]", visible: false, match: :first
   end
 end

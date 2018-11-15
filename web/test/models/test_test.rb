@@ -11,12 +11,27 @@ class TestTest < ActiveSupport::TestCase
     logout
   end
 
-  test "test request requires an associated investigation and product" do
-    test_request = Test::Request.create(legislation: "Test")
+  test "requires an associated investigation and product" do
+    test_request = Test::Request.create(legislation: "Test legislation")
     assert_not test_request.save
     test_request.investigation = @investigation
     assert_not test_request.save
     test_request.product = @product
+    assert test_request.save
+  end
+
+  test "test request requires legislation to be specified" do
+    test_request = Test::Request.create(investigation: @investigation, product: @product)
+    assert_not test_request.save
+    test_request.legislation = "Test legislation"
+    assert test_request.save
+  end
+
+  test "test result requires result to be specified" do
+    test_request = Test::Result.create(investigation: @investigation, product: @product, legislation: "Test")
+    assert_not test_request.save
+    test_request.result = "Fail"
+    assert test_request.save
   end
 
   test "should create activity when test request is created" do
