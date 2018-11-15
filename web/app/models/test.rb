@@ -19,6 +19,7 @@ class Test < ApplicationRecord
 
   def initialize(*args)
     raise "Cannot directly instantiate a Test record" if self.class == Test
+
     super
   end
 

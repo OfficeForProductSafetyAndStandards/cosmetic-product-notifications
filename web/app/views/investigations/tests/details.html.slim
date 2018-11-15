@@ -19,16 +19,18 @@ h1.govuk-heading-xl
             | Which product was tested?
         .govuk-form-group class=("govuk-form-group--error" if @test.errors[:product].any?)
           span.govuk-hint
-            | Only products already added to the case are listed. 
+            ' Only products already added to the case are listed.
             = link_to "Add a product", new_investigation_product_path(@investigation)
-          = form.collection_select :product_id, @investigation.products, :id, :name, class: "govuk-select", id: "test_product"
+          = form.collection_select :product_id, @investigation.products, :id, :name,
+                  class: "govuk-select", id: "test_product"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Against which legislation?
         .govuk-form-group class=("govuk-form-group--error" if @test.errors[:legislation].any?)
           span.govuk-hint
             | Select the relevant legislation from the list, or enter a different one.
-          #legislation-autocomplete-container data-value=@test.legislation data-options=legislation_constants["legislation"]
+          #legislation-autocomplete-container[data-options=legislation_constants["legislation"]
+                                              data-value=@test.legislation]
             = form.text_field :legislation, class: "govuk-input"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l

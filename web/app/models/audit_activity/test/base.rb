@@ -16,8 +16,6 @@ class AuditActivity::Test::Base < AuditActivity::Base
     attach_to_activity(activity, test.documents.first) if test.documents.attached?
   end
 
-private
-
   def self.build_body(test)
     date_label = test.requested? ? "Date requested" : "Test date"
     body = ""

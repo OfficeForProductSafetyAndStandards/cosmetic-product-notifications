@@ -25,13 +25,13 @@ $(document).on('turbolinks:load', function () {
   var currentAttachmentDetails = document.getElementById('current-attachment-details');
 
   if (attachmentFileInput) {
-    attachmentFileInput.onchange = function() {
+    attachmentFileInput.onchange = function () {
       if (this.value) {
         $(attachmentDescription).show();
       } else {
         $(attachmentDescription).hide();
       }
-    }
+    };
   }
 
   if (attachmentDescription) {

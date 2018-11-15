@@ -90,6 +90,7 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def test_params
     return {} if params[:test].blank?
+
     params.require(:test).permit(:product_id,
                                  :legislation,
                                  :type,
