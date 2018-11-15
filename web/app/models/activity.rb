@@ -3,7 +3,7 @@ class Activity < ApplicationRecord
     include UserService
   end
 
-  belongs_to :investigation
+  belongs_to :investigation, touch: true
 
   has_one :source, as: :sourceable, dependent: :destroy
 

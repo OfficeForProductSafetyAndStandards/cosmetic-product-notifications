@@ -45,6 +45,7 @@ class InvestigationsController < ApplicationController
   def update
     ps = investigation_update_params
     @investigation.is_closed = ps[:is_closed] if ps[:is_closed]
+    @investigation.status_rationale = ps[:status_rationale] if ps[:status_rationale]
     @investigation.priority = ps[:priority] if ps[:priority]
     @investigation.priority_rationale = ps[:priority_rationale] if ps[:priority_rationale]
     @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
@@ -71,7 +72,6 @@ class InvestigationsController < ApplicationController
   # POST /investigations.json
   def create
     @investigation = Investigation.new(investigation_create_params)
-    @investigation.source = UserSource.new(user: current_user)
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to investigation_path(@investigation) }
@@ -95,6 +95,9 @@ private
   end
 
   def investigation_update_params
-    params.require(:investigation).permit(:is_closed, :assignee_id, :priority, :priority_rationale)
+    if params[:investigation][:assignee_id].blank?
+      params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
+    end
+    params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id, :priority, :priority_rationale)
   end
 end

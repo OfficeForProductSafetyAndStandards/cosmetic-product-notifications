@@ -71,7 +71,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
-
     assert_redirected_to investigation_url(@investigation)
   end
 
@@ -87,5 +86,39 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
+  end
+
+  test "should set status" do
+    is_closed = true
+    investigation_status = lambda { Investigation.find(@investigation.id).is_closed }
+    assert_changes investigation_status, from: false, to: is_closed do
+      put investigation_url(@investigation), params: {
+          investigation: {
+              is_closed: is_closed,
+              status_rationale: "some rationale"
+          }
+      }
+    end
+    assert_redirected_to investigation_url(@investigation)
+  end
+
+  test "should update assignee from selectable list" do
+    assignee = User.first
+    put investigation_url(@investigation), params: {
+      investigation: {
+        assignee_id: assignee.id
+      }
+    }
+    assert_equal(Investigation.find(@investigation.id).assignee.id, assignee.id)
+  end
+
+  test "should update assignee from radio boxes" do
+    assignee = User.first
+    put investigation_url(@investigation), params: {
+      investigation: {
+        assignee_id_radio: assignee.id
+      }
+    }
+    assert_equal(Investigation.find(@investigation.id).assignee.id, assignee.id)
   end
 end
