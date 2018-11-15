@@ -7,6 +7,8 @@ class Correspondence < ApplicationRecord
   attribute :year, :integer
   validate :date_from_components
 
+  before_validation :strip_whitespace
+
   def get_date_key
     :correspondence_date
   end
@@ -25,5 +27,14 @@ class Correspondence < ApplicationRecord
 
   def find_attachment_by_category category
     documents.find { |attachment| attachment.metadata[:attachment_category] == category }
+  end
+
+
+  def strip_whitespace
+    changed.each do |attribute|
+      if send(attribute).respond_to?(:strip)
+        send("#{attribute}=", send(attribute).strip)
+      end
+    end
   end
 end
