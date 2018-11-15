@@ -5,18 +5,18 @@ module FileConcern
     session[attachment_category] = nil
   end
 
-  def load_file_attachment attachment_category, correspondence
-    return save_and_store_blob(attachment_category, correspondence) if file_params(attachment_category)[attachment_category].present?
+  def load_file_attachment attachment_category
+    return save_and_store_blob(attachment_category) if file_params(attachment_category)[attachment_category].present?
     return load_file_by_id attachment_category if session[attachment_category].present?
   end
 
-  def save_and_store_blob attachment_category, correspondence
+  def save_and_store_blob attachment_category
     evaluated_file_params = file_params(attachment_category)[attachment_category]
     file = ActiveStorage::Blob.create_after_upload!(
       io: evaluated_file_params,
       filename: evaluated_file_params.original_filename,
       content_type: evaluated_file_params.content_type,
-      metadata: file_metadata_params(attachment_category, correspondence).to_h
+      metadata: file_metadata_params(attachment_category).to_h
     )
     session[attachment_category] = file.id
     file.analyze_later

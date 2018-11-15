@@ -12,10 +12,7 @@ class Investigations::EmailsController < ApplicationController
   end
 
   def create
-    attach_file_to_list(@email_file, :email_file, @correspondence.documents)
-    attach_file_to_list(@email_attachment, :email_attachment, @correspondence.documents)
-    attach_file_to_list(@email_file, :email_file, @investigation.documents)
-    attach_file_to_list(@email_attachment, :email_attachment, @investigation.documents)
+    attach_files
     @investigation.correspondences << @correspondence
     @investigation.save
     AuditActivity::Correspondence::AddEmail.from(@correspondence, @investigation)
@@ -39,10 +36,17 @@ class Investigations::EmailsController < ApplicationController
 
 private
 
+  def attach_files
+    attach_file_to_list(@email_file, :email_file, @correspondence.documents)
+    attach_file_to_list(@email_attachment, :email_attachment, @correspondence.documents)
+    attach_file_to_list(@email_file, :email_file, @investigation.documents)
+    attach_file_to_list(@email_attachment, :email_attachment, @investigation.documents)
+  end
+
   def load_relevant_objects
     @investigation = Investigation.find(params[:investigation_id])
-    @email_file = load_file_attachment :email_file, @correspondence
-    @email_attachment = load_file_attachment :email_attachment, @correspondence
+    @email_file = load_file_attachment :email_file
+    @email_attachment = load_file_attachment :email_attachment
     load_correspondence
   end
 
