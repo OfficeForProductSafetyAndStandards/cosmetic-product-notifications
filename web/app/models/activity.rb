@@ -11,14 +11,6 @@ class Activity < ApplicationRecord
     nil
   end
 
-  def attached_document?
-    false
-  end
-
-  def attached_document
-    nil
-  end
-
   def subtitle
     "#{subtitle_slug} by #{source.show}, #{pretty_date_stamp}"
   end
