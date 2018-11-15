@@ -22,7 +22,7 @@ main#main-content.govuk-main-wrapper role="main"
               td.govuk-table__cell = @correspondence.correspondence_date
             tr.govuk-table__row
               th.govuk-table__header scope="row"  Email
-              td.govuk-table__cell =  @email_file.filename
+              td.govuk-table__cell =  @email_file&.filename
             tr.govuk-table__row
               th.govuk-table__header scope="row"  Subject
               td.govuk-table__cell = @correspondence.email_subject
@@ -31,10 +31,11 @@ main#main-content.govuk-main-wrapper role="main"
               td.govuk-table__cell = @correspondence.details
             tr.govuk-table__row
               th.govuk-table__header scope="row"  Attachments
-              td.govuk-table__cell = @email_attachment.filename
-            tr.govuk-table__row
-              th.govuk-table__header scope="row"  Attachment description
-              td.govuk-table__cell = @email_attachment.metadata[:attachment_description]
+              td.govuk-table__cell = @email_attachment&.filename
+            - if @email_attachment
+              tr.govuk-table__row
+                th.govuk-table__header scope="row"  Attachment description
+                td.govuk-table__cell = @email_attachment&.metadata[:attachment_description]
         = form.submit "Continue", class: "govuk-button"
           | Continue
         = link_to("Edit details", wizard_path(:context), class: "govuk-link mspsds-block-link")

@@ -6,7 +6,7 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
     email_file = correspondence.find_attachment_by_category "email_file"
     email_attachment = correspondence.find_attachment_by_category "email_attachment"
     attach_to_activity(activity, email_file, attachment_type: :email_file) if email_file
-    attach_to_activity(activity, email_attachment, attachment_type: :email_attachment) if email_file
+    attach_to_activity(activity, email_attachment, attachment_type: :email_attachment) if email_attachment
   end
 
   def subtitle_slug
