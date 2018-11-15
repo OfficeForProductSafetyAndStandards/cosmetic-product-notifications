@@ -90,7 +90,7 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-accessible-autocomplete@^1.6.1, accessible-autocomplete@^1.6.2:
+accessible-autocomplete@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/accessible-autocomplete/-/accessible-autocomplete-1.6.2.tgz#cb69d37748ba5b0351c84422468538890e25759c"
   integrity sha512-7S+6Vi82LQFSSd5feKedu46tiY2/DShpdXiRp0NY3cLwc+DKe1ayWd66mb3JVi8LTQubRM7jco+u92e6w0bbvg==
@@ -875,12 +875,12 @@ gonzales-pe-sl@^4.2.3:
   dependencies:
     minimist "1.1.x"
 
-govuk-country-and-territory-autocomplete@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/govuk-country-and-territory-autocomplete/-/govuk-country-and-territory-autocomplete-0.5.0.tgz#df946b1aa06815b73a7472d4ebdcdc9fe85fb615"
-  integrity sha512-MVIpYL0DfaYZxZyLZ7qpjyffDiAoMTdV3St1iAep0W0HMRjoJ5yrBvM5mggx4dYcCm+IXi44rbeyPO6yF6abhw==
+govuk-country-and-territory-autocomplete@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/govuk-country-and-territory-autocomplete/-/govuk-country-and-territory-autocomplete-0.5.1.tgz#6db13e6c29789a9b02e2d80878a6a1b36a38edd2"
+  integrity sha512-tfBzqd9SXjX+jlNEwFPv53R2tpuMOq8pyfnRI+023ak+1OEfLCGFqS7PlOMN4Af4+Cg6lv7R+Cue5Q07j/ECpw==
   dependencies:
-    accessible-autocomplete "^1.6.1"
+    accessible-autocomplete "^1.6.2"
     openregister-picker-engine "^1.2.1"
     webpack-sources "^1.3.0"
 
