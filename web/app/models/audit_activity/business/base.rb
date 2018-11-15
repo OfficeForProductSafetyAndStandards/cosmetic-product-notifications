@@ -1,13 +1,12 @@
 class AuditActivity::Business::Base < AuditActivity::Base
   belongs_to :business
 
-  private_class_method def self.from(business, investigation)
-    relationship = investigation.investigation_businesses.find_by(business_id: business.id).relationship
+  private_class_method def self.from(business, investigation, title, body)
     self.create(
-      body: "Role: **#{relationship.titleize}**",
+      body: body,
       source: UserSource.new(user: current_user),
       investigation: investigation,
-      title: business.company_name,
+      title: title,
       business: business
     )
   end

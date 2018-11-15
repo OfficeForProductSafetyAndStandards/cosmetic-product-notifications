@@ -1,12 +1,11 @@
 class AuditActivity::Product::Base < AuditActivity::Base
   belongs_to :product
 
-  private_class_method def self.from(product, investigation)
+  private_class_method def self.from(product, investigation, title)
     self.create(
-      body: product.description,
       source: UserSource.new(user: current_user),
       investigation: investigation,
-      title: product.name,
+      title: title,
       product: product
     )
   end
