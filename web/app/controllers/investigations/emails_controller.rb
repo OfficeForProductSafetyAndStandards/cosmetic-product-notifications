@@ -1,13 +1,13 @@
 class Investigations::EmailsController < ApplicationController
-  include FileConcern
+  include MultipleFilesConcern
+  set_attachment_categories [:email_file, :email_attachment]
   include Wicked::Wizard
   steps :context, :content, :confirmation
   before_action :load_relevant_objects, only: %i[show update create]
 
   def new
     clear_session
-    initialize_file_attachment :email_file
-    initialize_file_attachment :email_attachment
+    initialize_file_attachments
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
@@ -25,8 +25,7 @@ class Investigations::EmailsController < ApplicationController
 
   def update
     @correspondence.validate(step)
-    validate_blob_size(@email_file, @correspondence.errors, :email_file)
-    validate_blob_size(@email_attachment, @correspondence.errors, :email_attachment)
+    validate_blob_sizes(@correspondence.errors, email_file: @email_file, email_attachment: @email_attachment)
     if @correspondence.errors.any?
       render step
     else
@@ -37,16 +36,13 @@ class Investigations::EmailsController < ApplicationController
 private
 
   def attach_files
-    attach_file_to_list(@email_file, :email_file, @correspondence.documents)
-    attach_file_to_list(@email_attachment, :email_attachment, @correspondence.documents)
-    attach_file_to_list(@email_file, :email_file, @investigation.documents)
-    attach_file_to_list(@email_attachment, :email_attachment, @investigation.documents)
+    attach_files_to_list(@correspondence.documents, email_file: @email_file, email_attachment: @email_attachment)
+    attach_files_to_list(@investigation.documents, email_file: @email_file, email_attachment: @email_attachment)
   end
 
   def load_relevant_objects
     @investigation = Investigation.find(params[:investigation_id])
-    @email_file = load_file_attachment :email_file
-    @email_attachment = load_file_attachment :email_attachment
+    @email_file, @email_attachment = load_file_attachments
     load_correspondence
   end
 

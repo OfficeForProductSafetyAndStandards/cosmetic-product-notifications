@@ -7,8 +7,8 @@ module ActivityManyAttachable
 
   module ClassMethods
     def attach_to_activity(activity, attachment, metadata_opts = {})
-      attachments = activity.attachments.attach attachment.blob
-      metadata_opts.each { |k, v| attachments.last.blob.metadata[k] = v }
+      metadata_opts.each { |k, v| attachment.blob.metadata[k] = v }
+      activity.attachments.attach attachment.blob
     end
   end
 end
