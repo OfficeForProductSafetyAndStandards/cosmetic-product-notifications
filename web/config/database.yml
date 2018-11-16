@@ -83,4 +83,4 @@ production:
   url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("mspsds-database")["uri"] %>
   connect_timeout: 2
   variables:
-    statement_timeout: 250
+    statement_timeout: 500
