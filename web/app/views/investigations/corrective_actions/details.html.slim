@@ -19,7 +19,8 @@ h1.govuk-heading-xl
 
       legend.govuk-fieldset__legend.govuk-fieldset__legend--l
         | When was this action decided?
-      = render "date_input", form: form
+      .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:date_decided].any?)
+        = render "date_input", form: form
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l

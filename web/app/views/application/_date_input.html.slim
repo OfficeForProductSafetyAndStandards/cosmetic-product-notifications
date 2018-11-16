@@ -1,8 +1,9 @@
+- date_key = form.object.get_date_key
 span.govuk-hint
   | For example, 31 3 2018
-- if form.object.errors[:date].present?
+- if form.object.errors[date_key].present?
   span#date-error.govuk-error-message
-    = form.object.errors[:date].first
+    = form.object.errors[date_key].first.capitalize
 .govuk-date-input
   .govuk-date-input__item
     / The ids for these fields follow a special convention to work with Active Record dates
