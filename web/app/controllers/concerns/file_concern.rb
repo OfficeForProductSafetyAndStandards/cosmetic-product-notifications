@@ -16,15 +16,13 @@ module FileConcern
   end
 
   def file_params_key
-    check_correct_implementation
-    # raise "file_params_key must be specified in #{self.class}" unless self.class.attachment_categories
+    check_correct_usage
 
     self.class.file_params_key
   end
 
   def attachment_categories
-    check_correct_implementation
-    # raise "file_params_key must be specified in #{self.class}" unless self.class.attachment_categories
+    check_correct_usage
 
     self.class.attachment_categories
   end
@@ -117,7 +115,7 @@ module FileConcern
     params.require(file_params_key).permit(:file, attachment_category, :title, :description, :document_type, :other_type, :overview, :attachment_description)
   end
 
-  def check_correct_implementation
+  def check_correct_usage
     raise "file_params_key must be specified in #{self.class}" unless self.class.file_params_key
     raise "attachment_categories must be specified in #{self.class}" unless self.class.attachment_categories
   end
