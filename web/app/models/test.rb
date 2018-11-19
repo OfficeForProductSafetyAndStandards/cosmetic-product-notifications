@@ -8,11 +8,6 @@ class Test < ApplicationRecord
 
   has_many_attached :documents
 
-  attribute :day, :integer
-  attribute :month, :integer
-  attribute :year, :integer
-  validate :date_from_components
-
   validates :investigation, presence: true
   validates :legislation, presence: true
   validates :product, presence: true

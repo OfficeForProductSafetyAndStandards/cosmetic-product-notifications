@@ -4,17 +4,12 @@ class Product < ApplicationRecord
   include Searchable
   include DateConcern
 
-  attribute :day, :integer
-  attribute :month, :integer
-  attribute :year, :integer
-
   def get_date_key
     :date_placed_on_market
   end
 
   index_name [Rails.env, "products"].join("_")
 
-  validate :date_from_components
   validates :name, presence: true
   default_scope { order(created_at: :desc) }
 
