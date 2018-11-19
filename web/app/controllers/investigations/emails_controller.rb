@@ -20,7 +20,7 @@ class Investigations::EmailsController < ApplicationController
       AuditActivity::Correspondence::AddEmail.from(@correspondence, @investigation)
       redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
     else
-      redirect_to investigation_path(@investigation), notice: "Correspondence could not be updated."
+      redirect_to investigation_path(@investigation), notice: "Correspondence could not be saved."
     end
   end
 

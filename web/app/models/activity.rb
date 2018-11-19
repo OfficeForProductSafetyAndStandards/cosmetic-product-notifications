@@ -7,6 +7,10 @@ class Activity < ApplicationRecord
 
   has_one :source, as: :sourceable, dependent: :destroy
 
+  def attachments
+    {}
+  end
+
   def attached_image?
     nil
   end

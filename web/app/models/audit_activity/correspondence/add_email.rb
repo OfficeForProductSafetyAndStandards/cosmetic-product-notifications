@@ -1,12 +1,28 @@
 class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::Base
-  include ActivityManyAttachable
+  has_one_attached :email_file
+  has_one_attached :email_attachment
 
   def self.from(correspondence, investigation)
     activity = super(correspondence, investigation, self.build_body(correspondence))
-    email_file = correspondence.find_attachment_by_category "email_file"
-    email_attachment = correspondence.find_attachment_by_category "email_attachment"
-    attach_to_activity(activity, email_file, attachment_type: :email_file) if email_file
-    attach_to_activity(activity, email_attachment, attachment_type: :email_attachment) if email_attachment
+    self.attachments(correspondence).each do |category, file|
+      file.blob.metadata[:attachment_category] = category
+      activity.send(category).attach file.blob
+    end
+  end
+
+  def self.attachments correspondence
+    {
+        email_file: correspondence.find_attachment_by_category("email_file"),
+        email_attachment: correspondence.find_attachment_by_category("email_attachment")
+    }
+    .reject { |_, value| value.nil? }
+  end
+
+  def attachments
+    {
+        email_file: "email file",
+        email_attachment: "email attachment",
+    }
   end
 
   def subtitle_slug
@@ -50,13 +66,5 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
     output += correspondence.email_address
     output += ')' if correspondence.correspondent_name.present?
     output + "<br>"
-  end
-
-  def email_file
-    attachments.find { |attachment| attachment.metadata[:attachment_category] == "email_file" }
-  end
-
-  def email_attachment
-    attachments.find { |attachment| attachment.metadata[:attachment_category] == "email_attachment" }
   end
 end
