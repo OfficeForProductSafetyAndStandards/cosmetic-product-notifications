@@ -23,9 +23,9 @@
                     = link_to "View business details", business_url(activity.business_id), class: "mspsds-block-link"
                   - if activity.product_id
                     = link_to "View product details", product_url(activity.product_id), class: "mspsds-block-link"
-                  - if activity.respond_to?(:attachment) && activity.attachment.attached?
-                    = link_to activity_attachment_link_text(activity), activity.attachment, class: "mspsds-block-link",
-                            target: "_blank"
+                  - if activity.has_attachment?
+                    - activity.attachments.each do |name, attachment|
+                      = link_to "View #{name}", attachment, class: "mspsds-block-link", target: "_blank"
           li
     - else
       p

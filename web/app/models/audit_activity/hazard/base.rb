@@ -1,5 +1,6 @@
 class AuditActivity::Hazard::Base < AuditActivity::Base
   include ActivityAttachable
+  with_attachments attachment: "risk assessment document"
 
   private_class_method def self.from(hazard, investigation)
     body = self.build_body(hazard)

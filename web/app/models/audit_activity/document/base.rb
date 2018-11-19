@@ -1,5 +1,6 @@
 class AuditActivity::Document::Base < AuditActivity::Base
   include ActivityAttachable
+  with_attachments attachment: "document"
 
   private_class_method def self.from(document, investigation, title)
     activity = self.create(
