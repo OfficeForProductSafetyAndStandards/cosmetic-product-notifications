@@ -1,5 +1,4 @@
 class Investigations::Hazards::FlowController < ApplicationController
-  include FileConcern
   include HazardsHelper
   include Wicked::Wizard
   steps :details, :summary

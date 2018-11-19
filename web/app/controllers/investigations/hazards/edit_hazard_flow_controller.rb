@@ -1,4 +1,8 @@
 class Investigations::Hazards::EditHazardFlowController < Investigations::Hazards::FlowController
+  include FileConcern
+  set_attachment_categories :file
+  set_file_params_key :hazard
+
 private
 
   def preload_hazard(investigation)

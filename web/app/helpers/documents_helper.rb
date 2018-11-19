@@ -12,10 +12,6 @@ module DocumentsHelper
     redirect_to @parent
   end
 
-  def get_file_params_key
-    :document
-  end
-
   def audit_class
     AuditActivity::Document
   end

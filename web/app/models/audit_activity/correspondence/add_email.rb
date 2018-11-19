@@ -53,10 +53,10 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
   end
 
   def email_file
-    attachments.find { |attachment| attachment.metadata[:email_file] = "email_file" }
+    attachments.find { |attachment| attachment.metadata[:attachment_category] == "email_file" }
   end
 
   def email_attachment
-    attachments.find { |attachment| attachment.metadata[:email_file] = "email_attachment" }
+    attachments.find { |attachment| attachment.metadata[:attachment_category] == "email_attachment" }
   end
 end

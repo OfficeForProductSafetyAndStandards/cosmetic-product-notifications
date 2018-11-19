@@ -29,7 +29,6 @@ class Correspondence < ApplicationRecord
     documents.find { |attachment| attachment.metadata[:attachment_category] == category }
   end
 
-
   def strip_whitespace
     changed.each do |attribute|
       if send(attribute).respond_to?(:strip)

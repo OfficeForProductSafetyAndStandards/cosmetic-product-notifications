@@ -1,5 +1,8 @@
 class Investigations::CorrespondenceController < ApplicationController
   include FileConcern
+  set_attachment_categories :file
+  set_file_params_key :correspondence
+
   include Wicked::Wizard
   steps :general_info, :content, :confirmation
   before_action :load_relevant_objects, only: %i[show update create]
@@ -93,9 +96,5 @@ private
 
   def clear_session
     session[:correspondence] = nil
-  end
-
-  def get_file_params_key
-    :correspondence
   end
 end

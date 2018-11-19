@@ -1,6 +1,4 @@
 module HazardsHelper
-  include FileConcern
-
   def update_risk_assessment
     attach_file_to_attachment_slot(@file, @hazard.risk_assessment)
   end
@@ -28,9 +26,5 @@ module HazardsHelper
     if params[:hazard][:set_risk_level] == "none"
       params[:hazard][:risk_level] = params[:hazard][:set_risk_level]
     end
-  end
-
-  def get_file_params_key
-    :hazard
   end
 end

@@ -1,6 +1,8 @@
 class Investigations::EmailsController < ApplicationController
-  include MultipleFilesConcern
-  set_attachment_categories [:email_file, :email_attachment]
+  include FileConcern
+  set_attachment_categories :email_file, :email_attachment
+  set_file_params_key :correspondence
+
   include Wicked::Wizard
   steps :context, :content, :confirmation
   before_action :load_relevant_objects, only: %i[show update create]
@@ -14,9 +16,12 @@ class Investigations::EmailsController < ApplicationController
   def create
     attach_files
     @investigation.correspondences << @correspondence
-    @investigation.save
-    AuditActivity::Correspondence::AddEmail.from(@correspondence, @investigation)
-    redirect_to investigation_path(@investigation)
+    if @investigation.save
+      AuditActivity::Correspondence::AddEmail.from(@correspondence, @investigation)
+      redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
+    else
+      redirect_to investigation_path(@investigation), notice: "Correspondence could not be updated."
+    end
   end
 
   def show
@@ -63,14 +68,6 @@ private
 
   def clear_session
     session[:correspondence] = nil
-  end
-
-  def get_file_params_key
-    :correspondence
-  end
-
-  def get_file_session_key
-    :email_file_id
   end
 
   def suggested_values
