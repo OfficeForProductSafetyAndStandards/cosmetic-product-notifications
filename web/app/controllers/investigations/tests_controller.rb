@@ -42,7 +42,7 @@ class Investigations::TestsController < ApplicationController
   # PATCH/PUT /tests/1
   # PATCH/PUT /tests/1.json
   def update
-    if @test.valid?(step)
+    if test_valid?
       redirect_to next_wizard_path
     else
       render step
@@ -79,6 +79,12 @@ private
   def restore_test
     session_params = session[:test] || {}
     @test = @investigation.tests.build(session_params.merge(test_params))
+  end
+
+  def test_valid?
+    @test.validate(step)
+    validate_blob_size(@file, @test.errors)
+    @test.errors.empty?
   end
 
   def attach_files
