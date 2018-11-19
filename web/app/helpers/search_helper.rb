@@ -11,7 +11,8 @@ module SearchHelper
     query = params[:q] if params[:q].present?
     filters = filter_params
     sorting = sorting_params
-    ElasticsearchQuery.new(query, filters, sorting)
+    excludes = exclude_params
+    ElasticsearchQuery.new(query, filters, sorting, excludes)
   end
 
   def query_params

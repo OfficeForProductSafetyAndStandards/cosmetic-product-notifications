@@ -25,15 +25,15 @@ main#main-content.govuk-main-wrapper role="main"
                 | Assigned to
               .govuk-checkboxes data-module="checkboxes"
                 .govuk-checkboxes__item
-                  = form.check_box :assigned_to, { multiple: true, class: "govuk-checkboxes__input" }, "me", true
-                  = form.label :assigned_to, "Me", class: "govuk-checkboxes__label"
+                  = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
+                  = form.label :assigned_to_me, "Me", class: "govuk-checkboxes__label"
                 .govuk-checkboxes__item
-                  = form.check_box :assigned_to, { multiple: true, class: "govuk-checkboxes__input",
-                          "data-aria-controls": "conditional-other-assignee" }, "other", true
-                  = form.label :assigned_to, "Someone else", class: "govuk-checkboxes__label"
+                  = form.check_box :assigned_to_someone_else, { class: "govuk-checkboxes__input",
+                          "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
+                  = form.label :assigned_to_someone_else, "Someone else", class: "govuk-checkboxes__label"
                 #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
-                  = form.label :assigned_to, "Name", class: "govuk-label"
-                  = form.select :assigned_to,
+                  = form.label :assigned_to_someone_else_name, "Name", class: "govuk-label"
+                  = form.select :assigned_to_someone_else_name,
                           options_for_select(User.get_assignees_select_options_short([current_user])),
                           {},
                           class: "govuk-select", id: "assignee-picker"
@@ -74,13 +74,3 @@ main#main-content.govuk-main-wrapper role="main"
       = will_paginate @investigations
       br
       = link_to "Export as spreadsheet", investigations_path(format: :xlsx)
-
-- if @current_user
-  .govuk-grid-row[class="govuk-!-padding-bottom-4"]
-    .govuk-grid-column-one-third
-      .govuk-grid-column-one-quarter
-        p[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
-          = @current_user.investigations.count
-      .govuk-grid-column-three-quarters
-        p[class="govuk-!-font-size-24"]
-          = "#{'Case'.pluralize(@current_user.investigations.count)} assigned to you"

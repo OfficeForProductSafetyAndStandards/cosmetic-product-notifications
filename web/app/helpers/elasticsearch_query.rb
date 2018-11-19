@@ -1,15 +1,16 @@
 class ElasticsearchQuery
-  attr_accessor :query, :filters, :sorting
+  attr_accessor :query, :filters, :sorting, :excludes
 
-  def initialize(query, filters, sorting)
+  def initialize(query, filters, sorting, excludes)
     @query = query
     @filters = filters
     @sorting = sorting
+    @excludes = excludes
   end
 
   def build_query
     search_query = {}
-    search_query[:query] = query_params if query.present? || filters.present?
+    search_query[:query] = query_params if query.present? || filters.present? || excludes.present?
     search_query[:sort] = sort_params if sorting.present?
     search_query
   end
@@ -17,7 +18,7 @@ class ElasticsearchQuery
 private
 
   def query_params
-    if filters.present?
+    if filters.present? || excludes.present?
       filtered_query
     else
       fuzzy_match
@@ -28,7 +29,8 @@ private
     {
       bool: {
         must: match_params,
-        filter: filter_params
+        filter: filter_params,
+        must_not: exclude_params,
       }
     }
   end
@@ -38,6 +40,14 @@ private
       fuzzy_match
     else
       match_all
+    end
+  end
+
+  def exclude_params
+    excludes.map do |field, value|
+      {
+          term: { "#{field}": value }
+      }
     end
   end
 

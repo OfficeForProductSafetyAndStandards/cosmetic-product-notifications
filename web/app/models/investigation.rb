@@ -18,6 +18,7 @@ class Investigation < ApplicationRecord
   settings do
     mappings do
       indexes :status, type: :keyword
+      indexes :assignee_id, type: :keyword
     end
   end
 
