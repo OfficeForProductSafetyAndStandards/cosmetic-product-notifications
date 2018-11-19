@@ -63,8 +63,7 @@ module Searchable
     end
 
     def self.full_search(query)
-      # Possibly just for dev?
-      __elasticsearch__.refresh_index!
+      __elasticsearch__.refresh_index! if Rails.env.development? || Rails.env.test?
       __elasticsearch__.search(query.build_query)
     end
 
