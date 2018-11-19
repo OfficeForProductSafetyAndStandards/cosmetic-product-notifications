@@ -7,8 +7,7 @@ require "shared/web/version"
 Gem::Specification.new do |s|
   s.name        = "shared-web"
   s.version     = Shared::Web::VERSION
-  s.authors     = ["David Rendell"]
-  s.email       = ["david.rendell@softwire.com"]
+  s.authors     = ["UKGovernmentBEIS"]
   s.homepage    = "https://github.com/UKGovernmentBEIS/beis-mspsds"
   s.summary     = "Summary of Shared::Web."
   s.description = "Description of Shared::Web."
