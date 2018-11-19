@@ -4,8 +4,6 @@ class Test < ApplicationRecord
   belongs_to :investigation
   belongs_to :product
 
-  enum result: { passed: "Pass", failed: "Fail" }
-
   has_many_attached :documents
 
   validates :investigation, presence: true
@@ -18,11 +16,7 @@ class Test < ApplicationRecord
     super
   end
 
-  def pretty_name
-    "test record"
-  end
+  def pretty_name; end
 
-  def requested?
-    self.class == Test::Request
-  end
+  def requested?; end
 end

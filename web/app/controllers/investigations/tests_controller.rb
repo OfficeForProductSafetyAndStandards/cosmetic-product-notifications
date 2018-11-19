@@ -10,7 +10,6 @@ class Investigations::TestsController < ApplicationController
   before_action :set_attachment, only: %i[show update create]
 
   # GET /tests/1
-  # GET /tests/1.json
   def show
     render_wizard
   end

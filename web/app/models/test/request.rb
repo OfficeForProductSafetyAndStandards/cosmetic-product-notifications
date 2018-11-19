@@ -8,4 +8,8 @@ class Test::Request < Test
   def pretty_name
     "testing request"
   end
+
+  def requested?
+    true
+  end
 end

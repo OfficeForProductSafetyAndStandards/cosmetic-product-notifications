@@ -3,11 +3,17 @@ class Test::Result < Test
 
   validates :result, presence: true
 
+  enum result: { passed: "Pass", failed: "Fail" }
+
   def create_audit_activity
     AuditActivity::Test::Result.from(self, self.investigation)
   end
 
   def pretty_name
     "test result"
+  end
+
+  def requested?
+    false
   end
 end

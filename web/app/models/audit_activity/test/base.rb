@@ -18,7 +18,6 @@ class AuditActivity::Test::Base < AuditActivity::Base
   end
 
   def self.build_body(test)
-    date_label = test.requested? ? "Date requested" : "Test date"
     body = ""
     body += "Legislation: **#{test.legislation}**<br>" if test.legislation.present?
     body += "#{date_label}: **#{test.date.strftime('%d/%m/%Y')}**<br>" if test.date.present?
@@ -26,4 +25,6 @@ class AuditActivity::Test::Base < AuditActivity::Base
     body += "<br>#{test.details}" if test.details.present?
     body
   end
+
+  def self.date_label; end
 end

@@ -46,7 +46,7 @@ h1.govuk-heading-xl
             | What was the test result?
           .govuk-form-group class=("govuk-form-group--error" if @test.errors[:result].any?)
             .govuk-radios
-              - Test.results.each do |(result, label)|
+              - Test::Result.results.each do |(result, label)|
                 .govuk-radios__item
                   = form.radio_button :result, result, class: "govuk-radios__input"
                   = form.label :result, label, class: "govuk-label govuk-radios__label"

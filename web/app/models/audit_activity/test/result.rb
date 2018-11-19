@@ -4,6 +4,10 @@ class AuditActivity::Test::Result < AuditActivity::Test::Base
     super(test, investigation, title)
   end
 
+  def self.date_label
+    "Test date"
+  end
+
   def subtitle_slug
     "Test result recorded"
   end

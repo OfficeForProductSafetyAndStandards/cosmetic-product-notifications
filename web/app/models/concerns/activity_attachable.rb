@@ -8,7 +8,7 @@ module ActivityAttachable
       activity.attachment.attach attachment.blob
     end
 
-    private
+  private
 
     def with_attachments(names)
       @attachment_names = names
@@ -24,6 +24,7 @@ module ActivityAttachable
     klass = self.class
     while klass.respond_to? :attachment_names do
       return klass.attachment_names if klass.attachment_names.present?
+
       klass = klass.superclass
     end
     {}
@@ -31,11 +32,13 @@ module ActivityAttachable
 
   def has_attachment?
     return false if attachment_names.blank?
+
     attachment_names.any? { |key, _| self.send(key)&.attached? }
   end
 
   def attachments
     return {} unless has_attachment?
+
     attachment_names.map { |key, name| [name, self.send(key)] }.to_h
   end
 end
