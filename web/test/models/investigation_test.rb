@@ -56,4 +56,57 @@ class InvestigationTest < ActiveSupport::TestCase
       @investigation.save
     end
   end
+
+  test "elasticsearch should find exactly batch_number, brand, description, gtin, model, name of a product" do
+    assert_includes(Investigation.full_search(search_for_product_gtin).records.map(&:id),
+                    investigations(:search_related_products).id)
+    assert_includes(Investigation.full_search(search_for_product_name).records.map(&:id),
+                    investigations(:search_related_products).id)
+    assert_includes(Investigation.full_search(search_for_product_batch).records.map(&:id),
+                    investigations(:search_related_products).id)
+    assert_includes(Investigation.full_search(search_for_product_brand).records.map(&:id),
+                    investigations(:search_related_products).id)
+    assert_includes(Investigation.full_search(search_for_product_description).records.map(&:id),
+                    investigations(:search_related_products).id)
+    assert_includes(Investigation.full_search(search_for_product_model).records.map(&:id),
+                    investigations(:search_related_products).id)
+
+    assert_not_includes(Investigation.full_search(search_for_product_country).records.map(&:id),
+                    investigations(:search_related_products).id)
+  end
+
+  def search_for_product_gtin
+    query = products(:iphone).gtin
+    ElasticsearchQuery.new(query, {}, {})
+  end
+
+  def search_for_product_name
+    query = products(:iphone).name
+    ElasticsearchQuery.new(query, {}, {})
+  end
+
+  def search_for_product_batch
+    query = products(:iphone).batch_number
+    ElasticsearchQuery.new(query, {}, {})
+  end
+
+  def search_for_product_brand
+    query = products(:iphone).brand
+    ElasticsearchQuery.new(query, {}, {})
+  end
+
+  def search_for_product_description
+    query = products(:iphone).description
+    ElasticsearchQuery.new(query, {}, {})
+  end
+
+  def search_for_product_model
+    query = products(:iphone).model
+    ElasticsearchQuery.new(query, {}, {})
+  end
+
+  def search_for_product_country
+    query = products(:iphone).country_of_origin
+    ElasticsearchQuery.new(query, {}, {})
+  end
 end

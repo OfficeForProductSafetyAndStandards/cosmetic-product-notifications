@@ -53,33 +53,33 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       # Do we not want to search the programatically generated case title?
-      # methods: [:title],
       methods: [:pretty_id],
       only: [:question_title],
       include: {
         # Is it worth making sure only part of metadata is checked?
+        # Only actual strings get searched, document type is in there
+        # Need a model?
         documents: {
           include: {
             blob: {
-              only: [:metadata, :filename]
+              only: %i[metadata filename]
             }
           }
         },
-        # Is it worth making sure only part of metadata is checked?
         images: {
           include: {
             blob: {
-              only: [:metadata, :filename]
+              only: %i[metadata filename]
             }
           }
         },
         correspondences: {},
         activities: {
           # body returns some things that are the same for many activities
-          only: [:title, :body]
+          only: %i[title body]
         },
         businesses: {
-          only: [:company_name, :company_number]
+          only: %i[company_name company_number]
         },
         hazard: {
           only: :description
@@ -88,10 +88,10 @@ class Investigation < ApplicationRecord
           only: :description
         },
         products: {
-          only: [:batch_number, :brand, :description, :gtin, :model, :name]
+          only: %i[batch_number brand description gtin model name]
         },
         reporter: {
-          only: [:name, :phone_number, :email_address, :other_details]
+          only: %i[name phone_number email_address other_details]
         }
       }
     ).merge(status: status.downcase)
