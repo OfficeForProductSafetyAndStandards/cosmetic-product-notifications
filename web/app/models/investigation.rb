@@ -51,7 +51,50 @@ class Investigation < ApplicationRecord
   after_create :create_audit_activity_for_case
 
   def as_indexed_json(*)
-    as_json.merge(status: status.downcase)
+    as_json(
+      # Do we not want to search the programatically generated case title?
+      # methods: [:title],
+      methods: [:pretty_id],
+      only: [:question_title],
+      include: {
+        # Is it worth making sure only part of metadata is checked?
+        documents: {
+          include: {
+            blob: {
+              only: [:metadata, :filename]
+            }
+          }
+        },
+        # Is it worth making sure only part of metadata is checked?
+        images: {
+          include: {
+            blob: {
+              only: [:metadata, :filename]
+            }
+          }
+        },
+        correspondences: {},
+        activities: {
+          # body returns some things that are the same for many activities
+          only: [:title, :body]
+        },
+        businesses: {
+          only: [:company_name, :company_number]
+        },
+        hazard: {
+          only: :description
+        },
+        incidents: {
+          only: :description
+        },
+        products: {
+          only: [:batch_number, :brand, :description, :gtin, :model, :name]
+        },
+        reporter: {
+          only: [:name, :phone_number, :email_address, :other_details]
+        }
+      }
+    ).merge(status: status.downcase)
   end
 
   def status
