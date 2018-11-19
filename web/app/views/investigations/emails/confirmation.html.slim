@@ -35,7 +35,7 @@ main#main-content.govuk-main-wrapper role="main"
             - if @email_attachment
               tr.govuk-table__row
                 th.govuk-table__header scope="row"  Attachment description
-                td.govuk-table__cell = @email_attachment&.metadata[:attachment_description]
+                td.govuk-table__cell = @email_attachment&.metadata[:description]
         = form.submit "Continue", class: "govuk-button"
           | Continue
         = link_to("Edit details", wizard_path(:context), class: "govuk-link mspsds-block-link")

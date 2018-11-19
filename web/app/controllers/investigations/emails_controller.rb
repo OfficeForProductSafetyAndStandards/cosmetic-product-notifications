@@ -48,6 +48,10 @@ private
   def load_relevant_objects
     @investigation = Investigation.find(params[:investigation_id])
     @email_file, @email_attachment = load_file_attachments
+    if step == :content
+      add_metadata(@email_file, email_file_metadata)
+      add_metadata(@email_attachment, email_attachment_metadata)
+    end
     load_correspondence
   end
 
@@ -62,7 +66,7 @@ private
 
     params.require(:correspondence).permit(
       :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
-      :overview, :details, :email_direction, :email_subject
+      :overview, :details, :email_direction, :email_subject, :attachment_description
     )
   end
 
@@ -75,6 +79,20 @@ private
         day: Time.zone.today.day,
         month: Time.zone.today.month,
         year: Time.zone.today.year
+    }
+  end
+
+  def email_file_metadata
+    {
+      title: correspondence_params[:overview],
+      description: "Original email as a file"
+    }
+  end
+
+  def email_attachment_metadata
+    {
+      title: correspondence_params[:overview],
+      description: correspondence_params[:attachment_description]
     }
   end
 end

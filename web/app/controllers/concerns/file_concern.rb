@@ -28,7 +28,7 @@ module FileConcern
   end
 
   def initialize_file_attachments
-    attachment_categories.each { |category| session[category] = nil }
+    attachment_categories.each { |category| initialize_file_attachment category }
   end
 
   def load_file_attachments
@@ -61,8 +61,7 @@ module FileConcern
     file = ActiveStorage::Blob.create_after_upload!(
       io: evaluated_file_params,
       filename: evaluated_file_params.original_filename,
-      content_type: evaluated_file_params.content_type,
-      metadata: file_metadata_params(attachment_category).to_h
+      content_type: evaluated_file_params.content_type
     )
     session[attachment_category] = file.id
     file.analyze_later
@@ -112,7 +111,7 @@ module FileConcern
   def file_params(attachment_category = attachment_categories.first)
     return {} if params[file_params_key].blank?
 
-    params.require(file_params_key).permit(:file, attachment_category, :title, :description, :document_type, :other_type, :overview, :attachment_description)
+    params.require(file_params_key).permit(:file, attachment_category, :title, :description, :document_type, :other_type)
   end
 
   def check_correct_usage
@@ -120,13 +119,10 @@ module FileConcern
     raise "attachment_categories must be specified in #{self.class}" unless self.class.attachment_categories
   end
 
-  def file_metadata_params(attachment_category = attachment_categories.first)
-    title = file_params(attachment_category)[:overview]
-    if attachment_category == :email_file
-      description = "Original email as a file"
-    elsif attachment_category == :email_attachment
-      description = file_params(attachment_category)[:attachment_description]
+  def add_metadata(file, new_metadata)
+    if file && new_metadata
+      file.metadata.update(new_metadata)
+      file.save
     end
-    file_params(attachment_category).except(attachment_category).merge(title: title, description: description)
   end
 end
