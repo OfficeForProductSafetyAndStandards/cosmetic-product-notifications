@@ -14,7 +14,7 @@ class AuditActivity::Test::Base < AuditActivity::Base
       product: test.product,
       test: test
     )
-    attach_to_activity(activity, test.documents.first) if test.documents.attached?
+    activity.add_attachment test.documents.first if test.documents.attached?
   end
 
   def self.build_body(test)

@@ -4,10 +4,6 @@ module ActivityAttachable
   module ClassMethods
     attr_accessor :attachment_names
 
-    def attach_to_activity(activity, attachment)
-      activity.attachment.attach attachment.blob
-    end
-
   private
 
     def with_attachments(names)
@@ -40,5 +36,11 @@ module ActivityAttachable
     return {} unless has_attachment?
 
     attachment_names.map { |key, name| [name, self.send(key)] }.to_h
+  end
+
+  def add_attachment(attachment, attachment_key = attachment_names.keys.first)
+    return unless attachment_key.present? && attachment.present?
+
+    self.send(attachment_key).attach attachment.blob
   end
 end

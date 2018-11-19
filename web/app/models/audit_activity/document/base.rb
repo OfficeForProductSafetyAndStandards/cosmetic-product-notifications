@@ -9,6 +9,6 @@ class AuditActivity::Document::Base < AuditActivity::Base
       investigation: investigation,
       title: title
     )
-    attach_to_activity(activity, document)
+    activity.add_attachment document
   end
 end
