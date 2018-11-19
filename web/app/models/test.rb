@@ -7,8 +7,8 @@ class Test < ApplicationRecord
   has_many_attached :documents
 
   validates :investigation, presence: true
-  validates :legislation, presence: true
   validates :product, presence: true
+  validates :date, presence: true
 
   def initialize(*args)
     raise "Cannot directly instantiate a Test record" if self.class == Test

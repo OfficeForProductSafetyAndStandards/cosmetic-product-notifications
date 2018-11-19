@@ -29,7 +29,9 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
           product_id: @product.id,
           legislation: "Test Legislation",
           details: "Test Details",
-          date: "12/11/2018"
+          year: "2018",
+          month: "11",
+          day: "18"
         }
     }
     end
@@ -45,13 +47,31 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
               product_id: @product.id,
               legislation: "Test Legislation",
               details: "Test Details",
-              date: "12/11/2018",
+              year: "2018",
+              month: "11",
+              day: "18",
               result: "Fail"
           }
       }
     end
 
     assert_redirected_to investigation_url(@investigation)
+  end
+
+  test "should return error when creating test with invalid type" do
+    assert_raises do
+      post investigation_tests_path(@investigation), params: {
+          test: {
+              type: "Test::Foo",
+              product_id: @product.id,
+              legislation: "Test Legislation",
+              details: "Test Details",
+              year: "2018",
+              month: "11",
+              day: "18"
+          }
+      }
+    end
   end
 
   test "should add test record to investigation" do
@@ -61,7 +81,9 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
             product_id: @product.id,
             legislation: "Test Legislation",
             details: "Test Details",
-            date: "12/11/2018"
+            year: "2018",
+            month: "11",
+            day: "18"
         }
     }
 

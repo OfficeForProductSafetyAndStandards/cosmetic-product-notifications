@@ -15,11 +15,11 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     logout
   end
 
-  test "cannot add test request without legislation" do
+  test "cannot add test request without a date" do
     click_button "Continue"
 
     assert_text("1 error prohibited this testing request from being saved")
-    assert_text("Legislation can't be blank")
+    assert_text("Date can't be blank")
   end
 
   test "can add filled in test request to investigation" do
