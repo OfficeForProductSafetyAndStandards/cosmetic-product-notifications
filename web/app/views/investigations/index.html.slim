@@ -73,7 +73,7 @@ main#main-content.govuk-main-wrapper role="main"
       = render "table", investigations: @investigations
       = will_paginate @investigations
       br
-      = link_to "Export as spreadsheet", investigations_path(format: :xlsx)
+      = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: query_params)
 
 - if @current_user
   .govuk-grid-row[class="govuk-!-padding-bottom-4"]

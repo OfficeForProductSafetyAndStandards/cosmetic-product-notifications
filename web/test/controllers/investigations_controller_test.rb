@@ -121,4 +121,56 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     }
     assert_equal(Investigation.find(@investigation.id).assignee.id, assignee.id)
   end
+
+  test "status filter should be defaulted to open" do
+    get investigations_path
+    assert_not_includes(response.body, investigations(:three).pretty_id)
+    assert_includes(response.body, investigations(:one).pretty_id)
+    assert_includes(response.body, investigations(:two).pretty_id)
+    assert_includes(response.body, investigations(:no_products).pretty_id)
+  end
+
+  test "status filter for both open and closed checked" do
+    get investigations_path, params: {
+      status_open: "checked",
+      status_closed: "checked"
+    }
+    assert_includes(response.body, investigations(:three).pretty_id)
+    assert_includes(response.body, investigations(:one).pretty_id)
+    assert_includes(response.body, investigations(:two).pretty_id)
+    assert_includes(response.body, investigations(:no_products).pretty_id)
+  end
+
+  test "status filter for both open and closed unchecked" do
+    get investigations_path, params: {
+      status_open: "unchecked",
+      status_closed: "unchecked"
+    }
+    assert_includes(response.body, investigations(:three).pretty_id)
+    assert_includes(response.body, investigations(:one).pretty_id)
+    assert_includes(response.body, investigations(:two).pretty_id)
+    assert_includes(response.body, investigations(:no_products).pretty_id)
+  end
+
+  test "status filter for only open checked" do
+    get investigations_path, params: {
+      status_open: "checked",
+      status_closed: "unchecked"
+    }
+    assert_not_includes(response.body, investigations(:three).pretty_id)
+    assert_includes(response.body, investigations(:one).pretty_id)
+    assert_includes(response.body, investigations(:two).pretty_id)
+    assert_includes(response.body, investigations(:no_products).pretty_id)
+  end
+
+  test "status filter for only closed checked" do
+    get investigations_path, params: {
+      status_open: "unchecked",
+      status_closed: "checked"
+    }
+    assert_includes(response.body, investigations(:three).pretty_id)
+    assert_not_includes(response.body, investigations(:one).pretty_id)
+    assert_not_includes(response.body, investigations(:two).pretty_id)
+    assert_not_includes(response.body, investigations(:no_products).pretty_id)
+  end
 end
