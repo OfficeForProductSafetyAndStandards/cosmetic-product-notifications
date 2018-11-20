@@ -8,6 +8,8 @@ class Investigations::PhoneCallsController < ApplicationController
   before_action :load_relevant_objects, only: %i[show update create]
 
   def new
+    clear_session
+    initialize_file_attachment
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
@@ -37,6 +39,10 @@ class Investigations::PhoneCallsController < ApplicationController
   end
 
 private
+
+  def clear_session
+    session[:correspondence] = nil
+  end
 
   def attach_files
     attach_files_to_list(@correspondence.documents, file: @file)
