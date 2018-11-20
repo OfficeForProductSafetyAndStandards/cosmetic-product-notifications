@@ -2,7 +2,6 @@ class AuditActivity::Test::Base < AuditActivity::Base
   include ActivityAttachable
   with_attachments attachment: "attachment"
 
-  belongs_to :test
   belongs_to :product
 
   private_class_method def self.from(test, investigation, title)
@@ -11,8 +10,7 @@ class AuditActivity::Test::Base < AuditActivity::Base
       title: title,
       source: UserSource.new(user: current_user),
       investigation: investigation,
-      product: test.product,
-      test: test
+      product: test.product
     )
     activity.add_attachment test.documents.first if test.documents.attached?
   end
