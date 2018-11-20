@@ -51,20 +51,13 @@ class Investigation < ApplicationRecord
   after_create :create_audit_activity_for_case
 
   def as_indexed_json(*)
+    expose_file_data_in_attachment
     as_json(
-      # Do we not want to search the programatically generated case title?
-      methods: [:pretty_id],
-      only: [:question_title],
+      methods: :pretty_id,
+      only: %i[question_title description],
       include: {
-        # Is it worth making sure only part of metadata is checked?
-        # Only actual strings get searched, document type is in there
-        # Need a model?
         documents: {
-          include: {
-            blob: {
-              only: %i[metadata filename]
-            }
-          }
+          methods: %i[title description filename]
         },
         images: {
           include: {
@@ -75,7 +68,6 @@ class Investigation < ApplicationRecord
         },
         correspondences: {},
         activities: {
-          # body returns some things that are the same for many activities
           methods: :search_index,
           only: []
         },
@@ -210,6 +202,24 @@ private
     first_product = products.first
     if products.all? { |product| product[property_name] == first_product[property_name] }
       first_product[property_name]
+    end
+  end
+
+  def expose_file_data_in_attachment
+    return if ActiveStorage::Attachment.method_defined?(:title)
+
+    ActiveStorage::Attachment.class_eval do
+      def title
+        blob.metadata["title"]
+      end
+
+      def filename
+        blob.filename
+      end
+
+      def description
+        blob.metadata["description"]
+      end
     end
   end
 end
