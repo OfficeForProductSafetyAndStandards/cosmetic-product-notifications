@@ -15,11 +15,6 @@ module InvestigationsHelper
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
-  def exclude_params
-    excludes = {}
-    excludes.merge!({assignee_id: "4e7ad61f-9c39-4cad-b648-b4ae18000636"})
-  end
-
   def filter_params
     filters = {}
     filters.merge!(get_status_filter)
@@ -28,36 +23,58 @@ module InvestigationsHelper
 
   def get_status_filter
     return {} if params[:status_open] == params[:status_closed]
-    return { status: 'open' } if params[:status_open] == "checked"
-    { status: 'closed' }
+    if params[:status_open] == "checked"
+      status = { status: 'open' }
+    else
+      status = { status: 'closed' }
+    end
+    {must: {term: status}}
   end
 
   def get_assignee_filter
-    if params[:assigned_to_me] == "unchecked"
-      if params[:assigned_to_someone_else] == "unchecked"
-        return {}
-      elsif params[:assigned_to_someone_else_name].nil?
-        return {} #TODO: exclude me
-      else
-        return {assignee_id: params[:assigned_to_someone_else_name]}
-      end
-    else
-      if params[:assigned_to_someone_else] == "unchecked"
-        return {assignee_id: current_user.id}
-      elsif params[:assigned_to_someone_else_name].nil?
-        return {}
-      else
-        return {} #TODO: user or me
-      end
+    assignees = []
+    excluded_assignees = []
+
+    if  params[:assigned_to_me] == "checked" &&
+    params[:assigned_to_someone_else] == "unchecked"
+      assignees << current_user.id
     end
-    {}
+
+    if params[:assigned_to_me] == "unchecked" &&
+        params[:assigned_to_someone_else] == "checked" &&
+        params[:assigned_to_someone_else_id].blank?
+      excluded_assignees << current_user.id
+    end
+
+    if params[:assigned_to_me] == "unchecked" &&
+        params[:assigned_to_someone_else] == "checked" &&
+        params[:assigned_to_someone_else_id].present?
+      assignees << params[:assigned_to_someone_else_id]
+    end
+
+    if params[:assigned_to_me] == "checked" &&
+        params[:assigned_to_someone_else] == "checked" &&
+        params[:assigned_to_someone_else_id].present?
+      assignees << current_user.id
+      assignees << params[:assigned_to_someone_else_id]
+    end
+
+    assignee_terms = format_assignee_terms(assignees)
+    excluded_assignee_terms = format_assignee_terms(excluded_assignees)
+    {should: assignee_terms, must_not: excluded_assignee_terms}
+  end
+
+  def format_assignee_terms (assignee_array)
+    assignee_array.map do |a|
+      {term: {assignee_id: a}}
+    end
   end
 
   def query_params
     set_default_status_filter
     set_default_assignee_filter
     params.permit(:q, :sort, :direction, :status_open, :status_closed,
-                  :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_name)
+                  :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id)
   end
 
   def set_default_status_filter

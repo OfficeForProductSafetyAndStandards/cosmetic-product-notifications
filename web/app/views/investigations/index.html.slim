@@ -32,8 +32,8 @@ main#main-content.govuk-main-wrapper role="main"
                           "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
                   = form.label :assigned_to_someone_else, "Someone else", class: "govuk-checkboxes__label"
                 #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
-                  = form.label :assigned_to_someone_else_name, "Name", class: "govuk-label"
-                  = form.select :assigned_to_someone_else_name,
+                  = form.label :assigned_to_someone_else_id, "Name", class: "govuk-label"
+                  = form.select :assigned_to_someone_else_id,
                           options_for_select(User.get_assignees_select_options_short([current_user])),
                           {},
                           class: "govuk-select", id: "assignee-picker"
