@@ -24,7 +24,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     assert_text("Enter a real incident date")
   end
 
-  test "second step should be context" do
+  test "second step should be content" do
     click_button "Continue"
     assert_text("Email content")
   end

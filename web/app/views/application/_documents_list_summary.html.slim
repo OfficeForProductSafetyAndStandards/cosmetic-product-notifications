@@ -12,7 +12,7 @@
         p
           = document.blob.metadata[:description]
         p
-          = link_to "View #{document_file_extension(document) + " " if document_file_extension document}document",
+          = link_to "View #{document_file_extension(document) + ' ' if document_file_extension document}document",
                   document, class: "govuk-link mspsds-block-link", target: '_blank'
           = link_to "Edit document details or delete", edit_associated_document_path(parent, document),
                   class: "govuk-link mspsds-block-link"

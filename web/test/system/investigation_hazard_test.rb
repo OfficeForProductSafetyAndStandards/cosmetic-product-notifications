@@ -92,7 +92,7 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     click_on "Save"
     assert_text "Hazard updated"
 
-    new_window = window_opened_by { click_on "View risk assessment document", match: :first }
+    new_window = window_opened_by { click_on "View assessment", match: :first }
     within_window new_window do
       assert_text "Updated risk assessment"
     end
@@ -112,7 +112,7 @@ class InvestigationHazardTest < ApplicationSystemTestCase
     click_on "Save"
 
     assert_text "Hazard updated"
-    new_window = window_opened_by { click_on "View risk assessment document", match: :first }
+    new_window = window_opened_by { click_on "View assessment", match: :first }
     within_window new_window do
       assert_text "Updated risk assessment"
     end

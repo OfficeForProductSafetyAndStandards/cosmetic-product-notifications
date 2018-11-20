@@ -23,9 +23,11 @@
                   = link_to "View product details", product_url(activity.product_id) if activity.product_id
                   - if activity.respond_to?(:attachment) && activity.attachment.attached?
                     - link_text = "View document"
-                    = link_to link_text, activity.attachment, target: "_blank" unless activity.is_a?(AuditActivity::Hazard::Base)
-                  - activity.attachments.each do |attachment_category, printable_string|
-                    = link_to "View #{printable_string}", url_for(activity.send(attachment_category)),
+                    - link_text = "View risk assessment document" if activity.is_a?(AuditActivity::Hazard::Base)
+                    = link_to link_text, activity.attachment, target: "_blank"
+                  - if !activity.attachments.empty?
+                    - activity.attachments.each do |attachment_category, printable_string|
+                      = link_to "View #{printable_string}", activity.send(attachment_category),
                               class: "govuk-!-margin-right-3", target: "_blank"
           li
     - else

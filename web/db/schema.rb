@@ -78,7 +78,6 @@ ActiveRecord::Schema.define(version: 2018_11_09_145423) do
   end
 
   create_table "correspondences", force: :cascade do |t|
-    t.text "attachment_description"
     t.string "contact_method"
     t.date "correspondence_date"
     t.string "correspondent_name"

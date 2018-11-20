@@ -19,8 +19,4 @@ class AuditActivity::Hazard::Base < AuditActivity::Base
     body += "Vulnerable group: **#{hazard.affected_parties}**" if hazard.affected_parties.present?
     body
   end
-
-  def attachments
-    { attachment: "risk assessment document" }
-  end
 end

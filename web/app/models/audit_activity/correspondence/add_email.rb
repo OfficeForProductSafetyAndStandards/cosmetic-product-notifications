@@ -20,9 +20,10 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
 
   def attachments
     {
-        email_file: "email file",
-        email_attachment: "email attachment",
+        email_file: email_file.attached? ? "email file" : nil,
+        email_attachment: email_attachment.attached? ? "email attachment" : nil
     }
+    .reject { |_, v| v.nil? }
   end
 
   def subtitle_slug
