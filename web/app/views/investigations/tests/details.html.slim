@@ -34,10 +34,9 @@ h1.govuk-heading-xl
           | Against which legislation?
         .govuk-form-group class=("govuk-form-group--error" if @test.errors[:legislation].any?)
           span.govuk-hint
-            | Select the relevant legislation from the list, or enter a different one.
-          #legislation-autocomplete-container[data-options=legislation_constants["legislation"]
-                                              data-value=@test.legislation]
-            = form.text_field :legislation, class: "govuk-input"
+            | Select the relevant legislation from the list.
+          = form.select :legislation, legislation_constants["legislation"], {include_blank: true},
+                  class: "govuk-input"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           - if @test.requested?

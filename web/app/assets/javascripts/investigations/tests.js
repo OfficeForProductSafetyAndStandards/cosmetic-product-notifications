@@ -1,24 +1,7 @@
 /* globals simpleAccessibleAutocomplete */
 $(document).on('turbolinks:load', function () {
-  simpleAccessibleAutocomplete('test_product_id');
-
-  var legislationContainer = document.getElementById('legislation-autocomplete-container');
-  if (legislationContainer) {
-    $('#test_legislation').remove();
-
-    var value = $(legislationContainer).data('value');
-    var source = $(legislationContainer).data('options');
-
-    accessibleAutocomplete({
-      element: legislationContainer,
-      id: 'test_legislation',
-      name: 'test[legislation]',
-      showNoOptionsFound: false,
-      showAllValues: true,
-      defaultValue: value,
-      source: source
-    });
-  }
+  simpleAccessibleAutocomplete('test_product_id', { showAllValues: true });
+  simpleAccessibleAutocomplete('test_legislation', { showAllValues: true });
 
   var attachmentFileInput = document.getElementById('attachment-file-input');
   var attachmentDescription = document.getElementById('attachment-description');
