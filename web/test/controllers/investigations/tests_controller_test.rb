@@ -36,6 +36,8 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
     }
     end
 
+    assert Test.last.is_a?(Test::Request)
+
     assert_redirected_to investigation_url(@investigation)
   end
 
@@ -55,22 +57,9 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to investigation_url(@investigation)
-  end
+    assert Test.last.is_a?(Test::Result)
 
-  test "should return error when creating test without is_result param" do
-    assert_raises do
-      post investigation_tests_path(@investigation), params: {
-        test: {
-          product_id: @product.id,
-          legislation: "Test Legislation",
-          details: "Test Details",
-          year: "2018",
-          month: "11",
-          day: "18"
-        }
-      }
-    end
+    assert_redirected_to investigation_url(@investigation)
   end
 
   test "should add test record to investigation" do

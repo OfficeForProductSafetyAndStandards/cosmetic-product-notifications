@@ -104,9 +104,7 @@ private
   end
 
   def model_type
-    return nil if params[:test][:is_result].blank?
-
-    params[:test][:is_result] == "true" ? Test::Result.name : Test::Request.name
+    params.dig(:test, :is_result) == "true" ? Test::Result.name : Test::Request.name
   end
 
   def get_file_params_key

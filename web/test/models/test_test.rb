@@ -35,14 +35,14 @@ class TestTest < ActiveSupport::TestCase
   end
 
   test "should create activity when test request is created" do
-    assert_difference"Activity.count" do
+    assert_difference "Activity.count" do
       test_request = Test::Request.create(investigation: @investigation, product: @product, date: "2018-11-08")
       test_request.save!
     end
   end
 
   test "should create activity when test result is created" do
-    assert_difference"Activity.count" do
+    assert_difference "Activity.count" do
       test_result = Test::Result.create(investigation: @investigation, product: @product, date: "2018-11-08", result: "Pass")
       test_result.save!
     end
