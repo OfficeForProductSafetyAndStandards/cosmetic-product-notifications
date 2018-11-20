@@ -16,6 +16,7 @@ class Investigations::PhoneCallsController < ApplicationController
     @investigation.correspondences << @correspondence
     if @investigation.save
       redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
+      AuditActivity::Correspondence::AddPhoneCall.from(@correspondence, @investigation)
     else
       redirect_to investigation_path @investigation, notice: "Correspondence could not be saved."
     end
@@ -44,7 +45,7 @@ private
 
   def load_relevant_objects
     @investigation = Investigation.find(params[:investigation_id])
-    @file = load_file_attachments.first
+    @file = load_file_attachment
     load_correspondence
   end
 
