@@ -18,7 +18,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
   test "cannot add test result without a date or result" do
     click_button "Continue"
 
-    assert_text "2 errors prohibited this test result from being saved"
+    assert_text "4 errors prohibited this test result from being saved"
     assert_text "Date can't be blank"
     assert_text "Result can't be blank"
   end

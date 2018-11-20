@@ -27,15 +27,15 @@ h1.govuk-heading-xl
             span.govuk-hint
               ' Only products already added to the case are listed.
               = link_to "Add a product", new_investigation_product_path(@investigation)
-            = form.collection_select :product_id, @investigation.products, :id, :name,
-                    class: "govuk-select", id: "test_product"
+            = form.collection_select :product_id, @investigation.products, :id, :name, { include_blank: true },
+                    class: "govuk-select"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Against which legislation?
         .govuk-form-group class=("govuk-form-group--error" if @test.errors[:legislation].any?)
           span.govuk-hint
             | Select the relevant legislation from the list.
-          = form.select :legislation, legislation_constants["legislation"], {include_blank: true},
+          = form.select :legislation, legislation_constants["legislation"], { include_blank: true },
                   class: "govuk-input"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l

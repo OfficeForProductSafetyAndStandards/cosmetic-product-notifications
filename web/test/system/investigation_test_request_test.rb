@@ -18,8 +18,8 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
   test "cannot add test request without a date" do
     click_button "Continue"
 
-    assert_text("1 error prohibited this testing request from being saved")
-    assert_text("Date can't be blank")
+    assert_text "3 errors prohibited this testing request from being saved"
+    assert_text "Date can't be blank"
   end
 
   test "can add filled in test request to investigation" do
