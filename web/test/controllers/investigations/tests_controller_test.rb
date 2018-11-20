@@ -25,7 +25,7 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Test.count") do
       post investigation_tests_path(@investigation), params: {
         test: {
-          type: "Test::Request",
+          is_result: false,
           product_id: @product.id,
           legislation: "Test Legislation",
           details: "Test Details",
@@ -42,49 +42,48 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
   test "should create test result" do
     assert_difference("Test.count") do
       post investigation_tests_path(@investigation), params: {
-          test: {
-              type: "Test::Result",
-              product_id: @product.id,
-              legislation: "Test Legislation",
-              details: "Test Details",
-              year: "2018",
-              month: "11",
-              day: "18",
-              result: "Fail"
-          }
+        test: {
+          is_result: true,
+          product_id: @product.id,
+          legislation: "Test Legislation",
+          details: "Test Details",
+          year: "2018",
+          month: "11",
+          day: "18",
+          result: "Fail"
+        }
       }
     end
 
     assert_redirected_to investigation_url(@investigation)
   end
 
-  test "should return error when creating test with invalid type" do
+  test "should return error when creating test without is_result param" do
     assert_raises do
       post investigation_tests_path(@investigation), params: {
-          test: {
-              type: "Test::Foo",
-              product_id: @product.id,
-              legislation: "Test Legislation",
-              details: "Test Details",
-              year: "2018",
-              month: "11",
-              day: "18"
-          }
+        test: {
+          product_id: @product.id,
+          legislation: "Test Legislation",
+          details: "Test Details",
+          year: "2018",
+          month: "11",
+          day: "18"
+        }
       }
     end
   end
 
   test "should add test record to investigation" do
     post investigation_tests_path(@investigation), params: {
-        test: {
-            type: "Test::Request",
-            product_id: @product.id,
-            legislation: "Test Legislation",
-            details: "Test Details",
-            year: "2018",
-            month: "11",
-            day: "18"
-        }
+      test: {
+        is_result: false,
+        product_id: @product.id,
+        legislation: "Test Legislation",
+        details: "Test Details",
+        year: "2018",
+        month: "11",
+        day: "18"
+      }
     }
 
     assert_equal(Investigation.first.tests.last.legislation, "Test Legislation")

@@ -4,10 +4,9 @@ class Investigations::TestsController < ApplicationController
   steps :details, :confirmation
 
   before_action :set_investigation
-  before_action :build_test_from_params, only: %i[update]
+  before_action :set_test, only: %i[show create update]
+  before_action :set_attachment, only: %i[show create update]
   before_action :store_test, only: %i[update]
-  before_action :restore_test, only: %i[show create]
-  before_action :set_attachment, only: %i[show update create]
 
   # GET /tests/1
   def show
@@ -29,7 +28,6 @@ class Investigations::TestsController < ApplicationController
   end
 
   # POST /tests
-  # POST /tests.json
   def create
     attach_files
     if @test.save
@@ -40,7 +38,6 @@ class Investigations::TestsController < ApplicationController
   end
 
   # PATCH/PUT /tests/1
-  # PATCH/PUT /tests/1.json
   def update
     if test_valid?
       redirect_to next_wizard_path
@@ -60,25 +57,16 @@ private
     @investigation = Investigation.find(params[:investigation_id])
   end
 
+  def set_test
+    @test = @investigation.tests.build(test_params)
+  end
+
   def set_attachment
     @file = load_file_attachment
   end
 
-  def build_test_from_params
-    @test = if params.include? :test
-              @investigation.tests.build(test_params)
-            else
-              @investigation.tests.build
-            end
-  end
-
   def store_test
     session[:test] = @test.attributes
-  end
-
-  def restore_test
-    session_params = session[:test] || {}
-    @test = @investigation.tests.build(session_params.merge(test_params))
   end
 
   def test_valid?
@@ -92,18 +80,33 @@ private
     attach_file_to_list(@file, @investigation.documents)
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def test_params
+    session_params.merge(request_params)
+  end
+
+  def session_params
+    session[:test] || {}
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def request_params
     return {} if params[:test].blank?
 
-    params.require(:test).permit(:product_id,
-                                 :legislation,
-                                 :type,
-                                 :result,
-                                 :details,
-                                 :day,
-                                 :month,
-                                 :year)
+    params.require(:test)
+        .permit(:product_id,
+                :legislation,
+                :result,
+                :details,
+                :day,
+                :month,
+                :year)
+        .merge(type: model_type)
+  end
+
+  def model_type
+    return nil if params[:test][:is_result].blank?
+
+    params[:test][:is_result] == "true" ? Test::Result.name : Test::Request.name
   end
 
   def get_file_params_key

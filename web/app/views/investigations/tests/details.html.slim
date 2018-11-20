@@ -10,7 +10,7 @@ h1.govuk-heading-xl
   .govuk-grid-column-two-thirds
     = form_with model: @test, scope: :test, local: true, url: wizard_path, method: :put do |form|
       = render "form_validation_display", errors: @test.errors, model_name: @test.pretty_name
-      = form.hidden_field :type
+      = form.hidden_field :is_result, value: !@test.requested?
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           - if @test.requested?
