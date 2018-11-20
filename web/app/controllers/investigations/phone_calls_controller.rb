@@ -1,10 +1,24 @@
 class Investigations::PhoneCallsController < ApplicationController
+  include FileConcern
+  set_attachment_categories :file
+  set_file_params_key :correspondence
+
   include Wicked::Wizard
   steps :context, :content, :confirmation
-  before_action :load_relevant_objects, only: %i[show update]
+  before_action :load_relevant_objects, only: %i[show update create]
 
   def new
     redirect_to wizard_path(steps.first, request.query_parameters)
+  end
+
+  def create
+    attach_files
+    @investigation.correspondences << @correspondence
+    if @investigation.save
+      redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
+    else
+      redirect_to investigation_path @investigation, notice: "Correspondence could not be saved."
+    end
   end
 
   def show
@@ -13,7 +27,7 @@ class Investigations::PhoneCallsController < ApplicationController
 
   def update
     @correspondence.validate(step)
-    # validate_blob_sizes(@correspondence.errors, email_file: @email_file, email_attachment: @email_attachment)
+    validate_blob_sizes @correspondence.errors, file: @file
     if @correspondence.errors.any?
       render step
     else
@@ -23,8 +37,14 @@ class Investigations::PhoneCallsController < ApplicationController
 
 private
 
+  def attach_files
+    attach_files_to_list(@correspondence.documents, file: @file)
+    attach_files_to_list(@investigation.documents, file: @file)
+  end
+
   def load_relevant_objects
     @investigation = Investigation.find(params[:investigation_id])
+    @file = load_file_attachments.first
     load_correspondence
   end
 
@@ -38,7 +58,7 @@ private
     return {} if params[:correspondence].blank?
 
     params.require(:correspondence).permit(
-        :correspondent_name, :phone_number, :day, :month, :year,
+        :correspondent_name, :phone_number, :day, :month, :year, :overview, :details
     )
   end
 
