@@ -2,54 +2,129 @@ require "application_system_test_case"
 
 class CorrectiveActionsTest < ApplicationSystemTestCase
   setup do
+    sign_in_as_user
+
+    @investigation = investigations(:one)
     @corrective_action = corrective_actions(:one)
+
+    visit new_investigation_corrective_action_path(@investigation)
+    assert_selector "h1", text: "Record corrective action"
   end
 
-  test "visiting the index" do
-    visit corrective_actions_url
-    assert_selector "h1", text: "Corrective Actions"
+  teardown do
+    logout
   end
 
-  test "creating a Corrective action" do
-    visit corrective_actions_url
-    click_on "New Corrective Action"
+  test "cannot create corrective action without specifying date decided" do
+    click_button "Continue"
 
-    fill_in "Business", with: @corrective_action.business_id
-    fill_in "Date Decided", with: @corrective_action.date_decided
-    fill_in "Details", with: @corrective_action.details
-    fill_in "Investigation", with: @corrective_action.investigation_id
-    fill_in "Legislation", with: @corrective_action.legislation
-    fill_in "Product", with: @corrective_action.product_id
-    fill_in "Summary", with: @corrective_action.summary
-    click_on "Create Corrective action"
-
-    assert_text "Corrective action was successfully created"
-    click_on "Back"
+    assert_text("Date decided can't be blank")
   end
 
-  test "updating a Corrective action" do
-    visit corrective_actions_url
-    click_on "Edit", match: :first
+  test "can record corrective action for a case" do
+    fill_in_basic_details
+    click_on "Continue"
 
-    fill_in "Business", with: @corrective_action.business_id
-    fill_in "Date Decided", with: @corrective_action.date_decided
-    fill_in "Details", with: @corrective_action.details
-    fill_in "Investigation", with: @corrective_action.investigation_id
-    fill_in "Legislation", with: @corrective_action.legislation
-    fill_in "Product", with: @corrective_action.product_id
-    fill_in "Summary", with: @corrective_action.summary
-    click_on "Update Corrective action"
+    assert_text "Confirm corrective action details"
+    click_on "Continue"
 
-    assert_text "Corrective action was successfully updated"
-    click_on "Back"
+    assert_current_path(/investigations\/\d+/)
+    # assert_text @corrective_action.summary
+    # assert_text "Corrective action recorded"
   end
 
-  test "destroying a Corrective action" do
-    visit corrective_actions_url
-    page.accept_confirm do
-      click_on "Destroy", match: :first
-    end
+  test "can go back to the edit page from the confirmation page and not lose data" do
+    fill_in_basic_details
+    click_on "Continue"
 
-    assert_text "Corrective action was successfully destroyed"
+    # Assert all of the data is still here
+    assert_text @corrective_action.summary
+    assert_text @corrective_action.legislation
+    assert_text @corrective_action.details
+    assert_text "15/11/2018"
+    click_on "Edit details"
+
+    # Assert we're back on the details page and haven't lost data
+    assert_text "Record corrective action"
+    assert_field with: @corrective_action.summary
+    assert_field with: @corrective_action.date_decided.day
+    assert_field with: @corrective_action.date_decided.month
+    assert_field with: @corrective_action.date_decided.year
+    assert_field with: @corrective_action.legislation
+    assert_field with: @corrective_action.details
+  end
+
+  test "session data doesn't persist between reloads" do
+    fill_in_basic_details
+    visit new_investigation_corrective_action_path(@investigation)
+
+    assert_no_field with: @corrective_action.legislation
+  end
+
+  test "session data is cleared after completion" do
+    fill_in_basic_details
+    click_on "Continue"
+    click_on "Continue"
+
+    visit new_investigation_corrective_action_path(@investigation)
+
+    assert_no_field with: @corrective_action.legislation
+  end
+
+  test "invalid date shows an error" do
+    fill_in "Day", with: "7"
+    fill_in "Month", with: "13"
+    fill_in "Year", with: "1984"
+    click_on "Continue"
+
+    assert_text("Date decided must be a valid date")
+  end
+
+  test "date with missing component shows an error" do
+    fill_in "Day", with: "7"
+    fill_in "Year", with: "1984"
+    click_on "Continue"
+
+    assert_text("Date decided must specify a day, month and year")
+  end
+
+  test "can add an attachment when recording a corrective action" do
+    attachment_filename = "new_risk_assessment.txt"
+    attachment_description = "Test attachment description"
+
+    fill_in_basic_details
+    attach_file "corrective_action[file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    fill_in "Attachment description", with: attachment_description
+    click_on "Continue"
+
+    assert_text "Confirm corrective action details"
+    assert_text attachment_filename
+    assert_text attachment_description
+    click_on "Continue"
+
+    assert_current_path(/investigations\/\d+/)
+    # assert_text "Attached: #{attachment_filename}"
+    # assert_text "View attachment"
+  end
+
+  test "attachment description field is not visible when no file is selected" do
+    assert_no_text "Attachment description"
+  end
+
+  test "attachment description field is visible when a file is selected" do
+    attach_file "corrective_action[file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
+
+    assert_text "Attachment description"
+  end
+
+  def fill_in_basic_details
+    fill_in "corrective_action_summary", with: @corrective_action.summary
+    fill_in "corrective_action_legislation", with: @corrective_action.legislation
+    fill_in "corrective_action_details", with: @corrective_action.details
+    fill_in "business-picker", with: @corrective_action.business.company_name
+    fill_in "product-picker", with: @corrective_action.product.name
+    fill_in "Day", with: @corrective_action.date_decided.day
+    fill_in "Month", with: @corrective_action.date_decided.month
+    fill_in "Year", with: @corrective_action.date_decided.year
   end
 end

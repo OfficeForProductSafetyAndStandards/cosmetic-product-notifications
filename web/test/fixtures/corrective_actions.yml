@@ -2,18 +2,18 @@
 
 one:
   date_decided: 2018-11-15
-  details: MyText
-  legislation: MyString
-  summary: MyText
+  summary: Corrective action one
+  details: Details for corrective action one
+  legislation: General Product Safety Regulations 2005
   investigation: one
-  product: one
   business: one
+  product: one
 
 two:
-  date_decided: 2018-11-15
-  details: MyText
-  legislation: MyString
-  summary: MyText
+  date_decided: 2018-11-16
+  summary: Corrective action two
+  details: Details for corrective action two
+  legislation: Recreational Craft Regulations 2017
   investigation: two
-  product: two
   business: two
+  product: two
