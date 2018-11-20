@@ -41,3 +41,5 @@ class InvestigationIAssigneeTest < ApplicationSystemTestCase
     assert_text("Assigned to\nTest Admin Change")
   end
 end
+
+Investigation.import force: true # for auto sync with elastic search

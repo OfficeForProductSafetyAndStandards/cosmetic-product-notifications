@@ -53,7 +53,7 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: :pretty_id,
-      only: %i[question_title description],
+      only: %i[question_title description is_closed],
       include: {
         documents: {
           methods: %i[title description filename]
@@ -86,7 +86,7 @@ class Investigation < ApplicationRecord
           only: %i[name phone_number email_address other_details]
         }
       }
-    ).merge(status: status.downcase)
+    )
   end
 
   def status
