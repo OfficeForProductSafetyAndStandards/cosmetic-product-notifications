@@ -39,6 +39,8 @@ class Investigation < ApplicationRecord
 
   has_many :correspondences, dependent: :destroy
 
+  has_many :tests, dependent: :destroy
+
   has_many_attached :documents
   has_many_attached :images
 
