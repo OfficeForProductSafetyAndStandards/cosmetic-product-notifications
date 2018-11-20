@@ -24,21 +24,21 @@ class InvestigationIAssigneeTest < ApplicationSystemTestCase
 
   test "should allow to select assignee" do
     fill_in "assignee-picker", with: "("
-    all("li", visible: false, text: "(").first.click
+    all("li", visible: false, text: "Admin").first.click
     click_on "Assign"
-    assert_text("Assigned to\nTest User Change")
+    assert_text("Assigned to\nTest Admin Change")
   end
 
   test "should allow to select a different assignee, the current one should not appear in the list" do
     fill_in "assignee-picker", with: "("
-    all("li", visible: false, text: "(").first.click
+    all("li", visible: false, text: "Admin").first.click
     click_on "Assign"
     visit assign_investigation_path(investigations(:one))
 
     fill_in "assignee-picker", with: "("
     all("li", visible: false, text: "(").first.click
     click_on "Assign"
-    assert_text("Assigned to\nTest Admin Change")
+    assert_text("Assigned to\nTest User Change")
   end
 end
 
