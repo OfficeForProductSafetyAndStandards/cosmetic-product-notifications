@@ -17,6 +17,8 @@ class Activity < ApplicationRecord
 
   def subtitle_slug; end
 
+  def search_index;  end
+
 private
 
   def pretty_date_stamp

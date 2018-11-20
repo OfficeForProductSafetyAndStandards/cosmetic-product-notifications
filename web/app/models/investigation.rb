@@ -76,7 +76,8 @@ class Investigation < ApplicationRecord
         correspondences: {},
         activities: {
           # body returns some things that are the same for many activities
-          only: %i[title body]
+          methods: :search_index,
+          only: []
         },
         businesses: {
           only: %i[company_name company_number]
