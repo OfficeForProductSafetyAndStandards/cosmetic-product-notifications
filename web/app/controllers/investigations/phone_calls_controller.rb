@@ -46,6 +46,7 @@ private
   def load_relevant_objects
     @investigation = Investigation.find(params[:investigation_id])
     @file = load_file_attachment
+    add_metadata(@file, file_metadata) if step == :content
     load_correspondence
   end
 
@@ -59,8 +60,15 @@ private
     return {} if params[:correspondence].blank?
 
     params.require(:correspondence).permit(
-        :correspondent_name, :phone_number, :day, :month, :year, :overview, :details
+      :correspondent_name, :phone_number, :day, :month, :year, :overview, :details
     )
+  end
+
+  def file_metadata
+    {
+        title: correspondence_params[:overview],
+        description: "Call transcript"
+    }
   end
 
   def suggested_values

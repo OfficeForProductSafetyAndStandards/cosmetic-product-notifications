@@ -15,7 +15,8 @@ main.govuk-main-wrapper role="main"
           .govuk-form-group
             span.govuk-hint
               | Give an overview of the phonecall
-            = form.text_field :overview, class: "govuk-input govuk-!-width-two-thirds", aria_describedby: "correspondence-summary-hint"
+            = form.text_field :overview,
+                    class: "govuk-input govuk-!-width-two-thirds", aria_describedby: "correspondence-summary-hint"
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Details
