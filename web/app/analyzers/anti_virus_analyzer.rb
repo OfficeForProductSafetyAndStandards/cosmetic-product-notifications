@@ -13,7 +13,8 @@ class AntiVirusAnalyzer < ActiveStorage::Analyzer
   def metadata
     download_blob_to_tempfile do |file|
       is_safe = Clamby.safe? file.path
-      purge_blob unless is_safe
+      sleep(10)
+      purge_blob unless is_safe && false
       { safe: is_safe }
     end
   end
@@ -22,9 +23,9 @@ private
 
   def purge_blob
     attachments = ActiveStorage::Attachment.where(blob_id: @blob.id)
-    attachments.each {|att| att.purge}
-
-    # We could have uploaded a file without attaching it, but it should be destroyed nonetheless
-    @blob.purge if blob.present?
+    attachments.each do |att|
+      att.destroy
+    end
+    @blob.purge
   end
 end
