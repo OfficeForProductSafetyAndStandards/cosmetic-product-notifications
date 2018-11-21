@@ -4,6 +4,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_admin
     @investigation = investigations(:one)
+    @investigation_two = investigations(:two)
     @investigation.source = sources(:investigation_one)
     @investigation.hazard = hazards(:one)
     Investigation.import
@@ -172,5 +173,139 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes(response.body, investigations(:one).pretty_id)
     assert_not_includes(response.body, investigations(:two).pretty_id)
     assert_not_includes(response.body, investigations(:no_products).pretty_id)
+  end
+
+  test "should return all investigations if both assignee checkboxes are unchecked" do
+    User.all
+    admin_user = User.find_by(last_name: "Admin")
+    test_user = User.find_by(last_name: "User")
+
+    @investigation.assignee = admin_user
+    @investigation.save
+    @investigation_two.assignee = test_user
+    @investigation_two.save
+
+    get investigations_path, params: {
+        assigned_to_me: "unchecked",
+        assigned_to_someone_else: "unchecked",
+        status_open: "unchecked",
+        status_closed: "unchecked"
+    }
+    assert_includes(response.body, investigations(:one).pretty_id)
+    assert_includes(response.body, investigations(:two).pretty_id)
+    assert_includes(response.body, investigations(:three).pretty_id)
+  end
+
+  test "should return all investigations if both assignee checkboxes are checked and name input is blank" do
+    User.all
+    admin_user = User.find_by(last_name: "Admin")
+    test_user = User.find_by(last_name: "User")
+
+    @investigation.assignee = admin_user
+    @investigation.save
+    @investigation_two.assignee = test_user
+    @investigation_two.save
+
+    get investigations_path, params: {
+        assigned_to_me: "checked",
+        assigned_to_someone_else: "checked",
+        assigned_to_someone_else_id: nil,
+        status_open: "unchecked",
+        status_closed: "unchecked"
+    }
+    assert_includes(response.body, investigations(:one).pretty_id)
+    assert_includes(response.body, investigations(:two).pretty_id)
+    assert_includes(response.body, investigations(:three).pretty_id)
+  end
+
+  test "should return investigations assigned to current user if only the 'Me' checkbox is checked" do
+    User.all
+    admin_user = User.find_by(last_name: "Admin")
+    test_user = User.find_by(last_name: "User")
+
+    @investigation.assignee = admin_user
+    @investigation.save
+    @investigation_two.assignee = test_user
+    @investigation_two.save
+
+    get investigations_path, params: {
+        assigned_to_me: "checked",
+        assigned_to_someone_else: "unchecked",
+        assigned_to_someone_else_id: nil,
+        status_open: "unchecked",
+        status_closed: "unchecked"
+    }
+    assert_includes(response.body, investigations(:one).pretty_id)
+    assert_not_includes(response.body, investigations(:two).pretty_id)
+    assert_not_includes(response.body, investigations(:three).pretty_id)
+  end
+
+  test "should return investigations assigned to current user or given user if both checkboxes are checked
+              and a user is given in the input" do
+    User.all
+    admin_user = User.find_by(last_name: "Admin")
+    test_user = User.find_by(last_name: "User")
+
+    @investigation.assignee = admin_user
+    @investigation.save
+    @investigation_two.assignee = test_user
+    @investigation_two.save
+
+    get investigations_path, params: {
+        assigned_to_me: "checked",
+        assigned_to_someone_else: "checked",
+        assigned_to_someone_else_id: @investigation_two.assignee_id,
+        status_open: "unchecked",
+        status_closed: "unchecked"
+    }
+    assert_includes(response.body, investigations(:one).pretty_id)
+    assert_includes(response.body, investigations(:two).pretty_id)
+    assert_not_includes(response.body, investigations(:three).pretty_id)
+  end
+
+  test "should return investigations assigned to a given user if only 'someone else' checkbox is checked
+              and a user is given in the input" do
+    User.all
+    admin_user = User.find_by(last_name: "Admin")
+    test_user = User.find_by(last_name: "User")
+
+    @investigation.assignee = admin_user
+    @investigation.save
+    @investigation_two.assignee = test_user
+    @investigation_two.save
+
+    get investigations_path, params: {
+        assigned_to_me: "unchecked",
+        assigned_to_someone_else: "checked",
+        assigned_to_someone_else_id: @investigation_two.assignee_id,
+        status_open: "unchecked",
+        status_closed: "unchecked"
+    }
+    assert_not_includes(response.body, investigations(:one).pretty_id)
+    assert_includes(response.body, investigations(:two).pretty_id)
+    assert_not_includes(response.body, investigations(:three).pretty_id)
+  end
+
+  test "should return investigations assigned to anyone except current user if only 'someone else' checkbox
+              is checked and no user is given in the input" do
+    User.all
+    admin_user = User.find_by(last_name: "Admin")
+    test_user = User.find_by(last_name: "User")
+
+    @investigation.assignee = admin_user
+    @investigation.save
+    @investigation_two.assignee = test_user
+    @investigation_two.save
+
+    get investigations_path, params: {
+        assigned_to_me: "unchecked",
+        assigned_to_someone_else: "checked",
+        assigned_to_someone_else_id: nil,
+        status_open: "unchecked",
+        status_closed: "unchecked"
+    }
+    assert_not_includes(response.body, investigations(:one).pretty_id)
+    assert_includes(response.body, investigations(:two).pretty_id)
+    assert_includes(response.body, investigations(:three).pretty_id)
   end
 end

@@ -26,7 +26,7 @@ class InvestigationIAssigneeTest < ApplicationSystemTestCase
     fill_in "assignee-picker", with: "("
     all("li", visible: false, text: "(").first.click
     click_on "Assign"
-    assert_text("Assigned to\nTest User Change")
+    assert_text("Assigned to\nTest Admin Change")
   end
 
   test "should allow to select a different assignee, the current one should not appear in the list" do
@@ -38,6 +38,6 @@ class InvestigationIAssigneeTest < ApplicationSystemTestCase
     fill_in "assignee-picker", with: "("
     all("li", visible: false, text: "(").first.click
     click_on "Assign"
-    assert_text("Assigned to\nTest Admin Change")
+    assert_text("Assigned to\nTest User Change")
   end
 end
