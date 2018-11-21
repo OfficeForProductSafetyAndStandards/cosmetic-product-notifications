@@ -35,9 +35,9 @@ class CorrectiveActionTest < ActiveSupport::TestCase
 
   test "requires the date to not be in the future" do
     corrective_action = CorrectiveAction.create(investigation: @investigation, business: @business, product: @product, summary: "Test summary")
-    corrective_action.date_decided = Date.tomorrow
+    corrective_action.date_decided = Time.zone.tomorrow
     assert_not corrective_action.save, "expected validation errors when saving the record"
-    corrective_action.date_decided = Date.today
+    corrective_action.date_decided = Time.zone.today
     assert corrective_action.save, "unexpected validation errors encountered when saving the record"
   end
 

@@ -22,8 +22,7 @@ class CorrectiveAction < ApplicationRecord
   after_create :create_audit_activity
 
   def date_decided_cannot_be_in_the_future
-    errors.add(:date_decided, "can't be in the future") if
-        date_decided.present? and date_decided > Date.today
+    errors.add(:date_decided, "can't be in the future") if date_decided.present? && date_decided > Time.zone.today
   end
 
   def create_audit_activity

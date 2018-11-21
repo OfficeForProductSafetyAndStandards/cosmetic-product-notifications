@@ -35,6 +35,7 @@ h1.govuk-heading-xl
           tr.govuk-table__row
             th.govuk-table__header scope="row" Attachment description
             td.govuk-table__cell = @file.metadata[:description]
-    = form_with model: @corrective_action, url: investigation_corrective_actions_path(@investigation), method: :post do |form|
+    = form_with model: @corrective_action, url: investigation_corrective_actions_path(@investigation),
+            method: :post do |form|
       = form.submit "Continue", class: "govuk-button"
       = link_to "Edit details", previous_wizard_path, class: "govuk-link mspsds-block-link"

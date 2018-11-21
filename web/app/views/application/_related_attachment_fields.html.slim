@@ -1,4 +1,4 @@
-- has_validation_errors = form.object.errors.details[:base].any? { |error| error.values.include? :file_too_large }
+- has_validation_errors = form.object.errors.details[:base].any? { |error| error.value? :file_too_large }
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Related attachments
