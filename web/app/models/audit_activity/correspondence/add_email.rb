@@ -1,29 +1,11 @@
 class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::Base
-  has_one_attached :email_file
-  has_one_attached :email_attachment
+  include ActivityAttachable
+  with_attachments email_file: "email file", email_attachment: "email attachment"
 
   def self.from(correspondence, investigation)
     activity = super(correspondence, investigation, self.build_body(correspondence))
-    self.attachments(correspondence).each do |name, file|
-      file.blob.metadata[:attachment_name] = name
-      activity.send(name).attach file.blob
-    end
-  end
-
-  def self.attachments correspondence
-    {
-        email_file: correspondence.find_attachment_by_name("email_file"),
-        email_attachment: correspondence.find_attachment_by_name("email_attachment")
-    }
-    .reject { |_, value| value.nil? }
-  end
-
-  def attachments
-    {
-        email_file: email_file.attached? ? "email file" : nil,
-        email_attachment: email_attachment.attached? ? "email attachment" : nil
-    }
-    .reject { |_, v| v.nil? }
+    activity.add_attachment correspondence.email_file if correspondence.email_file.attached?
+    activity.add_attachment correspondence.email_attachment if correspondence.email_attachment.attached?
   end
 
   def subtitle_slug

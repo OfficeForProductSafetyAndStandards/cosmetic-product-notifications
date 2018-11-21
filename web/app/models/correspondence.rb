@@ -8,7 +8,8 @@ class Correspondence < ApplicationRecord
     :correspondence_date
   end
 
-  has_many_attached :documents
+  has_one_attached :email_file
+  has_one_attached :email_attachment
 
   enum email_direction: {
       outbound: "Outbound",
@@ -19,10 +20,6 @@ class Correspondence < ApplicationRecord
     email: "Email",
     phone: "Phone call"
   }, _suffix: true
-
-  def find_attachment_by_name name
-    documents.find { |attachment| attachment.metadata[:attachment_name] == name }
-  end
 
   def strip_whitespace
     changed.each do |attribute|
