@@ -1,6 +1,6 @@
 class Investigations::Hazards::EditHazardFlowController < Investigations::Hazards::FlowController
   include FileConcern
-  set_attachment_categories :file
+  set_attachment_names :file
   set_file_params_key :hazard
 
 private

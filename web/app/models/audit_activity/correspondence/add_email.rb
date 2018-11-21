@@ -4,16 +4,16 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
 
   def self.from(correspondence, investigation)
     activity = super(correspondence, investigation, self.build_body(correspondence))
-    self.attachments(correspondence).each do |category, file|
-      file.blob.metadata[:attachment_category] = category
-      activity.send(category).attach file.blob
+    self.attachments(correspondence).each do |name, file|
+      file.blob.metadata[:attachment_name] = name
+      activity.send(name).attach file.blob
     end
   end
 
   def self.attachments correspondence
     {
-        email_file: correspondence.find_attachment_by_category("email_file"),
-        email_attachment: correspondence.find_attachment_by_category("email_attachment")
+        email_file: correspondence.find_attachment_by_name("email_file"),
+        email_attachment: correspondence.find_attachment_by_name("email_attachment")
     }
     .reject { |_, value| value.nil? }
   end
@@ -34,7 +34,7 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
     body = ""
     body += self.build_correspondent_details correspondence
     body += "Subject: **#{correspondence.email_subject}**<br>" if correspondence.email_subject.present?
-    body += "Date sent: **#{correspondence.correspondence_date}**<br>" if correspondence.correspondence_date.present?
+    body += "Date sent: **#{correspondence.correspondence_date.strftime('%d/%m/%Y')}**<br>" if correspondence.correspondence_date.present?
     body += self.build_email_file_body correspondence
     body += self.build_attachment_body correspondence
     body += "<br>#{correspondence.details}" if correspondence.details.present?
@@ -52,12 +52,12 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
   end
 
   def self.build_email_file_body correspondence
-    file = correspondence.find_attachment_by_category "email_file"
+    file = correspondence.find_attachment_by_name "email_file"
     file ? "Email: #{file.filename.to_s.gsub('_', '\_')}<br>" : ""
   end
 
   def self.build_attachment_body correspondence
-    file = correspondence.find_attachment_by_category "email_attachment"
+    file = correspondence.find_attachment_by_name "email_attachment"
     file ? "Attached: #{file.filename.to_s.gsub('_', '\_')}<br>" : ""
   end
 

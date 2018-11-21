@@ -25,8 +25,8 @@ class Correspondence < ApplicationRecord
     phone: "Phone call"
   }, _suffix: true
 
-  def find_attachment_by_category category
-    documents.find { |attachment| attachment.metadata[:attachment_category] == category }
+  def find_attachment_by_name name
+    documents.find { |attachment| attachment.metadata[:attachment_name] == name }
   end
 
   def strip_whitespace

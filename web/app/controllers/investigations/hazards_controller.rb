@@ -1,6 +1,6 @@
 class Investigations::HazardsController < ApplicationController
   include FileConcern
-  set_attachment_categories :file
+  set_attachment_names :file
   set_file_params_key :hazard
 
   include HazardsHelper

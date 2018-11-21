@@ -1,11 +1,14 @@
 class Investigations::EmailsController < ApplicationController
   include FileConcern
-  set_attachment_categories :email_file, :email_attachment
+  set_attachment_names :email_file, :email_attachment
   set_file_params_key :correspondence
 
   include Wicked::Wizard
   steps :context, :content, :confirmation
-  before_action :load_relevant_objects, only: %i[show update create]
+
+  before_action :set_investigation
+  before_action :set_correspondence, only: %i[show update create]
+  before_action :set_attachments, only: %i[show update create]
 
   def new
     clear_session
@@ -40,24 +43,26 @@ class Investigations::EmailsController < ApplicationController
 
 private
 
+  def set_investigation
+    @investigation = Investigation.find(params[:investigation_id])
+  end
+
   def attach_files
     attach_files_to_list(@correspondence.documents, email_file: @email_file, email_attachment: @email_attachment)
     attach_files_to_list(@investigation.documents, email_file: @email_file, email_attachment: @email_attachment)
   end
 
-  def load_relevant_objects
-    @investigation = Investigation.find(params[:investigation_id])
+  def set_attachments
     @email_file, @email_attachment = load_file_attachments
     if step == :content
       add_metadata(@email_file, email_file_metadata)
       add_metadata(@email_attachment, email_attachment_metadata)
     end
-    load_correspondence
   end
 
-  def load_correspondence
+  def set_correspondence
     data_from_previous_steps = session[:correspondence] || suggested_values
-    session[:correspondence] = data_from_previous_steps.merge(correspondence_params || {})
+    session[:correspondence] = data_from_previous_steps.merge(correspondence_params || {}).except("attachment_description")
     @correspondence = Correspondence.new(session[:correspondence])
   end
 
@@ -66,7 +71,7 @@ private
 
     params.require(:correspondence).permit(
       :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
-      :overview, :details, :email_direction, :email_subject
+      :overview, :details, :email_direction, :email_subject, :attachment_description
     )
   end
 
