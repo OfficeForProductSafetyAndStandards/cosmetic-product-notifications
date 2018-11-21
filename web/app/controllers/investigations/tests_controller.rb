@@ -50,7 +50,7 @@ private
 
   def clear_session
     session[:test] = nil
-    initialize_file_attachment
+    initialize_file_attachments
   end
 
   def set_investigation
@@ -62,7 +62,7 @@ private
   end
 
   def set_attachment
-    @file = load_file_attachment
+    @file, * = load_file_attachments
   end
 
   def store_test
@@ -71,7 +71,7 @@ private
 
   def test_valid?
     @test.validate(step)
-    validate_blob_size(@file, @test.errors)
+    validate_blob_sizes(@file, @test.errors)
     @test.errors.empty?
   end
 

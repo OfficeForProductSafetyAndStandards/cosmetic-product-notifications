@@ -9,7 +9,7 @@ class Investigations::CorrespondenceController < ApplicationController
 
   def new
     clear_session
-    initialize_file_attachment
+    initialize_file_attachments
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
@@ -27,7 +27,7 @@ class Investigations::CorrespondenceController < ApplicationController
 
   def update
     @correspondence.validate(step)
-    validate_blob_size(@file, @correspondence.errors)
+    validate_blob_sizes(@file, @correspondence.errors)
     if @correspondence.errors.any?
       render step
     else
@@ -55,7 +55,7 @@ private
 
   def load_relevant_objects
     @investigation = Investigation.find_by(id: params[:investigation_id])
-    @file = load_file_attachment
+    @file, * = load_file_attachments
     load_correspondence
   end
 

@@ -7,7 +7,7 @@ class Investigations::HazardsController < ApplicationController
   before_action :load_relevant_objects
 
   def risk_level;
-    initialize_file_attachment
+    initialize_file_attachments
   end
 
   def update_risk_level

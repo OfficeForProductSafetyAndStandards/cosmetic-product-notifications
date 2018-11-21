@@ -33,7 +33,7 @@ class Investigations::EmailsController < ApplicationController
 
   def update
     @correspondence.validate(step)
-    validate_blob_sizes(@correspondence.errors, email_file: @email_file, email_attachment: @email_attachment)
+    validate_blob_sizes(@email_file, @email_attachment, @correspondence.errors)
     if @correspondence.errors.any?
       render step
     else

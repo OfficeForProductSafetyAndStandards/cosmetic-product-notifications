@@ -10,7 +10,7 @@ class FilesFlowController < ApplicationController
   end
 
   def new;
-    initialize_file_attachment
+    initialize_file_attachments
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
@@ -26,7 +26,7 @@ class FilesFlowController < ApplicationController
 private
 
   def set_file
-    @file_blob = load_file_attachment
+    @file_blob, * = load_file_attachments
   end
 
   def validate
@@ -37,6 +37,6 @@ private
     if file_params[:file].blank? && step == :upload
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end
-    validate_blob_size(@file_blob, @errors) if step == :upload
+    validate_blob_sizes(@file_blob, @errors) if step == :upload
   end
 end

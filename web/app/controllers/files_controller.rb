@@ -53,7 +53,7 @@ private
     if file_params[:file].blank? && !@file
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end
-    validate_blob_size(@file_blob, @errors)
+    validate_blob_sizes(@file_blob, @errors)
   end
 
   def update_file

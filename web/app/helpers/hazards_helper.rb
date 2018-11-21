@@ -5,7 +5,7 @@ module HazardsHelper
 
   def load_relevant_objects
     @investigation = Investigation.find_by(id: params[:investigation_id])
-    @file = load_file_attachment
+    @file, * = load_file_attachments
     set_hazard_data(@investigation)
 
     if @file.blank? && @hazard.risk_assessment.attached?
