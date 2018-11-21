@@ -11,6 +11,11 @@ class ElasticsearchQuery
     search_query = {}
     search_query[:query] = query_params if query.present? || filters.present?
     search_query[:sort] = sort_params if sorting.present?
+    search_query[:highlight] = {
+      fields: {
+        :"*" => {}
+      }
+    }
     search_query
   end
 

@@ -2,6 +2,18 @@ module InvestigationsHelper
   include SearchHelper
 
   def search_for_investigations(page_size)
+    a = Investigation.full_search(search_query)
+    p '============================================================='
+
+    a.results.each do |r|
+      p r if r.highlight
+      r.highlight.each do |a|
+        p a
+      end
+      p r._id
+    end
+    p '============================================================='
+    p a.records.first
     Investigation.full_search(search_query)
                  .paginate(page: params[:page], per_page: page_size)
                  .records
