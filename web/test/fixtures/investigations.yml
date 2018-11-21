@@ -15,3 +15,7 @@ three:
 no_products:
   description: Investigation with no product
   is_closed: false
+
+search_related_products:
+  description: Investigation_for_search_by_product
+  is_closed: false

@@ -1,6 +1,13 @@
 module DateConcern
   extend ActiveSupport::Concern
+
   included do
+    attribute :day, :integer
+    attribute :month, :integer
+    attribute :year, :integer
+
+    validate :date_from_components
+
     after_initialize do
       @date_key = get_date_key
       date_component_strings = [year, month, day]

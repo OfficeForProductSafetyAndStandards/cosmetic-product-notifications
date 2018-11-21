@@ -3,10 +3,12 @@ require "test_helper"
 class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_admin
-    @investigation = investigations(:one)
+    @investigation_one = investigations(:one)
     @investigation_two = investigations(:two)
-    @investigation.source = sources(:investigation_one)
-    @investigation.hazard = hazards(:one)
+    @investigation_three = investigations(:three)
+    @investigation_no_products = investigations(:no_products)
+    @investigation_one.source = sources(:investigation_one)
+    @investigation_one.hazard = hazards(:one)
     Investigation.import
   end
 
@@ -39,40 +41,40 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show investigation" do
-    get investigation_url(@investigation)
+    get investigation_url(@investigation_one)
     assert_response :success
   end
 
   test "should generate investigation pdf" do
-    get investigation_url(@investigation, format: :pdf)
+    get investigation_url(@investigation_one, format: :pdf)
     assert_response :success
   end
 
   test "should assign user to investigation" do
     id = User.first.id
-    investigation_assignee_id = lambda { Investigation.find(@investigation.id).assignee_id }
+    investigation_assignee_id = lambda { Investigation.find(@investigation_one.id).assignee_id }
     assert_changes investigation_assignee_id, from: nil, to: id do
-      put investigation_url(@investigation), params: {
+      put investigation_url(@investigation_one), params: {
         investigation: {
           assignee_id: id
         }
       }
     end
-    assert_redirected_to investigation_url(@investigation)
+    assert_redirected_to investigation_url(@investigation_one)
   end
 
   test "should set priority" do
     priority = "high"
-    investigation_priority = lambda { Investigation.find(@investigation.id).priority }
+    investigation_priority = lambda { Investigation.find(@investigation_one.id).priority }
     assert_changes investigation_priority, from: nil, to: priority do
-      put investigation_url(@investigation), params: {
+      put investigation_url(@investigation_one), params: {
         investigation: {
           priority: priority,
           priority_rationale: "some rationale"
         }
       }
     end
-    assert_redirected_to investigation_url(@investigation)
+    assert_redirected_to investigation_url(@investigation_one)
   end
 
   test "should not save priority_rationale if priority is nil" do
@@ -80,7 +82,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     investigation.source = sources(:investigation_two)
     investigation_priority = lambda { Investigation.find(investigation.id).priority }
     assert_no_changes investigation_priority do
-      put investigation_url(@investigation), params: {
+      put investigation_url(@investigation_one), params: {
         investigation: {
           priority: nil,
           priority_rationale: "some rational"
@@ -91,44 +93,44 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should set status" do
     is_closed = true
-    investigation_status = lambda { Investigation.find(@investigation.id).is_closed }
+    investigation_status = lambda { Investigation.find(@investigation_one.id).is_closed }
     assert_changes investigation_status, from: false, to: is_closed do
-      put investigation_url(@investigation), params: {
+      put investigation_url(@investigation_one), params: {
           investigation: {
               is_closed: is_closed,
               status_rationale: "some rationale"
           }
       }
     end
-    assert_redirected_to investigation_url(@investigation)
+    assert_redirected_to investigation_url(@investigation_one)
   end
 
   test "should update assignee from selectable list" do
     assignee = User.first
-    put investigation_url(@investigation), params: {
+    put investigation_url(@investigation_one), params: {
       investigation: {
         assignee_id: assignee.id
       }
     }
-    assert_equal(Investigation.find(@investigation.id).assignee.id, assignee.id)
+    assert_equal(Investigation.find(@investigation_one.id).assignee.id, assignee.id)
   end
 
   test "should update assignee from radio boxes" do
     assignee = User.first
-    put investigation_url(@investigation), params: {
+    put investigation_url(@investigation_one), params: {
       investigation: {
         assignee_id_radio: assignee.id
       }
     }
-    assert_equal(Investigation.find(@investigation.id).assignee.id, assignee.id)
+    assert_equal(Investigation.find(@investigation_one.id).assignee.id, assignee.id)
   end
 
   test "status filter should be defaulted to open" do
     get investigations_path
-    assert_not_includes(response.body, investigations(:three).pretty_id)
-    assert_includes(response.body, investigations(:one).pretty_id)
-    assert_includes(response.body, investigations(:two).pretty_id)
-    assert_includes(response.body, investigations(:no_products).pretty_id)
+    assert_not_includes(response.body, @investigation_three.pretty_id)
+    assert_includes(response.body, @investigation_one.pretty_id)
+    assert_includes(response.body, @investigation_two.pretty_id)
+    assert_includes(response.body, @investigation_no_products.pretty_id)
   end
 
   test "status filter for both open and closed checked" do
@@ -136,10 +138,10 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       status_open: "checked",
       status_closed: "checked"
     }
-    assert_includes(response.body, investigations(:three).pretty_id)
-    assert_includes(response.body, investigations(:one).pretty_id)
-    assert_includes(response.body, investigations(:two).pretty_id)
-    assert_includes(response.body, investigations(:no_products).pretty_id)
+    assert_includes(response.body, @investigation_three.pretty_id)
+    assert_includes(response.body, @investigation_one.pretty_id)
+    assert_includes(response.body, @investigation_two.pretty_id)
+    assert_includes(response.body, @investigation_no_products.pretty_id)
   end
 
   test "status filter for both open and closed unchecked" do
@@ -147,10 +149,10 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       status_open: "unchecked",
       status_closed: "unchecked"
     }
-    assert_includes(response.body, investigations(:three).pretty_id)
-    assert_includes(response.body, investigations(:one).pretty_id)
-    assert_includes(response.body, investigations(:two).pretty_id)
-    assert_includes(response.body, investigations(:no_products).pretty_id)
+    assert_includes(response.body, @investigation_three.pretty_id)
+    assert_includes(response.body, @investigation_one.pretty_id)
+    assert_includes(response.body, @investigation_two.pretty_id)
+    assert_includes(response.body, @investigation_no_products.pretty_id)
   end
 
   test "status filter for only open checked" do
@@ -158,10 +160,10 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       status_open: "checked",
       status_closed: "unchecked"
     }
-    assert_not_includes(response.body, investigations(:three).pretty_id)
-    assert_includes(response.body, investigations(:one).pretty_id)
-    assert_includes(response.body, investigations(:two).pretty_id)
-    assert_includes(response.body, investigations(:no_products).pretty_id)
+    assert_not_includes(response.body, @investigation_three.pretty_id)
+    assert_includes(response.body, @investigation_one.pretty_id)
+    assert_includes(response.body, @investigation_two.pretty_id)
+    assert_includes(response.body, @investigation_no_products.pretty_id)
   end
 
   test "status filter for only closed checked" do
@@ -169,10 +171,10 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       status_open: "unchecked",
       status_closed: "checked"
     }
-    assert_includes(response.body, investigations(:three).pretty_id)
-    assert_not_includes(response.body, investigations(:one).pretty_id)
-    assert_not_includes(response.body, investigations(:two).pretty_id)
-    assert_not_includes(response.body, investigations(:no_products).pretty_id)
+    assert_includes(response.body, @investigation_three.pretty_id)
+    assert_not_includes(response.body, @investigation_one.pretty_id)
+    assert_not_includes(response.body, @investigation_two.pretty_id)
+    assert_not_includes(response.body, @investigation_no_products.pretty_id)
   end
 
   test "should return all investigations if both assignee checkboxes are unchecked" do

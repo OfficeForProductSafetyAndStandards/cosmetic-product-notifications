@@ -17,7 +17,7 @@ class ReporterFlowTest < ApplicationSystemTestCase
 
   test "should be able to select option" do
     select_type_and_continue
-    assert_no_text("prohibited this case from being saved")
+    assert_no_text("prohibited this item from being saved")
   end
 
   test "second step should be details" do
@@ -28,7 +28,7 @@ class ReporterFlowTest < ApplicationSystemTestCase
   test "should be able to fill name" do
     select_type_and_continue
     fill_name_and_continue
-    assert_no_text("prohibited this case from being saved")
+    assert_no_text("prohibited this item from being saved")
   end
 
   test "last step should be confirmation" do

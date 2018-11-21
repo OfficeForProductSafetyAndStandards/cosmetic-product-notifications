@@ -1,9 +1,11 @@
-function simpleAccessibleAutocomplete(id) { // eslint-disable-line no-unused-vars
+function simpleAccessibleAutocomplete(id, autocompleteOptions) { // eslint-disable-line no-unused-vars
   var element = document.getElementById(id);
+  var options = autocompleteOptions || {};
   if (element) {
     accessibleAutocomplete.enhanceSelectElement({
       defaultValue: '',
       selectElement: element,
+      showAllValues: options.showAllValues,
       preserveNullOptions: true
     });
     // In the case that the user deletes the entry from the field, we want this to be reflected in the underlying select
