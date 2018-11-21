@@ -3,6 +3,9 @@ require "test_helper"
 class InvestigationTest < ActiveSupport::TestCase
   setup do
     sign_in_as_user
+    @investigation = investigations(:search_related_products)
+    @product = products(:iphone)
+    Investigation.import
   end
 
   teardown do
@@ -58,39 +61,37 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "elasticsearch should find product gtin" do
-    query = ElasticsearchQuery.new(products(:iphone).gtin, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), investigations(:search_related_products).id)
+    query = ElasticsearchQuery.new(@product.gtin, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation.id)
   end
 
   test "elasticsearch should find product name" do
-    query = ElasticsearchQuery.new(products(:iphone).name, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), investigations(:search_related_products).id)
+    query = ElasticsearchQuery.new(@product.name, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation.id)
   end
 
   test "elasticsearch should find product batch" do
-    query = ElasticsearchQuery.new(products(:iphone).batch_number, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), investigations(:search_related_products).id)
+    query = ElasticsearchQuery.new(@product.batch_number, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation.id)
   end
 
   test "elasticsearch should find product brand" do
-    query = ElasticsearchQuery.new(products(:iphone).brand, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), investigations(:search_related_products).id)
+    query = ElasticsearchQuery.new(@product.brand, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation.id)
   end
 
   test "elasticsearch should find product description" do
-    query = ElasticsearchQuery.new(products(:iphone).description, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), investigations(:search_related_products).id)
+    query = ElasticsearchQuery.new(@product.description, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation.id)
   end
 
   test "elasticsearch should find product model" do
-    query = ElasticsearchQuery.new(products(:iphone).model, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), investigations(:search_related_products).id)
+    query = ElasticsearchQuery.new(@product.model, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation.id)
   end
 
   test "elasticsearch should not find product country" do
-    query = ElasticsearchQuery.new(products(:iphone).country_of_origin, {}, {})
-    assert_not_includes(Investigation.full_search(query).records.map(&:id), investigations(:search_related_products).id)
+    query = ElasticsearchQuery.new(@product.country_of_origin, {}, {})
+    assert_not_includes(Investigation.full_search(query).records.map(&:id), @investigation.id)
   end
 end
-
-Investigation.import force: true # for auto sync with elastic search

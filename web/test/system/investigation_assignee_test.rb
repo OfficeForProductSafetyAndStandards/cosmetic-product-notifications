@@ -4,6 +4,7 @@ class InvestigationIAssigneeTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
     visit assign_investigation_path(investigations(:one))
+    Investigation.import
   end
 
   teardown do
@@ -41,5 +42,3 @@ class InvestigationIAssigneeTest < ApplicationSystemTestCase
     assert_text("Assigned to\nTest User Change")
   end
 end
-
-Investigation.import force: true # for auto sync with elastic search
