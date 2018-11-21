@@ -21,7 +21,10 @@ class AntiVirusAnalyzer < ActiveStorage::Analyzer
 private
 
   def purge_blob
-    attachment = ActiveStorage::Attachment.find_by blob_id: @blob.id
-    attachment.purge
+    attachments = ActiveStorage::Attachment.where(blob_id: @blob.id)
+    attachments.each {|att| att.purge}
+
+    # We could have uploaded a file without attaching it, but it should be destroyed nonetheless
+    @blob.purge if blob.present?
   end
 end

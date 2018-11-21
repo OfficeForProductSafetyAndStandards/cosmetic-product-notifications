@@ -41,6 +41,10 @@ module ActivityAttachable
   def add_attachment(attachment, attachment_key = attachment_names.keys.first)
     return unless attachment_key.present? && attachment.present?
 
-    self.send(attachment_key).attach attachment.blob
+    if attachment.blob.present?
+      # If a blob is purged by antivirus after upload but before this attachment is created we will get weird errors
+      # namely attachment will exist and in case of has_one say something is attached, but that something will be nil
+      self.send(attachment_key).attach attachment.blob
+    end
   end
 end
