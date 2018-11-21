@@ -5,7 +5,7 @@ class Investigation < ApplicationRecord
 
   attr_accessor :priority_rationale, :status_rationale
 
-  enum priority: %i[low medium high]
+  enum priority: %i[low medium high], _suffix: true
 
   validates :question_title, presence: true, on: :question_details
   validate :validate_assignment, :validate_priority
