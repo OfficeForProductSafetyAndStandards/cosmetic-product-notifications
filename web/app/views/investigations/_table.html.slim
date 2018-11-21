@@ -1,4 +1,4 @@
-- investigations.each do |investigation|
-  = render "case_card", investigation: investigation
-- if investigations.empty?
+- search_results.each do |search_result|
+  = render "case_card", investigation: search_result
+- if search_results.empty?
   p[class="govuk-!-font-weight-bold"] = "No cases found."

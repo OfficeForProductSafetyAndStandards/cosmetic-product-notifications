@@ -9,7 +9,29 @@ class InvestigationsController < ApplicationController
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @investigations = search_for_investigations(20)
+    @answer = search_for_investigations(20)
+    @investigations = @answer.records
+    @results = @answer.results.map do |r|
+      r[:record] = @answer.records.find_by(id: r._id)
+      r
+    end
+
+    p '============================================================='
+
+    # results.results.each do |r|
+    #   if query_params[:q].present?
+    #     if r.highlight
+    #       p r
+    #       r.highlight.each do |a|
+    #         p a
+    #       end
+    #       p r._id
+    #     end
+    #   end
+    # end
+    p @results.first
+    p @results.first[:record]
+    p '============================================================='
   end
 
   # GET /investigations/1
