@@ -94,5 +94,13 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.after_initialize do
+    ActiveRecord::Base.descendants.each do |model|
+      if model.respond_to?(:__elasticsearch__)
+        model.import force: true
+      end
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength

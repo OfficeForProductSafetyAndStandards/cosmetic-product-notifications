@@ -7,7 +7,7 @@ class Investigations::ProductsControllerTest < ActionDispatch::IntegrationTest
     @investigation.source = sources(:investigation_one)
     @product = products(:iphone)
     @product.source = sources(:product_iphone)
-    Product.import
+    Product.import force: true
   end
 
   teardown do
