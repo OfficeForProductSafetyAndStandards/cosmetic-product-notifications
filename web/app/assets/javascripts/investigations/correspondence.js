@@ -1,5 +1,5 @@
 $(document).on('turbolinks:load', function () {
-  $('#correspondence_email_attachment').on('change', function () {
+  $('#correspondence_email_attachment_file').on('change', function () {
     var attachmentDescription = $('#attachment-description');
     // Set value of textbox to empty
     attachmentDescription.children(1).val('');

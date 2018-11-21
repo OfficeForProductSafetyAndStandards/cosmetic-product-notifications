@@ -20,22 +20,24 @@ main#main-content.govuk-main-wrapper role="main"
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Email content
-          .govuk-form-group
-            span.govuk-hint
-              | Upload the email as a file, or enter the subject and body below
-              = form.file_field :email_file, class: "govuk-file-upload"
+          = form.fields_for :email_file do |subform|
+            .govuk-form-group
+              span.govuk-hint
+                | Upload the email as a file, or enter the subject and body below
+              = subform.file_field :file, class: "govuk-file-upload"
           .govuk-form-group
             = form.label :email_subject, "Subject line", class: "govuk-label"
             = form.text_field :email_subject, class: "govuk-input govuk-!-width-two-thirds"
           .govuk-form-group
             = form.label :details, "Body", class: "govuk-label"
             = form.text_area :details, rows: 5, class: "govuk-textarea"
-        fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            | Attachments
-          .govuk-form-group
-            = form.file_field :email_attachment, class: "govuk-file-upload"
-          .govuk-form-group#attachment-description style=("display: none;")
-            = form.label :attachment_description, "Attachment description", class: "govuk-label"
-            = form.text_area :attachment_description, rows: 5, class: "govuk-textarea"
-          = form.submit "Continue", class: "govuk-button"
+        = form.fields_for :email_attachment do |subform|
+          fieldset.govuk-fieldset
+            legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+              | Attachments
+            .govuk-form-group
+              = subform.file_field :file, class: "govuk-file-upload"
+            .govuk-form-group#attachment-description style=("display: none;")
+              = subform.label :description, "Attachment description", class: "govuk-label"
+              = subform.text_area :description, rows: 5, class: "govuk-textarea"
+        = form.submit "Continue", class: "govuk-button"

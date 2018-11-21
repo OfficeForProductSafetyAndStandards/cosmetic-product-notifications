@@ -33,38 +33,32 @@ module FileConcern
 
   def load_file_attachments
     attachment_names.map do |name|
-      specific_file_params = file_params(name)[name]
-
-      unless specific_file_params.present?
-        if session[name].present?
-          return ActiveStorage::Blob.find_by(id: session[name])
-        else
-          return
-        end
+      attachment_params = get_attachment_params(name)
+      if attachment_params.present?
+        file = ActiveStorage::Blob.create_after_upload!(
+            io: attachment_params[:file],
+            filename: attachment_params[:file].original_filename,
+            content_type: attachment_params[:file].content_type,
+            metadata: attachment_params.except(:file).to_h
+        )
+        session[name] = file.id
+        file.analyze_later
+        file
+      elsif session[name].present?
+        ActiveStorage::Blob.find_by(id: session[name])
       end
-
-      specific_metadata_params = specific_file_params.except(:file, name)
-      file = ActiveStorage::Blob.create_after_upload!(
-          io: specific_file_params,
-          filename: specific_file_params.original_filename,
-          content_type: specific_file_params.content_type,
-          metadata: specific_metadata_params.to_h
-      )
-      session[name] = file.id
-      file.analyze_later
-      file
     end
   end
-  
+
   def update_file_details(file, attachment_name)
     file.metadata.update(file_metadata_params(attachment_name))
     file.metadata["updated"] = Time.current
   end
 
-  def file_params(attachment_name)
-    return {} if params[file_params_key].blank?
+  def get_attachment_params(attachment_name)
+    return {} if params[file_params_key].blank? || params[file_params_key][attachment_name].blank?
 
-    params.require(file_params_key).permit(:file, attachment_name, :title, :description, :document_type, :other_type)
+    params.require(file_params_key).require(attachment_name).permit(:file, :title, :description, :document_type, :other_type)
   end
 
   def check_correct_usage
