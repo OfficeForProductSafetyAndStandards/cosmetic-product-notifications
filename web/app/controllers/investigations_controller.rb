@@ -15,23 +15,6 @@ class InvestigationsController < ApplicationController
       r[:record] = @answer.records.find_by(id: r._id)
       r
     end
-
-    p '============================================================='
-
-    # results.results.each do |r|
-    #   if query_params[:q].present?
-    #     if r.highlight
-    #       p r
-    #       r.highlight.each do |a|
-    #         p a
-    #       end
-    #       p r._id
-    #     end
-    #   end
-    # end
-    p @results.first
-    p @results.first[:record]
-    p '============================================================='
   end
 
   # GET /investigations/1

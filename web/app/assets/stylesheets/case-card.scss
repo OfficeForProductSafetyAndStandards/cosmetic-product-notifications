@@ -25,4 +25,13 @@
       border:  1px solid currentColor;
     }
   }
+
+  $highlight: govuk-colour("yellow");
+  & em {
+    font-style: normal;
+    border-bottom: 3px solid $highlight;
+    margin-right: 1px;
+    background-color: lighten( $highlight, 25% );
+    padding: 2px 0px 0px;
+  }
 }
