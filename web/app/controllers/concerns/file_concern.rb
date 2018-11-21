@@ -61,7 +61,8 @@ module FileConcern
     file = ActiveStorage::Blob.create_after_upload!(
       io: evaluated_file_params,
       filename: evaluated_file_params.original_filename,
-      content_type: evaluated_file_params.content_type
+      content_type: evaluated_file_params.content_type,
+      metadata: file_metadata_params(attachment_name).to_h
     )
     session[attachment_name] = file.id
     file.analyze_later
@@ -92,8 +93,7 @@ module FileConcern
   end
 
   def update_file_details(file, attachment_name = attachment_names.first)
-    file_metadata = file_params(attachment_name).merge(attachment_name: attachment_name)
-    file.metadata.update(file_metadata)
+    file.metadata.update(file_metadata_params(attachment_name))
     file.metadata["updated"] = Time.current
   end
 
@@ -124,5 +124,9 @@ module FileConcern
       file.metadata.update(new_metadata)
       file.save
     end
+  end
+
+  def file_metadata_params(attachment_name = attachment_names.first)
+    file_params.except(:file, attachment_name)
   end
 end

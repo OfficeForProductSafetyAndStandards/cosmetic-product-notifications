@@ -1,19 +1,8 @@
-module Clamby
-  # TODO: fix this properly by submitting a PR to Clamby
-  def self.system_command(path)
-    command = [].tap do |cmd|
-      cmd << 'clamdscan'
-      cmd << '--config-file=clamav/clamd.conf' if Rails.env.production?
-      cmd << path
-      cmd << '--no-summary'
-    end
-    command
-  end
-end
-
 class AntiVirusAnalyzer < ActiveStorage::Analyzer
   def initialize(blob)
-    Clamby.configure(daemonize: false)
+    config = { daemonize: true }
+    config[:config_file] = "clamav/clamd.conf" if Rails.env.production?
+    Clamby.configure(config)
     super(blob)
   end
 

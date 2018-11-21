@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_09_145423) do
+ActiveRecord::Schema.define(version: 2018_11_15_165509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,26 +151,6 @@ ActiveRecord::Schema.define(version: 2018_11_09_145423) do
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
 
-  create_table "pghero_query_stats", force: :cascade do |t|
-    t.bigint "calls"
-    t.datetime "captured_at"
-    t.text "database"
-    t.text "query"
-    t.bigint "query_hash"
-    t.float "total_time"
-    t.text "user"
-    t.index ["database", "captured_at"], name: "index_pghero_query_stats_on_database_and_captured_at"
-  end
-
-  create_table "pghero_space_stats", force: :cascade do |t|
-    t.datetime "captured_at"
-    t.text "database"
-    t.text "relation"
-    t.text "schema"
-    t.bigint "size"
-    t.index ["database", "captured_at"], name: "index_pghero_space_stats_on_database_and_captured_at"
-  end
-
   create_table "products", id: :serial, force: :cascade do |t|
     t.string "batch_number"
     t.string "brand"
@@ -214,6 +194,20 @@ ActiveRecord::Schema.define(version: 2018_11_09_145423) do
     t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
+  create_table "tests", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "date"
+    t.text "details"
+    t.integer "investigation_id"
+    t.string "legislation"
+    t.integer "product_id"
+    t.string "result"
+    t.string "type"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_tests_on_investigation_id"
+    t.index ["product_id"], name: "index_tests_on_product_id"
+  end
+
   add_foreign_key "activities", "businesses"
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"
@@ -223,4 +217,6 @@ ActiveRecord::Schema.define(version: 2018_11_09_145423) do
   add_foreign_key "hazards", "investigations"
   add_foreign_key "incidents", "investigations"
   add_foreign_key "reporters", "investigations"
+  add_foreign_key "tests", "investigations"
+  add_foreign_key "tests", "products"
 end

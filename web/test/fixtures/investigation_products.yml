@@ -9,3 +9,7 @@ two:
 three:
   investigation: two
   product: two
+
+four:
+  investigation: search_related_products
+  product: iphone
