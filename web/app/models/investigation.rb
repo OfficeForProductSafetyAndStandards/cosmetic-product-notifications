@@ -53,7 +53,45 @@ class Investigation < ApplicationRecord
   after_create :create_audit_activity_for_case
 
   def as_indexed_json(*)
-    as_json.merge(status: status.downcase)
+    as_json(
+      methods: :pretty_id,
+      only: %i[question_title description is_closed],
+      include: {
+        documents: {
+          methods: %i[title description filename]
+        },
+        images: {
+          include: {
+            blob: {
+              only: %i[metadata filename]
+            }
+          }
+        },
+        correspondences: {},
+        activities: {
+          methods: :search_index,
+          only: []
+        },
+        businesses: {
+          only: %i[company_name company_number]
+        },
+        hazard: {
+          only: :description
+        },
+        incidents: {
+          only: :description
+        },
+        products: {
+          only: %i[batch_number brand description gtin model name]
+        },
+        reporter: {
+          only: %i[name phone_number email_address other_details]
+        },
+        tests: {
+          only: %i[details result]
+        }
+      }
+    )
   end
 
   def status

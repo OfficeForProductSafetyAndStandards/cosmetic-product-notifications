@@ -23,9 +23,9 @@ module InvestigationsHelper
   def get_status_filter
     return {} if params[:status_open] == params[:status_closed]
 
-    return { status: 'open' } if params[:status_open] == "checked"
+    return { is_closed: false } if params[:status_open] == "checked"
 
-    { status: 'closed' }
+    { is_closed: true }
   end
 
   def query_params
