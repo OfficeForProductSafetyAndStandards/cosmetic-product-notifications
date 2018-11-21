@@ -29,8 +29,8 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/investigations\/\d+/)
-    # assert_text @corrective_action.summary
-    # assert_text "Corrective action recorded"
+    assert_text @corrective_action.summary
+    assert_text "Corrective action recorded"
   end
 
   test "can go back to the edit page from the confirmation page and not lose data" do
@@ -93,8 +93,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     attachment_description = "Test attachment description"
 
     fill_in_basic_details
-    attach_file "corrective_action[file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
-    fill_in "Attachment description", with: attachment_description
+    add_attachment filename: attachment_filename, description: attachment_description
     click_on "Continue"
 
     assert_text "Confirm corrective action details"
@@ -103,8 +102,24 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/investigations\/\d+/)
-    # assert_text "Attached: #{attachment_filename}"
-    # assert_text "View attachment"
+    assert_text "Attached: #{attachment_filename}"
+    assert_text "View attachment"
+  end
+
+  test "corrective action attachment is added to the case attachments" do
+    attachment_filename = "new_risk_assessment.txt"
+    attachment_description = "Test attachment description"
+
+    fill_in_basic_details
+    add_attachment filename: attachment_filename, description: attachment_description
+    click_on "Continue"
+    click_on "Continue"
+
+    assert_current_path(/investigations\/\d+/)
+    click_on "Attachments"
+
+    assert_text @corrective_action.summary
+    assert_text attachment_description
   end
 
   test "attachment description field is not visible when no file is selected" do
@@ -126,5 +141,10 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     fill_in "Day", with: @corrective_action.date_decided.day
     fill_in "Month", with: @corrective_action.date_decided.month
     fill_in "Year", with: @corrective_action.date_decided.year
+  end
+
+  def add_attachment(filename:, description:)
+    attach_file "corrective_action[file]", Rails.root + "test/fixtures/files/#{filename}"
+    fill_in "Attachment description", with: description
   end
 end

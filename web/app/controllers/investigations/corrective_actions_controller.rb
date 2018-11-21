@@ -97,6 +97,14 @@ private
                                               :year)
   end
 
+  def file_metadata_params
+    super.merge(
+      title: @corrective_action.summary,
+      other_type: "Corrective action document",
+      document_type: :other
+    )
+  end
+
   def get_file_params_key
     :corrective_action
   end
