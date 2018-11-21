@@ -14,7 +14,7 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def create
-    attach_file_to_list(@file, @correspondence.documents)
+    attach_blobs_to_list(@file, @correspondence.documents)
     @investigation.correspondences << @correspondence
     @investigation.save
     AuditActivity::Correspondence::Add.from(@correspondence, @investigation)

@@ -7,7 +7,7 @@ module ImagesHelper
   end
 
   def save_file
-    file = attach_file_to_list(@file_blob, file_collection)
+    file = attach_blobs_to_list(@file_blob, file_collection)
     audit_class::Add.from(file, @parent) if @parent.class == Investigation
     redirect_to @parent
   end

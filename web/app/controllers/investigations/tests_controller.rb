@@ -79,8 +79,8 @@ private
   end
 
   def attach_files
-    attach_file_to_list(@file, @test.documents)
-    attach_file_to_list(@file, @investigation.documents)
+    attach_blobs_to_list(@file, @test.documents)
+    attach_blobs_to_list(@file, @investigation.documents)
   end
 
   def test_params

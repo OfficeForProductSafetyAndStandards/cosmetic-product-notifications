@@ -55,37 +55,11 @@ module FileConcern
       file
     end
   end
-
-  def attach_files_to_list(documents, files = {})
-    files.each do |attachment_name, file|
-      attach_file_to_list(file, documents, attachment_name)
-    end
-  end
-
-  def attach_file_to_list(file, attachment_list, attachment_name)
-    return unless file
-
-    update_file_details(file, attachment_name)
-    attachments = attachment_list.attach(file)
-    attachment = attachments.last
-    attachment.blob.save
-    attachment
-  end
-
-  def attach_file_to_attachment_slot(file, attachment_slot, attachment_name)
-    return unless file
-
-    update_file_details(file, attachment_name)
-    attachment_slot.detach if attachment_slot.attached?
-    attachment_slot.attach(file)
-    attachment_slot.blob.save
-  end
-
+  
   def update_file_details(file, attachment_name)
     file.metadata.update(file_metadata_params(attachment_name))
     file.metadata["updated"] = Time.current
   end
-
 
   def file_params(attachment_name)
     return {} if params[file_params_key].blank?
@@ -119,5 +93,19 @@ module FileConcern
   def max_file_byte_size
     # If you want your controller to allow different max size, override this
     100.megabytes
+  end
+
+  def attach_blobs_to_list(*blobs, documents)
+    blobs.each do |blob|
+      attachments = documents.attach(blob)
+      attachment = attachments.last
+      attachment.blob.save
+    end
+  end
+
+  def attach_blob_to_attachment_slot(blob, attachment_slot)
+    attachment_slot.detach if attachment_slot.attached?
+    attachment_slot.attach(blob)
+    attachment_slot.blob.save
   end
 end
