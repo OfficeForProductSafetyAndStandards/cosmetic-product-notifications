@@ -22,9 +22,7 @@ private
 
   def purge_blob
     attachments = ActiveStorage::Attachment.where(blob_id: @blob.id)
-    attachments.each do |att|
-      att.destroy
-    end
+    attachments.each(&:destroy)
     @blob.purge
   end
 end
