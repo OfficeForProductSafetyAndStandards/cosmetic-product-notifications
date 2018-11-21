@@ -4,7 +4,7 @@ class InvestigationIAssigneeTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
     visit assign_investigation_path(investigations(:one))
-    Investigation.import force: true 
+    Investigation.import force: true
   end
 
   teardown do
