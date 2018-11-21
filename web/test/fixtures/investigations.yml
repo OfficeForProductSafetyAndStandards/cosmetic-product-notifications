@@ -17,5 +17,5 @@ no_products:
   is_closed: false
 
 search_related_products:
-  description: Investigation_for_search_by_product
+  description: Investigation for search by product
   is_closed: false
