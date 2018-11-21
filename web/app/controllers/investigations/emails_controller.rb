@@ -87,6 +87,7 @@ private
     }
   end
 
+  # TODO push this into params
   def email_file_metadata
     {
       title: correspondence_params[:overview],
@@ -94,6 +95,7 @@ private
     }
   end
 
+  # TODO push this into params
   def email_attachment_metadata
     {
       title: correspondence_params[:overview],

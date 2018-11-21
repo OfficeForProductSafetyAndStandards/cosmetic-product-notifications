@@ -1,5 +1,8 @@
 class Investigations::TestsController < ApplicationController
   include FileConcern
+  set_attachment_names :file
+  set_file_params_key :test
+
   include Wicked::Wizard
   steps :details, :confirmation
 
@@ -107,10 +110,7 @@ private
     params.dig(:test, :is_result) == "true" ? Test::Result.name : Test::Request.name
   end
 
-  def get_file_params_key
-    :test
-  end
-
+  # TODO push this into params
   def file_metadata_params
     if @test.requested?
       title = "Test requested: #{@test.product.name}"
