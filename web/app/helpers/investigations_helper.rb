@@ -23,20 +23,21 @@ module InvestigationsHelper
 
   def get_status_filter
     return {} if params[:status_open] == params[:status_closed]
-    if params[:status_open] == "checked"
-      status = { status: 'open' }
-    else
-      status = { status: 'closed' }
-    end
-    {must: {term: status}}
+
+    status = if params[:status_open] == "checked"
+               { status: 'open' }
+             else
+               { status: 'closed' }
+             end
+    { must: { term: status } }
   end
 
   def get_assignee_filter
     assignees = []
     excluded_assignees = []
 
-    if  params[:assigned_to_me] == "checked" &&
-    params[:assigned_to_someone_else] == "unchecked"
+    if params[:assigned_to_me] == "checked" &&
+        params[:assigned_to_someone_else] == "unchecked"
       assignees << current_user.id
     end
 
@@ -61,12 +62,12 @@ module InvestigationsHelper
 
     assignee_terms = format_assignee_terms(assignees)
     excluded_assignee_terms = format_assignee_terms(excluded_assignees)
-    {should: assignee_terms, must_not: excluded_assignee_terms}
+    { should: assignee_terms, must_not: excluded_assignee_terms }
   end
 
-  def format_assignee_terms (assignee_array)
+  def format_assignee_terms(assignee_array)
     assignee_array.map do |a|
-      {term: {assignee_id: a}}
+      { term: { assignee_id: a } }
     end
   end
 
