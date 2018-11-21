@@ -113,10 +113,10 @@ private
 
   def file_metadata_params
     if @test.requested?
-      title = "Test requested: #{@test.product.name}"
+      title = "Test requested: #{@test.product&.name}"
       document_type = "test_request"
     else
-      title = "#{@test.result.capitalize} test: #{@test.product.name}"
+      title = "#{@test.result&.capitalize} test: #{@test.product&.name}"
       document_type = "test_results"
     end
     super.merge(title: title, document_type: document_type)
