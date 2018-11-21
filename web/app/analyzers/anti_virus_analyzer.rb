@@ -13,8 +13,7 @@ class AntiVirusAnalyzer < ActiveStorage::Analyzer
   def metadata
     download_blob_to_tempfile do |file|
       is_safe = Clamby.safe? file.path
-      sleep(10)
-      purge_blob unless is_safe && false
+      purge_blob unless is_safe
       { safe: is_safe }
     end
   end
