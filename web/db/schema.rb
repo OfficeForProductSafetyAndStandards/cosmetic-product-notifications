@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_102901) do
+ActiveRecord::Schema.define(version: 2018_11_15_165509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,20 @@ ActiveRecord::Schema.define(version: 2018_11_07_102901) do
     t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
+  create_table "tests", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "date"
+    t.text "details"
+    t.integer "investigation_id"
+    t.string "legislation"
+    t.integer "product_id"
+    t.string "result"
+    t.string "type"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_tests_on_investigation_id"
+    t.index ["product_id"], name: "index_tests_on_product_id"
+  end
+
   add_foreign_key "activities", "businesses"
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"
@@ -201,4 +215,6 @@ ActiveRecord::Schema.define(version: 2018_11_07_102901) do
   add_foreign_key "hazards", "investigations"
   add_foreign_key "incidents", "investigations"
   add_foreign_key "reporters", "investigations"
+  add_foreign_key "tests", "investigations"
+  add_foreign_key "tests", "products"
 end
