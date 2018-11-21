@@ -5,6 +5,7 @@ class CorrectiveActionTest < ActiveSupport::TestCase
     @investigation = investigations(:one)
     @business = businesses(:one)
     @product = products(:one)
+    sign_in_as_user
   end
 
   test "requires an associated investigation, business and product" do
@@ -32,11 +33,20 @@ class CorrectiveActionTest < ActiveSupport::TestCase
     assert corrective_action.save, "unexpected validation errors encountered when saving the record"
   end
 
-  test "requires the date decided to not be in the future" do
+  test "requires the date to not be in the future" do
     corrective_action = CorrectiveAction.create(investigation: @investigation, business: @business, product: @product, summary: "Test summary")
     corrective_action.date_decided = Date.tomorrow
     assert_not corrective_action.save, "expected validation errors when saving the record"
     corrective_action.date_decided = Date.today
     assert corrective_action.save, "unexpected validation errors encountered when saving the record"
+  end
+
+  test "creates an associated activity when created" do
+    assert_difference "Activity.count" do
+      corrective_action = CorrectiveAction.create(investigation: @investigation, business: @business, product: @product, summary: "Test summary", date_decided: "2018-11-15")
+      corrective_action.save!
+    end
+
+    assert Activity.last.is_a? AuditActivity::CorrectiveAction::Add
   end
 end
