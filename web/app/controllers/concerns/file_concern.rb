@@ -46,8 +46,11 @@ module FileConcern
   end
 
   def update_file_details(file)
+    return unless file
+
     file.metadata.update(file_metadata_params)
     file.metadata["updated"] = Time.current
+    file.save
   end
 
   def validate_blob_size(blob, errors, allowed_size = max_file_byte_size)

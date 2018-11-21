@@ -71,6 +71,7 @@ private
 
   def test_valid?
     @test.validate(step)
+    update_file_details(@file)
     validate_blob_size(@file, @test.errors)
     @test.errors.empty?
   end
