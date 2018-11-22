@@ -22,10 +22,16 @@ class FilesController < ApplicationController
 
   # PATCH/PUT /documents/1
   def update
-    validate
-    return render :edit if @errors.present?
+    @previous_data = {
+        title: @file.metadata[:title],
+        description: @file.metadata[:description]
+    }
 
-    update_file
+    update_blob_metadata(@file, get_attachment_metadata_params(:file))
+    return render :edit unless file_valid?
+
+    @file.save
+    audit_class::Update.from(@file, @parent, @previous_data) if @parent.class == Investigation
     redirect_to @parent
   end
 
@@ -39,31 +45,18 @@ class FilesController < ApplicationController
 private
 
   def set_file
-    if params[:id].present?
-      @file = file_collection.find(params[:id])
-      @file_blob = @file.blob
-    end
+    @file = file_collection.find(params[:id]) if params[:id].present?
   end
 
-  def validate
+  def file_valid?
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
-    if get_attachment_metadata_params(:file)[:title].blank?
-      @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
-    end
-    if get_attachment_metadata_params(:file)[:file].blank? && !@file
+    if @file.blank? || @file.blob.blank?
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end
-    validate_blob_sizes(@file_blob, @errors)
-  end
-
-  def update_file
-    @previous_data = {
-      title: @file.metadata[:title],
-      description: @file.metadata[:description]
-    }
-    @file_blob.metadata.update(get_attachment_metadata_params(:file))
-    @file_blob.metadata["updated"] = Time.current
-    audit_class::Update.from(@file, @parent, @previous_data) if @parent.class == Investigation
-    @file_blob.save
+    if @file.metadata[:title].blank?
+      @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
+    end
+    validate_blob_size(@file, @errors, "file")
+    @errors.empty?
   end
 end
