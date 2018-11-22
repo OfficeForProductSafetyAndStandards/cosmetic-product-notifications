@@ -17,18 +17,18 @@ h1.govuk-heading-xl
             | Which product should be tested?
           - else
             | Which product was tested?
-        - if @investigation.products.empty?
-          span.govuk-hint
-            ' There are no products on this case.
-            = link_to "Add a product", new_investigation_product_path(@investigation)
-            |  to send it for testing.
-        - else
           .govuk-form-group class=("govuk-form-group--error" if @test.errors[:product].any?)
-            span.govuk-hint
-              ' Only products already added to the case are listed.
-              = link_to "Add a product", new_investigation_product_path(@investigation)
-            = form.collection_select :product_id, @investigation.products, :id, :name, { include_blank: true },
-                    class: "govuk-select", id: "product-picker"
+            - if @investigation.products.empty?
+              span.govuk-hint
+                ' There are no products on this case.
+                = link_to "Add a product", new_investigation_product_path(@investigation)
+                |  to send it for testing.
+            - else
+              span.govuk-hint
+                ' Only products already added to the case are listed.
+                = link_to "Add a product", new_investigation_product_path(@investigation)
+              = form.collection_select :product_id, @investigation.products, :id, :name, { include_blank: true },
+                      class: "govuk-select", id: "product-picker"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Against which legislation?
