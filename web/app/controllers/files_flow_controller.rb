@@ -37,7 +37,7 @@ private
     if @file_blob.blank? && step == :upload
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end
-    if @file_blob.metadata[:title].blank? && step != :upload
+    if @file_blob && @file_blob.metadata[:title].blank? && step != :upload
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
     validate_blob_size(@file_blob, @errors, "file") if step == :upload

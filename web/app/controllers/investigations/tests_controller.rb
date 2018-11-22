@@ -33,10 +33,10 @@ class Investigations::TestsController < ApplicationController
   # POST /tests
   def create
     update_attachment
-    if test_valid? && @test.save
-      attach_files
+    if test_saved?
       save_attachment
-      redirect_to investigation_url(@investigation), notice: "#{@test.pretty_name.capitalize} was successfully recorded."
+      redirect_to investigation_url(@investigation),
+                    notice: "#{@test.pretty_name.capitalize} was successfully recorded."
     else
       render step
     end
@@ -69,34 +69,40 @@ private
   end
 
   def set_attachment
-    @file, * = load_file_attachments
+    @file_blob, * = load_file_attachments
   end
 
   def update_attachment
-    update_blob_metadata @file, file_metadata
+    update_blob_metadata @file_blob, file_metadata
   end
 
   def store_test
     session[:test] = @test.attributes
   end
 
+  def test_saved?
+    return false unless test_valid?
+    attach_files
+    @test.save
+  end
+
   def test_valid?
     @test.validate(step)
-    validate_blob_size(@file, @test.errors, "file")
+    validate_blob_size(@file_blob, @test.errors, "file")
     @test.errors.empty?
   end
 
   def attach_files
-    attach_blobs_to_list(@file, @test.documents)
-    attach_blobs_to_list(@file, @investigation.documents)
+    attach_blobs_to_list(@file_blob, @test.documents)
+    attach_blobs_to_list(@file_blob, @investigation.documents)
   end
 
   def save_attachment
-    @file.save if @file
+    @file_blob.save if @file_blob
   end
 
   def test_params
-    session_params.merge(request_params)
+    session_params.merge(request_params).to_h.except(:description)
   end
 
   def session_params
@@ -125,10 +131,10 @@ private
   # TODO push this into params
   def file_metadata
     if @test.requested?
-      title = "Test requested: #{@test.product.name}"
+      title = "Test requested: #{@test.product&.name}"
       document_type = "test_request"
     else
-      title = "#{@test.result.capitalize} test: #{@test.product.name}"
+      title = "#{@test.result&.capitalize} test: #{@test.product&.name}"
       document_type = "test_results"
     end
     get_attachment_metadata_params(:file).merge(title: title, document_type: document_type)

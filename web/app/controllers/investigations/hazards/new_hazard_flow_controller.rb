@@ -1,9 +1,8 @@
 class Investigations::Hazards::NewHazardFlowController < Investigations::Hazards::FlowController
-  include FileConcern
   set_attachment_names :file
   set_file_params_key :hazard
 
-private
+  private
 
   def preload_hazard(investigation)
     @hazard = Hazard.new

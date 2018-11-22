@@ -18,20 +18,21 @@ class FilesController < ApplicationController
   end
 
   # GET /documents/1/edit
-  def edit; end
+  def edit
+  end
 
   # PATCH/PUT /documents/1
   def update
-    @previous_data = {
+    previous_data = {
         title: @file.metadata[:title],
         description: @file.metadata[:description]
     }
+    update_blob_metadata(@file.blob, get_attachment_metadata_params(:file))
 
-    update_blob_metadata(@file, get_attachment_metadata_params(:file))
     return render :edit unless file_valid?
 
-    @file.save
-    audit_class::Update.from(@file, @parent, @previous_data) if @parent.class == Investigation
+    @file.blob.save
+    audit_class::Update.from(@file, @parent, previous_data) if @parent.class == Investigation
     redirect_to @parent
   end
 

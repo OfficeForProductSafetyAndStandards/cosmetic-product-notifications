@@ -5,12 +5,12 @@
         = render "documents/document_image", document: document
       .govuk-grid-column-two-thirds
         h2.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-          = document.blob.metadata[:title]
+          = document.metadata[:title]
         span.govuk-caption-m[class="govuk-!-font-size-16"]
           = formatted_file_updated_date(document)
         br
         p
-          = document.blob.metadata[:description]
+          = document.metadata[:description]
         p
           = link_to "View #{document_file_extension(document) + ' ' if document_file_extension document}document",
                   document, class: "govuk-link mspsds-block-link", target: '_blank'

@@ -14,9 +14,8 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def create
-    @file_blob.metadata.update(get_attachment_metadata_params(:file))
-    @file_blob.metadata["updated"] = Time.current
-    attach_blobs_to_list(@file, @correspondence.documents)
+    update_blob_metadata(@file_blob, get_attachment_metadata_params(:file))
+    attach_blobs_to_list(@file_blob, @correspondence.documents)
     @investigation.correspondences << @correspondence
     @investigation.save
     AuditActivity::Correspondence::Add.from(@correspondence, @investigation)
@@ -29,7 +28,7 @@ class Investigations::CorrespondenceController < ApplicationController
 
   def update
     @correspondence.validate(step)
-    validate_blob_sizes(@file, @correspondence.errors)
+    validate_blob_size(@file_blob, @correspondence.errors, "file")
     if @correspondence.errors.any?
       render step
     else
@@ -57,7 +56,7 @@ private
 
   def load_relevant_objects
     @investigation = Investigation.find_by(id: params[:investigation_id])
-    @file, * = load_file_attachments
+    @file_blob, * = load_file_attachments
     load_correspondence
   end
 

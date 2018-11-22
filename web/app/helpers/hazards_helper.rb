@@ -1,19 +1,19 @@
 module HazardsHelper
   def update_risk_assessment
-    return unless @file
+    return unless @file_blob
 
-    update_blob_metadata(@file, {})
-    attach_blob_to_attachment_slot(@file, @hazard.risk_assessment)
-    @file.save
+    update_blob_metadata(@file_blob, {})
+    attach_blob_to_attachment_slot(@file_blob, @hazard.risk_assessment)
+    @file_blob.save
   end
 
   def load_relevant_objects
     @investigation = Investigation.find_by(id: params[:investigation_id])
-    @file, * = load_file_attachments
+    @file_blob, * = load_file_attachments
     set_hazard_data(@investigation)
 
-    if @file.blank? && @hazard.risk_assessment.attached?
-      @file = @hazard.risk_assessment.blob
+    if @file_blob.blank? && @hazard.risk_assessment.attached?
+      @file_blob = @hazard.risk_assessment.blob
     end
   end
 
