@@ -9,7 +9,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     @investigation_no_products = investigations(:no_products)
     @investigation_one.source = sources(:investigation_one)
     @investigation_one.hazard = hazards(:one)
-    Investigation.import
+    Investigation.import force: true
   end
 
   teardown do

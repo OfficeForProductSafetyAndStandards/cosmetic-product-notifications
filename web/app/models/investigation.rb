@@ -5,7 +5,7 @@ class Investigation < ApplicationRecord
 
   attr_accessor :priority_rationale, :status_rationale
 
-  enum priority: %i[low medium high], _suffix: true
+  enum priority: %i[low medium high]
 
   validates :question_title, presence: true, on: :question_details
   validate :validate_assignment, :validate_priority
@@ -62,11 +62,7 @@ class Investigation < ApplicationRecord
           methods: %i[title description filename]
         },
         images: {
-          include: {
-            blob: {
-              only: %i[metadata filename]
-            }
-          }
+          methods: %i[title description filename]
         },
         correspondences: {},
         activities: {
@@ -211,4 +207,4 @@ private
   end
 end
 
-Investigation.import force: true # for auto sync model with elastic search
+Investigation.import force: true if Rails.env.development? # for auto sync model with elastic search

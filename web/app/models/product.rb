@@ -28,4 +28,4 @@ class Product < ApplicationRecord
   end
 end
 
-Product.import force: true # for auto sync model with elastic search
+Product.import force: true if Rails.env.development? # for auto sync model with elastic search

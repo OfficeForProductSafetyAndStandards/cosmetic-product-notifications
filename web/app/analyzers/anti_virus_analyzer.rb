@@ -21,7 +21,8 @@ class AntiVirusAnalyzer < ActiveStorage::Analyzer
 private
 
   def purge_blob
-    attachment = ActiveStorage::Attachment.find_by blob_id: @blob.id
-    attachment.purge
+    attachments = ActiveStorage::Attachment.where(blob_id: @blob.id)
+    attachments.each(&:destroy)
+    @blob.purge
   end
 end
