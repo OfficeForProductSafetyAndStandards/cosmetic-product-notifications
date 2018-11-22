@@ -134,8 +134,8 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
 
   def fill_in_basic_details
     fill_in "corrective_action_summary", with: @corrective_action.summary
-    fill_in "corrective_action_legislation", with: @corrective_action.legislation
     fill_in "corrective_action_details", with: @corrective_action.details
+    fill_in "legislation-picker", with: @corrective_action.legislation
     fill_in "business-picker", with: @corrective_action.business.company_name
     fill_in "product-picker", with: @corrective_action.product.name
     fill_in "Day", with: @corrective_action.date_decided.day
