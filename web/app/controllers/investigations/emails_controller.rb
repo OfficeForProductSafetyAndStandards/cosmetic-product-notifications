@@ -19,9 +19,7 @@ class Investigations::EmailsController < ApplicationController
 
   def create
     update_attachments
-    @correspondence.validate(steps.last)
-    validate_attachments @correspondence.errors
-    if @correspondence.errors.empty? && @correspondence.save
+    if correspondence_valid? && @correspondence.save
       attach_files
       save_attachments
       AuditActivity::Correspondence::AddEmail.from(@correspondence, @investigation)
@@ -37,9 +35,7 @@ class Investigations::EmailsController < ApplicationController
 
   def update
     update_attachments
-    @correspondence.validate(step)
-    validate_attachments @correspondence.errors
-    if @correspondence.errors.empty?
+    if correspondence_valid?
       save_attachments
       redirect_to next_wizard_path
     else
@@ -74,9 +70,11 @@ class Investigations::EmailsController < ApplicationController
     update_blob_metadata @email_attachment, email_attachment_metadata
   end
 
-  def validate_attachments(errors)
-    validate_blob_size(@email_file, errors, "email file")
-    validate_blob_size(@email_attachment, errors, "email attachment")
+  def correspondence_valid?
+    @correspondence.validate(step || steps.last)
+    validate_blob_size(@email_file, @correspondence.errors, "email file")
+    validate_blob_size(@email_attachment, @correspondence.errors, "email attachment")
+    @correspondence.errors.empty?
   end
 
   def attach_files
@@ -98,8 +96,8 @@ class Investigations::EmailsController < ApplicationController
     return {} if params[:correspondence].blank?
 
     params.require(:correspondence).permit(
-    :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
-    :overview, :details, :email_direction, :email_subject, :attachment_description
+      :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
+      :overview, :details, :email_direction, :email_subject, :attachment_description
     )
   end
 
@@ -116,16 +114,20 @@ class Investigations::EmailsController < ApplicationController
   end
 
   def email_file_metadata
-    {
-      title: correspondence_params[:overview],
-      description: "Original email as a file"
-    }
+    get_attachment_metadata_params(:email_file).merge(
+        {
+            title: correspondence_params[:overview],
+            description: "Original email as a file"
+        }
+    )
   end
 
   def email_attachment_metadata
-    {
-      title: correspondence_params[:overview],
-      description: correspondence_params[:attachment_description]
-    }
+    get_attachment_metadata_params(:email_attachment).merge(
+      {
+        title: correspondence_params[:overview],
+        description: correspondence_params[:attachment_description]
+      }
+    )
   end
 end

@@ -32,8 +32,10 @@ class Investigations::TestsController < ApplicationController
 
   # POST /tests
   def create
-    attach_files
-    if @test.save
+    update_attachment
+    if test_valid? && @test.save
+      attach_files
+      save_attachment
       redirect_to investigation_url(@investigation), notice: "#{@test.pretty_name.capitalize} was successfully recorded."
     else
       render step
@@ -42,7 +44,9 @@ class Investigations::TestsController < ApplicationController
 
   # PATCH/PUT /tests/1
   def update
+    update_attachment
     if test_valid?
+      save_attachment
       redirect_to next_wizard_path
     else
       render step
@@ -68,19 +72,27 @@ private
     @file, * = load_file_attachments
   end
 
+  def update_attachment
+    update_blob_metadata @file, file_metadata
+  end
+
   def store_test
     session[:test] = @test.attributes
   end
 
   def test_valid?
     @test.validate(step)
-    validate_blob_sizes(@file, @test.errors)
+    validate_blob_size(@file, @test.errors, "file")
     @test.errors.empty?
   end
 
   def attach_files
     attach_blobs_to_list(@file, @test.documents)
     attach_blobs_to_list(@file, @investigation.documents)
+  end
+
+  def save_attachment
+    @file.save if @file
   end
 
   def test_params
@@ -111,7 +123,7 @@ private
   end
 
   # TODO push this into params
-  def file_metadata_params
+  def file_metadata
     if @test.requested?
       title = "Test requested: #{@test.product.name}"
       document_type = "test_request"
@@ -119,6 +131,6 @@ private
       title = "#{@test.result.capitalize} test: #{@test.product.name}"
       document_type = "test_results"
     end
-    super.merge(title: title, document_type: document_type)
+    get_attachment_metadata_params(:file).merge(title: title, document_type: document_type)
   end
 end
