@@ -29,7 +29,7 @@ module Investigations::DisplayTextHelper
 
   def get_highlight_content(highlight)
     highlighted_texts = highlight[1]
-    sanitized_content = sanitize(get_highlight_content(highlighted_texts.first), tags: %w(em))
+    sanitized_content = sanitize(highlighted_texts.first, tags: %w(em))
     sanitized_content.html_safe # rubocop:disable Rails/OutputSafety
   end
 end
