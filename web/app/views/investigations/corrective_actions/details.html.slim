@@ -27,7 +27,8 @@ h1.govuk-heading-xl
         .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:product].any?)
           - if @investigation.products.empty?
             span.govuk-hint
-              ' There are no products on this case.
+              | There are no products on this case.
+            span.govuk-hint
               = link_to "Add a product", new_investigation_product_path(@investigation)
               |  to record a corrective action.
           - else
