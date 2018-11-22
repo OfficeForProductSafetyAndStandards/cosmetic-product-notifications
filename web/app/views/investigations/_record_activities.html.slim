@@ -20,7 +20,8 @@ h2.govuk-heading-l
           = link_to "Record test result", new_result_investigation_tests_path(@investigation),
                   class: "mspsds-block-link"
         p
-          = link_to "Record corrective action", '#', class: "mspsds-block-link"
+          = link_to "Record corrective action", new_investigation_corrective_action_path(@investigation),
+                  class: "mspsds-block-link"
   .govuk-grid-column-one-third
     .govuk-form-group
       = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|

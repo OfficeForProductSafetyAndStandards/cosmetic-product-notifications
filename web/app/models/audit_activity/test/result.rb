@@ -1,7 +1,7 @@
 class AuditActivity::Test::Result < AuditActivity::Test::Base
-  def self.from(test, investigation)
+  def self.from(test)
     title = "#{test.result.capitalize} test: #{test.product.name}"
-    super(test, investigation, title)
+    super(test, title)
   end
 
   def self.date_label

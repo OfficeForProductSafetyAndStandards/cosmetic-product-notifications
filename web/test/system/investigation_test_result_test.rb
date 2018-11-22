@@ -77,7 +77,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text "Enter a real incident date"
+    assert_text("Date must be a valid date")
   end
 
   test "date with missing component shows an error" do
@@ -85,7 +85,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text "Enter date of incident and include a day, month and year"
+    assert_text("Date must specify a day, month and year")
   end
 
   test "can add an attachment to the test result" do
@@ -104,6 +104,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
 
     assert_current_path(/investigations\/\d+/)
     assert_text "Attached: #{attachment_filename}"
+    assert_text "View attachment"
   end
 
   test "attachment description field is not visible when no file is selected" do
@@ -117,8 +118,8 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
   end
 
   def fill_in_basic_details
-    fill_in "test_product_id", with: @test.product.name
-    fill_in "test_legislation", with: @test.legislation
+    fill_in "product-picker", with: @test.product.name
+    fill_in "legislation-picker", with: @test.legislation
     fill_in "test_details", with: @test.details
     fill_in "Day", with: @test.date.day
     fill_in "Month", with: @test.date.month
