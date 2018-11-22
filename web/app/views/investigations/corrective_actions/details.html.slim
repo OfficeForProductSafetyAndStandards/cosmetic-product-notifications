@@ -59,8 +59,8 @@ h1.govuk-heading-xl
             span.govuk-hint
               ' Only businesses already added to the case are listed.
               = link_to "Add a business", new_investigation_business_path(@investigation)
-            = form.collection_select :business_id, @investigation.businesses, :id, :company_name, { include_blank: true },
-                    class: "govuk-select", id: "business-picker"
+            = form.collection_select :business_id, @investigation.businesses, :id, :company_name,
+                    { include_blank: true }, class: "govuk-select", id: "business-picker"
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
