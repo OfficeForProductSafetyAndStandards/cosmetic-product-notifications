@@ -5,7 +5,7 @@ class InvestigationTest < ActiveSupport::TestCase
     sign_in_as_user
     @investigation = investigations(:search_related_products)
     @product = products(:iphone)
-    Investigation.import
+    Investigation.import force: true
   end
 
   teardown do
