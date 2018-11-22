@@ -43,8 +43,7 @@ h1.govuk-heading-xl
             | When did you request testing?
           - else
             | When was the test conducted?
-        .govuk-form-group class=("govuk-form-group--error" if @test.errors[:date].any?)
-          = render "date_input", form: form
+        = render "date_input", form: form
 
       - if !@test.requested?
         fieldset.govuk-fieldset
