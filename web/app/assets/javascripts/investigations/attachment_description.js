@@ -1,8 +1,4 @@
-/* globals simpleAccessibleAutocomplete */
 $(document).on('turbolinks:load', function () {
-  simpleAccessibleAutocomplete('test_product_id', { showAllValues: true });
-  simpleAccessibleAutocomplete('test_legislation', { showAllValues: true });
-
   var attachmentFileInput = document.getElementById('attachment-file-input');
   var attachmentDescription = document.getElementById('attachment-description');
   var currentAttachmentDetails = document.getElementById('current-attachment-details');
