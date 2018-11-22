@@ -2,7 +2,7 @@
 class SearchParams
   include ActiveModel::Model
 
-  attr_accessor :q, :sort, :direction, :status_open, :status_closed
+  attr_accessor :q, :sort, :direction, :status_open, :status_closed, :sort_by
 
   def initialize(attributes = {})
     attributes.keys.each { |name| class_eval { attr_accessor name } } # Add any additional query attributes to the model

@@ -15,6 +15,17 @@ module InvestigationsHelper
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
+  def sorting_params
+    case params[:sort_by]
+    when "newest"
+      { created_at: "desc" }
+    when "oldest"
+      { updated_at: "asc" }
+    else
+      { updated_at: "desc" }
+    end
+  end
+
   def filter_params
     filters = {}
     filters.merge(get_status_filter)
@@ -30,10 +41,15 @@ module InvestigationsHelper
 
   def query_params
     set_default_status_filter
-    params.permit(:q, :sort, :direction, :status_open, :status_closed, :page)
+    set_default_sort_by_filter
+    params.permit(:q, :sort, :direction, :status_open, :status_closed, :page, :sort_by)
   end
 
   def set_default_status_filter
     params[:status_open] = "checked" if params[:status_open].blank?
+  end
+
+  def set_default_sort_by_filter
+    params[:sort_by] = "recent" if params[:sort_by].blank?
   end
 end
