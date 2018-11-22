@@ -1,4 +1,7 @@
 - search_results.each do |search_result|
-  = render "case_card", search_result: search_result
+  - if search_result.respond_to?("highlight")
+    = render "highlight_card", investigation: search_result[:record], highlights: search_result.highlight
+  - else
+    = render "case_card", investigation: search_result[:record]
 - if search_results.empty?
   p[class="govuk-!-font-weight-bold"] = "No cases found."

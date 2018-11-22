@@ -7,11 +7,32 @@ module Investigations::DisplayTextHelper
     investigation.is_case ? 'report' : 'question'
   end
 
-  def get_highlight_title(search_result)
-    search_result.highlight.first[0]
+  def get_highlight(highlights)
+    highlight = pick_highlight(highlights)
+    {
+      label: get_highlight_title(highlight),
+      content: get_highlight_content(highlight)
+    }
   end
 
-  def get_highlight_content(search_result)
-    search_result.highlight.first[1][0]
+  def get_highlight_title(highlight)
+    field_name = highlight[0]
+    replace_unsightly_field_names(field_name).gsub('.', ', ').humanize
+  end
+
+  def replace_unsightly_field_names(field_name)
+    return "Case id" if field_name == "pretty_id"
+    field_name.gsub("search_index", "comment")
+  end
+
+  def get_highlight_content(highlight)
+    highlighted_texts = highlight[1]
+    highlighted_texts.first
+  end
+
+  private
+
+  def pick_highlight(highlights)
+    highlights.first
   end
 end

@@ -1,19 +1,12 @@
-- if !search_result.respond_to?("highlight")
-  .govuk-grid-row [class="mspsds-case-card "]
-    .govuk-grid-column-one-half
-      span.govuk-caption-m[class="govuk-!-font-size-14"] = "CASE #{search_result[:record].pretty_id}"
-      span = link_to search_result[:record].title, search_result[:record], class: "govuk-!-font-weight-bold"
-    .govuk-grid-column-one-quarter
-      span.govuk-caption-m[class="govuk-!-font-size-14"] = "Assigned to"
-      span = search_result[:record].assignee ? search_result[:record].assignee.full_name.to_s : "Unassigned"
-    .govuk-grid-column-one-quarter
-      span.govuk-caption-m[class="govuk-!-font-size-14"] = "Last updated"
-      span = search_result[:record].updated_at.strftime("%d/%m/%Y")
-- else
-  .govuk-grid-row [class="mspsds-case-card "]
-    .govuk-grid-column-one-half
-      span.govuk-caption-m[class="govuk-!-font-size-14"] = "CASE #{search_result[:record].pretty_id}"
-      span = link_to search_result[:record].title, search_result[:record], class: "govuk-!-font-weight-bold"
-    .govuk-grid-column-one-half
-      span.govuk-caption-m[class="govuk-!-font-size-14"] = get_highlight_title(search_result)
-      span = raw get_highlight_content(search_result)
+.govuk-grid-row class=(investigation.is_closed ? "mspsds-case-card mspsds-case-card--Closed" : "mspsds-case-card")
+  .govuk-grid-column-one-half
+    span.govuk-caption-m[class="govuk-!-font-size-14"] = "CASE #{investigation.pretty_id}"
+    span = link_to investigation.title, investigation
+    - if investigation.is_closed
+      span class="mspsds-case-card mspsds-case-card__status" = "CLOSED"
+  .govuk-grid-column-one-quarter
+    span.govuk-caption-m[class="govuk-!-font-size-14"] = "Assigned to"
+    span = investigation.assignee ? investigation.assignee.full_name.to_s : "Unassigned"
+  .govuk-grid-column-one-quarter
+    span.govuk-caption-m[class="govuk-!-font-size-14"] = "Last updated"
+    span = investigation.updated_at.strftime("%d/%m/%Y")
