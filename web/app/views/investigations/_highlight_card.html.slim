@@ -3,5 +3,7 @@
     span.govuk-caption-m[class="govuk-!-font-size-14"] = "CASE #{investigation.pretty_id}"
     span = link_to investigation.title, investigation, class: "govuk-!-font-weight-bold"
   .govuk-grid-column-one-half
-    span.govuk-caption-m[class="govuk-!-font-size-14"] = get_highlight(highlights)[:label]
-    span = raw get_highlight(highlights)[:content]
+    - get_displayable_highlights(highlights).each do |highlight|
+      span.govuk-caption-m[class="govuk-!-font-size-14"] = highlight[:label]
+      span = raw highlight[:content]
+      p

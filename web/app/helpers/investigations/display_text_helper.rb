@@ -7,12 +7,13 @@ module Investigations::DisplayTextHelper
     investigation.is_case ? 'report' : 'question'
   end
 
-  def get_highlight(highlights)
-    highlight = pick_highlight(highlights)
-    {
-      label: get_highlight_title(highlight),
-      content: get_highlight_content(highlight)
-    }
+  def get_displayable_highlights(highlights)
+    highlights.map do |highlight|
+      {
+        label: get_highlight_title(highlight),
+        content: get_highlight_content(highlight)
+      }
+    end
   end
 
   def get_highlight_title(highlight)
