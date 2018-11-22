@@ -23,6 +23,7 @@ module Investigations::DisplayTextHelper
 
   def replace_unsightly_field_names(field_name)
     return "Case id" if field_name == "pretty_id"
+
     field_name.gsub("search_index", "comment")
   end
 

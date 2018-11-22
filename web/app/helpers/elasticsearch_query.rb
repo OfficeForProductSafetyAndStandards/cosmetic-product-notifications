@@ -13,7 +13,7 @@ class ElasticsearchQuery
     search_query[:sort] = sort_params if sorting.present?
     search_query[:highlight] = {
       fields: {
-        :"*" => {}
+        "*": {}
       }
     }
     search_query
