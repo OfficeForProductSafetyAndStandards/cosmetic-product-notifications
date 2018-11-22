@@ -10,6 +10,11 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     @investigation_one.source = sources(:investigation_one)
     @investigation_one.hazard = hazards(:one)
     Investigation.import force: true
+    User.all
+    @investigation_one.assignee = User.find_by(last_name: "Admin")
+    @investigation_one.save
+    @investigation_two.assignee = User.find_by(last_name: "User")
+    @investigation_two.save
   end
 
   teardown do
@@ -52,15 +57,15 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should assign user to investigation" do
     id = User.first.id
-    investigation_assignee_id = lambda { Investigation.find(@investigation_one.id).assignee_id }
+    investigation_assignee_id = lambda { Investigation.find(@investigation_three.id).assignee_id }
     assert_changes investigation_assignee_id, from: nil, to: id do
-      put investigation_url(@investigation_one), params: {
+      put investigation_url(@investigation_three), params: {
         investigation: {
           assignee_id: id
         }
       }
     end
-    assert_redirected_to investigation_url(@investigation_one)
+    assert_redirected_to investigation_url(@investigation_three)
   end
 
   test "should set priority" do
@@ -178,15 +183,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should return all investigations if both assignee checkboxes are unchecked" do
-    User.all
-    admin_user = User.find_by(last_name: "Admin")
-    test_user = User.find_by(last_name: "User")
-
-    @investigation_one.assignee = admin_user
-    @investigation_one.save
-    @investigation_two.assignee = test_user
-    @investigation_two.save
-
     get investigations_path, params: {
         assigned_to_me: "unchecked",
         assigned_to_someone_else: "unchecked",
@@ -199,15 +195,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should return all investigations if both assignee checkboxes are checked and name input is blank" do
-    User.all
-    admin_user = User.find_by(last_name: "Admin")
-    test_user = User.find_by(last_name: "User")
-
-    @investigation_one.assignee = admin_user
-    @investigation_one.save
-    @investigation_two.assignee = test_user
-    @investigation_two.save
-
     get investigations_path, params: {
         assigned_to_me: "checked",
         assigned_to_someone_else: "checked",
@@ -221,15 +208,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should return investigations assigned to current user if only the 'Me' checkbox is checked" do
-    User.all
-    admin_user = User.find_by(last_name: "Admin")
-    test_user = User.find_by(last_name: "User")
-
-    @investigation_one.assignee = admin_user
-    @investigation_one.save
-    @investigation_two.assignee = test_user
-    @investigation_two.save
-
     get investigations_path, params: {
         assigned_to_me: "checked",
         assigned_to_someone_else: "unchecked",
@@ -244,15 +222,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should return investigations assigned to current user or given user if both checkboxes are checked
               and a user is given in the input" do
-    User.all
-    admin_user = User.find_by(last_name: "Admin")
-    test_user = User.find_by(last_name: "User")
-
-    @investigation_one.assignee = admin_user
-    @investigation_one.save
-    @investigation_two.assignee = test_user
-    @investigation_two.save
-
     get investigations_path, params: {
         assigned_to_me: "checked",
         assigned_to_someone_else: "checked",
@@ -267,15 +236,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should return investigations assigned to a given user if only 'someone else' checkbox is checked
               and a user is given in the input" do
-    User.all
-    admin_user = User.find_by(last_name: "Admin")
-    test_user = User.find_by(last_name: "User")
-
-    @investigation_one.assignee = admin_user
-    @investigation_one.save
-    @investigation_two.assignee = test_user
-    @investigation_two.save
-
     get investigations_path, params: {
         assigned_to_me: "unchecked",
         assigned_to_someone_else: "checked",
@@ -290,15 +250,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should return investigations assigned to anyone except current user if only 'someone else' checkbox
               is checked and no user is given in the input" do
-    User.all
-    admin_user = User.find_by(last_name: "Admin")
-    test_user = User.find_by(last_name: "User")
-
-    @investigation_one.assignee = admin_user
-    @investigation_one.save
-    @investigation_two.assignee = test_user
-    @investigation_two.save
-
     get investigations_path, params: {
         assigned_to_me: "unchecked",
         assigned_to_someone_else: "checked",
