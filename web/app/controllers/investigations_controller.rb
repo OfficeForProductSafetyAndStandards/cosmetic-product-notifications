@@ -12,8 +12,7 @@ class InvestigationsController < ApplicationController
     @answer = search_for_investigations(20)
     @investigations = @answer.records
     @results = @answer.results.map do |r|
-      r[:record] = @answer.records.find_by(id: r._id)
-      r
+      r.merge(record: @answer.records.find_by(id: r._id))
     end
   end
 

@@ -30,10 +30,4 @@ module Investigations::DisplayTextHelper
     highlighted_texts = highlight[1]
     highlighted_texts.first
   end
-
-  private
-
-  def pick_highlight(highlights)
-    highlights.first
-  end
 end
