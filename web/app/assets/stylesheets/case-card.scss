@@ -31,18 +31,19 @@
     border-bottom: 3px solid govuk-colour("yellow");
     margin-right: 1px;
     background-color: lighten( govuk-colour("yellow"), 25% );
-    padding: 2px 0px 0px;
+    padding: 2px 0 0;
   }
 
-  &--Closed {
+  &--closed {
     color: govuk-colour("grey-1");
+
     & * {
       @include govuk-typography-weight-regular();
       color:     govuk-colour("grey-1");
     }
   }
 
-  &__status{
+  &__status {
     display: block;
     position: absolute;
     transform-origin: top left;
