@@ -31,7 +31,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
 
   test "attaches the email file" do
     click_button "Continue"
-    attach_file("correspondence[email_file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence[email_file][file]", Rails.root + "test/fixtures/files/testImage.png")
     click_button "Continue"
     assert_text("testImage")
     click_button "Continue"
@@ -41,7 +41,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
 
   test "attaches the email attachment" do
     click_button "Continue"
-    attach_file("correspondence[email_attachment]", Rails.root + "test/fixtures/files/testImage2.png")
+    attach_file("correspondence[email_attachment][file]", Rails.root + "test/fixtures/files/testImage2.png")
     click_button "Continue"
     assert_text("testImage2")
     click_button "Continue"

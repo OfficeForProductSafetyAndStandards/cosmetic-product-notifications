@@ -31,10 +31,10 @@ private
 
   def validate
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
-    if file_params[:title].blank? && step != :upload
+    if get_attachment_metadata_params(:file).blank? && step != :upload
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
-    if file_params[:file].blank? && step == :upload
+    if @file_blob.blank? && step == :upload
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end
     validate_blob_sizes(@file_blob, @errors) if step == :upload

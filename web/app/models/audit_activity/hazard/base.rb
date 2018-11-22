@@ -10,7 +10,7 @@ class AuditActivity::Hazard::Base < AuditActivity::Base
       investigation: investigation,
       title: hazard.hazard_type,
     )
-    activity.add_attachment hazard.risk_assessment if hazard.risk_assessment.attached?
+    activity.add_attachment hazard.risk_assessment.blob if hazard.risk_assessment.attached?
   end
 
   def self.build_body(hazard)

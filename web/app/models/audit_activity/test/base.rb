@@ -12,7 +12,7 @@ class AuditActivity::Test::Base < AuditActivity::Base
       investigation: investigation,
       product: test.product
     )
-    activity.add_attachment test.documents.first if test.documents.attached?
+    activity.add_attachment test.documents.first.blob if test.documents.attached?
   end
 
   def self.build_body(test)

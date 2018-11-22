@@ -9,6 +9,6 @@ class AuditActivity::Document::Base < AuditActivity::Base
       investigation: investigation,
       title: title
     )
-    activity.add_attachment document
+    activity.add_attachment document.blob
   end
 end

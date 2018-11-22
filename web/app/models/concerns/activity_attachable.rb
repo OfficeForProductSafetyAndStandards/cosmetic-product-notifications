@@ -35,12 +35,12 @@ module ActivityAttachable
   def attachments
     return {} unless has_attachment?
 
-    attachment_names.map { |key, name| [name, self.send(key)] }.to_h
+    p attachment_names.map { |key, name| [name, self.send(key)] }.to_h
   end
 
-  def add_attachment(attachment, attachment_key = attachment_names.keys.first)
-    return unless attachment_key.present? && attachment.present?
+  def add_attachment(file_blob, attachment_key = attachment_names.keys.first)
+    return unless attachment_key.present? && file_blob.present?
 
-    self.send(attachment_key).attach attachment.blob
+    self.send(attachment_key).attach file_blob
   end
 end

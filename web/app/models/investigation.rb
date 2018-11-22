@@ -57,16 +57,16 @@ class Investigation < ApplicationRecord
       methods: :pretty_id,
       only: %i[question_title description is_closed],
       include: {
-        documents: {
-          methods: %i[title description filename]
-        },
-        images: {
-          include: {
-            blob: {
-              only: %i[metadata filename]
-            }
-          }
-        },
+        # documents: {
+        #   methods: %i[title description filename]
+        # },
+        # images: {
+        #   include: {
+        #     blob: {
+        #       only: %i[metadata filename]
+        #     }
+        #   }
+        # },
         correspondences: {},
         activities: {
           methods: :search_index,

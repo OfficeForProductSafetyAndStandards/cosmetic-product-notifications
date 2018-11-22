@@ -14,6 +14,8 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def create
+    @file_blob.metadata.update(get_attachment_metadata_params(:file))
+    @file_blob.metadata["updated"] = Time.current
     attach_blobs_to_list(@file, @correspondence.documents)
     @investigation.correspondences << @correspondence
     @investigation.save

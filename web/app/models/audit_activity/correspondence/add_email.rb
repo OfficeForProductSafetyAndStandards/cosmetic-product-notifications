@@ -4,8 +4,8 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
 
   def self.from(correspondence, investigation)
     activity = super(correspondence, investigation, self.build_body(correspondence))
-    activity.add_attachment correspondence.email_file if correspondence.email_file.attached?
-    activity.add_attachment correspondence.email_attachment if correspondence.email_attachment.attached?
+    activity.add_attachment(correspondence.email_file.blob, :email_file )if correspondence.email_file.attached?
+    activity.add_attachment(correspondence.email_attachment.blob, :email_attachment) if correspondence.email_attachment.attached?
   end
 
   def subtitle_slug
@@ -34,12 +34,12 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
   end
 
   def self.build_email_file_body correspondence
-    file = correspondence.find_attachment_by_name "email_file"
+    file = correspondence.email_file
     file ? "Email: #{file.filename.to_s.gsub('_', '\_')}<br>" : ""
   end
 
   def self.build_attachment_body correspondence
-    file = correspondence.find_attachment_by_name "email_attachment"
+    file = correspondence.email_attachment
     file ? "Attached: #{file.filename.to_s.gsub('_', '\_')}<br>" : ""
   end
 

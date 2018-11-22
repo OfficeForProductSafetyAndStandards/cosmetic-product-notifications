@@ -9,6 +9,7 @@ class Investigations::EmailsController < ApplicationController
   before_action :set_investigation
   before_action :set_correspondence, only: %i[show update create]
   before_action :set_attachments, only: %i[show update create]
+  before_action :store_correspondence, only: %i[update]
 
   def new
     clear_session
@@ -17,9 +18,12 @@ class Investigations::EmailsController < ApplicationController
   end
 
   def create
-    attach_files
-    @investigation.correspondences << @correspondence
-    if @investigation.save
+    update_attachments
+    @correspondence.validate(steps.last)
+    validate_attachments @correspondence.errors
+    if @correspondence.errors.empty? && @correspondence.save
+      attach_files
+      save_attachments
       AuditActivity::Correspondence::AddEmail.from(@correspondence, @investigation)
       redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
     else
@@ -32,51 +36,75 @@ class Investigations::EmailsController < ApplicationController
   end
 
   def update
+    update_attachments
     @correspondence.validate(step)
-    validate_blob_sizes(@email_file, @email_attachment, @correspondence.errors)
-    if @correspondence.errors.any?
-      render step
-    else
+    validate_attachments @correspondence.errors
+    if @correspondence.errors.empty?
+      save_attachments
       redirect_to next_wizard_path
+    else
+      render step
     end
   end
 
-private
+  private
+
+  def clear_session
+    session[:correspondence] = nil
+  end
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
   end
 
-  def attach_files
-    attach_files_to_list(@correspondence.documents, email_file: @email_file, email_attachment: @email_attachment)
-    attach_files_to_list(@investigation.documents, email_file: @email_file, email_attachment: @email_attachment)
+  def set_correspondence
+    @correspondence = @investigation.correspondences.build(correspondence_params)
+  end
+
+  def store_correspondence
+    session[:correspondence] = @correspondence.attributes
   end
 
   def set_attachments
     @email_file, @email_attachment = load_file_attachments
-    if step == :content
-      add_metadata(@email_file, email_file_metadata)
-      add_metadata(@email_attachment, email_attachment_metadata)
-    end
   end
 
-  def set_correspondence
-    data_from_previous_steps = session[:correspondence] || suggested_values
-    session[:correspondence] = data_from_previous_steps.merge(correspondence_params || {}).except("attachment_description")
-    @correspondence = Correspondence.new(session[:correspondence])
+  def update_attachments
+    update_blob_metadata @email_file, email_file_metadata
+    update_blob_metadata @email_attachment, email_attachment_metadata
+  end
+
+  def validate_attachments(errors)
+    validate_blob_size(@email_file, errors, "email file")
+    validate_blob_size(@email_attachment, errors, "email attachment")
+  end
+
+  def attach_files
+    attach_blob_to_attachment_slot(@email_file, @correspondence.email_file)
+    attach_blob_to_attachment_slot(@email_attachment, @correspondence.email_attachment)
+    attach_blobs_to_list(@email_file, @email_attachment, @investigation.documents)
+  end
+
+  def save_attachments
+    @email_file.save if @email_file
+    @email_attachment.save if @email_attachment
   end
 
   def correspondence_params
+    session_params.merge(request_params)
+  end
+
+  def request_params
     return {} if params[:correspondence].blank?
 
     params.require(:correspondence).permit(
-      :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
-      :overview, :details, :email_direction, :email_subject, :attachment_description
+    :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
+    :overview, :details, :email_direction, :email_subject, :attachment_description
     )
   end
 
-  def clear_session
-    session[:correspondence] = nil
+  def session_params
+    session[:correspondence] || suggested_values
   end
 
   def suggested_values
@@ -87,7 +115,6 @@ private
     }
   end
 
-  # TODO push this into params
   def email_file_metadata
     {
       title: correspondence_params[:overview],
@@ -95,7 +122,6 @@ private
     }
   end
 
-  # TODO push this into params
   def email_attachment_metadata
     {
       title: correspondence_params[:overview],

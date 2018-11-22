@@ -7,8 +7,10 @@ module ImagesHelper
   end
 
   def save_file
-    file = attach_blobs_to_list(@file_blob, file_collection)
-    audit_class::Add.from(file, @parent) if @parent.class == Investigation
+    @file_blob.metadata.update(get_attachment_metadata_params(:file))
+    @file_blob.metadata["updated"] = Time.current
+    attach_blobs_to_list(@file_blob, file_collection)
+    audit_class::Add.from(@file_blob, @parent) if @parent.class == Investigation
     redirect_to @parent
   end
 

@@ -34,12 +34,12 @@ module FileConcern
   def load_file_attachments
     attachment_names.map do |name|
       attachment_params = get_attachment_params(name)
-      if attachment_params.present?
+      if attachment_params[:file].present?
         file = ActiveStorage::Blob.create_after_upload!(
             io: attachment_params[:file],
             filename: attachment_params[:file].original_filename,
             content_type: attachment_params[:file].content_type,
-            metadata: attachment_params.except(:file).to_h
+            metadata: get_attachment_metadata_params_from_attachment_params(attachment_params)
         )
         session[name] = file.id
         file.analyze_later
@@ -50,15 +50,20 @@ module FileConcern
     end
   end
 
-  def update_file_details(file, attachment_name)
-    file.metadata.update(file_metadata_params(attachment_name))
-    file.metadata["updated"] = Time.current
-  end
-
   def get_attachment_params(attachment_name)
     return {} if params[file_params_key].blank? || params[file_params_key][attachment_name].blank?
 
     params.require(file_params_key).require(attachment_name).permit(:file, :title, :description, :document_type, :other_type)
+  end
+
+  def get_attachment_metadata_params(attachment_name)
+    attachment_params = get_attachment_params attachment_name
+    return {} if attachment_params.blank?
+    get_attachment_metadata_params_from_attachment_params attachment_params
+  end
+
+  def get_attachment_metadata_params_from_attachment_params(attachment_params)
+    attachment_params.except(:file).to_h
   end
 
   def check_correct_usage
@@ -66,22 +71,18 @@ module FileConcern
     raise "attachment_names must be specified in #{self.class}" unless self.class.attachment_names
   end
 
-  def add_metadata(file, new_metadata)
-    if file && new_metadata
-      file.metadata.update(new_metadata)
-      file.save
-    end
-  end
-
   # TODO move to model?
 
-  def validate_blob_sizes(*blobs, errors)
-    blobs.each do |blob|
-      return unless blob && (blob.byte_size > max_file_byte_size)
-      # TODO parameterise attachment_name
-      attachment_name = "file"
-      errors.add(:base, :file_too_large, message: "#{attachment_name} is too big, allowed size is #{max_file_byte_size / 1.megabyte}MB")
-    end
+  def update_blob_metadata blob, metadata
+    return unless blob
+
+    blob.metadata.update(metadata)
+    blob.metadata["updated"] = Time.current
+  end
+
+  def validate_blob_size(blob, errors, blob_display_name)
+    return unless blob && (blob.byte_size > max_file_byte_size)
+    errors.add(:base, :file_too_large, message: "#{blob_display_name} is too big, allowed size is #{max_file_byte_size / 1.megabyte}MB")
   end
 
   def max_file_byte_size

@@ -47,10 +47,10 @@ private
 
   def validate
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
-    if file_params[:title].blank?
+    if get_attachment_metadata_params(:file)[:title].blank?
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
-    if file_params[:file].blank? && !@file
+    if get_attachment_metadata_params(:file)[:file].blank? && !@file
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end
     validate_blob_sizes(@file_blob, @errors)
@@ -61,7 +61,8 @@ private
       title: @file.metadata[:title],
       description: @file.metadata[:description]
     }
-    update_file_details(@file_blob)
+    @file_blob.metadata.update(get_attachment_metadata_params(:file))
+    @file_blob.metadata["updated"] = Time.current
     audit_class::Update.from(@file, @parent, @previous_data) if @parent.class == Investigation
     @file_blob.save
   end
