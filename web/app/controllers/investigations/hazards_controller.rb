@@ -6,7 +6,7 @@ class Investigations::HazardsController < ApplicationController
   include HazardsHelper
   before_action :load_relevant_objects
 
-  def risk_level;
+  def risk_level
     initialize_file_attachments
   end
 

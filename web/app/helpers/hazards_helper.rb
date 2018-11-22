@@ -1,8 +1,10 @@
 module HazardsHelper
   def update_risk_assessment
-    @file_blob.metadata.update(get_attachment_metadata_params(:file))
-    @file_blob.metadata["updated"] = Time.current
+    return unless @file
+
+    update_blob_metadata(@file, {})
     attach_blob_to_attachment_slot(@file, @hazard.risk_assessment)
+    @file.save
   end
 
   def load_relevant_objects

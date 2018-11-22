@@ -43,7 +43,7 @@ class Investigations::EmailsController < ApplicationController
     end
   end
 
-  private
+private
 
   def clear_session
     session[:correspondence] = nil
@@ -115,19 +115,15 @@ class Investigations::EmailsController < ApplicationController
 
   def email_file_metadata
     get_attachment_metadata_params(:email_file).merge(
-        {
-            title: correspondence_params[:overview],
-            description: "Original email as a file"
-        }
+      title: correspondence_params[:overview],
+      description: "Original email as a file"
     )
   end
 
   def email_attachment_metadata
     get_attachment_metadata_params(:email_attachment).merge(
-      {
-        title: correspondence_params[:overview],
-        description: correspondence_params[:attachment_description]
-      }
+      title: correspondence_params[:overview],
+      description: correspondence_params[:attachment_description]
     )
   end
 end

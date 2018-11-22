@@ -36,10 +36,10 @@ module FileConcern
       attachment_params = get_attachment_params(name)
       if attachment_params[:file].present?
         file = ActiveStorage::Blob.create_after_upload!(
-            io: attachment_params[:file],
-            filename: attachment_params[:file].original_filename,
-            content_type: attachment_params[:file].content_type,
-            metadata: get_attachment_metadata_params_from_attachment_params(attachment_params)
+          io: attachment_params[:file],
+          filename: attachment_params[:file].original_filename,
+          content_type: attachment_params[:file].content_type,
+          metadata: get_attachment_metadata_params_from_attachment_params(attachment_params)
         )
         session[name] = file.id
         file.analyze_later
@@ -59,6 +59,7 @@ module FileConcern
   def get_attachment_metadata_params(attachment_name)
     attachment_params = get_attachment_params attachment_name
     return {} if attachment_params.blank?
+
     get_attachment_metadata_params_from_attachment_params attachment_params
   end
 
@@ -82,6 +83,7 @@ module FileConcern
 
   def validate_blob_size(blob, errors, blob_display_name)
     return unless blob && (blob.byte_size > max_file_byte_size)
+
     errors.add(:base, :file_too_large, message: "#{blob_display_name} is too big, allowed size is #{max_file_byte_size / 1.megabyte}MB")
   end
 
