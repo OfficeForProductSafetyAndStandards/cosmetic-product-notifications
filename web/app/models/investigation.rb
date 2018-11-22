@@ -56,7 +56,7 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: :pretty_id,
-      only: %i[question_title description is_closed],
+      only: %i[question_title description is_closed assignee_id],
       include: {
         documents: {
           methods: %i[title description filename]

@@ -182,8 +182,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     admin_user = User.find_by(last_name: "Admin")
     test_user = User.find_by(last_name: "User")
 
-    @investigation.assignee = admin_user
-    @investigation.save
+    @investigation_one.assignee = admin_user
+    @investigation_one.save
     @investigation_two.assignee = test_user
     @investigation_two.save
 
@@ -203,8 +203,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     admin_user = User.find_by(last_name: "Admin")
     test_user = User.find_by(last_name: "User")
 
-    @investigation.assignee = admin_user
-    @investigation.save
+    @investigation_one.assignee = admin_user
+    @investigation_one.save
     @investigation_two.assignee = test_user
     @investigation_two.save
 
@@ -225,8 +225,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     admin_user = User.find_by(last_name: "Admin")
     test_user = User.find_by(last_name: "User")
 
-    @investigation.assignee = admin_user
-    @investigation.save
+    @investigation_one.assignee = admin_user
+    @investigation_one.save
     @investigation_two.assignee = test_user
     @investigation_two.save
 
@@ -248,8 +248,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     admin_user = User.find_by(last_name: "Admin")
     test_user = User.find_by(last_name: "User")
 
-    @investigation.assignee = admin_user
-    @investigation.save
+    @investigation_one.assignee = admin_user
+    @investigation_one.save
     @investigation_two.assignee = test_user
     @investigation_two.save
 
@@ -271,8 +271,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     admin_user = User.find_by(last_name: "Admin")
     test_user = User.find_by(last_name: "User")
 
-    @investigation.assignee = admin_user
-    @investigation.save
+    @investigation_one.assignee = admin_user
+    @investigation_one.save
     @investigation_two.assignee = test_user
     @investigation_two.save
 
@@ -294,8 +294,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     admin_user = User.find_by(last_name: "Admin")
     test_user = User.find_by(last_name: "User")
 
-    @investigation.assignee = admin_user
-    @investigation.save
+    @investigation_one.assignee = admin_user
+    @investigation_one.save
     @investigation_two.assignee = test_user
     @investigation_two.save
 

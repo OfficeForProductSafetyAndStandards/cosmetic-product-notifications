@@ -25,9 +25,9 @@ module InvestigationsHelper
     return {} if params[:status_open] == params[:status_closed]
 
     status = if params[:status_open] == "checked"
-               { status: 'open' }
+               { is_closed: false }
              else
-               { status: 'closed' }
+               { is_closed: true }
              end
     { must: { term: status } }
   end
