@@ -19,6 +19,8 @@ class Business < ApplicationRecord
   has_many :investigations, through: :investigation_businesses
 
   has_many :addresses, dependent: :destroy
+  has_many :corrective_actions, dependent: :destroy
+
   accepts_nested_attributes_for :addresses, reject_if: :all_blank
 
   has_one :source, as: :sourceable, dependent: :destroy

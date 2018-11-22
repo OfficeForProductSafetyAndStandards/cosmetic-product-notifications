@@ -1,7 +1,7 @@
 class AuditActivity::Test::Request < AuditActivity::Test::Base
-  def self.from(test, investigation)
+  def self.from(test)
     title = "Test requested: #{test.product.name}"
-    super(test, investigation, title)
+    super(test, title)
   end
 
   def self.date_label

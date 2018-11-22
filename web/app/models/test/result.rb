@@ -6,7 +6,7 @@ class Test::Result < Test
   enum result: { passed: "Pass", failed: "Fail" }
 
   def create_audit_activity
-    AuditActivity::Test::Result.from(self, self.investigation)
+    AuditActivity::Test::Result.from(self)
   end
 
   def pretty_name
