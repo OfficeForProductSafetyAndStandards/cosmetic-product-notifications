@@ -75,4 +75,4 @@ private
   end
 end
 
-Business.import force: true # for auto sync model with elastic search
+Business.import force: true if Rails.env.development? # for auto sync model with elastic search
