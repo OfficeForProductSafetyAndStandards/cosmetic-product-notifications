@@ -9,9 +9,10 @@ module Investigations::DisplayTextHelper
 
   def get_displayable_highlights(highlights)
     highlights.map do |highlight|
+      sanitized_content = sanitize(get_highlight_content(highlight), tags: %w(em))
       {
         label: get_highlight_title(highlight),
-        content: get_highlight_content(highlight)
+        content: sanitized_content.html_safe # rubocop:disable Rails/OutputSafety
       }
     end
   end

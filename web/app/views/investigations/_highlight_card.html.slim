@@ -5,5 +5,5 @@
   .govuk-grid-column-one-half
     - get_displayable_highlights(highlights).each do |highlight|
       span.govuk-caption-m[class="govuk-!-font-size-14"] = highlight[:label]
-      span = raw highlight[:content]
+      span = highlight[:content]
       p
