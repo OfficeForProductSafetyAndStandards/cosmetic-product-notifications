@@ -3,7 +3,7 @@
     span.govuk-caption-m[class="govuk-!-font-size-14"] = "CASE #{investigation.pretty_id}"
     span = link_to investigation.title, investigation
     - if investigation.is_closed
-      span class="mspsds-case-card mspsds-case-card__status" = "CLOSED"
+      .mspsds-case-card class="mspsds-case-card__status" = "CLOSED"
   .govuk-grid-column-one-quarter
     span.govuk-caption-m[class="govuk-!-font-size-14"] = "Assigned to"
     span = investigation.assignee ? investigation.assignee.full_name.to_s : "Unassigned"
