@@ -35,7 +35,7 @@ h1.govuk-heading-xl
         .govuk-form-group class=("govuk-form-group--error" if @test.errors[:legislation].any?)
           span.govuk-hint
             | Select the relevant legislation from the list.
-          = form.select :legislation, legislation_constants["legislation"], { include_blank: true },
+          = form.select :legislation, relevant_legislation, { include_blank: true },
                   class: "govuk-select", id: "legislation-picker"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l

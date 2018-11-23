@@ -1,5 +1,5 @@
 module LegislationHelper
-  def legislation_constants
-    Rails.application.config.legislation_constants
+  def relevant_legislation
+    Rails.application.config.legislation_constants["legislation"]&.sort
   end
 end
