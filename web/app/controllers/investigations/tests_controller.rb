@@ -66,7 +66,7 @@ private
   end
 
   def store_test
-    session[:test] = @test.attributes
+    session[:test] = @test.attributes if @test.valid?(step)
   end
 
   def test_valid?

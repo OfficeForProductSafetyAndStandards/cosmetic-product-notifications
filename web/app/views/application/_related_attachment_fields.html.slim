@@ -12,4 +12,5 @@ fieldset.govuk-fieldset
     = form.file_field attachment_category, class: "govuk-file-upload", id: "attachment-file-input"
   #attachment-description.govuk-form-group
     = form.label :description, "Attachment description", class: "govuk-label"
-    = form.text_area :description, class: "govuk-textarea", rows: 5, value: file&.metadata&.dig(:description)
+    = form.text_area :description, value: file&.metadata&.dig(:description),
+            class: "govuk-textarea", rows: 5, maxlength: 1000

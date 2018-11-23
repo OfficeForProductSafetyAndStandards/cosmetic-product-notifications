@@ -59,8 +59,8 @@ h1.govuk-heading-xl
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Further details
-        .govuk-form-group
-          = form.text_area :details, class: "govuk-textarea", rows: 5
+        .govuk-form-group class=("govuk-form-group--error" if @test.errors[:details].any?)
+          = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
 
       = render "related_attachment_fields", form: form, file: @file, attachment_category: :file
 
