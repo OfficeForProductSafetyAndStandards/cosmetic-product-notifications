@@ -6,12 +6,15 @@ module InvestigationsHelper
                  .paginate(page: params[:page], per_page: page_size)
   end
 
-  def sort_column
-    (Investigation.column_names + %w[assignee]).include?(params[:sort]) ? params[:sort] : "updated_at"
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  def sorting_params
+    case params[:sort_by]
+    when "newest"
+      { created_at: "desc" }
+    when "oldest"
+      { updated_at: "asc" }
+    else
+      { updated_at: "desc" }
+    end
   end
 
   def filter_params
@@ -72,13 +75,19 @@ module InvestigationsHelper
 
   def query_params
     set_default_status_filter
+    params.permit(:q, :sort, :direction, :status_open, :status_closed, :page)
+    set_default_sort_by_filter
     set_default_assignee_filter
-    params.permit(:q, :sort, :direction, :status_open, :status_closed, :page,
-                  :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id)
+    params.permit(:q, :status_open, :status_closed, :page,
+                  :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by)
   end
 
   def set_default_status_filter
     params[:status_open] = "checked" if params[:status_open].blank?
+  end
+
+  def set_default_sort_by_filter
+    params[:sort_by] = "recent" if params[:sort_by].blank?
   end
 
   def set_default_assignee_filter
