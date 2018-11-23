@@ -1,0 +1,15 @@
+- has_validation_errors = form.object.errors.details[:base].any? { |error| error.value? :file_too_large }
+fieldset.govuk-fieldset
+  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+    | Related attachments
+  .govuk-form-group class=("govuk-form-group--error" if has_validation_errors)
+    - if file
+      p#current-attachment-details
+        ' Currently selected file:
+        = link_to file.filename, file, target: "_blank"
+        br
+        | Selecting a different one will replace it.
+    = form.file_field attachment_category, class: "govuk-file-upload", id: "attachment-file-input"
+  #attachment-description.govuk-form-group
+    = form.label :description, "Attachment description", class: "govuk-label"
+    = form.text_area :description, class: "govuk-textarea", rows: 5, value: file&.metadata&.dig(:description)
