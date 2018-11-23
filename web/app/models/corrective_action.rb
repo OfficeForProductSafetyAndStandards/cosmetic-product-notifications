@@ -19,8 +19,8 @@ class CorrectiveAction < ApplicationRecord
   validates :business, presence: true
   validates :product, presence: true
 
-  validates_length_of :summary, :maximum => 1000
-  validates_length_of :details, :maximum => 1000
+  validates_length_of :summary, maximum: 1000
+  validates_length_of :details, maximum: 1000
 
   after_create :create_audit_activity
 
