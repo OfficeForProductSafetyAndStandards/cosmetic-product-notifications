@@ -12,9 +12,6 @@ main#main-content.govuk-main-wrapper role="main"
       div class="govuk-!-margin-bottom-0"
         = form_with(model: @search, scope: "", url: investigations_path, method: :get,
                 class: "mspsds-search") do |form|
-          - if @search.sort.present?
-            = form.hidden_field :sort
-            = form.hidden_field :direction
           = form.label "Keywords", class: "govuk-label--s"
           = form.text_field :q, class: "govuk-input"
           = form.submit "Search", name: nil, class: "mspsds-search__submit"
@@ -54,14 +51,14 @@ main#main-content.govuk-main-wrapper role="main"
                 | Sort by
               .govuk-radios class="govuk-!-margin-bottom-5"
                 .govuk-radios__item
-                  = form.radio_button :sort_by, "newest", class: "govuk-radios__input"
-                  = form.label :sort_by, "Newest", class: "govuk-radios__label"
-                .govuk-radios__item
-                  = form.radio_button :sort_by, "latest", class: "govuk-radios__input"
-                  = form.label :sort_by, "Updated – recent", class: "govuk-radios__label"
+                  = form.radio_button :sort_by, "recent", class: "govuk-radios__input"
+                  = form.label :sort_by, "Updated: recent", class: "govuk-radios__label"
                 .govuk-radios__item
                   = form.radio_button :sort_by, "oldest", class: "govuk-radios__input"
-                  = form.label :sort_by, "Updated – oldest", class: "govuk-radios__label"
+                  = form.label :sort_by, "Updated: oldest", class: "govuk-radios__label"
+                .govuk-radios__item
+                  = form.radio_button :sort_by, "newest", class: "govuk-radios__input"
+                  = form.label :sort_by, "Created: newest", class: "govuk-radios__label"
           = form.submit "Apply filters", name: nil, class: "govuk-button"
 
     .govuk-grid-column-three-quarters

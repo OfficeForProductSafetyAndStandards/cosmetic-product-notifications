@@ -9,12 +9,20 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     @investigation_no_products = investigations(:no_products)
     @investigation_one.source = sources(:investigation_one)
     @investigation_one.hazard = hazards(:one)
-    Investigation.import force: true
+
     User.all
     @investigation_one.assignee = User.find_by(last_name: "Admin")
     @investigation_one.save
     @investigation_two.assignee = User.find_by(last_name: "User")
     @investigation_two.save
+
+    @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
+    @investigation_one.updated_at = Time.zone.parse('2017-07-11 21:00')
+    @investigation_one.save
+    @investigation_two.created_at = Time.zone.parse('2015-07-11 21:00')
+    @investigation_two.updated_at = Time.zone.parse('2016-07-11 21:00')
+    @investigation_two.save
+    Investigation.import force: true
   end
 
   teardown do
@@ -260,5 +268,37 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes(response.body, investigations(:one).pretty_id)
     assert_includes(response.body, investigations(:two).pretty_id)
     assert_includes(response.body, investigations(:three).pretty_id)
+  end
+
+  test "sort by filter should be defaulted to Updated: recent" do
+    get investigations_path
+    assert response.body.index(@investigation_one.id.to_s) < response.body.index(@investigation_two.id.to_s)
+  end
+
+  test "should return the most recently updated investigation first if sort by 'Updated: recent' is selected" do
+    get investigations_path, params: {
+        status_open: "unchecked",
+        status_closed: "unchecked",
+        sort_by: "recent"
+    }
+    assert response.body.index(@investigation_one.id.to_s) < response.body.index(@investigation_two.id.to_s)
+  end
+
+  test "should return the oldest updated investigation first if sort by 'Updated: oldest' is selected" do
+    get investigations_path, params: {
+        status_open: "unchecked",
+        status_closed: "unchecked",
+        sort_by: "oldest"
+    }
+    assert response.body.index(@investigation_two.id.to_s) < response.body.index(@investigation_one.id.to_s)
+  end
+
+  test "should return the most recently created investigation first if sort by 'Created: newest' is selected" do
+    get investigations_path, params: {
+        status_open: "unchecked",
+        status_closed: "unchecked",
+        sort_by: "newest"
+    }
+    assert response.body.index(@investigation_two.id.to_s) < response.body.index(@investigation_one.id.to_s)
   end
 end
