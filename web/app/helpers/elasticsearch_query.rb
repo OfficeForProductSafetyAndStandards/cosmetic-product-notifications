@@ -11,6 +11,11 @@ class ElasticsearchQuery
     search_query = {}
     search_query[:query] = query_params if query.present? || filters.present?
     search_query[:sort] = sort_params if sorting.present?
+    search_query[:highlight] = {
+      fields: {
+        "*": {}
+      }
+    }
     search_query
   end
 
@@ -28,7 +33,7 @@ private
     {
       bool: {
         must: match_params,
-        filter: filter_params
+        filter: filter_params,
       }
     }
   end
@@ -44,7 +49,7 @@ private
   def filter_params
     filters.map do |field, value|
       {
-        term: { "#{field}": value }
+        bool: { "#{field}": value }
       }
     end
   end
