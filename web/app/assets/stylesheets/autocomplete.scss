@@ -44,7 +44,7 @@
 }
 
 .autocomplete__dropdown-arrow-down {
-  z-index: -1;
+  z-index: auto;
   display: inline-block;
   position: absolute;
   right: 8px;
@@ -62,7 +62,7 @@
   max-height: 332px;
   overflow-x: hidden;
   padding: 0;
-  width: calc(100% - 4px);
+  width: 100%;
 }
 
 .autocomplete__menu--visible {
@@ -90,7 +90,8 @@
   border-width: 1px 0;
   cursor: pointer;
   display: block;
-  height: 26px;
+  height: auto;
+  min-height: 36px;
   line-height: 26px;
   position: relative;
 }
