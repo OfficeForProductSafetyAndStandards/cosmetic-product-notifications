@@ -7,9 +7,8 @@ fieldset.govuk-fieldset
       p#current-attachment-details
         ' Currently selected file:
         = link_to file.filename, file, target: "_blank"
-        br
-        | Selecting a different one will replace it.
-    = form.file_field attachment_category, class: "govuk-file-upload", id: "attachment-file-input"
+    - else
+      = form.file_field attachment_category, class: "govuk-file-upload", id: "attachment-file-input"
   #attachment-description.govuk-form-group
     = form.label :description, "Attachment description", class: "govuk-label"
     = form.text_area :description, value: file&.metadata&.dig(:description),
