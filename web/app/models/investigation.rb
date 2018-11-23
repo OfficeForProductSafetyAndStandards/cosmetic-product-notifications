@@ -18,6 +18,7 @@ class Investigation < ApplicationRecord
   settings do
     mappings do
       indexes :status, type: :keyword
+      indexes :assignee_id, type: :keyword
     end
   end
 
@@ -56,7 +57,7 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: :pretty_id,
-      only: %i[question_title description is_closed updated_at created_at],
+      only: %i[question_title description is_closed assignee_id updated_at created_at],
       include: {
         documents: {
           methods: %i[title description filename]
