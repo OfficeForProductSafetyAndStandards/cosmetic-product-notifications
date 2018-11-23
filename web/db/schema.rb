@@ -166,26 +166,6 @@ ActiveRecord::Schema.define(version: 2018_11_15_165509) do
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
 
-  create_table "pghero_query_stats", force: :cascade do |t|
-    t.bigint "calls"
-    t.datetime "captured_at"
-    t.text "database"
-    t.text "query"
-    t.bigint "query_hash"
-    t.float "total_time"
-    t.text "user"
-    t.index ["database", "captured_at"], name: "index_pghero_query_stats_on_database_and_captured_at"
-  end
-
-  create_table "pghero_space_stats", force: :cascade do |t|
-    t.datetime "captured_at"
-    t.text "database"
-    t.text "relation"
-    t.text "schema"
-    t.bigint "size"
-    t.index ["database", "captured_at"], name: "index_pghero_space_stats_on_database_and_captured_at"
-  end
-
   create_table "products", id: :serial, force: :cascade do |t|
     t.string "batch_number"
     t.string "brand"
