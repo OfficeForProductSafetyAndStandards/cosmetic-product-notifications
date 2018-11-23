@@ -27,12 +27,12 @@ class Investigation < ApplicationRecord
   belongs_to_active_hash :assignee, class_name: "User", optional: true
 
   has_many :investigation_products, dependent: :destroy
-  has_many :products, through: :investigation_products,
+  has_many :products, -> { unscope(:order).order("investigation_products.created_at") }, through: :investigation_products,
            after_add: :create_audit_activity_for_product,
            after_remove: :create_audit_activity_for_removing_product
 
   has_many :investigation_businesses, dependent: :destroy
-  has_many :businesses, through: :investigation_businesses,
+  has_many :businesses, -> { unscope(:order).order("investigation_businesses.created_at") }, through: :investigation_businesses,
            after_add: :create_audit_activity_for_business,
            after_remove: :create_audit_activity_for_removing_business
 
