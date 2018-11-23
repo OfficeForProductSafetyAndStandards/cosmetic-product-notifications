@@ -24,7 +24,7 @@ h1.govuk-heading-xl
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Which product is subject to action?
-        .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:product].any?)
+        .govuk-form-group.full-width class=("govuk-form-group--error" if @corrective_action.errors[:product].any?)
           - if @investigation.products.empty?
             span.govuk-hint
               | There are no products on this case.
@@ -49,7 +49,7 @@ h1.govuk-heading-xl
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Which business is responsible?
-        .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:business].any?)
+        .govuk-form-group.full-width class=("govuk-form-group--error" if @corrective_action.errors[:business].any?)
           - if @investigation.businesses.empty?
             span.govuk-hint
               | There are no businesses associated with this case.

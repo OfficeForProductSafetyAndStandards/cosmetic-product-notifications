@@ -17,7 +17,7 @@ h1.govuk-heading-xl
             | Which product should be tested?
           - else
             | Which product was tested?
-          .govuk-form-group class=("govuk-form-group--error" if @test.errors[:product].any?)
+          .govuk-form-group.full-width class=("govuk-form-group--error" if @test.errors[:product].any?)
             - if @investigation.products.empty?
               span.govuk-hint
                 ' There are no products on this case.
