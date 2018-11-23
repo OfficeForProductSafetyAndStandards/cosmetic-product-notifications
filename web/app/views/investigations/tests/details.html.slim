@@ -17,26 +17,26 @@ h1.govuk-heading-xl
             | Which product should be tested?
           - else
             | Which product was tested?
-        - if @investigation.products.empty?
-          span.govuk-hint
-            ' There are no products on this case.
-            = link_to "Add a product", new_investigation_product_path(@investigation)
-            |  to send it for testing.
-        - else
-          .govuk-form-group class=("govuk-form-group--error" if @test.errors[:product].any?)
-            span.govuk-hint
-              ' Only products already added to the case are listed.
-              = link_to "Add a product", new_investigation_product_path(@investigation)
-            = form.collection_select :product_id, @investigation.products, :id, :name, { include_blank: true },
-                    class: "govuk-select"
+          .govuk-form-group.full-width class=("govuk-form-group--error" if @test.errors[:product].any?)
+            - if @investigation.products.empty?
+              span.govuk-hint
+                ' There are no products on this case.
+                = link_to "Add a product", new_investigation_product_path(@investigation)
+                |  to send it for testing.
+            - else
+              span.govuk-hint
+                ' Only products already added to the case are listed.
+                = link_to "Add a product", new_investigation_product_path(@investigation)
+              = form.collection_select :product_id, @investigation.products, :id, :name, { include_blank: true },
+                      class: "govuk-select", id: "product-picker"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Against which legislation?
         .govuk-form-group class=("govuk-form-group--error" if @test.errors[:legislation].any?)
           span.govuk-hint
             | Select the relevant legislation from the list.
-          = form.select :legislation, legislation_constants["legislation"], { include_blank: true },
-                  class: "govuk-input"
+          = form.select :legislation, relevant_legislation, { include_blank: true },
+                  class: "govuk-select", id: "legislation-picker"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           - if @test.requested?
@@ -59,22 +59,10 @@ h1.govuk-heading-xl
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Further details
-        .govuk-form-group
-          = form.text_area :details, class: "govuk-textarea", rows: 5
+        .govuk-form-group class=("govuk-form-group--error" if @test.errors[:details].any?)
+          = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
 
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Related attachments
-        - if @file
-          p#current-attachment-details
-            = "Currently selected file: #{@file.filename}"
-            br
-            | Selecting a different one will replace it
-        .govuk-form-group
-          = form.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
-        #attachment-description.govuk-form-group
-          = form.label :description, "Attachment description", class: "govuk-label"
-          = form.text_area :description, class: "govuk-textarea", rows: 5, value: @file&.metadata&.dig(:description)
+      = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
 
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

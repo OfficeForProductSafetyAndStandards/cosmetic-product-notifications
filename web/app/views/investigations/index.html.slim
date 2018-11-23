@@ -12,9 +12,6 @@ main#main-content.govuk-main-wrapper role="main"
       div class="govuk-!-margin-bottom-0"
         = form_with(model: @search, scope: "", url: investigations_path, method: :get,
                 class: "mspsds-search") do |form|
-          - if @search.sort.present?
-            = form.hidden_field :sort
-            = form.hidden_field :direction
           = form.label "Keywords", class: "govuk-label--s"
           = form.text_field :q, class: "govuk-input"
           = form.submit "Search", name: nil, class: "mspsds-search__submit"
@@ -25,16 +22,16 @@ main#main-content.govuk-main-wrapper role="main"
                 | Assigned to
               .govuk-checkboxes data-module="checkboxes"
                 .govuk-checkboxes__item
-                  = form.check_box :assigned_to, { multiple: true, class: "govuk-checkboxes__input" }, "me", true
-                  = form.label :assigned_to, "Me", class: "govuk-checkboxes__label"
+                  = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
+                  = form.label :assigned_to_me, "Me", class: "govuk-checkboxes__label"
                 .govuk-checkboxes__item
-                  = form.check_box :assigned_to, { multiple: true, class: "govuk-checkboxes__input",
-                          "data-aria-controls": "conditional-other-assignee" }, "other", true
-                  = form.label :assigned_to, "Someone else", class: "govuk-checkboxes__label"
+                  = form.check_box :assigned_to_someone_else, { class: "govuk-checkboxes__input",
+                          "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
+                  = form.label :assigned_to_someone_else, "Someone else", class: "govuk-checkboxes__label"
                 #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
-                  = form.label :assigned_to, "Name", class: "govuk-label"
-                  = form.select :assigned_to,
-                          options_for_select(User.get_assignees_select_options_short([current_user])),
+                  = form.label :assigned_to_someone_else_id, "Name", class: "govuk-label"
+                  = form.select :assigned_to_someone_else_id,
+                          User.get_assignees_select_options_short([current_user]),
                           {},
                           class: "govuk-select", id: "assignee-picker"
           .govuk-form-group
@@ -54,14 +51,14 @@ main#main-content.govuk-main-wrapper role="main"
                 | Sort by
               .govuk-radios class="govuk-!-margin-bottom-5"
                 .govuk-radios__item
-                  = form.radio_button :sort_by, "newest", class: "govuk-radios__input"
-                  = form.label :sort_by, "Newest", class: "govuk-radios__label"
-                .govuk-radios__item
-                  = form.radio_button :sort_by, "latest", class: "govuk-radios__input"
-                  = form.label :sort_by, "Updated – recent", class: "govuk-radios__label"
+                  = form.radio_button :sort_by, "recent", class: "govuk-radios__input"
+                  = form.label :sort_by, "Updated: recent", class: "govuk-radios__label"
                 .govuk-radios__item
                   = form.radio_button :sort_by, "oldest", class: "govuk-radios__input"
-                  = form.label :sort_by, "Updated – oldest", class: "govuk-radios__label"
+                  = form.label :sort_by, "Updated: oldest", class: "govuk-radios__label"
+                .govuk-radios__item
+                  = form.radio_button :sort_by, "newest", class: "govuk-radios__input"
+                  = form.label :sort_by, "Created: newest", class: "govuk-radios__label"
           = form.submit "Apply filters", name: nil, class: "govuk-button"
 
     .govuk-grid-column-three-quarters
@@ -70,17 +67,7 @@ main#main-content.govuk-main-wrapper role="main"
         /TODO refer the links below to correct pages when they are created
         = link_to "Begin an investigation", new_investigation_path, class: "govuk-link mspsds-block-link"
         = link_to "Ask a question", new_question_path, class: "govuk-link mspsds-block-link"
-      = render "table", investigations: @investigations
+      = render "table", search_results: @results
       = will_paginate @investigations
       br
-      = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: query_params)
-
-- if @current_user
-  .govuk-grid-row[class="govuk-!-padding-bottom-4"]
-    .govuk-grid-column-one-third
-      .govuk-grid-column-one-quarter
-        p[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
-          = @current_user.investigations.count
-      .govuk-grid-column-three-quarters
-        p[class="govuk-!-font-size-24"]
-          = "#{'Case'.pluralize(@current_user.investigations.count)} assigned to you"
+      = link_to "Export as spreadsheet", investigations_path(format: :xlsx)

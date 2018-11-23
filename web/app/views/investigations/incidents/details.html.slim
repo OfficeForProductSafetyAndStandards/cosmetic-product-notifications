@@ -9,6 +9,8 @@ h1.govuk-heading-xl
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with model: @incident, url: wizard_path, method: :put do |form|
+      = render "form_validation_display", errors: @incident.errors, model_name: "incident"
+
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What happened?
@@ -23,13 +25,11 @@ h1.govuk-heading-xl
           = form.label :description, "Incident / event description", class: "govuk-hint"
           = form.text_area :description, class: "govuk-textarea govuk-!-width-two-thirds", \
             "aria-describedby": "incident-description-hint", rows: "5"
-      .govuk-form-group class=("govuk-form-group--error" if form.object.errors[:date].present?)
-        fieldset.govuk-fieldset [
-            aria-describedby="incident-date-hint #{"date-error" if form.object.errors[:date].present?}"
-            role="group"]
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            | When did it happen?
-          = render "date_input", form: form
+      fieldset.govuk-fieldset [aria-describedby="incident-date-hint #{"date-error" if form.object.errors[:date].any?}"
+                               role="group"]
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | When did it happen?
+        = render "date_input", form: form
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Who to?

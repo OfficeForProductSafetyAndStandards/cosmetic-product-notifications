@@ -9,12 +9,13 @@
 
     = form_with model: image, scope: :image, url: target_url, method: :put, local: true do |form|
       = render "form_validation_display", errors: @errors
-      .govuk-form-group class=("govuk-form-group--error" if @errors)
-        = form.label :title, "Image title", class: "govuk-label"
-        = form.text_field :title, value: image.metadata["title"], class: "govuk-input"
-      .govuk-form-group
-        = form.label :description, class: "govuk-label"
-        = form.text_area :description, value: image.metadata["description"], rows: 5, class: "govuk-textarea"
+      = form.fields_for :file do |subform|
+        .govuk-form-group class=("govuk-form-group--error" if @errors)
+          = subform.label :title, "Image title", class: "govuk-label"
+          = subform.text_field :title, value: image.metadata["title"], class: "govuk-input"
+        .govuk-form-group
+          = subform.label :description, class: "govuk-label"
+          = subform.text_area :description, value: image.metadata["description"], rows: 5, class: "govuk-textarea"
       .govuk-form-group
         = form.submit "Save", class: "govuk-button"
         - if show_delete

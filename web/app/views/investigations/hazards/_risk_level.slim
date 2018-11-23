@@ -13,4 +13,5 @@ h3.govuk-fieldset__legend--l
     - else
       h4.govuk-fieldset__legend--l
         | Add risk assessment
-    = form.file_field :file, class: "govuk-file-upload"
+    = form.fields_for :file do |subform|
+      = subform.file_field :file, class: "govuk-file-upload"

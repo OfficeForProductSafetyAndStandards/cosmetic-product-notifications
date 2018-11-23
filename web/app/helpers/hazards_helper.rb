@@ -1,17 +1,19 @@
 module HazardsHelper
-  include FileConcern
-
   def update_risk_assessment
-    attach_file_to_attachment_slot(@file, @hazard.risk_assessment)
+    return unless @file_blob
+
+    update_blob_metadata(@file_blob, {})
+    attach_blob_to_attachment_slot(@file_blob, @hazard.risk_assessment)
+    @file_blob.save
   end
 
   def load_relevant_objects
     @investigation = Investigation.find_by(id: params[:investigation_id])
-    @file = load_file_attachment
+    @file_blob, * = load_file_attachments
     set_hazard_data(@investigation)
 
-    if @file.blank? && @hazard.risk_assessment.attached?
-      @file = @hazard.risk_assessment.blob
+    if @file_blob.blank? && @hazard.risk_assessment.attached?
+      @file_blob = @hazard.risk_assessment.blob
     end
   end
 
@@ -28,9 +30,5 @@ module HazardsHelper
     if params[:hazard][:set_risk_level] == "none"
       params[:hazard][:risk_level] = params[:hazard][:set_risk_level]
     end
-  end
-
-  def get_file_params_key
-    :hazard
   end
 end

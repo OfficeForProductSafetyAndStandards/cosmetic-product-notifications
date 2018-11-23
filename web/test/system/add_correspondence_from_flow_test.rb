@@ -21,7 +21,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   test "first step should validate date" do
     fill_in("correspondence[day]", with: "333")
     click_on "Continue"
-    assert_text("prohibited this item from being saved")
+    assert_text("prevented this item from being saved")
   end
 
   test "first step should be populated with reporter name from the flow" do
@@ -100,7 +100,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
 
   test "should allow to attach file" do
     click_button "Continue"
-    attach_file("correspondence[file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence[file][file]", Rails.root + "test/fixtures/files/testImage.png")
     click_button "Continue"
     assert_text("testImage")
     click_button "Continue"

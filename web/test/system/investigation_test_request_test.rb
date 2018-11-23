@@ -18,7 +18,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
   test "cannot add test request without a date" do
     click_button "Continue"
 
-    assert_text "3 errors prohibited this testing request from being saved"
+    assert_text "The following errors prevented this testing request from being saved"
     assert_text "Date can't be blank"
   end
 
@@ -76,7 +76,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Enter a real incident date")
+    assert_text("Date must be a valid date")
   end
 
   test "date with missing component shows an error" do
@@ -84,7 +84,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Enter date of incident and include a day, month and year")
+    assert_text("Date must specify a day, month and year")
   end
 
   test "can add an attachment to the test request" do
@@ -92,7 +92,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     attachment_description = "Test attachment description"
 
     fill_in_basic_details
-    attach_file "test[file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    attach_file "test[file][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
     fill_in "Attachment description", with: attachment_description
     click_on "Continue"
 
@@ -103,6 +103,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
 
     assert_current_path(/investigations\/\d+/)
     assert_text "Attached: #{attachment_filename}"
+    assert_text "View attachment"
   end
 
   test "attachment description field is not visible when no file is selected" do
@@ -110,14 +111,14 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
   end
 
   test "attachment description field is visible when a file is selected" do
-    attach_file "test[file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
+    attach_file "test[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
 
     assert_text "Attachment description"
   end
 
   def fill_in_basic_details
-    fill_in "test_product_id", with: @test.product.name
-    fill_in "test_legislation", with: @test.legislation
+    fill_in "product-picker", with: @test.product.name
+    fill_in "legislation-picker", with: @test.legislation
     fill_in "test_details", with: @test.details
     fill_in "Day", with: @test.date.day
     fill_in "Month", with: @test.date.month

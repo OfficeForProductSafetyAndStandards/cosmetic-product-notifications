@@ -1,0 +1,75 @@
+- page_title = "Record corrective action"
+- content_for :page_title, page_title
+- content_for :after_header do
+  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+h1.govuk-heading-xl
+  span.govuk-caption-xl
+    | Case: #{@investigation.pretty_id}
+  = page_title
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: @corrective_action, local: true, url: wizard_path, method: :put do |form|
+      = render "form_validation_display", errors: @corrective_action.errors, model_name: "action"
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Summary
+        .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:summary].any?)
+          = form.text_field :summary, class: "govuk-input govuk-!-width-two-thirds", maxlength: 1000
+
+      legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+        | When was this action decided?
+      = render "date_input", form: form
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Which product is subject to action?
+        .govuk-form-group.full-width class=("govuk-form-group--error" if @corrective_action.errors[:product].any?)
+          - if @investigation.products.empty?
+            span.govuk-hint
+              | There are no products on this case.
+            span.govuk-hint
+              = link_to "Add a product", new_investigation_product_path(@investigation)
+              |  to record a corrective action.
+          - else
+            span.govuk-hint
+              ' Only products already added to the case are listed.
+              = link_to "Add a product", new_investigation_product_path(@investigation)
+            = form.collection_select :product_id, @investigation.products, :id, :name, { include_blank: true },
+                    class: "govuk-select", id: "product-picker"
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Under which legislation?
+        .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:legislation].any?)
+          span.govuk-hint
+            | Select the relevant legislation from the list.
+          = form.select :legislation, relevant_legislation, { include_blank: true },
+                  class: "govuk-select", id: "legislation-picker"
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Which business is responsible?
+        .govuk-form-group.full-width class=("govuk-form-group--error" if @corrective_action.errors[:business].any?)
+          - if @investigation.businesses.empty?
+            span.govuk-hint
+              | There are no businesses associated with this case.
+            span.govuk-hint
+              = link_to "Add a business", new_investigation_business_path(@investigation)
+              |  to record a corrective action.
+          - else
+            span.govuk-hint
+              ' Only businesses already added to the case are listed.
+              = link_to "Add a business", new_investigation_business_path(@investigation)
+            = form.collection_select :business_id, @investigation.businesses, :id, :company_name,
+                    { include_blank: true }, class: "govuk-select", id: "business-picker"
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Further details
+        .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:details].any?)
+          = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
+
+      = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
+
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

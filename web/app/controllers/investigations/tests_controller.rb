@@ -1,5 +1,8 @@
 class Investigations::TestsController < ApplicationController
   include FileConcern
+  set_attachment_names :file
+  set_file_params_key :test
+
   include Wicked::Wizard
   steps :details, :confirmation
 
@@ -29,8 +32,9 @@ class Investigations::TestsController < ApplicationController
 
   # POST /tests
   def create
-    attach_files
-    if @test.save
+    update_attachment
+    if test_saved?
+      save_attachment
       redirect_to investigation_url(@investigation), notice: "#{@test.pretty_name.capitalize} was successfully recorded."
     else
       render step
@@ -39,7 +43,9 @@ class Investigations::TestsController < ApplicationController
 
   # PATCH/PUT /tests/1
   def update
+    update_attachment
     if test_valid?
+      save_attachment
       redirect_to next_wizard_path
     else
       render step
@@ -50,7 +56,7 @@ private
 
   def clear_session
     session[:test] = nil
-    initialize_file_attachment
+    initialize_file_attachments
   end
 
   def set_investigation
@@ -62,23 +68,37 @@ private
   end
 
   def set_attachment
-    @file = load_file_attachment
+    @file_blob, * = load_file_attachments
+  end
+
+  def update_attachment
+    update_blob_metadata @file_blob, file_metadata
   end
 
   def store_test
-    session[:test] = @test.attributes
+    session[:test] = @test.attributes if @test.valid?(step)
   end
 
   def test_valid?
     @test.validate(step)
-    update_file_details(@file)
-    validate_blob_size(@file, @test.errors)
+    validate_blob_size(@file_blob, @test.errors, "file")
     @test.errors.empty?
   end
 
+  def test_saved?
+    return false unless test_valid?
+
+    attach_files
+    @test.save
+  end
+
   def attach_files
-    attach_file_to_list(@file, @test.documents)
-    attach_file_to_list(@file, @investigation.documents)
+    attach_blobs_to_list(@file_blob, @test.documents)
+    attach_blobs_to_list(@file_blob, @investigation.documents)
+  end
+
+  def save_attachment
+    @file_blob.save if @file_blob
   end
 
   def test_params
@@ -108,11 +128,7 @@ private
     params.dig(:test, :is_result) == "true" ? Test::Result.name : Test::Request.name
   end
 
-  def get_file_params_key
-    :test
-  end
-
-  def file_metadata_params
+  def file_metadata
     if @test.requested?
       title = "Test requested: #{@test.product&.name}"
       document_type = "test_request"
@@ -120,6 +136,6 @@ private
       title = "#{@test.result&.capitalize} test: #{@test.product&.name}"
       document_type = "test_results"
     end
-    super.merge(title: title, document_type: document_type)
+    get_attachment_metadata_params(:file).merge(title: title, document_type: document_type)
   end
 end

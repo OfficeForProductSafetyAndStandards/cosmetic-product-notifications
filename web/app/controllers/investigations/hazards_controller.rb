@@ -1,10 +1,13 @@
 class Investigations::HazardsController < ApplicationController
   include FileConcern
+  set_attachment_names :file
+  set_file_params_key :hazard
+
   include HazardsHelper
   before_action :load_relevant_objects
 
-  def risk_level;
-    initialize_file_attachment
+  def risk_level
+    initialize_file_attachments
   end
 
   def update_risk_level

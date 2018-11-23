@@ -19,6 +19,7 @@ class Product < ApplicationRecord
   has_many :investigation_products, dependent: :destroy
   has_many :investigations, through: :investigation_products
 
+  has_many :corrective_actions, dependent: :destroy
   has_many :tests, dependent: :destroy
 
   has_one :source, as: :sourceable, dependent: :destroy
@@ -28,4 +29,4 @@ class Product < ApplicationRecord
   end
 end
 
-Product.import force: true # for auto sync model with elastic search
+Product.import force: true if Rails.env.development? # for auto sync model with elastic search

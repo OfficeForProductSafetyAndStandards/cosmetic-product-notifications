@@ -5,7 +5,7 @@ class Investigation < ApplicationRecord
 
   attr_accessor :priority_rationale, :status_rationale
 
-  enum priority: %i[low medium high], _suffix: true
+  enum priority: %i[low medium high]
 
   validates :question_title, presence: true, on: :question_details
   validate :validate_assignment, :validate_priority
@@ -18,6 +18,7 @@ class Investigation < ApplicationRecord
   settings do
     mappings do
       indexes :status, type: :keyword
+      indexes :assignee_id, type: :keyword
     end
   end
 
@@ -26,19 +27,20 @@ class Investigation < ApplicationRecord
   belongs_to_active_hash :assignee, class_name: "User", optional: true
 
   has_many :investigation_products, dependent: :destroy
-  has_many :products, through: :investigation_products, after_add: :create_audit_activity_for_product,
+  has_many :products, through: :investigation_products,
+           after_add: :create_audit_activity_for_product,
            after_remove: :create_audit_activity_for_removing_product
 
   has_many :investigation_businesses, dependent: :destroy
-  has_many :businesses, through: :investigation_businesses, after_add: :create_audit_activity_for_business,
+  has_many :businesses, through: :investigation_businesses,
+           after_add: :create_audit_activity_for_business,
            after_remove: :create_audit_activity_for_removing_business
 
   has_many :activities, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :investigation
 
-  has_many :incidents, dependent: :destroy
-
+  has_many :corrective_actions, dependent: :destroy
   has_many :correspondences, dependent: :destroy
-
+  has_many :incidents, dependent: :destroy
   has_many :tests, dependent: :destroy
 
   has_many_attached :documents
@@ -55,17 +57,13 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: :pretty_id,
-      only: %i[question_title description is_closed],
+      only: %i[question_title description is_closed assignee_id updated_at created_at],
       include: {
         documents: {
           methods: %i[title description filename]
         },
         images: {
-          include: {
-            blob: {
-              only: %i[metadata filename]
-            }
-          }
+          methods: %i[title description filename]
         },
         correspondences: {},
         activities: {
@@ -210,4 +208,4 @@ private
   end
 end
 
-Investigation.import force: true # for auto sync model with elastic search
+Investigation.import force: true if Rails.env.development? # for auto sync model with elastic search

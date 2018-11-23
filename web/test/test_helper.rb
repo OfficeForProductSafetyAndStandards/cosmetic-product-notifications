@@ -21,15 +21,17 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   def sign_in_as_admin
-    stub_user_credentials(user: admin_user, is_admin: true)
+    admin = admin_user
+    stub_user_credentials(user: admin, is_admin: true)
     stub_client_config
-    stub_user_data(users: [admin_user, test_user])
+    stub_user_data(users: [admin, test_user])
   end
 
   def sign_in_as_user
-    stub_user_credentials(user: test_user, is_admin: false)
+    user = test_user
+    stub_user_credentials(user: user, is_admin: false)
     stub_client_config
-    stub_user_data(users: [admin_user, test_user])
+    stub_user_data(users: [admin_user, user])
   end
 
   def logout
@@ -39,16 +41,18 @@ class ActiveSupport::TestCase
     allow(Keycloak::Client).to receive(:auth_server_url).and_call_original
 
     allow(Keycloak::Internal).to receive(:all_users).and_call_original
+
+    Rails.cache.delete(:keycloak_users)
   end
 
 private
 
   def admin_user
-    { id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "User" }
+    { id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin" }
   end
 
   def test_user
-    { id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "Admin" }
+    { id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User" }
   end
 
   def stub_user_credentials(user:, is_admin: false)

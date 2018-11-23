@@ -1,73 +1,90 @@
 module FileConcern
   extend ActiveSupport::Concern
 
-  def initialize_file_attachment
-    session[get_file_session_key] = nil
-  end
+  module ClassMethods
+    attr_reader :attachment_names, :file_params_key
 
-  def load_file_attachment
-    return save_and_store_blob if file_params[:file].present?
-    return load_file_by_id if session[get_file_session_key].present?
-  end
+  private
 
-  def save_and_store_blob
-    file = ActiveStorage::Blob.create_after_upload!(
-      io: file_params[:file],
-      filename: file_params[:file].original_filename,
-      content_type: file_params[:file].content_type,
-      metadata: file_metadata_params.to_h
-    )
-    session[get_file_session_key] = file.id
-    file.analyze_later
-    file
-  end
+    def set_attachment_names(*names)
+      @attachment_names = names
+    end
 
-  def load_file_by_id
-    ActiveStorage::Blob.find_by(id: session[get_file_session_key])
-  end
-
-  def attach_file_to_list(file, attachment_list)
-    return unless file
-
-    update_file_details(file)
-    attachments = attachment_list.attach(file)
-    attachment = attachments.last
-    attachment.blob.save
-    attachment
-  end
-
-  def attach_file_to_attachment_slot(file, attachment_slot)
-    return unless file
-
-    update_file_details(file)
-    attachment_slot.detach if attachment_slot.attached?
-    attachment_slot.attach(file)
-    attachment_slot.blob.save
-  end
-
-  def update_file_details(file)
-    return unless file
-
-    file.metadata.update(file_metadata_params)
-    file.metadata["updated"] = Time.current
-    file.save
-  end
-
-  def validate_blob_size(blob, errors, allowed_size = max_file_byte_size)
-    if blob && (blob.byte_size > allowed_size)
-      errors.add(:base, :file_too_large, message: "File is too big, allowed size is #{allowed_size / 1.megabyte}MB")
+    def set_file_params_key(key)
+      @file_params_key = key
     end
   end
 
-  def get_file_params_key
-    # If file upload is part of a bigger form, like correspondence, you need to override this with the key used to get
-    # the relevant parameters from params(e.g. :correspondence)
-    :file
+  def file_params_key
+    check_correct_usage
+
+    self.class.file_params_key
   end
 
-  def get_file_session_key
-    # If for some reason you need to control where in session you store the id of your file, override this
-    :file_id
+  def attachment_names
+    check_correct_usage
+
+    self.class.attachment_names
+  end
+
+  def initialize_file_attachments
+    attachment_names.each { |name| session[name] = nil }
+  end
+
+  def load_file_attachments
+    attachment_names.map do |name|
+      attachment_params = get_attachment_params(name)
+      if attachment_params[:file].present?
+        file = ActiveStorage::Blob.create_after_upload!(
+          io: attachment_params[:file],
+          filename: attachment_params[:file].original_filename,
+          content_type: attachment_params[:file].content_type,
+          metadata: get_attachment_metadata_params_from_attachment_params(attachment_params)
+        )
+        session[name] = file.id
+        file.analyze_later
+        file
+      elsif session[name].present?
+        ActiveStorage::Blob.find_by(id: session[name])
+      end
+    end
+  end
+
+  def get_attachment_params(attachment_name)
+    return {} if params[file_params_key].blank? || params[file_params_key][attachment_name].blank?
+
+    params.require(file_params_key).require(attachment_name).permit(:file, :title, :description, :document_type, :other_type)
+  end
+
+  def get_attachment_metadata_params(attachment_name)
+    attachment_params = get_attachment_params attachment_name
+    return {} if attachment_params.blank?
+
+    get_attachment_metadata_params_from_attachment_params attachment_params
+  end
+
+  def get_attachment_metadata_params_from_attachment_params(attachment_params)
+    attachment_params.except(:file).to_h
+  end
+
+  def check_correct_usage
+    raise "file_params_key must be specified in #{self.class}" unless self.class.file_params_key
+    raise "attachment_names must be specified in #{self.class}" unless self.class.attachment_names
+  end
+
+  # TODO move to model?
+
+  def update_blob_metadata blob, metadata
+    return unless blob
+
+    blob.metadata.update(metadata)
+    blob.metadata["updated"] = Time.current
+  end
+
+  def validate_blob_size(blob, errors, blob_display_name)
+    return unless blob && (blob.byte_size > max_file_byte_size)
+
+    errors.add(:base, :file_too_large, message: "#{blob_display_name} is too big, allowed size is #{max_file_byte_size / 1.megabyte}MB")
   end
 
   def max_file_byte_size
@@ -75,13 +92,21 @@ module FileConcern
     100.megabytes
   end
 
-  def file_params
-    return {} if params[get_file_params_key].blank?
+  def attach_blobs_to_list(*blobs, documents)
+    blobs.each do |blob|
+      next unless blob
 
-    params.require(get_file_params_key).permit(:file, :title, :description, :document_type, :other_type)
+      attachments = documents.attach(blob)
+      attachment = attachments.last
+      attachment.blob.save
+    end
   end
 
-  def file_metadata_params
-    file_params.except(:file)
+  def attach_blob_to_attachment_slot(blob, attachment_slot)
+    return unless blob
+
+    attachment_slot.detach if attachment_slot.attached?
+    attachment_slot.attach(blob)
+    attachment_slot.blob.save
   end
 end
