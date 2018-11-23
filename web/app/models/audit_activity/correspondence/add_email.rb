@@ -4,8 +4,8 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
 
   def self.from(correspondence, investigation)
     activity = super(correspondence, investigation, self.build_body(correspondence))
-    activity.add_attachment(correspondence.email_file.blob, :email_file) if correspondence.email_file.attached?
-    activity.add_attachment(correspondence.email_attachment.blob, :email_attachment) if correspondence.email_attachment.attached?
+    activity.attach_blob(correspondence.email_file.blob, :email_file) if correspondence.email_file.attached?
+    activity.attach_blob(correspondence.email_attachment.blob, :email_attachment) if correspondence.email_attachment.attached?
   end
 
   def subtitle_slug

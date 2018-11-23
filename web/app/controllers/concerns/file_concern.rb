@@ -95,6 +95,7 @@ module FileConcern
   def attach_blobs_to_list(*blobs, documents)
     blobs.each do |blob|
       next unless blob
+
       attachments = documents.attach(blob)
       attachment = attachments.last
       attachment.blob.save

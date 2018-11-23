@@ -20,8 +20,8 @@
               = subform.label :document_type, document_type_label(type), class: "govuk-label govuk-radios__label"
     .govuk-form-group
       = subform.label :other_type, class: "govuk-label"
-      = subform.text_field :other_type, value: document.metadata["other_type"], placeholder: "Enter a type, if relevant",
-              class: "govuk-input"
+      = subform.text_field :other_type, value: document.metadata["other_type"],
+              placeholder: "Enter a type, if relevant", class: "govuk-input"
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"
     - if show_delete

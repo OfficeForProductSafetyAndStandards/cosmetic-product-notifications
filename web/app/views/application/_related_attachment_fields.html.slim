@@ -9,8 +9,9 @@ fieldset.govuk-fieldset
         = link_to file_blob.filename, file_blob, target: "_blank"
         br
         | Selecting a different one will replace it.
-    = form.fields_for :file do |subform|
-      = subform.file_field attachment_name, class: "govuk-file-upload", id: "attachment-file-input"
+    = form.fields_for attachment_name do |subform|
+      = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
       #attachment-description.govuk-form-group
         = subform.label :description, "Attachment description", class: "govuk-label"
-        = subform.text_area :description, class: "govuk-textarea", rows: 5, value: file_blob&.metadata&.dig(:description)
+        = subform.text_area :description,
+                class: "govuk-textarea", rows: 5, value: file_blob&.metadata&.dig(:description)

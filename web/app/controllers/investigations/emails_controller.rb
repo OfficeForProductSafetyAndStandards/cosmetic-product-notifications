@@ -122,8 +122,7 @@ private
 
   def email_attachment_metadata
     get_attachment_metadata_params(:email_attachment).merge(
-      title: correspondence_params[:overview],
-      description: correspondence_params[:attachment_description]
+      title: correspondence_params[:overview]
     )
   end
 end

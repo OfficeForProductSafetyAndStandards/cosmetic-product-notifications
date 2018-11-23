@@ -80,16 +80,17 @@ private
     session[:test] = @test.attributes
   end
 
-  def test_saved?
-    return false unless test_valid?
-    attach_files
-    @test.save
-  end
-
   def test_valid?
     @test.validate(step)
     validate_blob_size(@file_blob, @test.errors, "file")
     @test.errors.empty?
+  end
+
+  def test_saved?
+    return false unless test_valid?
+
+    attach_files
+    @test.save
   end
 
   def attach_files
@@ -102,7 +103,7 @@ private
   end
 
   def test_params
-    session_params.merge(request_params).to_h.except(:description)
+    session_params.merge(request_params)
   end
 
   def session_params
@@ -128,7 +129,6 @@ private
     params.dig(:test, :is_result) == "true" ? Test::Result.name : Test::Request.name
   end
 
-  # TODO push this into params
   def file_metadata
     if @test.requested?
       title = "Test requested: #{@test.product&.name}"

@@ -18,8 +18,7 @@ class FilesController < ApplicationController
   end
 
   # GET /documents/1/edit
-  def edit
-  end
+  def edit; end
 
   # PATCH/PUT /documents/1
   def update
@@ -32,14 +31,14 @@ class FilesController < ApplicationController
     return render :edit unless file_valid?
 
     @file.blob.save
-    audit_class::Update.from(@file, @parent, previous_data) if @parent.class == Investigation
+    audit_class::Update.from(@file.blob, @parent, previous_data) if @parent.class == Investigation
     redirect_to @parent
   end
 
   # DELETE /documents/1
   def destroy
     @file.destroy
-    audit_class::Destroy.from(@file, @parent) if @parent.class == Investigation
+    audit_class::Destroy.from(@file.blob, @parent) if @parent.class == Investigation
     redirect_to @parent, notice: "File was successfully removed"
   end
 
