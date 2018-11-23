@@ -2,10 +2,7 @@
 .govuk-form-group class=("govuk-form-group--error" if form.object.errors[date_key].any?)
   span.govuk-hint
     | For example, 31 3 2018
-  - if form.object.errors[date_key].present?
-    span#date-error.govuk-error-message
-      = form.object.errors[date_key].first.capitalize
-  .govuk-date-input
+  .govuk-date-input id=("date-error" if form.object.errors[date_key].any?)
     .govuk-date-input__item
       / The ids for these fields follow a special convention to work with ActiveRecord dates:
       / https://guides.rubyonrails.org/form_helpers.html#using-date-and-time-form-helpers-model-object-helpers

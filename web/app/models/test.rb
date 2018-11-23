@@ -10,6 +10,8 @@ class Test < ApplicationRecord
   validates :product, presence: true
   validates :date, presence: true
 
+  validates_length_of :details, maximum: 1000
+
   def initialize(*args)
     raise "Cannot directly instantiate a Test record" if self.class == Test
 
