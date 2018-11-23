@@ -21,7 +21,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   test "first step validates date" do
     fill_in("correspondence[day]", with: "333")
     click_on "Continue"
-    assert_text("Must be a valid date")
+    assert_text("Correspondence date must be a valid date")
   end
 
   test "second step should be content" do

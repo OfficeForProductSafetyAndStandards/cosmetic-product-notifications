@@ -20,10 +20,21 @@ class TestTest < ActiveSupport::TestCase
     assert test_request.save
   end
 
-  test "test request requires a date to be specified" do
+  test "requires a date to be specified" do
     test_request = Test::Request.create(investigation: @investigation, product: @product)
     assert_not test_request.save
     test_request.date = "2018-11-08"
+    assert test_request.save
+  end
+
+  test "requires the details to be no longer than 1000 characters" do
+    more_than_1000_characters = "a" * 1001
+    exactly_1000_characters = "a" * 1000
+
+    test_request = Test::Request.create(investigation: @investigation, product: @product, date: "2018-11-08")
+    test_request.details = more_than_1000_characters
+    assert_not test_request.save
+    test_request.details = exactly_1000_characters
     assert test_request.save
   end
 

@@ -17,7 +17,7 @@ h1.govuk-heading-xl
             | Which product should be tested?
           - else
             | Which product was tested?
-          .govuk-form-group class=("govuk-form-group--error" if @test.errors[:product].any?)
+          .govuk-form-group.full-width class=("govuk-form-group--error" if @test.errors[:product].any?)
             - if @investigation.products.empty?
               span.govuk-hint
                 ' There are no products on this case.
@@ -35,7 +35,7 @@ h1.govuk-heading-xl
         .govuk-form-group class=("govuk-form-group--error" if @test.errors[:legislation].any?)
           span.govuk-hint
             | Select the relevant legislation from the list.
-          = form.select :legislation, legislation_constants["legislation"], { include_blank: true },
+          = form.select :legislation, relevant_legislation, { include_blank: true },
                   class: "govuk-select", id: "legislation-picker"
 
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -59,8 +59,8 @@ h1.govuk-heading-xl
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Further details
-        .govuk-form-group
-          = form.text_area :details, class: "govuk-textarea", rows: 5
+        .govuk-form-group class=("govuk-form-group--error" if @test.errors[:details].any?)
+          = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
 
       = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
 

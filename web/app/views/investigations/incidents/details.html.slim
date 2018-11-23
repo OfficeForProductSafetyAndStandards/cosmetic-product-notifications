@@ -9,6 +9,8 @@ h1.govuk-heading-xl
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with model: @incident, url: wizard_path, method: :put do |form|
+      = render "form_validation_display", errors: @incident.errors, model_name: "incident"
+
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What happened?
