@@ -21,7 +21,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   test "first step should validate date" do
     fill_in("correspondence[day]", with: "333")
     click_on "Continue"
-    assert_text("prohibited this item from being saved")
+    assert_text("prevented this item from being saved")
   end
 
   test "first step should be populated with reporter name from the flow" do
