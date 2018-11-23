@@ -22,9 +22,11 @@ module Investigations::DisplayTextHelper
   end
 
   def replace_unsightly_field_names(field_name)
-    return "Case id" if field_name == "pretty_id"
-
-    field_name.gsub("search_index", "comment")
+    pretty_field_names = {
+      pretty_id: "Case id",
+      "activities.search_index": "Activities, comment"
+    }
+    pretty_field_names[field_name.to_sym] || field_name
   end
 
   def get_highlight_content(highlight)
