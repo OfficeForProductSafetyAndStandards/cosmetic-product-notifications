@@ -8,7 +8,7 @@ class AuditActivity::Image::Base < AuditActivity::Base
         investigation: investigation,
         title: title
     )
-    activity.image.attach image.blob
+    activity.image.attach image
   end
 
   def attached_image?

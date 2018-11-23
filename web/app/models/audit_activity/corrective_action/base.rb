@@ -14,7 +14,7 @@ class AuditActivity::CorrectiveAction::Base < AuditActivity::Base
       business: corrective_action.business,
       product: corrective_action.product
     )
-    activity.add_attachment corrective_action.documents.first if corrective_action.documents.attached?
+    activity.attach_blob corrective_action.documents.first.blob if corrective_action.documents.attached?
   end
 
   def self.build_body(corrective_action)

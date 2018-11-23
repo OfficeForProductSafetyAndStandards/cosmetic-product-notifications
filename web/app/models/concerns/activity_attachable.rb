@@ -35,12 +35,16 @@ module ActivityAttachable
   def attachments
     return {} unless has_attachment?
 
-    attachment_names.map { |key, name| [name, self.send(key)] }.to_h
+    attachment_names
+        .map { |attachment_name, display_name| [display_name, self.send(attachment_name)] }
+        .select { |_, attachment| attachment.attached? }
+        .to_h
   end
 
-  def add_attachment(attachment, attachment_key = attachment_names.keys.first)
-    return unless attachment_key.present? && attachment.present?
+  def attach_blob(file_blob, attachment_key = attachment_names.keys.first)
+    raise "You have not passed a blob to attach_blob in ActivityAttachable" unless file_blob.is_a? ActiveStorage::Blob
+    return unless attachment_key.present? && file_blob.present?
 
-    self.send(attachment_key).attach attachment.blob
+    self.send(attachment_key).attach file_blob
   end
 end

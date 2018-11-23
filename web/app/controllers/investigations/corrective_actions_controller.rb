@@ -1,5 +1,8 @@
 class Investigations::CorrectiveActionsController < ApplicationController
   include FileConcern
+  set_attachment_names :file
+  set_file_params_key :corrective_action
+
   include Wicked::Wizard
   steps :details, :confirmation
 
@@ -23,8 +26,8 @@ class Investigations::CorrectiveActionsController < ApplicationController
   # POST /corrective_actions.json
   def create
     respond_to do |format|
-      attach_files
-      if @corrective_action.save
+      update_attachment
+      if corrective_action_saved?
         format.html { redirect_to investigation_url(@investigation), notice: "Corrective action was successfully recorded." }
         format.json { render :show, status: :created, location: @corrective_action }
       else
@@ -38,7 +41,9 @@ class Investigations::CorrectiveActionsController < ApplicationController
   # PATCH/PUT /corrective_actions/1.json
   def update
     respond_to do |format|
+      update_attachment
       if corrective_action_valid?
+        save_attachment
         format.html { redirect_to next_wizard_path }
         format.json { render :show, status: :ok, location: @corrective_action }
       else
@@ -52,7 +57,7 @@ private
 
   def clear_session
     session[:corrective_action] = nil
-    initialize_file_attachment
+    initialize_file_attachments
   end
 
   def set_investigation
@@ -64,7 +69,11 @@ private
   end
 
   def set_attachment
-    @file = load_file_attachment
+    @file_blob, * = load_file_attachments
+  end
+
+  def update_attachment
+    update_blob_metadata @file_blob, file_metadata
   end
 
   def store_corrective_action
@@ -73,13 +82,24 @@ private
 
   def corrective_action_valid?
     @corrective_action.validate(step)
-    validate_blob_size(@file, @corrective_action.errors)
+    validate_blob_size(@file_blob, @corrective_action.errors, "file")
     @corrective_action.errors.empty?
   end
 
+  def corrective_action_saved?
+    return false unless corrective_action_valid?
+
+    attach_files
+    @corrective_action.save
+  end
+
   def attach_files
-    attach_file_to_list(@file, @corrective_action.documents)
-    attach_file_to_list(@file, @investigation.documents)
+    attach_blobs_to_list(@file_blob, @corrective_action.documents)
+    attach_blobs_to_list(@file_blob, @investigation.documents)
+  end
+
+  def save_attachment
+    @file_blob.save if @file_blob
   end
 
   def corrective_action_params
@@ -104,15 +124,11 @@ private
                                               :year)
   end
 
-  def file_metadata_params
-    super.merge(
+  def file_metadata
+    get_attachment_metadata_params(:file).merge(
       title: @corrective_action.summary,
       other_type: "Corrective action document",
       document_type: :other
     )
-  end
-
-  def get_file_params_key
-    :corrective_action
   end
 end
