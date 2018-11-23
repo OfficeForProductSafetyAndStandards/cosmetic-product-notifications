@@ -33,7 +33,7 @@ private
     {
       bool: {
         must: match_params,
-        filter: filter_params
+        filter: filter_params,
       }
     }
   end
@@ -49,7 +49,7 @@ private
   def filter_params
     filters.map do |field, value|
       {
-        term: { "#{field}": value }
+        bool: { "#{field}": value }
       }
     end
   end

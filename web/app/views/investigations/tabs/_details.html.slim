@@ -56,8 +56,15 @@ p = link_to "Record an incident", new_investigation_incident_path(@investigation
             tr.govuk-table__row
               th.govuk-table__header scope="row" File
               td.govuk-table__cell
-                - correspondence.documents&.each { |doc|
-                = doc.filename
-                = link_to render("documents/document_image", document: doc), doc, class: "document-link",
+                - correspondence.documents&.each do |doc|
+                  = doc.filename
+                  = link_to render("documents/document_image", document: doc), doc, class: "document-link",
                         target: "_blank"
-                - }
+                - if correspondence.email_file.attached?
+                  = correspondence.email_file.filename
+                  = link_to render("documents/document_image", document: correspondence.email_file),
+                          correspondence.email_file, class: "document-link", target: "_blank"
+                - if correspondence.email_attachment.attached?
+                  = correspondence.email_attachment.filename
+                  = link_to render("documents/document_image", document: correspondence.email_attachment),
+                          correspondence.email_attachment, class: "document-link", target: "_blank"

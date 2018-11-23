@@ -127,7 +127,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   end
 
   test "attachment description field is visible when a file is selected" do
-    attach_file "corrective_action[file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
+    attach_file "corrective_action[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
 
     assert_text "Attachment description"
   end
@@ -144,7 +144,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   end
 
   def add_attachment(filename:, description:)
-    attach_file "corrective_action[file]", Rails.root + "test/fixtures/files/#{filename}"
+    attach_file "corrective_action[file][file]", Rails.root + "test/fixtures/files/#{filename}"
     fill_in "Attachment description", with: description
   end
 end

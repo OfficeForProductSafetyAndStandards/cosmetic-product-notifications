@@ -32,7 +32,7 @@ h1.govuk-heading-xl
         th.govuk-table__header
           | Risk assessment
         td.govuk-table__cell
-          = @file&.filename
+          = @file_blob&.filename
   = form_with(model: @hazard, local: true,
               url: target_url, method: :post) do |form|
     = form.submit "Save", class: "govuk-button"

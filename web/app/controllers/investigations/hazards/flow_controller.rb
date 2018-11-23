@@ -1,5 +1,6 @@
 class Investigations::Hazards::FlowController < ApplicationController
   include FileConcern
+
   include HazardsHelper
   include Wicked::Wizard
   steps :details, :summary
@@ -7,7 +8,7 @@ class Investigations::Hazards::FlowController < ApplicationController
 
   def new
     clear_session
-    initialize_file_attachment
+    initialize_file_attachments
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 

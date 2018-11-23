@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(version: 2018_11_15_165509) do
     t.datetime "created_at", null: false
     t.text "details"
     t.string "email_address"
+    t.string "email_direction"
+    t.string "email_subject"
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"

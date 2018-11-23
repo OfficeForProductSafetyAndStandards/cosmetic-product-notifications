@@ -1,0 +1,44 @@
+- content_for :page_title, "Record email"
+- content_for :after_header do
+  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+main#main-content.govuk-main-wrapper role="main"
+  h1.govuk-heading-xl
+    span.govuk-caption-xl
+      = "Case: #{@investigation.pretty_id}"
+    | Record email
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
+        = render "form_validation_display", errors: @correspondence.errors
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Summary
+            span.govuk-hint
+            | Give an overview of the email
+          .govuk-form-group
+            = form.text_field :overview, class: "govuk-input govuk-!-width-two-thirds"
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Email content
+          = form.fields_for :email_file do |subform|
+            .govuk-form-group
+              - if @email_file_blob
+                p
+                  ' Currently selected file:
+                  = link_to @email_file_blob.filename, @email_file_blob, target: "_blank"
+                  br
+                  | Selecting a different one will replace it.
+              span.govuk-hint
+                | Upload the email as a file, or enter the subject and body below
+              = subform.file_field :file, class: "govuk-file-upload"
+          .govuk-form-group
+            = form.label :email_subject, "Subject line", class: "govuk-label"
+            = form.text_field :email_subject, class: "govuk-input govuk-!-width-two-thirds"
+          .govuk-form-group
+            = form.label :details, "Body", class: "govuk-label"
+            = form.text_area :details, rows: 5, class: "govuk-textarea"
+
+        = render "related_attachment_fields", form: form,
+                file_blob: @email_attachment_blob, attachment_name: :email_attachment
+
+        = form.submit "Continue", class: "govuk-button"

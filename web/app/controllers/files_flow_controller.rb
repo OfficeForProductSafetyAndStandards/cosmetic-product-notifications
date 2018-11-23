@@ -9,34 +9,38 @@ class FilesFlowController < ApplicationController
     render_wizard
   end
 
-  def new;
-    initialize_file_attachment
+  def new
+    initialize_file_attachments
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
   def update
-    validate
-    return render step if @errors.present?
+    update_blob_metadata(@file_blob, get_attachment_metadata_params(:file))
+    return render step unless file_valid?
 
-    return redirect_to next_wizard_path if step != steps.last
+    @file_blob.save
+    return redirect_to next_wizard_path unless step == steps.last
 
-    save_file
+    attach_blobs_to_list(@file_blob, file_collection)
+    audit_class::Add.from(@file_blob, @parent) if @parent.class == Investigation
+    redirect_to @parent
   end
 
 private
 
   def set_file
-    @file_blob = load_file_attachment
+    @file_blob, * = load_file_attachments
   end
 
-  def validate
+  def file_valid?
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
-    if file_params[:title].blank? && step != :upload
-      @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
-    end
-    if file_params[:file].blank? && step == :upload
+    if @file_blob.blank? && step == :upload
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end
-    validate_blob_size(@file_blob, @errors) if step == :upload
+    if @file_blob && @file_blob.metadata[:title].blank? && step != :upload
+      @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
+    end
+    validate_blob_size(@file_blob, @errors, "file") if step == :upload
+    @errors.empty?
   end
 end
