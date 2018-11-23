@@ -6,5 +6,5 @@
     - get_displayable_highlights(highlights).each do |highlight|
       span.govuk-caption-m[class="govuk-!-font-size-16"] = highlight[:label]
       span = highlight[:content]
-      - if (highlight != get_displayable_highlights(highlights).last)
+      - if highlight != get_displayable_highlights(highlights).last
         p
