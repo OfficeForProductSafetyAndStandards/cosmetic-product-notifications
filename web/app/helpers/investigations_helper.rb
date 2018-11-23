@@ -41,7 +41,7 @@ module InvestigationsHelper
   def query_params
     set_default_status_filter
     set_default_sort_by_filter
-    params.permit(:q, :sort, :direction, :status_open, :status_closed, :page, :sort_by)
+    params.permit(:q, :status_open, :status_closed, :page, :sort_by)
   end
 
   def set_default_status_filter

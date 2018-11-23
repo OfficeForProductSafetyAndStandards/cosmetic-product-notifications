@@ -9,7 +9,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     @investigation_no_products = investigations(:no_products)
     @investigation_one.source = sources(:investigation_one)
     @investigation_one.hazard = hazards(:one)
-    Investigation.import force: true
 
     @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
     @investigation_one.updated_at = Time.zone.parse('2017-07-11 21:00')
@@ -17,6 +16,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     @investigation_two.created_at = Time.zone.parse('2015-07-11 21:00')
     @investigation_two.updated_at = Time.zone.parse('2016-07-11 21:00')
     @investigation_two.save
+    Investigation.import force: true
   end
 
   teardown do
