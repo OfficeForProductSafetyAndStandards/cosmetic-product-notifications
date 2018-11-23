@@ -70,7 +70,7 @@ main#main-content.govuk-main-wrapper role="main"
         /TODO refer the links below to correct pages when they are created
         = link_to "Begin an investigation", new_investigation_path, class: "govuk-link mspsds-block-link"
         = link_to "Ask a question", new_question_path, class: "govuk-link mspsds-block-link"
-      = render "table", investigations: @investigations
+      = render "table", search_results: @results
       = will_paginate @investigations
       br
       = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: query_params)
