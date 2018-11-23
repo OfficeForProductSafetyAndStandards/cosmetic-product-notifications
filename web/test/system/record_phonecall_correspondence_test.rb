@@ -21,7 +21,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   test "first step validates date" do
     fill_in("correspondence[day]", with: "333")
     click_on "Continue"
-    assert_text("Enter a real incident date")
+    assert_text("Must be a valid date")
   end
 
   test "second step should be content" do
@@ -31,7 +31,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
 
   test "attaches a transcript file" do
     click_button "Continue"
-    attach_file("correspondence[file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence[file][file]", Rails.root + "test/fixtures/files/testImage.png")
     click_button "Continue"
     assert_text("testImage")
     click_button "Continue"

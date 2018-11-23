@@ -1,24 +1,29 @@
 class Investigations::PhoneCallsController < ApplicationController
   include FileConcern
-  set_attachment_categories :file
+  set_attachment_names :file
   set_file_params_key :correspondence
 
   include Wicked::Wizard
   steps :context, :content, :confirmation
-  before_action :load_relevant_objects, only: %i[show update create]
+
+  before_action :set_investigation
+  before_action :set_correspondence, only: %i[show create update]
+  before_action :set_attachment, only: %i[show create update]
+  before_action :store_correspondence, only: %i[update]
 
   def new
     clear_session
-    initialize_file_attachment
+    initialize_file_attachments
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
   def create
-    attach_files
-    @investigation.correspondences << @correspondence
-    if @investigation.save
-      redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
+    update_attachment
+    if correspondence_valid? && @investigation.save
+      attach_files
+      save_attachment
       AuditActivity::Correspondence::AddPhoneCall.from(@correspondence, @investigation)
+      redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
     else
       redirect_to investigation_path @investigation, notice: "Correspondence could not be saved."
     end
@@ -29,12 +34,12 @@ class Investigations::PhoneCallsController < ApplicationController
   end
 
   def update
-    @correspondence.validate(step)
-    validate_blob_sizes @correspondence.errors, file: @file
-    if @correspondence.errors.any?
-      render step
-    else
+    update_attachment
+    if correspondence_valid?
+      save_attachment
       redirect_to next_wizard_path
+    else
+      render step
     end
   end
 
@@ -44,37 +49,59 @@ private
     session[:correspondence] = nil
   end
 
-  def attach_files
-    attach_files_to_list(@correspondence.documents, file: @file)
-    attach_files_to_list(@investigation.documents, file: @file)
-  end
-
-  def load_relevant_objects
+  def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
-    @file = load_file_attachment
-    add_metadata(@file, file_metadata) if step == :content
-    load_correspondence
   end
 
-  def load_correspondence
-    data_from_previous_steps = session[:correspondence] || suggested_values
-    session[:correspondence] = data_from_previous_steps.merge(correspondence_params || {})
-    @correspondence = Correspondence.new(session[:correspondence])
+  def set_correspondence
+    @correspondence = @investigation.correspondences.build(correspondence_params)
+  end
+
+  def store_correspondence
+    session[:correspondence] = @correspondence.attributes
+  end
+
+  def set_attachment
+    @file_blob, * = load_file_attachments
+  end
+
+  def update_attachment
+    update_blob_metadata @file_blob, file_metadata
+  end
+
+  def correspondence_valid?
+    @correspondence.validate(step || steps.last)
+    validate_blob_size(@file_blob, @correspondence.errors, "file")
+    @correspondence.errors.empty?
+  end
+
+  def attach_files
+    attach_blobs_to_list(@file_blob, @correspondence.documents)
+    attach_blobs_to_list(@file_blob, @investigation.documents)
+  end
+
+  def save_attachment
+    @file_blob.save if @file_blob
   end
 
   def correspondence_params
-    return {} if params[:correspondence].blank?
-
-    params.require(:correspondence).permit(
-      :correspondent_name, :phone_number, :day, :month, :year, :overview, :details
-    )
+    session_params.merge(request_params)
   end
 
-  def file_metadata
-    {
-        title: correspondence_params[:overview],
-        description: "Call transcript"
-    }
+  def request_params
+    return {} if params[:correspondence].blank?
+
+    params.require(:correspondence).permit(:correspondent_name,
+                                           :phone_number,
+                                           :day,
+                                           :month,
+                                           :year,
+                                           :overview,
+                                           :details)
+  end
+
+  def session_params
+    session[:correspondence] || suggested_values
   end
 
   def suggested_values
@@ -83,5 +110,12 @@ private
         month: Time.zone.today.month,
         year: Time.zone.today.year
     }
+  end
+
+  def file_metadata
+    get_attachment_metadata_params(:file).merge(
+      title: correspondence_params[:overview],
+      description: "Call transcript"
+    )
   end
 end

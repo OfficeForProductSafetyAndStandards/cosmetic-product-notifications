@@ -20,10 +20,17 @@ main.govuk-main-wrapper role="main"
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Details
-          .govuk-form-group
-            span.govuk-hint class="govuk-!-width-full"
-              | Upload the transcript if you have one, or enter notes below
-            = form.file_field :file, class: "govuk-file-upload", aria_describedby: "correspondence-file-upload-1-hint"
+          = form.fields_for :file do |subform|
+            .govuk-form-group
+              - if @email_file_blob
+                p
+                  ' Currently selected file:
+                  = link_to @email_file_blob.filename, @email_file_blob, target: "_blank"
+                  br
+                  | Selecting a different one will replace it.
+              span.govuk-hint class="govuk-!-width-full"
+                | Upload the transcript if you have one, or enter notes below
+              = subform.file_field :file, class: "govuk-file-upload"
           .govuk-form-group
             label.govuk-label class="govuk-!-width-two-thirds"
               | Notes

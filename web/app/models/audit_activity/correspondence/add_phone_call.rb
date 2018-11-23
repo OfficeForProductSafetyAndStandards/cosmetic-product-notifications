@@ -1,11 +1,10 @@
 class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondence::Base
-  has_one_attached :file
+  include ActivityAttachable
+  with_attachments file: "file"
 
   def self.from(correspondence, investigation)
     activity = super(correspondence, investigation, self.build_body(correspondence))
-    if (file = correspondence.find_attachment_by_category "file")
-      activity.file.attach file.blob
-    end
+    activity.attach_blob(correspondence.documents.first.blob, :file) if correspondence.documents.attached?
   end
 
   def self.build_body correspondence
@@ -35,12 +34,8 @@ class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondenc
   end
 
   def self.build_file_body correspondence
-    file = correspondence.find_attachment_by_category "file"
+    file = correspondence.documents.first
     file ? "Attached: #{file.filename}<br>" : ""
-  end
-
-  def attachments
-    file.attached? ? { file: "transcript" } : {}
   end
 
   def subtitle_slug
