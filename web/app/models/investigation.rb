@@ -206,6 +206,26 @@ private
       first_product[property_name]
     end
   end
+
+  def self.highlighted_fields
+    {
+      fields: {
+        "*.*": {},
+        "pretty_id": {},
+        "question_title": {},
+        "description": {}
+      }
+    }
+  end
+
+  def self.fuzzy_fields
+    %w[documents.* images.* correspondences.* activities.* businesses.* hazard.* incidents.* products.* reporter.*
+    tests.* question_title description]
+  end
+
+  def self.exact_fields
+    %w[pretty_id]
+  end
 end
 
 Investigation.import force: true if Rails.env.development? # for auto sync model with elastic search
