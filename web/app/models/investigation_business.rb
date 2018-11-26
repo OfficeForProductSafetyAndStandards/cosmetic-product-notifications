@@ -4,5 +4,5 @@ class InvestigationBusiness < ApplicationRecord
   # TODO MSPSDS-687 Give these relationships a way to be set
   enum relationship: %i[manufacturer distributor importer]
 
-  default_scope { order('created_at') }
+  default_scope { order(created_at: :asc) }
 end
