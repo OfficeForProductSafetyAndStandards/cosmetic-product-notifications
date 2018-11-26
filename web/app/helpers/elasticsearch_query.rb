@@ -7,18 +7,20 @@ class ElasticsearchQuery
     @sorting = sorting
   end
 
-  def build_query
+  def build_query(highlighted_fields, fuzzy_fields, exact_fields)
+    @fuzzy_fields = fuzzy_fields
+    @exact_fields = exact_fields
     search_query = {}
     search_query[:query] = query_params if query.present? || filters.present?
     search_query[:sort] = sort_params if sorting.present?
     search_query[:highlight] = {
-      fields: {
-        "*.*": {},
-        "pretty_id": {},
-        "question_title": {},
-        "description": {}
-      }
+      fields: highlighted_fields.map do |f|
+        {
+          "#{f}": {}
+        }
+      end
     }
+
     search_query
   end
 
@@ -68,8 +70,30 @@ private
   # "multi_match" searches across all fields, applying fuzzy matching to any text and keyword fields
   def fuzzy_match
     {
+      bool: {
+        should: [
+          match_exact_fields,
+          match_fuzzy_fields
+        ]
+      }
+    }
+  end
+
+  def match_exact_fields
+    {
       multi_match: {
         query: query,
+        fields: @exact_fields,
+        fuzziness: 0
+      }
+    }
+  end
+
+  def match_fuzzy_fields
+    {
+      multi_match: {
+        query: query,
+        fields: @fuzzy_fields,
         fuzziness: "AUTO"
       }
     }
