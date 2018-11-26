@@ -8,7 +8,6 @@ main#main-content.govuk-main-wrapper role="main"
     | Record email
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      form.form action="./02e-add-email-content" method="post"
       = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
         = render "form_validation_display", errors: @correspondence.errors, model_name: "email"
         fieldset.govuk-fieldset
@@ -17,10 +16,10 @@ main#main-content.govuk-main-wrapper role="main"
           .govuk-form-group
             .govuk-radios.govuk-radios--inline.mspsds-email-direction-radios
               .govuk-radios__item
-                = form.radio_button :email_direction, "Outbound", class: "govuk-radios__input"
+                = form.radio_button :email_direction, "To", class: "govuk-radios__input"
                 = form.label :email_direction, "To", class: "govuk-label govuk-radios__label"
               .govuk-radios__item
-                = form.radio_button :email_direction, "Inbound", class: "govuk-radios__input"
+                = form.radio_button :email_direction, "From", class: "govuk-radios__input"
                 = form.label :email_direction, "From", class: "govuk-label govuk-radios__label"
           .govuk-form-group
           .govuk-form-group [class="govuk-!-width-two-thirds"]

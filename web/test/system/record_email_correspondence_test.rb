@@ -90,4 +90,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     test_request.details = exactly_1000_characters
     assert test_request.save
   end
+
+  
+
 end
