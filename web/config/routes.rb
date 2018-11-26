@@ -61,6 +61,7 @@ Rails.application.routes.draw do
               concerns: %i[document_attachable]
     resources :emails, controller: "investigations/emails", only: %i[show new create update]
     resources :phone_calls, controller: "investigations/phone_calls", only: %i[show new create update]
+    resources :meetings, controller: "investigations/meetings", only: %i[show new create update]
     resources :tests, controller: "investigations/tests", only: %i[show create update] do
       collection do
         get :new_request

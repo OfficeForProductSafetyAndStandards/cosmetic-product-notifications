@@ -11,7 +11,9 @@ class Correspondence < ApplicationRecord
   def get_date_key
     :correspondence_date
   end
-
+  
+  has_one_attached :transcript
+  has_one_attached :related_attachment
   has_many_attached :documents
 
   enum contact_method: {
