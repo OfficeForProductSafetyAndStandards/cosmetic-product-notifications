@@ -108,14 +108,14 @@ private
 
   def email_file_metadata
     get_attachment_metadata_params(:email_file).merge(
-      title: correspondence_params[:overview],
+      title: correspondence_params["overview"],
       description: "Original email as a file"
     )
   end
 
   def email_attachment_metadata
     get_attachment_metadata_params(:email_attachment).merge(
-      title: correspondence_params[:overview]
+      title: correspondence_params["overview"]
     )
   end
 
