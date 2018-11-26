@@ -120,6 +120,19 @@ class Investigation < ApplicationRecord
     past_assignees.reject { |user| user.id == assignee.id }
   end
 
+  def self.highlighted_fields
+    %w[*.* pretty_id question_title description]
+  end
+
+  def self.fuzzy_fields
+    %w[documents.* images.* correspondences.* activities.* businesses.* hazard.* incidents.* products.* reporter.*
+       tests.* question_title description]
+  end
+
+  def self.exact_fields
+    %w[pretty_id]
+  end
+
 private
 
   def create_audit_activity_for_case
@@ -205,26 +218,6 @@ private
     if products.all? { |product| product[property_name] == first_product[property_name] }
       first_product[property_name]
     end
-  end
-
-  def self.highlighted_fields
-    {
-      fields: {
-        "*.*": {},
-        "pretty_id": {},
-        "question_title": {},
-        "description": {}
-      }
-    }
-  end
-
-  def self.fuzzy_fields
-    %w[documents.* images.* correspondences.* activities.* businesses.* hazard.* incidents.* products.* reporter.*
-    tests.* question_title description]
-  end
-
-  def self.exact_fields
-    %w[pretty_id]
   end
 end
 

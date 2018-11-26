@@ -91,14 +91,9 @@ module Searchable
       [{ "#{sort_field}": { order: params[:direction] } }]
     end
 
-
     def self.highlighted_fields
       # To be overwritten by the model using it, defaults to all sent fields
-      {
-        fields: {
-          "*.*": {}
-        }
-      }
+      %w[*]
     end
 
     def self.fuzzy_fields

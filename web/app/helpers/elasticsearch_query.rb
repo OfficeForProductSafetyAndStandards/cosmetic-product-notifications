@@ -13,7 +13,14 @@ class ElasticsearchQuery
     search_query = {}
     search_query[:query] = query_params if query.present? || filters.present?
     search_query[:sort] = sort_params if sorting.present?
-    search_query[:highlight] = highlighted_fields
+    search_query[:highlight] = {
+      fields: highlighted_fields.map do |f|
+        {
+          "#{f}": {}
+        }
+      end
+    }
+
     search_query
   end
 
