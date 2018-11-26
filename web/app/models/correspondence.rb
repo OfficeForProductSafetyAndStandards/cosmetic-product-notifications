@@ -4,6 +4,9 @@ class Correspondence < ApplicationRecord
 
   before_validation :strip_whitespace
 
+  validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :context
+  validates_length_of :details, maximum: 1000
+
   def get_date_key
     :correspondence_date
   end
@@ -13,8 +16,8 @@ class Correspondence < ApplicationRecord
   has_many_attached :documents
 
   enum email_direction: {
-      outbound: "Outbound",
-      inbound: "Inbound"
+      outbound: "To",
+      inbound: "From"
   }
 
   enum contact_method: {
@@ -28,5 +31,10 @@ class Correspondence < ApplicationRecord
         send("#{attribute}=", send(attribute).strip)
       end
     end
+  end
+
+  def pretty_email_direction
+    return "To" if email_direction == "outbound"
+    return "From" if email_direction == "inbound"
   end
 end

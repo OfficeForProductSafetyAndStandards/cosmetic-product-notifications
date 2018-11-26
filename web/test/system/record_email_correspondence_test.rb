@@ -80,4 +80,14 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
     assert_text("There are no products attached to this case")
   end
+
+  test "requires details to be no longer than 1000 characters" do
+    more_than_1000_characters = "a" * 1001
+    exactly_1000_characters = "a" * 1000
+    test_request = Correspondence.create(investigation: @investigation)
+    test_request.details = more_than_1000_characters
+    assert_not test_request.save
+    test_request.details = exactly_1000_characters
+    assert test_request.save
+  end
 end

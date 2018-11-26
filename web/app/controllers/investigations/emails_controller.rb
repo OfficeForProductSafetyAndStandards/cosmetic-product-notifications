@@ -58,7 +58,7 @@ private
   end
 
   def store_correspondence
-    session[:correspondence] = @correspondence.attributes
+    session[:correspondence] = @correspondence.attributes if @correspondence.valid?(step)
   end
 
   def set_attachments
