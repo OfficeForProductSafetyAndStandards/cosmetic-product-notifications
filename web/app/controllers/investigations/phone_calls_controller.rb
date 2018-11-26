@@ -20,7 +20,7 @@ class Investigations::PhoneCallsController < ApplicationController
   def create
     update_attachment
     if correspondence_valid? && @investigation.save
-      attach_files
+      attach_file
       save_attachment
       AuditActivity::Correspondence::AddPhoneCall.from(@correspondence, @investigation)
       redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
@@ -75,7 +75,7 @@ private
     @correspondence.errors.empty?
   end
 
-  def attach_files
+  def attach_file
     attach_blobs_to_list(@file_blob, @correspondence.documents)
     attach_blobs_to_list(@file_blob, @investigation.documents)
   end

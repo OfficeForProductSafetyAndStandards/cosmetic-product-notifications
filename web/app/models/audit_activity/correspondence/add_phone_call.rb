@@ -1,10 +1,10 @@
 class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondence::Base
   include ActivityAttachable
-  with_attachments file: "file"
+  with_attachments attachment: "attachment"
 
   def self.from(correspondence, investigation)
     activity = super(correspondence, investigation, self.build_body(correspondence))
-    activity.attach_blob(correspondence.documents.first.blob, :file) if correspondence.documents.attached?
+    activity.attach_blob(correspondence.documents.first.blob, :attachment) if correspondence.documents.attached?
   end
 
   def self.build_body correspondence
