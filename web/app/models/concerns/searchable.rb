@@ -62,6 +62,10 @@ module Searchable
       ]
     end
 
+    after_update do |document|
+      document.__elasticsearch__.update_document_attributes updated_at: document.updated_at
+    end
+
     def self.full_search(query)
       # This line makes sure elasticsearch index is recreated before we search
       # It fixes the issue of getting no results the first time case list page is loaded
