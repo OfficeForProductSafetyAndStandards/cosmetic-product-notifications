@@ -35,8 +35,7 @@ class Investigations::TestsController < ApplicationController
     update_attachment
     if test_saved?
       save_attachment
-      redirect_to investigation_url(@investigation),
-                    notice: "#{@test.pretty_name.capitalize} was successfully recorded."
+      redirect_to investigation_url(@investigation), notice: "#{@test.pretty_name.capitalize} was successfully recorded."
     else
       render step
     end
@@ -77,7 +76,7 @@ private
   end
 
   def store_test
-    session[:test] = @test.attributes
+    session[:test] = @test.attributes if @test.valid?(step)
   end
 
   def test_valid?

@@ -13,7 +13,10 @@ class ElasticsearchQuery
     search_query[:sort] = sort_params if sorting.present?
     search_query[:highlight] = {
       fields: {
-        "*": {}
+        "*.*": {},
+        "pretty_id": {},
+        "question_title": {},
+        "description": {}
       }
     }
     search_query

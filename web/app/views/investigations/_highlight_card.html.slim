@@ -1,9 +1,11 @@
 .govuk-grid-row class=(investigation.is_closed ? "mspsds-case-card mspsds-case-card--closed" : "mspsds-case-card")
   .govuk-grid-column-one-half
-    span.govuk-caption-m[class="govuk-!-font-size-14"] = "CASE #{investigation.pretty_id}"
+    span.govuk-caption-m[class="govuk-!-font-size-16"]
+      = "#{case_question_text(investigation).capitalize} #{investigation.pretty_id}"
     span = link_to investigation.title, investigation, class: "govuk-!-font-weight-bold"
   .govuk-grid-column-one-half
     - get_displayable_highlights(highlights).each do |highlight|
-      span.govuk-caption-m[class="govuk-!-font-size-14"] = highlight[:label]
+      span.govuk-caption-m[class="govuk-!-font-size-16"] = highlight[:label]
       span = highlight[:content]
-      p
+      - if highlight != get_displayable_highlights(highlights).last
+        p

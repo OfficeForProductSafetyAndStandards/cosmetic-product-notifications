@@ -77,7 +77,7 @@ private
   end
 
   def store_corrective_action
-    session[:corrective_action] = @corrective_action.attributes
+    session[:corrective_action] = @corrective_action.attributes if @corrective_action.valid?(step)
   end
 
   def corrective_action_valid?

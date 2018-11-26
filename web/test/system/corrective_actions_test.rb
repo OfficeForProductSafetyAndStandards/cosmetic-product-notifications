@@ -15,12 +15,6 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     logout
   end
 
-  test "cannot create corrective action without specifying date decided" do
-    click_button "Continue"
-
-    assert_text("Date decided can't be blank")
-  end
-
   test "can record corrective action for a case" do
     fill_in_basic_details
     click_on "Continue"
@@ -71,13 +65,19 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     assert_no_field with: @corrective_action.legislation
   end
 
+  test "cannot create a corrective action without specifying the date decided" do
+    click_button "Continue"
+
+    assert_text "Date decided can't be blank"
+  end
+
   test "invalid date shows an error" do
     fill_in "Day", with: "7"
     fill_in "Month", with: "13"
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date decided must be a valid date")
+    assert_text "Date decided must be a valid date"
   end
 
   test "date with missing component shows an error" do
@@ -85,7 +85,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date decided must specify a day, month and year")
+    assert_text "Date decided must specify a day, month and year"
   end
 
   test "can add an attachment when recording a corrective action" do
