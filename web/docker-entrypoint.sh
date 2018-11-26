@@ -5,7 +5,7 @@ set -ex
 bin/bundle check || bin/bundle install
 
 # Ensure the correct directory for development is used for importing shared-web with yarn
-yarn add ../shared-web
+yarn add ./vendor/shared-web
 
 # Ensure all node packages are installed.
 yarn install

@@ -31,7 +31,8 @@ gem "uglifier", ">= 1.3.0"
 gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
 
-shared_web_path = 'vendor/shared-web'
+gem 'shared-web', path: './vendor/shared-web'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -44,9 +45,4 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-  # Shared web will be accessed from the root directory in development, and be copied to the vendors directory for deployment
-  shared_web_path = '../shared-web'
 end
-
-gem 'shared-web', path: shared_web_path

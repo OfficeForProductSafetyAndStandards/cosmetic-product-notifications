@@ -41,7 +41,8 @@ gem "wicked"
 gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
 
-shared_web_path = 'vendor/shared-web'
+gem 'shared-web', path: './vendor/shared-web'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -67,12 +68,7 @@ group :development do
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console"
-
-  # Shared web will be accessed from the root directory in development, and be copied to the vendors directory for deployment
-  shared_web_path = '../shared-web'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
-
-gem 'shared-web', path: shared_web_path

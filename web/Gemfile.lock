@@ -10,7 +10,7 @@ GIT
       rubyzip (>= 1.2.1)
 
 PATH
-  remote: ../shared-web
+  remote: vendor/shared-web
   specs:
     shared-web (0.1.0)
       rails (~> 5.2.1)

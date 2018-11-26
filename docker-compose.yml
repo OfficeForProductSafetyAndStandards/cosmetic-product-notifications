@@ -42,7 +42,7 @@ services:
       - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/web:/app
-      - ${PWD-.}/shared-web:/shared-web
+      - ${PWD-.}/shared-web:/app/vendor/shared-web
     depends_on:
       - db
       - elasticsearch
@@ -57,7 +57,7 @@ services:
       - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/cosmetics-web:/app
-      - ${PWD-.}/shared-web:/shared-web
+      - ${PWD-.}/shared-web:/app/vendor/shared-web
     depends_on:
       - db
   worker:
@@ -69,7 +69,7 @@ services:
       - bundle-cache:/usr/local/bundle
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/web:/app
-      - ${PWD-.}/shared-web:/shared-web
+      - ${PWD-.}/shared-web:/app/vendor/shared-web
     depends_on:
       - db
       - elasticsearch
