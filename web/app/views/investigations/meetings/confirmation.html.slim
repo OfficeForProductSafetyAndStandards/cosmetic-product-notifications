@@ -29,6 +29,9 @@ main.govuk-main-wrapper role="main"
               td.govuk-table__cell = @transcript_blob&.filename
             - if @related_attachment_blob
               tr.govuk-table__row
+                th.govuk-table__header scope="row"  Related attachments
+                td.govuk-table__cell = @related_attachment_blob&.filename
+              tr.govuk-table__row
                 th.govuk-table__header scope="row"  Attachment description
                 td.govuk-table__cell = @related_attachment_blob.metadata[:description]
         = form.submit "Continue", class: "govuk-button"
