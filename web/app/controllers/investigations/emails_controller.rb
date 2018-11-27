@@ -102,15 +102,7 @@ private
   end
 
   def session_params
-    session[:correspondence] || suggested_values
-  end
-
-  def suggested_values
-    {
-        day: Time.zone.today.day,
-        month: Time.zone.today.month,
-        year: Time.zone.today.year
-    }
+    session[:correspondence] || {}
   end
 
   def email_file_metadata
