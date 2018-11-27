@@ -60,12 +60,16 @@ class Investigation < ApplicationRecord
       only: %i[question_title description is_closed assignee_id updated_at created_at],
       include: {
         documents: {
+          only: [],
           methods: %i[title description filename]
         },
         images: {
+          only: [],
           methods: %i[title description filename]
         },
-        correspondences: {},
+        correspondences: {
+          only: %i[correspondent_name details email_address email_subject overview phone_number]
+        },
         activities: {
           methods: :search_index,
           only: []

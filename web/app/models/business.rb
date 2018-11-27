@@ -13,7 +13,6 @@ class Business < ApplicationRecord
   end
 
   validates :company_name, presence: true
-  default_scope { order(created_at: :desc) }
 
   has_many :investigation_businesses, dependent: :destroy
   has_many :investigations, through: :investigation_businesses
