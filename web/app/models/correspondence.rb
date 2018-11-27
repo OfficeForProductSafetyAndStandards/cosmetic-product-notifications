@@ -12,8 +12,6 @@ class Correspondence < ApplicationRecord
     :correspondence_date
   end
 
-  has_one_attached :email_file
-  has_one_attached :email_attachment
   has_many_attached :documents
 
   enum email_direction: {
@@ -32,10 +30,5 @@ class Correspondence < ApplicationRecord
         send("#{attribute}=", send(attribute).strip)
       end
     end
-  end
-
-  def pretty_email_direction
-    return "To" if email_direction == "outbound"
-    return "From" if email_direction == "inbound"
   end
 end

@@ -1,0 +1,15 @@
+class Correspondence::Email < Correspondence
+  has_one_attached :email_file
+  has_one_attached :email_attachment
+
+  def validate_email_file_and_content file_blob
+    if file_blob.nil? && email_subject.empty? && details.empty?
+      errors.add(:email, "Please provide either an email file or a subject and body")
+    end
+  end
+
+  def pretty_email_direction
+    return "To" if email_direction == "outbound"
+    return "From" if email_direction == "inbound"
+  end
+end

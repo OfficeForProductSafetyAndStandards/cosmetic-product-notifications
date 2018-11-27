@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_15_165509) do
+ActiveRecord::Schema.define(version: 2018_11_27_133944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2018_11_15_165509) do
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"
+    t.string "type"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_correspondences_on_investigation_id"
   end

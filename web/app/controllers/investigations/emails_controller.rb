@@ -1,7 +1,7 @@
 class Investigations::EmailsController < ApplicationController
   include FileConcern
   set_attachment_names :email_file, :email_attachment
-  set_file_params_key :correspondence
+  set_file_params_key :correspondence_email
 
   include Wicked::Wizard
   steps :context, :content, :confirmation
@@ -46,7 +46,7 @@ class Investigations::EmailsController < ApplicationController
 private
 
   def clear_session
-    session[:correspondence] = nil
+    session[correspondence_params_key] = nil
   end
 
   def set_investigation
@@ -54,11 +54,11 @@ private
   end
 
   def set_correspondence
-    @correspondence = @investigation.correspondences.build(correspondence_params)
+    @correspondence = @investigation.correspondences.build(correspondence_params.merge(type: "Correspondence::Email"))
   end
 
   def store_correspondence
-    session[:correspondence] = @correspondence.attributes if @correspondence.valid?(step)
+    session[correspondence_params_key] = @correspondence.attributes if @correspondence.valid?(step)
   end
 
   def set_attachments
@@ -72,6 +72,7 @@ private
 
   def correspondence_valid?
     @correspondence.validate(step || steps.last)
+    @correspondence.validate_email_file_and_content(@email_file_blob) if step == :content
     validate_blob_size(@email_file_blob, @correspondence.errors, "email file")
     validate_blob_size(@email_attachment_blob, @correspondence.errors, "email attachment")
     @correspondence.errors.empty?
@@ -93,16 +94,16 @@ private
   end
 
   def request_params
-    return {} if params[:correspondence].blank?
+    return {} if params[correspondence_params_key].blank?
 
-    params.require(:correspondence).permit(
+    params.require(correspondence_params_key).permit(
       :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
       :overview, :details, :email_direction, :email_subject, :attachment_description
     )
   end
 
   def session_params
-    session[:correspondence] || {}
+    session[correspondence_params_key] || {}
   end
 
   def email_file_metadata
@@ -116,5 +117,9 @@ private
     get_attachment_metadata_params(:email_attachment).merge(
       title: correspondence_params[:overview]
     )
+  end
+
+  def correspondence_params_key
+    "correspondence_email"
   end
 end
