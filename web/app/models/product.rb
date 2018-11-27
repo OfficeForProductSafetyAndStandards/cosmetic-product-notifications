@@ -11,7 +11,6 @@ class Product < ApplicationRecord
   index_name [Rails.env, "products"].join("_")
 
   validates :name, presence: true
-  default_scope { order(created_at: :desc) }
 
   has_many_attached :documents
   has_many_attached :images
