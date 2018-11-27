@@ -13,7 +13,7 @@ main#main-content.govuk-main-wrapper role="main"
         = form_with(model: @search, scope: "", url: investigations_path, method: :get,
                 class: "mspsds-search") do |form|
           .mspsds-search-box
-            = form.label "Keywords", class: "govuk-label govuk-label--s"
+            = form.label "Keywords", class: "govuk-label--s"
             = form.text_field :q, class: "govuk-input"
             = form.submit "Search", name: nil, class: "mspsds-search-box--submit"
           hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
