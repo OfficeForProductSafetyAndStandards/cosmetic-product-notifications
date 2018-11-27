@@ -39,7 +39,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
-    assert_redirected_to business_url(Business.first)
+    assert_redirected_to business_url(Business.last)
   end
 
   test "should not create business if name is missing" do
