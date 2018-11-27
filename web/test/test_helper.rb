@@ -19,6 +19,22 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
+  # Import all relevant models into Elasticsearch
+  def self.import_into_elasticsearch
+    unless @models_imported
+      ActiveRecord::Base.descendants.each do |model|
+        if model.respond_to?(:__elasticsearch__)
+          model.import force: true, refresh: true
+        end
+      end
+      @models_imported = true
+    end
+  end
+
+  def setup
+    self.class.import_into_elasticsearch
+  end
+
   # Add more helper methods to be used by all tests here...
   def sign_in_as_admin
     admin = admin_user
