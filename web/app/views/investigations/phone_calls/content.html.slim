@@ -1,11 +1,11 @@
-- content_for :page_title, "Record phonecall"
+- content_for :page_title, "Record phone call"
 - content_for :after_header do
   = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
 main.govuk-main-wrapper role="main"
   h1.govuk-heading-xl
     span.govuk-caption-xl
       = "Case: #{@investigation.pretty_id}"
-    | Record phonecall
+    | Record phone call
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
@@ -13,8 +13,8 @@ main.govuk-main-wrapper role="main"
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Summary
           .govuk-form-group
-            span.govuk-hint
-              | Give an overview of the phonecall
+            span#correspondence-summary-hint.govuk-hint
+              | Give an overview of the phone call
             = form.text_field :overview,
                     class: "govuk-input govuk-!-width-two-thirds", aria_describedby: "correspondence-summary-hint"
         fieldset.govuk-fieldset

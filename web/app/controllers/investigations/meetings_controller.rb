@@ -96,7 +96,6 @@ private
     return {} if params[:correspondence].blank?
 
     params.require(:correspondence).permit(:correspondent_name,
-                                           :phone_number,
                                            :day,
                                            :month,
                                            :year,
@@ -119,7 +118,7 @@ private
   def transcript_metadata
     get_attachment_metadata_params(:transcript).merge(
       title: correspondence_params["overview"],
-      description: "Call transcript"
+      description: "Meeting transcript"
     )
   end
 

@@ -1,11 +1,11 @@
-- content_for :page_title, "Record phonecall"
+- content_for :page_title, "Record phone call"
 - content_for :after_header do
   = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
 main.govuk-main-wrapper role="main"
   h1.govuk-heading-xl
     span.govuk-caption-xl
       = "Case: #{@investigation.pretty_id}"
-    | Confirm phonecall details
+    | Confirm phone call details
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_with(model: @correspondence, local: true,
@@ -14,7 +14,7 @@ main.govuk-main-wrapper role="main"
           tbody.govuk-table__body
             tr.govuk-table__row
               th.govuk-table__header scope="row"  Call with
-              td.govuk-table__cell = "INCOMPLETE" + @correspondence.correspondent_name || ""
+              td.govuk-table__cell = get_call_with_field @correspondence
             tr.govuk-table__row
               th.govuk-table__header scope="row"  Summary
               td.govuk-table__cell = @correspondence.overview

@@ -21,12 +21,12 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   test "first step validates date" do
     fill_in("correspondence[day]", with: "333")
     click_on "Continue"
-    assert_text("Must be a valid date")
+    assert_text("must be a valid date")
   end
 
   test "second step should be content" do
     click_button "Continue"
-    assert_text("Give an overview of the phonecall")
+    assert_text("Give an overview of the phone call")
   end
 
   test "attaches a transcript file" do
@@ -42,7 +42,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   test "third step should be confirmation" do
     click_button "Continue"
     click_button "Continue"
-    assert_text "Confirm phonecall details"
+    assert_text "Confirm phone call details"
     assert_text "Attachments"
   end
 

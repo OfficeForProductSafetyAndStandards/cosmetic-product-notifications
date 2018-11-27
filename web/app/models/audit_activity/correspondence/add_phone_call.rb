@@ -39,6 +39,6 @@ class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondenc
   end
 
   def subtitle_slug
-    "Phonecall"
+    "Phone call"
   end
 end

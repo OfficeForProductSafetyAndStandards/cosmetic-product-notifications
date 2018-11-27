@@ -9,6 +9,7 @@ main.govuk-main-wrapper role="main"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
+        = render "form_validation_display", errors: @correspondence.errors
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Who was the meeting with?
