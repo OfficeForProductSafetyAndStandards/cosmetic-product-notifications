@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 COPY ./cosmetics-web .
-COPY ./shared-web /shared-web
+COPY ./shared-web ./vendor/shared-web
 
 COPY ./cosmetics-web/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh

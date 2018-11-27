@@ -13,7 +13,7 @@ RUN sed -i 's/User clamav/User root/g' /etc/clamav/clamd.conf
 WORKDIR /app
 
 COPY ./web .
-COPY ./shared-web /shared-web
+COPY ./shared-web ./vendor/shared-web
 
 COPY ./worker/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
