@@ -20,6 +20,8 @@ cp ./worker/apt.yml ./web/apt.yml
 # Copy the clamav configuration
 cp -a ./worker/clamav/. ./web/clamav/
 
+cp -a ./shared-web ./worker/vendor/shared-web
+
 ./ci/install-cf.sh
 
 cf login -a api.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
