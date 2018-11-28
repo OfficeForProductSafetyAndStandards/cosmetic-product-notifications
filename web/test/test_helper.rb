@@ -85,6 +85,7 @@ private
 
   def stub_user_data(users:)
     allow(Keycloak::Internal).to receive(:get_users).and_return(format_user_for_get_users(users))
+    User.all
   end
 
   def format_user_for_get_users(users)
