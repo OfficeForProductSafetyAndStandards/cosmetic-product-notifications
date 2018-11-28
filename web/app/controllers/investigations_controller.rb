@@ -1,6 +1,5 @@
 class InvestigationsController < ApplicationController
   include InvestigationsHelper
-  helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[show update assign status confirmation priority]
@@ -9,7 +8,11 @@ class InvestigationsController < ApplicationController
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @investigations = search_for_investigations(20)
+    @answer = search_for_investigations(20)
+    @investigations = @answer.records
+    @results = @answer.results.map do |r|
+      r.merge(record: @answer.records.find_by(id: r._id))
+    end
   end
 
   # GET /investigations/1

@@ -24,9 +24,10 @@ main#main-content.govuk-main-wrapper role="main"
 
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | And/or, upload a file if you have one
-          - if @file
-            p = "Currently selected file: #{@file.filename}, selecting a different one will override it"
-          .govuk-form-group
-            = form.file_field :file, class: "govuk-file-upload"
+          - if @file_blob
+            p = "Currently selected file: #{@file_blob.filename}, selecting a different one will override it"
+          = form.fields_for :file do |subform|
+            .govuk-form-group
+              = subform.file_field :file, class: "govuk-file-upload"
         .govuk-form-group
           = form.submit "Continue", class: "govuk-button"

@@ -7,18 +7,21 @@ h2.govuk-heading-l
     .govuk-grid-row
       .govuk-grid-column-one-third
         p
-          = link_to "Record email", '#', class: "mspsds-block-link"
+          = link_to "Record email", new_investigation_email_path(@investigation), class: "mspsds-block-link"
         p
           = link_to "Record phonecall", '#', class: "mspsds-block-link"
         p
           = link_to "Record meeting", '#', class: "mspsds-block-link"
       .govuk-grid-column-two-thirds
         p
-          = link_to "Record testing request", '#', class: "mspsds-block-link"
+          = link_to "Record testing request", new_request_investigation_tests_path(@investigation),
+                  class: "mspsds-block-link"
         p
-          = link_to "Record test result", '#', class: "mspsds-block-link"
+          = link_to "Record test result", new_result_investigation_tests_path(@investigation),
+                  class: "mspsds-block-link"
         p
-          = link_to "Record corrective action", '#', class: "mspsds-block-link"
+          = link_to "Record corrective action", new_investigation_corrective_action_path(@investigation),
+                  class: "mspsds-block-link"
   .govuk-grid-column-one-third
     .govuk-form-group
       = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|

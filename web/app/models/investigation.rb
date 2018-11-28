@@ -18,6 +18,7 @@ class Investigation < ApplicationRecord
   settings do
     mappings do
       indexes :status, type: :keyword
+      indexes :assignee_id, type: :keyword
     end
   end
 
@@ -26,18 +27,21 @@ class Investigation < ApplicationRecord
   belongs_to_active_hash :assignee, class_name: "User", optional: true
 
   has_many :investigation_products, dependent: :destroy
-  has_many :products, through: :investigation_products, after_add: :create_audit_activity_for_product,
+  has_many :products, through: :investigation_products,
+           after_add: :create_audit_activity_for_product,
            after_remove: :create_audit_activity_for_removing_product
 
   has_many :investigation_businesses, dependent: :destroy
-  has_many :businesses, through: :investigation_businesses, after_add: :create_audit_activity_for_business,
+  has_many :businesses, through: :investigation_businesses,
+           after_add: :create_audit_activity_for_business,
            after_remove: :create_audit_activity_for_removing_business
 
   has_many :activities, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :investigation
 
-  has_many :incidents, dependent: :destroy
-
+  has_many :corrective_actions, dependent: :destroy
   has_many :correspondences, dependent: :destroy
+  has_many :incidents, dependent: :destroy
+  has_many :tests, dependent: :destroy
 
   has_many_attached :documents
   has_many_attached :images
@@ -51,7 +55,45 @@ class Investigation < ApplicationRecord
   after_create :create_audit_activity_for_case
 
   def as_indexed_json(*)
-    as_json.merge(status: status.downcase)
+    as_json(
+      methods: :pretty_id,
+      only: %i[question_title description is_closed assignee_id updated_at created_at],
+      include: {
+        documents: {
+          only: [],
+          methods: %i[title description filename]
+        },
+        images: {
+          only: [],
+          methods: %i[title description filename]
+        },
+        correspondences: {
+          only: %i[correspondent_name details email_address email_subject overview phone_number]
+        },
+        activities: {
+          methods: :search_index,
+          only: []
+        },
+        businesses: {
+          only: %i[company_name company_number]
+        },
+        hazard: {
+          only: :description
+        },
+        incidents: {
+          only: :description
+        },
+        products: {
+          only: %i[batch_number brand description gtin model name]
+        },
+        reporter: {
+          only: %i[name phone_number email_address other_details]
+        },
+        tests: {
+          only: %i[details result]
+        }
+      }
+    )
   end
 
   def status
@@ -80,6 +122,19 @@ class Investigation < ApplicationRecord
 
   def past_assignees_except_current
     past_assignees.reject { |user| user.id == assignee.id }
+  end
+
+  def self.highlighted_fields
+    %w[*.* pretty_id question_title description]
+  end
+
+  def self.fuzzy_fields
+    %w[documents.* images.* correspondences.* activities.* businesses.* hazard.* incidents.* products.* reporter.*
+       tests.* question_title description]
+  end
+
+  def self.exact_fields
+    %w[pretty_id]
   end
 
 private
@@ -170,4 +225,4 @@ private
   end
 end
 
-Investigation.import force: true # for auto sync model with elastic search
+Investigation.import force: true if Rails.env.development? # for auto sync model with elastic search

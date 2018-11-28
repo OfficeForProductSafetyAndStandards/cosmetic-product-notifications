@@ -6,16 +6,6 @@ module ImagesHelper
     @parent = Product.find(params[:product_id]) if params[:product_id]
   end
 
-  def save_file
-    file = attach_file_to_list(@file_blob, file_collection)
-    audit_class::Add.from(file, @parent) if @parent.class == Investigation
-    redirect_to @parent
-  end
-
-  def get_file_params_key
-    :image
-  end
-
   def audit_class
     AuditActivity::Image
   end

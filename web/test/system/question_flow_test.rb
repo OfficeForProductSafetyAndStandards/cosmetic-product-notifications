@@ -17,7 +17,7 @@ class QuestionFlowTest < ApplicationSystemTestCase
 
   test "should be able to select option" do
     select_type_and_continue
-    assert_no_text("prohibited this case from being saved")
+    assert_no_text("prevented this item from being saved")
   end
 
   test "second step should be details" do
@@ -29,19 +29,19 @@ class QuestionFlowTest < ApplicationSystemTestCase
     select_type_and_continue
     fill_in("reporter[email_address]", with: "invalid_email_address")
     click_button "Continue"
-    assert_text("prohibited this case from being saved")
+    assert_text("prevented this item from being saved")
   end
 
   test "second step should allow empty email" do
     select_type_and_continue
     click_button "Continue"
-    assert_no_text("prohibited this case from being saved")
+    assert_no_text("prevented this item from being saved")
   end
 
   test "second step should allow valid email" do
     select_type_and_continue
     fill_email_and_continue
-    assert_no_text("prohibited this case from being saved")
+    assert_no_text("prevented this item from being saved")
   end
 
   test "third step should be question details" do
@@ -55,7 +55,7 @@ class QuestionFlowTest < ApplicationSystemTestCase
     select_type_and_continue
     fill_email_and_continue
     click_button "Continue"
-    assert_text("prohibited this case from being saved")
+    assert_text("prevented this item from being saved")
   end
 
   test "last step should be confirmation" do

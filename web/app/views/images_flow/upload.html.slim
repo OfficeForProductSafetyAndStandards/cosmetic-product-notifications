@@ -4,4 +4,9 @@
 = render "page_heading", title: "New image"
 = form_with scope: :image, url: wizard_path, method: :put, local: true do |form|
   = render "form_validation_display", errors: @errors
-  = render "file_upload_display", form: form
+  = form.fields_for :file do |subform|
+    .govuk-form-group
+      = subform.label :file, "Browse for file", class: "govuk-heading-m"
+      = subform.file_field :file, class: "govuk-file-upload"
+  .govuk-form-group
+    = form.submit "Upload", class: "govuk-button"

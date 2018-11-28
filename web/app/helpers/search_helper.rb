@@ -19,7 +19,8 @@ module SearchHelper
   end
 
   def sorting_params
-    { "#{sort_column}": sort_direction }
+    # Default empty sort params. To be overridden by the controller.
+    # { "#{sort_column}": sort_direction }
   end
 
   def filter_params

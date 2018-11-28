@@ -6,7 +6,7 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
 
   @investigations.each do |investigation|
     sheet_investigations.add_row [
-      investigation.id,
+      investigation.pretty_id,
       investigation.is_closed? ? "Closed" : "Open",
       investigation.title,
       investigation.description,
@@ -79,7 +79,7 @@ book.add_worksheet name: "Actions" do |sheet_actions|
         activity.id,
         activity.type.titleize,
         activity.body,
-        activity.source.show,
+        activity.source&.show,
         investigation.id
       ]
     end

@@ -7,7 +7,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     @product_one.source = sources(:product_one)
     @product_iphone = products(:iphone)
     @product_iphone.source = sources(:product_iphone)
-    Product.import
+    Product.import force: true
     test_image1 = Rails.root.join('test', 'fixtures', 'files', 'testImage.png')
     test_image2 = Rails.root.join('test', 'fixtures', 'files', 'testImage2.png')
     @product_one.images.attach(io: File.open(test_image1), filename: 'testImage.png')
@@ -41,7 +41,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_redirected_to product_url(Product.first)
+    assert_redirected_to product_url(Product.last)
   end
 
   test "should show product" do

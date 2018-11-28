@@ -1,0 +1,36 @@
+- content_for :page_title, "Record email"
+- content_for :after_header do
+  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+main#main-content.govuk-main-wrapper role="main"
+  h1.govuk-heading-xl
+    span.govuk-caption-xl
+      = "Case: #{@investigation.pretty_id}"
+    | Record email
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      form.form action="./02e-add-email-content" method="post"
+      = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
+        = render "form_validation_display", errors: @correspondence.errors, model_name: "email"
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Email details
+          .govuk-form-group
+            .govuk-radios.govuk-radios--inline.mspsds-email-direction-radios
+              .govuk-radios__item
+                = form.radio_button :email_direction, "Outbound", class: "govuk-radios__input"
+                = form.label :email_direction, "To", class: "govuk-label govuk-radios__label"
+              .govuk-radios__item
+                = form.radio_button :email_direction, "Inbound", class: "govuk-radios__input"
+                = form.label :email_direction, "From", class: "govuk-label govuk-radios__label"
+          .govuk-form-group
+          .govuk-form-group [class="govuk-!-width-two-thirds"]
+            = form.label :correspondent_name, "Name", class: "govuk-label"
+            = form.text_field :correspondent_name, class: "govuk-input"
+          .govuk-form-group [class="govuk-!-width-two-thirds"]
+            = form.label :email_address, "Email address", class: "govuk-label"
+            = form.text_field :email_address, class: "govuk-input"
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Date sent
+          = render "date_input", form: form
+        .govuk-form-group
+          = form.submit "Continue", class: "govuk-button"
