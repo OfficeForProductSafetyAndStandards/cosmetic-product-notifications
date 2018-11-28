@@ -25,9 +25,9 @@
         text-decoration: none;
 
         &:hover {
-          -webkit-box-shadow: inset 0px -5px 0px 0px $govuk-link-hover-colour;
-          -moz-box-shadow: inset 0px -5px 0px 0px $govuk-link-hover-colour;
-          box-shadow: inset 0px -5px 0px 0px $govuk-link-hover-colour;
+          -webkit-box-shadow: inset 0 -5px 0 0 $govuk-link-hover-colour;
+          -moz-box-shadow: inset 0 -5px 0 0 $govuk-link-hover-colour;
+          box-shadow: inset 0 -5px 0 0 $govuk-link-hover-colour;
         }
 
         &:focus {
@@ -38,9 +38,9 @@
       &.app-navigation--current-page a,
       &.app-navigation--current-page a:hover {
         color: $govuk-link-colour;
-        -webkit-box-shadow: inset 0px -5px 0px 0px $govuk-link-colour;
-        -moz-box-shadow: inset 0px -5px 0px 0px $govuk-link-colour;
-        box-shadow: inset 0px -5px 0px 0px $govuk-link-colour;
+        -webkit-box-shadow: inset 0 -5px 0 0 $govuk-link-colour;
+        -moz-box-shadow: inset 0 -5px 0 0 $govuk-link-colour;
+        box-shadow: inset 0 -5px 0 0 $govuk-link-colour;
       }
     }
   }
@@ -49,8 +49,8 @@
     position: absolute;
     right: 4px;
     top: 4px;
-
     z-index: 1;
+
     .govuk-button--start {
       font-size: 1rem;
       margin: 0;
