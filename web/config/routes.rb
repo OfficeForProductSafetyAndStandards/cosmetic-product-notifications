@@ -55,20 +55,10 @@ Rails.application.routes.draw do
         delete :unlink, path: ''
       end
     end
-    resources :hazards, controller: "investigations/hazards", only: %i[new create show update] do
-      collection do
-        resources :new_hazard, controller: "investigations/hazards/new_hazard_flow", only: %i[show new create update]
-        resources :edit_hazard, controller: "investigations/hazards/edit_hazard_flow", only: %i[show new create update]
-
-        get :risk_level
-        post :update_risk_level
-      end
-    end
 
     resources :corrective_actions, controller: "investigations/corrective_actions", only: %i[show new create update]
     resources :correspondences, only: %i[show new create update], controller: "investigations/correspondence",
               concerns: %i[document_attachable]
-    resources :incidents, controller: "investigations/incidents", only: %i[new create show update]
     resources :emails, controller: "investigations/emails", only: %i[show new create update]
     resources :tests, controller: "investigations/tests", only: %i[show create update] do
       collection do
