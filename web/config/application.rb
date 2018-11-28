@@ -26,7 +26,18 @@ module App
     # This changes Rails timezone, but keeps ActiveRecord in UTC
     config.time_zone = "Europe/London"
 
+    config.rails_activesupport_breadcrumbs = true
+
+    # https://github.com/getsentry/raven-ruby/issues/494
     config.exceptions_app = self.routes
+
+    # Inject Sentry logger breadcrumbs
+    require 'raven/breadcrumbs/logger'
+
+    Raven.configure do |config|
+      config.dsn = ENV['SENTRY_DSN']
+      config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
+    end
 
     # This is the requests' timeout value in seconds. 15 is the default set by Slowpoke
     # Dev environments need longer due to occasional asset compilation
