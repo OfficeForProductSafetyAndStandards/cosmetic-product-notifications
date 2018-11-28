@@ -68,7 +68,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :businesses do
+  resources :businesses, concerns: %i[document_attachable image_attachable] do
     collection do
       get :confirm_merge
       post :merge
