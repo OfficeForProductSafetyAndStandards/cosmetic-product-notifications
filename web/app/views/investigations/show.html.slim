@@ -8,9 +8,6 @@
 
 - if @investigation.is_case
   p
-    - if @investigation.incidents.empty?
-      = link_to "Record an incident", new_investigation_incident_path(@investigation),
-          class: "govuk-link mspsds-block-link no-print"
 
 - else
   .govuk-grid-row

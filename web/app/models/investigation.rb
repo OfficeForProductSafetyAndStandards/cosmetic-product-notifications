@@ -40,7 +40,6 @@ class Investigation < ApplicationRecord
 
   has_many :corrective_actions, dependent: :destroy
   has_many :correspondences, dependent: :destroy
-  has_many :incidents, dependent: :destroy
   has_many :tests, dependent: :destroy
 
   has_many_attached :documents
@@ -75,9 +74,6 @@ class Investigation < ApplicationRecord
         },
         businesses: {
           only: %i[company_name company_number]
-        },
-        incidents: {
-          only: :description
         },
         products: {
           only: %i[batch_number brand description gtin model name]
@@ -125,7 +121,7 @@ class Investigation < ApplicationRecord
   end
 
   def self.fuzzy_fields
-    %w[documents.* images.* correspondences.* activities.* businesses.* incidents.* products.* reporter.*
+    %w[documents.* images.* correspondences.* activities.* businesses.* products.* reporter.*
        tests.* question_title description]
   end
 
