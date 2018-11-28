@@ -7,10 +7,8 @@
 
 hr.govuk-section-break.govuk-section-break--m
 = render "tabs", tabs: [\
-  Tab.new("activity", "Activity", lambda { render "businesses/tabs/activity" }), \
-  Tab.new("contacts", "Contact details", lambda { render "businesses/tabs/contacts" }), \
-  Tab.new("attachments", "Attachments", lambda { render "businesses/tabs/attachments" }), \
-  Tab.new("products", "Products", lambda { render "businesses/tabs/products" }), \
-  Tab.new("related", "Related", lambda { render "businesses/tabs/related" }), \
-  Tab.new("full-detail", "Full detail", lambda { render "businesses/tabs/details" })\
+  Tab.new("full-detail", "Full detail", lambda { render "businesses/tabs/details" }),
+  Tab.new("locations", "Locations", lambda { render "businesses/tabs/locations" }),
+  Tab.new("attachments", "Attachments", lambda { render "businesses/tabs/attachments" }),
+  Tab.new("cases", "Cases", lambda { render "businesses/tabs/cases" })\
 ]
