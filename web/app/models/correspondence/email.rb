@@ -7,9 +7,4 @@ class Correspondence::Email < Correspondence
       errors.add(:email, "Please provide either an email file or a subject and body")
     end
   end
-
-  def pretty_email_direction
-    return "To" if email_direction == "outbound"
-    return "From" if email_direction == "inbound"
-  end
 end
