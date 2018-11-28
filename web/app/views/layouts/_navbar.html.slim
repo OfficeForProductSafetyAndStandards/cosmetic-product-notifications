@@ -6,3 +6,7 @@ nav.app-navigation.govuk-clearfix
       = link_to "Businesses", businesses_path, "data-topnav": "businesses"
     li[class=(params[:controller] == "products" && "app-navigation--current-page")]
       = link_to "Products", products_path, "data-topnav": "products"
+  .creation
+    /TODO refer the button below to correct page when it is created
+    .govuk-button[class="govuk-button--start"]
+      = "Create new"
