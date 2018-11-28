@@ -92,31 +92,4 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     get suggested_businesses_url, params: { company_name: "Biscuit", company_type_code: "private-unlimited" }
     assert_response :success
   end
-
-  test "should merge businesses" do
-    assert_difference("Business.count", -1) do
-      post merge_businesses_url, params: {
-          selected_business_id: @business_one.id,
-          business_ids: [@business_two.id]
-      }
-    end
-
-    assert_redirected_to businesses_url, notice: "Businesses were successfully merged."
-  end
-
-  test "GET confirm_merge should redirect to businesses_url if two businesses are not provided" do
-    get confirm_merge_businesses_url, params: {
-        business_ids: [@business_one.id]
-    }
-
-    assert_redirected_to businesses_url, notice: "Please select at least two businesses before merging."
-  end
-
-  test "GET confirm_merge should get businesses/confirm_merge if two businesses provided" do
-    get confirm_merge_businesses_url, params: {
-        business_ids: [@business_one.id, @business_two.id]
-    }
-
-    assert_response :success
-  end
 end

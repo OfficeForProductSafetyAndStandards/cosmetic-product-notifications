@@ -17,7 +17,6 @@ main#main-content.govuk-main-wrapper role="main"
             = form.submit "Search", name: nil, class: "mspsds-search-box--submit"
     .govuk-grid-column-three-quarters
       = form_with(url: confirm_merge_products_path, method: :get) do |form|
-        = form.submit "Merge selected", name: nil, class: "govuk-button right"
         p
           /TODO remove the link below
           = link_to "Create new product", new_product_path, class: "govuk-!-font-size-19 govuk-!-font-weight-bold"

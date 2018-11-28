@@ -74,15 +74,4 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to products_url
   end
-
-  test "should merge products" do
-    assert_difference 'Product.count', -1 do
-      post merge_products_url, params: {
-          selected_product_id: @product_one.id,
-          product_ids: [@product_one.id, @product_iphone.id]
-      }
-    end
-
-    assert_redirected_to products_url
-  end
 end

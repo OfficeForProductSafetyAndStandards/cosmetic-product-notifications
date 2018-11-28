@@ -17,7 +17,7 @@ class KeycloakTest < ApplicationSystemTestCase
     fill_in "Username or email", with: "admin@example.com"
     fill_in "Password", with: "password"
     click_on "Continue"
-    click_on "Logout"
+    click_on "Sign out"
     assert_selector "h1", text: "Sign in"
   end
 end
