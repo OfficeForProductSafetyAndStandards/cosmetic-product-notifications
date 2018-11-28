@@ -78,14 +78,12 @@
 hr.govuk-section-break.govuk-section-break--m
 
 = render "tabs", tabs: [\
-  Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" }), \
-  Tab.new("contacts", "Contacts", lambda { render "investigations/tabs/contacts" }), \
-  Tab.new("attachments", "Attachments", lambda { render "investigations/tabs/attachments" }), \
-  Tab.new("products", "Products", lambda { render "investigations/tabs/products" }), \
-  Tab.new("businesses", "Businesses", lambda { render "investigations/tabs/businesses" }), \
-  Tab.new("related", "Related", lambda { render "investigations/tabs/related" }), \
-  Tab.new("full-detail", "Full detail", lambda { render "investigations/tabs/details" })\
-]
+  Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" }),
+  Tab.new("full-detail", "Full detail", lambda { render "investigations/tabs/details" }),
+  Tab.new("products", "Products", lambda { render "investigations/tabs/products" }),
+  Tab.new("businesses", "Businesses", lambda { render "investigations/tabs/businesses" }),
+  Tab.new("attachments", "Attachments", lambda { render "investigations/tabs/attachments" })\
+  ]
 
 .no-print[class="govuk-!-margin-top-3"]
   = link_to "Create PDF document", investigation_path(@investigation, format: :pdf)
