@@ -30,6 +30,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :create, controller: "create", only: %i[new create]
+  resources :question, controller: "create/question", only: %i[show new create update]
+
   resources :investigations, only: %i[index show new create update], concerns: %i[document_attachable image_attachable] do
     member do
       get :status
@@ -38,7 +41,6 @@ Rails.application.routes.draw do
     end
     collection do
       resources :report, controller: "investigations/report", only: %i[show new create update]
-      resources :question, controller: "investigations/question", only: %i[show new create update]
     end
     resources :activities, controller: "investigations/activities", only: %i[create]
     resources :products, only: %i[new create], controller: "investigations/products" do

@@ -1,0 +1,28 @@
+- content_for :page_title, "Create new"
+- content_for :after_header do
+  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
+h1.govuk-heading-xl
+  | Create new
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with scope: :create, local: true, url: create_path do |form|
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | What are you creating?
+        .govuk-form-group
+          .govuk-radios
+            .govuk-radios__item
+              = form.radio_button :type, :allegation, class: "govuk-radios__input"
+              = form.label :type, "Product safety allegation", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :type, :question, class: "govuk-radios__input"
+              = form.label :type, "Question", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :type, :product_recall, class: "govuk-radios__input"
+              = form.label :type, "Product recall notification", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :type, :rapex_notification, class: "govuk-radios__input"
+              = form.label :type, "Notification from RAPEX", class: "govuk-label govuk-radios__label"
+
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

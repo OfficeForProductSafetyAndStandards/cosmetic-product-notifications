@@ -1,43 +1,29 @@
-main#main-content.govuk-main-wrapper role="main"
-  h1.govuk-heading-xl
-    span.govuk-caption-xl = is_case ? "Report an unsafe product" : "Ask a question"
-    = is_case ? "Who’s reporting?" : "Who's asking?"
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_with(model: reporter, local: true, url: wizard_path, method: :put) do |form|
-        = render "form_validation_display", errors: reporter.errors
-        fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            =  is_case ? "Reporter type?" : "Questioner type?"
-          .govuk-form-group class=("govuk-form-group--error" if reporter.errors[:reporter_type].any?)
-            .govuk-radios.govuk-radios--conditional data-module="radios"
-              - if is_case
-                .govuk-radios__item
-                  = form.radio_button :reporter_type, "Consumer", class: "govuk-radios__input"
-                  = form.label :reporter_type, "Consumer", class: "govuk-label govuk-radios__label"
-              .govuk-radios__item
-                = form.radio_button :reporter_type, "Business", class: "govuk-radios__input"
-                = form.label :reporter_type, "Business", class: "govuk-label govuk-radios__label"
-              .govuk-radios__item
-                = form.radio_button :reporter_type, "Local authority (Trading standards)",\
-                        class: "govuk-radios__input"
-                = form.label :reporter_type, "Local authority (Trading standards)",\
-                        class: "govuk-label govuk-radios__label"
-              .govuk-radios__item
-                = form.radio_button :reporter_type, "Trade body", class: "govuk-radios__input"
-                = form.label :reporter_type, "Trade body", class: "govuk-label govuk-radios__label"
-              .govuk-radios__item
-                = form.radio_button :reporter_type, "Other MSA", class: "govuk-radios__input"
-                = form.label :reporter_type, "Other MSA", class: "govuk-label govuk-radios__label"
-              .govuk-radios__item
-                = form.radio_button :reporter_type, "Other", class: "govuk-radios__input",\
-                        "data-aria-controls": "conditional-reporter-type-other"
-                = form.label :reporter_type, "Other", class: "govuk-label govuk-radios__label"
-              #conditional-reporter-type-other.govuk-radios__conditional.govuk-radios__conditional--hidden
-                .govuk-form-group
-                  span#other-reporter-hint.govuk-hint [class="govuk-!-width-two-thirds"]
-                    | Please give details
-                  = form.text_field :other_reporter, class: "govuk-input govuk-!-width-two-thirds",\
-                    "aria-describedby": "other-reporter-hint"
-        .govuk-form-group
-          = form.submit "Continue", class: "govuk-button"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: reporter, local: true, url: wizard_path, method: :put do |form|
+      = render "form_validation_display", errors: reporter.errors, model_name: "reporter"
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          =  "Who did the question come from?"
+        .govuk-form-group class=("govuk-form-group--error" if reporter.errors[:reporter_type].any?)
+          .govuk-radios.govuk-radios--conditional data-module="radios"
+            .govuk-radios__item
+              = form.radio_button :reporter_type, "Consumer", class: "govuk-radios__input"
+              = form.label :reporter_type, "A consumer", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :reporter_type, "Business", class: "govuk-radios__input"
+              = form.label :reporter_type, "A business", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :reporter_type, "Local authority (Trading Standards)", class: "govuk-radios__input"
+              = form.label :reporter_type, "Local authority (Trading Standards)", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :reporter_type, "Other government department", class: "govuk-radios__input"
+              = form.label :reporter_type, "Other government department", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :reporter_type, "Emergency service", class: "govuk-radios__input"
+              = form.label :reporter_type, "Emergency service", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :reporter_type, "Internal", class: "govuk-radios__input"
+              = form.label :reporter_type, "Internal", class: "govuk-label govuk-radios__label"
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"
