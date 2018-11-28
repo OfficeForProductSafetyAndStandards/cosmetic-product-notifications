@@ -48,7 +48,6 @@ class Investigation < ApplicationRecord
 
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :reporter, dependent: :destroy
-  has_one :hazard, dependent: :destroy
 
   before_create :assign_current_user_to_case
 
@@ -76,9 +75,6 @@ class Investigation < ApplicationRecord
         },
         businesses: {
           only: %i[company_name company_number]
-        },
-        hazard: {
-          only: :description
         },
         incidents: {
           only: :description
@@ -129,7 +125,7 @@ class Investigation < ApplicationRecord
   end
 
   def self.fuzzy_fields
-    %w[documents.* images.* correspondences.* activities.* businesses.* hazard.* incidents.* products.* reporter.*
+    %w[documents.* images.* correspondences.* activities.* businesses.* incidents.* products.* reporter.*
        tests.* question_title description]
   end
 
@@ -183,7 +179,7 @@ private
   end
 
   def case_title
-    title = [build_title_products_portion, build_title_hazard_portion].reject(&:blank?).join(" - ")
+    title = [build_title_products_portion].reject(&:blank?).join(" - ")
     title.presence || "Untitled case"
   end
 
@@ -211,10 +207,6 @@ private
     shared_property_values = %w(brand model product_type).map { |property| get_property_value_if_shared property }
     title = shared_property_values.reject(&:blank?).join(", ")
     products.length > 1 ? "#{products.length} Products, ".concat(title) : title
-  end
-
-  def build_title_hazard_portion
-    hazard&.hazard_type.presence
   end
 
   def get_property_value_if_shared property_name
