@@ -8,7 +8,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     @investigation_three = investigations(:three)
     @investigation_no_products = investigations(:no_products)
     @investigation_one.source = sources(:investigation_one)
-    @investigation_one.hazard = hazards(:one)
 
     User.all
     @investigation_one.assignee = User.find_by(last_name: "Admin")
