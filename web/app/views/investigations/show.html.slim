@@ -6,10 +6,7 @@
 
 = render "investigation_heading", investigation: @investigation
 
-- if @investigation.is_case
-  p
-
-- else
+- if !@investigation.is_case
   .govuk-grid-row
     .govuk-grid-column-one-third
       h2.govuk-heading-m
@@ -19,18 +16,6 @@
       p
         = @investigation.description.presence || 'No description was provided'
 
-- if @investigation.products.first
-  = render "product_summary", product: @investigation.products.first do
-    p
-      = link_to "View product", @investigation.products.first, class: "govuk-link"
-
-- else
-  h2.govuk-heading-l
-    | There are no products attached to this case
-  p
-    | Add a product to the case
-  p
-    = link_to "Add product", new_investigation_product_path(@investigation)
 = render "investigations/record_activities"
 
 hr.govuk-section-break.govuk-section-break--m

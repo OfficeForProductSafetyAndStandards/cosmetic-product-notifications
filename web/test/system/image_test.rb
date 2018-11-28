@@ -35,7 +35,7 @@ class ImageTest < ApplicationSystemTestCase
     attach_file_and_upload
     fill_in "Image title", with: "Beautiful picture"
     click_on "Save"
-    assert_text "There are no products attached to this case"
+    assert_current_path(/investigations\/\d+/)
   end
 
   test "image data should be in attachments" do
