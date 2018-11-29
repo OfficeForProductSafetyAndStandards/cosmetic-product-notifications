@@ -7,6 +7,7 @@ branches:
   - master
   - staging
   - prod
+  - COS-29
 cache:
   directories:
   - "~/bundle-cache"
@@ -20,7 +21,7 @@ jobs:
     install:
     - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./ci/build-docker-images.sh
   - stage: Test
-    name: Run Tests
+    name: Web - Test
     install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
     before_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
@@ -29,7 +30,7 @@ jobs:
       bin/rake db:create db:schema:load test
     after_script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
-  - name: Static Analysis
+  - name: Web - Static Analysis
     install:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps web echo 'Gems pre-installed'
@@ -43,6 +44,30 @@ jobs:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn sass-lint
       -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/brakeman
+      --no-pager
+  - name: Cosmetics-web - Test
+    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
+    before_script:
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm start_dependencies
+    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web
+      bin/rake db:create db:schema:load test
+    after_script:
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
+  - name: Cosmetics-web - Static Analysis
+    install:
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps cosmetics-web echo 'Gems pre-installed'
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d cosmetics-web
+    script:
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/rubocop
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/slim-lint
+      app/views
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web yarn eslint
+      app/assets/javascripts
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web yarn sass-lint
+      -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/brakeman
       --no-pager
   - stage: Deploy to int
     name: Deploy web
