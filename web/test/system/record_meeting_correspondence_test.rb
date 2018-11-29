@@ -5,8 +5,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as_admin
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
-    @activity = activities(:one)
-    @activity.source = sources(:activity_one)
+    @correspondence = correspondences(:meeting)
     visit new_investigation_meeting_url(@investigation)
   end
 
@@ -19,19 +18,21 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "first step validates date" do
-    fill_in("correspondence[day]", with: "333")
+    fill_in("correspondence_meeting[day]", with: "333")
     click_on "Continue"
-    assert_text("must be a valid date")
+    assert_text("Correspondence date must specify a day, month and year")
   end
 
   test "second step is content" do
+    fill_in_context_form
     click_button "Continue"
     assert_text("Give an overview of the meeting")
   end
 
   test "attaches the transcript file" do
+    fill_in_context_form
     click_button "Continue"
-    attach_file("correspondence[transcript][file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence_meeting[transcript][file]", Rails.root + "test/fixtures/files/testImage.png")
     click_button "Continue"
     assert_text("testImage")
     click_button "Continue"
@@ -39,8 +40,9 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "attaches the related attachment" do
+    fill_in_context_form
     click_button "Continue"
-    attach_file("correspondence[related_attachment][file]", Rails.root + "test/fixtures/files/testImage2.png")
+    attach_file("correspondence_meeting[related_attachment][file]", Rails.root + "test/fixtures/files/testImage2.png")
     click_button "Continue"
     assert_text("testImage2")
     click_button "Continue"
@@ -48,6 +50,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "third step is confirmation" do
+    fill_in_context_form
     click_button "Continue"
     click_button "Continue"
     assert_text "Confirm meeting details"
@@ -55,6 +58,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "confirmation edit details links to first page in flow" do
+    fill_in_context_form
     click_button "Continue"
     click_button "Continue"
     click_on "Edit details"
@@ -63,19 +67,25 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "edit details retains changed values" do
-    fill_in("correspondence[correspondent_name]", with: "Tom")
+    fill_in_context_form
     click_button "Continue"
     click_button "Continue"
     click_on "Edit details"
-    assert_equal('Tom', find_field('correspondence[correspondent_name]').value)
-    assert_not_equal('', find_field('correspondence[correspondent_name]').value)
+    assert_equal(@correspondence.correspondent_name, find_field('correspondence_meeting[correspondent_name]').value)
   end
 
   test "confirmation continue returns to case page" do
-    visit new_investigation_meeting_url(investigations(:no_products))
+    fill_in_context_form
     click_button "Continue"
     click_button "Continue"
     click_button "Continue"
-    assert_text("There are no products attached to this case")
+    assert_current_path(/investigations\/\d+/)
+  end
+
+  def fill_in_context_form
+    fill_in "correspondence_meeting[correspondent_name]", with: @correspondence.correspondent_name
+    fill_in "Day", with: @correspondence.correspondence_date.day
+    fill_in "Month", with: @correspondence.correspondence_date.month
+    fill_in "Year", with: @correspondence.correspondence_date.year
   end
 end

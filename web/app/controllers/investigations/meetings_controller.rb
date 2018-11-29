@@ -1,7 +1,7 @@
 class Investigations::MeetingsController < ApplicationController
   include FileConcern
   set_attachment_names :transcript, :related_attachment
-  set_file_params_key :correspondence
+  set_file_params_key :correspondence_meeting
 
   include Wicked::Wizard
   steps :context, :content, :confirmation
@@ -46,7 +46,7 @@ class Investigations::MeetingsController < ApplicationController
 private
 
   def clear_session
-    session[:correspondence] = nil
+    session[correspondence_params_key] = nil
   end
 
   def set_investigation
@@ -54,11 +54,12 @@ private
   end
 
   def set_correspondence
-    @correspondence = @investigation.correspondences.build(correspondence_params)
+    @correspondence = Correspondence::Meeting.new correspondence_params
+    @investigation.association(:correspondences).add_to_target(@correspondence)
   end
 
   def store_correspondence
-    session[:correspondence] = @correspondence.attributes
+    session[correspondence_params_key] = @correspondence.attributes
   end
 
   def set_attachments
@@ -93,9 +94,9 @@ private
   end
 
   def request_params
-    return {} if params[:correspondence].blank?
+    return {} if params[correspondence_params_key].blank?
 
-    params.require(:correspondence).permit(:correspondent_name,
+    params.require(correspondence_params_key).permit(:correspondent_name,
                                            :day,
                                            :month,
                                            :year,
@@ -104,15 +105,7 @@ private
   end
 
   def session_params
-    session[:correspondence] || suggested_values
-  end
-
-  def suggested_values
-    {
-        day: Time.zone.today.day,
-        month: Time.zone.today.month,
-        year: Time.zone.today.year
-    }
+    session[correspondence_params_key] || {}
   end
 
   def transcript_metadata
@@ -126,5 +119,9 @@ private
     get_attachment_metadata_params(:related_attachment).merge(
       title: correspondence_params["overview"]
     )
+  end
+
+  def correspondence_params_key
+    "correspondence_meeting"
   end
 end

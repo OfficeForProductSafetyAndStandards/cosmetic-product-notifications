@@ -12,3 +12,9 @@ phone_call:
   contact_method: phone_call
   phone_number: 098765432
   correspondence_date: 2018-11-03
+
+meeting:
+  correspondent_name: Julie Smite
+  correspondence_date: 2018-11-05
+  overview: This was a great meeting
+  details: Longer description of how great the meeting was
