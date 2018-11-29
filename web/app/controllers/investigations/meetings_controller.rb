@@ -73,6 +73,7 @@ private
 
   def correspondence_valid?
     @correspondence.validate(step || steps.last)
+    @correspondence.validate_transcript_and_content(@transcript_blob) if step == :content
     validate_blob_size(@transcript_blob, @correspondence.errors, "transcript")
     validate_blob_size(@related_attachment_blob, @correspondence.errors, "related attachment")
     @correspondence.errors.empty?

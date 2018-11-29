@@ -42,6 +42,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   test "attaches the related attachment" do
     fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     attach_file("correspondence_meeting[related_attachment][file]", Rails.root + "test/fixtures/files/testImage2.png")
     click_button "Continue"
     assert_text("testImage2")
@@ -49,9 +50,17 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
     assert_text("testImage2")
   end
 
+  test "must have either transcript or summary and notes" do
+    fill_in_context_form
+    click_button "Continue"
+    click_button "Continue"
+    assert_text "please provide either a transcript or complete the summary and notes fields"
+  end
+
   test "third step is confirmation" do
     fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     assert_text "Confirm meeting details"
     assert_text "Attachments"
@@ -60,6 +69,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   test "confirmation edit details links to first page in flow" do
     fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     click_on "Edit details"
     assert_text "Who was the meeting with?"
@@ -69,6 +79,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   test "edit details retains changed values" do
     fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     click_on "Edit details"
     assert_equal(@correspondence.correspondent_name, find_field('correspondence_meeting[correspondent_name]').value)
@@ -77,6 +88,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   test "confirmation continue returns to case page" do
     fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     click_button "Continue"
     assert_current_path(/investigations\/\d+/)
@@ -87,5 +99,10 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
     fill_in "Day", with: @correspondence.correspondence_date.day
     fill_in "Month", with: @correspondence.correspondence_date.month
     fill_in "Year", with: @correspondence.correspondence_date.year
+  end
+
+  def fill_in_content_form
+    fill_in "correspondence_meeting[overview]", with: @correspondence.overview
+    fill_in "correspondence_meeting[details]", with: @correspondence.details
   end
 end
