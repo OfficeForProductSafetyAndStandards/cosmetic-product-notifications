@@ -26,6 +26,9 @@ class Address < ApplicationRecord
   end
 
   def with_registered_office_info(registered_office)
+    p '================================================='
+    p registered_office
+    p '================================================='
     self.address_type = "Registered office address"
     self.line_1 = registered_office["address_line_1"]
     self.line_2 = registered_office["address_line_2"]
