@@ -93,7 +93,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     fill_in_content_form
     click_button "Continue"
     click_button "Continue"
-    assert_text("There are no products attached to this case")
+    assert_current_path(/investigations\/\d+/)
   end
 
   test "requires details to be no longer than 1000 characters" do
