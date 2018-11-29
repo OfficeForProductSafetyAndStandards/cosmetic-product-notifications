@@ -7,7 +7,7 @@
           tbody.govuk-table__body
             tr.govuk-table__row
               th.govuk-table__header[scope="row"] = "Registered address"
-              td.govuk-table__cell = "#{address.summary}"
+              td.govuk-table__cell = address.summary
         p
           / TODO: Link these to correct pages
           = link_to "Edit location", '', class: "govuk-link mspsds-block-link"

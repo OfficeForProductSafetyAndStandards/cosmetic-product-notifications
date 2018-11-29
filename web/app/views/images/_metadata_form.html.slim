@@ -19,7 +19,7 @@
       .govuk-form-group
         .govuk-grid-row
           .govuk-grid-column-one-quarter
-            = form.submit "#{edit ? 'Update' : 'Save' } attachment", class: "govuk-button"
+            = form.submit "#{edit ? 'Update' : 'Save'} attachment", class: "govuk-button"
           - if edit
             .govuk-grid-column-one-quarter
               = link_to "Cancel", @parent, class: "mspsds-block-link"
