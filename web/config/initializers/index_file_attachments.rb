@@ -1,6 +1,6 @@
 module ActiveStorageAttachmentExtension
   def title
-    blob&.metadata["title"]
+    blob.metadata["title"] if blob.present?
   end
 
   def filename
@@ -8,7 +8,7 @@ module ActiveStorageAttachmentExtension
   end
 
   def description
-    blob&.metadata["description"]
+    blob.metadata["description"] if blob.present?
   end
 end
 
