@@ -16,7 +16,8 @@
           th.govuk-table__header[scope="row"]
             | Type
           td.govuk-table__cell
-            = "TODO"
+            / TODO MSPSDS-762: Probably change this
+            = @file.metadata[:document_type]
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Description
@@ -26,6 +27,6 @@
           th.govuk-table__header[scope="row"]
             | URL
           td.govuk-table__cell
-            = "TODO"
+            = @file.filename
 = form_with url: associated_document_path(@parent, @file), method: :delete do |form|
   = form.submit "Delete attachment", class: "govuk-button", style: "background-color: #df3034"
