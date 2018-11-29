@@ -27,5 +27,5 @@
             | URL
           td.govuk-table__cell
             = "TODO"
-= link_to "Delete attachment", associated_image_path(@parent, @file), method: :delete,
-        class: "govuk-button", style: "background-color: #df3034"
+= form_with url: associated_document_path(@parent, @file), method: :delete do |form|
+  = form.submit "Delete attachment", class: "govuk-button", style: "background-color: #df3034"
