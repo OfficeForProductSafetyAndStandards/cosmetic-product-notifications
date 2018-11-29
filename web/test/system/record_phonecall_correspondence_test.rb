@@ -5,8 +5,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as_admin
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
-    @activity = activities(:one)
-    @activity.source = sources(:activity_one)
+    @correspondence = correspondences(:phone_call)
     visit new_investigation_phone_call_url(@investigation)
   end
 
@@ -19,19 +18,21 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "first step validates date" do
-    fill_in("correspondence[day]", with: "333")
+    fill_in("correspondence_phone_call[day]", with: "333")
     click_on "Continue"
-    assert_text("must be a valid date")
+    assert_text("Correspondence date must specify a day, month and year")
   end
 
   test "second step should be content" do
+    fill_in_context_form
     click_button "Continue"
     assert_text("Give an overview of the phone call")
   end
 
   test "attaches a transcript file" do
+    fill_in_context_form
     click_button "Continue"
-    attach_file("correspondence[file][file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence_phone_call[file][file]", Rails.root + "test/fixtures/files/testImage.png")
     click_button "Continue"
     assert_text("testImage")
     click_button "Continue"
@@ -40,6 +41,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "third step should be confirmation" do
+    fill_in_context_form
     click_button "Continue"
     click_button "Continue"
     assert_text "Confirm phone call details"
@@ -47,6 +49,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "confirmation edit details should go to first page in flow" do
+    fill_in_context_form
     click_button "Continue"
     click_button "Continue"
     click_on "Edit details"
@@ -54,22 +57,27 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "edit details should retain changed values" do
-    fill_in("correspondence[correspondent_name]", with: "Tom")
-    fill_in("correspondence[phone_number]", with: "012345678910")
+    fill_in_context_form
     click_button "Continue"
     click_button "Continue"
     click_on "Edit details"
-    assert_equal('Tom', find_field('correspondence[correspondent_name]').value)
-    assert_not_equal('', find_field('correspondence[correspondent_name]').value)
-    assert_equal('012345678910', find_field('correspondence[phone_number]').value)
-    assert_not_equal('', find_field('correspondence[phone_number]').value)
+    assert_equal(@correspondence.correspondent_name, find_field('correspondence_phone_call[correspondent_name]').value)
+    assert_equal(@correspondence.phone_number, find_field('correspondence_phone_call[phone_number]').value)
   end
 
   test "confirmation continue should go to case page" do
-    visit new_investigation_phone_call_url(investigations(:no_products))
+    fill_in_context_form
     click_button "Continue"
     click_button "Continue"
     click_button "Continue"
-    assert_text("There are no products attached to this case")
+    assert_current_path(/investigations\/\d+/)
+  end
+
+  def fill_in_context_form
+    fill_in "correspondence_phone_call[correspondent_name]", with: @correspondence.correspondent_name
+    fill_in "correspondence_phone_call[phone_number]", with: @correspondence.phone_number
+    fill_in "Day", with: @correspondence.correspondence_date.day
+    fill_in "Month", with: @correspondence.correspondence_date.month
+    fill_in "Year", with: @correspondence.correspondence_date.year
   end
 end

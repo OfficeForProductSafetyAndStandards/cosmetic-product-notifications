@@ -6,3 +6,9 @@ email:
   email_address: jane.smith@example.com
   email_direction: from
   correspondence_date: 2018-10-02
+
+phone_call:
+  correspondent_name: Jake Smithy
+  contact_method: phone_call
+  phone_number: 098765432
+  correspondence_date: 2018-11-03

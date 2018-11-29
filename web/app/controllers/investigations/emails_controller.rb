@@ -54,7 +54,8 @@ private
   end
 
   def set_correspondence
-    @correspondence = @investigation.correspondences.build(correspondence_params.merge(type: "Correspondence::Email"))
+    @correspondence = Correspondence::Email.new correspondence_params
+    @investigation.association(:correspondences).add_to_target(@correspondence)
   end
 
   def store_correspondence
