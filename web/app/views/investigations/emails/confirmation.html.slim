@@ -13,7 +13,8 @@ main#main-content.govuk-main-wrapper role="main"
         table.govuk-table
           tbody.govuk-table__body
             tr.govuk-table__row
-              th.govuk-table__header scope="row" = @correspondence.email_direction&.titleize
+              th.govuk-table__header scope="row"
+                = Correspondence::Email.email_directions[@correspondence.email_direction]
               td.govuk-table__cell = @correspondence.email_address
             tr.govuk-table__row
               th.govuk-table__header scope="row"  Summary
