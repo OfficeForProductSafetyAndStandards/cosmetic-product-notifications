@@ -1,14 +1,14 @@
 module ActiveStorageAttachmentExtension
   def title
-    blob.metadata["title"]
+    blob&.metadata["title"]
   end
 
   def filename
-    blob.filename
+    blob&.filename
   end
 
   def description
-    blob.metadata["description"]
+    blob&.metadata["description"]
   end
 end
 
