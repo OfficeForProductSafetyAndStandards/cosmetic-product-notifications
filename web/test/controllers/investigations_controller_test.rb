@@ -75,34 +75,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to investigation_url(@investigation_three)
   end
 
-  test "should set priority" do
-    priority = "high"
-    investigation_priority = lambda { Investigation.find(@investigation_one.id).priority }
-    assert_changes investigation_priority, from: nil, to: priority do
-      put investigation_url(@investigation_one), params: {
-        investigation: {
-          priority: priority,
-          priority_rationale: "some rationale"
-        }
-      }
-    end
-    assert_redirected_to investigation_url(@investigation_one)
-  end
-
-  test "should not save priority_rationale if priority is nil" do
-    investigation = investigations(:two)
-    investigation.source = sources(:investigation_two)
-    investigation_priority = lambda { Investigation.find(investigation.id).priority }
-    assert_no_changes investigation_priority do
-      put investigation_url(@investigation_one), params: {
-        investigation: {
-          priority: nil,
-          priority_rationale: "some rational"
-        }
-      }
-    end
-  end
-
   test "should set status" do
     is_closed = true
     investigation_status = lambda { Investigation.find(@investigation_one.id).is_closed }
