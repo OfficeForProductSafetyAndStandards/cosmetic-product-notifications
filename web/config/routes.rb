@@ -24,7 +24,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :investigations, only: %i[index show new create update], concerns: %i[document_attachable image_attachable] do
+  resources :cases, controller: "investigations", as: "investigations",
+            only: %i[index show new create update], concerns: %i[document_attachable image_attachable] do
     member do
       get :status
       get :assign
@@ -93,6 +94,6 @@ Rails.application.routes.draw do
 
   mount PgHero::Engine, at: "pghero"
 
-  root to: redirect(path: "/investigations")
+  root to: redirect(path: "/cases")
 end
 # rubocop:enable Metrics/BlockLength
