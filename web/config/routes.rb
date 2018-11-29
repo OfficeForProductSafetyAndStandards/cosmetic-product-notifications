@@ -75,7 +75,11 @@ Rails.application.routes.draw do
       get :suggested
       post :companies_house
     end
-    resources :addresses, shallow: true
+    resources :addresses, shallow: true do
+      member do
+        get :remove
+      end
+    end
   end
 
   resources :products, concerns: %i[document_attachable image_attachable] do

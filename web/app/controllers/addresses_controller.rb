@@ -1,5 +1,5 @@
 class AddressesController < ApplicationController
-  before_action :set_address, only: %i[show edit update destroy]
+  before_action :set_address, only: %i[show edit update remove destroy]
   before_action :create_address, only: %i[create]
 
   # GET /addresses
@@ -56,6 +56,10 @@ class AddressesController < ApplicationController
         format.json { render json: @address.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def remove
+    @business = @address.business
   end
 
   # DELETE /addresses/1

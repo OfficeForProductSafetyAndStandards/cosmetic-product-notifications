@@ -20,6 +20,9 @@
               = address.country
             div
               = address.postal_code
+
+          = link_to "Edit location", edit_address_path(address)
+          = link_to "Remove location", remove_address_path(address)
     - else
       p
         | No locations.
