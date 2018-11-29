@@ -2,5 +2,5 @@
 - content_for :after_header do
   = link_to "Back", associated_documents_path(@parent), class: "govuk-back-link"
 = render "page_heading", title: "Edit document details"
-= render "metadata_form", document: @file, show_cancel: true,
+= render "metadata_form", document: @file, edit: true,
         target_url: associated_document_path(@parent, @file)
