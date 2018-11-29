@@ -1,7 +1,7 @@
 - has_validation_errors = form.object.errors.details[:base].any? { |error| error.value? :file_too_large }
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | Related attachments
+    = title
   .govuk-form-group class=("govuk-form-group--error" if has_validation_errors)
     - if file_blob.present?
       p#current-attachment-details
@@ -9,8 +9,9 @@ fieldset.govuk-fieldset
         = link_to file_blob.filename, file_blob, target: "_blank"
     = form.fields_for attachment_name do |subform|
       - if file_blob.blank?
-        = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
+        .govuk-form-group
+          = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
       #attachment-description.govuk-form-group
-        = subform.label :description, "Attachment description", class: "govuk-label"
-        = subform.text_area :description, value: file_blob&.metadata&.dig(:description),
+          = subform.label :description, "Attachment description", class: "govuk-label"
+          = subform.text_area :description, value: file_blob&.metadata&.dig(:description),
                 class: "govuk-textarea", rows: 5, maxlength: 1000
