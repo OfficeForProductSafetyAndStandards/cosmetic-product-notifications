@@ -10,6 +10,7 @@ class CreateController < ApplicationController
     when "question"
       redirect_to new_question_path
     else
+      @nothing_selected = true
       render :new
     end
   end
@@ -18,6 +19,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def request_params
-    params.require(:create).permit(:type)
+    params.permit(:type)
   end
 end

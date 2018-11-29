@@ -5,11 +5,15 @@ h1.govuk-heading-xl
   | Create new
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with scope: :create, local: true, url: create_path do |form|
+    = form_with local: true, url: create_path do |form|
+      - if @nothing_selected
+        #error_explanation
+          h2.govuk-heading-l.govuk-error-message
+            | Please select an option before continuing
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What are you creating?
-        .govuk-form-group
+        .govuk-form-group class=("govuk-form-group--error" if @nothing_selected)
           .govuk-radios
             .govuk-radios__item
               = form.radio_button :type, :allegation, class: "govuk-radios__input"
