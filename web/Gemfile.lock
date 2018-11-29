@@ -13,7 +13,9 @@ PATH
   remote: vendor/shared-web
   specs:
     shared-web (0.1.0)
+      govuk-lint
       rails (~> 5.2.1)
+      rubocop
 
 GEM
   remote: https://rubygems.org/
@@ -432,7 +434,6 @@ DEPENDENCIES
   debase
   elasticsearch-model
   elasticsearch-rails
-  govuk-lint
   govuk_notify_rails
   jbuilder (~> 2.8)
   keycloak
@@ -446,7 +447,6 @@ DEPENDENCIES
   rails (~> 5.2)
   redcarpet
   rspec-mocks
-  rubocop
   ruby-debug-ide
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.0)

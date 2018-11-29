@@ -36,7 +36,7 @@ jobs:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps web echo 'Gems pre-installed'
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d web
     script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rubocop
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rubocop -c vendor/shared-web/.rubocop.yml
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/slim-lint
       app/views
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn eslint
@@ -60,7 +60,7 @@ jobs:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps cosmetics-web echo 'Gems pre-installed'
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d cosmetics-web
     script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/rubocop
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/rubocop -c vendor/shared-web/.rubocop.yml
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/slim-lint
       app/views
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web yarn eslint

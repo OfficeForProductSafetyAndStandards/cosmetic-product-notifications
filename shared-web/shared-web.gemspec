@@ -13,9 +13,16 @@ Gem::Specification.new do |s|
   s.description = "Description of Shared::Web."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.files = Dir[
+      "{app,config,db,lib}/**/*",
+      "MIT-LICENSE",
+      "Rakefile",
+      "README.md",
+      ".rubocop.yml"]
 
   s.add_dependency "rails", "~> 5.2.1"
 
   s.add_development_dependency "sqlite3"
+  s.add_dependency "govuk-lint"
+  s.add_dependency "rubocop"
 end
