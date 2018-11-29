@@ -1,5 +1,3 @@
-/ TODO: Link it to a page that edits details?
-= link_to "Edit details", ''
 = render "report_summary", investigation: @investigation
 / TODO: MSPSDS-620, make sure this display is compliant with designs
 - if @investigation.correspondences.any?
@@ -35,11 +33,12 @@
                 = doc.filename
                 = link_to render("documents/document_image", document: doc), doc, class: "document-link",
                       target: "_blank"
-              - if correspondence.email_file.attached?
-                = correspondence.email_file.filename
-                = link_to render("documents/document_image", document: correspondence.email_file),
-                        correspondence.email_file, class: "document-link", target: "_blank"
-              - if correspondence.email_attachment.attached?
-                = correspondence.email_attachment.filename
-                = link_to render("documents/document_image", document: correspondence.email_attachment),
-                        correspondence.email_attachment, class: "document-link", target: "_blank"
+              - if correspondence.is_a? Correspondence::Email
+                - if correspondence.email_file.attached?
+                  = correspondence.email_file.filename
+                  = link_to render("documents/document_image", document: correspondence.email_file),
+                          correspondence.email_file, class: "document-link", target: "_blank"
+                - if correspondence.email_attachment.attached?
+                  = correspondence.email_attachment.filename
+                  = link_to render("documents/document_image", document: correspondence.email_attachment),
+                          correspondence.email_attachment, class: "document-link", target: "_blank"

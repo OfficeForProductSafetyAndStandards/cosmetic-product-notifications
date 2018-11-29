@@ -27,7 +27,7 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
     return "" unless correspondence.correspondent_name || correspondence.email_address
 
     output = ""
-    output += "#{correspondence.email_direction}: " if correspondence.email_direction.present?
+    output += "#{Correspondence::Email.email_directions[correspondence.email_direction]}: " if correspondence.email_direction.present?
     output += "**#{correspondence.correspondent_name}** " if correspondence.correspondent_name.present?
     output += self.build_email_address correspondence if correspondence.email_address.present?
     output
