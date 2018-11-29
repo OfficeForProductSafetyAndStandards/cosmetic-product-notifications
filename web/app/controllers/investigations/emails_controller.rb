@@ -97,8 +97,8 @@ private
     return {} if params[correspondence_params_key].blank?
 
     params.require(correspondence_params_key).permit(
-      :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
-      :overview, :details, :email_direction, :email_subject, :attachment_description
+      :correspondent_name, :email_address, :day, :month, :year, :email_direction, :overview, :details, :email_subject,
+      :attachment_description
     )
   end
 
