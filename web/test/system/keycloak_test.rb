@@ -8,7 +8,7 @@ class KeycloakTest < ApplicationSystemTestCase
     fill_in "Password", with: "password"
     click_on "Continue"
 
-    assert_text "Logged in successfully."
+    assert_text "Signed in successfully."
   end
 
   test "can logout" do

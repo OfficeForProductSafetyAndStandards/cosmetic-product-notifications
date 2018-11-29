@@ -71,8 +71,6 @@ Rails.application.routes.draw do
 
   resources :businesses do
     collection do
-      get :confirm_merge
-      post :merge
       get :suggested
       post :companies_house
     end
@@ -81,8 +79,6 @@ Rails.application.routes.draw do
 
   resources :products, concerns: %i[document_attachable image_attachable] do
     collection do
-      get :confirm_merge
-      post :merge
       get :suggested
     end
   end

@@ -1,8 +1,6 @@
 table.govuk-table.sortable[class="govuk-!-margin-bottom-3"]
   thead.govuk-table__head
     tr.govuk-table__row
-      - if form
-        th.govuk-table__header[scope="col"]
       th.govuk-table__header[scope="col"]
         = sortable "name", "Product"
       th.govuk-table__header[scope="col"]
@@ -14,9 +12,6 @@ table.govuk-table.sortable[class="govuk-!-margin-bottom-3"]
   tbody.govuk-table__body
     - products.each do |product|
       tr.govuk-table__row
-        - if form
-          td.govuk-table__cell
-            = form.check_box :product_ids, { multiple: true }, product.id, false
         td.govuk-table__cell
           = link_to product.name, product
         td.govuk-table__cell
