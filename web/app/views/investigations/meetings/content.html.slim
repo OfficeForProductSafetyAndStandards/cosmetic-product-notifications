@@ -38,6 +38,6 @@ main.govuk-main-wrapper role="main"
             = form.text_area :details, class: "govuk-textarea", rows: 5
 
           = render "related_attachment_fields", form: form,
-                file_blob: @related_attachment_blob, attachment_name: :related_attachment
+                file_blob: @related_attachment_blob, attachment_name: :related_attachment, title: "Related attachments"
 
         = form.submit "Continue", class: "govuk-button"
