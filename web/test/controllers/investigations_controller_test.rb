@@ -21,7 +21,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     @investigation_two.created_at = Time.zone.parse('2015-07-11 21:00')
     @investigation_two.updated_at = Time.zone.parse('2016-07-11 21:00')
     @investigation_two.save
-    Investigation.import force: true
+    Investigation.import refresh: true
   end
 
   teardown do

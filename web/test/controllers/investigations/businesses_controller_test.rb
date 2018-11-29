@@ -6,7 +6,7 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
     @investigation = investigations(:one)
     @business = businesses(:one)
     @business.source = sources(:business_one)
-    Business.import force: true
+    Business.import refresh: true
     allow(CompaniesHouseClient.instance).to receive(:companies_house_businesses).and_return([])
   end
 

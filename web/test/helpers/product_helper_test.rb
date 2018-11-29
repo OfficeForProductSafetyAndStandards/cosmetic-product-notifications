@@ -10,7 +10,6 @@ class ProductHelperTest < ActiveSupport::TestCase
     @iphone_3g = products(:iphone_3g)
     @pixel = products(:pixel)
     @chromecast = products(:chromecast)
-    Product.import refresh: true, force: true
   end
 
   test "product search matches by name (fuzzy)" do
