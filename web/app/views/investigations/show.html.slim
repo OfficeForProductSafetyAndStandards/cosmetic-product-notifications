@@ -6,52 +6,7 @@
 
 = render "investigation_heading", investigation: @investigation
 
-- if @investigation.is_case
-  - if @investigation.hazard
-    .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-      .govuk-grid-column-one-third
-        h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-          span.govuk-caption-m
-            | Hazard
-          = @investigation.hazard.hazard_type
-      .govuk-grid-column-one-third
-          h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-            span.govuk-caption-m
-              | Vulnerable group
-            = @investigation.hazard.affected_parties
-      .govuk-grid-column-one-third
-        h1.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-          span.govuk-caption-m
-            | Risk Level
-          - if @investigation.hazard.risk_level?
-            = @investigation.hazard.risk_level.titleize
-        .govuk-grid-row
-          .govuk-grid-column-one-half
-            = link_to "Edit risk details", risk_level_investigation_hazards_path(@investigation), class: "no-print"
-          .govuk-grid-column-one-half
-            - if @investigation.hazard.risk_assessment.attached?
-              = link_to "View assessment", @investigation.hazard.risk_assessment, target: "_blank"
-    p
-      = @investigation.hazard&.description
-  - else
-    h2.govuk-heading-l
-      | What's the nature of the hazard?
-    p
-      | Why does this case exist? Add information, be it assessed risk, initial triage info, reported incident etc
-  p
-    - if @investigation.hazard
-      = link_to "Edit hazard details",
-              new_investigation_edit_hazard_path(@investigation),
-              class: "govuk-link mspsds-block-link no-print"
-    -else
-      = link_to "Add hazard details",
-            new_investigation_new_hazard_path(@investigation),
-            class: "govuk-link mspsds-block-link no-print"
-    - if @investigation.incidents.empty?
-      = link_to "Record an incident", new_investigation_incident_path(@investigation),
-          class: "govuk-link mspsds-block-link no-print"
-
-- else
+- if !@investigation.is_case
   .govuk-grid-row
     .govuk-grid-column-one-third
       h2.govuk-heading-m
@@ -61,31 +16,17 @@
       p
         = @investigation.description.presence || 'No description was provided'
 
-- if @investigation.products.first
-  = render "product_summary", product: @investigation.products.first do
-    p
-      = link_to "View product", @investigation.products.first, class: "govuk-link"
-
-- else
-  h2.govuk-heading-l
-    | There are no products attached to this case
-  p
-    | Add a product to the case
-  p
-    = link_to "Add product", new_investigation_product_path(@investigation)
 = render "investigations/record_activities"
 
 hr.govuk-section-break.govuk-section-break--m
 
 = render "tabs", tabs: [\
-  Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" }), \
-  Tab.new("contacts", "Contacts", lambda { render "investigations/tabs/contacts" }), \
-  Tab.new("attachments", "Attachments", lambda { render "investigations/tabs/attachments" }), \
-  Tab.new("products", "Products", lambda { render "investigations/tabs/products" }), \
-  Tab.new("businesses", "Businesses", lambda { render "investigations/tabs/businesses" }), \
-  Tab.new("related", "Related", lambda { render "investigations/tabs/related" }), \
-  Tab.new("full-detail", "Full detail", lambda { render "investigations/tabs/details" })\
-]
+  Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" }),
+  Tab.new("full-detail", "Full detail", lambda { render "investigations/tabs/details" }),
+  Tab.new("products", "Products", lambda { render "investigations/tabs/products" }),
+  Tab.new("businesses", "Businesses", lambda { render "investigations/tabs/businesses" }),
+  Tab.new("attachments", "Attachments", lambda { render "investigations/tabs/attachments" })\
+  ]
 
 .no-print[class="govuk-!-margin-top-3"]
   = link_to "Create PDF document", investigation_path(@investigation, format: :pdf)

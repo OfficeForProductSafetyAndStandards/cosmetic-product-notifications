@@ -64,8 +64,6 @@ def create_investigation(notification, date, name)
     title: name,
     description: field_from_notification(notification, "danger"),
     is_closed: true,
-    risk_overview: field_from_notification(notification, "riskType"),
-    risk_level: risk_level(notification),
     created_at: date,
     updated_at: date,
     source: ReportSource.new(name: "RAPEX")
@@ -128,15 +126,6 @@ def brand(notification)
   brand = field_from_notification(notification, "brand")
   brand = nil if brand.casecmp("Unknown").zero?
   brand
-end
-
-def risk_level(notification)
-  level_map = {
-    "Serious risk" => :serious,
-    "Other risk level" => :medium
-  }
-  level_map.default = nil
-  level_map[field_from_notification(notification, "level")]
 end
 
 def field_from_notification(notification, field_name)

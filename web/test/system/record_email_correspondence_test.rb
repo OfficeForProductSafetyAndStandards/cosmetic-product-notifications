@@ -78,6 +78,6 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
     click_button "Continue"
     click_button "Continue"
-    assert_text("There are no products attached to this case")
+    assert_current_path(/investigations\/\d+/)
   end
 end
