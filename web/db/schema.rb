@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2018_11_28_115453) do
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"
+    t.string "type"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_correspondences_on_investigation_id"
   end
