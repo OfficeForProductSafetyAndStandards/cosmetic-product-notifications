@@ -8,8 +8,7 @@
         = render "business_summary", business: ib.business do
           p
             = link_to "View business", ib.business, class: "govuk-link mspsds-block-link"
-            = link_to "Remove business", unlink_investigation_business_path(@investigation, ib.business),
-                method: :delete, data: { confirm: "Are you sure?" }
+            = link_to "Remove business", remove_investigation_business_path(@investigation, ib.business)
     - else
       p
         | No businesses.

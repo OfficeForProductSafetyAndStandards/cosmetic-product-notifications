@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       end
       member do
         put :link, path: ''
+        get :remove
         delete :unlink, path: ''
       end
     end
@@ -58,6 +59,7 @@ Rails.application.routes.draw do
       end
       member do
         put :link, path: ''
+        get :remove
         delete :unlink, path: ''
       end
     end
