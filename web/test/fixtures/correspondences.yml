@@ -12,6 +12,8 @@ phone_call:
   contact_method: phone_call
   phone_number: 098765432
   correspondence_date: 2018-11-03
+  overview: Who wants to be a millionaire
+  details: Hi it's Chris Tarrant here from who wants to be a millionaire
 
 meeting:
   correspondent_name: Julie Smite

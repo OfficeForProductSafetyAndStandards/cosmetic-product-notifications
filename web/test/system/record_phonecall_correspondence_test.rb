@@ -40,9 +40,17 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     assert_text("testImage")
   end
 
+  test "must have either transcript or summary and notes" do
+    fill_in_context_form
+    click_button "Continue"
+    click_button "Continue"
+    assert_text "please provide either a transcript or complete the summary and notes fields"
+  end
+
   test "third step should be confirmation" do
     fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     assert_text "Confirm phone call details"
     assert_text "Attachments"
@@ -51,6 +59,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   test "confirmation edit details should go to first page in flow" do
     fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     click_on "Edit details"
     assert_text "Who was the call with?"
@@ -59,6 +68,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   test "edit details should retain changed values" do
     fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     click_on "Edit details"
     assert_equal(@correspondence.correspondent_name, find_field('correspondence_phone_call[correspondent_name]').value)
@@ -68,6 +78,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   test "confirmation continue should go to case page" do
     fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     click_button "Continue"
     assert_current_path(/investigations\/\d+/)
@@ -79,5 +90,10 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     fill_in "Day", with: @correspondence.correspondence_date.day
     fill_in "Month", with: @correspondence.correspondence_date.month
     fill_in "Year", with: @correspondence.correspondence_date.year
+  end
+
+  def fill_in_content_form
+    fill_in "correspondence_phone_call[overview]", with: @correspondence.overview
+    fill_in "correspondence_phone_call[details]", with: @correspondence.details
   end
 end
