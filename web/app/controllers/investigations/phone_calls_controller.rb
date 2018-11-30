@@ -1,6 +1,6 @@
 class Investigations::PhoneCallsController < ApplicationController
   include FileConcern
-  set_attachment_names :file
+  set_attachment_names :transcript
   set_file_params_key :correspondence_phone_call
 
   include Wicked::Wizard
@@ -63,27 +63,27 @@ private
   end
 
   def set_attachment
-    @file_blob, * = load_file_attachments
+    @transcript_blob, * = load_file_attachments
   end
 
   def update_attachment
-    update_blob_metadata @file_blob, file_metadata
+    update_blob_metadata @transcript_blob, file_metadata
   end
 
   def correspondence_valid?
     @correspondence.validate(step || steps.last)
-    @correspondence.validate_transcript_and_content(@file_blob) if step == :content
-    validate_blob_size(@file_blob, @correspondence.errors, "file")
+    @correspondence.validate_transcript_and_content(@transcript_blob) if step == :content
+    validate_blob_size(@transcript_blob, @correspondence.errors, "file")
     @correspondence.errors.empty?
   end
 
   def attach_file
-    attach_blobs_to_list(@file_blob, @correspondence.documents)
-    attach_blobs_to_list(@file_blob, @investigation.documents)
+    attach_blobs_to_list(@transcript_blob, @correspondence.documents)
+    attach_blobs_to_list(@transcript_blob, @investigation.documents)
   end
 
   def save_attachment
-    @file_blob.save if @file_blob
+    @transcript_blob.save if @transcript_blob
   end
 
   def correspondence_params
@@ -107,7 +107,7 @@ private
   end
 
   def file_metadata
-    get_attachment_metadata_params(:file).merge(
+    get_attachment_metadata_params(:transcript).merge(
       title: correspondence_params[:overview],
       description: "Call transcript"
     )

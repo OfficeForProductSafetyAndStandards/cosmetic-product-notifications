@@ -21,12 +21,12 @@ main.govuk-main-wrapper role="main"
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Details
-          = form.fields_for :file do |subform|
+          = form.fields_for :transcript do |subform|
             .govuk-form-group
-              - if @email_file_blob
+              - if @transcript_blob
                 p
                   ' Currently selected file:
-                  = link_to @email_file_blob.filename, @email_file_blob, target: "_blank"
+                  = link_to @transcript_blob.filename, @transcript_blob, target: "_blank"
                   br
                   | Selecting a different one will replace it.
               span.govuk-hint class="govuk-!-width-full"
