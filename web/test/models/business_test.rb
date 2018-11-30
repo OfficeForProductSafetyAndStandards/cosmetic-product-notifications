@@ -37,10 +37,10 @@ class BusinessTest < ActiveSupport::TestCase
     assert_equal(business.company_status_code, "active")
     assert_equal(business.source.show, "Companies House")
     assert_equal(business.nature_of_business_id, "SIC code")
-    address = business.primary_address
-    assert_equal(address.address_type, "Registered office address")
-    assert_equal(address.line_1, "Sesame Street")
-    assert_equal(address.line_2, "123")
+    address = business.primary_location
+    assert_equal(address.name, "Registered office address")
+    assert_equal(address.address, "Sesame Street, 123")
+    assert_nil(address.phone_number)
     assert_equal(address.locality, "New York City")
     assert_equal(address.country, "USA")
     assert_equal(address.postal_code, "55555")

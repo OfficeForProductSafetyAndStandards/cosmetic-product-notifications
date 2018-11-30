@@ -1,6 +1,6 @@
 - content_for :page_title, "View address"
 - content_for :after_header do
-  = link_to "Back to business",@business, class: "govuk-back-link"
+  = link_to "Back to business", @business, class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .govuk-heading-xl
@@ -15,22 +15,22 @@
           th.govuk-table__header[scope="row"]
             | Name
           td.govuk-table__cell
-            = @address.address_type
+            = @location.name
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
-            | Address
+            | Location
           td.govuk-table__cell
-            = @address.summary
+            = @location.summary
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Postcode
           td.govuk-table__cell
-            = @address.postal_code
+            = @location.postal_code
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Phone
           td.govuk-table__cell
             = "TODO: add phone"
-    - if policy(@address).update?
-      = form_with url: address_path(@address), method: :delete do |form|
+    - if policy(@location).update?
+      = form_with url: location_path(@location), method: :delete do |form|
         = form.submit "Remove from business", class: "govuk-button", style: "background-color: #df3034"

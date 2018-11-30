@@ -42,11 +42,11 @@ activity_two:
 
 address_one:
   type:
-  sourceable: one (Address)
+  sourceable: one (Location)
 
 address_one:
   type:
-  sourceable: two (Address)
+  sourceable: two (Location)
 
 activity_one:
   type: UserSource

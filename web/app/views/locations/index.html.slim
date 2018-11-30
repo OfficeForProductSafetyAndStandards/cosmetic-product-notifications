@@ -1,27 +1,27 @@
-- content_for :page_title, "Business addresses"
+- content_for :page_title, "Business locations"
 - content_for :after_header do
   = link_to "Back to business", @business, class: "govuk-back-link"
 = render "business_heading", business: @business
 h2.govuk-heading-l[class="govuk-!-margin-bottom-2"]
-  | Addresses
+  | Locations
 p[class="govuk-!-margin-bottom-6"]
-  = link_to "New address", new_business_address_path(@business)
+  = link_to "New address", new_business_location_path(@business)
 table.govuk-table
   thead.govuk-table__head
     tr.govuk-table__row
       th.govuk-table__header[scope="col"]
-        | Address type
+        | Location type
       th.govuk-table__header[scope="col"]
-        | Address
+        | Location
       th.govuk-table__header[scope="col"]
   tbody.govuk-table__body
-    - @addresses.each do |address|
+    - @locations.each do |location|
       tr.govuk-table__row
         td.govuk-table__cell
-          = address.address_type
+          = location.name
         td.govuk-table__cell
-          = link_to address.summary, address
+          = link_to location.summary, location
         td.govuk-table__cell
-          = link_to "Delete", address, method: :delete, data: { confirm: "Are you sure?" } if policy(address).destroy?
+          = link_to "Delete", location, method: :delete, data: { confirm: "Are you sure?" } if policy(location).destroy?
 br
-= will_paginate @addresses
+= will_paginate @locations

@@ -74,7 +74,7 @@ Rails.application.routes.draw do
       get :suggested
       post :companies_house
     end
-    resources :addresses, shallow: true do
+    resources :locations, shallow: true do
       member do
         get :remove
       end

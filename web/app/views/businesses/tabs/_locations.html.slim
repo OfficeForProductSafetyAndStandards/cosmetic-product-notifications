@@ -2,18 +2,18 @@
   .govuk-grid-column-full
     h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
       | Locations (
-      = @business.addresses.size
+      = @business.locations.size
       | )
-    - if @business.addresses.any?
+    - if @business.locations.any?
       .govuk-grid-row[class="govuk-!-padding-bottom-4"]
-        - @business.addresses.limit(2).each do |address|
+        - @business.locations.limit(2).each do |address|
           .govuk-grid-column-one-half
             h4.govuk-heading-s
-              = address.address_type
+              = address.name
             div
-              = address.line_1
+              = address.address
             div
-              = address.line_2
+              = address.phone_number
             div
               = address.locality
             div
@@ -21,9 +21,9 @@
             div
               = address.postal_code
 
-          = link_to "Edit location", edit_address_path(address)
-          = link_to "Remove location", remove_address_path(address)
+          = link_to "Edit location", edit_location_path(address)
+          = link_to "Remove location", remove_location_path(address)
     - else
       p
         | No locations.
-    = link_to "Manage locations", business_addresses_path(@business)
+    = link_to "Manage locations", business_locations_path(@business)
