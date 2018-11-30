@@ -18,13 +18,26 @@ services:
       - TRAVIS_JOB_ID
       - TRAVIS_PULL_REQUEST
       - COMPANIES_HOUSE_API_KEY='fake-key'
+      - SLIM_LINT_RUBOCOP_CONF=vendor/shared-web/.rubocop.yml
   worker:
     command: tail -f /dev/null
     image: ${DOCKER_USERNAME}/worker:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
   cosmetics-web:
+    command: tail -f /dev/null
     image: ${DOCKER_USERNAME}/cosmetics-web:${TRAVIS_BUILD_NUMBER}
+    volumes:
+    - ~/bundle-cache:/usr/local/bundle
+    - ~/npm-cache:/root/.npm
+    environment:
+    - CI
+    - TRAVIS
+    - TRAVIS_BRANCH
+    - TRAVIS_JOB_ID
+    - TRAVIS_PULL_REQUEST
+    - COMPANIES_HOUSE_API_KEY='fake-key'
+    - SLIM_LINT_RUBOCOP_CONF=vendor/shared-web/.rubocop.yml
   db:
     image: ${DOCKER_USERNAME}/db:${TRAVIS_BUILD_NUMBER}
   elasticsearch:
