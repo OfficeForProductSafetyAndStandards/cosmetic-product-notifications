@@ -4,16 +4,11 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_admin
     @location = locations(:one)
-    @location.source = sources(:address_one)
+    @location.source = sources(:location_one)
   end
 
   teardown do
     logout
-  end
-
-  test "should get index" do
-    get business_locations_url(@location.business)
-    assert_response :success
   end
 
   test "should get new" do
@@ -36,7 +31,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to business_locations_url(@location.business)
+    assert_redirected_to @location.business
   end
 
   test "should show location" do
@@ -61,7 +56,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
         postal_code: @location.postal_code
       }
     }
-    assert_redirected_to location_url(@location)
+    assert_redirected_to @location.business
   end
 
   test "should destroy location" do
@@ -69,6 +64,6 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
       delete location_url(@location)
     end
 
-    assert_redirected_to business_locations_url(@location.business)
+    assert_redirected_to @location.business
   end
 end

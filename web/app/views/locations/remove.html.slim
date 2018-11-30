@@ -1,4 +1,4 @@
-- content_for :page_title, "View address"
+- content_for :page_title, "View loaction"
 - content_for :after_header do
   = link_to "Back to business", @business, class: "govuk-back-link"
 .govuk-grid-row
@@ -30,7 +30,9 @@
           th.govuk-table__header[scope="row"]
             | Phone
           td.govuk-table__cell
-            = "TODO: add phone"
+            = @location.phone_number
     - if policy(@location).update?
       = form_with url: location_path(@location), method: :delete do |form|
         = form.submit "Remove from business", class: "govuk-button", style: "background-color: #df3034"
+    - else
+      p = "This location comes from Companies House and can't be removed"

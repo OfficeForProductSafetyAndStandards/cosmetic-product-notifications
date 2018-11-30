@@ -1,4 +1,4 @@
-= link_to "Add location", new_business_address_path(@business)
+= link_to "Add location", new_business_location_path(@business)
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
     - if @business.locations.any?
@@ -9,12 +9,8 @@
               th.govuk-table__header[scope="row"] = location.name
               td.govuk-table__cell = location.summary
         p
-          / TODO: MSPSDS-777 Link these to correct pages
-          = link_to "Edit location", '', class: "govuk-link mspsds-block-link"
-          = link_to "Remove location", '', class: "govuk-link mspsds-block-link"
-
-          = link_to "Edit location", edit_location_path(location)
-          = link_to "Remove location", remove_location_path(location)
+          = link_to "Edit location", edit_location_path(location), class: "govuk-link mspsds-block-link"
+          = link_to "Remove location", remove_location_path(location), class: "govuk-link mspsds-block-link"
     - else
       p
         | No locations.

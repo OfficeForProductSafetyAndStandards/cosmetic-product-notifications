@@ -1,7 +1,12 @@
-- content_for :page_title, "Edit address"
+- content_for :page_title, "Edit location"
 - content_for :after_header do
-  = link_to "Back to locations", @location, class: "govuk-back-link"
-= render "business_heading", business: @business
+  = link_to "Back to business", @business, class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-heading-xl
+      span.govuk-caption-xl
+        = "Business: #{@business.company_name}"
+      = "Remove location"
 h2.govuk-heading-l
   | Location details
-= render "form", location: @location, business: nil
+= render "form", location: @location, business: nil, edit: true

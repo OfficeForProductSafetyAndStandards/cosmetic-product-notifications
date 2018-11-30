@@ -2,13 +2,6 @@ class LocationsController < ApplicationController
   before_action :set_location, only: %i[show edit update remove destroy]
   before_action :create_location, only: %i[create]
 
-  # GET /locations
-  # GET /locations.json
-  def index
-    @business = Business.find(params[:business_id])
-    @locations = @business.locations.paginate(page: params[:page], per_page: 20)
-  end
-
   # GET /locations/1
   # GET /locations/1.json
   def show
@@ -32,7 +25,7 @@ class LocationsController < ApplicationController
     respond_to do |format|
       if @location.save
         format.html do
-          redirect_to business_locations_url(@location.business),
+          redirect_to @location.business,
                       notice: "Location was successfully created."
         end
         format.json { render :show, status: :created, location: @location }
@@ -49,7 +42,7 @@ class LocationsController < ApplicationController
     authorize @location
     respond_to do |format|
       if @location.update(location_params)
-        format.html { redirect_to @location, notice: "Location was successfully updated." }
+        format.html { redirect_to @location.business, notice: "Location was successfully updated." }
         format.json { render :show, status: :ok, location: @location }
       else
         format.html { render :edit }
@@ -69,7 +62,7 @@ class LocationsController < ApplicationController
     @location.destroy
     respond_to do |format|
       format.html do
-        redirect_to business_locations_url(@location.business), notice: "Location was successfully destroyed."
+        redirect_to @location.business, notice: "Location was successfully destroyed."
       end
       format.json { head :no_content }
     end
