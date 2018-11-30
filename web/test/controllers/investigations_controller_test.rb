@@ -3,25 +3,28 @@ require "test_helper"
 class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_admin
-    @investigation_one = investigations(:one)
-    @investigation_two = investigations(:two)
-    @investigation_three = investigations(:three)
-    @investigation_no_products = investigations(:no_products)
-    @investigation_one.source = sources(:investigation_one)
 
-    User.all
+    @investigation_one = investigations(:one)
+    @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
     @investigation_one.assignee = User.find_by(last_name: "Admin")
+    @investigation_one.source = sources(:investigation_one)
     @investigation_one.save
+
+    @investigation_two = investigations(:two)
+    @investigation_two.created_at = Time.zone.parse('2015-07-11 21:00')
     @investigation_two.assignee = User.find_by(last_name: "User")
     @investigation_two.save
 
-    @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
+    @investigation_three = investigations(:three)
+    @investigation_no_products = investigations(:no_products)
+
+    # The updated_at values must be set separately in order to be respected
     @investigation_one.updated_at = Time.zone.parse('2017-07-11 21:00')
     @investigation_one.save
-    @investigation_two.created_at = Time.zone.parse('2015-07-11 21:00')
     @investigation_two.updated_at = Time.zone.parse('2016-07-11 21:00')
     @investigation_two.save
-    Investigation.import force: true
+
+    Investigation.import refresh: true
   end
 
   teardown do
