@@ -15,18 +15,10 @@ h1.govuk-heading-xl
           | What are you creating?
         .govuk-form-group class=("govuk-form-group--error" if @nothing_selected)
           .govuk-radios
-            .govuk-radios__item
-              = form.radio_button :type, :allegation, class: "govuk-radios__input"
-              = form.label :type, "Product safety allegation", class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :type, :question, class: "govuk-radios__input"
-              = form.label :type, "Question", class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :type, :product_recall, class: "govuk-radios__input"
-              = form.label :type, "Product recall notification", class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :type, :rapex_notification, class: "govuk-radios__input"
-              = form.label :type, "Notification from RAPEX", class: "govuk-label govuk-radios__label"
+            - @available_options.each do |(option, label)|
+              .govuk-radios__item
+                = form.radio_button :type, option, class: "govuk-radios__input"
+                = form.label :type, label, value: option, class: "govuk-label govuk-radios__label"
 
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
