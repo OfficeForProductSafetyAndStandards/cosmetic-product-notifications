@@ -6,13 +6,13 @@ h1.govuk-heading-xl
   = page_title
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with model: @question, scope: :question, local: true, url: wizard_path, method: :put do |form|
-      = render "form_validation_display", errors: @question.errors, model_name: "question"
+    = form_with model: @investigation, scope: :question, local: true, url: wizard_path, method: :put do |form|
+      = render "form_validation_display", errors: @investigation.errors, model_name: "question"
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What is the question?
-        .govuk-form-group class=("govuk-form-group--error" if @question.errors[:description].any?)
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:description].any?)
           span.govuk-hint#question-description-hint
             | Please give as much detail as possible
           = form.text_area :description, class: "govuk-textarea", "aria-describedby": "question-description-hint",
@@ -21,13 +21,13 @@ h1.govuk-heading-xl
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Please provide a title
-        .govuk-form-group class=("govuk-form-group--error" if @question.errors[:question_title].any?)
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:question_title].any?)
           span.govuk-hint#question-title-hint
             | This will help other users identify this question
           = form.text_field :question_title, class: "govuk-input", "aria-describedby": "question-title-hint",
                   maxlength: 1000
 
-      - file_validation_errors = @question.errors.details[:base].any? { |error| error.value? :file_too_large }
+      - file_validation_errors = @investigation.errors.details[:base].any? { |error| error.value? :file_too_large }
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Are there any files or images related to the question?
@@ -36,7 +36,7 @@ h1.govuk-heading-xl
             p#current-attachment-details
               ' Currently selected file:
               = link_to @file_blob.filename, @file_blob, target: "_blank"
-          = form.fields_for :file do |subform|
+          = form.fields_for :attachment do |subform|
             = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
 
       .govuk-form-group
