@@ -14,5 +14,7 @@
         p
           = link_to "View #{document_file_extension(document) + ' ' if document_file_extension document}document",
                   document, class: "govuk-link mspsds-block-link", target: '_blank'
-          = link_to "Edit document details or delete", edit_associated_document_path(parent, document),
+          = link_to "Edit document", edit_associated_document_path(parent, document),
+                  class: "govuk-link mspsds-block-link"
+          = link_to "Remove document", remove_associated_document_path(parent, document),
                   class: "govuk-link mspsds-block-link"

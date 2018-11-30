@@ -1,29 +1,20 @@
+= link_to "Add location", new_business_address_path(@business)
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
-    h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
-      | Locations (
-      = @business.locations.size
-      | )
     - if @business.locations.any?
-      .govuk-grid-row[class="govuk-!-padding-bottom-4"]
-        - @business.locations.limit(2).each do |address|
-          .govuk-grid-column-one-half
-            h4.govuk-heading-s
-              = address.name
-            div
-              = address.address
-            div
-              = address.phone_number
-            div
-              = address.locality
-            div
-              = address.country
-            div
-              = address.postal_code
+      - @business.locations.each do |location|
+        table.govuk-table[class="govuk-table__body"]
+          tbody.govuk-table__body
+            tr.govuk-table__row
+              th.govuk-table__header[scope="row"] = location.name
+              td.govuk-table__cell = location.summary
+        p
+          / TODO: MSPSDS-777 Link these to correct pages
+          = link_to "Edit location", '', class: "govuk-link mspsds-block-link"
+          = link_to "Remove location", '', class: "govuk-link mspsds-block-link"
 
-          = link_to "Edit location", edit_location_path(address)
-          = link_to "Remove location", remove_location_path(address)
+          = link_to "Edit location", edit_location_path(location)
+          = link_to "Remove location", remove_location_path(location)
     - else
       p
         | No locations.
-    = link_to "Manage locations", business_locations_path(@business)
