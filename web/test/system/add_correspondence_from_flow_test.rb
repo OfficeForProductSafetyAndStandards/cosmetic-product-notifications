@@ -25,8 +25,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   end
 
   test "first step should be populated with reporter name from the flow" do
-    visit root_path
-    click_on "Report an unsafe product"
+    visit new_report_path
     select_type_and_continue
     fill_name_and_continue
     click_on "Add reporter correspondence"
@@ -34,8 +33,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   end
 
   test "first step should be populated with reporter's email" do
-    visit root_path
-    click_on "Report an unsafe product"
+    visit new_report_path
     select_type_and_continue
     fill_email_and_continue
     click_on "Add reporter correspondence"
@@ -43,8 +41,7 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   end
 
   test "first step should be populated with phone from the flow" do
-    visit root_path
-    click_on "Report an unsafe product"
+    visit new_report_path
     select_type_and_continue
     fill_phone_and_continue
     click_on "Add reporter correspondence"
