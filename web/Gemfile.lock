@@ -16,6 +16,7 @@ PATH
       govuk-lint
       rails (~> 5.2.1)
       rubocop
+      slim_lint
 
 GEM
   remote: https://rubygems.org/
@@ -457,7 +458,6 @@ DEPENDENCIES
   simplecov
   simplecov-console
   slim-rails
-  slim_lint
   slowpoke
   solargraph
   spring

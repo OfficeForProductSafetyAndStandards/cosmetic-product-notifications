@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "sqlite3"
   s.add_dependency "govuk-lint"
   s.add_dependency "rubocop"
+  s.add_dependency "slim_lint"
 end

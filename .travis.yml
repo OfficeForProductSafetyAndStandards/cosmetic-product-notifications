@@ -37,8 +37,8 @@ jobs:
       - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d web
     script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rubocop -c vendor/shared-web/.rubocop.yml
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/slim-lint
-      app/views
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e SLIM_LINT_RUBOCOP_CONF=vendor/shared-web/.rubocop.yml web bin/slim-lint -c vendor/shared-web/.slim-lint.yml
+      app/views -c
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn eslint
       app/assets/javascripts
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn sass-lint
@@ -61,8 +61,7 @@ jobs:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d cosmetics-web
     script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/rubocop -c vendor/shared-web/.rubocop.yml
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/slim-lint
-      app/views
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e SLIM_LINT_RUBOCOP_CONF=vendor/shared-web/.rubocop.yml cosmetics-web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app/views
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web yarn eslint
       app/assets/javascripts
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web yarn sass-lint
