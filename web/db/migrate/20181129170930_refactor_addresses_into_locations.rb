@@ -8,7 +8,7 @@ class RefactorAddressesIntoLocations < ActiveRecord::Migration[5.2]
           t.string :phone_number
 
           dir.up do
-            Location.all.each do |address|
+            Address.all.each do |address|
               address.update! line_1: "#{address.line_1}, #{address.line_2}"
             end
             t.rename :line_1, :address
