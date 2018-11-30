@@ -2,7 +2,7 @@ class Create::QuestionController < Create::CreationFlowController
   set_attachment_names :attachment
   set_file_params_key :question
 
-  steps :reporter_type, :reporter_details, :question_details
+  steps :reporter, :reporter_details, :question_details
 
 private
 
