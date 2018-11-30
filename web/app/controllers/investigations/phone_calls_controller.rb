@@ -78,7 +78,7 @@ private
   end
 
   def attach_file
-    attach_blobs_to_list(@transcript_blob, @correspondence.documents)
+    attach_blob_to_attachment_slot(@transcript_blob, @correspondence.transcript)
     attach_blobs_to_list(@transcript_blob, @investigation.documents)
   end
 
