@@ -46,7 +46,6 @@ gem 'shared-web', path: './vendor/shared-web'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem "brakeman"
   gem "byebug", platform: :mri
   gem "capybara"
   gem "coveralls"

@@ -13,6 +13,7 @@ PATH
   remote: vendor/shared-web
   specs:
     shared-web (0.1.0)
+      brakeman
       govuk-lint
       rails (~> 5.2.1)
       rubocop
@@ -425,7 +426,6 @@ DEPENDENCIES
   axlsx!
   axlsx_rails
   bootsnap (>= 1.1.0)
-  brakeman
   byebug
   capybara
   cf-app-utils

@@ -40,8 +40,7 @@ jobs:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e SLIM_LINT_RUBOCOP_CONF=vendor/shared-web/.rubocop.yml web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app/views
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/javascripts
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/brakeman
-      --no-pager
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/brakeman --no-pager
   - name: Cosmetics-web - Test
     install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
     before_script:
@@ -61,8 +60,7 @@ jobs:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e SLIM_LINT_RUBOCOP_CONF=vendor/shared-web/.rubocop.yml cosmetics-web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app/views
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/javascripts
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/brakeman
-      --no-pager
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/brakeman --no-pager
   - stage: Deploy to int
     name: Deploy web
     if: branch = master AND type != pull_request
