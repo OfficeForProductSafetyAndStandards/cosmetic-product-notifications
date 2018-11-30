@@ -14,7 +14,7 @@ main.govuk-main-wrapper role="main"
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Summary
           .govuk-form-group
-            span.govuk-hint
+            span.govuk-hint#correspondence-summary-hint
               | Give an overview of the meeting
             = form.text_field :overview,
                     class: "govuk-input govuk-!-width-two-thirds", aria_describedby: "correspondence-summary-hint"
