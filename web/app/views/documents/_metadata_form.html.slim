@@ -23,6 +23,9 @@
       = subform.text_field :other_type, value: document.metadata["other_type"],
               placeholder: "Enter a type, if relevant", class: "govuk-input"
   .govuk-form-group
-    = form.submit "Save", class: "govuk-button"
-    - if show_delete
-      = link_to "Delete", associated_document_path(@parent, document), method: :delete, class: "govuk-button"
+    .govuk-grid-row
+      .govuk-grid-column-one-quarter
+        = form.submit "#{edit ? 'Update' : 'Save'} attachment", class: "govuk-button"
+      - if edit
+        .govuk-grid-column-one-quarter
+          p = link_to "Cancel", @parent, class: "mspsds-block-link"

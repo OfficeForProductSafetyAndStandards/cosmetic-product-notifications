@@ -1,10 +1,9 @@
 require "application_system_test_case"
 
-class InvestigationIAssigneeTest < ApplicationSystemTestCase
+class InvestigationAssigneeTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
     visit assign_investigation_path(investigations(:one))
-    Investigation.import force: true
   end
 
   teardown do

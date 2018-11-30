@@ -2,4 +2,5 @@
 - content_for :after_header do
   = link_to "Back", @parent, class: "govuk-back-link"
 = render "page_heading", title: "Enter document details"
-= render "documents/metadata_form", document: @file_blob, show_delete: false, target_url: wizard_path
+= render "documents/metadata_form", document: @file_blob, edit: false,
+        target_url: wizard_path

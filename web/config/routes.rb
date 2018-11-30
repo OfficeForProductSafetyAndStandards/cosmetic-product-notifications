@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       collection do
         resources :new, controller: "documents_flow", only: %i[show new create update]
       end
+      member do
+        get :remove
+      end
     end
   end
 
@@ -12,6 +15,9 @@ Rails.application.routes.draw do
     resources :images, controller: "images" do
       collection do
         resources :new, controller: "images_flow", only: %i[show new create update]
+      end
+      member do
+        get :remove
       end
     end
   end
@@ -29,7 +35,6 @@ Rails.application.routes.draw do
       get :status
       get :assign
       get :confirmation
-      get :priority
     end
     collection do
       resources :report, controller: "investigations/report", only: %i[show new create update]
@@ -42,6 +47,7 @@ Rails.application.routes.draw do
       end
       member do
         put :link, path: ''
+        get :remove
         delete :unlink, path: ''
       end
     end
@@ -52,6 +58,7 @@ Rails.application.routes.draw do
       end
       member do
         put :link, path: ''
+        get :remove
         delete :unlink, path: ''
       end
     end
@@ -70,7 +77,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :businesses do
+  resources :businesses, concerns: %i[document_attachable image_attachable] do
     collection do
       get :confirm_merge
       post :merge

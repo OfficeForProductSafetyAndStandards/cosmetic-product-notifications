@@ -6,8 +6,6 @@
         = case_question_text(investigation).titleize + ': '
         = investigation.pretty_id
       = investigation.title
-      p.govuk-caption-m
-        = investigation.source.created_by
   .govuk-grid-column-one-third
     table.govuk-table.summary-table
       tbody.govuk-table__body
@@ -27,11 +25,3 @@
             = investigation.assignee ? investigation.assignee.full_name.to_s : "Unassigned"
             td.govuk-table__cell [class="govuk-!-font-size-16"]
               = link_to "Change", assign_investigation_path(investigation)
-
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            span.govuk-caption-m[class="govuk-!-font-size-16"]
-              | Priority
-            = investigation.priority&.titleize || "Not set"
-            td.govuk-table__cell [class="govuk-!-font-size-16"]
-              = link_to "Change", priority_investigation_path(investigation)

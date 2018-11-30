@@ -4,7 +4,6 @@ class InvestigationHighlightTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
     visit root_path
-    Investigation.import force: true
   end
 
   teardown do
