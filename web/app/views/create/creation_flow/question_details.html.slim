@@ -27,11 +27,10 @@ h1.govuk-heading-xl
           = form.text_field :question_title, class: "govuk-input", "aria-describedby": "question-title-hint",
                   maxlength: 1000
 
-      - file_validation_errors = @investigation.errors.details[:base].any? { |error| error.value? :file_too_large }
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Are there any files or images related to the question?
-        .govuk-form-group class=("govuk-form-group--error" if file_validation_errors)
+        .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation))
           - if @file_blob.present?
             p#current-attachment-details
               ' Currently selected file:
