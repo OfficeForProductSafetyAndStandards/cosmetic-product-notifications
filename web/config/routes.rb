@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   end
 
   resources :question, controller: "investigations/question", only: %i[show new create update]
+  resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
 
   resources :investigations, path: "cases", only: %i[index show new create update],
             concerns: %i[document_attachable image_attachable] do

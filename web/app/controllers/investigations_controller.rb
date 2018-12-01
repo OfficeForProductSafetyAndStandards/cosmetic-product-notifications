@@ -35,6 +35,8 @@ class InvestigationsController < ApplicationController
   # GET /investigations/new
   def new
     case params[:type]
+    when "allegation"
+      redirect_to new_allegation_path
     when "question"
       redirect_to new_question_path
     else
