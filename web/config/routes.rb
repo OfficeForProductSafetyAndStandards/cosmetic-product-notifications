@@ -38,10 +38,6 @@ Rails.application.routes.draw do
     member do
       get :status
       get :assign
-      get :confirmation
-    end
-    collection do
-      resources :report, controller: "investigations/report", only: %i[show new create update]
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do
       collection do

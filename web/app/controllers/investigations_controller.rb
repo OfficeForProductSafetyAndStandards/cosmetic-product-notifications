@@ -2,7 +2,7 @@ class InvestigationsController < ApplicationController
   include InvestigationsHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show update assign status confirmation]
+  before_action :set_investigation, only: %i[show update assign status]
 
   # GET /investigations
   # GET /investigations.json
@@ -49,9 +49,6 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/1/assign
   def assign; end
-
-  # GET /investigations/1/confirmation
-  def confirmation; end
 
   # PATCH/PUT /investigations/1
   # PATCH/PUT /investigations/1.json
