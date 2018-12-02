@@ -23,7 +23,11 @@ if [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-web ]]; then
     COMPONENTS="$COMPONENTS cosmetics-web"
 fi
 
-if [[ "$TOP_LEVEL_CHANGES" =~ web ]]; then
+if [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]]; then
+    COMPONENTS="$COMPONENTS web worker cosmetics-web"
+fi
+
+if [[ "$TOP_LEVEL_CHANGES" =~ '^web$' ]]; then
     COMPONENTS="$COMPONENTS web worker"
 elif [[ "$TOP_LEVEL_CHANGES" =~ worker ]]; then
     COMPONENTS="$COMPONENTS worker"
