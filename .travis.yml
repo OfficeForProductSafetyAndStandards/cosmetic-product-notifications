@@ -22,45 +22,13 @@ jobs:
     - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./ci/build-docker-images.sh
   - stage: Test
     name: Web - Test
-    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    before_script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm start_dependencies
-    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web
-      bin/rake db:create db:schema:load test
-    after_script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
+    script: COMPONENT=web ./ci/test-if-changed.sh
   - name: Web - Static Analysis
-    install:
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps web echo 'Gems pre-installed'
-      - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d web
-    script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/rubocop -c vendor/shared-web/.rubocop.yml
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app/views
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/javascripts
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec web bin/brakeman --no-pager
+    script: COMPONENT=web ./ci/static-analysis-if-changed.sh
   - name: Cosmetics-web - Test
-    install: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    before_script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm start_dependencies
-    script: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web
-      bin/rake db:create db:schema:load test
-    after_script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
+    script: COMPONENT=cosmetics-web ./ci/test-if-changed.sh
   - name: Cosmetics-web - Static Analysis
-    install:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps cosmetics-web echo 'Gems pre-installed'
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d cosmetics-web
-    script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/rubocop -c vendor/shared-web/.rubocop.yml
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app/views
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/javascripts
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec cosmetics-web bin/brakeman --no-pager
+    script: COMPONENT=cosmetics-web ./ci/static-analysis-if-changed.sh
   - stage: Deploy to int
     name: Deploy web
     if: branch = master AND type != pull_request
