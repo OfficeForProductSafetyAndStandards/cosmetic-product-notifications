@@ -1,4 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+one:
+  investigation: search_related_correspondence
+  overview: Overview
+  details: Sofisticated chess engine
+  correspondent_name: Bobby
+  email_address: grandmaster@gmail.com
+  email_subject: stockfish
+  phone_number: 111111
 
 email:
   correspondent_name: Jane Smith
