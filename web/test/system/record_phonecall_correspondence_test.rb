@@ -38,7 +38,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
 
     assert_current_path(/investigations\/\d+/)
-    assert_text "Attached: #{"testImage.png"}"
+    assert_text "Attached: testImage.png"
     assert_text "View attachment"
   end
 
