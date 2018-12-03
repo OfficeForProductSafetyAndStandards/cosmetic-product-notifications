@@ -41,7 +41,7 @@ class BusinessesController < ApplicationController
     other_businesses.each do |other_business|
       selected_business.merge!(other_business,
                                attributes: selected_business.attributes.keys,
-                               associations: %w[addresses investigation_businesses])
+                               associations: %w[locations investigation_businesses])
     end
 
     redirect_to businesses_url, notice: "Businesses were successfully merged."
@@ -54,7 +54,7 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/1/edit
   def edit
-    @business.addresses.build unless @business.addresses.any?
+    @business.locations.build unless @business.locations.any?
   end
 
   # GET /businesses/suggested
@@ -103,7 +103,7 @@ private
 
   def update_business
     @business.assign_attributes(business_params)
-    defaults_on_primary_address(@business) if @business.addresses.any?
+    defaults_on_primary_location(@business) if @business.locations.any?
   end
 
   def respond_to_business_creation
@@ -112,7 +112,7 @@ private
         format.html { redirect_to @business, notice: "Business was successfully created." }
         format.json { render :show, status: :created, location: @business }
       else
-        @business.addresses.build unless @business.addresses.any?
+        @business.locations.build unless @business.locations.any?
         format.html { render :new }
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
