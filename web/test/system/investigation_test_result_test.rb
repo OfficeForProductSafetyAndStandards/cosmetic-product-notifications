@@ -30,7 +30,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     assert_text "Confirm test result details"
     click_on "Continue"
 
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
     assert_text "Passed test: #{@test.product.name}"
     assert_text "Test result recorded"
   end
@@ -102,7 +102,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     assert_text attachment_description
     click_on "Continue"
 
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
     assert_text "Attached: #{attachment_filename}"
     assert_text "View attachment"
   end

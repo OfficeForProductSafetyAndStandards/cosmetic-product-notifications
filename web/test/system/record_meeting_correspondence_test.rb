@@ -91,7 +91,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
     fill_in_content_form
     click_button "Continue"
     click_button "Continue"
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
   end
 
   def fill_in_context_form
