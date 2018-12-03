@@ -2,7 +2,7 @@ class InvestigationsController < ApplicationController
   include InvestigationsHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show update assign status confirmation add_comment]
+  before_action :set_investigation, only: %i[show update assign status confirmation]
 
   # GET /investigations
   # GET /investigations.json
