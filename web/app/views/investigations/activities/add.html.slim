@@ -12,7 +12,7 @@
         = case_question_text(@investigation).titleize + ': '
         = @investigation.pretty_id
       = "New activity"
-    = form_with local: true, url: add_investigation_activities_path, method: :post do |form|
+    = form_with local: true, url: add_investigation_activities_path, method: :get do |form|
       - if @activity_type_empty
         h2.govuk-heading-l.govuk-error-message
           = "The following error prevented this you from continuing:"
@@ -21,14 +21,6 @@
       fieldset.govuk-fieldset
         .govuk-form-group class=("govuk-form-group--error" if @activity_type_empty)
           .govuk-radios
-            - activity_types = { \
-                    "comment": "Add a comment",
-                    "correspondence": "Record correspondence",
-                    "product": "Add a product to the case",
-                    "testing_request": "Request testing activity",
-                    "testing_result": "Record testing activity",
-                    "corrective_action": "Record corrective action",
-                    "business": "Add a business to the case" }
             - activity_types.each do |(type, label)|
               .govuk-radios__item
                 = form.radio_button :activity_type, type, class: "govuk-radios__input"

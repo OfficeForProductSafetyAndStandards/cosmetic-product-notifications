@@ -7,7 +7,7 @@ class Investigations::ActivitiesController < ApplicationController
   def new; end
 
   def add
-    return unless request.post?
+    return unless params[:commit] == "Continue"
 
     case params[:activity_type]
     when "comment"
