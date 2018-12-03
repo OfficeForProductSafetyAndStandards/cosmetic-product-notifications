@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
-if [[ $(./ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| )) \
-   || $(./ci/get-changed-components.sh) =~ ((^| )shared-web($| )) ]]; then
+if [[ $(./ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| )) ]]; then
     echo "Testing component $COMPONENT"
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
