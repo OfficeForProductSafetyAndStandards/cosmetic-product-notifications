@@ -44,7 +44,7 @@ book.add_worksheet name: "Products" do |sheet_products|
 end
 
 book.add_worksheet name: "Businesses" do |sheet_businesses|
-  sheet_businesses.add_row %w[ID Company_Number Company_Name Company_Type Address_Line_1 Address_Line_2 Locality
+  sheet_businesses.add_row %w[ID Company_Number Company_Name Company_Type Address Phone_Number Locality
                               Country Postal_Code Nature_Of_Business Additional_Information Source Case_ID]
 
   @investigations.each do |investigation|
@@ -54,8 +54,8 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
         business.company_number,
         business.company_name,
         business.company_type,
-        business.primary_address ? business.primary_address.line_1 : nil,
-        business.primary_address ? business.primary_address.line_2 : nil,
+        business.primary_address ? business.primary_address.address : nil,
+        business.primary_address ? business.primary_address.phone_number : nil,
         business.primary_address ? business.primary_address.locality : nil,
         business.primary_address ? business.primary_address.country : nil,
         business.primary_address ? business.primary_address.postal_code : nil,
