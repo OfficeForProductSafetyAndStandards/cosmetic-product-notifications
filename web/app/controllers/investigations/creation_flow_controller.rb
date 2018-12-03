@@ -11,6 +11,7 @@ class Investigations::CreationFlowController < ApplicationController
 
   # GET /xxx/step
   def show
+    set_page_title
     render_wizard
   end
 
@@ -53,6 +54,10 @@ private
   end
 
   def success_message
+    # This needs to be defined by any controller that inherits from this class.
+  end
+
+  def set_page_title
     # This needs to be defined by any controller that inherits from this class.
   end
 

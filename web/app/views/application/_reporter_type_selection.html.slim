@@ -4,7 +4,7 @@
       = render "form_validation_display", errors: reporter.errors, model_name: "reporter"
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          =  "Who did the question come from?"
+          = heading
         .govuk-form-group class=("govuk-form-group--error" if reporter.errors[:reporter_type].any?)
           .govuk-radios
             - reporter_types.each do |(type, label)|
