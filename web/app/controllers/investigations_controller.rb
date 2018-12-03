@@ -8,10 +8,16 @@ class InvestigationsController < ApplicationController
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @answer = search_for_investigations(20)
-    @investigations = @answer.records
-    @results = @answer.results.map do |r|
-      r.merge(record: @answer.records.find_by(id: r._id))
+    respond_to do |format|
+      format.html do
+        @answer = search_for_investigations(20)
+        @results = @answer.results.map { |r| r.merge(record: @answer.records.find_by(id: r._id)) }
+        @investigations = @answer.records
+      end
+      format.xlsx do
+        @answer = search_for_investigations
+        @investigations = @answer.records
+      end
     end
   end
 
