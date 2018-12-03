@@ -27,21 +27,21 @@ class ImageTest < ApplicationSystemTestCase
 
   test "details should validate title" do
     attach_file_and_upload
-    click_on "Save"
+    click_on "Save attachment"
     assert_text "prevented this item from being saved:"
   end
 
   test "details should be valid if title exists" do
     attach_file_and_upload
     fill_in "Image title", with: "Beautiful picture"
-    click_on "Save"
-    assert_text "There are no products attached to this case"
+    click_on "Save attachment"
+    assert_current_path(/investigations\/\d+/)
   end
 
   test "image data should be in attachments" do
     attach_file_and_upload
     fill_in "Image title", with: "Beautiful picture"
-    click_on "Save"
+    click_on "Save attachment"
     click_on "Attachments"
     assert_text "Beautiful picture"
   end
@@ -56,7 +56,7 @@ class ImageTest < ApplicationSystemTestCase
   test "should allow to edit file title" do
     get_to_edit
     fill_in "Image title", with: "Ugly picture"
-    click_on "Save"
+    click_on "Update attachment"
     click_on "Attachments"
     assert_text "Ugly picture"
   end
@@ -64,26 +64,31 @@ class ImageTest < ApplicationSystemTestCase
   test "should allow to edit file description" do
     get_to_edit
     fill_in "Description", with: "This is a large image"
-    click_on "Save"
+    click_on "Update attachment"
     click_on "Attachments"
     assert_text "This is a large image"
   end
 
   test "should allow to delete a picture" do
-    get_to_edit
-    click_on "Delete"
+    get_to_attachments
+    click_on "Remove image"
+    click_on "Delete attachment"
     click_on "Attachments"
     assert_no_text "Beautiful picture"
   end
 
   def get_to_edit
+    get_to_attachments
+    click_on "Edit image"
+    assert_text "Edit image details"
+  end
+
+  def get_to_attachments
     attach_file_and_upload
     fill_in "Image title", with: "Beautiful picture"
     fill_in "Description", with: "description"
-    click_on "Save"
+    click_on "Save attachment"
     click_on "Attachments"
-    click_on "Edit image details or delete"
-    assert_text "Edit image details"
   end
 
   def attach_file_and_upload

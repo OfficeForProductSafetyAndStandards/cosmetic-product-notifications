@@ -5,8 +5,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as_admin
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
-    @activity = activities(:one)
-    @activity.source = sources(:activity_one)
+    @correspondence = correspondences(:email)
     visit new_investigation_email_url(@investigation)
   end
 
@@ -18,20 +17,27 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     assert_text("Email details")
   end
 
-  test "first step validates date" do
-    fill_in("correspondence[day]", with: "333")
+  test "validates presence of date" do
+    click_button "Continue"
+    assert_text "date can't be blank"
+  end
+
+  test "validates date format" do
+    fill_in "correspondence_email[day]", with: "333"
     click_on "Continue"
-    assert_text("Correspondence date must be a valid date")
+    assert_text "must specify a day, month and year"
   end
 
   test "second step should be content" do
+    fill_in_context_form
     click_button "Continue"
     assert_text("Email content")
   end
 
   test "attaches the email file" do
+    fill_in_context_form
     click_button "Continue"
-    attach_file("correspondence[email_file][file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence_email[email_file][file]", Rails.root + "test/fixtures/files/testImage.png")
     click_button "Continue"
     assert_text("testImage")
     click_button "Continue"
@@ -40,8 +46,10 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "attaches the email attachment" do
+    fill_in_context_form
     click_button "Continue"
-    attach_file("correspondence[email_attachment][file]", Rails.root + "test/fixtures/files/testImage2.png")
+    attach_file("correspondence_email[email_attachment][file]", Rails.root + "test/fixtures/files/testImage2.png")
+    fill_in_content_form
     click_button "Continue"
     assert_text("testImage2")
     click_button "Continue"
@@ -50,14 +58,18 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "third step should be confirmation" do
+    fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     assert_text "Confirm email details"
     assert_text "Attachments"
   end
 
   test "confirmation edit details should go to first page in flow" do
+    fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     click_on "Edit details"
     assert_text "Email details"
@@ -65,19 +77,47 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "edit details should retain changed values" do
-    fill_in("correspondence[correspondent_name]", with: "Tom")
+    fill_in_context_form
     click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     click_on "Edit details"
-    assert_equal('Tom', find_field('correspondence[correspondent_name]').value)
-    assert_not_equal('', find_field('correspondence[correspondent_name]').value)
+    assert_equal(@correspondence.correspondent_name, find_field('correspondence_email[correspondent_name]').value)
+    assert_not_equal('', find_field('correspondence_email[correspondent_name]').value)
   end
 
   test "confirmation continue should go to case page" do
     visit new_investigation_email_url(investigations(:no_products))
+    fill_in_context_form
+    click_button "Continue"
+    fill_in_content_form
     click_button "Continue"
     click_button "Continue"
-    click_button "Continue"
-    assert_text("There are no products attached to this case")
+    assert_current_path(/investigations\/\d+/)
+  end
+
+  test "requires details to be no longer than 1000 characters" do
+    more_than_1000_characters = "a" * 1001
+    exactly_1000_characters = "a" * 1000
+    test_request = Correspondence.create(investigation: @investigation, correspondence_date: @correspondence.correspondence_date)
+    test_request.details = more_than_1000_characters
+    assert_not test_request.save
+    test_request.details = exactly_1000_characters
+    assert test_request.save
+  end
+
+  def fill_in_context_form
+    choose("correspondence_email[email_direction]", visible: false, option: "From")
+    fill_in "correspondence_email[correspondent_name]", with: @correspondence.correspondent_name
+    fill_in "correspondence_email[email_address]", with: @correspondence.email_address
+    fill_in "Day", with: @correspondence.correspondence_date.day
+    fill_in "Month", with: @correspondence.correspondence_date.month
+    fill_in "Year", with: @correspondence.correspondence_date.year
+  end
+
+  def fill_in_content_form
+    fill_in "correspondence_email[overview]", with: "correspondence overview"
+    fill_in "correspondence_email[email_subject]", with: "email subject"
+    fill_in "correspondence_email[details]", with: "email body"
   end
 end

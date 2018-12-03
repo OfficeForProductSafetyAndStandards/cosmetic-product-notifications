@@ -3,26 +3,28 @@ require "test_helper"
 class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_admin
-    @investigation_one = investigations(:one)
-    @investigation_two = investigations(:two)
-    @investigation_three = investigations(:three)
-    @investigation_no_products = investigations(:no_products)
-    @investigation_one.source = sources(:investigation_one)
-    @investigation_one.hazard = hazards(:one)
 
-    User.all
+    @investigation_one = investigations(:one)
+    @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
     @investigation_one.assignee = User.find_by(last_name: "Admin")
+    @investigation_one.source = sources(:investigation_one)
     @investigation_one.save
+
+    @investigation_two = investigations(:two)
+    @investigation_two.created_at = Time.zone.parse('2015-07-11 21:00')
     @investigation_two.assignee = User.find_by(last_name: "User")
     @investigation_two.save
 
-    @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
+    @investigation_three = investigations(:three)
+    @investigation_no_products = investigations(:no_products)
+
+    # The updated_at values must be set separately in order to be respected
     @investigation_one.updated_at = Time.zone.parse('2017-07-11 21:00')
     @investigation_one.save
-    @investigation_two.created_at = Time.zone.parse('2015-07-11 21:00')
     @investigation_two.updated_at = Time.zone.parse('2016-07-11 21:00')
     @investigation_two.save
-    Investigation.import force: true
+
+    Investigation.import refresh: true
   end
 
   teardown do
@@ -74,34 +76,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       }
     end
     assert_redirected_to investigation_url(@investigation_three)
-  end
-
-  test "should set priority" do
-    priority = "high"
-    investigation_priority = lambda { Investigation.find(@investigation_one.id).priority }
-    assert_changes investigation_priority, from: nil, to: priority do
-      put investigation_url(@investigation_one), params: {
-        investigation: {
-          priority: priority,
-          priority_rationale: "some rationale"
-        }
-      }
-    end
-    assert_redirected_to investigation_url(@investigation_one)
-  end
-
-  test "should not save priority_rationale if priority is nil" do
-    investigation = investigations(:two)
-    investigation.source = sources(:investigation_two)
-    investigation_priority = lambda { Investigation.find(investigation.id).priority }
-    assert_no_changes investigation_priority do
-      put investigation_url(@investigation_one), params: {
-        investigation: {
-          priority: nil,
-          priority_rationale: "some rational"
-        }
-      }
-    end
   end
 
   test "should set status" do

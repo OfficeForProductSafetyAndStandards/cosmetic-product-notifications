@@ -1,65 +1,39 @@
-table.govuk-table
-  tbody.govuk-table__body
-    - @investigation.incidents.each do |incident|
-      - if incident.incident_type.present?
-        tr.govuk-table__row
-          th.govuk-table__header scope="row" Incident type
-          td.govuk-table__cell = incident.incident_type
-      - if incident.description.present?
-        tr.govuk-table__row
-          th.govuk-table__header scope="row" Incident Description
-          td.govuk-table__cell = incident.description
-      - if incident.date.present?
-        tr.govuk-table__row
-          th.govuk-table__header scope="row" Incident Date
-          td.govuk-table__cell = incident.date.strftime("%d/%m/%Y")
-      - if incident.affected_party.present?
-        tr.govuk-table__row
-          th.govuk-table__header scope="row" Incident Affected Party
-          td.govuk-table__cell = incident.affected_party
-      - if incident.location.present?
-        tr.govuk-table__row
-          th.govuk-table__header scope="row" Incident Location
-          td.govuk-table__cell = incident.location
-
 = render "report_summary", investigation: @investigation
-
-p = link_to "Record an incident", new_investigation_incident_path(@investigation), class: "no-print"
-
 / TODO: MSPSDS-620, make sure this display is compliant with designs
 - if @investigation.correspondences.any?
-    h2.govuk-heading-m Correspondence
-    ul.govuk-list
-      - @investigation.correspondences.each do |correspondence|
-        table.govuk-table
-          tbody.govuk-table__body
-            | Correspondence details:
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Correspondent name
-              td.govuk-table__cell = correspondence.correspondent_name
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Contact method
-              td.govuk-table__cell
-                - if correspondence.contact_method == 'email'
-                  = "Email: #{correspondence.email_address}"
-                - if correspondence.contact_method == 'phone'
-                  = "Phone call: #{correspondence.phone_number}"
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Correspondence date
-              td.govuk-table__cell = correspondence.correspondence_date
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Overview
-              td.govuk-table__cell = correspondence.overview
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Details
-              td.govuk-table__cell = correspondence.details
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" File
-              td.govuk-table__cell
-                - correspondence.documents&.each do |doc|
-                  = doc.filename
-                  = link_to render("documents/document_image", document: doc), doc, class: "document-link",
-                        target: "_blank"
+  h2.govuk-heading-m Correspondence
+  ul.govuk-list
+    - @investigation.correspondences.each do |correspondence|
+      table.govuk-table
+        tbody.govuk-table__body
+          | Correspondence details:
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Correspondent name
+            td.govuk-table__cell = correspondence.correspondent_name
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Contact method
+            td.govuk-table__cell
+              - if correspondence.contact_method == 'email'
+                = "Email: #{correspondence.email_address}"
+              - if correspondence.contact_method == 'phone'
+                = "Phone call: #{correspondence.phone_number}"
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Correspondence date
+            td.govuk-table__cell = correspondence.correspondence_date
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Overview
+            td.govuk-table__cell = correspondence.overview
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Details
+            td.govuk-table__cell = correspondence.details
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" File
+            td.govuk-table__cell
+              - correspondence.documents&.each do |doc|
+                = doc.filename
+                = link_to render("documents/document_image", document: doc), doc, class: "document-link",
+                      target: "_blank"
+              - if correspondence.is_a? Correspondence::Email
                 - if correspondence.email_file.attached?
                   = correspondence.email_file.filename
                   = link_to render("documents/document_image", document: correspondence.email_file),

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_15_165509) do
+ActiveRecord::Schema.define(version: 2018_11_29_142400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,31 +105,9 @@ ActiveRecord::Schema.define(version: 2018_11_15_165509) do
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"
+    t.string "type"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_correspondences_on_investigation_id"
-  end
-
-  create_table "hazards", force: :cascade do |t|
-    t.string "affected_parties"
-    t.datetime "created_at", null: false
-    t.string "description"
-    t.string "hazard_type"
-    t.integer "investigation_id"
-    t.integer "risk_level"
-    t.datetime "updated_at", null: false
-    t.index ["investigation_id"], name: "index_hazards_on_investigation_id"
-  end
-
-  create_table "incidents", id: :serial, force: :cascade do |t|
-    t.string "affected_party"
-    t.datetime "created_at", null: false
-    t.date "date"
-    t.text "description"
-    t.string "incident_type"
-    t.integer "investigation_id"
-    t.string "location"
-    t.datetime "updated_at", null: false
-    t.index ["investigation_id"], name: "index_incidents_on_investigation_id"
   end
 
   create_table "investigation_businesses", id: :serial, force: :cascade do |t|
@@ -159,7 +137,6 @@ ActiveRecord::Schema.define(version: 2018_11_15_165509) do
     t.text "description"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
-    t.integer "priority"
     t.string "question_title"
     t.string "question_type"
     t.datetime "updated_at", null: false
@@ -232,8 +209,6 @@ ActiveRecord::Schema.define(version: 2018_11_15_165509) do
   add_foreign_key "corrective_actions", "investigations"
   add_foreign_key "corrective_actions", "products"
   add_foreign_key "correspondences", "investigations"
-  add_foreign_key "hazards", "investigations"
-  add_foreign_key "incidents", "investigations"
   add_foreign_key "reporters", "investigations"
   add_foreign_key "tests", "investigations"
   add_foreign_key "tests", "products"

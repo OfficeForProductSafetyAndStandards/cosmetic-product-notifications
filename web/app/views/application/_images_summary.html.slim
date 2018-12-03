@@ -13,5 +13,6 @@
           = image.blob.metadata[:description]
         p
           = link_to "View full image", image, class: "govuk-link mspsds-block-link", target: '_blank'
-          = link_to "Edit image details or delete", edit_associated_image_path(parent, image),
+          = link_to "Edit image", edit_associated_image_path(parent, image), class: "govuk-link mspsds-block-link"
+          = link_to "Remove image", remove_associated_image_path(parent, image),
                   class: "govuk-link mspsds-block-link"
