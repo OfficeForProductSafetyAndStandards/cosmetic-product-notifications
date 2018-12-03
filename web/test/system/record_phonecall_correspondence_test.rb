@@ -36,8 +36,10 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
     assert_text("testImage")
     click_button "Continue"
-    click_on "Full detail"
-    assert_text("testImage")
+
+    assert_current_path(/investigations\/\d+/)
+    assert_text "Attached: #{"testImage.png"}"
+    assert_text "View attachment"
   end
 
   test "must have either transcript or summary and notes" do
