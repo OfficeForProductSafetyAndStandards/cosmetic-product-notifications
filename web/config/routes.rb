@@ -30,7 +30,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :investigations, only: %i[index show new create update], concerns: %i[document_attachable image_attachable] do
+  resources :investigations, path: "cases", only: %i[index show new create update],
+            concerns: %i[document_attachable image_attachable] do
     member do
       get :status
       get :assign
@@ -40,7 +41,11 @@ Rails.application.routes.draw do
       resources :report, controller: "investigations/report", only: %i[show new create update]
       resources :question, controller: "investigations/question", only: %i[show new create update]
     end
-    resources :activities, controller: "investigations/activities", only: %i[create]
+    resources :activities, controller: "investigations/activities", only: %i[create new] do
+      collection do
+        get :comment
+      end
+    end
     resources :products, only: %i[new create], controller: "investigations/products" do
       collection do
         get :suggested
@@ -67,6 +72,8 @@ Rails.application.routes.draw do
     resources :correspondences, only: %i[show new create update], controller: "investigations/correspondence",
               concerns: %i[document_attachable]
     resources :emails, controller: "investigations/emails", only: %i[show new create update]
+    resources :phone_calls, controller: "investigations/phone_calls", only: %i[show new create update]
+    resources :meetings, controller: "investigations/meetings", only: %i[show new create update]
     resources :tests, controller: "investigations/tests", only: %i[show create update] do
       collection do
         get :new_request
@@ -77,8 +84,6 @@ Rails.application.routes.draw do
 
   resources :businesses, concerns: %i[document_attachable image_attachable] do
     collection do
-      get :confirm_merge
-      post :merge
       get :suggested
       post :companies_house
     end
@@ -91,8 +96,6 @@ Rails.application.routes.draw do
 
   resources :products, concerns: %i[document_attachable image_attachable] do
     collection do
-      get :confirm_merge
-      post :merge
       get :suggested
     end
   end
@@ -104,6 +107,6 @@ Rails.application.routes.draw do
 
   mount PgHero::Engine, at: "pghero"
 
-  root to: redirect(path: "/investigations")
+  root to: redirect(path: "/cases")
 end
 # rubocop:enable Metrics/BlockLength
