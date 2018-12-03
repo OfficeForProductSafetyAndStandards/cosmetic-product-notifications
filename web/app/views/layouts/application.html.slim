@@ -6,7 +6,7 @@ html.govuk-template.app-html-class[lang="en"]
       script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-1"
       javascript:
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() {dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-126364208-1');
 
@@ -57,26 +57,26 @@ html.govuk-template.app-html-class[lang="en"]
                 | GOV.UK
         .govuk-header__content
           a.govuk-header__link.govuk-header__link--service-name[href="/"]
-            | Product Safety
+            | Market Surveillance & Product Safety
           button.govuk-header__menu-button.js-header-toggle[role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation"]
             | Menu
           nav
             ul#navigation.govuk-header__navigation[aria-label="Top Level Navigation"]
               - if user_signed_in?
                 li.govuk-header__navigation-item
-                  = link_to "Manage your account", user_account_url, class: "govuk-header__link", target: "_blank"
+                  = link_to "Your account", user_account_url, class: "govuk-header__link", target: "_blank"
               - if !login_page?
                 li.govuk-header__navigation-item
                   - if user_signed_in?
-                    = link_to "Logout", logout_session_path, method: :delete, class: "govuk-header__link"
+                    = link_to "Sign out", logout_session_path, method: :delete, class: "govuk-header__link"
                   - else
-                    = link_to "Login", keycloak_login_url, class: "govuk-header__link"
+                    = link_to "Sign in", keycloak_login_url, class: "govuk-header__link"
 
     .govuk-width-container
       .govuk-phase-banner
         p.govuk-phase-banner__content
           strong.govuk-tag.govuk-phase-banner__content__tag
-            | alpha
+            | beta
           span.govuk-phase-banner__text
             | This is a new service – your
             '

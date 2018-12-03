@@ -35,7 +35,7 @@ class ImageTest < ApplicationSystemTestCase
     attach_file_and_upload
     fill_in "Image title", with: "Beautiful picture"
     click_on "Save attachment"
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
   end
 
   test "image data should be in attachments" do
