@@ -6,3 +6,10 @@ one:
   email_address: grandmaster@gmail.com
   email_subject: stockfish
   phone_number: 111111
+
+email:
+  correspondent_name: Jane Smith
+  contact_method: email
+  email_address: jane.smith@example.com
+  email_direction: from
+  correspondence_date: 2018-10-02

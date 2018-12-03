@@ -69,7 +69,8 @@ h1.govuk-heading-xl
         .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:details].any?)
           = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
 
-      = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
+      = render "related_attachment_fields", form: form,
+              file_blob: @file_blob, attachment_name: :file, title: "Related attachments"
 
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

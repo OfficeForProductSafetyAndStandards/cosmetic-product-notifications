@@ -16,8 +16,6 @@ class InvestigationTest < ActiveSupport::TestCase
 
     @investigation_with_business = investigations(:search_related_businesses)
     @business = businesses(:biscuit_base)
-
-    Investigation.import force: true
   end
 
   teardown do
