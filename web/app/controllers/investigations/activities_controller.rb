@@ -1,17 +1,15 @@
 class Investigations::ActivitiesController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
 
-  before_action :set_investigation, only: %i[create new add]
+  before_action :set_investigation, only: %i[create new comment]
   before_action :create_activity, only: %i[create]
 
-  def new; end
-
-  def add
+  def new
     return unless params[:commit] == "Continue"
 
     case params[:activity_type]
     when "comment"
-      redirect_to new_investigation_activity_path(@investigation)
+      redirect_to comment_investigation_activities_path(@investigation)
     when "correspondence"
       redirect_to new_investigation_correspondence_path(@investigation)
     when "product"
@@ -28,6 +26,8 @@ class Investigations::ActivitiesController < ApplicationController
       @activity_type_empty = true
     end
   end
+
+  def comment; end
 
   # POST /activities
   # POST /activities.json

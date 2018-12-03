@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do
       collection do
-        get :add
+        get :comment
       end
     end
     resources :products, only: %i[new create], controller: "investigations/products" do

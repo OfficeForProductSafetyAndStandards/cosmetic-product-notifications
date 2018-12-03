@@ -11,8 +11,19 @@
         = @investigation.question_title_prefix
         = case_question_text(@investigation).titleize + ': '
         = @investigation.pretty_id
-      = "Add comment"
-    = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|
-      = form.text_area :body, class: "govuk-textarea govuk-!-width-full", aria_describedby: "action__comment-hint",
-              rows: 5, id: "action_comment"
-      = form.submit "Add comment", class: "govuk-button", id: "action_comment_submit"
+      = "New activity"
+    = form_with local: true, url: new_investigation_activity_path, method: :get do |form|
+      - if @activity_type_empty
+        h2.govuk-heading-l.govuk-error-message
+          = "The following error prevented this you from continuing:"
+        ul.govuk-list.govuk-error-message
+          = "Activity type must not be empty"
+      fieldset.govuk-fieldset
+        .govuk-form-group class=("govuk-form-group--error" if @activity_type_empty)
+          .govuk-radios
+            - activity_types.each do |(type, label)|
+              .govuk-radios__item
+                = form.radio_button :activity_type, type, class: "govuk-radios__input"
+                = form.label :activity_type, label, value: type, class: "govuk-label govuk-radios__label"
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

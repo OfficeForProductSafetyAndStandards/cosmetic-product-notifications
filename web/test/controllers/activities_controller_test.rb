@@ -25,15 +25,17 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "comment should go to comment page" do
-    post add_investigation_activities_path(@investigation), params: {
+    get new_investigation_activity_path(@investigation), params: {
+      commit: "Continue",
       activity_type: "comment"
     }
 
-    assert_redirected_to new_investigation_activity_path(@investigation)
+    assert_redirected_to comment_investigation_activities_path(@investigation)
   end
 
   test "correspondence should go to new correspondence page" do
-    post add_investigation_activities_path(@investigation), params: {
+    get new_investigation_activity_path(@investigation), params: {
+      commit: "Continue",
       activity_type: "correspondence"
     }
 
@@ -41,7 +43,8 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "product should go to new product page" do
-    post add_investigation_activities_path(@investigation), params: {
+    get new_investigation_activity_path(@investigation), params: {
+      commit: "Continue",
       activity_type: "product"
     }
 
@@ -49,7 +52,8 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "request test should go to request test page" do
-    post add_investigation_activities_path(@investigation), params: {
+    get new_investigation_activity_path(@investigation), params: {
+      commit: "Continue",
       activity_type: "testing_request"
     }
 
@@ -57,7 +61,8 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "test result should go to test result page" do
-    post add_investigation_activities_path(@investigation), params: {
+    get new_investigation_activity_path(@investigation), params: {
+      commit: "Continue",
       activity_type: "testing_result"
     }
 
@@ -65,7 +70,8 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "corrective action should go to test corrective action page" do
-    post add_investigation_activities_path(@investigation), params: {
+    get new_investigation_activity_path(@investigation), params: {
+      commit: "Continue",
       activity_type: "corrective_action"
     }
 
@@ -73,7 +79,8 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "business should go to new business page" do
-    post add_investigation_activities_path(@investigation), params: {
+    get new_investigation_activity_path(@investigation), params: {
+      commit: "Continue",
       activity_type: "business"
     }
 

@@ -1,0 +1,18 @@
+- content_for :page_title, "Add activity"
+- content_for :after_header do
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      = link_to "Back to case #{@investigation.pretty_id}", @investigation, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      p.govuk-caption-xl
+        = @investigation.question_title_prefix
+        = case_question_text(@investigation).titleize + ': '
+        = @investigation.pretty_id
+      = "Add comment"
+    = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|
+      = form.text_area :body, class: "govuk-textarea govuk-!-width-full", aria_describedby: "action__comment-hint",
+              rows: 5, id: "action_comment"
+      = form.submit "Add comment", class: "govuk-button", id: "action_comment_submit"
