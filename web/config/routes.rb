@@ -30,8 +30,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :cases, controller: "investigations", as: "investigations",
-            only: %i[index show new create update], concerns: %i[document_attachable image_attachable] do
+  resources :investigations, path: "cases", only: %i[index show new create update],
+            concerns: %i[document_attachable image_attachable] do
     member do
       get :status
       get :assign
