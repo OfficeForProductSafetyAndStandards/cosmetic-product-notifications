@@ -33,13 +33,31 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to comment_investigation_activities_path(@investigation)
   end
 
-  test "correspondence should go to new correspondence page" do
+  test "email should go to new email flow" do
     get new_investigation_activity_path(@investigation), params: {
       commit: "Continue",
-      activity_type: "correspondence"
+      activity_type: "email"
     }
 
-    assert_redirected_to new_investigation_correspondence_path(@investigation)
+    assert_redirected_to new_investigation_email_path(@investigation)
+  end
+
+  test "phone call should go to new phone call flow" do
+    get new_investigation_activity_path(@investigation), params: {
+      commit: "Continue",
+      activity_type: "phone_call"
+    }
+
+    assert_redirected_to new_investigation_phone_call_path(@investigation)
+  end
+
+  test "meeting should go to new meeting flow" do
+    get new_investigation_activity_path(@investigation), params: {
+      commit: "Continue",
+      activity_type: "meeting"
+    }
+
+    assert_redirected_to new_investigation_meeting_path(@investigation)
   end
 
   test "product should go to new product page" do

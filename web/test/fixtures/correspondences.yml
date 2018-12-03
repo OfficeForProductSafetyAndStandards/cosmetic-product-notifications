@@ -6,3 +6,17 @@ email:
   email_address: jane.smith@example.com
   email_direction: from
   correspondence_date: 2018-10-02
+
+phone_call:
+  correspondent_name: Jake Smithy
+  contact_method: phone_call
+  phone_number: 098765432
+  correspondence_date: 2018-11-03
+  overview: Who wants to be a millionaire
+  details: Hi it's Chris Tarrant here from who wants to be a millionaire
+
+meeting:
+  correspondent_name: Julie Smite
+  correspondence_date: 2018-11-05
+  overview: This was a great meeting
+  details: Longer description of how great the meeting was
