@@ -1,6 +1,6 @@
 class FilesController < ApplicationController
   before_action :set_parent
-  before_action :set_file, only: %i[edit update destroy]
+  before_action :set_file, only: %i[edit update remove destroy]
 
   # POST /documents
   def create
@@ -34,6 +34,8 @@ class FilesController < ApplicationController
     audit_class::Update.from(@file.blob, @parent, previous_data) if @parent.class == Investigation
     redirect_to @parent
   end
+
+  def remove; end
 
   # DELETE /documents/1
   def destroy

@@ -22,7 +22,7 @@ table.govuk-table.sortable[class="govuk-!-margin-bottom-3"]
         td.govuk-table__cell
           = business.company_type_code
         td.govuk-table__cell
-          = business.addresses.first ? business.addresses.first.short : ""
+          = business.locations.first ? business.locations.first.short : ""
         td.govuk-table__cell.right-aligned
           span[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
             = business.investigations.count

@@ -2,8 +2,8 @@ class Investigations::ProductsController < ApplicationController
   include CountriesHelper
   include ProductsHelper
 
-  before_action :set_investigation, only: %i[new create suggested link unlink]
-  before_action :set_product, only: %i[link unlink]
+  before_action :set_investigation, only: %i[new create suggested link remove unlink]
+  before_action :set_product, only: %i[link remove unlink]
   before_action :create_product, only: %i[new create suggested]
   before_action :set_countries, only: %i[new]
 
@@ -41,6 +41,8 @@ class Investigations::ProductsController < ApplicationController
     @investigation.products << @product
     redirect_to_investigation_products_tab "Product was successfully linked."
   end
+
+  def remove; end
 
   # DELETE /investigations/1/products
   def unlink

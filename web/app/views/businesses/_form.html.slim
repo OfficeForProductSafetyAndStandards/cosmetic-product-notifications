@@ -17,15 +17,15 @@
     = form.select :company_status_code, \
         companies_house_constants["company_status"].collect { |t| [t[1], t[0]] }, \
         { include_blank: "None" }, class: "govuk-select", id: "company-status"
-  = form.fields_for :addresses, [business.primary_address] do |ff|
+  = form.fields_for :locations, [business.primary_location] do |ff|
     p
       | Registered office address
     .govuk-form-group
-      = ff.label :line_1, class: "govuk-label"
-      = ff.text_field :line_1, class: "govuk-input"
+      = ff.label :address, class: "govuk-label"
+      = ff.text_field :address, class: "govuk-input"
     .govuk-form-group
-      = ff.label :line_2, class: "govuk-label"
-      = ff.text_field :line_2, class: "govuk-input"
+      = ff.label :phone_number, class: "govuk-label"
+      = ff.text_field :phone_number, class: "govuk-input"
     .govuk-form-group
       = ff.label :locality, class: "govuk-label"
       = ff.text_field :locality, class: "govuk-input"

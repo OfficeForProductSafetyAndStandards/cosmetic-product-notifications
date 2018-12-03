@@ -4,6 +4,7 @@ module DocumentsHelper
   def set_parent
     @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
     @parent = Product.find(params[:product_id]) if params[:product_id]
+    @parent = Business.find(params[:business_id]) if params[:business_id]
   end
 
   def audit_class
