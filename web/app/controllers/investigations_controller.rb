@@ -2,7 +2,7 @@ class InvestigationsController < ApplicationController
   include InvestigationsHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show update assign status confirmation add_activity]
+  before_action :set_investigation, only: %i[show update assign status confirmation add_comment]
 
   # GET /investigations
   # GET /investigations.json
@@ -39,32 +39,6 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/1/confirmation
   def confirmation; end
-
-  # GET /investigations/1/add_activity
-  # POST /investigations/1/add_activity
-  def add_activity
-    return unless request.post?
-
-    case params[:activity_type]
-    when "comment"
-      # TODO MSPSDS-772: Redirect to new comment flow
-      redirect_to @investigation
-    when "correspondence"
-      redirect_to new_investigation_correspondence_path(@investigation)
-    when "product"
-      redirect_to new_investigation_product_path(@investigation)
-    when "testing_request"
-      redirect_to new_request_investigation_tests_path(@investigation)
-    when "testing_result"
-      redirect_to new_result_investigation_tests_path(@investigation)
-    when "corrective_action"
-      redirect_to new_investigation_corrective_action_path(@investigation)
-    when "business"
-      redirect_to new_investigation_business_path(@investigation)
-    else
-      @activity_type_empty = true
-    end
-  end
 
   # PATCH/PUT /investigations/1
   # PATCH/PUT /investigations/1.json

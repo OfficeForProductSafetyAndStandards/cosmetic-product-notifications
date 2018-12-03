@@ -12,10 +12,7 @@
         = case_question_text(@investigation).titleize + ': '
         = @investigation.pretty_id
       = "New activity"
-
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_with local: true, url: add_activity_investigation_path, method: :post do |form|
+    = form_with local: true, url: add_investigation_activities_path, method: :post do |form|
       - if @activity_type_empty
         h2.govuk-heading-l.govuk-error-message
           = "The following error prevented this you from continuing:"

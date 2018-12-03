@@ -1,8 +1,33 @@
 class Investigations::ActivitiesController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
 
-  before_action :set_investigation, only: %i[create]
+  before_action :set_investigation, only: %i[create new add]
   before_action :create_activity, only: %i[create]
+
+  def new; end
+
+  def add
+    return unless request.post?
+
+    case params[:activity_type]
+    when "comment"
+      redirect_to new_investigation_activity_path(@investigation)
+    when "correspondence"
+      redirect_to new_investigation_correspondence_path(@investigation)
+    when "product"
+      redirect_to new_investigation_product_path(@investigation)
+    when "testing_request"
+      redirect_to new_request_investigation_tests_path(@investigation)
+    when "testing_result"
+      redirect_to new_result_investigation_tests_path(@investigation)
+    when "corrective_action"
+      redirect_to new_investigation_corrective_action_path(@investigation)
+    when "business"
+      redirect_to new_investigation_business_path(@investigation)
+    else
+      @activity_type_empty = true
+    end
+  end
 
   # POST /activities
   # POST /activities.json

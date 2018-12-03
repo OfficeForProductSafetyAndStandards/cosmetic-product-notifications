@@ -35,14 +35,17 @@ Rails.application.routes.draw do
       get :status
       get :assign
       get :confirmation
-      get :add_activity
-      post :add_activity
     end
     collection do
       resources :report, controller: "investigations/report", only: %i[show new create update]
       resources :question, controller: "investigations/question", only: %i[show new create update]
     end
-    resources :activities, controller: "investigations/activities", only: %i[create]
+    resources :activities, controller: "investigations/activities", only: %i[create new] do
+      collection do
+        get :add
+        post :add
+      end
+    end
     resources :products, only: %i[new create], controller: "investigations/products" do
       collection do
         get :suggested
