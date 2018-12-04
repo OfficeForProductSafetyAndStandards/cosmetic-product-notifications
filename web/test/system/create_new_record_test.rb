@@ -32,6 +32,13 @@ class CreateNewRecordTest < ApplicationSystemTestCase
     assert_text "Please select an option before continuing"
   end
 
+  test "should show the new allegation page when selecting allegation" do
+    choose "type_allegation", visible: false
+    click_on "Continue"
+
+    assert_text "New Allegation"
+  end
+
   test "should show the new question page when selecting question" do
     choose "type_question", visible: false
     click_on "Continue"
