@@ -10,9 +10,7 @@ table.govuk-table
         th.govuk-table__header scope="row" = investigation.is_case ? "Reporter" : "Question asked by"
         td.govuk-table__cell
           = investigation.reporter&.reporter_type
-          br
-          / TODO: link this to reporter details
-          = link_to "View details", "/", class: "no-print"
+
 
       tr.govuk-table__row
         th.govuk-table__header scope="row" Correspondence
