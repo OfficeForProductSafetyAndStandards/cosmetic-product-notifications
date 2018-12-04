@@ -107,7 +107,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   def fill_in_context_form
-    choose("correspondence_email[email_direction]", visible: false, option: "From")
+    choose("correspondence_email[email_direction]", visible: false, option: :inbound)
     fill_in "correspondence_email[correspondent_name]", with: @correspondence.correspondent_name
     fill_in "correspondence_email[email_address]", with: @correspondence.email_address
     fill_in "Day", with: @correspondence.correspondence_date.day
