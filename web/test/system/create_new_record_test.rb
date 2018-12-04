@@ -20,8 +20,6 @@ class CreateNewRecordTest < ApplicationSystemTestCase
   test "should be prompted to select what to create" do
     assert_text "Product safety allegation"
     assert_text "Question"
-    assert_text "Product recall notification"
-    assert_text "Notification from RAPEX"
 
     assert_no_text "Please select an option before continuing"
   end
