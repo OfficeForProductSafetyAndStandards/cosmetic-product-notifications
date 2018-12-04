@@ -5,7 +5,7 @@ h2.govuk-heading-l
   | Remove product
 .govuk-grid-row
   .govuk-grid-column-one-half
-    = form_with(url: unlink_investigation_business_path(@investigation), method: :delete) do |form|
+    = form_with(url: unlink_investigation_product_path(@investigation), method: :delete) do |form|
       h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
         | Product details
       = render "product_summary", product: @product
