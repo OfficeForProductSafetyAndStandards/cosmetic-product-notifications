@@ -3,7 +3,7 @@ require "application_system_test_case"
 class CreateNewRecordTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
-    visit new_create_path
+    visit new_investigation_path
   end
 
   teardown do
@@ -22,6 +22,8 @@ class CreateNewRecordTest < ApplicationSystemTestCase
     assert_text "Question"
     assert_text "Product recall notification"
     assert_text "Notification from RAPEX"
+
+    assert_no_text "Please select an option before continuing"
   end
 
   test "should require an option to be selected" do

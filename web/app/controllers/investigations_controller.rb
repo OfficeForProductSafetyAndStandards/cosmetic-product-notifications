@@ -3,6 +3,7 @@ class InvestigationsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[show update assign status confirmation]
+  before_action :set_available_options, only: %i[new]
 
   # GET /investigations
   # GET /investigations.json
@@ -28,7 +29,13 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/new
   def new
-    @investigation = Investigation.new
+    type = params[:type]
+    case type
+    when "question"
+      redirect_to new_question_path
+    else
+      @nothing_selected = true if params[:commit].present?
+    end
   end
 
   # GET /investigations/1/status
@@ -95,5 +102,14 @@ private
       params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
     end
     params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id)
+  end
+
+  def set_available_options
+    @available_options = {
+      allegation: "Product safety allegation",
+      question: "Question",
+      product_recall: "Product recall notification",
+      rapex_notification: "Notification from RAPEX"
+    }
   end
 end
