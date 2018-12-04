@@ -1,8 +1,7 @@
-- has_validation_errors = form.object.errors.details[:base].any? { |error| error.value? :file_too_large }
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     = title
-  .govuk-form-group class=("govuk-form-group--error" if has_validation_errors)
+  .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(form.object))
     - if file_blob.present?
       p#current-attachment-details
         ' Currently selected file:

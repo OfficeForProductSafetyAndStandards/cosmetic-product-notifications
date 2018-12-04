@@ -6,6 +6,11 @@ class Investigation < ApplicationRecord
   attr_accessor :status_rationale
 
   validates :question_title, presence: true, on: :question_details
+  validates :description, presence: true, on: :question_details
+
+  validates_length_of :question_title, maximum: 1000
+  validates_length_of :description, maximum: 1000
+
   validate :validate_assignment
 
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
