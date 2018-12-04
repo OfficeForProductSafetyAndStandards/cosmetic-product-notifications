@@ -1,3 +1,13 @@
+- if document.content_type == "image/png"
+  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
+    .govuk-grid-column-two-thirds
+      - if document.variable? && document.metadata["safe"]
+        = image_tag document.variant(resize: "480x320"), alt: document.metadata["title"],
+                class: "govuk-!-margin-top-2 govuk-!-margin-bottom-2 image-thumbnail"
+      - else
+        span.govuk-caption-l
+          = document.variable? ? "Image is being processed" : "Image not available for preview"
+
 = form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
   = render "form_validation_display", errors: @errors
   = form.fields_for :file do |subform|
@@ -8,24 +18,9 @@
       = subform.label :description, class: "govuk-label"
       = subform.text_area :description, value: document.metadata["description"], rows: 5, class: "govuk-textarea"
     .govuk-form-group
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend
-        h4.govuk-heading-m
-          | Document type
-        .govuk-radios
-          - @parent.document_types.each do |type|
-            .govuk-radios__item
-              = subform.radio_button :document_type, type, checked: type.to_s == document.metadata["document_type"],
-                      class: "govuk-radios__input"
-              = subform.label :document_type, document_type_label(type), class: "govuk-label govuk-radios__label"
-    .govuk-form-group
-      = subform.label :other_type, class: "govuk-label"
-      = subform.text_field :other_type, value: document.metadata["other_type"],
-              placeholder: "Enter a type, if relevant", class: "govuk-input"
-  .govuk-form-group
-    .govuk-grid-row
-      .govuk-grid-column-one-quarter
-        = form.submit "#{edit ? 'Update' : 'Save'} attachment", class: "govuk-button"
-      - if edit
+      .govuk-grid-row
         .govuk-grid-column-one-quarter
-          p = link_to "Cancel", @parent, class: "mspsds-block-link"
+          = form.submit "#{edit ? 'Update' : 'Save'} attachment", class: "govuk-button"
+        - if edit
+          .govuk-grid-column-one-quarter
+            p = link_to "Cancel", @parent, class: "mspsds-block-link"
