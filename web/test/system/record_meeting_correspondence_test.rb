@@ -54,7 +54,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
     fill_in_context_form
     click_button "Continue"
     click_button "Continue"
-    assert_text "please provide either a transcript or complete the summary and notes fields"
+    assert_text "Please provide either a transcript or complete the summary and notes fields"
   end
 
   test "third step is confirmation" do
