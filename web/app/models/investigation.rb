@@ -188,7 +188,11 @@ private
 
     shared_property_values = %w(brand model product_type).map { |property| get_property_value_if_shared property }
     title = shared_property_values.reject(&:blank?).join(", ")
-    products.length > 1 ? "#{products.length} Products, ".concat(title) : title
+    if products.length > 1
+      "#{products.length} Products".concat(!title.empty? ? ", " + title : "")
+    else
+      title
+    end
   end
 
   def get_property_value_if_shared property_name
