@@ -6,7 +6,7 @@ def remove_empty_attachments_job
   )
   unless remove_attachments_job.save
     Rails.logger.error "***** WARNING - Removing empty attachments was not saved! *****"
-    Rails.logger.error remove_attachments_job.errors
+    Rails.logger.error remove_attachments_job.errors.join("; ")
   end
 end
 
