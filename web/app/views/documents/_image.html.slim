@@ -1,0 +1,4 @@
+- if image.metadata["safe"]
+  = link_to render("documents/image_tag", local_assigns), image, class: "image-with-preview", target: "_blank"
+- else
+  = render "documents/image_tag", local_assigns
