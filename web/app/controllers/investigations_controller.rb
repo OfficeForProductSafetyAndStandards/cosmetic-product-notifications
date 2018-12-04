@@ -34,8 +34,7 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/new
   def new
-    type = params[:type]
-    case type
+    case params[:type]
     when "question"
       redirect_to new_question_path
     else
