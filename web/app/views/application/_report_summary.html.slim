@@ -4,12 +4,15 @@ table.govuk-table
     - if investigation.reporter&.reporter_type.present?
       tr.govuk-table__row
         th.govuk-table__header scope="row" Date
-        td.govuk-table__cell = investigation.created_at&.to_date
+        td.govuk-table__cell = investigation.created_at&.strftime('%d/%m/%Y')
 
       tr.govuk-table__row
         th.govuk-table__header scope="row" = investigation.is_case ? "Reporter" : "Question asked by"
         td.govuk-table__cell
           = investigation.reporter&.reporter_type
+          br
+          / TODO: link this to reporter details
+          = link_to "View details", "/", class: "no-print"
 
       tr.govuk-table__row
         th.govuk-table__header scope="row" Correspondence
@@ -19,11 +22,6 @@ table.govuk-table
             br
             / TODO: link this to correspondence details
             = link_to "View details", "/", class: "no-print"
-
-      - if !investigation.is_case?
-        tr.govuk-table__row
-          th.govuk-table__header scope="row" = "Question type"
-          td.govuk-table__cell = investigation.question_type
 
       tr.govuk-table__row
         th.govuk-table__header scope="row" Additional notes
