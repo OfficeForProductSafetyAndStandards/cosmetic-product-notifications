@@ -50,7 +50,7 @@ class DocumentsController < ApplicationController
     redirect_to @parent, notice: "File was successfully removed"
   end
 
-  private
+private
 
   def set_file
     @file = file_collection.find(params[:id]) if params[:id].present?

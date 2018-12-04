@@ -11,7 +11,7 @@
         p
           = link_to "View #{pretty_type_description(document)}",
                   document, class: "govuk-link mspsds-block-link", target: '_blank'
-          = link_to "Edit #{document.image? ? 'image': 'document'}",
+          = link_to "Edit #{document.image? ? 'image' : 'document'}",
                   edit_associated_document_path(parent, document), class: "govuk-link mspsds-block-link"
-          = link_to "Remove #{document.image? ? 'image': 'document'}",
+          = link_to "Remove #{document.image? ? 'image' : 'document'}",
                   remove_associated_document_path(parent, document), class: "govuk-link mspsds-block-link"

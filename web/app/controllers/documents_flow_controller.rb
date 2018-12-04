@@ -31,7 +31,7 @@ class DocumentsFlowController < ApplicationController
     redirect_to @parent
   end
 
-  private
+private
 
   def set_file
     @file_blob, * = load_file_attachments

@@ -2,6 +2,6 @@ module AttachmentConcern
   extend ActiveSupport::Concern
 
   def images
-    documents.select{|d| d.image?}
+    documents.select(&:image?)
   end
 end
