@@ -59,7 +59,7 @@ If using RubyMine, you can base your Ruby SDK on the docker-compose-managed ruby
 1. Choose `Docker Compose` and set `Service` to `web`, click OK and select the newly created SDK
 
 RubyMine comes with db inspection tools, too. To connect to the dev db, you'll need the following config:
-`jdbc:postgresql://localhost:5432/app_development`, empty password.
+`jdbc:postgresql://localhost:5432/mspsds_development`, empty password.
 (note, RM may have created a db configuration automatically, but it'll have gotten some bits wrong, namely host)
 
 ### Debugging
@@ -124,5 +124,10 @@ See the Companies House account section in [the root README](../README.md#compan
     cf set-env mspsds-web PGHERO_PASSWORD XXX
 
 This sets the http auth username and password for access to the pgHero dashboard. See confluence for values. 
+
+    cf set-env mspsds-web SENTRY_DSN XXX
+    cf set-env mspsds-web SENTRY_CURRENT_ENV [int|staging|production]
+
+See the Sentry account section in [the root README](../README.md#sentry) to get this value.
 
 The app can then be started using `cf restart mspsds-web`.
