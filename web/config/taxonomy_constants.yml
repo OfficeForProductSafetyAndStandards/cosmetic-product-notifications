@@ -1,45 +1,26 @@
 ---
 hazard_type:
-  - Blunt force
-  - Penetrating force
-  - Fire/burn
   - Asphyxiation
+  - Blunt force
   - Chemical exposure
+  - Fire/burn
+  - Other hazard type
+  - Penetrating force
 
 product_type:
-  - Arts/Crafts/Needlework
-  - Audio Visual/Photography
-  - Automotive
-  - Beauty/Personal Care/Hygiene
-  - Building Products
-  - Camping
-  - Cleaning/Hygiene Products
-  - Clothing
-  - Communications
-  - Computing
-  - Cross Segment
-  - Electrical Supplies
-  - Food/Beverage/Tobacco
-  - Footwear
-  - Fuels/Gases
-  - Healthcare
-  - Home Appliances
-  - Household/Office Furniture/Furnishings
-  - Kitchen Merchandise
-  - Lawn/Garden Supplies
-  - Live Animals
-  - Lubricants
-  - Music
-  - Personal Accessories
-  - Pet Care/Food
-  - Plumbing/Heating/Ventilation/Air Conditioning
-  - Safety/Protection - DIY
-  - Safety/Security/Surveillance
-  - Sports Equipment
-  - Stationery/Office Machinery/Occasion Supplies
-  - Storage/Haulage Containers
-  - Textual/Printed/Reference Materials
-  - Tool Storage/Workshop Aids
-  - Tools/Equipment - Hand
-  - Tools/Equipment - Power
-  - Toys/Games
+  - Alarms
+  - Baby/Children's Products
+  - Clothing (inc. baby)
+  - Cosmetics
+  - Fancy Dress
+  - Furniture & Furnishings
+  - Lasers
+  - Low Voltage Equipment (inc. plugs & sockets)
+  - Measuring Instruments (inc. pressure)
+  - Other Product Type
+  - Personal Protective Equipment (PPE)
+  - Pyrotechnics
+  - Sanitary Products
+  - Small Electronics
+  - Toys
+  - White Goods
