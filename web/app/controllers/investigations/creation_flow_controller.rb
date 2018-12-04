@@ -2,6 +2,7 @@ class Investigations::CreationFlowController < ApplicationController
   include FileConcern
   include Wicked::Wizard
 
+  before_action :set_page_title, only: %i[show]
   before_action :set_reporter, only: %i[show create update]
   before_action :set_investigation, only: %i[show create update]
   before_action :set_attachment, only: %i[show create update]
@@ -11,7 +12,6 @@ class Investigations::CreationFlowController < ApplicationController
 
   # GET /xxx/step
   def show
-    set_page_title
     render_wizard
   end
 
