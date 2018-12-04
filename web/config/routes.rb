@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   end
 
   resource :create, controller: "create", only: %i[new create]
-  resources :question, controller: "create/question", only: %i[show new create update]
+  resources :question, controller: "investigations/question", only: %i[show new create update]
 
   resources :investigations, only: %i[index show new create update], concerns: %i[document_attachable image_attachable] do
     member do

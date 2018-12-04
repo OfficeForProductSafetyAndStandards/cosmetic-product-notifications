@@ -1,8 +1,8 @@
-class Create::CreationFlowController < ApplicationController
+class Investigations::CreationFlowController < ApplicationController
   include FileConcern
   include Wicked::Wizard
 
-  before_action :set_reporter
+  before_action :set_reporter, only: %i[show create update]
   before_action :set_investigation, only: %i[show create update]
   before_action :set_attachment, only: %i[show create update]
   before_action :update_attachment, only: %i[create update]

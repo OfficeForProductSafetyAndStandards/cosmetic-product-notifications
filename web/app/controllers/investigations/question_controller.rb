@@ -1,4 +1,4 @@
-class Create::QuestionController < Create::CreationFlowController
+class Investigations::QuestionController < Investigations::CreationFlowController
   set_attachment_names :attachment
   set_file_params_key :question
 
