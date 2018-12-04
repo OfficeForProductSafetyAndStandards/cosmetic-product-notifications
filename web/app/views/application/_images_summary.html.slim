@@ -1,18 +1,18 @@
-- if parent.images.attached?
-  - parent.images.attachments.each do |image|
+- if parent.images.any?
+  - parent.images.each do |image|
     .govuk-grid-row[class="govuk-!-padding-bottom-6"]
       .govuk-grid-column-one-third
         = render "images/image", image: image, dimensions: "300x200"
       .govuk-grid-column-two-thirds
         h2.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-          = image.blob.metadata[:title]
+          = image.metadata[:title]
         span.govuk-caption-m[class="govuk-!-font-size-16"]
           = formatted_file_updated_date(image)
         br
         p
-          = image.blob.metadata[:description]
+          = image.metadata[:description]
         p
           = link_to "View full image", image, class: "govuk-link mspsds-block-link", target: '_blank'
-          = link_to "Edit image", edit_associated_image_path(parent, image), class: "govuk-link mspsds-block-link"
-          = link_to "Remove image", remove_associated_image_path(parent, image),
+          = link_to "Edit image", edit_associated_document_path(parent, image), class: "govuk-link mspsds-block-link"
+          = link_to "Remove image", remove_associated_document_path(parent, image),
                   class: "govuk-link mspsds-block-link"

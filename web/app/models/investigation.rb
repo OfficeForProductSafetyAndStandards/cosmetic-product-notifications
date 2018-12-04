@@ -2,6 +2,7 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
   include UserService
+  include AttachmentConcern
 
   attr_accessor :status_rationale
 
@@ -41,7 +42,6 @@ class Investigation < ApplicationRecord
   has_many :tests, dependent: :destroy
 
   has_many_attached :documents
-  has_many_attached :images
 
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :reporter, dependent: :destroy
@@ -56,10 +56,6 @@ class Investigation < ApplicationRecord
       only: %i[question_title description is_closed assignee_id updated_at created_at],
       include: {
         documents: {
-          only: [],
-          methods: %i[title description filename]
-        },
-        images: {
           only: [],
           methods: %i[title description filename]
         },
@@ -119,7 +115,7 @@ class Investigation < ApplicationRecord
   end
 
   def self.fuzzy_fields
-    %w[documents.* images.* correspondences.* activities.* businesses.* products.* reporter.*
+    %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
        tests.* question_title description]
   end
 
