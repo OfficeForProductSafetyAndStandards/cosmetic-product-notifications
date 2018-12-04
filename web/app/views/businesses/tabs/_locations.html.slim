@@ -7,16 +7,12 @@ hr.govuk-section-break.govuk-section-break--l
     - if @business.locations.any?
       - @business.locations.each do |location|
         table.govuk-table[style="margin-bottom: 0"]
-          col[width="33%"]
-          col[width="47%"]
-          col[width="20%"]
           tr.govuk-table__row
-            th.govuk-table__header[scope="row"] = location.name
-            td.govuk-table__cell = location.summary
+            th.govuk-table__header[scope="row" class="govuk-!-width-one-third"] = location.name
+            td.govuk-table__cell[class="govuk-!-width-one-half"] = location.summary
             td.govuk-table__cell = location.phone_number
         = link_to "Edit location", edit_location_path(location), class: "govuk-link mspsds-block-link"
         = link_to "Remove location", remove_location_path(location), class: "govuk-link mspsds-block-link"
         p
     - else
-      p
-        | No locations.
+      p = "No locations."
