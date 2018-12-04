@@ -12,6 +12,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
 
   test "should assign case to nobody when created with an activity" do
     visit new_report_path
+    choose "reporter[reporter_type]", visible: false, match: :first
     click_on "Continue"
     click_on "Continue"
     click_on "View the case you've just created"
