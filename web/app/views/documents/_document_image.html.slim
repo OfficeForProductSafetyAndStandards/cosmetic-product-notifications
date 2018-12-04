@@ -1,9 +1,13 @@
 - if document.metadata["safe"]
-  .document-without-preview
-    = image_tag "document_placeholder.png"
-    span.document-filetype
-      = document_file_extension(document)
+  - if document.image?
+    = link_to render("documents/image_tag", image: document, dimensions: "300x200"), document,
+            class: "image-with-preview", target: "_blank"
+  - else
+    .document-without-preview
+      = image_tag "document_placeholder.png"
+      span.document-filetype = document_file_extension(document)
 - else
   .document-processing-placeholder
-    span
-      | Processing document
+    span = "Processing #{document.image? ? 'image' : 'document'}"
+
+

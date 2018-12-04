@@ -1,20 +1,17 @@
 - if parent.documents.attached?
-  - parent.documents.attachments.each do |document|
+  - parent.documents.each do |document|
     .govuk-grid-row[class="govuk-!-padding-bottom-6"]
       .govuk-grid-column-one-third
         = render "documents/document_image", document: document
       .govuk-grid-column-two-thirds
-        h2.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-          = document.metadata[:title]
-        span.govuk-caption-m[class="govuk-!-font-size-16"]
-          = formatted_file_updated_date(document)
+        h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = document.metadata[:title]
+        span.govuk-caption-m[class="govuk-!-font-size-16"] = formatted_file_updated_date(document)
         br
+        p = document.metadata[:description]
         p
-          = document.metadata[:description]
-        p
-          = link_to "View #{document_file_extension(document) + ' ' if document_file_extension document}document",
+          = link_to "View #{pretty_type_description(document)}",
                   document, class: "govuk-link mspsds-block-link", target: '_blank'
-          = link_to "Edit document", edit_associated_document_path(parent, document),
-                  class: "govuk-link mspsds-block-link"
-          = link_to "Remove document", remove_associated_document_path(parent, document),
-                  class: "govuk-link mspsds-block-link"
+          = link_to "Edit #{document.image? ? 'image': 'document'}",
+                  edit_associated_document_path(parent, document), class: "govuk-link mspsds-block-link"
+          = link_to "Remove #{document.image? ? 'image': 'document'}",
+                  remove_associated_document_path(parent, document), class: "govuk-link mspsds-block-link"
