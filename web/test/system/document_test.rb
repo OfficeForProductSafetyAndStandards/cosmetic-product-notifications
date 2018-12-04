@@ -35,7 +35,7 @@ class DocumentTest < ApplicationSystemTestCase
     attach_file_and_upload
     fill_in "Document title", with: "long document"
     click_on "Save attachment"
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
   end
 
   test "Document data should be in attachments" do
