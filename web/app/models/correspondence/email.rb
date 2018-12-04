@@ -1,6 +1,7 @@
 class Correspondence::Email < Correspondence
   has_one_attached :email_file
   has_one_attached :email_attachment
+  attribute :email_direction
 
   enum email_direction: {
       outbound: "To",
