@@ -26,12 +26,11 @@ module App
     # This changes Rails timezone, but keeps ActiveRecord in UTC
     config.time_zone = "Europe/London"
 
+    # Setup sentry (from https://github.com/getsentry/raven-ruby/blob/369fe6c5e2389b8c13b71e47d688a719e5c20df7/examples/rails-5.0/config/application.rb)
     config.rails_activesupport_breadcrumbs = true
 
-    # https://github.com/getsentry/raven-ruby/issues/494
     config.exceptions_app = self.routes
 
-    # Inject Sentry logger breadcrumbs
     require 'raven/breadcrumbs/logger'
 
     Raven.configure do |config|
