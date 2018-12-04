@@ -61,6 +61,9 @@ services:
       - ${PWD-.}/shared-web:/app/vendor/shared-web
     depends_on:
       - db
+      - elasticsearch
+      - keycloak
+      - redis
   worker:
     build:
       context: .
@@ -75,7 +78,20 @@ services:
       - db
       - elasticsearch
       - redis
-
+  cosmetics-worker:
+    build:
+      context: .
+      dockerfile: ./cosmetics-worker/Dockerfile
+    command: bin/sidekiq -C config/sidekiq.yml
+    volumes:
+    - bundle-cache:/usr/local/bundle
+    # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+    - ${PWD-.}/cosmetics-web:/app
+    - ${PWD-.}/shared-web:/app/vendor/shared-web
+    depends_on:
+    - db
+    - elasticsearch
+    - redis
 volumes:
   postgres-volume:
   elasticsearch-volume:

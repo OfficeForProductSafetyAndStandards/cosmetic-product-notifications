@@ -24,6 +24,11 @@ services:
     image: ${DOCKER_USERNAME}/worker:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
+  cosmetics-worker:
+    command: tail -f /dev/null
+    image: ${DOCKER_USERNAME}/cosmetics-worker:${TRAVIS_BUILD_NUMBER}
+    volumes:
+    - ~/bundle-cache:/usr/local/bundle
   cosmetics-web:
     command: tail -f /dev/null
     image: ${DOCKER_USERNAME}/cosmetics-web:${TRAVIS_BUILD_NUMBER}
@@ -47,4 +52,5 @@ services:
     depends_on:
       - elasticsearch
       - keycloak
+      - redis
     command: elasticsearch:9200 keycloak:8080

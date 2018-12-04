@@ -28,4 +28,6 @@ Gem::Specification.new do |s|
   s.add_dependency "simplecov"
   s.add_dependency "simplecov-console"
   s.add_dependency "slim_lint"
+  s.add_dependency "sidekiq"
+  s.add_dependency "sidekiq-cron"
 end

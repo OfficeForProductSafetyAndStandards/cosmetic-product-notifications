@@ -17,6 +17,8 @@ PATH
       coveralls
       rails (~> 5.2.1)
       rubocop
+      sidekiq
+      sidekiq-cron
       simplecov
       simplecov-console
       slim_lint
@@ -76,7 +78,7 @@ GEM
     ast (2.4.0)
     aws-eventstream (1.0.1)
     aws-partitions (1.125.0)
-    aws-sdk-core (3.44.0)
+    aws-sdk-core (3.44.1)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
@@ -164,7 +166,7 @@ GEM
       raabro (~> 1.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    govuk-lint (3.9.0)
+    govuk-lint (3.10.0)
       rubocop (~> 0.58)
       rubocop-rspec (~> 1.28)
       scss_lint
@@ -221,7 +223,7 @@ GEM
     multipart-post (2.0.0)
     netrc (0.11.0)
     nio4r (2.3.1)
-    nokogiri (1.9.0)
+    nokogiri (1.9.1)
       mini_portile2 (~> 2.4.0)
     notifications-ruby-client (2.9.0)
       jwt (>= 1.5, < 3)
@@ -356,7 +358,7 @@ GEM
       actionpack
       rack-timeout (>= 0.3.0, < 0.5.0)
       railties
-    solargraph (0.29.4)
+    solargraph (0.29.5)
       eventmachine (~> 1.2, >= 1.2.5)
       htmlentities (~> 4.3, >= 4.3.4)
       kramdown (~> 1.16)
@@ -457,8 +459,6 @@ DEPENDENCIES
   selenium-webdriver
   sentry-raven
   shared-web!
-  sidekiq
-  sidekiq-cron
   slim-rails
   slowpoke
   solargraph
