@@ -2,7 +2,7 @@
   - parent.documents.each do |document|
     .govuk-grid-row[class="govuk-!-padding-bottom-6"]
       .govuk-grid-column-one-third
-        = render "documents/document_image", document: document
+        = render "documents/document_preview", document: document, dimensions: "300x200"
       .govuk-grid-column-two-thirds
         h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = document.metadata[:title]
         span.govuk-caption-m[class="govuk-!-font-size-16"] = formatted_file_updated_date(document)

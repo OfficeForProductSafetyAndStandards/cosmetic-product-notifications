@@ -3,7 +3,8 @@
     .aspect-ratio-3-2-container
       .aspect-ratio-contents
         - if product.images.any?
-          = render "documents/image_tag", image: product.images.first, dimensions: "300x200", class_name: "product-image"
+          = render "documents/document_preview", document: product.images.first, dimensions: "300x200",
+                  class_name: "product-image"
         - else
           p
             | No images.

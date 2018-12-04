@@ -31,14 +31,14 @@
             td.govuk-table__cell
               - correspondence.documents&.each do |doc|
                 = doc.filename
-                = link_to render("documents/document_image", document: doc), doc, class: "document-link",
+                = link_to render("documents/document_preview", document: doc), doc, class: "document-link",
                       target: "_blank"
               - if correspondence.is_a? Correspondence::Email
                 - if correspondence.email_file.attached?
                   = correspondence.email_file.filename
-                  = link_to render("documents/document_image", document: correspondence.email_file),
+                  = link_to render("documents/document_preview", document: correspondence.email_file),
                           correspondence.email_file, class: "document-link", target: "_blank"
                 - if correspondence.email_attachment.attached?
                   = correspondence.email_attachment.filename
-                  = link_to render("documents/document_image", document: correspondence.email_attachment),
+                  = link_to render("documents/document_preview", document: correspondence.email_attachment),
                           correspondence.email_attachment, class: "document-link", target: "_blank"
