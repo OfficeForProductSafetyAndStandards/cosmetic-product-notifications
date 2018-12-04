@@ -20,11 +20,13 @@ if [[ "$TOP_LEVEL_CHANGES" =~ elasticseach ]]; then
 fi
 
 if [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-web ]]; then
-    COMPONENTS="$COMPONENTS cosmetics-web"
+    COMPONENTS="$COMPONENTS cosmetics-web cosmetics-worker"
+elif [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-worker ]]; then
+    COMPONENTS="$COMPONENTS cosmetics-worker"
 fi
 
 if [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]]; then
-    COMPONENTS="$COMPONENTS web worker cosmetics-web"
+    COMPONENTS="$COMPONENTS web worker cosmetics-web cosmetics-worker"
 fi
 
 if [[ "$TOP_LEVEL_CHANGES" =~ '^web$' ]]; then
