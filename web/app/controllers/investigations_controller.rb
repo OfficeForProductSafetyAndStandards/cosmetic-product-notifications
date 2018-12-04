@@ -34,7 +34,12 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/new
   def new
-    @investigation = Investigation.new
+    case params[:type]
+    when "question"
+      redirect_to new_question_path
+    else
+      @nothing_selected = true if params[:commit].present?
+    end
   end
 
   # GET /investigations/1/status

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :authenticate_user!
+  before_action :set_raven_context
 
   helper_method :current_user, :user_signed_in?
 
@@ -20,12 +21,17 @@ class ApplicationController < ActionController::Base
     @current_user ||= find_or_create_user
   end
 
+  def user_signed_in?
+    KeycloakClient.instance.user_signed_in?
+  end
+
   def authenticate_user!
     redirect_to helpers.keycloak_login_url unless user_signed_in? || try_refresh_token
   end
 
-  def user_signed_in?
-    KeycloakClient.instance.user_signed_in?
+  def set_raven_context
+    Raven.user_context(id: current_user.id) if current_user
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 
 private

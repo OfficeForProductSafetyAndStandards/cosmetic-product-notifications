@@ -1,8 +1,24 @@
-- content_for :page_title, "New case"
+- content_for :page_title, "Create new"
 - content_for :after_header do
-  = link_to "Back to list", investigations_path, class: "govuk-back-link"
-span.govuk-caption-xl
-  | Begin a case
+  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
 h1.govuk-heading-xl
-  | Why are you beginning a case?
-= render "form", investigation: @investigation
+  | Create new
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with local: true, url: new_investigation_path, method: :get do |form|
+      - if @nothing_selected
+        #error_explanation
+          h2.govuk-heading-l.govuk-error-message
+            | Please select an option before continuing
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | What are you creating?
+        .govuk-form-group class=("govuk-form-group--error" if @nothing_selected)
+          .govuk-radios
+            - new_item_options.each do |(option, label)|
+              .govuk-radios__item
+                = form.radio_button :type, option, class: "govuk-radios__input"
+                = form.label :type, label, value: option, class: "govuk-label govuk-radios__label"
+
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"
