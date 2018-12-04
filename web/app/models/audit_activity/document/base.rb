@@ -17,6 +17,6 @@ class AuditActivity::Document::Base < AuditActivity::Base
   end
 
   def attached_image?
-    self.attachment.content_type == "image/png"
+    self.attachment.image?
   end
 end

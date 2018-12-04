@@ -1,4 +1,4 @@
-- if document.content_type == "image/png"
+- if document.image?
   .govuk-grid-row[class="govuk-!-padding-bottom-6"]
     .govuk-grid-column-two-thirds
       - if document.variable? && document.metadata["safe"]
