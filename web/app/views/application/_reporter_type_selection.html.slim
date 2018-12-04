@@ -7,13 +7,6 @@
           =  "Who did the question come from?"
         .govuk-form-group class=("govuk-form-group--error" if reporter.errors[:reporter_type].any?)
           .govuk-radios
-            - reporter_types = { \
-                    "Consumer": "A consumer",
-                    "Business": "A business",
-                    "Local authority (Trading Standards)": "Local authority (Trading Standards)",
-                    "Other government department": "Other government department",
-                    "Emergency service": "Emergency service",
-                    "Internal": "Internal" }
             - reporter_types.each do |(type, label)|
               .govuk-radios__item
                 = form.radio_button :reporter_type, type, class: "govuk-radios__input"

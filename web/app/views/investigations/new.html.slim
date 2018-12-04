@@ -15,7 +15,7 @@ h1.govuk-heading-xl
           | What are you creating?
         .govuk-form-group class=("govuk-form-group--error" if @nothing_selected)
           .govuk-radios
-            - @available_options.each do |(option, label)|
+            - new_item_options.each do |(option, label)|
               .govuk-radios__item
                 = form.radio_button :type, option, class: "govuk-radios__input"
                 = form.label :type, label, value: option, class: "govuk-label govuk-radios__label"
