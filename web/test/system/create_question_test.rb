@@ -83,7 +83,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     fill_reporter_details_and_continue
     fill_question_details_and_continue
 
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
     assert_text "Test question title"
     assert_text "Test description"
   end
@@ -104,7 +104,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     attach_file "question[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
     fill_question_details_and_continue
 
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
     click_on "Attachments"
 
     assert_text attachment_filename
