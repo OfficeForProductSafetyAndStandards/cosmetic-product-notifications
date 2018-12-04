@@ -14,9 +14,12 @@ PATH
   specs:
     shared-web (0.1.0)
       brakeman
+      coveralls
       govuk-lint
       rails (~> 5.2.1)
       rubocop
+      simplecov
+      simplecov-console
       slim_lint
 
 GEM
@@ -382,7 +385,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    tins (1.18.0)
+    tins (1.20.2)
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -431,7 +434,6 @@ DEPENDENCIES
   cf-app-utils
   clamby
   companies-house-rest
-  coveralls
   debase
   elasticsearch-model
   elasticsearch-rails
@@ -455,8 +457,6 @@ DEPENDENCIES
   shared-web!
   sidekiq
   sidekiq-cron
-  simplecov
-  simplecov-console
   slim-rails
   slowpoke
   solargraph

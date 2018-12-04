@@ -48,13 +48,10 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platform: :mri
   gem "capybara"
-  gem "coveralls"
   gem "debase"
   gem "rspec-mocks"
   gem "ruby-debug-ide"
   gem "selenium-webdriver"
-  gem "simplecov"
-  gem "simplecov-console"
 end
 
 group :development do

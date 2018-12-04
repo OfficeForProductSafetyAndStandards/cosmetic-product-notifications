@@ -575,7 +575,7 @@ eslint@^2.7.0:
     text-table "~0.2.0"
     user-home "^2.0.0"
 
-eslint@^5.9.0:
+eslint@^5.8.0, eslint@^5.9.0:
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.9.0.tgz#b234b6d15ef84b5849c6de2af43195a2d59d408e"
   integrity sha512-g4KWpPdqN0nth+goDNICNXGfJF7nNnepthp46CAlJoJtC5K/cLu3NgCM3AHu1CkJ5Hzt9V0Y0PBAO6Ay/gGb+w==
@@ -1454,11 +1454,16 @@ shared-web@./vendor/shared-web:
   version "1.0.0"
   dependencies:
     accessible-autocomplete "^1.6.1"
+    babel-eslint "^10.0.1"
+    eslint "^5.8.0"
+    eslint-config-airbnb-es5 "^1.2.0"
+    eslint-plugin-react "^7.11.1"
     govuk-country-and-territory-autocomplete "^0.5.0"
     govuk-frontend "^2.2.0"
     html5shiv "^3.7.3"
     jquery "^3.3.1"
     jquery-ujs "^1.2.2"
+    sass-lint "^1.12.1"
 
 shebang-command@^1.2.0:
   version "1.2.0"
