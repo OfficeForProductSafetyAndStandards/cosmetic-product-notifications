@@ -3,9 +3,9 @@ module BusinessesHelper
 
   BUSINESS_SUGGESTION_LIMIT = 3
 
-  def defaults_on_primary_address(business)
-    business.primary_address.address_type ||= "Registered office address"
-    business.primary_address.source ||= UserSource.new(user: current_user)
+  def defaults_on_primary_location(business)
+    business.primary_location.name ||= "Registered office address"
+    business.primary_location.source ||= UserSource.new(user: current_user)
     business
   end
 
@@ -31,7 +31,7 @@ module BusinessesHelper
       :company_status_code,
       :nature_of_business_id,
       :additional_information,
-      addresses_attributes: %i[id line_1 line_2 locality country postal_code _destroy]
+      location_attributes: %i[id address phone_number locality country postal_code _destroy]
     )
   end
 
@@ -46,12 +46,12 @@ module BusinessesHelper
   def create_business
     if params[:business]
       @business = Business.new(business_params)
-      @business.addresses.build unless @business.addresses.any?
-      defaults_on_primary_address(@business)
+      @business.locations.build unless @business.locations.any?
+      defaults_on_primary_location(@business)
       @business.source = UserSource.new(user: current_user)
     else
       @business = Business.new
-      @business.addresses.build
+      @business.locations.build
     end
   end
 
@@ -60,7 +60,7 @@ module BusinessesHelper
     begin
       @companies_house_businesses = search_companies_house_for_similar_businesses(@business)
     rescue CompaniesHouseClient::ClientException => e
-      Rails.logger.error e
+      Rails.logger.error e.message
       @companies_house_error = true
     end
   end

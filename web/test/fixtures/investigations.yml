@@ -19,3 +19,15 @@ no_products:
 search_related_products:
   description: Investigation for search by product
   is_closed: false
+
+search_related_correspondence:
+  description: Investigation for search by correspondence
+  is_closed: false
+
+search_related_businesses:
+  description: Investigation for search by business
+  is_closed: false
+
+search_related_reporter:
+  description: Investigation for search by reporter
+  is_closed: false

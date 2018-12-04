@@ -1,8 +1,8 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
 
-  before_action :set_investigation, only: %i[new create suggested link unlink companies_house]
-  before_action :set_business, only: %i[link unlink]
+  before_action :set_investigation, only: %i[new create suggested link remove unlink companies_house]
+  before_action :set_business, only: %i[link remove unlink]
   before_action :create_business, only: %i[new create suggested]
 
   # GET /investigations/1/businesses/new
@@ -44,6 +44,8 @@ class Investigations::BusinessesController < ApplicationController
     @investigation.businesses << @business
     redirect_to_investigation_businesses_tab "Business was successfully linked."
   end
+
+  def remove; end
 
   # DELETE /investigations/1/businesses
   def unlink

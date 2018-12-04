@@ -3,14 +3,17 @@ class Investigation < ApplicationRecord
   include Documentable
   include UserService
 
-  attr_accessor :priority_rationale, :status_rationale
-
-  enum priority: %i[low medium high]
+  attr_accessor :status_rationale
 
   validates :question_title, presence: true, on: :question_details
-  validate :validate_assignment, :validate_priority
+  validates :description, presence: true, on: :question_details
 
-  after_save :send_assignee_email, :create_audit_activity_for_priority, :create_audit_activity_for_assignee,
+  validates_length_of :question_title, maximum: 1000
+  validates_length_of :description, maximum: 1000
+
+  validate :validate_assignment
+
+  after_save :send_assignee_email, :create_audit_activity_for_assignee,
              :create_audit_activity_for_status
 
   index_name [Rails.env, "investigations"].join("_")
@@ -136,12 +139,6 @@ private
     AuditActivity::Report::Add.from(self.reporter, self) if self.reporter
   end
 
-  def create_audit_activity_for_priority
-    if saved_changes.key?(:priority) || priority_rationale.present?
-      AuditActivity::Investigation::UpdatePriority.from(self)
-    end
-  end
-
   def create_audit_activity_for_status
     if saved_changes.key?(:is_closed) || status_rationale.present?
       AuditActivity::Investigation::UpdateStatus.from(self)
@@ -182,12 +179,6 @@ private
   def validate_assignment
     if assignee_id_was.present? && !assignee
       errors.add(:assignee, "cannot be blank")
-    end
-  end
-
-  def validate_priority
-    if !priority && priority_rationale
-      errors.add(:priority, "has not been selected")
     end
   end
 

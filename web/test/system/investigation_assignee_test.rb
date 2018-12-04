@@ -1,10 +1,9 @@
 require "application_system_test_case"
 
-class InvestigationIAssigneeTest < ApplicationSystemTestCase
+class InvestigationAssigneeTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
     visit assign_investigation_path(investigations(:one))
-    Investigation.import force: true
   end
 
   teardown do
@@ -13,6 +12,7 @@ class InvestigationIAssigneeTest < ApplicationSystemTestCase
 
   test "should assign case to nobody when created with an activity" do
     visit new_report_path
+    choose "reporter[reporter_type]", visible: false, match: :first
     click_on "Continue"
     click_on "Continue"
     click_on "View the case you've just created"

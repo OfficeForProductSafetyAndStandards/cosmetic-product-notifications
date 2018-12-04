@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_28_115453) do
+ActiveRecord::Schema.define(version: 2018_11_29_170930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,19 +50,6 @@ ActiveRecord::Schema.define(version: 2018_11_28_115453) do
     t.index ["correspondence_id"], name: "index_activities_on_correspondence_id"
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
     t.index ["product_id"], name: "index_activities_on_product_id"
-  end
-
-  create_table "addresses", id: :serial, force: :cascade do |t|
-    t.string "address_type", null: false
-    t.integer "business_id"
-    t.string "country"
-    t.datetime "created_at", null: false
-    t.string "line_1"
-    t.string "line_2"
-    t.string "locality"
-    t.string "postal_code"
-    t.datetime "updated_at", null: false
-    t.index ["business_id"], name: "index_addresses_on_business_id"
   end
 
   create_table "businesses", id: :serial, force: :cascade do |t|
@@ -105,6 +92,7 @@ ActiveRecord::Schema.define(version: 2018_11_28_115453) do
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"
+    t.string "type"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_correspondences_on_investigation_id"
   end
@@ -136,11 +124,23 @@ ActiveRecord::Schema.define(version: 2018_11_28_115453) do
     t.text "description"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
-    t.integer "priority"
     t.string "question_title"
     t.string "question_type"
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
+  end
+
+  create_table "locations", id: :serial, force: :cascade do |t|
+    t.string "address"
+    t.integer "business_id"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.string "locality"
+    t.string "name", null: false
+    t.string "phone_number"
+    t.string "postal_code"
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_locations_on_business_id"
   end
 
   create_table "products", id: :serial, force: :cascade do |t|
@@ -204,11 +204,11 @@ ActiveRecord::Schema.define(version: 2018_11_28_115453) do
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "products"
-  add_foreign_key "addresses", "businesses"
   add_foreign_key "corrective_actions", "businesses"
   add_foreign_key "corrective_actions", "investigations"
   add_foreign_key "corrective_actions", "products"
   add_foreign_key "correspondences", "investigations"
+  add_foreign_key "locations", "businesses"
   add_foreign_key "reporters", "investigations"
   add_foreign_key "tests", "investigations"
   add_foreign_key "tests", "products"

@@ -20,6 +20,10 @@ module UrlHelper
     associated_image_path(parent, image) + "/edit"
   end
 
+  def remove_associated_image_path(parent, image)
+    associated_image_path(parent, image) + "/remove"
+  end
+
   # DOCUMENTS
   def associated_documents_path(parent)
     polymorphic_path([parent, :documents])
@@ -39,5 +43,9 @@ module UrlHelper
 
   def edit_associated_document_path(parent, document)
     associated_document_path(parent, document) + "/edit"
+  end
+
+  def remove_associated_document_path(parent, document)
+    associated_document_path(parent, document) + "/remove"
   end
 end

@@ -2,4 +2,5 @@
 - content_for :after_header do
   = link_to "Back", @parent, class: "govuk-back-link"
 = render "page_heading", title: "Edit image details"
-= render "metadata_form", image: @file, show_delete: true, target_url: associated_image_path(@parent, @file)
+= render "metadata_form", image: @file, edit: true,
+        target_url: associated_image_path(@parent, @file)

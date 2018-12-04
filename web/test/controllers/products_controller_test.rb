@@ -7,7 +7,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     @product_one.source = sources(:product_one)
     @product_iphone = products(:iphone)
     @product_iphone.source = sources(:product_iphone)
-    Product.import force: true
+
     test_image1 = Rails.root.join('test', 'fixtures', 'files', 'testImage.png')
     test_image2 = Rails.root.join('test', 'fixtures', 'files', 'testImage2.png')
     @product_one.images.attach(io: File.open(test_image1), filename: 'testImage.png')
@@ -70,17 +70,6 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should destroy product" do
     assert_difference("Product.count", -1) do
       delete product_url(@product_one)
-    end
-
-    assert_redirected_to products_url
-  end
-
-  test "should merge products" do
-    assert_difference 'Product.count', -1 do
-      post merge_products_url, params: {
-          selected_product_id: @product_one.id,
-          product_ids: [@product_one.id, @product_iphone.id]
-      }
     end
 
     assert_redirected_to products_url

@@ -13,29 +13,30 @@ main#main-content.govuk-main-wrapper role="main"
         table.govuk-table
           tbody.govuk-table__body
             tr.govuk-table__row
-              th.govuk-table__header scope="row" = @correspondence.email_direction&.titleize
+              th.govuk-table__header scope="row"
+                = Correspondence::Email.email_directions[@correspondence.email_direction]
               td.govuk-table__cell = @correspondence.email_address
             tr.govuk-table__row
-              th.govuk-table__header scope="row"  Summary
+              th.govuk-table__header scope="row" Summary
               td.govuk-table__cell = @correspondence.overview
             tr.govuk-table__row
-              th.govuk-table__header scope="row"  Date sent
+              th.govuk-table__header scope="row" Date sent
               td.govuk-table__cell = @correspondence.correspondence_date.strftime '%d/%m/%Y'
             tr.govuk-table__row
-              th.govuk-table__header scope="row"  Email
+              th.govuk-table__header scope="row" Email
               td.govuk-table__cell = @email_file_blob&.filename
             tr.govuk-table__row
-              th.govuk-table__header scope="row"  Subject
+              th.govuk-table__header scope="row" Subject
               td.govuk-table__cell = @correspondence.email_subject
             tr.govuk-table__row
-              th.govuk-table__header scope="row"  Content
+              th.govuk-table__header scope="row" Content
               td.govuk-table__cell = @correspondence.details
             tr.govuk-table__row
-              th.govuk-table__header scope="row"  Attachments
+              th.govuk-table__header scope="row" Attachments
               td.govuk-table__cell = @email_attachment_blob&.filename
             - if @email_attachment_blob
               tr.govuk-table__row
-                th.govuk-table__header scope="row"  Attachment description
+                th.govuk-table__header scope="row" Attachment description
                 td.govuk-table__cell = @email_attachment_blob.metadata[:description]
         = form.submit "Continue", class: "govuk-button"
           | Continue

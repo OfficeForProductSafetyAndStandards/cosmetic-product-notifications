@@ -38,12 +38,15 @@ class ReportControllerTest < ActionDispatch::IntegrationTest
 
   test "should pass the data from other type field correctly" do
     other_type = "Product regulator"
+    name = "Danny"
     post report_index_url, params: {
       reporter: {
         reporter_type: "Other",
         other_reporter: other_type,
+        name: name
       }
     }
-    assert_equal(Reporter.first.reporter_type, other_type)
+    reporter = Reporter.find_by(name: name)
+    assert_equal(reporter.reporter_type, other_type)
   end
 end

@@ -2,12 +2,11 @@ require "test_helper"
 
 class ReporterTest < ActiveSupport::TestCase
   setup do
+    @reporter = Reporter.new(reporter_type: "Business")
     sign_in_as_user
-    @reporter = Reporter.new
   end
 
   teardown do
-    @reporter = nil
     logout
   end
 

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       collection do
         resources :new, controller: "documents_flow", only: %i[show new create update]
       end
+      member do
+        get :remove
+      end
     end
   end
 
@@ -12,6 +15,9 @@ Rails.application.routes.draw do
     resources :images, controller: "images" do
       collection do
         resources :new, controller: "images_flow", only: %i[show new create update]
+      end
+      member do
+        get :remove
       end
     end
   end
@@ -24,24 +30,30 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :investigations, only: %i[index show new create update], concerns: %i[document_attachable image_attachable] do
+  resources :question, controller: "investigations/question", only: %i[show new create update]
+
+  resources :investigations, path: "cases", only: %i[index show new create update],
+            concerns: %i[document_attachable image_attachable] do
     member do
       get :status
       get :assign
       get :confirmation
-      get :priority
     end
     collection do
       resources :report, controller: "investigations/report", only: %i[show new create update]
-      resources :question, controller: "investigations/question", only: %i[show new create update]
     end
-    resources :activities, controller: "investigations/activities", only: %i[create]
+    resources :activities, controller: "investigations/activities", only: %i[create new] do
+      collection do
+        get :comment
+      end
+    end
     resources :products, only: %i[new create], controller: "investigations/products" do
       collection do
         get :suggested
       end
       member do
         put :link, path: ''
+        get :remove
         delete :unlink, path: ''
       end
     end
@@ -52,6 +64,7 @@ Rails.application.routes.draw do
       end
       member do
         put :link, path: ''
+        get :remove
         delete :unlink, path: ''
       end
     end
@@ -60,6 +73,8 @@ Rails.application.routes.draw do
     resources :correspondences, only: %i[show new create update], controller: "investigations/correspondence",
               concerns: %i[document_attachable]
     resources :emails, controller: "investigations/emails", only: %i[show new create update]
+    resources :phone_calls, controller: "investigations/phone_calls", only: %i[show new create update]
+    resources :meetings, controller: "investigations/meetings", only: %i[show new create update]
     resources :tests, controller: "investigations/tests", only: %i[show create update] do
       collection do
         get :new_request
@@ -68,20 +83,20 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :businesses do
+  resources :businesses, concerns: %i[document_attachable image_attachable] do
     collection do
-      get :confirm_merge
-      post :merge
       get :suggested
       post :companies_house
     end
-    resources :addresses, shallow: true
+    resources :locations, shallow: true do
+      member do
+        get :remove
+      end
+    end
   end
 
   resources :products, concerns: %i[document_attachable image_attachable] do
     collection do
-      get :confirm_merge
-      post :merge
       get :suggested
     end
   end
@@ -93,6 +108,6 @@ Rails.application.routes.draw do
 
   mount PgHero::Engine, at: "pghero"
 
-  root to: redirect(path: "/investigations")
+  root to: redirect(path: "/cases")
 end
 # rubocop:enable Metrics/BlockLength

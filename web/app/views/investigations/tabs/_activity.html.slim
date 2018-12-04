@@ -1,3 +1,4 @@
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
+    = link_to "Add activity", new_investigation_activity_path(@investigation), class: "govuk-link mspsds-block-link"
     = render "activities_summary", activities: @investigation.activities
