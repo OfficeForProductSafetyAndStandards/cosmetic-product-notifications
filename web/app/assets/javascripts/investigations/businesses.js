@@ -7,7 +7,7 @@ $(document).on('turbolinks:load', function () {
 
   searchOnInputChange(
     $page.find('.search-trigger input, .search-trigger textarea'),
-    '/investigations/' + investigationId + '/businesses/suggested?excluded_businesses=' + excludedBusinessIds,
+    '/cases/' + investigationId + '/businesses/suggested?excluded_businesses=' + excludedBusinessIds,
     function () {
       return $page.find('form').serialize();
     },
