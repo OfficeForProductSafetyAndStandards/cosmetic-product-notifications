@@ -59,7 +59,7 @@ class InvestigationsController < ApplicationController
     @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "Investigation was successfully updated." }
+        format.html { redirect_to @investigation, notice: "Case was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes
@@ -80,7 +80,7 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.new(investigation_create_params)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to investigation_path(@investigation) }
+        format.html { redirect_to investigation_path(@investigation), notice: "Case was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
         format.html { render :new }
