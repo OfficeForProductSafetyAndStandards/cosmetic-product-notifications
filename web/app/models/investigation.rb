@@ -175,6 +175,12 @@ private
 
   def case_title
     title = [build_title_products_portion].reject(&:blank?).join(" - ")
+    if !hazard_type.nil?
+      title << " - " + hazard_type.to_s
+    end
+    if products.empty?
+      title << " (no product specified)"
+    end
     title.presence || "Untitled case"
   end
 
@@ -191,7 +197,7 @@ private
   end
 
   def build_title_products_portion
-    return "" if products.empty?
+    return product_type.to_s if products.empty?
 
     shared_property_values = %w(brand model product_type).map { |property| get_property_value_if_shared property }
     title = shared_property_values.reject(&:blank?).join(", ")
