@@ -15,4 +15,4 @@
     = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|
       = form.text_area :body, class: "govuk-textarea govuk-!-width-full", aria_describedby: "action__comment-hint",
               rows: 5, id: "action_comment", maxlength: 1000
-      = form.submit "Continue", class: "govuk-button", id: "action_comment_submit"
+      = form.submit "Continue", class: "govuk-button"
