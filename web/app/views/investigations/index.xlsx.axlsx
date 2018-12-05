@@ -1,8 +1,9 @@
 book = xlsx_package.workbook
 
 book.add_worksheet name: "Cases" do |sheet_investigations|
-  sheet_investigations.add_row %w[ID Status Title Description Assignee Source
-                                  Products Businesses Activities]
+  sheet_investigations.add_row %w[ID Status Title Description ProductType HazardType Assignee Source
+                            Reporter_Name Reporter_Email Reporter_Phone Reporter_Type
+                            Products Businesses Activities Correspondences Corrective_Actions Tests]
 
   @investigations.each do |investigation|
     sheet_investigations.add_row [
@@ -10,11 +11,20 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
       investigation.is_closed? ? "Closed" : "Open",
       investigation.title,
       investigation.description,
+      investigation.product_type,
+      investigation.hazard_type,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
       investigation.source&.show,
+      investigation.reporter ? investigation.reporter.name : nil,
+      investigation.reporter ? investigation.reporter.email_address : nil,
+      investigation.reporter ? investigation.reporter.phone_number : nil,
+      investigation.reporter ? investigation.reporter.reporter_type : nil,
       investigation.products.count,
       investigation.businesses.count,
-      investigation.activities.count
+      investigation.activities.count,
+      investigation.correspondences.count,
+      investigation.corrective_actions.count,
+      investigation.tests.count
     ]
   end
 end
@@ -37,15 +47,17 @@ book.add_worksheet name: "Products" do |sheet_products|
         product.batch_number,
         product.brand,
         product.source&.show,
-        investigation.id
+        investigation.pretty_id
       ]
     end
   end
 end
 
 book.add_worksheet name: "Businesses" do |sheet_businesses|
-  sheet_businesses.add_row %w[ID Company_Number Company_Name Company_Type Location Phone_Number Locality
-                              Country Postal_Code Nature_Of_Business Additional_Information Source Case_ID]
+  sheet_businesses.add_row %w[ID Company_Number Company_Name Company_Type
+                                Nature_Of_Business Additional_Information Source
+                                Location Phone_Number Locality Country Postal_Code Locations
+                                Case_ID]
 
   @investigations.each do |investigation|
     investigation.businesses.each do |business|
@@ -54,16 +66,39 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
         business.company_number,
         business.company_name,
         business.company_type,
+        business.nature_of_business,
+        business.additional_information,
+        business.source&.show,
         business.primary_location ? business.primary_location.address : nil,
         business.primary_location ? business.primary_location.phone_number : nil,
         business.primary_location ? business.primary_location.locality : nil,
         business.primary_location ? business.primary_location.country : nil,
         business.primary_location ? business.primary_location.postal_code : nil,
-        business.nature_of_business,
-        business.additional_information,
-        business.source&.show,
-        investigation.id
+        business.locations.count,
+        investigation.pretty_id
       ]
+    end
+  end
+end
+
+book.add_worksheet name: "Businesses locations" do |sheet_businesses_locations|
+  sheet_businesses_locations.add_row %w[ID Name Address Phone_Number Locality Country Postal_Code Business_ID Case_ID]
+
+  @investigations.each do |investigation|
+    investigation.businesses.each do |business|
+      business.locations.each do |location|
+        sheet_businesses_locations.add_row [
+          location.id,
+          location.name,
+          location.address,
+          location.phone_number,
+          location.locality,
+          location.country,
+          location.postal_code,
+          business.id,
+          investigation.pretty_id
+        ]
+      end
     end
   end
 end
@@ -78,7 +113,68 @@ book.add_worksheet name: "Actions" do |sheet_actions|
         activity.type.titleize,
         activity.body,
         activity.source&.show,
-        investigation.id
+        investigation.pretty_id
+      ]
+    end
+  end
+end
+
+book.add_worksheet name: "Correspondences" do |sheet_correspondences|
+  sheet_correspondences.add_row %w[ID Contact_method Date Correspondent_Name Correspondent_Type Email_Address
+                            Email_Direction Email_Subject Phone_Number Overview Case_ID]
+
+  @investigations.each do |investigation|
+    investigation.correspondences.each do |correspondence|
+      sheet_correspondences.add_row [
+        correspondence.id,
+        correspondence.contact_method,
+        correspondence.correspondence_date,
+        correspondence.correspondent_name,
+        correspondence.correspondent_type,
+        correspondence.email_address,
+        correspondence.email_direction,
+        correspondence.email_subject,
+        correspondence.phone_number,
+        correspondence.overview,
+        investigation.pretty_id
+      ]
+    end
+  end
+end
+
+book.add_worksheet name: "Corrective actions" do |sheet_corrective_actions|
+  sheet_corrective_actions.add_row %w[ID Summary Details Date_Decided Legislation Business_ID Product_ID Case_ID]
+
+  @investigations.each do |investigation|
+    investigation.corrective_actions.each do |corrective_action|
+      sheet_corrective_actions.add_row [
+        corrective_action.id,
+        corrective_action.summary,
+        corrective_action.details,
+        corrective_action.date_decided,
+        corrective_action.legislation,
+        corrective_action.business_id,
+        corrective_action.product_id,
+        investigation.pretty_id
+      ]
+    end
+  end
+end
+
+book.add_worksheet name: "Tests" do |sheet_tests|
+  sheet_tests.add_row %w[ID, Type Date Details Legislation Result Product_ID Case_ID]
+
+  @investigations.each do |investigation|
+    investigation.tests.each do |test|
+      sheet_tests.add_row [
+        test.id,
+        test.pretty_name,
+        test.date,
+        test.details,
+        test.legislation,
+        test.result,
+        test.product_id,
+        investigation.pretty_id
       ]
     end
   end
