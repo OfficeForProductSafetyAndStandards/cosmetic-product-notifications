@@ -104,7 +104,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_reporter_details_and_continue
     fill_allegation_details_and_continue
 
-    assert_text "Case was successfully created"
+    assert_text "Allegation was successfully created"
   end
 
   test "related file is attached to the case" do
