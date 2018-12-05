@@ -83,7 +83,7 @@ Running this with the `--auto-correct` flag set will cause rubocop to attempt to
 
 You can run the Slim linting with `docker-compose exec web bin/slim-lint app/views` (or simply `bin/slim-lint app/views` if installed locally).
 
-You can run the Sass linting with `docker-compose exec web yarn sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'`.
+You can run the Sass linting with `docker-compose exec web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'`.
 
 You can run the JavaScript linting with `docker-compose exec web yarn eslint app/assets/javascripts`.
 
