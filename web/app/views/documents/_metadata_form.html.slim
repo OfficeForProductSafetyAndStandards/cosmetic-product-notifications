@@ -5,7 +5,7 @@ hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--vis
   .govuk-grid-column-two-thirds
     = form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
       = render "form_validation_display", errors: @errors
-      .govuk-fieldset__legend--l = "#{document.image? ? 'Image' : 'Document'} details"
+      .govuk-fieldset__legend--l = "#{image_document_text(document).titleize} details"
       = form.fields_for :file do |subform|
         .govuk-form-group
           = subform.label :title, "Document title", class: "govuk-label"

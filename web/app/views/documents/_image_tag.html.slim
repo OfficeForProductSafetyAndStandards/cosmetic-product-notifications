@@ -1,6 +1,5 @@
-- class_name = local_assigns[:class_name] || "image-with-preview"
 - if image.variable?
-  = image_tag image.variant(resize: dimensions), alt: image.metadata["title"], class: class_name
+  = image_tag image.variant(resize: dimensions), class: class_name
 - else
   .image-without-preview
     span = image.metadata["title"]

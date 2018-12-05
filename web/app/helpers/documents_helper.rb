@@ -63,8 +63,8 @@ module DocumentsHelper
 
   def pretty_type_description(document)
     description = ""
-    description = description + document_file_extension(document) + ' ' if document_file_extension document
-    description + (document.image? ? 'image' : 'document').to_s
+    description += document_file_extension(document) + ' ' if document_file_extension document
+    description + image_document_text(document)
   end
 
   def formatted_file_updated_date(file)

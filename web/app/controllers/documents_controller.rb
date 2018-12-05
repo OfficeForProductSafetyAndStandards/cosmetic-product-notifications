@@ -11,14 +11,13 @@ class DocumentsController < ApplicationController
   # POST /documents
   def create
     respond_to do |format|
-      validate
-      if @errors.present?
-        format.html { redirect_to @investigation, notice: "Failed to attach file" }
-        format.json { render json: @errors, status: :unprocessable_entity }
-      else
+      if file_valid?
         save_file
         format.html { redirect_to @investigation, notice: "File was successfully attached." }
         format.json { render :show, status: :created, location: @activity }
+      else
+        format.html { redirect_to @investigation, notice: "Failed to attach file" }
+        format.json { render json: @errors, status: :unprocessable_entity }
       end
     end
   end

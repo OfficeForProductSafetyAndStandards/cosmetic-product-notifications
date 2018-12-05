@@ -13,7 +13,7 @@
                 .govuk-grid-row
                   .govuk-grid-column-one-third
                     = render "documents/document_preview", document: activity.attachment, dimensions: "100x100",
-                            alt: activity.attachment.metadata["title"], class_name: "product-image"
+                            class_name: "product-image"
                   .govuk-grid-column-two-thirds
                     = markdown activity.body if activity.body
               - else

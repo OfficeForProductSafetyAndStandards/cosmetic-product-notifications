@@ -1,5 +1,5 @@
 def remove_files_without_attachments_job
-  remove_attachments_job = Sidekiq::Cron::Job.new(
+  remove_files_without_attachments_job = Sidekiq::Cron::Job.new(
     name: 'remove files not attached to anything, midnight every sunday',
     cron: '0 0 * * 0',
     class: "RemoveFilesWithoutAttachmentsJob"
