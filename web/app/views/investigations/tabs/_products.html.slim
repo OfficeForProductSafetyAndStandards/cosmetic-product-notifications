@@ -1,5 +1,5 @@
 = link_to "Add product", new_investigation_product_url(@investigation), class: "no-print mspsds-block-link"
-.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+.govuk-grid-row
   .govuk-grid-column-full
     - if @investigation.products.any?
       - @investigation.products.each do |product|
