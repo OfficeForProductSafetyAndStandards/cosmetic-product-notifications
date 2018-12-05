@@ -3,14 +3,14 @@ inherit_gem:
 
 AllCops:
   Exclude:
-    - '/app/app/**/*.axlsx'
-    - '/app/bin/**/*'
-    - '/app/coverage/**/*'
-    - '/app/db/schema.rb'
-    - '/app/log/**/*'
-    - '/app/node_modules/**/*'
-    - '/app/tmp/**/*'
-    - '/app/vendor/shared-web/bin/**/*'
+    - './../../app/**/*.axlsx'
+    - './../../bin/**/*'
+    - './../../coverage/**/*'
+    - './../../db/schema.rb'
+    - './../../log/**/*'
+    - './../../node_modules/**/*'
+    - './../../tmp/**/*'
+    - 'bin/**/*'
 
 Rails:
   Enabled: true

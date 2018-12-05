@@ -18,7 +18,6 @@ services:
       - TRAVIS_JOB_ID
       - TRAVIS_PULL_REQUEST
       - COMPANIES_HOUSE_API_KEY='fake-key'
-      - SLIM_LINT_RUBOCOP_CONF=vendor/shared-web/.rubocop.yml
       - COVERALLS_PARALLEL
   worker:
     command: tail -f /dev/null
@@ -38,7 +37,6 @@ services:
     - TRAVIS_JOB_ID
     - TRAVIS_PULL_REQUEST
     - COMPANIES_HOUSE_API_KEY='fake-key'
-    - SLIM_LINT_RUBOCOP_CONF=vendor/shared-web/.rubocop.yml
     - COVERALLS_PARALLEL
   db:
     image: ${DOCKER_USERNAME}/db:${TRAVIS_BUILD_NUMBER}
