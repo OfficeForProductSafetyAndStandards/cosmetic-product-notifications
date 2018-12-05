@@ -1,5 +1,5 @@
-class RemoveEmptyAttachmentsJob < ApplicationJob
+class RemoveFilesWithoutAttachmentsJob < ApplicationJob
   def perform
-    ActiveStorage::Attachment.where(blob: nil).delete_all
+    ActiveStorage::Blob.all.select { |b| return b.attachments.empty? }.delete_all
   end
 end
