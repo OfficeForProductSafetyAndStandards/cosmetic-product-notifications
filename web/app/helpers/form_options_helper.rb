@@ -11,13 +11,13 @@ module FormOptionsHelper
 
   def hazard_types
     Rails.cache.fetch(HAZARD_TYPES_CACHE_KEY, expires_in: 1.hour) do
-      Rails.application.config.hazard_constants["hazard_type"]&.sort
+      Rails.application.config.hazard_constants["hazard_type"]
     end
   end
 
   def product_types
     Rails.cache.fetch(PRODUCT_TYPES_CACHE_KEY, expires_in: 1.hour) do
-      Rails.application.config.product_constants["product_type"]&.sort
+      Rails.application.config.product_constants["product_type"]
     end
   end
 end
