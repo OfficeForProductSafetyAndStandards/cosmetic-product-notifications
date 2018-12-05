@@ -2,6 +2,7 @@ class Investigations::CreationFlowController < ApplicationController
   include FileConcern
   include Wicked::Wizard
 
+  before_action :set_page_title, only: %i[show]
   before_action :set_reporter, only: %i[show create update]
   before_action :set_investigation, only: %i[show create update]
   before_action :set_attachment, only: %i[show create update]
@@ -53,6 +54,10 @@ private
   end
 
   def success_message
+    # This needs to be defined by any controller that inherits from this class.
+  end
+
+  def set_page_title
     # This needs to be defined by any controller that inherits from this class.
   end
 

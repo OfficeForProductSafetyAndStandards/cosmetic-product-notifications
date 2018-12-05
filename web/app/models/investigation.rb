@@ -7,7 +7,9 @@ class Investigation < ApplicationRecord
   attr_accessor :status_rationale
 
   validates :question_title, presence: true, on: :question_details
-  validates :description, presence: true, on: :question_details
+  validates :description, presence: true, on: %i[allegation_details question_details]
+  validates :hazard_type, presence: true, on: :allegation_details
+  validates :product_type, presence: true, on: :allegation_details
 
   validates_length_of :question_title, maximum: 1000
   validates_length_of :description, maximum: 1000

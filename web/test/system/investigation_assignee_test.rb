@@ -10,15 +10,6 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     logout
   end
 
-  test "should assign case to nobody when created with an activity" do
-    visit new_report_path
-    choose "reporter[reporter_type]", visible: false, match: :first
-    click_on "Continue"
-    click_on "Continue"
-    click_on "View the case you've just created"
-    assert_text("Unassigned")
-  end
-
   test "should show selection without radio buttons if the user hasn't been re-assigned" do
     assert_text "Name / Email address"
   end
