@@ -7,6 +7,15 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     @investigation.source = sources(:investigation_one)
     @activity = activities(:one)
     @activity.source = sources(:activity_one)
+
+    @reporter = Reporter.create(
+      reporter_type: "Consumer",
+      name: "Test Reporter",
+      email_address: "test.reporter@example.com"
+    )
+    @investigation_with_reporter = investigations(:two)
+    @investigation_with_reporter.reporter = @reporter
+
     visit new_investigation_correspondence_url(@investigation)
   end
 
@@ -24,30 +33,14 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     assert_text("prevented this item from being saved")
   end
 
-  test "first step should be populated with reporter name from the flow" do
-    visit new_report_path
-    select_type_and_continue
-    fill_name_and_continue
-    click_on "Add reporter correspondence"
-    assert_equal('Ben', find_field('correspondence[correspondent_name]').value)
+  test "first step should be populated with reporter's name" do
+    visit new_investigation_correspondence_url(@investigation_with_reporter)
+    assert_equal(@reporter.name, find_field('correspondence[correspondent_name]').value)
   end
 
-  test "first step should be populated with reporter's email" do
-    visit new_report_path
-    select_type_and_continue
-    fill_email_and_continue
-    click_on "Add reporter correspondence"
-    assert_equal('aa@aa.aa', find_field('correspondence[email_address]').value, visible: false)
-  end
-
-  test "first step should be populated with phone from the flow" do
-    visit new_report_path
-    select_type_and_continue
-    fill_phone_and_continue
-    click_on "Add reporter correspondence"
-    assert_text("Who is the correspondence with?")
-
-    assert_equal('12345678900', find_field('correspondence[phone_number]').value, visible: false)
+  test "first step should be populated with reporter's email address" do
+    visit new_investigation_correspondence_url(@investigation_with_reporter)
+    assert_equal(@reporter.email_address, find_field('correspondence[email_address]').value)
   end
 
   test "second step should be correspondence details" do
@@ -103,26 +96,5 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     click_button "Continue"
     click_on "Full detail"
     assert_text("testImage")
-  end
-
-
-  def select_type_and_continue
-    choose("reporter[reporter_type]", visible: false, match: :first)
-    click_button "Continue"
-  end
-
-  def fill_name_and_continue
-    fill_in("reporter[name]", with: "Ben")
-    click_button "Continue"
-  end
-
-  def fill_email_and_continue
-    fill_in("reporter[email_address]", with: "aa@aa.aa")
-    click_button "Continue"
-  end
-
-  def fill_phone_and_continue
-    fill_in("reporter[phone_number]", with: "12345678900")
-    click_button "Continue"
   end
 end

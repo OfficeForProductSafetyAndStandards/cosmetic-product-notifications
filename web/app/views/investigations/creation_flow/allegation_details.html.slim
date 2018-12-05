@@ -5,12 +5,12 @@ h1.govuk-heading-xl
   = @page_title
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with model: @investigation, scope: :question, local: true, url: wizard_path, method: :put do |form|
-      = render "form_validation_display", errors: @investigation.errors, model_name: "question"
+    = form_with model: @investigation, scope: :allegation, local: true, url: wizard_path, method: :put do |form|
+      = render "form_validation_display", errors: @investigation.errors, model_name: "allegation"
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | What is the question?
+          | What is being alleged?
         .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:description].any?)
           span.govuk-hint#question-description-hint
             | Please give as much detail as possible
@@ -19,16 +19,21 @@ h1.govuk-heading-xl
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Please provide a title
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:question_title].any?)
-          span.govuk-hint#question-title-hint
-            | This will help other users identify this question
-          = form.text_field :question_title, class: "govuk-input", "aria-describedby": "question-title-hint",
-                  maxlength: 1000
+          | Product Type
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_type].any?)
+          = form.select :product_type, product_types, { include_blank: true },
+                  class: "govuk-select", id: "product-type-picker"
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Are there any files or images related to the question?
+          | Hazard Type
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)
+          = form.select :hazard_type, hazard_types, { include_blank: true },
+                  class: "govuk-select", id: "hazard-type-picker"
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Are there any files or images related to the allegation?
         .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation))
           - if @file_blob.present?
             p#current-attachment-details

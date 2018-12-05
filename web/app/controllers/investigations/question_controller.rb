@@ -18,6 +18,11 @@ private
     "Question was successfully created."
   end
 
+  def set_page_title
+    @page_title = "New Question"
+    @page_subtitle = "Who did the question come from?"
+  end
+
   def investigation_params
     super.merge(is_case: false)
   end
