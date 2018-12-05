@@ -275,4 +275,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     }
     assert response.body.index(@investigation_two.id.to_s) < response.body.index(@investigation_one.id.to_s)
   end
+
+  test "should create excel file for list of investigations" do
+    get investigations_path format: :xlsx
+    assert_response :success
+  end
 end

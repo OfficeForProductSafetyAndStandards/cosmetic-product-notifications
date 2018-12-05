@@ -6,7 +6,7 @@ $(document).on('turbolinks:load', function () {
   $page.find('#search-button').remove();
   searchOnInputChange(
     $page.find('.search-term'),
-    '/investigations/' + investigationId + '/products/suggested?excluded_products=' + excludedProductIds,
+    '/cases/' + investigationId + '/products/suggested?excluded_products=' + excludedProductIds,
     function () {
       return $page.find('form').serialize();
     },

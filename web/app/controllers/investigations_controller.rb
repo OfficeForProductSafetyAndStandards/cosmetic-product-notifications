@@ -2,16 +2,22 @@ class InvestigationsController < ApplicationController
   include InvestigationsHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show update assign status confirmation]
+  before_action :set_investigation, only: %i[show update assign status]
 
   # GET /investigations
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @answer = search_for_investigations(20)
-    @investigations = @answer.records
-    @results = @answer.results.map do |r|
-      r.merge(record: @answer.records.find_by(id: r._id))
+    respond_to do |format|
+      format.html do
+        @answer = search_for_investigations(20)
+        @results = @answer.results.map { |r| r.merge(record: @answer.records.find_by(id: r._id)) }
+        @investigations = @answer.records
+      end
+      format.xlsx do
+        @answer = search_for_investigations
+        @investigations = @answer.records
+      end
     end
   end
 
@@ -28,7 +34,14 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/new
   def new
-    @investigation = Investigation.new
+    case params[:type]
+    when "allegation"
+      redirect_to new_allegation_path
+    when "question"
+      redirect_to new_question_path
+    else
+      @nothing_selected = true if params[:commit].present?
+    end
   end
 
   # GET /investigations/1/status
@@ -36,9 +49,6 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/1/assign
   def assign; end
-
-  # GET /investigations/1/confirmation
-  def confirmation; end
 
   # PATCH/PUT /investigations/1
   # PATCH/PUT /investigations/1.json

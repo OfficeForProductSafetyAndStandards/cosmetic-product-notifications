@@ -31,30 +31,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # GET /products/confirm_merge
-  def confirm_merge
-    if params[:product_ids] && params[:product_ids].length > 1
-      @products = Product.find(params[:product_ids])
-    else
-      redirect_to products_url, notice: "Please select at least two products before merging."
-    end
-  end
-
-  # POST /products/merge
-  def merge
-    selected_product = Product.find(params[:selected_product_id])
-    other_product_ids = params[:product_ids].reject { |id| id.to_i == selected_product.id }
-    other_products = Product.find(other_product_ids)
-
-    other_products.each do |other_product|
-      selected_product.merge!(other_product,
-                              attributes: selected_product.attributes.keys,
-                              associations: %w[investigation_products])
-    end
-
-    redirect_to products_url, notice: "Products were successfully merged."
-  end
-
   # GET /products/new
   def new
     @products = advanced_product_search(@product)
@@ -96,7 +72,7 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+      format.html { redirect_to products_url, notice: "Product was successfully deleted." }
       format.json { head :no_content }
     end
   end

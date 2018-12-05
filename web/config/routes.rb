@@ -30,17 +30,20 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :investigations, only: %i[index show new create update], concerns: %i[document_attachable image_attachable] do
+  resources :question, controller: "investigations/question", only: %i[show new create update]
+  resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
+
+  resources :investigations, path: "cases", only: %i[index show new create update],
+            concerns: %i[document_attachable image_attachable] do
     member do
       get :status
       get :assign
-      get :confirmation
     end
-    collection do
-      resources :report, controller: "investigations/report", only: %i[show new create update]
-      resources :question, controller: "investigations/question", only: %i[show new create update]
+    resources :activities, controller: "investigations/activities", only: %i[create new] do
+      collection do
+        get :comment
+      end
     end
-    resources :activities, controller: "investigations/activities", only: %i[create]
     resources :products, only: %i[new create], controller: "investigations/products" do
       collection do
         get :suggested
@@ -79,8 +82,6 @@ Rails.application.routes.draw do
 
   resources :businesses, concerns: %i[document_attachable image_attachable] do
     collection do
-      get :confirm_merge
-      post :merge
       get :suggested
       post :companies_house
     end
@@ -93,8 +94,6 @@ Rails.application.routes.draw do
 
   resources :products, concerns: %i[document_attachable image_attachable] do
     collection do
-      get :confirm_merge
-      post :merge
       get :suggested
     end
   end
@@ -106,6 +105,6 @@ Rails.application.routes.draw do
 
   mount PgHero::Engine, at: "pghero"
 
-  root to: redirect(path: "/investigations")
+  root to: redirect(path: "/cases")
 end
 # rubocop:enable Metrics/BlockLength

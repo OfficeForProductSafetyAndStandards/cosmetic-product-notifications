@@ -1,0 +1,29 @@
+- content_for :page_title, "Add activity"
+- content_for :after_header do
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      = link_to "Back to case #{@investigation.pretty_id}", @investigation, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      p.govuk-caption-xl
+        = @investigation.question_title_prefix
+        = case_question_text(@investigation).titleize + ': '
+        = @investigation.pretty_id
+      = "New activity"
+    = form_with local: true, url: new_investigation_activity_path, method: :get do |form|
+      - if @activity_type_empty
+        h2.govuk-heading-l.govuk-error-message
+          = "The following error prevented you from continuing:"
+        ul.govuk-list.govuk-error-message
+          = "Activity type must not be empty"
+      fieldset.govuk-fieldset
+        .govuk-form-group class=("govuk-form-group--error" if @activity_type_empty)
+          .govuk-radios
+            - activity_types.each do |(type, label)|
+              .govuk-radios__item
+                = form.radio_button :activity_type, type, class: "govuk-radios__input"
+                = form.label :activity_type, label, value: type, class: "govuk-label govuk-radios__label"
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

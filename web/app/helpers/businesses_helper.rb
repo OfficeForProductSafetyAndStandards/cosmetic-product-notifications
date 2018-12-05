@@ -60,7 +60,7 @@ module BusinessesHelper
     begin
       @companies_house_businesses = search_companies_house_for_similar_businesses(@business)
     rescue CompaniesHouseClient::ClientException => e
-      Rails.logger.error e
+      Rails.logger.error e.message
       @companies_house_error = true
     end
   end
