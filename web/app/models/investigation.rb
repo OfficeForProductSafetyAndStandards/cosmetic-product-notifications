@@ -98,6 +98,10 @@ class Investigation < ApplicationRecord
     id_string.insert(4, "-")
   end
 
+  def pretty_description
+    "Case #{pretty_id}"
+  end
+
   def question_title_prefix
     question_type && !is_case ? question_type + ' ' : ''
   end

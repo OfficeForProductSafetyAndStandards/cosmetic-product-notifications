@@ -1,26 +1,22 @@
-- if document.image?
-  .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-    .govuk-grid-column-two-thirds
-      - if document.variable? && document.metadata["safe"]
-        = image_tag document.variant(resize: "480x320"), alt: document.metadata["title"],
-                class: "govuk-!-margin-top-2 govuk-!-margin-bottom-2 image-thumbnail"
-      - else
-        span.govuk-caption-l
-          = document.variable? ? "Image is being processed" : "Image not available for preview"
+= render "documents/document_preview", document: document, dimensions: "480x320"
+hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-width-one-third"]
 
-= form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
-  = render "form_validation_display", errors: @errors
-  = form.fields_for :file do |subform|
-    .govuk-form-group
-      = subform.label :title, "Document title", class: "govuk-label"
-      = subform.text_field :title, value: document.metadata["title"], class: "govuk-input"
-    .govuk-form-group
-      = subform.label :description, class: "govuk-label"
-      = subform.text_area :description, value: document.metadata["description"], rows: 5, class: "govuk-textarea"
-    .govuk-form-group
-      .govuk-grid-row
-        .govuk-grid-column-one-quarter
-          = form.submit "#{edit ? 'Update' : 'Save'} attachment", class: "govuk-button"
-        - if edit
-          .govuk-grid-column-one-quarter
-            p = link_to "Cancel", @parent, class: "mspsds-block-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
+      = render "form_validation_display", errors: @errors
+      .govuk-fieldset__legend--l = "#{document.image? ? 'Image' : 'Document'} details"
+      = form.fields_for :file do |subform|
+        .govuk-form-group
+          = subform.label :title, "Document title", class: "govuk-label"
+          = subform.text_field :title, value: document.metadata["title"], class: "govuk-input govuk-!-width-two-thirds"
+        .govuk-form-group
+          = subform.label :description, class: "govuk-label"
+          = subform.text_area :description, value: document.metadata["description"], rows: 5, class: "govuk-textarea"
+        .govuk-form-group
+          .govuk-grid-row
+            .govuk-grid-column-one-third
+              = form.submit "#{edit ? 'Update' : 'Save'} attachment", class: "govuk-button"
+            - if edit
+              .govuk-grid-column-one-quarter
+                p = link_to "Cancel", @parent, class: "mspsds-block-link"

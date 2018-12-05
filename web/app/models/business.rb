@@ -66,6 +66,10 @@ class Business < ApplicationRecord
     self
   end
 
+  def pretty_description
+    "Business #{id}"
+  end
+
 private
 
   def add_sic_code(c_h_info)
