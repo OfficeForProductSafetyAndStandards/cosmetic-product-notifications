@@ -174,13 +174,9 @@ private
   end
 
   def case_title
-    title = [build_title_products_portion].reject(&:blank?).join(" - ")
-    if !hazard_type.nil?
-      title << " - " + hazard_type.to_s
-    end
-    if products.empty?
-      title << " (no product specified)"
-    end
+    title = build_title_from_products
+    title << " - " + hazard_type.to_s unless hazard_type.nil?
+    title << " (no product specified)" if products.empty?
     title.presence || "Untitled case"
   end
 
@@ -196,23 +192,20 @@ private
     end
   end
 
-  def build_title_products_portion
+  def build_title_from_products
     return product_type.to_s if products.empty?
 
-    shared_property_values = %w(brand model product_type).map { |property| get_property_value_if_shared property }
-    title = shared_property_values.reject(&:blank?).join(", ")
-    if products.length > 1
-      "#{products.length} Products".concat(!title.empty? ? ", " + title : "")
-    else
-      title
-    end
+    title_components = []
+    title_components << "#{products.length} Products" if products.length > 1
+    title_components << get_product_property_value_if_shared(:brand)
+    title_components << get_product_property_value_if_shared(:model)
+    title_components << get_product_property_value_if_shared(:product_type)
+    title_components.reject(&:blank?).join(", ")
   end
 
-  def get_property_value_if_shared property_name
+  def get_product_property_value_if_shared property_name
     first_product = products.first
-    if products.all? { |product| product[property_name] == first_product[property_name] }
-      first_product[property_name]
-    end
+    first_product[property_name] if products.drop(1).all? { |product| product[property_name] == first_product[property_name] }
   end
 end
 
