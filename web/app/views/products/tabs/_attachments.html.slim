@@ -1,7 +1,7 @@
-.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+.govuk-grid-row
   .govuk-grid-column-full
     = link_to "Add attachment", new_document_flow_path(@product), class: "govuk-link mspsds-block-link"
     = render "documents_list_summary", parent: @product
 
 - if @product.images.empty? && @product.documents.empty?
-  p = "No attachments yet."
+  p = "No attachments."
