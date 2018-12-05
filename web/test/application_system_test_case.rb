@@ -1,4 +1,5 @@
 require "test_helper"
+require "system_test_helper"
 
 # Values from .env-template
 ENV["KEYCLOAK_AUTH_URL"] = "http://keycloak:8080/auth"
@@ -8,6 +9,8 @@ ENV["HTTP_HOST"] = "localhost"
 ENV["HTTP_PORT"] = "3001"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  include SystemTestHelper
+
   Capybara.server_host = ENV["HTTP_HOST"]
   Capybara.server_port = ENV["HTTP_PORT"]
   Capybara.app_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"

@@ -1,9 +1,11 @@
 module InvestigationsHelper
   include SearchHelper
 
-  def search_for_investigations(page_size)
-    Investigation.full_search(search_query)
-                 .paginate(page: params[:page], per_page: page_size)
+  def search_for_investigations(page_size = 0)
+    result = Investigation.full_search(search_query)
+    return result if page_size.zero?
+
+    result.paginate(page: params[:page], per_page: page_size)
   end
 
   def sorting_params

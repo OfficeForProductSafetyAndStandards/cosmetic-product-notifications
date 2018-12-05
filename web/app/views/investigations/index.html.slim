@@ -2,77 +2,76 @@
 - content_for :after_header do
   = render "layouts/navbar"
 
-main#main-content.govuk-main-wrapper role="main"
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl
-        | Cases
-  .govuk-grid-row
-    .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
-      div class="govuk-!-margin-bottom-0"
-        = form_with(model: @search, scope: "", url: investigations_path, method: :get,
-                class: "mspsds-search") do |form|
-          .mspsds-search-box
-            = form.label "Keywords", class: "govuk-label--s"
-            = form.text_field :q, class: "govuk-input"
-            = form.submit "Search", name: nil, class: "mspsds-search-box--submit"
-          hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
-          .govuk-form-group
-            fieldset.govuk-fieldset
-              legend.govuk-fieldset__legend--s
-                | Assigned to
-              .govuk-checkboxes data-module="checkboxes"
-                .govuk-checkboxes__item
-                  = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
-                  = form.label :assigned_to_me, "Me", class: "govuk-checkboxes__label"
-                .govuk-checkboxes__item
-                  = form.check_box :assigned_to_someone_else, { class: "govuk-checkboxes__input",
-                          "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
-                  = form.label :assigned_to_someone_else, "Someone else", class: "govuk-checkboxes__label"
-                #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
-                  = form.label :assigned_to_someone_else_id, "Name", class: "govuk-label"
-                  = form.select :assigned_to_someone_else_id,
-                          User.get_assignees_select_options_short([current_user]),
-                          {},
-                          class: "govuk-select", id: "assignee-picker"
-          .govuk-form-group
-            fieldset.govuk-fieldset
-              .govuk-fieldset__legend--s
-                | Status
-              .govuk-checkboxes
-                .govuk-checkboxes__item
-                  = form.check_box :status_open, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
-                  = form.label :status_open, "Open", class: "govuk-checkboxes__label"
-                .govuk-checkboxes__item
-                  = form.check_box :status_closed, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
-                  = form.label :status_closed, "Closed", class: "govuk-checkboxes__label"
-          .govuk-form-group
-            fieldset.govuk-fieldset
-              .govuk-fieldset__legend--s
-                | Sort by
-              .govuk-radios class="govuk-!-margin-bottom-5"
-                .govuk-radios__item
-                  = form.radio_button :sort_by, "recent", class: "govuk-radios__input"
-                  = form.label :sort_by, "Updated: recent", class: "govuk-radios__label"
-                .govuk-radios__item
-                  = form.radio_button :sort_by, "oldest", class: "govuk-radios__input"
-                  = form.label :sort_by, "Updated: oldest", class: "govuk-radios__label"
-                .govuk-radios__item
-                  = form.radio_button :sort_by, "newest", class: "govuk-radios__input"
-                  = form.label :sort_by, "Created: newest", class: "govuk-radios__label"
-          = form.submit "Apply filters", name: nil, class: "govuk-button"
-
-    .govuk-grid-column-three-quarters
-      p
-        /TODO remove the links below
-        = link_to "Report an unsafe product", new_report_path, class: "govuk-link mspsds-block-link"
-        = link_to "Begin a case", new_investigation_path, class: "govuk-link mspsds-block-link"
-        = link_to "Ask a question", new_question_path, class: "govuk-link mspsds-block-link"
-
-      - if @results.any?
-        = render "table", search_results: @results
-        = will_paginate @investigations
-        br
-        = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: query_params)
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      - if params[:q].present?
+        span.govuk-caption-xl = "Case search results"
+        = params[:q]
+        span.govuk-caption-m = "#{@results.count} #{'result'.pluralize(@results.count)}"
       - else
-        .govuk-heading-xl[style="text-align:center"] = "No results"
+        = "Cases"
+
+.govuk-grid-row
+  .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
+    div class="govuk-!-margin-bottom-0"
+      = form_with(model: @search, scope: "", url: investigations_path, method: :get,
+              class: "mspsds-search") do |form|
+        .mspsds-search-box
+          = form.label "Keywords", class: "govuk-label--s"
+          = form.text_field :q, class: "govuk-input"
+          = form.submit "Search", name: nil, class: "mspsds-search-box--submit"
+        hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+        .govuk-form-group
+          fieldset.govuk-fieldset
+            legend.govuk-fieldset__legend--s
+              | Assigned to
+            .govuk-checkboxes data-module="checkboxes"
+              .govuk-checkboxes__item
+                = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
+                = form.label :assigned_to_me, "Me", class: "govuk-checkboxes__label"
+              .govuk-checkboxes__item
+                = form.check_box :assigned_to_someone_else, { class: "govuk-checkboxes__input",
+                        "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
+                = form.label :assigned_to_someone_else, "Someone else", class: "govuk-checkboxes__label"
+              #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
+                = form.label :assigned_to_someone_else_id, "Name", class: "govuk-label"
+                = form.select :assigned_to_someone_else_id,
+                        User.get_assignees_select_options_short([current_user]),
+                        {},
+                        class: "govuk-select", id: "assignee-picker"
+        .govuk-form-group
+          fieldset.govuk-fieldset
+            .govuk-fieldset__legend--s
+              | Status
+            .govuk-checkboxes
+              .govuk-checkboxes__item
+                = form.check_box :status_open, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
+                = form.label :status_open, "Open", class: "govuk-checkboxes__label"
+              .govuk-checkboxes__item
+                = form.check_box :status_closed, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
+                = form.label :status_closed, "Closed", class: "govuk-checkboxes__label"
+        .govuk-form-group
+          fieldset.govuk-fieldset
+            .govuk-fieldset__legend--s
+              | Sort by
+            .govuk-radios class="govuk-!-margin-bottom-5"
+              .govuk-radios__item
+                = form.radio_button :sort_by, "recent", class: "govuk-radios__input"
+                = form.label :sort_by, "Updated: recent", class: "govuk-radios__label"
+              .govuk-radios__item
+                = form.radio_button :sort_by, "oldest", class: "govuk-radios__input"
+                = form.label :sort_by, "Updated: oldest", class: "govuk-radios__label"
+              .govuk-radios__item
+                = form.radio_button :sort_by, "newest", class: "govuk-radios__input"
+                = form.label :sort_by, "Created: newest", class: "govuk-radios__label"
+        = form.submit "Apply filters", name: nil, class: "govuk-button"
+
+  .govuk-grid-column-three-quarters
+    - if @results.any?
+      = render "table", search_results: @results
+      = will_paginate @investigations
+      br
+      = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: query_params)
+    - else
+      .govuk-heading-xl[style="text-align:center"] = "No results"

@@ -31,7 +31,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to @location.business
+    assert_redirected_to business_url(@location.business, anchor: "locations")
   end
 
   test "should show location" do
@@ -56,7 +56,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
         postal_code: @location.postal_code
       }
     }
-    assert_redirected_to @location.business
+    assert_redirected_to business_url(@location.business, anchor: "locations")
   end
 
   test "should destroy location" do
@@ -64,6 +64,6 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
       delete location_url(@location)
     end
 
-    assert_redirected_to @location.business
+    assert_redirected_to business_url(@location.business, anchor: "locations")
   end
 end
