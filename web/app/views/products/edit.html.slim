@@ -3,6 +3,6 @@
   = link_to "Back to product", product_path(@product), class: "govuk-back-link"
 = render "product_heading", product: @product
 .govuk-grid-row
-  .govuk-grid-column-one-half
+  .govuk-grid-column-full
     = form_with model: @product, local: true do |form|
-      = render "form", form: form, product: @product, countries: @countries, search: false
+      = render "form", form: form, product: @product, countries: @countries, search: false, full_width: false

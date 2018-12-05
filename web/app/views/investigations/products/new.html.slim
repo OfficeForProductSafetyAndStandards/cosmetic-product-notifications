@@ -9,6 +9,6 @@
   .govuk-grid-row
     .govuk-grid-column-one-half
       = form_with model: @product, url: investigation_products_path(@investigation), local: true do |form|
-        = render "products/form", form: form, product: @product, countries: @countries, search: true
+        = render "products/form", form: form, product: @product, countries: @countries, search: true, full_width: true
     .govuk-grid-column-one-half
       = render "products/suggested_container"

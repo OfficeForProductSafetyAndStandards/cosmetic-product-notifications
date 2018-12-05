@@ -8,6 +8,6 @@
   .govuk-grid-row
     .govuk-grid-column-one-half
       = form_with model: @product, local: true do |form|
-        = render "form", form: form, product: @product, countries: @countries, search: true
+        = render "form", form: form, product: @product, countries: @countries, search: true, full_width: true
     .govuk-grid-column-one-half
       = render "suggested_container"
