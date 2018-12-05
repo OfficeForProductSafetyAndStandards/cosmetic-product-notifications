@@ -1,28 +1,22 @@
-# Shared::Web
-Short description and motivation.
+# Shared Web
 
-## Usage
-How to use my plugin.
+This folder contains a [Rails engine](https://guides.rubyonrails.org/engines.html) containing common code for OPSS web applications.
 
-## Installation
-Add this line to your application's Gemfile:
+Features of this engine include:
+- The [Gov.UK Design System](https://design-system.service.gov.uk/)
+- Support for [Gov.UK Notify](https://www.notifications.service.gov.uk/)
+- Various linting tools (e.g. rubocop, slim-lint)
+
+# Installation
+
+Add the following to your project's Gemfile:
 
 ```ruby
-gem 'shared-web'
+gem 'shared-web', path: '<path to shared web>'
 ```
+and run `bundle install`
 
-And then execute:
+To add the shared NPM packages, run
 ```bash
-$ bundle
+yarn add <path to shared web>
 ```
-
-Or install it yourself as:
-```bash
-$ gem install shared-web
-```
-
-## Contributing
-Contribution directions go here.
-
-## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
