@@ -278,6 +278,9 @@ GEM
       netrc (~> 0.8)
     reverse_markdown (1.1.0)
       nokogiri
+    roo (2.7.1)
+      nokogiri (~> 1)
+      rubyzip (~> 1.1, < 2.0.0)
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
@@ -447,6 +450,7 @@ DEPENDENCIES
   pundit
   rails (~> 5.2)
   redcarpet
+  roo (~> 2.7.0)
   rspec-mocks
   rubocop
   ruby-debug-ide
