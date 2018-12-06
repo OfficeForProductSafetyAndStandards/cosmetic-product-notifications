@@ -1,0 +1,5 @@
+- if image.variable?
+  = image_tag image.variant(resize: dimensions), class: class_name
+- else
+  .image-without-preview
+    span = image.metadata["title"]

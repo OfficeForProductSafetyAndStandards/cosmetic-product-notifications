@@ -4,7 +4,6 @@ hr.govuk-section-break.govuk-section-break--l
 
 .govuk-grid-row
   .govuk-grid-column-full
-    = render "images_summary", parent: @product
     = render "documents_list_summary", parent: @product
 
 - if @product.images.empty? && @product.documents.empty?
