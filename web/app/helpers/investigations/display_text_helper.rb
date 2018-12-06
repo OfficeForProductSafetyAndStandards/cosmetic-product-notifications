@@ -7,6 +7,10 @@ module Investigations::DisplayTextHelper
     investigation.is_case ? 'report' : 'question'
   end
 
+  def image_document_text(document)
+    document.image? ? 'image' : 'document'
+  end
+
   def get_displayable_highlights(highlights)
     highlights.map do |highlight|
       {
