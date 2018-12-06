@@ -7,12 +7,8 @@ set -ex
 #
 # The caller should have the following environment variables set:
 #
-# CF_USERNAME: cloudfoundry username
-# CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
-#
-# If SET_UP is set the script will omit installing cf cli and logging in and out
-# This can be used to invoke the script from dev machines when performing initial setup
+# If NO_START is set the app won't be started
 
 
 docker build --target keycloak-package -t keycloak-package:latest ./keycloak
@@ -20,12 +16,9 @@ docker cp $(docker create keycloak-package):/tmp/keycloak/package ./keycloak
 
 # Install the Cloud Foundry CLI
 
-if [[ -z ${SET_UP} ]] ; then
-    ./ci/install-cf.sh
-    cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
-    cf push -f ./keycloak/manifest.yml
-    cf logout
+if [[ -z ${NO_START} ]] ; then
+    cf push -f ./keycloak/manifest.yml --hostname keycloak-$SPACE
 fi
-if [[ ${SET_UP} ]] ; then
+if [[ ${NO_START} ]] ; then
     cf push -f ./keycloak/manifest.yml --no-start --hostname keycloak-$SPACE
 fi

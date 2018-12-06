@@ -7,12 +7,8 @@ set -ex
 #
 # The caller should have the following environment variables set:
 #
-# CF_USERNAME: cloudfoundry username
-# CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
-#
-# If SET_UP is set the script will omit installing cf cli and logging in and out
-# This can be used to invoke the script from dev machines when performing initial setup
+# If NO_START is set the app won't be started
 
 # Circumvent the cloudfoundry asset compilation step - https://github.com/cloudfoundry/ruby-buildpack/blob/master/src/ruby/finalize/finalize.go#L213
 cp -a ./worker/public/. ./web/public/
@@ -25,12 +21,9 @@ cp -a ./worker/clamav/. ./web/clamav/
 
 cp -a ./shared-web/. ./web/vendor/shared-web/
 
-if [[ -z ${SET_UP} ]] ; then
-    ./ci/install-cf.sh
-    cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
+if [[ -z ${NO_START} ]] ; then
     cf push -f ./worker/manifest.yml
-    cf logout
 fi
-if [[ ${SET_UP} ]] ; then
+if [[ ${NO_START} ]] ; then
     cf push -f ./worker/manifest.yml --no-start
 fi

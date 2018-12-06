@@ -101,7 +101,7 @@ CI as described in [the root README](../README.md#deployment).
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the website app:
 
-    SET_UP=setup SPACE=<<space>> ./web/deploy.sh
+    NO_START=no-start SPACE=<<space>> ./web/deploy.sh
 
 This provisions the app in Cloud Foundry.
 

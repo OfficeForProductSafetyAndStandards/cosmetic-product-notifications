@@ -43,7 +43,7 @@ To create a Keycloak database for the current space:
 
 Running the following commands from the root directory will then package and set up the Keycloak app:
 
-    SET_UP=setup SPACE=<<SPACE>> ./keycloak/deploy.sh
+    NO_START=no-start SPACE=<<SPACE>> ./keycloak/deploy.sh
 
 Once the app has been created, add the following environment variables to specify the database connection properties:
 
