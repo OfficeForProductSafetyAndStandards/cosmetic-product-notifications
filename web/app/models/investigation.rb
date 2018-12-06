@@ -152,19 +152,19 @@ private
     end
   end
 
-  def create_audit_activity_for_product product
+  def create_audit_activity_for_product(product)
     AuditActivity::Product::Add.from(product, self)
   end
 
-  def create_audit_activity_for_removing_product product
+  def create_audit_activity_for_removing_product(product)
     AuditActivity::Product::Destroy.from(product, self)
   end
 
-  def create_audit_activity_for_business business
+  def create_audit_activity_for_business(business)
     AuditActivity::Business::Add.from(business, self)
   end
 
-  def create_audit_activity_for_removing_business business
+  def create_audit_activity_for_removing_business(business)
     AuditActivity::Business::Destroy.from(business, self)
   end
 
@@ -202,7 +202,7 @@ private
     title_components.reject(&:blank?).join(", ")
   end
 
-  def get_product_property_value_if_shared property_name
+  def get_product_property_value_if_shared(property_name)
     first_product = products.first
     first_product[property_name] if products.drop(1).all? { |product| product[property_name] == first_product[property_name] }
   end
