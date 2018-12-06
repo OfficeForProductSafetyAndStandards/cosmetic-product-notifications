@@ -24,6 +24,7 @@ module Mspsds
     config.action_view.form_with_generates_ids = true
 
     config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = 'mspsds-mailers'
 
     # This changes Rails timezone, but keeps ActiveRecord in UTC
     config.time_zone = "Europe/London"
