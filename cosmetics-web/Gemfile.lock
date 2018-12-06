@@ -342,7 +342,6 @@ DEPENDENCIES
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.0)
   shared-web!
-  sidekiq
   slim-rails
   spring
   strong_migrations
