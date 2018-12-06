@@ -1,6 +1,5 @@
 class RemoveFilesWithoutAttachmentsJob < ApplicationJob
   def perform
-    good_blob_ids = ActiveStorage::Attachment.select("blob_id")
-    ActiveStorage::Blob.where.not(id: good_blob_ids).delete_all
+    ActiveStorage::Blob.left_outer_joins(:attachments).merge(ActiveStorage::Attachment.where(id: nil)).delete_all
   end
 end
