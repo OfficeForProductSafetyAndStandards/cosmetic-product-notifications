@@ -101,13 +101,17 @@ CI as described in [the root README](../README.md#deployment).
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the website app:
 
-    cf push -f ./web/manifest.yml --no-start --hostname mspsds-<SPACE>
+    NO_START=no-start SPACE=<<space>> ./web/deploy.sh
 
 This provisions the app in Cloud Foundry.
 
     cf set-env mspsds-web RAILS_ENV production
 
 This configures rails to use the production database amongst other things.
+
+    cf set-env mspsds-web SECRET_KEY_BASE XXX
+
+This sets the server's encryption key. Generate a new value by running `rake secret` 
 
     cf set-env mspsds-web AWS_ACCESS_KEY_ID XXX
     cf set-env mspsds-web AWS_SECRET_ACCESS_KEY XXX
