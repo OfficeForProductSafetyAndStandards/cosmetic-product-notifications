@@ -1,6 +1,6 @@
 - content_for :page_title, "Edit product"
 - content_for :after_header do
-  = link_to "Back to product", product_path(@product), class: "govuk-back-link"
+  = link_to "Back to product", @product, class: "govuk-back-link"
 = render "product_heading", product: @product
 .govuk-grid-row
   .govuk-grid-column-full

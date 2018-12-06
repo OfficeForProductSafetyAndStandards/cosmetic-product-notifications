@@ -1,10 +1,9 @@
-- page_title = "New product"
-- content_for :page_title, page_title
+- content_for :page_title, "New product"
 - content_for :after_header do
   = link_to "Back to list", products_path, class: "govuk-back-link"
 .new-product-page.products-search-form
   h1.govuk-heading-xl
-    = page_title
+    | New product
 
   = form_with model: @product, local: true do |form|
     .govuk-grid-row
