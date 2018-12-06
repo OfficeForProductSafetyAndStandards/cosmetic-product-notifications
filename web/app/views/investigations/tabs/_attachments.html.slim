@@ -1,6 +1,9 @@
+= link_to "Add attachment", new_document_flow_path(@investigation)
+
+hr.govuk-section-break.govuk-section-break--l
+
 .govuk-grid-row
   .govuk-grid-column-full
-    = link_to "Add attachment", new_document_flow_path(@investigation), class: "govuk-link mspsds-block-link"
     = render "images_summary", parent: @investigation
     = render "documents_list_summary", parent: @investigation
 
