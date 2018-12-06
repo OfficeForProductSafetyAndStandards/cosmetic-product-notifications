@@ -22,7 +22,7 @@ class DocumentTest < ApplicationSystemTestCase
 
   test "Second step should be details" do
     attach_file_and_upload
-    assert_text "Enter document details"
+    assert_text "Document details"
   end
 
   test "details should validate title" do

@@ -1,6 +1,6 @@
 h2
   | Case
-- if @investigation.images.attached? && @investigation.images.first.metadata["safe"] \
+- if @investigation.images.any? && @investigation.images.first.metadata["safe"] \
     && @investigation.images.first.variable?
   = image_tag @investigation.images.first.variant(resize: "300x200"), alt: "Case"
   br

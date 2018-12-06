@@ -1,6 +1,0 @@
-- content_for :page_title, "New image"
-- content_for :after_header do
-  = link_to "Back", @parent, class: "govuk-back-link"
-= render "page_heading", title: "Enter image details"
-= render "images/metadata_form", image: @file_blob, edit: false,
-        target_url: wizard_path

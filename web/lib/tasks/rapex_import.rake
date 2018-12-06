@@ -40,7 +40,7 @@ def create_records_from_notification(notification, date)
 
   investigation = create_investigation(notification, date, name)
   product = create_product(notification, name)
-  create_product_images(notification, product) unless product.nil?
+  create_product_attachments(notification, product) unless product.nil?
   create_investigation_product(investigation, product) unless investigation.nil? || investigation.id.nil? || product.nil?
   create_activity(notification, investigation, date) unless investigation.nil?
 end
@@ -70,7 +70,7 @@ def create_investigation(notification, date, name)
   )
 end
 
-def create_product_images(notification, product)
+def create_product_attachments(notification, product)
   urls = notification.xpath("pictures/picture")
   urls.each do |url|
     clean_url = url.text.delete("\n") unless url.nil?
@@ -79,7 +79,7 @@ def create_product_images(notification, product)
     file = download_url(fullsize_clean_url)
     file_content_type = file.content_type_parse.first
     file_type = file_content_type.split('/').last
-    product.images.attach(io: file, filename: "#{product.name}.#{file_type}", content_type: file_content_type)
+    product.documents.attach(io: file, filename: "#{product.name}.#{file_type}", content_type: file_content_type)
   end
 end
 

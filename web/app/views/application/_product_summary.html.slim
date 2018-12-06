@@ -2,8 +2,9 @@
   .govuk-grid-column-one-third
     .aspect-ratio-3-2-container
       .aspect-ratio-contents
-        - if product.images.attached?
-          = render "images/image_tag", image: product.images.first, dimensions: "300x200", class_name: "product-image"
+        - if product.images.any?
+          = render "documents/document_preview", document: product.images.first, dimensions: "300x200",
+                  class_name: "product-image"
         - else
           p
             | No images.

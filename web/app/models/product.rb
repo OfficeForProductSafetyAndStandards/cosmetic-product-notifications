@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   include Documentable
   include Searchable
   include DateConcern
+  include AttachmentConcern
 
   def get_date_key
     :date_placed_on_market
@@ -13,7 +14,6 @@ class Product < ApplicationRecord
   validates :name, presence: true
 
   has_many_attached :documents
-  has_many_attached :images
 
   has_many :investigation_products, dependent: :destroy
   has_many :investigations, through: :investigation_products
@@ -25,6 +25,10 @@ class Product < ApplicationRecord
 
   def country_of_origin_for_display
     country_from_code(country_of_origin) || country_of_origin
+  end
+
+  def pretty_description
+    "Product #{id}"
   end
 end
 
