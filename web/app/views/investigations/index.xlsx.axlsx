@@ -1,7 +1,7 @@
 book = xlsx_package.workbook
 
 book.add_worksheet name: "Cases" do |sheet_investigations|
-  sheet_investigations.add_row %w[ID Status Title Description ProductType HazardType Assignee Source
+  sheet_investigations.add_row %w[ID Status Title Description Product_Type Hazard_Type Assignee Source
                             Reporter_Name Reporter_Email Reporter_Phone Reporter_Type
                             Products Businesses Activities Correspondences Corrective_Actions Tests]
 
@@ -15,17 +15,17 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
       investigation.hazard_type,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
       investigation.source&.show,
-      investigation.reporter ? investigation.reporter.name : nil,
-      investigation.reporter ? investigation.reporter.email_address : nil,
-      investigation.reporter ? investigation.reporter.phone_number : nil,
-      investigation.reporter ? investigation.reporter.reporter_type : nil,
+      investigation.reporter&.name,
+      investigation.reporter&.email_address,
+      investigation.reporter&.phone_number,
+      investigation.reporter&.reporter_type,
       investigation.products.count,
       investigation.businesses.count,
       investigation.activities.count,
       investigation.correspondences.count,
       investigation.corrective_actions.count,
       investigation.tests.count
-    ]
+    ], :types => :text
   end
 end
 
@@ -48,7 +48,7 @@ book.add_worksheet name: "Products" do |sheet_products|
         product.brand,
         product.source&.show,
         investigation.pretty_id
-      ]
+      ], :types => :text
     end
   end
 end
@@ -76,7 +76,7 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
         business.primary_location ? business.primary_location.postal_code : nil,
         business.locations.count,
         investigation.pretty_id
-      ]
+      ], :types => :text
     end
   end
 end
@@ -97,7 +97,7 @@ book.add_worksheet name: "Businesses locations" do |sheet_businesses_locations|
           location.postal_code,
           business.id,
           investigation.pretty_id
-        ]
+        ], :types => :text
       end
     end
   end
@@ -114,7 +114,7 @@ book.add_worksheet name: "Actions" do |sheet_actions|
         activity.body,
         activity.source&.show,
         investigation.pretty_id
-      ]
+      ], :types => :text
     end
   end
 end
@@ -137,7 +137,7 @@ book.add_worksheet name: "Correspondences" do |sheet_correspondences|
         correspondence.phone_number,
         correspondence.overview,
         investigation.pretty_id
-      ]
+      ], :types => :text
     end
   end
 end
@@ -156,7 +156,7 @@ book.add_worksheet name: "Corrective actions" do |sheet_corrective_actions|
         corrective_action.business_id,
         corrective_action.product_id,
         investigation.pretty_id
-      ]
+      ], :types => :text
     end
   end
 end
@@ -175,7 +175,7 @@ book.add_worksheet name: "Tests" do |sheet_tests|
         test.result,
         test.product_id,
         investigation.pretty_id
-      ]
+      ], :types => :text
     end
   end
 end
