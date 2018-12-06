@@ -2,7 +2,8 @@
 - content_for :after_header do
   = link_to "Back to product", @product, class: "govuk-back-link"
 = render "product_heading", product: @product
-h2.govuk-heading-l
-  | Product details
-= form_with(model: @product, local: true) do |form|
-  = render "form", form: form, product: @product, countries: @countries, search: false
+.govuk-grid-row
+  .govuk-grid-column-full
+    = form_with model: @product, local: true do |form|
+      = render "form_validation_display", errors: @product.errors, model_name: "product"
+      = render "form", form: form, product: @product, countries: @countries, search: false
