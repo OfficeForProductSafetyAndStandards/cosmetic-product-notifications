@@ -1,4 +1,7 @@
-= link_to "Add business", new_investigation_business_url(@investigation), class: "no-print mspsds-block-link"
+= link_to "Add business", new_investigation_business_url(@investigation)
+
+hr.govuk-section-break.govuk-section-break--l
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     - if @investigation.businesses.any?
