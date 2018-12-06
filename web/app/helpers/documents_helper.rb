@@ -61,6 +61,12 @@ module DocumentsHelper
     File.extname(document.filename.to_s)&.remove(".")&.upcase
   end
 
+  def pretty_type_description(document)
+    description = ""
+    description += document_file_extension(document) + ' ' if document_file_extension document
+    description + image_document_text(document)
+  end
+
   def formatted_file_updated_date(file)
     if file.blob.metadata[:updated]
       "Updated #{Time.zone.parse(file.blob.metadata[:updated]).strftime('%d/%m/%Y')}"
