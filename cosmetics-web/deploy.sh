@@ -15,7 +15,7 @@ cp -a ./shared-web/. ./cosmetics-web/vendor/shared-web/
 
 ./ci/install-cf.sh
 
-cf login -a api.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
+cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
 
 cf push -f ./cosmetics-web/manifest.yml --hostname cosmetics-$SPACE
 

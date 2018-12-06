@@ -10,6 +10,9 @@ set -ex
 # CF_USERNAME: cloudfoundry username
 # CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
+#
+# If SET_UP is set the script will omit installing cf cli and logging in and out
+# This can be used to invoke the script from dev machines when performing initial setup
 
 # Circumvent the cloudfoundry asset compilation step - https://github.com/cloudfoundry/ruby-buildpack/blob/master/src/ruby/finalize/finalize.go#L213
 cp -a ./worker/public/. ./web/public/
@@ -20,12 +23,14 @@ cp ./worker/apt.yml ./web/apt.yml
 # Copy the clamav configuration
 cp -a ./worker/clamav/. ./web/clamav/
 
-cp -a ./shared-web ./web/vendor/shared-web
+cp -a ./shared-web/. ./web/vendor/shared-web/
 
-./ci/install-cf.sh
-
-cf login -a api.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
-
-cf push -f ./worker/manifest.yml
-
-cf logout
+if [[ -z ${SET_UP} ]] ; then
+    ./ci/install-cf.sh
+    cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
+    cf push -f ./worker/manifest.yml
+    cf logout
+fi
+if [[ ${SET_UP} ]] ; then
+    cf push -f ./worker/manifest.yml --no-start
+fi
