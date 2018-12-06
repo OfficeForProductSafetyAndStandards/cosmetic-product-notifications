@@ -13,6 +13,6 @@
         = render "form_validation_display", errors: @product.errors, model_name: "product"
     .govuk-grid-row
       .govuk-grid-column-one-half
-        = render "products/form", form: form, product: @product, countries: @countries, search: true, full_width: true
+        = render "products/form", form: form, product: @product, countries: @countries, search: true
       .govuk-grid-column-one-half
         = render "products/suggested_container"
