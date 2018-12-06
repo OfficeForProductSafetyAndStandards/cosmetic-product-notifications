@@ -9,7 +9,7 @@ $(document).on('turbolinks:load', function () {
     $page.find('.search-trigger input, .search-trigger textarea'),
     '/cases/' + investigationId + '/businesses/suggested?excluded_businesses=' + excludedBusinessIds,
     function () {
-      return $page.find('form').serialize();
+      return $page.find('form').find(':not(input[type=hidden])').serialize();
     },
     function (data) {
       $('#suggested-businesses').html(data);
