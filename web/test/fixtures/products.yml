@@ -34,7 +34,7 @@ iphone:
   model: XS MAX
   product_type: phone
   description: iphone description
-  country_of_origin: America
+  country_of_origin: United States
   batch_number: 1234
 
 iphone_3g:
