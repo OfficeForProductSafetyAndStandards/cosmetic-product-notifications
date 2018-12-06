@@ -39,13 +39,11 @@ To create a Keycloak database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
-    cf create-service postgres tiny-unencrypted-9.5 keycloak-database
+    cf create-service postgres tiny-unencrypted-10.5 keycloak-database
 
 Running the following commands from the root directory will then package and set up the Keycloak app:
 
-    docker build --target keycloak-package -t keycloak-package:latest ./keycloak
-    docker cp $(docker create keycloak-package):/tmp/keycloak/package ./keycloak
-    cf push -f ./keycloak/manifest.yml --no-start --hostname keycloak-<<SPACE>>
+    NO_START=no-start SPACE=<<SPACE>> ./keycloak/deploy.sh
 
 Once the app has been created, add the following environment variables to specify the database connection properties:
 
@@ -53,23 +51,23 @@ Once the app has been created, add the following environment variables to specif
     cf set-env keycloak KEYCLOAK_DATABASE_HOSTNAME << see: VCAP_SERVICES.postgres.credentials.host >>
     cf set-env keycloak KEYCLOAK_DATABASE_USERNAME << see: VCAP_SERVICES.postgres.credentials.username >>
     cf set-env keycloak KEYCLOAK_DATABASE_PASSWORD << see: VCAP_SERVICES.postgres.credentials.password >>
-    cf set-env keycloak NOTIFY_API_KEY             XXX
 
 The relevant values are specified as properties on the `VCAP_SERVICES` environment variable, which can be listed by
-running `cf env keycloak`. See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify)
-to get the API key.
+running `cf env keycloak`. 
+
+    cf set-env keycloak NOTIFY_API_KEY             XXX
+    
+See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get the API key.
+
+    cf set-env keycloak NOTIFY_SMS_TEMPLATE_ID     XXX
+
+with the value coming from [gov.uk Notify](https://www.notifications.service.gov.uk/services/)
+(see Notify accounts section in the [root README](../README.md#GOV.UK Notify))
 
 Finally, start the app and check that it is running correctly:
 
     cf start keycloak
     cf logs keycloak --recent
-
-
-Follow the steps in [the SMS autheticator README](keycloak/providers/sms-authenticator/README.md) to enable SMS two
-factor authentication. The following environment variable will also need to be set:
-
-    cf set-env keycloak NOTIFY_SMS_TEMPLATE_ID     XXX
-
 
 ### Initial configuration
 
@@ -94,7 +92,7 @@ Generate a new client secret for the MSPSDS app:
 
 Set the client credentials for the MSPSDS app:
 
-    cf set-env mspsds-web KEYCLOAK_AUTH_URL https://keycloak-<<SPACE>>.cloudapps.digital/auth
+    cf set-env mspsds-web KEYCLOAK_AUTH_URL https://keycloak-<<SPACE>>.london.cloudapps.digital/auth
     cf set-env mspsds-web KEYCLOAK_CLIENT_ID mspsds-app
     cf set-env mspsds-web KEYCLOAK_CLIENT_SECRET <<SECRET>>
     cf restage mspsds-web
@@ -103,4 +101,7 @@ Set the client credentials for the MSPSDS app:
 
 Allow keycloak to redirect back to the app after login
 * Select realm > MSPSDS > Clients > mspsds-app
-* Add `https://mspsds-<<SPACE>>.cloudapps.ditial/*` to the Valid Redirect URIs section and click save
+* Add `https://mspsds-<<SPACE>>.london.cloudapps.digital/*` to the Valid Redirect URIs section and click save
+
+Follow the steps in [the SMS autheticator README's Configuration section](
+./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication.
