@@ -13,6 +13,7 @@ PATH
   remote: vendor/shared-web
   specs:
     shared-web (0.1.0)
+      keycloak
       rails (~> 5.2.1)
 
 GEM
