@@ -137,7 +137,7 @@ class Investigation < ApplicationRecord
 private
 
   def create_audit_activity_for_case
-    AuditActivity::Investigation::Add.from(self)
+    is_case ? AuditActivity::Investigation::AddAllegation.from(self) : AuditActivity::Investigation::AddQuestion.from(self)
   end
 
   def create_audit_activity_for_status
