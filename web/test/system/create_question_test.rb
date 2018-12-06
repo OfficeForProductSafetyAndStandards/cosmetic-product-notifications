@@ -22,6 +22,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
   end
 
   test "first step should be reporter type" do
+    assert_text "New Question"
     assert_text "Who did the question come from?"
   end
 
@@ -30,13 +31,15 @@ class CreateQuestionTest < ApplicationSystemTestCase
     assert_text "Reporter type can't be blank"
   end
 
-  test "first step should allow an option to be selected" do
+  test "first step should allow a reporter type to be selected" do
     select_reporter_type_and_continue
     assert_no_text "prevented this reporter from being saved"
   end
 
   test "second step should be reporter details" do
     select_reporter_type_and_continue
+
+    assert_text "New Question"
     assert_text "What are their contact details?"
   end
 
@@ -66,6 +69,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     select_reporter_type_and_continue
     fill_reporter_details_and_continue
 
+    assert_text "New Question"
     assert_text "What is the question?"
   end
 

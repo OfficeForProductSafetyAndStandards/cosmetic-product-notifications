@@ -1,0 +1,46 @@
+- content_for :page_title, @page_title
+- content_for :after_header do
+  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
+h1.govuk-heading-xl
+  = @page_title
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: @investigation, scope: :allegation, local: true, url: wizard_path, method: :put do |form|
+      = render "form_validation_display", errors: @investigation.errors, model_name: "allegation"
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | What is being alleged?
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:description].any?)
+          span.govuk-hint#question-description-hint
+            | Please give as much detail as possible
+          = form.text_area :description, class: "govuk-textarea", "aria-describedby": "question-description-hint",
+                  rows: 5, maxlength: 1000
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Product Type
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_type].any?)
+          = form.select :product_type, product_types, { include_blank: true },
+                  class: "govuk-select", id: "product-type-picker"
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Hazard Type
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)
+          = form.select :hazard_type, hazard_types, { include_blank: true },
+                  class: "govuk-select", id: "hazard-type-picker"
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Are there any files or images related to the allegation?
+        .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation))
+          - if @file_blob.present?
+            p#current-attachment-details
+              ' Currently selected file:
+              = link_to @file_blob.filename, @file_blob, target: "_blank"
+          = form.fields_for :attachment do |subform|
+            = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
+
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

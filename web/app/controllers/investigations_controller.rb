@@ -2,7 +2,7 @@ class InvestigationsController < ApplicationController
   include InvestigationsHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show update assign status confirmation]
+  before_action :set_investigation, only: %i[show update assign status]
 
   # GET /investigations
   # GET /investigations.json
@@ -35,6 +35,8 @@ class InvestigationsController < ApplicationController
   # GET /investigations/new
   def new
     case params[:type]
+    when "allegation"
+      redirect_to new_allegation_path
     when "question"
       redirect_to new_question_path
     else
@@ -48,9 +50,6 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1/assign
   def assign; end
 
-  # GET /investigations/1/confirmation
-  def confirmation; end
-
   # PATCH/PUT /investigations/1
   # PATCH/PUT /investigations/1.json
   def update
@@ -60,7 +59,7 @@ class InvestigationsController < ApplicationController
     @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "Investigation was successfully updated." }
+        format.html { redirect_to @investigation, notice: "Case was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes
@@ -81,7 +80,7 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.new(investigation_create_params)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to investigation_path(@investigation) }
+        format.html { redirect_to investigation_path(@investigation), notice: "Case was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
         format.html { render :new }

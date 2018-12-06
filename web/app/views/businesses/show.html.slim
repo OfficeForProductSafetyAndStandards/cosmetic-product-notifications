@@ -5,7 +5,8 @@
 = render "business_heading", business: @business
 = render "business_summary", business: @business
 
-hr.govuk-section-break.govuk-section-break--m
+hr.govuk-section-break.govuk-section-break--l
+
 = render "tabs", tabs: [\
   Tab.new("full-detail", "Full detail", lambda { render "businesses/tabs/details" }),
   Tab.new("locations", "Locations", lambda { render "businesses/tabs/locations" }),

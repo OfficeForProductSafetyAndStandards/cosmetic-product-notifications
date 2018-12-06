@@ -11,17 +11,6 @@ Rails.application.routes.draw do
     end
   end
 
-  concern :image_attachable do
-    resources :images, controller: "images" do
-      collection do
-        resources :new, controller: "images_flow", only: %i[show new create update]
-      end
-      member do
-        get :remove
-      end
-    end
-  end
-
   resource :session, only: %i[new] do
     member do
       get :new
@@ -31,16 +20,13 @@ Rails.application.routes.draw do
   end
 
   resources :question, controller: "investigations/question", only: %i[show new create update]
+  resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
 
   resources :investigations, path: "cases", only: %i[index show new create update],
-            concerns: %i[document_attachable image_attachable] do
+            concerns: %i[document_attachable] do
     member do
       get :status
       get :assign
-      get :confirmation
-    end
-    collection do
-      resources :report, controller: "investigations/report", only: %i[show new create update]
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do
       collection do
@@ -83,7 +69,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :businesses, concerns: %i[document_attachable image_attachable] do
+  resources :businesses, concerns: %i[document_attachable] do
     collection do
       get :suggested
       post :companies_house
@@ -95,7 +81,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products, concerns: %i[document_attachable image_attachable] do
+  resources :products, concerns: %i[document_attachable] do
     collection do
       get :suggested
     end

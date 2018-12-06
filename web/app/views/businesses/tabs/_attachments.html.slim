@@ -1,8 +1,10 @@
-.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+= link_to "Add attachment", new_document_flow_path(@business)
+
+hr.govuk-section-break.govuk-section-break--l
+
+.govuk-grid-row
   .govuk-grid-column-full
-    = link_to "Add attachment", new_document_flow_path(@business), class: "govuk-link mspsds-block-link"
-    = render "images_summary", parent: @business
     = render "documents_list_summary", parent: @business
 
 - if @business.images.empty? && @business.documents.empty?
-  p = "No attachments yet."
+  p = "No attachments."

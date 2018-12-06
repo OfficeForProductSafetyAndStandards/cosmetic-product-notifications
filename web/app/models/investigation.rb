@@ -2,11 +2,14 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
   include UserService
+  include AttachmentConcern
 
   attr_accessor :status_rationale
 
   validates :question_title, presence: true, on: :question_details
-  validates :description, presence: true, on: :question_details
+  validates :description, presence: true, on: %i[allegation_details question_details]
+  validates :hazard_type, presence: true, on: :allegation_details
+  validates :product_type, presence: true, on: :allegation_details
 
   validates_length_of :question_title, maximum: 1000
   validates_length_of :description, maximum: 1000
@@ -46,7 +49,6 @@ class Investigation < ApplicationRecord
   has_many :tests, dependent: :destroy
 
   has_many_attached :documents
-  has_many_attached :images
 
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :reporter, dependent: :destroy
@@ -61,10 +63,6 @@ class Investigation < ApplicationRecord
       only: %i[question_title description is_closed assignee_id updated_at created_at],
       include: {
         documents: {
-          only: [],
-          methods: %i[title description filename]
-        },
-        images: {
           only: [],
           methods: %i[title description filename]
         },
@@ -100,6 +98,10 @@ class Investigation < ApplicationRecord
     id_string.insert(4, "-")
   end
 
+  def pretty_description
+    "Case #{pretty_id}"
+  end
+
   def question_title_prefix
     question_type && !is_case ? question_type + ' ' : ''
   end
@@ -124,7 +126,7 @@ class Investigation < ApplicationRecord
   end
 
   def self.fuzzy_fields
-    %w[documents.* images.* correspondences.* activities.* businesses.* products.* reporter.*
+    %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
        tests.* question_title description]
   end
 
