@@ -5,9 +5,13 @@
 .new-product-page.products-search-form
   h1.govuk-heading-xl
     = page_title
-  .govuk-grid-row
-    .govuk-grid-column-one-half
-      = form_with model: @product, local: true do |form|
+
+  = form_with model: @product, local: true do |form|
+    .govuk-grid-row
+      .govuk-grid-column-full
+        = render "form_validation_display", errors: @product.errors, model_name: "product"
+    .govuk-grid-row
+      .govuk-grid-column-one-half
         = render "form", form: form, product: @product, countries: @countries, search: true, full_width: true
-    .govuk-grid-column-one-half
-      = render "suggested_container"
+      .govuk-grid-column-one-half
+        = render "suggested_container"

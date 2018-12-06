@@ -5,4 +5,5 @@
 .govuk-grid-row
   .govuk-grid-column-full
     = form_with model: @product, local: true do |form|
+      = render "form_validation_display", errors: @product.errors, model_name: "product"
       = render "form", form: form, product: @product, countries: @countries, search: false, full_width: false
