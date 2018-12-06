@@ -1,8 +1,12 @@
 = link_to "Edit details", edit_business_path(@business)
 table.govuk-table
-  caption.govuk-table__caption.govuk-heading-m
-    | Business details
   tbody.govuk-table__body
+  br
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Name
+      td.govuk-table__cell
+        = @business.company_name
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
         | Company number
