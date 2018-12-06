@@ -121,7 +121,7 @@ Please only do this if you are confident that this is a stable commit.
 Once you have a GOV.UK PaaS account as mentioned above, you should install the Cloud Foundry CLI (`cf`) from
 https://github.com/cloudfoundry/cli#downloads and then run the following commands:
 
-    cf login -a api.cloud.service.gov.uk -u XXX -p XXX
+    cf login -a api.london.cloud.service.gov.uk -u XXX -p XXX
     cf target -o beis-mspsds
 
 This will log you in and set the correct target organisation.
@@ -138,7 +138,7 @@ To create a database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
-    cf create-service postgres tiny-unencrypted-9.5 mspsds-database
+    cf create-service postgres tiny-unencrypted-10.5 mspsds-database
 
 Larger database options should be considered if required.
 
