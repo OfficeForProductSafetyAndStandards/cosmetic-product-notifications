@@ -8,7 +8,7 @@ class AuditActivity::Investigation::Add < AuditActivity::Investigation::Base
   end
 
   def self.build_reporter_details(reporter)
-    details = "<br>**Reporter**<br>"
+    details = "<br><br>**Reporter**<br><br>"
     details += "Name: **#{reporter.name}**<br>" if reporter.name.present?
     details += "Type: **#{reporter.reporter_type}**<br>" if reporter.reporter_type.present?
     details += "Phone number: **#{reporter.phone_number}**<br>" if reporter.phone_number.present?

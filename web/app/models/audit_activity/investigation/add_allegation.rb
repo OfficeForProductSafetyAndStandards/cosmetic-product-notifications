@@ -9,10 +9,10 @@ class AuditActivity::Investigation::AddAllegation < AuditActivity::Investigation
 
   def self.build_body(investigation)
     body =  "**Allegation details**<br>"
-    body += "Product type: **#{investigation.product_type}**<br>" if investigation.product_type.present?
-    body += "Hazard type: **#{investigation.hazard_type}**<br>" if investigation.hazard_type.present?
-    body += "Attachment: **#{investigation.documents.first.filename.to_s.gsub('_', '\_')}**<br>" if investigation.documents.attached?
-    body += "<br>#{investigation.description}" if investigation.description.present?
+    body += "<br>Product type: **#{investigation.product_type}**" if investigation.product_type.present?
+    body += "<br>Hazard type: **#{investigation.hazard_type}**" if investigation.hazard_type.present?
+    body += "<br>Attachment: **#{investigation.documents.first.filename.to_s.gsub('_', '\_')}**" if investigation.documents.attached?
+    body += "<br><br>#{investigation.description}" if investigation.description.present?
     body += self.build_reporter_details(investigation.reporter) if investigation.reporter.present?
     body
   end
