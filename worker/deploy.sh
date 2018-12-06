@@ -7,9 +7,8 @@ set -ex
 #
 # The caller should have the following environment variables set:
 #
-# CF_USERNAME: cloudfoundry username
-# CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
+# If NO_START is set the app won't be started
 
 # Circumvent the cloudfoundry asset compilation step - https://github.com/cloudfoundry/ruby-buildpack/blob/master/src/ruby/finalize/finalize.go#L213
 cp -a ./worker/public/. ./web/public/
@@ -20,12 +19,11 @@ cp ./worker/apt.yml ./web/apt.yml
 # Copy the clamav configuration
 cp -a ./worker/clamav/. ./web/clamav/
 
-cp -a ./shared-web ./web/vendor/shared-web
+cp -a ./shared-web/. ./web/vendor/shared-web/
 
-./ci/install-cf.sh
-
-cf login -a api.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
-
-cf push -f ./worker/manifest.yml
-
-cf logout
+if [[ -z ${NO_START} ]] ; then
+    cf push -f ./worker/manifest.yml
+fi
+if [[ ${NO_START} ]] ; then
+    cf push -f ./worker/manifest.yml --no-start
+fi
