@@ -11,7 +11,7 @@ class AuditActivity::Document::Update < AuditActivity::Document::Base
   end
 
   def subtitle_slug
-    "Document details updated"
+    "#{attachment_type} details updated"
   end
 
   def self.no_change?(document, previous_data)
