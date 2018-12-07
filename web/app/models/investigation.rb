@@ -173,8 +173,8 @@ private
   end
 
   def case_title
-    title = build_title_from_products
-    title << " - " + hazard_type.to_s unless hazard_type.nil?
+    title = build_title_from_products || ""
+    title << " – #{hazard_type}" if hazard_type.present?
     title << " (no product specified)" if products.empty?
     title.presence || "Untitled case"
   end
@@ -192,7 +192,7 @@ private
   end
 
   def build_title_from_products
-    return product_type.to_s if products.empty?
+    return product_type.dup if products.empty?
 
     title_components = []
     title_components << "#{products.length} Products" if products.length > 1
