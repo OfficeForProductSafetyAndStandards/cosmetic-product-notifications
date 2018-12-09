@@ -35,26 +35,42 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "attaches the email file" do
+    attachment_filename = "testImage.png"
+
     fill_in_context_form
     click_button "Continue"
-    attach_file("correspondence_email[email_file][file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence_email[email_file][file]", Rails.root + "test/fixtures/files/#{attachment_filename}")
+    fill_in_content_form
     click_button "Continue"
-    assert_text("testImage")
+
+    assert_text(attachment_filename)
     click_button "Continue"
-    click_on "Full detail"
-    assert_text("testImage")
+
+    assert_text("Email: #{attachment_filename}")
+    assert_text("View email file")
+
+    click_on "Attachments"
+    assert_text("correspondence overview")
+    assert_text("Original email as a file")
   end
 
   test "attaches the email attachment" do
+    attachment_filename = "testImage2.png"
+
     fill_in_context_form
     click_button "Continue"
-    attach_file("correspondence_email[email_attachment][file]", Rails.root + "test/fixtures/files/testImage2.png")
+    attach_file("correspondence_email[email_attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}")
     fill_in_content_form
     click_button "Continue"
-    assert_text("testImage2")
+
+    assert_text(attachment_filename)
     click_button "Continue"
-    click_on "Full detail"
-    assert_text("testImage")
+
+    assert_text("Attached: #{attachment_filename}")
+    assert_text("View email attachment")
+
+    click_on "Attachments"
+    assert_text("correspondence overview")
   end
 
   test "third step should be confirmation" do
