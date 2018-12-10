@@ -137,8 +137,7 @@ class Investigation < ApplicationRecord
 private
 
   def create_audit_activity_for_case
-    AuditActivity::Investigation::Add.from(self)
-    AuditActivity::Report::Add.from(self.reporter, self) if self.reporter
+    is_case ? AuditActivity::Investigation::AddAllegation.from(self) : AuditActivity::Investigation::AddQuestion.from(self)
   end
 
   def create_audit_activity_for_status
@@ -153,19 +152,19 @@ private
     end
   end
 
-  def create_audit_activity_for_product product
+  def create_audit_activity_for_product(product)
     AuditActivity::Product::Add.from(product, self)
   end
 
-  def create_audit_activity_for_removing_product product
+  def create_audit_activity_for_removing_product(product)
     AuditActivity::Product::Destroy.from(product, self)
   end
 
-  def create_audit_activity_for_business business
+  def create_audit_activity_for_business(business)
     AuditActivity::Business::Add.from(business, self)
   end
 
-  def create_audit_activity_for_removing_business business
+  def create_audit_activity_for_removing_business(business)
     AuditActivity::Business::Destroy.from(business, self)
   end
 
@@ -174,7 +173,9 @@ private
   end
 
   def case_title
-    title = [build_title_products_portion].reject(&:blank?).join(" - ")
+    title = build_title_from_products || ""
+    title << " – #{hazard_type}" if hazard_type.present?
+    title << " (no product specified)" if products.empty?
     title.presence || "Untitled case"
   end
 
@@ -190,19 +191,20 @@ private
     end
   end
 
-  def build_title_products_portion
-    return "" if products.empty?
+  def build_title_from_products
+    return product_type.dup if products.empty?
 
-    shared_property_values = %w(brand model product_type).map { |property| get_property_value_if_shared property }
-    title = shared_property_values.reject(&:blank?).join(", ")
-    products.length > 1 ? "#{products.length} Products, ".concat(title) : title
+    title_components = []
+    title_components << "#{products.length} Products" if products.length > 1
+    title_components << get_product_property_value_if_shared(:brand)
+    title_components << get_product_property_value_if_shared(:model)
+    title_components << get_product_property_value_if_shared(:product_type)
+    title_components.reject(&:blank?).join(", ")
   end
 
-  def get_property_value_if_shared property_name
+  def get_product_property_value_if_shared(property_name)
     first_product = products.first
-    if products.all? { |product| product[property_name] == first_product[property_name] }
-      first_product[property_name]
-    end
+    first_product[property_name] if products.drop(1).all? { |product| product[property_name] == first_product[property_name] }
   end
 end
 

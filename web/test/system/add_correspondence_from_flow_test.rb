@@ -3,16 +3,14 @@ require "application_system_test_case"
 class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   setup do
     sign_in_as_admin
-    @investigation = investigations(:one)
-    @investigation.source = sources(:investigation_one)
-    @activity = activities(:one)
-    @activity.source = sources(:activity_one)
 
     @reporter = Reporter.create(
-      reporter_type: "Consumer",
       name: "Test Reporter",
-      email_address: "test.reporter@example.com"
+      reporter_type: "Consumer",
+      email_address: "test@example.com"
     )
+
+    @investigation = investigations(:one)
     @investigation_with_reporter = investigations(:two)
     @investigation_with_reporter.reporter = @reporter
 
@@ -79,22 +77,29 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     assert_current_path(/cases\/\d+/)
   end
 
-  test "case page should populate with correspondence details" do
+  test "case activity should contain correspondence details" do
     fill_in("correspondence[correspondent_name]", with: "Harry Potter")
     click_button "Continue"
+    fill_in("correspondence[overview]", with: "Test overview")
+    fill_in("correspondence[details]", with: "Test details")
     click_button "Continue"
     click_button "Continue"
-    click_on "Full detail"
-    assert_text("Harry Potter")
+
+    assert_text("Correspondence added")
+    assert_text("Test overview")
+    assert_text("Test details")
   end
 
   test "should allow to attach file" do
+    attachment_filename = "testImage.png"
+
     click_button "Continue"
-    attach_file("correspondence[file][file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence[file][file]", Rails.root + "test/fixtures/files/#{attachment_filename}")
     click_button "Continue"
-    assert_text("testImage")
+
+    assert_text(attachment_filename)
     click_button "Continue"
-    click_on "Full detail"
-    assert_text("testImage")
+
+    assert_current_path(/cases\/\d+/)
   end
 end
