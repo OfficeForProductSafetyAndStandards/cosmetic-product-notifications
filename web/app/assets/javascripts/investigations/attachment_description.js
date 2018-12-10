@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function () {
+$(document).ready(function () {
   var attachmentFileInput = document.getElementById('attachment-file-input');
   var attachmentDescription = document.getElementById('attachment-description');
   var currentAttachmentDetails = document.getElementById('current-attachment-details');
