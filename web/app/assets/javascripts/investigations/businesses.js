@@ -1,5 +1,5 @@
 /* globals searchOnInputChange, buildCompaniesHouseQuery */
-$(document).on('turbolinks:load', function () {
+$(document).ready(function () {
   var $page = $('.investigation-business-page');
   var investigationId = $page.data('investigation-id');
   var excludedBusinessIds = $page.data('business-ids');

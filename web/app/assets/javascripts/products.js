@@ -1,5 +1,5 @@
 /* globals searchOnInputChange */
-$(document).on('turbolinks:load', function () {
+$(document).ready(function () {
   var $form = $('.new-product-page form');
   $form.find('#search-button').remove();
   searchOnInputChange(

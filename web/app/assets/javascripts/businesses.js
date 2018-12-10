@@ -1,5 +1,5 @@
 /* globals simpleAccessibleAutocomplete, searchOnInputChange */
-$(document).on('turbolinks:load', function () {
+$(document).ready(function () {
   simpleAccessibleAutocomplete('company-type');
   simpleAccessibleAutocomplete('company-status');
   simpleAccessibleAutocomplete('sic-code');
