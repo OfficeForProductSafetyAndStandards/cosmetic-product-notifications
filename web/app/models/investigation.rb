@@ -60,14 +60,14 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: :pretty_id,
-      only: %i[question_title description is_closed assignee_id updated_at created_at],
+      only: %i[question_title description hazard_type product_type is_closed assignee_id updated_at created_at],
       include: {
         documents: {
           only: [],
           methods: %i[title description filename]
         },
         correspondences: {
-          only: %i[correspondent_name details email_address email_subject overview phone_number]
+          only: %i[correspondent_name details email_address email_subject overview phone_number email_subject]
         },
         activities: {
           methods: :search_index,
@@ -83,7 +83,7 @@ class Investigation < ApplicationRecord
           only: %i[name phone_number email_address other_details]
         },
         tests: {
-          only: %i[details result]
+          only: %i[details result legislation]
         }
       }
     )
@@ -122,12 +122,12 @@ class Investigation < ApplicationRecord
   end
 
   def self.highlighted_fields
-    %w[*.* pretty_id question_title description]
+    %w[*.* pretty_id question_title description hazard_type product_type]
   end
 
   def self.fuzzy_fields
     %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
-       tests.* question_title description]
+       tests.* question_title description hazard_type product_type]
   end
 
   def self.exact_fields
