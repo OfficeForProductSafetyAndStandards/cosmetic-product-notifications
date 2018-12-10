@@ -15,7 +15,7 @@ class User < ActiveHash::Base
 
   def self.all(options = {})
     begin
-      self.data = KeycloakClient.instance.all_users
+      self.data = Shared::Web::KeycloakClient.instance.all_users
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
       self.data = nil
@@ -33,7 +33,7 @@ class User < ActiveHash::Base
   end
 
   def has_role?(role)
-    KeycloakClient.instance.has_role? role
+    Shared::Web::KeycloakClient.instance.has_role? role
   end
 
   def self.get_assignees_select_options(except_those_users = [])

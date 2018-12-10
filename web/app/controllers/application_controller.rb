@@ -16,13 +16,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    return unless KeycloakClient.instance.user_signed_in?
+    return unless Shared::Web::KeycloakClient.instance.user_signed_in?
 
     @current_user ||= find_or_create_user
   end
 
   def user_signed_in?
-    KeycloakClient.instance.user_signed_in?
+    Shared::Web::KeycloakClient.instance.user_signed_in?
   end
 
   def authenticate_user!
@@ -37,13 +37,13 @@ class ApplicationController < ActionController::Base
 private
 
   def find_or_create_user
-    user = KeycloakClient.instance.user_info
+    user = Shared::Web::KeycloakClient.instance.user_info
     User.find_or_create(user)
   end
 
   def try_refresh_token
     begin
-      cookies.permanent[:keycloak_token] = KeycloakClient.instance.refresh_token
+      cookies.permanent[:keycloak_token] = Shared::Web::KeycloakClient.instance.refresh_token
     rescue StandardError => error
       if error.is_a? Keycloak::KeycloakException
         raise
