@@ -35,7 +35,7 @@ class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondenc
 
   def self.build_file_body correspondence
     file = correspondence.transcript
-    file.attached? ? "Attached: #{file.filename}<br>" : ""
+    file.attached? ? "Attached: #{file.escaped_filename}<br>" : ""
   end
 
   def subtitle_slug
