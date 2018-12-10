@@ -6,7 +6,7 @@ $(document).ready(function () {
     $form.find('.search-term'),
     '/products/suggested',
     function () {
-      return $form.serialize();
+      return $form.find(':not(input[type=hidden])').serialize();
     },
     function (data) {
       $('#suggested-products').html(data);

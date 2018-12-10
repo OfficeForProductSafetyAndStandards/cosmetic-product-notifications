@@ -10,7 +10,7 @@ $(document).ready(function () {
     $form.find('.search-trigger input, .search-trigger textarea'),
     '/businesses/suggested',
     function () {
-      return $form.serialize();
+      return $form.find(':not(input[type=hidden])').serialize();
     },
     function (data) {
       $('#suggested-businesses').html(data);
