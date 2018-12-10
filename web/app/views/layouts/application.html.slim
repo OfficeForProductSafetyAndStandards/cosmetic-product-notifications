@@ -10,7 +10,7 @@ html.govuk-template.app-html-class[lang="en"]
         gtag('js', new Date());
         gtag('config', 'UA-126364208-1');
 
-        document.addEventListener('turbolinks:load', function (event) {
+        document.ready(function (event) {
           if (typeof gtag === 'function') {
             gtag('config', 'UA-126364208-1', {
               'page_location': event.data.url
@@ -31,12 +31,12 @@ html.govuk-template.app-html-class[lang="en"]
     = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon-152x152.png', rel: 'apple-touch-icon', type: 'image/png', sizes: '152x152'
     = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png'
     /![if !IE 8]
-    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload"
+    = stylesheet_link_tag "application", media: "all"
     /![endif]
     /[if IE 8]
-      = stylesheet_link_tag "application-ie8", media: "all", "data-turbolinks-track": "reload"
+      = stylesheet_link_tag "application-ie8", media: "all"
       = javascript_include_tag "html5shiv/dist/html5shiv"
-    = javascript_include_tag "application", "data-turbolinks-track": "reload"
+    = javascript_include_tag "application"
     = csrf_meta_tags
     meta[property="og:image" content=asset_path("govuk-frontend/assets/images/govuk-opengraph-image.png")]
   body.govuk-template__body.app-body-class
