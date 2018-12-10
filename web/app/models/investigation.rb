@@ -83,7 +83,7 @@ class Investigation < ApplicationRecord
           only: %i[name phone_number email_address other_details]
         },
         tests: {
-          only: %i[details result]
+          only: %i[details result legislation]
         }
       }
     )
