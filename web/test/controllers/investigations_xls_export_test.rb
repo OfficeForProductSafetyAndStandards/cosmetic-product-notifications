@@ -26,11 +26,11 @@ class InvestigationsXlsExportTest < ActionDispatch::IntegrationTest
     Investigation.import refresh: true
 
     file = get_file(path, "A1")
-    cell_a_1 = file.sheet('Cases').cell(1,1)
-    cell_bad_description = file.sheet('Cases').cell(2,4)
+    cell_a1 = file.sheet('Cases').cell(1, 1)
+    cell_bad_description = file.sheet('Cases').cell(2, 4)
     assert_equal cell_bad_description, "=A1"
     assert_not_equal cell_bad_description, nil
-    assert_not_equal cell_bad_description, cell_a_1
+    assert_not_equal cell_bad_description, cell_a1
     File.delete(path)
   end
 
@@ -41,8 +41,8 @@ class InvestigationsXlsExportTest < ActionDispatch::IntegrationTest
   end
 
   def get_file(path, query = "")
-    get investigations_path format: :xlsx, params: {q: query}
-    File.open(path, 'w') {|f| f.write response.body}
+    get investigations_path format: :xlsx, params: { q: query }
+    File.open(path, 'w') { |f| f.write response.body }
     Roo::Excelx.new(path)
   end
 end

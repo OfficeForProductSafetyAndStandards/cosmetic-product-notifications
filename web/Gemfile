@@ -53,6 +53,7 @@ group :development, :test do
   gem "coveralls"
   gem "debase"
   gem "govuk-lint"
+  gem "roo", "~> 2.7.0"
   gem "rspec-mocks"
   gem "rubocop"
   gem "ruby-debug-ide"
@@ -60,7 +61,6 @@ group :development, :test do
   gem "simplecov"
   gem "simplecov-console"
   gem "slim_lint"
-  gem "roo", "~> 2.7.0"
 end
 
 group :development do
