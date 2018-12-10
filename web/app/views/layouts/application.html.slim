@@ -80,8 +80,7 @@ html.govuk-template.app-html-class[lang="en"]
           span.govuk-phase-banner__text
             | This is a new service – your
             '
-            a[href="#"]
-              | feedback
+            = link_to "feedback", "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank
             '
             | will help us to improve it.
       = yield :after_header
