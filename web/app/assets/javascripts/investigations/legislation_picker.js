@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function () {
+$(document).ready(function () {
   var legislationContainer = document.getElementById('legislation-autocomplete-container');
   var legislationInput = document.getElementById('legislation-input');
 
