@@ -7,20 +7,20 @@ class Investigations::ProductsController < ApplicationController
   before_action :create_product, only: %i[new create suggested]
   before_action :set_countries, only: %i[new]
 
-  # GET /investigations/1/products/new
+  # GET /cases/1/products/new
   def new
     excluded_product_ids = @investigation.products.map(&:id)
     @products = advanced_product_search(@product, excluded_product_ids)
   end
 
-  # GET /investigations/1/products/suggested
+  # GET /cases/1/products/suggested
   def suggested
     excluded_product_ids = params[:excluded_products].split(",").map(&:to_i)
     @products = advanced_product_search(@product, excluded_product_ids)
     render partial: "products/suggested"
   end
 
-  # POST /investigations/1/products
+  # POST /cases/1/products
   def create
     respond_to do |format|
       if @product.valid?
@@ -36,7 +36,7 @@ class Investigations::ProductsController < ApplicationController
     end
   end
 
-  # PUT /investigations/1/products/2
+  # PUT /cases/1/products/2
   def link
     @investigation.products << @product
     redirect_to_investigation_products_tab "Product was successfully linked."
@@ -44,7 +44,7 @@ class Investigations::ProductsController < ApplicationController
 
   def remove; end
 
-  # DELETE /investigations/1/products
+  # DELETE /cases/1/products
   def unlink
     @investigation.products.delete(@product)
     respond_to do |format|
