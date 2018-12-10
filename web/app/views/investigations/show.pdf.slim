@@ -1,6 +1,6 @@
 h2
   | Case
-- if @investigation.images.attached? && @investigation.images.first.metadata["safe"] \
+- if @investigation.images.any? && @investigation.images.first.metadata["safe"] \
     && @investigation.images.first.variable?
   = image_tag @investigation.images.first.variant(resize: "300x200"), alt: "Case"
   br
@@ -26,26 +26,6 @@ table[style="width:100%; text-align:left"]
       | Source
     td
       = @investigation.source.show
-  tr
-    th
-      | Hazard type
-    td
-      = @investigation.hazard&.hazard_type
-  tr
-    th
-      | Hazard description
-    td
-      = @investigation.hazard&.description
-  tr
-    th
-      | Vulnerable group
-    td
-      = @investigation.hazard&.affected_parties
-  tr
-    th
-      | Risk level
-    td
-      = @investigation.hazard&.risk_level
 - if @investigation.products.any?
   h3
     | Products

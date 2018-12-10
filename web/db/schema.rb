@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_102901) do
+ActiveRecord::Schema.define(version: 2018_12_06_175853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,19 +52,6 @@ ActiveRecord::Schema.define(version: 2018_11_07_102901) do
     t.index ["product_id"], name: "index_activities_on_product_id"
   end
 
-  create_table "addresses", id: :serial, force: :cascade do |t|
-    t.string "address_type", null: false
-    t.integer "business_id"
-    t.string "country"
-    t.datetime "created_at", null: false
-    t.string "line_1"
-    t.string "line_2"
-    t.string "locality"
-    t.string "postal_code"
-    t.datetime "updated_at", null: false
-    t.index ["business_id"], name: "index_addresses_on_business_id"
-  end
-
   create_table "businesses", id: :serial, force: :cascade do |t|
     t.text "additional_information"
     t.string "company_name", null: false
@@ -77,6 +64,21 @@ ActiveRecord::Schema.define(version: 2018_11_07_102901) do
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
+  create_table "corrective_actions", id: :serial, force: :cascade do |t|
+    t.integer "business_id"
+    t.datetime "created_at", null: false
+    t.date "date_decided"
+    t.text "details"
+    t.integer "investigation_id"
+    t.string "legislation"
+    t.integer "product_id"
+    t.text "summary"
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_corrective_actions_on_business_id"
+    t.index ["investigation_id"], name: "index_corrective_actions_on_investigation_id"
+    t.index ["product_id"], name: "index_corrective_actions_on_product_id"
+  end
+
   create_table "correspondences", force: :cascade do |t|
     t.string "contact_method"
     t.date "correspondence_date"
@@ -85,34 +87,14 @@ ActiveRecord::Schema.define(version: 2018_11_07_102901) do
     t.datetime "created_at", null: false
     t.text "details"
     t.string "email_address"
+    t.string "email_direction"
+    t.string "email_subject"
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"
+    t.string "type"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_correspondences_on_investigation_id"
-  end
-
-  create_table "hazards", force: :cascade do |t|
-    t.string "affected_parties"
-    t.datetime "created_at", null: false
-    t.string "description"
-    t.string "hazard_type"
-    t.integer "investigation_id"
-    t.integer "risk_level"
-    t.datetime "updated_at", null: false
-    t.index ["investigation_id"], name: "index_hazards_on_investigation_id"
-  end
-
-  create_table "incidents", id: :serial, force: :cascade do |t|
-    t.string "affected_party"
-    t.datetime "created_at", null: false
-    t.date "date"
-    t.text "description"
-    t.string "incident_type"
-    t.integer "investigation_id"
-    t.string "location"
-    t.datetime "updated_at", null: false
-    t.index ["investigation_id"], name: "index_incidents_on_investigation_id"
   end
 
   create_table "investigation_businesses", id: :serial, force: :cascade do |t|
@@ -140,13 +122,27 @@ ActiveRecord::Schema.define(version: 2018_11_07_102901) do
     t.uuid "assignee_id"
     t.datetime "created_at", null: false
     t.text "description"
+    t.string "hazard_type"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
-    t.integer "priority"
+    t.string "product_type"
     t.string "question_title"
     t.string "question_type"
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
+  end
+
+  create_table "locations", id: :serial, force: :cascade do |t|
+    t.string "address"
+    t.integer "business_id"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.string "locality"
+    t.string "name", null: false
+    t.string "phone_number"
+    t.string "postal_code"
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_locations_on_business_id"
   end
 
   create_table "products", id: :serial, force: :cascade do |t|
@@ -192,13 +188,30 @@ ActiveRecord::Schema.define(version: 2018_11_07_102901) do
     t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
+  create_table "tests", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "date"
+    t.text "details"
+    t.integer "investigation_id"
+    t.string "legislation"
+    t.integer "product_id"
+    t.string "result"
+    t.string "type"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_tests_on_investigation_id"
+    t.index ["product_id"], name: "index_tests_on_product_id"
+  end
+
   add_foreign_key "activities", "businesses"
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "products"
-  add_foreign_key "addresses", "businesses"
+  add_foreign_key "corrective_actions", "businesses"
+  add_foreign_key "corrective_actions", "investigations"
+  add_foreign_key "corrective_actions", "products"
   add_foreign_key "correspondences", "investigations"
-  add_foreign_key "hazards", "investigations"
-  add_foreign_key "incidents", "investigations"
+  add_foreign_key "locations", "businesses"
   add_foreign_key "reporters", "investigations"
+  add_foreign_key "tests", "investigations"
+  add_foreign_key "tests", "products"
 end

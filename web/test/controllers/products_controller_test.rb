@@ -7,11 +7,11 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     @product_one.source = sources(:product_one)
     @product_iphone = products(:iphone)
     @product_iphone.source = sources(:product_iphone)
-    Product.import
+
     test_image1 = Rails.root.join('test', 'fixtures', 'files', 'testImage.png')
     test_image2 = Rails.root.join('test', 'fixtures', 'files', 'testImage2.png')
-    @product_one.images.attach(io: File.open(test_image1), filename: 'testImage.png')
-    @product_one.images.attach(io: File.open(test_image2), filename: 'testImage2.png')
+    @product_one.documents.attach(io: File.open(test_image1), filename: 'testImage.png')
+    @product_one.documents.attach(io: File.open(test_image2), filename: 'testImage2.png')
   end
 
   teardown do
@@ -41,7 +41,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_redirected_to product_url(Product.first)
+    assert_redirected_to product_url(Product.last)
   end
 
   test "should show product" do
@@ -70,17 +70,6 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should destroy product" do
     assert_difference("Product.count", -1) do
       delete product_url(@product_one)
-    end
-
-    assert_redirected_to products_url
-  end
-
-  test "should merge products" do
-    assert_difference 'Product.count', -1 do
-      post merge_products_url, params: {
-          selected_product_id: @product_one.id,
-          product_ids: [@product_one.id, @product_iphone.id]
-      }
     end
 
     assert_redirected_to products_url

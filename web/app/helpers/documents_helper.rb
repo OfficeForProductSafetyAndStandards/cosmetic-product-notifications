@@ -4,16 +4,7 @@ module DocumentsHelper
   def set_parent
     @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
     @parent = Product.find(params[:product_id]) if params[:product_id]
-  end
-
-  def save_file
-    file = attach_file_to_list(@file_blob, file_collection)
-    audit_class::Add.from(file, @parent) if @parent.class == Investigation
-    redirect_to @parent
-  end
-
-  def get_file_params_key
-    :document
+    @parent = Business.find(params[:business_id]) if params[:business_id]
   end
 
   def audit_class
@@ -68,6 +59,12 @@ module DocumentsHelper
 
   def document_file_extension(document)
     File.extname(document.filename.to_s)&.remove(".")&.upcase
+  end
+
+  def pretty_type_description(document)
+    description = ""
+    description += document_file_extension(document) + ' ' if document_file_extension document
+    description + image_document_text(document)
   end
 
   def formatted_file_updated_date(file)

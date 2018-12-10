@@ -6,3 +6,5 @@ nav.app-navigation.govuk-clearfix
       = link_to "Businesses", businesses_path, "data-topnav": "businesses"
     li[class=(params[:controller] == "products" && "app-navigation--current-page")]
       = link_to "Products", products_path, "data-topnav": "products"
+  .creation
+    = link_to "Create new", new_investigation_path, class: "govuk-button govuk-button--start", role: "button"

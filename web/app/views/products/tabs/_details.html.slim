@@ -1,3 +1,7 @@
+= link_to "Edit details", edit_product_path(@product)
+
+hr.govuk-section-break.govuk-section-break--l
+
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
     table.govuk-table
@@ -42,4 +46,3 @@
             | Date on the market
           td.govuk-table__cell
             = @product.date_placed_on_market&.to_s :long_ordinal
-    = link_to "Edit details", edit_product_path(@product)

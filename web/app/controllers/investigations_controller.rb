@@ -1,15 +1,24 @@
 class InvestigationsController < ApplicationController
   include InvestigationsHelper
-  helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show update assign status confirmation priority]
+  before_action :set_investigation, only: %i[show update assign status]
 
   # GET /investigations
   # GET /investigations.json
   # GET /investigations.xlsx
   def index
-    @investigations = search_for_investigations(20)
+    respond_to do |format|
+      format.html do
+        @answer = search_for_investigations(20)
+        @results = @answer.results.map { |r| r.merge(record: @answer.records.find_by(id: r._id)) }
+        @investigations = @answer.records
+      end
+      format.xlsx do
+        @answer = search_for_investigations
+        @investigations = @answer.records
+      end
+    end
   end
 
   # GET /investigations/1
@@ -25,7 +34,14 @@ class InvestigationsController < ApplicationController
 
   # GET /investigations/new
   def new
-    @investigation = Investigation.new
+    case params[:type]
+    when "allegation"
+      redirect_to new_allegation_path
+    when "question"
+      redirect_to new_question_path
+    else
+      @nothing_selected = true if params[:commit].present?
+    end
   end
 
   # GET /investigations/1/status
@@ -34,30 +50,21 @@ class InvestigationsController < ApplicationController
   # GET /investigations/1/assign
   def assign; end
 
-  # GET /investigations/1/confirmation
-  def confirmation; end
-
-  # GET /investigations/1/priority
-  def priority; end
-
   # PATCH/PUT /investigations/1
   # PATCH/PUT /investigations/1.json
   def update
     ps = investigation_update_params
     @investigation.is_closed = ps[:is_closed] if ps[:is_closed]
-    @investigation.priority = ps[:priority] if ps[:priority]
-    @investigation.priority_rationale = ps[:priority_rationale] if ps[:priority_rationale]
+    @investigation.status_rationale = ps[:status_rationale] if ps[:status_rationale]
     @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "Investigation was successfully updated." }
+        format.html { redirect_to @investigation, notice: "Case was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes
         origin = if ps[:is_closed]
                    :status
-                 elsif ps[:priority]
-                   :priority
                  else
                    :assign
                  end
@@ -71,10 +78,9 @@ class InvestigationsController < ApplicationController
   # POST /investigations.json
   def create
     @investigation = Investigation.new(investigation_create_params)
-    @investigation.source = UserSource.new(user: current_user)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to investigation_path(@investigation) }
+        format.html { redirect_to investigation_path(@investigation), notice: "Case was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
         format.html { render :new }
@@ -95,6 +101,9 @@ private
   end
 
   def investigation_update_params
-    params.require(:investigation).permit(:is_closed, :assignee_id, :priority, :priority_rationale)
+    if params[:investigation][:assignee_id].blank?
+      params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
+    end
+    params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id)
   end
 end

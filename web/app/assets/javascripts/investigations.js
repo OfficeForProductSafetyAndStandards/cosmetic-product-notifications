@@ -1,5 +1,5 @@
 /* globals simpleAccessibleAutocomplete */
-$(document).on('turbolinks:load', function () {
+$(document).ready(function () {
   simpleAccessibleAutocomplete('assignee-picker');
 
   var commentSubmitButton = $('#action_comment_submit').attr('disabled', true);

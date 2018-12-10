@@ -1,9 +1,10 @@
+- model_name = "item" if local_assigns[:model_name].blank?
 - if errors&.any?
+  - error_messages = errors.details.keys.without(:day, :month, :year).map { |key| errors.full_messages_for(key).first }
   #error_explanation
     h2.govuk-heading-l.govuk-error-message
-      = pluralize(errors.count, "error ")
-      | prohibited this case from being saved:
+      = "The following #{'error'.pluralize(error_messages.count)} prevented this #{model_name} from being saved:"
     ul.govuk-list.govuk-error-message
-      - errors.full_messages.each do |message|
+      - error_messages.each do |message|
         li
           = message

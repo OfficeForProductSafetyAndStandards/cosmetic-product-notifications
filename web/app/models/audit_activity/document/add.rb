@@ -5,6 +5,6 @@ class AuditActivity::Document::Add < AuditActivity::Document::Base
   end
 
   def subtitle_slug
-    "Document added"
+    "#{attachment_type} added"
   end
 end

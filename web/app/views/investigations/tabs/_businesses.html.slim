@@ -1,4 +1,7 @@
-= link_to "Add business", new_investigation_business_url(@investigation), class: "no-print mspsds-block-link"
+= link_to "Add business", new_investigation_business_url(@investigation)
+
+hr.govuk-section-break.govuk-section-break--l
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     - if @investigation.businesses.any?
@@ -8,8 +11,7 @@
         = render "business_summary", business: ib.business do
           p
             = link_to "View business", ib.business, class: "govuk-link mspsds-block-link"
-            = link_to "Remove from this case", unlink_investigation_business_path(@investigation, ib.business), \
-                method: :delete, data: { confirm: "Are you sure?" }, class: "govuk-button"
+            = link_to "Remove business", remove_investigation_business_path(@investigation, ib.business)
     - else
       p
         | No businesses.

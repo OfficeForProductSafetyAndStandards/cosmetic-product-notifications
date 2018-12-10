@@ -2,10 +2,11 @@ class Correspondence < ApplicationRecord
   include DateConcern
   belongs_to :investigation, required: false
 
-  attribute :day, :integer
-  attribute :month, :integer
-  attribute :year, :integer
-  validate :date_from_components
+  before_validation :strip_whitespace
+
+  validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :context
+  validates_presence_of :correspondence_date, on: :context
+  validates_length_of :details, maximum: 1000
 
   def get_date_key
     :correspondence_date
@@ -17,4 +18,12 @@ class Correspondence < ApplicationRecord
     email: "Email",
     phone: "Phone call"
   }, _suffix: true
+
+  def strip_whitespace
+    changed.each do |attribute|
+      if send(attribute).respond_to?(:strip)
+        send("#{attribute}=", send(attribute).strip)
+      end
+    end
+  end
 end

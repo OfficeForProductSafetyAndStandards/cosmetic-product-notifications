@@ -1,17 +1,21 @@
 class Investigations::CorrespondenceController < ApplicationController
   include FileConcern
+  set_attachment_names :file
+  set_file_params_key :correspondence
+
   include Wicked::Wizard
   steps :general_info, :content, :confirmation
   before_action :load_relevant_objects, only: %i[show update create]
 
   def new
     clear_session
-    initialize_file_attachment
+    initialize_file_attachments
     redirect_to wizard_path(steps.first, request.query_parameters)
   end
 
   def create
-    attach_file_to_list(@file, @correspondence.documents)
+    update_blob_metadata(@file_blob, get_attachment_metadata_params(:file))
+    attach_blobs_to_list(@file_blob, @correspondence.documents)
     @investigation.correspondences << @correspondence
     @investigation.save
     AuditActivity::Correspondence::Add.from(@correspondence, @investigation)
@@ -24,7 +28,7 @@ class Investigations::CorrespondenceController < ApplicationController
 
   def update
     @correspondence.validate(step)
-    validate_blob_size(@file, @correspondence.errors)
+    validate_blob_size(@file_blob, @correspondence.errors, "file")
     if @correspondence.errors.any?
       render step
     else
@@ -52,7 +56,7 @@ private
 
   def load_relevant_objects
     @investigation = Investigation.find_by(id: params[:investigation_id])
-    @file = load_file_attachment
+    @file_blob, * = load_file_attachments
     load_correspondence
   end
 
@@ -93,9 +97,5 @@ private
 
   def clear_session
     session[:correspondence] = nil
-  end
-
-  def get_file_params_key
-    :correspondence
   end
 end

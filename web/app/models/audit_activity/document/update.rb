@@ -4,14 +4,14 @@ class AuditActivity::Document::Update < AuditActivity::Document::Base
 
     if self.title_changed?(document, previous_data)
       title = "Updated: #{document.metadata[:title] || 'Untitled document'} (was: #{previous_data[:title] || 'Untitled document'})"
-    elsif self.description_changed?(image, previous_data)
+    elsif self.description_changed?(document, previous_data)
       title = "Updated: Description for #{document.metadata[:title]}"
     end
     super(document, investigation, title)
   end
 
   def subtitle_slug
-    "Document details updated"
+    "#{attachment_type} details updated"
   end
 
   def self.no_change?(document, previous_data)

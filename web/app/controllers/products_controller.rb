@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   before_action :set_search_params, only: %i[index]
   before_action :set_product, only: %i[show edit update destroy]
   before_action :create_product, only: %i[new create suggested]
-  before_action :set_countries, only: %i[create new edit]
+  before_action :set_countries, only: %i[create update new edit]
 
   # GET /products
   # GET /products.json
@@ -29,30 +29,6 @@ class ProductsController < ApplicationController
         render pdf: @product.id.to_s
       end
     end
-  end
-
-  # GET /products/confirm_merge
-  def confirm_merge
-    if params[:product_ids] && params[:product_ids].length > 1
-      @products = Product.find(params[:product_ids])
-    else
-      redirect_to products_url, notice: "Please select at least two products before merging."
-    end
-  end
-
-  # POST /products/merge
-  def merge
-    selected_product = Product.find(params[:selected_product_id])
-    other_product_ids = params[:product_ids].reject { |id| id.to_i == selected_product.id }
-    other_products = Product.find(other_product_ids)
-
-    other_products.each do |other_product|
-      selected_product.merge!(other_product,
-                              attributes: selected_product.attributes.keys,
-                              associations: %w[investigation_products])
-    end
-
-    redirect_to products_url, notice: "Products were successfully merged."
   end
 
   # GET /products/new
@@ -96,7 +72,7 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+      format.html { redirect_to products_url, notice: "Product was successfully deleted." }
       format.json { head :no_content }
     end
   end

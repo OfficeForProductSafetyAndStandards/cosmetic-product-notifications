@@ -40,7 +40,7 @@ def create_records_from_notification(notification, date)
 
   investigation = create_investigation(notification, date, name)
   product = create_product(notification, name)
-  create_product_images(notification, product) unless product.nil?
+  create_product_attachments(notification, product) unless product.nil?
   create_investigation_product(investigation, product) unless investigation.nil? || investigation.id.nil? || product.nil?
   create_activity(notification, investigation, date) unless investigation.nil?
 end
@@ -64,15 +64,13 @@ def create_investigation(notification, date, name)
     title: name,
     description: field_from_notification(notification, "danger"),
     is_closed: true,
-    risk_overview: field_from_notification(notification, "riskType"),
-    risk_level: risk_level(notification),
     created_at: date,
     updated_at: date,
     source: ReportSource.new(name: "RAPEX")
   )
 end
 
-def create_product_images(notification, product)
+def create_product_attachments(notification, product)
   urls = notification.xpath("pictures/picture")
   urls.each do |url|
     clean_url = url.text.delete("\n") unless url.nil?
@@ -81,7 +79,7 @@ def create_product_images(notification, product)
     file = download_url(fullsize_clean_url)
     file_content_type = file.content_type_parse.first
     file_type = file_content_type.split('/').last
-    product.images.attach(io: file, filename: "#{product.name}.#{file_type}", content_type: file_content_type)
+    product.documents.attach(io: file, filename: "#{product.name}.#{file_type}", content_type: file_content_type)
   end
 end
 
@@ -128,15 +126,6 @@ def brand(notification)
   brand = field_from_notification(notification, "brand")
   brand = nil if brand.casecmp("Unknown").zero?
   brand
-end
-
-def risk_level(notification)
-  level_map = {
-    "Serious risk" => :serious,
-    "Other risk level" => :medium
-  }
-  level_map.default = nil
-  level_map[field_from_notification(notification, "level")]
 end
 
 def field_from_notification(notification, field_name)

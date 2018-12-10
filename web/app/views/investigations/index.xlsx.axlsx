@@ -1,19 +1,17 @@
 book = xlsx_package.workbook
 
 book.add_worksheet name: "Cases" do |sheet_investigations|
-  sheet_investigations.add_row %w[ID Status Title Description Assignee Source Risk_Overview Risk_Level
+  sheet_investigations.add_row %w[ID Status Title Description Assignee Source
                                   Products Businesses Activities]
 
   @investigations.each do |investigation|
     sheet_investigations.add_row [
-      investigation.id,
+      investigation.pretty_id,
       investigation.is_closed? ? "Closed" : "Open",
       investigation.title,
       investigation.description,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
-      investigation.source.show,
-      investigation.hazard&.description,
-      investigation.hazard&.risk_level,
+      investigation.source&.show,
       investigation.products.count,
       investigation.businesses.count,
       investigation.activities.count
@@ -38,7 +36,7 @@ book.add_worksheet name: "Products" do |sheet_products|
         product.date_placed_on_market&.to_s(:long_ordinal),
         product.batch_number,
         product.brand,
-        product.source.show,
+        product.source&.show,
         investigation.id
       ]
     end
@@ -46,7 +44,7 @@ book.add_worksheet name: "Products" do |sheet_products|
 end
 
 book.add_worksheet name: "Businesses" do |sheet_businesses|
-  sheet_businesses.add_row %w[ID Company_Number Company_Name Company_Type Address_Line_1 Address_Line_2 Locality
+  sheet_businesses.add_row %w[ID Company_Number Company_Name Company_Type Location Phone_Number Locality
                               Country Postal_Code Nature_Of_Business Additional_Information Source Case_ID]
 
   @investigations.each do |investigation|
@@ -56,14 +54,14 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
         business.company_number,
         business.company_name,
         business.company_type,
-        business.primary_address ? business.primary_address.line_1 : nil,
-        business.primary_address ? business.primary_address.line_2 : nil,
-        business.primary_address ? business.primary_address.locality : nil,
-        business.primary_address ? business.primary_address.country : nil,
-        business.primary_address ? business.primary_address.postal_code : nil,
+        business.primary_location ? business.primary_location.address : nil,
+        business.primary_location ? business.primary_location.phone_number : nil,
+        business.primary_location ? business.primary_location.locality : nil,
+        business.primary_location ? business.primary_location.country : nil,
+        business.primary_location ? business.primary_location.postal_code : nil,
         business.nature_of_business,
         business.additional_information,
-        business.source.show,
+        business.source&.show,
         investigation.id
       ]
     end
@@ -79,7 +77,7 @@ book.add_worksheet name: "Actions" do |sheet_actions|
         activity.id,
         activity.type.titleize,
         activity.body,
-        activity.source.show,
+        activity.source&.show,
         investigation.id
       ]
     end

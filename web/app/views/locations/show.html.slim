@@ -1,0 +1,44 @@
+- content_for :page_title, "View address"
+- content_for :after_header do
+  = link_to "Back to locations", business_locations_path(@business), class: "govuk-back-link"
+= render "business_heading", business: @business
+h2.govuk-heading-l
+  = @location.name
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-full
+    h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
+      | Location details
+    table.govuk-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Source
+          td.govuk-table__cell
+            = @location.source.show
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Address
+          td.govuk-table__cell
+            = @location.address
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Phone number
+          td.govuk-table__cell
+            = @location.phone_number
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | City/Town
+          td.govuk-table__cell
+            = @location.locality
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Country
+          td.govuk-table__cell
+            = @location.country
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Postal code
+          td.govuk-table__cell
+            = @location.postal_code
+    - if policy(@location).update?
+      = link_to "Edit details", edit_location_path(@location)
