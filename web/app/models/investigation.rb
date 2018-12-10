@@ -67,7 +67,7 @@ class Investigation < ApplicationRecord
           methods: %i[title description filename]
         },
         correspondences: {
-          only: %i[correspondent_name details email_address email_subject overview phone_number]
+          only: %i[correspondent_name details email_address email_subject overview phone_number email_subject]
         },
         activities: {
           methods: :search_index,
