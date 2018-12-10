@@ -137,8 +137,7 @@ class Investigation < ApplicationRecord
 private
 
   def create_audit_activity_for_case
-    AuditActivity::Investigation::Add.from(self)
-    AuditActivity::Report::Add.from(self.reporter, self) if self.reporter
+    is_case ? AuditActivity::Investigation::AddAllegation.from(self) : AuditActivity::Investigation::AddQuestion.from(self)
   end
 
   def create_audit_activity_for_status
@@ -153,19 +152,19 @@ private
     end
   end
 
-  def create_audit_activity_for_product product
+  def create_audit_activity_for_product(product)
     AuditActivity::Product::Add.from(product, self)
   end
 
-  def create_audit_activity_for_removing_product product
+  def create_audit_activity_for_removing_product(product)
     AuditActivity::Product::Destroy.from(product, self)
   end
 
-  def create_audit_activity_for_business business
+  def create_audit_activity_for_business(business)
     AuditActivity::Business::Add.from(business, self)
   end
 
-  def create_audit_activity_for_removing_business business
+  def create_audit_activity_for_removing_business(business)
     AuditActivity::Business::Destroy.from(business, self)
   end
 
@@ -174,8 +173,8 @@ private
   end
 
   def case_title
-    title = build_title_from_products
-    title << " - " + hazard_type.to_s unless hazard_type.nil?
+    title = build_title_from_products || ""
+    title << " – #{hazard_type}" if hazard_type.present?
     title << " (no product specified)" if products.empty?
     title.presence || "Untitled case"
   end
@@ -193,7 +192,7 @@ private
   end
 
   def build_title_from_products
-    return product_type.to_s if products.empty?
+    return product_type.dup if products.empty?
 
     title_components = []
     title_components << "#{products.length} Products" if products.length > 1
@@ -203,7 +202,7 @@ private
     title_components.reject(&:blank?).join(", ")
   end
 
-  def get_product_property_value_if_shared property_name
+  def get_product_property_value_if_shared(property_name)
     first_product = products.first
     first_product[property_name] if products.drop(1).all? { |product| product[property_name] == first_product[property_name] }
   end
