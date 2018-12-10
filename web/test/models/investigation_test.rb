@@ -72,22 +72,22 @@ class InvestigationTest < ActiveSupport::TestCase
 
   test "case title should match when no products are present on the case" do
     investigation = investigations(:no_products_case_titles)
-    assert_equal "Alarms - Asphyxiation (no product specified)", investigation.title
+    assert_equal "Alarms – Asphyxiation (no product specified)", investigation.title
   end
 
   test "case title should match when one product is added" do
     investigation = investigations(:one_product)
-    assert_equal "apple, XS MAX, phone - Asphyxiation", investigation.title
+    assert_equal "apple, XS MAX, phone – Asphyxiation", investigation.title
   end
 
   test "case title should match when two products with two common fields are added to the case" do
     investigation = investigations(:two_products_with_common_values)
-    assert_equal "2 Products, apple, phone - Asphyxiation", investigation.title
+    assert_equal "2 Products, apple, phone – Asphyxiation", investigation.title
   end
 
   test "case title should match when two products with no common fields are added to the case" do
     investigation = investigations(:two_products_with_no_common_values)
-    assert_equal "2 Products - Asphyxiation", investigation.title
+    assert_equal "2 Products – Asphyxiation", investigation.title
   end
 
   test "elasticsearch should find product gtin" do
