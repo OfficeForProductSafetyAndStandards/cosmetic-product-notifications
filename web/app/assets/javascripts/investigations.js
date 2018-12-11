@@ -1,4 +1,4 @@
 /* globals simpleAccessibleAutocomplete */
-$(document).on('turbolinks:load', function () {
+$(document).ready(function () {
   simpleAccessibleAutocomplete('assignee-picker');
 });

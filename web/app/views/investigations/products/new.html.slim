@@ -6,12 +6,13 @@
   = render "investigation_heading", investigation: @investigation
   h2.govuk-heading-l
     | Add product
-  .govuk-grid-row
-    .govuk-grid-column-one-half
-      = form_with(model: @product, url: investigation_products_path(@investigation), local: true, method: :post) \
-          do |form|
-        h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
-          | Product details
+
+  = form_with model: @product, url: investigation_products_path(@investigation), local: true do |form|
+    .govuk-grid-row
+      .govuk-grid-column-full
+        = render "form_validation_display", errors: @product.errors, model_name: "product"
+    .govuk-grid-row
+      .govuk-grid-column-one-half
         = render "products/form", form: form, product: @product, countries: @countries, search: true
-    .govuk-grid-column-one-half
-      = render "products/suggested_container"
+      .govuk-grid-column-one-half
+        = render "products/suggested_container"

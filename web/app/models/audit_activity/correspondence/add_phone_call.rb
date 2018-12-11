@@ -10,7 +10,7 @@ class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondenc
   def self.build_body correspondence
     output = ""
     output += self.build_correspondent_details correspondence
-    output += "Date: **#{correspondence.correspondence_date}**<br>" if correspondence.correspondence_date.present?
+    output += "Date: **#{correspondence.correspondence_date.strftime('%d/%m/%Y')}**<br>" if correspondence.correspondence_date.present?
     output += self.build_file_body correspondence
     output += "<br>#{correspondence.details}"
     output
@@ -35,7 +35,7 @@ class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondenc
 
   def self.build_file_body correspondence
     file = correspondence.transcript
-    file.attached? ? "Attached: #{file.filename}<br>" : ""
+    file.attached? ? "Attached: #{file.escaped_filename}<br>" : ""
   end
 
   def subtitle_slug

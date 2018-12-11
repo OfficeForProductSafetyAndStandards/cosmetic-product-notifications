@@ -1,31 +1,22 @@
-= form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
-  = render "form_validation_display", errors: @errors
-  = form.fields_for :file do |subform|
-    .govuk-form-group
-      = subform.label :title, "Document title", class: "govuk-label"
-      = subform.text_field :title, value: document.metadata["title"], class: "govuk-input"
-    .govuk-form-group
-      = subform.label :description, class: "govuk-label"
-      = subform.text_area :description, value: document.metadata["description"], rows: 5, class: "govuk-textarea"
-    .govuk-form-group
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend
-        h4.govuk-heading-m
-          | Document type
-        .govuk-radios
-          - @parent.document_types.each do |type|
-            .govuk-radios__item
-              = subform.radio_button :document_type, type, checked: type.to_s == document.metadata["document_type"],
-                      class: "govuk-radios__input"
-              = subform.label :document_type, document_type_label(type), class: "govuk-label govuk-radios__label"
-    .govuk-form-group
-      = subform.label :other_type, class: "govuk-label"
-      = subform.text_field :other_type, value: document.metadata["other_type"],
-              placeholder: "Enter a type, if relevant", class: "govuk-input"
-  .govuk-form-group
-    .govuk-grid-row
-      .govuk-grid-column-one-quarter
-        = form.submit "#{edit ? 'Update' : 'Save'} attachment", class: "govuk-button"
-      - if edit
-        .govuk-grid-column-one-quarter
-          p = link_to "Cancel", @parent, class: "mspsds-block-link"
+= render "documents/document_preview", document: document, dimensions: "480x320"
+hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-width-one-third"]
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
+      = render "form_validation_display", errors: @errors
+      .govuk-fieldset__legend--l = "#{image_document_text(document).titleize} details"
+      = form.fields_for :file do |subform|
+        .govuk-form-group
+          = subform.label :title, "Document title", class: "govuk-label"
+          = subform.text_field :title, value: document.metadata["title"], class: "govuk-input govuk-!-width-two-thirds"
+        .govuk-form-group
+          = subform.label :description, class: "govuk-label"
+          = subform.text_area :description, value: document.metadata["description"], rows: 5, class: "govuk-textarea"
+        .govuk-form-group
+          .govuk-grid-row
+            .govuk-grid-column-one-third
+              = form.submit "#{edit ? 'Update' : 'Save'} attachment", class: "govuk-button"
+            - if edit
+              .govuk-grid-column-one-quarter
+                p = link_to "Cancel", @parent, class: "mspsds-block-link"

@@ -4,9 +4,9 @@ class InvestigationsController < ApplicationController
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[show update assign status]
 
-  # GET /investigations
-  # GET /investigations.json
-  # GET /investigations.xlsx
+  # GET /cases
+  # GET /cases.json
+  # GET /cases.xlsx
   def index
     respond_to do |format|
       format.html do
@@ -21,8 +21,8 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  # GET /investigations/1
-  # GET /investigations/1.json
+  # GET /cases/1
+  # GET /cases/1.json
   def show
     respond_to do |format|
       format.html
@@ -32,7 +32,7 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  # GET /investigations/new
+  # GET /cases/new
   def new
     case params[:type]
     when "allegation"
@@ -44,14 +44,14 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  # GET /investigations/1/status
+  # GET /cases/1/status
   def status; end
 
-  # GET /investigations/1/assign
+  # GET /cases/1/assign
   def assign; end
 
-  # PATCH/PUT /investigations/1
-  # PATCH/PUT /investigations/1.json
+  # PATCH/PUT /cases/1
+  # PATCH/PUT /cases/1.json
   def update
     ps = investigation_update_params
     @investigation.is_closed = ps[:is_closed] if ps[:is_closed]
@@ -59,7 +59,7 @@ class InvestigationsController < ApplicationController
     @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "Investigation was successfully updated." }
+        format.html { redirect_to @investigation, notice: "Case was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes
@@ -74,13 +74,13 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  # POST /investigations
-  # POST /investigations.json
+  # POST /cases
+  # POST /cases.json
   def create
     @investigation = Investigation.new(investigation_create_params)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to investigation_path(@investigation) }
+        format.html { redirect_to investigation_path(@investigation), notice: "Case was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
         format.html { render :new }

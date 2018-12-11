@@ -15,7 +15,7 @@ private
   end
 
   def success_message
-    "Case was successfully created."
+    "Allegation was successfully created."
   end
 
   def set_page_title
