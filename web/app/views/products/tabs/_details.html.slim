@@ -45,4 +45,4 @@ hr.govuk-section-break.govuk-section-break--l
           th.govuk-table__header[scope="row"]
             | Date on the market
           td.govuk-table__cell
-            = @product.date_placed_on_market&.to_s :long_ordinal
+            = @product.date_placed_on_market&.strftime("%d/%m/%Y")
