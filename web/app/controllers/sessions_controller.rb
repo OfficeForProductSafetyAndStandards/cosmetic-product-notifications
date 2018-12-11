@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
 private
 
   def request_and_store_token(auth_code)
-    cookies.permanent[:keycloak_token] = KeycloakClient.instance.exchange_code_for_token(auth_code, signin_session_url)
+    cookies.permanent[:keycloak_token] = { value: KeycloakClient.instance.exchange_code_for_token(auth_code, signin_session_url), httponly: true }
   end
 
   def signin_error_message(error)

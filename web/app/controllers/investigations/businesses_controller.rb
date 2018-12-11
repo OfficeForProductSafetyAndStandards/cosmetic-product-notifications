@@ -5,12 +5,12 @@ class Investigations::BusinessesController < ApplicationController
   before_action :set_business, only: %i[link remove unlink]
   before_action :create_business, only: %i[new create suggested]
 
-  # GET /investigations/1/businesses/new
+  # GET /cases/1/businesses/new
   def new
     advanced_search(@investigation.businesses.map(&:id))
   end
 
-  # GET /investigations/1/businesses/suggested
+  # GET /cases/1/businesses/suggested
   def suggested
     excluded_business_ids = params[:excluded_businesses].split(",").map(&:to_i)
     advanced_search(excluded_business_ids)
@@ -24,7 +24,7 @@ class Investigations::BusinessesController < ApplicationController
     redirect_to_investigation_businesses_tab "Business was successfully added."
   end
 
-  # POST /investigations/1/businesses
+  # POST /cases/1/businesses
   def create
     respond_to do |format|
       if @business.valid?
@@ -39,7 +39,7 @@ class Investigations::BusinessesController < ApplicationController
     end
   end
 
-  # PUT /investigations/1/businesses/2
+  # PUT /cases/1/businesses/2
   def link
     @investigation.businesses << @business
     redirect_to_investigation_businesses_tab "Business was successfully linked."
@@ -47,7 +47,7 @@ class Investigations::BusinessesController < ApplicationController
 
   def remove; end
 
-  # DELETE /investigations/1/businesses
+  # DELETE /cases/1/businesses
   def unlink
     @investigation.businesses.delete(@business)
     respond_to do |format|

@@ -1,9 +1,10 @@
-- if @products.empty?
+- if @products.blank?
   p
     | No matches.
-- @products.each do |product|
-  = render "product_summary", product: product do
-    p
-      = link_to "View product", product, class: "govuk-link mspsds-block-link"
-      - if @investigation.present?
-        = link_to "Add", link_investigation_product_path(@investigation, product), method: :put, class: "govuk-button"
+- else
+  - @products.each do |product|
+    = render "product_summary", product: product do
+      p
+        = link_to "View product", product, class: "govuk-link mspsds-block-link"
+        - if @investigation.present?
+          = link_to "Add", link_investigation_product_path(@investigation, product), method: :put, class: "govuk-button"
