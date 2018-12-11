@@ -3,12 +3,13 @@
 one:
   gtin: product one gtin
   name: product one name
-  product_type: product one type
+  product_type: Toys
   description: product one description
   model: product one model
-  country_of_origin: product one country
+  country_of_origin: China
   batch_number: product one batch
   brand: product one brand
+  date_placed_on_market: 2017-06-05
 
 two:
   gtin: product two gtin
