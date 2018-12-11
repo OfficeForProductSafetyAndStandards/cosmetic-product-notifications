@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/randym/axlsx.git
-  revision: c8ac844572b25fda358cc01d2104720c4c42f450
-  ref: c8ac844
+  revision: c593a08b2a929dac7aa8dc418b55e26b4c49dc34
+  ref: c593a08
   specs:
-    axlsx (2.1.0.pre)
-      htmlentities (~> 4.3.4)
+    axlsx (3.0.0.pre)
+      htmlentities (~> 4.3, >= 4.3.4)
       mimemagic (~> 0.3)
-      nokogiri (>= 1.6.6)
-      rubyzip (>= 1.2.1)
+      nokogiri (~> 1.8, >= 1.8.2)
+      rubyzip (~> 1.2, >= 1.2.1)
 
 PATH
   remote: vendor/shared-web
@@ -278,6 +278,9 @@ GEM
       netrc (~> 0.8)
     reverse_markdown (1.1.0)
       nokogiri
+    roo (2.7.1)
+      nokogiri (~> 1)
+      rubyzip (~> 1.1, < 2.0.0)
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
@@ -444,6 +447,7 @@ DEPENDENCIES
   pundit
   rails (~> 5.2)
   redcarpet
+  roo (~> 2.7.0)
   rspec-mocks
   rubocop
   ruby-debug-ide
@@ -472,7 +476,7 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 RUBY VERSION
-   ruby 2.4.4p296
+   ruby 2.5.3p105
 
 BUNDLED WITH
    1.17.1
