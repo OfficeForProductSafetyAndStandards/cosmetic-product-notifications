@@ -84,7 +84,7 @@ module FileConcern
   def validate_blob_size(blob, errors, blob_display_name)
     return unless blob && (blob.byte_size > max_file_byte_size)
 
-    errors.add(:base, :file_too_large, message: "#{blob_display_name} is too big, allowed size is #{max_file_byte_size / 1.megabyte}MB")
+    errors.add(:base, :file_too_large, message: "#{blob_display_name&.capitalize} is too big, allowed size is #{max_file_byte_size / 1.megabyte} MB")
   end
 
   def max_file_byte_size
