@@ -21,7 +21,7 @@ services:
       - "3002:3002"
     env_file:
       - .env
-      - .env.keycloak
+      - .env.keycloak.cosmetics-web
   worker:
     env_file:
       - .env

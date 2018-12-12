@@ -60,6 +60,17 @@ html.govuk-template.app-html-class[lang="en"]
             | Cosmetics
           button.govuk-header__menu-button.js-header-toggle[role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation"]
             | Menu
+          nav
+            ul#navigation.govuk-header__navigation[aria-label="Top Level Navigation"]
+              - if user_signed_in?
+                li.govuk-header__navigation-item
+                  = link_to "Your account", user_account_url, class: "govuk-header__link", target: "_blank"
+              - if !login_page?
+                li.govuk-header__navigation-item
+                  - if user_signed_in?
+                    = link_to "Sign out", logout_session_path, method: :delete, class: "govuk-header__link"
+                  - else
+                    = link_to "Sign in", keycloak_login_url, class: "govuk-header__link"
 
     .govuk-width-container
       .govuk-phase-banner
