@@ -1,7 +1,5 @@
-- if parent.investigations.any?
-  br
-    - parent.investigations.each do |investigation|
+- if @product.investigations.any?
+    - @product.investigations.each do |investigation|
       = render "investigations/case_card", investigation: investigation
 - else
-  br
     | No cases.
