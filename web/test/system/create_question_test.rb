@@ -2,6 +2,19 @@ require "application_system_test_case"
 
 class CreateQuestionTest < ApplicationSystemTestCase
   setup do
+    @reporter = Reporter.new(
+      name: "Test Reporter",
+      reporter_type: "Consumer",
+      phone_number: "01234 567890",
+      email_address: "test@example.com"
+    )
+
+    @question = Investigation.new(
+      is_case: false,
+      question_title: "Question title",
+      description: "Question description"
+    )
+
     sign_in_as_user
     visit new_question_path
   end
@@ -88,8 +101,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     fill_question_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-    assert_text "Test question title"
-    assert_text "Test description"
+    assert_text @question.question_title
   end
 
   test "confirmation message should be shown when complete" do
@@ -98,6 +110,23 @@ class CreateQuestionTest < ApplicationSystemTestCase
     fill_question_details_and_continue
 
     assert_text "Question was successfully created"
+  end
+
+  test "question and reporter details should be logged as case activity" do
+    select_reporter_type_and_continue
+    fill_all_reporter_details_and_continue
+    fill_question_details_and_continue
+
+    assert_current_path(/cases\/\d+/)
+
+    assert_text "Question logged: #{@question.title}"
+    assert_text @question.description
+
+    assert_text "Name: #{@reporter.name}"
+    assert_text "Type: #{@reporter.reporter_type}"
+    assert_text "Phone number: #{@reporter.phone_number}"
+    assert_text "Email address: #{@reporter.email_address}"
+    assert_text @reporter.other_details
   end
 
   test "related file is attached to the question" do
@@ -114,19 +143,42 @@ class CreateQuestionTest < ApplicationSystemTestCase
     assert_text attachment_filename
   end
 
+  test "attachment details should be shown in activity entry" do
+    attachment_filename = "new_risk_assessment.txt"
+
+    select_reporter_type_and_continue
+    fill_reporter_details_and_continue
+    attach_file "question[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    fill_question_details_and_continue
+
+    assert_current_path(/cases\/\d+/)
+
+    assert_text "Attachment: #{attachment_filename}"
+    assert_text "View attachment"
+  end
+
   def select_reporter_type_and_continue
     choose("reporter[reporter_type]", visible: false, match: :first)
     click_on "Continue"
   end
 
   def fill_reporter_details_and_continue
-    fill_in "reporter[email_address]", with: "test@example.com"
+    fill_in "reporter[name]", with: @reporter.name
+    fill_in "reporter[email_address]", with: @reporter.email_address
+    click_on "Continue"
+  end
+
+  def fill_all_reporter_details_and_continue
+    fill_in "reporter[name]", with: @reporter.name
+    fill_in "reporter[phone_number]", with: @reporter.phone_number
+    fill_in "reporter[email_address]", with: @reporter.email_address
+    fill_in "reporter[other_details]", with: @reporter.other_details
     click_on "Continue"
   end
 
   def fill_question_details_and_continue
-    fill_in "question[question_title]", with: "Test question title"
-    fill_in "question[description]", with: "Test description"
+    fill_in "question[question_title]", with: @question.question_title
+    fill_in "question[description]", with: @question.description
     click_on "Continue"
   end
 end

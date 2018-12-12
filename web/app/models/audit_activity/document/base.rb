@@ -11,4 +11,12 @@ class AuditActivity::Document::Base < AuditActivity::Base
     )
     activity.attach_blob document
   end
+
+  def attachment_type
+    attached_image? ? "Image" : "Document"
+  end
+
+  def attached_image?
+    self.attachment.image?
+  end
 end

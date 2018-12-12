@@ -2,6 +2,19 @@ require "application_system_test_case"
 
 class CreateAllegationTest < ApplicationSystemTestCase
   setup do
+    @reporter = Reporter.new(
+      name: "Test Reporter",
+      reporter_type: "Consumer",
+      phone_number: "01234 567890",
+      email_address: "test@example.com"
+    )
+
+    @allegation = Investigation.new(
+      hazard_type: "Blunt force",
+      product_type: "Small Electronics",
+      description: "Allegation description"
+    )
+
     sign_in_as_user
     visit new_allegation_path
   end
@@ -96,7 +109,6 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_allegation_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-    assert_text "Test description"
   end
 
   test "confirmation message should be shown when complete" do
@@ -105,6 +117,25 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_allegation_details_and_continue
 
     assert_text "Allegation was successfully created"
+  end
+
+  test "allegation and reporter details should be logged as case activity" do
+    select_reporter_type_and_continue
+    fill_all_reporter_details_and_continue
+    fill_allegation_details_and_continue
+
+    assert_current_path(/cases\/\d+/)
+
+    assert_text "Allegation logged: #{@allegation.title}"
+    assert_text "Product type: #{@allegation.product_type}"
+    assert_text "Hazard type: #{@allegation.hazard_type}"
+    assert_text @allegation.description
+
+    assert_text "Name: #{@reporter.name}"
+    assert_text "Type: #{@reporter.reporter_type}"
+    assert_text "Phone number: #{@reporter.phone_number}"
+    assert_text "Email address: #{@reporter.email_address}"
+    assert_text @reporter.other_details
   end
 
   test "related file is attached to the case" do
@@ -121,21 +152,43 @@ class CreateAllegationTest < ApplicationSystemTestCase
     assert_text attachment_filename
   end
 
+  test "attachment details should be shown in activity entry" do
+    attachment_filename = "new_risk_assessment.txt"
+
+    select_reporter_type_and_continue
+    fill_reporter_details_and_continue
+    attach_file "allegation[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    fill_allegation_details_and_continue
+
+    assert_current_path(/cases\/\d+/)
+
+    assert_text "Attachment: #{attachment_filename}"
+    assert_text "View attachment"
+  end
+
   def select_reporter_type_and_continue
     choose("reporter[reporter_type]", visible: false, match: :first)
     click_on "Continue"
   end
 
   def fill_reporter_details_and_continue
-    fill_in "reporter[name]", with: "Test Reporter"
-    fill_in "reporter[email_address]", with: "test@example.com"
+    fill_in "reporter[name]", with: @reporter.name
+    fill_in "reporter[email_address]", with: @reporter.email_address
+    click_on "Continue"
+  end
+
+  def fill_all_reporter_details_and_continue
+    fill_in "reporter[name]", with: @reporter.name
+    fill_in "reporter[phone_number]", with: @reporter.phone_number
+    fill_in "reporter[email_address]", with: @reporter.email_address
+    fill_in "reporter[other_details]", with: @reporter.other_details
     click_on "Continue"
   end
 
   def fill_allegation_details_and_continue
-    fill_in "allegation[description]", with: "Test description"
-    fill_autocomplete "hazard-type-picker", with: "Blunt force"
-    fill_autocomplete "product-type-picker", with: "Small Electronics"
+    fill_in "allegation[description]", with: @allegation.description
+    fill_autocomplete "hazard-type-picker", with: @allegation.hazard_type
+    fill_autocomplete "product-type-picker", with: @allegation.product_type
     click_on "Continue"
   end
 end

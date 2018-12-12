@@ -19,7 +19,7 @@ class AuditActivity::Test::Base < AuditActivity::Base
     body = ""
     body += "Legislation: **#{test.legislation}**<br>" if test.legislation.present?
     body += "#{date_label}: **#{test.date.strftime('%d/%m/%Y')}**<br>" if test.date.present?
-    body += "Attached: **#{test.documents.first.filename.to_s.gsub('_', '\_')}**<br>" if test.documents.attached?
+    body += "Attached: **#{test.documents.first.escaped_filename}**<br>" if test.documents.attached?
     body += "<br>#{test.details}" if test.details.present?
     body
   end

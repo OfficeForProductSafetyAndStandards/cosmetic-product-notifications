@@ -2,4 +2,10 @@
 
 Rails.application.configure do
   config.lograge.enabled = true
+
+  config.lograge.custom_payload do |controller|
+    extra_payload = {}
+    extra_payload[:user_id] = controller.current_user.id if controller.respond_to?(:current_user) && controller.current_user
+    extra_payload
+  end
 end

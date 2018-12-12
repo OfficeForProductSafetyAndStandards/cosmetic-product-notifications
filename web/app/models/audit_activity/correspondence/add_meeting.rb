@@ -16,8 +16,8 @@ class AuditActivity::Correspondence::AddMeeting < AuditActivity::Correspondence:
     body = ""
     body += "Meeting with: **#{correspondence.correspondent_name}**<br>" if correspondence.correspondent_name.present?
     body += "Date: **#{correspondence.correspondence_date.strftime('%d/%m/%Y')}**<br>" if correspondence.correspondence_date.present?
-    body += "Transcript: #{correspondence.transcript.filename.to_s.gsub('_', '\_')}<br>" if correspondence.transcript.attached?
-    body += "Related attachment: #{correspondence.related_attachment.filename.to_s.gsub('_', '\_')}<br>" if correspondence.related_attachment.attached?
+    body += "Transcript: #{correspondence.transcript.escaped_filename}<br>" if correspondence.transcript.attached?
+    body += "Related attachment: #{correspondence.related_attachment.escaped_filename}<br>" if correspondence.related_attachment.attached?
     body += "<br>#{correspondence.details}" if correspondence.details.present?
     body
   end

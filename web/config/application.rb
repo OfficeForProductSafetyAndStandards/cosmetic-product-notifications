@@ -40,6 +40,6 @@ module App
 
     # This is the requests' timeout value in seconds. 15 is the default set by Slowpoke
     # Dev environments need longer due to occasional asset compilation
-    Slowpoke.timeout = Rails.env.production? ? 15 : 120
+    Slowpoke.timeout = Rails.env.production? ? 15 : 180
   end
 end
