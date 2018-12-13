@@ -43,7 +43,7 @@ private
 
   def try_refresh_token
     begin
-      cookies.permanent[:keycloak_token] = KeycloakClient.instance.refresh_token
+      cookies.permanent[:keycloak_token] = { value: KeycloakClient.instance.refresh_token, httponly: true }
     rescue StandardError => error
       if error.is_a? Keycloak::KeycloakException
         raise

@@ -261,7 +261,7 @@
       }, {
         "id" : "fdfc9286-5f71-4e01-8ad5-241c92848fb1",
         "name" : "admin",
-        "description" : "Administrator role allowing users to be assigned to investigations, etc.",
+        "description" : "Administrator role allowing users to be assigned to cases, etc.",
         "composite" : false,
         "clientRole" : true,
         "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"

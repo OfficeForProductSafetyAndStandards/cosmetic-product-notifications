@@ -6,16 +6,6 @@
 
 = render "investigation_heading", investigation: @investigation
 
-- if !@investigation.is_case
-  .govuk-grid-row
-    .govuk-grid-column-one-third
-      h2.govuk-heading-m
-        span.govuk-caption-m Asked by
-        = (@investigation.reporter&.name&.presence || 'Anonymous')
-    .govuk-grid-column-two-thirds
-      p
-        = @investigation.description.presence || 'No description was provided'
-
 hr.govuk-section-break.govuk-section-break--m
 
 = render "tabs", tabs: [\
