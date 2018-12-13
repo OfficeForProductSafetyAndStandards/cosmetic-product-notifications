@@ -2,9 +2,14 @@ table.govuk-table class="govuk-!-margin-bottom-4"
   tbody.govuk-table__body
     tr.govuk-table__row
       th.govuk-table__header scope="row"
-        | Company number
+        | Name
       td.govuk-table__cell
-        = business.company_number
+        = business.company_name
+    tr.govuk-table__row
+      th.govuk-table__header scope="row"
+        | Main address
+      td.govuk-table__cell
+        = business.primary_location&.summary
     / TODO MSPSDS-611 Add contacts to businesses
     / tr.govuk-table__row
     /   th.govuk-table__header scope="row"
