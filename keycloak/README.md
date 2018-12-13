@@ -105,3 +105,18 @@ Allow keycloak to redirect back to the app after login
 
 Follow the steps in [the SMS autheticator README's Configuration section](
 ./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication.
+
+### Troubleshooting
+##### Problem: the keycloak database doesn't exist when running `$ docker-compose up`
+
+The first time `$ docker-compose up` is run in the root directory, a keycloak database is created according to 
+`/postgres/setup-keycloak.sh`. This database shares a docker volume with the dev database.
+
+If the local keycloak database is subsequently dropped but the development database is not, then this script will not 
+run the next time you run `$ docker-compose up`.
+
+To recreate the database, start the postgres command line with
+
+```$ docker-compose exec postgres --username keycloak```
+
+then in the postgres interface run each command from `/postgres/setup-keycloak.sh`.
