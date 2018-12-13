@@ -1,36 +1,7 @@
-class User < ActiveHash::Base
-  include ActiveHash::Associations
-
-  field :first_name
-  field :last_name
-  field :email
-
+class User < Shared::Web::User
   has_many :activities, dependent: :nullify
   has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
   has_many :user_sources, dependent: :delete
-
-  def self.find_or_create(user)
-    User.find_by(id: user[:id]) || User.create(user)
-  end
-
-  def self.all(options = {})
-    begin
-      self.data = Shared::Web::KeycloakClient.instance.all_users
-    rescue StandardError => error
-      Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
-      self.data = nil
-    end
-
-    if options.has_key?(:conditions)
-      where(options[:conditions])
-    else
-      @records ||= []
-    end
-  end
-
-  def full_name
-    "#{first_name} #{last_name}"
-  end
 
   def has_role?(role)
     Shared::Web::KeycloakClient.instance.has_role? role
