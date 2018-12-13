@@ -2,6 +2,7 @@ class Business < ApplicationRecord
   include BusinessesHelper
   include Searchable
   include Documentable
+  include AttachmentConcern
 
   index_name [Rails.env, "businesses"].join("_")
 
@@ -16,15 +17,14 @@ class Business < ApplicationRecord
   validates :company_name, presence: true
 
   has_many_attached :documents
-  has_many_attached :images
 
   has_many :investigation_businesses, dependent: :destroy
   has_many :investigations, through: :investigation_businesses
 
-  has_many :addresses, dependent: :destroy
+  has_many :locations, dependent: :destroy
   has_many :corrective_actions, dependent: :destroy
 
-  accepts_nested_attributes_for :addresses, reject_if: :all_blank
+  accepts_nested_attributes_for :locations, reject_if: :all_blank
 
   has_one :source, as: :sourceable, dependent: :destroy
 
@@ -44,8 +44,8 @@ class Business < ApplicationRecord
     !company_number.nil?
   end
 
-  def primary_address
-    addresses.first
+  def primary_location
+    locations.first
   end
 
   def self.from_companies_house_response(response)
@@ -62,8 +62,12 @@ class Business < ApplicationRecord
     save
 
     registered_office = c_h_info["registered_office_address"]
-    add_registered_address(registered_office) unless registered_office.nil?
+    add_registered_location(registered_office) unless registered_office.nil?
     self
+  end
+
+  def pretty_description
+    "Business #{id}"
   end
 
 private
@@ -72,9 +76,9 @@ private
     self.nature_of_business_id = c_h_info["sic_codes"][0] if c_h_info["sic_codes"].present?
   end
 
-  def add_registered_address(registered_office)
-    registered_office_address = primary_address || addresses.build
-    registered_office_address.with_registered_office_info(registered_office)
+  def add_registered_location(registered_office)
+    registered_office_location = primary_location || locations.build
+    registered_office_location.with_registered_office_info(registered_office)
   end
 end
 

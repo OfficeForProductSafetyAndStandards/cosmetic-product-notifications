@@ -48,6 +48,7 @@ services:
       - elasticsearch
       - keycloak
       - redis
+      - worker
   cosmetics-web:
     build:
       context: .

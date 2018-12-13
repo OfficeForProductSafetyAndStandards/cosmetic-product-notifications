@@ -22,7 +22,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     assert_text "Confirm corrective action details"
     click_on "Continue"
 
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
     assert_text @corrective_action.summary
     assert_text "Corrective action recorded"
   end
@@ -101,7 +101,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     assert_text attachment_description
     click_on "Continue"
 
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
     assert_text "Attached: #{attachment_filename}"
     assert_text "View attachment"
   end
@@ -115,7 +115,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     click_on "Continue"
     click_on "Continue"
 
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
     click_on "Attachments"
 
     assert_text @corrective_action.summary
@@ -135,9 +135,9 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   def fill_in_basic_details
     fill_in "corrective_action_summary", with: @corrective_action.summary
     fill_in "corrective_action_details", with: @corrective_action.details
-    fill_in "legislation-picker", with: @corrective_action.legislation
-    fill_in "business-picker", with: @corrective_action.business.company_name
-    fill_in "product-picker", with: @corrective_action.product.name
+    fill_autocomplete "legislation-picker", with: @corrective_action.legislation
+    fill_autocomplete "business-picker", with: @corrective_action.business.company_name
+    fill_autocomplete "product-picker", with: @corrective_action.product.name
     fill_in "Day", with: @corrective_action.date_decided.day
     fill_in "Month", with: @corrective_action.date_decided.month
     fill_in "Year", with: @corrective_action.date_decided.year

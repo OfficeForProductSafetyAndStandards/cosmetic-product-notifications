@@ -1,8 +1,13 @@
 = link_to "Edit details", edit_business_path(@business)
+
 table.govuk-table
-  caption.govuk-table__caption.govuk-heading-m
-    | Business details
   tbody.govuk-table__body
+  br
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Name
+      td.govuk-table__cell
+        = @business.company_name
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
         | Company number
@@ -22,7 +27,7 @@ table.govuk-table
       th.govuk-table__header[scope="row"]
         | Registered office address
       td.govuk-table__cell
-        = @business.primary_address&.summary
+        = @business.primary_location&.summary
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
         | Nature of business (SIC)

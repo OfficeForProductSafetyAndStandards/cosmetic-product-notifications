@@ -35,12 +35,12 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
 
   def self.build_email_file_body correspondence
     file = correspondence.email_file
-    file.attached? ? "Email: #{file.filename.to_s.gsub('_', '\_')}<br>" : ""
+    file.attached? ? "Email: #{file.escaped_filename}<br>" : ""
   end
 
   def self.build_attachment_body correspondence
     file = correspondence.email_attachment
-    file.attached? ? "Attached: #{file.filename.to_s.gsub('_', '\_')}<br>" : ""
+    file.attached? ? "Attached: #{file.escaped_filename}<br>" : ""
   end
 
   def self.build_email_address correspondence

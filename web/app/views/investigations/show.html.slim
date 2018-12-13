@@ -6,27 +6,14 @@
 
 = render "investigation_heading", investigation: @investigation
 
-- if !@investigation.is_case
-  .govuk-grid-row
-    .govuk-grid-column-one-third
-      h2.govuk-heading-m
-        span.govuk-caption-m Asked by
-        = (@investigation.reporter&.name&.presence || 'Anonymous')
-    .govuk-grid-column-two-thirds
-      p
-        = @investigation.description.presence || 'No description was provided'
-
-= render "investigations/record_activities"
-
 hr.govuk-section-break.govuk-section-break--m
 
 = render "tabs", tabs: [\
   Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" }),
-  Tab.new("full-detail", "Full detail", lambda { render "investigations/tabs/details" }),
   Tab.new("products", "Products", lambda { render "investigations/tabs/products" }),
   Tab.new("businesses", "Businesses", lambda { render "investigations/tabs/businesses" }),
   Tab.new("attachments", "Attachments", lambda { render "investigations/tabs/attachments" })\
-  ]
+]
 
 .no-print[class="govuk-!-margin-top-3"]
   = link_to "Create PDF document", investigation_path(@investigation, format: :pdf)

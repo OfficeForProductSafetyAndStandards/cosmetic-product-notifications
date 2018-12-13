@@ -1,5 +1,5 @@
 /* globals searchOnInputChange, buildCompaniesHouseQuery */
-$(document).on('turbolinks:load', function () {
+$(document).ready(function () {
   var $page = $('.investigation-business-page');
   var investigationId = $page.data('investigation-id');
   var excludedBusinessIds = $page.data('business-ids');
@@ -7,9 +7,9 @@ $(document).on('turbolinks:load', function () {
 
   searchOnInputChange(
     $page.find('.search-trigger input, .search-trigger textarea'),
-    '/investigations/' + investigationId + '/businesses/suggested?excluded_businesses=' + excludedBusinessIds,
+    '/cases/' + investigationId + '/businesses/suggested?excluded_businesses=' + excludedBusinessIds,
     function () {
-      return $page.find('form').serialize();
+      return $page.find('form').find(':not(input[type=hidden])').serialize();
     },
     function (data) {
       $('#suggested-businesses').html(data);

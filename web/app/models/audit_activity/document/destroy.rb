@@ -5,6 +5,6 @@ class AuditActivity::Document::Destroy < AuditActivity::Document::Base
   end
 
   def subtitle_slug
-    "Document deleted"
+    "#{attachment_type} deleted"
   end
 end

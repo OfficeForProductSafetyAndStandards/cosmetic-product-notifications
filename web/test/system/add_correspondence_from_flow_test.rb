@@ -3,10 +3,17 @@ require "application_system_test_case"
 class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
   setup do
     sign_in_as_admin
+
+    @reporter = Reporter.create(
+      name: "Test Reporter",
+      reporter_type: "Consumer",
+      email_address: "test@example.com"
+    )
+
     @investigation = investigations(:one)
-    @investigation.source = sources(:investigation_one)
-    @activity = activities(:one)
-    @activity.source = sources(:activity_one)
+    @investigation_with_reporter = investigations(:two)
+    @investigation_with_reporter.reporter = @reporter
+
     visit new_investigation_correspondence_url(@investigation)
   end
 
@@ -24,33 +31,14 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     assert_text("prevented this item from being saved")
   end
 
-  test "first step should be populated with reporter name from the flow" do
-    visit root_path
-    click_on "Report an unsafe product"
-    select_type_and_continue
-    fill_name_and_continue
-    click_on "Add reporter correspondence"
-    assert_equal('Ben', find_field('correspondence[correspondent_name]').value)
+  test "first step should be populated with reporter's name" do
+    visit new_investigation_correspondence_url(@investigation_with_reporter)
+    assert_equal(@reporter.name, find_field('correspondence[correspondent_name]').value)
   end
 
-  test "first step should be populated with reporter's email" do
-    visit root_path
-    click_on "Report an unsafe product"
-    select_type_and_continue
-    fill_email_and_continue
-    click_on "Add reporter correspondence"
-    assert_equal('aa@aa.aa', find_field('correspondence[email_address]').value, visible: false)
-  end
-
-  test "first step should be populated with phone from the flow" do
-    visit root_path
-    click_on "Report an unsafe product"
-    select_type_and_continue
-    fill_phone_and_continue
-    click_on "Add reporter correspondence"
-    assert_text("Who is the correspondence with?")
-
-    assert_equal('12345678900', find_field('correspondence[phone_number]').value, visible: false)
+  test "first step should be populated with reporter's email address" do
+    visit new_investigation_correspondence_url(@investigation_with_reporter)
+    assert_equal(@reporter.email_address, find_field('correspondence[email_address]').value)
   end
 
   test "second step should be correspondence details" do
@@ -86,46 +74,32 @@ class AddCorrespondenceFromFlowTest < ApplicationSystemTestCase
     click_button "Continue"
     click_button "Continue"
     click_button "Continue"
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
   end
 
-  test "case page should populate with correspondence details" do
+  test "case activity should contain correspondence details" do
     fill_in("correspondence[correspondent_name]", with: "Harry Potter")
     click_button "Continue"
+    fill_in("correspondence[overview]", with: "Test overview")
+    fill_in("correspondence[details]", with: "Test details")
     click_button "Continue"
     click_button "Continue"
-    click_on "Full detail"
-    assert_text("Harry Potter")
+
+    assert_text("Correspondence added")
+    assert_text("Test overview")
+    assert_text("Test details")
   end
 
   test "should allow to attach file" do
-    click_button "Continue"
-    attach_file("correspondence[file][file]", Rails.root + "test/fixtures/files/testImage.png")
-    click_button "Continue"
-    assert_text("testImage")
-    click_button "Continue"
-    click_on "Full detail"
-    assert_text("testImage")
-  end
+    attachment_filename = "testImage.png"
 
-
-  def select_type_and_continue
-    choose("reporter[reporter_type]", visible: false, match: :first)
     click_button "Continue"
-  end
-
-  def fill_name_and_continue
-    fill_in("reporter[name]", with: "Ben")
+    attach_file("correspondence[file][file]", Rails.root + "test/fixtures/files/#{attachment_filename}")
     click_button "Continue"
-  end
 
-  def fill_email_and_continue
-    fill_in("reporter[email_address]", with: "aa@aa.aa")
+    assert_text(attachment_filename)
     click_button "Continue"
-  end
 
-  def fill_phone_and_continue
-    fill_in("reporter[phone_number]", with: "12345678900")
-    click_button "Continue"
+    assert_current_path(/cases\/\d+/)
   end
 end

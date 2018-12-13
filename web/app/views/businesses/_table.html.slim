@@ -1,8 +1,6 @@
 table.govuk-table.sortable[class="govuk-!-margin-bottom-3"]
   thead.govuk-table__head
     tr.govuk-table__row
-      - if form
-        th.govuk-table__header
       th.govuk-table__header[scope="col"]
         = sortable "company_name", "Business"
       th.govuk-table__header[scope="col"]
@@ -14,15 +12,12 @@ table.govuk-table.sortable[class="govuk-!-margin-bottom-3"]
   tbody.govuk-table__body
     - businesses.each do |business|
       tr.govuk-table__row
-        - if form
-          td.govuk-table__cell
-            = form.check_box :business_ids, { multiple: true }, business.id, false
         td.govuk-table__cell
           = link_to business.company_name, business
         td.govuk-table__cell
           = business.company_type_code
         td.govuk-table__cell
-          = business.addresses.first ? business.addresses.first.short : ""
+          = business.locations.first ? business.locations.first.short : ""
         td.govuk-table__cell.right-aligned
           span[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
             = business.investigations.count

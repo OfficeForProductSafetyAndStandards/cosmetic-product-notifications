@@ -2,10 +2,18 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
   include UserService
+  include AttachmentConcern
 
   attr_accessor :status_rationale
 
   validates :question_title, presence: true, on: :question_details
+  validates :description, presence: true, on: %i[allegation_details question_details]
+  validates :hazard_type, presence: true, on: :allegation_details
+  validates :product_type, presence: true, on: :allegation_details
+
+  validates_length_of :question_title, maximum: 1000
+  validates_length_of :description, maximum: 1000
+
   validate :validate_assignment
 
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
@@ -41,7 +49,6 @@ class Investigation < ApplicationRecord
   has_many :tests, dependent: :destroy
 
   has_many_attached :documents
-  has_many_attached :images
 
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :reporter, dependent: :destroy
@@ -53,18 +60,14 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: :pretty_id,
-      only: %i[question_title description is_closed assignee_id updated_at created_at],
+      only: %i[question_title description hazard_type product_type is_closed assignee_id updated_at created_at],
       include: {
         documents: {
           only: [],
           methods: %i[title description filename]
         },
-        images: {
-          only: [],
-          methods: %i[title description filename]
-        },
         correspondences: {
-          only: %i[correspondent_name details email_address email_subject overview phone_number]
+          only: %i[correspondent_name details email_address email_subject overview phone_number email_subject]
         },
         activities: {
           methods: :search_index,
@@ -80,7 +83,7 @@ class Investigation < ApplicationRecord
           only: %i[name phone_number email_address other_details]
         },
         tests: {
-          only: %i[details result]
+          only: %i[details result legislation]
         }
       }
     )
@@ -93,6 +96,10 @@ class Investigation < ApplicationRecord
   def pretty_id
     id_string = id.to_s.rjust(8, '0')
     id_string.insert(4, "-")
+  end
+
+  def pretty_description
+    "Case #{pretty_id}"
   end
 
   def question_title_prefix
@@ -115,12 +122,12 @@ class Investigation < ApplicationRecord
   end
 
   def self.highlighted_fields
-    %w[*.* pretty_id question_title description]
+    %w[*.* pretty_id question_title description hazard_type product_type]
   end
 
   def self.fuzzy_fields
-    %w[documents.* images.* correspondences.* activities.* businesses.* products.* reporter.*
-       tests.* question_title description]
+    %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
+       tests.* question_title description hazard_type product_type]
   end
 
   def self.exact_fields
@@ -130,8 +137,7 @@ class Investigation < ApplicationRecord
 private
 
   def create_audit_activity_for_case
-    AuditActivity::Investigation::Add.from(self)
-    AuditActivity::Report::Add.from(self.reporter, self) if self.reporter
+    is_case ? AuditActivity::Investigation::AddAllegation.from(self) : AuditActivity::Investigation::AddQuestion.from(self)
   end
 
   def create_audit_activity_for_status
@@ -146,19 +152,19 @@ private
     end
   end
 
-  def create_audit_activity_for_product product
+  def create_audit_activity_for_product(product)
     AuditActivity::Product::Add.from(product, self)
   end
 
-  def create_audit_activity_for_removing_product product
+  def create_audit_activity_for_removing_product(product)
     AuditActivity::Product::Destroy.from(product, self)
   end
 
-  def create_audit_activity_for_business business
+  def create_audit_activity_for_business(business)
     AuditActivity::Business::Add.from(business, self)
   end
 
-  def create_audit_activity_for_removing_business business
+  def create_audit_activity_for_removing_business(business)
     AuditActivity::Business::Destroy.from(business, self)
   end
 
@@ -167,7 +173,9 @@ private
   end
 
   def case_title
-    title = [build_title_products_portion].reject(&:blank?).join(" - ")
+    title = build_title_from_products || ""
+    title << " – #{hazard_type}" if hazard_type.present?
+    title << " (no product specified)" if products.empty?
     title.presence || "Untitled case"
   end
 
@@ -183,19 +191,20 @@ private
     end
   end
 
-  def build_title_products_portion
-    return "" if products.empty?
+  def build_title_from_products
+    return product_type.dup if products.empty?
 
-    shared_property_values = %w(brand model product_type).map { |property| get_property_value_if_shared property }
-    title = shared_property_values.reject(&:blank?).join(", ")
-    products.length > 1 ? "#{products.length} Products, ".concat(title) : title
+    title_components = []
+    title_components << "#{products.length} Products" if products.length > 1
+    title_components << get_product_property_value_if_shared(:brand)
+    title_components << get_product_property_value_if_shared(:model)
+    title_components << get_product_property_value_if_shared(:product_type)
+    title_components.reject(&:blank?).join(", ")
   end
 
-  def get_property_value_if_shared property_name
+  def get_product_property_value_if_shared(property_name)
     first_product = products.first
-    if products.all? { |product| product[property_name] == first_product[property_name] }
-      first_product[property_name]
-    end
+    first_product[property_name] if products.drop(1).all? { |product| product[property_name] == first_product[property_name] }
   end
 end
 

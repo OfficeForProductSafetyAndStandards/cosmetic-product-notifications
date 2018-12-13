@@ -29,7 +29,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     assert_text "Confirm testing request details"
     click_on "Continue"
 
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
     assert_text "Test requested: #{@test.product.name}"
     assert_text "Testing requested"
   end
@@ -101,7 +101,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     assert_text attachment_description
     click_on "Continue"
 
-    assert_current_path(/investigations\/\d+/)
+    assert_current_path(/cases\/\d+/)
     assert_text "Attached: #{attachment_filename}"
     assert_text "View attachment"
   end
@@ -117,8 +117,8 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
   end
 
   def fill_in_basic_details
-    fill_in "product-picker", with: @test.product.name
-    fill_in "legislation-picker", with: @test.legislation
+    fill_autocomplete "product-picker", with: @test.product.name
+    fill_autocomplete "legislation-picker", with: @test.legislation
     fill_in "test_details", with: @test.details
     fill_in "Day", with: @test.date.day
     fill_in "Month", with: @test.date.month

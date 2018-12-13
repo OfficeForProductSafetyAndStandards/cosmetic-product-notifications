@@ -1,5 +1,7 @@
+= link_to "Add activity", new_investigation_activity_path(@investigation)
+
+hr.govuk-section-break.govuk-section-break--l
+
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
-    / TODO: MSPSDS-754 link this to correct page
-    = link_to "Add activity", '', class: "govuk-link mspsds-block-link"
     = render "activities_summary", activities: @investigation.activities

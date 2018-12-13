@@ -15,12 +15,12 @@ main#main-content.govuk-main-wrapper role="main"
             | Email details
           .govuk-form-group
             .govuk-radios.govuk-radios--inline.mspsds-email-direction-radios
-              - Correspondence::Email.email_directions.each do |_, label|
+              - Correspondence::Email.email_directions.each do |value, label|
                 .govuk-radios__item
-                  = form.radio_button :email_direction, label, class: "govuk-radios__input"
+                  = form.radio_button :email_direction, value, class: "govuk-radios__input"
                   = form.label :email_direction, label, class: "govuk-label govuk-radios__label"
           .govuk-form-group [class="govuk-!-width-two-thirds"]
-            = form.label :correspondent_name, "Name", class: "govuk-label"
+            = form.label :correspondent_name, "Name", class: "govuk-label govuk-!-width-two-thirds"
             = form.text_field :correspondent_name, class: "govuk-input"
           .govuk-form-group [class="govuk-!-width-two-thirds"]
             = form.label :email_address, "Email address", class: "govuk-label"

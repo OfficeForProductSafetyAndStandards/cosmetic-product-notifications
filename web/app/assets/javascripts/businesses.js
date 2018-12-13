@@ -1,5 +1,5 @@
 /* globals simpleAccessibleAutocomplete, searchOnInputChange */
-$(document).on('turbolinks:load', function () {
+$(document).ready(function () {
   simpleAccessibleAutocomplete('company-type');
   simpleAccessibleAutocomplete('company-status');
   simpleAccessibleAutocomplete('sic-code');
@@ -10,7 +10,7 @@ $(document).on('turbolinks:load', function () {
     $form.find('.search-trigger input, .search-trigger textarea'),
     '/businesses/suggested',
     function () {
-      return $form.serialize();
+      return $form.find(':not(input[type=hidden])').serialize();
     },
     function (data) {
       $('#suggested-businesses').html(data);

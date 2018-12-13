@@ -10,18 +10,26 @@ module DateConcern
 
     after_initialize do
       @date_key = get_date_key
-      date_component_strings = [year, month, day]
 
-      if date_component_strings.any?(&:present?)
+      date = self[@date_key]
+      if date.present? && date_components.all?(&:blank?)
+        self.day = date.day
+        self.month = date.month
+        self.year = date.year
+      end
+    end
+
+    before_validation do
+      if date_components.any?(&:present?)
         self[@date_key] = nil
       end
 
-      unless date_component_strings.any?(&:blank?)
-        date_components = date_component_strings.map(&:to_i)
-        if Date.valid_civil?(*date_components)
+      unless date_components.any?(&:blank?)
+        date_component_values = date_components.map(&:to_i)
+        if Date.valid_civil?(*date_component_values)
           # This sets it if it makes sense. Validation then can compare the presence of
           # date and its components to know if the date parsed correctly
-          self[@date_key] = Date.civil(*date_components)
+          self[@date_key] = Date.civil(*date_component_values)
         end
       end
     end
@@ -50,5 +58,11 @@ module DateConcern
         errors.add(:year)
       end
     end
+  end
+
+private
+
+  def date_components
+    [year, month, day]
   end
 end
