@@ -108,6 +108,12 @@ Follow the steps in [the SMS autheticator README's Configuration section](
 
 ### Troubleshooting
 ##### Problem: the keycloak database doesn't exist when running `$ docker-compose up`
+Error message:
+```
+WARN  [org.jboss.jca.core.connectionmanager.pool.strategy.OnePool] (ServerService Thread Pool -- 52) IJ000604: Throwable while attempting to get a new connection: null: javax.resource.ResourceException: IJ031084: Unable to create connection
+[......]
+Caused by: org.postgresql.util.PSQLException: FATAL: database "keycloak" does not exist
+```
 
 The first time `$ docker-compose up` is run in the root directory, a keycloak database is created according to 
 `/postgres/setup-keycloak.sh`. This database shares a docker volume with the dev database.
