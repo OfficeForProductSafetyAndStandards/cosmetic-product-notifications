@@ -17,7 +17,7 @@
   "dependencies": {
     "accessible-autocomplete": "^1.6.2",
     "govuk-country-and-territory-autocomplete": "^0.5.1",
-    "govuk-frontend": "^2.4.0",
+    "govuk-frontend": "^2.4.1",
     "html5shiv": "^3.7.3",
     "jquery": "^3.3.1",
     "jquery-ujs": "^1.2.2",
