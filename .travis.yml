@@ -7,7 +7,6 @@ branches:
   - master
   - staging
   - prod
-  - COS-29
 cache:
   directories:
   - "~/bundle-cache"
