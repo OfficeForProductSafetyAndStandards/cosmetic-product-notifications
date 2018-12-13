@@ -49,11 +49,11 @@ group :development, :test do
   gem "byebug", platform: :mri
   gem "capybara"
   gem "debase"
+  gem "govuk-lint"
   gem "roo", "~> 2.7.0"
   gem "rspec-mocks"
   gem "ruby-debug-ide"
   gem "selenium-webdriver"
-  gem "govuk-lint"
 end
 
 group :development do
