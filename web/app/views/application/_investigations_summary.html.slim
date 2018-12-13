@@ -1,5 +1,5 @@
-- if @product.investigations.any?
-    - @product.investigations.each do |investigation|
+- if investigations.any?
+    - investigations.each do |investigation|
       = render "investigations/case_card", investigation: investigation
 - else
-    | No cases.
+    p[class="govuk-!-margin-top-6"] = "No cases."
