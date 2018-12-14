@@ -104,7 +104,8 @@ Allow keycloak to redirect back to the app after login
 * Add `https://mspsds-<<SPACE>>.london.cloudapps.digital/*` to the Valid Redirect URIs section and click save
 
 Follow the steps in [the SMS autheticator README's Configuration section](
-./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication.
+./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication. Set the 2FA 
+code length to 6.
 
 ### Troubleshooting
 ##### Problem: the keycloak database doesn't exist when running `$ docker-compose up`

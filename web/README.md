@@ -130,7 +130,7 @@ See the Companies House account section in [the root README](../README.md#compan
 This sets the http auth username and password for access to the pgHero dashboard. See confluence for values. 
 
     cf set-env mspsds-web SENTRY_DSN XXX
-    cf set-env mspsds-web SENTRY_CURRENT_ENV [int|staging|production]
+    cf set-env mspsds-web SENTRY_CURRENT_ENV [int|staging|prod]
 
 See the Sentry account section in [the root README](../README.md#sentry) to get this value.
 
