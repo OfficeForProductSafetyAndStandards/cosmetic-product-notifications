@@ -36,7 +36,7 @@ WORKDIR /tmp/keycloak
 COPY ./providers/email ./email
 RUN mkdir -p ./providers
 
-RUN mvn -q --settings ./email/settings.xml --file ./email/pom.xml package
+RUN mvn -q --file ./email/pom.xml package
 RUN cp ./email/target/notify-email-provider-jar-with-dependencies.jar ./providers/
 
 
