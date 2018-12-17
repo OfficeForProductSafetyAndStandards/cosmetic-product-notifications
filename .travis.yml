@@ -24,8 +24,9 @@ jobs:
     script: COMPONENT=web ./ci/test-if-changed.sh
   - name: Web - Static Analysis
     script: COMPONENT=web ./ci/static-analysis-if-changed.sh
-  - name: Cosmetics-web - Test
-    script: COMPONENT=cosmetics-web ./ci/test-if-changed.sh
+# TODO: COS-29 Reenable cosmetics tests once issues with Coveralls are resolved
+#  - name: Cosmetics-web - Test
+#    script: COMPONENT=cosmetics-web ./ci/test-if-changed.sh
   - name: Cosmetics-web - Static Analysis
     script: COMPONENT=cosmetics-web ./ci/static-analysis-if-changed.sh
   - stage: Deploy to int
