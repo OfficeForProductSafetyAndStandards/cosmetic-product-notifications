@@ -80,7 +80,7 @@ or update any API keys for the deployed instances, you'll need an account for
 #### GOV.UK Platform as a Service
 
 If you want to update any of the deployed instances, you'll need an account for
-[GOV.UK PaaS](https://www.cloud.service.gov.uk/) - ask someone on the team to invite you.
+[GOV.UK PaaS](https://admin.london.cloud.service.gov.uk/) - ask someone on the team to invite you.
 
 
 #### Amazon Web Services
@@ -106,14 +106,14 @@ If you want to view the exceptions, you'll need an account - ask someone on the 
 Anything which is merged to `master` (via a Pull Request or push) will trigger the
 [Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
 and cause deployments of the various components to the int space
-([the int website is hosted here](https://mspsds-int.cloudapps.digital/)) on GOV.UK PaaS.
+([the int website is hosted here](https://mspsds-int.london.cloudapps.digital/)) on GOV.UK PaaS.
 
 Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
-space ([staging website](https://mspsds-int.cloudapps.digital/)).
+space ([staging website](https://mspsds-int.london.cloudapps.digital/)).
 Please only do this if you are confident that this is a stable commit.
 
 Anything merged into the branch `prod` (only via a Pull Request) will cause Travis CI to instead build to the prod
-space ([staging website](https://mspsds-int.cloudapps.digital/)).
+space ([staging website](https://mspsds-int.london.cloudapps.digital/)).
 Please only do this if you are confident that this is a stable commit.
 
 ### Deployment from scratch
