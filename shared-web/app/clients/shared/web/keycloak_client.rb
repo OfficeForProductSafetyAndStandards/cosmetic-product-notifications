@@ -1,7 +1,7 @@
 module Keycloak
   module Client
     def self.get_installation
-      @realm = "mspsds"
+      @realm = "opss"
       @auth_server_url = ENV["KEYCLOAK_AUTH_URL"]
       @client_id = ENV["KEYCLOAK_CLIENT_ID"]
       @secret = ENV["KEYCLOAK_CLIENT_SECRET"]

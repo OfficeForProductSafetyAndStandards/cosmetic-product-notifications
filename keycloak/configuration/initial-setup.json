@@ -1,8 +1,8 @@
 [ {
-  "id" : "mspsds",
-  "realm" : "mspsds",
-  "displayName" : "Market Surveillance & Product Safety",
-  "displayNameHtml" : "Market Surveillance & Product Safety",
+  "id" : "opss",
+  "realm" : "opss",
+  "displayName" : "Office for Product Safety and Standards",
+  "displayNameHtml" : "Office for Product Safety and Standards",
   "notBefore" : 0,
   "revokeRefreshToken" : false,
   "refreshTokenMaxReuse" : 0,
@@ -43,27 +43,27 @@
       "description" : "Default user",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "mspsds"
+      "containerId" : "opss"
     }, {
       "id" : "a3dfe69c-8344-4323-8d28-3df3b282a993",
       "name" : "admin",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "mspsds"
+      "containerId" : "opss"
     }, {
       "id" : "8a5e3da3-8d25-46bf-a768-cc4734f7f15d",
       "name" : "uma_authorization",
       "description" : "${role_uma_authorization}",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "mspsds"
+      "containerId" : "opss"
     }, {
       "id" : "755b044c-16e5-4e75-befd-569443a7a398",
       "name" : "offline_access",
       "description" : "${role_offline-access}",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "mspsds"
+      "containerId" : "opss"
     } ],
     "client" : {
       "realm-management" : [ {
@@ -416,13 +416,13 @@
     "id" : "68531a90-8123-44ae-9bc7-21df38edbe52",
     "clientId" : "account",
     "name" : "${client_account}",
-    "baseUrl" : "/auth/realms/mspsds/account",
+    "baseUrl" : "/auth/realms/opss/account",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "**********",
     "defaultRoles" : [ "manage-account", "view-profile" ],
-    "redirectUris" : [ "/auth/realms/mspsds/account/*" ],
+    "redirectUris" : [ "/auth/realms/opss/account/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -798,12 +798,12 @@
     "id" : "f898d930-fa25-4b70-b649-19660db491c7",
     "clientId" : "security-admin-console",
     "name" : "${client_security-admin-console}",
-    "baseUrl" : "/auth/admin/mspsds/console/index.html",
+    "baseUrl" : "/auth/admin/opss/console/index.html",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "**********",
-    "redirectUris" : [ "/auth/admin/mspsds/console/*" ],
+    "redirectUris" : [ "/auth/admin/opss/console/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -1675,10 +1675,10 @@
     "_browser_header.xFrameOptions" : "SAMEORIGIN",
     "quickLoginCheckMilliSeconds" : "1000",
     "permanentLockout" : "false",
-    "displayName" : "Market Surveillance & Product Safety",
+    "displayName" : "Office for Product Safety and Standards",
     "_browser_header.xRobotsTag" : "none",
     "maxFailureWaitSeconds" : "900",
-    "displayNameHtml" : "Market Surveillance & Product Safety",
+    "displayNameHtml" : "Office for Product Safety and Standards",
     "minimumQuickLoginWaitSeconds" : "60",
     "failureFactor" : "30",
     "actionTokenGeneratedByUserLifespan" : "300",
@@ -1747,7 +1747,7 @@
       "composites" : {
         "realm" : [ "create-realm" ],
         "client" : {
-          "mspsds-realm" : [ "manage-users", "impersonation", "manage-authorization", "view-authorization", "query-clients", "query-users", "manage-clients", "query-groups", "view-clients", "create-client", "view-users", "manage-events", "view-events", "manage-realm", "manage-identity-providers", "view-identity-providers", "query-realms", "view-realm" ],
+          "opss-realm" : [ "manage-users", "impersonation", "manage-authorization", "view-authorization", "query-clients", "query-users", "manage-clients", "query-groups", "view-clients", "create-client", "view-users", "manage-events", "view-events", "manage-realm", "manage-identity-providers", "view-identity-providers", "query-realms", "view-realm" ],
           "master-realm" : [ "view-identity-providers", "query-realms", "view-users", "manage-realm", "manage-clients", "impersonation", "manage-identity-providers", "query-clients", "view-authorization", "manage-authorization", "view-realm", "manage-users", "view-events", "query-users", "view-clients", "query-groups", "manage-events", "create-client" ]
         }
       },
@@ -1771,7 +1771,7 @@
     "client" : {
       "security-admin-console" : [ ],
       "admin-cli" : [ ],
-      "mspsds-realm" : [ {
+      "opss-realm" : [ {
         "id" : "ed8e7664-8c15-4d70-bd3c-ec0721edf8a3",
         "name" : "manage-users",
         "description" : "${role_manage-users}",
@@ -1799,7 +1799,7 @@
         "composite" : true,
         "composites" : {
           "client" : {
-            "mspsds-realm" : [ "query-users", "query-groups" ]
+            "opss-realm" : [ "query-users", "query-groups" ]
           }
         },
         "clientRole" : true,
@@ -1853,7 +1853,7 @@
         "composite" : true,
         "composites" : {
           "client" : {
-            "mspsds-realm" : [ "query-clients" ]
+            "opss-realm" : [ "query-clients" ]
           }
         },
         "clientRole" : true,
@@ -2230,8 +2230,8 @@
     "optionalClientScopes" : [ "address", "phone", "offline_access" ]
   }, {
     "id" : "8ea1bb96-55f7-42cb-9bfd-c87a13d86879",
-    "clientId" : "mspsds-realm",
-    "name" : "mspsds Realm",
+    "clientId" : "opss-realm",
+    "name" : "opss Realm",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",

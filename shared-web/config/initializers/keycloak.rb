@@ -7,7 +7,7 @@ Keycloak.generate_request_exception = true
 # Controller that manages user sessions
 Keycloak.keycloak_controller = "sessions"
 # Realm name (only used if the installation file is not present)
-Keycloak.realm = "mspsds"
+Keycloak.realm = "opss"
 # Realm url (only used if the installation file is not present)
 Keycloak.auth_server_url = ""
 # To load users on app startup
