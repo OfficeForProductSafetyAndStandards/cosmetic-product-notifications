@@ -19,6 +19,7 @@ cp ./worker/apt.yml ./web/apt.yml
 # Copy the clamav configuration
 cp -a ./worker/clamav/. ./web/clamav/
 
+rm -fr ./web/vendor/shared-web/
 cp -a ./shared-web/. ./web/vendor/shared-web/
 
 if [[ -z ${NO_START} ]] ; then
