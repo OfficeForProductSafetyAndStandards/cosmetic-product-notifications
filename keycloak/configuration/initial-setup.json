@@ -1554,7 +1554,7 @@
     "offlineSessionMaxLifespanEnabled" : "false",
     "waitIncrementSeconds" : "60"
   },
-  "keycloakVersion" : "4.3.0.Final",
+  "keycloakVersion" : "4.7.0.Final",
   "userManagedAccessAllowed" : false
 }, {
   "id" : "master",
@@ -2995,6 +2995,6 @@
     "offlineSessionMaxLifespanEnabled" : "false",
     "waitIncrementSeconds" : "60"
   },
-  "keycloakVersion" : "4.3.0.Final",
+  "keycloakVersion" : "4.7.0.Final",
   "userManagedAccessAllowed" : false
 } ]
