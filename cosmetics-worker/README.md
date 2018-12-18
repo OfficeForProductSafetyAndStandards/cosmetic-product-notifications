@@ -1,6 +1,6 @@
-# MSPSDS Background Worker
+# Cosmetics Background Worker
 
-This folder contains the configuration to setup the worker processes which support the (website)[../web/README.md].
+This folder contains the configuration to setup the worker processes which support the (cosmetics website)[../cosmetics-web/README.md].
 The codebase is shared with the website.
 
 
@@ -25,30 +25,30 @@ described in [the root README](../README.md#deployment).
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the worker app.
 
-    cp -a ./worker/public/. ./web/public/
-    cp ./worker/apt.yml ./web/apt.yml
-    cp -a ./worker/clamav/. ./web/clamav/
-    cf push -f ./worker/manifest.yml --no-start
+    cp -a ./cosmetics-worker/public/. ./cosmetics-web/public/
+    cp ./cosmetics-worker/apt.yml ./cosmetics-web/apt.yml
+    cp -a ./cosmetics-worker/clamav/. ./cosmetics-web/clamav/
+    cf push -f ./cosmetics-worker/manifest.yml --no-start
 
 This provisions the app in Cloud Foundry.
 
-    cf set-env mspsds-worker RAILS_ENV production
+    cf set-env cosmetics-worker RAILS_ENV production
 
 This configures rails to use the production database amongst other things.
 
-    cf set-env mspsds-worker AWS_ACCESS_KEY_ID XXX
-    cf set-env mspsds-worker AWS_SECRET_ACCESS_KEY XXX
-    cf set-env mspsds-worker AWS_REGION XXX
-    cf set-env mspsds-worker AWS_S3_BUCKET XXX
+    cf set-env cosmetics-worker AWS_ACCESS_KEY_ID XXX
+    cf set-env cosmetics-worker AWS_SECRET_ACCESS_KEY XXX
+    cf set-env cosmetics-worker AWS_REGION XXX
+    cf set-env cosmetics-worker AWS_S3_BUCKET XXX
 
 See the AWS account section in [the root README](../README.md#aws) to get these values.
 
-    cf set-env mspsds-worker NOTIFY_API_KEY XXX
+    cf set-env cosmetics-worker NOTIFY_API_KEY XXX
 
 See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value.
 
-    cf set-env mspsds-worker MSPSDS_HOST XXX
+    cf set-env cosmetics-worker COSMETICS_HOST XXX
 
 This is the URL for the website and is used for sending emails.
 
-The app can then be started using `cf restart mspsds-worker`.
+The app can then be started using `cf restart cosmetics-worker`.
