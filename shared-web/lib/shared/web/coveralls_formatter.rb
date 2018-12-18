@@ -33,7 +33,6 @@ module Shared
       end
 
       def format(result)
-
         unless Coveralls.should_run?
           if Coveralls.noisy?
             display_result result
@@ -43,15 +42,14 @@ module Shared
 
         # Post to Coveralls.
         Coveralls::API.post_json "jobs",
-                      :source_files => get_source_files(result),
-                      :test_framework => result.command_name.downcase,
-                      :run_at => result.created_at
+                      source_files: get_source_files(result),
+                      test_framework: result.command_name.downcase,
+                      run_at: result.created_at
 
         Coveralls::Output.puts output_message result
 
         true
-
-      rescue Exception => e
+      rescue StandardError => e
         display_error e
       end
     end
