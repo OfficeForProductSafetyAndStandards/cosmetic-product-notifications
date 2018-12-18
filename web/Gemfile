@@ -46,20 +46,14 @@ gem 'shared-web', path: './vendor/shared-web'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem "brakeman"
   gem "byebug", platform: :mri
   gem "capybara"
-  gem "coveralls"
   gem "debase"
   gem "govuk-lint"
   gem "roo", "~> 2.7.0"
   gem "rspec-mocks"
-  gem "rubocop"
   gem "ruby-debug-ide"
   gem "selenium-webdriver"
-  gem "simplecov"
-  gem "simplecov-console"
-  gem "slim_lint"
 end
 
 group :development do

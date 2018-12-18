@@ -13,7 +13,19 @@ Gem::Specification.new do |s|
   s.description = "Description of Shared::Web."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.files = Dir[
+      "{app,config,db,lib}/**/*",
+      "MIT-LICENSE",
+      "Rakefile",
+      "README.md",
+      ".rubocop.yml"]
 
   s.add_dependency "rails", "~> 5.2.1"
+
+  s.add_dependency "brakeman"
+  s.add_dependency "coveralls"
+  s.add_dependency "rubocop"
+  s.add_dependency "simplecov"
+  s.add_dependency "simplecov-console"
+  s.add_dependency "slim_lint"
 end
