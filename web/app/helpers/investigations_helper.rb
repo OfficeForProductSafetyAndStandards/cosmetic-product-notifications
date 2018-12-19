@@ -19,9 +19,15 @@ module InvestigationsHelper
 
   def filter_params
     filters = {}
-    filters.merge!(get_status_filter)
+    filters.merge!(get_must_filters)
     filters.merge!(get_assignee_filter)
-    filters.merge!(get_visibility_filter)
+  end
+
+  def get_must_filters
+    must = []
+    must.push(get_status_filter) if get_status_filter.present?
+    must.push(get_visibility_filter)
+    { must: must }
   end
 
   def get_status_filter
@@ -32,7 +38,11 @@ module InvestigationsHelper
              else
                { is_closed: true }
              end
-    { must: { term: status } }
+    { term: status }
+  end
+
+  def get_visibility_filter
+    { term: { can_be_displayed_string: 'true' } }
   end
 
   def get_assignee_filter
@@ -66,10 +76,6 @@ module InvestigationsHelper
     assignee_terms = format_assignee_terms(assignees)
     excluded_assignee_terms = format_assignee_terms(excluded_assignees)
     { should: assignee_terms, must_not: excluded_assignee_terms }
-  end
-
-  def get_visibility_filter
-    { must: { term: { can_be_displayed_string: 'true' } } }
   end
 
   def format_assignee_terms(assignee_array)
