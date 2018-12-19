@@ -11,7 +11,6 @@ applications:
   no-route: true
   health-check-type: process
   services:
-    - mspsds-redis
-    - mspsds-database
-    - mspsds-elasticsearch
+    - cosmetics-redis
+    - cosmetics-database
     - logit-ssl-drain
