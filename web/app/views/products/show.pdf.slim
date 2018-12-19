@@ -60,10 +60,10 @@ table[style="width:100%; text-align:left"]
       | Source
     td
       = @product.source.show
-- if @product.investigations.any?
+- if @product.visible_investigations.any?
   tr
     th
       | Cases
-    - @product.investigations.each do |investigation|
+    - @product.visible_investigations.each do |investigation|
       td
         = link_to investigation.id, polymorphic_url(investigation)

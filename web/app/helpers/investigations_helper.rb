@@ -69,7 +69,7 @@ module InvestigationsHelper
   end
 
   def get_visibility_filter
-    { must: { term: { can_be_displayed: 'true' } } }
+    { must: { term: { can_be_displayed_string: 'true' } } }
   end
 
   def format_assignee_terms(assignee_array)

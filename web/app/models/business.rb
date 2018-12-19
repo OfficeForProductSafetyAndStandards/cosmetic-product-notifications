@@ -70,6 +70,10 @@ class Business < ApplicationRecord
     "Business #{id}"
   end
 
+  def visible_investigations
+    investigations.select{|investigation| investigation.can_be_displayed}
+  end
+
 private
 
   def add_sic_code(c_h_info)
