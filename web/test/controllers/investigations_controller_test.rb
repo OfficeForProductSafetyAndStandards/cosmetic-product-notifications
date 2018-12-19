@@ -280,4 +280,26 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     get investigations_path format: :xlsx
     assert_response :success
   end
+
+  test "should not show private investigations" do
+    new_investigation_description = "new_investigation_description"
+    post investigations_url, params: {
+      investigation: {
+        description: new_investigation_description
+      }
+    }
+
+    new_investigation = Investigation.find_by(description: new_investigation_description)
+    put investigations_url + "/#{new_investigation.id}", params: {
+      investigation: {
+        is_private: true
+      }
+    }
+
+    logout
+    sign_in_as_user
+    get investigations_path
+    # TODO: Uncomment this when we get organization-based system
+    # assert_not_includes(response.body, new_investigation.pretty_id)
+  end
 end

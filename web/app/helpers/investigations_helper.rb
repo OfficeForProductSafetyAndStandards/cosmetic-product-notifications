@@ -25,8 +25,8 @@ module InvestigationsHelper
 
   def get_must_filters
     must = []
-    must.push(get_status_filter) if get_status_filter.present?
-    must.push(get_visibility_filter)
+    must << get_status_filter if get_status_filter.present?
+    must << get_visibility_filter
     { must: must }
   end
 
@@ -42,6 +42,11 @@ module InvestigationsHelper
   end
 
   def get_visibility_filter
+    # TODO: this is bad when multiple users use service
+    # Need to store some sort of visibility object that will be matched to the one we send here
+    # String of organisations allowed to see it would work. Relation of such organizations would work if we include
+    # them in index
+    # Then we just need to send our organization name in place of can_be_displayed_string.
     { term: { can_be_displayed_string: 'true' } }
   end
 
