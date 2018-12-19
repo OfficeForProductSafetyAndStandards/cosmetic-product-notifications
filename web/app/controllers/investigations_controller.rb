@@ -57,6 +57,7 @@ class InvestigationsController < ApplicationController
     @investigation.is_closed = ps[:is_closed] if ps[:is_closed]
     @investigation.status_rationale = ps[:status_rationale] if ps[:status_rationale]
     @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
+    @investigation.private = ps[:is_private] if ps[:is_private]
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to @investigation, notice: "Case was successfully updated." }
@@ -104,6 +105,6 @@ private
     if params[:investigation][:assignee_id].blank?
       params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
     end
-    params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id)
+    params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id, :is_private)
   end
 end

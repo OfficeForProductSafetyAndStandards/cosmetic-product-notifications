@@ -1,0 +1,9 @@
+= link_to "Add product", new_investigation_product_url(@investigation)
+
+hr.govuk-section-break.govuk-section-break--l
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    = "Visibility: "
+    = @investigation.private
+    = link_to "Edit details", @investigation

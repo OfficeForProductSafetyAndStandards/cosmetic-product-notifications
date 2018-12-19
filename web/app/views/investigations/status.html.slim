@@ -3,7 +3,7 @@
   = link_to "Back to case", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
 h2.govuk-heading-l
-  | Case status
+  = "#{case_question_text(investigation).titleize} status"
 = form_with(model: @investigation, local: true) do |form|
   .govuk-form-group
     fieldset.govuk-fieldset
