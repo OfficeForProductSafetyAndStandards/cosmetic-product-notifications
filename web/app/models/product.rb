@@ -32,7 +32,7 @@ class Product < ApplicationRecord
   end
 
   def visible_investigations
-    investigations.select{|investigation| investigation.can_be_displayed}
+    investigations.select(&:can_be_displayed)
   end
 end
 
