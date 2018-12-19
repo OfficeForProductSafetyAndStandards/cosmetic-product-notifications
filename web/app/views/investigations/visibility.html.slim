@@ -3,13 +3,10 @@
   = link_to "Back to case", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Visibility information"
 h2.govuk-heading-l
-  = "#{case_question_text(investigation).titleize} visibility"
+  = "#{case_question_text(@investigation).titleize} visibility"
 = form_with(model: @investigation, local: true) do |form|
   .govuk-form-group
     fieldset.govuk-fieldset
-      legend.govuk-fieldset__legend
-      h4.govuk-label
-        | Visibility
       .govuk-radios
         .govuk-radios__item
           = form.radio_button :is_private, false, class: "govuk-radios__input"

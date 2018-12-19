@@ -6,8 +6,6 @@ class Investigation < ApplicationRecord
 
   attr_accessor :status_rationale
 
-  attribute :is_private
-
   validates :question_title, presence: true, on: :question_details
   validates :description, presence: true, on: %i[allegation_details question_details]
   validates :hazard_type, presence: true, on: :allegation_details
@@ -93,6 +91,10 @@ class Investigation < ApplicationRecord
 
   def status
     is_closed? ? "Closed" : "Open"
+  end
+
+  def visibility
+    is_private ? "Private - Only my organisation" : "Public - Visible to all"
   end
 
   def pretty_id
