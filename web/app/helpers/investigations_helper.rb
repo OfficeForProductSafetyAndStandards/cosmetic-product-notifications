@@ -81,6 +81,10 @@ module InvestigationsHelper
                   :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by)
   end
 
+  def export_params
+    query_params.except(:page)
+  end
+
   def set_default_status_filter
     params[:status_open] = "checked" if params[:status_open].blank?
   end
