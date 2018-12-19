@@ -59,7 +59,7 @@ class Investigation < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      methods: :pretty_id,
+      methods: %i[pretty_id can_be_displayed],
       only: %i[question_title description hazard_type product_type is_closed assignee_id updated_at created_at],
       include: {
         documents: {
@@ -95,6 +95,12 @@ class Investigation < ApplicationRecord
 
   def visibility
     is_private ? "Private - Only my organisation" : "Public - Visible to all"
+  end
+
+  def can_be_displayed
+    return 'true' unless is_private
+
+    return (current_user == source.user).to_s
   end
 
   def pretty_id
