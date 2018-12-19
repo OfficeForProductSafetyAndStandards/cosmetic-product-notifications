@@ -77,12 +77,12 @@ module InvestigationsHelper
     set_default_status_filter
     set_default_sort_by_filter
     set_default_assignee_filter
-    params.permit(:q, :status_open, :status_closed, :pages,
+    params.permit(:q, :status_open, :status_closed, :page,
                   :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by)
   end
 
   def export_params
-    query_params.except(:pages)
+    query_params.except(:page)
   end
 
   def set_default_status_filter
