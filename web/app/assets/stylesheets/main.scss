@@ -17,6 +17,21 @@
   box-sizing: border-box;
 }
 
+
+
+body {
+  // This block prevents content moving when hiding/displaying the scrollbar in the browser
+  @media screen and (min-width: 960px) {
+    header,
+    footer {
+      // Ensures that header and footer background colours fill width of screen
+      margin-left: -20px;
+    }
+    // Shifts content of body to right by width of scrollbar
+    padding-left: calc(100vw - 100%);
+  }
+}
+
 @media print {
   .no-print {
     display: none !important; // sass-lint:disable-line no-important

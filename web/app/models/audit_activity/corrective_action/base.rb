@@ -23,7 +23,7 @@ class AuditActivity::CorrectiveAction::Base < AuditActivity::Base
     body += "Legislation: **#{corrective_action.legislation}**<br>" if corrective_action.legislation.present?
     body += "Business responsible: **#{corrective_action.business.company_name}**<br>" if corrective_action.business.present?
     body += "Date decided: **#{corrective_action.date_decided.strftime('%d/%m/%Y')}**<br>" if corrective_action.date_decided.present?
-    body += "Attached: **#{corrective_action.documents.first.filename.to_s.gsub('_', '\_')}**<br>" if corrective_action.documents.attached?
+    body += "Attached: **#{corrective_action.documents.first.escaped_filename}**<br>" if corrective_action.documents.attached?
     body += "<br>#{corrective_action.details}" if corrective_action.details.present?
     body
   end

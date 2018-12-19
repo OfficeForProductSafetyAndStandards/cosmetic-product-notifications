@@ -3,12 +3,16 @@ module ActiveStorageAttachmentExtension
     blob.metadata["title"] if blob.present?
   end
 
+  def description
+    blob.metadata["description"] if blob.present?
+  end
+
   def filename
     blob&.filename
   end
 
-  def description
-    blob.metadata["description"] if blob.present?
+  def escaped_filename
+    blob&.filename.to_s.gsub('_', '\_')
   end
 end
 
