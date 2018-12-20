@@ -29,7 +29,7 @@ RUN curl -o /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/$CH
   && rm /tmp/chromedriver.zip \
   && chmod ugo+rx /usr/bin/chromedriver
 
-WORKDIR /app
+WORKDIR /web
 
 COPY ./web .
 COPY ./shared-web ./vendor/shared-web
