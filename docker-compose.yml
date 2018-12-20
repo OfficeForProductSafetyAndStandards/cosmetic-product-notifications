@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     build:
-      context: ./postgres
+      context: ./db
       dockerfile: Dockerfile
     volumes:
       - postgres-volume:/var/lib/postgresql/data
