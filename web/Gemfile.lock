@@ -164,7 +164,7 @@ GEM
       raabro (~> 1.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    govuk-lint (3.9.0)
+    govuk-lint (3.10.0)
       rubocop (~> 0.58)
       rubocop-rspec (~> 1.28)
       scss_lint
