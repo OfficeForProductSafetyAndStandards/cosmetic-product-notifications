@@ -1,3 +1,3 @@
 class ApplicationJob < ActiveJob::Base
-    queue_as :mspsds
+  queue_as :mspsds
 end
