@@ -205,7 +205,7 @@ private
 
   def send_assignee_email
     if saved_changes.key? :assignee_id
-      # NotifyMailer.assigned_investigation(self, assignee.full_name, assignee.email).deliver_later
+      NotifyMailer.assigned_investigation(id, assignee.full_name, assignee.email).deliver_later
     end
   end
 
