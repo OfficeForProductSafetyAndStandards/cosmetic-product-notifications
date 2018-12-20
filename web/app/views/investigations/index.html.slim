@@ -72,6 +72,6 @@
       = render "table", search_results: @results
       = will_paginate @investigations
       br
-      = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: query_params)
+      = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: export_params)
     - else
       .govuk-heading-xl[style="text-align:center"] = "No results"
