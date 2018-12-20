@@ -42,6 +42,9 @@ jobs:
   - name: Deploy cosmetics
     if: branch = master AND type != pull_request
     script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
+  - name: Deploy cosmetics worker
+    if: branch = master AND type != pull_request
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=cosmetics-worker ./ci/deploy-if-changed.sh
   - stage: Deploy to staging
     name: Deploy web
     if: branch = staging AND type != pull_request
@@ -55,6 +58,9 @@ jobs:
 #  - name: Deploy cosmetics
 #    if: branch = staging AND type != pull_request
 #    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
+#  - name: Deploy cosmetics worker
+#    if: branch = master AND type != pull_request
+#    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-worker ./ci/deploy-if-changed.sh
   - stage: Deploy to production
     name: Deploy web
     if: branch = prod AND type != pull_request
@@ -68,6 +74,9 @@ jobs:
 #  - name: Deploy cosmetics
 #    if: branch = prod AND type != pull_request
 #    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
+#  - name: Deploy cosmetics worker
+#    if: branch = master AND type != pull_request
+#    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-worker ./ci/deploy-if-changed.sh
 notifications:
   webhooks: https://coveralls.io/webhook
 env:
