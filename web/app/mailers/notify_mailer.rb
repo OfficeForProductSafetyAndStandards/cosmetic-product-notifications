@@ -5,7 +5,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       name: name,
-      investigation_url: investigation_url(id:investigation_id)
+      investigation_url: investigation_url(id: investigation_id)
     )
 
     mail(to: email)

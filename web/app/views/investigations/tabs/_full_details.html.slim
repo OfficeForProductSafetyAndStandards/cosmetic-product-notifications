@@ -2,10 +2,10 @@ p = link_to "Edit details", visibility_investigation_path(@investigation)
 
 hr.govuk-section-break.govuk-section-break--l
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = "Visibility: "
-    = @investigation.visibility
-
-    p = @investigation.can_be_displayed
-    p = @investigation.who_can_see
+table.govuk-table class="govuk-!-margin-bottom-4"
+  tbody.govuk-table__body
+    tr.govuk-table__row
+      th.govuk-table__header scope="row"
+        = "Visibility: "
+      td.govuk-table__cell
+        = @investigation.visibility

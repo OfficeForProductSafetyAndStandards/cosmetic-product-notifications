@@ -101,15 +101,16 @@ class Investigation < ApplicationRecord
   def can_be_displayed
     return true unless is_private
 
-    current_user == source.user
+    [assignee, source&.user].include?(current_user)
   end
 
   def who_can_see
     return [] unless is_private
+
     users = User.all.select do |u|
-      u == assignee || u == source&.user
+      [assignee, source&.user].include?(u)
     end
-    users.map {|u| u.id}
+    users.map(&:id)
   end
 
   def pretty_id
