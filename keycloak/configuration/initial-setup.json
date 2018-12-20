@@ -494,7 +494,7 @@
     "optionalClientScopes" : [ "address", "phone", "offline_access" ]
   }, {
     "id": "121ec424-71bc-4403-829a-44cf4fcb05c5",
-    "clientId": "npis-app",
+    "clientId": "cosmetics-app",
     "name": "Notify Cosmetics",
     "rootUrl": "http://localhost:3002",
     "adminUrl": "http://localhost:3002",
@@ -593,7 +593,7 @@
       "resources": [
         {
           "name": "Default Resource",
-          "type": "urn:npis-app:resources:default",
+          "type": "urn:cosmetics-app:resources:default",
           "ownerManagedAccess": false,
           "attributes": {},
           "_id": "764b308d-5447-4292-9d61-1e792672cb70",
@@ -622,7 +622,7 @@
           "logic": "POSITIVE",
           "decisionStrategy": "UNANIMOUS",
           "config": {
-            "defaultResourceType": "urn:npis-app:resources:default",
+            "defaultResourceType": "urn:cosmetics-app:resources:default",
             "applyPolicies": "[\"Default Policy\"]"
           }
         }

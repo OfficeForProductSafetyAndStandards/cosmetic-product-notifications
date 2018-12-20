@@ -1,5 +1,6 @@
 class ApplicationController < Shared::Web::ApplicationController
   include Pundit
+  include Shared::Web::ApplicationConcern
   before_action :set_raven_context
 
   def set_raven_context

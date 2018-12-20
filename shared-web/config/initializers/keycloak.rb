@@ -1,5 +1,3 @@
-require 'keycloak'
-
 # Set proxy to connect in Keycloak server
 Keycloak.proxy = ""
 # If true, then all request exceptions will explode in the application (this is the default value)
