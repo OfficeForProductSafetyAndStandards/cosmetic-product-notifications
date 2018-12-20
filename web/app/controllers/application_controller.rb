@@ -1,7 +1,13 @@
-class ApplicationController < Shared::Web::ApplicationController
+class ApplicationController < ActionController::Base
+  include Shared::Web::Concerns::ApplicationConcern
+
   include Pundit
-  include Shared::Web::ApplicationConcern
+  helper Shared::Web::Engine.helpers
+  helper_method :current_user, :user_signed_in?
+
+  protect_from_forgery with: :exception
   before_action :set_raven_context
+  before_action :authenticate_user!
 
   def set_raven_context
     Raven.user_context(id: current_user.id) if current_user
