@@ -22,9 +22,4 @@ cp -a ./shared-worker/clamav/. ./mspsds-web/clamav/
 rm -rf ./mspsds-web/vendor/shared-web/
 cp -a ./shared-web/. ./mspsds-web/vendor/shared-web/
 
-if [[ -z ${NO_START} ]] ; then
-    cf push -f ./mspsds-worker/manifest.yml
-fi
-if [[ ${NO_START} ]] ; then
-    cf push -f ./mspsds-worker/manifest.yml --no-start
-fi
+cf push -f ./mspsds-worker/manifest.yml $( [[ ${NO_START} ]] && printf %s '--no-start' )

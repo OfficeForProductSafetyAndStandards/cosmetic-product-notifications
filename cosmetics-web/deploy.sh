@@ -13,9 +13,4 @@ set -ex
 rm -rf ./cosmetics-web/vendor/shared-web/
 cp -a ./shared-web/. ./cosmetics-web/vendor/shared-web/
 
-if [[ -z ${NO_START} ]] ; then
-    cf push -f ./cosmetics-web/manifest.yml --hostname cosmetics-$SPACE
-fi
-if [[ ${NO_START} ]] ; then
-    cf push -f ./cosmetics-web/manifest.yml --hostname cosmetics-$SPACE --no-start
-fi
+cf push -f ./cosmetics-web/manifest.yml --hostname cosmetics-$SPACE $( [[ ${NO_START} ]] && printf %s '--no-start' )

@@ -25,7 +25,7 @@ described in [the root README](../README.md#deployment).
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the worker app.
 
-    NO_START=no-start ./mspsds-worker/deploy.sh
+    NO_START=true ./mspsds-worker/deploy.sh
 
 This provisions the app in Cloud Foundry.
 

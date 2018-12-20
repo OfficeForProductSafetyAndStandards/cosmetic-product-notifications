@@ -13,9 +13,4 @@ set -ex
 rm -rf ./mspsds-web/vendor/shared-web/
 cp -a ./shared-web/. ./mspsds-web/vendor/shared-web/
 
-if [[ -z ${NO_START} ]] ; then
-    cf push -f ./mspsds-web/manifest.yml --hostname mspsds-$SPACE
-fi
-if [[ ${NO_START} ]] ; then
-    cf push -f ./mspsds-web/manifest.yml --hostname mspsds-$SPACE --no-start
-fi
+cf push -f ./mspsds-web/manifest.yml --hostname mspsds-$SPACE $( [[ ${NO_START} ]] && printf %s '--no-start' )

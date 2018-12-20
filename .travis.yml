@@ -25,7 +25,7 @@ jobs:
     install:
     - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./ci/build-docker-images.sh
  
- - stage: Test
+  - stage: Test
     name: MSPSDS Tests
     script: COMPONENT=mspsds-web ./ci/test-if-changed.sh
   - name: MSPSDS Static Analysis
@@ -65,7 +65,7 @@ jobs:
 #  - name: Deploy Cosmetics web
 #    if: branch = staging AND type != pull_request
 #    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
-#  - name: Deploy Cosmetics Worker
+#  - name: Deploy Cosmetics worker
 #    if: branch = master AND type != pull_request
 #    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-worker ./ci/deploy-if-changed.sh
   
