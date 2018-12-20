@@ -81,7 +81,7 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
   end
 end
 
-book.add_worksheet name: "Businesses locations" do |sheet_businesses_locations|
+book.add_worksheet name: "Business locations" do |sheet_businesses_locations|
   sheet_businesses_locations.add_row %w[ID Name Address Phone_Number Locality Country Postal_Code Business_ID Case_ID]
 
   @investigations.each do |investigation|
