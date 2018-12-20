@@ -14,6 +14,12 @@ RUN curl -Lo ./artifacts/postgresql-42.2.5.jar https://jdbc.postgresql.org/downl
 RUN mkdir -p ./package/modules/system/layers/keycloak/org/postgresql/main
 RUN cp ./artifacts/postgresql-42.2.5.jar ./package/modules/system/layers/keycloak/org/postgresql/main
 
+# Download and copy the commonly-used password blacklist
+RUN curl -Lo ./artifacts/10-million-password-list-top-1000000.txt https://raw.githubusercontent.com/danielmiessler/SecLists/2018.3/Passwords/Common-Credentials/10-million-password-list-top-1000000.txt
+RUN mkdir -p ./package/standalone/data/password-blacklists
+RUN cp ./artifacts/10-million-password-list-top-1000000.txt ./package/standalone/data/password-blacklists/
+
+
 COPY ./providers ./providers
 RUN mkdir -p ./package/providers
 
