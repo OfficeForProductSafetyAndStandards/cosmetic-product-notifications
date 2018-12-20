@@ -47,7 +47,7 @@ module InvestigationsHelper
     # String of organisations allowed to see it would work. Relation of such organizations would work if we include
     # them in index
     # Then we just need to send our organization name in place of can_be_displayed_string.
-    { term: { can_be_displayed_string: 'true' } }
+    { term: { who_can_see: current_user.id } }
   end
 
   def get_assignee_filter

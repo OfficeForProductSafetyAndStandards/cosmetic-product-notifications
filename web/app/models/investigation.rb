@@ -25,6 +25,7 @@ class Investigation < ApplicationRecord
     mappings do
       indexes :status, type: :keyword
       indexes :assignee_id, type: :keyword
+      indexes :who_can_see, type: :keyword
     end
   end
 
@@ -59,7 +60,7 @@ class Investigation < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      methods: %i[pretty_id can_be_displayed_string],
+      methods: %i[pretty_id who_can_see],
       only: %i[question_title description hazard_type product_type is_closed assignee_id updated_at created_at],
       include: {
         documents: {
@@ -103,8 +104,8 @@ class Investigation < ApplicationRecord
     current_user == source.user
   end
 
-  def can_be_displayed_string
-    can_be_displayed ? 'true' : 'false'
+  def who_can_see
+    User.all.map {|u| u.id}
   end
 
   def pretty_id
