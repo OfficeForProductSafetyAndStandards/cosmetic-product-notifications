@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 # Run ClamAV as root to avoid permissions issues
 RUN sed -i 's/User clamav/User root/g' /etc/clamav/clamd.conf
 
-WORKDIR /app
+WORKDIR /cosmetics-web
 
 COPY ./cosmetics-web .
 COPY ./shared-web ./vendor/shared-web
