@@ -299,7 +299,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     logout
     sign_in_as_user
     get investigations_path
-    # TODO: Uncomment this when we get organization-based system
-    # assert_not_includes(response.body, new_investigation.pretty_id)
+    assert_not_includes(response.body, new_investigation.pretty_id)
   end
 end

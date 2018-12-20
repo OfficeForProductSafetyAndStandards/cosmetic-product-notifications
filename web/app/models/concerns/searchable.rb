@@ -67,6 +67,7 @@ module Searchable
     # https://github.com/elastic/elasticsearch-rails/pull/703
     after_update do |document|
       document.__elasticsearch__.update_document_attributes updated_at: document.updated_at
+      document.__elasticsearch__.update_document_attributes who_can_see: document.who_can_see if document.is_a? Investigation
     end
 
     def self.full_search(query)

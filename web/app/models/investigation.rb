@@ -105,7 +105,10 @@ class Investigation < ApplicationRecord
   end
 
   def who_can_see
-    User.all.map {|u| u.id}
+    users = User.all.select do |u|
+      !is_private || (u == assignee || u == source&.user)
+    end
+    users.map {|u| u.id}
   end
 
   def pretty_id
@@ -202,7 +205,7 @@ private
 
   def send_assignee_email
     if saved_changes.key? :assignee_id
-      NotifyMailer.assigned_investigation(self, assignee.full_name, assignee.email).deliver_later
+      # NotifyMailer.assigned_investigation(self, assignee.full_name, assignee.email).deliver_later
     end
   end
 
