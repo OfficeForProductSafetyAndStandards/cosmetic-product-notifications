@@ -5,11 +5,11 @@ require "rspec/mocks/standalone"
 
 require 'simplecov'
 require 'simplecov-console'
-require 'coveralls'
+require 'shared/web/coveralls_formatter'
 SimpleCov.formatters = [
   SimpleCov::Formatter::HTMLFormatter,
   SimpleCov::Formatter::Console,
-  Coveralls::SimpleCov::Formatter
+  Shared::Web::CoverallsFormatter
 ]
 SimpleCov.start
 

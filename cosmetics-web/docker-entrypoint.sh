@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -ex
-bundle update
+
 # Ensure all gems are installed.
 bin/bundle check || bin/bundle install
 
