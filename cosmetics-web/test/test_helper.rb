@@ -4,15 +4,13 @@ require 'rails/test_help'
 
 require 'simplecov'
 require 'simplecov-console'
-require 'shared-web/lib/shared/web/coveralls_formatter'
+require 'shared/web/coveralls_formatter'
 SimpleCov.formatters = [
     SimpleCov::Formatter::HTMLFormatter,
     SimpleCov::Formatter::Console,
     Shared::Web::CoverallsFormatter
 ]
-SimpleCov.start 'rails' do
-
-end
+SimpleCov.start
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
