@@ -29,11 +29,11 @@ RUN curl -o /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/$CH
   && rm /tmp/chromedriver.zip \
   && chmod ugo+rx /usr/bin/chromedriver
 
-WORKDIR /web
+WORKDIR /mspsds-web
 
-COPY ./web .
+COPY ./mspsds-web .
 COPY ./shared-web ./vendor/shared-web
 
-COPY ./web/docker-entrypoint.sh /
+COPY ./mspsds-web/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]

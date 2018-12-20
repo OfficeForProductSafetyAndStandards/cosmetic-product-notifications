@@ -1,16 +1,21 @@
 sudo: required
+
 language: generic
+
 services:
 - docker
+
 branches:
   only:
   - master
   - staging
   - prod
+
 cache:
   directories:
   - "~/bundle-cache"
   - "~/npm-cache"
+
 jobs:
   include:
   - stage: Build
@@ -19,65 +24,71 @@ jobs:
     - mkdir -p ~/npm-cache
     install:
     - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./ci/build-docker-images.sh
-  - stage: Test
-    name: Web - Test
-    script: COMPONENT=web ./ci/test-if-changed.sh
-  - name: Web - Static Analysis
-    script: COMPONENT=web ./ci/static-analysis-if-changed.sh
-  - name: Cosmetics-web - Test
+ 
+ - stage: Test
+    name: MSPSDS Tests
+    script: COMPONENT=mspsds-web ./ci/test-if-changed.sh
+  - name: MSPSDS Static Analysis
+    script: COMPONENT=mspsds-web ./ci/static-analysis-if-changed.sh
+  - name: Cosmetics Tests
     script: COMPONENT=cosmetics-web ./ci/test-if-changed.sh
-  - name: Cosmetics-web - Static Analysis
+  - name: Cosmetics Static Analysis
     script: COMPONENT=cosmetics-web ./ci/static-analysis-if-changed.sh
+  
   - stage: Deploy to int
-    name: Deploy web
+    name: Deploy MSPSDS web
     if: branch = master AND type != pull_request
-    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=web ./ci/deploy-if-changed.sh
-  - name: Deploy worker
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=mspsds-web ./ci/deploy-if-changed.sh
+  - name: Deploy MSPSDS worker
     if: branch = master AND type != pull_request
-    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=worker ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=mspsds-worker ./ci/deploy-if-changed.sh
   - name: Deploy keycloak
     if: branch = master AND type != pull_request
     script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=keycloak ./ci/deploy-if-changed.sh
-  - name: Deploy cosmetics
+  - name: Deploy Cosmetics web
     if: branch = master AND type != pull_request
     script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
-  - name: Deploy cosmetics worker
+  - name: Deploy Cosmetics worker
     if: branch = master AND type != pull_request
     script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=cosmetics-worker ./ci/deploy-if-changed.sh
+  
   - stage: Deploy to staging
-    name: Deploy web
+    name: Deploy MSPSDS web
     if: branch = staging AND type != pull_request
-    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=web ./ci/deploy-if-changed.sh
-  - name: Deploy worker
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=mspsds-web ./ci/deploy-if-changed.sh
+  - name: Deploy MSPSDS worker
     if: branch = staging AND type != pull_request
-    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=worker ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=mspsds-worker ./ci/deploy-if-changed.sh
   - name: Deploy keycloak
     if: branch = staging AND type != pull_request
     script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=keycloak ./ci/deploy-if-changed.sh
-#  - name: Deploy cosmetics
+#  - name: Deploy Cosmetics web
 #    if: branch = staging AND type != pull_request
 #    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
-#  - name: Deploy cosmetics worker
+#  - name: Deploy Cosmetics Worker
 #    if: branch = master AND type != pull_request
 #    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-worker ./ci/deploy-if-changed.sh
+  
   - stage: Deploy to production
-    name: Deploy web
+    name: Deploy MSPSDS web
     if: branch = prod AND type != pull_request
-    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=web ./ci/deploy-if-changed.sh
-  - name: Deploy worker
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=mspsds-web ./ci/deploy-if-changed.sh
+  - name: Deploy MSPSDS worker
     if: branch = prod AND type != pull_request
-    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=worker ./ci/deploy-if-changed.sh
+    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=mspsds-worker ./ci/deploy-if-changed.sh
   - name: Deploy keycloak
     if: branch = prod AND type != pull_request
     script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=keycloak ./ci/deploy-if-changed.sh
-#  - name: Deploy cosmetics
+#  - name: Deploy Cosmetics web
 #    if: branch = prod AND type != pull_request
 #    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=cosmetics-web ./ci/deploy-if-changed.sh
-#  - name: Deploy cosmetics worker
+#  - name: Deploy Cosmetics worker
 #    if: branch = master AND type != pull_request
-#    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-worker ./ci/deploy-if-changed.sh
+#    script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=cosmetics-worker ./ci/deploy-if-changed.sh
+
 notifications:
   webhooks: https://coveralls.io/webhook
+
 env:
   global:
   - COVERALLS_PARALLEL=true

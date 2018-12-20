@@ -10,11 +10,11 @@ RUN apt-get update && apt-get install -y \
 # Run ClamAV as root to avoid permissions issues
 RUN sed -i 's/User clamav/User root/g' /etc/clamav/clamd.conf
 
-WORKDIR /web
+WORKDIR /mspsds-web
 
-COPY ./web .
+COPY ./mspsds-web .
 COPY ./shared-web ./vendor/shared-web
 
-COPY ./worker/docker-entrypoint.sh /
+COPY ./mspsds-worker/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]

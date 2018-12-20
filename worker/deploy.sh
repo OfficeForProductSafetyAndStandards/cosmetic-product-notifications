@@ -11,20 +11,20 @@ set -ex
 # If NO_START is set the app won't be started
 
 # Circumvent the cloudfoundry asset compilation step - https://github.com/cloudfoundry/ruby-buildpack/blob/master/src/ruby/finalize/finalize.go#L213
-cp -a ./shared-worker/public/. ./web/public/
+cp -a ./shared-worker/public/. ./mspsds-web/public/
 
 # Copy the apt packages to be installed
-cp ./shared-worker/apt.yml ./web/apt.yml
+cp ./shared-worker/apt.yml ./mspsds-web/apt.yml
 
 # Copy the clamav configuration
-cp -a ./shared-worker/clamav/. ./web/clamav/
+cp -a ./shared-worker/clamav/. ./mspsds-web/clamav/
 
-rm -rf ./web/vendor/shared-web/
-cp -a ./shared-web/. ./web/vendor/shared-web/
+rm -rf ./mspsds-web/vendor/shared-web/
+cp -a ./shared-web/. ./mspsds-web/vendor/shared-web/
 
 if [[ -z ${NO_START} ]] ; then
-    cf push -f ./worker/manifest.yml
+    cf push -f ./mspsds-worker/manifest.yml
 fi
 if [[ ${NO_START} ]] ; then
-    cf push -f ./worker/manifest.yml --no-start
+    cf push -f ./mspsds-worker/manifest.yml --no-start
 fi

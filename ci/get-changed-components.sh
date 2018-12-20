@@ -25,10 +25,10 @@ elif [[ "$TOP_LEVEL_CHANGES" =~ shared-worker ]] || [[ "$TOP_LEVEL_CHANGES" =~ c
     COMPONENTS="$COMPONENTS cosmetics-worker"
 fi
 
-if [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]] || [[ "$TOP_LEVEL_CHANGES" =~ '^web$' ]]; then
-    COMPONENTS="$COMPONENTS web worker"
-elif [[ "$TOP_LEVEL_CHANGES" =~ shared-worker ]] || [[ "$TOP_LEVEL_CHANGES" =~ '^worker$' ]]; then
-    COMPONENTS="$COMPONENTS worker"
+if [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]] || [[ "$TOP_LEVEL_CHANGES" =~ mspsds-web ]]; then
+    COMPONENTS="$COMPONENTS mspsds-web mspsds-worker"
+elif [[ "$TOP_LEVEL_CHANGES" =~ shared-worker ]] || [[ "$TOP_LEVEL_CHANGES" =~ mspsds-worker ]]; then
+    COMPONENTS="$COMPONENTS mspsds-worker"
 fi
 
 echo $COMPONENTS

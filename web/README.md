@@ -1,7 +1,7 @@
 # MSPSDS Website
 
 This folder contains the configuration and code for the MSPSDS website.
-This folder also contains the code for the (background worker)[../worker/README.md].
+This folder also contains the code for the (background worker)[../mspsds-worker/README.md].
 
 
 ## Overview
@@ -20,11 +20,11 @@ This assumes you've followed the setup steps in [the root README](../README.md#g
 
 Initialise the database:
 
-    docker-compose run web bin/rake db:create db:schema:load
+    docker-compose run mspsds-web bin/rake db:create db:schema:load
 
 Restart the website (which may have crashed):
 
-    docker-compose restart web
+    docker-compose restart mspsds-web
 
 Visit the site on [localhost:3000](http://localhost:3000)
 (default credentials: `user@example.com` / `password`)
@@ -32,7 +32,7 @@ Visit the site on [localhost:3000](http://localhost:3000)
 When pulling new changes from master, it is sometimes necessary to run the following
 if there are new migrations:
 
-    docker-compose exec web bin/rake db:migrate
+    docker-compose exec mspsds-web bin/rake db:migrate
 
 
 ### VS Code Setup
@@ -56,7 +56,7 @@ Once rbenv is installed, run the following commands:
 If using RubyMine, you can base your Ruby SDK on the docker-compose-managed ruby installation.
 1. Go to `Settings` -> `Languages & Frameworks` -> `Ruby SDK & Gems`
 1. Click the `+` button and choose `Remote`
-1. Choose `Docker Compose` and set `Service` to `web`, click OK and select the newly created SDK
+1. Choose `Docker Compose` and set `Service` to `mspsds-web`, click OK and select the newly created SDK
 
 RubyMine comes with db inspection tools, too. To connect to the dev db, you'll need the following config:
 `jdbc:postgresql://localhost:5432/mspsds_development`, empty password.
@@ -69,23 +69,23 @@ Debugging is available by running `docker-compose -f docker-compose.yml -f docke
 - the `Remote Debug` configuration, if in RubyMine
 Note, that when run in this mode, the website won't launch until the debugger is connected!
 
-You can access the [rails console](https://guides.rubyonrails.org/command_line.html#rails-console) using `docker-compose exec web bin/rails console`.
+You can access the [rails console](https://guides.rubyonrails.org/command_line.html#rails-console) using `docker-compose exec mspsds-web bin/rails console`.
 
 If your Docker VM uses an IP other than `localhost`, you will need to change the `remoteHost` property in `launch.json` (accessed by clicking the cog icon next to the debug configuration in VS Code).
 
 
 ## Tests
 
-You can run the tests with `docker-compose exec web bin/rake test`.
+You can run the tests with `docker-compose exec mspsds-web bin/rake test`.
 
-You can run the ruby linting with `docker-compose exec web bin/rubocop` (or simply `bin/rubocop` if you installed ruby locally for the [IDE Setup section](#ide-setup) above).
+You can run the ruby linting with `docker-compose exec mspsds-web bin/rubocop` (or simply `bin/rubocop` if you installed ruby locally for the [IDE Setup section](#ide-setup) above).
 Running this with the `--auto-correct` flag set will cause rubocop to attempt to fix as many of the issues as it can.
 
-You can run the Slim linting with `docker-compose exec web bin/slim-lint app/views` (or simply `bin/slim-lint app/views` if installed locally).
+You can run the Slim linting with `docker-compose exec mspsds-web bin/slim-lint app/views` (or simply `bin/slim-lint app/views` if installed locally).
 
-You can run the Sass linting with `docker-compose exec web yarn sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'`.
+You can run the Sass linting with `docker-compose exec mspsds-web yarn sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'`.
 
-You can run the JavaScript linting with `docker-compose exec web yarn eslint app/assets/javascripts`.
+You can run the JavaScript linting with `docker-compose exec mspsds-web yarn eslint app/assets/javascripts`.
 
 You can run the security vulnerability static analysis with `bin/brakeman --no-pager`.
 
@@ -101,7 +101,7 @@ CI as described in [the root README](../README.md#deployment).
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the website app:
 
-    NO_START=no-start SPACE=<<space>> ./web/deploy.sh
+    NO_START=no-start SPACE=<<space>> ./mspsds-web/deploy.sh
 
 This provisions the app in Cloud Foundry.
 

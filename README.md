@@ -28,7 +28,7 @@ Build and start-up the project:
 
     docker-compose up
 
-You'll then most likely want to run the [website setup steps](web/README.md#getting-setup).
+You'll then most likely want to run the [website setup steps](mspsds-web/README.md#getting-setup).
 
 When pulling new changes from master, it is sometimes necessary to run the following
 if there are changes to the Docker config:
@@ -188,13 +188,13 @@ Setting up a logstash filter as follows may be useful:
 
 Create an S3 bucket named `mspsds-SPACE-NAME`.
 
-#### Website
+#### MSPSDS Website
 
-See [web/README.md](web/README.md#deployment-from-scratch).
+See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
 
-#### Worker
+#### MSPSDS Worker
 
-See [worker/README.md](worker/README.md#deployment-from-scratch).
+See [mspsds-worker/README.md](mspsds-worker/README.md#deployment-from-scratch).
 
 #### Keycloak
 
