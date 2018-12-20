@@ -61,7 +61,7 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: %i[pretty_id who_can_see],
-      only: %i[question_title description hazard_type product_type is_closed assignee_id updated_at created_at],
+      only: %i[question_title description hazard_type product_type is_closed assignee_id updated_at created_at is_private],
       include: {
         documents: {
           only: [],
@@ -105,8 +105,9 @@ class Investigation < ApplicationRecord
   end
 
   def who_can_see
+    return [] unless is_private
     users = User.all.select do |u|
-      !is_private || (u == assignee || u == source&.user)
+      u == assignee || u == source&.user
     end
     users.map {|u| u.id}
   end

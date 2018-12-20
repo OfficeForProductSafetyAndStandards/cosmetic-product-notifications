@@ -42,7 +42,14 @@ module InvestigationsHelper
   end
 
   def get_visibility_filter
-    { term: { who_can_see: current_user.id } }
+    {
+      bool: {
+        should: [
+          { term: { who_can_see: current_user.id } },
+          { term: { is_private: false } }
+        ]
+      }
+    }
   end
 
   def get_assignee_filter
