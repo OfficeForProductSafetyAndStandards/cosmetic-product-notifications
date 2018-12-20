@@ -11,15 +11,15 @@ set -ex
 # If NO_START is set the app won't be started
 
 # Circumvent the cloudfoundry asset compilation step - https://github.com/cloudfoundry/ruby-buildpack/blob/master/src/ruby/finalize/finalize.go#L213
-cp -a ./worker/public/. ./web/public/
+cp -a ./shared-worker/public/. ./web/public/
 
 # Copy the apt packages to be installed
-cp ./worker/apt.yml ./web/apt.yml
+cp ./shared-worker/apt.yml ./web/apt.yml
 
 # Copy the clamav configuration
-cp -a ./worker/clamav/. ./web/clamav/
+cp -a ./shared-worker/clamav/. ./web/clamav/
 
-rm -fr ./web/vendor/shared-web/
+rm -rf ./web/vendor/shared-web/
 cp -a ./shared-web/. ./web/vendor/shared-web/
 
 if [[ -z ${NO_START} ]] ; then
