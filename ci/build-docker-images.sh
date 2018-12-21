@@ -9,8 +9,8 @@ COMPONENTS=(
     'keycloak'
     'cosmetics-web'
     'cosmetics-worker'
-    'web'
-    'worker'
+    'mspsds-web'
+    'mspsds-worker'
 )
 
 function docker_tag_exists {
