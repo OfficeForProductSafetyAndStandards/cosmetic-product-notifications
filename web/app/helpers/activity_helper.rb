@@ -5,8 +5,8 @@ module ActivityHelper
       "email": "Record email",
       "phone_call": "Record phone call",
       "meeting": "Record meeting",
-      "testing_request": "Request testing activity",
-      "testing_result": "Record testing activity",
+      "testing_request": "Record testing request",
+      "testing_result": "Record test result",
       "corrective_action": "Record corrective action",
       "product": "Add a product to the case",
       "business": "Add a business to the case"
