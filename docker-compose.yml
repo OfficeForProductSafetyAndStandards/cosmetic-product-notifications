@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     build:
-      context: ./postgres
+      context: ./db
       dockerfile: Dockerfile
     volumes:
       - postgres-volume:/var/lib/postgresql/data
@@ -68,32 +68,32 @@ services:
     - elasticsearch
     - redis
 
-  web:
+  mspsds-web:
     build:
       context: .
-      dockerfile: ./web/Dockerfile
+      dockerfile: ./mspsds-web/Dockerfile
     volumes:
       - bundle-cache:/usr/local/bundle
       - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}/web:/web
-      - ${PWD-.}/shared-web:/web/vendor/shared-web
+      - ${PWD-.}/mspsds-web:/mspsds-web
+      - ${PWD-.}/shared-web:/mspsds-web/vendor/shared-web
     depends_on:
       - db
       - elasticsearch
       - keycloak
       - redis
-      - worker
-  worker:
+      - mspsds-worker
+  mspsds-worker:
     build:
       context: .
-      dockerfile: ./worker/Dockerfile
+      dockerfile: ./mspsds-worker/Dockerfile
     command: bin/sidekiq -C config/sidekiq.yml
     volumes:
       - bundle-cache:/usr/local/bundle
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}/web:/web
-      - ${PWD-.}/shared-web:/web/vendor/shared-web
+      - ${PWD-.}/mspsds-web:/mspsds-web
+      - ${PWD-.}/shared-web:/mspsds-web/vendor/shared-web
     depends_on:
       - db
       - elasticsearch
