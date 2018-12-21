@@ -30,10 +30,6 @@ class Product < ApplicationRecord
   def pretty_description
     "Product #{id}"
   end
-
-  def visible_investigations
-    investigations.select(&:is_visible)
-  end
 end
 
 Product.import force: true if Rails.env.development? # for auto sync model with elastic search

@@ -1,4 +1,9 @@
-- content_for :page_title, "Page not found"
+- content_for :page_title, "Access denied"
+
+.govuk-grid-row
+  .govuk-grid-column-one-third
+    = link_to "Back to list", investigations_path, class: "govuk-back-link"
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl Access denied

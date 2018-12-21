@@ -58,6 +58,10 @@ class Investigation < ApplicationRecord
 
   after_create :create_audit_activity_for_case
 
+  after_update do
+    self.__elasticsearch__.update_document_attributes who_can_see: self.who_can_see
+  end
+
   def as_indexed_json(*)
     as_json(
       methods: %i[pretty_id who_can_see],
@@ -97,13 +101,6 @@ class Investigation < ApplicationRecord
   def visibility
     # TODO: Update to organisations when we get them
     is_private ? "Private - Only creator and assignee" : "Public - Visible to all"
-  end
-
-  def is_visible
-    return true unless is_private
-
-    # TODO: Replace users with organizations when we get organizations
-    [assignee, source&.user].include?(current_user)
   end
 
   def who_can_see

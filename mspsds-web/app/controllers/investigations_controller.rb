@@ -97,7 +97,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
-    restrict_access
+    restrict_access unless policy(@investigation).visible?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -113,6 +113,6 @@ private
   end
 
   def restrict_access
-    redirect_to '/403' unless @investigation.is_visible
+    render 'forbidden'
   end
 end

@@ -20,7 +20,7 @@ table.govuk-table.sortable[class="govuk-!-margin-bottom-3"]
           = business.locations.first ? business.locations.first.short : ""
         td.govuk-table__cell.right-aligned
           span[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
-            = business.visible_investigations.count
+            = visible_investigations(business).count
     - if businesses.empty?
       tr.govuk-table__row
         td.govuk-table__cell[colspan="5"]
