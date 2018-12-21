@@ -98,19 +98,18 @@ class Investigation < ApplicationRecord
     is_private ? "Private - Only my organisation" : "Public - Visible to all"
   end
 
-  def can_be_displayed
+  def is_visible
     return true unless is_private
 
+    # TODO: Replace users with organizations when we get organizations
     [assignee, source&.user].include?(current_user)
   end
 
   def who_can_see
     return [] unless is_private
 
-    users = User.all.select do |u|
-      [assignee, source&.user].include?(u)
-    end
-    users.map(&:id)
+    # TODO: Replace user.id with organization.id when we get organizations
+    [assignee, source&.user].map { |u| u&.id }.uniq
   end
 
   def pretty_id

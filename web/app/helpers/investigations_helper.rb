@@ -45,6 +45,7 @@ module InvestigationsHelper
     {
       bool: {
         should: [
+          # TODO: Replace user.id with organization.id when we get organizations
           { term: { who_can_see: current_user.id } },
           { term: { is_private: false } }
         ]
