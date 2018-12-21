@@ -97,6 +97,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
+    restrict_access
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -109,5 +110,9 @@ private
       params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
     end
     params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id, :is_private)
+  end
+
+  def restrict_access
+    redirect_to '/403' unless @investigation.is_visible
   end
 end

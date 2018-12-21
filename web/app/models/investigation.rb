@@ -17,7 +17,7 @@ class Investigation < ApplicationRecord
   validate :validate_assignment
 
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
-             :create_audit_activity_for_status
+             :create_audit_activity_for_status, :create_audit_activity_for_visibility
 
   index_name [Rails.env, "investigations"].join("_")
 
@@ -95,7 +95,8 @@ class Investigation < ApplicationRecord
   end
 
   def visibility
-    is_private ? "Private - Only my organisation" : "Public - Visible to all"
+    # TODO: Update to organisations when we get them
+    is_private ? "Private - Only creator and assignee" : "Public - Visible to all"
   end
 
   def is_visible
@@ -162,6 +163,12 @@ private
   def create_audit_activity_for_status
     if saved_changes.key?(:is_closed) || status_rationale.present?
       AuditActivity::Investigation::UpdateStatus.from(self)
+    end
+  end
+
+  def create_audit_activity_for_visibility
+    if saved_changes.key?(:is_private)
+      AuditActivity::Investigation::UpdateVisibility.from(self)
     end
   end
 
