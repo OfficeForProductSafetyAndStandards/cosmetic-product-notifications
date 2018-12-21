@@ -56,8 +56,6 @@ Rails.application.routes.draw do
     end
 
     resources :corrective_actions, controller: "investigations/corrective_actions", only: %i[show new create update]
-    resources :correspondences, only: %i[show new create update], controller: "investigations/correspondence",
-              concerns: %i[document_attachable]
     resources :emails, controller: "investigations/emails", only: %i[show new create update]
     resources :phone_calls, controller: "investigations/phone_calls", only: %i[show new create update]
     resources :meetings, controller: "investigations/meetings", only: %i[show new create update]
