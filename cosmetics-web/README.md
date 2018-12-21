@@ -1,7 +1,7 @@
 # Cosmetics Website
 
 This folder contains the code for the Cosmetics website.
-This folder also contains the code for the (background worker)[../cosmetics-worker/README.md].
+This folder also contains the code for the [background worker](../cosmetics-worker/README.md).
 
 ## Overview
 
