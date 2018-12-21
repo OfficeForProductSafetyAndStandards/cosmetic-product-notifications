@@ -52,10 +52,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.0.0", "@babel/parser@^7.2.2":
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.2.2.tgz#37ebdbc88a2e1ebc6c8dd3d35ea9436e3e39e477"
-  integrity sha512-UNTmQ5cSLDeBGBl+s7JeowkqIHgmFAGBnLDdIzFmUNSuS5JF0XBcN59jsh/vJO/YjfsBqMxhMjoFGmNExmf0FA==
+"@babel/parser@^7.0.0", "@babel/parser@^7.2.2", "@babel/parser@^7.2.3":
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.2.3.tgz#32f5df65744b70888d17872ec106b02434ba1489"
+  integrity sha512-0LyEcVlfCoFmci8mXx8A5oIkpkOgyo8dRHtxBnK9RRBwxO2+JZPNsqtVEZQ7mJFPxnXF9lfmU24mHOPI0qnlkA==
 
 "@babel/template@^7.1.0":
   version "7.2.2"
@@ -67,15 +67,15 @@
     "@babel/types" "^7.2.2"
 
 "@babel/traverse@^7.0.0":
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.2.2.tgz#961039de1f9bcb946d807efe2dba9c92e859d188"
-  integrity sha512-E5Bn9FSwHpSkUhthw/XEuvFZxIgrqb9M8cX8j5EUQtrUG5DQUy6bFyl7G7iQ1D1Czudor+xkmp81JbLVVM0Sjg==
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.2.3.tgz#7ff50cefa9c7c0bd2d81231fdac122f3957748d8"
+  integrity sha512-Z31oUD/fJvEWVR0lNZtfgvVt512ForCTNKYcJBGbPb1QZfve4WGH8Wsy7+Mev33/45fhP/hwQtvgusNdcCMgSw==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@babel/generator" "^7.2.2"
     "@babel/helper-function-name" "^7.1.0"
     "@babel/helper-split-export-declaration" "^7.0.0"
-    "@babel/parser" "^7.2.2"
+    "@babel/parser" "^7.2.3"
     "@babel/types" "^7.2.2"
     debug "^4.1.0"
     globals "^11.1.0"
@@ -90,7 +90,7 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-accessible-autocomplete@^1.6.1, accessible-autocomplete@^1.6.2:
+accessible-autocomplete@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/accessible-autocomplete/-/accessible-autocomplete-1.6.2.tgz#cb69d37748ba5b0351c84422468538890e25759c"
   integrity sha512-7S+6Vi82LQFSSd5feKedu46tiY2/DShpdXiRp0NY3cLwc+DKe1ayWd66mb3JVi8LTQubRM7jco+u92e6w0bbvg==
@@ -585,7 +585,7 @@ eslint@^2.7.0:
     text-table "~0.2.0"
     user-home "^2.0.0"
 
-eslint@^5.10.0, eslint@^5.8.0:
+eslint@^5.10.0:
   version "5.10.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.10.0.tgz#24adcbe92bf5eb1fc2d2f2b1eebe0c5e0713903a"
   integrity sha512-HpqzC+BHULKlnPwWae9MaVZ5AXJKpkxCVXQHrFaRw3hbDj26V/9ArYM4Rr/SQ8pi6qUPLXSSXC4RBJlyq2Z2OQ==
@@ -835,7 +835,7 @@ gonzales-pe-sl@^4.2.3:
   dependencies:
     minimist "1.1.x"
 
-govuk-country-and-territory-autocomplete@^0.5.0, govuk-country-and-territory-autocomplete@^0.5.1:
+govuk-country-and-territory-autocomplete@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/govuk-country-and-territory-autocomplete/-/govuk-country-and-territory-autocomplete-0.5.1.tgz#6db13e6c29789a9b02e2d80878a6a1b36a38edd2"
   integrity sha512-tfBzqd9SXjX+jlNEwFPv53R2tpuMOq8pyfnRI+023ak+1OEfLCGFqS7PlOMN4Af4+Cg6lv7R+Cue5Q07j/ECpw==
@@ -844,7 +844,7 @@ govuk-country-and-territory-autocomplete@^0.5.0, govuk-country-and-territory-aut
     openregister-picker-engine "^1.2.1"
     webpack-sources "^1.3.0"
 
-govuk-frontend@^2.2.0, govuk-frontend@^2.4.1:
+govuk-frontend@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.4.1.tgz#4e8e3b16aa588a25e6b7f97ab3ac0045df52c60c"
   integrity sha512-6cqX9YxypQfE7gfuexqSll3EAQLW2MDgL2w8LUEnmfW36cadUktZHjzyusOY/ggJxDAiiyEcC+9R8Oj57g90mw==
@@ -1462,13 +1462,13 @@ semver@^5.5.0, semver@^5.5.1:
 shared-web@./vendor/shared-web:
   version "1.0.0"
   dependencies:
-    accessible-autocomplete "^1.6.1"
+    accessible-autocomplete "^1.6.2"
     babel-eslint "^10.0.1"
-    eslint "^5.8.0"
+    eslint "^5.10.0"
     eslint-config-airbnb-es5 "^1.2.0"
     eslint-plugin-react "^7.11.1"
-    govuk-country-and-territory-autocomplete "^0.5.0"
-    govuk-frontend "^2.2.0"
+    govuk-country-and-territory-autocomplete "^0.5.1"
+    govuk-frontend "^2.4.1"
     html5shiv "^3.7.3"
     jquery "^3.3.1"
     jquery-ujs "^1.2.2"
