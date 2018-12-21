@@ -64,7 +64,7 @@ RubyMine comes with db inspection tools, too. To connect to the dev db, you'll n
 
 ### Debugging
 
-Debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up` and then 
+Debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up mspsds-web` and then 
 - the `Docker: Attach to Ruby` configuration, if in VS Code.
 - the `Remote Debug` configuration, if in RubyMine
 Note, that when run in this mode, the website won't launch until the debugger is connected!
@@ -78,14 +78,14 @@ If your Docker VM uses an IP other than `localhost`, you will need to change the
 
 You can run the tests with `docker-compose exec mspsds-web bin/rake test`.
 
-You can run the ruby linting with `docker-compose exec mspsds-web bin/rubocop` (or simply `bin/rubocop` if you installed ruby locally for the [IDE Setup section](#ide-setup) above).
+You can run the ruby linting with `docker-compose exec mspsds-web bin/rubocop`.
 Running this with the `--auto-correct` flag set will cause rubocop to attempt to fix as many of the issues as it can.
 
-You can run the Slim linting with `docker-compose exec mspsds-web bin/slim-lint app/views` (or simply `bin/slim-lint app/views` if installed locally).
+You can run the Slim linting with `docker-compose exec mspsds-web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app/views`.
 
-You can run the Sass linting with `docker-compose exec mspsds-web yarn sass-lint -vq -c .sasslint.yml 'app/assets/stylesheets/**/*.scss'`.
+You can run the Sass linting with `docker-compose exec mspsds-web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'`.
 
-You can run the JavaScript linting with `docker-compose exec mspsds-web yarn eslint app/assets/javascripts`.
+You can run the JavaScript linting with `docker-compose exec mspsds-web yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/javascripts`.
 
 You can run the security vulnerability static analysis with `bin/brakeman --no-pager`.
 
@@ -95,10 +95,56 @@ You can run the security vulnerability static analysis with `bin/brakeman --no-p
 The website code is automatically deployed to the relevant environment by Travis
 CI as described in [the root README](../README.md#deployment).
 
+The int MSPSDS website is hosted [here](https://mspsds-int.london.cloudapps.digital/).
+
+The staging MSPSDS website is hosted [here](https://mspsds-staging.london.cloudapps.digital/).
+
+The production MSPSDS website is hosted [here](https://mspsds-prod.london.cloudapps.digital/).
+
 
 ### Deployment from scratch
 
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
+
+#### Database
+
+To create a database for the current space:
+
+    cf marketplace -s postgres
+    cf enable-service-access postgres
+    cf create-service postgres tiny-unencrypted-10.5 mspsds-database
+
+Larger database options should be considered if required.
+
+
+#### Elasticsearch
+
+To create an Elasticsearch instance for the current space:
+
+    cf marketplace -s elasticsearch
+    cf create-service elasticsearch tiny-6.x mspsds-elasticsearch
+
+
+#### Redis
+
+To create a redis instance for the current space. 
+
+    cf marketplace -s redis
+    cf create-service redis tiny-unclustered-3.2 mspsds-redis
+
+Larger options should be considered if required. The current worker (sidekiq) only works with the unclustered version.
+
+
+#### S3
+
+When setting up a new environment, you'll also need to create an AWS user called `mspsds-SPACE-NAME` and keep a note of the Access key ID and secret access key.
+Give this user the AmazonS3FullAccess policy.
+
+Create an S3 bucket named `mspsds-SPACE-NAME`.
+
+
+#### MSPSDS Website
+
 Running the following commands from the root directory will then setup the website app:
 
     NO_START=true SPACE=<<space>> ./mspsds-web/deploy.sh
@@ -118,7 +164,7 @@ This sets the server's encryption key. Generate a new value by running `rake sec
     cf set-env mspsds-web AWS_REGION XXX
     cf set-env mspsds-web AWS_S3_BUCKET XXX
 
-See the AWS account section in [the root README](../README.md#aws) to get these values.
+See the S3 section [above](#s3) to get these values.
 
     cf set-env mspsds-web COMPANIES_HOUSE_API_KEY XXX
 
@@ -134,4 +180,9 @@ This sets the http auth username and password for access to the pgHero dashboard
 
 See the Sentry account section in [the root README](../README.md#sentry) to get this value.
 
-The app can then be started using `cf restart mspsds-web`.
+The app can then be started using `cf start mspsds-web`.
+
+
+#### MSPSDS Worker
+
+See [mspsds-worker/README.md](../mspsds-worker/README.md#deployment-from-scratch).

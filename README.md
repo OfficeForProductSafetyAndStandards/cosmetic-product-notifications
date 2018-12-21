@@ -24,11 +24,13 @@ Add the following entry for Keycloak to your hosts file ([instructions](https://
 
     127.0.0.1   keycloak
 
-Build and start-up the project:
+Build and start-up the full project:
 
     docker-compose up
 
-You'll then most likely want to run the [website setup steps](mspsds-web/README.md#getting-setup).
+Alternatively, you can run the specific component you're interested in using e.g. `docker-compose up mspsds-web` or `docker-compose up cosmetics-web`.
+
+You'll then most likely want to run the [Cosmetics setup steps](cosmetics-web/README.md#getting-setup) or [MSPSDS setup steps](mspsds-web/README.md#getting-setup).
 
 When pulling new changes from master, it is sometimes necessary to run the following
 if there are changes to the Docker config:
@@ -105,15 +107,14 @@ If you want to view the exceptions, you'll need an account - ask someone on the 
 
 Anything which is merged to `master` (via a Pull Request or push) will trigger the
 [Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
-and cause deployments of the various components to the int space
-([the int website is hosted here](https://mspsds-int.london.cloudapps.digital/)) on GOV.UK PaaS.
+and cause deployments of the various components to the int space on GOV.UK PaaS.
 
 Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
-space ([staging website](https://mspsds-int.london.cloudapps.digital/)).
+space.
 Please only do this if you are confident that this is a stable commit.
 
 Anything merged into the branch `prod` (only via a Pull Request) will cause Travis CI to instead build to the prod
-space ([staging website](https://mspsds-int.london.cloudapps.digital/)).
+space.
 Please only do this if you are confident that this is a stable commit.
 
 ### Deployment from scratch
@@ -128,37 +129,20 @@ This will log you in and set the correct target organisation.
 
 If you need to create a new environment, you can run `cf create-space SPACE-NAME`, otherwise, select the correct space using `cf target -o beis-mspsds -s SPACE-NAME`.
 
-When setting up a new environment, you'll also need to create an AWS user called `mspsds-SPACE-NAME` and keep a note of the Access key ID and secret access key.
-Give this user the AmazonS3FullAccess policy.
+
+#### Keycloak
+
+See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
 
 
-#### Database
+#### Cosmetics
 
-To create a database for the current space:
-
-    cf marketplace -s postgres
-    cf enable-service-access postgres
-    cf create-service postgres tiny-unencrypted-10.5 mspsds-database
-
-Larger database options should be considered if required.
+See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
 
 
-#### Elasticsearch
+#### MSPSDS
 
-To create an Elasticsearch instance for the current space:
-
-    cf marketplace -s elasticsearch
-    cf create-service elasticsearch tiny-6.x mspsds-elasticsearch
-
-
-#### Redis
-
-To create a redis instance for the current space. 
-
-    cf marketplace -s redis
-    cf create-service redis tiny-unclustered-3.2 mspsds-redis
-
-Larger options should be considered if required. The current worker (sidekiq) only works with the unclustered version.
+See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
 
 
 #### Logging
@@ -183,22 +167,6 @@ Setting up a logstash filter as follows may be useful:
       }
     }
 
-
-#### S3
-
-Create an S3 bucket named `mspsds-SPACE-NAME`.
-
-#### MSPSDS Website
-
-See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
-
-#### MSPSDS Worker
-
-See [mspsds-worker/README.md](mspsds-worker/README.md#deployment-from-scratch).
-
-#### Keycloak
-
-See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
 
 ## Licence
 

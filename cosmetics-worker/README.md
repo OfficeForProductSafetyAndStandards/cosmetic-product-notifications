@@ -22,7 +22,7 @@ described in [the root README](../README.md#deployment).
 
 ### Deployment from scratch
 
-Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
+This assumes that you've run [the deployment from scratch steps for the Cosmetics website](../cosmetics-web/README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the worker app.
 
     NO_START=no-start ./cosmetics-worker/deploy.sh
@@ -33,13 +33,6 @@ This provisions the app in Cloud Foundry.
 
 This configures rails to use the production database amongst other things.
 
-    cf set-env cosmetics-worker AWS_ACCESS_KEY_ID XXX
-    cf set-env cosmetics-worker AWS_SECRET_ACCESS_KEY XXX
-    cf set-env cosmetics-worker AWS_REGION XXX
-    cf set-env cosmetics-worker AWS_S3_BUCKET XXX
-
-See the AWS account section in [the root README](../README.md#aws) to get these values.
-
     cf set-env cosmetics-worker NOTIFY_API_KEY XXX
 
 See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value.
@@ -48,4 +41,4 @@ See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-n
 
 This is the URL for the website and is used for sending emails.
 
-The app can then be started using `cf restart cosmetics-worker`.
+The app can then be started using `cf start cosmetics-worker`.
