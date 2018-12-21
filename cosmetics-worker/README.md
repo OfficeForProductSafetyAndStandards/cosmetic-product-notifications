@@ -25,10 +25,7 @@ described in [the root README](../README.md#deployment).
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the worker app.
 
-    cp -a ./cosmetics-worker/public/. ./cosmetics-web/public/
-    cp ./cosmetics-worker/apt.yml ./cosmetics-web/apt.yml
-    cp -a ./cosmetics-worker/clamav/. ./cosmetics-web/clamav/
-    cf push -f ./cosmetics-worker/manifest.yml --no-start
+    NO_START=no-start ./cosmetics-worker/deploy.sh
 
 This provisions the app in Cloud Foundry.
 
