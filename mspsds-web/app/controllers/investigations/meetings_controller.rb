@@ -97,12 +97,14 @@ private
   def request_params
     return {} if params[correspondence_params_key].blank?
 
-    params.require(correspondence_params_key).permit(:correspondent_name,
-                                           :day,
-                                           :month,
-                                           :year,
-                                           :overview,
-                                           :details)
+    params.require(correspondence_params_key).permit(
+        :correspondent_name,
+        :day,
+        :month,
+        :year,
+        :overview,
+        :details
+    )
   end
 
   def session_params
@@ -111,14 +113,14 @@ private
 
   def transcript_metadata
     get_attachment_metadata_params(:transcript).merge(
-      title: correspondence_params["overview"],
-      description: "Meeting transcript"
+        title: correspondence_params["overview"],
+        description: "Meeting transcript"
     )
   end
 
   def related_attachment_metadata
     get_attachment_metadata_params(:related_attachment).merge(
-      title: correspondence_params["overview"]
+        title: correspondence_params["overview"]
     )
   end
 

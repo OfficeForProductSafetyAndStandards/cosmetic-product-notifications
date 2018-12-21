@@ -59,7 +59,7 @@ private
   end
 
   def store_correspondence
-    session[correspondence_params_key] = @correspondence.attributes
+    session[correspondence_params_key] = @correspondence.attributes if @correspondence.valid?(step)
   end
 
   def set_attachment
@@ -93,13 +93,15 @@ private
   def request_params
     return {} if params[correspondence_params_key].blank?
 
-    params.require(correspondence_params_key).permit(:correspondent_name,
-                                           :phone_number,
-                                           :day,
-                                           :month,
-                                           :year,
-                                           :overview,
-                                           :details)
+    params.require(correspondence_params_key).permit(
+        :correspondent_name,
+        :phone_number,
+        :day,
+        :month,
+        :year,
+        :overview,
+        :details
+    )
   end
 
   def session_params
@@ -108,8 +110,8 @@ private
 
   def file_metadata
     get_attachment_metadata_params(:transcript).merge(
-      title: correspondence_params[:overview],
-      description: "Call transcript"
+        title: correspondence_params[:overview],
+        description: "Call transcript"
     )
   end
 
