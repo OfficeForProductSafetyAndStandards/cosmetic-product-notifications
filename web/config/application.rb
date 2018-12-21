@@ -23,6 +23,8 @@ module App
     }
     config.action_view.form_with_generates_ids = true
 
+    config.active_job.queue_adapter = :sidekiq
+
     # This changes Rails timezone, but keeps ActiveRecord in UTC
     config.time_zone = "Europe/London"
 

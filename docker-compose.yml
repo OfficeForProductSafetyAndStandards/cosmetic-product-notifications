@@ -9,6 +9,7 @@ services:
       - postgres-volume:/var/lib/postgresql/data
     env_file:
       - .env.keycloak
+
   elasticsearch:
     build:
       context: .
@@ -18,11 +19,13 @@ services:
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     volumes:
       - elasticsearch-volume:/usr/share/elasticsearch/data
+
   redis:
     image: redis
     hostname: redis
     volumes:
       - redis-volume:/data
+
   keycloak:
     build:
       context: ./keycloak
@@ -33,6 +36,38 @@ services:
     - db
     ports:
       - "8080:8080"
+
+  cosmetics-web:
+    build:
+      context: .
+      dockerfile: ./cosmetics-web/Dockerfile
+    volumes:
+      - bundle-cache:/usr/local/bundle
+      - npm-cache:/root/.npm
+      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+      - ${PWD-.}/cosmetics-web:/cosmetics-web
+      - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
+    depends_on:
+      - db
+      - elasticsearch
+      - keycloak
+      - redis
+      - cosmetics-worker
+  cosmetics-worker:
+    build:
+      context: .
+      dockerfile: ./cosmetics-worker/Dockerfile
+    command: bin/sidekiq -C config/sidekiq.yml
+    volumes:
+    - bundle-cache:/usr/local/bundle
+    # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+    - ${PWD-.}/cosmetics-web:/cosmetics-web
+    - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
+    depends_on:
+    - db
+    - elasticsearch
+    - redis
+
   web:
     build:
       context: .
@@ -49,18 +84,6 @@ services:
       - keycloak
       - redis
       - worker
-  cosmetics-web:
-    build:
-      context: .
-      dockerfile: ./cosmetics-web/Dockerfile
-    volumes:
-      - bundle-cache:/usr/local/bundle
-      - npm-cache:/root/.npm
-      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}/cosmetics-web:/cosmetics-web
-      - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
-    depends_on:
-      - db
   worker:
     build:
       context: .
