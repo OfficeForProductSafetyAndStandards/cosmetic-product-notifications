@@ -8,14 +8,14 @@ default: &default
 
 development:
   <<: *default
-  database: cosmetics_development
+  database: mspsds_development
 
 test:
   <<: *default
-  database: cosmetics_test
+  database: mspsds_test
 
 production:
-  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-database")["uri"] %>
+  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("mspsds-database")["uri"] %>
   connect_timeout: 2
   variables:
     statement_timeout: 500

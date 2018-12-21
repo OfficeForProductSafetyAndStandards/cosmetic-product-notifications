@@ -35,15 +35,21 @@ Keycloak is automatically deployed to the relevant environment by Travis CI, as 
 
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 
+
+#### Database
+
 To create a Keycloak database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
     cf create-service postgres tiny-unencrypted-10.5 keycloak-database
 
+
+#### Keycloak
+
 Running the following commands from the root directory will then package and set up the Keycloak app:
 
-    NO_START=no-start SPACE=<<SPACE>> ./keycloak/deploy.sh
+    NO_START=true SPACE=<<SPACE>> ./keycloak/deploy.sh
 
 Once the app has been created, add the following environment variables to specify the database connection properties:
 

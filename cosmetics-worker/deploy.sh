@@ -22,9 +22,4 @@ cp -a ./shared-worker/clamav/. ./cosmetics-web/clamav/
 rm -rf ./cosmetics-web/vendor/shared-web/
 cp -a ./shared-web ./cosmetics-web/vendor/shared-web
 
-if [[ -z ${NO_START} ]] ; then
-    cf push -f ./cosmetics-worker/manifest.yml
-fi
-if [[ ${NO_START} ]] ; then
-    cf push -f ./cosmetics-worker/manifest.yml --no-start
-fi
+cf push -f ./cosmetics-worker/manifest.yml $( [[ ${NO_START} ]] && printf %s '--no-start' )

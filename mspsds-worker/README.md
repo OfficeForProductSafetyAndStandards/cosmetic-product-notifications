@@ -1,6 +1,6 @@
 # MSPSDS Background Worker
 
-This folder contains the configuration to setup the worker processes which support the (website)[../web/README.md].
+This folder contains the configuration to setup the worker processes which support the (website)[../mspsds-web/README.md].
 The codebase is shared with the website.
 
 
@@ -22,10 +22,10 @@ described in [the root README](../README.md#deployment).
 
 ### Deployment from scratch
 
-Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
+This assumes that you've run [the deployment from scratch steps for the MSPSDS website](../mspsds-web/README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the worker app.
 
-    NO_START=no-start ./worker/deploy.sh
+    NO_START=true ./mspsds-worker/deploy.sh
 
 This provisions the app in Cloud Foundry.
 
@@ -38,7 +38,7 @@ This configures rails to use the production database amongst other things.
     cf set-env mspsds-worker AWS_REGION XXX
     cf set-env mspsds-worker AWS_S3_BUCKET XXX
 
-See the AWS account section in [the root README](../README.md#aws) to get these values.
+See the S3 section in [the MSPSDS Website README](../mspsds-web/README.md#s3) to get these values.
 
     cf set-env mspsds-worker NOTIFY_API_KEY XXX
 
@@ -48,4 +48,4 @@ See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-n
 
 This is the URL for the website and is used for sending emails.
 
-The app can then be started using `cf restart mspsds-worker`.
+The app can then be started using `cf start mspsds-worker`.
