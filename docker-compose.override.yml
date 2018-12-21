@@ -4,21 +4,31 @@ services:
   db:
     ports:
       - "5433:5432"
+
+  elasticsearch:
+    ports:
+      - "9200:9200"
+
   keycloak:
     env_file:
       - .env
       - .env.keycloak
-  web:
-    command: bin/rails s -p 3000 -b 0.0.0.0
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env
-      - .env.keycloak
+
   cosmetics-web:
     command: bin/rails s -p 3002 -b 0.0.0.0
     ports:
       - "3002:3002"
+    env_file:
+      - .env
+      - .env.keycloak
+  cosmetics-worker:
+    env_file:
+    - .env
+
+  web:
+    command: bin/rails s -p 3000 -b 0.0.0.0
+    ports:
+      - "3000:3000"
     env_file:
       - .env
       - .env.keycloak

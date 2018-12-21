@@ -17,6 +17,8 @@ PATH
       coveralls
       rails (~> 5.2.1)
       rubocop
+      sidekiq
+      sidekiq-cron
       simplecov
       simplecov-console
       slim_lint
@@ -76,7 +78,7 @@ GEM
     ast (2.4.0)
     aws-eventstream (1.0.1)
     aws-partitions (1.125.0)
-    aws-sdk-core (3.44.0)
+    aws-sdk-core (3.44.1)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
@@ -457,8 +459,6 @@ DEPENDENCIES
   selenium-webdriver
   sentry-raven
   shared-web!
-  sidekiq
-  sidekiq-cron
   slim-rails
   slowpoke
   solargraph
