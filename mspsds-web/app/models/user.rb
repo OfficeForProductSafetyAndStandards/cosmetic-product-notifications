@@ -1,5 +1,6 @@
 class User < ActiveHash::Base
   include ActiveHash::Associations
+  include UserService
 
   field :first_name
   field :last_name
@@ -46,6 +47,14 @@ class User < ActiveHash::Base
     display_name = full_name
     display_name += " (#{organisation.name})" if organisation.present?
     display_name
+  end
+
+  def assignee_short_name
+    if organisation.present? && organisation.id != current_user&.organisation&.id
+      organisation.name
+    else
+      full_name
+    end
   end
 
   def has_role?(role)

@@ -7,7 +7,7 @@
       .mspsds-case-card class="mspsds-case-card__status" = "CLOSED"
   .govuk-grid-column-one-quarter
     span.govuk-caption-m[class="govuk-!-font-size-16"] = "Assigned to"
-    span = investigation.assignee ? investigation.assignee.full_name.to_s : "Unassigned"
+    span = investigation.assignee ? investigation.assignee.assignee_short_name : "Unassigned"
   .govuk-grid-column-one-quarter
     span.govuk-caption-m[class="govuk-!-font-size-16"] = "Last updated"
     span = investigation.updated_at.strftime("%d/%m/%Y")
