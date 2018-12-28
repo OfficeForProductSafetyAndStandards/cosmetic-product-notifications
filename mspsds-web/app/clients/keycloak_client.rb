@@ -8,6 +8,25 @@ module Keycloak
       openid_configuration
     end
   end
+
+  module Admin
+    def self.get_groups(query_parameters = nil, access_token = nil)
+      generic_get("groups/", query_parameters, access_token)
+    end
+  end
+
+  module Internal
+    def self.get_groups(query_parameters = nil, client_id = '', secret = '')
+      client_id = Keycloak::Client.client_id if client_id.blank?
+      secret = Keycloak::Client.secret if secret.blank?
+
+      proc = lambda {|token|
+        Keycloak::Admin.get_groups(query_parameters, token["access_token"])
+      }
+
+      default_call(proc, client_id, secret)
+    end
+  end
 end
 
 class KeycloakClient
@@ -26,6 +45,23 @@ class KeycloakClient
     JSON.parse(response).map do |user|
       { id: user["id"], email: user["email"], first_name: user["firstName"], last_name: user["lastName"] }
     end
+  end
+
+  def all_organisations
+    groups = all_groups
+    organisations = groups.find { |group| group["name"] == "Organisations" }
+
+    organisations["subGroups"].map do |organisation|
+      { id: organisation["id"], name: organisation["name"], path: organisation["path"] }
+    end
+  end
+
+  def all_groups
+    response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
+      Keycloak::Internal.get_groups
+    end
+
+    JSON.parse(response)
   end
 
   def login_url(redirect_uri)
