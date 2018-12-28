@@ -42,30 +42,24 @@ class User < ActiveHash::Base
     "#{first_name} #{last_name}"
   end
 
+  def display_name
+    display_name = full_name
+    display_name += " (#{organisation.name})" if organisation.present?
+    display_name
+  end
+
   def has_role?(role)
     KeycloakClient.instance.has_role? role
   end
 
-  def self.get_assignees_select_options(except_those_users = [])
-    select_options = { '': nil }
+  def self.get_assignees_select_options(except: [], use_short_name: false)
+    users_to_exclude = Array(except)
 
-    (self.all - (except_those_users || [])).each do |user|
-      display_string = user.get_assignee_display_string
-      select_options[display_string] = user.id
+    select_options = { '': nil }
+    (self.all - users_to_exclude).each do |user|
+      label = use_short_name ? user.full_name : user.display_name
+      select_options[label] = user.id
     end
     select_options
-  end
-
-  def self.get_assignees_select_options_short(except_those_users = [])
-    select_options = { '': nil }
-    (self.all - (except_those_users || [])).each do |user|
-      display_string = user.full_name
-      select_options[display_string] = user.id
-    end
-    select_options
-  end
-
-  def get_assignee_display_string
-    "#{full_name} (#{email})"
   end
 end
