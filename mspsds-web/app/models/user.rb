@@ -9,13 +9,23 @@ class User < ActiveHash::Base
   has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
   has_many :user_sources, dependent: :delete
 
-  def self.find_or_create(user)
-    User.find_by(id: user[:id]) || User.create(user)
+  belongs_to :organisation
+
+  def self.find_or_create(attributes)
+    groups = attributes.delete(:groups)
+    organisation = Organisation.find_by_path(groups)
+    User.find_by(id: attributes[:id]) || User.create(attributes.merge(organisation_id: organisation&.id))
   end
 
   def self.all(options = {})
     begin
-      self.data = KeycloakClient.instance.all_users
+      organisations = Organisation.all
+      all_users = organisations.flat_map do |organisation|
+        KeycloakClient.instance.all_users(organisation.id)
+      end
+      all_users.concat(KeycloakClient.instance.all_users)
+
+      self.data = all_users.uniq { |user| user[:id] }
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
       self.data = nil
