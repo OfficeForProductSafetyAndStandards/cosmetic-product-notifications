@@ -32,4 +32,16 @@ private
   def pretty_date_stamp
     created_at.strftime('%d %B %Y')
   end
+
+  def self.sanitize_text text
+    text.gsub(/[*_~]/){|match| "\\#{match}"}
+  end
+
+  def self.sanitize_object object
+    sanitized = object.dup
+    object.attributes.each do |attr_name, attr_value|
+      sanitized[attr_name] = self.sanitize_text attr_value if attr_value.is_a? String
+    end
+    sanitized
+  end
 end
