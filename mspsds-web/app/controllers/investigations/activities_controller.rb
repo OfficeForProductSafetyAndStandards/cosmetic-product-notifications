@@ -54,7 +54,7 @@ class Investigations::ActivitiesController < ApplicationController
 private
 
   def create_activity
-    @activity = CommentActivity.new(body: activity_params[:body].strip.gsub(/[*_~]/) { |match| "\\#{match}" })
+    @activity = CommentActivity.new(body: Activity.sanitize_text(activity_params[:body]))
     @investigation.activities << @activity
     @activity.source = UserSource.new(user: current_user)
   end
