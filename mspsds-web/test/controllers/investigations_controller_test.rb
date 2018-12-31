@@ -69,7 +69,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     id = User.first.id
     investigation_assignee_id = lambda { Investigation.find(@investigation_three.id).assignee_id }
     assert_changes investigation_assignee_id, from: nil, to: id do
-      put investigation_url(@investigation_three), params: {
+      put assign_investigation_url(@investigation_three), params: {
         investigation: {
           assignee_id: id
         }
@@ -82,7 +82,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     is_closed = true
     investigation_status = lambda { Investigation.find(@investigation_one.id).is_closed }
     assert_changes investigation_status, from: false, to: is_closed do
-      put investigation_url(@investigation_one), params: {
+      put status_investigation_url(@investigation_one), params: {
           investigation: {
               is_closed: is_closed,
               status_rationale: "some rationale"

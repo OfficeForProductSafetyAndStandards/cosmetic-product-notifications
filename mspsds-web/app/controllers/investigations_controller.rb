@@ -45,34 +45,39 @@ class InvestigationsController < ApplicationController
   end
 
   # GET /cases/1/status
-  def status; end
+  # PUT /cases/1/assign
+  def status
+    return if request.get?
+
+    ps = investigation_update_params
+    unless ps[:is_closed]
+      @investigation.errors.add(:status, :invalid, message: "Status should be closed or open")
+      return
+    end
+
+    @investigation.is_closed = ps[:is_closed] if ps[:is_closed]
+    @investigation.status_rationale = ps[:status_rationale] if ps[:status_rationale]
+    respond_to_update(:status)
+  end
 
   # GET /cases/1/assign
-  def assign; end
+  # PUT /cases/1/assign
+  def assign
+    return if request.get?
+
+    ps = investigation_update_params
+    unless ps[:assignee_id]
+      @investigation.errors.add(:assignee, :invalid, message: "Assignee should exist")
+      return
+    end
+
+    @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
+    respond_to_update(:assign)
+  end
 
   # PATCH/PUT /cases/1
   # PATCH/PUT /cases/1.json
-  def update
-    ps = investigation_update_params
-    @investigation.is_closed = ps[:is_closed] if ps[:is_closed]
-    @investigation.status_rationale = ps[:status_rationale] if ps[:status_rationale]
-    @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
-    respond_to do |format|
-      if @investigation.save
-        format.html { redirect_to @investigation, notice: "Case was successfully updated." }
-        format.json { render :show, status: :ok, location: @investigation }
-      else
-        @investigation.restore_attributes
-        origin = if ps[:is_closed]
-                   :status
-                 else
-                   :assign
-                 end
-        format.html { render origin }
-        format.json { render json: @investigation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  def update; end
 
   # POST /cases
   # POST /cases.json
@@ -105,5 +110,18 @@ private
       params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
     end
     params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id)
+  end
+
+  def respond_to_update(origin)
+    respond_to do |format|
+      if @investigation.save
+        format.html { redirect_to @investigation, notice: "Case was successfully updated." }
+        format.json { render :show, status: :ok, location: @investigation }
+      else
+        @investigation.restore_attributes
+        format.html { render origin }
+        format.json { render json: @investigation.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end

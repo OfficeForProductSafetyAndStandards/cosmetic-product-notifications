@@ -4,7 +4,7 @@
 = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
 h2.govuk-heading-l
   | Case status
-= form_with(model: @investigation, local: true) do |form|
+= form_with(model: @investigation, method: :put, url: status_investigation_url(@investigation)) do |form|
   .govuk-form-group
     fieldset.govuk-fieldset
       legend.govuk-fieldset__legend

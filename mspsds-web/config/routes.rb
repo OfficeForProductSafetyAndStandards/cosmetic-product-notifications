@@ -25,7 +25,9 @@ Rails.application.routes.draw do
   resources :investigations, path: "cases", only: %i[index show new create update],
             concerns: %i[document_attachable] do
     member do
+      put :status
       get :status
+      put :assign
       get :assign
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do
