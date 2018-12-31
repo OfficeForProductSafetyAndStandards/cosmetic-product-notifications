@@ -8,7 +8,7 @@ class AuditActivity::CorrectiveAction::Base < AuditActivity::Base
   private_class_method def self.from(corrective_action)
     activity = self.create(
       title: corrective_action.summary,
-      body: self.build_body(corrective_action),
+      body: self.build_body(self.sanitize_object corrective_action),
       source: UserSource.new(user: current_user),
       investigation: corrective_action.investigation,
       business: corrective_action.business,

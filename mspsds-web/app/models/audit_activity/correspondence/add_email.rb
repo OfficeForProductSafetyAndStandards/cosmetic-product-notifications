@@ -3,7 +3,7 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
   with_attachments email_file: "email file", email_attachment: "email attachment"
 
   def self.from(correspondence, investigation)
-    activity = super(correspondence, investigation, self.build_body(correspondence))
+    activity = super(correspondence, investigation, self.build_body(self.sanitize_object correspondence))
     activity.attach_blob(correspondence.email_file.blob, :email_file) if correspondence.email_file.attached?
     activity.attach_blob(correspondence.email_attachment.blob, :email_attachment) if correspondence.email_attachment.attached?
   end

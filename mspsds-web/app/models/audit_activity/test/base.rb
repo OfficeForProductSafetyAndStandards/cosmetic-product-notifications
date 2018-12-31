@@ -6,7 +6,7 @@ class AuditActivity::Test::Base < AuditActivity::Base
 
   private_class_method def self.from(test, title)
     activity = self.create(
-      body: self.build_body(test),
+      body: self.build_body(self.sanitize_object test),
       title: title,
       source: UserSource.new(user: current_user),
       investigation: test.investigation,

@@ -2,7 +2,7 @@ class AuditActivity::Business::Add < AuditActivity::Business::Base
   def self.from(business, investigation)
     title = business.company_name
     relationship = investigation.investigation_businesses.find_by(business_id: business.id).relationship
-    body = "Role: **#{relationship.titleize}**"
+    body = "Role: **#{self.sanitize_text relationship.titleize}**"
     super(business, investigation, title, body)
   end
 

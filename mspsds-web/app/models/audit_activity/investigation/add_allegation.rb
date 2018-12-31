@@ -12,8 +12,8 @@ class AuditActivity::Investigation::AddAllegation < AuditActivity::Investigation
     body += "<br>Product type: **#{investigation.product_type}**" if investigation.product_type.present?
     body += "<br>Hazard type: **#{investigation.hazard_type}**" if investigation.hazard_type.present?
     body += "<br>Attachment: **#{investigation.documents.first.escaped_filename}**" if investigation.documents.attached?
-    body += "<br><br>#{investigation.description}" if investigation.description.present?
-    body += self.build_reporter_details(investigation.reporter) if investigation.reporter.present?
+    body += "<br><br>#{self.sanitize_text investigation.description}" if investigation.description.present?
+    body += self.build_reporter_details(self.sanitize_object investigation.reporter) if investigation.reporter.present?
     body
   end
 end
