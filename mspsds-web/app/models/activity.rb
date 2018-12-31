@@ -28,7 +28,7 @@ class Activity < ApplicationRecord
   def search_index;  end
 
   def self.sanitize_text(text)
-    text.gsub(/[*_~]/) { |match| "\\#{match}" }
+    text.strip.gsub(/[*_~]/) { |match| "\\#{match}" }
   end
 
   def self.sanitize_object(object)
