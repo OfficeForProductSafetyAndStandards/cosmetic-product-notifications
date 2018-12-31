@@ -3,7 +3,7 @@ class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondenc
   with_attachments attachment: "attachment"
 
   def self.from(correspondence, investigation)
-    activity = super(correspondence, investigation, self.build_body(self.sanitize_object correspondence))
+    activity = super(correspondence, investigation, self.build_body(self.sanitize_object(correspondence)))
     activity.attach_blob(correspondence.transcript.blob, :attachment) if correspondence.transcript.attached?
   end
 

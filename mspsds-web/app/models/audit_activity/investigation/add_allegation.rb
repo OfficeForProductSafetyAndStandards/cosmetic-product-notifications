@@ -13,7 +13,7 @@ class AuditActivity::Investigation::AddAllegation < AuditActivity::Investigation
     body += "<br>Hazard type: **#{investigation.hazard_type}**" if investigation.hazard_type.present?
     body += "<br>Attachment: **#{investigation.documents.first.escaped_filename}**" if investigation.documents.attached?
     body += "<br><br>#{self.sanitize_text investigation.description}" if investigation.description.present?
-    body += self.build_reporter_details(self.sanitize_object investigation.reporter) if investigation.reporter.present?
+    body += self.build_reporter_details(self.sanitize_object(investigation.reporter)) if investigation.reporter.present?
     body
   end
 end
