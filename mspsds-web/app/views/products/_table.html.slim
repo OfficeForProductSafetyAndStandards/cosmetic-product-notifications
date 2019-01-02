@@ -1,27 +1,4 @@
-table.govuk-table.sortable[class="govuk-!-margin-bottom-3"]
-  thead.govuk-table__head
-    tr.govuk-table__row
-      th.govuk-table__header[scope="col"]
-        = sortable "name", "Product"
-      th.govuk-table__header[scope="col"]
-        = sortable "product_type", "Type"
-      th.govuk-table__header[scope="col"]
-        = sortable "country_of_origin", "Origin"
-      th.govuk-table__header.right-aligned[scope="col"]
-        | Cases
-  tbody.govuk-table__body
-    - products.each do |product|
-      tr.govuk-table__row
-        td.govuk-table__cell
-          = link_to product.name, product
-        td.govuk-table__cell
-          = product.product_type
-        td.govuk-table__cell
-          = product.country_of_origin_for_display
-        td.govuk-table__cell.right-aligned
-          span[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
-            = product.investigations.count
-    - if products.empty?
-      tr.govuk-table__row
-        td.govuk-table__cell[colspan="5"]
-          | No products found.
+- products.each do |search_result|
+  = render "product_card", product: search_result
+- if products.empty?
+  p[class="govuk-!-font-weight-bold"] = "No products found."

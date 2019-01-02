@@ -1,0 +1,17 @@
+.govuk-grid-row class="mspsds-case-card"
+  .govuk-grid-column-one-half
+    span.govuk-caption-m[class="govuk-!-font-size-16"]
+      = "Product"
+    span = link_to product.name, product
+  .govuk-grid-column-one-half
+    .govuk-grid-row
+      .govuk-grid-column-one-third
+        span.govuk-caption-m[class="govuk-!-font-size-16"] = "Type"
+        span = product.product_type
+      .govuk-grid-column-one-third
+        span.govuk-caption-m[class="govuk-!-font-size-16"] = "Origin"
+        span = product.country_of_origin
+      .govuk-grid-column-one-third
+        span.govuk-caption-m[class="govuk-!-font-size-16"] = "Cases"
+        /TODO after MSPSDS-530: use visible cases instead
+        span = product.investigations.count
