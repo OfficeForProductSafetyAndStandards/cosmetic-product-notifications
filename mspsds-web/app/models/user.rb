@@ -20,13 +20,8 @@ class User < ActiveHash::Base
 
   def self.all(options = {})
     begin
-      organisations = Organisation.all
-      all_users = organisations.flat_map do |organisation|
-        KeycloakClient.instance.all_users(organisation.id)
-      end
-      all_users.concat(KeycloakClient.instance.all_users)
-
-      self.data = all_users.uniq { |user| user[:id] }
+      all_users = KeycloakClient.instance.all_users
+      self.data = all_users.map { |user| populate_organisation(user) }
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
       self.data = nil
@@ -37,6 +32,12 @@ class User < ActiveHash::Base
     else
       @records ||= []
     end
+  end
+
+  def self.populate_organisation(attributes)
+    groups = attributes.delete(:groups)
+    organisation = Organisation.find_by(id: groups)
+    attributes.merge(organisation_id: organisation&.id)
   end
 
   def full_name
