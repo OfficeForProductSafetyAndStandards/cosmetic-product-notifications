@@ -9,11 +9,11 @@ class AuditActivity::Investigation::Add < AuditActivity::Investigation::Base
 
   def self.build_reporter_details(reporter)
     details = "<br><br>**Reporter**<br><br>"
-    details += "Name: **#{reporter.name}**<br>" if reporter.name.present?
-    details += "Type: **#{reporter.reporter_type}**<br>" if reporter.reporter_type.present?
-    details += "Phone number: **#{reporter.phone_number}**<br>" if reporter.phone_number.present?
-    details += "Email address: **#{reporter.email_address}**<br>" if reporter.email_address.present?
-    details += "<br>#{reporter.other_details}" if reporter.other_details.present?
+    details += "Name: **#{self.sanitize_text reporter.name}**<br>" if reporter.name.present?
+    details += "Type: **#{self.sanitize_text reporter.reporter_type}**<br>" if reporter.reporter_type.present?
+    details += "Phone number: **#{self.sanitize_text reporter.phone_number}**<br>" if reporter.phone_number.present?
+    details += "Email address: **#{self.sanitize_text reporter.email_address}**<br>" if reporter.email_address.present?
+    details += "<br>#{self.sanitize_text reporter.other_details}" if reporter.other_details.present?
     details
   end
 end
