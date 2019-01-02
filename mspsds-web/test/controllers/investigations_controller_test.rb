@@ -94,7 +94,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update assignee from selectable list" do
     assignee = User.first
-    put investigation_url(@investigation_one), params: {
+    put assign_investigation_url(@investigation_one), params: {
       investigation: {
         assignee_id: assignee.id
       }
@@ -104,7 +104,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update assignee from radio boxes" do
     assignee = User.first
-    put investigation_url(@investigation_one), params: {
+    put assign_investigation_url(@investigation_one), params: {
       investigation: {
         assignee_id_radio: assignee.id
       }

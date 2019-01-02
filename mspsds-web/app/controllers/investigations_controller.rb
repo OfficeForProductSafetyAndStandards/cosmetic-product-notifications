@@ -2,7 +2,7 @@ class InvestigationsController < ApplicationController
   include InvestigationsHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show update assign status]
+  before_action :set_investigation, only: %i[show assign status]
 
   # GET /cases
   # GET /cases.json
@@ -45,11 +45,11 @@ class InvestigationsController < ApplicationController
   end
 
   # GET /cases/1/status
-  # PUT /cases/1/assign
+  # PUT /cases/1/status
   def status
     return if request.get?
 
-    ps = investigation_update_params
+    ps = status_update_params
     unless ps[:is_closed]
       @investigation.errors.add(:status, :invalid, message: "Status should be closed or open")
       return
@@ -65,7 +65,7 @@ class InvestigationsController < ApplicationController
   def assign
     return if request.get?
 
-    ps = investigation_update_params
+    ps = assignee_update_params
     unless ps[:assignee_id]
       @investigation.errors.add(:assignee, :invalid, message: "Assignee should exist")
       return
@@ -74,10 +74,6 @@ class InvestigationsController < ApplicationController
     @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
     respond_to_update(:assign)
   end
-
-  # PATCH/PUT /cases/1
-  # PATCH/PUT /cases/1.json
-  def update; end
 
   # POST /cases
   # POST /cases.json
@@ -105,17 +101,21 @@ private
     params.require(:investigation).permit(:description)
   end
 
-  def investigation_update_params
+  def status_update_params
+    params.require(:investigation).permit(:is_closed, :status_rationale)
+  end
+
+  def assignee_update_params
     if params[:investigation][:assignee_id].blank?
       params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
     end
-    params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id)
+    params.require(:investigation).permit(:assignee_id)
   end
 
   def respond_to_update(origin)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "Case was successfully updated." }
+        format.html { redirect_to @investigation, notice: "#{helpers.case_question_text(@investigation).titleize} was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes
