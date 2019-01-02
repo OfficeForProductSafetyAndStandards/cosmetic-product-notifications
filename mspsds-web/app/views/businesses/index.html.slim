@@ -4,7 +4,13 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
-      | Businesses
+      - if params[:q].present?
+        span.govuk-caption-xl = "Business search results"
+        = params[:q]
+        span.govuk-caption-m = "#{@businesses.count} #{'result'.pluralize(@businesses.count)}"
+      - else
+        = "Businesses"
+
 .govuk-grid-row
   .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
     div class="govuk-!-margin-bottom-0"
