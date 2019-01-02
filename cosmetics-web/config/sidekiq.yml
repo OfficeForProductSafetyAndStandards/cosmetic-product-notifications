@@ -3,4 +3,4 @@
 :max_retries: 3
 :queues:
   - cosmetics
-  - mailers
+  - cosmetics-mailers

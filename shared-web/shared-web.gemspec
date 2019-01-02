@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "brakeman"
   s.add_dependency "coveralls"
+  s.add_dependency "govuk_notify_rails"
   s.add_dependency "rubocop"
   s.add_dependency "sidekiq"
   s.add_dependency "sidekiq-cron"
