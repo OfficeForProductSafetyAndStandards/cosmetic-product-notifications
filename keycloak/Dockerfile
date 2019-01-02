@@ -1,4 +1,4 @@
-FROM maven as notify-build
+FROM maven as keycloak-build
 
 WORKDIR /tmp/keycloak
 
@@ -19,30 +19,52 @@ RUN curl -Lo ./artifacts/10-million-password-list-top-1000000.txt https://raw.gi
 RUN mkdir -p ./package/standalone/data/password-blacklists
 RUN cp ./artifacts/10-million-password-list-top-1000000.txt ./package/standalone/data/password-blacklists/
 
+# Copy the GOV.UK Notify SMS authenticator page templates
+COPY ./providers/sms-authenticator/templates ./templates
+RUN cp ./templates/sms-validation.ftl ./package/themes/base/login/
+RUN cp ./templates/sms-validation-error.ftl ./package/themes/base/login/
+RUN cp ./templates/sms-validation-mobile-number.ftl ./package/themes/base/login/
 
-COPY ./providers ./providers
-RUN mkdir -p ./package/providers
+RUN cat ./templates/messages/messages_en.properties >> ./package/themes/base/login/messages/messages_en.properties
 
-# Build and copy the extended users resource provider
-RUN mvn -q --file ./providers/rest-api/pom.xml package
-RUN cp ./providers/rest-api/target/extended-users-resource-provider-jar-with-dependencies.jar ./package/providers/
 
 # Build and copy the GOV.UK Notify email service provider
-RUN mvn -q --settings ./providers/email/settings.xml --file ./providers/email/pom.xml package
-RUN cp ./providers/email/target/notify-email-provider-jar-with-dependencies.jar ./package/providers/notify-email-provider-jar-with-dependencies.jar
+FROM maven as notify-email-build
+
+WORKDIR /tmp/keycloak
+
+COPY ./providers/email ./email
+RUN mkdir -p ./providers
+
+RUN mvn -q --settings ./email/settings.xml --file ./email/pom.xml package
+RUN cp ./email/target/notify-email-provider-jar-with-dependencies.jar ./providers/
+
+
+# Build and copy the extended users resource provider
+FROM maven as rest-api-build
+
+WORKDIR /tmp/keycloak
+
+COPY ./providers/rest-api ./rest-api
+RUN mkdir -p ./providers
+
+RUN mvn -q --file ./rest-api/pom.xml package
+RUN cp ./rest-api/target/extended-users-resource-provider-jar-with-dependencies.jar ./providers/
+
 
 # Build and copy the GOV.UK Notify SMS authenticator provider
-RUN mvn -q --settings ./providers/sms-authenticator/settings.xml --file ./providers/sms-authenticator/pom.xml package
-RUN cp ./providers/sms-authenticator/target/keycloak-sms-authenticator-sns-*.jar ./package/providers/
+FROM maven as sms-authenticator-build
 
-# Copy the GOV.UK Notify SMS authenticator page templates
-RUN cp ./providers/sms-authenticator/templates/sms-validation.ftl ./package/themes/base/login/
-RUN cp ./providers/sms-authenticator/templates/sms-validation-error.ftl ./package/themes/base/login/
-RUN cp ./providers/sms-authenticator/templates/sms-validation-mobile-number.ftl ./package/themes/base/login/
+WORKDIR /tmp/keycloak
 
-RUN cat ./providers/sms-authenticator/templates/messages/messages_en.properties >> ./package/themes/base/login/messages/messages_en.properties
+COPY ./providers/sms-authenticator ./sms-authenticator
+RUN mkdir -p ./providers
+
+RUN mvn -q --settings ./sms-authenticator/settings.xml --file ./sms-authenticator/pom.xml package
+RUN cp ./sms-authenticator/target/keycloak-sms-authenticator-sns-*.jar ./providers/
 
 
+# Build and copy the GOV.UK theme
 FROM node as theme-build
 
 WORKDIR /tmp/govuk-theme
@@ -53,12 +75,18 @@ RUN npm install
 RUN npm run build
 
 
+# Package the built components
 FROM alpine as keycloak-package
 
 WORKDIR /tmp/keycloak/package
 
-# Copy the Keycloak package from the notify-build docker image
-COPY --from=notify-build /tmp/keycloak/package .
+# Copy the Keycloak package from the keycloak-build docker image
+COPY --from=keycloak-build /tmp/keycloak/package .
+
+# Copy the custom providers from the relevant docker images
+COPY --from=rest-api-build /tmp/keycloak/providers ./providers/
+COPY --from=notify-email-build /tmp/keycloak/providers ./providers/
+COPY --from=sms-authenticator-build /tmp/keycloak/providers ./providers/
 
 # Copy the themes from the theme-build docker image
 COPY --from=theme-build /tmp/govuk-theme/govuk ./themes/govuk
