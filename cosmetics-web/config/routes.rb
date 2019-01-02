@@ -55,4 +55,6 @@ Rails.application.routes.draw do
   #   end
 
   root 'helloworld#index'
+
+  get '/send' => 'helloworld#send_email'
 end
