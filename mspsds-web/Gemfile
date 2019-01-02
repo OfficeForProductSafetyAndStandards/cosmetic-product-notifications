@@ -40,7 +40,7 @@ gem "wkhtmltopdf-binary"
 gem "shared-web", path: "./vendor/shared-web"
 
 
-group :development do
+group :development, :test do
   gem "capybara"
   gem "roo", "~> 2.7.0"
   gem "rspec-mocks"

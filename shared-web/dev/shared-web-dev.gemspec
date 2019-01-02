@@ -18,6 +18,4 @@ Gem::Specification.new do |s|
   s.add_dependency "listen"
   s.add_dependency "ruby-debug-ide"
   s.add_dependency "solargraph"
-  s.add_dependency "spring"
-  s.add_dependency "spring-watcher-listen"
 end
