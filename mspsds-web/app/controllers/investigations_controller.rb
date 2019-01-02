@@ -56,7 +56,7 @@ class InvestigationsController < ApplicationController
       return
     end
 
-    @investigation.is_closed = ps[:is_closed] if ps[:is_closed]
+    @investigation.is_closed = ps[:is_closed]
     @investigation.status_rationale = ps[:status_rationale] if ps[:status_rationale]
     respond_to_update(:status)
   end
@@ -73,7 +73,7 @@ class InvestigationsController < ApplicationController
       return
     end
 
-    @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
+    @investigation.assignee = User.find_by(id: ps[:assignee_id])
     respond_to_update(:assign)
   end
 
