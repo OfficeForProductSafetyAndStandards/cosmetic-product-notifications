@@ -5,7 +5,7 @@
   "dependencies": {
     "accessible-autocomplete": "^1.6.2",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.10.0",
+    "eslint": "^5.11.1",
     "eslint-config-airbnb-es5": "^1.2.0",
     "eslint-plugin-react": "^7.11.1",
     "govuk-country-and-territory-autocomplete": "^0.5.1",

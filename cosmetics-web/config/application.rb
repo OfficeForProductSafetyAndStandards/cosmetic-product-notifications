@@ -30,5 +30,6 @@ module Cosmetics
     # config.active_record.raise_in_transactional_callbacks = true
 
     config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = 'cosmetics-mailers'
   end
 end

@@ -9,3 +9,6 @@ applications:
   command: bin/rake cf:on_first_instance db:migrate && bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
   services:
     - cosmetics-database
+    - cosmetics-redis
+    - logit-ssl-drain
+
