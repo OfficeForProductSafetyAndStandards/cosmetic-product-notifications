@@ -23,6 +23,10 @@ RUN cp ./artifacts/10-million-password-list-top-1000000.txt ./package/standalone
 COPY ./providers ./providers
 RUN mkdir -p ./package/providers
 
+# Build and copy the extended users resource provider
+RUN mvn -q --file ./providers/rest-api/pom.xml package
+RUN cp ./providers/rest-api/target/extended-users-resource-provider-jar-with-dependencies.jar ./package/providers/
+
 # Build and copy the GOV.UK Notify email service provider
 RUN mvn -q --settings ./providers/email/settings.xml --file ./providers/email/pom.xml package
 RUN cp ./providers/email/target/notify-email-provider-jar-with-dependencies.jar ./package/providers/notify-email-provider-jar-with-dependencies.jar
