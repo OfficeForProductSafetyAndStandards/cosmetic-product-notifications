@@ -17,6 +17,8 @@ PATH
       coveralls
       rails (~> 5.2.1)
       rubocop
+      sidekiq
+      sidekiq-cron
       simplecov
       simplecov-console
       slim_lint
@@ -73,8 +75,8 @@ GEM
     arel (9.0.0)
     ast (2.4.0)
     aws-eventstream (1.0.1)
-    aws-partitions (1.125.0)
-    aws-sdk-core (3.44.0)
+    aws-partitions (1.126.0)
+    aws-sdk-core (3.44.1)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
@@ -111,11 +113,16 @@ GEM
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.7.1)
+    et-orbi (1.1.6)
+      tzinfo
     execjs (2.7.0)
     ffi (1.9.25)
+    fugit (1.1.6)
+      et-orbi (~> 1.1, >= 1.1.6)
+      raabro (~> 1.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    govuk-lint (3.9.0)
+    govuk-lint (3.10.0)
       rubocop (~> 0.58)
       rubocop-rspec (~> 1.28)
       scss_lint
@@ -159,7 +166,7 @@ GEM
     multi_json (1.13.1)
     netrc (0.11.0)
     nio4r (2.3.1)
-    nokogiri (1.9.0)
+    nokogiri (1.9.1)
       mini_portile2 (~> 2.4.0)
     notifications-ruby-client (2.9.0)
       jwt (>= 1.5, < 3)
@@ -174,6 +181,7 @@ GEM
     puma (3.12.0)
     pundit (2.0.0)
       activesupport (>= 3.0.0)
+    raabro (1.1.6)
     rack (2.0.6)
     rack-protection (2.0.4)
       rack
@@ -245,6 +253,9 @@ GEM
       connection_pool (~> 2.2, >= 2.2.2)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
+    sidekiq-cron (1.0.4)
+      fugit (~> 1.1)
+      sidekiq (>= 4.2.1)
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -331,7 +342,6 @@ DEPENDENCIES
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.0)
   shared-web!
-  sidekiq
   slim-rails
   spring
   strong_migrations

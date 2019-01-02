@@ -1,29 +1,17 @@
 version: '3'
 
 services:
+  db:
+    image: ${DOCKER_USERNAME}/db:${TRAVIS_BUILD_NUMBER}
+  
+  elasticsearch:
+    image: ${DOCKER_USERNAME}/elasticsearch:${TRAVIS_BUILD_NUMBER}
+
   keycloak:
     environment:
       - NOTIFY_API_KEY='fake-key'
     image: ${DOCKER_USERNAME}/keycloak:${TRAVIS_BUILD_NUMBER}
-  web:
-    command: tail -f /dev/null
-    image: ${DOCKER_USERNAME}/web:${TRAVIS_BUILD_NUMBER}
-    volumes:
-      - ~/bundle-cache:/usr/local/bundle
-      - ~/npm-cache:/root/.npm
-    environment:
-      - CI
-      - TRAVIS
-      - TRAVIS_BRANCH
-      - TRAVIS_JOB_ID
-      - TRAVIS_PULL_REQUEST
-      - COMPANIES_HOUSE_API_KEY='fake-key'
-      - COVERALLS_PARALLEL
-  worker:
-    command: tail -f /dev/null
-    image: ${DOCKER_USERNAME}/worker:${TRAVIS_BUILD_NUMBER}
-    volumes:
-      - ~/bundle-cache:/usr/local/bundle
+  
   cosmetics-web:
     command: tail -f /dev/null
     image: ${DOCKER_USERNAME}/cosmetics-web:${TRAVIS_BUILD_NUMBER}
@@ -38,13 +26,36 @@ services:
     - TRAVIS_PULL_REQUEST
     - COMPANIES_HOUSE_API_KEY='fake-key'
     - COVERALLS_PARALLEL
-  db:
-    image: ${DOCKER_USERNAME}/db:${TRAVIS_BUILD_NUMBER}
-  elasticsearch:
-    image: ${DOCKER_USERNAME}/elasticsearch:${TRAVIS_BUILD_NUMBER}
+  cosmetics-worker:
+    command: tail -f /dev/null
+    image: ${DOCKER_USERNAME}/cosmetics-worker:${TRAVIS_BUILD_NUMBER}
+    volumes:
+    - ~/bundle-cache:/usr/local/bundle
+  
+  mspsds-web:
+    command: tail -f /dev/null
+    image: ${DOCKER_USERNAME}/mspsds-web:${TRAVIS_BUILD_NUMBER}
+    volumes:
+      - ~/bundle-cache:/usr/local/bundle
+      - ~/npm-cache:/root/.npm
+    environment:
+      - CI
+      - TRAVIS
+      - TRAVIS_BRANCH
+      - TRAVIS_JOB_ID
+      - TRAVIS_PULL_REQUEST
+      - COMPANIES_HOUSE_API_KEY='fake-key'
+      - COVERALLS_PARALLEL
+  mspsds-worker:
+    command: tail -f /dev/null
+    image: ${DOCKER_USERNAME}/mspsds-worker:${TRAVIS_BUILD_NUMBER}
+    volumes:
+      - ~/bundle-cache:/usr/local/bundle
+  
   start_dependencies:
     image: dadarek/wait-for-dependencies
     depends_on:
       - elasticsearch
       - keycloak
+      - redis
     command: elasticsearch:9200 keycloak:8080
