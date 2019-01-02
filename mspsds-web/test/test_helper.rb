@@ -50,11 +50,18 @@ class ActiveSupport::TestCase
     stub_client_config
   end
 
+  def sign_in_as_user_with_organisation
+    user = test_user.merge(groups: ["def4eef8-1a33-4322-8b8c-fc7fa95a2e3b"])
+    stub_user_credentials(user: user, is_admin: false)
+    stub_user_data(users: [admin_user, user])
+    stub_client_config
+  end
+
   def logout
+    allow(Keycloak::Client).to receive(:auth_server_url).and_call_original
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
-    allow(Keycloak::Client).to receive(:auth_server_url).and_call_original
 
     reset_user_data
   end
@@ -69,6 +76,30 @@ private
     { id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User" }
   end
 
+  def group_data
+    [
+      {
+        id: "13763657-d228-4209-a3de-523dcab13810",
+        name: "Group 1",
+        path: "/Group 1",
+        subGroups: []
+      }, {
+        id: "512c85e6-5a7f-4289-95e2-a78c0e40f05c",
+        name: "Organisations",
+        path: "/Organisations",
+        subGroups: [
+          { id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1", subGroups: [] },
+          { id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2", subGroups: [] },
+        ]
+      }, {
+        id: "10036801-2182-4c5b-92d9-b34b1e0a421b",
+        name: "Group 2",
+        path: "/Group 2",
+        subGroups: []
+      }
+    ].to_json
+  end
+
   def stub_user_credentials(user:, is_admin: false)
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user))
@@ -76,7 +107,7 @@ private
   end
 
   def format_user_for_get_userinfo(user)
-    { sub: user[:id], email: user[:email], given_name: user[:first_name], family_name: user[:last_name] }.to_json
+    { sub: user[:id], email: user[:email], groups: user[:groups], given_name: user[:first_name], family_name: user[:last_name] }.to_json
   end
 
   def stub_client_config
@@ -84,15 +115,23 @@ private
   end
 
   def stub_user_data(users:)
+    stub_group_data
     allow(Keycloak::Internal).to receive(:get_users).and_return(format_user_for_get_users(users))
     User.all
   end
 
+  def stub_group_data
+    KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
+    allow(Keycloak::Internal).to receive(:get_groups).and_return(group_data)
+    Organisation.all
+  end
+
   def format_user_for_get_users(users)
-    users.map { |user| { id: user[:id], email: user[:email], firstName: user[:first_name], lastName: user[:last_name] } }.to_json
+    users.map { |user| { id: user[:id], email: user[:email], groups: user[:groups], firstName: user[:first_name], lastName: user[:last_name] } }.to_json
   end
 
   def reset_user_data
+    allow(Keycloak::Internal).to receive(:get_groups).and_call_original
     allow(Keycloak::Internal).to receive(:get_users).and_call_original
     Rails.cache.delete(:keycloak_users)
   end
