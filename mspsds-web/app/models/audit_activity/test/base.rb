@@ -17,10 +17,10 @@ class AuditActivity::Test::Base < AuditActivity::Base
 
   def self.build_body(test)
     body = ""
-    body += "Legislation: **#{test.legislation}**<br>" if test.legislation.present?
+    body += "Legislation: **#{self.sanitize_text(test.legislation)}**<br>" if test.legislation.present?
     body += "#{date_label}: **#{test.date.strftime('%d/%m/%Y')}**<br>" if test.date.present?
-    body += "Attached: **#{test.documents.first.escaped_filename}**<br>" if test.documents.attached?
-    body += "<br>#{test.details}" if test.details.present?
+    body += "Attached: **#{self.sanitize_text test.documents.first.filename}**<br>" if test.documents.attached?
+    body += "<br>#{self.sanitize_text(test.details)}" if test.details.present?
     body
   end
 
