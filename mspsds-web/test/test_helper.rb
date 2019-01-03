@@ -70,6 +70,12 @@ class ActiveSupport::TestCase
     reset_user_data
   end
 
+  def assert_same_elements(expected, actual, msg = nil)
+    full_message = message(msg, '') { diff(expected, actual) }
+    condition = (expected.size == actual.size) && (expected - actual == [])
+    assert(condition, full_message)
+  end
+
 private
 
   def admin_user
