@@ -1,8 +1,13 @@
 class Investigations::ActivitiesController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
 
-  before_action :set_investigation, only: %i[create new comment]
+  before_action :set_investigation
   before_action :create_activity, only: %i[create]
+
+  include Pundit
+  before_action do
+    authorize @investigation, :visible?
+  end
 
   def new
     return unless params[:commit] == "Continue"

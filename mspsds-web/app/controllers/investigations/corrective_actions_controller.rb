@@ -11,6 +11,11 @@ class Investigations::CorrectiveActionsController < ApplicationController
   before_action :set_attachment, only: %i[show create update]
   before_action :store_corrective_action, only: %i[update]
 
+  include Pundit
+  before_action do
+    authorize @investigation, :visible?
+  end
+
   # GET /corrective_actions/1
   def show
     render_wizard

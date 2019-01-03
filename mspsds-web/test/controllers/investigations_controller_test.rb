@@ -287,7 +287,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     logout
     sign_in_as_user
     get investigations_path
-    assert_not_includes(response.body, @new_investigation.pretty_id)
+    assert_not_includes(response.body, @new_investigation.description)
+    assert_includes(response.body, "Case restricted")
   end
 
   test "should not show case to someone without access" do
@@ -297,7 +298,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as_user
     get investigation_path(@new_investigation)
     assert_not_includes(response.body, @new_investigation.pretty_id)
-    assert_includes(response.body, "Access denied")
   end
 
   test "should show private investigations to creator" do

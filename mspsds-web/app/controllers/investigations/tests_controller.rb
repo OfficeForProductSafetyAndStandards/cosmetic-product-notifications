@@ -11,6 +11,11 @@ class Investigations::TestsController < ApplicationController
   before_action :set_attachment, only: %i[show create update]
   before_action :store_test, only: %i[update]
 
+  include Pundit
+  before_action do
+    authorize @investigation, :visible?
+  end
+
   # GET /tests/1
   def show
     render_wizard

@@ -8,6 +8,11 @@ class DocumentsController < ApplicationController
   before_action :set_parent
   before_action :set_file, only: %i[edit update remove destroy]
 
+  include Pundit
+  before_action do
+    authorize @parent, :visible? if @parent.class == Investigation
+  end
+
   # POST /documents
   def create
     respond_to do |format|
