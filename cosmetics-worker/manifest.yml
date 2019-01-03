@@ -11,6 +11,6 @@ applications:
   no-route: true
   health-check-type: process
   services:
-    - cosmetics-redis
     - cosmetics-database
+    - cosmetics-redis
     - logit-ssl-drain
