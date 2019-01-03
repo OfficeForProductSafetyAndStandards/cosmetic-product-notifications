@@ -5,16 +5,20 @@ WORKDIR /tmp/keycloak
 RUN mkdir -p ./artifacts
 RUN mkdir -p ./package
 
-ENV keycloakVersion 4.7.0
-
 # Download and unpack Keycloak
-RUN curl -Lo ./artifacts/keycloak.tar.gz https://downloads.jboss.org/keycloak/$keycloakVersion.Final/keycloak-$keycloakVersion.Final.tar.gz
+RUN curl -Lo ./artifacts/keycloak.tar.gz https://downloads.jboss.org/keycloak/4.3.0.Final/keycloak-4.3.0.Final.tar.gz
 RUN tar -xzf ./artifacts/keycloak.tar.gz --directory ./package --strip 1
 
 # Download and add PostgreSQL JDBC driver
 RUN curl -Lo ./artifacts/postgresql-42.2.5.jar https://jdbc.postgresql.org/download/postgresql-42.2.5.jar
 RUN mkdir -p ./package/modules/system/layers/keycloak/org/postgresql/main
 RUN cp ./artifacts/postgresql-42.2.5.jar ./package/modules/system/layers/keycloak/org/postgresql/main
+
+# Download and copy the commonly-used password blacklist
+RUN curl -Lo ./artifacts/10-million-password-list-top-1000000.txt https://raw.githubusercontent.com/danielmiessler/SecLists/2018.3/Passwords/Common-Credentials/10-million-password-list-top-1000000.txt
+RUN mkdir -p ./package/standalone/data/password-blacklists
+RUN cp ./artifacts/10-million-password-list-top-1000000.txt ./package/standalone/data/password-blacklists/
+
 
 COPY ./providers ./providers
 RUN mkdir -p ./package/providers
