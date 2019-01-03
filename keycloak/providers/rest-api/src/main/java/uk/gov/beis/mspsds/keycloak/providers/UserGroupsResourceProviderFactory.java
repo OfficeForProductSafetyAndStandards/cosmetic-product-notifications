@@ -6,11 +6,11 @@ import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.services.resource.RealmResourceProvider;
 import org.keycloak.services.resource.RealmResourceProviderFactory;
 
-public class ExtendedUsersResourceProviderFactory implements RealmResourceProviderFactory {
+public class UserGroupsResourceProviderFactory implements RealmResourceProviderFactory {
 
     @Override
     public RealmResourceProvider create(KeycloakSession session) {
-        return new ExtendedUsersResourceProvider(session);
+        return new UserGroupsResourceProvider(session);
     }
 
     @Override

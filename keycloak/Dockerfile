@@ -40,7 +40,7 @@ RUN mvn -q --settings ./email/settings.xml --file ./email/pom.xml package
 RUN cp ./email/target/notify-email-provider-jar-with-dependencies.jar ./providers/
 
 
-# Build and copy the extended users resource provider
+# Build and copy the user groups resource provider
 FROM maven as rest-api-build
 
 WORKDIR /tmp/keycloak
@@ -49,7 +49,7 @@ COPY ./providers/rest-api ./rest-api
 RUN mkdir -p ./providers
 
 RUN mvn -q --file ./rest-api/pom.xml package
-RUN cp ./rest-api/target/extended-users-resource-provider-jar-with-dependencies.jar ./providers/
+RUN cp ./rest-api/target/user-groups-resource-provider-jar-with-dependencies.jar ./providers/
 
 
 # Build and copy the GOV.UK Notify SMS authenticator provider

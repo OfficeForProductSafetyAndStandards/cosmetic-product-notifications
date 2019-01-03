@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <name>Extended Users Resource Provider</name>
-    <description>User resource provider for Keycloak that returns additional user properties, including group membership</description>
+    <name>User Groups Resource Provider</name>
+    <description>Realm resource provider for Keycloak that returns group membership details for all users</description>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>uk.gov.beis</groupId>
-    <artifactId>extended-users-resource-provider</artifactId>
+    <artifactId>user-groups-resource-provider</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -60,7 +60,7 @@
     </dependencies>
 
     <build>
-        <finalName>extended-users-resource-provider</finalName>
+        <finalName>user-groups-resource-provider</finalName>
 
         <plugins>
             <plugin>

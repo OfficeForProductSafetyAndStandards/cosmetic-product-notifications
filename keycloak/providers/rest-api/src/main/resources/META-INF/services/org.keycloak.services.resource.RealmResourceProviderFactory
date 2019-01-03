@@ -1,1 +1,1 @@
-uk.gov.beis.mspsds.keycloak.providers.ExtendedUsersResourceProviderFactory
+uk.gov.beis.mspsds.keycloak.providers.UserGroupsResourceProviderFactory
