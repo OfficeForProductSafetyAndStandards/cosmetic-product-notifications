@@ -43,13 +43,15 @@ public class UserGroupsResource {
      * @param firstResult Pagination offset
      * @param maxResults Maximum number of results (defaults to 100)
      * @return List of UserRepresentation models, each containing the user ID and list of associated group IDs
+     *
+     * Based on the {@link org.keycloak.services.resources.admin.UsersResource#getUsers getUsers} method from the Keycloak Admin REST API.
      */
     @GET
     @Path("user-groups")
     @NoCache
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UserRepresentation> getUsers(@QueryParam("first") Integer firstResult,
-                                             @QueryParam("max") Integer maxResults) {
+    public List<UserRepresentation> getUserGroups(@QueryParam("first") Integer firstResult,
+                                                  @QueryParam("max") Integer maxResults) {
 
         AdminPermissionEvaluator auth = getAdminPermissionEvaluator();
         auth.users().requireQuery();
