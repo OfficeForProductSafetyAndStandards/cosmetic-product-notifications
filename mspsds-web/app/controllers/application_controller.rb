@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     unless user_signed_in? || try_refresh_token
-      redirect_to helpers.keycloak_login_url(request.original_url)
+      redirect_to helpers.keycloak_login_url(request.original_fullpath)
     end
   end
 

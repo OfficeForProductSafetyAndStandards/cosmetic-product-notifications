@@ -4,16 +4,15 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user!
 
   def new
-    redirect_to keycloak_login_url(request.original_url)
+    redirect_to keycloak_login_url(request.original_fullpath)
   end
 
   def signin
-    request_and_store_token(auth_code, params[:request_url])
+    request_and_store_token(auth_code, params[:request_path])
     flash[:notice] = "Signed in successfully." if KeycloakClient.instance.user_signed_in?
-    redirect_url = params[:request_url] || root_path
-    redirect_to redirect_url
+    redirect_to params[:request_path] || root_path
   rescue RestClient::ExceptionWithResponse => error
-    redirect_to keycloak_login_url(params[:request_url]), alert: signin_error_message(error)
+    redirect_to keycloak_login_url(params[:request_path]), alert: signin_error_message(error)
   end
 
   def logout
