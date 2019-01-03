@@ -25,7 +25,7 @@ module Shared
     private
 
       def request_and_store_token(auth_code)
-        cookies.permanent[:"keycloak_token_#{ENV['KEYCLOAK_CLIENT_ID']}"] = { value: Shared::Web::KeycloakClient.instance.exchange_code_for_token(auth_code, signin_session_url), httponly: true }
+        cookies.permanent[cookie_name] = { value: Shared::Web::KeycloakClient.instance.exchange_code_for_token(auth_code, signin_session_url), httponly: true }
       end
 
       def signin_error_message(error)

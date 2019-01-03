@@ -8,6 +8,10 @@ module Shared
       def login_page?
         Keycloak.keycloak_controller == controller_name
       end
+
+      def cookie_name
+        :"keycloak_token_#{ENV['KEYCLOAK_CLIENT_ID']}"
+      end
     end
   end
 end
