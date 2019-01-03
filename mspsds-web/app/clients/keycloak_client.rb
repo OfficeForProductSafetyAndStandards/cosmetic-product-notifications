@@ -25,7 +25,7 @@ module Keycloak
       client_id = Keycloak::Client.client_id if client_id.blank?
       secret = Keycloak::Client.secret if secret.blank?
 
-      proc = lambda {|token|
+      proc = lambda { |token|
         Keycloak::Admin.get_groups(query_parameters, token["access_token"])
       }
 
@@ -55,7 +55,7 @@ class KeycloakClient
 
   def all_users
     response = Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
-        Keycloak::Internal.get_users
+      Keycloak::Internal.get_users
     end
     user_groups = all_user_groups
 

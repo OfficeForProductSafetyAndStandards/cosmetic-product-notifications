@@ -14,7 +14,7 @@ class User < ActiveHash::Base
 
   def self.find_or_create(attributes)
     groups = attributes.delete(:groups)
-    organisation = Organisation.find_by_path(groups)
+    organisation = Organisation.find_by_path(groups) # rubocop:disable Rails/DynamicFindBy
     User.find_by(id: attributes[:id]) || User.create(attributes.merge(organisation_id: organisation&.id))
   end
 

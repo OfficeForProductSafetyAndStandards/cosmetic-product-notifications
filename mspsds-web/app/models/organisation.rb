@@ -5,7 +5,7 @@ class Organisation < ActiveHash::Base
   field :name
   field :path
 
-  has_many :users
+  has_many :users, dependent: :nullify
 
   def self.find_or_create(organisation)
     Organisation.find_by(id: organisation[:id]) || Organisation.create(organisation)
