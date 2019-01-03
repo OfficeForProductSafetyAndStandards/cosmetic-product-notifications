@@ -34,7 +34,7 @@ class User < ActiveHash::Base
     end
   end
 
-  def self.populate_organisation(attributes)
+  private_class_method def self.populate_organisation(attributes)
     groups = attributes.delete(:groups)
     organisation = Organisation.find_by(id: groups)
     attributes.merge(organisation_id: organisation&.id)
