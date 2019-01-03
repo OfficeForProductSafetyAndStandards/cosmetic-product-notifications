@@ -16,8 +16,8 @@ class Investigations::PhoneCallsController < Investigations::CorrespondenceContr
 
   def file_metadata
     get_attachment_metadata_params(:transcript).merge(
-        title: correspondence_params[:overview],
-        description: "Call transcript"
+      title: correspondence_params[:overview],
+      description: "Call transcript"
     )
   end
 
@@ -25,13 +25,13 @@ class Investigations::PhoneCallsController < Investigations::CorrespondenceContr
     return {} if params[correspondence_params_key].blank?
 
     params.require(correspondence_params_key).permit(
-        :correspondent_name,
-        :phone_number,
-        :day,
-        :month,
-        :year,
-        :overview,
-        :details
+      :correspondent_name,
+      :phone_number,
+      :day,
+      :month,
+      :year,
+      :overview,
+      :details
     )
   end
 
@@ -58,5 +58,4 @@ class Investigations::PhoneCallsController < Investigations::CorrespondenceContr
   def save_attachments
     @transcript_blob.save if @transcript_blob
   end
-
 end

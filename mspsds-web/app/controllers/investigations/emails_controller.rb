@@ -16,14 +16,14 @@ class Investigations::EmailsController < Investigations::CorrespondenceControlle
 
   def email_file_metadata
     get_attachment_metadata_params(:email_file).merge(
-        title: correspondence_params["overview"],
-        description: "Original email as a file"
+      title: correspondence_params["overview"],
+      description: "Original email as a file"
     )
   end
 
   def email_attachment_metadata
     get_attachment_metadata_params(:email_attachment).merge(
-        title: correspondence_params["overview"]
+      title: correspondence_params["overview"]
     )
   end
 
@@ -31,16 +31,16 @@ class Investigations::EmailsController < Investigations::CorrespondenceControlle
     return {} if params[correspondence_params_key].blank?
 
     params.require(correspondence_params_key).permit(
-        :correspondent_name,
-        :email_address,
-        :day,
-        :month,
-        :year,
-        :email_direction,
-        :overview,
-        :details,
-        :email_subject,
-        :attachment_description
+      :correspondent_name,
+      :email_address,
+      :day,
+      :month,
+      :year,
+      :email_direction,
+      :overview,
+      :details,
+      :email_subject,
+      :attachment_description
     )
   end
 

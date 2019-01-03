@@ -41,7 +41,7 @@ class Investigations::CorrespondenceController < ApplicationController
     end
   end
 
-  private
+private
 
   def clear_session
     session[correspondence_params_key] = nil
@@ -67,5 +67,4 @@ class Investigations::CorrespondenceController < ApplicationController
   def session_params
     session[correspondence_params_key] || {}
   end
-
 end
