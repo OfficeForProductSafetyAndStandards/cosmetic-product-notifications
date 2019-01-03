@@ -1,5 +1,6 @@
 module InvestigationsHelper
   include SearchHelper
+  include UserService
 
   def search_for_investigations(page_size = Investigation.count)
     result = Investigation.full_search(search_query)

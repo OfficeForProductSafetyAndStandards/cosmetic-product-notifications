@@ -1,5 +1,5 @@
 class Activity < ApplicationRecord
-  include Shared::Web::Concerns::UserService
+  include UserService
 
   belongs_to :investigation, touch: true
 

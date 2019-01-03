@@ -5,7 +5,7 @@ Rails.application.configure do
 
   config.lograge.custom_payload do |controller|
     extra_payload = {}
-    extra_payload[:user_id] = controller.current_user.id if controller.respond_to?(:current_user) && controller.current_user
+    extra_payload[:user_id] = controller.current_user.id if controller.respond_to?(:user_signed_in?) && controller.current_user
     extra_payload
   end
 end

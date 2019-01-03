@@ -1,5 +1,6 @@
 module ProductsHelper
   include SearchHelper
+  include UserService
 
   SUGGESTED_PRODUCTS_LIMIT = 4
 

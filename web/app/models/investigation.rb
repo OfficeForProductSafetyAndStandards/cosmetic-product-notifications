@@ -2,7 +2,7 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
   include AttachmentConcern
-  include Shared::Web::Concerns::UserService
+  include UserService
 
   attr_accessor :status_rationale
 
