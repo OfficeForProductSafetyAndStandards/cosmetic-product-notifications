@@ -50,7 +50,7 @@ class InvestigationsController < ApplicationController
     return if request.get?
 
     ps = status_update_params
-    unless ps[:is_closed].present?
+    if ps[:is_closed].blank?
       @investigation.errors.add(:status, :invalid, message: "Status should be closed or open")
       respond_to_invalid_data(:status)
       return
@@ -67,7 +67,7 @@ class InvestigationsController < ApplicationController
     return if request.get?
 
     ps = assignee_update_params
-    unless ps[:assignee_id].present?
+    if ps[:assignee_id].blank?
       @investigation.errors.add(:assignee, :invalid, message: "Assignee should exist")
       respond_to_invalid_data(:assign)
       return
