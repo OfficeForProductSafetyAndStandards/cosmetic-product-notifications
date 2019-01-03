@@ -1,6 +1,5 @@
 class AuditActivity::CorrectiveAction::Base < AuditActivity::Base
   include ActivityAttachable
-  include UserService
   with_attachments attachment: "attachment"
 
   belongs_to :business

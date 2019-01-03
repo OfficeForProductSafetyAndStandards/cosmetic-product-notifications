@@ -1,5 +1,7 @@
 class Activity < ApplicationRecord
-  include UserService
+  class << self
+    include UserService
+  end
 
   belongs_to :investigation, touch: true
 
