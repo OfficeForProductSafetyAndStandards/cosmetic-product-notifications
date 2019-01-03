@@ -7,10 +7,6 @@ class Organisation < ActiveHash::Base
 
   has_many :users, dependent: :nullify
 
-  def self.find_or_create(organisation)
-    Organisation.find_by(id: organisation[:id]) || Organisation.create(organisation)
-  end
-
   def self.all(options = {})
     begin
       self.data = KeycloakClient.instance.all_organisations
