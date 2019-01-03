@@ -19,15 +19,8 @@ module InvestigationsHelper
 
   def filter_params
     filters = {}
-    filters.merge!(get_must_filters)
+    filters.merge!(get_status_filter)
     filters.merge!(get_assignee_filter)
-  end
-
-  def get_must_filters
-    must = []
-    must << get_status_filter if get_status_filter.present?
-    must << get_visibility_filter
-    { must: must }
   end
 
   def get_status_filter
@@ -38,7 +31,7 @@ module InvestigationsHelper
              else
                { is_closed: true }
              end
-    { term: status }
+    { must: { term: status } }
   end
 
   def get_visibility_filter

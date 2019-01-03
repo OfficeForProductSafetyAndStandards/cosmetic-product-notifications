@@ -58,14 +58,10 @@ class Investigation < ApplicationRecord
 
   after_create :create_audit_activity_for_case
 
-  after_update do
-    self.__elasticsearch__.update_document_attributes who_can_see: self.who_can_see
-  end
-
   def as_indexed_json(*)
     as_json(
-      methods: %i[pretty_id who_can_see],
-      only: %i[question_title description hazard_type product_type is_closed assignee_id updated_at created_at is_private],
+      methods: %i[pretty_id],
+      only: %i[question_title description hazard_type product_type is_closed updated_at created_at assignee_id],
       include: {
         documents: {
           only: [],
