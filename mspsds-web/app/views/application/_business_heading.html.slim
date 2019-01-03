@@ -11,4 +11,4 @@
           th.govuk-table__header[scope="row"]
             span.govuk-caption-m[class="govuk-!-font-size-16"]
               | Cases
-            = visible_investigations(business).count
+            = business.investigations.count

@@ -20,7 +20,7 @@ table.govuk-table.sortable[class="govuk-!-margin-bottom-3"]
           = product.country_of_origin_for_display
         td.govuk-table__cell.right-aligned
           span[class="govuk-!-font-size-36 govuk-!-font-weight-bold"]
-            = visible_investigations(product).count
+            = product.investigations.count
     - if products.empty?
       tr.govuk-table__row
         td.govuk-table__cell[colspan="5"]
