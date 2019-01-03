@@ -1,46 +1,29 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
+
 
 ruby File.read(".ruby-version").strip
 
-gem "will_paginate"
-
 gem "active_hash"
-gem "ar_merge"
-gem "aws-sdk-s3"
-gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c8ac844"
-gem "axlsx_rails"
 gem "bootsnap", ">= 1.1.0"
 gem "cf-app-utils"
 gem "clamby"
 gem "jbuilder", "~> 2.8"
 gem "keycloak"
 gem "mini_magick"
-gem "paper_trail"
 gem "pg", "~> 1.1"
 gem "puma", "~> 3.0"
-gem "pundit"
 gem "rails", "~> 5.2"
-gem "rubyzip", ">= 1.2.1"
 gem "sass-rails", "~> 5.0"
 gem "slim-rails"
 gem "strong_migrations"
 gem "uglifier", ">= 1.3.0"
-gem "wicked_pdf"
-gem "wkhtmltopdf-binary"
 
-gem 'shared-web', path: './vendor/shared-web'
+gem "shared-web", path: "./vendor/shared-web"
 
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-  gem "govuk-lint"
-end
+  gem "rspec-rails"
+  gem "rubocop-rspec"
 
-group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 3.7'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem "shared-web-dev", path: "./vendor/shared-web/dev"
 end
