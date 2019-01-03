@@ -5,7 +5,7 @@ WORKDIR /tmp/keycloak
 RUN mkdir -p ./artifacts
 RUN mkdir -p ./package
 
-ENV keycloakVersion 4.7.0
+ENV keycloakVersion 4.8.2
 
 # Download and unpack Keycloak
 RUN curl -Lo ./artifacts/keycloak.tar.gz https://downloads.jboss.org/keycloak/$keycloakVersion.Final/keycloak-$keycloakVersion.Final.tar.gz
