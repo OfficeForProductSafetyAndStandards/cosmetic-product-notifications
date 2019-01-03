@@ -35,15 +35,21 @@ Keycloak is automatically deployed to the relevant environment by Travis CI, as 
 
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 
+
+#### Database
+
 To create a Keycloak database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
     cf create-service postgres tiny-unencrypted-10.5 keycloak-database
 
+
+#### Keycloak
+
 Running the following commands from the root directory will then package and set up the Keycloak app:
 
-    NO_START=no-start SPACE=<<SPACE>> ./keycloak/deploy.sh
+    NO_START=true SPACE=<<SPACE>> ./keycloak/deploy.sh
 
 Once the app has been created, add the following environment variables to specify the database connection properties:
 
@@ -106,24 +112,3 @@ Allow keycloak to redirect back to the app after login
 Follow the steps in [the SMS autheticator README's Configuration section](
 ./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication. Set the 2FA 
 code length to 6.
-
-### Troubleshooting
-##### Problem: the keycloak database doesn't exist when running `$ docker-compose up`
-Error message:
-```
-WARN  [org.jboss.jca.core.connectionmanager.pool.strategy.OnePool] (ServerService Thread Pool -- 52) IJ000604: Throwable while attempting to get a new connection: null: javax.resource.ResourceException: IJ031084: Unable to create connection
-[......]
-Caused by: org.postgresql.util.PSQLException: FATAL: database "keycloak" does not exist
-```
-
-The first time `$ docker-compose up` is run in the root directory, a keycloak database is created according to 
-`/postgres/setup-keycloak.sh`. This database shares a docker volume with the dev database.
-
-If the local keycloak database is subsequently dropped but the development database is not, then this script will not 
-run the next time you run `$ docker-compose up`.
-
-To recreate the database, start the postgres command line with
-
-```$ docker-compose exec postgres --username keycloak```
-
-then in the postgres interface run each command from `/postgres/setup-keycloak.sh`.

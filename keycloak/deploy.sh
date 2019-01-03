@@ -14,11 +14,4 @@ set -ex
 docker build --target keycloak-package -t keycloak-package:latest ./keycloak
 docker cp $(docker create keycloak-package):/tmp/keycloak/package ./keycloak
 
-# Install the Cloud Foundry CLI
-
-if [[ -z ${NO_START} ]] ; then
-    cf push -f ./keycloak/manifest.yml --hostname keycloak-$SPACE
-fi
-if [[ ${NO_START} ]] ; then
-    cf push -f ./keycloak/manifest.yml --no-start --hostname keycloak-$SPACE
-fi
+cf push -f ./keycloak/manifest.yml --hostname keycloak-$SPACE $( [[ ${NO_START} ]] && printf %s '--no-start' )

@@ -28,7 +28,7 @@
   "duplicateEmailsAllowed" : false,
   "resetPasswordAllowed" : true,
   "editUsernameAllowed" : false,
-  "bruteForceProtected" : false,
+  "bruteForceProtected" : true,
   "permanentLockout" : false,
   "maxFailureWaitSeconds" : 900,
   "minimumQuickLoginWaitSeconds" : 60,
@@ -308,6 +308,7 @@
   } ],
   "defaultRoles" : [ "user" ],
   "requiredCredentials" : [ "password" ],
+  "passwordPolicy": "notUsername(undefined) and length(8) and passwordBlacklist(10-million-password-list-top-1000000.txt)",
   "otpPolicyType" : "totp",
   "otpPolicyAlgorithm" : "HmacSHA1",
   "otpPolicyInitialCounter" : 0,
@@ -1686,12 +1687,12 @@
     "_browser_header.xContentTypeOptions" : "nosniff",
     "actionTokenGeneratedByAdminLifespan" : "43200",
     "offlineSessionMaxLifespan" : "5184000",
-    "bruteForceProtected" : "false",
+    "bruteForceProtected" : "true",
     "_browser_header.contentSecurityPolicy" : "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
     "offlineSessionMaxLifespanEnabled" : "false",
     "waitIncrementSeconds" : "60"
   },
-  "keycloakVersion" : "4.7.0.Final",
+  "keycloakVersion" : "4.3.0.Final",
   "userManagedAccessAllowed" : false
 }, {
   "id" : "master",
@@ -1723,7 +1724,7 @@
   "duplicateEmailsAllowed" : false,
   "resetPasswordAllowed" : false,
   "editUsernameAllowed" : false,
-  "bruteForceProtected" : false,
+  "bruteForceProtected" : true,
   "permanentLockout" : false,
   "maxFailureWaitSeconds" : 900,
   "minimumQuickLoginWaitSeconds" : 60,
@@ -2085,6 +2086,7 @@
   "groups" : [ ],
   "defaultRoles" : [ "offline_access", "uma_authorization" ],
   "requiredCredentials" : [ "password" ],
+  "passwordPolicy": "notUsername(undefined) and length(8) and passwordBlacklist(10-million-password-list-top-1000000.txt)",
   "otpPolicyType" : "totp",
   "otpPolicyAlgorithm" : "HmacSHA1",
   "otpPolicyInitialCounter" : 0,
@@ -3127,11 +3129,11 @@
     "_browser_header.xContentTypeOptions" : "nosniff",
     "actionTokenGeneratedByAdminLifespan" : "43200",
     "offlineSessionMaxLifespan" : "5184000",
-    "bruteForceProtected" : "false",
+    "bruteForceProtected" : "true",
     "_browser_header.contentSecurityPolicy" : "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
     "offlineSessionMaxLifespanEnabled" : "false",
     "waitIncrementSeconds" : "60"
   },
-  "keycloakVersion" : "4.7.0.Final",
+  "keycloakVersion" : "4.3.0.Final",
   "userManagedAccessAllowed" : false
 } ]

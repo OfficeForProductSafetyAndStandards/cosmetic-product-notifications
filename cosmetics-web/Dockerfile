@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
   nodejs \
   yarn
 
-WORKDIR /app
+WORKDIR /cosmetics-web
 
 COPY ./cosmetics-web .
 COPY ./shared-web ./vendor/shared-web

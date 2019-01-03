@@ -4,12 +4,13 @@
 set -ex
 
 COMPONENTS=(
-    'web'
-    'worker'
-    'cosmetics-web'
-    'keycloak'
     'db'
     'elasticsearch'
+    'keycloak'
+    'cosmetics-web'
+    'cosmetics-worker'
+    'mspsds-web'
+    'mspsds-worker'
 )
 
 function docker_tag_exists {
