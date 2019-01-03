@@ -26,15 +26,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    if user_signed_in? || try_refresh_token
-      if session[:requested_url].present?
-        redirect_url = session[:requested_url]
-        session[:requested_url] = nil
-        redirect_to redirect_url
-      end
-    else
-      session[:requested_url] = request.original_url
-      redirect_to helpers.keycloak_login_url
+    unless user_signed_in? || try_refresh_token
+      redirect_to helpers.keycloak_login_url(request.original_url)
     end
   end
 
