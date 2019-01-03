@@ -32,4 +32,10 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     click_on "Assign"
     assert_text("Assigned to\nTest User Change")
   end
+
+  test "should require an actual assignee" do
+    fill_in "assignee-picker", with: "aa@aa.aa"
+    click_on "Assign"
+    assert_text("Assignee should exist")
+  end
 end

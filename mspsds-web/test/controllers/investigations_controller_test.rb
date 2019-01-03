@@ -92,6 +92,15 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to investigation_url(@investigation_one)
   end
 
+  test "should require status to be open or closed" do
+    put status_investigation_url(@investigation_one), params: {
+      investigation: {
+        status_rationale: "some rationale"
+      }
+    }
+    assert_includes(response.body, "Status should be closed or open")
+  end
+
   test "should update assignee from selectable list" do
     assignee = User.first
     put assign_investigation_url(@investigation_one), params: {

@@ -69,7 +69,7 @@ class InvestigationsController < ApplicationController
     ps = assignee_update_params
     unless ps[:assignee_id]
       @investigation.errors.add(:assignee, :invalid, message: "Assignee should exist")
-      respond_to_invalid_data(:assignee)
+      respond_to_invalid_data(:assign)
       return
     end
 
