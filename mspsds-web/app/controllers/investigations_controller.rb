@@ -4,10 +4,6 @@ class InvestigationsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[show update assign status visibility]
-  before_action only: %i[show update assign status visibility] do
-    authorize @investigation, :visible?
-  end
-
 
   # GET /cases
   # GET /cases.json
@@ -102,6 +98,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
+    authorize @investigation, :visible?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,13 +1,9 @@
 class Investigations::ActivitiesController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
+  include Pundit
 
   before_action :set_investigation
   before_action :create_activity, only: %i[create]
-
-  include Pundit
-  before_action do
-    authorize @investigation, :visible?
-  end
 
   def new
     return unless params[:commit] == "Continue"
@@ -66,6 +62,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
+    authorize @investigation, :visible?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

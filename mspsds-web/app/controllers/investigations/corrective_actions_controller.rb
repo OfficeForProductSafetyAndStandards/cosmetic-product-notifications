@@ -5,16 +5,12 @@ class Investigations::CorrectiveActionsController < ApplicationController
 
   include Wicked::Wizard
   steps :details, :confirmation
+  include Pundit
 
   before_action :set_investigation
   before_action :set_corrective_action, only: %i[show create update]
   before_action :set_attachment, only: %i[show create update]
   before_action :store_corrective_action, only: %i[update]
-
-  include Pundit
-  before_action do
-    authorize @investigation, :visible?
-  end
 
   # GET /corrective_actions/1
   def show
@@ -67,6 +63,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
+    authorize @investigation, :visible?
   end
 
   def set_corrective_action

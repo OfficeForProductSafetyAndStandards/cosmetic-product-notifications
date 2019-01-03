@@ -10,11 +10,6 @@ class DocumentsFlowController < ApplicationController
   before_action :set_parent
   before_action :set_file, only: %i[show update]
 
-  include Pundit
-  before_action do
-    authorize @parent, :visible? if @parent.class == Investigation
-  end
-
   def show;
     render_wizard
   end

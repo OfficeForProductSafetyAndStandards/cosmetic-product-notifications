@@ -1,14 +1,10 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
+  include Pundit
 
   before_action :set_investigation
   before_action :set_business, only: %i[link remove unlink]
   before_action :create_business, only: %i[new create suggested]
-
-  include Pundit
-  before_action do
-    authorize @investigation, :visible?
-  end
 
   # GET /cases/1/businesses/new
   def new
@@ -71,5 +67,6 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
+    authorize @investigation, :visible?
   end
 end
