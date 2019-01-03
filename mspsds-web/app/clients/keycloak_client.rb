@@ -10,13 +10,13 @@ module Keycloak
   end
 
   module Admin
-    def self.get_users(query_parameters = nil, access_token = nil)
-      request_uri = Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/admin/users"
-      Keycloak.generic_request(effective_access_token(access_token), request_uri, query_parameters, nil, 'GET')
-    end
-
     def self.get_groups(query_parameters = nil, access_token = nil)
       generic_get("groups/", query_parameters, access_token)
+    end
+
+    def self.get_user_groups(access_token = nil)
+      request_uri = Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/admin/user-groups"
+      Keycloak.generic_request(effective_access_token(access_token), request_uri, nil, nil, 'GET')
     end
   end
 
@@ -27,6 +27,17 @@ module Keycloak
 
       proc = lambda {|token|
         Keycloak::Admin.get_groups(query_parameters, token["access_token"])
+      }
+
+      default_call(proc, client_id, secret)
+    end
+
+    def self.get_user_groups(client_id = '', secret = '')
+      client_id = Keycloak::Client.client_id if client_id.blank?
+      secret = Keycloak::Client.secret if secret.blank?
+
+      proc = lambda { |token|
+        Keycloak::Admin.get_user_groups(token["access_token"])
       }
 
       default_call(proc, client_id, secret)
@@ -46,9 +57,10 @@ class KeycloakClient
     response = Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
         Keycloak::Internal.get_users
     end
+    user_groups = all_user_groups
 
     JSON.parse(response).map do |user|
-      { id: user["id"], email: user["email"], groups: user["groups"], first_name: user["firstName"], last_name: user["lastName"] }
+      { id: user["id"], email: user["email"], groups: user_groups[user["id"]], first_name: user["firstName"], last_name: user["lastName"] }
     end
   end
 
@@ -101,5 +113,15 @@ class KeycloakClient
 
   def has_role?(role)
     @client.has_role? role
+  end
+
+private
+
+  def all_user_groups
+    response = Rails.cache.fetch(:keycloak_user_groups, expires_in: 5.minutes) do
+      Keycloak::Internal.get_user_groups
+    end
+
+    JSON.parse(response).collect { |user| [user["id"], user["groups"]] }.to_h
   end
 end

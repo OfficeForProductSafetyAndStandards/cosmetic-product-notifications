@@ -51,8 +51,12 @@ class ActiveSupport::TestCase
   end
 
   def sign_in_as_user_with_organisation
-    user = test_user.merge(groups: ["def4eef8-1a33-4322-8b8c-fc7fa95a2e3b"])
+    groups = [organisations[0][:id]]
+    user = test_user.merge(groups: groups)
+    user_groups = [{ id: user[:id], groups: groups }].to_json
+
     stub_user_credentials(user: user, is_admin: false)
+    stub_user_group_data(user_groups: user_groups)
     stub_user_data(users: [admin_user, user])
     stub_client_config
   end
@@ -87,10 +91,7 @@ private
         id: "512c85e6-5a7f-4289-95e2-a78c0e40f05c",
         name: "Organisations",
         path: "/Organisations",
-        subGroups: [
-          { id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1", subGroups: [] },
-          { id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2", subGroups: [] },
-        ]
+        subGroups: organisations
       }, {
         id: "10036801-2182-4c5b-92d9-b34b1e0a421b",
         name: "Group 2",
@@ -98,6 +99,13 @@ private
         subGroups: []
       }
     ].to_json
+  end
+
+  def organisations
+    [
+      { id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1", subGroups: [] },
+      { id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2", subGroups: [] },
+    ]
   end
 
   def stub_user_credentials(user:, is_admin: false)
@@ -115,9 +123,13 @@ private
   end
 
   def stub_user_data(users:)
-    stub_group_data
     allow(Keycloak::Internal).to receive(:get_users).and_return(format_user_for_get_users(users))
     User.all
+  end
+
+  def stub_user_group_data(user_groups:)
+    stub_group_data
+    allow(Keycloak::Internal).to receive(:get_user_groups).and_return(user_groups)
   end
 
   def stub_group_data
@@ -127,12 +139,13 @@ private
   end
 
   def format_user_for_get_users(users)
-    users.map { |user| { id: user[:id], email: user[:email], groups: user[:groups], firstName: user[:first_name], lastName: user[:last_name] } }.to_json
+    users.map { |user| { id: user[:id], email: user[:email], firstName: user[:first_name], lastName: user[:last_name] } }.to_json
   end
 
   def reset_user_data
     allow(Keycloak::Internal).to receive(:get_groups).and_call_original
     allow(Keycloak::Internal).to receive(:get_users).and_call_original
+    allow(Keycloak::Internal).to receive(:get_user_groups).and_call_original
     Rails.cache.delete(:keycloak_users)
   end
 end
