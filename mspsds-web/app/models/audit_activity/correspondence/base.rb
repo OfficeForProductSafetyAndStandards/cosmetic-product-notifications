@@ -3,7 +3,7 @@ class AuditActivity::Correspondence::Base < AuditActivity::Base
 
   private_class_method def self.from(correspondence, investigation, body = nil)
     self.create(
-      body: body || correspondence.details,
+      body: body || self.sanitize_text(correspondence.details),
       source: UserSource.new(user: current_user),
       investigation: investigation,
       title: correspondence.overview,
