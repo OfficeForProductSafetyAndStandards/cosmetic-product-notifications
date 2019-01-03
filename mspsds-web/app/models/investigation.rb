@@ -99,14 +99,14 @@ class Investigation < ApplicationRecord
   end
 
   def visibility
-    # TODO: Update to organisations when we get them
+    # TODO MSPSDS-859: Update to organisations when we get them
     is_private ? "Private - Only creator and assignee" : "Public - Visible to all"
   end
 
   def who_can_see
     return [] unless is_private
 
-    # TODO: Replace user.id with organization.id when we get organizations
+    # TODO MSPSDS-859: Replace user.id with organization.id when we get organizations
     [assignee, source&.user].map { |u| u&.id }.uniq
   end
 

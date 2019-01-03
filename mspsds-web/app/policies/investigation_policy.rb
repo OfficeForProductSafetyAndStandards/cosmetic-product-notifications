@@ -6,7 +6,7 @@ class InvestigationPolicy < ApplicationPolicy
   def visible?
     return true unless @record.is_private
 
-    # TODO: Replace users with organizations when we get organizations
+    # TODO MSPSDS-859: Replace users with organizations when we get organizations
     @record.who_can_see.include?(@user.id)
   end
 end
