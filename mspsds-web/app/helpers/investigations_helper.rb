@@ -34,18 +34,6 @@ module InvestigationsHelper
     { must: { term: status } }
   end
 
-  def get_visibility_filter
-    {
-      bool: {
-        should: [
-          # TODO MSPSDS-859: Replace user.id with organization.id when we get organizations
-          { term: { who_can_see: current_user.id } },
-          { term: { is_private: false } }
-        ]
-      }
-    }
-  end
-
   def get_assignee_filter
     assignees = []
     excluded_assignees = []
