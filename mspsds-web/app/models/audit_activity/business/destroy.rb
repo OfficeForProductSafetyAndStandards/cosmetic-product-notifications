@@ -1,6 +1,6 @@
 class AuditActivity::Business::Destroy < AuditActivity::Business::Base
   def self.from(business, investigation)
-    title = "Removed: #{business.company_name}"
+    title = "Removed: #{self.sanitize_text business.company_name}"
     super(business, investigation, title, nil)
   end
 

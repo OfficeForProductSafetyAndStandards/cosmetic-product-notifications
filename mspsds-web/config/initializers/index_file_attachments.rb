@@ -10,10 +10,6 @@ module ActiveStorageAttachmentExtension
   def filename
     blob&.filename
   end
-
-  def escaped_filename
-    blob&.filename.to_s.gsub('_', '\_')
-  end
 end
 
 Rails.configuration.to_prepare do

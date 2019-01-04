@@ -34,7 +34,7 @@ if there are new migrations:
 
 ## Tests
 
-You can run the tests with `docker-compose exec cosmetics-web bin/rake test`.
+You can run the tests with `docker-compose exec cosmetics-web bin/rspec`.
 
 You can run the ruby linting with `docker-compose exec cosmetics-web bin/rubocop`.
 Running this with the `--auto-correct` flag set will cause rubocop to attempt to fix as many of the issues as it can.
