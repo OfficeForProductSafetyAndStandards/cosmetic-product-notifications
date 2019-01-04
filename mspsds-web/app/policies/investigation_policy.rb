@@ -4,9 +4,6 @@ class InvestigationPolicy < ApplicationPolicy
   end
 
   def show?
-    return true unless @record.is_private
-
-    # TODO MSPSDS-859: Replace users with organizations when we get organizations
-    @record.who_can_see.include?(@user.id)
+    @record.can_be_seen_by_current_user
   end
 end
