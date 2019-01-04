@@ -1,6 +1,13 @@
 require_relative "boot"
 
-require "rails/all"
+require "active_record/railtie"
+require "active_storage/engine"
+require "action_controller/railtie"
+require "action_view/railtie"
+require "action_mailer/railtie"
+require "active_job/railtie"
+require "rails/test_unit/railtie"
+require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,6 +31,7 @@ module Mspsds
     config.action_view.form_with_generates_ids = true
 
     config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = 'mspsds-mailers'
 
     # This changes Rails timezone, but keeps ActiveRecord in UTC
     config.time_zone = "Europe/London"
