@@ -9,38 +9,23 @@ module Keycloak
     end
   end
 
-  module Admin
-    def self.get_groups(query_parameters = nil, access_token = nil)
-      generic_get("groups/", query_parameters, access_token)
-    end
-
-    def self.get_user_groups(access_token = nil)
-      request_uri = Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/admin/user-groups"
-      Keycloak.generic_request(effective_access_token(access_token), request_uri, nil, nil, 'GET')
-    end
-  end
-
   module Internal
-    def self.get_groups(query_parameters = nil, client_id = '', secret = '')
-      client_id = Keycloak::Client.client_id if client_id.blank?
-      secret = Keycloak::Client.secret if secret.blank?
-
+    def self.get_groups
       proc = lambda { |token|
-        Keycloak::Admin.get_groups(query_parameters, token["access_token"])
+        request_uri = Keycloak::Admin.full_url("groups")
+        Keycloak.generic_request(token["access_token"], request_uri, nil, nil, "GET")
       }
 
-      default_call(proc, client_id, secret)
+      default_call(proc)
     end
 
-    def self.get_user_groups(client_id = '', secret = '')
-      client_id = Keycloak::Client.client_id if client_id.blank?
-      secret = Keycloak::Client.secret if secret.blank?
-
+    def self.get_user_groups
       proc = lambda { |token|
-        Keycloak::Admin.get_user_groups(token["access_token"])
+        request_uri = Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/admin/user-groups"
+        Keycloak.generic_request(token["access_token"], request_uri, nil, nil, "GET")
       }
 
-      default_call(proc, client_id, secret)
+      default_call(proc)
     end
   end
 end
