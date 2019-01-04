@@ -68,5 +68,5 @@ table[style="width:100%; text-align:left"]
       td
         - if policy(investigation).show?
           = link_to investigation.id, polymorphic_url(investigation)
-        - else 
+        - else
           = investigation.id
