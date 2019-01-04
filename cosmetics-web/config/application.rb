@@ -1,6 +1,12 @@
 require File.expand_path('boot', __dir__)
 
-require 'rails/all'
+require "active_record/railtie"
+require "active_storage/engine"
+require "action_controller/railtie"
+require "action_view/railtie"
+require "action_mailer/railtie"
+require "active_job/railtie"
+require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,5 +30,6 @@ module Cosmetics
     # config.active_record.raise_in_transactional_callbacks = true
 
     config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = 'cosmetics-mailers'
   end
 end

@@ -27,6 +27,10 @@ class Activity < ApplicationRecord
 
   def search_index;  end
 
+  def self.sanitize_text(text)
+    return text.to_s.strip.gsub(/[*_~]/) { |match| "\\#{match}" } if text
+  end
+
 private
 
   def pretty_date_stamp
