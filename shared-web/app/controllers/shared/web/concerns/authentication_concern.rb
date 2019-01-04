@@ -15,14 +15,14 @@ module Shared
         end
 
         def authenticate_user!
-          redirect_to helpers.keycloak_login_url unless (user_signed_in? || try_refresh_token)
+          redirect_to helpers.keycloak_login_url unless user_signed_in? || try_refresh_token
         end
 
         def user_signed_in?
           Shared::Web::KeycloakClient.instance.user_signed_in?
         end
 
-        private
+      private
 
         def try_refresh_token
           begin
@@ -39,4 +39,3 @@ module Shared
     end
   end
 end
-

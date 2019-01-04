@@ -12,7 +12,6 @@ end
 
 module Shared
   module Web
-
     class KeycloakClient
       include Singleton
 
@@ -65,6 +64,5 @@ module Shared
         @client.has_role? role
       end
     end
-
   end
 end
