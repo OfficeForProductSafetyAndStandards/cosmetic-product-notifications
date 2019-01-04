@@ -93,8 +93,8 @@ class Investigation < ApplicationRecord
     is_closed? ? "Closed" : "Open"
   end
 
-  def visibility
-    is_private ? "Private - Only creator and assignee" : "Public - Visible to all"
+  def pretty_visibility(private=is_private)
+    private ? "Private - Only creator and assignee" : "Public - Visible to all"
   end
 
   def who_can_see
@@ -110,7 +110,7 @@ class Investigation < ApplicationRecord
   end
 
   def pretty_description
-    "Case #{pretty_id}"
+    "#{is_case ? 'Case' : 'Question'} #{pretty_id}"
   end
 
   def question_title_prefix
@@ -124,8 +124,7 @@ class Investigation < ApplicationRecord
   def past_assignees
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
     user_id_list = activities.map(&:assignee_id)
-    users = User.where(id: user_id_list.uniq)
-    users
+    User.where(id: user_id_list.uniq)
   end
 
   def past_assignees_except_current

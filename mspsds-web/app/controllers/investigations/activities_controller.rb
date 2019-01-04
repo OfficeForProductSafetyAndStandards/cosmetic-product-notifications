@@ -62,7 +62,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
-    authorize @investigation, :visible?
+    authorize @investigation, :show?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

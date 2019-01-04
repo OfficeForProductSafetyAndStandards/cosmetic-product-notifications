@@ -1,6 +1,6 @@
 - content_for :page_title, "Update visibility"
 - content_for :after_header do
-  = link_to "Back to case", @investigation, class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Visibility information"
 h2.govuk-heading-l
   = "#{case_question_text(@investigation).titleize} visibility"
@@ -10,9 +10,9 @@ h2.govuk-heading-l
       .govuk-radios
         .govuk-radios__item
           = form.radio_button :is_private, false, class: "govuk-radios__input"
-          = form.label :is_private, "Public - Visible to all", class: "govuk-label govuk-radios__label"
+          = form.label :is_private, @investigation.pretty_visibility(false), class: "govuk-label govuk-radios__label"
         .govuk-radios__item
           = form.radio_button :is_private, true, class: "govuk-radios__input"
-          = form.label :is_private, "Private - Only my organisation", class: "govuk-label govuk-radios__label"
+          = form.label :is_private, @investigation.pretty_visibility(true), class: "govuk-label govuk-radios__label"
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"

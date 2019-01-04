@@ -1,6 +1,6 @@
 - content_for :page_title, "Update status"
 - content_for :after_header do
-  = link_to "Back to case", @investigation, class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
 h2.govuk-heading-l
   = "#{case_question_text(@investigation).titleize} status"

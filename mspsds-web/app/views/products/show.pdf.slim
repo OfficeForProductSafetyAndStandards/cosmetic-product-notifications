@@ -66,7 +66,7 @@ table[style="width:100%; text-align:left"]
       | Cases
     - @product.investigations.each do |investigation|
       td
-        - if policy(investigation).visible?
+        - if policy(investigation).show?
           = link_to investigation.id, polymorphic_url(investigation)
         - else 
           = investigation.id

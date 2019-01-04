@@ -3,7 +3,7 @@ class InvestigationPolicy < ApplicationPolicy
     @user.has_role? :admin
   end
 
-  def visible?
+  def show?
     return true unless @record.is_private
 
     # TODO MSPSDS-859: Replace users with organizations when we get organizations
