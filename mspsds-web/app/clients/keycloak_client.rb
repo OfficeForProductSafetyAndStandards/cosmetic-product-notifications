@@ -10,6 +10,7 @@ module Keycloak
   end
 
   module Internal
+    # TODO MSPSDS-861: Remove once the following PR has been merged into the Keycloak gem: https://github.com/imagov/keycloak/pull/9
     def self.get_groups
       proc = lambda { |token|
         request_uri = Keycloak::Admin.full_url("groups")
