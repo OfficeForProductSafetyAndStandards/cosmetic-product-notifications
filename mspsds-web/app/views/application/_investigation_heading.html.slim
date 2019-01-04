@@ -23,5 +23,8 @@
             span.govuk-caption-m[class="govuk-!-font-size-16"]
               | Assigned to
             = investigation.assignee ? investigation.assignee.full_name.to_s : "Unassigned"
-            td.govuk-table__cell [class="govuk-!-font-size-16"]
-              = link_to "Change", assign_investigation_path(investigation)
+            - if investigation.assignee&.organisation.present?
+              div[class="govuk-!-font-size-16"]
+                = investigation.assignee.organisation.name
+          td.govuk-table__cell [class="govuk-!-font-size-16"]
+            = link_to "Change", assign_investigation_path(investigation)
