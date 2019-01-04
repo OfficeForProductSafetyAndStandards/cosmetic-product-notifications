@@ -10,7 +10,9 @@ class SessionsController < ApplicationController
   def signin
     request_and_store_token(auth_code, params[:request_path])
     flash[:notice] = "Signed in successfully." if KeycloakClient.instance.user_signed_in?
-    redirect_to params[:request_path] || root_path
+    redirect_path = root_path
+    redirect_path = params[:request_path] if is_relative(params[:request_path])
+    redirect_to redirect_path
   rescue RestClient::ExceptionWithResponse => error
     redirect_to keycloak_login_url(params[:request_path]), alert: signin_error_message(error)
   end

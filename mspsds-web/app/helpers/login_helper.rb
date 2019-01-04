@@ -12,4 +12,8 @@ module LoginHelper
     uri.query = [uri.query, "request_path=#{request_path}"].compact.join('&')
     uri.to_s
   end
+
+  def is_relative(url)
+    url =~ /^\/[^\/\\]/
+  end
 end
