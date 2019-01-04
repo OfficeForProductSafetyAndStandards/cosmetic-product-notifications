@@ -93,7 +93,7 @@ class Investigation < ApplicationRecord
     is_closed? ? "Closed" : "Open"
   end
 
-  def pretty_visibility(private=is_private)
+  def pretty_visibility(private = is_private)
     private ? "Private - Only creator and assignee" : "Public - Visible to all"
   end
 
