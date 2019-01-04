@@ -286,25 +286,23 @@
     },
     "subGroups" : [ ]
   }, {
-    "id" : "9dd0dfbb-f5a6-45d2-a411-5e6a3d68fb59",
-    "name" : "Enforcement",
-    "path" : "/Enforcement",
+    "id" : "512c85e6-5a7f-4289-95e2-a78c0e40f05c",
+    "name" : "Organisations",
+    "path" : "/Organisations",
     "attributes" : { },
     "realmRoles" : [ "user" ],
     "clientRoles" : {
       "mspsds-app" : [ "user" ]
     },
-    "subGroups" : [ ]
-  }, {
-    "id" : "5e850884-83fa-4571-80c0-b58aa551c3ab",
-    "name" : "Processing",
-    "path" : "/Processing",
-    "attributes" : { },
-    "realmRoles" : [ "user" ],
-    "clientRoles" : {
-      "mspsds-app" : [ "user" ]
-    },
-    "subGroups" : [ ]
+    "subGroups" : [ {
+      "id" : "1a612aea-1d3d-47ee-8c3a-76b4448bb97b",
+      "name" : "Office for Product Safety and Standards",
+      "path" : "/Organisations/Office for Product Safety and Standards",
+      "attributes" : { },
+      "realmRoles" : [ ],
+      "clientRoles" : { },
+      "subGroups" : [ ]
+    } ]
   } ],
   "defaultRoles" : [ "user" ],
   "requiredCredentials" : [ "password" ],
@@ -397,7 +395,7 @@
       "mspsds-app" : [ "user" ]
     },
     "notBefore" : 0,
-    "groups" : [ ]
+    "groups" : [ "/Organisations/Office for Product Safety and Standards" ]
   } ],
   "scopeMappings" : [ {
     "clientScope" : "offline_access",
@@ -536,6 +534,19 @@
     "fullScopeAllowed" : false,
     "nodeReRegistrationTimeout" : -1,
     "protocolMappers" : [ {
+      "id" : "cac0986f-e24a-46ef-ad68-3d3a72ec9729",
+      "name" : "Groups",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-group-membership-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "claim.name" : "groups",
+        "full.path" : "true",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "userinfo.token.claim" : "true"
+      }
+    }, {
       "id" : "5cfb78a4-48c6-4153-93cf-998fbfe0cdb4",
       "name" : "Client IP Address",
       "protocol" : "openid-connect",
