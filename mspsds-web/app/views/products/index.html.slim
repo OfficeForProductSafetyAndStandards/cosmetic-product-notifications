@@ -10,7 +10,7 @@
         = params[:q]
         span.govuk-caption-m = "#{@products.count} #{'result'.pluralize(@products.count)}"
       - else
-        = "Products"
+        | Products
 
 .govuk-grid-row
   .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
