@@ -14,6 +14,6 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
   end
 
   def title
-    "Assigned to #{User.find_by(id: assignee_id)&.get_assignee_display_string}"
+    "Assigned to #{User.find_by(id: assignee_id)&.display_name}"
   end
 end
