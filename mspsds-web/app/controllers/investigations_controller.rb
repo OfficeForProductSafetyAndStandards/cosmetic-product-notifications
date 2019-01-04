@@ -67,7 +67,7 @@ class InvestigationsController < ApplicationController
     return if request.get?
 
     ps = assignee_update_params
-    if ps[:assignee_id].blank?
+    if User.where(id: ps[:assignee_id]).empty?
       @investigation.errors.add(:assignee, :invalid, message: "Assignee should exist")
       respond_to_invalid_data(:assign)
       return
