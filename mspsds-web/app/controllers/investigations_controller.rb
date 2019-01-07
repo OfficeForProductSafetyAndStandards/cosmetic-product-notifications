@@ -112,8 +112,4 @@ private
     end
     params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id, :is_private)
   end
-
-  def restrict_access
-    render 'forbidden'
-  end
 end
