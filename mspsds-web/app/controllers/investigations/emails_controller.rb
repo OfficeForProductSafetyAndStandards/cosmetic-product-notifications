@@ -2,6 +2,8 @@ class Investigations::EmailsController < Investigations::CorrespondenceControlle
   set_file_params_key :correspondence_email
   set_attachment_names :email_file, :email_attachment
 
+private
+
   def audit_class
     AuditActivity::Correspondence::AddEmail
   end

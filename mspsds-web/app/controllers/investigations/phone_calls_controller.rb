@@ -2,6 +2,8 @@ class Investigations::PhoneCallsController < Investigations::CorrespondenceContr
   set_attachment_names :transcript
   set_file_params_key :correspondence_phone_call
 
+private
+
   def audit_class
     AuditActivity::Correspondence::AddPhoneCall
   end

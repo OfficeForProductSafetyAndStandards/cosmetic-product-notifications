@@ -2,6 +2,8 @@ class Investigations::MeetingsController < Investigations::CorrespondenceControl
   set_attachment_names :transcript, :related_attachment
   set_file_params_key :correspondence_meeting
 
+private
+
   def audit_class
     AuditActivity::Correspondence::AddMeeting
   end
