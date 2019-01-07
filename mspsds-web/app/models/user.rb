@@ -13,7 +13,7 @@ class User < Shared::Web::User
 
   def self.all(options = {})
     begin
-      all_users = KeycloakClient.instance.all_users
+      all_users = Shared::Web::KeycloakClient.instance.all_users
       self.data = all_users.map { |user| populate_organisation(user) }
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
@@ -24,14 +24,15 @@ class User < Shared::Web::User
       where(options[:conditions])
     else
       @records ||= []
+
     end
   end
 
   private_class_method def self.populate_organisation(attributes)
-     groups = attributes.delete(:groups)
-     organisation = Organisation.find_by(id: groups)
-     attributes.merge(organisation_id: organisation&.id)
-   end
+    groups = attributes.delete(:groups)
+    organisation = Organisation.find_by(id: groups)
+    attributes.merge(organisation_id: organisation&.id)
+  end
 
   def display_name
     display_name = full_name

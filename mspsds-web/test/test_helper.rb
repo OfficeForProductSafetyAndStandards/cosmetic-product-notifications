@@ -141,7 +141,7 @@ private
   end
 
   def stub_group_data
-    KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
+    Shared::Web::KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
     allow(Keycloak::Internal).to receive(:get_groups).and_return(group_data)
     Organisation.all
   end
