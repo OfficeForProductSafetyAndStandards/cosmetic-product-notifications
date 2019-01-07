@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       get :status
       put :assign
       get :assign
+      put :visibility
       get :visibility
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do

@@ -324,7 +324,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     @new_investigation = Investigation.find_by(description: description)
-    put investigations_url + "/#{@new_investigation.id}", params: {
+    put visibility_investigation_url(@new_investigation), params: {
       investigation: {
         is_private: true
       }

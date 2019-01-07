@@ -83,9 +83,9 @@ class InvestigationsController < ApplicationController
   def visibility
     return if request.get?
 
-    ps = status_update_params
+    ps = visibility_update_params
     if ps[:is_private].blank?
-      @investigation.errors.add(:visibility, :invalid, message: "Visibility needs to be private or public")
+      @investigation.errors.add(:pretty_visibility, :invalid, message: "Visibility needs to be private or public")
       respond_to_invalid_data(:visibility)
       return
     end
