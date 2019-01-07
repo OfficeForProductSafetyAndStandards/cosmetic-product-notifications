@@ -102,8 +102,8 @@ module Shared
       def has_role?(role)
         @client.has_role? role
       end
-      
-      private
+
+    private
 
       def all_user_groups
         response = Rails.cache.fetch(:keycloak_user_groups, expires_in: 5.minutes) do
