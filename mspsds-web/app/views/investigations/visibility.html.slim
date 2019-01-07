@@ -10,9 +10,9 @@ h2.govuk-heading-l
       .govuk-radios
         .govuk-radios__item
           = form.radio_button :is_private, false, class: "govuk-radios__input"
-          = form.label :is_private, @investigation.pretty_visibility(false), class: "govuk-label govuk-radios__label"
+          = form.label :is_private, visibility_options[:public], class: "govuk-label govuk-radios__label"
         .govuk-radios__item
           = form.radio_button :is_private, true, class: "govuk-radios__input"
-          = form.label :is_private, @investigation.pretty_visibility(true), class: "govuk-label govuk-radios__label"
+          = form.label :is_private, visibility_options[:private], class: "govuk-label govuk-radios__label"
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"

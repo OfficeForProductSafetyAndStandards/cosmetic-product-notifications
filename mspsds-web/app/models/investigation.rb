@@ -93,8 +93,8 @@ class Investigation < ApplicationRecord
     is_closed? ? "Closed" : "Open"
   end
 
-  def pretty_visibility(private = is_private)
-    private ? "Private - Only creator and assignee" : "Public - Visible to all"
+  def pretty_visibility
+    is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
   end
 
   def who_can_see
