@@ -70,6 +70,6 @@ private
 
   def correspondence_params_key
     # Turns the class name into the same format used by rails in form `name` attributes (e.g. 'correspondence_email')
-    model_class.name.underscore.gsub("/","_")
+    model_class.name.underscore.tr("/", "_")
   end
 end
