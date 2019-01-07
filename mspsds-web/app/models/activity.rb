@@ -31,6 +31,8 @@ class Activity < ApplicationRecord
     return text.to_s.strip.gsub(/[*_~]/) { |match| "\\#{match}" } if text
   end
 
+  def sensitive_body?; end
+
 private
 
   def pretty_date_stamp

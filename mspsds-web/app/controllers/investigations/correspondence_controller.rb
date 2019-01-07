@@ -76,10 +76,10 @@ private
     reporter = @investigation.reporter
     if reporter
       values = values.merge(
-        correspondent_name: reporter.name,
+        correspondent_name: reporter.can_be_displayed? ? reporter.name : "",
         contact_method: get_contact_method,
-        phone_number: reporter.phone_number,
-        email_address: reporter.email_address
+        phone_number: reporter.can_be_displayed? ? reporter.phone_number : "",
+        email_address: reporter.can_be_displayed? ? reporter.email_address : ""
       )
     end
 

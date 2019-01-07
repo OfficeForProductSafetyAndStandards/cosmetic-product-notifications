@@ -13,7 +13,11 @@ li
         = markdown activity.body if activity.body
   - else
     p
-      = markdown activity.body if activity.body
+      - if activity.sensitive_body?
+        = markdown "This activity contains sensitive data, contact *** team for details"
+      - else
+        = markdown activity.body if activity.body
+
       - if activity.product_id
         = link_to "View product details", product_url(activity.product_id), class: "mspsds-block-link"
       - if activity.business_id
