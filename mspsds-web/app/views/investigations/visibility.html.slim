@@ -5,6 +5,7 @@
 h2.govuk-heading-l
   = "#{case_question_text(@investigation).titleize} visibility"
 = form_with(model: @investigation, local: true) do |form|
+  = render "form_validation_display", errors: @investigation.errors
   .govuk-form-group
     fieldset.govuk-fieldset
       .govuk-radios
