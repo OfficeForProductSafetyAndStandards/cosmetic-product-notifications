@@ -10,10 +10,6 @@ class Investigations::EmailsController < Investigations::CorrespondenceControlle
     Correspondence::Email
   end
 
-  def correspondence_params_key
-    "correspondence_email"
-  end
-
   def email_file_metadata
     get_attachment_metadata_params(:email_file).merge(
       title: correspondence_params["overview"],

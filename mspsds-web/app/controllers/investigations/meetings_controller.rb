@@ -10,10 +10,6 @@ class Investigations::MeetingsController < Investigations::CorrespondenceControl
     Correspondence::Meeting
   end
 
-  def correspondence_params_key
-    "correspondence_meeting"
-  end
-
   def transcript_metadata
     get_attachment_metadata_params(:transcript).merge(
       title: correspondence_params["overview"],

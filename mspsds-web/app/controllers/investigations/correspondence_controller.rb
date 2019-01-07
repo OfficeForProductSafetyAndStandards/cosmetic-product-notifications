@@ -9,6 +9,11 @@ class Investigations::CorrespondenceController < ApplicationController
   before_action :set_attachments, only: %i[show update create]
   before_action :store_correspondence, only: %i[update]
 
+  def correspondence_params_key
+    # Turns the class name into the same format used by rails in form `name` attributes (e.g. 'correspondence_email')
+    model_class.name.underscore.gsub("/","_")
+  end
+
   def new
     clear_session
     initialize_file_attachments
