@@ -5,6 +5,6 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       p.govuk-caption-xl = @parent.pretty_description
-      = "Add attachment"
+      | Add attachment
 = render "documents/metadata_form", document: @file_blob, edit: false,
         target_url: wizard_path

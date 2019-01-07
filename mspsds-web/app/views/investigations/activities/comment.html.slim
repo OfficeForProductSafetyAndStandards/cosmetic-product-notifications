@@ -11,7 +11,7 @@
         = @investigation.question_title_prefix
         = case_question_text(@investigation).titleize + ': '
         = @investigation.pretty_id
-      = "Add comment"
+      | Add comment
     = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|
       = form.text_area :body, class: "govuk-textarea govuk-!-width-full", aria_describedby: "action__comment-hint",
               rows: 5, id: "action_comment", maxlength: 1000

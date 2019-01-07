@@ -5,12 +5,12 @@
         = "#{case_question_text(investigation).capitalize} #{investigation.pretty_id}"
       span = link_to investigation.title, investigation
       - if investigation.is_closed
-        .mspsds-case-card class="mspsds-case-card__status" = "CLOSED"
+        .mspsds-case-card class="mspsds-case-card__status" CLOSED
     .govuk-grid-column-one-quarter
-      span.govuk-caption-m[class="govuk-!-font-size-16"] = "Assigned to"
+      span.govuk-caption-m[class="govuk-!-font-size-16"] Assigned to
       span = investigation.assignee ? investigation.assignee.assignee_short_name : "Unassigned"
     .govuk-grid-column-one-quarter
-      span.govuk-caption-m[class="govuk-!-font-size-16"] = "Last updated"
+      span.govuk-caption-m[class="govuk-!-font-size-16"] Last updated
       span = investigation.updated_at.strftime("%d/%m/%Y")
 - else
   .govuk-grid-row class=(investigation.is_closed ? "mspsds-case-card mspsds-case-card--closed" : "mspsds-case-card")
@@ -19,4 +19,4 @@
         = "#{case_question_text(investigation).capitalize} #{investigation.pretty_id}"
       span = link_to "#{case_question_text(investigation).capitalize} restricted", "/"
       - if investigation.is_closed
-        .mspsds-case-card class="mspsds-case-card__status" = "CLOSED"
+        .mspsds-case-card class="mspsds-case-card__status" CLOSED

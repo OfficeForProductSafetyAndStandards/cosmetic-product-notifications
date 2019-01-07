@@ -9,7 +9,7 @@
   - if @investigation.assignee.present?
     p = @investigation.assignee.display_name
   - else
-    p = "Nobody is assigned yet"
+    p Nobody is assigned yet
   hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible"]
 
   h2.govuk-heading-l
@@ -26,7 +26,7 @@
             = form.label :assignee_id_radio,
                     past_assignee.display_name,
                     class: "govuk-label govuk-radios__label"
-        .govuk-radios__divider = "or"
+        .govuk-radios__divider or
         .govuk-radios__item
           = form.radio_button :assignee_id_radio, "Other", class: "govuk-radios__input",
                   "data-aria-controls": "conditional-other-assignee-other"
