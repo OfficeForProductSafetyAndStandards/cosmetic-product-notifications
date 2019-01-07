@@ -3,7 +3,7 @@
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Assign case"
 
-= form_with(model: @investigation, local: true) do |form|
+= form_with(model: @investigation, method: :put, url: assign_investigation_url(@investigation)) do |form|
   h2.govuk-heading-l
     | Current assignee
   - if @investigation.assignee.present?
