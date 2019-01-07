@@ -8,6 +8,12 @@ class InvestigationsController < ApplicationController
   # GET /cases.json
   # GET /cases.xlsx
   def index
+    # TODO delete unless block when user role exists for The Office
+    unless current_user.is_office?
+      render "trading_standards_index"
+      return
+    end
+
     respond_to do |format|
       format.html do
         @answer = search_for_investigations(20)

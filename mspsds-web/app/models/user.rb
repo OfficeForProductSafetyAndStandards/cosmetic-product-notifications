@@ -62,6 +62,10 @@ class User < ActiveHash::Base
     KeycloakClient.instance.has_role? role
   end
 
+  def is_office?
+    false
+  end
+
   def self.get_assignees_select_options(except: [], use_short_name: false)
     users_to_exclude = Array(except)
 
