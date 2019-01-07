@@ -1,8 +1,9 @@
 class InvestigationsController < ApplicationController
   include InvestigationsHelper
+  include Pundit
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show update assign status]
+  before_action :set_investigation, only: %i[show update assign status visibility]
 
   # GET /cases
   # GET /cases.json
@@ -50,6 +51,9 @@ class InvestigationsController < ApplicationController
   # GET /cases/1/assign
   def assign; end
 
+  # GET /cases/1/visibility
+  def visibility; end
+
   # PATCH/PUT /cases/1
   # PATCH/PUT /cases/1.json
   def update
@@ -57,6 +61,7 @@ class InvestigationsController < ApplicationController
     @investigation.is_closed = ps[:is_closed] if ps[:is_closed]
     @investigation.status_rationale = ps[:status_rationale] if ps[:status_rationale]
     @investigation.assignee = User.find_by(id: ps[:assignee_id]) if ps[:assignee_id]
+    @investigation.is_private = ps[:is_private] if ps[:is_private]
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to @investigation, notice: "Case was successfully updated." }
@@ -93,6 +98,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
+    authorize @investigation, :show?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -104,6 +110,6 @@ private
     if params[:investigation][:assignee_id].blank?
       params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
     end
-    params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id)
+    params.require(:investigation).permit(:is_closed, :status_rationale, :assignee_id, :is_private)
   end
 end
