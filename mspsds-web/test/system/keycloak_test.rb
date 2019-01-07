@@ -20,4 +20,12 @@ class KeycloakTest < ApplicationSystemTestCase
     click_on "Sign out"
     assert_selector "h1", text: "Sign in"
   end
+
+  test "redirects login correctly" do
+    visit products_path
+    fill_in "Username or email", with: "admin@example.com"
+    fill_in "Password", with: "password"
+    click_on "Continue"
+    assert_current_path(/products/)
+  end
 end

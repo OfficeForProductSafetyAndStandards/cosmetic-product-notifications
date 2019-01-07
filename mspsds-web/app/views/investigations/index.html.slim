@@ -6,11 +6,11 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       - if params[:q].present?
-        span.govuk-caption-xl = "Case search results"
+        span.govuk-caption-xl Case search results
         = params[:q]
         span.govuk-caption-m = "#{@results.count} #{'result'.pluralize(@results.count)}"
       - else
-        = "Cases"
+        | Cases
 
 .govuk-grid-row
   .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
@@ -74,4 +74,4 @@
       br
       = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: export_params)
     - else
-      .govuk-heading-xl[style="text-align:center"] = "No results"
+      .govuk-heading-xl[style="text-align:center"] No results
