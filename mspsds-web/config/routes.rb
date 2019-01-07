@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     member do
       get :status
       get :assign
+      get :visibility
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do
       collection do
@@ -86,6 +87,7 @@ Rails.application.routes.draw do
   end
 
   match "/404", to: "errors#not_found", via: :all
+  match "/403", to: "errors#forbidden", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
   # This is the page that will show for timeouts, currently showing the same as an internal error
   match "/503", to: "errors#timeout", via: :all
