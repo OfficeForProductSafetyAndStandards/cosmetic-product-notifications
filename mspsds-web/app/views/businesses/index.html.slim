@@ -5,7 +5,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       - if params[:q].present?
-        span.govuk-caption-xl = "Business search results"
+        span.govuk-caption-xl Business search results
         = params[:q]
         span.govuk-caption-m = "#{@businesses.count} #{'result'.pluralize(@businesses.count)}"
       - else
