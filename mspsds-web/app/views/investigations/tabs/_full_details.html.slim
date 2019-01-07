@@ -1,0 +1,11 @@
+p = link_to "Edit details", visibility_investigation_path(@investigation)
+
+hr.govuk-section-break.govuk-section-break--l
+
+table.govuk-table class="govuk-!-margin-bottom-4"
+  tbody.govuk-table__body
+    tr.govuk-table__row
+      th.govuk-table__header scope="row"
+        = "Visibility: "
+      td.govuk-table__cell
+        = @investigation.pretty_visibility

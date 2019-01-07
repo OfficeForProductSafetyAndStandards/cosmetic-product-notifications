@@ -1,7 +1,7 @@
 - page_title = "Confirm #{@test.pretty_name} details"
 - content_for :page_title, page_title
 - content_for :after_header do
-  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
 h1.govuk-heading-xl
   span.govuk-caption-xl
     = "Case: #{@investigation.pretty_id}"

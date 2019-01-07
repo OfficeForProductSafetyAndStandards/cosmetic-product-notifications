@@ -1,11 +1,14 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :forbidden
+
   protect_from_forgery with: :exception
 
   before_action :authenticate_user!
   before_action :set_raven_context
 
   helper_method :current_user, :user_signed_in?
+
 
   def initialize
     Keycloak.proc_cookie_token = lambda do
@@ -53,5 +56,9 @@ private
         false
       end
     end
+  end
+
+  def forbidden
+    redirect_to '/403'
   end
 end

@@ -289,4 +289,45 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     get investigations_path format: :xlsx
     assert_response :success
   end
+
+  test "should not show private investigations to everyone" do
+    create_new_private_case
+
+    logout
+    sign_in_as_user
+    get investigations_path
+    assert_not_includes(response.body, @new_investigation.description)
+    assert_includes(response.body, "Case restricted")
+  end
+
+  test "should not show case to someone without access" do
+    create_new_private_case
+
+    logout
+    sign_in_as_user
+    get investigation_path(@new_investigation)
+    assert_not_includes(response.body, @new_investigation.pretty_id)
+  end
+
+  test "should show private investigations to creator" do
+    create_new_private_case
+
+    get investigations_path
+    assert_includes(response.body, @new_investigation.pretty_id)
+  end
+
+  def create_new_private_case
+    description = "new_investigation_description"
+    post investigations_url, params: {
+      investigation: {
+        description: description
+      }
+    }
+    @new_investigation = Investigation.find_by(description: description)
+    put investigations_url + "/#{@new_investigation.id}", params: {
+      investigation: {
+        is_private: true
+      }
+    }
+  end
 end

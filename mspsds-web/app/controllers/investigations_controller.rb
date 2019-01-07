@@ -1,8 +1,9 @@
 class InvestigationsController < ApplicationController
   include InvestigationsHelper
+  include Pundit
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show assign status]
+  before_action :set_investigation, only: %i[show assign status visibility]
 
   # GET /cases
   # GET /cases.json
@@ -77,6 +78,22 @@ class InvestigationsController < ApplicationController
     respond_to_update(:assign)
   end
 
+  # GET /cases/1/visibility
+  # PUT /cases/1/visibility
+  def visibility
+    return if request.get?
+
+    ps = status_update_params
+    if ps[:is_private].blank?
+      @investigation.errors.add(:visibility, :invalid, message: "Visibility needs to be private or public")
+      respond_to_invalid_data(:visibility)
+      return
+    end
+
+    @investigation.is_private = ps[:is_private]
+    respond_to_update(:visibility)
+  end
+
   # POST /cases
   # POST /cases.json
   def create
@@ -96,6 +113,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
+    authorize @investigation, :show?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -105,6 +123,10 @@ private
 
   def status_update_params
     params.require(:investigation).permit(:is_closed, :status_rationale)
+  end
+
+  def visibility_update_params
+    params.require(:investigation).permit(:is_private)
   end
 
   def assignee_update_params

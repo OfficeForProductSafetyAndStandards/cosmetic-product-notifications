@@ -10,4 +10,8 @@ class ErrorsController < ApplicationController
   def timeout
     render :internal_server_error, status: :service_unavailable, formats: [:html]
   end
+
+  def forbidden
+    render status: :forbidden, formats: [:html]
+  end
 end
