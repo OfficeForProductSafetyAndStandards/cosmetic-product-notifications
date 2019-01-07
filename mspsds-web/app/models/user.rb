@@ -5,6 +5,8 @@ class User < Shared::Web::User
 
   belongs_to :organisation
 
+  include UserService
+
   def self.find_or_create(attributes)
     groups = attributes.delete(:groups)
     organisation = Organisation.find_by_path(groups) # rubocop:disable Rails/DynamicFindBy
