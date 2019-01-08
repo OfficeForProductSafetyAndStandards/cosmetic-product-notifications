@@ -97,9 +97,10 @@ class Investigation < ApplicationRecord
 
   def visible_to(user)
     return true unless is_private
-    return true if (assignee&.organisation&.users&.include? user) || assignee == user
-    return true if (source&.user&.organisation&.users&.include? user) || source&.user == user
+    return true if assignee.present? && (assignee&.organisation == user.organisation)
+    return true if source&.user&.organisation == user.organisation
     return true if user.has_role? :admin
+
     false
   end
 
