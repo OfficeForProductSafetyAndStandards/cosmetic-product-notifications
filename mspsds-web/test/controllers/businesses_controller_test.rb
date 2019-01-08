@@ -2,7 +2,7 @@ require "test_helper"
 
 class BusinessesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin
+    sign_in_as_admin_with_organisation
     @business_one = businesses(:one)
     @business_two = businesses(:two)
     @business_one.source = sources(:business_one)

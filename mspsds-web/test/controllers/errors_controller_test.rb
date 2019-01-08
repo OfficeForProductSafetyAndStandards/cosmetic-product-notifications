@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ErrorsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin
+    sign_in_as_admin_with_organisation
   end
 
   teardown do

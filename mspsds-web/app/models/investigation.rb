@@ -95,11 +95,13 @@ class Investigation < ApplicationRecord
     is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
   end
 
-  def who_can_see
-    return [] unless is_private
+  def visible_to(user)
+    return true unless is_private
+    return true if assignee.present? && (assignee&.organisation == user.organisation)
+    return true if source&.user&.present? && (source&.user&.organisation == user.organisation)
+    return true if user.has_role? :admin
 
-    # TODO MSPSDS-859: Replace hard-coded list with computation of users from organisations
-    [assignee, source&.user].map { |u| u&.id }.uniq
+    false
   end
 
   def pretty_id

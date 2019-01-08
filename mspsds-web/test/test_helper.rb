@@ -37,21 +37,6 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  # Add more helper methods to be used by all tests here...
-  def sign_in_as_admin
-    admin = admin_user
-    stub_user_credentials(user: admin, is_admin: true)
-    stub_user_data(users: [admin, test_user])
-    stub_client_config
-  end
-
-  def sign_in_as_user
-    user = test_user
-    stub_user_credentials(user: user, is_admin: false)
-    stub_user_data(users: [admin_user, user])
-    stub_client_config
-  end
-
   def sign_in_as_user_with_organisation
     groups = [organisations[0][:id]]
     user = test_user.merge(groups: groups)
@@ -60,6 +45,17 @@ class ActiveSupport::TestCase
     stub_user_credentials(user: user, is_admin: false)
     stub_user_group_data(user_groups: user_groups)
     stub_user_data(users: [admin_user, user])
+    stub_client_config
+  end
+
+  def sign_in_as_admin_with_organisation
+    groups = [organisations[0][:id]]
+    user = admin_user.merge(groups: groups)
+    user_groups = [{ id: user[:id], groups: groups }].to_json
+
+    stub_user_credentials(user: user, is_admin: false)
+    stub_user_group_data(user_groups: user_groups)
+    stub_user_data(users: [user, test_user])
     stub_client_config
   end
 
