@@ -57,4 +57,10 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     assert_text "Test Admin"
     assert_text "Other"
   end
+
+  test "should require an actual assignee" do
+    fill_in "assignee-picker", with: "aa@aa.aa"
+    click_on "Assign"
+    assert_text("Assignee should exist")
+  end
 end

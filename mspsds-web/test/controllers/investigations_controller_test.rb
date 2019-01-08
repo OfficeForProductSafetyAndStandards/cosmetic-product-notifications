@@ -69,7 +69,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     id = User.find_by(last_name: "User").id
     investigation_assignee_id = lambda { Investigation.find(@investigation_three.id).assignee_id }
     assert_changes investigation_assignee_id, from: nil, to: id do
-      put investigation_url(@investigation_three), params: {
+      put assign_investigation_url(@investigation_three), params: {
         investigation: {
           assignee_id: id
         }
@@ -82,7 +82,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     is_closed = true
     investigation_status = lambda { Investigation.find(@investigation_one.id).is_closed }
     assert_changes investigation_status, from: false, to: is_closed do
-      put investigation_url(@investigation_one), params: {
+      put status_investigation_url(@investigation_one), params: {
           investigation: {
               is_closed: is_closed,
               status_rationale: "some rationale"
@@ -92,9 +92,18 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to investigation_url(@investigation_one)
   end
 
+  test "should require status to be open or closed" do
+    put status_investigation_url(@investigation_one), params: {
+      investigation: {
+        status_rationale: "some rationale"
+      }
+    }
+    assert_includes(response.body, "Status should be closed or open")
+  end
+
   test "should update assignee from selectable list" do
     assignee = User.find_by(last_name: "User")
-    put investigation_url(@investigation_one), params: {
+    put assign_investigation_url(@investigation_one), params: {
       investigation: {
         assignee_id: assignee.id
       }
@@ -104,7 +113,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update assignee from radio boxes" do
     assignee = User.find_by(last_name: "User")
-    put investigation_url(@investigation_one), params: {
+    put assign_investigation_url(@investigation_one), params: {
       investigation: {
         assignee_id_radio: assignee.id
       }
@@ -315,7 +324,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     @new_investigation = Investigation.find_by(description: description)
-    put investigations_url + "/#{@new_investigation.id}", params: {
+    put visibility_investigation_url(@new_investigation), params: {
       investigation: {
         is_private: true
       }

@@ -1,11 +1,13 @@
+# This class serves as as a common base controller extended by the different types of correspondence
 class Investigations::CorrespondenceController < ApplicationController
   include FileConcern
-  set_attachment_names :file
-  set_file_params_key :correspondence
-
   include Wicked::Wizard
-  steps :general_info, :content, :confirmation
-  before_action :load_relevant_objects, only: %i[show update create]
+  steps :context, :content, :confirmation
+
+  before_action :set_investigation
+  before_action :set_correspondence, only: %i[show update create]
+  before_action :set_attachments, only: %i[show update create]
+  before_action :store_correspondence, only: %i[update]
 
   def new
     clear_session
@@ -14,12 +16,15 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def create
-    update_blob_metadata(@file_blob, get_attachment_metadata_params(:file))
-    attach_blobs_to_list(@file_blob, @correspondence.documents)
-    @investigation.correspondences << @correspondence
-    @investigation.save
-    AuditActivity::Correspondence::Add.from(@correspondence, @investigation)
-    redirect_to investigation_path(@investigation)
+    update_attachments
+    if correspondence_valid? && @investigation.save
+      attach_files
+      save_attachments
+      audit_class.from(@correspondence, @investigation)
+      redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
+    else
+      redirect_to investigation_path(@investigation), notice: "Correspondence could not be saved."
+    end
   end
 
   def show
@@ -27,75 +32,44 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def update
-    @correspondence.validate(step)
-    validate_blob_size(@file_blob, @correspondence.errors, "file")
-    if @correspondence.errors.any?
-      render step
-    else
+    update_attachments
+    if correspondence_valid?
+      save_attachments
       redirect_to next_wizard_path
+    else
+      render step
     end
   end
 
 private
 
-  def correspondence_params
-    return {} if params[:correspondence].blank?
-
-    handle_type_params
-    params.require(:correspondence).permit(
-      :correspondent_name, :correspondent_type, :contact_method, :phone_number, :email_address, :day, :month, :year,
-      :overview, :details
-    )
-  end
-
-  def handle_type_params
-    if params[:correspondence][:correspondent_type] == 'Other'
-      params[:correspondence][:correspondent_type] = params[:correspondence][:other_correspondent_type]
-    end
-  end
-
-  def load_relevant_objects
-    @investigation = Investigation.find_by(id: params[:investigation_id])
-    @file_blob, * = load_file_attachments
-    load_correspondence
-  end
-
-  def load_correspondence
-    data_from_previous_steps = session[:correspondence] || suggested_values
-    session[:correspondence] = data_from_previous_steps.merge(correspondence_params || {})
-    @correspondence = Correspondence.new(session[:correspondence])
-  end
-
-  def suggested_values
-    values = {
-      day: Time.zone.today.day,
-      month: Time.zone.today.month,
-      year: Time.zone.today.year
-    }
-
-    reporter = @investigation.reporter
-    if reporter
-      values = values.merge(
-        correspondent_name: reporter.name,
-        contact_method: get_contact_method,
-        phone_number: reporter.phone_number,
-        email_address: reporter.email_address
-      )
-    end
-
-    values
-  end
-
-  def get_contact_method
-    reporter = @investigation.reporter
-    if reporter.email_address.present?
-      Correspondence.contact_methods[:email]
-    elsif reporter.phone_number.present?
-      Correspondence.contact_methods[:phone]
-    end
-  end
-
   def clear_session
-    session[:correspondence] = nil
+    session[correspondence_params_key] = nil
+  end
+
+  def set_investigation
+    @investigation = Investigation.find(params[:investigation_id])
+  end
+
+  def set_correspondence
+    @correspondence = model_class.new correspondence_params
+    @investigation.association(:correspondences).add_to_target(@correspondence)
+  end
+
+  def store_correspondence
+    session[correspondence_params_key] = @correspondence.attributes if @correspondence.valid?(step)
+  end
+
+  def correspondence_params
+    session_params.merge(request_params)
+  end
+
+  def session_params
+    session[correspondence_params_key] || {}
+  end
+
+  def correspondence_params_key
+    # Turns the class name into the same format used by rails in form `name` attributes (e.g. 'correspondence_email')
+    model_class.name.underscore.tr("/", "_")
   end
 end

@@ -22,11 +22,14 @@ Rails.application.routes.draw do
   resources :question, controller: "investigations/question", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
 
-  resources :investigations, path: "cases", only: %i[index show new create update],
+  resources :investigations, path: "cases", only: %i[index show new create],
             concerns: %i[document_attachable] do
     member do
+      put :status
       get :status
+      put :assign
       get :assign
+      put :visibility
       get :visibility
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do
@@ -57,8 +60,6 @@ Rails.application.routes.draw do
     end
 
     resources :corrective_actions, controller: "investigations/corrective_actions", only: %i[show new create update]
-    resources :correspondences, only: %i[show new create update], controller: "investigations/correspondence",
-              concerns: %i[document_attachable]
     resources :emails, controller: "investigations/emails", only: %i[show new create update]
     resources :phone_calls, controller: "investigations/phone_calls", only: %i[show new create update]
     resources :meetings, controller: "investigations/meetings", only: %i[show new create update]

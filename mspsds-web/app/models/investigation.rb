@@ -14,8 +14,6 @@ class Investigation < ApplicationRecord
   validates_length_of :question_title, maximum: 1000
   validates_length_of :description, maximum: 1000
 
-  validate :validate_assignment
-
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility
 
@@ -194,12 +192,6 @@ private
     title << " – #{hazard_type}" if hazard_type.present?
     title << " (no product specified)" if products.empty?
     title.presence || "Untitled case"
-  end
-
-  def validate_assignment
-    if assignee_id_was.present? && !assignee
-      errors.add(:assignee, "cannot be blank")
-    end
   end
 
   def send_assignee_email
