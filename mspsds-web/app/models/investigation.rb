@@ -95,11 +95,11 @@ class Investigation < ApplicationRecord
     is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
   end
 
-  def can_be_seen_by_current_user
+  def visible_to(user)
     return true unless is_private
-    return true if (assignee&.organisation&.users&.include? current_user) || assignee == current_user
-    return true if (source&.user&.organisation&.users&.include? current_user) || source&.user == current_user
-    return true if current_user&.organisation&.name == "The Office of Product Safety"
+    return true if (assignee&.organisation&.users&.include? user) || assignee == user
+    return true if (source&.user&.organisation&.users&.include? user) || source&.user == user
+    return true if user.has_role? :admin
     false
   end
 
