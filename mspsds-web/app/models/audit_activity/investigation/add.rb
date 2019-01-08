@@ -18,6 +18,6 @@ class AuditActivity::Investigation::Add < AuditActivity::Investigation::Base
   end
 
   def sensitive_body?
-    investigation.reporter&.can_be_displayed?
+    !investigation.reporter&.can_be_displayed?
   end
 end

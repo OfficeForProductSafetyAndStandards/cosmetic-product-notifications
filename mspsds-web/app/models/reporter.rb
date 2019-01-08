@@ -1,4 +1,5 @@
 class Reporter < ApplicationRecord
+  include UserService
   belongs_to :investigation, required: false
 
   validates :reporter_type, presence: true
@@ -14,7 +15,7 @@ class Reporter < ApplicationRecord
 
   def can_be_displayed?
     return true unless contains_personal_data?
-    return true if current_user.organisation&.include?(investigation&.source&.user)
+    return true if current_user.organisation&.include?(investigation&.source&.user) || current_user == investigation&.source&.user
     false
   end
 end
