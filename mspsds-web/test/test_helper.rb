@@ -127,7 +127,7 @@ private
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user))
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
-    allow(Keycloak::Client).to receive(:has_role?).with(:the_office).and_return(is_office)
+    allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_office)
   end
 
   def format_user_for_get_userinfo(user)

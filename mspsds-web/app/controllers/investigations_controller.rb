@@ -8,9 +8,8 @@ class InvestigationsController < ApplicationController
   # GET /cases.json
   # GET /cases.xlsx
   def index
-    # TODO delete unless block when user role exists for The Office
-    if !current_user.is_office?
-      render "non_office_index"
+    unless current_user.is_office?
+      return render "non_office_index"
     end
 
     respond_to do |format|

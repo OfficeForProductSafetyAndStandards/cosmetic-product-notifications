@@ -63,7 +63,7 @@ class User < ActiveHash::Base
   end
 
   def is_office?
-    KeycloakClient.instance.has_role? :the_office
+    KeycloakClient.instance.has_role? :opss_user
   end
 
   def self.get_assignees_select_options(except: [], use_short_name: false)

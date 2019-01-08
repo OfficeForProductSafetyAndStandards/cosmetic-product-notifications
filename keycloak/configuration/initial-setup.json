@@ -272,6 +272,13 @@
         "composite" : false,
         "clientRole" : true,
         "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"
+      }, {
+        "id" : "34fabcde-0e95-4b56-8663-97bba9fa3d6f",
+        "name" : "opss_user",
+        "description" : "OPSS users",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"
       } ]
     }
   },
@@ -341,7 +348,7 @@
     "realmRoles" : [ "user" ],
     "clientRoles" : {
       "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "user" ]
+      "mspsds-app" : [ "opss_user", "user" ]
     },
     "notBefore" : 0,
     "groups" : [ "/Admin" ]
@@ -391,8 +398,8 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "user" ],
     "clientRoles" : {
-      "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "user" ]
+        "account" : [ "manage-account", "view-profile" ],
+        "mspsds-app" : [ "opss_user", "user" ]
     },
     "notBefore" : 0,
     "groups" : [ "/Organisations/Office for Product Safety and Standards" ]
@@ -408,7 +415,7 @@
     } ],
     "mspsds-app" : [ {
       "clientScope" : "roles",
-      "roles" : [ "user" ]
+      "roles" : [ "opss_user", "user" ]
     } ]
   },
   "clients" : [ {
@@ -1990,7 +1997,8 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "admin", "offline_access", "uma_authorization" ],
     "clientRoles" : {
-      "account" : [ "view-profile", "manage-account" ]
+      "account" : [ "manage-account", "view-profile" ],
+      "mspsds-app" : [ "opss_user", "user" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
