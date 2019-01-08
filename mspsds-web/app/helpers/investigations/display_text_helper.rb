@@ -34,10 +34,16 @@ module Investigations::DisplayTextHelper
   end
 
   def get_highlight_content(highlight, investigation)
-    return "This record contains sensitive data, contact #{investigation.source&.user&.organisation&.name || investigation.source&.user.full_name} for details" if should_be_hidden(highlight, investigation)
+    return gdpr_restriction_text(investigation) if should_be_hidden(highlight, investigation)
+
     highlighted_texts = highlight[1]
     sanitized_content = sanitize(highlighted_texts.first, tags: %w(em))
     sanitized_content.html_safe # rubocop:disable Rails/OutputSafety
+  end
+
+  def gdpr_restriction_text(investigation)
+    source = investigation.source&.user&.organisation&.name || investigation.source&.user.full_name
+    "This record contains sensitive data, contact #{source} for details"
   end
 
   def should_be_hidden(highlight, investigation)
