@@ -1,5 +1,4 @@
 class InvestigationPolicy < ApplicationPolicy
-  include UserService
   def destroy?
     @user.has_role? :admin
   end

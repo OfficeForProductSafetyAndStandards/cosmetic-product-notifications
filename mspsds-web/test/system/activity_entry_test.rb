@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class ActivityEntryTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_admin
+    sign_in_as_admin_with_organisation
     @investigation = investigations(:one)
     visit investigation_path(@investigation)
     click_on "Add activity"
