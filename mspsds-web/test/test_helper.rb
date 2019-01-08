@@ -45,9 +45,16 @@ class ActiveSupport::TestCase
     stub_client_config
   end
 
-  def sign_in_as_user
+  def sign_in_as_office_user
     user = test_user
-    stub_user_credentials(user: user, is_admin: false)
+    stub_user_credentials(user: user, is_admin: false, is_office: true)
+    stub_user_data(users: [admin_user, user])
+    stub_client_config
+  end
+
+  def sign_in_as_non_office_user
+    user = test_user
+    stub_user_credentials(user: user, is_admin: false, is_office: false)
     stub_user_data(users: [admin_user, user])
     stub_client_config
   end
@@ -116,10 +123,11 @@ private
     ]
   end
 
-  def stub_user_credentials(user:, is_admin: false)
+  def stub_user_credentials(user:, is_admin: false, is_office: true)
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user))
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
+    allow(Keycloak::Client).to receive(:has_role?).with(:the_office).and_return(is_office)
   end
 
   def format_user_for_get_userinfo(user)

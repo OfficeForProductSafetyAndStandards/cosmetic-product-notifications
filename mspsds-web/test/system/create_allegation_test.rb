@@ -15,7 +15,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
       description: "Allegation description"
     )
 
-    sign_in_as_user
+    sign_in_as_office_user
     visit new_allegation_path
   end
 

@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class CorrectiveActionsTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_user
+    sign_in_as_office_user
 
     @investigation = investigations(:one)
     @corrective_action = corrective_actions(:one)
