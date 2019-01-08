@@ -11,11 +11,11 @@ module Investigations::DisplayTextHelper
     document.image? ? 'image' : 'document'
   end
 
-  def get_displayable_highlights(highlights)
+  def get_displayable_highlights(highlights, investigation)
     highlights.map do |highlight|
       {
         label: get_highlight_title(highlight),
-        content: get_highlight_content(highlight)
+        content: get_highlight_content(highlight, investigation)
       }
     end
   end
@@ -33,9 +33,17 @@ module Investigations::DisplayTextHelper
     pretty_field_names[field_name.to_sym] || field_name
   end
 
-  def get_highlight_content(highlight)
+  def get_highlight_content(highlight, investigation)
+    return "This record contains sensitive data, contact #{investigation.source&.user&.organisation&.name || investigation.source&.user.full_name} for details" if should_be_hidden(highlight, investigation)
     highlighted_texts = highlight[1]
     sanitized_content = sanitize(highlighted_texts.first, tags: %w(em))
     sanitized_content.html_safe # rubocop:disable Rails/OutputSafety
+  end
+
+  def should_be_hidden(highlight, investigation)
+    p highlight[0].include? "reporter"
+    p !investigation.reporter.can_be_displayed?
+    return true if (highlight[0].include? "reporter") && (!investigation.reporter.can_be_displayed?)
+    false
   end
 end

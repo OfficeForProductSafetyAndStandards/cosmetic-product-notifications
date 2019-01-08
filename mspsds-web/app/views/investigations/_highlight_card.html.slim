@@ -4,8 +4,8 @@
       = "#{case_question_text(investigation).capitalize} #{investigation.pretty_id}"
     span = link_to investigation.title, investigation, class: "govuk-!-font-weight-bold"
   .govuk-grid-column-one-half
-    - get_displayable_highlights(highlights).each do |highlight|
+    - get_displayable_highlights(highlights, investigation).each do |highlight|
       span.govuk-caption-m[class="govuk-!-font-size-16"] = highlight[:label]
       span = highlight[:content]
-      - if highlight != get_displayable_highlights(highlights).last
+      - if highlight != get_displayable_highlights(highlights, investigation).last
         p
