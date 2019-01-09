@@ -7,7 +7,7 @@ fieldset.govuk-fieldset
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span.govuk-hint
       |  The high-level category (for reporting purposes)
-    = form.select :category, product_types, { include_black: true },
+    = form.select :category, product_types, { include_blank: true },
             class: "govuk-select", id: "product-type-picker"
 
 fieldset.govuk-fieldset

@@ -6,8 +6,12 @@ module ProductsHelper
   # Never trust parameters from the scary internet, only allow the white list through.
   def product_params
     params.require(:product).permit(
+      # TODO these params are from add products form as it was before MSPSDS-868. They should be deleted once MSPSDS-868 has been finalised
       :gtin, :name, :description, :model, :batch_number, :brand, :product_type,
-      :country_of_origin, :day, :month, :year
+      :country_of_origin, :day, :month, :year,
+
+      # TODO these params are up to date following MSPSDS-868
+      :name, :product_type, :category, :product_code, :webpage, :description
     )
   end
 
