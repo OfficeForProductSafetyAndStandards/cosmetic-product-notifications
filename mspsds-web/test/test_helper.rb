@@ -162,6 +162,4 @@ private
     allow(Keycloak::Internal).to receive(:get_user_groups).and_call_original
     Rails.cache.delete(:keycloak_users)
   end
-
-
 end
