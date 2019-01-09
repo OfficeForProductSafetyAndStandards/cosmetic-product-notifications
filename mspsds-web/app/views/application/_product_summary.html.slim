@@ -13,14 +13,24 @@
       tbody.govuk-table__body
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
-            | Brand
+            | Product name
           td.govuk-table__cell
-            = product.brand
+            = product.name
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
-            | Model
+            | Barcode / serial number
           td.govuk-table__cell
-            = product.model
+            = product.product_code
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Type
+          td.govuk-table__cell
+            = product.product_type
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Category
+          td.govuk-table__cell
+            = product.category
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Description
