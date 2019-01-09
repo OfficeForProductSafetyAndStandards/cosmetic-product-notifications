@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_06_175853) do
+ActiveRecord::Schema.define(version: 2019_01_09_163555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2018_12_06_175853) do
     t.string "hazard_type"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
+    t.boolean "is_private", default: false, null: false
     t.string "product_type"
     t.string "question_title"
     t.string "question_type"
@@ -148,6 +149,7 @@ ActiveRecord::Schema.define(version: 2018_12_06_175853) do
   create_table "products", id: :serial, force: :cascade do |t|
     t.string "batch_number"
     t.string "brand"
+    t.string "category"
     t.string "country_of_origin"
     t.datetime "created_at", null: false
     t.date "date_placed_on_market"
@@ -155,8 +157,10 @@ ActiveRecord::Schema.define(version: 2018_12_06_175853) do
     t.string "gtin"
     t.string "model"
     t.string "name"
+    t.string "product_code"
     t.string "product_type"
     t.datetime "updated_at", null: false
+    t.string "webpage"
   end
 
   create_table "rapex_imports", id: :serial, force: :cascade do |t|
