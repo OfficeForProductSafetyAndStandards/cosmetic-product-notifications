@@ -38,32 +38,28 @@ class ActiveSupport::TestCase
   end
 
   def sign_in_as_user_with_organisation
-    groups = [organisations[0][:id]]
-    user = test_user.merge(groups: groups)
-    user_groups = [{ id: user[:id], groups: groups }].to_json
+    user = test_user.merge(groups: user_groups)
+    user_groups_json = [{ id: user[:id], groups: user_groups }].to_json
     stub_user_credentials(user: user, is_admin: false, is_opss: true)
-    stub_user_group_data(user_groups: user_groups)
+    stub_user_group_data(user_groups: user_groups_json)
     stub_user_data(users: [admin_user, user])
     stub_client_config
   end
 
   def sign_in_as_non_opss_user_with_organisation
-    groups = [organisations[0][:id]]
-    user = test_user.merge(groups: groups)
-    user_groups = [{ id: user[:id], groups: groups }].to_json
+    user = test_user.merge(groups: user_groups)
+    user_groups_json = [{ id: user[:id], groups: user_groups }].to_json
     stub_user_credentials(user: user, is_admin: false, is_opss: false)
-    stub_user_group_data(user_groups: user_groups)
+    stub_user_group_data(user_groups: user_groups_json)
     stub_user_data(users: [admin_user, user])
     stub_client_config
   end
 
   def sign_in_as_admin_with_organisation
-    groups = [organisations[0][:id]]
-    user = admin_user.merge(groups: groups)
-    user_groups = [{ id: user[:id], groups: groups }].to_json
-
+    user = admin_user.merge(groups: user_groups)
+    user_groups_json = [{ id: user[:id], groups: user_groups }].to_json
     stub_user_credentials(user: user, is_admin: false, is_opss: true)
-    stub_user_group_data(user_groups: user_groups)
+    stub_user_group_data(user_groups: user_groups_json)
     stub_user_data(users: [user, test_user])
     stub_client_config
   end
@@ -84,6 +80,10 @@ class ActiveSupport::TestCase
   end
 
 private
+
+  def user_groups
+    [organisations[0][:id]]
+  end
 
   def admin_user
     { id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin" }
@@ -162,4 +162,6 @@ private
     allow(Keycloak::Internal).to receive(:get_user_groups).and_call_original
     Rails.cache.delete(:keycloak_users)
   end
+
+
 end

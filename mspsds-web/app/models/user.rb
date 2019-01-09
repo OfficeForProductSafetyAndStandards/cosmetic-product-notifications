@@ -62,7 +62,7 @@ class User < ActiveHash::Base
     KeycloakClient.instance.has_role? role
   end
 
-  def is_office?
+  def is_opss?
     KeycloakClient.instance.has_role? :opss_user
   end
 

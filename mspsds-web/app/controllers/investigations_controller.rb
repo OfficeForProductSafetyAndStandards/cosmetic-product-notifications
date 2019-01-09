@@ -9,10 +9,6 @@ class InvestigationsController < ApplicationController
   # GET /cases.json
   # GET /cases.xlsx
   def index
-    unless current_user.is_office?
-      return render "non_office_index"
-    end
-
     respond_to do |format|
       format.html do
         @answer = search_for_investigations(20)
