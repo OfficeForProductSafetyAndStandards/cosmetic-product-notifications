@@ -82,7 +82,7 @@ Larger options should be considered if required. The current worker (sidekiq) on
 #### S3
 
 When setting up a new environment, you'll also need to create an AWS user called `cosmetics-SPACE-NAME` and keep a note of the Access key ID and secret access key.
-Give this user the AmazonS3FullAccess policy.
+Give this user the `cosmetics-int-s3` policy.
 
 Create an S3 bucket named `cosmetics-SPACE-NAME`.
 
