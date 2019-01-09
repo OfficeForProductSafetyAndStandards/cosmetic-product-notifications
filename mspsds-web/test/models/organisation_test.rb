@@ -2,7 +2,7 @@ require "test_helper"
 
 class OrganisationTest < ActiveSupport::TestCase
   setup do
-    sign_in_as_opss_user
+    sign_in_as_user_with_organisation
 
     @organisations = [
       { id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1", subGroups: [] },

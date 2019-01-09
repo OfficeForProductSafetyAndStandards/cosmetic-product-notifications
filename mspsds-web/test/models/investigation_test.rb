@@ -2,7 +2,7 @@ require "test_helper"
 
 class InvestigationTest < ActiveSupport::TestCase
   setup do
-    sign_in_as_opss_user
+    sign_in_as_user_with_organisation
     @investigation = investigations(:one)
 
     @investigation_with_product = investigations(:search_related_products)

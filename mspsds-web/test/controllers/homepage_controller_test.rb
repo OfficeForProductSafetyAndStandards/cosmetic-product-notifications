@@ -6,13 +6,13 @@ class HomepageControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "displays homepage for non_opss users" do
-    sign_in_as_non_opss_user
+    sign_in_as_non_opss_user_with_organisation
     get "/"
     assert_response :success
   end
 
   test "redirects to /cases for opss users" do
-    sign_in_as_opss_user
+    sign_in_as_user_with_organisation
     get "/"
     assert_redirected_to investigations_path
   end

@@ -6,7 +6,7 @@
     .govuk-heading-xl
       span.govuk-caption-xl
         = "Business: #{@business.company_name}"
-      = "Remove location"
+      | Remove location
 h2.govuk-heading-l
   | Location details
 = render "form", location: @location, business: nil, edit: true
