@@ -3,7 +3,7 @@ require "application_system_test_case"
 class UpdateProductTest < ApplicationSystemTestCase
   setup do
     @product = products(:one)
-    sign_in_as_office_user
+    sign_in_as_opss_user
   end
 
   teardown do

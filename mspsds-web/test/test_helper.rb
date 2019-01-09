@@ -45,16 +45,16 @@ class ActiveSupport::TestCase
     stub_client_config
   end
 
-  def sign_in_as_office_user
+  def sign_in_as_opss_user
     user = test_user
-    stub_user_credentials(user: user, is_admin: false, is_office: true)
+    stub_user_credentials(user: user, is_admin: false, is_opss: true)
     stub_user_data(users: [admin_user, user])
     stub_client_config
   end
 
-  def sign_in_as_non_office_user
+  def sign_in_as_non_opss_user
     user = test_user
-    stub_user_credentials(user: user, is_admin: false, is_office: false)
+    stub_user_credentials(user: user, is_admin: false, is_opss: false)
     stub_user_data(users: [admin_user, user])
     stub_client_config
   end
@@ -64,7 +64,7 @@ class ActiveSupport::TestCase
     user = test_user.merge(groups: groups)
     user_groups = [{ id: user[:id], groups: groups }].to_json
 
-    stub_user_credentials(user: user, is_admin: false)
+    stub_user_credentials(user: user, is_admin: false, is_opss: true)
     stub_user_group_data(user_groups: user_groups)
     stub_user_data(users: [admin_user, user])
     stub_client_config
@@ -123,11 +123,11 @@ private
     ]
   end
 
-  def stub_user_credentials(user:, is_admin: false, is_office: true)
+  def stub_user_credentials(user:, is_admin: false, is_opss: true)
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user))
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
-    allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_office)
+    allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_opss)
   end
 
   def format_user_for_get_userinfo(user)

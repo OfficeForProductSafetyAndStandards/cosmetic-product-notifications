@@ -4,7 +4,7 @@ class TestTest < ActiveSupport::TestCase
   setup do
     @investigation = investigations(:one)
     @product = products(:one)
-    sign_in_as_office_user
+    sign_in_as_opss_user
   end
 
   teardown do

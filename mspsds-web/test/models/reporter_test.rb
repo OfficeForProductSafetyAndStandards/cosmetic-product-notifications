@@ -3,7 +3,7 @@ require "test_helper"
 class ReporterTest < ActiveSupport::TestCase
   setup do
     @reporter = Reporter.new(reporter_type: "Business")
-    sign_in_as_office_user
+    sign_in_as_opss_user
   end
 
   teardown do
