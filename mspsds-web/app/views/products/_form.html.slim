@@ -2,45 +2,55 @@
 - text_field_width = search ? "govuk-!-width-full" : "govuk-!-width-one-half"
 
 fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | Identifying labels
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:name].any?)]
-    = form.label :name, "Product name", class: "govuk-label"
-    = form.text_field :name, class: "govuk-input search-term"
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:brand].any?)]
-    = form.label :brand, class: "govuk-label"
-    = form.text_field :brand, class: "govuk-input search-term"
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:model].any?)]
-    = form.label :model, class: "govuk-label"
-    = form.text_field :model, class: "govuk-input"
-
-fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | ID numbers
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:gtin].any?)]
-    = form.label :gtin, "Barcode (or GTIN – Global Trade Information Number)", class: "govuk-label"
-    = form.text_field :gtin, class: "govuk-input search-term", id: "gtin-input"
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:batch_number].any?)]
-    = form.label :batch_number, class: "govuk-label"
-    = form.text_field :batch_number, class: "govuk-input"
-
-fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | Other information
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:product_type].any?)]
-    = form.label :product_type, class: "govuk-label"
-    = form.select :product_type, product_types, { include_blank: true },
+  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:category].any?)]
+    = form.label :category, "Product category",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span.govuk-hint
+      |  The high-level category (for reporting purposes)
+    = form.select :category, product_types, { include_black: true },
             class: "govuk-select", id: "product-type-picker"
-  .govuk-form-group class=[input_field_width, ("govuk-form-group--error" if product.errors[:description].any?)]
-    = form.label :description, class: "govuk-label"
-    = form.text_area :description, class: "govuk-textarea", rows: 5, maxlength: 1000
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:country_of_origin].any?)]
-    = form.label :country_of_origin, class: "govuk-label"
-    = form.select :country_of_origin, countries, { include_blank: "Unknown" },
-            class: "govuk-select js-product-country-of-origin", id: "location-autocomplete"
-  .govuk-form-group class=[input_field_width]
-    = form.label :date_placed_on_market, "Date on market", class: "govuk-label"
-    = render "date_input", form: form
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:type].any?)]
+    = form.label :product_type, "Product type",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span#report-product-type-hint.govuk-hint
+      |  In plain English, what is it?
+      br
+      |  For example, ‘dishwasher, soft toy, chainsaw...’
+    = form.text_field :product_type, class: "govuk-input search-term", aria_describedby: "report-product-type-hint"
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:name].any?)]
+    = form.label :name, "Product name", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span#report-product-name-hint.govuk-hint
+      |  Brand, model name, model number, etc.
+      br
+      |  For example, ‘Bosch Series 2 SMS25EI00G’
+    = form.text_field :name, class: "govuk-input search-term", aria_describedby: "report-product-name-hint"
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:product_code].any?)]
+    = form.label :product_code, "Barcode (or serial number)",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span#report-product-code-hint.govuk-hint
+      |  If you have this data, it makes it easier to correctly identify the product
+    = form.text_field :product_code, class: "govuk-input search-term", aria_describedby: "report-product-code-hint"
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:webpage].any?)]
+    = form.label :webpage, "Webpage", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span#report-product-webpage-hint.govuk-hint
+      |  A link to the manufacturer's page for this product, or a webpage where it can be bought
+    = form.text_field :webpage, class: "govuk-input search-term", aria_describedby: "report-product-webpage-hint"
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:description].any?)]
+    = form.label :description, "Description", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span#report-product-description-hint.govuk-hint
+      |  For example, 'Orange, 4 socket extension lead'
+    = form.text_area :description, class: "govuk-textarea", rows: 5, maxlength: 1000,
+            aria_describedby: "report-product-description-hint"
 
 .govuk-form-group class=[input_field_width]
   - if search
