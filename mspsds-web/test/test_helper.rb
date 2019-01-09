@@ -38,22 +38,24 @@ class ActiveSupport::TestCase
   end
 
   def sign_in_as_user_with_organisation
-    groups = [organisations[0][:id]]
-    user = test_user.merge(groups: groups)
-    user_groups = [{ id: user[:id], groups: groups }].to_json
+    group = organisations[0].id
+    user = test_user
+    user.organisation = organisations[0]
+    user_groups = [{ id: user[:id], groups: [group] }].to_json
 
-    stub_user_credentials(user: user, is_admin: false)
+    stub_user_credentials(user: user, groups: [group], is_admin: false)
     stub_user_group_data(user_groups: user_groups)
     stub_user_data(users: [admin_user, user])
     stub_client_config
   end
 
   def sign_in_as_admin_with_organisation
-    groups = [organisations[0][:id]]
-    user = admin_user.merge(groups: groups)
-    user_groups = [{ id: user[:id], groups: groups }].to_json
+    group = organisations[0].id
+    user = admin_user
+    user.organisation = organisations[0]
+    user_groups = [{ id: user[:id], groups: [group] }].to_json
 
-    stub_user_credentials(user: user, is_admin: false)
+    stub_user_credentials(user: user, groups: [group], is_admin: false)
     stub_user_group_data(user_groups: user_groups)
     stub_user_data(users: [user, test_user])
     stub_client_config
@@ -77,11 +79,11 @@ class ActiveSupport::TestCase
 private
 
   def admin_user
-    { id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin" }
+    User.new(id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin")
   end
 
   def test_user
-    { id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User" }
+    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User")
   end
 
   def group_data
@@ -95,7 +97,7 @@ private
         id: "512c85e6-5a7f-4289-95e2-a78c0e40f05c",
         name: "Organisations",
         path: "/Organisations",
-        subGroups: organisations
+        subGroups: organisations_json
       }, {
         id: "10036801-2182-4c5b-92d9-b34b1e0a421b",
         name: "Group 2",
@@ -105,21 +107,28 @@ private
     ].to_json
   end
 
-  def organisations
+  def organisations_json
     [
-      { id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1", subGroups: [] },
-      { id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2", subGroups: [] },
+      {id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1"},
+      {id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2"},
     ]
   end
 
-  def stub_user_credentials(user:, is_admin: false)
+  def organisations
+    [
+      Organisation.new(id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1"),
+      Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2"),
+    ]
+  end
+
+  def stub_user_credentials(user:, groups:, is_admin: false)
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
-    allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user))
+    allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user, groups))
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
   end
 
-  def format_user_for_get_userinfo(user)
-    { sub: user[:id], email: user[:email], groups: user[:groups], given_name: user[:first_name], family_name: user[:last_name] }.to_json
+  def format_user_for_get_userinfo(user, groups)
+    { sub: user[:id], email: user[:email], groups: groups, given_name: user[:first_name], family_name: user[:last_name] }.to_json
   end
 
   def stub_client_config
