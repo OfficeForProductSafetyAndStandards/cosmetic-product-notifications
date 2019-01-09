@@ -2,7 +2,7 @@ require "test_helper"
 
 class LocationsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin
+    sign_in_as_admin_with_organisation
     @location = locations(:one)
     @location.source = sources(:location_one)
   end

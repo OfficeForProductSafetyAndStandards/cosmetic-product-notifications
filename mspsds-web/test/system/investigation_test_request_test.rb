@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class InvestigationTestRequestTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_user
+    sign_in_as_user_with_organisation
 
     @investigation = investigations(:one)
     @test = tests(:one)

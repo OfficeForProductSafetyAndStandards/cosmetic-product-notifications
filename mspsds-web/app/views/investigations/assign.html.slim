@@ -1,15 +1,15 @@
 - content_for :page_title, "Update assignee"
 - content_for :after_header do
-  = link_to "Back to case", @investigation, class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Assign case"
 
-= form_with(model: @investigation, local: true) do |form|
+= form_with(model: @investigation, method: :put, url: assign_investigation_url(@investigation)) do |form|
   h2.govuk-heading-l
     | Current assignee
   - if @investigation.assignee.present?
     p = @investigation.assignee.display_name
   - else
-    p = "Nobody is assigned yet"
+    p Nobody is assigned yet
   hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible"]
 
   h2.govuk-heading-l
@@ -26,7 +26,7 @@
             = form.label :assignee_id_radio,
                     past_assignee.display_name,
                     class: "govuk-label govuk-radios__label"
-        .govuk-radios__divider = "or"
+        .govuk-radios__divider or
         .govuk-radios__item
           = form.radio_button :assignee_id_radio, "Other", class: "govuk-radios__input",
                   "data-aria-controls": "conditional-other-assignee-other"

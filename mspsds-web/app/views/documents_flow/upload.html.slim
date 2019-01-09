@@ -5,7 +5,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       p.govuk-caption-xl = @parent.pretty_description
-      = "Add attachment"
+      | Add attachment
 = form_with scope: :document, url: wizard_path, method: :put, local: true do |form|
   = render "form_validation_display", errors: @errors
   = form.fields_for :file do |subform|

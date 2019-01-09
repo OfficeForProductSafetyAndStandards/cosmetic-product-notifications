@@ -15,7 +15,9 @@ module Shared
         end
 
         def authenticate_user!
-          redirect_to helpers.keycloak_login_url unless user_signed_in? || try_refresh_token
+          unless user_signed_in? || try_refresh_token
+            redirect_to helpers.keycloak_login_url(request.original_fullpath)
+          end
         end
 
         def user_signed_in?
