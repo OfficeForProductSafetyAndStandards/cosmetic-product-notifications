@@ -60,7 +60,7 @@ WORKDIR /tmp/keycloak
 COPY ./providers/sms-authenticator ./sms-authenticator
 RUN mkdir -p ./providers
 
-RUN mvn -q --settings ./sms-authenticator/settings.xml --file ./sms-authenticator/pom.xml package
+RUN mvn -q --file ./sms-authenticator/pom.xml package
 RUN cp ./sms-authenticator/target/keycloak-sms-authenticator-sns-*.jar ./providers/
 
 
