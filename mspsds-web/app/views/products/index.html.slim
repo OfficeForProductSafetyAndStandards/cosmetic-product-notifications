@@ -6,18 +6,6 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       | Products
-.govuk-grid-row
-  .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
-    div class="govuk-!-margin-bottom-0"
-      = form_with(model: @search, scope: "", url: products_path, method: :get,
-              class: "mspsds-search") do |form|
-        .mspsds-search-box
-          = form.label "Keywords", class: "govuk-label--s"
-          = form.text_field :q, class: "govuk-input"
-          = form.submit "Search", name: nil, class: "mspsds-search-box--submit"
-  .govuk-grid-column-three-quarters
-    p
-      /TODO remove the link below
-      = link_to "Create new product", new_product_path, class: "govuk-!-font-size-19 govuk-!-font-weight-bold"
+  .govuk-grid-column-full.mspsds-case-list-tab
     = render "table", products: @products
     = will_paginate @products
