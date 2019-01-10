@@ -1,3 +1,16 @@
+module Clamby
+  # TODO: fix this properly by submitting a PR to Clamby
+  class Command
+    def default_args
+      args = []
+      args << "--config-file=#{Clamby.config[:config_file]}" if Clamby.config[:daemonize] && Clamby.config[:config_file]
+      args << '--quiet' if Clamby.config[:output_level] == 'low'
+      args << '--verbose' if Clamby.config[:output_level] == 'high'
+      args
+    end
+  end
+end
+
 class AntiVirusAnalyzer < ActiveStorage::Analyzer
   def initialize(blob)
     config = { daemonize: true }
