@@ -15,9 +15,9 @@ li
     p
       - if activity.sensitive_body?
         | This activity contains sensitive data, contact
-        = " #{activity.source&.user&.organisation&.name || activity.source&.user.full_name} for details"
-      - else
-        = markdown activity.body if activity.body
+        = " #{activity.source&.user&.organisation&.name || activity.source&.user&.full_name} for details"
+      - elsif activity.body
+        = markdown activity.body
 
       - if activity.product_id
         = link_to "View product details", product_url(activity.product_id), class: "mspsds-block-link"
