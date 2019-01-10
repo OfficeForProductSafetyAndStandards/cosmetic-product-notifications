@@ -8,7 +8,7 @@ button.govuk-button[onclick="sendEmail()" role="button"]
 h2.govuk-heading-m
     |Test file upload
 
-= form_with() do |form|
+= form_with do |form|
     .form-group
         = form.label "Upload file to S3 bucket", class: "govuk-label govuk-date-input__label"
         = form.file_field :uploaded_file, class: "govuk-file-upload"
