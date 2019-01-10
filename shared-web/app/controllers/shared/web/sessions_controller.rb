@@ -1,7 +1,7 @@
 module Shared
   module Web
     class SessionsController < ApplicationController
-      include Shared::Web::LoginHelper
+      include Shared::Web::Concerns::AuthenticationConcern
 
       skip_before_action :authenticate_user!
 

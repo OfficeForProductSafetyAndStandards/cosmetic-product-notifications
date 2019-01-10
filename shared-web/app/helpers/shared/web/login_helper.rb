@@ -18,10 +18,6 @@ module Shared
       def is_relative(url)
         url =~ /^\/[^\/\\]/
       end
-
-      def cookie_name
-        :"keycloak_token_#{ENV['KEYCLOAK_CLIENT_ID']}"
-      end
     end
   end
 end

@@ -3,8 +3,6 @@ class User < Shared::Web::User
   has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
   has_many :user_sources, dependent: :delete
 
-  belongs_to :organisation
-
   include UserService
 
   def self.find_or_create(attributes)

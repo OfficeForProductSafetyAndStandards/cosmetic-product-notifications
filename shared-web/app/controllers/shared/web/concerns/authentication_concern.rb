@@ -24,6 +24,10 @@ module Shared
           Shared::Web::KeycloakClient.instance.user_signed_in?
         end
 
+        def cookie_name
+          :"keycloak_token_#{ENV['KEYCLOAK_CLIENT_ID']}"
+        end
+
       private
 
         def try_refresh_token

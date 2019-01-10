@@ -3,10 +3,11 @@ module Shared
     class User < ActiveHash::Base
       include ActiveHash::Associations
 
+      belongs_to :organisation
+
       field :first_name
       field :last_name
       field :email
-
 
       def self.find_or_create(user)
         User.find_by(id: user[:id]) || User.create(user)
