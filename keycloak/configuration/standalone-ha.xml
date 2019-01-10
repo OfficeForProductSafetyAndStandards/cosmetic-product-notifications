@@ -629,7 +629,8 @@
                 <provider name="default" enabled="false"/>
                 <provider name="notify-email" enabled="true">
                     <properties>
-                        <property name="verifyEmailTemplateId" value="edab6550-eb34-4cb1-910f-41606e583076"/>
+                        <property name="verifyEmailTemplateId" value="0be2ef83-bc2d-4b71-8fc2-93dc1eea0ae8"/>
+                        <property name="welcomeEmailTemplateId" value="edab6550-eb34-4cb1-910f-41606e583076"/>
                         <property name="passwordResetTemplateId" value="e85c3c6c-272d-4c43-b8fb-e7d266bc2bd9"/>
                         <property name="systemTestTemplateId" value="c6a27d3c-9fea-4f81-899f-17d49e5a0d58"/>
                     </properties>
