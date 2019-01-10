@@ -47,7 +47,7 @@ class ActiveSupport::TestCase
 
     stub_user_credentials(user: user, groups: [group], is_admin: is_admin)
     stub_user_group_data(user_groups: user_groups)
-    stub_user_data(users: other_users.push(user) )
+    stub_user_data(users: other_users.push(user))
     stub_client_config
   end
 
@@ -105,8 +105,8 @@ private
 
   def organisations_json
     [
-      {id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1"},
-      {id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2"},
+      { id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1" },
+      { id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2" },
     ]
   end
 
