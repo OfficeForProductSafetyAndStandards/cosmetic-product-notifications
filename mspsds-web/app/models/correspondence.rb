@@ -26,4 +26,10 @@ class Correspondence < ApplicationRecord
       end
     end
   end
+
+  def can_be_displayed?
+    return true unless has_consumer_info
+    return true if current_user.organisation == investigation&.source&.user&.organisation
+    false
+  end
 end
