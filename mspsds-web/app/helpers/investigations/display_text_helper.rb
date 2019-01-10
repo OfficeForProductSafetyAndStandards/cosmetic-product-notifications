@@ -47,9 +47,26 @@ module Investigations::DisplayTextHelper
   end
 
   def should_be_hidden(highlight, investigation)
-    p highlight[0].include? "reporter"
-    p !investigation.reporter.can_be_displayed?
+    return true if correspondence_should_be_hidden(highlight, investigation)
     return true if (highlight[0].include? "reporter") && (!investigation.reporter.can_be_displayed?)
+    false
+  end
+
+  def correspondence_should_be_hidden(highlight, investigation)
+    return false unless highlight[0].include? "correspondences"
+
+    key = highlight[0].partition('.').last
+    highlighted_texts = highlight[1]
+    sanitized_content = sanitize(highlighted_texts.first)
+    investigation.correspondences.each do |c|
+      # That means if 2 correspondences of a case have similar phone number, then highlight from both will get blocked
+      # Since we don't actually hide the case this shouldn't be a massive problem
+      #
+      # The only other solution I can think of is to have 2 has_many correspondence lists on case, one sensitive
+      # so elasticsearch gives us more specific highlights and we do the same but only for correspondence we know
+      # is sensitive
+      return true if (sanitized_content.include? c.send(key)) && (!c.can_be_displayed?)
+    end
     false
   end
 end
