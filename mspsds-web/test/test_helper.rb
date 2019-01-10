@@ -37,7 +37,9 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user_with_organisation(is_admin: false, other_users: [admin_user, test_user_two, test_user_three], user: test_user)
+  def sign_in_as_user_with_organisation(is_admin: false,
+                                        other_users: [admin_user, test_user(name: "User_two"), test_user(name: "User_three")],
+                                        user: test_user)
     group = organisations[0].id
     user = user
     user.organisation = organisations[0]
@@ -50,7 +52,9 @@ class ActiveSupport::TestCase
   end
 
   def sign_in_as_admin_with_organisation
-    sign_in_as_user_with_organisation(is_admin: true, other_users: [test_user, test_user_two, test_user_three], user: admin_user)
+    sign_in_as_user_with_organisation(is_admin: true,
+                                      other_users: [test_user, test_user(name: "User_two"), test_user(name: "User_three")],
+                                      user: admin_user)
   end
 
   def logout
@@ -74,16 +78,8 @@ private
     User.new(id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin")
   end
 
-  def test_user
-    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User_one")
-  end
-
-  def test_user_two
-    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User_two")
-  end
-
-  def test_user_three
-    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User_three")
+  def test_user(name: "User_one")
+    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: name)
   end
 
   def group_data
