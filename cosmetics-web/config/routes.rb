@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   root 'helloworld#index'
 
   get '/send' => 'helloworld#send_email'
+  post '/' => 'helloworld#upload_file'
 end
