@@ -79,6 +79,12 @@ To create a redis instance for the current space.
 
 Larger options should be considered if required. The current worker (sidekiq) only works with the unclustered version.
 
+#### S3
+
+When setting up a new environment, you'll also need to create an AWS user called `cosmetics-SPACE-NAME` and keep a note of the Access key ID and secret access key.
+Create a policy for this user similar to the [Policy for Programmatic Access from the AWS docs](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/) but specifically for the new bucket.
+
+Create an S3 bucket named `cosmetics-SPACE-NAME`.
 
 #### Cosmetics Website
 
@@ -96,7 +102,14 @@ This configures rails to use the production database amongst other things.
 
 This sets the server's encryption key. Generate a new value by running `rake secret` 
 
-The app can then be started using `cf start mspsds-web`.
+    cf set-env cosmetics-web AWS_ACCESS_KEY_ID XXX
+    cf set-env cosmetics-web AWS_SECRET_ACCESS_KEY XXX
+    cf set-env cosmetics-web AWS_REGION XXX
+    cf set-env cosmetics-web AWS_S3_BUCKET XXX
+
+See the S3 section [above](#s3) to get these values.
+
+The app can then be started using `cf start cosmetics-web`.
 
 
 #### Cosmetics Worker
