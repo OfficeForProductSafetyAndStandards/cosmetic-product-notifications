@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class CreateNewRecordTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_user
+    sign_in_as_user_with_organisation
     visit new_investigation_path
   end
 

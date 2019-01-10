@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_06_175853) do
+ActiveRecord::Schema.define(version: 2018_12_19_122234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2018_12_06_175853) do
     t.string "hazard_type"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
+    t.boolean "is_private", default: false, null: false
     t.string "product_type"
     t.string "question_title"
     t.string "question_type"
