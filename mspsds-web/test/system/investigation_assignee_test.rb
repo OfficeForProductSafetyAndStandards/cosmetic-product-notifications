@@ -17,7 +17,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
 
   test "should show user organisations in the assignee list" do
     fill_in "assignee-picker", with: "Test"
-    assert_text "Test User (Organisation 1)"
+    assert_text "Test User_one (Organisation 1)"
   end
 
   test "should allow to select assignee" do
@@ -37,9 +37,9 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     fill_in "assignee-picker", with: "Test"
     assert_no_css(".autocomplete__option", text: "Test Admin")
 
-    all("li", visible: false, text: "User").first.click
+    all("li", visible: false, text: "User_one").first.click
     click_on "Assign"
-    assert_text "Assigned to\nTest User\nOrganisation 1\nChange"
+    assert_text "Assigned to\nTest User_one\nOrganisation 1\nChange"
   end
 
   test "should show recent assignee as an option when previous assignees have been selected" do
@@ -49,7 +49,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
 
     visit assign_investigation_path(investigations(:one))
     fill_in "assignee-picker", with: "Test"
-    all("li", visible: false, text: "User").first.click
+    all("li", visible: false, text: "User_one").first.click
     click_on "Assign"
 
     visit assign_investigation_path(investigations(:one))

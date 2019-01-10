@@ -37,28 +37,20 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user_with_organisation
+  def sign_in_as_user_with_organisation(is_admin: false, other_users: [admin_user, test_user_two, test_user_three], user: test_user)
     group = organisations[0].id
-    user = test_user
+    user = user
     user.organisation = organisations[0]
     user_groups = [{ id: user[:id], groups: [group] }].to_json
 
-    stub_user_credentials(user: user, groups: [group], is_admin: false)
+    stub_user_credentials(user: user, groups: [group], is_admin: is_admin)
     stub_user_group_data(user_groups: user_groups)
-    stub_user_data(users: [admin_user, user])
+    stub_user_data(users: other_users.push(user) )
     stub_client_config
   end
 
   def sign_in_as_admin_with_organisation
-    group = organisations[0].id
-    user = admin_user
-    user.organisation = organisations[0]
-    user_groups = [{ id: user[:id], groups: [group] }].to_json
-
-    stub_user_credentials(user: user, groups: [group], is_admin: false)
-    stub_user_group_data(user_groups: user_groups)
-    stub_user_data(users: [user, test_user])
-    stub_client_config
+    sign_in_as_user_with_organisation(is_admin: true, other_users: [test_user, test_user_two, test_user_three], user: admin_user)
   end
 
   def logout
@@ -83,7 +75,15 @@ private
   end
 
   def test_user
-    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User")
+    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User_one")
+  end
+
+  def test_user_two
+    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User_two")
+  end
+
+  def test_user_three
+    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User_three")
   end
 
   def group_data
