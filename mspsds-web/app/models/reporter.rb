@@ -16,6 +16,7 @@ class Reporter < ApplicationRecord
   def can_be_displayed?
     return true unless contains_personal_data?
     return true if current_user.organisation == investigation&.source&.user&.organisation
+
     false
   end
 end

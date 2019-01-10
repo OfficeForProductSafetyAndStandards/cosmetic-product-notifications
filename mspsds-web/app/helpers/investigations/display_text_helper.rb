@@ -42,13 +42,14 @@ module Investigations::DisplayTextHelper
   end
 
   def gdpr_restriction_text(investigation)
-    source = investigation.source&.user&.organisation&.name || investigation.source&.user.full_name
+    source = investigation.source&.user&.organisation&.name || investigation.source&.user&.full_name
     "This record contains sensitive data, contact #{source} for details"
   end
 
   def should_be_hidden(highlight, investigation)
     return true if correspondence_should_be_hidden(highlight, investigation)
-    return true if (highlight[0].include? "reporter") && (!investigation.reporter.can_be_displayed?)
+    return true if (highlight[0].include? "reporter") && !investigation.reporter.can_be_displayed?
+
     false
   end
 
@@ -65,7 +66,7 @@ module Investigations::DisplayTextHelper
       # The only other solution I can think of is to have 2 has_many correspondence lists on case, one sensitive
       # so elasticsearch gives us more specific highlights and we do the same but only for correspondence we know
       # is sensitive
-      return true if (sanitized_content.include? c.send(key)) && (!c.can_be_displayed?)
+      return true if (sanitized_content.include? c.send(key)) && !c.can_be_displayed?
     end
     false
   end
