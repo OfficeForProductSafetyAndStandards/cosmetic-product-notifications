@@ -24,6 +24,7 @@ public class NotifyEmailTemplateProviderFactory implements EmailTemplateProvider
     public void init(Config.Scope config) {
         templateIds = new HashMap<>();
         templateIds.put(verifyEmailTemplateKey, config.get(verifyEmailTemplateKey));
+        templateIds.put(welcomeEmailTemplateKey, config.get(welcomeEmailTemplateKey));
         templateIds.put(passwordResetTemplateKey, config.get(passwordResetTemplateKey));
         templateIds.put(systemTestTemplateKey, config.get(systemTestTemplateKey));
     }

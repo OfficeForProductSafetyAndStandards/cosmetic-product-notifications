@@ -7,7 +7,6 @@ ruby File.read(".ruby-version").strip
 gem "will_paginate"
 
 gem "active_hash"
-gem "aws-sdk-s3"
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c593a08"
 gem "axlsx_rails"
 gem "bootsnap", ">= 1.1.0"
