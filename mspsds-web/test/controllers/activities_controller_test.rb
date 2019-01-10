@@ -2,7 +2,7 @@ require "test_helper"
 
 class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin
+    sign_in_as_admin_with_organisation
     @investigation = investigations(:one)
     @activity = activities(:one)
     @activity.source = sources(:activity_one)

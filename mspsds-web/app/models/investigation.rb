@@ -14,8 +14,6 @@ class Investigation < ApplicationRecord
   validates_length_of :question_title, maximum: 1000
   validates_length_of :description, maximum: 1000
 
-  validate :validate_assignment
-
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility
 
@@ -97,11 +95,13 @@ class Investigation < ApplicationRecord
     is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
   end
 
-  def who_can_see
-    return [] unless is_private
+  def visible_to(user)
+    return true unless is_private
+    return true if assignee.present? && (assignee&.organisation == user.organisation)
+    return true if source&.user&.present? && (source&.user&.organisation == user.organisation)
+    return true if user.has_role? :admin
 
-    # TODO MSPSDS-859: Replace hard-coded list with computation of users from organisations
-    [assignee, source&.user].map { |u| u&.id }.uniq
+    false
   end
 
   def pretty_id
@@ -193,12 +193,6 @@ private
     title << " – #{hazard_type}" if hazard_type.present?
     title << " (no product specified)" if products.empty?
     title.presence || "Untitled case"
-  end
-
-  def validate_assignment
-    if assignee_id_was.present? && !assignee
-      errors.add(:assignee, "cannot be blank")
-    end
   end
 
   def send_assignee_email

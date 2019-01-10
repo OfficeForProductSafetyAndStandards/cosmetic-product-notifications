@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_admin
+    sign_in_as_admin_with_organisation
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
     @correspondence = correspondences(:meeting)
