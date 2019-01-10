@@ -29,6 +29,7 @@ PATH
   remote: vendor/shared-web
   specs:
     shared-web (1.0.0)
+      aws-sdk-s3
       govuk_notify_rails
       rails (~> 5.2.1)
       sidekiq
@@ -422,7 +423,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash
-  aws-sdk-s3
   axlsx!
   axlsx_rails
   bootsnap (>= 1.1.0)

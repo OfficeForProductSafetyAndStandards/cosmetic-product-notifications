@@ -6,6 +6,7 @@ Gem::Specification.new do |s|
   s.authors     = %w(UKGovernmentBEIS)
   s.summary     = "Shared functionality for OPSS applications."
 
+  s.add_dependency "aws-sdk-s3"
   s.add_dependency "govuk_notify_rails"
   s.add_dependency "rails", "~> 5.2.1"
   s.add_dependency "sidekiq"
