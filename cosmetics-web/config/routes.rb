@@ -54,8 +54,5 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  root 'helloworld#index'
-
-  get '/send' => 'helloworld#send_email'
-  post '/' => 'helloworld#upload_file'
+  root 'landing_page#index'
 end
