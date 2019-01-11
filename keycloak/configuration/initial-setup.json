@@ -253,6 +253,13 @@
         "containerId" : "68531a90-8123-44ae-9bc7-21df38edbe52"
       } ],
       "mspsds-app" : [ {
+        "id" : "a06d9d2f-18b8-46c8-8111-ebf89f5579a8",
+        "name" : "opss_user",
+        "description" : "OPSS users",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"
+      }, {
         "id" : "d4f54543-60fb-4630-ad73-7e8bf7f3f576",
         "name" : "uma_protection",
         "composite" : false,
@@ -269,13 +276,6 @@
         "id" : "9609944f-dca7-421f-9572-1f89d12aa732",
         "name" : "user",
         "description" : "Default role assigned to all users.",
-        "composite" : false,
-        "clientRole" : true,
-        "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"
-      }, {
-        "id" : "34fabcde-0e95-4b56-8663-97bba9fa3d6f",
-        "name" : "opss_user",
-        "description" : "OPSS users",
         "composite" : false,
         "clientRole" : true,
         "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"
@@ -307,7 +307,9 @@
       "path" : "/Organisations/Office for Product Safety and Standards",
       "attributes" : { },
       "realmRoles" : [ ],
-      "clientRoles" : { },
+      "clientRoles" : {
+        "mspsds-app" : [ "opss_user" ]
+      },
       "subGroups" : [ ]
     } ]
   } ],
@@ -348,7 +350,7 @@
     "realmRoles" : [ "user" ],
     "clientRoles" : {
       "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "opss_user", "user" ]
+      "mspsds-app" : [ "user" ]
     },
     "notBefore" : 0,
     "groups" : [ "/Admin" ]
@@ -398,8 +400,8 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "user" ],
     "clientRoles" : {
-        "account" : [ "manage-account", "view-profile" ],
-        "mspsds-app" : [ "opss_user", "user" ]
+      "account" : [ "manage-account", "view-profile" ],
+      "mspsds-app" : [ "user" ]
     },
     "notBefore" : 0,
     "groups" : [ "/Organisations/Office for Product Safety and Standards" ]
@@ -415,7 +417,7 @@
     } ],
     "mspsds-app" : [ {
       "clientScope" : "roles",
-      "roles" : [ "opss_user", "user" ]
+      "roles" : [ "user" ]
     } ]
   },
   "clients" : [ {
@@ -1997,8 +1999,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "admin", "offline_access", "uma_authorization" ],
     "clientRoles" : {
-      "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "opss_user", "user" ]
+      "account" : [ "view-profile", "manage-account" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
