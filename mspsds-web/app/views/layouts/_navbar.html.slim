@@ -1,10 +1,12 @@
 nav.app-navigation.govuk-clearfix
   ul.app-navigation__list
+    li[class=(params[:controller] == "homepage" && "app-navigation--current-page")]
+      = link_to "Home", '/', "data-topnav": "homepage", class: "govuk-link--no-visited-state"
     li[class=(params[:controller] == "investigations" && "app-navigation--current-page")]
-      = link_to "Cases", investigations_path, "data-topnav": "investigations"
+      = link_to "Cases", investigations_path, "data-topnav": "investigations", class: "govuk-link--no-visited-state"
     li[class=(params[:controller] == "businesses" && "app-navigation--current-page")]
-      = link_to "Businesses", businesses_path, "data-topnav": "businesses"
+      = link_to "Businesses", businesses_path, "data-topnav": "businesses", class: "govuk-link--no-visited-state"
     li[class=(params[:controller] == "products" && "app-navigation--current-page")]
-      = link_to "Products", products_path, "data-topnav": "products"
+      = link_to "Products", products_path, "data-topnav": "products", class: "govuk-link--no-visited-state"
   .creation
     = link_to "Create new", new_investigation_path, class: "govuk-button govuk-button--start", role: "button"
