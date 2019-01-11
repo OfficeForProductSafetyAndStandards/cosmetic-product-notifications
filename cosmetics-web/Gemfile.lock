@@ -345,7 +345,6 @@ DEPENDENCIES
   cf-app-utils
   clamby
   jbuilder (~> 2.8)
-  keycloak
   mini_magick
   pg (~> 1.1)
   puma (~> 3.0)
