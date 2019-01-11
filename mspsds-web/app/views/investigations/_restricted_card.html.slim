@@ -1,7 +1,5 @@
-.govuk-grid-row class=(investigation.is_closed ? "mspsds-case-card mspsds-case-card--closed" : "mspsds-case-card")
+.govuk-grid-row class="mspsds-case-card mspsds-case-card--restricted"
   .govuk-grid-column-one-half
     span.govuk-caption-m[class="govuk-!-font-size-16"]
       = "#{case_question_text(investigation).capitalize} #{investigation.pretty_id}"
-    span = link_to "#{case_question_text(investigation).capitalize} restricted", "/"
-    - if investigation.is_closed
-      .mspsds-case-card class="mspsds-case-card__status" CLOSED
+    span = "#{case_question_text(investigation).capitalize} restricted"
