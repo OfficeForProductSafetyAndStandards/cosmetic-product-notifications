@@ -52,6 +52,7 @@ def create_product(notification, name)
     description: field_from_notification(notification, "description"),
     model: field_from_notification(notification, "type_numberOfModel"),
     category: field_from_notification(notification, "category"),
+    webpage: field_from_notification(notification, "webpage"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     country_of_origin: field_from_notification(notification, "countryOfOrigin"),
     brand: brand(notification),

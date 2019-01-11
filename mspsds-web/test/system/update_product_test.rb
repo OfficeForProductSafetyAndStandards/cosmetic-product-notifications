@@ -19,6 +19,7 @@ class UpdateProductTest < ApplicationSystemTestCase
 
     assert_field with: @product.product_code
     assert_field with: @product.batch_number
+    assert_field with: @product.webpage
     assert_field with: @product.description
 
     assert_field with: @product.date_placed_on_market.day
@@ -63,6 +64,7 @@ class UpdateProductTest < ApplicationSystemTestCase
     assert_text @product.batch_number
     assert_text @product.product_type
     assert_text @product.category
+    assert_text @product.webpage
     assert_text @product.description
     assert_text @product.country_of_origin
     assert_text @product.date_placed_on_market.strftime("%d/%m/%Y")
@@ -74,6 +76,7 @@ class UpdateProductTest < ApplicationSystemTestCase
     fill_in "product[model]", with: product.model
     fill_in "product[product_code]", with: product.product_code
     fill_in "product[batch_number]", with: product.batch_number
+    fill_in "product[webpage]", with: product.webpage
     fill_in "product[description]", with: product.description
     fill_in "product[day]", with: product.date_placed_on_market.day
     fill_in "product[month]", with: product.date_placed_on_market.month

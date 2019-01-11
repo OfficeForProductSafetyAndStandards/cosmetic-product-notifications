@@ -30,7 +30,7 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
 end
 
 book.add_worksheet name: "Products" do |sheet_products|
-  sheet_products.add_row %w[ID Product_Code Name Type Category Description Model Country_of_origin Date_placed_on_market
+  sheet_products.add_row %w[ID Product_Code Name Type Category Webpage Description Model Country_of_origin Date_placed_on_market
                             Batch_Number Brand Source Case_ID]
 
   @investigations.each do |investigation|
@@ -41,6 +41,7 @@ book.add_worksheet name: "Products" do |sheet_products|
         product.name,
         product.product_type,
         product.category,
+        product.webpage,
         product.description,
         product.model,
         product.country_of_origin,

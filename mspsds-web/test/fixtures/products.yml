@@ -7,6 +7,7 @@ one:
   product_type: product one product_type
   description: product one description
   model: product one model
+  webpage: https://www.product_one.webpage
   country_of_origin: China
   batch_number: product one batch
   brand: product one brand
@@ -36,6 +37,7 @@ iphone:
   name: iPhone XS MAX
   brand: apple
   model: XS MAX
+  webpage: https://www.iphone.webpage
   product_type: phone
   category: phone category
   description: iphone description

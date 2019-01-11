@@ -37,6 +37,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
         category: @product_one.category,
         description: @product_one.description,
         product_code: @product_one.product_code,
+        webpage: @product_one.webpage,
         model: @product_one.model,
         name: @product_one.name
       } }
@@ -63,6 +64,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       category: @product_one.category,
       description: @product_one.description,
       product_code: @product_one.product_code,
+      webpage: @product_one.webpage,
       model: @product_one.model,
       name: @product_one.name
     } }

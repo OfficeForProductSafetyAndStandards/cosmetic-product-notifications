@@ -27,6 +27,7 @@ class Investigations::ProductsControllerTest < ActionDispatch::IntegrationTest
           brand: @product.brand,
           product_type: @product.product_type,
           category: @product.category,
+          webpage: @product.webpage,
           description: @product.description,
           product_code: @product.product_code,
           model: @product.model
@@ -46,6 +47,7 @@ class Investigations::ProductsControllerTest < ActionDispatch::IntegrationTest
           product_type: @product.product_type,
           category: @product.category,
           description: @product.description,
+          webpage: @product.webpage,
           product_code: @product.product_code,
           model: @product.model
         }
