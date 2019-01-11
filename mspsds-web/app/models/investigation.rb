@@ -77,7 +77,7 @@ class Investigation < ApplicationRecord
           only: %i[company_name company_number]
         },
         products: {
-          only: %i[batch_number brand description gtin model name]
+          only: %i[batch_number brand description product_code model name]
         },
         reporter: {
           only: %i[name phone_number email_address other_details]

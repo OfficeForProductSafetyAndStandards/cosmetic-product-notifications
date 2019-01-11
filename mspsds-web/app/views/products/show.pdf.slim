@@ -12,9 +12,9 @@ table[style="width:100%; text-align:left"]
       = @product.id
   tr
     th
-      | GTIN (Global Trade Item Number/Barcode)
+      | Barcode/serial number
     td
-      = @product.gtin
+      = @product.product_code
   tr
     th
       | Name
@@ -30,6 +30,11 @@ table[style="width:100%; text-align:left"]
       | Type
     td
       = @product.product_type
+    tr
+      th
+        | Category
+      td
+        = @product.category
   tr
     th
       | Description

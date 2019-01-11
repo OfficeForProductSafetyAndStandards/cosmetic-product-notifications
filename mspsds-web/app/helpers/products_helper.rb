@@ -11,7 +11,7 @@ module ProductsHelper
       :country_of_origin, :day, :month, :year,
 
       # TODO these params are up to date following MSPSDS-868
-      :name, :product_type, :category, :product_code, :webpage, :description
+      :name, :product_type, :category, :product_code, :webpage, :description, :batch_number, :country_of_origin
     )
   end
 
@@ -32,13 +32,13 @@ module ProductsHelper
   # If the user supplies a barcode then just return that.
   # Otherwise use the general query param
   def advanced_product_search(product, excluded_ids = [])
-    if product.gtin.present?
-      search_for_gtin(product.gtin, excluded_ids)
+    if product.product_code.present?
+      search_for_product_code(product.product_code, excluded_ids)
     else
       possible_search_fields = {
         "name": product.name,
         "brand": product.brand,
-        "product_type": product.product_type
+        "category": product.category
       }
       used_search_fields = possible_search_fields.reject { |_, value| value.blank? }
       fuzzy_match = used_search_fields.map do |field, value|
@@ -62,11 +62,11 @@ module ProductsHelper
     end
   end
 
-  def search_for_gtin(gtin, excluded_ids)
-    match_gtin = { match: { gtin: gtin } }
+  def search_for_product_code(product_code, excluded_ids)
+    match_product_code = { match: { product_code: product_code } }
     Product.search(query: {
       bool: {
-        must: match_gtin,
+        must: match_product_code,
         must_not: have_excluded_id(excluded_ids),
       }
     })

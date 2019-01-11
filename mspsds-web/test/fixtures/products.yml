@@ -1,9 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  gtin: product one gtin
+  product_code: product one product_code
   name: product one name
-  product_type: Toys
+  category: Toys
+  product_type: product one product_type
   description: product one description
   model: product one model
   country_of_origin: China
@@ -12,8 +13,9 @@ one:
   date_placed_on_market: 2017-06-05
 
 two:
-  gtin: product two gtin
+  product_code: product two product_code
   name: product two name
+  category: product two category
   product_type: product two type
   description: product two description
   model: product two model
@@ -22,32 +24,36 @@ two:
   brand: product two brand
 
 chromecast:
-  gtin: 123
+  product_code: 123
   name: Chromecast
   brand: Google
   model: 2015
   product_type: tv dongle
+  category: chromecast category
 
 iphone:
-  gtin: 234
+  product_code: 234
   name: iPhone XS MAX
   brand: apple
   model: XS MAX
   product_type: phone
+  category: phone category
   description: iphone description
   country_of_origin: United States
   batch_number: 1234
 
 iphone_3g:
-  gtin: 345
+  product_code: 345
   name: iPhone
   brand: apple
   model: 3G
   product_type: phone
+  category: phone category
 
 pixel:
-  gtin: 456
+  product_code: 456
   name: Pixel
   brand: Google
   model: 2
   product_type: phone
+  category: pixel category

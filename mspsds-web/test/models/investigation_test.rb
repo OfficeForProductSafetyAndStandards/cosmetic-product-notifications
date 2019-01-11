@@ -90,8 +90,8 @@ class InvestigationTest < ActiveSupport::TestCase
     assert_equal "2 Products – Asphyxiation", investigation.title
   end
 
-  test "elasticsearch should find product gtin" do
-    query = ElasticsearchQuery.new(@product.gtin, {}, {})
+  test "elasticsearch should find product product_code" do
+    query = ElasticsearchQuery.new(@product.product_code, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_product.id)
   end
 

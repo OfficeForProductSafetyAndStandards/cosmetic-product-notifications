@@ -34,8 +34,9 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
         batch_number: @product_one.batch_number,
         brand: @product_one.brand,
         product_type: @product_one.product_type,
+        category: @product_one.category,
         description: @product_one.description,
-        gtin: @product_one.gtin,
+        product_code: @product_one.product_code,
         model: @product_one.model,
         name: @product_one.name
       } }
@@ -59,8 +60,9 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       batch_number: @product_one.batch_number,
       brand: @product_one.brand,
       product_type: @product_one.product_type,
+      category: @product_one.category,
       description: @product_one.description,
-      gtin: @product_one.gtin,
+      product_code: @product_one.product_code,
       model: @product_one.model,
       name: @product_one.name
     } }
