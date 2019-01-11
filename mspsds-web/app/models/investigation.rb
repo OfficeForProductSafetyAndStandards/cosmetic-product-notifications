@@ -196,8 +196,7 @@ private
 
     title_components = []
     title_components << "#{products.length} Products" if products.length > 1
-    title_components << get_product_property_value_if_shared(:brand)
-    title_components << get_product_property_value_if_shared(:model)
+    title_components << get_product_property_value_if_shared(:name)
     title_components << get_product_property_value_if_shared(:product_type)
     title_components.reject(&:blank?).join(", ")
   end

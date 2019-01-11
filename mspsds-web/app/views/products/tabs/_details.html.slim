@@ -23,6 +23,11 @@ hr.govuk-section-break.govuk-section-break--l
             = @product.product_type
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
+            | Batch number
+          td.govuk-table__cell
+            = @product.batch_number
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
             | Category
           td.govuk-table__cell
           = @product.category
@@ -32,6 +37,11 @@ hr.govuk-section-break.govuk-section-break--l
           td.govuk-table__cell
             = @product.webpage
         tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Country of origin
+          td.govuk-table__cell
+            = @product.country_of_origin_for_display
+          tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Description
           td.govuk-table__cell

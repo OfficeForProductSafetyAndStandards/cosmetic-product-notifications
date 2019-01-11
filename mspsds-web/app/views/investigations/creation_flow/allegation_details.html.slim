@@ -22,7 +22,7 @@ h1.govuk-heading-xl
           | Product Type
         .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_type].any?)
           = form.select :product_type, product_categories, { include_blank: true },
-                  class: "govuk-select", id: "product-type-picker"
+                  class: "govuk-select", id: "product-category-picker"
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l

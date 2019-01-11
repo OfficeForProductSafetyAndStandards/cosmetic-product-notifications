@@ -6,11 +6,9 @@ one:
   category: Toys
   product_type: product one product_type
   description: product one description
-  model: product one model
   webpage: https://www.product_one.webpage
   country_of_origin: China
   batch_number: product one batch
-  brand: product one brand
   date_placed_on_market: 2017-06-05
 
 two:
@@ -19,24 +17,18 @@ two:
   category: product two category
   product_type: product two type
   description: product two description
-  model: product two model
   country_of_origin: product two country
   batch_number: product two batch
-  brand: product two brand
 
 chromecast:
   product_code: 123
-  name: Chromecast
-  brand: Google
-  model: 2015
+  name: chromecast
   product_type: tv dongle
   category: chromecast category
 
 iphone:
   product_code: 234
   name: iPhone XS MAX
-  brand: apple
-  model: XS MAX
   webpage: https://www.iphone.webpage
   product_type: phone
   category: phone category
@@ -47,15 +39,20 @@ iphone:
 iphone_3g:
   product_code: 345
   name: iPhone
-  brand: apple
-  model: 3G
   product_type: phone
-  category: phone category
+  category: phone
 
 pixel:
   product_code: 456
   name: Pixel
-  brand: Google
-  model: 2
   product_type: phone
-  category: pixel category
+  category: phone
+
+alexa:
+  product_code: 735
+  name: alexa
+  category: electronics
+
+phone_charger:
+  name: phone charger
+  category: electronics
