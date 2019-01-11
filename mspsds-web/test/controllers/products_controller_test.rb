@@ -37,7 +37,6 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
         description: @product_one.description,
         product_code: @product_one.product_code,
         webpage: @product_one.webpage,
-        model: @product_one.model,
         name: @product_one.name
       } }
     end
@@ -63,7 +62,6 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       description: @product_one.description,
       product_code: @product_one.product_code,
       webpage: @product_one.webpage,
-      model: @product_one.model,
       name: @product_one.name
     } }
     assert_redirected_to product_url(@product_one)
