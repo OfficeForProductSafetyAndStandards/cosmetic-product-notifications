@@ -20,6 +20,7 @@ PATH
     shared-web (1.0.0)
       aws-sdk-s3
       govuk_notify_rails
+      keycloak
       rails (~> 5.2.1)
       sidekiq
       sidekiq-cron

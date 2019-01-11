@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "aws-sdk-s3"
   s.add_dependency "govuk_notify_rails"
+  s.add_dependency "keycloak"
   s.add_dependency "rails", "~> 5.2.1"
   s.add_dependency "sidekiq"
   s.add_dependency "sidekiq-cron"
