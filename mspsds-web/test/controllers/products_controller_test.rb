@@ -32,7 +32,6 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Product.count") do
       post products_url, params: { product: {
         batch_number: @product_one.batch_number,
-        brand: @product_one.brand,
         product_type: @product_one.product_type,
         category: @product_one.category,
         description: @product_one.description,
@@ -59,7 +58,6 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should update product" do
     patch product_url(@product_one), params: { product: {
       batch_number: @product_one.batch_number,
-      brand: @product_one.brand,
       product_type: @product_one.product_type,
       category: @product_one.category,
       description: @product_one.description,

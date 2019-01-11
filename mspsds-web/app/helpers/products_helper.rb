@@ -7,7 +7,7 @@ module ProductsHelper
   def product_params
     params.require(:product).permit(
       # TODO these params are from add products form as it was before MSPSDS-868. They should be deleted once MSPSDS-868 has been finalised
-      :gtin, :name, :description, :model, :batch_number, :brand, :product_type,
+      :gtin, :name, :description, :model, :batch_number, :product_type,
       :country_of_origin, :day, :month, :year,
 
       # TODO these params are up to date following MSPSDS-868
@@ -37,7 +37,6 @@ module ProductsHelper
     else
       possible_search_fields = {
         "name": product.name,
-        "brand": product.brand,
         "category": product.category
       }
       used_search_fields = possible_search_fields.reject { |_, value| value.blank? }

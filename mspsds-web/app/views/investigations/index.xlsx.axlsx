@@ -31,7 +31,7 @@ end
 
 book.add_worksheet name: "Products" do |sheet_products|
   sheet_products.add_row %w[ID Product_Code Name Type Category Webpage Description Model Country_of_origin Date_placed_on_market
-                            Batch_Number Brand Source Case_ID]
+                            Batch_Number Source Case_ID]
 
   @investigations.each do |investigation|
     investigation.products.each do |product|
@@ -47,7 +47,6 @@ book.add_worksheet name: "Products" do |sheet_products|
         product.country_of_origin,
         product.date_placed_on_market&.to_s(:long_ordinal),
         product.batch_number,
-        product.brand,
         product.source&.show,
         investigation.pretty_id
       ], :types => :text

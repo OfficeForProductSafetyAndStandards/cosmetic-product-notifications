@@ -24,7 +24,6 @@ class Investigations::ProductsControllerTest < ActionDispatch::IntegrationTest
         product: {
           name: @product.name,
           batch_number: @product.batch_number,
-          brand: @product.brand,
           product_type: @product.product_type,
           category: @product.category,
           webpage: @product.webpage,
@@ -43,7 +42,6 @@ class Investigations::ProductsControllerTest < ActionDispatch::IntegrationTest
         product: {
           name: '',
           batch_number: @product.batch_number,
-          brand: @product.brand,
           product_type: @product.product_type,
           category: @product.category,
           description: @product.description,

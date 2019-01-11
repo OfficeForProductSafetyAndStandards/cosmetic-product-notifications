@@ -14,7 +14,6 @@ class UpdateProductTest < ApplicationSystemTestCase
     visit edit_product_path(@product)
 
     assert_field with: @product.name
-    assert_field with: @product.brand
     assert_field with: @product.model
 
     assert_field with: @product.product_code
@@ -58,7 +57,6 @@ class UpdateProductTest < ApplicationSystemTestCase
     assert_current_path(/products\/\d+/)
 
     assert_text @product.name
-    assert_text @product.brand
     assert_text @product.model
     assert_text @product.product_code
     assert_text @product.batch_number
@@ -72,7 +70,6 @@ class UpdateProductTest < ApplicationSystemTestCase
 
   def fill_in_product_details(product)
     fill_in "product[name]", with: product.name
-    fill_in "product[brand]", with: product.brand
     fill_in "product[model]", with: product.model
     fill_in "product[product_code]", with: product.product_code
     fill_in "product[batch_number]", with: product.batch_number
