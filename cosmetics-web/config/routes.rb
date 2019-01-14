@@ -5,4 +5,7 @@ Rails.application.routes.draw do
 
   get '/send' => 'helloworld#send_email'
   post '/' => 'helloworld#upload_file'
+
+  resources :manual_entry, only: %i[show create update]
+  get '/manual_entry' => 'manual_entry#create'
 end
