@@ -17,6 +17,7 @@ import java.util.Map;
 public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
 
     static String verifyEmailTemplateKey = "verifyEmailTemplateId";
+    static String welcomeEmailTemplateKey = "welcomeEmailTemplateId";
     static String passwordResetTemplateKey = "passwordResetTemplateId";
     static String systemTestTemplateKey = "systemTestTemplateId";
 
@@ -51,6 +52,11 @@ public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
         return this;
     }
 
+
+    /**
+     * This method gets triggered by a login attempt from a user with `Verify Email` Required User Action.
+     * This is different from the {@link #sendExecuteActions} method which is triggered by the admin.
+     */
     @Override
     public void sendVerifyEmail(String link, long expirationInMinutes) throws EmailException {
         Map<String, String> config = new HashMap<>();
@@ -91,9 +97,21 @@ public class NotifyEmailTemplateProvider implements EmailTemplateProvider {
         throw new EmailException("No template configured for verifying account during identity brokering", new UnsupportedOperationException());
     }
 
+
+    /**
+     * This method gets triggered by the Credential Reset admin action in the keycloak console.
+     * We are currently using this action as a way to send welcome emails to users.
+     */
     @Override
     public void sendExecuteActions(String link, long expirationInMinutes) throws EmailException {
-        throw new EmailException("No template configured for required account actions", new UnsupportedOperationException());
+        Map<String, String> config = new HashMap<>();
+        config.put("templateId", templateIds.get(welcomeEmailTemplateKey));
+        config.put("reference", "Welcome email");
+        config.put("name", getUserName());
+        config.put("invitation_url", link);
+        config.put("expiry_in_minutes", String.valueOf(expirationInMinutes));
+
+        send(config);
     }
 
     @Override

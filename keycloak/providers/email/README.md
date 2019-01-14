@@ -56,6 +56,7 @@ The Notify API key and relevant email template IDs are specified by adding the f
             <provider name="notify-email" enabled="true">
                 <properties>
                     <property name="verifyEmailTemplateId" value="VERIFY_EMAIL_TEMPLATE_ID"/>
+                    <property name="welcomeEmailTemplateId" value="WELCOME_EMAIL_TEMPLATE_ID"/>
                     <property name="passwordResetTemplateId" value="PASSWORD_RESET_TEMPLATE_ID"/>
                     <property name="systemTestTemplateId" value="SYSTEM_TEST_TEMPLATE_ID"/>
                 </properties>

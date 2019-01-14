@@ -1,5 +1,2 @@
 $govuk-is-ie8: true;
-$govuk-global-styles: true;
-$govuk-image-url-function: 'image-url';
-$govuk-font-url-function: 'font-url';
-@import "govuk-frontend/all";
+@import "shared-imports";

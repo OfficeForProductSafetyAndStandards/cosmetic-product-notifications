@@ -53,6 +53,8 @@ services:
       - keycloak
       - redis
       - cosmetics-worker
+    env_file:
+        - .env.keycloak.cosmetics
   cosmetics-worker:
     build:
       context: .
@@ -84,6 +86,8 @@ services:
       - keycloak
       - redis
       - mspsds-worker
+    env_file:
+      - .env.keycloak.mspsds
   mspsds-worker:
     build:
       context: .

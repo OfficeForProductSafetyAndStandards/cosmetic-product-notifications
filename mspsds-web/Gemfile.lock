@@ -29,7 +29,9 @@ PATH
   remote: vendor/shared-web
   specs:
     shared-web (1.0.0)
+      aws-sdk-s3
       govuk_notify_rails
+      keycloak
       rails (~> 5.2.1)
       sidekiq
       sidekiq-cron
@@ -422,7 +424,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash
-  aws-sdk-s3
   axlsx!
   axlsx_rails
   bootsnap (>= 1.1.0)
@@ -433,7 +434,6 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   jbuilder (~> 2.8)
-  keycloak
   lograge
   mini_magick
   pg (~> 1.1)

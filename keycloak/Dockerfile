@@ -36,7 +36,7 @@ WORKDIR /tmp/keycloak
 COPY ./providers/email ./email
 RUN mkdir -p ./providers
 
-RUN mvn -q --settings ./email/settings.xml --file ./email/pom.xml package
+RUN mvn -q --file ./email/pom.xml package
 RUN cp ./email/target/notify-email-provider-jar-with-dependencies.jar ./providers/
 
 
@@ -60,7 +60,7 @@ WORKDIR /tmp/keycloak
 COPY ./providers/sms-authenticator ./sms-authenticator
 RUN mkdir -p ./providers
 
-RUN mvn -q --settings ./sms-authenticator/settings.xml --file ./sms-authenticator/pom.xml package
+RUN mvn -q --file ./sms-authenticator/pom.xml package
 RUN cp ./sms-authenticator/target/keycloak-sms-authenticator-sns-*.jar ./providers/
 
 

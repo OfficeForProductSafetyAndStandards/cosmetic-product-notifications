@@ -1,7 +1,7 @@
 module Shared
   module Web
     class ApplicationController < ActionController::Base
-      protect_from_forgery with: :exception
+      include AuthenticationConcern
     end
   end
 end
