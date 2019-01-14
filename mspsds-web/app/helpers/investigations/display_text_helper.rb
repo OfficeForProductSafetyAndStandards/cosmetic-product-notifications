@@ -12,25 +12,26 @@ module Investigations::DisplayTextHelper
   end
 
   def get_displayable_highlights(highlights, investigation)
-    displayable_highlights = []
-    highlights.each do |highlight|
-      available_highlights = get_available_highlights(highlight, investigation)
-      visible_results = available_highlights.reject { |r| r[:content] == gdpr_restriction_text }
-      visible_results << available_highlights.first if visible_results.empty?
-      displayable_highlights << visible_results.first
+    highlights.map do |highlight|
+      get_best_highlight(highlight, investigation)
     end
-    displayable_highlights
   end
 
-  def get_available_highlights(highlight, investigation)
-    results = []
+  def get_best_highlight(highlight, investigation)
+    source = highlight[0]
+    best_highlight = {
+      label: pretty_source(source),
+      content: gdpr_restriction_text
+    }
+
     highlight[1].each do |result|
-      results << {
-        label: pretty_source(highlight[0]),
-        content: get_highlight_content(result, highlight[0], investigation)
-      }
+      unless should_be_hidden(result, source, investigation)
+        best_highlight[:content] = get_highlight_content(result)
+        return best_highlight
+      end
     end
-    results
+
+    best_highlight
   end
 
   def pretty_source(source)
@@ -45,9 +46,7 @@ module Investigations::DisplayTextHelper
     pretty_field_names[field_name.to_sym] || field_name
   end
 
-  def get_highlight_content(result, source, investigation)
-    return gdpr_restriction_text if should_be_hidden(result, source, investigation)
-
+  def get_highlight_content(result)
     sanitized_content = sanitize(result, tags: %w(em))
     sanitized_content.html_safe # rubocop:disable Rails/OutputSafety
   end
