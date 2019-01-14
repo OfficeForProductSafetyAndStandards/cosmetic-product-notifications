@@ -25,7 +25,7 @@ class AuditActivity::Investigation::Add < AuditActivity::Investigation::Base
     safe_part = body.split("<br><br>**Reporter**<br><br>")[0]
     safe_part += "<br><br>**Reporter**<br><br>"
     safe_part += "Consumer contact details hidden to comply with GDPR legislation. <br><br>"
-    safe_part += "Contact #{investigation.source&.user&.organisation || investigation&.source&.show }"
+    safe_part += "Contact #{investigation.source&.user&.organisation || investigation&.source&.show}"
     safe_part += ", who created this case, to obtain these details if required."
     safe_part
   end
