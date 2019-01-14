@@ -22,7 +22,8 @@ fieldset.govuk-fieldset
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:name].any?)]
-    = form.label :name, "Product name", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    = form.label :name, "Product name",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-name-hint.govuk-hint
       |  Brand, model name, model number, etc.
       br
@@ -61,7 +62,8 @@ fieldset.govuk-fieldset
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:description].any?)]
-    = form.label :description, "Description", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    = form.label :description, "Description",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-description-hint.govuk-hint
       |  For example, 'Orange, 4 socket extension lead'
     = form.text_area :description, class: "govuk-textarea", rows: 5, maxlength: 1000,
