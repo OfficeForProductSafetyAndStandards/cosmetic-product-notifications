@@ -49,5 +49,15 @@ RSpec.describe ManualEntryController, type: :controller do
                 session: {'notification_id' => notification.id})
             expect(notification.reload.product_name).to eq('Super Shampoo')
         end
+
+        it "marks the notification as complete on reaching the final step" do
+            notification = Notification.create
+            notification.aasm_state = 'draft_complete'
+            notification.save
+            post(:update,
+                params: {'id' => 'check_your_answers'},
+                session: {'notification_id' => notification.id})
+            expect(notification.reload.aasm_state).to eq('notification_complete')
+        end
     end
 end

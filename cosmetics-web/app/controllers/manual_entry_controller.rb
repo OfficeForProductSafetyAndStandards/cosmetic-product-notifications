@@ -15,6 +15,10 @@ class ManualEntryController < ApplicationController
             @notification.update_attributes(notification_params)
         end
 
+        if next_step?(steps.last)
+            @notification.submit_notification!
+        end
+
         render_wizard @notification
     end
 
