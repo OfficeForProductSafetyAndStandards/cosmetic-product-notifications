@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "products/show", type: :view do
-  before(:each) do
+  before do
     @product = assign(:product, Product.create!(
-      :name => "Name"
+                                  name: "Name"
     ))
   end
 

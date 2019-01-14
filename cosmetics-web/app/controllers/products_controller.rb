@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
-  # before_action :set_attachments, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: %i[show edit update destroy]
 
   # GET /products
   # GET /products.json
@@ -10,8 +9,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   # GET /products/1.json
-  def show
-  end
+  def show; end
 
   # GET /products/new
   def new
@@ -19,8 +17,7 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /products
   # POST /products.json
@@ -28,6 +25,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     @product.name = product_params[:uploaded_file].original_filename
+    @product.uploaded_file.attach(product_params[:uploaded_file])
 
     respond_to do |format|
       if @product.save
@@ -64,32 +62,15 @@ class ProductsController < ApplicationController
     end
   end
 
-  private
+private
+
     # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(:name, :uploaded_file)
-    end
-
-    # def load_file_attachments
-    #   uploaded_io = product_params[:uploaded_file]
-    #   if uploaded_io.present?
-    #     blob = ActiveStorage::Blob.create_after_upload!(
-    #         io: uploaded_io,
-    #         filename: uploaded_io.original_filename,
-    #         content_type: uploaded_io.content_type,
-    #         metadata: nil
-    #     )
-    #     blob.analyze_later
-    #     blob
-    #   end
-    # end
-    #
-    # def set_attachments
-    #   @file_blob, * = load_file_attachments
-    # end
+  def product_params
+    params.require(:product).permit(:name, :uploaded_file)
+  end
 end

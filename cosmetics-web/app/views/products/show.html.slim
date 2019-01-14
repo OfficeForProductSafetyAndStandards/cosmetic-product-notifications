@@ -7,7 +7,7 @@ p
   - if @product.uploaded_file
     p
       ' Currently selected file:
-      = link_to @product.uploaded_file.filename,  url_for(@product.uploaded_file), target: "_blank"
+      = link_to @product.uploaded_file.filename, url_for(@product.uploaded_file), target: "_blank"
 
 => link_to 'Edit', edit_product_path(@product)
 '|
