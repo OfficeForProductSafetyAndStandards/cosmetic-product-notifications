@@ -45,7 +45,9 @@
                         = @notification.external_reference
         h3.govuk-heading-m
             | Now notify your product
-        p By submitting this notification you are confirming that, to the best of your knowledge, the details you are providing are correct.
-        = form_for(@notification, :url => wizard_path, :method => :put) do |form|
+        p
+            | By submitting this notification you are confirming that, to the best of your knowledge,
+            | the details you are providing are correct.
+        = form_for(@notification, url: wizard_path, method: :put) do |form|
             .govuk-form-group
                 = form.submit "Accept and notify product", class: "govuk-button"
