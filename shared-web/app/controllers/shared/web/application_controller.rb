@@ -1,7 +1,7 @@
 module Shared
   module Web
     class ApplicationController < ActionController::Base
-      include AuthenticationConcern
+      include Shared::Web::Concerns::AuthenticationConcern
     end
   end
 end
