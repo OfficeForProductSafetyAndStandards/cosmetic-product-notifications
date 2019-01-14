@@ -31,6 +31,7 @@ PATH
     shared-web (1.0.0)
       aws-sdk-s3
       govuk_notify_rails
+      keycloak
       rails (~> 5.2.1)
       sidekiq
       sidekiq-cron
@@ -124,7 +125,7 @@ GEM
     cf-app-utils (0.6)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
-    clamby (1.5.0)
+    clamby (1.6.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     companies-house-rest (0.4.4)
@@ -433,7 +434,6 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   jbuilder (~> 2.8)
-  keycloak
   lograge
   mini_magick
   pg (~> 1.1)
