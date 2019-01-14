@@ -20,6 +20,7 @@ PATH
     shared-web (1.0.0)
       aws-sdk-s3
       govuk_notify_rails
+      keycloak
       rails (~> 5.2.1)
       sidekiq
       sidekiq-cron
@@ -94,7 +95,7 @@ GEM
     brakeman (4.3.1)
     builder (3.2.3)
     cf-app-utils (0.6)
-    clamby (1.6.0)
+    clamby (1.6.1)
     concurrent-ruby (1.1.4)
     connection_pool (2.2.2)
     coveralls (0.7.1)
@@ -344,7 +345,6 @@ DEPENDENCIES
   cf-app-utils
   clamby
   jbuilder (~> 2.8)
-  keycloak
   mini_magick
   pg (~> 1.1)
   puma (~> 3.0)
