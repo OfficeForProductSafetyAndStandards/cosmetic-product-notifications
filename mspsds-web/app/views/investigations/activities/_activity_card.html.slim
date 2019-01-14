@@ -14,8 +14,7 @@ li
   - else
     p
       - if activity.sensitive_body?
-        | This activity contains sensitive data, contact
-        = " #{activity.source&.user&.organisation&.name || activity.source&.user&.full_name} for details"
+        = markdown activity.safe_body
       - elsif activity.body
         = markdown activity.body
 

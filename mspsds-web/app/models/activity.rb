@@ -35,6 +35,10 @@ class Activity < ApplicationRecord
     false
   end
 
+  def safe_body
+    body
+  end
+
 private
 
   def pretty_date_stamp
