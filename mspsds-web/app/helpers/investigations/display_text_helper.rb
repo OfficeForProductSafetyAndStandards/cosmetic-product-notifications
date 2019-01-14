@@ -12,17 +12,29 @@ module Investigations::DisplayTextHelper
   end
 
   def get_displayable_highlights(highlights, investigation)
-    highlights.map do |highlight|
-      {
-        label: get_highlight_title(highlight),
-        content: get_highlight_content(highlight, investigation)
-      }
+    displayable_highlights = []
+    highlights.each do |highlight|
+      available_highlights = get_available_highlights(highlight, investigation)
+      visible_results = available_highlights.reject { |r| r[:content] == gdpr_restriction_text }
+      visible_results << available_highlights.first if visible_results.empty?
+      displayable_highlights << visible_results.first
     end
+    displayable_highlights
   end
 
-  def get_highlight_title(highlight)
-    field_name = highlight[0]
-    replace_unsightly_field_names(field_name).gsub('.', ', ').humanize
+  def get_available_highlights(highlight, investigation)
+    results = []
+    highlight[1].each do |result|
+      results << {
+        label: pretty_source(highlight[0]),
+        content: get_highlight_content(result, highlight[0], investigation)
+      }
+    end
+    results
+  end
+
+  def pretty_source(source)
+    replace_unsightly_field_names(source).gsub('.', ', ').humanize
   end
 
   def replace_unsightly_field_names(field_name)
@@ -33,41 +45,35 @@ module Investigations::DisplayTextHelper
     pretty_field_names[field_name.to_sym] || field_name
   end
 
-  def get_highlight_content(highlight, investigation)
-    return gdpr_restriction_text(investigation) if should_be_hidden(highlight, investigation)
+  def get_highlight_content(result, source, investigation)
+    return gdpr_restriction_text if should_be_hidden(result, source, investigation)
 
-    highlighted_texts = highlight[1]
-    sanitized_content = sanitize(highlighted_texts.first, tags: %w(em))
+    sanitized_content = sanitize(result, tags: %w(em))
     sanitized_content.html_safe # rubocop:disable Rails/OutputSafety
   end
 
-  def gdpr_restriction_text(investigation)
-    source = investigation.source&.user&.organisation&.name || investigation.source&.user&.full_name
-    "This record contains sensitive data, contact #{source} for details"
+  def gdpr_restriction_text
+    "GDPR protected details hidden"
   end
 
-  def should_be_hidden(highlight, investigation)
-    return true if correspondence_should_be_hidden(highlight, investigation)
-    return true if (highlight[0].include? "reporter") && !investigation.reporter.can_be_displayed?
+  def should_be_hidden(result, source, investigation)
+    return true if correspondence_should_be_hidden(result, source, investigation)
+    return true if (source.include? "reporter") && !investigation.reporter.can_be_displayed?
 
     false
   end
 
-  def correspondence_should_be_hidden(highlight, investigation)
-    return false unless highlight[0].include? "correspondences"
+  def correspondence_should_be_hidden(result, source, investigation)
+    return false unless source.include? "correspondences"
 
-    key = highlight[0].partition('.').last
-    highlighted_texts = highlight[1]
-    sanitized_content = sanitize(highlighted_texts.first)
+    key = source.partition('.').last
+    sanitized_content = sanitize(result, tags: [])
+
+    # If a result in its entirety appears in case correspondence that the user can see,
+    # we probably don't care what was its source.
     investigation.correspondences.each do |c|
-      # That means if 2 correspondences of a case have similar phone number, then highlight from both will get blocked
-      # Since we don't actually hide the case this shouldn't be a massive problem
-      #
-      # The only other solution I can think of is to have 2 has_many correspondence lists on case, one sensitive
-      # so elasticsearch gives us more specific highlights and we do the same but only for correspondence we know
-      # is sensitive
-      return true if (sanitized_content.include? c.send(key)) && !c.can_be_displayed?
+      return false if (c.send(key).include? sanitized_content) && c.can_be_displayed?
     end
-    false
+    true
   end
 end
