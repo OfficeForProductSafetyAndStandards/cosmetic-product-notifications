@@ -37,12 +37,12 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user(is_admin: false, user: test_user, is_opss: true)
-    group = organisations[0].id
-    user = user
+  def sign_in_as_user(is_admin: false, user_name: "User_one", is_opss: true)
+    users = all_users
+    user = users.detect { |u| u.last_name == user_name }
     user.organisation = organisations[0]
+    group = organisations[0].id
     user_groups = [{ id: user[:id], groups: [group] }].to_json
-    users = all_users.map { |u| u.last_name == user.last_name ? user : u }
 
     stub_user_credentials(user: user, groups: [group], is_admin: is_admin, is_opss: is_opss)
     stub_user_group_data(user_groups: user_groups)
@@ -51,11 +51,11 @@ class ActiveSupport::TestCase
   end
 
   def sign_in_as_non_opss_user
-    sign_in_as_user(user: test_user, is_opss: false)
+    sign_in_as_user(user_name: "User_one", is_opss: false)
   end
 
   def sign_in_as_admin
-    sign_in_as_user(is_admin: true, user: admin_user, is_opss: true)
+    sign_in_as_user(is_admin: true, user_name: "Admin", is_opss: true)
   end
 
   def all_users
@@ -78,11 +78,6 @@ class ActiveSupport::TestCase
   end
 
 private
-
-  #
-  # def user_groups
-  #   [organisations[0][:id]]
-  # end
 
   def admin_user
     User.new(id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin")
