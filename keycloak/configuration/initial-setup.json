@@ -253,6 +253,13 @@
         "containerId" : "68531a90-8123-44ae-9bc7-21df38edbe52"
       } ],
       "mspsds-app" : [ {
+        "id" : "a06d9d2f-18b8-46c8-8111-ebf89f5579a8",
+        "name" : "opss_user",
+        "description" : "OPSS users",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"
+      }, {
         "id" : "d4f54543-60fb-4630-ad73-7e8bf7f3f576",
         "name" : "uma_protection",
         "composite" : false,
@@ -300,7 +307,9 @@
       "path" : "/Organisations/Office for Product Safety and Standards",
       "attributes" : { },
       "realmRoles" : [ ],
-      "clientRoles" : { },
+      "clientRoles" : {
+        "mspsds-app" : [ "opss_user" ]
+      },
       "subGroups" : [ ]
     } ]
   } ],
