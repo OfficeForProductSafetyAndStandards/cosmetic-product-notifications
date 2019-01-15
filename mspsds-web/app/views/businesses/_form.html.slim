@@ -1,4 +1,67 @@
 = render "form_validation_display", errors: business.errors
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=[("govuk-form-group--error" if business.errors[:company_name].any?)]
+    = form.label :company_name, "Business name",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span.govuk-hint#business-company-name-hint
+      |  The registered name, trading name or any other way of identifying
+    = form.text_field :company_name, class: "govuk-input search-term", aria_describedby: "business-company-name-hint"
+
+fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
+  .govuk-form-group class=[("govuk-form-group--error" if business.errors[:company_number].any?)]
+    = form.label :company_number, "Company number",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span.govuk-hint#business-company-number-hint
+      |  If you have this information
+    = form.text_field :company_number, class: "govuk-input search-term", aria_describedby: "business-company-number-hint"
+
+= form.fields_for :locations, [business.primary_location] do |ff|
+  fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
+    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+      | Address
+    .govuk-form-group
+      = ff.label :address_line_1, "Building and street",
+              class: "govuk-label"
+      = ff.text_field :address_line_1, class: "govuk-input search-term"
+    .govuk-form-group class=[("govuk-form-group--error" if business.errors[:address_line_2].any?)]
+      = ff.text_field :address_line_2, class: "govuk-input search-term"
+
+    .govuk-form-group
+      = ff.label :city, "Town or city",
+            class: "govuk-label"
+      = ff.text_field :city, class: "govuk-input search-term"
+
+    .govuk-form-group
+      = ff.label :county, "County",
+              class: "govuk-label"
+      = ff.text_field :county, class: "govuk-input search-term"
+
+    .govuk-form-group
+      = ff.label :postcode, "Postcode",
+              class: "govuk-label"
+      = ff.text_field :postcode, class: "govuk-input search-term govuk-!-width-one-half"
+
+    .govuk-form-group
+      = ff.label :country, "Country",
+              class: "govuk-label"
+      = ff.text_field :country, class: "govuk-input search-term"
+
+= form.fields_for :contacts, [business.primary_contact] do |ff|
+  fieldset.govuk-fieldset
+    .govuk-form-group class=["govuk-!-width-two-thirds", ("govuk-form-group--error" if business.errors[:contact_name].any?)]
+      = ff.label :name, "Contact name",
+              class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+      = ff.text_field :contact_name, class: "govuk-input search-term"
+
+  .govuk-form-group class=["govuk-!-width-two-thirds", ("govuk-form-group--error" if business.errors[:contact_name].any?)]
+    = ff.label :contact_name, "Contact name",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    = ff.text_field :contact_name, class: "govuk-input search-term"
+
+
+
+
 - if business.from_companies_house?
   p
     | Some data is set by companies house and is therefore non-editable
