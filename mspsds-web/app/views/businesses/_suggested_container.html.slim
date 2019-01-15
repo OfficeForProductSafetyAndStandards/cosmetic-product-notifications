@@ -1,7 +1,7 @@
 h3.govuk-heading-m
   | Suggested businesses
 #suggested-businesses
-  - if @business.company_name.present?
+  - if @business.legal_name.present?
     = render "businesses/suggested"
   - else
     p
