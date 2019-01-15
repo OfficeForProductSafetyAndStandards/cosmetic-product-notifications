@@ -99,7 +99,7 @@ class Investigation < ApplicationRecord
     return true unless is_private
     return true if assignee.present? && (assignee&.organisation == user.organisation)
     return true if source&.user&.present? && (source&.user&.organisation == user.organisation)
-    return true if user.has_role? :admin
+    return true if user.is_opss?
 
     false
   end
