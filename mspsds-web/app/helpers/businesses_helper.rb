@@ -5,7 +5,6 @@ module BusinessesHelper
   BUSINESS_SUGGESTION_LIMIT = 3
 
   def defaults_on_primary_location(business)
-    business.primary_location.name ||= "Registered office address"
     business.primary_location.source ||= UserSource.new(user: current_user)
     business
   end
@@ -50,11 +49,13 @@ module BusinessesHelper
     if params[:business]
       @business = Business.new(business_params)
       @business.locations.build unless @business.locations.any?
+      @business.contacts.build unless @business.contacts.any?
       defaults_on_primary_location(@business)
       @business.source = UserSource.new(user: current_user)
     else
       @business = Business.new
       @business.locations.build
+      @business.contacts.build
     end
   end
 

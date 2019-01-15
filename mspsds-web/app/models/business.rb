@@ -20,6 +20,7 @@ class Business < ApplicationRecord
 
   has_many :investigation_businesses, dependent: :destroy
   has_many :investigations, through: :investigation_businesses
+  has_many :contacts, dependent: :destroy
 
   has_many :locations, dependent: :destroy
   has_many :corrective_actions, dependent: :destroy
@@ -46,6 +47,10 @@ class Business < ApplicationRecord
 
   def primary_location
     locations.first
+  end
+
+  def primary_contact
+    contacts.first
   end
 
   def self.from_companies_house_response(response)
