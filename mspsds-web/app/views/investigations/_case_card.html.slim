@@ -9,9 +9,14 @@
     .govuk-grid-column-one-quarter
       span.govuk-caption-m[class="govuk-!-font-size-16"] Assigned to
       span = investigation.assignee ? investigation.assignee.assignee_short_name : "Unassigned"
-    .govuk-grid-column-one-quarter
-      span.govuk-caption-m[class="govuk-!-font-size-16"] Last updated
-      span = investigation.updated_at.strftime("%d/%m/%Y")
+    - if sorted_by == "newest"
+      .govuk-grid-column-one-quarter
+        span.govuk-caption-m[class="govuk-!-font-size-16"] Date created
+        span = investigation.created_at.strftime("%d/%m/%Y")
+    - elsif sorted_by == "recent" || sorted_by == "oldest"
+      .govuk-grid-column-one-quarter
+        span.govuk-caption-m[class="govuk-!-font-size-16"] Last updated
+        span = investigation.updated_at.strftime("%d/%m/%Y")
 - else
   .govuk-grid-row class=(investigation.is_closed ? "mspsds-case-card mspsds-case-card--closed" : "mspsds-case-card")
     .govuk-grid-column-one-half
