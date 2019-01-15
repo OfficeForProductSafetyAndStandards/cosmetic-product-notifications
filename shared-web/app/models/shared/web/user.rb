@@ -1,0 +1,36 @@
+module Shared
+  module Web
+    class User < ActiveHash::Base
+      include ActiveHash::Associations
+
+      belongs_to :organisation
+
+      field :first_name
+      field :last_name
+      field :email
+
+      def self.find_or_create(user)
+        User.find_by(id: user[:id]) || User.create(user)
+      end
+
+      def self.all(options = {})
+        begin
+          self.data = Shared::Web::KeycloakClient.instance.all_users
+        rescue StandardError => error
+          Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
+          self.data = nil
+        end
+
+        if options.has_key?(:conditions)
+          where(options[:conditions])
+        else
+          @records ||= []
+        end
+      end
+
+      def full_name
+        "#{first_name} #{last_name}"
+      end
+    end
+  end
+end

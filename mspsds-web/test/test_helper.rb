@@ -39,22 +39,28 @@ class ActiveSupport::TestCase
 
   def sign_in_as_user_with_organisation(is_admin: false,
                                         other_users: [admin_user, test_user(name: "User_two"), test_user(name: "User_three")],
-                                        user: test_user)
+                                        user: test_user, is_opss: true)
     group = organisations[0].id
     user = user
     user.organisation = organisations[0]
     user_groups = [{ id: user[:id], groups: [group] }].to_json
 
-    stub_user_credentials(user: user, groups: [group], is_admin: is_admin)
+
+    stub_user_credentials(user: user, groups: [group], is_admin: is_admin, is_opss: is_opss)
     stub_user_group_data(user_groups: user_groups)
     stub_user_data(users: other_users.push(user))
     stub_client_config
   end
 
+  def sign_in_as_non_opss_user_with_organisation
+    sign_in_as_user_with_organisation(other_users: [admin_user, test_user(name: "User_two"), test_user(name: "User_three")],
+                                        user: test_user, is_opss: false)
+  end
+
   def sign_in_as_admin_with_organisation
     sign_in_as_user_with_organisation(is_admin: true,
                                       other_users: [test_user, test_user(name: "User_two"), test_user(name: "User_three")],
-                                      user: admin_user)
+                                      user: admin_user, is_opss: true)
   end
 
   def logout
@@ -73,6 +79,10 @@ class ActiveSupport::TestCase
   end
 
 private
+
+  def user_groups
+    [organisations[0][:id]]
+  end
 
   def admin_user
     User.new(id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin")
@@ -117,10 +127,11 @@ private
     ]
   end
 
-  def stub_user_credentials(user:, groups:, is_admin: false)
+  def stub_user_credentials(user:, groups:, is_admin: false, is_opss: true)
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user, groups))
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
+    allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_opss)
   end
 
   def format_user_for_get_userinfo(user, groups)
@@ -142,7 +153,7 @@ private
   end
 
   def stub_group_data
-    KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
+    Shared::Web::KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
     allow(Keycloak::Internal).to receive(:get_groups).and_return(group_data)
     Organisation.all
   end

@@ -224,7 +224,9 @@ class InvestigationTest < ActiveSupport::TestCase
 
   test "not visible to no-admin, no-source, no-assignee organisation" do
     create_new_private_case
-    user = User.find_by(last_name: "User_two")
+    logout
+    sign_in_as_non_opss_user_with_organisation
+    user = User.find_by(last_name: "User_one")
     user.organisation = organisations[1]
     assert_equal(@new_investigation.visible_to(user), false)
   end

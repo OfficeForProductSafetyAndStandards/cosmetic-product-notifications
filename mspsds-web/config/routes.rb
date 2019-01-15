@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
+  mount Shared::Web::Engine => '/', as: 'shared_engine'
+
   concern :document_attachable do
     resources :documents, controller: "documents" do
       collection do
@@ -8,14 +10,6 @@ Rails.application.routes.draw do
       member do
         get :remove
       end
-    end
-  end
-
-  resource :session, only: %i[new] do
-    member do
-      get :new
-      get :signin
-      delete :logout
     end
   end
 
@@ -97,6 +91,6 @@ Rails.application.routes.draw do
 
   mount PgHero::Engine, at: "pghero"
 
-  root to: redirect(path: "/cases")
+  root to: "homepage#show"
 end
 # rubocop:enable Metrics/BlockLength

@@ -1,5 +1,6 @@
 module BusinessesHelper
   include SearchHelper
+  include UserService
 
   BUSINESS_SUGGESTION_LIMIT = 3
 
