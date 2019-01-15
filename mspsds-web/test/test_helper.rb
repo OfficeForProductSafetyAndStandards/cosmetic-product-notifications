@@ -37,25 +37,25 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user(is_admin: false, user_name: "User_one", is_opss: true)
+  def sign_in_as_user(is_admin: false, user_name: "User_one", organisation: organisations[1])
     users = all_users
     user = users.detect { |u| u.last_name == user_name }
-    user.organisation = organisations[0]
-    group = organisations[0].id
+    user.organisation = organisation
+    group = organisation.id
     user_groups = [{ id: user[:id], groups: [group] }].to_json
 
-    stub_user_credentials(user: user, groups: [group], is_admin: is_admin, is_opss: is_opss)
+    stub_user_credentials(user: user, groups: [group], is_admin: is_admin, is_opss: organisation.name == organisations[1].name)
     stub_user_group_data(user_groups: user_groups)
     stub_user_data(users: users)
     stub_client_config
   end
 
   def sign_in_as_non_opss_user
-    sign_in_as_user(user_name: "User_one", is_opss: false)
+    sign_in_as_user(user_name: "User_one", organisation: organisations[0])
   end
 
   def sign_in_as_admin
-    sign_in_as_user(is_admin: true, user_name: "Admin", is_opss: true)
+    sign_in_as_user(is_admin: true, user_name: "Admin", organisation: organisations[1])
   end
 
   def all_users
@@ -111,7 +111,7 @@ private
   def organisations
     [
       Organisation.new(id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1"),
-      Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2"),
+      Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2"),
     ]
   end
 

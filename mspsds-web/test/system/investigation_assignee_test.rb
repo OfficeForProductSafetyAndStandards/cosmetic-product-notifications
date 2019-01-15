@@ -17,7 +17,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
 
   test "should show user organisations in the assignee list" do
     fill_in "assignee-picker", with: "Test"
-    assert_text "Test User_one (Organisation 1)"
+    assert_text "Test User_one (Office of Product Safety and Standards)"
   end
 
   test "should allow to select assignee" do
@@ -39,7 +39,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
 
     all("li", visible: false, text: "User_one").first.click
     click_on "Assign"
-    assert_text "Assigned to\nTest User_one\nOrganisation 1\nChange"
+    assert_text "Assigned to\nTest User_one\nOffice of Product Safety and Standards\nChange"
   end
 
   test "should show recent assignee as an option when previous assignees have been selected" do

@@ -26,7 +26,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "display name includes user's organisation" do
     assert_equal "Test User_one (Organisation 1)", @user.display_name
-    assert_equal "Test Admin (Organisation 2)", @admin.display_name
+    assert_equal "Test Admin (Office of Product Safety and Standards)", @admin.display_name
   end
 
   test "assignee short name is full name when user's organisation is same as that of current user" do
@@ -34,7 +34,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "assignee short name is organisation when user's organisation is different to that of current user" do
-    assert_equal "Organisation 2", @admin.assignee_short_name
+    assert_equal "Office of Product Safety and Standards", @admin.assignee_short_name
   end
 
   test "assignee select option keys include all user display names" do
