@@ -37,30 +37,29 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user_with_organisation(is_admin: false,
-                                        other_users: [admin_user, test_user(name: "User_two"), test_user(name: "User_three")],
-                                        user: test_user, is_opss: true)
+  def sign_in_as_user(is_admin: false, user: test_user, is_opss: true)
     group = organisations[0].id
     user = user
     user.organisation = organisations[0]
     user_groups = [{ id: user[:id], groups: [group] }].to_json
-
+    users = all_users.map { |u| u.last_name == user.last_name ? user : u }
 
     stub_user_credentials(user: user, groups: [group], is_admin: is_admin, is_opss: is_opss)
     stub_user_group_data(user_groups: user_groups)
-    stub_user_data(users: other_users.push(user))
+    stub_user_data(users: users)
     stub_client_config
   end
 
-  def sign_in_as_non_opss_user_with_organisation
-    sign_in_as_user_with_organisation(other_users: [admin_user, test_user(name: "User_two"), test_user(name: "User_three")],
-                                        user: test_user, is_opss: false)
+  def sign_in_as_non_opss_user
+    sign_in_as_user(user: test_user, is_opss: false)
   end
 
-  def sign_in_as_admin_with_organisation
-    sign_in_as_user_with_organisation(is_admin: true,
-                                      other_users: [test_user, test_user(name: "User_two"), test_user(name: "User_three")],
-                                      user: admin_user, is_opss: true)
+  def sign_in_as_admin
+    sign_in_as_user(is_admin: true, user: admin_user, is_opss: true)
+  end
+
+  def all_users
+    [admin_user, test_user, test_user(name: "User_two"), test_user(name: "User_three")]
   end
 
   def logout
