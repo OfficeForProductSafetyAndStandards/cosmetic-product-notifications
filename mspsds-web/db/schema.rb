@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_122234) do
+ActiveRecord::Schema.define(version: 2019_01_15_111318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,15 +53,21 @@ ActiveRecord::Schema.define(version: 2018_12_19_122234) do
   end
 
   create_table "businesses", id: :serial, force: :cascade do |t|
-    t.text "additional_information"
-    t.string "company_name", null: false
     t.string "company_number"
-    t.string "company_status_code"
-    t.string "company_type_code"
     t.datetime "created_at", null: false
-    t.string "nature_of_business_id"
+    t.string "legal_name", null: false
+    t.string "trading_name"
     t.datetime "updated_at", null: false
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer "business_id"
+    t.string "email"
+    t.string "job_title"
+    t.string "name"
+    t.string "phone_number"
+    t.index ["business_id"], name: "index_contacts_on_business_id"
   end
 
   create_table "corrective_actions", id: :serial, force: :cascade do |t|
@@ -134,12 +140,13 @@ ActiveRecord::Schema.define(version: 2018_12_19_122234) do
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
-    t.string "address"
+    t.string "address_line_1"
+    t.string "address_line_2"
     t.integer "business_id"
+    t.string "city"
     t.string "country"
+    t.string "county"
     t.datetime "created_at", null: false
-    t.string "locality"
-    t.string "name", null: false
     t.string "phone_number"
     t.string "postal_code"
     t.datetime "updated_at", null: false
@@ -148,16 +155,16 @@ ActiveRecord::Schema.define(version: 2018_12_19_122234) do
 
   create_table "products", id: :serial, force: :cascade do |t|
     t.string "batch_number"
-    t.string "brand"
+    t.string "category"
     t.string "country_of_origin"
     t.datetime "created_at", null: false
     t.date "date_placed_on_market"
     t.text "description"
-    t.string "gtin"
-    t.string "model"
     t.string "name"
+    t.string "product_code"
     t.string "product_type"
     t.datetime "updated_at", null: false
+    t.string "webpage"
   end
 
   create_table "rapex_imports", id: :serial, force: :cascade do |t|
