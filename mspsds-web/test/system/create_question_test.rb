@@ -15,7 +15,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
       description: "Question description"
     )
 
-    sign_in_as_user_with_organisation
+    sign_in_as_user
     visit new_question_path
   end
 
