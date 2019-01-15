@@ -17,7 +17,7 @@ module BusinessesHelper
   end
 
   def sort_column
-    Business.column_names.include?(params[:sort]) ? params[:sort] : "company_name"
+    Business.column_names.include?(params[:sort]) ? params[:sort] : "legal_name"
   end
 
   def sort_direction
@@ -27,12 +27,14 @@ module BusinessesHelper
   # Never trust parameters from the scary internet, only allow the white list through.
   def business_params
     params.require(:business).permit(
-      :company_name,
+      :legal_name,
+      :trading_name,
       :company_type_code,
       :company_status_code,
       :nature_of_business_id,
       :additional_information,
-      location_attributes: %i[id address phone_number locality country postal_code _destroy]
+      location_attributes: %i[id address phone_number locality country postal_code _destroy],
+      contact_attributes: %i[name email phone_number job_title]
     )
   end
 
@@ -67,7 +69,7 @@ module BusinessesHelper
   end
 
   def search_for_similar_businesses(business, excluded_ids)
-    return [] if business.company_name.blank?
+    return [] if business.legal_name.blank?
 
     Business.search(query: {
       bool: {
@@ -88,7 +90,7 @@ module BusinessesHelper
         (business.company_status_code.present? && business.company_status_code != candidate[:company_status_code])
       # field matched by nature_of_business_id is not available on the search models returned by companies house
     end
-    search_companies_house(business.company_name)
+    search_companies_house(business.legal_name)
       .reject(&type_or_status_differ)
       .first(BUSINESS_SUGGESTION_LIMIT)
   end
@@ -133,8 +135,8 @@ private
   def match_name(business)
     {
       match: {
-        "company_name": {
-          query: business.company_name,
+        "legal_name": {
+          query: business.legal_name,
           fuzziness: "AUTO"
         }
       }

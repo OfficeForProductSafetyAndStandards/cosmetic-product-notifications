@@ -12,28 +12,28 @@ class BusinessHelperTest < ActiveSupport::TestCase
     allow(@client_instance).to receive(:companies_house_businesses).with("company").and_return(
       [
         {
-          company_name: "company one, already in the db",
+          legal_name: "company one, already in the db",
           company_number: "1",
           company_type_code: "private-unlimited",
           company_status_code: "active",
           url: "urlToView/1"
         },
         {
-          company_name: "company two",
+          legal_name: "company two",
           company_number: "2",
           company_type_code: "private-unlimited",
           company_status_code: "dissolved",
           url: "urlToView/2"
         },
         {
-          company_name: "company three",
+          legal_name: "company three",
           company_number: "3",
           company_type_code: "ltd",
           company_status_code: "active",
           url: "urlToView/3"
         },
         {
-          company_name: "company four",
+          legal_name: "company four",
           company_number: "4",
           company_type_code: "ltd",
           company_status_code: "liquidation",
@@ -54,9 +54,9 @@ class BusinessHelperTest < ActiveSupport::TestCase
 
   test "companies house search respects company type" do
     # Act
-    search_model = Business.new(company_name: "company", company_type_code: "ltd")
+    search_model = Business.new(legal_name: "company", company_type_code: "ltd")
     results = search_companies_house_for_similar_businesses(search_model)
-                .map { |b| b[:company_name] }
+                .map { |b| b[:legal_name] }
 
     # Assert
     assert_equal(["company three", "company four"], results)
@@ -64,9 +64,9 @@ class BusinessHelperTest < ActiveSupport::TestCase
 
   test "companies house search respects company status" do
     # Act
-    search_model = Business.new(company_name: "company", company_status_code: "liquidation")
+    search_model = Business.new(legal_name: "company", company_status_code: "liquidation")
     results = search_companies_house_for_similar_businesses(search_model)
-                .map { |b| b[:company_name] }
+                .map { |b| b[:legal_name] }
 
     # Assert
     assert_equal(["company four"], results)
@@ -74,26 +74,26 @@ class BusinessHelperTest < ActiveSupport::TestCase
 
   test "local search respects company type" do
     # Act
-    search_model_ltd = Business.new(company_name: "biscuit", company_type_code: "ltd")
+    search_model_ltd = Business.new(legal_name: "biscuit", company_type_code: "ltd")
     results_ltd = search_for_similar_businesses(search_model_ltd, [])
-    search_model_pu = Business.new(company_name: "biscuit", company_type_code: "private-unlimited")
+    search_model_pu = Business.new(legal_name: "biscuit", company_type_code: "private-unlimited")
     results_pu = search_for_similar_businesses(search_model_pu, [])
 
     # Assert
-    assert_includes(results_pu.map(&:company_name), "Biscuit Base")
-    assert_not_includes(results_ltd.map(&:company_name), "Biscuit Base")
+    assert_includes(results_pu.map(&:legal_name), "Biscuit Base")
+    assert_not_includes(results_ltd.map(&:legal_name), "Biscuit Base")
   end
 
   test "local search respects company status" do
     # Act
-    search_model_active = Business.new(company_name: "biscuit", company_status_code: "active")
+    search_model_active = Business.new(legal_name: "biscuit", company_status_code: "active")
     results_active = search_for_similar_businesses(search_model_active, [])
-    search_model_dissolved = Business.new(company_name: "biscuit", company_status_code: "dissolved")
+    search_model_dissolved = Business.new(legal_name: "biscuit", company_status_code: "dissolved")
     results_dissolved = search_for_similar_businesses(search_model_dissolved, [])
 
     # Assert
-    assert_includes(results_active.map(&:company_name), "Biscuit Base")
-    assert_not_includes(results_dissolved.map(&:company_name), "Biscuit Base")
+    assert_includes(results_active.map(&:legal_name), "Biscuit Base")
+    assert_not_includes(results_dissolved.map(&:legal_name), "Biscuit Base")
   end
 
   test "companies house outage doesn't affect local search" do
@@ -103,7 +103,7 @@ class BusinessHelperTest < ActiveSupport::TestCase
 
     # Act + Assert
     assert_nothing_raised do
-      @business = Business.new company_name: "Hello Kitty"
+      @business = Business.new legal_name: "Hello Kitty"
       advanced_search
     end
     assert_not_nil(@existing_businesses.present?)

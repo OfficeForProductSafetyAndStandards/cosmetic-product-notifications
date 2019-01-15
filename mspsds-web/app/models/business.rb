@@ -14,7 +14,7 @@ class Business < ApplicationRecord
     end
   end
 
-  validates :company_name, presence: true
+  validates :legal_name, presence: true
 
   has_many_attached :documents
 
@@ -54,7 +54,7 @@ class Business < ApplicationRecord
 
   def with_company_house_info(c_h_info)
     self.company_number = c_h_info["company_number"]
-    self.company_name = c_h_info["company_name"]
+    self.legal_name = c_h_info["company_name"]
     self.company_type_code = c_h_info["type"]
     self.company_status_code = c_h_info["company_status"]
     self.source ||= ReportSource.new(name: "Companies House")

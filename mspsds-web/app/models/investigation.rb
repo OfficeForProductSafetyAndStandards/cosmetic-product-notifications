@@ -72,7 +72,7 @@ class Investigation < ApplicationRecord
           only: []
         },
         businesses: {
-          only: %i[company_name company_number]
+          only: %i[legal_name trading_name company_number]
         },
         products: {
           only: %i[batch_number brand description gtin model name]

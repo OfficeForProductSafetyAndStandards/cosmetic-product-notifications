@@ -30,7 +30,8 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Business.count") do
       post businesses_url, params: {
         business: {
-          company_name: @business_one.company_name,
+          legal_name: @business_one.legal_name,
+          trading_name: @business_one.trading_name,
           additional_information: @business_one.additional_information,
           company_number: @business_one.company_number,
           company_type_code: @business_one.company_type_code,
@@ -46,7 +47,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Business.count", 0) do
       post businesses_url, params: {
         business: {
-          company_name: '',
+          legal_name: '',
           additional_information: @business_one.additional_information,
           company_number: @business_one.company_number,
           company_type_code: @business_one.company_type_code,
@@ -69,7 +70,8 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
   test "should update business" do
     patch business_url(@business_one), params: {
       business: {
-        company_name: @business_one.company_name,
+        legal_name: @business_one.legal_name,
+        trading_name: @business_one.trading_name,
         additional_information: @business_one.additional_information,
         company_number: @business_one.company_number,
         company_type_code: @business_one.company_type_code,
@@ -89,7 +91,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should search for similar businesses" do
-    get suggested_businesses_url, params: { company_name: "Biscuit", company_type_code: "private-unlimited" }
+    get suggested_businesses_url, params: { legal_name: "Biscuit", company_type_code: "private-unlimited" }
     assert_response :success
   end
 end

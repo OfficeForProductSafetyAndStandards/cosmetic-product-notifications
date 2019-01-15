@@ -1,27 +1,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  company_name: MyString
+  legal_name: MyString
+  trading_name: companyOneTradingName
   company_type_code: ltd
   company_status_code: active
   nature_of_business_id: MyString
   additional_information: MyText
 
 two:
-  company_name: MyString
+  legal_name: MyString
+  trading_name: companyTwoTradingName
   company_type_code: ltd
   company_status_code: dissolved
   nature_of_business_id: MyString
   additional_information: MyText
 
 active_from_companies_house:
-  company_name: MyString
+  legal_name: MyString
+  trading_name: companyTwoTradingName
   company_type_code: ltd
   company_number: 1
   company_status_code: active
 
 biscuit_base:
-  company_name: Biscuit Base
+  legal_name: Biscuit Base
+  trading_name: Biscuit Base trading name
   company_type_code: private-unlimited
   company_number: 100
   company_status_code: active

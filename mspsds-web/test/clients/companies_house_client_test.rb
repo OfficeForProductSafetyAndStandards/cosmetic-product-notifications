@@ -25,7 +25,7 @@ class CompaniesHouseClientTest < ActiveSupport::TestCase
     results = @companies_house_client.companies_house_businesses("xyz")
     assert_equal(results, [
       {
-        company_name: "company XYZ",
+        legal_name: "company XYZ",
         company_number: "123",
         company_status_code: "active",
         company_type_code: "ltd",

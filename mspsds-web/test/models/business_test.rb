@@ -4,7 +4,7 @@ class BusinessTest < ActiveSupport::TestCase
   test "Business requires a company name" do
     business = Business.new
     assert_not business.save
-    business.company_name = 'Test'
+    business.legal_name = 'Test'
     assert business.save
   end
 
@@ -32,7 +32,7 @@ class BusinessTest < ActiveSupport::TestCase
 
     # Assert
     assert_equal(business.company_number, "234")
-    assert_equal(business.company_name, "Turbo Frogs")
+    assert_equal(business.legal_name, "Turbo Frogs")
     assert_equal(business.company_type_code, "ltd")
     assert_equal(business.company_status_code, "active")
     assert_equal(business.source.show, "Companies House")

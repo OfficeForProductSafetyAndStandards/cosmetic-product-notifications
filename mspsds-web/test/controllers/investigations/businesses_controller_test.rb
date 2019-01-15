@@ -24,7 +24,8 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
     assert_difference ["InvestigationBusiness.count", "Business.count"] do
       post investigation_businesses_url(@investigation), params: {
         business: {
-          company_name: @business.company_name,
+          legal_name: @business.legal_name,
+          trading_name: @business.trading_name,
           additional_information: @business.additional_information,
           company_number: @business.company_number,
           company_type_code: @business.company_type_code,
@@ -40,7 +41,7 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference ["InvestigationBusiness.count", "Business.count"] do
       post investigation_businesses_url(@investigation), params: {
         business: {
-          company_name: '',
+          legal_name: '',
           additional_information: @business.additional_information,
           company_number: @business.company_number,
           company_type_code: @business.company_type_code,
