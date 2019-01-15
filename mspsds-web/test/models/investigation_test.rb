@@ -209,7 +209,7 @@ class InvestigationTest < ActiveSupport::TestCase
     logout
     sign_in_as_admin_with_organisation
     user = User.find_by(last_name: "Admin")
-    assert_equal(@new_investigation.visible_to(user), true)
+    assert(@new_investigation.visible_to(user))
   end
 
   test "visible to assignee organisation" do
@@ -219,7 +219,7 @@ class InvestigationTest < ActiveSupport::TestCase
     user = User.find_by(last_name: "User_three")
     user.organisation = organisations[1]
     @new_investigation.assignee = assignee
-    assert_equal(@new_investigation.visible_to(user), true)
+    assert(@new_investigation.visible_to(user))
   end
 
   test "not visible to no-admin, no-source, no-assignee organisation" do
@@ -228,7 +228,7 @@ class InvestigationTest < ActiveSupport::TestCase
     sign_in_as_non_opss_user_with_organisation
     user = User.find_by(last_name: "User_one")
     user.organisation = organisations[1]
-    assert_equal(@new_investigation.visible_to(user), false)
+    assert_not(@new_investigation.visible_to(user))
   end
 
   def create_new_private_case
