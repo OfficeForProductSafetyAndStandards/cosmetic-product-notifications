@@ -58,15 +58,14 @@
             .govuk-radios class="govuk-!-margin-bottom-5"
               .govuk-radios__item
                 = form.radio_button :sort_by, "recent", class: "govuk-radios__input"
-                = form.label :sort_by_recent, "Updated: recent", class: "govuk-radios__label"
+                = form.label :sort_by, "Updated: recent", value: "recent", class: "govuk-radios__label"
               .govuk-radios__item
                 = form.radio_button :sort_by, "oldest", class: "govuk-radios__input"
-                = form.label :sort_by_oldest, "Updated: oldest", class: "govuk-radios__label"
+                = form.label :sort_by, "Updated: oldest", value: "oldest", class: "govuk-radios__label"
               .govuk-radios__item
                 = form.radio_button :sort_by, "newest", class: "govuk-radios__input"
-                = form.label :sort_by_newest, "Created: newest", class: "govuk-radios__label"
+                = form.label :sort_by, "Created: newest", value: "newest", class: "govuk-radios__label"
         = form.submit "Apply filters", name: nil, class: "govuk-button"
-
   .govuk-grid-column-three-quarters
     - if @results.any?
       = render "table", search_results: @results
