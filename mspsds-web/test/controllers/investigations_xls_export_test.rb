@@ -2,7 +2,7 @@ require "test_helper"
 
 class InvestigationsXlsExportTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin_with_organisation
+    sign_in_as_admin
   end
 
   teardown do

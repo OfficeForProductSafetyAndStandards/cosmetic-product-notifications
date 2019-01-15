@@ -2,7 +2,7 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   setup do
-    sign_in_as_user_with_organisation
+    sign_in_as_user
 
     user = User.find_by(last_name: "User_one")
     admin = User.find_by(last_name: "Admin")

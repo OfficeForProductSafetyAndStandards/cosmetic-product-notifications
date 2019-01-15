@@ -2,7 +2,7 @@ require "test_helper"
 
 class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin_with_organisation
+    sign_in_as_admin
 
     @investigation_one = investigations(:one)
     @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
@@ -294,7 +294,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     create_new_private_case
 
     logout
-    sign_in_as_non_opss_user_with_organisation
+    sign_in_as_non_opss_user
     get investigations_path
     assert_not_includes(response.body, @new_investigation.description)
     assert_includes(response.body, "Case restricted")
@@ -304,7 +304,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     create_new_private_case
 
     logout
-    sign_in_as_non_opss_user_with_organisation
+    sign_in_as_non_opss_user
     get investigation_path(@new_investigation)
     assert_not_includes(response.body, @new_investigation.pretty_id)
   end

@@ -2,7 +2,7 @@ require "test_helper"
 
 class InvestigationTest < ActiveSupport::TestCase
   setup do
-    sign_in_as_user_with_organisation
+    sign_in_as_user
     @investigation = investigations(:one)
 
     @investigation_with_product = investigations(:search_related_products)
@@ -207,7 +207,7 @@ class InvestigationTest < ActiveSupport::TestCase
   test "visible to admin" do
     create_new_private_case
     logout
-    sign_in_as_admin_with_organisation
+    sign_in_as_admin
     user = User.find_by(last_name: "Admin")
     assert(@new_investigation.visible_to(user))
   end
@@ -225,7 +225,7 @@ class InvestigationTest < ActiveSupport::TestCase
   test "not visible to no-admin, no-source, no-assignee organisation" do
     create_new_private_case
     logout
-    sign_in_as_non_opss_user_with_organisation
+    sign_in_as_non_opss_user
     user = User.find_by(last_name: "User_one")
     user.organisation = organisations[1]
     assert_not(@new_investigation.visible_to(user))
