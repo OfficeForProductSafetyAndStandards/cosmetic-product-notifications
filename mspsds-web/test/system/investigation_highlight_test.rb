@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class InvestigationHighlightTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_user_with_organisation
+    sign_in_as_user
     visit root_path
   end
 
