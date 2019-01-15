@@ -79,9 +79,10 @@ class ActiveSupport::TestCase
 
 private
 
-  def user_groups
-    [organisations[0][:id]]
-  end
+  #
+  # def user_groups
+  #   [organisations[0][:id]]
+  # end
 
   def admin_user
     User.new(id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin")
@@ -102,7 +103,7 @@ private
         id: "512c85e6-5a7f-4289-95e2-a78c0e40f05c",
         name: "Organisations",
         path: "/Organisations",
-        subGroups: organisations.to_json
+        subGroups: organisations.map(&:attributes)
       }, {
         id: "10036801-2182-4c5b-92d9-b34b1e0a421b",
         name: "Group 2",
