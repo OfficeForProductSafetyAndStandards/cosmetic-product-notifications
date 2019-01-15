@@ -1,6 +1,6 @@
 - content_for :page_title, "Confirm meeting details"
 - content_for :after_header do
-  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
 main.govuk-main-wrapper role="main"
   h1.govuk-heading-xl
     span.govuk-caption-xl

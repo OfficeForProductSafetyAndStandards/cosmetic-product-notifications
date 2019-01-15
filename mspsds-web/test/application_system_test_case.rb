@@ -1,10 +1,6 @@
 require "test_helper"
 require "system_test_helper"
 
-# Values from .env-template
-ENV["KEYCLOAK_AUTH_URL"] = "http://keycloak:8080/auth"
-ENV["KEYCLOAK_CLIENT_ID"] = "mspsds-app"
-ENV["KEYCLOAK_CLIENT_SECRET"] = "932677f2-55c0-45c5-901a-f4beddb85e17"
 ENV["HTTP_HOST"] = "localhost"
 ENV["HTTP_PORT"] = "3001"
 

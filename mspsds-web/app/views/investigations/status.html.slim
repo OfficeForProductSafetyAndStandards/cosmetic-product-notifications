@@ -1,10 +1,11 @@
 - content_for :page_title, "Update status"
 - content_for :after_header do
-  = link_to "Back to case", @investigation, class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
 h2.govuk-heading-l
-  | Case status
-= form_with(model: @investigation, local: true) do |form|
+  = "#{case_question_text(@investigation).titleize} status"
+= form_with(model: @investigation, method: :put, url: status_investigation_url(@investigation)) do |form|
+  = render "form_validation_display", errors: @investigation.errors
   .govuk-form-group
     fieldset.govuk-fieldset
       legend.govuk-fieldset__legend

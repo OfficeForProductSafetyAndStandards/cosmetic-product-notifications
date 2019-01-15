@@ -1,8 +1,8 @@
 class Investigation < ApplicationRecord
   include Searchable
   include Documentable
-  include UserService
   include AttachmentConcern
+  include UserService
 
   attr_accessor :status_rationale
 
@@ -14,10 +14,8 @@ class Investigation < ApplicationRecord
   validates_length_of :question_title, maximum: 1000
   validates_length_of :description, maximum: 1000
 
-  validate :validate_assignment
-
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
-             :create_audit_activity_for_status
+             :create_audit_activity_for_status, :create_audit_activity_for_visibility
 
   index_name [Rails.env, "investigations"].join("_")
 
@@ -59,8 +57,8 @@ class Investigation < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      methods: :pretty_id,
-      only: %i[question_title description hazard_type product_type is_closed assignee_id updated_at created_at],
+      methods: %i[pretty_id],
+      only: %i[question_title description hazard_type product_type is_closed updated_at created_at assignee_id],
       include: {
         documents: {
           only: [],
@@ -93,13 +91,26 @@ class Investigation < ApplicationRecord
     is_closed? ? "Closed" : "Open"
   end
 
+  def pretty_visibility
+    is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
+  end
+
+  def visible_to(user)
+    return true unless is_private
+    return true if assignee.present? && (assignee&.organisation == user.organisation)
+    return true if source&.user&.present? && (source&.user&.organisation == user.organisation)
+    return true if user.is_opss?
+
+    false
+  end
+
   def pretty_id
     id_string = id.to_s.rjust(8, '0')
     id_string.insert(4, "-")
   end
 
   def pretty_description
-    "Case #{pretty_id}"
+    "#{is_case ? 'Case' : 'Question'} #{pretty_id}"
   end
 
   def question_title_prefix
@@ -113,8 +124,7 @@ class Investigation < ApplicationRecord
   def past_assignees
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
     user_id_list = activities.map(&:assignee_id)
-    users = User.where(id: user_id_list.uniq)
-    users
+    User.where(id: user_id_list.uniq)
   end
 
   def past_assignees_except_current
@@ -143,6 +153,12 @@ private
   def create_audit_activity_for_status
     if saved_changes.key?(:is_closed) || status_rationale.present?
       AuditActivity::Investigation::UpdateStatus.from(self)
+    end
+  end
+
+  def create_audit_activity_for_visibility
+    if saved_changes.key?(:is_private)
+      AuditActivity::Investigation::UpdateVisibility.from(self)
     end
   end
 
@@ -179,15 +195,9 @@ private
     title.presence || "Untitled case"
   end
 
-  def validate_assignment
-    if assignee_id_was.present? && !assignee
-      errors.add(:assignee, "cannot be blank")
-    end
-  end
-
   def send_assignee_email
     if saved_changes.key? :assignee_id
-      NotifyMailer.assigned_investigation(self, assignee.full_name, assignee.email).deliver_later
+      NotifyMailer.assigned_investigation(id, assignee.full_name, assignee.email).deliver_later
     end
   end
 
