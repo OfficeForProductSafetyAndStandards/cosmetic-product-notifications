@@ -7,6 +7,10 @@ h2.govuk-heading-l
 = form_with(model: @investigation, method: :put, url: visibility_investigation_url(@investigation)) do |form|
   = render "form_validation_display", errors: @investigation.errors
   .govuk-form-group
+    span.govuk-hint
+      | Private cases can only be viewed by the creating organisation, the assigned organisation
+      br
+      | or The Office of Product Safety and Standards.
     fieldset.govuk-fieldset
       .govuk-radios
         .govuk-radios__item
