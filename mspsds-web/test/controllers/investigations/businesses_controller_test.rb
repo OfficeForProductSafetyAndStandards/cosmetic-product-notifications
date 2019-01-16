@@ -26,7 +26,6 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
         business: {
           legal_name: @business.legal_name,
           trading_name: @business.trading_name,
-          additional_information: @business.additional_information,
           company_number: @business.company_number,
           company_type_code: @business.company_type_code,
           company_status_code: @business.company_status_code,
@@ -42,7 +41,6 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
       post investigation_businesses_url(@investigation), params: {
         business: {
           legal_name: '',
-          additional_information: @business.additional_information,
           company_number: @business.company_number,
           company_type_code: @business.company_type_code,
           nature_of_business_id: @business.nature_of_business_id

@@ -6,7 +6,6 @@ one:
   company_type_code: ltd
   company_status_code: active
   nature_of_business_id: MyString
-  additional_information: MyText
 
 two:
   legal_name: MyString
@@ -14,7 +13,6 @@ two:
   company_type_code: ltd
   company_status_code: dissolved
   nature_of_business_id: MyString
-  additional_information: MyText
 
 active_from_companies_house:
   legal_name: MyString

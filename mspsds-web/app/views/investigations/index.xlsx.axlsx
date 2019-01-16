@@ -64,7 +64,7 @@ end
 
 book.add_worksheet name: "Businesses" do |sheet_businesses|
   sheet_businesses.add_row %w[ID Company_Number Legal_Name Trading_Name Company_Type
-                                Nature_Of_Business Additional_Information Source
+                                Nature_Of_Business Source
                                 Location Phone_Number Locality Country Postal_Code Locations
                                 Case_ID]
 
@@ -78,7 +78,6 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
           business.trading_name,
           business.company_type,
           business.nature_of_business,
-          business.additional_information,
           business.source&.show,
           business.primary_location ? business.primary_location.address : nil,
           business.primary_location ? business.primary_location.phone_number : nil,
