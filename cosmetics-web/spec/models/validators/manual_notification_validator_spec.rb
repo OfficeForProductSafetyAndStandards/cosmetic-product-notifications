@@ -8,7 +8,7 @@ RSpec.describe Validators::ManualNotificationValidator do
       notification.external_reference = '12345678'
       notification.save
 
-      check_error(:external_reference, "cannot be set at this stage")
+      check_error(notification, :external_reference, "cannot be set at this stage")
     end
   end
 
@@ -19,13 +19,13 @@ RSpec.describe Validators::ManualNotificationValidator do
       notification.product_name = nil
       notification.save
 
-      check_error(:product_name, "must not be empty")
+      check_error(notification, :product_name, "must not be empty")
     end
   end
 
     private
 
-  def check_error(attribute, error)
+  def check_error(notification, attribute, error)
     expect(
       notification.errors[attribute]
     ).to include(error)

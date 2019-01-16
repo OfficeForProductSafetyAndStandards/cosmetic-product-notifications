@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ManualEntryController, type: :controller do
+  before(:each) do
+    authenticate_user
+  end
+
   describe "GET #create" do
     it "creates new notification object" do
       get :create
@@ -9,24 +13,20 @@ RSpec.describe ManualEntryController, type: :controller do
 
     it "redirects to the first step of the manual web form" do
       get :create
-      expect(response).to redirect_to("/manual_entry/add_product_name")
+      expect(response).to redirect_to(get_manual_journey_url(assigns(:notification).id, "add_product_name"))
     end
   end
 
   describe "GET #show" do
     it "assigns the correct notification" do
       notification = Notification.create
-      get(:show,
-          params: { 'id' => 'add_product_name' },
-          session: { 'notification_id' => notification.id })
+      get(:show, params: { 'notification_id' => notification.id, 'id' => 'add_product_name' })
       expect(assigns(:notification)).to eq(notification)
     end
 
     it "renders the step template" do
       notification = Notification.create
-      get(:show,
-          params: { 'id' => 'add_product_name' },
-          session: { 'notification_id' => notification.id })
+      get(:show, params: { 'notification_id' => notification.id, 'id' => 'add_product_name' })
       expect(response).to render_template(:add_product_name)
     end
   end
@@ -34,15 +34,16 @@ RSpec.describe ManualEntryController, type: :controller do
   describe "POST #update" do
     it "assigns the correct notification" do
       notification = Notification.create
-      post(:update, params: { 'id' => 'add_product_name' }, session: { 'notification_id' => notification.id })
+      post(:update, params: { 'notification_id' => notification.id, 'id' => 'add_product_name' })
       expect(assigns(:notification)).to eq(notification)
     end
 
     it "updates notification parameters if present" do
       notification = Notification.create
       post(:update,
-          params: { 'id' => 'add_product_name', 'notification' => { 'product_name' => 'Super Shampoo' } },
-          session: { 'notification_id' => notification.id })
+          params: { 'notification_id' => notification.id, 
+                    'id' => 'add_product_name', 
+                    'notification' => { 'product_name' => 'Super Shampoo' } })
       expect(notification.reload.product_name).to eq('Super Shampoo')
     end
 
@@ -50,8 +51,14 @@ RSpec.describe ManualEntryController, type: :controller do
       notification = Notification.create
       notification.aasm_state = 'draft_complete'
       notification.save
-      post(:update, params: { 'id' => 'check_your_answers' }, session: { 'notification_id' => notification.id })
+      post(:update, params: { 'notification_id' => notification.id, 'id' => 'check_your_answers' })
       expect(notification.reload.aasm_state).to eq('notification_complete')
     end
+  end
+
+  private
+
+  def get_manual_journey_url(notificationId, step)
+    "/notifications/%d/manual_entry/%s" % [notificationId, step]
   end
 end
