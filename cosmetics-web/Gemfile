@@ -23,6 +23,13 @@ gem "shared-web", path: "./vendor/shared-web"
 group :development, :test do
   gem "rspec-rails"
   gem "rubocop-rspec"
+  gem "database_cleaner"
+  gem "rspec-rails"
 
   gem "shared-web-dev", path: "./vendor/shared-web/dev"
+end
+
+group :test do
+  gem "capybara"
+  gem "selenium-webdriver"
 end

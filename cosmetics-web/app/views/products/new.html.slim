@@ -18,6 +18,6 @@
       .govuk-form-group
         .form-group
           = form.label "Upload CPNP zip file", class: "govuk-label"
-          = form.file_field :uploaded_file, class: "govuk-file-upload"
+          = form.file_field :uploaded_file, class: "govuk-file-upload", id: "uploaded_file"
 
       = form.submit "Upload", name: nil, class: "govuk-button"
