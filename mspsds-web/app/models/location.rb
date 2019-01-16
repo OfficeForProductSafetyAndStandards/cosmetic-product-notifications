@@ -1,5 +1,4 @@
 class Location < ApplicationRecord
-  validates :name, presence: true
   default_scope { order(created_at: :asc) }
 
   belongs_to :business
@@ -8,7 +7,8 @@ class Location < ApplicationRecord
 
   def summary
     [
-      address,
+      address_line_1,
+      address_line_2,
       postal_code,
       country
     ].reject(&:blank?).join(", ")
