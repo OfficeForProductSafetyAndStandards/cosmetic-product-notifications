@@ -5,7 +5,7 @@ class CorrectiveActionsControllerTest < ActionDispatch::IntegrationTest
     @investigation = investigations(:one)
     @business = businesses(:one)
     @product = products(:one)
-    sign_in_as_user_with_organisation
+    sign_in_as_user
   end
 
   teardown do

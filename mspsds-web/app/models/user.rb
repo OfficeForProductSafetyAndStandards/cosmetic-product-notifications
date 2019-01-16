@@ -52,6 +52,10 @@ class User < Shared::Web::User
     Shared::Web::KeycloakClient.instance.has_role? role
   end
 
+  def is_opss?
+    has_role? :opss_user
+  end
+
   def self.get_assignees_select_options(except: [], use_short_name: false)
     users_to_exclude = Array(except)
 
