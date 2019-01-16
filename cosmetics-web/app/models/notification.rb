@@ -3,8 +3,8 @@ require_relative 'validators/manual_notification_validator'
 class Notification < ApplicationRecord
   include AASM
 
-  after_save :add_product_name!, if: :saved_change_to_product_name?
-  after_save :add_external_reference!, if: :saved_change_to_external_reference?
+  before_save :add_product_name!, if: :will_save_change_to_product_name?
+  before_save :add_external_reference!, if: :will_save_change_to_external_reference?
 
   validates_with Validators::ManualNotificationValidator
 
