@@ -24,8 +24,10 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
 
-    @product.name = product_params[:uploaded_file].original_filename
-    @product.uploaded_file.attach(product_params[:uploaded_file])
+    if product_params and product_params[:uploaded_file]
+      @product.name = product_params[:uploaded_file].original_filename
+      @product.uploaded_file.attach(product_params[:uploaded_file])
+    end
 
     respond_to do |format|
       if @product.save
@@ -71,6 +73,8 @@ private
 
     # Never trust parameters from the scary internet, only allow the white list through.
   def product_params
-    params.require(:product).permit(:name, :uploaded_file)
+    if params.has_key?(:product)
+      params.require(:product).permit(:name, :uploaded_file)
+    end
   end
 end

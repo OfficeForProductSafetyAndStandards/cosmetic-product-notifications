@@ -4,10 +4,13 @@ p
   strong Name:
   = @product.name
 
-  - if @product.uploaded_file
+  - if @product.name.present?
     p
       ' Currently selected file:
       = link_to @product.uploaded_file.filename, url_for(@product.uploaded_file), target: "_blank"
+  -else
+    P
+      ' No attachment
 
 => link_to 'Edit', edit_product_path(@product)
 '|
