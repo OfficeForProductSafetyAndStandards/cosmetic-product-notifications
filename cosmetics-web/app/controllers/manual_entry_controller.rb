@@ -4,12 +4,12 @@ class ManualEntryController < ApplicationController
   steps :add_product_name, :add_external_reference, :check_your_answers, :confirmation
 
   def show
-    @notification = Notification.find(session[:notification_id])
+    @notification = Notification.find(params[:notification_id])
     render_wizard
   end
 
   def update
-    @notification = Notification.find(session[:notification_id])
+    @notification = Notification.find(params[:notification_id])
 
     if !notification_params.nil?
       @notification.update(notification_params)
@@ -25,7 +25,7 @@ class ManualEntryController < ApplicationController
   def create
     @notification = Notification.create
     session[:notification_id] = @notification.id
-    redirect_to wizard_path steps.first
+    redirect_to wizard_path(steps.first, :notification_id => @notification.id)
   end
 
 private
