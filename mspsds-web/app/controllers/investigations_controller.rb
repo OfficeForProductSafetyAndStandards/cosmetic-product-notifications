@@ -3,7 +3,8 @@ class InvestigationsController < ApplicationController
   include Pundit
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show assign status visibility]
+  before_action :set_investigation, only: %i[assign status visibility]
+  before_action :eager_load_investigation_data, only: %i[show]
 
   # GET /cases
   # GET /cases.json
@@ -111,6 +112,16 @@ class InvestigationsController < ApplicationController
   end
 
 private
+
+  def eager_load_investigation_data
+    @investigation = Investigation.with_attached_documents.eager_load(:source,
+                                                                      products: {documents_attachments: :blob},
+                                                                      investigation_businesses: {business: :locations},
+                                                                      # activities: {attachment_attachment: :blob}
+    ).find(params[:id])
+    authorize @investigation, :show?
+    @activities = @investigation.activities.eager_load(:source)
+  end
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
