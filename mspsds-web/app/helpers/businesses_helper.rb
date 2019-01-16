@@ -28,12 +28,10 @@ module BusinessesHelper
     params.require(:business).permit(
       :legal_name,
       :trading_name,
-      :company_type_code,
-      :company_status_code,
+      :company_number,
       :nature_of_business_id,
-      :additional_information,
-      location_attributes: %i[id address phone_number locality country postal_code _destroy],
-      contact_attributes: %i[name email phone_number job_title]
+      locations_attributes: %i[id address_line_1 address_line_2 phone_number county country postal_code _destroy],
+      contacts_attributes: %i[id name email phone_number job_title]
     )
   end
 

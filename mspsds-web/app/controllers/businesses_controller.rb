@@ -18,7 +18,8 @@ class BusinessesController < ApplicationController
   def show
     return unless @business.from_companies_house?
 
-    CompaniesHouseClient.instance.update_business_from_companies_house(@business)
+    # TODO uncomment or delete the below line once we know whether we are keeping companies house or not
+    # CompaniesHouseClient.instance.update_business_from_companies_house(@business)
   end
 
   # GET /businesses/new
