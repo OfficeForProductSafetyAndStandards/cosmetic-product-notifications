@@ -13,8 +13,8 @@ class InvestigationsController < ApplicationController
     respond_to do |format|
       format.html do
         @answer = search_for_investigations(20)
-        records = Investigation.eager_load(:products, :source).where(id: @answer.results.map {|i| i._id })
-        @results = @answer.results.map { |r| r.merge(record: records.detect { |rec| rec.id.to_s == r._id} )}
+        records = Investigation.eager_load(:products, :source).where(id: @answer.results.map(&:_id))
+        @results = @answer.results.map { |r| r.merge(record: records.detect { |rec| rec.id.to_s == r._id }) }
         @investigations = @answer.records
       end
       format.xlsx do
@@ -114,13 +114,12 @@ class InvestigationsController < ApplicationController
 private
 
   def eager_load_investigation_data
-    @investigation = Investigation.with_attached_documents.eager_load(:source,
-                                                                      products: {documents_attachments: :blob},
-                                                                      investigation_businesses: {business: :locations},
-                                                                      # activities: {attachment_attachment: :blob}
-    ).find(params[:id])
+    @investigation = Investigation.eager_load(:source,
+                                              products: { documents_attachments: :blob },
+                                              investigation_businesses: { business: :locations },
+                                              documents_attachments: :blob).find(params[:id])
     authorize @investigation, :show?
-    @activities = @investigation.activities.eager_load(:source)
+    preload_activities
   end
 
   def set_investigation
@@ -166,5 +165,19 @@ private
       format.html { render origin }
       format.json { render json: @investigation.errors, status: :unprocessable_entity }
     end
+  end
+
+  def preload_activities
+    @activities = @investigation.activities.eager_load(:source)
+    preload_manually(@activities.select { |a| a.respond_to?("attachment") },
+                     [{ attachment_attachment: :blob }])
+    preload_manually(@activities.select { |a| a.respond_to?("email_file") },
+                     [{ email_file_attachment: :blob }, { email_attachment_attachment: :blob }])
+    preload_manually(@activities.select { |a| a.respond_to?("transcript") },
+                     [{ transcript_attachment: :blob }, { related_attachment_attachment: :blob }])
+  end
+
+  def preload_manually(records, associations)
+    ActiveRecord::Associations::Preloader.new.preload(records, associations)
   end
 end
