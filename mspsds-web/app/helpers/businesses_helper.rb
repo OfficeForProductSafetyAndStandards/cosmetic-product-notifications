@@ -39,7 +39,7 @@ module BusinessesHelper
     if params[:business]
       @business = Business.new(business_params)
       @business.locations.build unless @business.locations.any?
-      @business.contact = Contact.new(business_params.contact_attributes)  unless @business.contact
+      @business.contact = Contact.new(business_params[:contact_attributes])  unless @business.contact
       defaults_on_primary_location(@business)
       @business.source = UserSource.new(user: current_user)
     else
