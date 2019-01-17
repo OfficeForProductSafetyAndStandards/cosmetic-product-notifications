@@ -108,6 +108,7 @@ Set the client credentials for the MSPSDS app:
 Allow keycloak to redirect back to the app after login
 * Select realm > MSPSDS > Clients > mspsds-app
 * Add `https://mspsds-<<SPACE>>.london.cloudapps.digital/*` to the Valid Redirect URIs section and click save
+* Replace all `localhost` values with `https://mspsds-<<SPACE>>.london.cloudapps.digital/`
 
 Follow the steps in [the SMS autheticator README's Configuration section](
 ./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication. Set the 2FA 
