@@ -4,7 +4,7 @@ class InvestigationsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[assign status visibility]
-  before_action :eager_load_investigation_data, only: %i[show]
+  before_action :set_investigation_with_associations, only: %i[show]
 
   # GET /cases
   # GET /cases.json
@@ -120,7 +120,7 @@ class InvestigationsController < ApplicationController
 
 private
 
-  def eager_load_investigation_data
+  def set_investigation_with_associations
     @investigation = Investigation.eager_load(:source,
                                               products: { documents_attachments: :blob },
                                               investigation_businesses: { business: :locations },
@@ -182,6 +182,8 @@ private
                      [{ email_file_attachment: :blob }, { email_attachment_attachment: :blob }])
     preload_manually(@activities.select { |a| a.respond_to?("transcript") },
                      [{ transcript_attachment: :blob }, { related_attachment_attachment: :blob }])
+    preload_manually(@activities.select { |a| a.respond_to?("correspondence") },
+                     [:correspondence])
   end
 
   def preload_manually(records, associations)
