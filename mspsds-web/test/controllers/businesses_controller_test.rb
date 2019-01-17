@@ -76,9 +76,4 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to businesses_url
   end
-
-  test "should search for similar businesses" do
-    get suggested_businesses_url, params: { legal_name: "Biscuit", company_type_code: "private-unlimited" }
-    assert_response :success
-  end
 end

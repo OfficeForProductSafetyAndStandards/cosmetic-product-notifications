@@ -42,9 +42,6 @@ Rails.application.routes.draw do
       end
     end
     resources :businesses, only: %i[new create], controller: "investigations/businesses" do
-      collection do
-        get :suggested
-      end
       member do
         put :link, path: ''
         get :remove
@@ -65,9 +62,6 @@ Rails.application.routes.draw do
   end
 
   resources :businesses, concerns: %i[document_attachable] do
-    collection do
-      get :suggested
-    end
     resources :locations, shallow: true do
       member do
         get :remove

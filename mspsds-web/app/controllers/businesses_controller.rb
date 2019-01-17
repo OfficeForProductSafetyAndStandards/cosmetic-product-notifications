@@ -4,7 +4,7 @@ class BusinessesController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_business, only: %i[show edit update destroy]
-  before_action :create_business, only: %i[new create suggested]
+  before_action :create_business, only: %i[new create]
   before_action :update_business, only: %i[update]
 
   # GET /businesses
@@ -26,12 +26,6 @@ class BusinessesController < ApplicationController
   # GET /businesses/1/edit
   def edit
     @business.locations.build unless @business.locations.any?
-  end
-
-  # GET /businesses/suggested
-  def suggested
-    advanced_search
-    render partial: "suggested"
   end
 
   # POST /businesses
