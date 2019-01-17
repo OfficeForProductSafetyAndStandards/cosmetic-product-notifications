@@ -25,9 +25,6 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
           legal_name: @business.legal_name,
           trading_name: @business.trading_name,
           company_number: @business.company_number,
-          company_type_code: @business.company_type_code,
-          company_status_code: @business.company_status_code,
-          nature_of_business_id: @business.nature_of_business_id
         }
       }
     end
@@ -40,8 +37,6 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
         business: {
           legal_name: '',
           company_number: @business.company_number,
-          company_type_code: @business.company_type_code,
-          nature_of_business_id: @business.nature_of_business_id
         }
       }
     end
