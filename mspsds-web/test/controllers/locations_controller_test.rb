@@ -23,9 +23,10 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
           name: @location.name,
           business_id: @location.business_id,
           country: @location.country,
-          address: @location.address,
+          address_line_1: @location.address_line_1,
+          address_line_2: @location.address_line_2,
           phone_number: @location.phone_number,
-          locality: @location.locality,
+          county: @location.county,
           postal_code: @location.postal_code
         }
       }
@@ -50,9 +51,10 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
         name: @location.name,
         business_id: @location.business_id,
         country: @location.country,
-        address: @location.address,
+        address_line_1: @location.address_line_1,
+        address_line_2: @location.address_line_2,
         phone_number: @location.phone_number,
-        locality: @location.locality,
+        county: @location.county,
         postal_code: @location.postal_code
       }
     }
