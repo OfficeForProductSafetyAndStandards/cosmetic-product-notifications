@@ -2,18 +2,18 @@
 
 one:
   business: one
-  name: MyString
-  address: MyString
+  address_line_1: MyString
+  address_line_2: MyString
   phone_number: 111
-  locality: MyString
+  county: MyString
   country: MyString
   postal_code: MyString
 
 two:
   business: two
-  name: MyString
-  address: MyString
+  address_line_1: MyString
+  address_line_2: MyString
   phone_number: 222
-  locality: MyString
+  county: MyString
   country: MyString
   postal_code: MyString
