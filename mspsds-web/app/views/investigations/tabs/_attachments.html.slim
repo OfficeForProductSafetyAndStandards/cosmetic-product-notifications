@@ -6,5 +6,5 @@ hr.govuk-section-break.govuk-section-break--l
   .govuk-grid-column-full
     = render "documents_list_summary", parent: @investigation
 
-- if @investigation.images.empty? && @investigation.documents.empty?
+- if @investigation.documents.length.zero?
   p No attachments.
