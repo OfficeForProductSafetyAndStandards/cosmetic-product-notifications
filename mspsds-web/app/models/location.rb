@@ -16,19 +16,8 @@ class Location < ApplicationRecord
 
   def short
     [
-      locality,
+      county,
       country
     ].reject(&:blank?).join(", ")
-  end
-
-  def with_registered_office_info(registered_office)
-    self.name = "Registered office address"
-    self.address = "#{registered_office['address_line_1']}, #{registered_office['address_line_2']}"
-    self.phone_number = registered_office["phone_number"]
-    self.locality = registered_office["locality"]
-    self.country = registered_office["country"]
-    self.postal_code = registered_office["postal_code"]
-    save
-    self
   end
 end
