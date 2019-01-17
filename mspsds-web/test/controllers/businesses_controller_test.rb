@@ -32,10 +32,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
         business: {
           legal_name: @business_one.legal_name,
           trading_name: @business_one.trading_name,
-          company_number: @business_one.company_number,
-          company_type_code: @business_one.company_type_code,
-          company_status_code: @business_one.company_status_code,
-          nature_of_business_id: @business_one.nature_of_business_id
+          company_number: @business_one.company_number
         }
       }
     end
@@ -47,9 +44,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
       post businesses_url, params: {
         business: {
           legal_name: '',
-          company_number: @business_one.company_number,
-          company_type_code: @business_one.company_type_code,
-          nature_of_business_id: @business_one.nature_of_business_id
+          company_number: @business_one.company_number
         }
       }
     end
@@ -70,10 +65,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
       business: {
         legal_name: @business_one.legal_name,
         trading_name: @business_one.trading_name,
-        company_number: @business_one.company_number,
-        company_type_code: @business_one.company_type_code,
-        company_status_code: @business_one.company_status_code,
-        nature_of_business_id: @business_one.nature_of_business_id
+        company_number: @business_one.company_number
       }
     }
     assert_redirected_to business_url(@business_one)
