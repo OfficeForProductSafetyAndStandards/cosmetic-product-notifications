@@ -16,6 +16,9 @@ main.govuk-main-wrapper role="main"
               th.govuk-table__header scope="row" Call with
               td.govuk-table__cell = get_call_with_field @correspondence
             tr.govuk-table__row
+              th.govuk-table__header scope="row" Contains consumer info
+              td.govuk-table__cell = @correspondence.has_consumer_info ? "Yes" : "No"
+            tr.govuk-table__row
               th.govuk-table__header scope="row" Summary
               td.govuk-table__cell = @correspondence.overview
             tr.govuk-table__row
