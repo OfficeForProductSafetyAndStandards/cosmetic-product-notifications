@@ -1711,6 +1711,13 @@
         "clientRole" : true,
         "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"
       }, {
+        "id" : "cea5ad59-1722-4467-9fbb-857a4153ef03",
+        "name" : "mspsds_user",
+        "description" : "Role granting access to the Market Surveillance & Product Safety service.",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"
+      }, {
         "id" : "d4f54543-60fb-4630-ad73-7e8bf7f3f576",
         "name" : "uma_protection",
         "composite" : false,
@@ -1740,7 +1747,7 @@
     "attributes" : { },
     "realmRoles" : [ "admin", "user" ],
     "clientRoles" : {
-      "mspsds-app" : [ "admin", "user" ]
+      "mspsds-app" : [ "mspsds_user", "admin", "user" ]
     },
     "subGroups" : [ ]
   }, {
@@ -1750,7 +1757,7 @@
     "attributes" : { },
     "realmRoles" : [ "user" ],
     "clientRoles" : {
-      "mspsds-app" : [ "user" ]
+      "mspsds-app" : [ "mspsds_user", "user" ]
     },
     "subGroups" : [ {
       "id" : "1a612aea-1d3d-47ee-8c3a-76b4448bb97b",
@@ -1805,6 +1812,37 @@
     },
     "notBefore" : 0,
     "groups" : [ "/Admin" ]
+  }, {
+    "id" : "300abf9d-fb01-4a09-859b-25a62573eaa3",
+    "createdTimestamp" : 1547734972391,
+    "username" : "non-mspsds@example.com",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "Non-MSPSDS",
+    "lastName" : "User",
+    "email" : "non-mspsds@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "YTj0rlOf3IFGTu27UhuBguj+UVl0M/O5yLRw/qs72HsYDonDRGrZcHVfVRj5rIGx10ZzFzJ4hQ7JkwSKhrepeA==",
+      "salt" : "LGjxqpd4/ZJk22gBo2k6Qw==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1547736842176,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ],
+      "mspsds-app" : [ "user" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
   }, {
     "id" : "8f825c3b-af73-43f1-b9fe-d405c7addf82",
     "createdTimestamp" : 1547209967480,
