@@ -102,10 +102,6 @@ GEM
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
     aws-sigv4 (1.0.3)
-    axiom-types (0.1.1)
-      descendants_tracker (~> 0.0.4)
-      ice_nine (~> 0.11.0)
-      thread_safe (~> 0.3, >= 0.3.1)
     axlsx_rails (0.5.2)
       actionpack (>= 3.1)
       axlsx (>= 2.0.1)
@@ -126,11 +122,6 @@ GEM
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     clamby (1.6.1)
-    coercible (1.0.0)
-      descendants_tracker (~> 0.0.1)
-    companies-house-rest (0.4.4)
-      activesupport (>= 4.2, < 6)
-      virtus (~> 1.0, >= 1.0.5)
     concurrent-ruby (1.1.4)
     connection_pool (2.2.2)
     coveralls (0.7.1)
@@ -143,8 +134,6 @@ GEM
     debase (0.2.2)
       debase-ruby_core_source (>= 0.10.2)
     debase-ruby_core_source (0.10.4)
-    descendants_tracker (0.0.4)
-      thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.3)
     docile (1.3.1)
     domain_name (0.5.20180417)
@@ -162,7 +151,6 @@ GEM
     elasticsearch-transport (6.1.0)
       faraday
       multi_json
-    equalizer (0.0.11)
     erubi (1.8.0)
     et-orbi (1.1.6)
       tzinfo
@@ -189,7 +177,6 @@ GEM
       domain_name (~> 0.5)
     i18n (1.5.1)
       concurrent-ruby (~> 1.0)
-    ice_nine (0.11.2)
     jaro_winkler (1.5.1)
     jbuilder (2.8.0)
       activesupport (>= 4.2.0)
@@ -402,11 +389,6 @@ GEM
       unf_ext
     unf_ext (0.0.7.5)
     unicode-display_width (1.4.1)
-    virtus (1.0.5)
-      axiom-types (~> 0.1)
-      coercible (~> 1.0)
-      descendants_tracker (~> 0.0, >= 0.0.3)
-      equalizer (~> 0.0, >= 0.0.9)
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
@@ -430,7 +412,6 @@ DEPENDENCIES
   capybara
   cf-app-utils
   clamby
-  companies-house-rest
   elasticsearch-model
   elasticsearch-rails
   jbuilder (~> 2.8)
@@ -463,4 +444,4 @@ RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   1.17.1
+   1.17.2

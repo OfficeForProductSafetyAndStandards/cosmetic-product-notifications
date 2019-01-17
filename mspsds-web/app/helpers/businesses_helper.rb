@@ -35,14 +35,6 @@ module BusinessesHelper
     )
   end
 
-  def companies_house_constants
-    Rails.application.config.companies_house_constants
-  end
-
-  def companies_house_new_business_form_url
-    @investigation.present? ? companies_house_investigation_businesses_path(@investigation) : companies_house_businesses_path
-  end
-
   def create_business
     if params[:business]
       @business = Business.new(business_params)
@@ -59,12 +51,6 @@ module BusinessesHelper
 
   def advanced_search(excluded_ids = [])
     @existing_businesses = search_for_similar_businesses(@business, excluded_ids)
-    begin
-      @companies_house_businesses = search_companies_house_for_similar_businesses(@business)
-    rescue CompaniesHouseClient::ClientException => e
-      Rails.logger.error e.message
-      @companies_house_error = true
-    end
   end
 
   def search_for_similar_businesses(business, excluded_ids)
@@ -81,22 +67,6 @@ module BusinessesHelper
       }
     }).paginate(per_page: BUSINESS_SUGGESTION_LIMIT)
       .records
-  end
-
-  def search_companies_house_for_similar_businesses(business)
-    type_or_status_differ = lambda do |candidate|
-      (business.company_type_code.present? && business.company_type_code != candidate[:company_type_code]) ||
-        (business.company_status_code.present? && business.company_status_code != candidate[:company_status_code])
-      # field matched by nature_of_business_id is not available on the search models returned by companies house
-    end
-    search_companies_house(business.legal_name)
-      .reject(&type_or_status_differ)
-      .first(BUSINESS_SUGGESTION_LIMIT)
-  end
-
-  def search_companies_house(query)
-    companies_house_response = CompaniesHouseClient.instance.companies_house_businesses(query)
-    filter_out_existing_businesses(companies_house_response)
   end
 
   def filter_out_existing_businesses(businesses)

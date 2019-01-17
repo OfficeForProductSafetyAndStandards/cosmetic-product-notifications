@@ -71,13 +71,6 @@ you'll need an account for [GOV.UK Notify](https://www.notifications.service.gov
 - ask someone on the team to invite you.
 
 
-#### Companies House
-
-If you want to pull in business information from Companies House to your development instance,
-or update any API keys for the deployed instances, you'll need an account for
-[Companies House](https://developer.companieshouse.gov.uk/api/docs/)
-- ask someone on the team to invite you.
-
 
 #### GOV.UK Platform as a Service
 

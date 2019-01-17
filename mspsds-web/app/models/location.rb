@@ -21,10 +21,6 @@ class Location < ApplicationRecord
     ].reject(&:blank?).join(", ")
   end
 
-  def from_companies_house?
-    source.show == "Companies House"
-  end
-
   def with_registered_office_info(registered_office)
     self.name = "Registered office address"
     self.address = "#{registered_office['address_line_1']}, #{registered_office['address_line_2']}"
@@ -32,7 +28,6 @@ class Location < ApplicationRecord
     self.locality = registered_office["locality"]
     self.country = registered_office["country"]
     self.postal_code = registered_office["postal_code"]
-    self.source ||= ReportSource.new(name: "Companies House")
     save
     self
   end

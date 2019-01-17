@@ -8,12 +8,10 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     @business_one.source = sources(:business_one)
     @business_two.source = sources(:business_two)
     Business.import refresh: true
-    allow(CompaniesHouseClient.instance).to receive(:companies_house_businesses).and_return([])
   end
 
   teardown do
     logout
-    allow(CompaniesHouseClient.instance).to receive(:companies_house_businesses).and_call_original
   end
 
   test "should get index" do

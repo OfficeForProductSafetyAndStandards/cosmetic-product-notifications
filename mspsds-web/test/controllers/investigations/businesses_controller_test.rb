@@ -7,12 +7,10 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
     @business = businesses(:one)
     @business.source = sources(:business_one)
     Business.import refresh: true
-    allow(CompaniesHouseClient.instance).to receive(:companies_house_businesses).and_return([])
   end
 
   teardown do
     logout
-    allow(CompaniesHouseClient.instance).to receive(:companies_house_businesses).and_call_original
   end
 
   test "should get new" do

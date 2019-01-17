@@ -44,7 +44,6 @@ Rails.application.routes.draw do
     resources :businesses, only: %i[new create], controller: "investigations/businesses" do
       collection do
         get :suggested
-        post :companies_house
       end
       member do
         put :link, path: ''
@@ -68,7 +67,6 @@ Rails.application.routes.draw do
   resources :businesses, concerns: %i[document_attachable] do
     collection do
       get :suggested
-      post :companies_house
     end
     resources :locations, shallow: true do
       member do

@@ -8,11 +8,6 @@ two:
   legal_name: MyString
   trading_name: companyTwoTradingName
 
-active_from_companies_house:
-  legal_name: MyString
-  trading_name: companyTwoTradingName
-  company_number: 1
-
 biscuit_base:
   legal_name: Biscuit Base
   trading_name: Biscuit Base trading name

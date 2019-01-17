@@ -30,22 +30,6 @@ class Business < ApplicationRecord
 
   has_one :source, as: :sourceable, dependent: :destroy
 
-  def nature_of_business
-    companies_house_constants["sic_descriptions"][nature_of_business_id]
-  end
-
-  def company_type
-    companies_house_constants["company_type"][company_type_code]
-  end
-
-  def company_status
-    companies_house_constants["company_status"][company_status_code]
-  end
-
-  def from_companies_house?
-    !company_number.nil?
-  end
-
   def primary_location
     locations.first
   end
@@ -56,24 +40,6 @@ class Business < ApplicationRecord
 
   def name
      trading_name || legal_name
-  end
-
-  def self.from_companies_house_response(response)
-    Business.new.with_company_house_info(response)
-  end
-
-  def with_company_house_info(c_h_info)
-    self.company_number = c_h_info["company_number"]
-    self.legal_name = c_h_info["company_name"]
-    self.company_type_code = c_h_info["type"]
-    self.company_status_code = c_h_info["company_status"]
-    self.source ||= ReportSource.new(name: "Companies House")
-    add_sic_code(c_h_info)
-    save
-
-    registered_office = c_h_info["registered_office_address"]
-    add_registered_location(registered_office) unless registered_office.nil?
-    self
   end
 
   def pretty_description

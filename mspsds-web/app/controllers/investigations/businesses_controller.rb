@@ -17,14 +17,7 @@ class Investigations::BusinessesController < ApplicationController
     advanced_search(excluded_business_ids)
     render partial: "businesses/suggested"
   end
-
-  # POST /businesses/companies_house
-  def companies_house
-    @business = CompaniesHouseClient.instance.create_business_from_companies_house_number params[:company_number]
-    @investigation.businesses << @business
-    redirect_to_investigation_businesses_tab "Business was successfully added."
-  end
-
+  
   # POST /cases/1/businesses
   def create
     respond_to do |format|

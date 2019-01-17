@@ -16,10 +16,6 @@ class BusinessesController < ApplicationController
   # GET /businesses/1
   # GET /businesses/1.json
   def show
-    return unless @business.from_companies_house?
-
-    # TODO uncomment or delete the below line once we know whether we are keeping companies house or not
-    # CompaniesHouseClient.instance.update_business_from_companies_house(@business)
   end
 
   # GET /businesses/new
@@ -36,12 +32,6 @@ class BusinessesController < ApplicationController
   def suggested
     advanced_search
     render partial: "suggested"
-  end
-
-  # POST /businesses/companies_house
-  def companies_house
-    @business = CompaniesHouseClient.instance.create_business_from_companies_house_number params[:company_number]
-    respond_to_business_creation
   end
 
   # POST /businesses
