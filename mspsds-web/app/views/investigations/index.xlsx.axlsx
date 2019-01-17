@@ -63,9 +63,8 @@ book.add_worksheet name: "Products" do |sheet_products|
 end
 
 book.add_worksheet name: "Businesses" do |sheet_businesses|
-  sheet_businesses.add_row %w[ID Company_Number Legal_Name Trading_Name Company_Type
-                                Nature_Of_Business Source
-                                Location Phone_Number Locality Country Postal_Code Locations
+  sheet_businesses.add_row %w[ID Company_Number Legal_Name Trading_Name Source
+                                Address_Line_1 Address_line_2 Phone_Number County Country Postal_Code Locations
                                 Case_ID]
 
   @investigations.each do |investigation|
@@ -76,12 +75,11 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
           business.company_number,
           business.legal_name,
           business.trading_name,
-          business.company_type,
-          business.nature_of_business,
           business.source&.show,
-          business.primary_location ? business.primary_location.address : nil,
+          business.primary_location ? business.primary_location.address_line_1 : nil,
+          business.primary_location ? business.primary_location.address_line_2 : nil,
           business.primary_location ? business.primary_location.phone_number : nil,
-          business.primary_location ? business.primary_location.locality : nil,
+          business.primary_location ? business.primary_location.county : nil,
           business.primary_location ? business.primary_location.country : nil,
           business.primary_location ? business.primary_location.postal_code : nil,
           business.locations.count,
@@ -93,7 +91,7 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
 end
 
 book.add_worksheet name: "Business locations" do |sheet_businesses_locations|
-  sheet_businesses_locations.add_row %w[ID Name Address Phone_Number Locality Country Postal_Code Business_ID Case_ID]
+  sheet_businesses_locations.add_row %w[ID Address_Line_1 Address_Line_2 Phone_Number County Country Postal_Code Business_ID Case_ID]
 
   @investigations.each do |investigation|
     if policy(investigation).show?
@@ -101,10 +99,10 @@ book.add_worksheet name: "Business locations" do |sheet_businesses_locations|
         business.locations.each do |location|
           sheet_businesses_locations.add_row [
             location.id,
-            location.name,
-            location.address,
+            location.address_line_1,
+            location.address_line_2,
             location.phone_number,
-            location.locality,
+            location.county,
             location.country,
             location.postal_code,
             business.id,
