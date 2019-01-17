@@ -1,6 +1,8 @@
 class Location < ApplicationRecord
   default_scope { order(created_at: :asc) }
 
+  validates :name, presence: true
+
   belongs_to :business
 
   has_one :source, as: :sourceable, dependent: :destroy

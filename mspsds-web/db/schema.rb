@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 2019_01_15_111318) do
     t.string "country"
     t.string "county"
     t.datetime "created_at", null: false
+    t.string "name", null: false
     t.string "phone_number"
     t.string "postal_code"
     t.datetime "updated_at", null: false
@@ -155,16 +156,16 @@ ActiveRecord::Schema.define(version: 2019_01_15_111318) do
 
   create_table "products", id: :serial, force: :cascade do |t|
     t.string "batch_number"
-    t.string "category"
+    t.string "brand"
     t.string "country_of_origin"
     t.datetime "created_at", null: false
     t.date "date_placed_on_market"
     t.text "description"
+    t.string "gtin"
+    t.string "model"
     t.string "name"
-    t.string "product_code"
     t.string "product_type"
     t.datetime "updated_at", null: false
-    t.string "webpage"
   end
 
   create_table "rapex_imports", id: :serial, force: :cascade do |t|

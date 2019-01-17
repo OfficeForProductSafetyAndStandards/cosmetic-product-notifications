@@ -5,6 +5,7 @@ module BusinessesHelper
   BUSINESS_SUGGESTION_LIMIT = 3
 
   def defaults_on_primary_location(business)
+    business.primary_location.name ||= "Registered office address"
     business.primary_location.source ||= UserSource.new(user: current_user)
     business
   end

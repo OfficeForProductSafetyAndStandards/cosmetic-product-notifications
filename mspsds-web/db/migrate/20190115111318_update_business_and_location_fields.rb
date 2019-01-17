@@ -27,7 +27,6 @@ class UpdateBusinessAndLocationFields < ActiveRecord::Migration[5.2]
             t.string :address_line_2
             t.string :city
             t.rename :locality, :county
-            t.remove :name
           end
         end
 
@@ -49,7 +48,6 @@ class UpdateBusinessAndLocationFields < ActiveRecord::Migration[5.2]
             t.remove :address_line_2
             t.remove :city
             t.rename :county, :locality
-            t.string :name
           end
 
           drop_table :contacts

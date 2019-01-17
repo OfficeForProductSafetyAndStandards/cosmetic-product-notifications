@@ -2,6 +2,7 @@
 
 one:
   business: one
+  name: MyString
   address_line_1: MyString
   address_line_2: MyString
   phone_number: 111
@@ -11,6 +12,7 @@ one:
 
 two:
   business: two
+  name: MyString
   address_line_1: MyString
   address_line_2: MyString
   phone_number: 222

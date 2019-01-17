@@ -8,6 +8,7 @@ hr.govuk-section-break.govuk-section-break--l
       - @business.locations.each do |location|
         table.govuk-table[style="margin-bottom: 0"]
           tr.govuk-table__row
+            th.govuk-table__header[scope="row" class="govuk-!-width-one-third"] = location.name
             td.govuk-table__cell[class="govuk-!-width-one-half"] = location.summary
             td.govuk-table__cell = location.phone_number
         = link_to "Edit location", edit_location_path(location), class: "govuk-link mspsds-block-link"

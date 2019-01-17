@@ -91,7 +91,7 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
 end
 
 book.add_worksheet name: "Business locations" do |sheet_businesses_locations|
-  sheet_businesses_locations.add_row %w[ID Address_Line_1 Address_Line_2 Phone_Number County Country Postal_Code Business_ID Case_ID]
+  sheet_businesses_locations.add_row %w[ID Name Address_Line_1 Address_Line_2 Phone_Number County Country Postal_Code Business_ID Case_ID]
 
   @investigations.each do |investigation|
     if policy(investigation).show?
@@ -99,6 +99,7 @@ book.add_worksheet name: "Business locations" do |sheet_businesses_locations|
         business.locations.each do |location|
           sheet_businesses_locations.add_row [
             location.id,
+            location.name,
             location.address_line_1,
             location.address_line_2,
             location.phone_number,
