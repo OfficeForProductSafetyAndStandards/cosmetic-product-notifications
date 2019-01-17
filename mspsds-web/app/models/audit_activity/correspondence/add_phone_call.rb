@@ -1,4 +1,5 @@
 class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondence::Base
+  belongs_to :correspondence, class_name: "Correspondence::PhoneCall"
   include ActivityAttachable
   with_attachments attachment: "attachment"
 

@@ -5,3 +5,6 @@ hr.govuk-section-break.govuk-section-break--l
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
     = render "activities_summary", activities: @investigation.activities
+
+- if @investigation.activities.empty?
+  p No activities.
