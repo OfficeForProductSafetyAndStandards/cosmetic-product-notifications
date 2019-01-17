@@ -1,5 +1,6 @@
 class Correspondence < ApplicationRecord
   include DateConcern
+  include UserService
   belongs_to :investigation, required: false
 
   before_validation :strip_whitespace
@@ -25,5 +26,12 @@ class Correspondence < ApplicationRecord
         send("#{attribute}=", send(attribute).strip)
       end
     end
+  end
+
+  def can_be_displayed?
+    return true unless has_consumer_info
+    return true if current_user.organisation == investigation&.source&.user&.organisation
+
+    false
   end
 end
