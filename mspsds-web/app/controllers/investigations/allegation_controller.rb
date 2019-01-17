@@ -24,6 +24,6 @@ private
   end
 
   def investigation_params
-    super.merge(is_case: true)
+    super.merge(case_type: "case")
   end
 end

@@ -10,7 +10,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     )
 
     @question = Investigation.new(
-      is_case: false,
+      case_type: "question",
       question_title: "Question title",
       description: "Question description"
     )

@@ -110,15 +110,11 @@ class Investigation < ApplicationRecord
   end
 
   def pretty_description
-    "#{is_case ? 'Case' : 'Question'} #{pretty_id}"
-  end
-
-  def question_title_prefix
-    question_type && !is_case ? question_type + ' ' : ''
+    "#{case_type.titleize} #{pretty_id}"
   end
 
   def title
-    self.is_case ? case_title : question_title
+    self.is_question ? question_title : case_title
   end
 
   def past_assignees
@@ -142,6 +138,18 @@ class Investigation < ApplicationRecord
 
   def self.exact_fields
     %w[pretty_id]
+  end
+
+  def is_case
+    case_type == "case"
+  end
+
+  def is_question
+    case_type == "question"
+  end
+
+  def is_project
+    case_type == "project"
   end
 
 private

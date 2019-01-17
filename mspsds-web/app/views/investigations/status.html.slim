@@ -3,7 +3,7 @@
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
 h2.govuk-heading-l
-  = "#{case_question_text(@investigation).titleize} status"
+  = "#{@investigation.case_type.titleize} status"
 = form_with(model: @investigation, method: :put, url: status_investigation_url(@investigation)) do |form|
   = render "form_validation_display", errors: @investigation.errors
   .govuk-form-group
