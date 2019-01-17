@@ -1,9 +1,11 @@
 class InvestigationsController < ApplicationController
   include InvestigationsHelper
   include Pundit
+  include LoadHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[show assign status visibility]
+  before_action :set_investigation, only: %i[assign status visibility]
+  before_action :set_investigation_with_associations, only: %i[show]
 
   # GET /cases
   # GET /cases.json
@@ -12,12 +14,20 @@ class InvestigationsController < ApplicationController
     respond_to do |format|
       format.html do
         @answer = search_for_investigations(20)
-        @results = @answer.results.map { |r| r.merge(record: @answer.records.find_by(id: r._id)) }
+        records = Investigation.eager_load(:products, :source).where(id: @answer.results.map(&:_id))
+        @results = @answer.results.map { |r| r.merge(record: records.detect { |rec| rec.id.to_s == r._id }) }
         @investigations = @answer.records
       end
       format.xlsx do
         @answer = search_for_investigations
-        @investigations = @answer.records
+        @investigations = Investigation.eager_load(:reporter,
+                                                   :source,
+                                                   { products: :source },
+                                                   { activities: :source },
+                                                   { businesses: %i[locations source] },
+                                                   :corrective_actions,
+                                                   :correspondences,
+                                                   :tests).where(id: @answer.results.map(&:_id))
       end
     end
   end
@@ -111,6 +121,15 @@ class InvestigationsController < ApplicationController
 
 private
 
+  def set_investigation_with_associations
+    @investigation = Investigation.eager_load(:source,
+                                              products: { documents_attachments: :blob },
+                                              investigation_businesses: { business: :locations },
+                                              documents_attachments: :blob).find(params[:id])
+    authorize @investigation, :show?
+    preload_activities
+  end
+
   def set_investigation
     @investigation = Investigation.find(params[:id])
     authorize @investigation, :show?
@@ -154,5 +173,17 @@ private
       format.html { render origin }
       format.json { render json: @investigation.errors, status: :unprocessable_entity }
     end
+  end
+
+  def preload_activities
+    @activities = @investigation.activities.eager_load(:source)
+    preload_manually(@activities.select { |a| a.respond_to?("attachment") },
+                     [{ attachment_attachment: :blob }])
+    preload_manually(@activities.select { |a| a.respond_to?("email_file") },
+                     [{ email_file_attachment: :blob }, { email_attachment_attachment: :blob }])
+    preload_manually(@activities.select { |a| a.respond_to?("transcript") },
+                     [{ transcript_attachment: :blob }, { related_attachment_attachment: :blob }])
+    preload_manually(@activities.select { |a| a.respond_to?("correspondence") },
+                     [:correspondence])
   end
 end
