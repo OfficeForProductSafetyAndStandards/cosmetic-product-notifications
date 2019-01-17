@@ -8,6 +8,8 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require "capybara/rspec"
 
+Capybara.default_driver = :chrome
+
 ENV["HTTP_HOST"] = "localhost"
 ENV["HTTP_PORT"] = "3003"
 Capybara.server_host = ENV["HTTP_HOST"]
@@ -39,10 +41,27 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-Capybara.register_driver :selenium_chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
+# Register headless Chrome as a Selenium driver (default RackTest driver does not support JavaScript)
+Capybara.server = :puma, { Silent: true }
+
+Capybara.register_driver :chrome_headless do |app|
+  options = ::Selenium::WebDriver::Chrome::Options.new
+
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--window-size=1400,1400')
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
-Capybara.javascript_driver = :selenium_chrome
+
+Capybara.javascript_driver = :chrome_headless
+
+RSpec.configure do |config|
+  config.before(:each, type: :system) do
+    driven_by :chrome_headless
+  end
+end
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
