@@ -23,3 +23,9 @@ table.govuk-table
         | Registered office address
       td.govuk-table__cell
         = @business.primary_location&.summary
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Contact
+      td.govuk-table__cell
+        = @business.primary_contact&.summary
+

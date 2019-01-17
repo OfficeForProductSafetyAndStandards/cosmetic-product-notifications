@@ -20,13 +20,13 @@ class Business < ApplicationRecord
 
   has_many :investigation_businesses, dependent: :destroy
   has_many :investigations, through: :investigation_businesses
-  has_many :contacts, dependent: :destroy
+  has_one :contact, dependent: :destroy
 
   has_many :locations, dependent: :destroy
   has_many :corrective_actions, dependent: :destroy
 
   accepts_nested_attributes_for :locations, reject_if: :all_blank
-  accepts_nested_attributes_for :contacts, reject_if: :all_blank
+  accepts_nested_attributes_for :contact, reject_if: :all_blank
 
   has_one :source, as: :sourceable, dependent: :destroy
 
@@ -51,7 +51,11 @@ class Business < ApplicationRecord
   end
 
   def primary_contact
-    contacts.first
+    contact
+  end
+
+  def name
+     trading_name || legal_name
   end
 
   def self.from_companies_house_response(response)

@@ -31,7 +31,7 @@ module BusinessesHelper
       :company_number,
       :nature_of_business_id,
       locations_attributes: %i[id address_line_1 address_line_2 phone_number county country postal_code _destroy],
-      contacts_attributes: %i[id name email phone_number job_title]
+      contact_attributes: %i[id name email phone_number job_title]
     )
   end
 
@@ -47,13 +47,13 @@ module BusinessesHelper
     if params[:business]
       @business = Business.new(business_params)
       @business.locations.build unless @business.locations.any?
-      @business.contacts.build unless @business.contacts.any?
+      @business.contact = Contact.new(business_params.contact_attributes)  unless @business.contact
       defaults_on_primary_location(@business)
       @business.source = UserSource.new(user: current_user)
     else
       @business = Business.new
       @business.locations.build
-      @business.contacts.build
+      @business.contact = Contact.new
     end
   end
 
