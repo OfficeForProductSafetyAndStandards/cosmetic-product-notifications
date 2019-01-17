@@ -1,6 +1,7 @@
 class InvestigationsController < ApplicationController
   include InvestigationsHelper
   include Pundit
+  include LoadHelper
 
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[assign status visibility]
@@ -184,9 +185,5 @@ private
                      [{ transcript_attachment: :blob }, { related_attachment_attachment: :blob }])
     preload_manually(@activities.select { |a| a.respond_to?("correspondence") },
                      [:correspondence])
-  end
-
-  def preload_manually(records, associations)
-    ActiveRecord::Associations::Preloader.new.preload(records, associations)
   end
 end
