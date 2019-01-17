@@ -93,8 +93,11 @@ Set a strong password for the master admin account:
 * Edit the admin user > Credentials
 * Enter and confirm the new password, disable the 'Temporary' option, and click 'Reset Password'
 
+#### Setup clients
+*The instructions in this sections are given for the mspsds client, but should be repeated for all clients required.*
+
 Generate a new client secret for the MSPSDS app:
-* Select realm > MSPSDS > Clients > mspsds-app > Credentials > Regenerate Secret
+* Select realm > OPSS > Clients > mspsds-app > Credentials > Regenerate Secret
 
 Set the client credentials for the MSPSDS app:
 
@@ -106,8 +109,9 @@ Set the client credentials for the MSPSDS app:
 (The client secret is listed on the Keycloak admin console: Clients > mspsds-app > Credentials)
 
 Allow keycloak to redirect back to the app after login
-* Select realm > MSPSDS > Clients > mspsds-app
+* Select realm > OPSS > Clients > mspsds-app
 * Add `https://mspsds-<<SPACE>>.london.cloudapps.digital/*` to the Valid Redirect URIs section and click save
+* Replace all `localhost` values with `https://mspsds-<<SPACE>>.london.cloudapps.digital/`
 
 Follow the steps in [the SMS autheticator README's Configuration section](
 ./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication. Set the 2FA 
