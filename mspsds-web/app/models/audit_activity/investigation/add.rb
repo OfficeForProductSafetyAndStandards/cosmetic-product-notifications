@@ -16,4 +16,8 @@ class AuditActivity::Investigation::Add < AuditActivity::Investigation::Base
     details += "<br>#{self.sanitize_text reporter.other_details}" if reporter.other_details.present?
     details
   end
+
+  def sensitive_body?
+    !investigation.reporter&.can_be_displayed?
+  end
 end

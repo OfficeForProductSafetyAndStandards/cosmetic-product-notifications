@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_122234) do
+ActiveRecord::Schema.define(version: 2019_01_10_114451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_122234) do
     t.string "email_address"
     t.string "email_direction"
     t.string "email_subject"
+    t.boolean "has_consumer_info", default: false, null: false
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"
