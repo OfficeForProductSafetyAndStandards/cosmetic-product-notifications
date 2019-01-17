@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   resources :notifications do
     resources :manual_entry, only: %i[show update]
+    get '/confirmation' => 'manual_entry#confirmation'
   end
 end

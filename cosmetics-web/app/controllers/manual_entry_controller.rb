@@ -1,7 +1,7 @@
 class ManualEntryController < ApplicationController
   include Wicked::Wizard
 
-  steps :add_product_name, :add_external_reference, :check_your_answers, :confirmation
+  steps :add_product_name, :add_external_reference, :check_your_answers
 
   def show
     @notification = Notification.find(params[:notification_id])
@@ -26,6 +26,15 @@ class ManualEntryController < ApplicationController
     @notification = Notification.create
     session[:notification_id] = @notification.id
     redirect_to wizard_path(steps.first, :notification_id => @notification.id)
+  end
+
+  def confirmation
+    @notification = Notification.find(params[:notification_id])
+  end
+
+  def finish_wizard_path
+    @notification = Notification.find(params[:notification_id])
+    notification_path(@notification) + '/confirmation'
   end
 
 private
