@@ -1,26 +1,47 @@
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
+  .govuk-grid-column-one-half
     = form_with(model: [business, location], local: true) do |form|
       = render "form_validation_display", errors: location.errors
-      .govuk-fieldset
+      fieldset.govuk-fieldset
+        .govuk-form-group class=[("govuk-form-group--error" if location.errors[:name].any?)]
+          = form.label :name, "Name", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+          span.govuk-hint#location-name-hint
+            |  E.g. Main office, Warehouse
+          = form.text_field :name, class: "govuk-input search-term", aria_describedby: "location-name-number-hint"
+
+      fieldset.govuk-fieldset
         .govuk-form-group
-          = form.label "Name", class: "govuk-label"
-          span[class="govuk-hint"] E.g. Main office, Warehouse
-          = form.text_field :name, class: "govuk-input govuk-!-width-two-thirds"
+          = form.label :address_line_1, "Building and street",
+                  class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+          = form.text_field :address_line_1, class: "govuk-input search-term"
+
         .govuk-form-group
-          = form.label "Address", class: "govuk-label"
-          = form.text_area :address, class: "govuk-textarea govuk-!-width-two-thirds", rows: 5
+          = form.text_field :address_line_2, class: "govuk-input search-term"
+
+      fieldset.govuk-fieldset
         .govuk-form-group
-          = form.label "City/Town", class: "govuk-label"
-          = form.text_field :locality, class: "govuk-input govuk-!-width-two-thirds"
+          = form.label :city, "Town or city",
+                  class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+          = form.text_field :city, class: "govuk-input search-term"
+
+      fieldset.govuk-fieldset
         .govuk-form-group
-          = form.label "Country", class: "govuk-label"
-          = form.text_field :country, class: "govuk-input govuk-!-width-two-thirds"
+          = form.label :county, "County",
+                  class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+          = form.text_field :county, class: "govuk-input search-term"
+
+      fieldset.govuk-fieldset
         .govuk-form-group
-          = form.label "Post-code", class: "govuk-label"
-          = form.text_field :postal_code, class: "govuk-input govuk-!-width-two-thirds"
+          = form.label :postal_code, "Postcode",
+                  class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+          = form.text_field :postal_code, class: "govuk-input search-term govuk-!-width-one-half"
+
+      fieldset.govuk-fieldset
         .govuk-form-group
-          = form.label "Phone number", class: "govuk-label"
-          = form.text_field :phone_number, class: "govuk-input govuk-!-width-two-thirds"
+          = form.label :country, "Country",
+                  class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+          = form.text_field :country, class: "govuk-input search-term"
+
+      fieldset.govuk-fieldset
         .govuk-form-group
           = form.submit "Save", class: "govuk-button"

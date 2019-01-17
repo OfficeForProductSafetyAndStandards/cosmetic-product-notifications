@@ -85,6 +85,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def location_params
-    params.require(:location).permit(:business_id, :name, :address, :phone_number, :locality, :country, :postal_code)
+    params.require(:location).permit(:business_id, :name, :address_line_1, :address_line_2, :phone_number, :locality, :country, :postal_code)
   end
 end
