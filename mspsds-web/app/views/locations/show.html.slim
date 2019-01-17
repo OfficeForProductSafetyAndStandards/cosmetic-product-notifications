@@ -40,5 +40,4 @@ h2.govuk-heading-l
             | Postal code
           td.govuk-table__cell
             = @location.postal_code
-    - if policy(@location).update?
-      = link_to "Edit details", edit_location_path(@location)
+    = link_to "Edit details", edit_location_path(@location)
