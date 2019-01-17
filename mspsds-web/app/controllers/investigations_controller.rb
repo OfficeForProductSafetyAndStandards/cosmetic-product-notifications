@@ -19,7 +19,14 @@ class InvestigationsController < ApplicationController
       end
       format.xlsx do
         @answer = search_for_investigations
-        @investigations = @answer.records
+        @investigations = Investigation.eager_load(:reporter,
+                                                   :source,
+                                                   { products: :source },
+                                                   { activities: :source },
+                                                   { businesses: %i[locations source] },
+                                                   :corrective_actions,
+                                                   :correspondences,
+                                                   :tests).where(id: @answer.results.map(&:_id))
       end
     end
   end
