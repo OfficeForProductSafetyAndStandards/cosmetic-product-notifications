@@ -1806,6 +1806,26 @@
     "notBefore" : 0,
     "groups" : [ "/Admin" ]
   }, {
+    "id" : "8f825c3b-af73-43f1-b9fe-d405c7addf82",
+    "createdTimestamp" : 1547209967480,
+    "username" : "service-account-cosmetics-app",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "email" : "service-account-cosmetics-app@placeholder.org",
+    "serviceAccountClientId" : "cosmetics-app",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ],
+      "cosmetics-app" : [ "user" ],
+      "mspsds-app" : [ "user" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
     "id" : "72391471-2633-40cd-8be2-3b8879ed04f8",
     "createdTimestamp" : 1536192267336,
     "username" : "service-account-mspsds-app",
