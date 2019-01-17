@@ -184,14 +184,4 @@ class InvestigationTest < ActiveSupport::TestCase
     query = ElasticsearchQuery.new(@business.company_number, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
   end
-
-  test "elasticsearch should not find business type code" do
-    query = ElasticsearchQuery.new(@business.company_type_code, {}, {})
-    assert_not_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
-  end
-
-  test "elasticsearch should not find business status code" do
-    query = ElasticsearchQuery.new(@business.company_status_code, {}, {})
-    assert_not_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
-  end
 end
