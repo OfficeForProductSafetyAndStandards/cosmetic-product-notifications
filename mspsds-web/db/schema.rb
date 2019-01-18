@@ -125,8 +125,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_143423) do
     t.string "hazard_type"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
-    t.boolean "is_private", default: false, null: false
-    t.string "product_type"
+    t.string "product_category"
     t.string "question_title"
     t.string "question_type"
     t.datetime "updated_at", null: false

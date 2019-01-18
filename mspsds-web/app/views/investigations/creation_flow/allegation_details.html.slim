@@ -19,9 +19,9 @@ h1.govuk-heading-xl
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Product Type
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_type].any?)
-          = form.select :product_type, product_categories, { include_blank: true },
+          | Product Category
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_category].any?)
+          = form.select :product_category, product_categories, { include_blank: true },
                   class: "govuk-select", id: "product-category-picker"
 
       fieldset.govuk-fieldset

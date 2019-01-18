@@ -48,7 +48,7 @@ end
 def create_product(notification, name)
   Product.where.not(product_code: "").where(product_code: barcode_from_notification(notification)).first_or_create(
     product_code: barcode_from_notification(notification),
-    name: "#{brand(notification)}, #{name}, #{field_from_notification(notification, "type_numberOfModel")}",
+    name: "#{brand(notification)}, #{name}, #{field_from_notification(notification, 'type_numberOfModel')}",
     description: field_from_notification(notification, "description"),
     category: field_from_notification(notification, "category"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),

@@ -11,7 +11,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
     @allegation = Investigation.new(
       hazard_type: "Blunt force",
-      product_type: "Small Electronics",
+      product_category: "Small Electronics",
       description: "Allegation description"
     )
 
@@ -99,7 +99,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_reporter_details_and_continue
     click_on "Continue"
 
-    assert_text "Product type can't be blank"
+    assert_text "Product category can't be blank"
     assert_text "Hazard type can't be blank"
   end
 
@@ -127,7 +127,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     assert_current_path(/cases\/\d+/)
 
     assert_text "Allegation logged: #{@allegation.title}"
-    assert_text "Product type: #{@allegation.product_type}"
+    assert_text "Product category: #{@allegation.product_category}"
     assert_text "Hazard type: #{@allegation.hazard_type}"
     assert_text @allegation.description
 
@@ -188,7 +188,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
   def fill_allegation_details_and_continue
     fill_in "allegation[description]", with: @allegation.description
     fill_autocomplete "hazard-type-picker", with: @allegation.hazard_type
-    fill_autocomplete "product-category-picker", with: @allegation.product_type
+    fill_autocomplete "product-category-picker", with: @allegation.product_category
     click_on "Continue"
   end
 end

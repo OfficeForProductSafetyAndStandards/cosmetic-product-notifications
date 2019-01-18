@@ -9,7 +9,7 @@ class Investigation < ApplicationRecord
   validates :question_title, presence: true, on: :question_details
   validates :description, presence: true, on: %i[allegation_details question_details]
   validates :hazard_type, presence: true, on: :allegation_details
-  validates :product_type, presence: true, on: :allegation_details
+  validates :product_category, presence: true, on: :allegation_details
 
   validates_length_of :question_title, maximum: 1000
   validates_length_of :description, maximum: 1000
@@ -60,7 +60,7 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: :pretty_id,
-      only: %i[question_title description hazard_type product_type is_closed assignee_id updated_at created_at],
+      only: %i[question_title description hazard_type product_category is_closed assignee_id updated_at created_at],
       include: {
         documents: {
           only: [],
@@ -122,12 +122,12 @@ class Investigation < ApplicationRecord
   end
 
   def self.highlighted_fields
-    %w[*.* pretty_id question_title description hazard_type product_type]
+    %w[*.* pretty_id question_title description hazard_type product_category]
   end
 
   def self.fuzzy_fields
     %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
-       tests.* question_title description hazard_type product_type]
+       tests.* question_title description hazard_type product_category]
   end
 
   def self.exact_fields
@@ -192,7 +192,7 @@ private
   end
 
   def build_title_from_products
-    return product_type.dup if products.empty?
+    return product_category.dup if products.empty?
 
     title_components = []
     title_components << "#{products.length} Products" if products.length > 1

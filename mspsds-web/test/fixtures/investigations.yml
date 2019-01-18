@@ -34,24 +34,24 @@ search_related_reporter:
 
 no_products_case_titles:
   description: Investigation with no products
-  product_type: Alarms
+  product_category: Alarms
   hazard_type: Asphyxiation
   is_closed: false
 
 one_product:
   description: Investigation with one product
-  product_type: Alarms
+  product_category: Alarms
   hazard_type: Asphyxiation
   is_closed: false
 
 two_products_with_common_values:
   description: Investigation with two products
-  product_type: Alarms
+  product_category: Alarms
   hazard_type: Asphyxiation
   is_closed: false
 
 two_products_with_no_common_values:
   description: Investigation with two products
-  product_type: Alarms
+  product_category: Alarms
   hazard_type: Asphyxiation
   is_closed: false

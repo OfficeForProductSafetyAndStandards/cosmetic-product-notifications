@@ -1,7 +1,7 @@
 book = xlsx_package.workbook
 
 book.add_worksheet name: "Cases" do |sheet_investigations|
-  sheet_investigations.add_row %w[ID Status Title Description Product_Type Hazard_Type Assignee Source
+  sheet_investigations.add_row %w[ID Status Title Description Product_Category Hazard_Type Assignee Source
                             Reporter_Name Reporter_Email Reporter_Phone Reporter_Type
                             Products Businesses Activities Correspondences Corrective_Actions Tests]
 
@@ -11,7 +11,7 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
       investigation.is_closed? ? "Closed" : "Open",
       investigation.title,
       investigation.description,
-      investigation.product_type,
+      investigation.product_category,
       investigation.hazard_type,
       investigation.assignee ? investigation.assignee.email : "Unassigned",
       investigation.source&.show,
