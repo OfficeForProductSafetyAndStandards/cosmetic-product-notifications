@@ -29,6 +29,12 @@ RSpec.describe ManualEntryController, type: :controller do
       get(:show, params: { 'notification_id' => notification.id, 'id' => 'add_product_name' })
       expect(response).to render_template(:add_product_name)
     end
+
+    it "redirects to the confirmation page on finish" do
+      notification = Notification.create
+      get(:show, params: { 'notification_id' => notification.id, 'id' => 'wicked_finish' })
+      expect(response).to redirect_to(get_confirmation_url(notification.id))
+    end
   end
 
   describe "POST #update" do
@@ -49,10 +55,18 @@ RSpec.describe ManualEntryController, type: :controller do
 
     it "marks the notification as complete on reaching the final step" do
       notification = Notification.create
-      notification.aasm_state = 'draft_complete'
+      notification.state = 'draft_complete'
       notification.save
       post(:update, params: { 'notification_id' => notification.id, 'id' => 'check_your_answers' })
-      expect(notification.reload.aasm_state).to eq('notification_complete')
+      expect(notification.reload.state).to eq('notification_complete')
+    end
+  end
+
+  describe "GET #confirmation" do
+    it "assigns the correct notification" do
+      notification = Notification.create
+      get(:confirmation, params: { 'notification_id' => notification.id })
+      expect(assigns(:notification)).to eq(notification)
     end
   end
 
@@ -60,5 +74,9 @@ RSpec.describe ManualEntryController, type: :controller do
 
   def get_manual_journey_url(notificationId, step)
     "/notifications/%d/manual_entry/%s" % [notificationId, step]
+  end
+
+  def get_confirmation_url(notificationId)
+    "/notifications/%s/confirmation" % notificationId
   end
 end

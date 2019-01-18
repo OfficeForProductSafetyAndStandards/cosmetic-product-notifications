@@ -15,7 +15,7 @@ class ManualEntryController < ApplicationController
       @notification.update(notification_params)
     end
 
-    if next_step?(steps.last)
+    if step == steps.last
       @notification.submit_notification!
     end
 

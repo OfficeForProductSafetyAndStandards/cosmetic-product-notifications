@@ -14,7 +14,7 @@ RSpec.describe Validators::ManualNotificationValidator do
 
   describe "validate notification" do
     it "adds errors if product_name removed in product_name_added_state" do
-      notification = Notification.create(aasm_state: 'product_name_added', product_name: 'Super Shampoo')
+      notification = Notification.create(state: 'product_name_added', product_name: 'Super Shampoo')
 
       notification.product_name = nil
       notification.save
