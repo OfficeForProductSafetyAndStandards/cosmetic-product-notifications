@@ -6,6 +6,6 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       | Products
-  .govuk-grid-column-full.mspsds-case-list-tab
+  .govuk-grid-column-full
     = render "table", products: @products
     = will_paginate @products
