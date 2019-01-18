@@ -101,7 +101,11 @@ private
   end
 
   def save_attachment
-    @file_blob.save if @file_blob
+    if params[:corrective_action][:related_file] == "Yes"
+      @file_blob.save if @file_blob
+    else
+      @file_blob.purge if @file_blob
+    end
   end
 
   def corrective_action_params
