@@ -17,14 +17,14 @@ class Validators::ManualNotificationValidator < ActiveModel::Validator
     end
   end
 
-  private
+private
 
   MANDATORY_ATTRITBUTES_BY_STATE = [
     %w[state product_name],
     %w[external_reference],
     [],
     []
-  ]
+  ].freeze
 
   def mandatory_attributes(notification)
     state = notification.state

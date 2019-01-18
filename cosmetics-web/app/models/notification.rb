@@ -3,12 +3,12 @@ require_relative 'validators/manual_notification_validator'
 class Notification < ApplicationRecord
   include AASM
 
-  enum state: [
-    :empty, 
-    :product_name_added, 
-    :draft_complete, 
-    :notification_complete
-  ]  
+  enum state: %i[
+    empty
+    product_name_added
+    draft_complete
+    notification_complete
+  ]
 
   before_save :add_product_name!, if: :will_save_change_to_product_name?
   before_save :add_external_reference!, if: :will_save_change_to_external_reference?

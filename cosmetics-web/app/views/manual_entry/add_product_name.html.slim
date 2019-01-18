@@ -13,6 +13,7 @@
                 = form.label "Include the brand, range, individual product name and its "\
                  "use so it can be easily identified and distinguished from other "\
                  "products.", class: "govuk-label"
-                = form.text_field :product_name, class: ["govuk-input", product_name_errors ? "govuk-input--error" : nil]
+                = form.text_field :product_name,
+                    class: ["govuk-input", product_name_errors ? "govuk-input--error" : nil]
             .govuk-form-group
                 = form.submit "Continue", class: "govuk-button"

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ManualEntryController, type: :controller do
-  before(:each) do
+  before do
     authenticate_user
   end
 
@@ -47,8 +47,7 @@ RSpec.describe ManualEntryController, type: :controller do
     it "updates notification parameters if present" do
       notification = Notification.create
       post(:update,
-          params: { 'notification_id' => notification.id, 
-                    'id' => 'add_product_name', 
+          params: { 'notification_id' => notification.id, 'id' => 'add_product_name',
                     'notification' => { 'product_name' => 'Super Shampoo' } })
       expect(notification.reload.product_name).to eq('Super Shampoo')
     end
@@ -72,11 +71,16 @@ RSpec.describe ManualEntryController, type: :controller do
 
   private
 
-  def get_manual_journey_url(notificationId, step)
-    "/notifications/%d/manual_entry/%s" % [notificationId, step]
+  def get_manual_journey_url(notification_id, step)
+    "/notifications/%<notification_id>d/manual_entry/%<step>s" % {
+      notification_id: notification_id,
+      step: step
+    }
   end
 
-  def get_confirmation_url(notificationId)
-    "/notifications/%s/confirmation" % notificationId
+  def get_confirmation_url(notification_id)
+    "/notifications/%<notification_id>d/confirmation" % {
+      notification_id: notification_id
+    }
   end
 end

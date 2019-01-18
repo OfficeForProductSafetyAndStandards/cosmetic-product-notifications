@@ -25,7 +25,7 @@ class ManualEntryController < ApplicationController
   def create
     @notification = Notification.create
     session[:notification_id] = @notification.id
-    redirect_to wizard_path(steps.first, :notification_id => @notification.id)
+    redirect_to wizard_path(steps.first, notification_id: @notification.id)
   end
 
   def confirmation
