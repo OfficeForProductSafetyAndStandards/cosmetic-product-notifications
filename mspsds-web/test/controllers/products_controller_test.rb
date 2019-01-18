@@ -2,7 +2,7 @@ require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_user_with_organisation
+    sign_in_as_user
     @product_one = products(:one)
     @product_one.source = sources(:product_one)
     @product_iphone = products(:iphone)

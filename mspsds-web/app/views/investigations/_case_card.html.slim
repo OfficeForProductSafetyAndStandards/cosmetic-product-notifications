@@ -1,22 +1,18 @@
-- if policy(investigation).show?
-  .govuk-grid-row class=(investigation.is_closed ? "mspsds-case-card mspsds-case-card--closed" : "mspsds-case-card")
-    .govuk-grid-column-one-half
-      span.govuk-caption-m[class="govuk-!-font-size-16"]
-        = "#{case_question_text(investigation).capitalize} #{investigation.pretty_id}"
-      span = link_to investigation.title, investigation
-      - if investigation.is_closed
-        .mspsds-case-card class="mspsds-case-card__status" CLOSED
+.govuk-grid-row class=(investigation.is_closed ? "mspsds-case-card mspsds-case-card--closed" : "mspsds-case-card")
+  .govuk-grid-column-one-half
+    span.govuk-caption-m[class="govuk-!-font-size-16"]
+      = "#{case_question_text(investigation).capitalize} #{investigation.pretty_id}"
+    span = link_to investigation.title, investigation
+    - if investigation.is_closed
+      .mspsds-case-card class="mspsds-case-card__status" CLOSED
+  .govuk-grid-column-one-quarter
+    span.govuk-caption-m[class="govuk-!-font-size-16"] Assigned to
+    span = investigation.assignee ? investigation.assignee.assignee_short_name : "Unassigned"
+  - if sorted_by == "newest"
     .govuk-grid-column-one-quarter
-      span.govuk-caption-m[class="govuk-!-font-size-16"] Assigned to
-      span = investigation.assignee ? investigation.assignee.assignee_short_name : "Unassigned"
+      span.govuk-caption-m[class="govuk-!-font-size-16"] Date created
+      span = "#{time_ago_in_words(investigation.created_at)} ago"
+  - elsif sorted_by == "recent" || sorted_by == "oldest"
     .govuk-grid-column-one-quarter
       span.govuk-caption-m[class="govuk-!-font-size-16"] Last updated
-      span = investigation.updated_at.strftime("%d/%m/%Y")
-- else
-  .govuk-grid-row class=(investigation.is_closed ? "mspsds-case-card mspsds-case-card--closed" : "mspsds-case-card")
-    .govuk-grid-column-one-half
-      span.govuk-caption-m[class="govuk-!-font-size-16"]
-        = "#{case_question_text(investigation).capitalize} #{investigation.pretty_id}"
-      span = link_to "#{case_question_text(investigation).capitalize} restricted", "/"
-      - if investigation.is_closed
-        .mspsds-case-card class="mspsds-case-card__status" CLOSED
+      span = "#{time_ago_in_words(investigation.updated_at)} ago"

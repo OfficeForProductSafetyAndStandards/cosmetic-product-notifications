@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_admin_with_organisation
+    sign_in_as_admin
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
     @correspondence = correspondences(:email)

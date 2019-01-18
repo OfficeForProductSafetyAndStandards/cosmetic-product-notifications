@@ -6,11 +6,11 @@ update_configs:
     update_schedule: "daily"
 
   - package_manager: "java:maven"
-    directory: "‎/keycloak/providers/rest-api"
+    directory: "/keycloak/providers/rest-api"
     update_schedule: "daily"
 
   - package_manager: "java:maven"
-    directory: "‎/keycloak/providers/email"
+    directory: "/keycloak/providers/email"
     update_schedule: "daily"
 
   - package_manager: "javascript"
