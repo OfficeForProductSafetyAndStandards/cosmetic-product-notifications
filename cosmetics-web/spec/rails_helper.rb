@@ -7,7 +7,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require "capybara/rspec"
-
+require "selenium-webdriver"
 Capybara.default_driver = :chrome
 
 ENV["HTTP_HOST"] = "localhost"
@@ -91,26 +91,4 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
-  # config.before(:suite) do
-  #   DatabaseCleaner.clean_with(:truncation)
-  # end
-  #
-  # config.before(:each) do
-  #   DatabaseCleaner.strategy = :transaction
-  # end
-  #
-  # config.before(:each, js: true) do
-  #   DatabaseCleaner.strategy = :truncation
-  # end
-  #
-  # # This block must be here, do not combine with the other `before(:each)` block.
-  # # This makes it so Capybara can see the database.
-  # config.before(:each) do
-  #   DatabaseCleaner.start
-  # end
-  #
-  # config.after(:each) do
-  #   DatabaseCleaner.clean
-  # end
 end

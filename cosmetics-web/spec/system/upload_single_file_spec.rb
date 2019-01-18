@@ -10,7 +10,7 @@ RSpec.describe "Upload a single file", :type => :system do
   end
 
   it "enables to upload a file" do
-    visit "/products/new"
+    visit new_product_path
 
     page.attach_file('uploaded_file', Rails.root + 'spec/fixtures/testImage.png')
     click_button "Upload"

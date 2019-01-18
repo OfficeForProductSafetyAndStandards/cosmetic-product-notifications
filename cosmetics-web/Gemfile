@@ -26,8 +26,3 @@ group :development, :test do
 
   gem "shared-web-dev", path: "./vendor/shared-web/dev"
 end
-
-group :test do
-  gem "capybara"
-  gem "selenium-webdriver"
-end
