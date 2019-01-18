@@ -48,14 +48,11 @@ end
 def create_product(notification, name)
   Product.where.not(product_code: "").where(product_code: barcode_from_notification(notification)).first_or_create(
     product_code: barcode_from_notification(notification),
-    name: name,
+    name: "#{brand(notification)}, #{name}, #{field_from_notification(notification, "type_numberOfModel")}",
     description: field_from_notification(notification, "description"),
-    model: field_from_notification(notification, "type_numberOfModel"),
     category: field_from_notification(notification, "category"),
-    webpage: field_from_notification(notification, "webpage"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     country_of_origin: field_from_notification(notification, "countryOfOrigin"),
-    brand: brand(notification),
     source: ReportSource.new(name: "RAPEX")
   )
 end
