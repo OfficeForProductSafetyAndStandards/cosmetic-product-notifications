@@ -34,7 +34,7 @@ h1.govuk-heading-xl
           - else
             span.govuk-hint
               ' Only products already added to the case are listed.
-            - @one_product = @investigation.products.size == 1 ? @investigation.products[0].id : ''
+            - @one_product = @investigation.products.size == 1 ? @investigation.products.first.id : ''
             = form.collection_select :product_id, @investigation.products, :id, :name, { include_blank: true, selected: @one_product  },
                     class: "govuk-select", id: "product-picker"
       fieldset.govuk-fieldset
@@ -57,7 +57,8 @@ h1.govuk-heading-xl
               ' Only businesses already added to the case are listed.
             - @one_business = @investigation.businesses.size == 1 ? @investigation.businesses.first.id : ''
             = form.collection_select :business_id, @investigation.businesses, :id, :company_name,
-                       { include_blank: true, selected: @one_business }, class: "govuk-select", id: "business-picker"
+                    { include_blank: true, selected: @one_business }, class: "govuk-select", id: "business-picker"
+
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Further details
