@@ -18,7 +18,8 @@ cache:
 
 stages:
   - Build
-  - Test
+  - name: Test
+    if: type = pull_request
   - name: Deploy to int
     if: branch = master AND type != pull_request
   - name: Deploy to staging
