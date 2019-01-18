@@ -92,6 +92,8 @@ COPY --from=sms-authenticator-build /tmp/keycloak/providers ./providers/
 COPY --from=theme-build /tmp/govuk-theme/govuk ./themes/govuk
 COPY --from=theme-build /tmp/govuk-theme/govuk-internal ./themes/govuk-internal
 COPY --from=theme-build /tmp/govuk-theme/govuk-social-providers ./themes/govuk-social-providers
+COPY --from=theme-build /tmp/govuk-theme/govuk-cosmetics ./themes/govuk-cosmetics
+COPY --from=theme-build /tmp/govuk-theme/govuk-mspsds ./themes/govuk-mspsds
 
 # Copy the postgres configuration file
 COPY ./configuration/postgresql-module.xml ./modules/system/layers/keycloak/org/postgresql/main/module.xml
