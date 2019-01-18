@@ -18,7 +18,7 @@ fieldset.govuk-fieldset
       | In plain English, what is it?
       br
       | For example, ‘dishwasher, soft toy, chainsaw...’
-    = form.text_field :product_type, class: "govuk-input search-term", aria_describedby: "report-product-type-hint"
+    = form.text_field :product_type, class: "govuk-input", aria_describedby: "report-product-type-hint"
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:name].any?)]
@@ -28,7 +28,7 @@ fieldset.govuk-fieldset
       | Brand, model name, model number, etc.
       br
       | For example, ‘Bosch Series 2 SMS25EI00G’
-    = form.text_field :name, class: "govuk-input search-term", aria_describedby: "report-product-name-hint"
+    = form.text_field :name, class: "govuk-input", aria_describedby: "report-product-name-hint"
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:product_code].any?)]
@@ -36,7 +36,7 @@ fieldset.govuk-fieldset
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-code-hint.govuk-hint
       | If you have this data, it makes it easier to correctly identify the product
-    = form.text_field :product_code, class: "govuk-input search-term", aria_describedby: "report-product-code-hint"
+    = form.text_field :product_code, class: "govuk-input", aria_describedby: "report-product-code-hint"
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:batch_number].any?)]
@@ -44,14 +44,14 @@ fieldset.govuk-fieldset
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-batch-number-hint.govuk-hint
       | Particularly important if only a specific batch of a product is being reported
-    = form.text_field :batch_number, class: "govuk-input search-term", aria_describedby: "report-batch-number-hint"
+    = form.text_field :batch_number, class: "govuk-input", aria_describedby: "report-batch-number-hint"
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:webpage].any?)]
     = form.label :webpage, "Webpage", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-webpage-hint.govuk-hint
       | A link to the manufacturer's page for this product, or a webpage where it can be bought
-    = form.text_field :webpage, class: "govuk-input search-term", aria_describedby: "report-product-webpage-hint"
+    = form.text_field :webpage, class: "govuk-input", aria_describedby: "report-product-webpage-hint"
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:country_of_origin].any?)]
@@ -70,6 +70,4 @@ fieldset.govuk-fieldset
             aria_describedby: "report-product-description-hint"
 
 .govuk-form-group class=[input_field_width]
-  - if search
-    = form.submit "Search products", id: "search-button", class: "govuk-button", formmethod: "get", formaction: "new"
   = form.submit "Save product", class: "govuk-button"

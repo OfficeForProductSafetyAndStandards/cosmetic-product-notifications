@@ -1,8 +1,0 @@
-h3.govuk-heading-l
-  | Suggested products
-#suggested-products
-  - if [@product.product_code, @product.name, @product.product_type].compact.any?
-    = render "products/suggested"
-  - else
-    p
-      | Start filling in the form for suggestions.
