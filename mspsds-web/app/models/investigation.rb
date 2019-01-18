@@ -6,12 +6,12 @@ class Investigation < ApplicationRecord
 
   attr_accessor :status_rationale
 
-  validates :question_title, presence: true, on: :question_details
-  validates :description, presence: true, on: %i[allegation_details question_details]
+  validates :user_title, presence: true, on: %i[question_details project]
+  validates :description, presence: true, on: %i[allegation_details question_details project]
   validates :hazard_type, presence: true, on: :allegation_details
   validates :product_type, presence: true, on: :allegation_details
 
-  validates_length_of :question_title, maximum: 1000
+  validates_length_of :user_title, maximum: 1000
   validates_length_of :description, maximum: 1000
 
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
@@ -58,7 +58,7 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: %i[pretty_id],
-      only: %i[question_title description hazard_type product_type is_closed updated_at created_at assignee_id],
+      only: %i[user_title description hazard_type product_type is_closed updated_at created_at assignee_id],
       include: {
         documents: {
           only: [],
@@ -114,7 +114,7 @@ class Investigation < ApplicationRecord
   end
 
   def title
-    self.is_question ? question_title : case_title
+    self.is_case ? case_title : user_title
   end
 
   def past_assignees
@@ -128,12 +128,12 @@ class Investigation < ApplicationRecord
   end
 
   def self.highlighted_fields
-    %w[*.* pretty_id question_title description hazard_type product_type]
+    %w[*.* pretty_id user_title description hazard_type product_type]
   end
 
   def self.fuzzy_fields
     %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
-       tests.* question_title description hazard_type product_type]
+       tests.* user_title description hazard_type product_type]
   end
 
   def self.exact_fields
@@ -155,7 +155,9 @@ class Investigation < ApplicationRecord
 private
 
   def create_audit_activity_for_case
-    is_case ? AuditActivity::Investigation::AddAllegation.from(self) : AuditActivity::Investigation::AddQuestion.from(self)
+    AuditActivity::Investigation::AddAllegation.from(self) if is_case
+    AuditActivity::Investigation::AddQuestion.from(self) if is_question
+    AuditActivity::Investigation::AddProject.from(self) if is_project
   end
 
   def create_audit_activity_for_status

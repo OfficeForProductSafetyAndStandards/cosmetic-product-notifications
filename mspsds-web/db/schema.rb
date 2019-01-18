@@ -128,8 +128,8 @@ ActiveRecord::Schema.define(version: 2019_01_17_160320) do
     t.boolean "is_closed", default: false
     t.boolean "is_private", default: false, null: false
     t.string "product_type"
-    t.string "question_title"
     t.datetime "updated_at", null: false
+    t.string "user_title"
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
 

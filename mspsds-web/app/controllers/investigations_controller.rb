@@ -50,6 +50,8 @@ class InvestigationsController < ApplicationController
       redirect_to new_allegation_path
     when "question"
       redirect_to new_question_path
+    when "project"
+      redirect_to new_project_path
     else
       @nothing_selected = true if params[:commit].present?
     end

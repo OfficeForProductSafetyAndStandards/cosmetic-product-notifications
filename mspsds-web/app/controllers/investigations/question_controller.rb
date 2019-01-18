@@ -11,7 +11,7 @@ private
   end
 
   def model_params
-    %i[question_title description]
+    %i[user_title description]
   end
 
   def success_message

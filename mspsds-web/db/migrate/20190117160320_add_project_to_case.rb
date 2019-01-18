@@ -4,6 +4,7 @@ class AddProjectToCase < ActiveRecord::Migration[5.2]
       reversible do |dir|
         change_table :investigations do |t|
           t.remove :question_type
+          t.rename :question_title, :user_title
 
           dir.up do
             t.string :case_type, null: false, default: "case"
