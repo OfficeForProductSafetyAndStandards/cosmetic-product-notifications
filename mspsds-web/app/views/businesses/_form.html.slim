@@ -1,20 +1,20 @@
 = render "form_validation_display", errors: business.errors
 
 fieldset.govuk-fieldset
-  .govuk-form-group class=[("govuk-form-group--error" if business.errors[:legal_name].any?)]
-    = form.label :legal_name, "Legal name",
-            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    span.govuk-hint#business-legal-name-hint
-      |  The registered name of the company
-    = form.text_field :legal_name, class: "govuk-input search-term", aria_describedby: "business-legal-name-hint"
-
-fieldset.govuk-fieldset
   .govuk-form-group class=[("govuk-form-group--error" if business.errors[:trading_name].any?)]
     = form.label :trading_name, "Trading name",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span.govuk-hint#business-trading-name-hint
-      |  The name the business is known by (if different from the legal name)
+      |  The name the business is known by (including Ebay / Amazon seller name if relevant)
     = form.text_field :trading_name, class: "govuk-input search-term", aria_describedby: "business-trading-name-hint"
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=[("govuk-form-group--error" if business.errors[:legal_name].any?)]
+    = form.label :legal_name, "Legal name",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span.govuk-hint#business-legal-name-hint
+      |  If different from the trading name
+    = form.text_field :legal_name, class: "govuk-input search-term", aria_describedby: "business-legal-name-hint"
 
 fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
   .govuk-form-group class=[("govuk-form-group--error" if business.errors[:company_number].any?)]
@@ -22,7 +22,8 @@ fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span.govuk-hint#business-company-number-hint
       |  If you have this information
-    = form.text_field :company_number, class: "govuk-input search-term", aria_describedby: "business-company-number-hint"
+    = form.text_field :company_number,
+            class: "govuk-input search-term", aria_describedby: "business-company-number-hint"
 
 = form.fields_for :locations, business.primary_location do |ff|
   fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]

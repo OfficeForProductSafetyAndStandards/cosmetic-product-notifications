@@ -5,6 +5,6 @@
   .govuk-grid-column-two-thirds
     .govuk-heading-xl
       span.govuk-caption-xl
-        = "Business: #{@business.legal_name}"
+        = "Business: #{@business.trading_name}"
       | Edit location
 = render "form", location: @location, business: nil, edit: true

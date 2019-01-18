@@ -14,7 +14,7 @@ class Business < ApplicationRecord
     end
   end
 
-  validates :legal_name, presence: true
+  validates :trading_name, presence: true
 
   has_many_attached :documents
 
@@ -36,10 +36,6 @@ class Business < ApplicationRecord
 
   def primary_contact
     contact
-  end
-
-  def name
-     trading_name || legal_name
   end
 
   def pretty_description

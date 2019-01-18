@@ -31,14 +31,14 @@ class InvestigationTest < ActiveSupport::TestCase
   test "should create an activity when business is added to investigation" do
     @investigation = Investigation.create
     assert_difference"Activity.count" do
-      @business = Business.new(legal_name: 'Test Company')
+      @business = Business.new(trading_name: 'Test Company')
       @investigation.businesses << @business
     end
   end
 
   test "should create an activity when business is removed from investigation" do
     @investigation = Investigation.create
-    @business = Business.new(legal_name: 'Test Company')
+    @business = Business.new(trading_name: 'Test Company')
     @investigation.businesses << @business
     assert_difference"Activity.count" do
       @investigation.businesses.delete(@business)
@@ -176,7 +176,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "elasticsearch should find business name" do
-    query = ElasticsearchQuery.new(@business.legal_name, {}, {})
+    query = ElasticsearchQuery.new(@business.trading_name, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
   end
 

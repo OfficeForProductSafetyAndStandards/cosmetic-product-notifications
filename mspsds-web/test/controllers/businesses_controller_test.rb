@@ -28,9 +28,9 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Business.count") do
       post businesses_url, params: {
         business: {
-          legal_name: @business_one.legal_name,
-          trading_name: @business_one.trading_name,
-          company_number: @business_one.company_number
+          legal_name: @business_two.legal_name,
+          trading_name: @business_two.trading_name,
+          company_number: "new_company_number"
         }
       }
     end
@@ -42,7 +42,7 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
       post businesses_url, params: {
         business: {
           legal_name: '',
-          company_number: @business_one.company_number
+          company_number: "new_company_number"
         }
       }
     end
@@ -61,9 +61,9 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
   test "should update business" do
     patch business_url(@business_one), params: {
       business: {
-        legal_name: @business_one.legal_name,
-        trading_name: @business_one.trading_name,
-        company_number: @business_one.company_number
+        legal_name: "new legal_name for business_one",
+        trading_name: "new trading_name for business_one",
+        company_number: "new company number for business_one"
       }
     }
     assert_redirected_to business_url(@business_one)

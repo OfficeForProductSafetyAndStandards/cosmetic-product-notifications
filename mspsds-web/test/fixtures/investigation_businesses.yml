@@ -1,6 +1,6 @@
 one:
   investigation: one
-  business: two
+  business: one
 
 two:
   investigation: search_related_businesses

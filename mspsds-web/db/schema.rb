@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 2019_01_15_111318) do
   create_table "businesses", id: :serial, force: :cascade do |t|
     t.string "company_number"
     t.datetime "created_at", null: false
-    t.string "legal_name", null: false
-    t.string "trading_name"
+    t.string "legal_name"
+    t.string "trading_name", null: false
     t.datetime "updated_at", null: false
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end

@@ -27,10 +27,10 @@ module BusinessesHelper
   # Never trust parameters from the scary internet, only allow the white list through.
   def business_params
     params.require(:business).permit(
+      :id,
       :legal_name,
       :trading_name,
       :company_number,
-      :nature_of_business_id,
       locations_attributes: %i[id address_line_1 address_line_2 phone_number county country postal_code _destroy],
       contact_attributes: %i[id name email phone_number job_title]
     )
@@ -40,7 +40,7 @@ module BusinessesHelper
     if params[:business]
       @business = Business.new(business_params)
       @business.locations.build unless @business.locations.any?
-      @business.contact = Contact.new(business_params[:contact_attributes])  unless @business.contact
+      @business.contact = Contact.new(business_params[:contact_attributes]) unless @business.contact
       defaults_on_primary_location(@business)
       @business.source = UserSource.new(user: current_user)
     else
@@ -55,7 +55,7 @@ module BusinessesHelper
   end
 
   def search_for_similar_businesses(business, excluded_ids)
-    return [] if business.legal_name.blank?
+    return [] if business.trading_name.blank?
 
     Business.search(query: {
       bool: {
@@ -106,7 +106,7 @@ private
     {
       match: {
         "legal_name": {
-          query: business.legal_name,
+          query: business.trading_name,
           fuzziness: "AUTO"
         }
       }

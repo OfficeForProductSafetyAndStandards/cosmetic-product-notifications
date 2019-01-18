@@ -5,9 +5,9 @@ table.govuk-table
   br
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
-        | Legal name
+        | Trading name
       td.govuk-table__cell
-        = @business.legal_name
+        = @business.trading_name
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
         | Trading name
@@ -28,4 +28,3 @@ table.govuk-table
         | Contact
       td.govuk-table__cell
         = @business.primary_contact&.summary
-

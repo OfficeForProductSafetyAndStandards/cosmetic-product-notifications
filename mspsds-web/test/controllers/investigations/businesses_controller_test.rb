@@ -4,8 +4,8 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_admin_with_organisation
     @investigation = investigations(:one)
-    @business = businesses(:one)
-    @business.source = sources(:business_one)
+    @business = businesses(:three)
+    @business.source = sources(:business_three)
     Business.import refresh: true
   end
 
@@ -24,7 +24,7 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
         business: {
           legal_name: @business.legal_name,
           trading_name: @business.trading_name,
-          company_number: @business.company_number,
+          company_number: "new company number",
         }
       }
     end
@@ -36,7 +36,7 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
       post investigation_businesses_url(@investigation), params: {
         business: {
           legal_name: '',
-          company_number: @business.company_number,
+          company_number: "new company number",
         }
       }
     end

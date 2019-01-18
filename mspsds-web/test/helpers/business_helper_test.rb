@@ -11,6 +11,4 @@ class BusinessHelperTest < ActiveSupport::TestCase
 
   teardown do
   end
-
-
 end

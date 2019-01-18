@@ -17,7 +17,7 @@ class Investigations::BusinessesController < ApplicationController
     advanced_search(excluded_business_ids)
     render partial: "businesses/suggested"
   end
-  
+
   # POST /cases/1/businesses
   def create
     respond_to do |format|

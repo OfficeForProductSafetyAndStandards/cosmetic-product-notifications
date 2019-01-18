@@ -32,6 +32,10 @@ business_two:
   type:
   sourceable: two (Business)
 
+business_three:
+  type:
+  sourceable: three (Business)
+
 activity_one:
   type:
   sourceable: one (Activity)

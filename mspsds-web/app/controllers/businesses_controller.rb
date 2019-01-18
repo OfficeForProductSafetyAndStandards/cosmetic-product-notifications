@@ -15,8 +15,7 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/1
   # GET /businesses/1.json
-  def show
-  end
+  def show; end
 
   # GET /businesses/new
   def new
