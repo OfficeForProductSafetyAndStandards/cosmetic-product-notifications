@@ -40,6 +40,18 @@ RUN mvn -q --file ./email/pom.xml package
 RUN cp ./email/target/notify-email-provider-jar-with-dependencies.jar ./providers/
 
 
+# Build and copy the mobile number registration form action
+FROM maven as registration-form-build
+
+WORKDIR /tmp/keycloak
+
+COPY ./providers/registration-form ./registration-form
+RUN mkdir -p ./providers
+
+RUN mvn -q --file ./registration-form/pom.xml package
+RUN cp ./registration-form/target/mobile-number-form-action-jar-with-dependencies.jar ./providers/
+
+
 # Build and copy the user groups resource provider
 FROM maven as rest-api-build
 
@@ -86,6 +98,7 @@ COPY --from=keycloak-build /tmp/keycloak/package .
 # Copy the custom providers from the relevant docker images
 COPY --from=rest-api-build /tmp/keycloak/providers ./providers/
 COPY --from=notify-email-build /tmp/keycloak/providers ./providers/
+COPY --from=registration-form-build /tmp/keycloak/providers ./providers/
 COPY --from=sms-authenticator-build /tmp/keycloak/providers ./providers/
 
 # Copy the themes from the theme-build docker image
