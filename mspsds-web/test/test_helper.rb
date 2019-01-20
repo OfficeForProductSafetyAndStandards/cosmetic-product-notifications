@@ -115,11 +115,12 @@ private
     ]
   end
 
-  def stub_user_credentials(user:, groups:, is_admin: false, is_opss: true)
+  def stub_user_credentials(user:, groups:, is_admin: false, is_opss: true, is_mspsds: true)
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user, groups))
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
     allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_opss)
+    allow(Keycloak::Client).to receive(:has_role?).with(:mspsds_user).and_return(is_mspsds)
   end
 
   def format_user_for_get_userinfo(user, groups)
