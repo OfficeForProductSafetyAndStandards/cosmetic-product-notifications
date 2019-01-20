@@ -41,13 +41,23 @@ class ActiveSupport::TestCase
     users = all_users
     user = users.detect { |u| u.last_name == user_name }
     user.organisation = organisation
-    group = organisation.id
-    user_groups = [{ id: user[:id], groups: [group] }].to_json
 
-    stub_user_credentials(user: user, groups: [group], is_admin: is_admin, is_opss: organisation.name == organisations[1].name)
+    if organisation.present?
+      group = organisation.id
+      user_groups = [{ id: user[:id], groups: [group] }].to_json
+    end
+
+    is_mspsds_user = organisation.present?
+    is_opss_user = organisation&.name == organisations[1].name
+
+    stub_user_credentials(user: user, groups: [group], is_admin: is_admin, is_opss: is_opss_user, is_mspsds: is_mspsds_user)
     stub_user_group_data(user_groups: user_groups)
     stub_user_data(users: users)
     stub_client_config
+  end
+
+  def sign_in_as_non_mspsds_user
+    sign_in_as_user(user_name: "User_three", organisation: nil)
   end
 
   def sign_in_as_non_opss_user
@@ -59,7 +69,7 @@ class ActiveSupport::TestCase
   end
 
   def all_users
-    [admin_user, test_user, test_user(name: "User_two"), test_user(name: "User_three")]
+    [admin_user, test_user(name: "User_one"), test_user(name: "User_two"), test_user(name: "User_three")]
   end
 
   def logout
