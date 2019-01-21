@@ -34,8 +34,8 @@ h1.govuk-heading-xl
           - else
             span.govuk-hint
               ' Only products already added to the case are listed.
-            - @one_product = @investigation.products.size == 1 ? @investigation.products.first.id : ''
-            = form.collection_select :product_id, @investigation.products, :id, :name, { include_blank: true, selected: @one_product  },
+            = form.collection_select :product_id, @investigation.products, :id, :name,
+                    { include_blank: true, selected: @investigation.products.size == 1 && @investigation.products.first.id },
                     class: "govuk-select", id: "product-picker"
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -55,9 +55,9 @@ h1.govuk-heading-xl
           - else
             span.govuk-hint
               ' Only businesses already added to the case are listed.
-            - @one_business = @investigation.businesses.size == 1 ? @investigation.businesses.first.id : ''
             = form.collection_select :business_id, @investigation.businesses, :id, :company_name,
-                    { include_blank: true, selected: @one_business }, class: "govuk-select", id: "business-picker"
+                    { include_blank: true, selected: @investigation.businesses.size == 1 && @investigation.businesses.first.id },
+                    class: "govuk-select", id: "business-picker"
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -76,7 +76,7 @@ h1.govuk-heading-xl
               = form.label :related_file, "Yes", class: "govuk-label govuk-radios__label"
             #conditional-related-file.govuk-radios__conditional.govuk-radios__conditional--hidden
               = render "related_attachment_fields", form: form,
-                file_blob: @file_blob, attachment_name: :file, title: ""
+                file_blob: @file_blob, attachment_name: :file
             .govuk-radios__item
               = form.radio_button :related_file, "No", class: "govuk-radios__input", "data-aria-controls": "conditional-no-related-file"
               = form.label :related_file, "No", class: "govuk-label govuk-radios__label"
