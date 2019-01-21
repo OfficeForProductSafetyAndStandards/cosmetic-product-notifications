@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class CreateProjectTest < ApplicationSystemTestCase
   setup do
-    @project = Investigation.new(description: "new project description", user_title: "project title")
+    @project = Investigation::Project.new(description: "new project description", user_title: "project title")
     sign_in_as_user
     visit new_project_path
   end
@@ -51,8 +51,8 @@ class CreateProjectTest < ApplicationSystemTestCase
   end
 
   def fill_project_details_and_continue
-    fill_in "investigation[description]", with: @project.description
-    fill_in "investigation[user_title]", with: @project.user_title
+    fill_in "investigation_project[description]", with: @project.description
+    fill_in "investigation_project[user_title]", with: @project.user_title
     click_on "Continue"
   end
 end

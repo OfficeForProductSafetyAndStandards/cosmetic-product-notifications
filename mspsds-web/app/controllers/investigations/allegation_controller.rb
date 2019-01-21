@@ -14,6 +14,10 @@ private
     %i[description hazard_type product_type]
   end
 
+  def set_investigation
+    @investigation = Investigation::Allegation.new(investigation_params)
+  end
+
   def success_message
     "Allegation was successfully created."
   end

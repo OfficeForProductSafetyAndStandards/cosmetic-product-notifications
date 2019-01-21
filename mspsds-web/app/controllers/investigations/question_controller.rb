@@ -14,6 +14,10 @@ private
     %i[user_title description]
   end
 
+  def set_investigation
+    @investigation = Investigation::Question.new(investigation_params)
+  end
+
   def success_message
     "Question was successfully created."
   end

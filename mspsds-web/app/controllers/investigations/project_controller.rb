@@ -4,7 +4,7 @@ class Investigations::ProjectController < ApplicationController
   def new; end
 
   def create
-    if @investigation.valid?(:project)
+    if @investigation.valid?
       @investigation.save
       redirect_to investigation_path(@investigation), notice: "Project was successfully created"
     else
@@ -22,6 +22,6 @@ private
   end
 
   def set_investigation
-    @investigation = Investigation.new(project_params.merge(case_type: "project"))
+    @investigation = Investigation::Project.new(project_params.merge(case_type: "project"))
   end
 end

@@ -296,8 +296,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     logout
     sign_in_as_non_opss_user
     get investigations_path
-    assert_not_includes(response.body, @new_investigation.description)
-    assert_includes(response.body, "Case restricted")
+    assert_includes(response.body, "restricted")
   end
 
   test "should not show case to someone without access" do
@@ -312,7 +311,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should show private investigations to creator" do
     create_new_private_case
 
-    get investigations_path
+    get investigation_path(@new_investigation)
     assert_includes(response.body, @new_investigation.pretty_id)
   end
 
@@ -323,11 +322,11 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         description: description
       }
     }
-    @new_investigation = Investigation.find_by(description: description)
-    put visibility_investigation_url(@new_investigation), params: {
+    put visibility_investigation_url(Investigation.find_by(description: description)), params: {
       investigation: {
         is_private: true
       }
     }
+    @new_investigation = Investigation.find_by(description: description)
   end
 end

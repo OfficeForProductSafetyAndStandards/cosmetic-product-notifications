@@ -109,10 +109,10 @@ class InvestigationsController < ApplicationController
   # POST /cases
   # POST /cases.json
   def create
-    @investigation = Investigation.new(investigation_create_params)
+    @investigation = Investigation::Allegation.new(investigation_create_params)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to investigation_path(@investigation), notice: "Case was successfully created." }
+        format.html { redirect_to investigation_path(@investigation), notice: "Allegation was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
         format.html { render :new }

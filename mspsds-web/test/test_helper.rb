@@ -26,7 +26,7 @@ class ActiveSupport::TestCase
     unless @models_imported
       ActiveRecord::Base.descendants.each do |model|
         if model.respond_to?(:__elasticsearch__)
-          model.import force: true, refresh: true
+          model.import force: true, refresh: true unless (model.name.include? "Allegation") || (model.name.include? "Question") || (model.name.include? "Project")
         end
       end
       @models_imported = true

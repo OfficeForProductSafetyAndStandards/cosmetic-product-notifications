@@ -9,7 +9,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
       email_address: "test@example.com"
     )
 
-    @question = Investigation.new(
+    @question = Investigation::Question.new(
       case_type: "question",
       user_title: "Question title",
       description: "Question description"
