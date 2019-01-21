@@ -10,7 +10,7 @@
             span.govuk-error-message External reference number is a required field
         = form_for(@notification, url: wizard_path, method: :put) do |form|
             .govuk-form-group
-                = form.label "Dummy field for testing wizard", class: "govuk-label"
+                = form.label :external_reference, "Dummy field for testing wizard", class: "govuk-label"
                 = form.text_field :external_reference,
                 class: ["govuk-input", external_reference_errors ? "govuk-input--error" : nil]
             .govuk-form-group

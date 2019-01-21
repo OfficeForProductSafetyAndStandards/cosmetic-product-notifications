@@ -11,12 +11,10 @@ class ManualEntryController < ApplicationController
   def update
     @notification = Notification.find(params[:notification_id])
 
-    if !notification_params.nil?
-      @notification.update(notification_params)
-    end
-
     if step == steps.last
       @notification.submit_notification!
+    elsif !notification_params.nil?
+      @notification.update(notification_params)
     end
 
     render_wizard @notification
@@ -24,7 +22,6 @@ class ManualEntryController < ApplicationController
 
   def create
     @notification = Notification.create
-    session[:notification_id] = @notification.id
     redirect_to wizard_path(steps.first, notification_id: @notification.id)
   end
 
@@ -40,9 +37,6 @@ class ManualEntryController < ApplicationController
 private
 
   def notification_params
-    params.permit(notification: %i[
-          product_name
-          external_reference
-      ])[:notification]
+    params.require(:notification).permit(:product_name, :external_reference)
   end
 end

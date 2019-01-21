@@ -13,42 +13,42 @@ RSpec.describe ManualEntryController, type: :controller do
 
     it "redirects to the first step of the manual web form" do
       get :create
-      expect(response).to redirect_to(get_manual_journey_url(assigns(:notification).id, "add_product_name"))
+      expect(response).to redirect_to(notification_manual_entry_path(assigns(:notification).id, "add_product_name"))
     end
   end
 
   describe "GET #show" do
     it "assigns the correct notification" do
       notification = Notification.create
-      get(:show, params: { 'notification_id' => notification.id, 'id' => 'add_product_name' })
+      get(:show, params: { notification_id: notification.id, id: 'add_product_name' })
       expect(assigns(:notification)).to eq(notification)
     end
 
     it "renders the step template" do
       notification = Notification.create
-      get(:show, params: { 'notification_id' => notification.id, 'id' => 'add_product_name' })
+      get(:show, params: { notification_id: notification.id, id: 'add_product_name' })
       expect(response).to render_template(:add_product_name)
     end
 
     it "redirects to the confirmation page on finish" do
       notification = Notification.create
-      get(:show, params: { 'notification_id' => notification.id, 'id' => 'wicked_finish' })
-      expect(response).to redirect_to(get_confirmation_url(notification.id))
+      get(:show, params: { notification_id: notification.id, id: 'wicked_finish' })
+      expect(response).to redirect_to(notification_path(notification.id) + '/confirmation')
     end
   end
 
   describe "POST #update" do
     it "assigns the correct notification" do
       notification = Notification.create
-      post(:update, params: { 'notification_id' => notification.id, 'id' => 'add_product_name' })
+      post(:update, params: { notification_id: notification.id, id: 'add_product_name',
+                  notification: { product_name: 'Super Shampoo' } })
       expect(assigns(:notification)).to eq(notification)
     end
 
     it "updates notification parameters if present" do
       notification = Notification.create
-      post(:update,
-          params: { 'notification_id' => notification.id, 'id' => 'add_product_name',
-                    'notification' => { 'product_name' => 'Super Shampoo' } })
+      post(:update, params: { notification_id: notification.id, id: 'add_product_name',
+                    notification: { product_name: 'Super Shampoo' } })
       expect(notification.reload.product_name).to eq('Super Shampoo')
     end
 
@@ -56,7 +56,7 @@ RSpec.describe ManualEntryController, type: :controller do
       notification = Notification.create
       notification.state = 'draft_complete'
       notification.save
-      post(:update, params: { 'notification_id' => notification.id, 'id' => 'check_your_answers' })
+      post(:update, params: { notification_id: notification.id, id: 'check_your_answers' })
       expect(notification.reload.state).to eq('notification_complete')
     end
   end
@@ -64,23 +64,8 @@ RSpec.describe ManualEntryController, type: :controller do
   describe "GET #confirmation" do
     it "assigns the correct notification" do
       notification = Notification.create
-      get(:confirmation, params: { 'notification_id' => notification.id })
+      get(:confirmation, params: { notification_id: notification.id })
       expect(assigns(:notification)).to eq(notification)
     end
-  end
-
-  private
-
-  def get_manual_journey_url(notification_id, step)
-    "/notifications/%<notification_id>d/manual_entry/%<step>s" % {
-      notification_id: notification_id,
-      step: step
-    }
-  end
-
-  def get_confirmation_url(notification_id)
-    "/notifications/%<notification_id>d/confirmation" % {
-      notification_id: notification_id
-    }
   end
 end
