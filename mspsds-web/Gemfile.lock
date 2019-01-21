@@ -187,7 +187,7 @@ GEM
     htmlentities (4.3.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.5.1)
+    i18n (1.5.2)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     jaro_winkler (1.5.1)
@@ -232,7 +232,7 @@ GEM
     multipart-post (2.0.0)
     netrc (0.11.0)
     nio4r (2.3.1)
-    nokogiri (1.9.1)
+    nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
     notifications-ruby-client (2.9.0)
       jwt (>= 1.5, < 3)
@@ -245,7 +245,7 @@ GEM
     powerpack (0.1.2)
     public_suffix (3.0.3)
     puma (3.12.0)
-    pundit (2.0.0)
+    pundit (2.0.1)
       activesupport (>= 3.0.0)
     raabro (1.1.6)
     rack (2.0.6)
@@ -294,9 +294,9 @@ GEM
       netrc (~> 0.8)
     reverse_markdown (1.1.0)
       nokogiri
-    roo (2.7.1)
+    roo (2.8.1)
       nokogiri (~> 1)
-      rubyzip (~> 1.1, < 2.0.0)
+      rubyzip (>= 1.2.1, < 2.0.0)
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
@@ -442,7 +442,7 @@ DEPENDENCIES
   pundit
   rails (~> 5.2)
   redcarpet
-  roo (~> 2.7.0)
+  roo (~> 2.8.1)
   rspec-mocks
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.0)
