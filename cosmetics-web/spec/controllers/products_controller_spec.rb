@@ -26,7 +26,7 @@ RSpec.describe ProductsController, type: :controller do
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      get :new, params: {}
       expect(response).to be_successful
     end
   end
@@ -35,12 +35,12 @@ RSpec.describe ProductsController, type: :controller do
     context "with valid params" do
       it "creates a new Product" do
         expect {
-          post :create, params: { product: valid_attributes }, session: valid_session
+          post :create, params: { product: valid_attributes }
         }.to change(Product, :count).by(1)
       end
 
       it "redirects to the created product" do
-        post :create, params: { product: valid_attributes }, session: valid_session
+        post :create, params: { product: valid_attributes }
         expect(response).to redirect_to(Product.last)
       end
     end
