@@ -24,7 +24,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
 
-    if product_params and product_params[:uploaded_file]
+    if product_params && product_params[:uploaded_file]
       @product.name = product_params[:uploaded_file].original_filename
       @product.uploaded_file.attach(product_params[:uploaded_file])
     end
