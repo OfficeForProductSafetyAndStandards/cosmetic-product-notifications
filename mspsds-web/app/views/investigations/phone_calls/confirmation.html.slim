@@ -1,6 +1,6 @@
 - content_for :page_title, "Record phone call"
 - content_for :after_header do
-  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
 main.govuk-main-wrapper role="main"
   h1.govuk-heading-xl
     span.govuk-caption-xl
@@ -15,6 +15,9 @@ main.govuk-main-wrapper role="main"
             tr.govuk-table__row
               th.govuk-table__header scope="row" Call with
               td.govuk-table__cell = get_call_with_field @correspondence
+            tr.govuk-table__row
+              th.govuk-table__header scope="row" Contains consumer info
+              td.govuk-table__cell = @correspondence.has_consumer_info ? "Yes" : "No"
             tr.govuk-table__row
               th.govuk-table__header scope="row" Summary
               td.govuk-table__cell = @correspondence.overview

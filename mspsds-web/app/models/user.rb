@@ -1,16 +1,9 @@
-class User < ActiveHash::Base
-  include ActiveHash::Associations
-  include UserService
-
-  field :first_name
-  field :last_name
-  field :email
-
+class User < Shared::Web::User
   has_many :activities, dependent: :nullify
   has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
   has_many :user_sources, dependent: :delete
 
-  belongs_to :organisation
+  include UserService
 
   def self.find_or_create(attributes)
     groups = attributes.delete(:groups)
@@ -20,7 +13,7 @@ class User < ActiveHash::Base
 
   def self.all(options = {})
     begin
-      all_users = KeycloakClient.instance.all_users
+      all_users = Shared::Web::KeycloakClient.instance.all_users
       self.data = all_users.map { |user| populate_organisation(user) }
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
@@ -31,6 +24,7 @@ class User < ActiveHash::Base
       where(options[:conditions])
     else
       @records ||= []
+
     end
   end
 
@@ -38,10 +32,6 @@ class User < ActiveHash::Base
     groups = attributes.delete(:groups)
     organisation = Organisation.find_by(id: groups)
     attributes.merge(organisation_id: organisation&.id)
-  end
-
-  def full_name
-    "#{first_name} #{last_name}"
   end
 
   def display_name
@@ -59,7 +49,11 @@ class User < ActiveHash::Base
   end
 
   def has_role?(role)
-    KeycloakClient.instance.has_role? role
+    Shared::Web::KeycloakClient.instance.has_role? role
+  end
+
+  def is_opss?
+    has_role? :opss_user
   end
 
   def self.get_assignees_select_options(except: [], use_short_name: false)

@@ -4,6 +4,7 @@ class DocumentTest < ApplicationSystemTestCase
   include UrlHelper
   setup do
     sign_in_as_user
+
     visit new_document_flow_path(investigations(:no_products))
   end
 

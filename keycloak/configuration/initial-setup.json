@@ -1,8 +1,8 @@
 [ {
-  "id" : "mspsds",
-  "realm" : "mspsds",
-  "displayName" : "Market Surveillance & Product Safety",
-  "displayNameHtml" : "Market Surveillance & Product Safety",
+  "id" : "opss",
+  "realm" : "opss",
+  "displayName" : "Office for Product Safety and Standards",
+  "displayNameHtml" : "Office for Product Safety and Standards",
   "notBefore" : 0,
   "revokeRefreshToken" : false,
   "refreshTokenMaxReuse" : 0,
@@ -43,27 +43,27 @@
       "description" : "Default user",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "mspsds"
+      "containerId" : "opss"
     }, {
       "id" : "a3dfe69c-8344-4323-8d28-3df3b282a993",
       "name" : "admin",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "mspsds"
+      "containerId" : "opss"
     }, {
       "id" : "8a5e3da3-8d25-46bf-a768-cc4734f7f15d",
       "name" : "uma_authorization",
       "description" : "${role_uma_authorization}",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "mspsds"
+      "containerId" : "opss"
     }, {
       "id" : "755b044c-16e5-4e75-befd-569443a7a398",
       "name" : "offline_access",
       "description" : "${role_offline-access}",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "mspsds"
+      "containerId" : "opss"
     } ],
     "client" : {
       "realm-management" : [ {
@@ -253,6 +253,13 @@
         "containerId" : "68531a90-8123-44ae-9bc7-21df38edbe52"
       } ],
       "mspsds-app" : [ {
+        "id" : "a06d9d2f-18b8-46c8-8111-ebf89f5579a8",
+        "name" : "opss_user",
+        "description" : "OPSS users",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52"
+      }, {
         "id" : "d4f54543-60fb-4630-ad73-7e8bf7f3f576",
         "name" : "uma_protection",
         "composite" : false,
@@ -300,7 +307,9 @@
       "path" : "/Organisations/Office for Product Safety and Standards",
       "attributes" : { },
       "realmRoles" : [ ],
-      "clientRoles" : { },
+      "clientRoles" : {
+        "mspsds-app" : [ "opss_user" ]
+      },
       "subGroups" : [ ]
     } ]
   } ],
@@ -415,13 +424,13 @@
     "id" : "68531a90-8123-44ae-9bc7-21df38edbe52",
     "clientId" : "account",
     "name" : "${client_account}",
-    "baseUrl" : "/auth/realms/mspsds/account",
+    "baseUrl" : "/auth/realms/opss/account",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "**********",
     "defaultRoles" : [ "manage-account", "view-profile" ],
-    "redirectUris" : [ "/auth/realms/mspsds/account/*" ],
+    "redirectUris" : [ "/auth/realms/opss/account/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -491,6 +500,143 @@
     "nodeReRegistrationTimeout" : 0,
     "defaultClientScopes" : [ "role_list", "profile", "email" ],
     "optionalClientScopes" : [ "address", "phone", "offline_access" ]
+  }, {
+    "id": "121ec424-71bc-4403-829a-44cf4fcb05c5",
+    "clientId": "cosmetics-app",
+    "name": "Notify Cosmetics",
+    "rootUrl": "http://localhost:3002",
+    "adminUrl": "http://localhost:3002",
+    "surrogateAuthRequired": false,
+    "enabled": true,
+    "clientAuthenticatorType": "client-secret",
+    "secret": "bb1c1dde-7b7a-488a-9061-8090b59857ef",
+    "defaultRoles" : [ "user" ],
+    "redirectUris": ["http://localhost:3002/*"],
+    "webOrigins": ["http://localhost:3002"],
+    "notBefore": 0,
+    "bearerOnly": false,
+    "consentRequired": false,
+    "standardFlowEnabled": true,
+    "implicitFlowEnabled": false,
+    "directAccessGrantsEnabled": true,
+    "serviceAccountsEnabled": true,
+    "authorizationServicesEnabled": true,
+    "publicClient": false,
+    "frontchannelLogout": false,
+    "protocol": "openid-connect",
+    "attributes": {
+      "saml.assertion.signature": "false",
+      "saml.force.post.binding": "false",
+      "saml.multivalued.roles": "false",
+      "saml.encrypt": "false",
+      "saml.server.signature": "false",
+      "saml.server.signature.keyinfo.ext": "false",
+      "exclude.session.state.from.auth.response": "false",
+      "saml_force_name_id_format": "false",
+      "saml.client.signature": "false",
+      "tls.client.certificate.bound.access.tokens": "false",
+      "saml.authnstatement": "false",
+      "display.on.consent.screen": "false",
+      "saml.onetimeuse.condition": "false"
+    },
+    "authenticationFlowBindingOverrides": {},
+    "fullScopeAllowed": false,
+    "nodeReRegistrationTimeout": -1,
+    "protocolMappers": [
+      {
+        "id": "862bea5d-613f-4b6c-b82b-1bd07dcbbb81",
+        "name": "Client IP Address",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usersessionmodel-note-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.session.note": "clientAddress",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "clientAddress",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "6ef96afc-5e39-44c1-b0e2-391f528190c6",
+        "name": "Client Host",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usersessionmodel-note-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.session.note": "clientHost",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "clientHost",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "7ab99d7a-bbfd-4ece-8a70-ed71ae4aa6ce",
+        "name": "Client ID",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usersessionmodel-note-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.session.note": "clientId",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "clientId",
+          "jsonType.label": "String"
+        }
+      }
+    ],
+    "defaultClientScopes": [
+      "role_list",
+      "profile",
+      "email"
+    ],
+    "optionalClientScopes": [
+      "address",
+      "phone"
+    ],
+    "authorizationSettings": {
+      "allowRemoteResourceManagement": false,
+      "policyEnforcementMode": "ENFORCING",
+      "resources": [
+        {
+          "name": "Default Resource",
+          "type": "urn:cosmetics-app:resources:default",
+          "ownerManagedAccess": false,
+          "attributes": {},
+          "_id": "764b308d-5447-4292-9d61-1e792672cb70",
+          "uris": [
+            "/*"
+          ]
+        }
+      ],
+      "policies": [
+        {
+          "id": "3d0389e8-42e2-4e50-bfdc-3d2667639c7b",
+          "name": "Default Policy",
+          "description": "A policy that grants access only for users within this realm",
+          "type": "js",
+          "logic": "POSITIVE",
+          "decisionStrategy": "AFFIRMATIVE",
+          "config": {
+            "code": "// by default, grants any permission associated with this policy\n$evaluation.grant();\n"
+          }
+        },
+        {
+          "id": "a83f3e4d-ef50-4802-9f50-32fd904a8d2c",
+          "name": "Default Permission",
+          "description": "A permission that applies to the default resource type",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "defaultResourceType": "urn:cosmetics-app:resources:default",
+            "applyPolicies": "[\"Default Policy\"]"
+          }
+        }
+      ],
+      "scopes": []
+    }
   }, {
     "id" : "629299db-762e-49a8-aeff-b6e5f64b9e52",
     "clientId" : "mspsds-app",
@@ -673,12 +819,12 @@
     "id" : "f898d930-fa25-4b70-b649-19660db491c7",
     "clientId" : "security-admin-console",
     "name" : "${client_security-admin-console}",
-    "baseUrl" : "/auth/admin/mspsds/console/index.html",
+    "baseUrl" : "/auth/admin/opss/console/index.html",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "**********",
-    "redirectUris" : [ "/auth/admin/mspsds/console/*" ],
+    "redirectUris" : [ "/auth/admin/opss/console/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -1550,10 +1696,10 @@
     "_browser_header.xFrameOptions" : "SAMEORIGIN",
     "quickLoginCheckMilliSeconds" : "1000",
     "permanentLockout" : "false",
-    "displayName" : "Market Surveillance & Product Safety",
+    "displayName" : "Office for Product Safety and Standards",
     "_browser_header.xRobotsTag" : "none",
     "maxFailureWaitSeconds" : "900",
-    "displayNameHtml" : "Market Surveillance & Product Safety",
+    "displayNameHtml" : "Office for Product Safety and Standards",
     "minimumQuickLoginWaitSeconds" : "60",
     "failureFactor" : "30",
     "actionTokenGeneratedByUserLifespan" : "300",
@@ -1622,7 +1768,7 @@
       "composites" : {
         "realm" : [ "create-realm" ],
         "client" : {
-          "mspsds-realm" : [ "manage-users", "impersonation", "manage-authorization", "view-authorization", "query-clients", "query-users", "manage-clients", "query-groups", "view-clients", "create-client", "view-users", "manage-events", "view-events", "manage-realm", "manage-identity-providers", "view-identity-providers", "query-realms", "view-realm" ],
+          "opss-realm" : [ "manage-users", "impersonation", "manage-authorization", "view-authorization", "query-clients", "query-users", "manage-clients", "query-groups", "view-clients", "create-client", "view-users", "manage-events", "view-events", "manage-realm", "manage-identity-providers", "view-identity-providers", "query-realms", "view-realm" ],
           "master-realm" : [ "view-identity-providers", "query-realms", "view-users", "manage-realm", "manage-clients", "impersonation", "manage-identity-providers", "query-clients", "view-authorization", "manage-authorization", "view-realm", "manage-users", "view-events", "query-users", "view-clients", "query-groups", "manage-events", "create-client" ]
         }
       },
@@ -1646,7 +1792,7 @@
     "client" : {
       "security-admin-console" : [ ],
       "admin-cli" : [ ],
-      "mspsds-realm" : [ {
+      "opss-realm" : [ {
         "id" : "ed8e7664-8c15-4d70-bd3c-ec0721edf8a3",
         "name" : "manage-users",
         "description" : "${role_manage-users}",
@@ -1674,7 +1820,7 @@
         "composite" : true,
         "composites" : {
           "client" : {
-            "mspsds-realm" : [ "query-users", "query-groups" ]
+            "opss-realm" : [ "query-users", "query-groups" ]
           }
         },
         "clientRole" : true,
@@ -1728,7 +1874,7 @@
         "composite" : true,
         "composites" : {
           "client" : {
-            "mspsds-realm" : [ "query-clients" ]
+            "opss-realm" : [ "query-clients" ]
           }
         },
         "clientRole" : true,
@@ -2106,8 +2252,8 @@
     "optionalClientScopes" : [ "address", "phone", "offline_access" ]
   }, {
     "id" : "8ea1bb96-55f7-42cb-9bfd-c87a13d86879",
-    "clientId" : "mspsds-realm",
-    "name" : "mspsds Realm",
+    "clientId" : "opss-realm",
+    "name" : "opss Realm",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",

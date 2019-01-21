@@ -1,65 +1,46 @@
-class Investigations::EmailsController < ApplicationController
-  include FileConcern
-  set_attachment_names :email_file, :email_attachment
+class Investigations::EmailsController < Investigations::CorrespondenceController
   set_file_params_key :correspondence_email
-
-  include Wicked::Wizard
-  steps :context, :content, :confirmation
-
-  before_action :set_investigation
-  before_action :set_correspondence, only: %i[show update create]
-  before_action :set_attachments, only: %i[show update create]
-  before_action :store_correspondence, only: %i[update]
-
-  def new
-    clear_session
-    initialize_file_attachments
-    redirect_to wizard_path(steps.first, request.query_parameters)
-  end
-
-  def create
-    update_attachments
-    if correspondence_valid? && @correspondence.save
-      attach_files
-      save_attachments
-      AuditActivity::Correspondence::AddEmail.from(@correspondence, @investigation)
-      redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
-    else
-      redirect_to investigation_path(@investigation), notice: "Correspondence could not be saved."
-    end
-  end
-
-  def show
-    render_wizard
-  end
-
-  def update
-    update_attachments
-    if correspondence_valid?
-      save_attachments
-      redirect_to next_wizard_path
-    else
-      render step
-    end
-  end
+  set_attachment_names :email_file, :email_attachment
 
 private
 
-  def clear_session
-    session[correspondence_params_key] = nil
+  def audit_class
+    AuditActivity::Correspondence::AddEmail
   end
 
-  def set_investigation
-    @investigation = Investigation.find(params[:investigation_id])
+  def model_class
+    Correspondence::Email
   end
 
-  def set_correspondence
-    @correspondence = Correspondence::Email.new correspondence_params
-    @investigation.association(:correspondences).add_to_target(@correspondence)
+  def email_file_metadata
+    get_attachment_metadata_params(:email_file).merge(
+      title: correspondence_params["overview"],
+      description: "Original email as a file"
+    )
   end
 
-  def store_correspondence
-    session[correspondence_params_key] = @correspondence.attributes if @correspondence.valid?(step)
+  def email_attachment_metadata
+    get_attachment_metadata_params(:email_attachment).merge(
+      title: correspondence_params["overview"]
+    )
+  end
+
+  def request_params
+    return {} if params[correspondence_params_key].blank?
+
+    params.require(correspondence_params_key).permit(
+      :correspondent_name,
+      :email_address,
+      :day,
+      :month,
+      :year,
+      :email_direction,
+      :overview,
+      :details,
+      :email_subject,
+      :attachment_description,
+      :has_consumer_info
+    )
   end
 
   def set_attachments
@@ -88,39 +69,5 @@ private
   def save_attachments
     @email_file_blob.save if @email_file_blob
     @email_attachment_blob.save if @email_attachment_blob
-  end
-
-  def correspondence_params
-    session_params.merge(request_params)
-  end
-
-  def request_params
-    return {} if params[correspondence_params_key].blank?
-
-    params.require(correspondence_params_key).permit(
-      :correspondent_name, :email_address, :day, :month, :year, :email_direction, :overview, :details, :email_subject,
-      :attachment_description
-    )
-  end
-
-  def session_params
-    session[correspondence_params_key] || {}
-  end
-
-  def email_file_metadata
-    get_attachment_metadata_params(:email_file).merge(
-      title: correspondence_params["overview"],
-      description: "Original email as a file"
-    )
-  end
-
-  def email_attachment_metadata
-    get_attachment_metadata_params(:email_attachment).merge(
-      title: correspondence_params["overview"]
-    )
-  end
-
-  def correspondence_params_key
-    "correspondence_email"
   end
 end

@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_143423) do
     t.string "email_address"
     t.string "email_direction"
     t.string "email_subject"
+    t.boolean "has_consumer_info", default: false, null: false
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"
@@ -125,6 +126,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_143423) do
     t.string "hazard_type"
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
+    t.boolean "is_private", default: false, null: false
     t.string "product_category"
     t.string "question_title"
     t.string "question_type"

@@ -1,0 +1,23 @@
+- content_for :page_title, "Update visibility"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+= render "minimal_investigation_heading", investigation: @investigation, title: "Visibility information"
+h2.govuk-heading-l
+  = "#{case_question_text(@investigation).titleize} visibility"
+= form_with(model: @investigation, method: :put, url: visibility_investigation_url(@investigation)) do |form|
+  = render "form_validation_display", errors: @investigation.errors
+  .govuk-form-group
+    span.govuk-hint
+      | Private cases can only be viewed by the creating organisation, the assigned organisation
+      br
+      | or The Office of Product Safety and Standards.
+    fieldset.govuk-fieldset
+      .govuk-radios
+        .govuk-radios__item
+          = form.radio_button :is_private, false, class: "govuk-radios__input"
+          = form.label :is_private, visibility_options[:public], class: "govuk-label govuk-radios__label"
+        .govuk-radios__item
+          = form.radio_button :is_private, true, class: "govuk-radios__input"
+          = form.label :is_private, visibility_options[:private], class: "govuk-label govuk-radios__label"
+  .govuk-form-group
+    = form.submit "Save", class: "govuk-button"

@@ -1,7 +1,8 @@
 class Investigations::ActivitiesController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
+  include Pundit
 
-  before_action :set_investigation, only: %i[create new comment]
+  before_action :set_investigation
   before_action :create_activity, only: %i[create]
 
   def new
@@ -61,6 +62,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
+    authorize @investigation, :show?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

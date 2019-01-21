@@ -7,7 +7,6 @@ ruby File.read(".ruby-version").strip
 gem "will_paginate"
 
 gem "active_hash"
-gem "aws-sdk-s3"
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c593a08"
 gem "axlsx_rails"
 gem "bootsnap", ">= 1.1.0"
@@ -17,7 +16,6 @@ gem "companies-house-rest"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 gem "jbuilder", "~> 2.8"
-gem "keycloak"
 gem "lograge"
 gem "mini_magick"
 gem "pg", "~> 1.1"
@@ -42,7 +40,7 @@ gem "shared-web", path: "./vendor/shared-web"
 
 group :development, :test do
   gem "capybara"
-  gem "roo", "~> 2.7.0"
+  gem "roo", "~> 2.8.1"
   gem "rspec-mocks"
   gem "selenium-webdriver"
 

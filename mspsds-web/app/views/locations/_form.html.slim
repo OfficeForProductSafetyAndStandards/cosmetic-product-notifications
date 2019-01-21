@@ -5,7 +5,7 @@
       .govuk-fieldset
         .govuk-form-group
           = form.label "Name", class: "govuk-label"
-          span[class="govuk-hint"] = "E.g. Main office, Warehouse"
+          span[class="govuk-hint"] E.g. Main office, Warehouse
           = form.text_field :name, class: "govuk-input govuk-!-width-two-thirds"
         .govuk-form-group
           = form.label "Address", class: "govuk-label"
@@ -27,7 +27,7 @@
             .govuk-form-group
               = form.submit "Save", class: "govuk-button"
           - else
-            p = "This location comes from Companies House and can't be edited"
+            p This location comes from Companies House and can't be edited
         - else
           .govuk-form-group
             = form.submit "Save", class: "govuk-button"

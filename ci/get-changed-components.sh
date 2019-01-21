@@ -19,13 +19,13 @@ if [[ "$TOP_LEVEL_CHANGES" =~ keycloak ]]; then
     COMPONENTS="$COMPONENTS keycloak"
 fi
 
-if [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]] || [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-web ]]; then
+if [[ "$TOP_LEVEL_CHANGES" =~ keycloak ]] || [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]] || [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-web ]]; then
     COMPONENTS="$COMPONENTS cosmetics-web cosmetics-worker"
 elif [[ "$TOP_LEVEL_CHANGES" =~ shared-worker ]] || [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-worker ]]; then
     COMPONENTS="$COMPONENTS cosmetics-worker"
 fi
 
-if [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]] || [[ "$TOP_LEVEL_CHANGES" =~ mspsds-web ]]; then
+if [[ "$TOP_LEVEL_CHANGES" =~ keycloak ]] || [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]] || [[ "$TOP_LEVEL_CHANGES" =~ mspsds-web ]]; then
     COMPONENTS="$COMPONENTS mspsds-web mspsds-worker"
 elif [[ "$TOP_LEVEL_CHANGES" =~ shared-worker ]] || [[ "$TOP_LEVEL_CHANGES" =~ mspsds-worker ]]; then
     COMPONENTS="$COMPONENTS mspsds-worker"

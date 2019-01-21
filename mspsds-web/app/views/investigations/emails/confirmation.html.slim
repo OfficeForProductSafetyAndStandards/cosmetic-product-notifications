@@ -1,6 +1,6 @@
 - content_for :page_title, "Confirm email details"
 - content_for :after_header do
-  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
 
 h1.govuk-heading-xl
   span.govuk-caption-xl
@@ -16,6 +16,9 @@ h1.govuk-heading-xl
             th.govuk-table__header scope="row"
               = Correspondence::Email.email_directions[@correspondence.email_direction]
             td.govuk-table__cell = @correspondence.email_address
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Contains consumer info
+            td.govuk-table__cell = @correspondence.has_consumer_info ? "Yes" : "No"
           tr.govuk-table__row
             th.govuk-table__header scope="row" Summary
             td.govuk-table__cell = @correspondence.overview

@@ -1,6 +1,6 @@
 - content_for :page_title, "Record email"
 - content_for :after_header do
-  = link_to "Back to case", investigation_path(@investigation), class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
 
 h1.govuk-heading-xl
   span.govuk-caption-xl
@@ -25,6 +25,21 @@ h1.govuk-heading-xl
         .govuk-form-group [class="govuk-!-width-two-thirds"]
           = form.label :email_address, "Email address", class: "govuk-label"
           = form.text_field :email_address, class: "govuk-input"
+
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+        | Are these consumer contact details?
+        span.govuk-hint class="govuk-!-width-two-thirds"
+          | Consumer contact details are protected by GDPR legislation
+        .govuk-grid-row
+          .govuk-grid-column-one-third
+            .govuk-radios__item
+              = form.radio_button :has_consumer_info, false, class: "govuk-radios__input"
+              = form.label :has_consumer_info, "No", class: "govuk-label govuk-radios__label"
+          .govuk-grid-column-one-third
+            .govuk-radios__item
+              = form.radio_button :has_consumer_info, true, class: "govuk-radios__input"
+              = form.label :has_consumer_info, "Yes", class: "govuk-label govuk-radios__label"
+        p
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Date sent
         = render "date_input", form: form
