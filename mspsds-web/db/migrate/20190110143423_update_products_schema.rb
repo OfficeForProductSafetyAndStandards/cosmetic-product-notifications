@@ -1,7 +1,7 @@
 class UpdateProductsSchema < ActiveRecord::Migration[5.2]
   class Product < ApplicationRecord; end
   def change
-    safety_assured do # rubocop disable: Metrics/BlockLength
+    safety_assured do # rubocop:disable Metrics/BlockLength
       reversible do |dir|
         dir.up do
           change_table :products, bulk: true do |t|
@@ -25,7 +25,7 @@ class UpdateProductsSchema < ActiveRecord::Migration[5.2]
 
 
         dir.down do
-          change_table :products, bulk: true  do |t|
+          change_table :products, bulk: true do |t|
             t.rename :product_code, :gtin
 
             t.rename :category, :product_type
