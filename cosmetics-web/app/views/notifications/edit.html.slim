@@ -1,6 +1,6 @@
 - content_for :page_title, "Check your answers"
 - content_for :after_header do
-  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+  = link_to "Back", "/", class: "govuk-back-link"
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
@@ -48,6 +48,5 @@
         p
             | By submitting this notification you are confirming that, to the best of your knowledge,
             | the details you are providing are correct.
-        = form_for(@notification, url: wizard_path, method: :put) do |form|
-            .govuk-form-group
-                = form.submit "Accept and notify product", class: "govuk-button"
+        a.govuk-button[href=confirmation_notification_path(@notification)]
+            | Accept and notify product

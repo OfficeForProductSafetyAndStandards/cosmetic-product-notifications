@@ -8,8 +8,11 @@ Rails.application.routes.draw do
 
   get '/manual_entry' => 'manual_entry#create'
 
-  resources :notifications do
+  resources :notifications, only: %i[edit] do
+    member do
+      get 'confirmation'
+    end
+    
     resources :manual_entry, only: %i[show update]
-    get '/confirmation' => 'manual_entry#confirmation'
   end
 end
