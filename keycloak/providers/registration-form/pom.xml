@@ -18,6 +18,7 @@
         <keycloak.version>4.3.0.Final</keycloak.version>
         <resteasy.version>3.6.2.Final</resteasy.version>
         <jboss-jaxrs-api_2.0_spec>1.0.1.Final</jboss-jaxrs-api_2.0_spec>
+        <libphonenumber.version>8.9.0</libphonenumber.version>
     </properties>
 
     <dependencies>
@@ -56,6 +57,11 @@
             <artifactId>resteasy-jaxrs</artifactId>
             <version>${resteasy.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>${libphonenumber.version}</version>
         </dependency>
     </dependencies>
 
