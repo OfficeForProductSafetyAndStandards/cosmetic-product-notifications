@@ -4,11 +4,10 @@ class Investigations::BusinessesController < ApplicationController
 
   before_action :set_investigation
   before_action :set_business, only: %i[link remove unlink]
-  before_action :create_business, only: %i[new create suggested]
+  before_action :create_business, only: %i[new create]
 
   # GET /cases/1/businesses/new
-  def new
-  end
+  def new; end
 
   # POST /cases/1/businesses
   def create

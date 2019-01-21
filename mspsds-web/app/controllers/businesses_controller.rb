@@ -18,8 +18,7 @@ class BusinessesController < ApplicationController
   def show; end
 
   # GET /businesses/new
-  def new
-  end
+  def new; end
 
   # GET /businesses/1/edit
   def edit
