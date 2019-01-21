@@ -4,7 +4,7 @@ p
   strong Name:
   = @product.name
 
-  - if @product.uploaded_file.attached?
+  - if @product.uploaded_file.attached? && @product.uploaded_file.metadata["safe"]
     p
       | Currently selected file:
       = link_to @product.uploaded_file.filename, url_for(@product.uploaded_file), target: "_blank"
