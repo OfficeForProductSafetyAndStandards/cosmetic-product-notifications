@@ -34,7 +34,8 @@ private
       :month,
       :year,
       :overview,
-      :details
+      :details,
+      :has_consumer_info
     )
   end
 

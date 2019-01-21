@@ -1,4 +1,5 @@
 class AuditActivity::Correspondence::AddMeeting < AuditActivity::Correspondence::Base
+  belongs_to :correspondence, class_name: "Correspondence::Meeting"
   include ActivityAttachable
   with_attachments transcript: "transcript", related_attachment: "related attachment"
 

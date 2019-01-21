@@ -64,7 +64,7 @@ html.govuk-template.app-html-class[lang="en"]
             ul#navigation.govuk-header__navigation[aria-label="Top Level Navigation"]
               - if user_signed_in?
                 li.govuk-header__navigation-item
-                  = link_to "Your account", user_account_url, class: "govuk-header__link", target: "_blank"
+                  = link_to "Your account", user_account_url, class: "govuk-header__link"
               - if !login_page?
                 li.govuk-header__navigation-item
                   - if user_signed_in?
@@ -84,7 +84,6 @@ html.govuk-template.app-html-class[lang="en"]
             '
             | will help us to improve it.
       = yield :after_header
-
       - if alert
         .govuk-error-summary[aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary"]
           h2#error-summary-title.govuk-error-summary__title

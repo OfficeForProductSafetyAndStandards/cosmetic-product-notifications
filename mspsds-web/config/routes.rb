@@ -83,6 +83,6 @@ Rails.application.routes.draw do
 
   mount PgHero::Engine, at: "pghero"
 
-  root to: redirect(path: "/cases")
+  root to: "homepage#show"
 end
 # rubocop:enable Metrics/BlockLength

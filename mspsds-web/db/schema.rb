@@ -63,10 +63,12 @@ ActiveRecord::Schema.define(version: 2019_01_15_111318) do
 
   create_table "contacts", force: :cascade do |t|
     t.integer "business_id"
+    t.datetime "created_at", null: false
     t.string "email"
     t.string "job_title"
     t.string "name"
     t.string "phone_number"
+    t.datetime "updated_at", null: false
     t.index ["business_id"], name: "index_contacts_on_business_id"
   end
 
@@ -95,6 +97,7 @@ ActiveRecord::Schema.define(version: 2019_01_15_111318) do
     t.string "email_address"
     t.string "email_direction"
     t.string "email_subject"
+    t.boolean "has_consumer_info", default: false, null: false
     t.integer "investigation_id"
     t.string "overview"
     t.string "phone_number"
@@ -132,7 +135,7 @@ ActiveRecord::Schema.define(version: 2019_01_15_111318) do
     t.boolean "is_case", default: true, null: false
     t.boolean "is_closed", default: false
     t.boolean "is_private", default: false, null: false
-    t.string "product_type"
+    t.string "product_category"
     t.string "question_title"
     t.string "question_type"
     t.datetime "updated_at", null: false
@@ -156,16 +159,16 @@ ActiveRecord::Schema.define(version: 2019_01_15_111318) do
 
   create_table "products", id: :serial, force: :cascade do |t|
     t.string "batch_number"
-    t.string "brand"
+    t.string "category"
     t.string "country_of_origin"
     t.datetime "created_at", null: false
     t.date "date_placed_on_market"
     t.text "description"
-    t.string "gtin"
-    t.string "model"
     t.string "name"
+    t.string "product_code"
     t.string "product_type"
     t.datetime "updated_at", null: false
+    t.string "webpage"
   end
 
   create_table "rapex_imports", id: :serial, force: :cascade do |t|

@@ -2,7 +2,7 @@ require "test_helper"
 
 class InvestigationTest < ActiveSupport::TestCase
   setup do
-    sign_in_as_user_with_organisation
+    sign_in_as_user
     @investigation = investigations(:one)
 
     @investigation_with_product = investigations(:search_related_products)
@@ -183,5 +183,46 @@ class InvestigationTest < ActiveSupport::TestCase
   test "elasticsearch should find business number" do
     query = ElasticsearchQuery.new(@business.company_number, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
+  end
+
+  test "visible to creator organisation" do
+    create_new_private_case
+    creator = User.find_by(last_name: "User_one")
+    creator.organisation = organisations[0]
+    user = User.find_by(last_name: "User_two")
+    user.organisation = organisations[0]
+    assert_equal(@new_investigation.visible_to(user), true)
+  end
+
+  test "visible to admin" do
+    create_new_private_case
+    logout
+    sign_in_as_admin
+    user = User.find_by(last_name: "Admin")
+    assert(@new_investigation.visible_to(user))
+  end
+
+  test "visible to assignee organisation" do
+    create_new_private_case
+    assignee = User.find_by(last_name: "User_two")
+    assignee.organisation = organisations[1]
+    user = User.find_by(last_name: "User_three")
+    user.organisation = organisations[1]
+    @new_investigation.assignee = assignee
+    assert(@new_investigation.visible_to(user))
+  end
+
+  test "not visible to no-admin, no-source, no-assignee organisation" do
+    create_new_private_case
+    logout
+    sign_in_as_non_opss_user
+    user = User.find_by(last_name: "User_one")
+    user.organisation = organisations[1]
+    assert_not(@new_investigation.visible_to(user))
+  end
+
+  def create_new_private_case
+    description = "new_investigation_description"
+    @new_investigation = Investigation.create(description: description, is_private: true)
   end
 end

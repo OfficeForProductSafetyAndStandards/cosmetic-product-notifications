@@ -38,7 +38,8 @@ private
       :overview,
       :details,
       :email_subject,
-      :attachment_description
+      :attachment_description,
+      :has_consumer_info
     )
   end
 

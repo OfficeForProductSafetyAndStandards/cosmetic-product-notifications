@@ -4,7 +4,7 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @investigation = investigations(:one)
     @product = products(:one)
-    sign_in_as_user_with_organisation
+    sign_in_as_user
   end
 
   teardown do
