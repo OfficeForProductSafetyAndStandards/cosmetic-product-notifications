@@ -41,12 +41,6 @@ class Business < ApplicationRecord
   def pretty_description
     "Business #{id}"
   end
-
-private
-
-  def add_sic_code(c_h_info)
-    self.nature_of_business_id = c_h_info["sic_codes"][0] if c_h_info["sic_codes"].present?
-  end
 end
 
 Business.import force: true if Rails.env.development? # for auto sync model with elastic search

@@ -27,7 +27,6 @@ module BusinessesHelper
   # Never trust parameters from the scary internet, only allow the white list through.
   def business_params
     params.require(:business).permit(
-      :id,
       :legal_name,
       :trading_name,
       :company_number,
@@ -50,66 +49,7 @@ module BusinessesHelper
     end
   end
 
-  def advanced_search(excluded_ids = [])
-    @existing_businesses = search_for_similar_businesses(@business, excluded_ids)
-  end
-
-  def search_for_similar_businesses(business, excluded_ids)
-    return [] if business.trading_name.blank?
-
-    Business.search(query: {
-      bool: {
-        must: [
-          match_name(business),
-          match_additional_information(business)
-        ].compact,
-        must_not: have_excluded_id(excluded_ids),
-        filter: filters(business)
-      }
-    }).paginate(per_page: BUSINESS_SUGGESTION_LIMIT)
-      .records
-  end
-
-  def filter_out_existing_businesses(businesses)
-    businesses.reject { |business| Business.exists?(company_number: business[:company_number]) }
-  end
-
   def set_business
     @business = Business.find(params[:id])
-  end
-
-private
-
-  def filters(business)
-    {
-      "company_type_code": business.company_type_code,
-      "company_status_code": business.company_status_code,
-      "nature_of_business_id": business.nature_of_business_id
-    }.
-      reject { |_, value| value.blank? }.
-      map do |field, value|
-      {
-        term: { "#{field}": value }
-      }
-    end
-  end
-
-  def have_excluded_id(excluded_ids)
-    {
-      ids: {
-        values: excluded_ids.map(&:to_s)
-      }
-    }
-  end
-
-  def match_name(business)
-    {
-      match: {
-        "legal_name": {
-          query: business.trading_name,
-          fuzziness: "AUTO"
-        }
-      }
-    }
   end
 end

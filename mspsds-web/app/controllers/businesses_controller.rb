@@ -19,7 +19,6 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/new
   def new
-    advanced_search
   end
 
   # GET /businesses/1/edit

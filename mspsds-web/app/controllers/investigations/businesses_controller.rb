@@ -8,14 +8,6 @@ class Investigations::BusinessesController < ApplicationController
 
   # GET /cases/1/businesses/new
   def new
-    advanced_search(@investigation.businesses.map(&:id))
-  end
-
-  # GET /cases/1/businesses/suggested
-  def suggested
-    excluded_business_ids = params[:excluded_businesses].split(",").map(&:to_i)
-    advanced_search(excluded_business_ids)
-    render partial: "businesses/suggested"
   end
 
   # POST /cases/1/businesses
@@ -26,7 +18,6 @@ class Investigations::BusinessesController < ApplicationController
         format.html { redirect_to_investigation_businesses_tab "Business was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
-        advanced_search(@investigation.businesses.map(&:id))
         format.html { render :new }
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
