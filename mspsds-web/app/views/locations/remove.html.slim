@@ -31,8 +31,5 @@
             | Phone
           td.govuk-table__cell
             = @location.phone_number
-    - if policy(@location).update?
-      = form_with url: location_path(@location), method: :delete do |form|
-        = form.submit "Remove location", class: "govuk-button", style: "background-color: #df3034"
-    - else
-      p This location comes from Companies House and can't be removed
+    = form_with url: location_path(@location), method: :delete do |form|
+      = form.submit "Remove location", class: "govuk-button", style: "background-color: #df3034"
