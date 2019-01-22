@@ -41,20 +41,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create investigation and redirect to investigation page" do
-    new_investigation_description = "new_investigation_description"
-    assert_difference("Investigation.count") do
-      post investigations_url, params: {
-        investigation: {
-            description: new_investigation_description
-        }
-      }
-    end
-
-    new_investigation = Investigation.find_by(description: new_investigation_description)
-    assert_redirected_to investigation_path(new_investigation)
-  end
-
   test "should show investigation" do
     get investigation_url(@investigation_one)
     assert_response :success
@@ -317,11 +303,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   def create_new_private_case
     description = "new_investigation_description"
-    post investigations_url, params: {
-      investigation: {
-        description: description
-      }
-    }
+    Investigation::Allegation.create(user_title: "title", description: description)
     put visibility_investigation_url(Investigation.find_by(description: description)), params: {
       investigation: {
         is_private: true

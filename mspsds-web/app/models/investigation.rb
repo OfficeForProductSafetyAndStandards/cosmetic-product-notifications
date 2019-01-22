@@ -106,10 +106,6 @@ class Investigation < ApplicationRecord
   end
 
   def pretty_description
-    "#{case_type.titleize} #{pretty_id}"
-  end
-
-  def pretty_presentation
     "#{case_type.titleize}: #{pretty_id}"
   end
 

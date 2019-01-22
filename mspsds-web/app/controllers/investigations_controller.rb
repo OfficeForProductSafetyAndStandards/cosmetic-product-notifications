@@ -106,21 +106,6 @@ class InvestigationsController < ApplicationController
     respond_to_update(:visibility)
   end
 
-  # POST /cases
-  # POST /cases.json
-  def create
-    @investigation = Investigation::Allegation.new(investigation_create_params)
-    respond_to do |format|
-      if @investigation.save
-        format.html { redirect_to investigation_path(@investigation), notice: "Allegation was successfully created." }
-        format.json { render :show, status: :created, location: @investigation }
-      else
-        format.html { render :new }
-        format.json { render json: @investigation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
 private
 
   def set_investigation_with_associations

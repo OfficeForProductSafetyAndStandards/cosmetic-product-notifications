@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
   resources :project, controller: "investigations/project", only: %i[new create]
 
-  resources :investigations, path: "cases", only: %i[index show new create],
+  resources :investigations, path: "cases", only: %i[index show new],
             concerns: %i[document_attachable] do
     member do
       put :status

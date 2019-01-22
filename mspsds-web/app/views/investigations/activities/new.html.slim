@@ -8,7 +8,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       p.govuk-caption-xl
-        = @investigation.pretty_presentation
+        = @investigation.pretty_description
       | New activity
     = form_with local: true, url: new_investigation_activity_path, method: :get do |form|
       - if @activity_type_empty

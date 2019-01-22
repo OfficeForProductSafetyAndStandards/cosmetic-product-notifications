@@ -7,7 +7,7 @@ class AddProjectToCase < ActiveRecord::Migration[5.2]
           t.rename :question_title, :user_title
 
           dir.up do
-            t.string :investigations, :type, default: "Investigation::Allegation"
+            t.string :type, default: "Investigation::Allegation"
             Investigation.all.each do |investigation|
               investigation.update! type: investigation.is_case ? "Investigation::Allegation" : "Investigation::Question"
             end

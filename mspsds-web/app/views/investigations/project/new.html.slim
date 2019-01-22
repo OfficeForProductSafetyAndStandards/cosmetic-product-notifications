@@ -5,7 +5,7 @@ h1.govuk-heading-xl
   = "New Project"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with(model: @investigation, url: project_index_path, method: :post,) do |form|
+    = form_with(model: @investigation, url: project_index_path, method: :post) do |form|
       = render "form_validation_display", errors: @investigation.errors
 
       fieldset.govuk-fieldset

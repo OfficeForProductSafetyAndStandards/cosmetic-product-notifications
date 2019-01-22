@@ -26,8 +26,4 @@ private
     @page_title = "New Allegation"
     @page_subtitle = "Who's making the allegation?"
   end
-
-  def investigation_params
-    super
-  end
 end

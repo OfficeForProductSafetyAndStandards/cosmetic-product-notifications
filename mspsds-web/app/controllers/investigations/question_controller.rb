@@ -26,8 +26,4 @@ private
     @page_title = "New Question"
     @page_subtitle = "Who did the question come from?"
   end
-
-  def investigation_params
-    super
-  end
 end

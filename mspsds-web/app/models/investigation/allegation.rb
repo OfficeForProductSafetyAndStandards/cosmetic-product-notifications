@@ -7,7 +7,7 @@ class Investigation::Allegation < Investigation
   index_name [Rails.env, "investigations"].join("_")
 
   def self.model_name
-    Investigation.model_name
+    self.superclass.model_name
   end
 
   def title
