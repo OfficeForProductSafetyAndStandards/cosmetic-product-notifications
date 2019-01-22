@@ -17,6 +17,9 @@ h1.govuk-heading-xl
               = Correspondence::Email.email_directions[@correspondence.email_direction]
             td.govuk-table__cell = @correspondence.email_address
           tr.govuk-table__row
+            th.govuk-table__header scope="row" Contains consumer info
+            td.govuk-table__cell = @correspondence.has_consumer_info ? "Yes" : "No"
+          tr.govuk-table__row
             th.govuk-table__header scope="row" Summary
             td.govuk-table__cell = @correspondence.overview
           tr.govuk-table__row

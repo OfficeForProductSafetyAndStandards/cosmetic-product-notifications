@@ -20,6 +20,7 @@ PATH
     shared-web (1.0.0)
       aws-sdk-s3
       govuk_notify_rails
+      keycloak
       rails (~> 5.2.1)
       sidekiq
       sidekiq-cron
@@ -132,7 +133,7 @@ GEM
     htmlentities (4.3.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.5.1)
+    i18n (1.5.2)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.1)
     jbuilder (2.8.0)
@@ -170,7 +171,7 @@ GEM
     multi_json (1.13.1)
     netrc (0.11.0)
     nio4r (2.3.1)
-    nokogiri (1.9.1)
+    nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
     notifications-ruby-client (2.9.0)
       jwt (>= 1.5, < 3)
@@ -230,7 +231,7 @@ GEM
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
-    rspec-rails (3.8.1)
+    rspec-rails (3.8.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -344,7 +345,6 @@ DEPENDENCIES
   cf-app-utils
   clamby
   jbuilder (~> 2.8)
-  keycloak
   mini_magick
   pg (~> 1.1)
   puma (~> 3.0)

@@ -37,26 +37,39 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user_with_organisation
-    groups = [organisations[0][:id]]
-    user = test_user.merge(groups: groups)
-    user_groups = [{ id: user[:id], groups: groups }].to_json
+  def sign_in_as_user(is_admin: false, user_name: "User_one", organisation: organisations[1])
+    users = all_users
+    user = users.detect { |u| u.last_name == user_name }
+    user.organisation = organisation
 
-    stub_user_credentials(user: user, is_admin: false)
+    if organisation.present?
+      group = organisation.id
+      user_groups = [{ id: user[:id], groups: [group] }].to_json
+    end
+
+    is_mspsds_user = organisation.present?
+    is_opss_user = organisation&.name == organisations[1].name
+
+    stub_user_credentials(user: user, groups: [group], is_admin: is_admin, is_opss: is_opss_user, is_mspsds: is_mspsds_user)
     stub_user_group_data(user_groups: user_groups)
-    stub_user_data(users: [admin_user, user])
+    stub_user_data(users: users)
     stub_client_config
   end
 
-  def sign_in_as_admin_with_organisation
-    groups = [organisations[0][:id]]
-    user = admin_user.merge(groups: groups)
-    user_groups = [{ id: user[:id], groups: groups }].to_json
+  def sign_in_as_non_mspsds_user
+    sign_in_as_user(user_name: "User_three", organisation: nil)
+  end
 
-    stub_user_credentials(user: user, is_admin: false)
-    stub_user_group_data(user_groups: user_groups)
-    stub_user_data(users: [user, test_user])
-    stub_client_config
+  def sign_in_as_non_opss_user
+    sign_in_as_user(user_name: "User_one", organisation: organisations[0])
+  end
+
+  def sign_in_as_admin
+    sign_in_as_user(is_admin: true, user_name: "Admin", organisation: organisations[1])
+  end
+
+  def all_users
+    [admin_user, test_user(name: "User_one"), test_user(name: "User_two"), test_user(name: "User_three")]
   end
 
   def logout
@@ -77,11 +90,11 @@ class ActiveSupport::TestCase
 private
 
   def admin_user
-    { id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin" }
+    User.new(id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin")
   end
 
-  def test_user
-    { id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: "User" }
+  def test_user(name: "User_one")
+    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: name)
   end
 
   def group_data
@@ -95,7 +108,7 @@ private
         id: "512c85e6-5a7f-4289-95e2-a78c0e40f05c",
         name: "Organisations",
         path: "/Organisations",
-        subGroups: organisations
+        subGroups: organisations.map(&:attributes)
       }, {
         id: "10036801-2182-4c5b-92d9-b34b1e0a421b",
         name: "Group 2",
@@ -107,19 +120,21 @@ private
 
   def organisations
     [
-      { id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1", subGroups: [] },
-      { id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2", subGroups: [] },
+      Organisation.new(id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1"),
+      Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2"),
     ]
   end
 
-  def stub_user_credentials(user:, is_admin: false)
+  def stub_user_credentials(user:, groups:, is_admin: false, is_opss: true, is_mspsds: true)
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
-    allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user))
+    allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user, groups))
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
+    allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_opss)
+    allow(Keycloak::Client).to receive(:has_role?).with(:mspsds_user).and_return(is_mspsds)
   end
 
-  def format_user_for_get_userinfo(user)
-    { sub: user[:id], email: user[:email], groups: user[:groups], given_name: user[:first_name], family_name: user[:last_name] }.to_json
+  def format_user_for_get_userinfo(user, groups)
+    { sub: user[:id], email: user[:email], groups: groups, given_name: user[:first_name], family_name: user[:last_name] }.to_json
   end
 
   def stub_client_config
@@ -137,7 +152,7 @@ private
   end
 
   def stub_group_data
-    KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
+    Shared::Web::KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
     allow(Keycloak::Internal).to receive(:get_groups).and_return(group_data)
     Organisation.all
   end

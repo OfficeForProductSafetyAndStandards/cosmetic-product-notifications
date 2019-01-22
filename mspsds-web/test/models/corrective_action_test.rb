@@ -5,7 +5,7 @@ class CorrectiveActionTest < ActiveSupport::TestCase
     @investigation = investigations(:one)
     @business = businesses(:one)
     @product = products(:one)
-    sign_in_as_user_with_organisation
+    sign_in_as_user
   end
 
   test "requires an associated investigation, business and product" do
