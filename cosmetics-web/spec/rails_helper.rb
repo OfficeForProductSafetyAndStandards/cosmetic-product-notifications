@@ -63,3 +63,7 @@ end
 def authenticate_user
   allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
 end
+
+def sign_out_user
+  allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
+end

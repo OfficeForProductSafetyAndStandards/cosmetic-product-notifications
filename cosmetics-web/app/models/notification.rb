@@ -25,30 +25,30 @@ class Notification < ApplicationRecord
     end
   end
 
-  private
+private
 
   def all_required_attributes_must_be_set
     mandatory_attributes = mandatory_attributes(state)
 
-    changed.select { |attribute| 
-      mandatory_attributes.include?(attribute) && self[attribute].blank?
-    }.each { |attribute|
-      errors.add attribute, "must not be blank"
+    changed.each { |attribute|
+      if mandatory_attributes.include?(attribute) && self[attribute].blank?
+        errors.add attribute, "must not be blank"
+      end
     }
   end
 
   def mandatory_attributes(state)
     case state
     when 'empty'
-      return %w[product_name]
+      %w[product_name]
     when 'product_name_added'
-      return %w[external_reference] + mandatory_attributes('empty')
+      %w[external_reference] + mandatory_attributes('empty')
     when 'external_reference_added'
-      return mandatory_attributes('product_name_added')
+      mandatory_attributes('product_name_added')
     when 'draft_complete'
-      return mandatory_attributes('external_reference_added')
+      mandatory_attributes('external_reference_added')
     when 'notification_complete'
-      return mandatory_attributes('draft_complete')
+      mandatory_attributes('draft_complete')
     end
   end
 end

@@ -5,6 +5,10 @@ RSpec.describe ManualEntryController, type: :controller do
     authenticate_user
   end
 
+  after do
+    sign_out_user
+  end
+
   describe "GET #create" do
     it "creates new notification object" do
       get :create

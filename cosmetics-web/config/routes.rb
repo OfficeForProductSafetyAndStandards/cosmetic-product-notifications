@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     member do
       get 'confirmation'
     end
-    
+
     resources :manual_entry, only: %i[show update]
   end
 end
