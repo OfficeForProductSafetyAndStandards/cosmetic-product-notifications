@@ -5,4 +5,4 @@ Rails.application.config.document_analyzers = Rails.application.config.active_st
 Rails.application.config.document_analyzers.append Shared::Web::AntiVirusAnalyzer
 # MasterAnalyzer is the only one that we pass to active_storage
 Rails.application.config.active_storage.analyzers = [Shared::Web::MasterAnalyzer]
-Rails.application.config.active_storage.queue = :mspsds
+Rails.application.config.active_storage.queue = :cosmetics
