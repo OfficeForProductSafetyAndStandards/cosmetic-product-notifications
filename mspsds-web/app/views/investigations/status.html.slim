@@ -3,7 +3,7 @@
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
 h2.govuk-heading-l
-  = "#{case_question_text(@investigation).titleize} status"
+  = "#{@investigation.case_type.titleize} status"
 = form_with(model: @investigation, method: :put, url: status_investigation_url(@investigation)) do |form|
   = render "form_validation_display", errors: @investigation.errors
   .govuk-form-group
@@ -14,10 +14,10 @@ h2.govuk-heading-l
       .govuk-radios
         .govuk-radios__item
           = form.radio_button :is_closed, false, class: "govuk-radios__input"
-          = form.label :is_closed, "Open", class: "govuk-label govuk-radios__label"
+          = form.label :is_closed, "Open", value: false, class: "govuk-label govuk-radios__label"
         .govuk-radios__item
           = form.radio_button :is_closed, true, class: "govuk-radios__input"
-          = form.label :is_closed, "Closed", class: "govuk-label govuk-radios__label"
+          = form.label :is_closed, "Closed", value: true, class: "govuk-label govuk-radios__label"
   fieldset.govuk-fieldset
     legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       | Comment / rationale

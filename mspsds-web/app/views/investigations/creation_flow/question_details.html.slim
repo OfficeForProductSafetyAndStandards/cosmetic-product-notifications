@@ -20,10 +20,10 @@ h1.govuk-heading-xl
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Please provide a title
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:question_title].any?)
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:user_title].any?)
           span.govuk-hint#question-title-hint
             | This will help other users identify this question
-          = form.text_field :question_title, class: "govuk-input", "aria-describedby": "question-title-hint",
+          = form.text_field :user_title, class: "govuk-input", "aria-describedby": "question-title-hint",
                   maxlength: 1000
 
       fieldset.govuk-fieldset
