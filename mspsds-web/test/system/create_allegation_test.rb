@@ -9,7 +9,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
       email_address: "test@example.com"
     )
 
-    @allegation = Investigation.new(
+    @allegation = Investigation::Allegation.new(
       hazard_type: "Blunt force",
       product_type: "Small Electronics",
       description: "Allegation description"

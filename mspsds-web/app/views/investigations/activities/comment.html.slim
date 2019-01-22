@@ -8,9 +8,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       p.govuk-caption-xl
-        = @investigation.question_title_prefix
-        = case_question_text(@investigation).titleize + ': '
-        = @investigation.pretty_id
+        = @investigation.pretty_description
       | Add comment
     = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|
       = form.text_area :body, class: "govuk-textarea govuk-!-width-full", aria_describedby: "action__comment-hint",
