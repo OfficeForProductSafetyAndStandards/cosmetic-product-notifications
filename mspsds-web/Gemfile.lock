@@ -294,7 +294,7 @@ GEM
       netrc (~> 0.8)
     reverse_markdown (1.1.0)
       nokogiri
-    roo (2.8.0)
+    roo (2.8.1)
       nokogiri (~> 1)
       rubyzip (>= 1.2.1, < 2.0.0)
     rspec-mocks (3.8.0)
@@ -333,7 +333,7 @@ GEM
     selenium-webdriver (3.141.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2, >= 1.2.2)
-    sentry-raven (2.8.0)
+    sentry-raven (2.9.0)
       faraday (>= 0.7.6, < 1.0)
     sidekiq (5.2.3)
       connection_pool (~> 2.2, >= 2.2.2)
@@ -442,7 +442,7 @@ DEPENDENCIES
   pundit
   rails (~> 5.2)
   redcarpet
-  roo (~> 2.8.0)
+  roo (~> 2.8.1)
   rspec-mocks
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.0)
