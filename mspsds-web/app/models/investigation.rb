@@ -108,6 +108,10 @@ class Investigation < ApplicationRecord
     "#{case_type.titleize} #{pretty_id}"
   end
 
+  def pretty_presentation
+    "#{case_type.titleize}: #{pretty_id}"
+  end
+
   def title
     # To be implemented by children
   end
@@ -133,18 +137,6 @@ class Investigation < ApplicationRecord
 
   def self.exact_fields
     %w[pretty_id]
-  end
-
-  def is_case
-    case_type == "case"
-  end
-
-  def is_question
-    case_type == "question"
-  end
-
-  def is_project
-    case_type == "project"
   end
 
 private

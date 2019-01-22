@@ -51,8 +51,8 @@ class CreateProjectTest < ApplicationSystemTestCase
   end
 
   def fill_project_details_and_continue
-    fill_in "investigation_project[description]", with: @project.description
-    fill_in "investigation_project[user_title]", with: @project.user_title
+    fill_in "investigation[description]", with: @project.description
+    fill_in "investigation[user_title]", with: @project.user_title
     click_on "Continue"
   end
 end
