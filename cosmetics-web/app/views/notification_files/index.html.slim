@@ -1,0 +1,21 @@
+h1 Listing notification_files
+
+table
+  thead
+    tr
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @notification_files.each do |notification_file|
+      tr
+        td = notification_file.name
+        td = link_to 'Show', notification_file
+        td = link_to 'Edit', edit_notification_file_path(notification_file)
+        td = link_to 'Destroy', notification_file, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New notification_file', new_notification_file_path
