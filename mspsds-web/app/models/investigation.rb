@@ -12,6 +12,7 @@ class Investigation < ApplicationRecord
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility
 
+  # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
 
   settings do
