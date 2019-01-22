@@ -12,8 +12,8 @@ class UpdateProductsSchema < ActiveRecord::Migration[5.2]
 
             t.string :webpage
 
-            Product.all.each do |product|
-              product.update! name: "#{product.brand}, #{product.name}, #{product.model}"
+            Product.in_batches.each_record do |product|
+              product.update! name: [product.brand, product.name, product.model].reject(&:nil?).join(", ")
             end
 
             t.remove :brand
@@ -28,8 +28,8 @@ class UpdateProductsSchema < ActiveRecord::Migration[5.2]
           change_table :products, bulk: true do |t|
             t.rename :product_code, :gtin
 
+            t.remove :product_type
             t.rename :category, :product_type
-            t.remove :category
 
             t.remove :webpage
 
