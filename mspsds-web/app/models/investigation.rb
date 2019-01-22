@@ -112,10 +112,6 @@ class Investigation < ApplicationRecord
     "#{case_type.titleize}: #{pretty_id}"
   end
 
-  def title
-    # To be implemented by children
-  end
-
   def past_assignees
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
     user_id_list = activities.map(&:assignee_id)
@@ -138,6 +134,11 @@ class Investigation < ApplicationRecord
   def self.exact_fields
     %w[pretty_id]
   end
+
+  # To be implemented by children
+  def title; end
+
+  def case_type; end
 
 private
 

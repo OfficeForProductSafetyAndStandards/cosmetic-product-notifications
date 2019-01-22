@@ -3,6 +3,8 @@ class Investigation::Allegation < Investigation
   validates :hazard_type, presence: true, on: :allegation_details
   validates :product_type, presence: true, on: :allegation_details
 
+  index_name [Rails.env, "investigations"].join("_")
+
   def self.model_name
     Investigation.model_name
   end
@@ -10,7 +12,11 @@ class Investigation::Allegation < Investigation
   def title
     case_title
   end
-  index_name [Rails.env, "investigations"].join("_")
+
+  def case_type
+    "allegation"
+  end
+
 private
 
   def create_audit_activity_for_case

@@ -12,7 +12,7 @@ class InvestigationStiElasticsearchTest < ApplicationSystemTestCase
   test "elasticsearch index should update for each type of new or existing case" do
     # If you experience unreliable elasticsearch behaviour for large number of cases use long sequence to replicate it
     # random_long_type_sequence = (1..10).map{|i| rand(1..3)}
-    short_type_sequence = [1,2,3,1]
+    short_type_sequence = [1, 2, 3, 1]
     short_type_sequence.each_with_index do |type, index|
       description = "CaseDescription#{index}#{index}#{index}"
       create_new_case(type, description)

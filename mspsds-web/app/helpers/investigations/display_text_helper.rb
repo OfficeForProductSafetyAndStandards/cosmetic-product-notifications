@@ -1,6 +1,6 @@
 module Investigations::DisplayTextHelper
   def report_question_text(investigation)
-    investigation.type.include? "Allegation" ? 'report' : 'question'
+    investigation.type.include?("Allegation") ? 'report' : 'question'
   end
 
   def image_document_text(document)

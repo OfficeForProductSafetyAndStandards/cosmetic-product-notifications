@@ -22,6 +22,6 @@ private
   end
 
   def set_investigation
-    @investigation = Investigation::Project.new(project_params.merge(case_type: "project"))
+    @investigation = Investigation::Project.new(project_params)
   end
 end

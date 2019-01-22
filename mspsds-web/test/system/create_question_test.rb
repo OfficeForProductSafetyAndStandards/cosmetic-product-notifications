@@ -10,7 +10,6 @@ class CreateQuestionTest < ApplicationSystemTestCase
     )
 
     @question = Investigation::Question.new(
-      case_type: "question",
       user_title: "Question title",
       description: "Question description"
     )

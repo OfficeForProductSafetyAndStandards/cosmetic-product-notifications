@@ -7,9 +7,9 @@ class AddProjectToCase < ActiveRecord::Migration[5.2]
           t.rename :question_title, :user_title
 
           dir.up do
-            t.string :case_type, null: false, default: "case"
+            t.string :investigations, :type, default: "Investigation::Allegation"
             Investigation.all.each do |investigation|
-              investigation.update! case_type: investigation.is_case ? "case" : "question"
+              investigation.update! type: investigation.is_case ? "Investigation::Allegation" : "Investigation::Question"
             end
             t.remove :is_case
           end
@@ -17,9 +17,9 @@ class AddProjectToCase < ActiveRecord::Migration[5.2]
           dir.down do
             t.boolean :is_case, null: false, default: true
             Investigation.all.each do |investigation|
-              investigation.update! is_case: investigation.case_type == "case"
+              investigation.update! is_case: investigation.include?("Allegation")
             end
-            t.remove :case_type
+            t.remove :type
           end
         end
       end
