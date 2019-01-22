@@ -72,7 +72,7 @@ private
   end
 
   def set_investigation
-    @investigation = Investigation.new(investigation_params)
+    # This needs to be defined by any controller that inherits from this class.
   end
 
   def set_attachment

@@ -11,7 +11,11 @@ private
   end
 
   def model_params
-    %i[question_title description]
+    %i[user_title description]
+  end
+
+  def set_investigation
+    @investigation = Investigation::Question.new(investigation_params)
   end
 
   def success_message
@@ -21,9 +25,5 @@ private
   def set_page_title
     @page_title = "New Question"
     @page_subtitle = "Who did the question come from?"
-  end
-
-  def investigation_params
-    super.merge(is_case: false)
   end
 end
