@@ -10,5 +10,14 @@ RSpec.describe Notification, type: :model do
 
       expect(notification.state).to eq('product_name_added')
     end
+
+    it "adds errors if product_name updated to be blank" do
+      notification = Notification.create
+
+      notification.product_name = ''
+      notification.save
+
+      expect(notification.errors[:product_name]).to include('must not be blank')
+    end
   end
 end

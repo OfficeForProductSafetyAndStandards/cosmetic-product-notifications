@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2019_01_14_114318) do
   create_table "notifications", force: :cascade do |t|
     t.string "product_name"
     t.string "external_reference"
-    t.integer "state"
+    t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

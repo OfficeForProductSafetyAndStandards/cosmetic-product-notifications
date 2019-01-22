@@ -1,21 +1,12 @@
-require_relative 'validators/manual_notification_validator'
-
 class Notification < ApplicationRecord
   include AASM
 
-  enum state: %i[
-    empty
-    product_name_added
-    draft_complete
-    notification_complete
-  ]
+  before_save :add_product_name, if: :will_save_change_to_product_name?
+  before_save :add_external_reference, if: :will_save_change_to_external_reference?
 
-  before_save :add_product_name!, if: :will_save_change_to_product_name?
-  before_save :add_external_reference!, if: :will_save_change_to_external_reference?
+  validate :all_required_attributes_must_be_set
 
-  validates_with Validators::ManualNotificationValidator
-
-  aasm whiny_transitions: false, column: :state, enum: true do
+  aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :product_name_added
     state :draft_complete
@@ -31,6 +22,33 @@ class Notification < ApplicationRecord
 
     event :submit_notification do
       transitions from: :draft_complete, to: :notification_complete
+    end
+  end
+
+  private
+
+  def all_required_attributes_must_be_set
+    mandatory_attributes = mandatory_attributes(state)
+
+    changed.select { |attribute| 
+      mandatory_attributes.include?(attribute) && self[attribute].blank?
+    }.each { |attribute|
+      errors.add attribute, "must not be blank"
+    }
+  end
+
+  def mandatory_attributes(state)
+    case state
+    when 'empty'
+      return %w[product_name]
+    when 'product_name_added'
+      return %w[external_reference] + mandatory_attributes('empty')
+    when 'external_reference_added'
+      return mandatory_attributes('product_name_added')
+    when 'draft_complete'
+      return mandatory_attributes('external_reference_added')
+    when 'notification_complete'
+      return mandatory_attributes('draft_complete')
     end
   end
 end
