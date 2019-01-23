@@ -1,18 +1,7 @@
 - content_for :page_title, "Landing Page"
 .app-masthead
   .govuk-width-container
-    .govuk-phase-banner
-      p.govuk-phase-banner__content
-        strong.govuk-tag.govuk-phase-banner__content__tag
-          | alpha
-        span.govuk-phase-banner__text
-          | This is a new service – your
-          '
-          a.govuk-link--no-visited-state[href="#"]
-            | feedback
-          '
-          | will help us to improve it.
-    = yield :after_header
+    = render "layouts/phase_banner"
 
     .govuk-grid-row
       .govuk-grid-column-two-thirds
@@ -24,25 +13,20 @@
           = link_to "Create an account", keycloak_registration_url,
                   class: "govuk-button govuk-!-font-weight-bold"
           span
-            '
-            | or
-            '
+            '  or
             = link_to "sign in", keycloak_login_url, class: "govuk-link govuk-link--no-visited-state"
-            '
-            | if you've used it before
+            |  if you've used it before
 
-main#main-content.govuk-main-wrapper.app-main-class[role="main"]
-  .govuk-width-container
+main#main-content.app-main-class[role="main"]
+  .govuk-width-container[class="govuk-!-margin-top-3"]
     .govuk-grid-row
       .govuk-grid-column-two-thirds
         h3.govuk-heading-m
           | Registering cosmetic products in the UK
         p
-          | For safety purposes all
-          '
+          ' For safety purposes all
           = link_to "cosmetic products", "/", class: "govuk-link"
-          '
-          | intended for sale or given away in the UK must be registered in the UK.
+          '  intended for sale or given away in the UK must be registered in the UK.
         p
           | To register a product you need to give details of:
         ul.govuk-list.govuk-list--bullet
@@ -80,8 +64,7 @@ main#main-content.govuk-main-wrapper.app-main-class[role="main"]
         ul.govuk-list.govuk-list--bullet
           li
             b export
-            '
-            | your data as zip files for all cosmetic products
+            |  your data as zip files for all cosmetic products
           li
             | prepare an image file for each product, this can be the same as you used for the EU notification
           li

@@ -1,33 +1,6 @@
 = render "layouts/header"
-
 .govuk-width-container
-  .govuk-phase-banner
-    p.govuk-phase-banner__content
-      strong.govuk-tag.govuk-phase-banner__content__tag
-        | alpha
-      span.govuk-phase-banner__text
-        | This is a new service – your
-        '
-        a[href="#"]
-          | feedback
-        '
-        | will help us to improve it.
-  = yield :after_header
-
-
-.govuk-width-container
-  .govuk-phase-banner
-    p.govuk-phase-banner__content
-      strong.govuk-tag.govuk-phase-banner__content__tag
-        | alpha
-      span.govuk-phase-banner__text
-        | This is a new service – your
-        '
-        a[href="#"]
-          | feedback
-        '
-        | will help us to improve it.
-  = yield :after_header
+  = render "layouts/phase_banner"
 
   - if alert
     .govuk-error-summary[aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary"]
@@ -41,6 +14,5 @@
 
   main#main-content.govuk-main-wrapper.app-main-class[role="main"]
     = yield
-
 
 = render "layouts/footer"
