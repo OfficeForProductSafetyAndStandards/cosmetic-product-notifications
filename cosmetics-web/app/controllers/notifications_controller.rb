@@ -1,5 +1,11 @@
 class NotificationsController < ApplicationController
   before_action :set_notification
+  skip_before_action :set_notification, only: [:new]
+
+  def new
+    @notification = Notification.create
+    redirect_to new_notification_build_path(@notification)
+  end
 
     # Check your answers page
   def edit; end

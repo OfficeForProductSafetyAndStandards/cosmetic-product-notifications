@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ManualEntryController, type: :controller do
+RSpec.describe NotificationBuildController, type: :controller do
   before do
     authenticate_user
   end
@@ -9,15 +9,13 @@ RSpec.describe ManualEntryController, type: :controller do
     sign_out_user
   end
 
-  describe "GET #create" do
-    it "creates new notification object" do
-      get :create
-      expect(assigns(:notification)).to be_kind_of(Notification)
-    end
-
+  describe "GET #new" do
     it "redirects to the first step of the manual web form" do
-      get :create
-      expect(response).to redirect_to(notification_manual_entry_path(assigns(:notification).id, "add_product_name"))
+      notification = Notification.create
+      get(:new, params: { notification_id: notification.id })
+      expect(response).to redirect_to(
+        notification_build_path(assigns(:notification).id, "add_product_name")
+)
     end
   end
 

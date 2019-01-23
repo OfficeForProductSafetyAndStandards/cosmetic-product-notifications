@@ -1,10 +1,9 @@
-class ManualEntryController < ApplicationController
+class NotificationBuildController < ApplicationController
   include Wicked::Wizard
 
   steps :add_product_name, :add_external_reference, :single_or_multi_component
 
   before_action :set_notification
-  skip_before_action :set_notification, only: [:create]
 
   def show
     render_wizard
@@ -21,12 +20,11 @@ class ManualEntryController < ApplicationController
     else
       @notification.update(notification_params)
     end
-    
+
     render_wizard @notification
   end
 
-  def create
-    @notification = Notification.create
+  def new
     redirect_to wizard_path(steps.first, notification_id: @notification.id)
   end
 
