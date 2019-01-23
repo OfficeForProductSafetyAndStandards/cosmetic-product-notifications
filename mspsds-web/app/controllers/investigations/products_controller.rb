@@ -5,20 +5,13 @@ class Investigations::ProductsController < ApplicationController
 
   before_action :set_investigation
   before_action :set_product, only: %i[link remove unlink]
-  before_action :create_product, only: %i[new create suggested]
+  before_action :create_product, only: %i[new create]
   before_action :set_countries, only: %i[new]
 
   # GET /cases/1/products/new
   def new
     excluded_product_ids = @investigation.products.map(&:id)
     @products = advanced_product_search(@product, excluded_product_ids)
-  end
-
-  # GET /cases/1/products/suggested
-  def suggested
-    excluded_product_ids = params[:excluded_products].split(",").map(&:to_i)
-    @products = advanced_product_search(@product, excluded_product_ids)
-    render partial: "products/suggested"
   end
 
   # POST /cases/1/products

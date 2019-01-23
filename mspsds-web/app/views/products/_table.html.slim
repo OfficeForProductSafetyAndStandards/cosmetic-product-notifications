@@ -1,4 +1,4 @@
-- products.each do |search_result|
-  = render "product_card", product: search_result
+- products.each do |product|
+  = render "product_card", product: product
 - if products.empty?
   p[class="govuk-!-font-weight-bold"] No products found.

@@ -33,9 +33,6 @@ Rails.application.routes.draw do
       end
     end
     resources :products, only: %i[new create], controller: "investigations/products" do
-      collection do
-        get :suggested
-      end
       member do
         put :link, path: ''
         get :remove
@@ -78,11 +75,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products, concerns: %i[document_attachable] do
-    collection do
-      get :suggested
-    end
-  end
+  resources :products, concerns: %i[document_attachable]
 
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all

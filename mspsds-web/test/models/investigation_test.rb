@@ -77,12 +77,12 @@ class InvestigationTest < ActiveSupport::TestCase
 
   test "case title should match when one product is added" do
     investigation = investigations(:one_product)
-    assert_equal "apple, XS MAX, phone – Asphyxiation", investigation.title
+    assert_equal "iPhone XS MAX, phone – Asphyxiation", investigation.title
   end
 
   test "case title should match when two products with two common fields are added to the case" do
     investigation = investigations(:two_products_with_common_values)
-    assert_equal "2 Products, apple, phone – Asphyxiation", investigation.title
+    assert_equal "2 Products, phone – Asphyxiation", investigation.title
   end
 
   test "case title should match when two products with no common fields are added to the case" do
@@ -90,8 +90,8 @@ class InvestigationTest < ActiveSupport::TestCase
     assert_equal "2 Products – Asphyxiation", investigation.title
   end
 
-  test "elasticsearch should find product gtin" do
-    query = ElasticsearchQuery.new(@product.gtin, {}, {})
+  test "elasticsearch should find product product_code" do
+    query = ElasticsearchQuery.new(@product.product_code, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_product.id)
   end
 
@@ -105,18 +105,8 @@ class InvestigationTest < ActiveSupport::TestCase
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_product.id)
   end
 
-  test "elasticsearch should find product brand" do
-    query = ElasticsearchQuery.new(@product.brand, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_product.id)
-  end
-
   test "elasticsearch should find product description" do
     query = ElasticsearchQuery.new(@product.description, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_product.id)
-  end
-
-  test "elasticsearch should find product model" do
-    query = ElasticsearchQuery.new(@product.model, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_product.id)
   end
 
