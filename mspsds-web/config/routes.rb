@@ -72,6 +72,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :products, concerns: %i[document_attachable] do
+    collection do
+      get :suggested
+    end
+  end
+
   resources :products, concerns: %i[document_attachable]
 
   match "/404", to: "errors#not_found", via: :all
