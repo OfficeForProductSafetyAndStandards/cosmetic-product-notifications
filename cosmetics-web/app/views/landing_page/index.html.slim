@@ -21,13 +21,13 @@
         h2.govuk-body-l
           | Notification of cosmetic products to be sold or given away in the UK.
         p.masthead-account-links
-          = link_to "Create an account", "/",
+          = link_to "Create an account", keycloak_registration_url,
                   class: "govuk-button govuk-!-font-weight-bold"
           span
             '
             | or
             '
-            = link_to "sign in", "/", class: "govuk-link govuk-link--no-visited-state"
+            = link_to "sign in", keycloak_login_url, class: "govuk-link govuk-link--no-visited-state"
             '
             | if you've used it before
 

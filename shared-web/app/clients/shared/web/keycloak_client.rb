@@ -77,6 +77,10 @@ module Shared
         @client.url_user_account
       end
 
+      def registration_url
+        Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/protocol/openid-connect/registrations?client_id=#{Keycloak::Client.client_id}&response_type=code"
+      end
+
       def exchange_code_for_token(code, redirect_uri)
         @client.get_token_by_code(code, redirect_uri)
       end
