@@ -23,5 +23,4 @@ active_from_companies_house:
 biscuit_base:
   company_name: Biscuit Base
   company_type_code: private-unlimited
-  company_number: 100
   company_status_code: active

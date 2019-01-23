@@ -25,11 +25,11 @@ module UrlHelper
   end
 
   def build_back_link_to_case
-    result = { is_simple_link: request.referrer.match?(/cases\/\d/) }
+    result = { is_simple_link: request.referer&.match?(/cases\/\d/) }
     if result[:is_simple_link]
-      case_id = request.referrer.split(/cases\//)[1].split(/[?\/#]/)[0]
+      case_id = request.referer.split(/cases\//)[1].split(/[?\/#]/)[0]
       kase = Investigation.find(case_id)
-      result[:simple_link_text] = "Bask to #{kase.pretty_description}"
+      result[:simple_link_text] = "Back to #{kase.pretty_description}"
       result[:link_to] = kase
     end
     result

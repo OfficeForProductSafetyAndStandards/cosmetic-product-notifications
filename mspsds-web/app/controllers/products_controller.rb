@@ -78,7 +78,9 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 private
+
   def build_breadcrumbs
     @breadcrumbs = build_back_link_to_case
     @breadcrumbs = @breadcrumbs.merge(build_breadcrumb_structure) unless @breadcrumbs[:is_simple_link]
