@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @notification_file.name
+
+  - if @notification_file.uploaded_file.attached?
+    p
+      | Currently selected file:
+      = link_to @notification_file.uploaded_file.filename,
+              url_for(@notification_file.uploaded_file), target: "_blank"
+  -else
+    p
+      | No attachment
+
+=> link_to 'Edit', edit_notification_file_path(@notification_file)
+'|
+=< link_to 'Back', notification_files_path

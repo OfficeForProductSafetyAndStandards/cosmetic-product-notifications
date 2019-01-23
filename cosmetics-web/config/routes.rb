@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   mount Shared::Web::Engine => '/', as: 'shared_engine'
 
-  root 'helloworld#index'
+  resources :notification_files
 
   get '/send' => 'helloworld#send_email'
-  post '/' => 'helloworld#upload_file'
+
+  root 'helloworld#index'
 
   get '/manual_entry' => 'manual_entry#create'
 
