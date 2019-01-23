@@ -2,30 +2,28 @@ require 'test_helper'
 
 class ContactsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in_as_admin
     @contact = contacts(:one)
   end
 
-  test "should get index" do
-    get contacts_url
-    assert_response :success
-  end
-
   test "should get new" do
-    get new_contact_url
+    get new_business_contact_url(@contact.business)
     assert_response :success
   end
 
   test "should create contact" do
     assert_difference('Contact.count') do
-      post contacts_url, params: { contact: { description: @contact.description, email: @contact.email, name: @contact.name, phone_number: @contact.phone_number } }
+      post business_contacts_url(@contact.business), params: {
+        contact: {
+          description: @contact.description,
+          email: @contact.email,
+          name: @contact.name,
+          phone_number: @contact.phone_number
+        }
+      }
     end
 
-    assert_redirected_to contact_url(Contact.last)
-  end
-
-  test "should show contact" do
-    get contact_url(@contact)
-    assert_response :success
+    assert_redirected_to business_url(@contact.business, anchor: "contacts")
   end
 
   test "should get edit" do
@@ -35,7 +33,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update contact" do
     patch contact_url(@contact), params: { contact: { description: @contact.description, email: @contact.email, name: @contact.name, phone_number: @contact.phone_number } }
-    assert_redirected_to contact_url(@contact)
+    assert_redirected_to business_url(@contact.business, anchor: "contacts")
   end
 
   test "should destroy contact" do
@@ -43,6 +41,6 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
       delete contact_url(@contact)
     end
 
-    assert_redirected_to contacts_url
+    assert_redirected_to business_url(@contact.business, anchor: "contacts")
   end
 end
