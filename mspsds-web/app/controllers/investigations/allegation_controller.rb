@@ -14,6 +14,10 @@ private
     %i[description hazard_type product_category]
   end
 
+  def set_investigation
+    @investigation = Investigation::Allegation.new(investigation_params)
+  end
+
   def success_message
     "Allegation was successfully created."
   end
@@ -21,9 +25,5 @@ private
   def set_page_title
     @page_title = "New Allegation"
     @page_subtitle = "Who's making the allegation?"
-  end
-
-  def investigation_params
-    super.merge(is_case: true)
   end
 end

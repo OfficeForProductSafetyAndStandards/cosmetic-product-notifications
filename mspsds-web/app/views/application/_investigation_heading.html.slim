@@ -2,9 +2,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       p.govuk-caption-xl
-        = investigation.question_title_prefix
-        = case_question_text(investigation).titleize + ': '
-        = investigation.pretty_id
+        = investigation.pretty_description
       = investigation.title
   - unless local_variables.include?(:hide_heading_info)
     = render "investigations/heading_info", investigation: investigation

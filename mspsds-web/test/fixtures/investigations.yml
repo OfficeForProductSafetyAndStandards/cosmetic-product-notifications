@@ -3,55 +3,67 @@
 one:
   description: Investigation one description
   is_closed: false
+  type: Investigation::Allegation
 
 two:
   description: Investigation two description
   is_closed: false
+  type: Investigation::Allegation
 
 three:
   description: Investigation into faulty toys
   is_closed: true
+  type: Investigation::Allegation
 
 no_products:
   description: Investigation with no product
   is_closed: false
+  type: Investigation::Allegation
 
 search_related_products:
   description: Investigation for search by product
   is_closed: false
+  type: Investigation::Allegation
 
 search_related_correspondence:
   description: Investigation for search by correspondence
   is_closed: false
+  type: Investigation::Allegation
 
 search_related_businesses:
   description: Investigation for search by business
   is_closed: false
+  type: Investigation::Allegation
 
 search_related_reporter:
   description: Investigation for search by reporter
   is_closed: false
+  type: Investigation::Allegation
 
 no_products_case_titles:
   description: Investigation with no products
   product_category: Alarms
   hazard_type: Asphyxiation
   is_closed: false
+  type: Investigation::Allegation
 
 one_product:
   description: Investigation with one product
   product_category: Alarms
   hazard_type: Asphyxiation
   is_closed: false
+  type: Investigation::Allegation
 
 two_products_with_common_values:
   description: Investigation with two products
   product_category: Alarms
   hazard_type: Asphyxiation
   is_closed: false
+  type: Investigation::Allegation
 
 two_products_with_no_common_values:
   description: Investigation with two products
   product_category: Alarms
   hazard_type: Asphyxiation
   is_closed: false
+  type: Investigation::Allegation

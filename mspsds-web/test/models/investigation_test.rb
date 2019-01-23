@@ -24,12 +24,12 @@ class InvestigationTest < ActiveSupport::TestCase
 
   test "should create activities when investigation is created" do
     assert_difference"Activity.count" do
-      @investigation = Investigation.create
+      @investigation = Investigation::Allegation.create
     end
   end
 
   test "should create an activity when business is added to investigation" do
-    @investigation = Investigation.create
+    @investigation = Investigation::Allegation.create
     assert_difference"Activity.count" do
       @business = Business.new(company_name: 'Test Company')
       @investigation.businesses << @business
@@ -37,7 +37,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when business is removed from investigation" do
-    @investigation = Investigation.create
+    @investigation = Investigation::Allegation.create
     @business = Business.new(company_name: 'Test Company')
     @investigation.businesses << @business
     assert_difference"Activity.count" do
@@ -46,7 +46,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when product is added to investigation" do
-    @investigation = Investigation.create
+    @investigation = Investigation::Allegation.create
     assert_difference"Activity.count" do
       @product = Product.new(name: 'Test Product')
       @investigation.products << @product
@@ -54,7 +54,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when product is removed from investigation" do
-    @investigation = Investigation.create
+    @investigation = Investigation::Allegation.create
     @product = Product.new(name: 'Test Product')
     @investigation.products << @product
     assert_difference"Activity.count" do
@@ -63,7 +63,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when status is updated on investigation" do
-    @investigation = Investigation.create
+    @investigation = Investigation::Allegation.create
     assert_difference "Activity.count" do
       @investigation.is_closed = !@investigation.is_closed
       @investigation.save
@@ -223,6 +223,6 @@ class InvestigationTest < ActiveSupport::TestCase
 
   def create_new_private_case
     description = "new_investigation_description"
-    @new_investigation = Investigation.create(description: description, is_private: true)
+    @new_investigation = Investigation::Allegation.create(description: description, is_private: true)
   end
 end

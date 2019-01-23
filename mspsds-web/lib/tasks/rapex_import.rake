@@ -58,7 +58,7 @@ def create_product(notification, name)
 end
 
 def create_investigation(notification, date, name)
-  Investigation.create(
+  Investigation::Allegation.create(
     title: name,
     description: field_from_notification(notification, "danger"),
     is_closed: true,

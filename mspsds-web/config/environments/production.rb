@@ -94,7 +94,7 @@ Rails.application.configure do
 
   config.after_initialize do
     ActiveRecord::Base.descendants.each do |model|
-      if model.respond_to?(:__elasticsearch__)
+      if model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
         model.import force: true
       end
     end
