@@ -32,7 +32,3 @@ Rails.application.config.assets.precompile += %w[
   govuk-logotype-crown.png
   govuk-crest-2x.png
 ]
-
-Rails.application.config.assets.configure do |env|
-  env.cache = ActiveSupport::Cache.lookup_store(:memory_store, size: 128.megabytes) unless Rails.env.production?
-end
