@@ -18,7 +18,8 @@ section.mspsds-pagebody
         li
           |  Ask questions about testing, policy, legislation etc
       p.govuk-body-l
-        a.govuk-button.govuk-button--start[href="/" role="button" draggable="false"]
+        =link_to new_msa_investigation_path,
+                class: "govuk-button govuk-button--start", role: "button", draggable: "false"
           |  Get started
   hr.govuk-section-break.govuk-section-break--visible[class="govuk-!-margin-bottom-9"]
   .govuk-grid-row

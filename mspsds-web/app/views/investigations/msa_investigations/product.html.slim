@@ -1,0 +1,15 @@
+- content_for :page_title, "New product"
+- content_for :after_header do
+  = link_to "Back to list", products_path, class: "govuk-back-link"
+.new-product-page.products-search-form
+  span.govuk-caption-xl Report an unsafe or non-compliant product
+  h1.govuk-heading-xl
+    | What product are you reporting?
+
+  = form_with model: @product, url: wizard_path, method: :put, local: true do |form|
+    .govuk-grid-row
+      .govuk-grid-column-full
+        = render "form_validation_display", errors: @product.errors, model_name: "product"
+    .govuk-grid-row
+      .govuk-grid-column-one-half
+        = render "products/form", form: form, product: @product, countries: @countries, search: true

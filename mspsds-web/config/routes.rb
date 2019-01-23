@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :question, controller: "investigations/question", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
   resources :project, controller: "investigations/project", only: %i[new create]
+  resources :msa_investigation, controller: "investigations/msa_investigations", only: %i[show new create update]
 
   resources :investigations, path: "cases", only: %i[index show new],
             concerns: %i[document_attachable] do
