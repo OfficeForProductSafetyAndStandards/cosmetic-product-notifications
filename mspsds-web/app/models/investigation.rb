@@ -6,17 +6,13 @@ class Investigation < ApplicationRecord
 
   attr_accessor :status_rationale
 
-  validates :question_title, presence: true, on: :question_details
-  validates :description, presence: true, on: %i[allegation_details question_details]
-  validates :hazard_type, presence: true, on: :allegation_details
-  validates :product_type, presence: true, on: :allegation_details
-
-  validates_length_of :question_title, maximum: 1000
+  validates_length_of :user_title, maximum: 1000
   validates_length_of :description, maximum: 1000
 
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility
 
+  # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
 
   settings do
@@ -58,7 +54,7 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: %i[pretty_id],
-      only: %i[question_title description hazard_type product_type is_closed updated_at created_at assignee_id],
+      only: %i[user_title description hazard_type product_type is_closed updated_at created_at assignee_id],
       include: {
         documents: {
           only: [],
@@ -110,15 +106,7 @@ class Investigation < ApplicationRecord
   end
 
   def pretty_description
-    "#{is_case ? 'Case' : 'Question'} #{pretty_id}"
-  end
-
-  def question_title_prefix
-    question_type && !is_case ? question_type + ' ' : ''
-  end
-
-  def title
-    self.is_case ? case_title : question_title
+    "#{case_type.titleize}: #{pretty_id}"
   end
 
   def past_assignees
@@ -132,22 +120,27 @@ class Investigation < ApplicationRecord
   end
 
   def self.highlighted_fields
-    %w[*.* pretty_id question_title description hazard_type product_type]
+    %w[*.* pretty_id user_title description hazard_type product_type]
   end
 
   def self.fuzzy_fields
     %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
-       tests.* question_title description hazard_type product_type]
+       tests.* user_title description hazard_type product_type]
   end
 
   def self.exact_fields
     %w[pretty_id]
   end
 
+  # To be implemented by children
+  def title; end
+
+  def case_type; end
+
 private
 
   def create_audit_activity_for_case
-    is_case ? AuditActivity::Investigation::AddAllegation.from(self) : AuditActivity::Investigation::AddQuestion.from(self)
+    # To be implemented by children
   end
 
   def create_audit_activity_for_status
@@ -188,33 +181,10 @@ private
     self.source = UserSource.new(user: current_user) if self.source.blank? && current_user.present?
   end
 
-  def case_title
-    title = build_title_from_products || ""
-    title << " – #{hazard_type}" if hazard_type.present?
-    title << " (no product specified)" if products.empty?
-    title.presence || "Untitled case"
-  end
-
   def send_assignee_email
     if saved_changes.key? :assignee_id
       NotifyMailer.assigned_investigation(id, assignee.full_name, assignee.email).deliver_later
     end
-  end
-
-  def build_title_from_products
-    return product_type.dup if products.empty?
-
-    title_components = []
-    title_components << "#{products.length} Products" if products.length > 1
-    title_components << get_product_property_value_if_shared(:brand)
-    title_components << get_product_property_value_if_shared(:model)
-    title_components << get_product_property_value_if_shared(:product_type)
-    title_components.reject(&:blank?).join(", ")
-  end
-
-  def get_product_property_value_if_shared(property_name)
-    first_product = products.first
-    first_product[property_name] if products.drop(1).all? { |product| product[property_name] == first_product[property_name] }
   end
 end
 

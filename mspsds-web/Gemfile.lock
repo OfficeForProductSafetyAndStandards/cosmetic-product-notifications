@@ -14,12 +14,14 @@ PATH
   specs:
     shared-web-dev (1.0.0)
       brakeman
+      capybara
       coveralls
       debase
       govuk-lint
       listen
       rubocop
       ruby-debug-ide
+      selenium-webdriver
       simplecov
       simplecov-console
       slim_lint
@@ -30,6 +32,7 @@ PATH
   specs:
     shared-web (1.0.0)
       aws-sdk-s3
+      clamby
       govuk_notify_rails
       keycloak
       rails (~> 5.2.1)
@@ -429,7 +432,6 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   capybara
   cf-app-utils
-  clamby
   companies-house-rest
   elasticsearch-model
   elasticsearch-rails
