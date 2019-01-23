@@ -12,6 +12,7 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 3.0"
 gem "rails", "~> 5.2"
 gem 'rails-controller-testing'
+gem 'rspec-collection_matchers'
 gem "sass-rails", "~> 5.0"
 gem "slim-rails"
 gem "strong_migrations"

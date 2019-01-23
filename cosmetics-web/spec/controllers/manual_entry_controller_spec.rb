@@ -55,5 +55,20 @@ RSpec.describe ManualEntryController, type: :controller do
                     notification: { product_name: 'Super Shampoo' } })
       expect(notification.reload.product_name).to eq('Super Shampoo')
     end
+
+    it "creates a component if single_or_multi_component set to single" do
+      notification = Notification.create
+      post(:update, params: { notification_id: notification.id, id: 'single_or_multi_component',
+                    single_or_multi_component: "single" })
+      expect(notification.components).to have(1).item          
+    end
+
+    # TODO COSBETA-10 Update this test
+    it "throws an exception if single_or_multi_component set to multiple" do
+      notification = Notification.create
+      post(:update, params: { notification_id: notification.id, id: 'single_or_multi_component',
+                  single_or_multi_component: "multiple" })
+      expect(notification.components).to have(1).item       
+    end
   end
 end

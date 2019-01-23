@@ -1,7 +1,7 @@
 class ManualEntryController < ApplicationController
   include Wicked::Wizard
 
-  steps :add_product_name, :add_external_reference
+  steps :add_product_name, :add_external_reference, :single_or_multi_component
 
   before_action :set_notification
   skip_before_action :set_notification, only: [:create]
@@ -11,7 +11,17 @@ class ManualEntryController < ApplicationController
   end
 
   def update
-    @notification.update(notification_params)
+    if step == :single_or_multi_component
+      if params[:single_or_multi_component] == 'single'
+        @notification.components.build
+      else
+        # TODO COSBETA-10 Implement multiple components
+        @notification.components.build
+      end
+    else
+      @notification.update(notification_params)
+    end
+    
     render_wizard @notification
   end
 

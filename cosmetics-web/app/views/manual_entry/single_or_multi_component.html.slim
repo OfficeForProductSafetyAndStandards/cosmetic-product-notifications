@@ -1,0 +1,30 @@
+- content_for :page_title, "Single or multi component"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+.govuk-grid-row
+    .govuk-grid-column-two-thirds
+        h1.govuk-heading-xl
+            | Will the cosmetic be sold as a single component?
+        p
+            | Multi-component cosmetics are composed of several components 
+            | that are not marketed separately. They are sold as a set and 
+            | intended to be used as a mix or sequentially.
+        p 
+            | Examples of multi-component cosmetics include:
+        ul.govuk-list.govuk-list--bullet
+            li hair dye sets
+            li skin peeling kits
+            li permanent styling products
+            li anti-age/revitalising kits
+        = form_with url: wizard_path, method: :put do |form|
+            .govuk-form-group
+                .govuk-radios
+                    .govuk-radios__item
+                        = form.radio_button :single_or_multi_component, "single", class: "govuk-radios__input"
+                        = form.label :single_or_multi_component_single, "Yes", class: "govuk-label govuk-radios__label"
+                    .govuk-radios__item
+                        = form.radio_button :single_or_multi_component, "multiple", class: "govuk-radios__input"
+                        = form.label :single_or_multi_component_multiple, "No, it will be sold as multi-component cosmetic", class: "govuk-label govuk-radios__label"
+            = form.submit "Continue", class: "govuk-button"
+
+        

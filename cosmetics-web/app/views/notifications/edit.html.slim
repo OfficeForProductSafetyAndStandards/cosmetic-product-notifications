@@ -43,6 +43,11 @@
                         | External reference
                     td.govuk-table__cell
                         = @notification.external_reference
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Number of components
+                    td.govuk-table__cell
+                        = @notification.components.length
         h3.govuk-heading-m
             | Now notify your product
         p

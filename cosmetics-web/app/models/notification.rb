@@ -2,6 +2,7 @@ class Notification < ApplicationRecord
   include AASM
 
   belongs_to :responsible_person
+  has_many :components, dependent: :destroy
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_external_reference, if: :will_save_change_to_external_reference?
@@ -11,6 +12,7 @@ class Notification < ApplicationRecord
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :product_name_added
+    state :external_reference_added
     state :draft_complete
     state :notification_complete
 
@@ -19,7 +21,11 @@ class Notification < ApplicationRecord
     end
 
     event :add_external_reference do
-      transitions from: :product_name_added, to: :draft_complete
+      transitions from: :product_name_added, to: :external_reference_added
+    end
+
+    event :set_single_or_multi_component do
+      transitions from: :external_reference_added, to: :draft_complete
     end
 
     event :submit_notification do
@@ -46,7 +52,7 @@ private
     when 'product_name_added'
       %w[external_reference] + mandatory_attributes('empty')
     when 'external_reference_added'
-      mandatory_attributes('product_name_added')
+      %w[components] + mandatory_attributes('product_name_added')
     when 'draft_complete'
       mandatory_attributes('external_reference_added')
     when 'notification_complete'

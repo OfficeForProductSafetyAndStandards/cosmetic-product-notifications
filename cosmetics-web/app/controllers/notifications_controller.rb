@@ -8,7 +8,7 @@ class NotificationsController < ApplicationController
   def confirmation
     if @notification.may_submit_notification?
       @notification.submit_notification!
-    elsif @notification.state != :notification_complete
+    elsif @notification.state != "notification_complete"
       redirect_to edit_notification_path(@notification)
     end
   end
