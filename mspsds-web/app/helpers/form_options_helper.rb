@@ -11,7 +11,7 @@ module FormOptionsHelper
     Rails.application.config.hazard_constants["hazard_type"]
   end
 
-  def product_types
-    Rails.application.config.product_constants["product_type"]
+  def product_categories
+    Rails.application.config.product_constants["product_category"]
   end
 end

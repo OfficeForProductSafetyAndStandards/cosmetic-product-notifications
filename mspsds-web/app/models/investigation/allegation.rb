@@ -1,7 +1,7 @@
 class Investigation::Allegation < Investigation
   validates :description, presence: true, on: %i[allegation_details]
   validates :hazard_type, presence: true, on: :allegation_details
-  validates :product_type, presence: true, on: :allegation_details
+  validates :product_category, presence: true, on: :allegation_details
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
@@ -32,12 +32,11 @@ private
   end
 
   def build_title_from_products
-    return product_type.dup if products.empty?
+    return product_category.dup if products.empty?
 
     title_components = []
     title_components << "#{products.length} Products" if products.length > 1
-    title_components << get_product_property_value_if_shared(:brand)
-    title_components << get_product_property_value_if_shared(:model)
+    title_components << get_product_property_value_if_shared(:name)
     title_components << get_product_property_value_if_shared(:product_type)
     title_components.reject(&:blank?).join(", ")
   end
