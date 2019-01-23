@@ -15,8 +15,9 @@ Rails.application.routes.draw do
 
   resources :question, controller: "investigations/question", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
+  resources :project, controller: "investigations/project", only: %i[new create]
 
-  resources :investigations, path: "cases", only: %i[index show new create],
+  resources :investigations, path: "cases", only: %i[index show new],
             concerns: %i[document_attachable] do
     member do
       put :status
@@ -32,9 +33,6 @@ Rails.application.routes.draw do
       end
     end
     resources :products, only: %i[new create], controller: "investigations/products" do
-      collection do
-        get :suggested
-      end
       member do
         put :link, path: ''
         get :remove
@@ -77,11 +75,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products, concerns: %i[document_attachable] do
-    collection do
-      get :suggested
-    end
-  end
+  resources :products, concerns: %i[document_attachable]
 
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all

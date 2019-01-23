@@ -3,29 +3,33 @@ require "application_system_test_case"
 class KeycloakTest < ApplicationSystemTestCase
   test "can login" do
     visit root_path
-    assert_selector "h1", text: "Sign in"
-    fill_in "Username or email", with: "admin@example.com"
-    fill_in "Password", with: "password"
-    click_on "Continue"
-
+    sign_in email: "admin@example.com", password: "password"
     assert_text "Signed in successfully."
   end
 
   test "can logout" do
     visit root_path
-    assert_selector "h1", text: "Sign in"
-    fill_in "Username or email", with: "admin@example.com"
-    fill_in "Password", with: "password"
-    click_on "Continue"
+    sign_in email: "admin@example.com", password: "password"
     click_on "Sign out"
-    assert_selector "h1", text: "Sign in"
+    assert_selector "h1", text: "Sign in to Market Surveillance & Product Safety"
   end
 
-  test "redirects login correctly" do
+  test "redirects to previous page after login" do
     visit products_path
-    fill_in "Username or email", with: "admin@example.com"
-    fill_in "Password", with: "password"
+    sign_in email: "admin@example.com", password: "password"
+    assert_current_path products_path
+  end
+
+  test "non-MSPSDS user is denied access" do
+    visit root_path
+    sign_in email: "non-mspsds@example.com", password: "password"
+    assert_text "Access denied"
+  end
+
+  def sign_in(email:, password:)
+    assert_selector "h1", text: "Sign in to Market Surveillance & Product Safety"
+    fill_in "Email address", with: email
+    fill_in "Password", with: password
     click_on "Continue"
-    assert_current_path(/products/)
   end
 end

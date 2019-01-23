@@ -1,0 +1,53 @@
+- content_for :page_title, "Check your answers"
+- content_for :after_header do
+  = link_to "Back", "/", class: "govuk-back-link"
+.govuk-grid-row
+    .govuk-grid-column-two-thirds
+        h1.govuk-heading-xl
+            | Check your answers before notifying
+        table.govuk-table
+            caption.govuk-table__caption
+                | Responsible Person
+            tbody.govuk-table__body
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Name
+                    td.govuk-table__cell
+                        | -
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Email address
+                    td.govuk-table__cell
+                        | -
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Phone number
+                    td.govuk-table__cell
+                        | -
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Address
+                    td.govuk-table__cell
+                        | -
+        table.govuk-table
+            caption.govuk-table__caption
+                | Cosmetics
+            tbody.govuk-table__body
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Product name
+                    td.govuk-table__cell
+                        = @notification.product_name
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | External reference
+                    td.govuk-table__cell
+                        = @notification.external_reference
+        h3.govuk-heading-m
+            | Now notify your product
+        p
+            | By submitting this notification you are confirming that, to the best of your knowledge,
+            | the details you are providing are correct.
+        = form_with url: confirmation_notification_path(@notification), method: :get do |form|
+            .govuk-form-group
+                = form.submit "Accept and notify product", name: nil, class: "govuk-button"

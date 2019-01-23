@@ -24,7 +24,7 @@ class ReporterTest < ActiveSupport::TestCase
   end
 
   def add_investigation
-    @investigation = Investigation.new
+    @investigation = Investigation::Allegation.new
     @investigation.reporter = @reporter
   end
 end
