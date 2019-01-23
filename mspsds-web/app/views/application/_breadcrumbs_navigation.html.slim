@@ -1,0 +1,10 @@
+- if breadcrumbs[:is_simple_link]
+  = link_to breadcrumbs[:simple_link_text], breadcrumbs[:link_to], class: "govuk-back-link"
+- else
+  .govuk-breadcrumbs
+    ol class="govuk-breadcrumbs__list"
+      - breadcrumbs[:ancestors].each do |a|
+        li class="govuk-breadcrumbs__list-item"
+          = link_to a[:name], a[:path]
+      li class="govuk-breadcrumbs__list-item"
+        = breadcrumbs[:current][:name]

@@ -23,6 +23,7 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    build_breadcrumbs
     respond_to do |format|
       format.html
       format.pdf do
@@ -75,5 +76,37 @@ class ProductsController < ApplicationController
       format.html { redirect_to products_url, notice: "Product was successfully deleted." }
       format.json { head :no_content }
     end
+  end
+
+  def build_breadcrumbs
+    @breadcrumbs = { is_simple_link: request.referrer.match?(/cases\//) }
+    if @breadcrumbs[:is_simple_link]
+      @breadcrumbs = @breadcrumbs.merge(build_back_link_to_case)
+    else
+      @breadcrumbs = @breadcrumbs.merge(build_breadcrumb_structure)
+    end
+  end
+
+  def build_back_link_to_case
+    case_id = request.referrer.split(/cases\//)[1].split(/[?\/#]/)[0]
+    kase = Investigation.find(case_id)
+    {
+      simple_link_text: "Bask to #{kase.pretty_description}",
+      link_to: kase
+    }
+  end
+
+  def build_breadcrumb_structure
+   {
+     ancestors: [
+      {
+        name: "Products",
+        path: products_path
+      }
+    ],
+    current: {
+      name: @product.name
+    }
+   }
   end
 end
