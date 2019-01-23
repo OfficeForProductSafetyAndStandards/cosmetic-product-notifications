@@ -1,6 +1,6 @@
 class Reporter < ApplicationRecord
   include UserService
-  belongs_to :investigation, required: false
+  belongs_to :investigation, optional: true
 
   validates :reporter_type, presence: true
   validates :investigation, presence: true, on: %i[create update]

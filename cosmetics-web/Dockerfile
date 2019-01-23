@@ -15,7 +15,14 @@ RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main"  | tee /etc/ap
 RUN apt-get update && apt-get install -y \
   build-essential \
   nodejs \
-  yarn
+  yarn \
+  unzip \
+  google-chrome-stable
+
+RUN curl -o /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/$CHROMIUM_DRIVER_VERSION/chromedriver_linux64.zip \
+  && unzip /tmp/chromedriver.zip chromedriver -d /usr/bin/ \
+  && rm /tmp/chromedriver.zip \
+  && chmod ugo+rx /usr/bin/chromedriver
 
 WORKDIR /cosmetics-web
 

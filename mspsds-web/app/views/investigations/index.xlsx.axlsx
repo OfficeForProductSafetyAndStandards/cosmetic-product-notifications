@@ -1,7 +1,7 @@
 book = xlsx_package.workbook
 
 book.add_worksheet name: "Cases" do |sheet_investigations|
-  sheet_investigations.add_row %w[ID Status Title Description Product_Type Hazard_Type Assignee Source
+  sheet_investigations.add_row %w[ID Status Title Description Product_Category Hazard_Type Assignee Source
                             Reporter_Name Reporter_Email Reporter_Phone Reporter_Type
                             Products Businesses Activities Correspondences Corrective_Actions Tests]
 
@@ -12,7 +12,7 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
         investigation.is_closed? ? "Closed" : "Open",
         investigation.title,
         investigation.description,
-        investigation.product_type,
+        investigation.product_category,
         investigation.hazard_type,
         investigation.assignee ? investigation.assignee.email : "Unassigned",
         investigation.source&.show,
@@ -37,23 +37,23 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
 end
 
 book.add_worksheet name: "Products" do |sheet_products|
-  sheet_products.add_row %w[ID GTIN Name Type Description Model Country_of_origin Date_placed_on_market
-                            Batch_Number Brand Source Case_ID]
+  sheet_products.add_row %w[ID Product_Code Name Type Category Webpage Description Country_of_origin Date_placed_on_market
+                            Batch_Number Source Case_ID]
 
   @investigations.each do |investigation|
     if policy(investigation).show?
       investigation.products.each do |product|
         sheet_products.add_row [
           product.id,
-          product.gtin,
+          product.product_code,
           product.name,
           product.product_type,
+          product.category,
+          product.webpage,
           product.description,
-          product.model,
           product.country_of_origin,
           product.date_placed_on_market&.to_s(:long_ordinal),
           product.batch_number,
-          product.brand,
           product.source&.show,
           investigation.pretty_id
         ], :types => :text
@@ -124,7 +124,7 @@ book.add_worksheet name: "Actions" do |sheet_actions|
         sheet_actions.add_row [
           activity.id,
           activity.type.titleize,
-          activity.body,
+          activity.sensitive_body? ? "Restricted" : activity.body,
           activity.source&.show,
           investigation.pretty_id
         ], :types => :text

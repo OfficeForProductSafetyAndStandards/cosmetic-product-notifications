@@ -20,7 +20,7 @@ end
 def create_products(products)
   products.each do |product|
     Product.create(
-      gtin: product["gtin_cd"],
+      product_code: product["gtin_cd"],
       name: product["gtin_nm"],
       brand: product["brand_nm"] && product["brand_nm"][0] || nil,
       source: "Imported from the Open Product Database"
