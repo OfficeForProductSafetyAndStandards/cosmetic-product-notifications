@@ -124,10 +124,9 @@ ActiveRecord::Schema.define(version: 2019_01_17_160320) do
     t.datetime "created_at", null: false
     t.text "description"
     t.string "hazard_type"
-    t.string "investigations", default: "Investigation::Allegation"
     t.boolean "is_closed", default: false
     t.boolean "is_private", default: false, null: false
-    t.string "product_type"
+    t.string "product_category"
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
     t.string "user_title"
@@ -149,16 +148,16 @@ ActiveRecord::Schema.define(version: 2019_01_17_160320) do
 
   create_table "products", id: :serial, force: :cascade do |t|
     t.string "batch_number"
-    t.string "brand"
+    t.string "category"
     t.string "country_of_origin"
     t.datetime "created_at", null: false
     t.date "date_placed_on_market"
     t.text "description"
-    t.string "gtin"
-    t.string "model"
     t.string "name"
+    t.string "product_code"
     t.string "product_type"
     t.datetime "updated_at", null: false
+    t.string "webpage"
   end
 
   create_table "rapex_imports", id: :serial, force: :cascade do |t|

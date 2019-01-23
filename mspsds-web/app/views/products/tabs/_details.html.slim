@@ -8,19 +8,19 @@ hr.govuk-section-break.govuk-section-break--l
       tbody.govuk-table__body
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
+            | Name
+          td.govuk-table__cell
+            = @product.name
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Barcode / serial number
+          td.govuk-table__cell
+            = @product.product_code
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
             | Type
           td.govuk-table__cell
             = @product.product_type
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Brand
-          td.govuk-table__cell
-            = @product.brand
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Model
-          td.govuk-table__cell
-            = @product.model
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Batch number
@@ -28,9 +28,14 @@ hr.govuk-section-break.govuk-section-break--l
             = @product.batch_number
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
-            | Barcode
+            | Category
           td.govuk-table__cell
-            = @product.gtin
+          = @product.category
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Webpage
+          td.govuk-table__cell
+            = @product.webpage
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Country of origin
@@ -41,8 +46,3 @@ hr.govuk-section-break.govuk-section-break--l
             | Description
           td.govuk-table__cell
             = @product.description
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Date on the market
-          td.govuk-table__cell
-            = @product.date_placed_on_market&.strftime("%d/%m/%Y")

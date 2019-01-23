@@ -3,7 +3,7 @@
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 .investigation-product-page.products-search-form{ data-investigation-id=@investigation.id.to_s
     data-product-ids=@investigation.product_ids.join(",") }
-  = render "investigation_heading", investigation: @investigation
+  = render "investigation_heading", investigation: @investigation, hide_heading_info: true
   h2.govuk-heading-l
     | Add product
 
@@ -14,5 +14,3 @@
     .govuk-grid-row
       .govuk-grid-column-one-half
         = render "products/form", form: form, product: @product, countries: @countries, search: true
-      .govuk-grid-column-one-half
-        = render "products/suggested_container"

@@ -6,7 +6,13 @@ class Investigation < ApplicationRecord
 
   attr_accessor :status_rationale
 
+  validates :user_title, presence: true, on: :question_details
+  validates :description, presence: true, on: %i[allegation_details question_details]
+  validates :hazard_type, presence: true, on: :allegation_details
+  validates :product_category, presence: true, on: :allegation_details
+
   validates_length_of :user_title, maximum: 1000
+
   validates_length_of :description, maximum: 1000
 
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
@@ -53,8 +59,8 @@ class Investigation < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      methods: %i[pretty_id],
-      only: %i[user_title description hazard_type product_type is_closed updated_at created_at assignee_id],
+      methods: :pretty_id,
+      only: %i[user_title description hazard_type product_category is_closed assignee_id updated_at created_at],
       include: {
         documents: {
           only: [],
@@ -71,7 +77,7 @@ class Investigation < ApplicationRecord
           only: %i[company_name company_number]
         },
         products: {
-          only: %i[batch_number brand description gtin model name]
+          only: %i[category description name product_code product_type]
         },
         reporter: {
           only: %i[name phone_number email_address other_details]
@@ -120,12 +126,12 @@ class Investigation < ApplicationRecord
   end
 
   def self.highlighted_fields
-    %w[*.* pretty_id user_title description hazard_type product_type]
+    %w[*.* pretty_id user_title description hazard_type product_category]
   end
 
   def self.fuzzy_fields
     %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
-       tests.* user_title description hazard_type product_type]
+       tests.* user_title description hazard_type product_category]
   end
 
   def self.exact_fields

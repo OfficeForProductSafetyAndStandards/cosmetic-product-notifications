@@ -14,6 +14,6 @@ class InvestigationHighlightTest < ApplicationSystemTestCase
     fill_in "q", with: "234", visible: false
     click_on "Search"
     assert_text "234"
-    assert_text "Products, gtin"
+    assert_text "Products, product code"
   end
 end
