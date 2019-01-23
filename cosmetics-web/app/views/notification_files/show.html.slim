@@ -7,7 +7,8 @@ p
   - if @notification_file.uploaded_file.attached?
     p
       | Currently selected file:
-      = link_to @notification_file.uploaded_file.filename, url_for(@notification_file.uploaded_file), target: "_blank"
+      = link_to @notification_file.uploaded_file.filename,
+              url_for(@notification_file.uploaded_file), target: "_blank"
   -else
     p
       | No attachment

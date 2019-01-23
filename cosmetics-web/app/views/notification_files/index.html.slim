@@ -14,7 +14,8 @@ table
         td = notification_file.name
         td = link_to 'Show', notification_file
         td = link_to 'Edit', edit_notification_file_path(notification_file)
-        td = link_to 'Destroy', notification_file, data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to 'Destroy', notification_file,
+                data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
