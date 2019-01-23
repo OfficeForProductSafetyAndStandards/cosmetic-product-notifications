@@ -3,6 +3,7 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version").strip
 
+gem "aasm"
 gem "active_hash"
 gem "bootsnap", ">= 1.1.0"
 gem "cf-app-utils"
@@ -11,10 +12,12 @@ gem "mini_magick"
 gem "pg", "~> 1.1"
 gem "puma", "~> 3.0"
 gem "rails", "~> 5.2"
+gem 'rails-controller-testing'
 gem "sass-rails", "~> 5.0"
 gem "slim-rails"
 gem "strong_migrations"
 gem "uglifier", ">= 1.3.0"
+gem "wicked"
 
 gem "shared-web", path: "./vendor/shared-web"
 
