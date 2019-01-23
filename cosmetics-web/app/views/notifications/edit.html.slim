@@ -48,5 +48,6 @@
         p
             | By submitting this notification you are confirming that, to the best of your knowledge,
             | the details you are providing are correct.
-        a.govuk-button[href=confirmation_notification_path(@notification)]
-            | Accept and notify product
+        = form_with url: confirmation_notification_path(@notification), method: :get do |form|
+            .govuk-form-group
+                = form.submit "Accept and notify product", name: nil, class: "govuk-button"
