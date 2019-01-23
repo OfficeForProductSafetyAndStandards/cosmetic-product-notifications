@@ -1,12 +1,12 @@
-- content_for :page_title, "View location"
+- content_for :page_title, "View contact"
 - content_for :after_header do
   = link_to "Back to business", @business, class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .govuk-heading-xl
       span.govuk-caption-xl
-        = "Business: #{@business.trading_name}"
-      | Remove location
+        /= "Business: #{@business.company_name}"
+      | Remove contact
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-two-thirds
     table.govuk-table
@@ -15,21 +15,21 @@
           th.govuk-table__header[scope="row"]
             | Name
           td.govuk-table__cell
-            = @location.name
+            = @contact.name
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
-            | Location
+            | contact
           td.govuk-table__cell
-            = @location.summary
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Postcode
-          td.govuk-table__cell
-            = @location.postal_code
+            = @contact.email
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Phone
           td.govuk-table__cell
-            = @location.phone_number
-    = form_with url: location_path(@location), method: :delete do |form|
-      = form.submit "Remove location", class: "govuk-button", style: "background-color: #df3034"
+            = @contact.phone_number
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Title / Description
+          td.govuk-table__cell
+            = @contact.description
+= form_with url: contact_path(@contact), method: :delete do |form|
+    = form.submit "Remove contact", class: "govuk-button", style: "background-color: #df3034"

@@ -1,0 +1,10 @@
+- content_for :page_title, "Edit contact"
+- content_for :after_header do
+  = link_to "Back to business", @business, class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-heading-xl
+      span.govuk-caption-xl
+        = "Business: #{@business.company_name}"
+      | Remove contact
+= render "form", contact: @contact, business: nil, edit: true

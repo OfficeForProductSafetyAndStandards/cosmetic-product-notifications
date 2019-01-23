@@ -1,4 +1,11 @@
 class Contact < ApplicationRecord
+  validates :name, presence: true
+
+  default_scope { order(created_at: :asc) }
+  belongs_to :business
+
+  has_one :source, as: :sourceable, dependent: :destroy
+
   def summary
     [
         name,

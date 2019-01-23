@@ -23,10 +23,11 @@ class Business < ApplicationRecord
   has_one :contact, dependent: :destroy
 
   has_many :locations, dependent: :destroy
+  has_many :contacts, dependent: :destroy
   has_many :corrective_actions, dependent: :destroy
 
   accepts_nested_attributes_for :locations, reject_if: :all_blank
-  accepts_nested_attributes_for :contact, reject_if: :all_blank
+  accepts_nested_attributes_for :contacts, reject_if: :all_blank
 
   has_one :source, as: :sourceable, dependent: :destroy
 

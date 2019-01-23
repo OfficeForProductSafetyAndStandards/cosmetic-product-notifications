@@ -65,6 +65,11 @@ Rails.application.routes.draw do
         get :remove
       end
     end
+    resources :contacts, shallow: true do
+      member do
+        get :remove
+      end
+    end
   end
 
   resources :products, concerns: %i[document_attachable]
