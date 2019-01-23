@@ -1,4 +1,4 @@
-.mspsds-case-card {
+%mspsds-card {
 
   color: govuk-colour("black");
   @include govuk-font(19, $weight: bold);
@@ -90,4 +90,16 @@
     font-size: 0.75rem;
     line-height: 1;
   }
+}
+
+
+.mspsds-case-card {
+  @extend %mspsds-card
+}
+
+.mspsds-product-card {
+  @extend %mspsds-card;
+
+  margin-left: 0;
+  margin-right: 0;
 }

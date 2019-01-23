@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_product, only: %i[show edit update destroy]
-  before_action :create_product, only: %i[new create suggested]
+  before_action :create_product, only: %i[new create]
   before_action :set_countries, only: %i[create update new edit]
   before_action :build_breadcrumbs, only: %i[show]
 
@@ -14,12 +14,6 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = search_for_products(20)
-  end
-
-  # GET /products/suggested
-  def suggested
-    @products = advanced_product_search(@product)
-    render partial: "suggested"
   end
 
   # GET /products/1
