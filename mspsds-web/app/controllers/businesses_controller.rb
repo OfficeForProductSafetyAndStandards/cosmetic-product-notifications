@@ -1,11 +1,13 @@
 class BusinessesController < ApplicationController
   include BusinessesHelper
+  include UrlHelper
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
   before_action :set_business, only: %i[show edit update destroy]
   before_action :create_business, only: %i[new create suggested]
   before_action :update_business, only: %i[update]
+  before_action :build_breadcrumbs, only: %i[show]
 
   # GET /businesses
   # GET /businesses.json
@@ -91,5 +93,10 @@ private
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def build_breadcrumbs
+    @breadcrumbs = build_back_link_to_case
+    @breadcrumbs = @breadcrumbs.merge(build_breadcrumb_structure) unless @breadcrumbs[:is_simple_link]
   end
 end

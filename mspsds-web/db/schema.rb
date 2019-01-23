@@ -124,7 +124,6 @@ ActiveRecord::Schema.define(version: 2019_01_17_160320) do
     t.datetime "created_at", null: false
     t.text "description"
     t.string "hazard_type"
-    t.string "investigations", default: "Investigation::Allegation"
     t.boolean "is_closed", default: false
     t.boolean "is_private", default: false, null: false
     t.string "product_type"

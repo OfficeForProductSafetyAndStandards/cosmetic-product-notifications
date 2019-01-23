@@ -153,4 +153,18 @@ private
       }
     }
   end
+
+  def build_breadcrumb_structure
+    {
+      ancestors: [
+        {
+          name: "Businesses",
+          path: businesses_path
+        }
+      ],
+      current: {
+        name: @business.company_name
+      }
+    }
+  end
 end
