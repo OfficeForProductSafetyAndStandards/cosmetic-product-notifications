@@ -1,0 +1,31 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+- content_for :after_header do
+  = link_to "Back to list", products_path, class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      span.govuk-caption-xl Report an unsafe or non-compliant product
+      | Why are you reporting this product?
+= form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
+  .govuk-grid-row class="govuk-!-margin-bottom-3"
+    .mspsds-input.govuk-grid-column-two-thirds class="govuk-!-margin-bottom-9"
+      .govuk-form-group
+        .govuk-checkboxes data-module="checkboxes"
+          .govuk-checkboxes__item
+            input#report-report-type-1.govuk-checkboxes__input aria-controls="conditional-report-report-type-1" aria-expanded="false" name="new[report][reportType]" type="checkbox" value="unsafe" /
+            label.govuk-label.govuk-checkboxes__label for="report-report-type-1"
+              | It’s unsafe
+          #conditional-report-report-type-1.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
+          .govuk-checkboxes__item
+            input#report-report-type-2.govuk-checkboxes__input aria-controls="conditional-report-report-type-2" aria-expanded="false" name="new[report][reportType]" type="checkbox" value="noncompliant" /
+            label.govuk-label.govuk-checkboxes__label for="report-report-type-2"
+              | It’s non-compliant
+          #conditional-report-report-type-2.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
+            .govuk-form-group
+              span#allegation-compliance-detail-hint.govuk-hint
+                | Please give details of its non-compliance
+              textarea#allegation-compliance-detail.govuk-textarea aria-describedby="allegation-compliance-detail-hint" name="new[report][complianceSummary]" rows="5"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      button.govuk-button type="submit"
+        | Continue
