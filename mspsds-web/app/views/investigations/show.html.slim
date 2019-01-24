@@ -1,8 +1,6 @@
 - content_for :page_title, "View case"
 - content_for :after_header do
-  .govuk-grid-row
-    .govuk-grid-column-one-third
-      = link_to "Back to list", investigations_path, class: "govuk-back-link"
+  = render "breadcrumbs_navigation", breadcrumbs: @breadcrumbs
 
 = render "investigation_heading", investigation: @investigation
 
