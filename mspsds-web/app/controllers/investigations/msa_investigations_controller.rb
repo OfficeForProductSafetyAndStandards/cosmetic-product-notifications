@@ -3,7 +3,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
   include Wicked::Wizard
   include CountriesHelper
 
-  steps :product, :why_reporting, :which_businesses
+  steps :product, :why_reporting, :which_businesses, :has_corrective_action, :has_files, :reference_number
   before_action :set_product, except: :new
   before_action :set_countries
 
