@@ -95,4 +95,18 @@ private
       }
     }
   end
+
+  def build_breadcrumb_structure
+    {
+      ancestors: [
+        {
+          name: "Products",
+          path: products_path
+        }
+      ],
+      current: {
+        name: @product.name
+      }
+    }
+  end
 end
