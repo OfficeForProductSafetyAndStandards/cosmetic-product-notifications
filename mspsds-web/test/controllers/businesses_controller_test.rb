@@ -8,12 +8,10 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     @business_one.source = sources(:business_one)
     @business_two.source = sources(:business_two)
     Business.import refresh: true
-    allow(CompaniesHouseClient.instance).to receive(:companies_house_businesses).and_return([])
   end
 
   teardown do
     logout
-    allow(CompaniesHouseClient.instance).to receive(:companies_house_businesses).and_call_original
   end
 
   test "should get index" do
@@ -30,12 +28,9 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Business.count") do
       post businesses_url, params: {
         business: {
-          company_name: @business_one.company_name,
-          additional_information: @business_one.additional_information,
-          company_number: @business_one.company_number,
-          company_type_code: @business_one.company_type_code,
-          company_status_code: @business_one.company_status_code,
-          nature_of_business_id: @business_one.nature_of_business_id
+          legal_name: @business_two.legal_name,
+          trading_name: @business_two.trading_name,
+          company_number: "new_company_number"
         }
       }
     end
@@ -46,11 +41,8 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Business.count", 0) do
       post businesses_url, params: {
         business: {
-          company_name: '',
-          additional_information: @business_one.additional_information,
-          company_number: @business_one.company_number,
-          company_type_code: @business_one.company_type_code,
-          nature_of_business_id: @business_one.nature_of_business_id
+          legal_name: '',
+          company_number: "new_company_number"
         }
       }
     end
@@ -69,12 +61,9 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
   test "should update business" do
     patch business_url(@business_one), params: {
       business: {
-        company_name: @business_one.company_name,
-        additional_information: @business_one.additional_information,
-        company_number: @business_one.company_number,
-        company_type_code: @business_one.company_type_code,
-        company_status_code: @business_one.company_status_code,
-        nature_of_business_id: @business_one.nature_of_business_id
+        legal_name: "new legal_name for business_one",
+        trading_name: "new trading_name for business_one",
+        company_number: "new company number for business_one"
       }
     }
     assert_redirected_to business_url(@business_one)
@@ -86,10 +75,5 @@ class BusinessesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to businesses_url
-  end
-
-  test "should search for similar businesses" do
-    get suggested_businesses_url, params: { company_name: "Biscuit", company_type_code: "private-unlimited" }
-    assert_response :success
   end
 end
