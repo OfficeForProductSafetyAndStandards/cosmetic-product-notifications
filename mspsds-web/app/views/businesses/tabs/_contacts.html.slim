@@ -9,7 +9,7 @@ hr.govuk-section-break.govuk-section-break--l
         table.govuk-table[style="margin-bottom: 0"]
           tr.govuk-table__row
             th.govuk-table__header[scope="row" class="govuk-!-width-one-third"] = contact.name
-            td.govuk-table__cell[class="govuk-!-width-one-third"] = contact.description
+            td.govuk-table__cell[class="govuk-!-width-one-third"] = contact.job_title
             td.govuk-table__cell = contact.phone_number
             td.govuk-table__cell = contact.email
         = link_to "Edit contact", edit_contact_path(contact), class: "govuk-link mspsds-block-link"

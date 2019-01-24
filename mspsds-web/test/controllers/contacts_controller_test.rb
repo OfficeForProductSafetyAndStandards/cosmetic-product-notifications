@@ -15,7 +15,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Contact.count') do
       post business_contacts_url(@contact.business), params: {
         contact: {
-          description: @contact.description,
+          job_title: @contact.job_title,
           email: @contact.email,
           name: @contact.name,
           phone_number: @contact.phone_number
@@ -34,7 +34,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
   test "should update contact" do
     patch contact_url(@contact), params: {
       contact: {
-        description: "Job title/Description",
+        job_title: "Job title/Description",
         email: "email@email.com",
         name: "John Smith",
         phone_number: "+4477619345346"

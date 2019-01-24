@@ -5,11 +5,11 @@ one:
   name: MyString
   email: MyString
   phone_number: MyString
-  description: MyString
+  job_title: MyString
 
 two:
   business: two
   name: MyString
   email: MyString
   phone_number: MyString
-  description: MyString
+  job_title: MyString

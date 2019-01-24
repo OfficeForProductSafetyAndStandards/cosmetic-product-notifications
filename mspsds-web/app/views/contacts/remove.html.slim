@@ -30,6 +30,6 @@
           th.govuk-table__header[scope="row"]
             | Title / Description
           td.govuk-table__cell
-            = @contact.description
+            = @contact.job_title
 = form_with url: contact_path(@contact), method: :delete do |form|
     = form.submit "Remove contact", class: "govuk-button", style: "background-color: #df3034"
