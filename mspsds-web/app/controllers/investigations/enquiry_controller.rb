@@ -2,7 +2,7 @@ class Investigations::EnquiryController < Investigations::CreationFlowController
   set_attachment_names :attachment
   set_file_params_key :enquiry
 
-  steps :reporter, :reporter_details, :enquiry_details
+  steps :complainant, :complainant_details, :enquiry_details
 
 private
 

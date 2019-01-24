@@ -1,5 +1,5 @@
-module ReporterHelper
-  def reporter_types
+module ComplainantHelper
+  def complainant_types
     {
       "Consumer": "A consumer",
       "Business": "A business",

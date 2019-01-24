@@ -20,7 +20,7 @@ class InvestigationsController < ApplicationController
       end
       format.xlsx do
         @answer = search_for_investigations
-        @investigations = Investigation.eager_load(:reporter,
+        @investigations = Investigation.eager_load(:complainant,
                                                    :source,
                                                    { products: :source },
                                                    { activities: :source },

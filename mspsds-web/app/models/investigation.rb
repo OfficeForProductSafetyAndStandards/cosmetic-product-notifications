@@ -51,7 +51,7 @@ class Investigation < ApplicationRecord
   has_many_attached :documents
 
   has_one :source, as: :sourceable, dependent: :destroy
-  has_one :reporter, dependent: :destroy
+  has_one :complainant, dependent: :destroy
 
   before_create :assign_current_user_to_case
 
@@ -79,7 +79,7 @@ class Investigation < ApplicationRecord
         products: {
           only: %i[category description name product_code product_type]
         },
-        reporter: {
+        complainant: {
           only: %i[name phone_number email_address other_details]
         },
         tests: {
@@ -130,7 +130,7 @@ class Investigation < ApplicationRecord
   end
 
   def self.fuzzy_fields
-    %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
+    %w[documents.* correspondences.* activities.* businesses.* products.* complainant.*
        tests.* user_title description hazard_type product_category]
   end
 
