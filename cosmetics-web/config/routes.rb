@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   resources :notification_files
 
   get '/send' => 'helloworld#send_email'
-
   root 'helloworld#index'
 
+  get '/dashboard' => "dashboard_page#index"
   get '/manual_entry' => 'manual_entry#create'
 
   resources :notifications, only: %i[edit] do
