@@ -96,7 +96,6 @@ private
   end
 
   def build_breadcrumbs
-    @breadcrumbs = build_back_link_to_case
-    @breadcrumbs = @breadcrumbs.merge(build_breadcrumb_structure) unless @breadcrumbs[:is_simple_link]
+    @breadcrumbs = build_back_link_to_case || build_breadcrumb_structure
   end
 end
