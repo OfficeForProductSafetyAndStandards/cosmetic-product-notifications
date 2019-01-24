@@ -2,11 +2,12 @@ book = xlsx_package.workbook
 
 book.add_worksheet name: "Cases" do |sheet_investigations|
   sheet_investigations.add_row %w[ID Status Title Description Product_Category Hazard_Type Assignee Source
-                            Reporter_Name Reporter_Email Reporter_Phone Reporter_Type
+                            Complainant_Name Complainant_Email Complainant_Phone Complainant_Type
                             Products Businesses Activities Correspondences Corrective_Actions Tests]
 
   @investigations.each do |investigation|
     if policy(investigation).show?
+    complainant = investigation.complainant
       sheet_investigations.add_row [
         investigation.pretty_id,
         investigation.is_closed? ? "Closed" : "Open",
@@ -16,10 +17,10 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
         investigation.hazard_type,
         investigation.assignee ? investigation.assignee.email : "Unassigned",
         investigation.source&.show,
-        investigation.reporter&.can_be_displayed? ? investigation.reporter&.name : "Restricted",
-        investigation.reporter&.can_be_displayed? ? investigation.reporter&.email_address : "Restricted",
-        investigation.reporter&.can_be_displayed? ? investigation.reporter&.phone_number : "Restricted",
-        investigation.reporter&.reporter_type,
+        complainant.present? ? (complainant.can_be_displayed? ? complainant&.name : "Restricted") : "",
+        complainant.present? ? (complainant.can_be_displayed? ? complainant&.email_address : "Restricted") : "",
+        complainant.present? ? (complainant.can_be_displayed? ? complainant&.phone_number : "Restricted") : "",
+        complainant&.complainant_type,
         investigation.products.length,
         investigation.businesses.length,
         investigation.activities.length,
