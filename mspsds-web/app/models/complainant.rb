@@ -1,6 +1,6 @@
 class Complainant < ApplicationRecord
   include UserService
-  belongs_to :investigation, required: false
+  belongs_to :investigation, optional: true
 
   validates :complainant_type, presence: true
   validates :investigation, presence: true, on: %i[create update]

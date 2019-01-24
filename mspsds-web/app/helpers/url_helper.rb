@@ -23,4 +23,16 @@ module UrlHelper
   def remove_associated_document_path(parent, document)
     associated_document_path(parent, document) + "/remove"
   end
+
+  def build_back_link_to_case
+    case_id = request.referer&.match(/cases\/(\d+)/)&.captures&.first
+    return nil if case_id.blank?
+
+    investigation = Investigation.find(case_id)
+    {
+      is_simple_link: true,
+      link_text: "Back to #{investigation.pretty_description}",
+      link_to: investigation
+    }
+  end
 end

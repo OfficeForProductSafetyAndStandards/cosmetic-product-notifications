@@ -1,12 +1,14 @@
 class ProductsController < ApplicationController
   include CountriesHelper
   include ProductsHelper
+  include UrlHelper
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
   before_action :set_product, only: %i[show edit update destroy]
   before_action :create_product, only: %i[new create]
   before_action :set_countries, only: %i[create update new edit]
+  before_action :build_breadcrumbs, only: %i[show]
 
   # GET /products
   # GET /products.json
@@ -69,5 +71,11 @@ class ProductsController < ApplicationController
       format.html { redirect_to products_url, notice: "Product was successfully deleted." }
       format.json { head :no_content }
     end
+  end
+
+private
+
+  def build_breadcrumbs
+    @breadcrumbs = build_back_link_to_case || build_breadcrumb_structure
   end
 end

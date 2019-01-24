@@ -53,13 +53,10 @@ ActiveRecord::Schema.define(version: 2019_01_24_134204) do
   end
 
   create_table "businesses", id: :serial, force: :cascade do |t|
-    t.text "additional_information"
-    t.string "company_name", null: false
     t.string "company_number"
-    t.string "company_status_code"
-    t.string "company_type_code"
     t.datetime "created_at", null: false
-    t.string "nature_of_business_id"
+    t.string "legal_name"
+    t.string "trading_name", null: false
     t.datetime "updated_at", null: false
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
@@ -74,6 +71,17 @@ ActiveRecord::Schema.define(version: 2019_01_24_134204) do
     t.string "phone_number"
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_complainants_on_investigation_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer "business_id"
+    t.datetime "created_at", null: false
+    t.string "email"
+    t.string "job_title"
+    t.string "name"
+    t.string "phone_number"
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_contacts_on_business_id"
   end
 
   create_table "corrective_actions", id: :serial, force: :cascade do |t|
@@ -146,11 +154,13 @@ ActiveRecord::Schema.define(version: 2019_01_24_134204) do
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
-    t.string "address"
+    t.string "address_line_1"
+    t.string "address_line_2"
     t.integer "business_id"
+    t.string "city"
     t.string "country"
+    t.string "county"
     t.datetime "created_at", null: false
-    t.string "locality"
     t.string "name", null: false
     t.string "phone_number"
     t.string "postal_code"

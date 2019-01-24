@@ -98,4 +98,18 @@ module InvestigationsHelper
     params[:assigned_to_me] = "unchecked" if params[:assigned_to_me].blank?
     params[:assigned_to_someone_else] = "unchecked" if params[:assigned_to_someone_else].blank?
   end
+
+  def build_breadcrumb_structure
+    {
+      ancestors: [
+        {
+          name: "Cases",
+          path: investigations_path
+        }
+      ],
+      current: {
+        name: @investigation.pretty_description
+      }
+    }
+  end
 end

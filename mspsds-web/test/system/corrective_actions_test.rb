@@ -127,6 +127,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   end
 
   test "attachment description field is visible when a file is selected" do
+    choose "corrective_action_related_file_yes", visible: false
     attach_file "corrective_action[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
 
     assert_text "Attachment description"
@@ -136,7 +137,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     fill_in "corrective_action_summary", with: @corrective_action.summary
     fill_in "corrective_action_details", with: @corrective_action.details
     fill_autocomplete "legislation-picker", with: @corrective_action.legislation
-    fill_autocomplete "business-picker", with: @corrective_action.business.company_name
+    fill_autocomplete "business-picker", with: @corrective_action.business.trading_name
     fill_autocomplete "product-picker", with: @corrective_action.product.name
     fill_in "Day", with: @corrective_action.date_decided.day
     fill_in "Month", with: @corrective_action.date_decided.month
@@ -144,6 +145,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   end
 
   def add_attachment(filename:, description:)
+    choose "corrective_action_related_file_yes", visible: false
     attach_file "corrective_action[file][file]", Rails.root + "test/fixtures/files/#{filename}"
     fill_in "Attachment description", with: description
   end
