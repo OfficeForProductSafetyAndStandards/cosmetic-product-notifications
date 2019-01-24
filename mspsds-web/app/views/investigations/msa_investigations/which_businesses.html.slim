@@ -20,29 +20,29 @@
             .govuk-checkboxes__item
               = form.check_box :business_type_retailer, id: "new-business-type-1", class: "govuk-checkboxes__input",
                       value: "Retailer", name: "new[report][business][type]"
-              label.govuk-label.govuk-checkboxes__label for="new-business-type-1"
-                | Retailer
+              = form.label :business_type_retailer, "Retailer",
+                      class: "govuk-label govuk-checkboxes__label", for: "new-business-type-1"
             .govuk-checkboxes__item
               = form.check_box :business_type_distributor, id: "new-business-type-2", class: "govuk-checkboxes__input",
                       value: "Retailer", name: "new[report][business][type]"
-              label.govuk-label.govuk-checkboxes__label for="new-business-type-2"
-                | Distributor
+              = form.label :business_type_distributor, "Distributor",
+                      class: "govuk-label govuk-checkboxes__label", for: "new-business-type-2"
             .govuk-checkboxes__item
               = form.check_box :business_type_importer, id: "new-business-type-3", class: "govuk-checkboxes__input",
                       value: "Importer", name: "new[report][business][type]"
-              label.govuk-label.govuk-checkboxes__label for="new-business-type-3"
-                | Importer
+              = form.label :business_type_importer, "Importer",
+                      class: "govuk-label govuk-checkboxes__label", for: "new-business-type-3"
             .govuk-checkboxes__item
               = form.check_box :business_type_manufacturer, id: "new-business-type-4", class: "govuk-checkboxes__input",
                       value: "Manufacturer", name: "new[report][business][type]"
-              label.govuk-label.govuk-checkboxes__label for="new-business-type-4"
-                | Manufacturer
+              = form.label :business_type_manufacturer, "Manufacturer",
+                      class: "govuk-label govuk-checkboxes__label", for: "new-business-type-4"
             .govuk-checkboxes__item
               = form.check_box :business_type_other, id: "new-business-type-5", class: "govuk-checkboxes__input",
                       value: "Other", name: "new[report][business][type]",
                       "aria-controls": "conditional-new-business-type-5", "aria-expanded": "false"
-              label.govuk-label.govuk-checkboxes__label for="new-business-type-5"
-                | Other
+              = form.label :business_type_other, "Other",
+                      class: "govuk-label govuk-checkboxes__label", for: "new-business-type-5"
             #conditional-new-business-type-5.govuk-checkboxes__conditional.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
               .govuk-form-group
                 = form.text_field :other_business_type_description, id: "new-business-type-other", class: "govuk-input", name: "new[report][business][typeOther]"
@@ -51,8 +51,8 @@
             .govuk-checkboxes__item
               = form.check_box :business_type_none, id: "new-business-type-none-1", class: "govuk-checkboxes__input",
                       name: "new[report][business][typeNone]", value: "None"
-              label.govuk-label.govuk-checkboxes__label for="new-business-type-none-1"
-                | None
+              = form.label :business_type_none, "None",
+                      class: "govuk-label govuk-checkboxes__label", for: "new-business-type-none-1"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"

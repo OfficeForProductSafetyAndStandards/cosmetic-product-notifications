@@ -12,9 +12,11 @@
       .govuk-form-group
         .govuk-checkboxes data-module="checkboxes"
           .govuk-checkboxes__item
-            input#report-report-type-1.govuk-checkboxes__input aria-controls="conditional-report-report-type-1" aria-expanded="false" name="new[report][reportType]" type="checkbox" value="unsafe" /
-            label.govuk-label.govuk-checkboxes__label for="report-report-type-1"
-              | It’s unsafe
+            = form.check_box :unsafe, id: "report-report-type-1", class: "govuk-checkboxes__input",
+                    "aria-controls": "conditional-report-report-type-1", "aria-expanded": "false",
+                    "name": "new[report][reportType]", value: "unsafe"
+            = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label",
+                    for: "report-report-type-1"
           #conditional-report-report-type-1.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
             legend.govuk-fieldset__legend--m class="govuk-!-margin-bottom-1" for="hazard-type-autocomplete"
               | Hazard type
@@ -30,10 +32,11 @@
                 name="new[report][hazardSummary]" rows="5"]
 
           .govuk-checkboxes__item
-            input#report-report-type-2.govuk-checkboxes__input [aria-controls="conditional-report-report-type-2"
-              aria-expanded="false" name="new[report][reportType]" type="checkbox" value="noncompliant"]
-            label.govuk-label.govuk-checkboxes__label for="report-report-type-2"
-              | It’s non-compliant
+            = form.check_box :non_compliant, id: "report-report-type-2", class: "govuk-checkboxes__input",
+                    "aria-controls": "conditional-report-report-type-2", "aria-expanded": "false",
+                    "name": "new[report][reportType]", value: "non-compliant"
+            = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label",
+                    for: "report-report-type-2"
           #conditional-report-report-type-2.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
             .govuk-form-group
               span#allegation-compliance-detail-hint.govuk-hint
