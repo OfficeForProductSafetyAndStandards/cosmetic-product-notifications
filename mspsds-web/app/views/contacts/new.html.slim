@@ -5,6 +5,6 @@
   .govuk-grid-column-two-thirds
     .govuk-heading-xl
       span.govuk-caption-xl
-        = "Business: #{@business.company_name}"
+        = "Business: #{@business.trading_name}"
       | Add contact
 = render "form", contact: @contact, business: @contact.business, edit: false
