@@ -1,0 +1,58 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+- content_for :after_header do
+  = link_to "Back to list", products_path, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      span.govuk-caption-xl Report an unsafe or non-compliant product
+      | Supply chain information
+= form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
+  .govuk-grid-row class="govuk-!-margin-bottom-3"
+    .govuk-form-group
+      input#report-businesses.govuk-input name="new[report][businesses]" type="hidden" /
+    .govuk-grid-column-one-half class="govuk-!-margin-bottom-9"
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--m class="govuk-!-margin-bottom-1"
+          | Which parts of the chain do you know about?
+        .govuk-form-group
+          .govuk-checkboxes data-module="checkboxes"
+            .govuk-checkboxes__item
+              = form.check_box :business_type_retailer, id: "new-business-type-1", class: "govuk-checkboxes__input",
+                      value: "Retailer", name: "new[report][business][type]"
+              label.govuk-label.govuk-checkboxes__label for="new-business-type-1"
+                | Retailer
+            .govuk-checkboxes__item
+              = form.check_box :business_type_distributor, id: "new-business-type-2", class: "govuk-checkboxes__input",
+                      value: "Retailer", name: "new[report][business][type]"
+              label.govuk-label.govuk-checkboxes__label for="new-business-type-2"
+                | Distributor
+            .govuk-checkboxes__item
+              = form.check_box :business_type_importer, id: "new-business-type-3", class: "govuk-checkboxes__input",
+                      value: "Importer", name: "new[report][business][type]"
+              label.govuk-label.govuk-checkboxes__label for="new-business-type-3"
+                | Importer
+            .govuk-checkboxes__item
+              = form.check_box :business_type_manufacturer, id: "new-business-type-4", class: "govuk-checkboxes__input",
+                      value: "Manufacturer", name: "new[report][business][type]"
+              label.govuk-label.govuk-checkboxes__label for="new-business-type-4"
+                | Manufacturer
+            .govuk-checkboxes__item
+              = form.check_box :business_type_other, id: "new-business-type-5", class: "govuk-checkboxes__input",
+                      value: "Other", name: "new[report][business][type]",
+                      "aria-controls": "conditional-new-business-type-5", "aria-expanded": "false"
+              label.govuk-label.govuk-checkboxes__label for="new-business-type-5"
+                | Other
+            #conditional-new-business-type-5.govuk-checkboxes__conditional.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
+              .govuk-form-group
+                = form.text_field :other_business_type_description, id: "new-business-type-other", class: "govuk-input", name: "new[report][business][typeOther]"
+        .govuk-form-group
+          .govuk-checkboxes
+            .govuk-checkboxes__item
+              = form.check_box :business_type_none, id: "new-business-type-none-1", class: "govuk-checkboxes__input",
+                      name: "new[report][business][typeNone]", value: "None"
+              label.govuk-label.govuk-checkboxes__label for="new-business-type-none-1"
+                | None
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form.submit "Continue", class: "govuk-button"
