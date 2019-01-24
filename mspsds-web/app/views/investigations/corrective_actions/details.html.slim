@@ -56,7 +56,6 @@ h1.govuk-heading-xl
           - else
             span.govuk-hint
               ' Only businesses already added to the case are listed.
-              = link_to "Add a business", new_investigation_business_path(@investigation)
             = form.collection_select :business_id, @investigation.businesses, :id, :company_name,
                     { include_blank: true,
                     selected: @investigation.businesses.size == 1 && @investigation.businesses.first.id },
