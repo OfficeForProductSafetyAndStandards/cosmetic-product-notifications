@@ -56,7 +56,7 @@ h1.govuk-heading-xl
           - else
             span.govuk-hint
               ' Only businesses already added to the case are listed.
-            = form.collection_select :business_id, @investigation.businesses, :id, :company_name,
+            = form.collection_select :business_id, @investigation.businesses, :id, :trading_name,
                     { include_blank: true,
                     selected: @investigation.businesses.size == 1 && @investigation.businesses.first.id },
                     class: "govuk-select", id: "business-picker"
