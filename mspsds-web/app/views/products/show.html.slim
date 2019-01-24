@@ -1,6 +1,6 @@
 - content_for :page_title, "View product"
 - content_for :after_header do
-  = link_to "Back to list", products_path, class: "govuk-back-link"
+  = render "breadcrumbs_navigation", breadcrumbs: @breadcrumbs
 
 = render "product_heading", product: @product
 = render "product_summary", product: @product

@@ -1,6 +1,6 @@
 - content_for :page_title, "View business"
 - content_for :after_header do
-  = link_to "Back to list", businesses_path, class: "govuk-back-link"
+  = render "breadcrumbs_navigation", breadcrumbs: @breadcrumbs
 
 = render "business_heading", business: @business
 
