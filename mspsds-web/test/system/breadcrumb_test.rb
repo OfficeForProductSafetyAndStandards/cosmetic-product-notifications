@@ -36,6 +36,6 @@ class BreadcrumbTest < ApplicationSystemTestCase
 
   test "when accessing business page from list page navigation should let you go back to the list" do
     visit business_path(@business)
-    assert_text "Businesses\n#{@business.company_name}"
+    assert_text "Businesses\n#{@business.trading_name}"
   end
 end

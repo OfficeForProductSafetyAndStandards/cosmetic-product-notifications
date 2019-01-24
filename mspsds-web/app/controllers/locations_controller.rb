@@ -39,7 +39,6 @@ class LocationsController < ApplicationController
   # PATCH/PUT /locations/1
   # PATCH/PUT /locations/1.json
   def update
-    authorize @location
     respond_to do |format|
       if @location.update(location_params)
         format.html do
@@ -61,7 +60,6 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   # DELETE /locations/1.json
   def destroy
-    authorize @location
     @location.destroy
     respond_to do |format|
       format.html do
@@ -87,6 +85,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def location_params
-    params.require(:location).permit(:business_id, :name, :address, :phone_number, :locality, :country, :postal_code)
+    params.require(:location).permit(:business_id, :name, :address_line_1, :address_line_2, :phone_number, :locality, :country, :postal_code)
   end
 end

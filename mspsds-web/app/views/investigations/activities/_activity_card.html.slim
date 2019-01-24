@@ -26,4 +26,4 @@ li
         = link_to "View business details", business_url(activity.business_id), class: "mspsds-block-link"
       - if activity.has_attachment?
         - activity.attachments.each do |name, attachment|
-          = link_to "View #{name}", attachment, class: "mspsds-block-link", target: "_blank"
+          = link_to "View #{name}", attachment, class: "mspsds-block-link", target: "_blank", rel: 'noopener'
