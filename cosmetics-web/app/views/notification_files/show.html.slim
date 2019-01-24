@@ -4,7 +4,7 @@ p
   strong Name:
   = @notification_file.name
 
-  - if @notification_file.uploaded_file.attached?
+  - if @notification_file.uploaded_file.attached? && @notification_file.uploaded_file.metadata["safe"]
     p
       | Currently selected file:
       = link_to @notification_file.uploaded_file.filename,
