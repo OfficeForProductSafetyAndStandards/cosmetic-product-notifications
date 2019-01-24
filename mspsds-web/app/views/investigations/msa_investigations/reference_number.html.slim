@@ -1,0 +1,20 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+- content_for :after_header do
+  = link_to "Back to list", products_path, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      span.govuk-caption-xl Reporting an unsafe product
+      | Find this in your system
+= form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
+  .govuk-grid-row class="govuk-!-margin-bottom-3"
+    .govuk-grid-column-one-half
+      .govuk-form-group
+        span#report-title-hint.govuk-hint
+          | Give us a reference, ie a case number from your system, use it to help you find your report in the future.
+        = form.text_field :reference_number, id: "report-title", class:"govuk-input",
+                "aria-describedby": "report-title-hint",  name: "new[reference]"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form.submit "Save", class: "govuk-button"
