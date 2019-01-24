@@ -5,7 +5,7 @@ fieldset.govuk-fieldset
     - if file_blob.present?
       p#current-attachment-details
         ' Currently selected file:
-        = link_to file_blob.filename, file_blob, target: "_blank"
+        = link_to file_blob.filename, file_blob, target: "_blank", rel: 'noopener'
     = form.fields_for attachment_name do |subform|
       - if file_blob.blank?
         .govuk-form-group

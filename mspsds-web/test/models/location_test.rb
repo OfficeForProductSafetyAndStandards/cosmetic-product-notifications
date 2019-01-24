@@ -2,7 +2,7 @@ require "test_helper"
 
 class LocationTest < ActiveSupport::TestCase
   test "short displays correctly" do
-    location = Location.new(locality: 'L', country: 'C')
+    location = Location.new(county: 'L', country: 'C')
     assert_equal 'L, C', location.short
   end
 

@@ -38,7 +38,7 @@ h1.govuk-heading-xl
           - if @file_blob.present?
             p#current-attachment-details
               ' Currently selected file:
-              = link_to @file_blob.filename, @file_blob, target: "_blank"
+              = link_to @file_blob.filename, @file_blob, target: "_blank", rel: 'noopener'
           = form.fields_for :attachment do |subform|
             = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
 

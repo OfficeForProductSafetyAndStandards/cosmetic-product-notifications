@@ -31,14 +31,14 @@ class InvestigationTest < ActiveSupport::TestCase
   test "should create an activity when business is added to investigation" do
     @investigation = Investigation::Allegation.create
     assert_difference"Activity.count" do
-      @business = Business.new(company_name: 'Test Company')
+      @business = Business.new(trading_name: 'Test Company')
       @investigation.businesses << @business
     end
   end
 
   test "should create an activity when business is removed from investigation" do
     @investigation = Investigation::Allegation.create
-    @business = Business.new(company_name: 'Test Company')
+    @business = Business.new(trading_name: 'Test Company')
     @investigation.businesses << @business
     assert_difference"Activity.count" do
       @investigation.businesses.delete(@business)
@@ -166,23 +166,13 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "elasticsearch should find business name" do
-    query = ElasticsearchQuery.new(@business.company_name, {}, {})
+    query = ElasticsearchQuery.new(@business.trading_name, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
   end
 
   test "elasticsearch should find business number" do
     query = ElasticsearchQuery.new(@business.company_number, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
-  end
-
-  test "elasticsearch should not find business type code" do
-    query = ElasticsearchQuery.new(@business.company_type_code, {}, {})
-    assert_not_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
-  end
-
-  test "elasticsearch should not find business status code" do
-    query = ElasticsearchQuery.new(@business.company_status_code, {}, {})
-    assert_not_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
   end
 
   test "visible to creator organisation" do
