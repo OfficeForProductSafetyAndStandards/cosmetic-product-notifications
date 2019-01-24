@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :question, path: "enquiry", controller: "investigations/question", only: %i[show new create update]
+  resources :enquiry, controller: "investigations/enquiry", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
   resources :project, controller: "investigations/project", only: %i[new create]
 

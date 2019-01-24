@@ -1,6 +1,6 @@
-class Investigation::Question < Investigation
-  validates :user_title, presence: true, on: %i[question_details]
-  validates :description, presence: true, on: %i[question_details]
+class Investigation::Enquiry < Investigation
+  validates :user_title, presence: true, on: %i[enquiry_details]
+  validates :description, presence: true, on: %i[enquiry_details]
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
@@ -20,6 +20,6 @@ class Investigation::Question < Investigation
 private
 
   def create_audit_activity_for_case
-    AuditActivity::Investigation::AddQuestion.from(self)
+    AuditActivity::Investigation::AddEnquiry.from(self)
   end
 end

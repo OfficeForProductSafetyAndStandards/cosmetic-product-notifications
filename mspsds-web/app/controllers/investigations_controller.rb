@@ -48,8 +48,8 @@ class InvestigationsController < ApplicationController
     case params[:type]
     when "allegation"
       redirect_to new_allegation_path
-    when "question"
-      redirect_to new_question_path
+    when "enquiry"
+      redirect_to new_enquiry_path
     when "project"
       redirect_to new_project_path
     else

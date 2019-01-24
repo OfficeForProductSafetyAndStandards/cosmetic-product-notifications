@@ -1,6 +1,6 @@
 require "application_system_test_case"
 
-class CreateQuestionTest < ApplicationSystemTestCase
+class CreateEnquiryTest < ApplicationSystemTestCase
   setup do
     @reporter = Reporter.new(
       name: "Test Reporter",
@@ -9,13 +9,13 @@ class CreateQuestionTest < ApplicationSystemTestCase
       email_address: "test@example.com"
     )
 
-    @question = Investigation::Question.new(
+    @enquiry = Investigation::Enquiry.new(
       user_title: "Enquiry title",
       description: "Enquiry description"
     )
 
     sign_in_as_user
-    visit new_question_path
+    visit new_enquiry_path
   end
 
   teardown do
@@ -27,7 +27,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     click_on "Create new"
     assert_text "Create new"
 
-    choose "type_question", visible: false
+    choose "type_enquiry", visible: false
     click_on "Continue"
 
     assert_text "New Enquiry"
@@ -97,16 +97,16 @@ class CreateQuestionTest < ApplicationSystemTestCase
   test "enquiry page should be shown when complete" do
     select_reporter_type_and_continue
     fill_reporter_details_and_continue
-    fill_question_details_and_continue
+    fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-    assert_text @question.user_title
+    assert_text @enquiry.user_title
   end
 
   test "confirmation message should be shown when complete" do
     select_reporter_type_and_continue
     fill_reporter_details_and_continue
-    fill_question_details_and_continue
+    fill_enquiry_details_and_continue
 
     assert_text "Enquiry was successfully created"
   end
@@ -114,12 +114,12 @@ class CreateQuestionTest < ApplicationSystemTestCase
   test "enquiry and reporter details should be logged as case activity" do
     select_reporter_type_and_continue
     fill_all_reporter_details_and_continue
-    fill_question_details_and_continue
+    fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
 
-    assert_text "Enquiry logged: #{@question.title}"
-    assert_text @question.description
+    assert_text "Enquiry logged: #{@enquiry.title}"
+    assert_text @enquiry.description
 
     assert_text "Name: #{@reporter.name}"
     assert_text "Type: #{@reporter.reporter_type}"
@@ -133,8 +133,8 @@ class CreateQuestionTest < ApplicationSystemTestCase
 
     select_reporter_type_and_continue
     fill_reporter_details_and_continue
-    attach_file "question[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
-    fill_question_details_and_continue
+    attach_file "enquiry[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
     click_on "Attachments"
@@ -147,8 +147,8 @@ class CreateQuestionTest < ApplicationSystemTestCase
 
     select_reporter_type_and_continue
     fill_reporter_details_and_continue
-    attach_file "question[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
-    fill_question_details_and_continue
+    attach_file "enquiry[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
 
@@ -175,9 +175,9 @@ class CreateQuestionTest < ApplicationSystemTestCase
     click_on "Continue"
   end
 
-  def fill_question_details_and_continue
-    fill_in "question[user_title]", with: @question.user_title
-    fill_in "question[description]", with: @question.description
+  def fill_enquiry_details_and_continue
+    fill_in "enquiry[user_title]", with: @enquiry.user_title
+    fill_in "enquiry[description]", with: @enquiry.description
     click_on "Continue"
   end
 end

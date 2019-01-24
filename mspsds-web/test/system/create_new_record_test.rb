@@ -38,7 +38,7 @@ class CreateNewRecordTest < ApplicationSystemTestCase
   end
 
   test "should show the new enquiry page when selecting enquiry" do
-    choose "type_question", visible: false
+    choose "type_enquiry", visible: false
     click_on "Continue"
 
     assert_text "New Enquiry"

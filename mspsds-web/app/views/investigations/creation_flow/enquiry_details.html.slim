@@ -5,7 +5,7 @@ h1.govuk-heading-xl
   = @page_title
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with model: @investigation, scope: :question, local: true, url: wizard_path, method: :put do |form|
+    = form_with model: @investigation, scope: :enquiry, local: true, url: wizard_path, method: :put do |form|
       = render "form_validation_display", errors: @investigation.errors, model_name: "enquiry"
 
       fieldset.govuk-fieldset

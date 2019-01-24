@@ -1,13 +1,13 @@
-class Investigations::QuestionController < Investigations::CreationFlowController
+class Investigations::EnquiryController < Investigations::CreationFlowController
   set_attachment_names :attachment
-  set_file_params_key :question
+  set_file_params_key :enquiry
 
-  steps :reporter, :reporter_details, :question_details
+  steps :reporter, :reporter_details, :enquiry_details
 
 private
 
   def model_key
-    :question
+    :enquiry
   end
 
   def model_params
@@ -15,7 +15,7 @@ private
   end
 
   def set_investigation
-    @investigation = Investigation::Question.new(investigation_params)
+    @investigation = Investigation::Enquiry.new(investigation_params)
   end
 
   def success_message

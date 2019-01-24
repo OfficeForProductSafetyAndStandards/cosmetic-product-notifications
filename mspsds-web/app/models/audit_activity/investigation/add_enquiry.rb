@@ -1,4 +1,4 @@
-class AuditActivity::Investigation::AddQuestion < AuditActivity::Investigation::Add
+class AuditActivity::Investigation::AddEnquiry < AuditActivity::Investigation::Add
   def self.from(investigation)
     super(investigation, self.build_title(investigation), self.build_body(investigation))
   end

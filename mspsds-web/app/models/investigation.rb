@@ -6,8 +6,8 @@ class Investigation < ApplicationRecord
 
   attr_accessor :status_rationale
 
-  validates :user_title, presence: true, on: :question_details
-  validates :description, presence: true, on: %i[allegation_details question_details]
+  validates :user_title, presence: true, on: :enquiry_details
+  validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
   validates :product_category, presence: true, on: :allegation_details
 
