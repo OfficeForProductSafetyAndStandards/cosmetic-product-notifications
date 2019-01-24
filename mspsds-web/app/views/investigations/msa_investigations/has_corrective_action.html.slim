@@ -1,3 +1,7 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+- content_for :after_header do
+  = link_to "Back to list", products_path, class: "govuk-back-link"
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
