@@ -1,0 +1,17 @@
+- content_for :page_title, "List the shades"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+- shades_errors = @component.errors.messages[:shades].any?
+.govuk-grid-row
+    .govuk-grid-column-two-thirds
+        h1.govuk-heading-xl
+            | List the shades
+        - if shades_errors
+            span.govuk-error-message Please add at least two shades
+        = form_for(@component, url: wizard_path, method: :put) do |form|
+            .govuk-form-group
+                = form.text_field :shades, multiple: true, class: "govuk-input"
+            .govuk-form-group
+                = form.text_field :shades, multiple: true, class: "govuk-input"
+            .govuk-form-group
+                = form.submit "Continue", class: "govuk-button"

@@ -1,7 +1,7 @@
 class ComponentBuildController < ApplicationController
     include Wicked::Wizard
 
-    steps :number_of_shades
+    steps :number_of_shades, :add_shades
 
     before_action :set_component
 
@@ -11,12 +11,15 @@ class ComponentBuildController < ApplicationController
 
     def update
         if step == :number_of_shades
-            # TODO - Do something here....
+            if params[:number_of_shades] == 'single'
+                redirect_to edit_notification_path(@component.notification)
+            else
+                render_wizard @component
+            end
         else
             @component.update(component_params)
+            render_wizard @component
         end
-
-        render_wizard @component
     end
 
     def new
@@ -30,7 +33,7 @@ class ComponentBuildController < ApplicationController
 private
 
     def component_params
-        params.require(:component).permit()
+        params.require(:component).permit(shades: [])
     end
 
     def set_component
