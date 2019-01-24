@@ -4,26 +4,10 @@ class Investigations::BusinessesController < ApplicationController
 
   before_action :set_investigation
   before_action :set_business, only: %i[link remove unlink]
-  before_action :create_business, only: %i[new create suggested]
+  before_action :create_business, only: %i[new create]
 
   # GET /cases/1/businesses/new
-  def new
-    advanced_search(@investigation.businesses.map(&:id))
-  end
-
-  # GET /cases/1/businesses/suggested
-  def suggested
-    excluded_business_ids = params[:excluded_businesses].split(",").map(&:to_i)
-    advanced_search(excluded_business_ids)
-    render partial: "businesses/suggested"
-  end
-
-  # POST /businesses/companies_house
-  def companies_house
-    @business = CompaniesHouseClient.instance.create_business_from_companies_house_number params[:company_number]
-    @investigation.businesses << @business
-    redirect_to_investigation_businesses_tab "Business was successfully added."
-  end
+  def new; end
 
   # POST /cases/1/businesses
   def create
@@ -33,7 +17,6 @@ class Investigations::BusinessesController < ApplicationController
         format.html { redirect_to_investigation_businesses_tab "Business was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
-        advanced_search(@investigation.businesses.map(&:id))
         format.html { render :new }
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end

@@ -11,7 +11,7 @@
         p
           - if document.metadata["safe"]
             = link_to "View #{pretty_type_description(document)}",
-                    document, class: "govuk-link mspsds-block-link", target: '_blank'
+                    document, class: "govuk-link mspsds-block-link", target: '_blank', rel: 'noopener'
           = link_to "Edit #{image_document_text(document)}",
                   edit_associated_document_path(parent, document), class: "govuk-link mspsds-block-link"
           = link_to "Remove #{image_document_text(document)}",

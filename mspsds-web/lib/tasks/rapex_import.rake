@@ -46,21 +46,19 @@ def create_records_from_notification(notification, date)
 end
 
 def create_product(notification, name)
-  Product.where.not(gtin: "").where(gtin: barcode_from_notification(notification)).first_or_create(
-    gtin: barcode_from_notification(notification),
-    name: name,
+  Product.where.not(product_code: "").where(product_code: barcode_from_notification(notification)).first_or_create(
+    product_code: barcode_from_notification(notification),
+    name: "#{brand(notification)}, #{name}, #{field_from_notification(notification, 'type_numberOfModel')}",
     description: field_from_notification(notification, "description"),
-    model: field_from_notification(notification, "type_numberOfModel"),
-    product_type: field_from_notification(notification, "category"),
+    category: field_from_notification(notification, "category"),
     batch_number: field_from_notification(notification, "batchNumber_barcode"),
     country_of_origin: field_from_notification(notification, "countryOfOrigin"),
-    brand: brand(notification),
     source: ReportSource.new(name: "RAPEX")
   )
 end
 
 def create_investigation(notification, date, name)
-  Investigation.create(
+  Investigation::Allegation.create(
     title: name,
     description: field_from_notification(notification, "danger"),
     is_closed: true,

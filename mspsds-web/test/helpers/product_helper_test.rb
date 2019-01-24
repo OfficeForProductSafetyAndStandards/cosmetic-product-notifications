@@ -10,6 +10,8 @@ class ProductHelperTest < ActiveSupport::TestCase
     @iphone_3g = products(:iphone_3g)
     @pixel = products(:pixel)
     @chromecast = products(:chromecast)
+    @alexa = products(:alexa)
+    @phone_charger = products(:phone_charger)
   end
 
   test "product search matches by name (fuzzy)" do
@@ -24,9 +26,9 @@ class ProductHelperTest < ActiveSupport::TestCase
     assert_results_do_not_include(results, @chromecast)
   end
 
-  test "product search matches by product type (fuzzy)" do
+  test "product search matches by category (fuzzy)" do
     # Act
-    search_model = Product.new product_type: "phoRne"
+    search_model = Product.new category: "phoRne"
     results = advanced_product_search(search_model)
 
     # Assert
@@ -36,47 +38,35 @@ class ProductHelperTest < ActiveSupport::TestCase
     assert_results_do_not_include(results, @chromecast)
   end
 
-  test "product search matches by brand (fuzzy)" do
-    # Act
-    search_model = Product.new brand: "oogle"
-    results = advanced_product_search(search_model)
-
-    # Assert
-    assert_results_include(results, @pixel)
-    assert_results_include(results, @chromecast)
-    assert_results_do_not_include(results, @iphone)
-    assert_results_do_not_include(results, @iphone_3g)
-  end
-
   test "product search matches if at least one field matches, prioritising higher scores" do
     # Act
-    search_model = Product.new brand: "google", name: "chromecast"
+    search_model = Product.new category: "electronics", name: "chromecast"
     results = advanced_product_search(search_model)
 
     # Assert
     assert_results_include(results, @chromecast)
-    assert_results_include(results, @pixel)
-    results.find_index(@chromecast) < results.find_index(@pixel)
+    assert_results_include(results, @alexa)
+    results.find_index(@alexa) < results.find_index(@chromecast)
   end
 
   test "product search doesn't match between fields" do
     # Act
-    search_model = Product.new brand: "iphone"
+    search_model = Product.new category: "phone"
     results = advanced_product_search(search_model)
 
     # Assert
-    assert_results_do_not_include(results, @iphone)
-    assert_results_do_not_include(results, @iphone_3g)
+    assert_results_do_not_include(results, @phone_charger)
   end
 
   test "product search excludes specified ids" do
     # Act
-    search_model = Product.new brand: "google"
+    search_model = Product.new category: "phone"
     results = advanced_product_search(search_model, [@pixel.id])
 
     # Assert
     assert_results_do_not_include(results, @pixel)
-    assert_results_include(results, @chromecast)
+    assert_results_include(results, @iphone)
+    assert_results_include(results, @iphone_3g)
   end
 
   def assert_results_include(results, product)

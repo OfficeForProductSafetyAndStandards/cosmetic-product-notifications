@@ -166,10 +166,6 @@ This sets the server's encryption key. Generate a new value by running `rake sec
 
 See the S3 section [above](#s3) to get these values.
 
-    cf set-env mspsds-web COMPANIES_HOUSE_API_KEY XXX
-
-See the Companies House account section in [the root README](../README.md#companies-house) to get this value.
-
     cf set-env mspsds-web PGHERO_USERNAME XXX
     cf set-env mspsds-web PGHERO_PASSWORD XXX
 
