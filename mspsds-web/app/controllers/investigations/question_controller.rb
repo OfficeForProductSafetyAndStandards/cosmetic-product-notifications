@@ -19,11 +19,11 @@ private
   end
 
   def success_message
-    "Question was successfully created."
+    "Enquiry was successfully created."
   end
 
   def set_page_title
-    @page_title = "New Question"
-    @page_subtitle = "Who did the question come from?"
+    @page_title = "New Enquiry"
+    @page_subtitle = "Who did the enquiry come from?"
   end
 end

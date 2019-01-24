@@ -14,7 +14,7 @@ class Investigation::Question < Investigation
   end
 
   def case_type
-    "question"
+    "enquiry"
   end
 
 private

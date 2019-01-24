@@ -10,8 +10,8 @@ class CreateQuestionTest < ApplicationSystemTestCase
     )
 
     @question = Investigation::Question.new(
-      user_title: "Question title",
-      description: "Question description"
+      user_title: "Enquiry title",
+      description: "Enquiry description"
     )
 
     sign_in_as_user
@@ -30,12 +30,12 @@ class CreateQuestionTest < ApplicationSystemTestCase
     choose "type_question", visible: false
     click_on "Continue"
 
-    assert_text "New Question"
+    assert_text "New Enquiry"
   end
 
   test "first step should be reporter type" do
-    assert_text "New Question"
-    assert_text "Who did the question come from?"
+    assert_text "New Enquiry"
+    assert_text "Who did the enquiry come from?"
   end
 
   test "first step should require an option to be selected" do
@@ -51,7 +51,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
   test "second step should be reporter details" do
     select_reporter_type_and_continue
 
-    assert_text "New Question"
+    assert_text "New Enquiry"
     assert_text "What are their contact details?"
   end
 
@@ -77,15 +77,15 @@ class CreateQuestionTest < ApplicationSystemTestCase
     assert_no_text "prevented this reporter from being saved"
   end
 
-  test "third step should be question details" do
+  test "third step should be enquiry details" do
     select_reporter_type_and_continue
     fill_reporter_details_and_continue
 
-    assert_text "New Question"
-    assert_text "What is the question?"
+    assert_text "New Enquiry"
+    assert_text "What is the enquiry?"
   end
 
-  test "third step should require a question title and description" do
+  test "third step should require na enquiry title and description" do
     select_reporter_type_and_continue
     fill_reporter_details_and_continue
     click_on "Continue"
@@ -94,7 +94,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     assert_text "Description can't be blank"
   end
 
-  test "question page should be shown when complete" do
+  test "enquiry page should be shown when complete" do
     select_reporter_type_and_continue
     fill_reporter_details_and_continue
     fill_question_details_and_continue
@@ -108,17 +108,17 @@ class CreateQuestionTest < ApplicationSystemTestCase
     fill_reporter_details_and_continue
     fill_question_details_and_continue
 
-    assert_text "Question was successfully created"
+    assert_text "Enquiry was successfully created"
   end
 
-  test "question and reporter details should be logged as case activity" do
+  test "enquiry and reporter details should be logged as case activity" do
     select_reporter_type_and_continue
     fill_all_reporter_details_and_continue
     fill_question_details_and_continue
 
     assert_current_path(/cases\/\d+/)
 
-    assert_text "Question logged: #{@question.title}"
+    assert_text "Enquiry logged: #{@question.title}"
     assert_text @question.description
 
     assert_text "Name: #{@reporter.name}"
@@ -128,7 +128,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     assert_text @reporter.other_details
   end
 
-  test "related file is attached to the question" do
+  test "related file is attached to the enquiry" do
     attachment_filename = "new_risk_assessment.txt"
 
     select_reporter_type_and_continue

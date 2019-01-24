@@ -4,11 +4,11 @@ class AuditActivity::Investigation::AddQuestion < AuditActivity::Investigation::
   end
 
   def self.build_title(investigation)
-    "Question logged: #{investigation.title}"
+    "Enquiry logged: #{investigation.title}"
   end
 
   def self.build_body(investigation)
-    body = "**Question details**<br>"
+    body = "**Enquiry details**<br>"
     body += "<br>Attachment: **#{self.sanitize_text investigation.documents.first.filename}**<br>" if investigation.documents.attached?
     body += "<br>#{self.sanitize_text investigation.description}" if investigation.description.present?
     body += self.build_reporter_details(investigation.reporter) if investigation.reporter.present?
