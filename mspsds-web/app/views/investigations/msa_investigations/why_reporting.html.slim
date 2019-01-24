@@ -16,16 +16,31 @@
             label.govuk-label.govuk-checkboxes__label for="report-report-type-1"
               | It’s unsafe
           #conditional-report-report-type-1.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
+            legend.govuk-fieldset__legend--m class="govuk-!-margin-bottom-1" for="hazard-type-autocomplete"
+              | Hazard type
+            span#hazard-type-category-picker.govuk-hint What kind of danger does the product present?
+            .mspsds-autocomplete#hazard-type-auto-complete-container
+              = form.select :hazard_type, hazard_types, {include_blank: true},
+                      class: "govuk-select", id: "hazard-type-picker", aria_describedby: "hazard-type-category-hint"
+
+            .govuk-form-group
+              span.govuk-hint id="allegation-hazard–detail-hint"
+                | Please give details about the hazard, including any incidents or events that brought it to your attention
+              textarea.govuk-textarea [aria-describedby="allegation-hazard–detail-hint" id="allegation-hazard–detail"
+                name="new[report][hazardSummary]" rows="5"]
+
           .govuk-checkboxes__item
-            input#report-report-type-2.govuk-checkboxes__input aria-controls="conditional-report-report-type-2" aria-expanded="false" name="new[report][reportType]" type="checkbox" value="noncompliant" /
+            input#report-report-type-2.govuk-checkboxes__input [aria-controls="conditional-report-report-type-2"
+              aria-expanded="false" name="new[report][reportType]" type="checkbox" value="noncompliant"]
             label.govuk-label.govuk-checkboxes__label for="report-report-type-2"
               | It’s non-compliant
           #conditional-report-report-type-2.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
             .govuk-form-group
               span#allegation-compliance-detail-hint.govuk-hint
                 | Please give details of its non-compliance
-              textarea#allegation-compliance-detail.govuk-textarea aria-describedby="allegation-compliance-detail-hint" name="new[report][complianceSummary]" rows="5"
+              = form.text_area :non_compliant_reason, class: "govuk-textarea", id: "allegation-compliance-detail",
+                      aria_describedby: "allegation-compliance-detail-hint", name: "new[report][nonCompliantReason]",
+                      rows: "5"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      button.govuk-button type="submit"
-        | Continue
+      = form.submit "Continue", class: "govuk-button"

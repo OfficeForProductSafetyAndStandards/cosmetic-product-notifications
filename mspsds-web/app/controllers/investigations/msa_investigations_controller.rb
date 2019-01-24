@@ -1,9 +1,11 @@
 class Investigations::MsaInvestigationsController < ApplicationController
   # include FileConcern
   include Wicked::Wizard
+  include CountriesHelper
 
   steps :product, :why_reporting
   before_action :set_product, except: :new
+  before_action :set_countries
 
   #GET /xxx/step
   def show
@@ -28,5 +30,9 @@ private
   end
 
   def clear_session
+  end
+
+  def set_countries
+    @countries = all_countries
   end
 end
