@@ -1,6 +1,7 @@
 class ContactsController < ApplicationController
   before_action :set_contact, only: %i[show edit update remove destroy]
   before_action :create_contact, only: %i[create]
+  before_action :assign_business, only: %i[show edit remove]
   # GET /contacts
   # GET /contacts.json
 
@@ -57,7 +58,7 @@ class ContactsController < ApplicationController
   end
 
   def remove
-    @business = @location.business
+    @business = @contact.business
   end
 
   # DELETE /contacts/1
@@ -74,6 +75,10 @@ class ContactsController < ApplicationController
   end
 
 private
+
+  def assign_business
+    @business = @contact.business
+  end
 
   def create_contact
     business = Business.find(params[:business_id])

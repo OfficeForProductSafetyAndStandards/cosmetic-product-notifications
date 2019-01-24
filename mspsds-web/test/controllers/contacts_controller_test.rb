@@ -32,7 +32,14 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update contact" do
-    patch contact_url(@contact), params: { contact: { description: @contact.description, email: @contact.email, name: @contact.name, phone_number: @contact.phone_number } }
+    patch contact_url(@contact), params: {
+      contact: {
+        description: "Job title/Description",
+        email: "email@email.com",
+        name: "John Smith",
+        phone_number: "+4477619345346"
+      }
+    }
     assert_redirected_to business_url(@contact.business, anchor: "contacts")
   end
 
