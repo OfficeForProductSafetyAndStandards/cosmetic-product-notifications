@@ -4,7 +4,7 @@
 
 h1.govuk-heading-xl
   span.govuk-caption-xl
-    = "Case: #{@investigation.pretty_id}"
+    = @investigation.pretty_description
   | Record email
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -25,7 +25,7 @@ h1.govuk-heading-xl
             - if @email_file_blob
               p
                 ' Currently selected file:
-                = link_to @email_file_blob.filename, @email_file_blob, target: "_blank"
+                = link_to @email_file_blob.filename, @email_file_blob, target: "_blank", rel: 'noopener'
                 br
                 | Selecting a different one will replace it.
             span.govuk-hint

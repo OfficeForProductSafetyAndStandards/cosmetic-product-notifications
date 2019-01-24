@@ -1,7 +1,7 @@
 class Correspondence < ApplicationRecord
   include DateConcern
   include UserService
-  belongs_to :investigation, required: false
+  belongs_to :investigation, optional: true
 
   before_validation :strip_whitespace
 

@@ -10,5 +10,3 @@
         | Business details
       = form_with(model: @business, local: true, html: { autocomplete: :off }) do |form|
         = render "businesses/form", form: form, business: @business, search: true
-    .govuk-grid-column-one-half
-      = render "suggested_container"

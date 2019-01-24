@@ -4,7 +4,7 @@
   = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
 h1.govuk-heading-xl
   span.govuk-caption-xl
-    | Case: #{@investigation.pretty_id}
+    = @investigation.pretty_description
   = page_title
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -56,6 +56,7 @@ h1.govuk-heading-xl
           - else
             span.govuk-hint
               ' Only businesses already added to the case are listed.
+              = link_to "Add a business", new_investigation_business_path(@investigation)
             = form.collection_select :business_id, @investigation.businesses, :id, :company_name,
                     { include_blank: true,
                     selected: @investigation.businesses.size == 1 && @investigation.businesses.first.id },

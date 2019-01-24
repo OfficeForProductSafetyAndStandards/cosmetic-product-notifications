@@ -50,6 +50,8 @@ class InvestigationsController < ApplicationController
       redirect_to new_allegation_path
     when "question"
       redirect_to new_question_path
+    when "project"
+      redirect_to new_project_path
     else
       @nothing_selected = true if params[:commit].present?
     end
@@ -104,21 +106,6 @@ class InvestigationsController < ApplicationController
     respond_to_update(:visibility)
   end
 
-  # POST /cases
-  # POST /cases.json
-  def create
-    @investigation = Investigation.new(investigation_create_params)
-    respond_to do |format|
-      if @investigation.save
-        format.html { redirect_to investigation_path(@investigation), notice: "Case was successfully created." }
-        format.json { render :show, status: :created, location: @investigation }
-      else
-        format.html { render :new }
-        format.json { render json: @investigation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
 private
 
   def set_investigation_with_associations
@@ -158,7 +145,7 @@ private
   def respond_to_update(origin)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "#{helpers.case_question_text(@investigation).titleize} was successfully updated." }
+        format.html { redirect_to @investigation, notice: "#{@investigation.case_type.titleize} was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes

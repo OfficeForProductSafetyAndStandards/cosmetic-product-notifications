@@ -9,9 +9,8 @@ class CreateQuestionTest < ApplicationSystemTestCase
       email_address: "test@example.com"
     )
 
-    @question = Investigation.new(
-      is_case: false,
-      question_title: "Question title",
+    @question = Investigation::Question.new(
+      user_title: "Question title",
       description: "Question description"
     )
 
@@ -91,7 +90,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     fill_reporter_details_and_continue
     click_on "Continue"
 
-    assert_text "Question title can't be blank"
+    assert_text "User title can't be blank"
     assert_text "Description can't be blank"
   end
 
@@ -101,7 +100,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
     fill_question_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-    assert_text @question.question_title
+    assert_text @question.user_title
   end
 
   test "confirmation message should be shown when complete" do
@@ -177,7 +176,7 @@ class CreateQuestionTest < ApplicationSystemTestCase
   end
 
   def fill_question_details_and_continue
-    fill_in "question[question_title]", with: @question.question_title
+    fill_in "question[user_title]", with: @question.user_title
     fill_in "question[description]", with: @question.description
     click_on "Continue"
   end

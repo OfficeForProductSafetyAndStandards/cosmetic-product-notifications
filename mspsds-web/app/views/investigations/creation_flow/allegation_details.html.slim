@@ -19,10 +19,10 @@ h1.govuk-heading-xl
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Product Type
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_type].any?)
-          = form.select :product_type, product_types, { include_blank: true },
-                  class: "govuk-select", id: "product-type-picker"
+          | Product Category
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_category].any?)
+          = form.select :product_category, product_categories, { include_blank: true },
+                  class: "govuk-select", id: "product-category-picker"
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -38,7 +38,7 @@ h1.govuk-heading-xl
           - if @file_blob.present?
             p#current-attachment-details
               ' Currently selected file:
-              = link_to @file_blob.filename, @file_blob, target: "_blank"
+              = link_to @file_blob.filename, @file_blob, target: "_blank", rel: 'noopener'
           = form.fields_for :attachment do |subform|
             = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
 

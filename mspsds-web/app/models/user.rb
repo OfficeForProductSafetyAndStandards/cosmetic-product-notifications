@@ -52,6 +52,10 @@ class User < Shared::Web::User
     Shared::Web::KeycloakClient.instance.has_role? role
   end
 
+  def is_mspsds_user?
+    has_role? :mspsds_user
+  end
+
   def is_opss?
     has_role? :opss_user
   end

@@ -41,20 +41,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create investigation and redirect to investigation page" do
-    new_investigation_description = "new_investigation_description"
-    assert_difference("Investigation.count") do
-      post investigations_url, params: {
-        investigation: {
-            description: new_investigation_description
-        }
-      }
-    end
-
-    new_investigation = Investigation.find_by(description: new_investigation_description)
-    assert_redirected_to investigation_path(new_investigation)
-  end
-
   test "should show investigation" do
     get investigation_url(@investigation_one)
     assert_response :success
@@ -296,8 +282,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     logout
     sign_in_as_non_opss_user
     get investigations_path
-    assert_not_includes(response.body, @new_investigation.description)
-    assert_includes(response.body, "Case restricted")
+    assert_includes(response.body, "restricted")
   end
 
   test "should not show case to someone without access" do
@@ -312,22 +297,18 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should show private investigations to creator" do
     create_new_private_case
 
-    get investigations_path
+    get investigation_path(@new_investigation)
     assert_includes(response.body, @new_investigation.pretty_id)
   end
 
   def create_new_private_case
     description = "new_investigation_description"
-    post investigations_url, params: {
-      investigation: {
-        description: description
-      }
-    }
-    @new_investigation = Investigation.find_by(description: description)
-    put visibility_investigation_url(@new_investigation), params: {
+    Investigation::Allegation.create(user_title: "title", description: description)
+    put visibility_investigation_url(Investigation.find_by(description: description)), params: {
       investigation: {
         is_private: true
       }
     }
+    @new_investigation = Investigation.find_by(description: description)
   end
 end

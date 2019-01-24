@@ -4,7 +4,7 @@
   = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
 h1.govuk-heading-xl
   span.govuk-caption-xl
-    | Case: #{@investigation.pretty_id}
+    = @investigation.pretty_description
   = page_title
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -25,7 +25,7 @@ h1.govuk-heading-xl
         - if @corrective_action.business
           tr.govuk-table__row
             th.govuk-table__header scope="row" Business
-            td.govuk-table__cell = @corrective_action.business.company_name
+          td.govuk-table__cell = @corrective_action.business.trading_name
         - if @corrective_action.details.present?
           tr.govuk-table__row
             th.govuk-table__header scope="row" Details
