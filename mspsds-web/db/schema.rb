@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_154516) do
     t.boolean "is_private", default: false, null: false
     t.text "non_compliant_reason"
     t.string "product_category"
+    t.string "reporter_reference"
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
     t.string "user_title"
