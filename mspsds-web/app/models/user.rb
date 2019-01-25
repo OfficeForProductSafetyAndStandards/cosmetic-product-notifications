@@ -72,3 +72,4 @@ class User < Shared::Web::User
     select_options
   end
 end
+User.all if Rails.env.development?
