@@ -8,7 +8,7 @@ module Shared
 
       def self.all(options = {})
         begin
-          self.data = Shared::Web::KeycloakClient.instance.all_memberships
+          self.data = Shared::Web::KeycloakClient.instance.all_memberships if self.data.blank?
         rescue StandardError => error
           Rails.logger.error "Failed to fetch organisations from Keycloak: #{error.message}"
           self.data = nil

@@ -12,6 +12,10 @@ module Shared
       has_many :memberships
       has_many :users, through: :memberships
 
+      def users
+        memberships.map {|m| m.user}
+      end
+
       def self.all(options = {})
         begin
           self.data = Shared::Web::KeycloakClient.instance.all_teams

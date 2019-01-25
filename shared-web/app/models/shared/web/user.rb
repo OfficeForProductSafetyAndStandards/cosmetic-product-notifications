@@ -12,6 +12,10 @@ module Shared
       field :last_name
       field :email
 
+      def teams
+        memberships.map{ |m| m.team }
+      end
+
       def self.find_or_create(user)
         User.find_by(id: user[:id]) || User.create(user)
       end
