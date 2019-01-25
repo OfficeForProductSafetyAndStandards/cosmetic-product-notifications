@@ -5,9 +5,11 @@ class Investigations::MsaInvestigationsController < ApplicationController
   include ProductsHelper
 
   steps :product, :why_reporting, :which_businesses, :has_corrective_action, :other_information, :reference_number
-  before_action :set_product, except: :new
-  before_action :set_investigation
-  before_action :set_countries
+  before_action :set_product, only: %i[show create update]
+  before_action :set_investigation, only: %i[show create update]
+  before_action :set_countries, only: %i[show create update]
+  before_action :store_product, only: %i[update]
+  before_action :store_investigation, only: %i[update]
 
   #GET /xxx/step
   def show
@@ -21,7 +23,11 @@ class Investigations::MsaInvestigationsController < ApplicationController
   end
 
   def create
-    redirect_to investigation_path(@investigation)
+    if records_saved?
+      redirect_to investigation_path(@investigation)
+    else
+      render step
+    end
   end
 
   # PATCH/PUT /xxx
@@ -39,15 +45,11 @@ class Investigations::MsaInvestigationsController < ApplicationController
 private
 
   def set_product
-    @product = params[:product].present? ? Product.new(product_step_params) : Product.new
+    @product = Product.new(product_step_params)
   end
 
   def set_investigation
-    if params[:investigation].present?
-      @investigation = Investigation.new(investigation_step_params.except(:unsafe, :non_compliant))
-    else
-      @investigation = Investigation.new
-    end
+    @investigation = Investigation.new(investigation_step_params.except(:unsafe, :non_compliant))
   end
 
   def clear_session
@@ -56,7 +58,13 @@ private
   end
 
   def store_investigation
-    session[:investigation] = @investigation.attributes if @investigation.valid?(step)
+    session[:investigation] = @investigation.attributes if changed_investigation step && @investigation.valid?(step)
+  end
+
+  def store_product
+    if changed_product(step) && @product.valid?(step)
+      session[:product] = @product.attributes
+    end
   end
 
   def investigation_session_params
@@ -122,6 +130,20 @@ private
     @investigation.errors.empty?
   end
 
+  def records_saved?
+    return false unless records_valid?
+    if !@product.save
+      return false
+    end
+
+    if !@investigation.save
+      return false
+    end
+
+    @investigation.products << @product
+
+  end
+
   def product_unsafe
     investigation_step_params[:unsafe] == "1"
   end
@@ -142,4 +164,11 @@ private
     has_corrective_action_params.empty?
   end
 
+  def changed_investigation this_step
+    %i[why_reporting reference_number].include? this_step
+  end
+
+  def changed_product this_step
+    this_step == :product
+  end
 end
