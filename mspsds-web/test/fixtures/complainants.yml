@@ -1,5 +1,5 @@
 one:
-  investigation: search_related_reporter
+  investigation: search_related_complainant
   name: Jeremy
   phone_number: 222222
   email_address: Jer@gmail.com
