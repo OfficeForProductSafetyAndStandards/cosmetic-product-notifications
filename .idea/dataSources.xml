@@ -15,7 +15,7 @@
       <imported>true</imported>
       <remarks>$PROJECT_DIR$/config/database.yml</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/app_development</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5433/cosmetics_development</jdbc-url>
     </data-source>
   </component>
 </project>
