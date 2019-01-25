@@ -63,6 +63,10 @@ private
     )
   end
 
+  def has_corrective_action_params
+    params.permit(has_corrective_action: [:has_action])
+  end
+
   def records_valid?
     case step
     when :product
@@ -74,6 +78,8 @@ private
     when :which_businesses
       @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
       @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
+    when :has_corrective_action
+      @investigation.errors.add(:base, "Please indicate whether or not correction actions have been agreed or taken") if corrective_action_not_known
     else
       true
     end
@@ -95,4 +101,9 @@ private
   def no_other_business_type
     which_businesses_params[:other] == "1" && which_businesses_params[:other_business_type].empty?
   end
+
+  def corrective_action_not_known
+    has_corrective_action_params.empty?
+  end
+
 end
