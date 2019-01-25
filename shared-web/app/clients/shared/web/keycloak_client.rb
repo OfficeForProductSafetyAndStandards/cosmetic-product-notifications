@@ -61,6 +61,16 @@ module Shared
         end
       end
 
+      def all_teams
+        groups = all_groups
+        organisations = groups.find { |group| group["name"] == "Organisations" }
+
+        opss = organisations["subGroups"].find {|org| org["name"] == "Office for Product Safety and Standards"}
+        opss["subGroups"].map do |organisation|
+          { id: organisation["id"], name: organisation["name"], path: organisation["path"], organisation_id: opss["id"]}
+        end
+      end
+
       def all_groups
         response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
           Keycloak::Internal.get_groups

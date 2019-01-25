@@ -30,8 +30,9 @@ class User < Shared::Web::User
 
   private_class_method def self.populate_organisation(attributes)
     groups = attributes.delete(:groups)
-    organisation = Organisation.find_by(id: groups)
-    attributes.merge(organisation_id: organisation&.id)
+    teams = Team.where(id: groups)
+    organisation = Organisation.find_by(id: groups) || Organisation.find_by(id: teams.first&.organisation_id)
+    attributes.merge(organisation_id: organisation&.id, teams_ids: teams.map{|t| t.id})
   end
 
   def display_name

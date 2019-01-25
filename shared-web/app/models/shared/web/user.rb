@@ -5,6 +5,8 @@ module Shared
 
       belongs_to :organisation
 
+      has_many :teams
+
       field :first_name
       field :last_name
       field :email
