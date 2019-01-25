@@ -131,11 +131,9 @@ ActiveRecord::Schema.define(version: 2019_01_23_154516) do
     t.uuid "assignee_id"
     t.datetime "created_at", null: false
     t.text "description"
-    t.text "hazard_description"
     t.string "hazard_type"
     t.boolean "is_closed", default: false
     t.boolean "is_private", default: false, null: false
-    t.text "non_compliant_reason"
     t.string "product_category"
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
