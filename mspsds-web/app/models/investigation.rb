@@ -143,7 +143,13 @@ class Investigation < ApplicationRecord
 
   def case_type; end
 
-private
+  def validate_hazard_information
+    if hazard_type.empty?
+      errors.add(:hazard_type, "cannot be blank")
+    end
+  end
+
+  private
 
   def create_audit_activity_for_case
     # To be implemented by children
