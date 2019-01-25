@@ -34,6 +34,10 @@ services:
     - db
     ports:
       - "8080:8080"
+#    This can speed up development when working on themes in keycloak, by not requiring to rebuild the keycloak image
+#    to pickup changes, instead simply restarting the keycloak container
+#    volumes:
+#      - ${PWD-.}/keycloak/govuk-theme/govuk:/opt/jboss/keycloak/themes/govuk
 
   cosmetics-web:
     build:
