@@ -1,16 +1,16 @@
-class Reporter < ApplicationRecord
+class Complainant < ApplicationRecord
   include UserService
   belongs_to :investigation, optional: true
 
-  validates :reporter_type, presence: true
+  validates :complainant_type, presence: true
   validates :investigation, presence: true, on: %i[create update]
-  validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :reporter_details
+  validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :complainant_details
 
   validates_length_of :name, maximum: 1000
   validates_length_of :other_details, maximum: 1000
 
   def contains_personal_data?
-    reporter_type == "Consumer"
+    complainant_type == "Consumer"
   end
 
   def can_be_displayed?

@@ -2,7 +2,7 @@ class CorrectiveAction < ApplicationRecord
   include DateConcern
 
   belongs_to :investigation
-  belongs_to :business
+  belongs_to :business, optional: true
   belongs_to :product
 
   has_many_attached :documents
@@ -16,7 +16,6 @@ class CorrectiveAction < ApplicationRecord
   validates :summary, presence: true
   validates :date_decided, presence: true
   validates :investigation, presence: true
-  validates :business, presence: true
   validates :product, presence: true
 
   validates_length_of :summary, maximum: 1000
