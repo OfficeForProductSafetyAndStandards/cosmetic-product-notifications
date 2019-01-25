@@ -9,11 +9,11 @@ module Shared
 
       belongs_to :organisation
 
-      has_many :memberships
+      has_many :memberships, dependent: :nullify
       has_many :users, through: :memberships
 
       def users
-        memberships.map {|m| m.user}
+        memberships.map(&:user)
       end
 
       def self.all(options = {})

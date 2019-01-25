@@ -5,7 +5,7 @@ module Shared
 
       belongs_to :organisation
 
-      has_many :memberships
+      has_many :memberships, dependent: :nullify
       has_many :teams, through: :memberships
 
       field :first_name
@@ -13,7 +13,7 @@ module Shared
       field :email
 
       def teams
-        memberships.map{ |m| m.team }
+        memberships.map(&:team)
       end
 
       def self.find_or_create(user)
