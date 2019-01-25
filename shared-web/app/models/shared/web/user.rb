@@ -5,7 +5,8 @@ module Shared
 
       belongs_to :organisation
 
-      has_many :teams
+      has_many :memberships
+      has_many :teams, through: :memberships
 
       field :first_name
       field :last_name

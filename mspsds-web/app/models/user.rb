@@ -32,7 +32,7 @@ class User < Shared::Web::User
     groups = attributes.delete(:groups)
     teams = Team.where(id: groups)
     organisation = Organisation.find_by(id: groups) || Organisation.find_by(id: teams.first&.organisation_id)
-    attributes.merge(organisation_id: organisation&.id, teams_ids: teams.map{|t| t.id})
+    attributes.merge(organisation_id: organisation&.id)
   end
 
   def display_name

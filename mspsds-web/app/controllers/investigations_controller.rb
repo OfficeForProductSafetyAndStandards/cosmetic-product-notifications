@@ -12,6 +12,10 @@ class InvestigationsController < ApplicationController
   # GET /cases.json
   # GET /cases.xlsx
   def index
+    @aaa = Membership.all
+    # @aaa = Team.all
+    # @aaa = Team.find("a26a4dac-4f47-464d-b84f-048c4b8e9602")
+    # @aaa = Team.find("faeeea3d-383c-48c6-99af-c654141dd6b5")
     respond_to do |format|
       format.html do
         @answer = search_for_investigations(20)

@@ -71,6 +71,24 @@ module Shared
         end
       end
 
+      def all_memberships
+        response = Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
+          Keycloak::Internal.get_users
+        end
+
+        user_groups = all_user_groups
+
+        memberships = []
+        JSON.parse(response).each do |user|
+          user_groups[user["id"]].each do |group|
+            memberships << { team_id: group, user_id: user["id"] }
+          end
+        end
+        p "==================================== IN MEMBERSHIPS ============================"
+        p memberships
+        memberships
+      end
+
       def all_groups
         response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
           Keycloak::Internal.get_groups

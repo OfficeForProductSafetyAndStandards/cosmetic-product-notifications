@@ -1,22 +1,16 @@
 module Shared
   module Web
-    class Team < ActiveHash::Base
+    class Membership < ActiveHash::Base
       include ActiveHash::Associations
 
-      field :id
-      field :name
-      field :path
-
-      belongs_to :organisation
-
-      has_many :memberships
-      has_many :users, through: :memberships
+      belongs_to :team
+      belongs_to :user
 
       def self.all(options = {})
         begin
-          self.data = Shared::Web::KeycloakClient.instance.all_teams
+          self.data = Shared::Web::KeycloakClient.instance.all_memberships
         rescue StandardError => error
-          Rails.logger.error "Failed to fetch teams from Keycloak: #{error.message}"
+          Rails.logger.error "Failed to fetch organisations from Keycloak: #{error.message}"
           self.data = nil
         end
 
