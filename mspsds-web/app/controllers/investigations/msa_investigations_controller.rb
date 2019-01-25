@@ -43,7 +43,7 @@ private
   end
 
   def set_investigation
-    @investigation = params[:investigation].present? ? Investigation.new(investigation_params) : Investigation.new
+    @investigation = params[:investigation].present? ? Investigation.new(investigation_params.except(:unsafe, :non_compliant)) : Investigation.new
   end
 
   def clear_session
@@ -62,10 +62,20 @@ private
     when :product
       @product.validate
     when :why_reporting
-      @investigation.validate_hazard_information
+      @investigation.errors.add(:base, "Please indicate whether the product is unsafe or non-compliant") if !product_unsafe && !product_non_compliant
+      @investigation.validate_hazard_information if product_unsafe
+      @investigation.validate_non_compliant_information if product_non_compliant
     else
       true
     end
     @investigation.errors.empty?
+  end
+
+  def product_unsafe
+    investigation_params[:unsafe] == "1"
+  end
+
+  def product_non_compliant
+    investigation_params[:non_compliant] == "1"
   end
 end

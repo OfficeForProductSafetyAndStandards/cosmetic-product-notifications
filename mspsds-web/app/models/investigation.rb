@@ -149,6 +149,12 @@ class Investigation < ApplicationRecord
     end
   end
 
+  def validate_non_compliant_information
+    if non_compliant_reason&.empty?
+      errors.add(:non_compliant_reason, "cannot be blank")
+    end
+  end
+
   private
 
   def create_audit_activity_for_case

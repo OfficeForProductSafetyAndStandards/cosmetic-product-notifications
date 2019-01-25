@@ -14,8 +14,7 @@
         .govuk-checkboxes data-module="checkboxes"
           .govuk-checkboxes__item
             = form.check_box :unsafe, id: "report-report-type-1", class: "govuk-checkboxes__input",
-                    "aria-controls": "conditional-report-report-type-1", "aria-expanded": "false",
-                    "name": "unsafe", value: "unsafe"
+                    "aria-controls": "conditional-report-report-type-1", "aria-expanded": "false", value: "unsafe"
             = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label",
                     for: "report-report-type-1"
           #conditional-report-report-type-1.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
@@ -31,21 +30,21 @@
               span.govuk-hint id="allegation-hazard–detail-hint"
                 | Please give details about the hazard, including any incidents or events that brought it to your attention
               = form.text_area :hazard_description, class: "govuk-textarea", id: "allegation-hazard–detail",
-                      "aria-describedby": "allegation-hazard–detail-hint", name:"hazard_description", rows: 5
+                      "aria-describedby": "allegation-hazard–detail-hint", rows: 5
 
           .govuk-checkboxes__item
             = form.check_box :non_compliant, id: "report-report-type-2", class: "govuk-checkboxes__input",
                     "aria-controls": "conditional-report-report-type-2", "aria-expanded": "false",
-                    "name": "non_compliant", value: "non-compliant"
+                    value: "non-compliant"
             = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label",
                     for: "report-report-type-2"
           #conditional-report-report-type-2.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
-            .govuk-form-group
-              span#allegation-compliance-detail-hint.govuk-hint
-                | Please give details of its non-compliance
-              = form.text_area :non_compliant_reason, class: "govuk-textarea", id: "allegation-compliance-detail",
-                      aria_describedby: "allegation-compliance-detail-hint", name: "non_compliant_reason",
-                      rows: "5"
+            .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:non_compliant_reason].any?)]
+              .govuk-form-group
+                span#allegation-compliance-detail-hint.govuk-hint
+                  | Please give details of its non-compliance
+                = form.text_area :non_compliant_reason, class: "govuk-textarea", id: "allegation-compliance-detail",
+                        aria_describedby: "allegation-compliance-detail-hint", rows: "5"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"
