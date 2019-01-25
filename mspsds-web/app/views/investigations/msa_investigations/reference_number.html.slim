@@ -8,13 +8,14 @@
       span.govuk-caption-xl Reporting an unsafe product
       | Find this in your system
 = form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
+  = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
   .govuk-grid-row class="govuk-!-margin-bottom-3"
     .govuk-grid-column-one-half
-      .govuk-form-group
+      .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:reporter_reference].any?)]
         span#report-title-hint.govuk-hint
           | Give us a reference, ie a case number from your system, use it to help you find your report in the future.
-        = form.text_field :reference_number, id: "report-title", class:"govuk-input",
-                "aria-describedby": "report-title-hint",  name: "new[reference]"
+        = form.text_field :reporter_reference, id: "report-title", class:"govuk-input",
+                "aria-describedby": "report-title-hint"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Save", class: "govuk-button"

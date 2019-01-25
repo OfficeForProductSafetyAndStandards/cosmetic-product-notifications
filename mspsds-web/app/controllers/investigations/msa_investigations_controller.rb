@@ -39,22 +39,58 @@ class Investigations::MsaInvestigationsController < ApplicationController
 private
 
   def set_product
-    @product = params[:product].present? ? Product.new(product_params) : Product.new
+    @product = params[:product].present? ? Product.new(product_step_params) : Product.new
   end
 
   def set_investigation
-    @investigation = params[:investigation].present? ? Investigation.new(investigation_params.except(:unsafe, :non_compliant)) : Investigation.new
+    if params[:investigation].present?
+      @investigation = Investigation.new(investigation_step_params.except(:unsafe, :non_compliant))
+    else
+      @investigation = Investigation.new
+    end
   end
 
   def clear_session
+    session[:investigation] = nil
+    session[:product] = nil
   end
 
-  def investigation_params
-    if step == :why_reporting
+  def store_investigation
+    session[:investigation] = @investigation.attributes if @investigation.valid?(step)
+  end
+
+  def investigation_session_params
+    session[:investigation] || {}
+  end
+
+  def product_session_params
+    session[:product] || {}
+  end
+
+  def investigation_request_params
+    return {} if params[:investigation].blank?
+
+    case step
+    when :why_reporting
       params.require(:investigation).permit(
-        :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
+          :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
       )
+    when :reference_number
+      params.require(:investigation).permit(:reporter_reference)
     end
+  end
+
+  def product_request_params
+    return {} if params[:product].blank?
+    product_params
+  end
+
+  def investigation_step_params
+    investigation_session_params.merge(investigation_request_params).symbolize_keys
+  end
+
+  def product_step_params
+    product_session_params.merge(product_request_params).symbolize_keys
   end
 
   def which_businesses_params
@@ -80,18 +116,18 @@ private
       @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
     when :has_corrective_action
       @investigation.errors.add(:base, "Please indicate whether or not correction actions have been agreed or taken") if corrective_action_not_known
-    else
-      true
+    when :reference_number
+      @investigation.validate(step)
     end
     @investigation.errors.empty?
   end
 
   def product_unsafe
-    investigation_params[:unsafe] == "1"
+    investigation_step_params[:unsafe] == "1"
   end
 
   def product_non_compliant
-    investigation_params[:non_compliant] == "1"
+    investigation_step_params[:non_compliant] == "1"
   end
 
   def no_business_selected
