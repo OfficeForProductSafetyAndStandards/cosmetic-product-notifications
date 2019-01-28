@@ -1,0 +1,25 @@
+.app-masthead {
+  background-color: govuk-colour("blue");
+  margin-top: -40px;
+
+  * {
+    color: govuk-colour("white");
+  }
+
+  .govuk-link--no-visited-state {
+    color: govuk-colour("white");
+  }
+
+  .govuk-tag {
+    background-color: govuk-colour("white");
+    color: govuk-colour("blue");
+  }
+
+  .masthead-account-links {
+    .govuk-button {
+      background-color: govuk-colour("white");
+      color: govuk-colour("blue");
+      margin: -8px 10px 30px 0;
+    }
+  }
+}
