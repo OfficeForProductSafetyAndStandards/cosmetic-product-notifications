@@ -1768,7 +1768,55 @@
       "clientRoles" : {
         "mspsds-app" : [ "opss_user" ]
       },
-      "subGroups" : [ ]
+      "subGroups" : [ {
+        "id" : "a26a4dac-4f47-464d-b84f-048c4b8e9602",
+        "name" : "OPSS Enforcement",
+        "path" : "/Organisations/Office for Product Safety and Standards/OPSS Enforcement",
+        "attributes" : { },
+        "realmRoles" : [ ],
+        "clientRoles" : { },
+        "subGroups" : [ ]
+      }, {
+        "id" : "faeeea3d-383c-48c6-99af-c654141dd6b5",
+        "name" : "OPSS Science and Tech",
+        "path" : "/Organisations/Office for Product Safety and Standards/OPSS Science and Tech",
+        "attributes" : { },
+        "realmRoles" : [ ],
+        "clientRoles" : { },
+        "subGroups" : [ ]
+      }, {
+        "id" : "b189d372-b7d8-4078-b47b-fd2d2d153af2",
+        "name" : "OPSS Trading Standards Co-ordination",
+        "path" : "/Organisations/Office for Product Safety and Standards/OPSS Trading Standards Co-ordination",
+        "attributes" : { },
+        "realmRoles" : [ ],
+        "clientRoles" : { },
+        "subGroups" : [ ]
+      }, {
+        "id": "5c925205-c142-4b46-b7ac-bfeefec773a6",
+        "name": "OPSS Incident Management",
+        "path": "/Organisations/Office for Product Safety and Standards/OPSS Incident Management",
+        "attributes": { },
+        "realmRoles": [ ],
+        "clientRoles": { },
+        "subGroups": [ ]
+      }, {
+        "id" : "3b59f50d-b739-4d5d-914f-75ff352c1f20",
+        "name" : "OPSS Processing",
+        "path" : "/Organisations/Office for Product Safety and Standards/OPSS Processing",
+        "attributes" : { },
+        "realmRoles" : [ ],
+        "clientRoles" : { },
+        "subGroups" : [ ]
+      }, {
+        "id" : "af132f78-0f17-4229-9473-572ab5ce5bfc",
+        "name" : "OPSS Testing",
+        "path" : "/Organisations/Office for Product Safety and Standards/OPSS Testing",
+        "attributes" : { },
+        "realmRoles" : [ ],
+        "clientRoles" : { },
+        "subGroups" : [ ]
+      } ]
     } ]
   } ],
   "defaultRoles" : [ "user" ],
