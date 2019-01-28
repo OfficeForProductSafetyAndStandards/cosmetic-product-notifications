@@ -15,12 +15,10 @@ class NotificationBuildController < ApplicationController
         @notification.components.build
         @notification.save
         redirect_to new_component_build_path(@notification.components.first)
-      elsif params[:single_or_multi_component] == 'multiple'
+      else
         # TODO COSBETA-10 Implement multiple components
         @notification.components.build
         render_wizard @notification
-      else
-        render step
       end
     else
       @notification.update(notification_params)

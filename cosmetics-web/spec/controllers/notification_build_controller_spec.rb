@@ -14,7 +14,7 @@ RSpec.describe NotificationBuildController, type: :controller do
       notification = Notification.create
       get(:new, params: { notification_id: notification.id })
       expect(response).to redirect_to(
-        notification_build_path(assigns(:notification).id, "add_product_name")
+        notification_build_path(notification.id, "add_product_name")
 )
     end
   end
