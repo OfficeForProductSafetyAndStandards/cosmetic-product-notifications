@@ -5,19 +5,19 @@
 
     .govuk-grid-row
       .govuk-grid-column-two-thirds
-        h1.govuk-heading-xl[class="govuk-!-margin-top-3"]
-          | Register cosmetics products
+        h1.govuk-heading-xl[class="govuk-!-margin-top-4 govuk-!-margin-bottom-6"]
+          | Register cosmetic products
         h2.govuk-body-l
           | Notification of cosmetic products to be sold or given away in the UK.
-        p.masthead-account-links
+        p.masthead-account-links[class="govuk-!-padding-top-2 govuk-!-margin-bottom-5"]
           => link_to "Create an account", keycloak_registration_url, class: "govuk-button govuk-!-font-weight-bold",
                   role: "button", draggable: "false"
-          | or
+          ' or
           => link_to "sign in", keycloak_login_url, class: "govuk-link govuk-link--no-visited-state"
-          | if you've used it before
+          | if you’ve used it before
 
-main#main-content.app-main-class[role="main"]
-  .govuk-width-container[class="govuk-!-margin-top-3"]
+.govuk-width-container
+  main#main-content.govuk-main-wrapper.app-main-class[role="main"]
     .govuk-grid-row
       .govuk-grid-column-two-thirds
         h3.govuk-heading-m
@@ -30,7 +30,7 @@ main#main-content.app-main-class[role="main"]
           | To register a product you need to give details of:
         ul.govuk-list.govuk-list--bullet
           li
-            ' the organisation or individual responsible for ensuring regulations are followed,
+            | the organisation or individual responsible for ensuring regulations are followed,
               known as the ‘responsible person’
           li
             | the cosmetic name
@@ -41,8 +41,8 @@ main#main-content.app-main-class[role="main"]
         h3.govuk-heading-m
           | Cosmetic products notified in the EU before 29 March 2019
         p
-          ' To continue to sell or give away cosmetic products that were notified to the European
-            Union (EU) before Brexit, you must register your products in the UK by 11:59pm on 27 June 2019.
+          | To continue to sell or give away cosmetic products that were notified to the European Union (EU)
+            before Brexit, you must register your products in the UK by 11:59pm on 27 June 2019.
         p
           | You will need to provide:
         ul.govuk-list.govuk-list--bullet
@@ -59,18 +59,18 @@ main#main-content.app-main-class[role="main"]
         h4.govuk-heading-s
           | Cosmetic products available in the EU and the UK
         p
-          ' If your cosmetic products are on sale in both the EU and UK and you have complete a EU
-            notification, you can use the same data to make registration in the UK simpler.
+          | If your cosmetic products are on sale in both the EU and UK and you have complete a EU notification,
+            you can use the same data to make registration in the UK simpler.
         p
           | If you use the same data, you will need to:
         ul.govuk-list.govuk-list--bullet
           li
             b export
-            |  your data as zip files for all cosmetic products
+            |  your data as ZIP files for all cosmetic products
           li
             | prepare an image file for each product, this can be the same as you used for the EU notification
           li
-            ' if the original EU notification had attached a document with formulation information,
+            | if the original EU notification had attached a document with formulation information,
               you will also need provide this
         h4.govuk-heading-s
           | Cosmetic products not available in the EU
@@ -90,7 +90,7 @@ main#main-content.app-main-class[role="main"]
           li
             | an image of the packaging and label
         p
-          ' If cosmetic the product was not notified in the EU before 29 March 2019, you will be asked to
+          | If cosmetic the product was not notified in the EU before 29 March 2019, you will be asked to
             provide information about:
         ul.govuk-list.govuk-list--bullet
           li
@@ -98,9 +98,9 @@ main#main-content.app-main-class[role="main"]
           li
             | nanomaterials
         h4.govuk-heading-s
-          | Cosmetic products not available in the EU
+          | Cosmetic products containing nanomaterials
         p
-          ' If a cosmetic product contains nanomaterials not already approved for use in cosmetics,
+          | If a cosmetic product contains nanomaterials not already approved for use in cosmetics,
             the responsible person must notify us of their proposed use 6 months before the cosmetic
             product containing them goes on sale.
         p = link_to "Read about using nanomaterials in cosmetics.", '/', class: "govuk-link"
