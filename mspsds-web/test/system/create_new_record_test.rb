@@ -19,7 +19,7 @@ class CreateNewRecordTest < ApplicationSystemTestCase
 
   test "should be prompted to select what to create" do
     assert_text "Product safety allegation"
-    assert_text "Question"
+    assert_text "Enquiry"
 
     assert_no_text "Please select an option before continuing"
   end
@@ -37,10 +37,10 @@ class CreateNewRecordTest < ApplicationSystemTestCase
     assert_text "New Allegation"
   end
 
-  test "should show the new question page when selecting question" do
-    choose "type_question", visible: false
+  test "should show the new enquiry page when selecting enquiry" do
+    choose "type_enquiry", visible: false
     click_on "Continue"
 
-    assert_text "New Question"
+    assert_text "New Enquiry"
   end
 end

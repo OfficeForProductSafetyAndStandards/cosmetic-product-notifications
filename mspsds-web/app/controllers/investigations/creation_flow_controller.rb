@@ -3,12 +3,12 @@ class Investigations::CreationFlowController < ApplicationController
   include Wicked::Wizard
 
   before_action :set_page_title, only: %i[show create update]
-  before_action :set_reporter, only: %i[show create update]
+  before_action :set_complainant, only: %i[show create update]
   before_action :set_investigation, only: %i[show create update]
   before_action :set_attachment, only: %i[show create update]
   before_action :update_attachment, only: %i[create update]
   before_action :store_investigation, only: %i[update]
-  before_action :store_reporter, only: %i[update]
+  before_action :store_complainant, only: %i[update]
 
   # GET /xxx/step
   def show
@@ -62,13 +62,13 @@ private
   end
 
   def clear_session
-    session[:reporter] = nil
+    session[:complainant] = nil
     session[model_key] = nil
     initialize_file_attachments
   end
 
-  def set_reporter
-    @reporter = Reporter.new(reporter_params)
+  def set_complainant
+    @complainant = Complainant.new(complainant_params)
   end
 
   def set_investigation
@@ -83,8 +83,8 @@ private
     update_blob_metadata @file_blob, attachment_metadata
   end
 
-  def store_reporter
-    session[:reporter] = @reporter.attributes if @reporter.valid?(step)
+  def store_complainant
+    session[:complainant] = @complainant.attributes if @complainant.valid?(step)
   end
 
   def store_investigation
@@ -92,30 +92,30 @@ private
   end
 
   def investigation_valid?
-    @reporter.validate(step)
+    @complainant.validate(step)
     @investigation.validate(step)
     validate_blob_size(@file_blob, @investigation.errors, "File")
-    @reporter.errors.empty? && @investigation.errors.empty?
+    @complainant.errors.empty? && @investigation.errors.empty?
   end
 
   def investigation_saved?
     return false unless investigation_valid?
 
     attach_blobs_to_list(@file_blob, @investigation.documents)
-    @investigation.reporter = @reporter
+    @investigation.complainant = @complainant
     @investigation.save
   end
 
-  def reporter_params
-    reporter_session_params.merge(reporter_request_params)
+  def complainant_params
+    complainant_session_params.merge(complainant_request_params)
   end
 
   def investigation_params
     investigation_session_params.merge(investigation_request_params)
   end
 
-  def reporter_session_params
-    session[:reporter] || {}
+  def complainant_session_params
+    session[:complainant] || {}
   end
 
   def investigation_session_params
@@ -123,10 +123,10 @@ private
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
-  def reporter_request_params
-    return {} if params[:reporter].blank?
+  def complainant_request_params
+    return {} if params[:complainant].blank?
 
-    params.require(:reporter).permit(:reporter_type, :name, :phone_number, :email_address, :other_details)
+    params.require(:complainant).permit(:complainant_type, :name, :phone_number, :email_address, :other_details)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
