@@ -18,7 +18,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
 
   # GET /xxx/new
   def new
-    clear_session # functionality not implemented
+    clear_session
     redirect_to wizard_path(steps.first)
   end
 
@@ -36,13 +36,21 @@ class Investigations::MsaInvestigationsController < ApplicationController
       if step == steps.last
         return create
       end
-      redirect_to next_wizard_path
+      redirect_to_next_step
     else
       render step
     end
   end
 
 private
+
+  def redirect_to_next_step
+    case step
+    when :which_businesses, :business
+      session[:known_businesses]
+    end
+    redirect_to next_wizard_path
+  end
 
   def set_product
     @product = Product.new(product_step_params)
@@ -55,6 +63,7 @@ private
   def clear_session
     session[:investigation] = nil
     session[:product] = nil
+    session[:known_businesses] = nil
   end
 
   def store_investigation

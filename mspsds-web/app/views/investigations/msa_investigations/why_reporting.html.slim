@@ -13,10 +13,10 @@
       .govuk-form-group
         .govuk-checkboxes data-module="checkboxes"
           .govuk-checkboxes__item
-            = form.check_box :unsafe, id: "report-report-type-1", class: "govuk-checkboxes__input",
+            = form.check_box :unsafe, class: "govuk-checkboxes__input",
                     "aria-controls": "conditional-report-report-type-1", "aria-expanded": "false", value: "unsafe"
             = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label",
-                    for: "report-report-type-1"
+                    for: :investigation_unsafe
           #conditional-report-report-type-1.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
             .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)]
               legend.govuk-fieldset__legend--m class="govuk-!-margin-bottom-1" for="hazard-type-autocomplete"
@@ -33,11 +33,11 @@
                       "aria-describedby": "allegation-hazard–detail-hint", rows: 5
 
           .govuk-checkboxes__item
-            = form.check_box :non_compliant, id: "report-report-type-2", class: "govuk-checkboxes__input",
+            = form.check_box :non_compliant, class: "govuk-checkboxes__input",
                     "aria-controls": "conditional-report-report-type-2", "aria-expanded": "false",
                     value: "non-compliant"
             = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label",
-                    for: "report-report-type-2"
+                    for: :investigation_non_compliant
           #conditional-report-report-type-2.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
             .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:non_compliant_reason].any?)]
               .govuk-form-group

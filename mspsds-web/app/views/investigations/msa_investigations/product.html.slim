@@ -12,4 +12,5 @@
         = render "form_validation_display", errors: @product.errors, model_name: "product"
     .govuk-grid-row
       .govuk-grid-column-one-half
-        = render "products/form", form: form, product: @product, countries: @countries, search: true
+        = render "products/form", form: form, product: @product, countries: @countries, submit_text: "Continue",
+                search: true

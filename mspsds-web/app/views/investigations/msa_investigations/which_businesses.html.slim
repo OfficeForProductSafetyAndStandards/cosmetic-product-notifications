@@ -18,41 +18,36 @@
           .govuk-form-group
             .govuk-checkboxes data-module="checkboxes"
               .govuk-checkboxes__item
-                = form.check_box :retailer, id: "new-business-type-1", class: "govuk-checkboxes__input",
-                        value: "Retailer"
-                = form.label :retailer, "Retailer",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-business-type-1"
+                = form.check_box :retailer, class: "govuk-checkboxes__input", value: "retailer"
+                = form.label :retailer, "Retailer", class: "govuk-label govuk-checkboxes__label",
+                        for: :businesses_retailer
               .govuk-checkboxes__item
-                = form.check_box :distributor, id: "new-business-type-2", class: "govuk-checkboxes__input",
-                        value: "Retailer"
-                = form.label :distributor, "Distributor",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-business-type-2"
+                = form.check_box :distributor, class: "govuk-checkboxes__input", value: "distributor"
+                = form.label :distributor, "Distributor", class: "govuk-label govuk-checkboxes__label",
+                        for: :businesses_distributor
               .govuk-checkboxes__item
-                = form.check_box :importer, id: "new-business-type-3", class: "govuk-checkboxes__input",
-                        value: "Importer"
-                = form.label :importer, "Importer",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-business-type-3"
+                = form.check_box :importer, class: "govuk-checkboxes__input", value: "importer"
+                = form.label :importer, "Importer", class: "govuk-label govuk-checkboxes__label",
+                        for: :businesses_importer
               .govuk-checkboxes__item
-                = form.check_box :manufacturer, id: "new-business-type-4", class: "govuk-checkboxes__input",
-                        value: "Manufacturer"
+                = form.check_box :manufacturer, class: "govuk-checkboxes__input", value: "manufacturer"
                 = form.label :manufacturer, "Manufacturer",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-business-type-4"
+                        class: "govuk-label govuk-checkboxes__label", for: :investigation_manufacturer
               .govuk-checkboxes__item
-                = form.check_box :other, id: "new-business-type-5", class: "govuk-checkboxes__input",
-                        value: "Other", "aria-controls": "conditional-new-business-type-5", "aria-expanded": "false"
+                = form.check_box :other, class: "govuk-checkboxes__input",
+                        value: "Other", "aria-controls": "new-business-other-type", "aria-expanded": "false"
                 = form.label :other, "Other",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-business-type-5"
-              #conditional-new-business-type-5.govuk-checkboxes__conditional.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
+                        class: "govuk-label govuk-checkboxes__label", for: :investigation_other
+              #new-business-other-type.govuk-checkboxes__conditional.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
                 .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:other_business].any?)]
                   .govuk-form-group
                     = form.text_field :other_business_type, id: "new-business-type-other", class: "govuk-input"
           .govuk-form-group
             .govuk-checkboxes
               .govuk-checkboxes__item
-                = form.check_box :none, id: "new-business-type-none-1", class: "govuk-checkboxes__input",
-                        value: "None"
+                = form.check_box :none, class: "govuk-checkboxes__input", value: "None"
                 = form.label :none, "None",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-business-type-none-1"
+                        class: "govuk-label govuk-checkboxes__label", for: :investigation_none
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"

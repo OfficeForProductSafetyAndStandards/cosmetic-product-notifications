@@ -14,15 +14,11 @@
       .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:has_corrective_action].any?)]
         .govuk-radios
           .govuk-radios__item
-            = form.radio_button :has_action, "Yes", class: "govuk-radios__input", id: "new-report-action-1",
-                    value: "Yes"
-            = form.label :has_corrective_actions, has_corrective_actions_options[:yes],
-                    class: "govuk-label govuk-radios__label"
+            = form.radio_button :has_action, "Yes", class: "govuk-radios__input", value: "Yes"
+            = form.label :has_action, "Yes", class: "govuk-label govuk-radios__label"
           .govuk-radios__item
-            = form.radio_button :has_action, "No", class: "govuk-radios__input", id: "new-report-action-2",
-                    value: "No"
-            = form.label :has_corrective_action, has_corrective_actions_options[:no],
-                    class: "govuk-label govuk-radios__label"
+            = form.radio_button :has_action, "No", class: "govuk-radios__input", value: "No"
+            = form.label :has_action, "No", class: "govuk-label govuk-radios__label"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"
