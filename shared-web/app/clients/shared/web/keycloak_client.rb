@@ -76,11 +76,12 @@ module Shared
           Keycloak::Internal.get_users
         end
         user_groups = all_user_groups
+        teams = all_teams
 
         team_users = []
         JSON.parse(response).each do |user|
           user_groups[user["id"]].each do |group|
-            team_users << { team_id: group, user_id: user["id"] }
+            team_users << { team_id: group, user_id: user["id"] } if teams.map{|t| t[:id]}.include? group
           end
         end
         team_users
