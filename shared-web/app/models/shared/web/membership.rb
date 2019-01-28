@@ -10,7 +10,7 @@ module Shared
         begin
           self.data = Shared::Web::KeycloakClient.instance.all_memberships if self.data.blank?
         rescue StandardError => error
-          Rails.logger.error "Failed to fetch organisations from Keycloak: #{error.message}"
+          Rails.logger.error "Failed to fetch team memberships from Keycloak: #{error.message}"
           self.data = nil
         end
 

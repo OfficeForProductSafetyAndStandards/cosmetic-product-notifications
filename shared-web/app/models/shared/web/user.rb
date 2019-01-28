@@ -13,6 +13,8 @@ module Shared
       field :email
 
       def teams
+        # has_many through seems not to work with ActiveHash
+        # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
         memberships.map(&:team)
       end
 
