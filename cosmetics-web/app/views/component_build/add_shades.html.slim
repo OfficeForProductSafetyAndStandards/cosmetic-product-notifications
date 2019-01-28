@@ -9,9 +9,12 @@
         - if shades_errors
             span.govuk-error-message Please add at least two shades
         = form_for(@component, url: wizard_path, method: :put) do |form|
+            - @component.shades.each_with_index do |shade, index|
+                .govuk-form-group
+                    = form.text_field :shades, multiple: true, value: shade, class: "govuk-input govuk-input--width-20 shade-input"
+                    button.govuk-button.secondary-button[type="submit" name="remove_shade_with_id" value=index] Remove
+
             .govuk-form-group
-                = form.text_field :shades, multiple: true, class: "govuk-input"
-            .govuk-form-group
-                = form.text_field :shades, multiple: true, class: "govuk-input"
+                button.govuk-button.secondary-button[type="submit" name="add_shade" value='true'] Add another
             .govuk-form-group
                 = form.submit "Continue", class: "govuk-button"

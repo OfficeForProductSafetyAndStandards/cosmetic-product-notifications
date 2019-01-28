@@ -36,6 +36,12 @@ RSpec.describe ComponentBuildController, type: :controller do
             get(:show, params: { component_id: component.id, id: 'wicked_finish' })
             expect(response).to redirect_to(edit_notification_path(component.notification))
         end
+
+        it "initialises shades array with two empty strings in add_shades step" do
+            component = create_component
+            get(:show, params: { component_id: component.id, id: 'add_shades' })
+            expect(assigns(:component).shades).to eq([ '', '' ])
+        end
     end
 
     describe "POST #update" do
@@ -66,6 +72,34 @@ RSpec.describe ComponentBuildController, type: :controller do
             post(:update, params: { component_id: component.id, id: 'number_of_shades',
                                     number_of_shades: 'single' })
             expect(response).to redirect_to(edit_notification_path(component.notification))
+        end
+
+        it "adds empty string to shades array if add_shade parameter passed" do
+            component = create_component
+            post(:update, params: { component_id: component.id, id: 'add_shades',
+                                    component: { shades: [ 'red', 'blue' ] }, add_shade: true })
+            expect(assigns(:component).shades).to eq([ 'red', 'blue', '' ])                                 
+        end
+
+        it "removes shade from list if passed remove_shade_with_id" do
+            component = create_component
+            post(:update, params: { component_id: component.id, id: 'add_shades',
+                                    component: { shades: [ 'red', 'blue', 'yellow' ] }, remove_shade_with_id: 1 })
+            expect(assigns(:component).shades).to eq([ 'red', 'yellow' ])  
+        end
+
+        it "adds an emty string to shades if removing an element would leave less than two" do
+            component = create_component
+            post(:update, params: { component_id: component.id, id: 'add_shades',
+                                    component: { shades: [ 'red', 'blue' ] }, remove_shade_with_id: 0 })
+            expect(assigns(:component).shades).to eq([ 'blue', '' ])  
+        end
+
+        it "rerenders add_shades if less than two non blank shades are present" do
+            component = create_component
+            post(:update, params: { component_id: component.id, id: 'add_shades',
+                                    component: { shades: [ 'red', '' ] } })
+            expect(response).to render_template("component_build/add_shades")                                    
         end
     end
 

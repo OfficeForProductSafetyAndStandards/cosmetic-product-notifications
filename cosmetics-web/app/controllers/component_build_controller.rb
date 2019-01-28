@@ -6,19 +6,22 @@ class ComponentBuildController < ApplicationController
     before_action :set_component
 
     def show
+        if step == :add_shades && @component.shades.nil?
+            @component.shades = [ '', '' ]
+        end
         render_wizard
     end
 
     def update
-        if step == :number_of_shades
+        case step
+        when :number_of_shades
             if params[:number_of_shades] == 'single'
                 redirect_to edit_notification_path(@component.notification)
             else
                 render_wizard @component
             end
-        else
-            @component.update(component_params)
-            render_wizard @component
+        when :add_shades
+            render_add_shades
         end
     end
 
@@ -38,5 +41,31 @@ private
 
     def set_component
         @component = Component.find(params[:component_id])
+    end
+
+    def render_add_shades
+        @component.update(component_params)
+        
+        if params.key?(:add_shade) && params[:add_shade]
+            @component.shades.push ''
+            render :add_shades
+        elsif params.key?(:remove_shade_with_id)
+            @component.shades.delete_at(params[:remove_shade_with_id].to_i)
+            if @component.shades.length < 2
+                @component.shades.push ''
+            end
+            render :add_shades
+        else
+            @component.prune_blank_shades
+            if @component.valid?
+                render_wizard @component
+            else
+                if @component.shades.length < 2
+                    required_shades = 2 - @component.shades.length
+                    @component.shades.concat(Array.new(required_shades, ''))
+                end
+                render step
+            end
+        end
     end
 end

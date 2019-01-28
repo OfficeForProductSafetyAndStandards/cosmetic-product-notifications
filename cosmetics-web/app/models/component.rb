@@ -4,7 +4,7 @@ class Component < ApplicationRecord
   belongs_to :notification
 
   before_save :update_notification_state
-  before_save :prune_blank_shades
+  before_save :add_shades, if: :will_save_change_to_shades?
 
   validates :shades, length: { 
     minimum: 2, 
@@ -21,17 +21,17 @@ class Component < ApplicationRecord
     end
   end
 
-private
-
-  def update_notification_state
-    notification.set_single_or_multi_component!
-  end
-
   def prune_blank_shades
     unless self[:shades].nil?
       self[:shades] = self[:shades].select do |shade|
         !shade.blank?
       end
     end
+  end
+
+private
+
+  def update_notification_state
+    notification.set_single_or_multi_component!
   end
 end
