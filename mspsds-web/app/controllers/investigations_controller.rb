@@ -21,7 +21,7 @@ class InvestigationsController < ApplicationController
       end
       format.xlsx do
         @answer = search_for_investigations
-        @investigations = Investigation.eager_load(:reporter,
+        @investigations = Investigation.eager_load(:complainant,
                                                    :source,
                                                    { products: :source },
                                                    { activities: :source },
@@ -49,8 +49,8 @@ class InvestigationsController < ApplicationController
     case params[:type]
     when "allegation"
       redirect_to new_allegation_path
-    when "question"
-      redirect_to new_question_path
+    when "enquiry"
+      redirect_to new_enquiry_path
     when "project"
       redirect_to new_project_path
     else

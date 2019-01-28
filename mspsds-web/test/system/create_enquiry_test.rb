@@ -1,6 +1,6 @@
 require "application_system_test_case"
 
-class CreateAllegationTest < ApplicationSystemTestCase
+class CreateEnquiryTest < ApplicationSystemTestCase
   setup do
     @complainant = Complainant.new(
       name: "Test complainant",
@@ -9,14 +9,13 @@ class CreateAllegationTest < ApplicationSystemTestCase
       email_address: "test@example.com"
     )
 
-    @allegation = Investigation::Allegation.new(
-      hazard_type: "Blunt force",
-      product_category: "Small Electronics",
-      description: "Allegation description"
+    @enquiry = Investigation::Enquiry.new(
+      user_title: "Enquiry title",
+      description: "Enquiry description"
     )
 
     sign_in_as_user
-    visit new_allegation_path
+    visit new_enquiry_path
   end
 
   teardown do
@@ -28,15 +27,15 @@ class CreateAllegationTest < ApplicationSystemTestCase
     click_on "Create new"
     assert_text "Create new"
 
-    choose "type_allegation", visible: false
+    choose "type_enquiry", visible: false
     click_on "Continue"
 
-    assert_text "New Allegation"
+    assert_text "New Enquiry"
   end
 
   test "first step should be complainant type" do
-    assert_text "New Allegation"
-    assert_text "Who's making the allegation?"
+    assert_text "New Enquiry"
+    assert_text "Who did the enquiry come from?"
   end
 
   test "first step should require an option to be selected" do
@@ -52,7 +51,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
   test "second step should be complainant details" do
     select_complainant_type_and_continue
 
-    assert_text "New Allegation"
+    assert_text "New Enquiry"
     assert_text "What are their contact details?"
   end
 
@@ -78,58 +77,49 @@ class CreateAllegationTest < ApplicationSystemTestCase
     assert_no_text "prevented this complainant from being saved"
   end
 
-  test "third step should be allegation details" do
+  test "third step should be enquiry details" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
 
-    assert_text "New Allegation"
-    assert_text "What is being alleged?"
+    assert_text "New Enquiry"
+    assert_text "What is the enquiry?"
   end
 
-  test "third step should require a description" do
+  test "third step should require na enquiry title and description" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
     click_on "Continue"
 
+    assert_text "User title can't be blank"
     assert_text "Description can't be blank"
   end
 
-  test "third step should require a product type and hazard type to be selected" do
+  test "enquiry page should be shown when complete" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
-    click_on "Continue"
-
-    assert_text "Product category can't be blank"
-    assert_text "Hazard type can't be blank"
-  end
-
-  test "case page should be shown when complete" do
-    select_complainant_type_and_continue
-    fill_complainant_details_and_continue
-    fill_allegation_details_and_continue
+    fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
+    assert_text @enquiry.user_title
   end
 
   test "confirmation message should be shown when complete" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
-    fill_allegation_details_and_continue
+    fill_enquiry_details_and_continue
 
-    assert_text "Allegation was successfully created"
+    assert_text "Enquiry was successfully created"
   end
 
-  test "allegation and complainant details should be logged as case activity" do
+  test "enquiry and complainant details should be logged as case activity" do
     select_complainant_type_and_continue
     fill_all_complainant_details_and_continue
-    fill_allegation_details_and_continue
+    fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
 
-    assert_text "Allegation logged: #{@allegation.title}"
-    assert_text "Product category: #{@allegation.product_category}"
-    assert_text "Hazard type: #{@allegation.hazard_type}"
-    assert_text @allegation.description
+    assert_text "Enquiry logged: #{@enquiry.title}"
+    assert_text @enquiry.description
 
     assert_text "Name: #{@complainant.name}"
     assert_text "Type: #{@complainant.complainant_type}"
@@ -138,13 +128,13 @@ class CreateAllegationTest < ApplicationSystemTestCase
     assert_text @complainant.other_details
   end
 
-  test "related file is attached to the case" do
+  test "related file is attached to the enquiry" do
     attachment_filename = "new_risk_assessment.txt"
 
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
-    attach_file "allegation[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
-    fill_allegation_details_and_continue
+    attach_file "enquiry[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
     click_on "Attachments"
@@ -157,8 +147,8 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
-    attach_file "allegation[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
-    fill_allegation_details_and_continue
+    attach_file "enquiry[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
 
@@ -185,10 +175,9 @@ class CreateAllegationTest < ApplicationSystemTestCase
     click_on "Continue"
   end
 
-  def fill_allegation_details_and_continue
-    fill_in "allegation[description]", with: @allegation.description
-    fill_autocomplete "hazard-type-picker", with: @allegation.hazard_type
-    fill_autocomplete "product-category-picker", with: @allegation.product_category
+  def fill_enquiry_details_and_continue
+    fill_in "enquiry[user_title]", with: @enquiry.user_title
+    fill_in "enquiry[description]", with: @enquiry.description
     click_on "Continue"
   end
 end

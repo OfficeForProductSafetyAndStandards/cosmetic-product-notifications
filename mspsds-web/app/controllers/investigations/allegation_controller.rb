@@ -2,7 +2,7 @@ class Investigations::AllegationController < Investigations::CreationFlowControl
   set_attachment_names :attachment
   set_file_params_key :allegation
 
-  steps :reporter, :reporter_details, :allegation_details
+  steps :complainant, :complainant_details, :allegation_details
 
 private
 
