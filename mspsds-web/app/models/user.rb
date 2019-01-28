@@ -37,7 +37,9 @@ class User < Shared::Web::User
 
   def display_name
     display_name = full_name
-    display_name += " (#{organisation.name})" if organisation.present?
+    can_display_teams = organisation.present? && current_user.organisation&.id == organisation.id && teams.any?
+    membership_display = can_display_teams ? teams.map(&:name).join(', ') : organisation&.name
+    display_name += " (#{membership_display})" if membership_display.present?
     display_name
   end
 
