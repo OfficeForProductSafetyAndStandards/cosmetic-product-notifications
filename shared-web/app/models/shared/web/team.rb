@@ -9,13 +9,13 @@ module Shared
 
       belongs_to :organisation
 
-      has_many :memberships, dependent: :nullify
-      has_many :users, through: :memberships
+      has_many :team_users, dependent: :nullify
+      has_many :users, through: :team_users
 
       def users
         # has_many through seems not to work with ActiveHash
         # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
-        memberships.map(&:user)
+        team_users.map(&:user)
       end
 
       def self.all(options = {})

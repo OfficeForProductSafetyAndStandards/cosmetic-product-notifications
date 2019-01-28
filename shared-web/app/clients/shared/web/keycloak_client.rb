@@ -71,19 +71,19 @@ module Shared
         end
       end
 
-      def all_memberships
+      def all_team_users
         response = Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
           Keycloak::Internal.get_users
         end
         user_groups = all_user_groups
 
-        memberships = []
+        team_users = []
         JSON.parse(response).each do |user|
           user_groups[user["id"]].each do |group|
-            memberships << { team_id: group, user_id: user["id"] }
+            team_users << { team_id: group, user_id: user["id"] }
           end
         end
-        memberships
+        team_users
       end
 
       def all_groups

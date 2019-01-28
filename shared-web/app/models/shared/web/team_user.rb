@@ -1,6 +1,6 @@
 module Shared
   module Web
-    class Membership < ActiveHash::Base
+    class TeamUser < ActiveHash::Base
       include ActiveHash::Associations
 
       belongs_to :team
@@ -8,7 +8,7 @@ module Shared
 
       def self.all(options = {})
         begin
-          self.data = Shared::Web::KeycloakClient.instance.all_memberships if self.data.blank?
+          self.data = Shared::Web::KeycloakClient.instance.all_team_users if self.data.blank?
         rescue StandardError => error
           Rails.logger.error "Failed to fetch team memberships from Keycloak: #{error.message}"
           self.data = nil

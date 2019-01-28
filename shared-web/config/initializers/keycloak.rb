@@ -13,4 +13,4 @@ Keycloak.auth_server_url = ""
 Organisation.all unless Rails.env.test? || Sidekiq.server?
 Team.all unless Rails.env.test? || Sidekiq.server?
 User.all unless Rails.env.test? || Sidekiq.server?
-Membership.all unless Rails.env.test? || Sidekiq.server?
+TeamUser.all unless Rails.env.test? || Sidekiq.server?

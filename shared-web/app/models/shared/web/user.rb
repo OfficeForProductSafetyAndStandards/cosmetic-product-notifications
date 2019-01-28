@@ -5,8 +5,8 @@ module Shared
 
       belongs_to :organisation
 
-      has_many :memberships, dependent: :nullify
-      has_many :teams, through: :memberships
+      has_many :team_users, dependent: :nullify
+      has_many :teams, through: :team_users
 
       field :first_name
       field :last_name
@@ -15,7 +15,7 @@ module Shared
       def teams
         # has_many through seems not to work with ActiveHash
         # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
-        memberships.map(&:team)
+        team_users.map(&:team)
       end
 
       def self.find_or_create(user)
