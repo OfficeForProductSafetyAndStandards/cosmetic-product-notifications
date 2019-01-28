@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   # Test & static analysis dependencies
   s.add_dependency "brakeman", "4.4.0"
-  s.add_dependency "capybara", "3.13.0"
+  s.add_dependency "capybara", "3.13.2"
   s.add_dependency "coveralls", "0.8.22"
   s.add_dependency "govuk-lint", "3.10.0"
   s.add_dependency "rubocop", "0.63.1"
