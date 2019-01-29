@@ -12,9 +12,9 @@
   .govuk-grid-row class="govuk-!-margin-bottom-3"
     .govuk-grid-column-one-half
       .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:reporter_reference].any?)]
-        span#report-title-hint.govuk-hint
+        span#investigation_reporter_reference.govuk-hint
           | Give us a reference, ie a case number from your system, use it to help you find your report in the future.
-        = form.text_field :reporter_reference, id: "report-title", class:"govuk-input",
+        = form.text_field :reporter_reference, class:"govuk-input",
                 "aria-describedby": "report-title-hint"
   .govuk-grid-row
     .govuk-grid-column-two-thirds

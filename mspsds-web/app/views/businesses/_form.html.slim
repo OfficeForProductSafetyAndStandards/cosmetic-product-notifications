@@ -55,7 +55,8 @@ fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
     .govuk-form-group
       = ff.label :country, "Country",
               class: "govuk-label"
-      = ff.text_field :country, class: "govuk-input"
+    = form.select :country, countries, { include_blank: "" },
+            class: "govuk-select", id: "location-autocomplete"
 
 = form.fields_for :contact, business.primary_contact do |ff|
   fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
@@ -80,5 +81,5 @@ fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
       = ff.label :job_title, "Job title / description",
               class: "govuk-label"
       = ff.text_field :job_title, class: "govuk-input"
-
-= form.submit "Save business", class: "govuk-button"
+- submit_text ||= "Save business"
+= form.submit submit_text, class: "govuk-button"

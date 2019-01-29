@@ -57,7 +57,7 @@ fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:country_of_origin].any?)]
     = form.label :country_of_origin, "Country of origin",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    = form.select :country_of_origin, countries, { include_blank: "Unknown" },
+    = form.select :country_of_origin, countries, { include_blank: "" },
             class: "govuk-select", id: "location-autocomplete"
 
 fieldset.govuk-fieldset
@@ -70,5 +70,5 @@ fieldset.govuk-fieldset
             aria_describedby: "report-product-description-hint"
 
 .govuk-form-group class=[input_field_width]
-  - submit_text = local_variables.include?(:submit_text) ? submit_text : "Save product"
+  - submit_text ||= "Save product"
   = form.submit submit_text, class: "govuk-button"
