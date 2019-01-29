@@ -35,8 +35,8 @@ search_related_businesses:
   is_closed: false
   type: Investigation::Allegation
 
-search_related_reporter:
-  description: Investigation for search by reporter
+search_related_complainant:
+  description: Investigation for search by complainant
   is_closed: false
   type: Investigation::Allegation
 

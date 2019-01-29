@@ -1,6 +1,7 @@
 fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    = title
+  - if local_variables.include?(:title)
+    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+      = title
   .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(form.object))
     - if file_blob.present?
       p#current-attachment-details

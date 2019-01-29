@@ -4,7 +4,6 @@ source "https://rubygems.org"
 ruby File.read(".ruby-version").strip
 
 gem "aasm"
-gem "active_hash"
 gem "bootsnap", ">= 1.1.0"
 gem "cf-app-utils"
 gem "jbuilder", "~> 2.8"

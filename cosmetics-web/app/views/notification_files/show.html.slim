@@ -8,7 +8,7 @@ p
     p
       | Currently selected file:
       = link_to @notification_file.uploaded_file.filename,
-              url_for(@notification_file.uploaded_file), target: "_blank"
+              url_for(@notification_file.uploaded_file), target: "_blank", rel: "noopener"
   -else
     p
       | No attachment

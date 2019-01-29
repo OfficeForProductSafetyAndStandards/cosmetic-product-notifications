@@ -6,6 +6,7 @@ class InvestigationsController < ApplicationController
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[assign status visibility]
   before_action :set_investigation_with_associations, only: %i[show]
+  before_action :build_breadcrumbs, only: %i[show]
 
   # GET /cases
   # GET /cases.json
@@ -20,7 +21,7 @@ class InvestigationsController < ApplicationController
       end
       format.xlsx do
         @answer = search_for_investigations
-        @investigations = Investigation.eager_load(:reporter,
+        @investigations = Investigation.eager_load(:complainant,
                                                    :source,
                                                    { products: :source },
                                                    { activities: :source },
@@ -48,8 +49,8 @@ class InvestigationsController < ApplicationController
     case params[:type]
     when "allegation"
       redirect_to new_allegation_path
-    when "question"
-      redirect_to new_question_path
+    when "enquiry"
+      redirect_to new_enquiry_path
     when "project"
       redirect_to new_project_path
     else
@@ -172,5 +173,9 @@ private
                      [{ transcript_attachment: :blob }, { related_attachment_attachment: :blob }])
     preload_manually(@activities.select { |a| a.respond_to?("correspondence") },
                      [:correspondence])
+  end
+
+  def build_breadcrumbs
+    @breadcrumbs = build_breadcrumb_structure
   end
 end
