@@ -27,10 +27,11 @@
                         class: "govuk-select", id: "hazard-type-picker", aria_describedby: "hazard-type-category-hint"
 
             .govuk-form-group
-              span.govuk-hint id="allegation-hazard–detail-hint"
-                | Please give details about the hazard, including any incidents or events that brought it to your attention
-              = form.text_area :hazard_description, class: "govuk-textarea", id: "allegation-hazard–detail",
-                      "aria-describedby": "allegation-hazard–detail-hint", rows: 5
+              .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_description].any?)]
+                span.govuk-hint id="allegation-hazard–detail-hint"
+                  | Please give details about the hazard, including any incidents or events that brought it to your attention
+                = form.text_area :hazard_description, class: "govuk-textarea", id: "allegation-hazard–detail",
+                        "aria-describedby": "allegation-hazard–detail-hint", rows: 5
 
           .govuk-checkboxes__item
             = form.check_box :non_compliant, class: "govuk-checkboxes__input",

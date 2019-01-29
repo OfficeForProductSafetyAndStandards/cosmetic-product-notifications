@@ -12,6 +12,8 @@ class Product < ApplicationRecord
   index_name [Rails.env, "products"].join("_")
 
   validates :name, presence: true
+  validates :product_type, presence: true
+  validates :category, presence: true
 
   has_many_attached :documents
 

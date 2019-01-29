@@ -126,17 +126,15 @@ private
       @product.validate
     when :why_reporting
       @investigation.errors.add(:base, "Please indicate whether the product is unsafe or non-compliant") if !product_unsafe && !product_non_compliant
-      @investigation.validate_hazard_information if product_unsafe
-      @investigation.validate_non_compliant_information if product_non_compliant
+      @investigation.validate :unsafe if product_unsafe
+      @investigation.validate :non_compliant if product_non_compliant
     when :which_businesses
       @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
       @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
     when :has_corrective_action
       @investigation.errors.add(:base, "Please indicate whether or not correction actions have been agreed or taken") if corrective_action_not_known
-    when :reference_number
-      @investigation.validate(step)
     end
-    @investigation.errors.empty?
+    @investigation.errors.empty? && @product.errors.empty?
   end
 
   def records_saved?
