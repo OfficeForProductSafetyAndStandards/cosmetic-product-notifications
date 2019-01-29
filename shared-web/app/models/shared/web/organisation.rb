@@ -7,8 +7,6 @@ module Shared
       field :name
       field :path
 
-      has_many :teams, dependent: :nullify
-
       has_many :users, dependent: :nullify
 
       def self.all(options = {})

@@ -25,6 +25,7 @@ class User < Shared::Web::User
     begin
       all_users = Shared::Web::KeycloakClient.instance.all_users
       self.data = all_users.map { |user| populate_organisation(user) }
+      Team.all
       TeamUser.all
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"

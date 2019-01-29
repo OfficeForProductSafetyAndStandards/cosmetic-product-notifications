@@ -11,6 +11,4 @@ Keycloak.auth_server_url = ""
 
 # Load organisations, teams and users on app startup
 Organisation.all unless Rails.env.test? || Sidekiq.server?
-Team.all unless Rails.env.test? || Sidekiq.server?
 User.all unless Rails.env.test? || Sidekiq.server?
-TeamUser.all unless Rails.env.test? || Sidekiq.server?
