@@ -1,0 +1,72 @@
+/ Implementation based on
+/ https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/template.njk
+- id_prefix = params[:idPrefix] ? params[:idPrefix] : params[:name]
+- described_by = ""
+- is_conditional = params[:items]&.any? {|item| item[:conditional]}
+- radios_html = capture do
+  - if params[:hint]
+    - hint_id = id_prefix + '-hint'
+    - described_by = described_by ? described_by + ' ' + hint_id : hint_id
+    = render "components/govuk_hint", params: {\
+            id: hint_id,
+            classes: params[:hint][:classes],
+            attributes: params[:hint][:attributes],
+            html: params[:hint][:html],
+            text: params[:hint][:text]}
+  - if params[:errorMessage]
+    - error_id = id_prefix + '-error'
+    - described_by = described_by ? described_by + ' ' + error_id : error_id
+    = render "components/govuk_error_message", params: {\
+            id: error_id,
+            classes: params[:errorMessage] && params[:errorMessage][:classes],
+            attributes: params[:errorMessage] && params[:errorMessage][:attributes],
+            html: params[:errorMessage] && params[:errorMessage][:html],
+            text: params[:errorMessage] && params[:errorMessage][:text]}
+  .govuk-radios [
+      class=[params[:classes], ("govuk-radios--conditional" if is_conditional)]
+      data-module=("radios" if is_conditional) *(params[:attributes] || {})]
+    - params[:items].each_with_index do |item, i|
+      - id = item[:id] || "#{id_prefix}-#{i}"
+      - conditional_id = 'conditional-' + id
+      - if item[:divider]
+        .govuk-radios__divider = item[:divider]
+      - else
+        - has_hint = item[:hint] && (item[:hint][:text] || item[:hint][:html])
+        - item_hint_id = id + '-item-hint'
+        .govuk-radios__item
+          input.govuk-radios__input  [
+            id=id
+            name=params[:name]
+            type='radio'
+            value=item[:value]
+            checked=item[:checked]
+            disabled=item[:disabled]
+            data-aria-controls=(conditional_id if item[:conditional])
+            aria-describeby= (item_hint_id if has_hint) *(params[:attributes] || {})]
+          = render "components/govuk_label", params: {\
+                  html: item[:html],
+                  text: item[:text],
+                  classes: ['govuk-radios__label', (item[:label][:classes] if item[:label])],
+                  attributes: item[:label] && item[:label][:attributes],
+                  for: id}
+          - if has_hint
+            = render "components/govuk_hint", params: {\
+                  id: item_hint_id,
+                  classes: 'govuk-radios__hint',
+                  attributes: item[:hint] && item[:hint][:attributes],
+                  html: item[:hint] && item[:hint][:html],
+                  text: item[:hint] && item[:hint][:text]}
+        - if item[:conditional]
+          .govuk-radios__conditional class=("govuk-radios__conditional--hidden" unless item[:checked]) id=conditional_id
+            == item[:conditional] && item[:conditional][:html]
+
+.govuk-form-group class=[params[:formGroup] && params[:formGroup][:classes], ("govuk-form-group--error" if params[:errorMessage])]
+  - if params[:fieldset]
+    = render "components/govuk_fieldset", params: {\
+            describedBy: described_by,
+            classes: params[:fieldset][:classes],
+            attributes: params[:fieldset][:attributes],
+            legend: params[:fieldset][:legend]}
+      = radios_html
+  - else
+    = radios_html

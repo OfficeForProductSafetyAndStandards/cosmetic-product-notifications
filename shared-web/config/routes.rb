@@ -6,4 +6,8 @@ Shared::Web::Engine.routes.draw do
       delete :logout
     end
   end
+
+  if Rails.env.development?
+    get "components/:component" => "components#show"
+  end
 end

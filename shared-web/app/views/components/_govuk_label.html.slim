@@ -1,0 +1,14 @@
+/ Implementation based on
+/ https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/label/template.njk
+- if params[:html] || params[:text]
+  - label_html = capture do
+    label.govuk-label class=(params[:classes]) for=(params[:for]) *(params[:attributes] || {})
+      - if params[:html]
+        == params[:html]
+      - else
+        = params[:text]
+  - if params[:isPageHeading]
+    h1.govuk-label-wrapper
+      = label_html
+  - else
+    = label_html
