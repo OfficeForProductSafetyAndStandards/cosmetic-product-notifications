@@ -65,23 +65,24 @@ module Shared
         groups = all_groups
         organisations = groups.find { |group| group["name"] == "Organisations" }
 
-        opss = organisations["subGroups"].find { |org| org["name"] == "Office for Product Safety and Standards" }
-        opss["subGroups"].map do |organisation|
-          { id: organisation["id"], name: organisation["name"], path: organisation["path"], organisation_id: opss["id"] }
+        teams = []
+        organisations["subGroups"].each do |organisation|
+          organisation["subGroups"].map do |team|
+            teams << { id: team["id"], name: team["name"], path: team["path"], organisation_id: organisation["id"] }
+          end
         end
+        teams
       end
 
       def all_team_users
-        response = Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
-          Keycloak::Internal.get_users
-        end
+        users = all_users
         user_groups = all_user_groups
-        teams = all_teams
+        teams = all_teams.map{|t| t[:id]}
 
         team_users = []
-        JSON.parse(response).each do |user|
-          user_groups[user["id"]].each do |group|
-            team_users << { team_id: group, user_id: user["id"] } if teams.map{|t| t[:id]}.include? group
+        users.each do |user|
+          user_groups[user[:id]].each do |group|
+            team_users << { team_id: group, user_id: user[:id] } if teams.include? group
           end
         end
         team_users

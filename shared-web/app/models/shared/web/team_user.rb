@@ -7,13 +7,16 @@ module Shared
       belongs_to :user
 
       def self.all(options = {})
-        begin
-          self.data = Shared::Web::KeycloakClient.instance.all_team_users if self.data.blank?
-        rescue StandardError => error
-          Rails.logger.error "Failed to fetch team memberships from Keycloak: #{error.message}"
-          self.data = nil
+        # This condition is to limit number of calls when Rails creates Active Hash for TeamUsers
+        if @previous_time.blank? || (Time.now - @previous_time).to_i > 5*60
+          @previous_time = Time.now
+          begin
+            self.data = Shared::Web::KeycloakClient.instance.all_team_users
+          rescue StandardError => error
+            Rails.logger.error "Failed to fetch team memberships from Keycloak: #{error.message}"
+            self.data = nil
+          end
         end
-
         if options.has_key?(:conditions)
           where(options[:conditions])
         else

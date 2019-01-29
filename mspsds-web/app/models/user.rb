@@ -8,7 +8,9 @@ class User < Shared::Web::User
   def self.find_or_create(attributes)
     groups = attributes.delete(:groups)
     organisation = Organisation.find_by_path(groups) # rubocop:disable Rails/DynamicFindBy
-    User.find_by(id: attributes[:id]) || User.create(attributes.merge(organisation_id: organisation&.id))
+    user = User.find_by(id: attributes[:id]) || User.create(attributes.merge(organisation_id: organisation&.id))
+    TeamUser.all
+    user
   end
 
   def self.all(options = {})
@@ -24,7 +26,6 @@ class User < Shared::Web::User
       where(options[:conditions])
     else
       @records ||= []
-
     end
   end
 
