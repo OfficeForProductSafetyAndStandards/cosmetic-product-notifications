@@ -20,7 +20,6 @@ class Business < ApplicationRecord
 
   has_many :investigation_businesses, dependent: :destroy
   has_many :investigations, through: :investigation_businesses
-  has_one :contact, dependent: :destroy
 
   has_many :locations, dependent: :destroy
   has_many :contacts, dependent: :destroy
@@ -36,7 +35,7 @@ class Business < ApplicationRecord
   end
 
   def primary_contact
-    contact
+    contacts.first
   end
 
   def pretty_description

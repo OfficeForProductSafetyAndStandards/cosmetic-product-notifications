@@ -60,12 +60,12 @@ Rails.application.routes.draw do
   end
 
   resources :businesses, concerns: %i[document_attachable] do
-    resources :locations, shallow: true do
+    resources :locations do
       member do
         get :remove
       end
     end
-    resources :contacts, shallow: true do
+    resources :contacts do
       member do
         get :remove
       end

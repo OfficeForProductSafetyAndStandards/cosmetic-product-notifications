@@ -5,7 +5,7 @@
   .govuk-grid-column-two-thirds
     .govuk-heading-xl
       span.govuk-caption-xl
-        /= "Business: #{@business.trading_name}"
+        = "Business: #{@business.trading_name}"
       | Remove contact
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-two-thirds
@@ -31,5 +31,5 @@
             | Title / Description
           td.govuk-table__cell
             = @contact.job_title
-= form_with url: contact_path(@contact), method: :delete do |form|
+= form_with url: business_contact_path(@business, @contact), method: :delete do |form|
     = form.submit "Remove contact", class: "govuk-button", style: "background-color: #df3034"

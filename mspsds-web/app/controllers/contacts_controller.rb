@@ -1,15 +1,7 @@
 class ContactsController < ApplicationController
-  before_action :set_contact, only: %i[show edit update remove destroy]
+  before_action :set_contact, only: %i[edit update remove destroy]
   before_action :create_contact, only: %i[create]
-  before_action :assign_business, only: %i[show edit remove]
-  # GET /contacts
-  # GET /contacts.json
-
-  # GET /contacts/1
-  # GET /contacts/1.json
-  def show
-    @business = @contact.business
-  end
+  before_action :assign_business, only: %i[edit remove]
 
   # GET /contacts/new
   def new
@@ -18,9 +10,7 @@ class ContactsController < ApplicationController
   end
 
   # GET /contacts/1/edit
-  def edit
-    @business = @contact.business
-  end
+  def edit; end
 
   # POST /contacts
   # POST /contacts.json
@@ -57,9 +47,7 @@ class ContactsController < ApplicationController
     end
   end
 
-  def remove
-    @business = @contact.business
-  end
+  def remove; end
 
   # DELETE /contacts/1
   # DELETE /contacts/1.json
@@ -68,7 +56,7 @@ class ContactsController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_to business_url(@contact.business, anchor: "contacts"),
-                    notice: "contact was successfully deleted."
+                    notice: "Contact was successfully deleted."
       end
       format.json { head :no_content }
     end

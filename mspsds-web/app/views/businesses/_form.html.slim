@@ -57,7 +57,7 @@ fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
               class: "govuk-label"
       = ff.text_field :country, class: "govuk-input"
 
-= form.fields_for :contact, business.primary_contact do |ff|
+= form.fields_for :contacts, business.contacts.first do |ff|
   fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
     legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       | Contact
