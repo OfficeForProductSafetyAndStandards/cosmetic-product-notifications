@@ -3,13 +3,21 @@ class User < Shared::Web::User
   has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
   has_many :user_sources, dependent: :delete
 
+  has_many :team_users, dependent: :nullify
+  has_many :teams, through: :team_users
+
+  def teams
+    # has_many through seems not to work with ActiveHash
+    # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
+    team_users.map(&:team)
+  end
+
   include UserService
 
   def self.find_or_create(attributes)
     groups = attributes.delete(:groups)
     organisation = Organisation.find_by_path(groups) # rubocop:disable Rails/DynamicFindBy
     user = User.find_by(id: attributes[:id]) || User.create(attributes.merge(organisation_id: organisation&.id))
-    TeamUser.all
     user
   end
 
@@ -17,6 +25,7 @@ class User < Shared::Web::User
     begin
       all_users = Shared::Web::KeycloakClient.instance.all_users
       self.data = all_users.map { |user| populate_organisation(user) }
+      TeamUser.all
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
       self.data = nil

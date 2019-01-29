@@ -77,12 +77,16 @@ module Shared
       def all_team_users
         users = all_users
         user_groups = all_user_groups
-        teams = all_teams.map { |t| t[:id] }
+        teams = all_teams.map { |t| t[:id] }.to_set
 
+        # We set ids manually because if we don't ActiveHash will use 'next_id' method when computing @records,
+        # which calls TeamUser.all, and gets into an infinite loop
         team_users = []
+        id = 1
         users.each do |user|
           user_groups[user[:id]].each do |group|
-            team_users << { team_id: group, user_id: user[:id] } if teams.include? group
+            team_users << { team_id: group, user_id: user[:id], id: id } if teams.include? group
+            id += 1
           end
         end
         team_users
