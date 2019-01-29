@@ -16,8 +16,9 @@ class Investigations::MsaInvestigationsController < ApplicationController
   def show
     case step
     when :business
-      if get_session_businesses.any?
-        @business_type = get_session_businesses.shift
+      next_selected_business = get_session_businesses.find{ |entry| entry["business"].nil? }
+      if next_selected_business.any?
+        @business_type = next_selected_business["type"]
         set_business
       else
         return redirect_to next_wizard_path
@@ -47,6 +48,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
       when :which_businesses
         set_session_businesses selected_businesses
       when :business
+        store_business
         return redirect_to wizard_path :business
       when steps.last
         return create
@@ -131,8 +133,13 @@ private
   end
 
   def business_step_params
-    # business_session_params.merge(business_request_params).symbolize_keys
-    business_request_params.to_h
+    business_session_params.merge(business_request_params).symbolize_keys
+  end
+
+  def business_session_params
+    # TODO use this to retrieve a business for editing eg for browser back button
+    # @investigation.businesses[0]&.attributes || {}
+    {}
   end
 
   def which_businesses_params
@@ -149,12 +156,17 @@ private
     session[:selected_businesses] = new_value
   end
 
+  def store_business
+    business_entry = get_session_businesses.find{|entry| entry["type"] == params.require(:business)[:business_type]}
+    business_entry["business"] = Business.new business_step_params
+  end
+
   def selected_businesses
     return {} if which_businesses_params["none"] == "1"
 
-    businesses = which_businesses_params.select{ |_, known| known == "1"}.keys
+    businesses = which_businesses_params.select{ |_, selected| selected == "1"}.keys
     businesses << which_businesses_params[:other_business_type] if which_businesses_params[:other] == "1"
-    businesses
+    businesses.map{|type| {type: type, business: nil}}
   end
 
   def has_corrective_action_params
