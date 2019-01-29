@@ -3,8 +3,9 @@ class Investigations::MsaInvestigationsController < ApplicationController
   include Wicked::Wizard
   include CountriesHelper
   include ProductsHelper
+  include BusinessesHelper
 
-  steps :product, :why_reporting, :which_businesses, :has_corrective_action, :other_information, :reference_number
+  steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :other_information, :reference_number
   before_action :set_product, only: %i[show create update]
   before_action :set_investigation, only: %i[show create update]
   before_action :set_countries, only: %i[show create update]
@@ -13,6 +14,15 @@ class Investigations::MsaInvestigationsController < ApplicationController
 
   #GET /xxx/step
   def show
+    case step
+    when :business
+      if get_session_businesses.any?
+        @business_type = get_session_businesses.shift
+        set_business
+      else
+        return redirect_to next_wizard_path
+      end
+    end
     render_wizard
   end
 
@@ -33,24 +43,21 @@ class Investigations::MsaInvestigationsController < ApplicationController
   # PATCH/PUT /xxx
   def update
     if records_valid?
-      if step == steps.last
+      case step
+      when :which_businesses
+        set_session_businesses selected_businesses
+      when :business
+        return redirect_to wizard_path :business
+      when steps.last
         return create
       end
-      redirect_to_next_step
+      redirect_to next_wizard_path
     else
       render step
     end
   end
 
 private
-
-  def redirect_to_next_step
-    case step
-    when :which_businesses, :business
-      session[:known_businesses]
-    end
-    redirect_to next_wizard_path
-  end
 
   def set_product
     @product = Product.new(product_step_params)
@@ -60,18 +67,24 @@ private
     @investigation = Investigation.new(investigation_step_params.except(:unsafe, :non_compliant))
   end
 
+  def set_business
+    @business = Business.new business_step_params
+    @business.locations.build
+    @business.build_contact
+  end
+
   def clear_session
     session[:investigation] = nil
     session[:product] = nil
-    session[:known_businesses] = nil
+    set_session_businesses([])
   end
 
   def store_investigation
-    session[:investigation] = @investigation.attributes if changed_investigation step && @investigation.valid?(step)
+    session[:investigation] = @investigation.attributes if changed_investigation && @investigation.valid?(step)
   end
 
   def store_product
-    if changed_product(step) && @product.valid?(step)
+    if changed_product && @product.valid?(step)
       session[:product] = @product.attributes
     end
   end
@@ -99,7 +112,14 @@ private
 
   def product_request_params
     return {} if params[:product].blank?
+
     product_params
+  end
+
+  def business_request_params
+    return {} if params[:business].blank?
+
+    business_params
   end
 
   def investigation_step_params
@@ -110,10 +130,31 @@ private
     product_session_params.merge(product_request_params).symbolize_keys
   end
 
+  def business_step_params
+    # business_session_params.merge(business_request_params).symbolize_keys
+    business_request_params.to_h
+  end
+
   def which_businesses_params
     params.require(:businesses).permit(
       :retailer, :distributor, :importer, :manufacturer, :other, :other_business_type, :none
     )
+  end
+
+  def get_session_businesses
+    session[:selected_businesses]
+  end
+
+  def set_session_businesses new_value
+    session[:selected_businesses] = new_value
+  end
+
+  def selected_businesses
+    return {} if which_businesses_params["none"] == "1"
+
+    businesses = which_businesses_params.select{ |_, known| known == "1"}.keys
+    businesses << which_businesses_params[:other_business_type] if which_businesses_params[:other] == "1"
+    businesses
   end
 
   def has_corrective_action_params
@@ -171,11 +212,11 @@ private
     has_corrective_action_params.empty?
   end
 
-  def changed_investigation this_step
-    %i[why_reporting reference_number].include? this_step
+  def changed_investigation
+    %i[why_reporting reference_number].include? step
   end
 
-  def changed_product this_step
-    this_step == :product
+  def changed_product
+    step == :product
   end
 end
