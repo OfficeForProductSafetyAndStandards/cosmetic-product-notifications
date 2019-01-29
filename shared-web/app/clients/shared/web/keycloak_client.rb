@@ -77,7 +77,7 @@ module Shared
       def all_team_users
         users = all_users
         user_groups = all_user_groups
-        teams = all_teams.map{|t| t[:id]}
+        teams = all_teams.map { |t| t[:id] }
 
         team_users = []
         users.each do |user|

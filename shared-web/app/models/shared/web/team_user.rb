@@ -8,8 +8,8 @@ module Shared
 
       def self.all(options = {})
         # This condition is to limit number of calls when Rails creates Active Hash for TeamUsers
-        if @previous_time.blank? || (Time.now - @previous_time).to_i > 5*60
-          @previous_time = Time.now
+        if @previous_time.blank? || (Time.current - @previous_time).to_i > 5 * 60
+          @previous_time = Time.current
           begin
             self.data = Shared::Web::KeycloakClient.instance.all_team_users
           rescue StandardError => error
