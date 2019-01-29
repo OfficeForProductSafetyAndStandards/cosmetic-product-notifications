@@ -31,7 +31,6 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     choose_no_other_info
 
     assert_selector "h1", text: "Find this in your system"
-
     fill_in_reporter_reference
 
     click_link "tab_products"

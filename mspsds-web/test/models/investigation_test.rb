@@ -48,14 +48,14 @@ class InvestigationTest < ActiveSupport::TestCase
   test "should create an activity when product is added to investigation" do
     @investigation = Investigation::Allegation.create
     assert_difference"Activity.count" do
-      @product = Product.new(name: 'Test Product')
+      @product = Product.new(name: 'Test Product', product_type: "test product type", category: "test product category")
       @investigation.products << @product
     end
   end
 
   test "should create an activity when product is removed from investigation" do
     @investigation = Investigation::Allegation.create
-    @product = Product.new(name: 'Test Product')
+    @product = Product.new(name: 'Test Product', product_type: "test product type", category: "test product category")
     @investigation.products << @product
     assert_difference"Activity.count" do
       @investigation.products.delete(@product)

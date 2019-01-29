@@ -12,4 +12,4 @@
               html: { autocomplete: :off }) do |form|
         h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
           | Business details
-        = render "businesses/form", form: form, business: @business, search: true
+        = render "businesses/form", form: form, business: @business, search: true, countries: @countries

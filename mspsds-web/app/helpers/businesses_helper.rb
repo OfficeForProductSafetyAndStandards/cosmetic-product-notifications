@@ -24,6 +24,10 @@ module BusinessesHelper
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
+  def set_countries
+    @countries = all_countries
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def business_params
     params.require(:business).permit(

@@ -1,10 +1,12 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
   include Pundit
+  include CountriesHelper
 
   before_action :set_investigation
   before_action :set_business, only: %i[link remove unlink]
   before_action :create_business, only: %i[new create]
+  before_action :set_countries, only: %i[new edit create update]
 
   # GET /cases/1/businesses/new
   def new; end
