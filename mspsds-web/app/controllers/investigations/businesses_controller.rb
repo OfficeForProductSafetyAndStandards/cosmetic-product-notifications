@@ -15,7 +15,9 @@ class Investigations::BusinessesController < ApplicationController
   def create
     respond_to do |format|
       if @business.valid?
-        @investigation.businesses << @business
+        @business.save
+        # TODO MSPSDS-687 Create UI for setting the value to something other than the default "manufacturer"
+        @investigation.add_business(@business, "manufacturer")
         format.html { redirect_to_investigation_businesses_tab "Business was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
@@ -27,7 +29,8 @@ class Investigations::BusinessesController < ApplicationController
 
   # PUT /cases/1/businesses/2
   def link
-    @investigation.businesses << @business
+    # TODO MSPSDS-687 Create UI for setting the value to something other than the default "manufacturer"
+    @investigation.add_business(@business, "manufacturer")
     redirect_to_investigation_businesses_tab "Business was successfully linked."
   end
 
