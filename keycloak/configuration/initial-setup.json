@@ -1440,7 +1440,7 @@
     "offlineSessionMaxLifespanEnabled" : "false",
     "waitIncrementSeconds" : "60"
   },
-  "keycloakVersion" : "4.3.0.Final",
+  "keycloakVersion" : "4.8.3.Final",
   "userManagedAccessAllowed" : false
 }, {
   "id" : "opss",
@@ -2095,7 +2095,7 @@
         "jsonType.label" : "String"
       }
     } ],
-    "defaultClientScopes" : [ "role_list", "profile", "email" ],
+    "defaultClientScopes" : [ "roles", "role_list", "profile", "email" ],
     "optionalClientScopes" : [ "address", "phone" ],
     "authorizationSettings" : {
       "allowRemoteResourceManagement" : false,
@@ -2144,7 +2144,7 @@
     "secret" : "932677f2-55c0-45c5-901a-f4beddb85e17",
     "defaultRoles" : [ "user" ],
     "redirectUris" : [ "http://localhost:3000/*", "http://localhost:3001/*" ],
-    "webOrigins" : [ "http://localhost:3001", "http://localhost:3000" ],
+    "webOrigins" : [ "http://localhost:3000", "http://localhost:3001" ],
     "notBefore" : 0,
     "bearerOnly" : false,
     "consentRequired" : false,
@@ -2231,7 +2231,7 @@
         "jsonType.label" : "String"
       }
     } ],
-    "defaultClientScopes" : [ "role_list", "profile", "email" ],
+    "defaultClientScopes" : [ "roles", "role_list", "profile", "email" ],
     "optionalClientScopes" : [ "address", "phone" ],
     "authorizationSettings" : {
       "allowRemoteResourceManagement" : false,
@@ -2693,25 +2693,45 @@
   }, {
     "id" : "6f622199-71b2-4988-9f52-7d37836ab04d",
     "name" : "roles",
-    "description" : "roles",
+    "description" : "OpenID Connect scope for add user roles to the access token",
     "protocol" : "openid-connect",
     "attributes" : {
-      "consent.screen.text" : "roles",
-      "display.on.consent.screen" : "false"
+      "include.in.token.scope" : "false",
+      "display.on.consent.screen" : "true",
+      "consent.screen.text" : "${rolesScopeConsentText}"
     },
     "protocolMappers" : [ {
-      "id" : "660f314f-55bb-421c-a5f6-a090ee29b2b9",
-      "name" : "role mapper",
+      "id" : "6b5710fb-f72c-4fef-aa8c-243a9f6d2a2b",
+      "name" : "audience resolve",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-audience-resolve-mapper",
+      "consentRequired" : false,
+      "config" : { }
+    }, {
+      "id" : "716896c7-fedd-4613-b26e-288cd740d633",
+      "name" : "realm roles",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usermodel-realm-role-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "multivalued" : "true",
+        "user.attribute" : "foo",
+        "access.token.claim" : "true",
+        "claim.name" : "realm_access.roles",
+        "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "e6b9cb95-7181-45a8-9b5a-d88ce8433119",
+      "name" : "client roles",
       "protocol" : "openid-connect",
       "protocolMapper" : "oidc-usermodel-client-role-mapper",
       "consentRequired" : false,
       "config" : {
         "multivalued" : "true",
-        "userinfo.token.claim" : "true",
-        "id.token.claim" : "true",
-        "claim.name" : "roles",
-        "jsonType.label" : "String",
-        "usermodel.clientRoleMapping.clientId" : "mspsds-app"
+        "user.attribute" : "foo",
+        "access.token.claim" : "true",
+        "claim.name" : "resource_access.${client_id}.roles",
+        "jsonType.label" : "String"
       }
     } ]
   } ],
@@ -3342,6 +3362,6 @@
     "offlineSessionMaxLifespanEnabled" : "false",
     "waitIncrementSeconds" : "60"
   },
-  "keycloakVersion" : "4.3.0.Final",
+  "keycloakVersion" : "4.8.3.Final",
   "userManagedAccessAllowed" : false
 } ]
