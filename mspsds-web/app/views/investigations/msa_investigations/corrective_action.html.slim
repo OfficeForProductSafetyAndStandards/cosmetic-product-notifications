@@ -6,17 +6,20 @@ h1.govuk-heading-xl
   | Record corrective action
 
 .govuk-grid-row
-  .govuk-grid-column-one-half
-    = form_with model: @corrective_action, url: wizard_path, method: :put, local: true do |form|
-      / TODO - FORM
-      / .govuk-grid-row
-      /   .govuk-grid-column-full
-      /     = render "form_validation_display", errors: @corrective_action.errors, model_name: "business"
-      /
-      /   = render "corrective_actions/form", form: form, business: @corrective_action, submit_text: "Continue"
+  = form_with model: @corrective_action, url: wizard_path, method: :put, local: true do |form|
+    .govuk-grid-column-two-thirds
+      .govuk-grid-column-full
+        = render "form_validation_display", errors: @corrective_action.errors, model_name: "corrective_action"
+      = render "investigations/corrective_actions/form", form: form,
+              corrective_action: @corrective_action,
+              investigation: @investigation,
+              file_blob: @file_blob,
+              allow_product_linking: false,
+              allow_business_linking: false
+    .govuk-grid-column-full
       hr.govuk-section-break.govuk-section-break--visible
-      .govuk-grid-row class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
-        .mspsds-input.govuk-grid-column-two-thirds class="govuk-!-margin-bottom-5"
+      div class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
+        .mspsds-input class="govuk-!-margin-bottom-5"
           fieldset.govuk-fieldset
             legend.govuk-fieldset__legend.govuk-fieldset__legend--l class="govuk-!-margin-bottom-1"
               | Are there other actions to report
@@ -28,7 +31,5 @@ h1.govuk-heading-xl
                 .govuk-radios__item
                   = radio_button "", :has_action, "No", class: "govuk-radios__input", value: "No"
                   = label :has_action, "No", class: "govuk-label govuk-radios__label"
-      .govuk-grid-row
-        .govuk-grid-column-two-thirds
-          button.govuk-button type="submit"
-            | Continue
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

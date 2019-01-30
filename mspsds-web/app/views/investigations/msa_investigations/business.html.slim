@@ -1,6 +1,7 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 - content_for :after_header do
   = link_to "Back to list", products_path, class: "govuk-back-link"
+/ TODO fix classes
 .new-product-page.products-search-form
   span.govuk-caption-xl Report an unsafe or non-compliant product
   h1.govuk-heading-xl
@@ -13,6 +14,6 @@
         .govuk-grid-row
           .govuk-grid-column-full
             = render "form_validation_display", errors: @business.errors, model_name: "business"
-
+            / TODO remove search: true
           = render "businesses/form", form: form, business: @business, countries: @countries,
                       search: true, submit_text: "Continue"

@@ -27,6 +27,8 @@ class Investigations::MsaInvestigationsController < ApplicationController
         return redirect_to next_wizard_path
       end
     when :corrective_action
+      set_corrective_action
+      set_attachment
       unless session[:corrective_action_pending]
         return redirect_to next_wizard_path
       end
@@ -44,7 +46,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
     if records_saved?
       redirect_to investigation_path(@investigation)
     else
-      render step
+      render_wizard
     end
   end
 
@@ -60,6 +62,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
       when :has_corrective_action
         store_corrective_action_pending
       when :corrective_action
+        store_corrective_action
         store_corrective_action_pending
         return redirect_to wizard_path step
       when steps.last
@@ -67,7 +70,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
       end
       redirect_to next_wizard_path
     else
-      render step
+      render_wizard
     end
   end
 
@@ -90,6 +93,7 @@ private
   def clear_session
     session[:investigation] = nil
     session[:product] = nil
+    session[:corrective_actions] = []
     set_session_businesses([])
   end
 
@@ -150,7 +154,11 @@ private
 
   def business_session_params
     # TODO use this to retrieve a business for editing eg for browser back button
-    # @investigation.businesses[0]&.attributes || {}
+    {}
+  end
+
+  def corrective_action_session_params
+    # TODO use this to retrieve a corrective action for editing eg for browser back button
     {}
   end
 
@@ -171,6 +179,16 @@ private
   def store_business
     business_entry = session_businesses.find { |entry| entry["type"] == params.require(:business)[:business_type] }
     business_entry["business"] = Business.new business_step_params
+  end
+
+  def store_corrective_action
+    set_corrective_action
+    set_attachment
+    session[:corrective_actions] << { corrective_action: @corrective_action, file_blob: @file_blob }
+    # Delete these objects in session having saved them. This allows us to loop round and use the same keys for the a
+    # different record created with the same step
+    session.delete :file
+    session.delete :corrective_action
   end
 
   def selected_businesses
