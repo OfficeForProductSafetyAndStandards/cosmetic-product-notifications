@@ -27,12 +27,12 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get edit" do
-    get edit_contact_url(@contact)
+    get edit_business_contact_url(@contact, @contact.business)
     assert_response :success
   end
 
   test "should update contact" do
-    patch contact_url(@contact), params: {
+    patch business_contact_url(@contact.business, @contact), params: {
       contact: {
         job_title: "Job title/Description",
         email: "email@email.com",
@@ -45,7 +45,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy contact" do
     assert_difference('Contact.count', -1) do
-      delete contact_url(@contact)
+      delete business_contact_url(@contact.business, @contact)
     end
 
     assert_redirected_to business_url(@contact.business, anchor: "contacts")
