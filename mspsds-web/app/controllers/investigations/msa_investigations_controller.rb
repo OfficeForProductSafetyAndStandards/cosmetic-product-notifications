@@ -16,7 +16,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
   def show
     case step
     when :business
-      next_selected_business = get_session_businesses.find{ |entry| entry["business"].nil? }
+      next_selected_business = session_businesses.find{ |entry| (p entry["business"]).nil? } || []
       if next_selected_business.any?
         @business_type = next_selected_business["type"]
         set_business
@@ -148,7 +148,7 @@ private
     )
   end
 
-  def get_session_businesses
+  def session_businesses
     session[:selected_businesses]
   end
 
@@ -157,14 +157,14 @@ private
   end
 
   def store_business
-    business_entry = get_session_businesses.find{|entry| entry["type"] == params.require(:business)[:business_type]}
+    business_entry = session_businesses.find{|entry| entry["type"] == params.require(:business)[:business_type]}
     business_entry["business"] = Business.new business_step_params
   end
 
   def selected_businesses
     return {} if which_businesses_params["none"] == "1"
 
-    businesses = which_businesses_params.select{ |_, selected| selected == "1"}.keys
+    businesses = which_businesses_params.select{ |relationship, selected| relationship != "other" && selected == "1"}.keys
     businesses << which_businesses_params[:other_business_type] if which_businesses_params[:other] == "1"
     businesses.map{|type| {type: type, business: nil}}
   end
@@ -202,6 +202,14 @@ private
 
     @investigation.products << @product
 
+    save_businesses
+  end
+
+  def save_businesses
+    session_businesses.each do |session_business|
+      business = Business.create(session_business["business"])
+      @investigation.add_business(business, session_business["type"])
+    end
   end
 
   def product_unsafe
