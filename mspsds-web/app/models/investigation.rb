@@ -127,7 +127,6 @@ class Investigation < ApplicationRecord
   end
 
   def can_be_assigned_by(user)
-    return true
     return true if assignee.blank?
     return true if assignee.is_a?(Team) && (user.teams.include? assignee)
     return true if assignee.is_a?(User) && ((user.teams && assignee.teams).any?)

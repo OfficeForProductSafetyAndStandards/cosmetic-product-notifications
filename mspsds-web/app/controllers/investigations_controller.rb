@@ -80,6 +80,7 @@ class InvestigationsController < ApplicationController
   def assign
     return if request.get?
 
+    authorize @investigation, :assign?
     ps = assignee_update_params
     potential_assignees = User.where(id: ps[:assignee_id]) + Team.where(id: ps[:assignee_id])
     if potential_assignees.empty?
