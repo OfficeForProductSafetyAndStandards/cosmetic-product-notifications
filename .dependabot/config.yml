@@ -33,6 +33,10 @@ update_configs:
     directory: "/mspsds-web"
     update_schedule: "live"
 
+  - package_manager: "javascript"
+    directory: "/maintenance"
+    update_schedule: "live"
+
   - package_manager: "ruby:bundler"
     directory: "/cosmetics-web"
     update_schedule: "live"
