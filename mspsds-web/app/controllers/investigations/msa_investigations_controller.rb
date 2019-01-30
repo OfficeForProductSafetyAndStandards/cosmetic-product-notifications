@@ -1,9 +1,12 @@
 class Investigations::MsaInvestigationsController < ApplicationController
-  # include FileConcern
   include Wicked::Wizard
   include CountriesHelper
   include ProductsHelper
   include BusinessesHelper
+  include CorrectiveActionsHelper
+  include FileConcern
+  set_attachment_names :file
+  set_file_params_key :corrective_action
 
   steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :corrective_action, :other_information, :reference_number
   before_action :set_product, only: %i[show create update]
