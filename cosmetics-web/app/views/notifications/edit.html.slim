@@ -46,6 +46,20 @@
                         = @notification.external_reference
                 tr.govuk-table__row
                     th.govuk-table__header
+                        | Imported
+                    td.govuk-table__cell
+                        - if @notification.import_country.nil?
+                            | No
+                        - else
+                            | Yes
+                - unless @notification.import_country.nil?
+                    tr.govuk-table__row
+                        th.govuk-table__header
+                            | Imported from
+                        td.govuk-table__cell
+                            = @notification.import_country
+                tr.govuk-table__row
+                    th.govuk-table__header
                         | Number of components
                     td.govuk-table__cell
                         = @notification.components.length

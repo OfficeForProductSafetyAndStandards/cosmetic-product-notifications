@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2019_01_31_143532) do
     t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "import_country"
     t.bigint "responsible_person_id"
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
   end

@@ -1,0 +1,22 @@
+- content_for :page_title, "Is the cosmetic imported into the UK"
+- content_for :after_header do
+    = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+- is_imported_errors = @notification.errors.messages[:import_country].any?
+.govuk-grid-row
+    .govuk-grid-column-two-thirds
+        h1.govuk-heading-xl
+            | Is the cosmetic imported into the UK?
+        - if is_imported_errors
+            span.govuk-error-message
+                | Please select one
+        = form_with url: wizard_path, method: :put do |form|
+            = form.hidden_field :is_imported, value: nil
+            .govuk-form-group
+                .govuk-radios
+                    .govuk-radios__item
+                        = form.radio_button :is_imported, "true", class: "govuk-radios__input"
+                        = form.label :is_imported_yes, "Yes", class: "govuk-label govuk-radios__label"
+                    .govuk-radios__item
+                        = form.radio_button :is_imported, "false", class: "govuk-radios__input"
+                        = form.label :is_imported_no, "No", class: "govuk-label govuk-radios__label"
+            = form.submit "Continue", class: "govuk-button"

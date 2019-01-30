@@ -68,5 +68,40 @@ RSpec.describe NotificationBuildController, type: :controller do
                   single_or_multi_component: "multiple" })
       expect(notification.components).to have(1).item       
     end
+
+    it "redirects to add_import_country step if is_imported set to true" do
+      notification = Notification.create
+      post(:update, params: { notification_id: notification.id, id: 'is_imported',
+                              is_imported: "true" })
+      expect(response).to redirect_to(notification_build_path(notification, :add_import_country))                                 
+    end
+
+    it "skips add_import_country step if is_imported set to false" do
+      notification = Notification.create
+      post(:update, params: { notification_id: notification.id, id: 'is_imported',
+                              is_imported: "false" })
+      expect(response).to redirect_to(notification_build_path(notification, :single_or_multi_component))
+    end
+
+    it "adds an error if user doesn't pick a radio option for is_imported" do
+      notification = Notification.create
+      post(:update, params: { notification_id: notification.id, id: 'is_imported',
+                              is_imported: nil })
+      expect(assigns(:notification).errors[:import_country]).to include('Must not be nil')   
+    end
+
+    it "adds an error if user submits import_country with a blank value" do
+      notification = Notification.create
+      post(:update, params: { notification_id: notification.id, id: 'add_import_country',
+                    notification: { import_country: '' } })
+      expect(assigns(:notification).errors[:import_country]).to include('Must not be blank')  
+    end
+
+    it "continues to next step if user submits import_country with a valid value" do
+      notification = Notification.create
+      post(:update, params: { notification_id: notification.id, id: 'add_import_country',
+                    notification: { import_country: 'France' } })
+                    expect(response).to redirect_to(notification_build_path(notification, :single_or_multi_component))
+    end
   end
 end
