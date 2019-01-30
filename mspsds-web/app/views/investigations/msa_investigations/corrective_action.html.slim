@@ -1,0 +1,34 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+- content_for :after_header do
+  = link_to "Back to list", products_path, class: "govuk-back-link"
+span.govuk-caption-xl Report an unsafe or non-compliant product
+h1.govuk-heading-xl
+  | Record corrective action
+
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    = form_with model: @corrective_action, url: wizard_path, method: :put, local: true do |form|
+      / TODO - FORM
+      / .govuk-grid-row
+      /   .govuk-grid-column-full
+      /     = render "form_validation_display", errors: @corrective_action.errors, model_name: "business"
+      /
+      /   = render "corrective_actions/form", form: form, business: @corrective_action, submit_text: "Continue"
+      hr.govuk-section-break.govuk-section-break--visible
+      .govuk-grid-row class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
+        .mspsds-input.govuk-grid-column-two-thirds class="govuk-!-margin-bottom-5"
+          fieldset.govuk-fieldset
+            legend.govuk-fieldset__legend.govuk-fieldset__legend--l class="govuk-!-margin-bottom-1"
+              | Are there other actions to report
+            .govuk-form-group
+              .govuk-radios
+                .govuk-radios__item
+                  = radio_button "", :has_action, "Yes", class: "govuk-radios__input", value: "Yes"
+                  = label :has_action, "Yes", class: "govuk-label govuk-radios__label"
+                .govuk-radios__item
+                  = radio_button "", :has_action, "No", class: "govuk-radios__input", value: "No"
+                  = label :has_action, "No", class: "govuk-label govuk-radios__label"
+      .govuk-grid-row
+        .govuk-grid-column-two-thirds
+          button.govuk-button type="submit"
+            | Continue

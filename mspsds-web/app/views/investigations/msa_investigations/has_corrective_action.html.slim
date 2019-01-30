@@ -7,7 +7,7 @@
     h1.govuk-heading-xl
       span.govuk-caption-xl Report an unsafe or non-compliant product
       | Has any corrective action been agreed or taken?
-= form_with model: @investigation, scope: :has_corrective_action, url: wizard_path, method: :put, local: true do |form|
+= form_with model: @investigation, scope: "", url: wizard_path, method: :put, local: true do |form|
   = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
   .govuk-grid-row class="govuk-!-margin-bottom-3"
     .govuk-grid-column-two-thirds

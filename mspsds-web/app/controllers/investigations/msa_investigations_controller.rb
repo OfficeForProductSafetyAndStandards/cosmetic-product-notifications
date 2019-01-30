@@ -5,7 +5,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
   include ProductsHelper
   include BusinessesHelper
 
-  steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :other_information, :reference_number
+  steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :corrective_action, :other_information, :reference_number
   before_action :set_product, only: %i[show create update]
   before_action :set_investigation, only: %i[show create update]
   before_action :set_countries, only: %i[show create update]
@@ -21,6 +21,10 @@ class Investigations::MsaInvestigationsController < ApplicationController
         @business_type = next_selected_business["type"]
         set_business
       else
+        return redirect_to next_wizard_path
+      end
+    when :corrective_action
+      unless session[:corrective_action_pending]
         return redirect_to next_wizard_path
       end
     end
@@ -49,7 +53,12 @@ class Investigations::MsaInvestigationsController < ApplicationController
         set_session_businesses selected_businesses
       when :business
         store_business
-        return redirect_to wizard_path :business
+        return redirect_to wizard_path step
+      when :has_corrective_action
+        store_corrective_action_pending
+      when :corrective_action
+        store_corrective_action_pending
+        return redirect_to wizard_path step
       when steps.last
         return create
       end
@@ -169,8 +178,12 @@ private
     businesses.map { |type| { type: type, business: nil } }
   end
 
-  def has_corrective_action_params
-    params.permit(has_corrective_action: [:has_action])
+  def pending_corrective_action_params
+    params.permit(:has_action)
+  end
+
+  def store_corrective_action_pending
+    session[:corrective_action_pending] = pending_corrective_action_params[:has_action] == "Yes"
   end
 
   def records_valid?
@@ -229,7 +242,7 @@ private
   end
 
   def corrective_action_not_known
-    has_corrective_action_params.empty?
+    pending_corrective_action_params.empty?
   end
 
   def changed_investigation
