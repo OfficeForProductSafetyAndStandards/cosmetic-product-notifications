@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  include CountriesHelper
+  include Shared::Web::CountriesHelper
   include ProductsHelper
   include UrlHelper
   helper_method :sort_column, :sort_direction

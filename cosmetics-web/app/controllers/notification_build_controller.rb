@@ -1,9 +1,11 @@
 class NotificationBuildController < ApplicationController
   include Wicked::Wizard
+  include Shared::Web::CountriesHelper
 
   steps :add_product_name, :add_external_reference, :is_imported, :add_import_country, :single_or_multi_component
 
   before_action :set_notification
+  before_action :set_countries, only: %i[show update]
 
   def show
     render_wizard
@@ -64,5 +66,9 @@ private
 
   def set_notification
     @notification = Notification.find(params[:notification_id])
+  end
+
+  def set_countries
+    @countries = all_countries
   end
 end
