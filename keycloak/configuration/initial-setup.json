@@ -2691,7 +2691,7 @@
       }
     } ]
   }, {
-    "id" : "144b8112-a771-4c4a-a02a-450659d84ea8",
+    "id" : "6f622199-71b2-4988-9f52-7d37836ab04d",
     "name" : "roles",
     "description" : "OpenID Connect scope for add user roles to the access token",
     "protocol" : "openid-connect",
