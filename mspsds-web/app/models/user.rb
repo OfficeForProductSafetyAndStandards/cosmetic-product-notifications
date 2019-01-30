@@ -3,18 +3,30 @@ class User < Shared::Web::User
   has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
   has_many :user_sources, dependent: :delete
 
+  has_many :team_users, dependent: :nullify
+  has_many :teams, through: :team_users
+
+  def teams
+    # has_many through seems not to work with ActiveHash
+    # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
+    team_users.map(&:team)
+  end
+
   include UserService
 
   def self.find_or_create(attributes)
     groups = attributes.delete(:groups)
     organisation = Organisation.find_by_path(groups) # rubocop:disable Rails/DynamicFindBy
-    User.find_by(id: attributes[:id]) || User.create(attributes.merge(organisation_id: organisation&.id))
+    user = User.find_by(id: attributes[:id]) || User.create(attributes.merge(organisation_id: organisation&.id))
+    user
   end
 
   def self.all(options = {})
     begin
       all_users = Shared::Web::KeycloakClient.instance.all_users
       self.data = all_users.map { |user| populate_organisation(user) }
+      Team.all
+      TeamUser.all
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
       self.data = nil
@@ -24,19 +36,21 @@ class User < Shared::Web::User
       where(options[:conditions])
     else
       @records ||= []
-
     end
   end
 
   private_class_method def self.populate_organisation(attributes)
     groups = attributes.delete(:groups)
-    organisation = Organisation.find_by(id: groups)
+    teams = Team.where(id: groups)
+    organisation = Organisation.find_by(id: groups) || Organisation.find_by(id: teams.first&.organisation_id)
     attributes.merge(organisation_id: organisation&.id)
   end
 
   def display_name
     display_name = full_name
-    display_name += " (#{organisation.name})" if organisation.present?
+    can_display_teams = organisation.present? && current_user.organisation&.id == organisation.id && teams.any?
+    membership_display = can_display_teams ? teams.map(&:name).join(', ') : organisation&.name
+    display_name += " (#{membership_display})" if membership_display.present?
     display_name
   end
 
@@ -71,3 +85,4 @@ class User < Shared::Web::User
     select_options
   end
 end
+User.all if Rails.env.development?
