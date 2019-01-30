@@ -15,9 +15,9 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <keycloak.version>4.3.0.Final</keycloak.version>
+        <keycloak.version>4.8.3.Final</keycloak.version>
         <resteasy.version>3.6.2.Final</resteasy.version>
-        <jboss-jaxrs-api_2.0_spec>1.0.1.Final</jboss-jaxrs-api_2.0_spec>
+        <jaxrs-api.version>1.0.1.Final</jaxrs-api.version>
     </properties>
 
     <dependencies>
@@ -47,8 +47,8 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.spec.javax.ws.rs</groupId>
-            <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
-            <version>${jboss-jaxrs-api_2.0_spec}</version>
+            <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
+            <version>${jaxrs-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
