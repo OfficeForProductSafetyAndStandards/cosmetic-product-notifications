@@ -10,13 +10,19 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
   end
 
   def metadata
-    get_xml_file do |xml_file|
-      puts xml_file.get_input_stream.read
-    end
-    {zip: 2}
+    {notification_name: set_notification_from_file}
   end
 
   private
+
+  def set_notification_from_file
+    get_xml_file do |xml_file|
+      xml_doc = Nokogiri::XML(xml_file.get_input_stream.read.gsub('sanco-xmlgate:', ''))
+      notification_current_name = xml_doc.
+          xpath('//currentVersion/generalInfo/productNameList/productName/name').first.text
+      notification_current_name
+    end
+  end
 
   def get_xml_file
     download_blob_to_tempfile do |file|
