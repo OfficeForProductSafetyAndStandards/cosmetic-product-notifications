@@ -1,6 +1,6 @@
 class User < Shared::Web::User
   has_many :activities, dependent: :nullify
-  has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
+  has_many :investigations, dependent: :nullify, as: :assignable
   has_many :user_sources, dependent: :delete
 
   has_many :team_users, dependent: :nullify

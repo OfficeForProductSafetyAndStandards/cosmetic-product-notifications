@@ -10,6 +10,8 @@ class Team < ActiveHash::Base
   has_many :team_users, dependent: :nullify
   has_many :users, through: :team_users
 
+  has_many :investigations, as: :assignable
+
   def users
     # has_many through seems not to work with ActiveHash
     # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
@@ -29,6 +31,18 @@ class Team < ActiveHash::Base
     else
       @records ||= []
     end
+  end
+
+  def display_name
+    name
+  end
+
+  def full_name
+    name
+  end
+
+  def assignee_short_name
+    name
   end
 end
 Team.all if Rails.env.development?

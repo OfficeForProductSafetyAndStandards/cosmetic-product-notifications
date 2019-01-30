@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_24_134204) do
+ActiveRecord::Schema.define(version: 2019_01_29_155220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,8 @@ ActiveRecord::Schema.define(version: 2019_01_24_134204) do
   end
 
   create_table "investigations", id: :serial, force: :cascade do |t|
+    t.uuid "assignable_id"
+    t.string "assignable_type"
     t.uuid "assignee_id"
     t.datetime "created_at", null: false
     t.text "description"
@@ -150,6 +152,7 @@ ActiveRecord::Schema.define(version: 2019_01_24_134204) do
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
     t.string "user_title"
+    t.index ["assignable_type", "assignable_id"], name: "index_investigations_on_assignable_type_and_assignable_id"
     t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
 

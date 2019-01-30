@@ -30,7 +30,7 @@ class Investigation < ApplicationRecord
 
   default_scope { order(updated_at: :desc) }
 
-  belongs_to_active_hash :assignee, class_name: "User", optional: true
+  belongs_to :assignable, polymorphic: :true, optional: true
 
   has_many :investigation_products, dependent: :destroy
   has_many :products, through: :investigation_products,
@@ -87,6 +87,18 @@ class Investigation < ApplicationRecord
         }
       }
     )
+  end
+
+  def assignee
+    return User.find(assignable_id) if assignable_type == "User"
+    return Team.find(assignable_id) if assignable_type == "Team"
+  end
+
+  def assignee=(entity)
+    p entity
+    self.assignable_id = entity.id
+    self.assignable_type = "User" if entity.is_a?(User)
+    self.assignable_type = "Team" if entity.is_a?(Team)
   end
 
   def status
@@ -162,7 +174,7 @@ private
   end
 
   def create_audit_activity_for_assignee
-    if saved_changes.key? :assignee_id
+    if (saved_changes.key? :assignable_id) || (saved_changes.key? :assignable_type)
       AuditActivity::Investigation::UpdateAssignee.from(self)
     end
   end
