@@ -3,10 +3,15 @@ Rails.application.routes.draw do
 
   resources :notification_files
 
+  resources :responsible_persons do
+    resources :notifications, controller: "responsible_persons/notifications"
+    resources :team_members, controller: "responsible_persons/team_members"
+  end
+
+
   get '/send' => 'helloworld#send_email'
   root 'helloworld#index'
 
-  get '/dashboard' => "dashboard_page#index"
   get '/manual_entry' => 'manual_entry#create'
 
   resources :notifications, only: %i[edit] do
