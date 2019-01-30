@@ -14,4 +14,13 @@ module FormOptionsHelper
   def product_categories
     Rails.application.config.product_constants["product_category"]
   end
+
+  def compute_select_options(entities: [])
+    select_options = { '': nil }
+    entities.each do |entity|
+      label = entity.display_name
+      select_options[label] = entity.id
+    end
+    select_options
+  end
 end

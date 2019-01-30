@@ -1,41 +1,22 @@
 - content_for :page_title, "Update assignee"
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
-= render "minimal_investigation_heading", investigation: @investigation, title: "Assign case"
+= render "minimal_investigation_heading", investigation: @investigation, title: "Assign #{@investigation.case_type}"
+- if @investigation.assignee.present?
+  p
+    | Currently assigned to:
+    strong = " #{@investigation.assignee.display_name}"
+- else
+  p Nobody is assigned yet
 
-= form_with(model: @investigation, method: :put, url: assign_investigation_url(@investigation)) do |form|
-  h2.govuk-heading-l
-    | Current assignee
-  - if @investigation.assignee.present?
-    p = @investigation.assignee.display_name
-  - else
-    p Nobody is assigned yet
-  hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible"]
+- if @investigation.can_be_assigned_by(current_user)
+  = render "assignee_form", investigation: @investigation
+- else
+  p
+    = "You do not have permission to assign this #{@investigation.case_type}."
+    br
+    | Contact
+    strong = " #{@investigation.assignee.display_name} "
+    | to change assignment.
+  = link_to "Return to case", @investigation, class: "govuk-button"
 
-  h2.govuk-heading-l
-    | New assignee
-
-  = render "form_validation_display", errors: @investigation.errors
-
-  - if @investigation.past_assignees_except_current.present?
-    .govuk-form-group class=("govuk-form-group--error" unless @investigation.errors[:assignee].empty?)
-      .govuk-radios.govuk-radios--conditional data-module="radios"
-        - @investigation.past_assignees_except_current.each do |past_assignee|
-          .govuk-radios__item
-            = form.radio_button :assignee_id_radio, past_assignee&.id, class: "govuk-radios__input"
-            = form.label :assignee_id_radio,
-                    past_assignee.display_name,
-                    class: "govuk-label govuk-radios__label"
-        .govuk-radios__divider or
-        .govuk-radios__item
-          = form.radio_button :assignee_id_radio, "Other", class: "govuk-radios__input",
-                  "data-aria-controls": "conditional-other-assignee-other"
-          = form.label :assignee_id_radio, "Other", class: "govuk-label govuk-radios__label"
-        #conditional-other-assignee-other.govuk-radios__conditional.govuk-radios__conditional--hidden
-          = render "investigations/assignee_selection", investigation: @investigation, form: form
-
-  - if @investigation.past_assignees_except_current.blank?
-    = render "investigations/assignee_selection", investigation: @investigation, form: form
-
-  .govuk-form-group
-    = form.submit "Assign", class: "govuk-button"

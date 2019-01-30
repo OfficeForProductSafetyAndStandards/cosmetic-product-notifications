@@ -1,5 +1,6 @@
 class Team < ActiveHash::Base
   include ActiveHash::Associations
+  include UserService
 
   field :id
   field :name
@@ -34,15 +35,23 @@ class Team < ActiveHash::Base
   end
 
   def display_name
-    name
+    return name if current_user.organisation == organisation
+
+    (name == "OPSS Enforcement") ? "The Office for Product Safety and Standards" : name
   end
 
   def full_name
-    name
+    display_name
   end
 
   def assignee_short_name
-    name
+    display_name
+  end
+
+  def self.get_visible_teams(user)
+    user.is_opss? ?
+      Team.where(name: ["OPSS Enforcement", "OPSS Processing", "OPSS Incident management"]) :
+      Team.where(name: ["OPSS Enforcement"])
   end
 end
 Team.all if Rails.env.development?

@@ -1,10 +1,6 @@
 .govuk-form-group
   span#other-assignee-hint.govuk-hint [class="govuk-!-width-two-thirds"]
     | Name / Organisation
-  = form.label :assignee_id, class: "govuk-label"
+  = form.label key, "Assignee", class: "govuk-label"
   / When there are many users, we should consider loading them with ajax using the autocomplete
-  = form.select :assignee_id,
-          options_for_select(User.get_assignees_select_options(except: investigation.past_assignees),
-                  investigation.assignee ? investigation.assignee.id : ''),
-          {},
-          class: "govuk-select", id: "assignee-picker"
+  = form.select key, options_for_select(options, ''), {}, class: "govuk-select", id: "assignee-picker-#{key}"

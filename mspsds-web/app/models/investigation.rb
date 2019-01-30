@@ -95,7 +95,6 @@ class Investigation < ApplicationRecord
   end
 
   def assignee=(entity)
-    p entity
     self.assignable_id = entity.id
     self.assignable_type = "User" if entity.is_a?(User)
     self.assignable_type = "Team" if entity.is_a?(Team)
@@ -127,10 +126,41 @@ class Investigation < ApplicationRecord
     "#{case_type.titleize}: #{pretty_id}"
   end
 
+  def can_be_assigned_by(user)
+    return true
+    return true if assignee.blank?
+    return true if assignee.is_a?(Team) && (user.teams.include? assignee)
+    return true if assignee.is_a?(User) && ((user.teams && assignee.teams).any?)
+
+    false
+  end
+
+  def important_assignable_people
+    people = []
+    people << assignee if assignee.is_a? User
+    people << current_user
+    people.uniq
+  end
+
   def past_assignees
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
     user_id_list = activities.map(&:assignee_id)
     User.where(id: user_id_list.uniq)
+  end
+
+  def important_assignable_teams
+    teams = current_user.teams
+    Team.get_visible_teams(current_user).each do |team|
+      teams << team
+    end
+    teams << assignee if assignee.is_a? Team
+    teams.uniq
+  end
+
+  def past_teams
+    activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
+    user_id_list = activities.map(&:assignee_id)
+    Team.where(id: user_id_list.uniq)
   end
 
   def past_assignees_except_current

@@ -81,13 +81,14 @@ class InvestigationsController < ApplicationController
     return if request.get?
 
     ps = assignee_update_params
-    if User.where(id: ps[:assignee_id]).empty?
+    potential_assignees = User.where(id: ps[:assignee_id]) + Team.where(id: ps[:assignee_id])
+    if potential_assignees.empty?
       @investigation.errors.add(:assignee, :invalid, message: "should exist")
       respond_to_invalid_data(:assign)
       return
     end
 
-    @investigation.assignee = User.find_by(id: ps[:assignee_id])
+    @investigation.assignee = potential_assignees.first
     respond_to_update(:assign)
   end
 
@@ -137,9 +138,19 @@ private
   end
 
   def assignee_update_params
-    if params[:investigation][:assignee_id].blank?
+    case params[:investigation][:assignee_id_radio]
+    when "Someone in your team"
+      params[:investigation][:assignee_id] = params[:investigation][:assignee_1_id]
+    when "Previously assigned"
+      params[:investigation][:assignee_id] = params[:investigation][:assignee_2_id]
+    when "Other team"
+      params[:investigation][:assignee_id] = params[:investigation][:assignee_3_id]
+    when "Someone else"
+      params[:investigation][:assignee_id] = params[:investigation][:assignee_4_id]
+    else
       params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
     end
+
     params.require(:investigation).permit(:assignee_id)
   end
 

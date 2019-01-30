@@ -1,0 +1,59 @@
+= form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
+
+  = render "form_validation_display", errors: investigation.errors
+  .govuk-form-group class=("govuk-form-group--error" unless investigation.errors[:assignee].empty?)
+    .govuk-radios.govuk-radios--conditional data-module="radios"
+
+      - investigation.important_assignable_people.each do |user|
+        .govuk-radios__item
+          = form.radio_button :assignee_id_radio, user.id, class: "govuk-radios__input",
+                  checked: investigation.assignee == user
+          = form.label :assignee_id_radio,
+                  user.display_name,
+                  class: "govuk-label govuk-radios__label"
+      .govuk-radios__item
+        = form.radio_button :assignee_id_radio, "Someone in your team", class: "govuk-radios__input",
+                "data-aria-controls": "conditional-assignee-team-mate"
+        = form.label :assignee_id_radio, "Someone in your team", class: "govuk-label govuk-radios__label"
+      #conditional-assignee-team-mate.govuk-radios__conditional.govuk-radios__conditional--hidden
+        = render "investigations/assignee_selection", investigation: investigation, form: form,
+                key: :assignee_1_id,
+                options: compute_select_options(entities: User.get_team_members(user: current_user))
+      .govuk-radios__item
+        = form.radio_button :assignee_id_radio, "Previously assigned", class: "govuk-radios__input",
+                "data-aria-controls": "conditional-assignee-past-person"
+        = form.label :assignee_id_radio, "Previously assigned", class: "govuk-label govuk-radios__label"
+      #conditional-assignee-past-person.govuk-radios__conditional.govuk-radios__conditional--hidden
+        = render "investigations/assignee_selection", investigation: investigation, form: form,
+                key: :assignee_2_id,
+                options: compute_select_options(entities: investigation.past_assignees + investigation.past_teams)
+
+      .govuk-radios__divider Teams
+      - investigation.important_assignable_teams.each do |team|
+        .govuk-radios__item
+          = form.radio_button :assignee_id_radio, team.id, class: "govuk-radios__input",
+                  checked: investigation.assignee == team
+          = form.label :assignee_id_radio,
+                  team.display_name,
+                  class: "govuk-label govuk-radios__label"
+      .govuk-radios__item
+        = form.radio_button :assignee_id_radio, "Other team", class: "govuk-radios__input",
+                "data-aria-controls": "conditional-assignee-other-team"
+        = form.label :assignee_id_radio, "Other team", class: "govuk-label govuk-radios__label"
+      #conditional-assignee-other-team.govuk-radios__conditional.govuk-radios__conditional--hidden
+        = render "investigations/assignee_selection", investigation: investigation, form: form,
+                key: :assignee_3_id,
+                options: compute_select_options(entities: Team.all)
+
+      .govuk-radios__divider or
+      .govuk-radios__item
+        = form.radio_button :assignee_id_radio, "Someone else", class: "govuk-radios__input",
+                "data-aria-controls": "conditional-other-assignee-other"
+        = form.label :assignee_id_radio, "Someone else", class: "govuk-label govuk-radios__label"
+      #conditional-other-assignee-other.govuk-radios__conditional.govuk-radios__conditional--hidden
+        = render "investigations/assignee_selection", investigation: investigation, form: form,
+                key: :assignee_4_id,
+                options: compute_select_options(entities: User.all)
+
+  .govuk-form-group
+    = form.submit "Assign", class: "govuk-button"

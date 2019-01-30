@@ -74,15 +74,19 @@ class User < Shared::Web::User
     has_role? :opss_user
   end
 
-  def self.get_assignees_select_options(except: [], use_short_name: false)
+  def self.get_assignees(except: [])
     users_to_exclude = Array(except)
+    self.all - users_to_exclude
+  end
 
-    select_options = { '': nil }
-    (self.all - users_to_exclude).each do |user|
-      label = use_short_name ? user.full_name : user.display_name
-      select_options[label] = user.id
+  def self.get_team_members(user:)
+    users = []
+    user.teams.each do |team|
+      team.users.each do |team_member|
+        users << team_member
+      end
     end
-    select_options
+    users.uniq
   end
 end
 User.all if Rails.env.development?

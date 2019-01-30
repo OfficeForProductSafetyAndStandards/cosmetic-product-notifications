@@ -38,30 +38,23 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "assignee select option keys include all user display names" do
-    options = User.get_assignees_select_options
+    options = User.get_assignees
 
     assert_includes options.keys, @user.display_name
     assert_includes options.keys, @admin.display_name
   end
 
   test "assignee select option values include all user IDs" do
-    options = User.get_assignees_select_options
+    options = User.get_assignees
 
     assert_includes options.values, @user.id
     assert_includes options.values, @admin.id
   end
 
   test "assignee select options exclude specified user" do
-    options = User.get_assignees_select_options(except: @admin)
+    options = User.get_assignees(except: @admin)
 
     assert_includes options.values, @user.id
     assert_not_includes options.values, @admin.id
-  end
-
-  test "assignee select options use full names when short names are enabled" do
-    options = User.get_assignees_select_options(use_short_name: true)
-
-    assert_includes options.keys, @user.full_name
-    assert_includes options.keys, @admin.full_name
   end
 end
