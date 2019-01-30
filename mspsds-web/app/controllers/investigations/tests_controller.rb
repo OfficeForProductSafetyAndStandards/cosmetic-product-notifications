@@ -100,7 +100,11 @@ private
   end
 
   def save_attachment
-    @file_blob.save if @file_blob
+    if params[:test][:related_file] == "Yes"
+      @file_blob.save if @file_blob
+    elsif @file_blob
+      @file_blob.purge
+    end
   end
 
   def test_params
