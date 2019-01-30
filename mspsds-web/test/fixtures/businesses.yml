@@ -8,6 +8,7 @@ one:
 two:
   legal_name: company_two_legal_name
   trading_name: company_two_trading_name
+  company_number: 999
 
 three:
   legal_name: company_three_legal_name

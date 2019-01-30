@@ -157,7 +157,7 @@ class Investigation < ApplicationRecord
     end
   end
 
-  def add_business (business, relationship)
+  def add_business(business, relationship)
     # Could not find a way to add a business to an investigation which allowed us to set the relationship value and
     # while still triggering the callback to add the audit activity. One possibility is to move the callback to the
     # InvestigationBusiness model.

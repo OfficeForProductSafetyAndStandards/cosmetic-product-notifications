@@ -16,7 +16,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
   def show
     case step
     when :business
-      next_selected_business = session_businesses.find{ |entry| (p entry["business"]).nil? } || []
+      next_selected_business = session_businesses.find { |entry| entry["business"].nil? } || []
       if next_selected_business.any?
         @business_type = next_selected_business["type"]
         set_business
@@ -105,7 +105,7 @@ private
     case step
     when :why_reporting
       params.require(:investigation).permit(
-          :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
+        :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
       )
     when :reference_number
       params.require(:investigation).permit(:reporter_reference)
@@ -157,16 +157,16 @@ private
   end
 
   def store_business
-    business_entry = session_businesses.find{|entry| entry["type"] == params.require(:business)[:business_type]}
+    business_entry = session_businesses.find { |entry| entry["type"] == params.require(:business)[:business_type] }
     business_entry["business"] = Business.new business_step_params
   end
 
   def selected_businesses
     return {} if which_businesses_params["none"] == "1"
 
-    businesses = which_businesses_params.select{ |relationship, selected| relationship != "other" && selected == "1"}.keys
+    businesses = which_businesses_params.select { |relationship, selected| relationship != "other" && selected == "1" }.keys
     businesses << which_businesses_params[:other_business_type] if which_businesses_params[:other] == "1"
-    businesses.map{|type| {type: type, business: nil}}
+    businesses.map { |type| { type: type, business: nil } }
   end
 
   def has_corrective_action_params
@@ -221,7 +221,7 @@ private
   end
 
   def no_business_selected
-    !which_businesses_params.except(:other_business_type).values.include?("1")
+    !which_businesses_params.except(:other_business_type).value?("1")
   end
 
   def no_other_business_type

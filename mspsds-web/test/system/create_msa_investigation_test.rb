@@ -6,13 +6,15 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
 
     @product = products(:one)
     @investigation = investigations(:one)
+    @business_one = businesses :one
+    @business_two = businesses :two
   end
 
   teardown do
     logout
   end
 
-  test "can complete the flow without no busineses, corrective actions, or other files " do
+  test "can complete the flow without busineses, corrective actions, or other files " do
     visit new_msa_investigation_path
 
     assert_selector "h1", text: "What product are you reporting?"
@@ -44,6 +46,41 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     assert_text @product.country_of_origin
   end
 
+  test "can complete the flow with multiple businesses" do
+    visit new_msa_investigation_path
+
+    assert_selector "h1", text: "What product are you reporting?"
+    fill_in_product_page
+
+    assert_text "Why are you reporting this product?"
+    fill_in_why_reporting
+
+    assert_selector "h1", text: "Supply chain information"
+    choose_two_businesses
+
+    assert_selector "h1", text: "Retailer details"
+    fill_in_business_form @business_one
+
+    assert_selector "h1", text: "Advertiser details"
+    fill_in_business_form @business_two
+
+    assert_selector "h1", text: "Has any corrective action been agreed or taken?"
+    choose_no_corrective_action
+
+    assert_selector "h1", text: "Other information and files"
+    choose_no_other_info
+
+    assert_selector "h1", text: "Find this in your system"
+    fill_in_reporter_reference
+
+    click_link "tab_businesses"
+
+    assert_text "Advertiser"
+    assert_text "Retailer"
+    assert_text @business_one.trading_name
+    assert_text @business_two.trading_name
+  end
+
   def fill_in_product_page
     fill_autocomplete "product-category-picker", with: @product.category
     fill_in "Product type", with: @product.product_type
@@ -71,6 +108,23 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
 
     click_button "Continue"
   end
+
+  def choose_two_businesses
+    page.check "businesses_retailer", visible: false
+    page.check "businesses_other", visible: false
+    fill_in "new-business-type-other", with: "advertiser"
+
+    click_button "Continue"
+  end
+
+  def fill_in_business_form business
+    fill_in "business_trading_name", with: business.trading_name
+    fill_in "business_legal_name", with: business.legal_name
+    fill_in "business_company_number", with: business.company_number + "unique company number"
+
+    click_button "Continue"
+  end
+
 
   def choose_no_corrective_action
     choose "has_corrective_action_has_action_no", visible: false
