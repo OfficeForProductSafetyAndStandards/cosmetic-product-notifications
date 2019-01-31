@@ -11,10 +11,10 @@ def remove_files_without_attachments_job
 end
 
 Sidekiq.configure_server do |config|
-  config.redis = Rails.application.config_for(:redis)
+  config.redis = Rails.application.config_for(:redis_queue)
   remove_files_without_attachments_job
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = Rails.application.config_for(:redis)
+  config.redis = Rails.application.config_for(:redis_queue)
 end
