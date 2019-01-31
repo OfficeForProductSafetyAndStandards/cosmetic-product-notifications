@@ -186,8 +186,8 @@ private
     set_corrective_action
     set_attachment
     update_attachment
-    @file_blob.save
-    session[:corrective_actions] << { corrective_action: @corrective_action, file_blob_id: @file_blob.id }
+    @file_blob.save if @file_blob
+    session[:corrective_actions] << { corrective_action: @corrective_action, file_blob_id: @file_blob&.id }
     # Delete these objects in session having saved them. This allows us to loop round and use the same keys for the a
     # different record created with the same step
     session.delete :file
@@ -248,9 +248,10 @@ private
     session[:corrective_actions].each do |session_corrective_action|
       action_record = CorrectiveAction.new(session_corrective_action["corrective_action"])
       action_record.product = @product
-      file_blob = ActiveStorage::Blob.find_by(id: session_corrective_action["file_blob_id"])
-      attach_blobs_to_list(file_blob, action_record.documents)
-      attach_blobs_to_list(file_blob, @investigation.documents)
+      if file_blob = ActiveStorage::Blob.find_by(id: session_corrective_action["file_blob_id"])
+        attach_blobs_to_list(file_blob, action_record.documents)
+        attach_blobs_to_list(file_blob, @investigation.documents)
+      end
       @investigation.corrective_actions << action_record
     end
   end
