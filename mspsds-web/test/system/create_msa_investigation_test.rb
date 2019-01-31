@@ -1,6 +1,10 @@
 require "application_system_test_case"
+require_relative "../test_helpers/corrective_action_test_helper"
+
 
 class CreateMsaInvestigationTest < ApplicationSystemTestCase
+  include CorrectiveActionTestHelper
+
   setup do
     sign_in_as_non_opss_user
 
@@ -8,6 +12,10 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     @investigation = investigations(:one)
     @business_one = businesses :one
     @business_two = businesses :two
+    @corrective_action_one = corrective_actions :one
+    @corrective_action_two = corrective_actions :two
+
+    visit new_msa_investigation_path
   end
 
   teardown do
@@ -15,8 +23,6 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
   end
 
   test "can complete the flow without busineses, corrective actions, or other files " do
-    visit new_msa_investigation_path
-
     assert_selector "h1", text: "What product are you reporting?"
     fill_in_product_page
 
@@ -47,15 +53,8 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
   end
 
   test "can complete the flow with multiple businesses" do
-    visit new_msa_investigation_path
-
-    assert_selector "h1", text: "What product are you reporting?"
     fill_in_product_page
-
-    assert_text "Why are you reporting this product?"
     fill_in_why_reporting
-
-    assert_selector "h1", text: "Supply chain information"
     choose_two_businesses
 
     assert_selector "h1", text: "Retailer details"
@@ -79,6 +78,47 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     assert_text "Retailer"
     assert_text @business_one.trading_name
     assert_text @business_two.trading_name
+  end
+
+  test "can complete the flow with two corrective actions" do
+    attachment_filename_one = "new_risk_assessment.txt"
+    attachment_description_one = "Test attachment description"
+    attachment_filename_two = "another_risk_assessment.txt"
+    attachment_description_two = "Another test attachment description"
+
+    fill_in_product_page
+    fill_in_why_reporting
+    choose_no_businesses
+
+    choose_corrective_action
+
+    assert_selection "h1", text: "Record corrective action"
+    fill_in_corrective_action_details @corrective_action_one
+    add_corrective_action_attachment(filename: attachment_filename_one, description: attachment_description_one)
+
+    choose_corrective_action
+
+    assert_selection "h1", text: "Record corrective action"
+    fill_in_corrective_action_details @corrective_action_two
+    add_corrective_action_attachment(filename: attachment_filename_two, description: attachment_description_two)
+
+    choose_no_corrective_action
+
+    assert_selector "h1", text: "Other information and files"
+    choose_no_other_info
+
+    assert_selector "h1", text: "Find this in your system"
+    fill_in_reporter_reference
+
+    # TODO add assertions once correcive action audit activity bug has been fixed so activities display correctly in investigation
+
+    assert_text @product.name
+    assert_text @product.product_code
+    assert_text @product.product_type
+    assert_text @product.category
+    assert_text @product.webpage
+    assert_text @product.description
+    assert_text @product.country_of_origin
   end
 
   def fill_in_product_page
@@ -127,7 +167,13 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
 
 
   def choose_no_corrective_action
-    choose "has_corrective_action_has_action_no", visible: false
+    choose "has_action_no", visible: false
+
+    click_button "Continue"
+  end
+
+  def choose_corrective_action
+    choose "has_action_yes", visible: false
 
     click_button "Continue"
   end
