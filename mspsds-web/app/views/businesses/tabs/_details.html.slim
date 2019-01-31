@@ -5,9 +5,14 @@ table.govuk-table
   br
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
-        | Name
+        | Trading name
       td.govuk-table__cell
-        = @business.company_name
+        = @business.trading_name
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Trading name
+      td.govuk-table__cell
+        = @business.trading_name
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
         | Company number
@@ -15,26 +20,11 @@ table.govuk-table
         = @business.company_number
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
-        | Company type
-      td.govuk-table__cell
-        = @business.company_type
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Company status
-      td.govuk-table__cell
-        = @business.company_status
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
         | Registered office address
       td.govuk-table__cell
         = @business.primary_location&.summary
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
-        | Nature of business (SIC)
+        | Contact
       td.govuk-table__cell
-        = @business.nature_of_business
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Additional information
-      td.govuk-table__cell
-        = @business.additional_information
+        = @business.primary_contact&.summary

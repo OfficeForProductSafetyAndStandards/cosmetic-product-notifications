@@ -34,16 +34,16 @@ h1.govuk-heading-xl
           - else
             span.govuk-hint
               ' Only products already added to the case are listed.
-              = link_to "Add a product", new_investigation_product_path(@investigation)
-            = form.collection_select :product_id, @investigation.products, :id, :name, { include_blank: true },
+            = form.collection_select :product_id, @investigation.products, :id, :name,
+                    { include_blank: true,
+                    selected: @investigation.products.size == 1 && @investigation.products.first.id },
                     class: "govuk-select", id: "product-picker"
-
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Under which legislation?
         .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:legislation].any?)
           span.govuk-hint
-            | Select the relevant legislation from the list.
+            | Select the relevant legislation from the list, or enter a different one.
           = form.select :legislation, relevant_legislation, { include_blank: true },
                   class: "govuk-select", id: "legislation-picker"
       fieldset.govuk-fieldset
@@ -53,15 +53,13 @@ h1.govuk-heading-xl
           - if @investigation.businesses.empty?
             span.govuk-hint
               | There are no businesses associated with this case.
-            span.govuk-hint
-              = link_to "Add a business", new_investigation_business_path(@investigation)
-              |  to record a corrective action.
           - else
             span.govuk-hint
               ' Only businesses already added to the case are listed.
-              = link_to "Add a business", new_investigation_business_path(@investigation)
-            = form.collection_select :business_id, @investigation.businesses, :id, :company_name,
-                    { include_blank: true }, class: "govuk-select", id: "business-picker"
+            = form.collection_select :business_id, @investigation.businesses, :id, :trading_name,
+                    { include_blank: true,
+                    selected: @investigation.businesses.size == 1 && @investigation.businesses.first.id },
+                    class: "govuk-select", id: "business-picker"
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -69,8 +67,22 @@ h1.govuk-heading-xl
         .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:details].any?)
           = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
 
-      = render "related_attachment_fields", form: form,
-              file_blob: @file_blob, attachment_name: :file, title: "Related attachments"
-
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Are there any files related to the action?
+        fieldset.govuk-fieldset
+          .govuk-radios.govuk-radios--conditional data-module="radios"
+            .govuk-radios__item
+              = form.radio_button :related_file, "Yes", class: "govuk-radios__input",
+                      "data-aria-controls": "conditional-related-file"
+              = form.label :related_file, "Yes", class: "govuk-label govuk-radios__label"
+            #conditional-related-file.govuk-radios__conditional.govuk-radios__conditional--hidden
+              = render "related_attachment_fields", form: form,
+                file_blob: @file_blob, attachment_name: :file
+            .govuk-radios__item
+              = form.radio_button :related_file, "No", class: "govuk-radios__input",
+              "data-aria-controls": "conditional-no-related-file"
+              = form.label :related_file, "No", class: "govuk-label govuk-radios__label"
+      br
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

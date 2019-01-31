@@ -5,8 +5,10 @@
   .govuk-grid-column-two-thirds
     .govuk-heading-xl
       span.govuk-caption-xl
-        = "Business: #{@business.company_name}"
-      | Remove location
-h2.govuk-heading-l
-  | Location details
-= render "form", location: @location, business: nil, edit: true
+        = "Business: #{@business.trading_name}"
+      | Edit location
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      = form_with(model: @location, url: business_location_path(@business, @location), local: true) do |form|
+        = render "form_validation_display", errors: @location.errors
+        = render "form", form: form

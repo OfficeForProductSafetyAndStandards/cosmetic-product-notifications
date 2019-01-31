@@ -6,8 +6,8 @@ class Investigation < ApplicationRecord
 
   attr_accessor :status_rationale
 
-  validates :user_title, presence: true, on: :question_details
-  validates :description, presence: true, on: %i[allegation_details question_details]
+  validates :user_title, presence: true, on: :enquiry_details
+  validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
   validates :product_category, presence: true, on: :allegation_details
 
@@ -51,7 +51,7 @@ class Investigation < ApplicationRecord
   has_many_attached :documents
 
   has_one :source, as: :sourceable, dependent: :destroy
-  has_one :reporter, dependent: :destroy
+  has_one :complainant, dependent: :destroy
 
   before_create :assign_current_user_to_case
 
@@ -74,12 +74,12 @@ class Investigation < ApplicationRecord
           only: []
         },
         businesses: {
-          only: %i[company_name company_number]
+          only: %i[legal_name trading_name company_number]
         },
         products: {
           only: %i[category description name product_code product_type]
         },
-        reporter: {
+        complainant: {
           only: %i[name phone_number email_address other_details]
         },
         tests: {
@@ -130,7 +130,7 @@ class Investigation < ApplicationRecord
   end
 
   def self.fuzzy_fields
-    %w[documents.* correspondences.* activities.* businesses.* products.* reporter.*
+    %w[documents.* correspondences.* activities.* businesses.* products.* complainant.*
        tests.* user_title description hazard_type product_category]
   end
 

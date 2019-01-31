@@ -12,9 +12,9 @@ h1.govuk-heading-xl
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What is being alleged?
         .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:description].any?)
-          span.govuk-hint#question-description-hint
+          span.govuk-hint#enquiry-description-hint
             | Please give as much detail as possible
-          = form.text_area :description, class: "govuk-textarea", "aria-describedby": "question-description-hint",
+          = form.text_area :description, class: "govuk-textarea", "aria-describedby": "enquiry-description-hint",
                   rows: 5, maxlength: 1000
 
       fieldset.govuk-fieldset
@@ -38,7 +38,7 @@ h1.govuk-heading-xl
           - if @file_blob.present?
             p#current-attachment-details
               ' Currently selected file:
-              = link_to @file_blob.filename, @file_blob, target: "_blank"
+              = link_to @file_blob.filename, @file_blob, target: "_blank", rel: 'noopener'
           = form.fields_for :attachment do |subform|
             = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
 

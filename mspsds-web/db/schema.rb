@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_17_160320) do
+ActiveRecord::Schema.define(version: 2019_01_24_134204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,15 +53,35 @@ ActiveRecord::Schema.define(version: 2019_01_17_160320) do
   end
 
   create_table "businesses", id: :serial, force: :cascade do |t|
-    t.text "additional_information"
-    t.string "company_name", null: false
     t.string "company_number"
-    t.string "company_status_code"
-    t.string "company_type_code"
     t.datetime "created_at", null: false
-    t.string "nature_of_business_id"
+    t.string "legal_name"
+    t.string "trading_name", null: false
     t.datetime "updated_at", null: false
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
+  end
+
+  create_table "complainants", id: :serial, force: :cascade do |t|
+    t.string "complainant_type"
+    t.datetime "created_at", null: false
+    t.string "email_address"
+    t.integer "investigation_id"
+    t.string "name"
+    t.text "other_details"
+    t.string "phone_number"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_complainants_on_investigation_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer "business_id"
+    t.datetime "created_at", null: false
+    t.string "email"
+    t.string "job_title"
+    t.string "name"
+    t.string "phone_number"
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_contacts_on_business_id"
   end
 
   create_table "corrective_actions", id: :serial, force: :cascade do |t|
@@ -134,11 +154,13 @@ ActiveRecord::Schema.define(version: 2019_01_17_160320) do
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
-    t.string "address"
+    t.string "address_line_1"
+    t.string "address_line_2"
     t.integer "business_id"
+    t.string "city"
     t.string "country"
+    t.string "county"
     t.datetime "created_at", null: false
-    t.string "locality"
     t.string "name", null: false
     t.string "phone_number"
     t.string "postal_code"
@@ -164,18 +186,6 @@ ActiveRecord::Schema.define(version: 2019_01_17_160320) do
     t.datetime "created_at", null: false
     t.string "reference", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "reporters", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "email_address"
-    t.integer "investigation_id"
-    t.string "name"
-    t.text "other_details"
-    t.string "phone_number"
-    t.string "reporter_type"
-    t.datetime "updated_at", null: false
-    t.index ["investigation_id"], name: "index_reporters_on_investigation_id"
   end
 
   create_table "sources", id: :serial, force: :cascade do |t|
@@ -207,12 +217,12 @@ ActiveRecord::Schema.define(version: 2019_01_17_160320) do
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "products"
+  add_foreign_key "complainants", "investigations"
   add_foreign_key "corrective_actions", "businesses"
   add_foreign_key "corrective_actions", "investigations"
   add_foreign_key "corrective_actions", "products"
   add_foreign_key "correspondences", "investigations"
   add_foreign_key "locations", "businesses"
-  add_foreign_key "reporters", "investigations"
   add_foreign_key "tests", "investigations"
   add_foreign_key "tests", "products"
 end

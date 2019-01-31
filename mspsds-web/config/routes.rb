@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :question, controller: "investigations/question", only: %i[show new create update]
+  resources :enquiry, controller: "investigations/enquiry", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
   resources :project, controller: "investigations/project", only: %i[new create]
 
@@ -40,10 +40,6 @@ Rails.application.routes.draw do
       end
     end
     resources :businesses, only: %i[new create], controller: "investigations/businesses" do
-      collection do
-        get :suggested
-        post :companies_house
-      end
       member do
         put :link, path: ''
         get :remove
@@ -64,11 +60,12 @@ Rails.application.routes.draw do
   end
 
   resources :businesses, concerns: %i[document_attachable] do
-    collection do
-      get :suggested
-      post :companies_house
+    resources :locations do
+      member do
+        get :remove
+      end
     end
-    resources :locations, shallow: true do
+    resources :contacts do
       member do
         get :remove
       end

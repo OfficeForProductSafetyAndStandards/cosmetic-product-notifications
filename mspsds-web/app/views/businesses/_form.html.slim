@@ -1,50 +1,84 @@
 = render "form_validation_display", errors: business.errors
-- if business.from_companies_house?
-  p
-    | Some data is set by companies house and is therefore non-editable
-- else
-  .govuk-form-group.search-trigger class=("govuk-form-group--error" if business.errors.any?)
-    = form.label :company_name, class: "govuk-label"
-    = form.text_field :company_name, class: "govuk-input #{'govuk-input--error' if business.errors.any?}", \
-            id: "company-name"
-  .govuk-form-group.search-trigger
-    = form.label :company_type_code, class: "govuk-label"
-    = form.select :company_type_code, \
-        companies_house_constants["company_type"].collect { |t| [t[1], t[0]] }, \
-        { include_blank: "None" }, class: "govuk-select", id: "company-type"
-  .govuk-form-group.search-trigger
-    = form.label :company_status_code, class: "govuk-label"
-    = form.select :company_status_code, \
-        companies_house_constants["company_status"].collect { |t| [t[1], t[0]] }, \
-        { include_blank: "None" }, class: "govuk-select", id: "company-status"
-  = form.fields_for :locations, [business.primary_location] do |ff|
-    p
-      | Registered office address
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=[("govuk-form-group--error" if business.errors[:trading_name].any?)]
+    = form.label :trading_name, "Trading name",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span.govuk-hint#business-trading-name-hint
+      |  The name the business is known by (including Ebay / Amazon seller name if relevant)
+    = form.text_field :trading_name, class: "govuk-input", aria_describedby: "business-trading-name-hint"
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=[("govuk-form-group--error" if business.errors[:legal_name].any?)]
+    = form.label :legal_name, "Legal name",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span.govuk-hint#business-legal-name-hint
+      |  If different from the trading name
+    = form.text_field :legal_name, class: "govuk-input", aria_describedby: "business-legal-name-hint"
+
+fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
+  .govuk-form-group class=[("govuk-form-group--error" if business.errors[:company_number].any?)]
+    = form.label :company_number, "Company number",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    span.govuk-hint#business-company-number-hint
+      |  If you have this information
+    = form.text_field :company_number,
+            class: "govuk-input", aria_describedby: "business-company-number-hint"
+
+= form.fields_for :locations, business.primary_location do |ff|
+  fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
+    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+      | Address
     .govuk-form-group
-      = ff.label :address, class: "govuk-label"
-      = ff.text_field :address, class: "govuk-input"
+      = ff.label :address_line_1, "Building and street",
+              class: "govuk-label"
+      = ff.text_field :address_line_1, class: "govuk-input"
+
     .govuk-form-group
-      = ff.label :phone_number, class: "govuk-label"
-      = ff.text_field :phone_number, class: "govuk-input"
+      = ff.text_field :address_line_2, class: "govuk-input"
+
     .govuk-form-group
-      = ff.label :locality, class: "govuk-label"
-      = ff.text_field :locality, class: "govuk-input"
+      = ff.label :city, "Town or city",
+            class: "govuk-label"
+      = ff.text_field :city, class: "govuk-input"
+
     .govuk-form-group
-      = ff.label :country, class: "govuk-label"
+      = ff.label :county, "County",
+              class: "govuk-label"
+      = ff.text_field :county, class: "govuk-input"
+
+    .govuk-form-group
+      = ff.label :postal_code, "Postcode",
+              class: "govuk-label"
+      = ff.text_field :postal_code, class: "govuk-input govuk-!-width-one-half"
+
+    .govuk-form-group
+      = ff.label :country, "Country",
+              class: "govuk-label"
       = ff.text_field :country, class: "govuk-input"
+
+= form.fields_for :contacts, business.primary_contact do |ff|
+  fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
+    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+      | Contact
     .govuk-form-group
-      = ff.label :postal_code, class: "govuk-label"
-      = ff.text_field :postal_code, class: "govuk-input"
-  .govuk-form-group.search-trigger
-    = form.label :nature_of_business_id, class: "govuk-label"
-    = form.select :nature_of_business_id, \
-        companies_house_constants["sic_descriptions"].collect { |s| [s[1], s[0]] }, \
-        { include_blank: "None" }, class: "govuk-select", id: "sic-code"
-.govuk-form-group.search-trigger
-  = form.label :additional_information, class: "govuk-label"
-  = form.text_area :additional_information, class: "govuk-input"
-.govuk-form-group
-  - if search
-    = form.submit "Search businesses", id: "search-button", class: "govuk-button", \
-        'formmethod': "get", 'formaction': 'new'
-  = form.submit "Save business", class: "govuk-button"
+      = ff.label :name, "Name",
+              class: "govuk-label"
+      = ff.text_field :name, class: "govuk-input"
+
+    .govuk-form-group
+      = ff.label :email, "Email",
+              class: "govuk-label"
+      = ff.text_field :email, class: "govuk-input"
+
+    .govuk-form-group
+      = ff.label :phone_number, "Phone number",
+              class: "govuk-label"
+      = ff.text_field :phone_number, class: "govuk-input"
+
+    .govuk-form-group
+      = ff.label :job_title, "Job title / description",
+              class: "govuk-label"
+      = ff.text_field :job_title, class: "govuk-input"
+
+= form.submit "Save business", class: "govuk-button"

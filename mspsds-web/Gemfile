@@ -6,12 +6,10 @@ ruby File.read(".ruby-version").strip
 # https://github.com/elastic/elasticsearch-rails/issues/239
 gem "will_paginate"
 
-gem "active_hash"
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c593a08"
 gem "axlsx_rails"
 gem "bootsnap", ">= 1.1.0"
 gem "cf-app-utils"
-gem "companies-house-rest"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 gem "jbuilder", "~> 2.8"

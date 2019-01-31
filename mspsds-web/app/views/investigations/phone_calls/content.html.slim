@@ -26,7 +26,7 @@ main.govuk-main-wrapper role="main"
               - if @transcript_blob
                 p
                   ' Currently selected file:
-                  = link_to @transcript_blob.filename, @transcript_blob, target: "_blank"
+                  = link_to @transcript_blob.filename, @transcript_blob, target: "_blank", rel: 'noopener'
                   br
                   | Selecting a different one will replace it.
               span.govuk-hint class="govuk-!-width-full"

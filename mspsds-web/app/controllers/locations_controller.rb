@@ -1,12 +1,11 @@
 class LocationsController < ApplicationController
   before_action :set_location, only: %i[show edit update remove destroy]
   before_action :create_location, only: %i[create]
+  before_action :assign_business, only: %i[show edit remove]
 
   # GET /locations/1
   # GET /locations/1.json
-  def show
-    @business = @location.business
-  end
+  def show; end
 
   # GET /locations/new
   def new
@@ -15,9 +14,7 @@ class LocationsController < ApplicationController
   end
 
   # GET /locations/1/edit
-  def edit
-    @business = @location.business
-  end
+  def edit; end
 
   # POST /locations
   # POST /locations.json
@@ -39,7 +36,6 @@ class LocationsController < ApplicationController
   # PATCH/PUT /locations/1
   # PATCH/PUT /locations/1.json
   def update
-    authorize @location
     respond_to do |format|
       if @location.update(location_params)
         format.html do
@@ -54,14 +50,11 @@ class LocationsController < ApplicationController
     end
   end
 
-  def remove
-    @business = @location.business
-  end
+  def remove; end
 
   # DELETE /locations/1
   # DELETE /locations/1.json
   def destroy
-    authorize @location
     @location.destroy
     respond_to do |format|
       format.html do
@@ -73,6 +66,10 @@ class LocationsController < ApplicationController
   end
 
 private
+
+  def assign_business
+    @business = @location.business
+  end
 
   def create_location
     business = Business.find(params[:business_id])
@@ -87,6 +84,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def location_params
-    params.require(:location).permit(:business_id, :name, :address, :phone_number, :locality, :country, :postal_code)
+    params.require(:location).permit(:business_id, :name, :address_line_1, :address_line_2, :phone_number, :locality, :country, :postal_code)
   end
 end

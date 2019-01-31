@@ -24,7 +24,6 @@ services:
     - TRAVIS_BRANCH
     - TRAVIS_JOB_ID
     - TRAVIS_PULL_REQUEST
-    - COMPANIES_HOUSE_API_KEY='fake-key'
     - COVERALLS_PARALLEL
   cosmetics-worker:
     command: tail -f /dev/null
@@ -44,7 +43,6 @@ services:
       - TRAVIS_BRANCH
       - TRAVIS_JOB_ID
       - TRAVIS_PULL_REQUEST
-      - COMPANIES_HOUSE_API_KEY='fake-key'
       - COVERALLS_PARALLEL
   mspsds-worker:
     command: tail -f /dev/null

@@ -11,8 +11,8 @@ class InvestigationTest < ActiveSupport::TestCase
     @investigation_with_correspondence = investigations(:search_related_correspondence)
     @correspondence = correspondences(:one)
 
-    @investigation_with_reporter = investigations(:search_related_reporter)
-    @reporter = reporters(:one)
+    @investigation_with_complainant = investigations(:search_related_complainant)
+    @complainant = complainants(:one)
 
     @investigation_with_business = investigations(:search_related_businesses)
     @business = businesses(:biscuit_base)
@@ -31,14 +31,14 @@ class InvestigationTest < ActiveSupport::TestCase
   test "should create an activity when business is added to investigation" do
     @investigation = Investigation::Allegation.create
     assert_difference"Activity.count" do
-      @business = Business.new(company_name: 'Test Company')
+      @business = Business.new(trading_name: 'Test Company')
       @investigation.businesses << @business
     end
   end
 
   test "should create an activity when business is removed from investigation" do
     @investigation = Investigation::Allegation.create
-    @business = Business.new(company_name: 'Test Company')
+    @business = Business.new(trading_name: 'Test Company')
     @investigation.businesses << @business
     assert_difference"Activity.count" do
       @investigation.businesses.delete(@business)
@@ -145,44 +145,34 @@ class InvestigationTest < ActiveSupport::TestCase
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_correspondence.id)
   end
 
-  test "elasticsearch should find reporter name" do
-    query = ElasticsearchQuery.new(@reporter.name, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_reporter.id)
+  test "elasticsearch should find complainant name" do
+    query = ElasticsearchQuery.new(@complainant.name, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_complainant.id)
   end
 
-  test "elasticsearch should find reporter phone number" do
-    query = ElasticsearchQuery.new(@reporter.phone_number, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_reporter.id)
+  test "elasticsearch should find complainant phone number" do
+    query = ElasticsearchQuery.new(@complainant.phone_number, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_complainant.id)
   end
 
-  test "elasticsearch should find reporter email address" do
-    query = ElasticsearchQuery.new(@reporter.email_address, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_reporter.id)
+  test "elasticsearch should find complainant email address" do
+    query = ElasticsearchQuery.new(@complainant.email_address, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_complainant.id)
   end
 
-  test "elasticsearch should find reporter other details" do
-    query = ElasticsearchQuery.new(@reporter.other_details, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_reporter.id)
+  test "elasticsearch should find complainant other details" do
+    query = ElasticsearchQuery.new(@complainant.other_details, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_complainant.id)
   end
 
   test "elasticsearch should find business name" do
-    query = ElasticsearchQuery.new(@business.company_name, {}, {})
+    query = ElasticsearchQuery.new(@business.trading_name, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
   end
 
   test "elasticsearch should find business number" do
     query = ElasticsearchQuery.new(@business.company_number, {}, {})
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
-  end
-
-  test "elasticsearch should not find business type code" do
-    query = ElasticsearchQuery.new(@business.company_type_code, {}, {})
-    assert_not_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
-  end
-
-  test "elasticsearch should not find business status code" do
-    query = ElasticsearchQuery.new(@business.company_status_code, {}, {})
-    assert_not_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_business.id)
   end
 
   test "visible to creator organisation" do

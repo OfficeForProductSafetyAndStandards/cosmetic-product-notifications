@@ -2,11 +2,12 @@ book = xlsx_package.workbook
 
 book.add_worksheet name: "Cases" do |sheet_investigations|
   sheet_investigations.add_row %w[ID Status Title Description Product_Category Hazard_Type Assignee Source
-                            Reporter_Name Reporter_Email Reporter_Phone Reporter_Type
+                            Complainant_Name Complainant_Email Complainant_Phone Complainant_Type
                             Products Businesses Activities Correspondences Corrective_Actions Tests]
 
   @investigations.each do |investigation|
     if policy(investigation).show?
+    complainant = investigation.complainant
       sheet_investigations.add_row [
         investigation.pretty_id,
         investigation.is_closed? ? "Closed" : "Open",
@@ -16,10 +17,10 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
         investigation.hazard_type,
         investigation.assignee ? investigation.assignee.email : "Unassigned",
         investigation.source&.show,
-        investigation.reporter&.can_be_displayed? ? investigation.reporter&.name : "Restricted",
-        investigation.reporter&.can_be_displayed? ? investigation.reporter&.email_address : "Restricted",
-        investigation.reporter&.can_be_displayed? ? investigation.reporter&.phone_number : "Restricted",
-        investigation.reporter&.reporter_type,
+        complainant.present? ? (complainant.can_be_displayed? ? complainant&.name : "Restricted") : "",
+        complainant.present? ? (complainant.can_be_displayed? ? complainant&.email_address : "Restricted") : "",
+        complainant.present? ? (complainant.can_be_displayed? ? complainant&.phone_number : "Restricted") : "",
+        complainant&.complainant_type,
         investigation.products.length,
         investigation.businesses.length,
         investigation.activities.length,
@@ -63,9 +64,8 @@ book.add_worksheet name: "Products" do |sheet_products|
 end
 
 book.add_worksheet name: "Businesses" do |sheet_businesses|
-  sheet_businesses.add_row %w[ID Company_Number Company_Name Company_Type
-                                Nature_Of_Business Additional_Information Source
-                                Location Phone_Number Locality Country Postal_Code Locations
+  sheet_businesses.add_row %w[ID Company_Number Legal_Name Trading_Name Source
+                                Address_Line_1 Address_line_2 Phone_Number County Country Postal_Code Locations
                                 Case_ID]
 
   @investigations.each do |investigation|
@@ -74,14 +74,13 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
         sheet_businesses.add_row [
           business.id,
           business.company_number,
-          business.company_name,
-          business.company_type,
-          business.nature_of_business,
-          business.additional_information,
+          business.legal_name,
+          business.trading_name,
           business.source&.show,
-          business.primary_location ? business.primary_location.address : nil,
+          business.primary_location ? business.primary_location.address_line_1 : nil,
+          business.primary_location ? business.primary_location.address_line_2 : nil,
           business.primary_location ? business.primary_location.phone_number : nil,
-          business.primary_location ? business.primary_location.locality : nil,
+          business.primary_location ? business.primary_location.county : nil,
           business.primary_location ? business.primary_location.country : nil,
           business.primary_location ? business.primary_location.postal_code : nil,
           business.locations.length,
@@ -93,7 +92,7 @@ book.add_worksheet name: "Businesses" do |sheet_businesses|
 end
 
 book.add_worksheet name: "Business locations" do |sheet_businesses_locations|
-  sheet_businesses_locations.add_row %w[ID Name Address Phone_Number Locality Country Postal_Code Business_ID Case_ID]
+  sheet_businesses_locations.add_row %w[ID Name Address_Line_1 Address_Line_2 Phone_Number County Country Postal_Code Business_ID Case_ID]
 
   @investigations.each do |investigation|
     if policy(investigation).show?
@@ -102,9 +101,10 @@ book.add_worksheet name: "Business locations" do |sheet_businesses_locations|
           sheet_businesses_locations.add_row [
             location.id,
             location.name,
-            location.address,
+            location.address_line_1,
+            location.address_line_2,
             location.phone_number,
-            location.locality,
+            location.county,
             location.country,
             location.postal_code,
             business.id,
