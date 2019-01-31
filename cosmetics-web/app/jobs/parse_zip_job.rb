@@ -8,17 +8,18 @@ class ParseZipJob < ApplicationJob
 
   def perform(blob_id)
     @blob = ActiveStorage::Blob.find_by(id: blob_id)
-    create_notification
+    create_notification_from_file
+    delete_notification_file
   end
 
   private
 
-  def create_notification
-    @notification = Notification.new(product_name: get_notification_current_name_from_file)
+  def create_notification_from_file
+    @notification = Notification.new(product_name: get_notification_current_name)
     @notification.save
   end
 
-  def get_notification_current_name_from_file
+  def get_notification_current_name
     get_xml_file do |xml_file|
       xml_doc = Nokogiri::XML(xml_file.get_input_stream.read.gsub('sanco-xmlgate:', ''))
       notification_current_name = xml_doc.
@@ -37,5 +38,11 @@ class ParseZipJob < ApplicationJob
 
   def get_xml_file_name_regex
     return @blob.filename.base[0...8]+'*.xml'
+  end
+
+  def delete_notification_file
+    attachment = ActiveStorage::Attachment.find_by(blob_id: @blob.id)
+    notification_file = NotificationFile.find_by(id: attachment.record_id)
+    notification_file.destroy
   end
 end
