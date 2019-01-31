@@ -167,13 +167,14 @@ private
     allow(Keycloak::Internal).to receive(:all_users).and_return(users)
     allow(Keycloak::Internal).to receive(:get_user_groups).and_return(user_groups)
     allow(Keycloak::Internal).to receive(:all_team_users).and_call_original
+    load_keycloak_data
+  end
 
+  def load_keycloak_data
     Organisation.all
     Team.all
     TeamUser.all
   end
-
-  def stub_group_data; end
 
   def format_user_for_get_users(users)
     users.map { |user| { id: user[:id], email: user[:email], firstName: user[:first_name], lastName: user[:last_name] } }.to_json
