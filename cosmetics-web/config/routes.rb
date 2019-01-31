@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :responsible_persons do
-    resources :notifications, controller: "responsible_persons/notifications"
-    resources :team_members, controller: "responsible_persons/team_members"
+    resources :notifications, controller: "responsible_persons/notifications", only: %i[index]
+    resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
   end
 end

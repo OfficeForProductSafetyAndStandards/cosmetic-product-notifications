@@ -1,6 +1,6 @@
 .product {
   :first-of-type {
-    border-top: none
+    border-top: none;
   }
 
   :last-of-type {
@@ -22,9 +22,9 @@
       margin-left: 0;
     }
 
-    dt, dd {
+    dt,
+    dd {
       display: inline-block;
     }
   }
-
 }
