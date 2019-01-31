@@ -15,7 +15,8 @@ class ParseZipJob < ApplicationJob
   private
 
   def create_notification_from_file
-    @notification = Notification.new(product_name: get_notification_current_name)
+    @notification = Notification.new(product_name: get_notification_current_name,
+                                     state: :draft_complete)
     @notification.save
   end
 
