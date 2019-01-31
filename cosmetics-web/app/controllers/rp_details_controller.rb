@@ -1,2 +1,0 @@
-class RpDetailsController < ApplicationController
-end
