@@ -7,7 +7,7 @@
     h1.govuk-heading-xl
       span.govuk-caption-xl Reporting an unsafe product
       | Other information and files
-= form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
+= form_with model: @investigation, scope: :information, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row class="govuk-!-margin-bottom-3"
     .govuk-form-group
       .govuk-grid-column-one-half class="govuk-!-margin-bottom-9"
@@ -17,44 +17,44 @@
           .govuk-form-group
             .govuk-checkboxes
               .govuk-checkboxes__item
-                = form.check_box :test_results, id: "new-file-types-1", class: "govuk-checkboxes__input",
-                        "aria-describedby": "new-file-types-1-item-hint", name: "new[report][file][types]",
+                = form.check_box :test_results, class: "govuk-checkboxes__input",
+                        "aria-describedby": "test-results-hint", name: "test_results",
                         value: "Test results"
-                = form.label :test_results, "Test results", id: "new-file-types-1",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-file-types-1"
-                span#new-file-types-1-item-hint.govuk-hint.govuk-checkboxes__hint
+                = form.label :test_results, "Test results", class: "govuk-label govuk-checkboxes__label",
+                        for: :investigation_test_results
+                span#test-results-hint.govuk-hint.govuk-checkboxes__hint
                   | Record test results and upload files
               .govuk-checkboxes__item
-                = form.check_box :risk_assessments, id: "new-file-types-2", class: "govuk-checkboxes__input",
-                        "aria-describedby": "new-file-types-2-item-hint", name: "new[report][file][types]",
+                = form.check_box :risk_assessments, class: "govuk-checkboxes__input",
+                        "aria-describedby": "risk-assessments-hint", name: "risk_assessments",
                         value: "Risk assessments"
-                = form.label :risk_assessmentz, "Risk assessments", id: "new-file-types-1",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-file-types-1"
-                span#new-file-types-2-item-hint.govuk-hint.govuk-checkboxes__hint
+                = form.label :risk_assessment, "Risk assessments", class: "govuk-label govuk-checkboxes__label",
+                        for: "investigation_risk_assessments"
+                span#risk-assessments-hint.govuk-hint.govuk-checkboxes__hint
                   | Upload any risk assesment files
               .govuk-checkboxes__item
-                = form.check_box :product_images, id: "new-file-types-3", class: "govuk-checkboxes__input",
-                        "aria-describedby": "new-file-types-3-item-hint", name: "new[report][file][types]",
+                = form.check_box :product_images, class: "govuk-checkboxes__input",
+                        "aria-describedby": "product-images-hint", name: "product_images",
                         value: "Product images"
-                = form.label :product_images, "Product images", id: "new-file-types-3",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-file-types-3"
-                span#new-file-types-3-item-hint.govuk-hint.govuk-checkboxes__hint
+                = form.label :product_images, "Product images", class: "govuk-label govuk-checkboxes__label",
+                        for: "investigation_product_images"
+                span#product-images-hint.govuk-hint.govuk-checkboxes__hint
                   | Images of the product, used for identification
               .govuk-checkboxes__item
-                = form.check_box :evidence_images, id: "new-file-types-4", class: "govuk-checkboxes__input",
-                        "aria-describedby": "new-file-types-4-item-hint", name: "new[report][file][types]",
+                = form.check_box :evidence_images, class: "govuk-checkboxes__input",
+                        "aria-describedby": "evidence-images-hint", name: "evidence_images",
                         value: "Evidence images"
-                = form.label :evidence_images, "Evidence images", id: "new-file-types-4",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-file-types-4"
-                span#new-file-types-4-item-hint.govuk-hint.govuk-checkboxes__hint
+                = form.label :evidence_images, "Evidence images", class: "govuk-label govuk-checkboxes__label",
+                        for: "investigation_evidence_images"
+                span#evidence-images-hint.govuk-hint.govuk-checkboxes__hint
                   | Images which show damage injury or other types of evidence
               .govuk-checkboxes__item
-                = form.check_box :other_files, id: "new-file-types-5", class: "govuk-checkboxes__input",
-                        "aria-describedby": "new-file-types-5-item-hint", name: "new[report][file][types]",
+                = form.check_box :other_files, class: "govuk-checkboxes__input",
+                        "aria-describedby": "other-files-hint", name: "other_files",
                         value: "Other files"
-                = form.label :other_files, "Other files", id: "new-file-types-5",
-                        class: "govuk-label govuk-checkboxes__label", for: "new-file-types-5"
-                span#new-file-types-5-item-hint.govuk-hint.govuk-checkboxes__hint
+                = form.label :other_files, "Other files", class: "govuk-label govuk-checkboxes__label",
+                        for: "investigation_other_files"
+                span#other-files-hint.govuk-hint.govuk-checkboxes__hint
                   | Any other relevant files, such as purchase receipts, case-file downloads etc
   .govuk-grid-row
     .govuk-grid-column-two-thirds

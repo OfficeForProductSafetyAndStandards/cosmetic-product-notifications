@@ -4,11 +4,13 @@ class Investigations::MsaInvestigationsController < ApplicationController
   include ProductsHelper
   include BusinessesHelper
   include CorrectiveActionsHelper
+  include TestsHelper
   include FileConcern
   set_attachment_names :file
   set_file_params_key :corrective_action
 
-  steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :corrective_action, :other_information, :reference_number
+  steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :corrective_action,
+        :other_information, :test_results, :reference_number
   before_action :set_product, only: %i[show create update]
   before_action :set_investigation, only: %i[show create update]
   before_action :set_countries, only: %i[show create update]
@@ -30,6 +32,11 @@ class Investigations::MsaInvestigationsController < ApplicationController
       set_corrective_action
       set_attachment
       unless session[:corrective_action_pending]
+        return redirect_to next_wizard_path
+      end
+    when :test_results
+      set_test
+      unless session[:test_results_pending]
         return redirect_to next_wizard_path
       end
     end
@@ -65,6 +72,11 @@ class Investigations::MsaInvestigationsController < ApplicationController
         store_corrective_action
         store_corrective_action_pending
         return redirect_to wizard_path step
+      when :other_information
+        store_other_information
+      when :test_results
+        session[:test_results_pending] = params.permit(:has_test_results)[:has_test_results] = "Yes"
+        return redirect_to wizard_path step
       when steps.last
         return create
       end
@@ -94,6 +106,7 @@ private
     session.delete :investigation
     session.delete :product
     session[:corrective_actions] = []
+    session[:test_results] = []
     session.delete :file
     set_session_businesses([])
   end
@@ -163,10 +176,23 @@ private
     {}
   end
 
+  def test_session_params
+    # TODO use this to retrieve a test for editing eg for browser back button
+    { type: Test::Result.name }
+  end
+
   def which_businesses_params
     params.require(:businesses).permit(
       :retailer, :distributor, :importer, :manufacturer, :other, :other_business_type, :none
     )
+  end
+
+  def other_information_params
+    params.permit(*other_information_types)
+  end
+
+  def other_information_types
+    [:test_results, :risk_assessments, :product_images, :evidence_images, :other_files]
   end
 
   def session_businesses
@@ -208,6 +234,13 @@ private
 
   def store_corrective_action_pending
     session[:corrective_action_pending] = pending_corrective_action_params[:has_action] == "Yes"
+  end
+
+  def store_other_information
+    other_information_types.each do |info|
+      pending_symbol = (info.to_s + "_pending").to_sym
+      session[pending_symbol] = other_information_params[info] == "1"
+    end
   end
 
   def records_valid?

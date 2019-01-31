@@ -1,0 +1,34 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+- content_for :after_header do
+  = link_to "Back to list", products_path, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      span.govuk-caption-xl Report an unsafe or non-compliant product
+      | Test results details
+= form_with model: @test, scope: "", url: wizard_path, method: :put, local: true do |form|
+  = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
+  = render "investigations/tests/form", form: form,
+          test: @test,
+          investigation: @investigation,
+          file_blob: @file_blob,
+          allow_product_linking: false
+  .govuk-grid-column-full
+    hr.govuk-section-break.govuk-section-break--visible
+    div class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
+      .mspsds-input class="govuk-!-margin-bottom-5"
+        fieldset.govuk-fieldset
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l class="govuk-!-margin-bottom-1"
+            | Are there other test results to report?
+          .govuk-form-group
+            .govuk-radios
+              .govuk-radios__item
+                = radio_button "", :has_test_results, "Yes", class: "govuk-radios__input", value: "Yes"
+                = label :has_test_results, "Yes", class: "govuk-label govuk-radios__label"
+              .govuk-radios__item
+                = radio_button "", :has_test_results, "No", class: "govuk-radios__input", value: "No"
+                = label :has_test_results, "No", class: "govuk-label govuk-radios__label"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form.submit "Continue", class: "govuk-button"
