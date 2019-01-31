@@ -79,6 +79,7 @@ class InvestigationsController < ApplicationController
   # PUT /cases/1/assign
   def assign
     return if request.get?
+
     authorize @investigation, :assign?
     ps = assignee_update_params
 
@@ -140,17 +141,17 @@ private
 
   def assignee_update_params
     params[:investigation][:assignable_id] = case params[:investigation][:assignable_id_radio]
-                                           when "Someone in your team"
-                                             params[:investigation][:assignee_1_id]
-                                           when "Previously assigned"
-                                             params[:investigation][:assignee_2_id]
-                                           when "Other team"
-                                             params[:investigation][:assignee_3_id]
-                                           when "Someone else"
-                                             params[:investigation][:assignee_4_id]
-                                           else
-                                             params[:investigation][:assignable_id_radio] || params[:investigation][:assignable_id]
-                                           end
+                                             when "Someone in your team"
+                                               params[:investigation][:assignee_1_id]
+                                             when "Previously assigned"
+                                               params[:investigation][:assignee_2_id]
+                                             when "Other team"
+                                               params[:investigation][:assignee_3_id]
+                                             when "Someone else"
+                                               params[:investigation][:assignee_4_id]
+                                             else
+                                               params[:investigation][:assignable_id_radio] || params[:investigation][:assignable_id]
+                                             end
     params.require(:investigation).permit(:assignable_id)
   end
 

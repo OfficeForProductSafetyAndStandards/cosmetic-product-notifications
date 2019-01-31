@@ -43,9 +43,9 @@ class ActiveSupport::TestCase
     user.organisation = organisation
 
     if organisation.present?
-      groups = teams.map{|t| t.id}
+      groups = teams.map(&:id)
       groups << organisation.id
-      user_groups = users.map{|u| {id: u[:id], groups: u.last_name == user_name ? groups : [] }}.to_json
+      user_groups = users.map { |u| { id: u[:id], groups: u.last_name == user_name ? groups : [] } }.to_json
     end
 
     is_mspsds_user = organisation.present?
@@ -111,7 +111,7 @@ private
         path: "/Organisations",
         subGroups: organisations.map do |org|
           result = org.attributes.merge(subGroups: [])
-          result = result.merge(subGroups: all_teams.map{|team| team.attributes}) if org.name == "Office of Product Safety and Standards"
+          result = result.merge(subGroups: all_teams.map(&:attributes)) if org.name == "Office of Product Safety and Standards"
           result
         end
       }, {
@@ -173,9 +173,7 @@ private
     TeamUser.all
   end
 
-  def stub_group_data
-
-  end
+  def stub_group_data; end
 
   def format_user_for_get_users(users)
     users.map { |user| { id: user[:id], email: user[:email], firstName: user[:first_name], lastName: user[:last_name] } }.to_json

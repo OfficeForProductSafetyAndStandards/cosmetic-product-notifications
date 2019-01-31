@@ -93,7 +93,7 @@ class Investigation < ApplicationRecord
     begin
       return User.find(assignable_id) if assignable_type == "User"
       return Team.find(assignable_id) if assignable_type == "Team"
-    rescue
+    rescue StandardError
       return nil
     end
   end
@@ -233,7 +233,7 @@ private
   end
 
   def send_assignee_email
-    if saved_changes.key? :assignable_id && (assignee.is_a?(User))
+    if saved_changes.key?(:assignable_id) && assignee.is_a?(User)
       NotifyMailer.assigned_investigation(id, assignee.full_name, assignee.email).deliver_later
     end
   end
