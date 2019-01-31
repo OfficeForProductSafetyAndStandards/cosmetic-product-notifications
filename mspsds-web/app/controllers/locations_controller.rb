@@ -1,12 +1,11 @@
 class LocationsController < ApplicationController
   before_action :set_location, only: %i[show edit update remove destroy]
   before_action :create_location, only: %i[create]
+  before_action :assign_business, only: %i[show edit remove]
 
   # GET /locations/1
   # GET /locations/1.json
-  def show
-    @business = @location.business
-  end
+  def show; end
 
   # GET /locations/new
   def new
@@ -15,9 +14,7 @@ class LocationsController < ApplicationController
   end
 
   # GET /locations/1/edit
-  def edit
-    @business = @location.business
-  end
+  def edit; end
 
   # POST /locations
   # POST /locations.json
@@ -53,9 +50,7 @@ class LocationsController < ApplicationController
     end
   end
 
-  def remove
-    @business = @location.business
-  end
+  def remove; end
 
   # DELETE /locations/1
   # DELETE /locations/1.json
@@ -71,6 +66,10 @@ class LocationsController < ApplicationController
   end
 
 private
+
+  def assign_business
+    @business = @location.business
+  end
 
   def create_location
     business = Business.find(params[:business_id])
