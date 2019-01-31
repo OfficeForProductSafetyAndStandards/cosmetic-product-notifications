@@ -79,10 +79,10 @@ class InvestigationsController < ApplicationController
   # PUT /cases/1/assign
   def assign
     return if request.get?
-
     authorize @investigation, :assign?
     ps = assignee_update_params
-    potential_assignees = User.where(id: ps[:assignee_id]) + Team.where(id: ps[:assignee_id])
+
+    potential_assignees = User.where(id: ps[:assignable_id]) + Team.where(id: ps[:assignable_id])
     if potential_assignees.empty?
       @investigation.errors.add(:assignee, :invalid, message: "should exist")
       respond_to_invalid_data(:assign)
@@ -139,20 +139,19 @@ private
   end
 
   def assignee_update_params
-    case params[:investigation][:assignee_id_radio]
-    when "Someone in your team"
-      params[:investigation][:assignee_id] = params[:investigation][:assignee_1_id]
-    when "Previously assigned"
-      params[:investigation][:assignee_id] = params[:investigation][:assignee_2_id]
-    when "Other team"
-      params[:investigation][:assignee_id] = params[:investigation][:assignee_3_id]
-    when "Someone else"
-      params[:investigation][:assignee_id] = params[:investigation][:assignee_4_id]
-    else
-      params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
-    end
-
-    params.require(:investigation).permit(:assignee_id)
+    params[:investigation][:assignable_id] = case params[:investigation][:assignable_id_radio]
+                                           when "Someone in your team"
+                                             params[:investigation][:assignee_1_id]
+                                           when "Previously assigned"
+                                             params[:investigation][:assignee_2_id]
+                                           when "Other team"
+                                             params[:investigation][:assignee_3_id]
+                                           when "Someone else"
+                                             params[:investigation][:assignee_4_id]
+                                           else
+                                             params[:investigation][:assignable_id_radio] || params[:investigation][:assignable_id]
+                                           end
+    params.require(:investigation).permit(:assignable_id)
   end
 
   def respond_to_update(origin)

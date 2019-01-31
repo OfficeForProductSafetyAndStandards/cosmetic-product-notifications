@@ -24,13 +24,13 @@ class Investigation < ApplicationRecord
   settings do
     mappings do
       indexes :status, type: :keyword
-      indexes :assignee_id, type: :keyword
+      indexes :assignable_id, type: :keyword
     end
   end
 
   default_scope { order(updated_at: :desc) }
 
-  belongs_to :assignable, polymorphic: :true, optional: true
+  belongs_to :assignable, polymorphic: true, optional: true
 
   has_many :investigation_products, dependent: :destroy
   has_many :products, through: :investigation_products,
@@ -60,7 +60,7 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: :pretty_id,
-      only: %i[user_title description hazard_type product_category is_closed assignee_id updated_at created_at],
+      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at],
       include: {
         documents: {
           only: [],
@@ -90,8 +90,12 @@ class Investigation < ApplicationRecord
   end
 
   def assignee
-    return User.find(assignable_id) if assignable_type == "User"
-    return Team.find(assignable_id) if assignable_type == "Team"
+    begin
+      return User.find(assignable_id) if assignable_type == "User"
+      return Team.find(assignable_id) if assignable_type == "Team"
+    rescue
+      return nil
+    end
   end
 
   def assignee=(entity)
@@ -129,7 +133,7 @@ class Investigation < ApplicationRecord
   def can_be_assigned_by(user)
     return true if assignee.blank?
     return true if assignee.is_a?(Team) && (user.teams.include? assignee)
-    return true if assignee.is_a?(User) && ((user.teams && assignee.teams).any?)
+    return true if assignee.is_a?(User) && (user.teams && assignee.teams).any? || assignee == user
 
     false
   end
@@ -143,7 +147,7 @@ class Investigation < ApplicationRecord
 
   def past_assignees
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
-    user_id_list = activities.map(&:assignee_id)
+    user_id_list = activities.map(&:assignable_id)
     User.where(id: user_id_list.uniq)
   end
 
@@ -158,7 +162,7 @@ class Investigation < ApplicationRecord
 
   def past_teams
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
-    user_id_list = activities.map(&:assignee_id)
+    user_id_list = activities.map(&:assignable_id)
     Team.where(id: user_id_list.uniq)
   end
 
@@ -229,7 +233,7 @@ private
   end
 
   def send_assignee_email
-    if saved_changes.key? :assignee_id
+    if saved_changes.key? :assignable_id && (assignee.is_a?(User))
       NotifyMailer.assigned_investigation(id, assignee.full_name, assignee.email).deliver_later
     end
   end

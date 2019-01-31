@@ -11,7 +11,7 @@ class Team < ActiveHash::Base
   has_many :team_users, dependent: :nullify
   has_many :users, through: :team_users
 
-  has_many :investigations, as: :assignable
+  has_many :investigations, dependent: :nullify, as: :assignable
 
   def users
     # has_many through seems not to work with ActiveHash
@@ -37,7 +37,7 @@ class Team < ActiveHash::Base
   def display_name
     return name if current_user.organisation == organisation
 
-    (name == "OPSS Enforcement") ? "The Office for Product Safety and Standards" : name
+    name == "OPSS Enforcement" ? "The Office for Product Safety and Standards" : name
   end
 
   def full_name
@@ -49,9 +49,9 @@ class Team < ActiveHash::Base
   end
 
   def self.get_visible_teams(user)
-    user.is_opss? ?
-      Team.where(name: ["OPSS Enforcement", "OPSS Processing", "OPSS Incident management"]) :
-      Team.where(name: ["OPSS Enforcement"])
+    return Team.where(name: ["OPSS Enforcement", "OPSS Processing", "OPSS Incident management"]) if user.is_opss?
+
+    Team.where(name: ["OPSS Enforcement"])
   end
 end
 Team.all if Rails.env.development?
