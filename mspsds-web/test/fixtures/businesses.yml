@@ -19,3 +19,6 @@ biscuit_base:
   legal_name: Biscuit Base
   trading_name: Biscuit Base trading name
   company_number: 10
+
+new_business:
+  trading_name: Test company

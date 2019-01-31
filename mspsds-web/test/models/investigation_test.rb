@@ -31,15 +31,15 @@ class InvestigationTest < ActiveSupport::TestCase
   test "should create an activity when business is added to investigation" do
     @investigation = Investigation::Allegation.create
     assert_difference"Activity.count" do
-      @business = Business.new(trading_name: 'Test Company')
-      @investigation.businesses << @business
+      @business = businesses :new_business
+      @investigation.add_business @business, "manufacturer"
     end
   end
 
   test "should create an activity when business is removed from investigation" do
     @investigation = Investigation::Allegation.create
-    @business = Business.new(trading_name: 'Test Company')
-    @investigation.businesses << @business
+    @business = businesses :new_business
+    @investigation.add_business @business, "retailer"
     assert_difference"Activity.count" do
       @investigation.businesses.delete(@business)
     end
