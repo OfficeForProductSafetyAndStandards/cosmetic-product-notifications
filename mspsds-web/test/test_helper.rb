@@ -37,21 +37,22 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user(is_admin: false, user_name: "User_one", organisation: organisations[1])
+  def sign_in_as_user(is_admin: false, user_name: "User_one", organisation: organisations[1], teams: [all_teams[0]])
     users = all_users
     user = users.detect { |u| u.last_name == user_name }
     user.organisation = organisation
 
     if organisation.present?
-      group = organisation.id
-      user_groups = [{ id: user[:id], groups: [group] }].to_json
+      groups = teams.map{|t| t.id}
+      groups << organisation.id
+      user_groups = users.map{|u| {id: u[:id], groups: u.last_name == user_name ? groups : [] }}.to_json
     end
 
     is_mspsds_user = organisation.present?
     is_opss_user = organisation&.name == organisations[1].name
 
-    stub_user_credentials(user: user, groups: [group], is_admin: is_admin, is_opss: is_opss_user, is_mspsds: is_mspsds_user)
-    stub_user_group_data(user_groups: user_groups)
+    stub_user_credentials(user: user, groups: groups, is_admin: is_admin, is_opss: is_opss_user, is_mspsds: is_mspsds_user)
+    stub_user_group_data(user_groups: user_groups, users: users)
     stub_user_data(users: users)
     stub_client_config
   end
@@ -108,7 +109,11 @@ private
         id: "512c85e6-5a7f-4289-95e2-a78c0e40f05c",
         name: "Organisations",
         path: "/Organisations",
-        subGroups: organisations.map(&:attributes)
+        subGroups: organisations.map do |org|
+          result = org.attributes.merge(subGroups: [])
+          result = result.merge(subGroups: all_teams.map{|team| team.attributes}) if org.name == "Office of Product Safety and Standards"
+          result
+        end
       }, {
         id: "10036801-2182-4c5b-92d9-b34b1e0a421b",
         name: "Group 2",
@@ -121,7 +126,14 @@ private
   def organisations
     [
       Organisation.new(id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1"),
-      Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2"),
+      Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2")
+    ]
+  end
+
+  def all_teams
+    [
+      Team.new(id: "aaaaeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 1", path: "/Organisations/Organisation 1/Team 1", organisation_id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b"),
+      Team.new(id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 2", path: "/Organisations/Organisation 1/Team 2", organisation_id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b")
     ]
   end
 
@@ -146,15 +158,23 @@ private
     User.all
   end
 
-  def stub_user_group_data(user_groups:)
-    stub_group_data
+  def stub_user_group_data(user_groups:, users: [])
+    Shared::Web::KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
+    allow(Keycloak::Internal).to receive(:get_groups).and_return(group_data)
+    allow(Keycloak::Internal).to receive(:all_groups).and_return(JSON.parse(group_data))
+    allow(Keycloak::Internal).to receive(:all_organisations).and_call_original
+    allow(Keycloak::Internal).to receive(:all_teams).and_return(all_teams.map(&:attributes))
+    allow(Keycloak::Internal).to receive(:all_users).and_return(users)
     allow(Keycloak::Internal).to receive(:get_user_groups).and_return(user_groups)
+    allow(Keycloak::Internal).to receive(:all_team_users).and_call_original
+
+    Organisation.all
+    Team.all
+    TeamUser.all
   end
 
   def stub_group_data
-    Shared::Web::KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
-    allow(Keycloak::Internal).to receive(:get_groups).and_return(group_data)
-    Organisation.all
+
   end
 
   def format_user_for_get_users(users)
