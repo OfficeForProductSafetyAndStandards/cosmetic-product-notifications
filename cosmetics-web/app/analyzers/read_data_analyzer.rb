@@ -6,7 +6,14 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
   end
 
   def self.accept?(_blob)
-    true
+    if _blob.present?
+      # this analyzer only accepts notification files which are zip
+      notification_file = NotificationFile.find_by(id: ActiveStorage::Attachment.find_by(blob_id: _blob.id).record_id)
+      if notification_file.present?
+        return true
+      end
+    end
+    false
   end
 
   def metadata
