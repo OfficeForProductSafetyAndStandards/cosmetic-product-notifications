@@ -41,11 +41,6 @@
                         = @notification.product_name
                 tr.govuk-table__row
                     th.govuk-table__header
-                        | External reference
-                    td.govuk-table__cell
-                        = @notification.external_reference
-                tr.govuk-table__row
-                    th.govuk-table__header
                         | Imported
                     td.govuk-table__cell
                         - if @notification.import_country.nil?

@@ -2,7 +2,7 @@ class NotificationBuildController < ApplicationController
   include Wicked::Wizard
   include Shared::Web::CountriesHelper
 
-  steps :add_product_name, :add_external_reference, :is_imported, :add_import_country, :single_or_multi_component
+  steps :add_product_name, :is_imported, :add_import_country, :single_or_multi_component
 
   before_action :set_notification
   before_action :set_countries, only: %i[show update]
@@ -61,7 +61,7 @@ class NotificationBuildController < ApplicationController
 private
 
   def notification_params
-    params.require(:notification).permit(:product_name, :external_reference, :is_imported, :import_country)
+    params.require(:notification).permit(:product_name, :is_imported, :import_country)
   end
 
   def set_notification
