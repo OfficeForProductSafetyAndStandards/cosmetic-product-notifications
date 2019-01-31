@@ -1,5 +1,6 @@
 class Notification < ApplicationRecord
   include AASM
+  include Shared::Web::CountriesHelper
 
   belongs_to :responsible_person
   has_many :components, dependent: :destroy
@@ -31,6 +32,10 @@ class Notification < ApplicationRecord
     event :submit_notification do
       transitions from: :draft_complete, to: :notification_complete
     end
+  end
+
+  def import_country_for_display
+    country_from_code(import_country) || import_country
   end
 
 private

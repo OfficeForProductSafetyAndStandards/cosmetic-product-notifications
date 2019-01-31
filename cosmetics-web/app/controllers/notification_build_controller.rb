@@ -14,39 +14,18 @@ class NotificationBuildController < ApplicationController
   def update
     case step
     when :single_or_multi_component
-      if params[:single_or_multi_component] == 'single'
-        @notification.components.build
-        @notification.save
-        redirect_to new_component_build_path(@notification.components.first)
-      else
-        # TODO COSBETA-10 Implement multiple components
-        @notification.components.build
-        render_wizard @notification
-      end
+      render_single_or_multi_component_step
     when :is_imported
-      case params['is_imported']
-      when "true"
-        render_wizard @notification
-      when "false"
-        @notification.import_country = nil
-        @notification.add_import_country
-        jump_to :single_or_multi_component
-        render_wizard @notification
-      when ""
-        @notification.errors.add :import_country, "Must not be nil"
-        render step
-      end
-    when :add_import_country
+      render_is_imported_step
+    else
       @notification.update(notification_params)
-      if @notification.import_country.blank?
+
+      if step == :add_import_country && @notification.import_country.blank?
         @notification.errors.add :import_country, "Must not be blank"
         render step
       else
         render_wizard @notification
       end
-    else
-      @notification.update(notification_params)
-      render_wizard @notification
     end    
   end
 
@@ -70,5 +49,36 @@ private
 
   def set_countries
     @countries = all_countries
+  end
+
+  def render_single_or_multi_component_step
+    case params[:single_or_multi_component]
+    when "single"
+      @notification.components.build
+      @notification.save
+      redirect_to new_component_build_path(@notification.components.first)
+    when "multiple"
+      # TODO COSBETA-10 Implement multiple components
+      @notification.components.build
+      render_wizard @notification
+    when ""
+      @notification.errors.add :components, "Must not be nil"
+      render step
+    end
+  end
+
+  def render_is_imported_step
+    case params[:is_imported]
+    when "true"
+      render_wizard @notification
+    when "false"
+      @notification.import_country = nil
+      @notification.add_import_country
+      jump_to :single_or_multi_component
+      render_wizard @notification
+    when ""
+      @notification.errors.add :import_country, "Must not be nil"
+      render step
+    end
   end
 end

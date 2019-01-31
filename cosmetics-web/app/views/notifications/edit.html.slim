@@ -43,33 +43,23 @@
                     th.govuk-table__header
                         | Imported
                     td.govuk-table__cell
-                        - if @notification.import_country.nil?
-                            | No
-                        - else
-                            | Yes
+                        = @notification.import_country.present? ? "Yes" : "No"
                 - unless @notification.import_country.nil?
                     tr.govuk-table__row
                         th.govuk-table__header
                             | Imported from
                         td.govuk-table__cell
-                            = @notification.import_country
+                            = @notification.import_country_for_display
                 tr.govuk-table__row
                     th.govuk-table__header
                         | Number of components
                     td.govuk-table__cell
                         = @notification.components.length
-                - if @notification.components.first.shades.nil?
-                    tr.govuk-table__row
-                        th.govuk-table__header
-                            | Shades
-                        td.govuk-table__cell
-                            | N/A
-                - else
-                    tr.govuk-table__row
-                        th.govuk-table__header
-                            | Shades
-                        td.govuk-table__cell
-                            = @notification.components.first.shades.join(', ')
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Shades
+                    td.govuk-table__cell
+                        = @notification.components.first.shades&.join(', ') || "N/A"
     .govuk-grid-column-two-thirds
         h3.govuk-heading-m
             | Now register your cosmetic product

@@ -9,7 +9,9 @@
             | Only decorative cosmetics are sold in ‘shades’. 
             | Each shade varies only in colour and is otherwise
             |  identical.
+        = render "radio_select_error" if @component.errors.messages[:shades].any?
         = form_with url: wizard_path, method: :put do |form|
+            = form.hidden_field :number_of_shades, value: nil
             .govuk-form-group
                 .govuk-radios
                     .govuk-radios__item

@@ -6,19 +6,22 @@ class ComponentBuildController < ApplicationController
     before_action :set_component
 
     def show
-        if step == :add_shades && @component.shades.nil?
-            @component.shades = [ '', '' ]
-        end
+        @component.shades = [ '', '' ] if step == :add_shades && @component.shades.nil?
         render_wizard
     end
 
     def update
         case step
         when :number_of_shades
-            if params[:number_of_shades] == 'single'
-                redirect_to edit_notification_path(@component.notification)
-            else
+            case params[:number_of_shades]
+            when "single"
+                @component.shades = nil
+                redirect_to finish_wizard_path
+            when "multiple"
                 render_wizard @component
+            when ""
+                @component.errors.add :shades, "Must not be nil"
+                render step
             end
         when :add_shades
             render_add_shades

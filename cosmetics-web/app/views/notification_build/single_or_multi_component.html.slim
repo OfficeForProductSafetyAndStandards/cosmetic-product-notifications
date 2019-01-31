@@ -19,15 +19,17 @@
             li skin peeling kits
             li permanent styling products
             li anti-age/revitalising kits
+        = render "radio_select_error" if @notification.errors.messages[:components].any?
         = form_with url: wizard_path, method: :put do |form|
+            = form.hidden_field :single_or_multi_component, value: nil
             .govuk-form-group
                 .govuk-radios
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "single", class: "govuk-radios__input"
-                        = form.label :single_or_multi_component_single, "Yes", class: "govuk-label govuk-radios__label"
+                        = form.label :single_or_multi_component, "Yes", value: "single", class: "govuk-label govuk-radios__label"
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "multiple", class: "govuk-radios__input"
-                        = form.label :single_or_multi_component_multiple, "No, it will be sold as multi-component cosmetic", class: "govuk-label govuk-radios__label"
+                        = form.label :single_or_multi_component, "No, it will be sold as multi-component cosmetices", value: "multiple", class: "govuk-label govuk-radios__label"
             = form.submit "Continue", class: "govuk-button"
 
         

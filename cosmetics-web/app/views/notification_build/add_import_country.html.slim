@@ -1,17 +1,15 @@
 - content_for :page_title, "Where is the cosmetic imported from"
 - content_for :after_header do
     = link_to "Back", notification_build_path(@notification, :is_imported), class: "govuk-back-link"
-- import_country_errors = @notification.errors.messages[:import_country].any?
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
             | Where is the cosmetic imported from?
-        - if import_country_errors
-            span.govuk-error-message Import country is a required field
+        = render "mandatory_field_error", field_name: "Import country" if @notification.errors.messages[:import_country].any?
         = form_for(@notification, url: wizard_path, method: :put) do |form|
             .govuk-form-group
                 = form.label :import_country, "Country", class: "govuk-label"
                 = form.select :import_country, @countries, { include_blank: "" },
-                    class: "govuk-select", id: "location-autocomplete"
+                    class: "govuk-input", id: "location-autocomplete"
             .govuk-form-group
                 = form.submit "Continue", class: "govuk-button"

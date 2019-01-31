@@ -22,11 +22,9 @@ class Component < ApplicationRecord
   end
 
   def prune_blank_shades
-    unless self[:shades].nil?
-      self[:shades] = self[:shades].select do |shade|
-        !shade.blank?
-      end
-    end
+    return if self[:shades].nil?
+
+    self[:shades] = self[:shades].select { |shade| shade.present? }
   end
 
 private
