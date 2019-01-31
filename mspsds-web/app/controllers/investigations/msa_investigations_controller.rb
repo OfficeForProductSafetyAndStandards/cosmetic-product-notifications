@@ -19,8 +19,8 @@ class Investigations::MsaInvestigationsController < ApplicationController
   def show
     case step
     when :business
-      next_selected_business = session_businesses.find { |entry| entry["business"].nil? } || []
-      if next_selected_business.any?
+      next_selected_business = session_businesses.find { |entry| entry["business"].nil? }
+      if next_selected_business
         @business_type = next_selected_business["type"]
         set_business
       else
@@ -91,9 +91,10 @@ private
   end
 
   def clear_session
-    session[:investigation] = nil
-    session[:product] = nil
+    session.delete :investigation
+    session.delete :product
     session[:corrective_actions] = []
+    session.delete :file
     set_session_businesses([])
   end
 
@@ -184,7 +185,9 @@ private
   def store_corrective_action
     set_corrective_action
     set_attachment
-    session[:corrective_actions] << { corrective_action: @corrective_action, file_blob: @file_blob }
+    update_attachment
+    @file_blob.save
+    session[:corrective_actions] << { corrective_action: @corrective_action, file_blob_id: @file_blob.id }
     # Delete these objects in session having saved them. This allows us to loop round and use the same keys for the a
     # different record created with the same step
     session.delete :file
@@ -226,6 +229,7 @@ private
 
   def records_saved?
     return false unless records_valid?
+
     if !@product.save
       return false
     end
@@ -237,6 +241,18 @@ private
     @investigation.products << @product
 
     save_businesses
+    save_corrective_actions
+  end
+
+  def save_corrective_actions
+    session[:corrective_actions].each do |session_corrective_action|
+      action_record = CorrectiveAction.new(session_corrective_action["corrective_action"])
+      action_record.product = @product
+      file_blob = ActiveStorage::Blob.find_by(id: session_corrective_action["file_blob_id"])
+      attach_blobs_to_list(file_blob, action_record.documents)
+      attach_blobs_to_list(file_blob, @investigation.documents)
+      @investigation.corrective_actions << action_record
+    end
   end
 
   def save_businesses
