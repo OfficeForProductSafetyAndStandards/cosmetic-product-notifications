@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
   s.add_dependency "simplecov", "0.16.1"
   s.add_dependency "simplecov-console", "0.4.2"
   s.add_dependency "slim_lint", "0.16.1"
-  s.add_dependency "rubyzip", ">= 1.2.1"
 
   # Dev improvements & debugging
   s.add_dependency "debase", "0.2.2"
