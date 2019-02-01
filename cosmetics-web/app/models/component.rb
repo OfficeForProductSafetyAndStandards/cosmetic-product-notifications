@@ -6,9 +6,9 @@ class Component < ApplicationRecord
   before_save :update_notification_state
   before_save :add_shades, if: :will_save_change_to_shades?
 
-  validates :shades, length: { 
-    minimum: 2, 
-    allow_nil: true, 
+  validates :shades, length: {
+    minimum: 2,
+    allow_nil: true,
     message: "Shades must have at least two entries"
   }
 
@@ -24,7 +24,7 @@ class Component < ApplicationRecord
   def prune_blank_shades
     return if self[:shades].nil?
 
-    self[:shades] = self[:shades].select { |shade| shade.present? }
+    self[:shades] = self[:shades].select(&:present?)
   end
 
 private

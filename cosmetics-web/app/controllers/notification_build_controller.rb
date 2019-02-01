@@ -26,7 +26,7 @@ class NotificationBuildController < ApplicationController
       else
         render_wizard @notification
       end
-    end    
+    end
   end
 
   def new

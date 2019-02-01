@@ -1,13 +1,14 @@
 - content_for :page_title, "Single or multi component"
 - content_for :after_header do
-  = link_to "Back", notification_build_path(@component.notification, :single_or_multi_component), class: "govuk-back-link"
+  = link_to "Back", notification_build_path(@component.notification, :single_or_multi_component),
+    class: "govuk-back-link"
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
             | Is the cosmetic sold in more than 1 shade?
         p
-            | Only decorative cosmetics are sold in ‘shades’. 
-            | Each shade varies only in colour and is otherwise
+            | Only decorative cosmetics are sold in ‘shades’.
+            |  Each shade varies only in colour and is otherwise
             |  identical.
         = render "radio_select_error" if @component.errors.messages[:shades].any?
         = form_with url: wizard_path, method: :put do |form|

@@ -9,10 +9,10 @@
         h1.govuk-heading-xl
             | Will the cosmetic be sold as a single component?
         p
-            | Multi-component cosmetics are composed of several components 
-            | that are not marketed separately. They are sold as a set and 
-            | intended to be used as a mix or sequentially.
-        p 
+            | Multi-component cosmetics are composed of several components
+            |  that are not marketed separately. They are sold as a set and
+            |  intended to be used as a mix or sequentially.
+        p
             | Examples of multi-component cosmetics include:
         ul.govuk-list.govuk-list--bullet
             li hair dye sets
@@ -26,10 +26,10 @@
                 .govuk-radios
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "single", class: "govuk-radios__input"
-                        = form.label :single_or_multi_component, "Yes", value: "single", class: "govuk-label govuk-radios__label"
+                        = form.label :single_or_multi_component, "Yes", value: "single",
+                            class: "govuk-label govuk-radios__label"
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "multiple", class: "govuk-radios__input"
-                        = form.label :single_or_multi_component, "No, it will be sold as multi-component cosmetices", value: "multiple", class: "govuk-label govuk-radios__label"
+                        = form.label :single_or_multi_component, "No, it will be sold as multi-component cosmetices",
+                            value: "multiple", class: "govuk-label govuk-radios__label"
             = form.submit "Continue", class: "govuk-button"
-
-        

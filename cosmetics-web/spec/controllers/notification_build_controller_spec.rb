@@ -58,7 +58,7 @@ RSpec.describe NotificationBuildController, type: :controller do
       notification = Notification.create
       post(:update, params: { notification_id: notification.id, id: 'single_or_multi_component',
                     single_or_multi_component: "single" })
-      expect(notification.components).to have(1).item          
+      expect(notification.components).to have(1).item
     end
 
     # TODO COSBETA-10 Update this test
@@ -66,14 +66,21 @@ RSpec.describe NotificationBuildController, type: :controller do
       notification = Notification.create
       post(:update, params: { notification_id: notification.id, id: 'single_or_multi_component',
                   single_or_multi_component: "multiple" })
-      expect(notification.components).to have(1).item       
+      expect(notification.components).to have(1).item
+    end
+
+    it "adds errors if single_or_multi_component is empty" do
+      notification = Notification.create
+      post(:update, params: { notification_id: notification.id, id: 'single_or_multi_component',
+                              single_or_multi_component: nil })
+      expect(assigns(:notification).errors[:components]).to include('Must not be nil')
     end
 
     it "redirects to add_import_country step if is_imported set to true" do
       notification = Notification.create
       post(:update, params: { notification_id: notification.id, id: 'is_imported',
                               is_imported: "true" })
-      expect(response).to redirect_to(notification_build_path(notification, :add_import_country))                                 
+      expect(response).to redirect_to(notification_build_path(notification, :add_import_country))
     end
 
     it "skips add_import_country step if is_imported set to false" do
@@ -87,21 +94,21 @@ RSpec.describe NotificationBuildController, type: :controller do
       notification = Notification.create
       post(:update, params: { notification_id: notification.id, id: 'is_imported',
                               is_imported: nil })
-      expect(assigns(:notification).errors[:import_country]).to include('Must not be nil')   
+      expect(assigns(:notification).errors[:import_country]).to include('Must not be nil')
     end
 
     it "adds an error if user submits import_country with a blank value" do
       notification = Notification.create
       post(:update, params: { notification_id: notification.id, id: 'add_import_country',
                     notification: { import_country: '' } })
-      expect(assigns(:notification).errors[:import_country]).to include('Must not be blank')  
+      expect(assigns(:notification).errors[:import_country]).to include('Must not be blank')
     end
 
     it "continues to next step if user submits import_country with a valid value" do
       notification = Notification.create
       post(:update, params: { notification_id: notification.id, id: 'add_import_country',
                     notification: { import_country: 'France' } })
-                    expect(response).to redirect_to(notification_build_path(notification, :single_or_multi_component))
+      expect(response).to redirect_to(notification_build_path(notification, :single_or_multi_component))
     end
   end
 end
