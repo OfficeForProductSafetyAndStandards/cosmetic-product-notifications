@@ -32,7 +32,8 @@ h1.govuk-heading-xl
               = link_to "Add a product", new_investigation_product_path(@investigation)
               |  to record a corrective action.
           - elsif @investigation.products.size == 1
-            = form.text_field :product_id, { value: @investigation.products.first.name, disabled: true, readonly: true },
+            = form.text_field :product_id, { value: @investigation.products.first.name,
+            disabled: true, readonly: true },
             class: "govuk-input govuk-!-width-two-thirds"
             = form.hidden_field :product_id, value: @investigation.products.first.id
           - else
