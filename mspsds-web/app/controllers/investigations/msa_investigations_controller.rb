@@ -10,7 +10,8 @@ class Investigations::MsaInvestigationsController < ApplicationController
   set_file_params_key :corrective_action
 
   steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :corrective_action,
-        :other_information, :test_results, :reference_number
+        :other_information, :test_results, :risk_assessments, :product_images, :evidence_images, :other_files,
+        :reference_number
   before_action :set_product, only: %i[show create update]
   before_action :set_investigation, only: %i[show create update]
   before_action :set_countries, only: %i[show create update]
@@ -34,9 +35,20 @@ class Investigations::MsaInvestigationsController < ApplicationController
       unless session[:corrective_action_pending]
         return redirect_to next_wizard_path
       end
-    when :test_results
-      set_test
-      unless session[:test_results_pending]
+    when *other_information_types
+      case step
+      when :test_results
+        set_test
+      when :risk_assessments
+        # TODO
+      when :product_images
+        # TODO
+      when :evidence_images
+        # TODO
+      when :other_files
+        # TODO
+      end
+      unless session[pending(step)]
         return redirect_to next_wizard_path
       end
     end
@@ -74,8 +86,8 @@ class Investigations::MsaInvestigationsController < ApplicationController
         return redirect_to wizard_path step
       when :other_information
         store_other_information
-      when :test_results
-        store_is_pending_test_result
+      when *other_information_types
+        store_is_pending step
         return redirect_to wizard_path step
       when steps.last
         return create
@@ -88,8 +100,9 @@ class Investigations::MsaInvestigationsController < ApplicationController
 
 private
 
-  def store_is_pending_test_result
-    session[:test_results_pending] = params.permit(:has_test_results)[:has_test_results] == "Yes"
+  def store_is_pending(step)
+    info = pending(step)
+    session[info] = params.permit(info)[info] == "Yes"
   end
 
   def set_product
@@ -242,9 +255,12 @@ private
 
   def store_other_information
     other_information_types.each do |info|
-      pending_symbol = (info.to_s + "_pending").to_sym
-      session[pending_symbol] = other_information_params[info] == "1"
+      session[pending(info)] = other_information_params[info] == "1"
     end
+  end
+
+  def pending(info)
+    (info.to_s + "_pending").to_sym
   end
 
   def records_valid?
