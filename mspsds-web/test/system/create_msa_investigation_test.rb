@@ -92,13 +92,13 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
 
     choose_corrective_action
 
-    assert_selection "h1", text: "Record corrective action"
+    assert_selector "h1", text: "Record corrective action"
     fill_in_corrective_action_details @corrective_action_one
     add_corrective_action_attachment(filename: attachment_filename_one, description: attachment_description_one)
 
     choose_corrective_action
 
-    assert_selection "h1", text: "Record corrective action"
+    assert_selector "h1", text: "Record corrective action"
     fill_in_corrective_action_details @corrective_action_two
     add_corrective_action_attachment(filename: attachment_filename_two, description: attachment_description_two)
 
