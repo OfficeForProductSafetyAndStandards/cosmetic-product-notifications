@@ -78,6 +78,18 @@ RUN mvn -q --file ./sms-authenticator/pom.xml package
 RUN cp ./sms-authenticator/target/keycloak-sms-authenticator-sns-*.jar ./providers/
 
 
+# Build and copy the System Out event listener provider
+FROM maven as system-out-event-listener-build
+
+WORKDIR /tmp/keycloak
+
+COPY ./providers/system-out-event-listener ./system-out-event-listener
+RUN mkdir -p ./providers
+
+RUN mvn -q --file ./system-out-event-listener/pom.xml package
+RUN cp ./system-out-event-listener/target/system-out-event-listener-*.jar ./providers/
+
+
 # Build and copy the GOV.UK theme
 FROM node as theme-build
 
@@ -98,10 +110,11 @@ WORKDIR /tmp/keycloak/package
 COPY --from=keycloak-build /tmp/keycloak/package .
 
 # Copy the custom providers from the relevant docker images
-COPY --from=rest-api-build /tmp/keycloak/providers ./providers/
 COPY --from=notify-email-build /tmp/keycloak/providers ./providers/
 COPY --from=registration-form-build /tmp/keycloak/providers ./providers/
+COPY --from=rest-api-build /tmp/keycloak/providers ./providers/
 COPY --from=sms-authenticator-build /tmp/keycloak/providers ./providers/
+COPY --from=system-out-event-listener-build /tmp/keycloak/providers ./providers/
 
 # Copy the themes from the theme-build docker image
 COPY --from=theme-build /tmp/govuk-theme/govuk ./themes/govuk

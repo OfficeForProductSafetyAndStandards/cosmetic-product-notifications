@@ -1,6 +1,8 @@
 class Notification < ApplicationRecord
   include AASM
 
+  belongs_to :responsible_person
+
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_external_reference, if: :will_save_change_to_external_reference?
 

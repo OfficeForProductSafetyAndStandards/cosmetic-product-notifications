@@ -117,6 +117,12 @@ Follow the steps in [the SMS autheticator README's Configuration section](
 ./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication. Set the 2FA 
 code length to 6.
 
+### Setup event logging
+Setup the system out event listener:
+* Select Events > Config
+* Add "system-out" to the "Event Listeners" section
+
+
 ### Troubleshooting
 ##### Problem: the keycloak database doesn't exist when running `$ docker-compose up`
 Error message:

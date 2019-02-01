@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <name>Registration Mobile Number Form Action</name>
-    <description>Form action for Keycloak that validates mobile phone number during user registration</description>
+    <name>System Out Event Listener</name>
+    <description>Outputs keycloak events and admin events to System.out</description>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>uk.gov.beis</groupId>
-    <artifactId>mobile-number-form-action</artifactId>
+    <artifactId>system-out-event-listener</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -16,9 +16,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <keycloak.version>4.8.3.Final</keycloak.version>
-        <resteasy.version>3.6.2.Final</resteasy.version>
-        <jboss-jaxrs-api_2.0_spec>1.0.1.Final</jboss-jaxrs-api_2.0_spec>
-        <libphonenumber.version>8.9.0</libphonenumber.version>
     </properties>
 
     <dependencies>
@@ -40,33 +37,10 @@
             <version>${keycloak.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-services</artifactId>
-            <version>${keycloak.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.ws.rs</groupId>
-            <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
-            <version>${jboss-jaxrs-api_2.0_spec}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxrs</artifactId>
-            <version>${resteasy.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>libphonenumber</artifactId>
-            <version>${libphonenumber.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
-        <finalName>mobile-number-form-action</finalName>
+        <finalName>system-out-event-listener</finalName>
 
         <plugins>
             <plugin>
