@@ -18,7 +18,7 @@ module CorrectiveActionsHelper
   end
 
   def update_attachment
-    update_blob_metadata @file_blob, file_metadata
+    update_blob_metadata @file_blob, corrective_action_file_metadata
   end
 
   def corrective_action_valid?
@@ -40,7 +40,7 @@ module CorrectiveActionsHelper
                                               :year)
   end
 
-  def file_metadata
+  def corrective_action_file_metadata
     get_attachment_metadata_params(:file).merge(
         title: @corrective_action.summary,
         other_type: "Corrective action document",

@@ -17,7 +17,7 @@ module TestsHelper
   end
 
   def update_attachment
-    update_blob_metadata @file_blob, file_metadata
+    update_blob_metadata @file_blob, test_file_metadata
   end
 
   def test_valid?
@@ -41,7 +41,7 @@ module TestsHelper
         .merge(type: model_type)
   end
 
-  def file_metadata
+  def test_file_metadata
     if @test.requested?
       title = "Test requested: #{@test.product&.name}"
       document_type = "test_request"

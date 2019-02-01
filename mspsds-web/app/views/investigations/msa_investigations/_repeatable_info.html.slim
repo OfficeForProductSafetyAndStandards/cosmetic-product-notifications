@@ -7,14 +7,16 @@
     h1.govuk-heading-xl
       span.govuk-caption-xl Report an unsafe or non-compliant product
       = title
-= form_with model: model, url: wizard_path, method: :put, local: true do |form|
+- model ||= nil
+- scope ||= nil
+= form_with model: model, scope: scope, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row
   = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
   .govuk-grid-row
   = yield(form)
   .govuk-grid-row
     .govuk-grid-column-full
-      hr.govuk-section-break.govuk-section-break--visible
+      hr.govuk-section-break class=("govuk-section-break--visible" unless hide_break)
       div class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
         .mspsds-input class="govuk-!-margin-bottom-5"
           fieldset.govuk-fieldset

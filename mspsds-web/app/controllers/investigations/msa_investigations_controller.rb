@@ -32,21 +32,13 @@ class Investigations::MsaInvestigationsController < ApplicationController
     when :corrective_action
       set_corrective_action
       set_attachment
-      unless session[:corrective_action_pending]
+      unless session[pending(step)]
         return redirect_to next_wizard_path
       end
-    when *other_information_types
-      case step
-      when :test_results
-        set_test
-      when :risk_assessments
-        # TODO
-      when :product_images
-        # TODO
-      when :evidence_images
-        # TODO
-      when :other_files
-        # TODO
+    when :test_results
+      set_test
+      unless session[pending(step)]
+        return redirect_to next_wizard_path
       end
       unless session[pending(step)]
         return redirect_to next_wizard_path
@@ -86,7 +78,13 @@ class Investigations::MsaInvestigationsController < ApplicationController
         return redirect_to wizard_path step
       when :other_information
         store_other_information
-      when *other_information_types
+      when :test_results
+        store_test
+        store_is_pending step
+        unless session[:test_results_pending]
+          return redirect_to next_wizard_path
+        end
+      when *other_information_types # test_results exists in this array, but has been dealt with above
         store_is_pending step
         return redirect_to wizard_path step
       when steps.last
@@ -227,14 +225,20 @@ private
 
   def store_corrective_action
     set_corrective_action
-    set_attachment
-    update_attachment
+    @file_blob, * = load_file_attachments :corrective_action
+    update_blob_metadata @file_blob, corrective_action_file_metadata
     @file_blob.save if @file_blob
     session[:corrective_actions] << { corrective_action: @corrective_action, file_blob_id: @file_blob&.id }
-    # Delete these objects in session having saved them. This allows us to loop round and use the same keys for the a
-    # different record created with the same step
     session.delete :file
-    session.delete :corrective_action
+  end
+
+  def store_test
+    set_test
+    @file_blob, * = load_file_attachments :test
+    update_blob_metadata @file_blob, test_file_metadata
+    @file_blob.save if @file_blob
+    session[:test_results] << { test: @test, file_blob_id: @file_blob&.id }
+    session.delete :file
   end
 
   def selected_businesses
