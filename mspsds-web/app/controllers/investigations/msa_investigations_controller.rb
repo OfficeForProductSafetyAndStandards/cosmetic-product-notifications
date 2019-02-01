@@ -84,9 +84,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
       when :test_results
         store_test
         store_is_pending step
-        unless session[:test_results_pending]
-          return redirect_to next_wizard_path
-        end
+        return redirect_to wizard_path step
       when *other_information_types # test_results exists in this array, but has been dealt with above
         store_file
         store_is_pending step
