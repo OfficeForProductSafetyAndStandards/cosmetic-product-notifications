@@ -1,0 +1,22 @@
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    ul.govuk-list
+      li[class="govuk-!-padding-bottom-2"]
+        = link_to "Try uploading files again", "/", class: "govuk-link--no-visited-state"
+      li[class="govuk-!-padding-bottom-2"]
+        = link_to "Dismiss all failed files", "/", class: "govuk-link--no-visited-state"
+.govuk-grid-row
+  .govuk-grid-column-full
+    table.govuk-table
+      thead.govuk-table__head
+        tr.govuk-table__row
+          th.govuk-table__header[scope="col"]
+            | Product name
+          th.govuk-table__header[scope="col"]
+            | Reason for failure
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          td.govuk-table__cell
+            | Example product
+          td.govuk-table__cell
+            | Incorrect file type

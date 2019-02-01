@@ -14,4 +14,9 @@ Rails.application.routes.draw do
 
     resources :manual_entry, only: %i[show update]
   end
+
+  resources :responsible_persons do
+    resources :notifications, controller: "responsible_persons/notifications", only: %i[index]
+    resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
+  end
 end
