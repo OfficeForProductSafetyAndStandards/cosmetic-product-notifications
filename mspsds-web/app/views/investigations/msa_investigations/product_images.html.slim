@@ -1,8 +1,7 @@
 = render "repeatable_info",
         title: "Product images",
-        model: @product_image,
+        scope: :file,
         hide_break: true,
         other_text: "Are there other product images to report",
         pending_symbol: :product_images_pending do |form|
-  / TODO
-  | FORM
+  = render "file_page", form: form

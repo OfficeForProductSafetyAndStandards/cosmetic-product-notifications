@@ -127,6 +127,7 @@ private
     session[:corrective_actions] = []
     session[:test_results] = []
     session[:files] = []
+    session[:product_files] = []
     session.delete :file
     set_session_businesses([])
   end
@@ -250,7 +251,11 @@ private
     @file_blob, * = load_file_attachments
     update_blob_metadata @file_blob, get_attachment_metadata_params(:file)
     @file_blob.save!
-    session[:files] << @file_blob.id
+    if step == :product_images
+      session[:product_files] << @file_blob.id
+    else
+      session[:files] << @file_blob.id
+    end
     session.delete :file
   end
 
@@ -313,6 +318,7 @@ private
     save_businesses
     save_corrective_actions
     save_test_results
+    save_product_files
     save_files
   end
 
@@ -353,6 +359,13 @@ private
       file_blob = ActiveStorage::Blob.find_by(id: file_blob_id)
       attach_blobs_to_list(file_blob, @investigation.documents)
       AuditActivity::Document::Add.from(file_blob, @investigation)
+    end
+  end
+
+  def save_product_files
+    session[:product_files].each do |file_blob_id|
+      file_blob = ActiveStorage::Blob.find_by(id: file_blob_id)
+      attach_blobs_to_list(file_blob, @product.documents)
     end
   end
 

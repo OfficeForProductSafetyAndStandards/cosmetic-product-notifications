@@ -1,8 +1,7 @@
 = render "repeatable_info",
         title: "Other files",
-        model: @other_file,
+        scope: :file,
         hide_break: true,
         other_text: "Are there other files to report",
         pending_symbol: :other_files_pending do |form|
-  / TODO
-  | FORM
+  = render "file_page", form: form
