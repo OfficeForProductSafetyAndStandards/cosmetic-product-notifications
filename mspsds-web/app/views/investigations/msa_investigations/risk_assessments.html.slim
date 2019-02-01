@@ -1,7 +1,7 @@
 = render "repeatable_info",
         title: "Risk assessments details",
-        model: @risk_assessment,
+        scope: :file,
         other_text: "Are there other risk assessments to report",
-        pending_symbol: :risk_assessments_pending do |form|
-  / TODO
-  | FORM
+        pending_symbol: :risk_assessments_pending,
+        hide_break: true do |form|
+  = render "file_page", form: form

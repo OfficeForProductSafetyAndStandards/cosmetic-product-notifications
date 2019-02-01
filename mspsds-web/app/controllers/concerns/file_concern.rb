@@ -50,7 +50,9 @@ module FileConcern
     end
   end
 
-  def get_attachment_params(attachment_name, params_key = file_params_key)
+  def get_attachment_params(attachment_name, params_key = nil)
+    params_key ||= file_params_key
+
     return {} if params[params_key].blank? || params[params_key][attachment_name].blank?
 
     params.require(params_key).require(attachment_name).permit(:file, :title, :description, :document_type, :other_type)

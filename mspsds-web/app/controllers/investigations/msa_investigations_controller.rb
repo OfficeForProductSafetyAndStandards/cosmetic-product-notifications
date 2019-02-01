@@ -40,6 +40,9 @@ class Investigations::MsaInvestigationsController < ApplicationController
       unless session[pending(step)]
         return redirect_to next_wizard_path
       end
+    when *other_information_types # test_results exists in this array, but has been dealt with above
+      @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
+      @file_blob, * = load_file_attachments
       unless session[pending(step)]
         return redirect_to next_wizard_path
       end
@@ -85,6 +88,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
           return redirect_to next_wizard_path
         end
       when *other_information_types # test_results exists in this array, but has been dealt with above
+        store_file
         store_is_pending step
         return redirect_to wizard_path step
       when steps.last
@@ -122,6 +126,7 @@ private
     session.delete :product
     session[:corrective_actions] = []
     session[:test_results] = []
+    session[:files] = []
     session.delete :file
     set_session_businesses([])
   end
@@ -241,6 +246,14 @@ private
     session.delete :file
   end
 
+  def store_file
+    @file_blob, * = load_file_attachments
+    update_blob_metadata @file_blob, get_attachment_metadata_params(:file)
+    @file_blob.save!
+    session[:files] << @file_blob.id
+    session.delete :file
+  end
+
   def selected_businesses
     return {} if which_businesses_params["none"] == "1"
 
@@ -299,13 +312,23 @@ private
 
     save_businesses
     save_corrective_actions
+    save_test_results
+    save_files
+  end
+
+  def save_businesses
+    session_businesses.each do |session_business|
+      business = Business.create(session_business["business"])
+      @investigation.add_business(business, session_business["type"])
+    end
   end
 
   def save_corrective_actions
     session[:corrective_actions].each do |session_corrective_action|
       action_record = CorrectiveAction.new(session_corrective_action["corrective_action"])
       action_record.product = @product
-      if file_blob = ActiveStorage::Blob.find_by(id: session_corrective_action["file_blob_id"])
+      file_blob = ActiveStorage::Blob.find_by(id: session_corrective_action["file_blob_id"])
+      if file_blob
         attach_blobs_to_list(file_blob, action_record.documents)
         attach_blobs_to_list(file_blob, @investigation.documents)
       end
@@ -313,10 +336,23 @@ private
     end
   end
 
-  def save_businesses
-    session_businesses.each do |session_business|
-      business = Business.create(session_business["business"])
-      @investigation.add_business(business, session_business["type"])
+  def save_test_results
+    session[:test_results].each do |session_test_result|
+      test_record = Test::Result.new(session_test_result["test"])
+      file_blob = ActiveStorage::Blob.find_by(id: session_test_result["file_blob_id"])
+      if file_blob
+        attach_blobs_to_list(file_blob, test_record.documents)
+        attach_blobs_to_list(file_blob, @investigation.documents)
+      end
+      @investigation.tests << test_record
+    end
+  end
+
+  def save_files
+    session[:files].each do |file_blob_id|
+      file_blob = ActiveStorage::Blob.find_by(id: file_blob_id)
+      attach_blobs_to_list(file_blob, @investigation.documents)
+      AuditActivity::Document::Add.from(file_blob, @investigation)
     end
   end
 
