@@ -75,7 +75,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
       when :other_information
         store_other_information
       when :test_results
-        session[:test_results_pending] = params.permit(:has_test_results)[:has_test_results] = "Yes"
+        store_is_pending_test_result
         return redirect_to wizard_path step
       when steps.last
         return create
@@ -87,6 +87,10 @@ class Investigations::MsaInvestigationsController < ApplicationController
   end
 
 private
+
+  def store_is_pending_test_result
+    session[:test_results_pending] = params.permit(:has_test_results)[:has_test_results] == "Yes"
+  end
 
   def set_product
     @product = Product.new(product_step_params)
