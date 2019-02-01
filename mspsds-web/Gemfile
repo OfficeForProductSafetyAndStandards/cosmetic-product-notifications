@@ -37,7 +37,7 @@ gem "shared-web", path: "./vendor/shared-web"
 
 group :development, :test do
   gem "capybara"
-  gem "roo", "~> 2.8.1"
+  gem "roo", "~> 2.8.2"
   gem "rspec-mocks"
   gem "selenium-webdriver"
 
