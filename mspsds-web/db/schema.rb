@@ -142,7 +142,6 @@ ActiveRecord::Schema.define(version: 2019_01_29_155220) do
   create_table "investigations", id: :serial, force: :cascade do |t|
     t.uuid "assignable_id"
     t.string "assignable_type"
-    t.uuid "assignee_id"
     t.datetime "created_at", null: false
     t.text "description"
     t.string "hazard_type"
@@ -153,7 +152,6 @@ ActiveRecord::Schema.define(version: 2019_01_29_155220) do
     t.datetime "updated_at", null: false
     t.string "user_title"
     t.index ["assignable_type", "assignable_id"], name: "index_investigations_on_assignable_type_and_assignable_id"
-    t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|

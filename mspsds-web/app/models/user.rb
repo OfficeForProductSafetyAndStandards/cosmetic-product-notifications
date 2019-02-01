@@ -80,13 +80,13 @@ class User < Shared::Web::User
   end
 
   def self.get_team_members(user:)
-    users = []
+    users = [].to_set
     user.teams.each do |team|
       team.users.each do |team_member|
         users << team_member
       end
     end
-    users.uniq
+    users
   end
 end
 User.all if Rails.env.development?

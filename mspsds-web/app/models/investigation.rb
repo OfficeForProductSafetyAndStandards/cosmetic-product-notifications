@@ -139,31 +139,31 @@ class Investigation < ApplicationRecord
   end
 
   def important_assignable_people
-    people = []
+    people = [].to_set
     people << assignee if assignee.is_a? User
     people << current_user
-    people.uniq
+    people
   end
 
   def past_assignees
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
-    user_id_list = activities.map(&:assignable_id)
-    User.where(id: user_id_list.uniq)
+    user_id_list = activities.map(&:assignable_id).to_set
+    User.where(id: user_id_list)
   end
 
   def important_assignable_teams
-    teams = current_user.teams
+    teams = current_user.teams.to_set
     Team.get_visible_teams(current_user).each do |team|
       teams << team
     end
     teams << assignee if assignee.is_a? Team
-    teams.uniq
+    teams
   end
 
   def past_teams
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
-    user_id_list = activities.map(&:assignable_id)
-    Team.where(id: user_id_list.uniq)
+    team_id_list = activities.map(&:assignable_id).to_set
+    Team.where(id: team_id_list)
   end
 
   def past_assignees_except_current

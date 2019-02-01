@@ -80,7 +80,7 @@ class InvestigationsController < ApplicationController
   def assign
     return if request.get?
 
-    authorize @investigation, :assign?
+    authorize @investigation
     ps = assignee_update_params
 
     potential_assignees = User.where(id: ps[:assignable_id]) + Team.where(id: ps[:assignable_id])
@@ -142,13 +142,13 @@ private
   def assignee_update_params
     params[:investigation][:assignable_id] = case params[:investigation][:assignable_id_radio]
                                              when "Someone in your team"
-                                               params[:investigation][:assignee_1_id]
+                                               params[:investigation][:select_team_member]
                                              when "Previously assigned"
-                                               params[:investigation][:assignee_2_id]
+                                               params[:investigation][:select_previously_assigned]
                                              when "Other team"
-                                               params[:investigation][:assignee_3_id]
+                                               params[:investigation][:select_other_team]
                                              when "Someone else"
-                                               params[:investigation][:assignee_4_id]
+                                               params[:investigation][:select_someone_else]
                                              else
                                                params[:investigation][:assignable_id_radio] || params[:investigation][:assignable_id]
                                              end

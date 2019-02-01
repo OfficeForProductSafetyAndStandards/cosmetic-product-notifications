@@ -37,7 +37,7 @@ class Team < ActiveHash::Base
   def display_name
     return name if current_user.organisation == organisation
 
-    name == "OPSS Enforcement" ? "The Office for Product Safety and Standards" : name
+    organisation.name
   end
 
   def full_name
@@ -49,9 +49,19 @@ class Team < ActiveHash::Base
   end
 
   def self.get_visible_teams(user)
-    return Team.where(name: ["OPSS Enforcement", "OPSS Processing", "OPSS Incident management"]) if user.is_opss?
+    return Team.find_teams_in_organisation(%w[Enforcement Processing Incident], "Safety and Standards") if user.is_opss?
 
-    Team.where(name: ["OPSS Enforcement"])
+    Team.find_teams_in_organisation(%w[Enforcement], "Safety and Standards")
+  end
+
+  def self.find_teams_in_organisation(team_names, organisation_name)
+    Team.all.select do |team|
+      found = false
+      team_names.each do |name|
+        found = found || (team.name.downcase.include? name.downcase)
+      end
+      found && (team.organisation.name.downcase.include? organisation_name.downcase)
+    end
   end
 end
 Team.all if Rails.env.development?
