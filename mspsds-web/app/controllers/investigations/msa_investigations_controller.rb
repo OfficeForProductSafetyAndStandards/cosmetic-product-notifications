@@ -7,7 +7,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
   include TestsHelper
   include FileConcern
   set_attachment_names :file
-  set_file_params_key :corrective_action
+  set_file_params_key  :file
 
   steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :corrective_action,
         :other_information, :test_results, :risk_assessments, :product_images, :evidence_images, :other_files,

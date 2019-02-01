@@ -31,9 +31,9 @@ module FileConcern
     attachment_names.each { |name| session[name] = nil }
   end
 
-  def load_file_attachments
+  def load_file_attachments(params_name_override = nil)
     attachment_names.map do |name|
-      attachment_params = get_attachment_params(name)
+      attachment_params = get_attachment_params(name, params_name_override)
       if attachment_params[:file].present?
         file = ActiveStorage::Blob.create_after_upload!(
           io: attachment_params[:file],
@@ -50,10 +50,10 @@ module FileConcern
     end
   end
 
-  def get_attachment_params(attachment_name)
-    return {} if params[file_params_key].blank? || params[file_params_key][attachment_name].blank?
+  def get_attachment_params(attachment_name, params_key = file_params_key)
+    return {} if params[params_key].blank? || params[params_key][attachment_name].blank?
 
-    params.require(file_params_key).require(attachment_name).permit(:file, :title, :description, :document_type, :other_type)
+    params.require(params_key).require(attachment_name).permit(:file, :title, :description, :document_type, :other_type)
   end
 
   def get_attachment_metadata_params(attachment_name)
