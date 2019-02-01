@@ -1,6 +1,17 @@
 - content_for :page_title, "Your cosmetic products"
 = render "layouts/rp_navbar"
 .govuk-grid-row
+  .govuk-grid-column-full
+    .govuk-error-summary.loading_spinner__container
+      h2.govuk-error-summary__title
+        span.loading_spinner__dot
+
+        | Checking X notification files
+
+      .govuk-error-summary__body
+        = link_to "Refresh the browser to see uploaded products", url_for,
+                class: "govuk-link--no-visited-state"
+.govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       | Your cosmetic products
