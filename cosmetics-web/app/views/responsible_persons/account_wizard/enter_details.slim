@@ -7,6 +7,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    = render "error_summary", errors: @responsible_person.errors
+
     h1.govuk-heading-xl
       | UK responsible person details
 
