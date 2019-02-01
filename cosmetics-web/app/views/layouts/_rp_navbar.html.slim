@@ -1,5 +1,5 @@
 nav.app-navigation.govuk-clearfix
-  ul.rp-links
+  ul.app-navigation__list
     li[class=(params[:controller] == "responsible_persons/notifications" && "app-navigation--current-page")]
       = link_to "Cosmetics products", responsible_person_notifications_path(@responsible_person),
               "data-topnav": "responsible_persons/notifications",
@@ -12,5 +12,5 @@ nav.app-navigation.govuk-clearfix
       = link_to "Team members", responsible_person_team_members_path(@responsible_person),
               "data-topnav": "responsible_persons/team_members",
               class: "govuk-link--no-visited-state"
-    .rp-name.govuk-heading-s
+    .responsible-person-name.govuk-heading-s
       = @responsible_person.name
