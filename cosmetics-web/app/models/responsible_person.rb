@@ -19,4 +19,8 @@ class ResponsiblePerson < ApplicationRecord
   def add_team_member(user)
     team_members << TeamMember.create(user: user)
   end
+
+  def address_lines
+    [address_line_1, address_line_2, city, county, postal_code].select(&:present?)
+  end
 end
