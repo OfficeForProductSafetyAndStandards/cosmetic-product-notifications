@@ -10,7 +10,7 @@
   p Nobody is assigned yet
 
 - if policy(@investigation).assign?
-  = render "assignee_form", investigation: @investigation
+  = render "investigations/assign/assignee_form", investigation: @investigation
 - else
   p
     = "You do not have permission to assign this #{@investigation.case_type}."

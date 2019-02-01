@@ -147,7 +147,7 @@ class Investigation < ApplicationRecord
 
   def past_assignees
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
-    user_id_list = activities.map(&:assignable_id).to_set
+    user_id_list = activities.map(&:assignable_id)
     User.where(id: user_id_list)
   end
 
@@ -162,7 +162,7 @@ class Investigation < ApplicationRecord
 
   def past_teams
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
-    team_id_list = activities.map(&:assignable_id).to_set
+    team_id_list = activities.map(&:assignable_id)
     Team.where(id: team_id_list)
   end
 

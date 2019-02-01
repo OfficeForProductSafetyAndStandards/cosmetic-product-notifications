@@ -46,9 +46,10 @@ class User < Shared::Web::User
     attributes.merge(organisation_id: organisation&.id)
   end
 
-  def display_name
+  def display_name(ignore_visibility_restrictions: false)
     display_name = full_name
-    can_display_teams = organisation.present? && current_user.organisation&.id == organisation.id && teams.any?
+    can_display_teams = ignore_visibility_restrictions || (organisation.present? && current_user.organisation&.id == organisation.id)
+    can_display_teams = can_display_teams && teams.any?
     membership_display = can_display_teams ? teams.map(&:name).join(', ') : organisation&.name
     display_name += " (#{membership_display})" if membership_display.present?
     display_name

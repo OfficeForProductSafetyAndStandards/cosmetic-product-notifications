@@ -1,0 +1,7 @@
+.govuk-radios__item
+  = form.radio_button :assignable_id_radio, "Other team", class: "govuk-radios__input",
+          "data-aria-controls": "conditional-assignee-other-team"
+  = form.label :assignable_id_radio, "Other team", value: "Other team", class: "govuk-label govuk-radios__label"
+#conditional-assignee-other-team.govuk-radios__conditional.govuk-radios__conditional--hidden
+  = render "investigations/assign/assignee_selection", form: form, key: :select_other_team,
+          options: compute_select_options(entities: Team.all, ignore_visibility_restrictions: true)

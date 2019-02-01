@@ -3,58 +3,16 @@
   = render "form_validation_display", errors: investigation.errors
   .govuk-form-group class=("govuk-form-group--error" unless investigation.errors[:assignee].empty?)
     .govuk-radios.govuk-radios--conditional data-module="radios"
-
-      - investigation.important_assignable_people.each do |user|
-        .govuk-radios__item
-          = form.radio_button :assignable_id_radio, user.id, class: "govuk-radios__input",
-                  checked: investigation.assignee == user
-          = form.label :assignable_id_radio, user.display_name, value: user.id,
-                  class: "govuk-label govuk-radios__label"
-      - if current_user.teams.any?
-        .govuk-radios__item
-          = form.radio_button :assignable_id_radio, "Someone in your team", class: "govuk-radios__input",
-                  "data-aria-controls": "conditional-assignee-team-mate"
-          = form.label :assignable_id_radio, "Someone in your team", value: "Someone in your team",
-                  class: "govuk-label govuk-radios__label"
-        #conditional-assignee-team-mate.govuk-radios__conditional.govuk-radios__conditional--hidden
-          = render "investigations/assignee_selection", investigation: investigation, form: form,
-                  key: :select_team_member,
-                  options: compute_select_options(entities: User.get_team_members(user: current_user))
-      .govuk-radios__item
-        = form.radio_button :assignable_id_radio, "Previously assigned", class: "govuk-radios__input",
-                "data-aria-controls": "conditional-assignee-past-person"
-        = form.label :assignable_id_radio, "Previously assigned", value: "Previously assigned",
-                class: "govuk-label govuk-radios__label"
-      #conditional-assignee-past-person.govuk-radios__conditional.govuk-radios__conditional--hidden
-        = render "investigations/assignee_selection", investigation: investigation, form: form,
-                key: :select_previously_assigned,
-                options: compute_select_options(entities: investigation.past_assignees + investigation.past_teams)
+      = render "investigations/assign/important_assignable_people", form: form, investigation: investigation
+      = render "investigations/assign/team_member_select", form: form
+      = render "investigations/assign/previously_assigned_select", form: form, investigation: investigation
 
       .govuk-radios__divider Teams
-      - investigation.important_assignable_teams.each do |team|
-        .govuk-radios__item
-          = form.radio_button :assignable_id_radio, team.id, class: "govuk-radios__input",
-                  checked: investigation.assignee == team
-          = form.label :assignable_id_radio, team.display_name, value: team.id,
-                  class: "govuk-label govuk-radios__label"
-      .govuk-radios__item
-        = form.radio_button :assignable_id_radio, "Other team", class: "govuk-radios__input",
-                "data-aria-controls": "conditional-assignee-other-team"
-        = form.label :assignable_id_radio, "Other team", value: "Other team", class: "govuk-label govuk-radios__label"
-      #conditional-assignee-other-team.govuk-radios__conditional.govuk-radios__conditional--hidden
-        = render "investigations/assignee_selection", investigation: investigation, form: form,
-                key: :select_other_team,
-                options: compute_select_options(entities: Team.all)
+      = render "investigations/assign/important_assignable_teams", form: form, investigation: investigation
+      = render "investigations/assign/other_team_select", form: form
 
       .govuk-radios__divider or
-      .govuk-radios__item
-        = form.radio_button :assignable_id_radio, "Someone else", class: "govuk-radios__input",
-                "data-aria-controls": "conditional-other-assignee-other"
-        = form.label :assignable_id_radio, "Someone else", value: "Someone else", class: "govuk-label govuk-radios__label"
-      #conditional-other-assignee-other.govuk-radios__conditional.govuk-radios__conditional--hidden
-        = render "investigations/assignee_selection", investigation: investigation, form: form,
-                key: :select_someone_else,
-                options: compute_select_options(entities: User.all)
+      = render "investigations/assign/someone_else_select", form: form
 
   .govuk-form-group
     = form.submit "Assign", class: "govuk-button"
