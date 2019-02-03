@@ -12,7 +12,7 @@ h1.govuk-heading-xl
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Please provide a title
         .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:user_title].any?)
-          span.govuk-hint#question-title-hint
+          span.govuk-hint#enquiry-title-hint
             | This will help other users identify this project
           = form.text_field :user_title, class: "govuk-input", "aria-describedby": "project-title-hint",
                   maxlength: 1000

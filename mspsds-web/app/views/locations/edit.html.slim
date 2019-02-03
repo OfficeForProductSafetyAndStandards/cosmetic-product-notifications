@@ -7,4 +7,8 @@
       span.govuk-caption-xl
         = "Business: #{@business.trading_name}"
       | Edit location
-= render "form", location: @location, business: nil, edit: true
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      = form_with(model: @location, url: business_location_path(@business, @location), local: true) do |form|
+        = render "form_validation_display", errors: @location.errors
+        = render "form", form: form

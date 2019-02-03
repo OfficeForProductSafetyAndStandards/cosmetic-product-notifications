@@ -1,0 +1,30 @@
+.product {
+  :first-of-type {
+    border-top: none;
+  }
+
+  :last-of-type {
+    border-bottom: none;
+  }
+
+  display: inline-block;
+
+  .product-data {
+    width: 65%;
+    display: block;
+    float: left;
+
+    dt {
+      min-width: 220px;
+    }
+
+    dd {
+      margin-left: 0;
+    }
+
+    dt,
+    dd {
+      display: inline-block;
+    }
+  }
+}

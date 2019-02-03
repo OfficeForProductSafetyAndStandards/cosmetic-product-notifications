@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :question, controller: "investigations/question", only: %i[show new create update]
+  resources :enquiry, controller: "investigations/enquiry", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
   resources :project, controller: "investigations/project", only: %i[new create]
 
@@ -60,7 +60,12 @@ Rails.application.routes.draw do
   end
 
   resources :businesses, concerns: %i[document_attachable] do
-    resources :locations, shallow: true do
+    resources :locations do
+      member do
+        get :remove
+      end
+    end
+    resources :contacts do
       member do
         get :remove
       end
