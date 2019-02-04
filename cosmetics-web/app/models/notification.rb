@@ -4,6 +4,9 @@ class Notification < ApplicationRecord
 
   belongs_to :responsible_person
   has_many :components, dependent: :destroy
+  has_many :image_uploads, dependent: :destroy
+
+  accepts_nested_attributes_for :image_uploads
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_import_country, if: :will_save_change_to_import_country?

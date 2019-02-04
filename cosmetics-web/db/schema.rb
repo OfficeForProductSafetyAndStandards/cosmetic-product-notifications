@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 2019_02_05_094834) do
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
+  create_table "image_uploads", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "notification_id"
+    t.index ["notification_id"], name: "index_image_uploads_on_notification_id"
+  end
+
   create_table "notification_files", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -89,6 +96,7 @@ ActiveRecord::Schema.define(version: 2019_02_05_094834) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "components", "notifications"
+  add_foreign_key "image_uploads", "notifications"
   add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "responsible_person_users", "responsible_persons"

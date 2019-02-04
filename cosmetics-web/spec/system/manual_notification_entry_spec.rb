@@ -28,11 +28,18 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # add_product_image
+    attach_file(
+      :image_upload, 
+      Rails.root + 'spec/fixtures/testImage.png')
+    click_button "Continue"
+
     # Check your answers page
     expect_check_your_answers_value("Product name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "N/A")
+    expect_check_your_answers_value("Label image", "testImage.png")
     click_button "Accept and register the cosmetics product"
 
     # Check notification was completed
@@ -63,12 +70,19 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # add_product_image
+    attach_file(
+      :image_upload, 
+      Rails.root + 'spec/fixtures/testImage.png')
+    click_button "Continue"
+
     # Check your answers page
     expect_check_your_answers_value("Product name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "Yes")
     expect_check_your_answers_value("Imported from", "New Zealand")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "N/A")
+    expect_check_your_answers_value("Label image", "testImage.png")
     click_button "Accept and register the cosmetics product"
 
     # Check notification was completed
@@ -104,11 +118,18 @@ RSpec.describe "Manually enter product details", type: :system do
     end
     click_button "Continue"
 
+    # add_product_image
+    attach_file(
+      :image_upload, 
+      Rails.root + 'spec/fixtures/testImage.png')
+    click_button "Continue"
+
     # Check your answers page
     expect_check_your_answers_value("Product name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "Red, Blue, Yellow")
+    expect_check_your_answers_value("Label image", "testImage.png")
 
     click_button "Accept and register the cosmetics product"
 

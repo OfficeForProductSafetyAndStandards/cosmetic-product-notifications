@@ -60,6 +60,15 @@
                         | Shades
                     td.govuk-table__cell
                         = @notification.components.first.shades&.join(', ') || "N/A"
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Label image
+                    td.govuk-table__cell
+                        - @notification.image_uploads.each_with_index do |image_upload, index|
+                            p 
+                                = link_to image_upload.file.filename, url_for(image_upload.file)
+
+
     .govuk-grid-column-two-thirds
         h3.govuk-heading-m
             | Now register your cosmetic product

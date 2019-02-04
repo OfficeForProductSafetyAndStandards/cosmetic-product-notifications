@@ -34,7 +34,7 @@ class ComponentBuildController < ApplicationController
   end
 
   def finish_wizard_path
-    edit_notification_path(@component.notification)
+    notification_build_path(@component.notification, :add_product_image)
   end
 
 private
