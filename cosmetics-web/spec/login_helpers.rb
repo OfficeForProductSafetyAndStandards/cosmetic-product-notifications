@@ -1,6 +1,5 @@
 module LoginHelpers
-
-  def sign_in(as_user: test_user)
+  def sign_in(as_user: build(:user))
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(as_user))
   end
@@ -9,10 +8,6 @@ module LoginHelpers
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
-  end
-
-  def test_user(name: "Test User")
-    User.new(id: SecureRandom.uuid, email: "test.user@example.com", first_name: name)
   end
 
   def format_user_for_get_userinfo(user, groups: [])

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe NotificationFilesController, type: :controller do
   before do
-    sign_in
+    sign_in_as_member_of_responsible_person(create(:responsible_person))
   end
 
   after do
