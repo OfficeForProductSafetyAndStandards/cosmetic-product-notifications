@@ -19,14 +19,16 @@ class Investigations::MsaInvestigationsController < ApplicationController
   before_action :store_investigation, only: %i[update]
   before_action :set_why_reporting, ony: %i[show update], if: -> { step == :why_reporting }
   before_action :store_why_reporting, ony: %i[update], if: -> { step == :why_reporting }
+  before_action :set_selected_businesses, ony: %i[show update], if: -> { step == :which_businesses }
+  before_action :store_selected_businesses, ony: %i[update], if: -> { step == :which_businesses }
 
   #GET /xxx/step
   def show
     case step
     when :business
-      next_selected_business = session_businesses.find { |entry| entry["business"].nil? }
-      if next_selected_business
-        @business_type = next_selected_business["type"]
+      next_business = session_businesses.find { |entry| entry["business"].nil? }
+      if next_business
+        @business_type = next_business["type"]
         set_business
       else
         return redirect_to next_wizard_path
@@ -71,7 +73,8 @@ class Investigations::MsaInvestigationsController < ApplicationController
     if records_valid?
       case step
       when :which_businesses
-        set_session_businesses selected_businesses
+        store_selected_businesses
+        store_businesses
       when :business
         store_business
         return redirect_to wizard_path step
@@ -115,6 +118,21 @@ private
     @investigation = Investigation.new(investigation_step_params.except(:unsafe, :non_compliant))
   end
 
+  def set_why_reporting
+    @unsafe = investigation_step_params.include?(:unsafe) ? product_unsafe : session[:unsafe]
+    @non_compliant = investigation_step_params.include?(:non_compliant) ?
+                         product_non_compliant :
+                         session[:non_compliant]
+  end
+
+  def set_selected_businesses
+    if params.has_key?(:businesses)
+      @selected_businesses = which_businesses_params.select { |_, selected| selected == "1" }.keys
+    else
+      @selected_businesses = session[:selected_businesses]
+    end
+  end
+
   def set_business
     @business = Business.new business_step_params
     @business.locations.build
@@ -131,7 +149,8 @@ private
     session[:files] = []
     session[:product_files] = []
     session.delete :file
-    set_session_businesses([])
+    session[:selected_businesses] = []
+    session[:businesses] = []
   end
 
   def store_investigation
@@ -219,18 +238,15 @@ private
   end
 
   def session_businesses
-    session[:selected_businesses]
+    session[:businesses]
   end
 
-  def set_why_reporting
-    @unsafe = investigation_step_params.include?(:unsafe) ? product_unsafe : session[:unsafe]
-    @non_compliant = investigation_step_params.include?(:non_compliant) ?
-                         product_non_compliant :
-                         session[:non_compliant]
+  def store_selected_businesses
+    session[:selected_businesses] = @selected_businesses
   end
 
-  def set_session_businesses new_value
-    session[:selected_businesses] = new_value
+  def store_businesses
+    session[:businesses] = @businesses
   end
 
   def store_why_reporting
@@ -273,9 +289,8 @@ private
     session.delete :file
   end
 
-  def selected_businesses
-    return {} if which_businesses_params["none"] == "1"
-
+  def businesses
+    return [] if which_businesses_params["none"] == "1"
     businesses = which_businesses_params.select { |relationship, selected| relationship != "other" && selected == "1" }.keys
     businesses << which_businesses_params[:other_business_type] if which_businesses_params[:other] == "1"
     businesses.map { |type| { type: type, business: nil } }
