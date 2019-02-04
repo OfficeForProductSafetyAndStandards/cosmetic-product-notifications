@@ -1,4 +1,7 @@
-function simpleAccessibleAutocomplete(id, autocompleteOptions) { // eslint-disable-line no-unused-vars
+import $ from 'jquery';
+import accessibleAutocomplete from 'accessible-autocomplete';
+
+export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
   var element = document.getElementById(id);
   var options = autocompleteOptions || {};
   if (element) {
@@ -17,21 +20,4 @@ function simpleAccessibleAutocomplete(id, autocompleteOptions) { // eslint-disab
       }
     });
   }
-}
-
-function searchOnInputChange(inputElement, url, buildQuery, callback) { // eslint-disable-line no-unused-vars
-  var debounceTimeout = null;
-  var searchRequest = null;
-  inputElement.on('keyup change', function () {
-    clearTimeout(debounceTimeout);
-    if (searchRequest) {
-      // Cancel previous outstanding requests
-      searchRequest.abort();
-    }
-    // Don't send requests all the time, just every 500ms
-    debounceTimeout = setTimeout(function () {
-      searchRequest = $.get(url, buildQuery())
-        .done(callback);
-    }, 500);
-  });
 }

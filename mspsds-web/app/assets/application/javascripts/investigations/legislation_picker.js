@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import accessibleAutocomplete from 'accessible-autocomplete';
+
 $(document).ready(function () {
   var legislationContainer = document.getElementById('legislation-autocomplete-container');
   var legislationInput = document.getElementById('legislation-input');

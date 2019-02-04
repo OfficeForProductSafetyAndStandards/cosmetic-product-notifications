@@ -1,6 +1,5 @@
 $govuk-global-styles: true;
-$govuk-image-url-function: 'image-url';
-$govuk-font-url-function: 'font-url';
-@import "govuk-frontend/all";
+$govuk-assets-path: '~govuk-frontend/assets/';
+@import "~govuk-frontend/all";
 @import "navbar";
 @import "autocomplete"

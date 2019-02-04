@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 $(document).ready(function () {
   var attachmentFileInput = document.getElementById('attachment-file-input');
   var attachmentDescription = document.getElementById('attachment-description');

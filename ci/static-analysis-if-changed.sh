@@ -8,8 +8,8 @@ if [[ $(./ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| )) ]]; then
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d $COMPONENT
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT bin/rubocop
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT bin/slim-lint -c vendor/shared-web/.slim-lint.yml app/views
-    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/javascripts
-    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'
+    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets
+    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/**/*.scss'
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT bin/brakeman --no-pager
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
 else

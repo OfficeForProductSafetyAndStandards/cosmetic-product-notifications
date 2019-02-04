@@ -9,4 +9,4 @@ class StripInsecureHeaders
   end
 end
 
-Rails.application.config.middleware.insert_before(0, StripInsecureHeaders)
+Rails.application.config.middleware.insert_before(0, StripInsecureHeaders) if Rails.env.production?

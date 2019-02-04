@@ -1,4 +1,6 @@
-/* globals simpleAccessibleAutocomplete */
+import $ from 'jquery';
+import { simpleAccessibleAutocomplete } from '../autocomplete';
+
 $(document).ready(function () {
   simpleAccessibleAutocomplete('product-picker', { showAllValues: true });
   simpleAccessibleAutocomplete('business-picker', { showAllValues: true });
