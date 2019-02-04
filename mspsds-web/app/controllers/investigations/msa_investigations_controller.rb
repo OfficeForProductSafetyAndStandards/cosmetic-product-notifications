@@ -26,7 +26,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
   def show
     case step
     when :business
-      next_business = session_businesses.find { |entry| entry["business"].nil? }
+      next_business = session[:businesses].find { |entry| entry["business"].nil? }
       if next_business
         @business_type = next_business["type"]
         set_business
@@ -74,7 +74,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
       case step
       when :which_businesses
         store_selected_businesses
-        store_businesses
+        store_pending_businesses
       when :business
         store_business
         return redirect_to wizard_path step
@@ -239,16 +239,20 @@ private
     [:test_results, :risk_assessments, :product_images, :evidence_images, :other_files]
   end
 
-  def session_businesses
-    session[:businesses]
-  end
-
   def store_selected_businesses
     session[:selected_businesses] = @selected_businesses
   end
 
-  def store_businesses
-    session[:businesses] = @businesses
+  def store_pending_businesses
+    if which_businesses_params["none"] == "1"
+      session[:businesses] = []
+    else
+      businesses = which_businesses_params
+                       .select {|relationship, selected| relationship != "other" && selected == "1"}
+                       .keys
+      businesses << which_businesses_params[:other_business_type] if which_businesses_params[:other] == "1"
+      session[:businesses] = businesses.map {|type| {type: type, business: nil}}
+    end
   end
 
   def store_why_reporting
@@ -257,7 +261,7 @@ private
   end
 
   def store_business
-    business_entry = session_businesses.find { |entry| entry["type"] == params.require(:business)[:business_type] }
+    business_entry = session[:businesses].find { |entry| entry["type"] == params.require(:business)[:business_type] }
     business_entry["business"] = Business.new business_step_params
   end
 
@@ -289,13 +293,6 @@ private
       session[:files] << @file_blob.id
     end
     session.delete :file
-  end
-
-  def businesses
-    return [] if which_businesses_params["none"] == "1"
-    businesses = which_businesses_params.select { |relationship, selected| relationship != "other" && selected == "1" }.keys
-    businesses << which_businesses_params[:other_business_type] if which_businesses_params[:other] == "1"
-    businesses.map { |type| { type: type, business: nil } }
   end
 
   def pending_corrective_action_params
@@ -361,7 +358,7 @@ private
   end
 
   def save_businesses
-    session_businesses.each do |session_business|
+    session[:businesses].each do |session_business|
       business = Business.create(session_business["business"])
       @investigation.add_business(business, session_business["type"])
     end
