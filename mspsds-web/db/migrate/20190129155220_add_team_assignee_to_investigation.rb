@@ -20,8 +20,6 @@ class AddTeamAssigneeToInvestigation < ActiveRecord::Migration[5.2]
             Investigation.all.each do |investigation|
               investigation.update! assignee_id: investigation.assignable_id
             end
-            t.remove :assignable_id
-            t.remove :assignable_type
             add_index :investigations, :assignee_id
           end
         end
