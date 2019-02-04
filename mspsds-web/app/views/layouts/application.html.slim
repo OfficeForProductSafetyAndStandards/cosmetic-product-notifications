@@ -10,14 +10,6 @@ html.govuk-template.app-html-class[lang="en"]
         gtag('js', new Date());
         gtag('config', 'UA-126364208-1');
 
-        document.ready(function (event) {
-          if (typeof gtag === 'function') {
-            gtag('config', 'UA-126364208-1', {
-              'page_location': event.data.url
-            });
-          }
-        });
-
     meta[charset="utf-8"]
     title
       = yield :page_title
