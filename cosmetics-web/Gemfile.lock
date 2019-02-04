@@ -134,6 +134,11 @@ GEM
     et-orbi (1.1.7)
       tzinfo
     execjs (2.7.0)
+    factory_bot (5.0.0)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.0.0)
+      factory_bot (~> 5.0.0)
+      railties (>= 4.2.0)
     ffi (1.10.0)
     fugit (1.1.8)
       et-orbi (~> 1.1, >= 1.1.7)
@@ -377,6 +382,7 @@ DEPENDENCIES
   aasm
   bootsnap (>= 1.1.0)
   cf-app-utils
+  factory_bot_rails
   jbuilder (~> 2.8)
   mini_magick
   pg (~> 1.1)
