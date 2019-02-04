@@ -53,19 +53,21 @@ class Team < ActiveHash::Base
   def self.ensure_names_up_to_date
     return if Rails.env.test?
 
-    Rails.application.config.team_name_constants.each do |team|
-      name = team[1]
-      found = false
-      self.data.each { |team_data| found = found || team_data[:name] == name }
-      raise "Team name #{name} not found, if recently changed in Keycloak, please update important_team_names.yml" unless found
+    Rails.cache.fetch(:up_to_date, expires_in: 30.minutes) do
+      Rails.application.config.team_names["organisations"]["opss"].each do |name|
+        found = false
+        self.data.each { |team_data| found = found || team_data[:name] == name }
+        raise "Team name #{name} not found, if recently changed in Keycloak, please update important_team_names.yml" unless found
+      end
+      true
     end
   end
 
   def self.get_visible_teams(user)
-    team_names = Rails.application.config.team_name_constants
-    return Team.where(name: [team_names["enforcement"], team_names["processing"], team_names["incident_management"]]) if user.is_opss?
+    team_names = Rails.application.config.team_names["organisations"]["opss"]
+    return Team.where(name: team_names) if user.is_opss?
 
-    Team.where(name: team_names["enforcement"])
+    Team.where(name: team_names[0])
   end
 end
 Team.all if Rails.env.development?

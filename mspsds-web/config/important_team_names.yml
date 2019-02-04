@@ -1,4 +1,6 @@
 ---
-enforcement: "OPSS Enforcement"
-processing: "OPSS Processing"
-incidend_management: "OPSS Incident Management"
+organisations:
+  opss:
+    - OPSS Enforcement
+    - OPSS Processing
+    - OPSS Incident Management
