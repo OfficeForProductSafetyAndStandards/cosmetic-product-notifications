@@ -17,6 +17,8 @@ class Investigations::MsaInvestigationsController < ApplicationController
   before_action :set_countries, only: %i[show create update]
   before_action :store_product, only: %i[update]
   before_action :store_investigation, only: %i[update]
+  before_action :set_why_reporting, ony: %i[show update], if: -> { step == :why_reporting }
+  before_action :store_why_reporting, ony: %i[update], if: -> { step == :why_reporting }
 
   #GET /xxx/step
   def show
@@ -122,6 +124,8 @@ private
   def clear_session
     session.delete :investigation
     session.delete :product
+    session.delete :unsafe
+    session.delete :non_compliant
     session[:corrective_actions] = []
     session[:test_results] = []
     session[:files] = []
@@ -218,8 +222,20 @@ private
     session[:selected_businesses]
   end
 
+  def set_why_reporting
+    @unsafe = investigation_step_params.include?(:unsafe) ? product_unsafe : session[:unsafe]
+    @non_compliant = investigation_step_params.include?(:non_compliant) ?
+                         product_non_compliant :
+                         session[:non_compliant]
+  end
+
   def set_session_businesses new_value
     session[:selected_businesses] = new_value
+  end
+
+  def store_why_reporting
+    session[:unsafe] = @unsafe
+    session[:non_compliant] = @non_compliant
   end
 
   def store_business
