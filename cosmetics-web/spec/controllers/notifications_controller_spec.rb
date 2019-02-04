@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe NotificationsController, type: :controller do
   before do
-    authenticate_user
+    sign_in
   end
 
   after do
-    sign_out_user
+    sign_out
   end
 
   describe "GET /confimation" do

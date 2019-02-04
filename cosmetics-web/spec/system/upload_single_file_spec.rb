@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Upload a single file", type: :system do
   before do
-    allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
+    sign_in
   end
 
   after do
-    allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
+    sign_out
   end
 
   it "enables to upload a file" do
