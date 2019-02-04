@@ -9,4 +9,4 @@ test:
   <<: *default
 
 production:
-  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("mspsds-redis-session")["uri"] %>
+  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("mspsds-session")["uri"] %>
