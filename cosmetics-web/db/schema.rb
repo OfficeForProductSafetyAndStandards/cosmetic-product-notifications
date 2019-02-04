@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_31_143532) do
+ActiveRecord::Schema.define(version: 2019_02_04_112230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,9 @@ ActiveRecord::Schema.define(version: 2019_01_31_143532) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "responsible_person_id"
+    t.uuid "user_id"
+    t.index ["responsible_person_id"], name: "index_notification_files_on_responsible_person_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -77,5 +80,6 @@ ActiveRecord::Schema.define(version: 2019_01_31_143532) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "notifications", "responsible_persons"
+  add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "team_members", "responsible_persons"
 end

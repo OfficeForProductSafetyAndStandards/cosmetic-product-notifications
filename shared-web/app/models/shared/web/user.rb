@@ -10,7 +10,7 @@ module Shared
       field :email
 
       def self.find_or_create(user)
-        User.find_by(id: user[:id]) || User.create(user)
+        User.find_by(id: user[:id]) || User.create(user.except(:groups))
       end
 
       def self.all(options = {})

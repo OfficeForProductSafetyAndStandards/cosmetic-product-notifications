@@ -1,5 +1,6 @@
-class NotificationFilesController < ApplicationController
+class ResponsiblePersons::NotificationFilesController < ApplicationController
   before_action :set_notification_file, only: %i[show edit update destroy]
+  before_action :set_responsible_person
 
   # GET /notification_files
   # GET /notification_files.json
@@ -26,12 +27,14 @@ class NotificationFilesController < ApplicationController
 
     if notification_file_params && notification_file_params[:uploaded_file]
       @notification_file.name = notification_file_params[:uploaded_file].original_filename
+      @notification_file.responsible_person_id = @responsible_person.id
+      @notification_file.user_id = current_user.id
       @notification_file.uploaded_file.attach(notification_file_params[:uploaded_file])
     end
 
     respond_to do |format|
       if @notification_file.save
-        format.html { redirect_to @notification_file, notice: 'NotificationFile was successfully created.' }
+        format.html { redirect_to responsible_person_notifications_path(@responsible_person) }
         format.json { render :show, status: :created, location: @notification_file }
       else
         format.html { render :new }
@@ -69,6 +72,10 @@ private
     # Use callbacks to share common setup or constraints between actions.
   def set_notification_file
     @notification_file = NotificationFile.find(params[:id])
+  end
+
+  def set_responsible_person
+    @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.
