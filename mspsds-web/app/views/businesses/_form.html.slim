@@ -1,5 +1,3 @@
-= render "form_validation_display", errors: business.errors
-
 fieldset.govuk-fieldset
   .govuk-form-group class=[("govuk-form-group--error" if business.errors[:trading_name].any?)]
     = form.label :trading_name, "Trading name",
@@ -27,12 +25,13 @@ fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
 
 = form.fields_for :locations, business.primary_location do |ff|
   fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
+    = ff.hidden_field :name, value: "Main address"
     legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       | Address
     .govuk-form-group
       = ff.label :address_line_1, "Building and street",
               class: "govuk-label"
-      = ff.text_field :address_line_1, class: "govuk-input"
+      = ff.text_field :address_line_1, class: "govuk-input", class: "govuk-input"
 
     .govuk-form-group
       = ff.text_field :address_line_2, class: "govuk-input"

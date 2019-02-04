@@ -21,18 +21,13 @@ class Investigations::MsaInvestigationsController < ApplicationController
   before_action :store_why_reporting, ony: %i[update], if: -> { step == :why_reporting }
   before_action :set_selected_businesses, ony: %i[show update], if: -> { step == :which_businesses }
   before_action :store_selected_businesses, ony: %i[update], if: -> { step == :which_businesses }
+  before_action :set_business, only: %i[show update], if: -> { step == :business }
 
   #GET /xxx/step
   def show
     case step
     when :business
-      next_business = session[:businesses].find { |entry| entry["business"].nil? }
-      if next_business
-        @business_type = next_business["type"]
-        set_business
-      else
-        return redirect_to next_wizard_path
-      end
+      return redirect_to next_wizard_path if all_businesses_complete?
     when :corrective_action
       set_corrective_action
       set_attachment
@@ -138,9 +133,21 @@ private
   end
 
   def set_business
-    @business = Business.new business_step_params
-    @business.locations.build
-    @business.build_contact
+    if params.include?(:business)
+      @business = Business.new business_step_params
+      @business.locations.build business_step_params[:locations_attributes]["0"]
+      @business.build_contact business_step_params[:contact_attributes]
+    else
+      @business = Business.new
+      @business.locations.build
+      @business.build_contact
+    end
+    next_business = session[:businesses].find { |entry| entry["business"].nil? }
+    @business_type = next_business ? next_business["type"] : nil
+  end
+
+  def all_businesses_complete?
+    session[:businesses].all? { |entry| entry["business"].present? }
   end
 
   def clear_session
@@ -254,7 +261,7 @@ private
                        .select {|relationship, selected| relationship != "other" && selected == "1"}
                        .keys
       businesses << which_businesses_params[:other_business_type] if which_businesses_params[:other] == "1"
-      session[:businesses] = businesses.map {|type| {type: type, business: nil}}
+      session[:businesses] = businesses.map {|type| { type: type, business: nil }}
     end
   end
 
@@ -265,7 +272,7 @@ private
 
   def store_business
     business_entry = session[:businesses].find { |entry| entry["type"] == params.require(:business)[:business_type] }
-    business_entry["business"] = Business.new business_step_params
+    business_entry["business"] = @business
   end
 
   def store_corrective_action
@@ -328,10 +335,12 @@ private
       validate_none_as_only_selection
       @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
       @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
+    when :business
+      @business.validate
     when :has_corrective_action
       @investigation.errors.add(:base, "Please indicate whether or not correction actions have been agreed or taken") if corrective_action_not_known
     end
-    @investigation.errors.empty? && @product.errors.empty?
+    @investigation.errors.empty? && @product.errors.empty? && @business.errors.empty?
   end
 
   def validate_none_as_only_selection
