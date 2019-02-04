@@ -7,3 +7,6 @@ Rails.application.config.hazard_constants = YAML.load_file(
 Rails.application.config.product_constants = YAML.load_file(
   Rails.root.join("config", "product_constants.yml")
 )
+Rails.application.config.team_name_constants = YAML.load_file(
+  Rails.root.join("config", "important_team_names.yml")
+)

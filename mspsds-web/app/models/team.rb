@@ -27,6 +27,8 @@ class Team < ActiveHash::Base
       self.data = nil
     end
 
+    self.ensure_names_up_to_date
+
     if options.has_key?(:conditions)
       where(options[:conditions])
     else
@@ -48,20 +50,22 @@ class Team < ActiveHash::Base
     display_name
   end
 
-  def self.get_visible_teams(user)
-    return Team.find_teams_in_organisation(%w[Enforcement Processing Incident], "Safety and Standards") if user.is_opss?
+  def self.ensure_names_up_to_date
+    return if Rails.env.test?
 
-    Team.find_teams_in_organisation(%w[Enforcement], "Safety and Standards")
+    Rails.application.config.team_name_constants.each do |team|
+      name = team[1]
+      found = false
+      self.data.each { |team_data| found = found || team_data[:name] == name }
+      raise "Team name #{name} not found, if recently changed in Keycloak, please update important_team_names.yml" unless found
+    end
   end
 
-  def self.find_teams_in_organisation(team_names, organisation_name)
-    Team.all.select do |team|
-      found = false
-      team_names.each do |name|
-        found = found || (team.name.downcase.include? name.downcase)
-      end
-      found && (team.organisation.name.downcase.include? organisation_name.downcase)
-    end
+  def self.get_visible_teams(user)
+    team_names = Rails.application.config.team_name_constants
+    return Team.where(name: [team_names["enforcement"], team_names["processing"], team_names["incident_management"]]) if user.is_opss?
+
+    Team.where(name: team_names["enforcement"])
   end
 end
 Team.all if Rails.env.development?
