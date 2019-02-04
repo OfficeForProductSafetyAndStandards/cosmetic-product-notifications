@@ -127,7 +127,9 @@ private
 
   def set_selected_businesses
     if params.has_key?(:businesses)
-      @selected_businesses = which_businesses_params.select { |_, selected| selected == "1" }.keys
+      @selected_businesses = which_businesses_params
+                                 .select { |key, selected| key != :other_type && selected == "1" }
+                                 .keys
     else
       @selected_businesses = session[:selected_businesses]
     end
@@ -323,12 +325,19 @@ private
       @investigation.validate :unsafe if product_unsafe
       @investigation.validate :non_compliant if product_non_compliant
     when :which_businesses
+      validate_none_as_only_selection
       @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
       @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
     when :has_corrective_action
       @investigation.errors.add(:base, "Please indicate whether or not correction actions have been agreed or taken") if corrective_action_not_known
     end
     @investigation.errors.empty? && @product.errors.empty?
+  end
+
+  def validate_none_as_only_selection
+    if @selected_businesses.include?("none") && @selected_businesses.length > 1
+      @investigation.errors.add(:none, "has to be the only option if selected")
+    end
   end
 
   def records_saved?
