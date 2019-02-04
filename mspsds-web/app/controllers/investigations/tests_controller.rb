@@ -99,8 +99,6 @@ private
   end
 
   def save_attachment
-    p "PARAMS"
-    p params
     if params[:test][:related_file] == "Yes"
       @file_blob.save if @file_blob
     elsif @file_blob
