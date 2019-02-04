@@ -8,12 +8,12 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
     "Assigned"
   end
 
-  def assignee_id
+  def assignable_id
     # Using alias for accessing parent method causes errors elsewhere :(
     AuditActivity::Investigation::Base.instance_method(:title).bind(self).call
   end
 
   def title
-    "Assigned to #{User.find_by(id: assignee_id)&.display_name}"
+    "Assigned to #{(User.find_by(id: assignable_id) || Team.find_by(id: assignable_id))&.display_name}"
   end
 end

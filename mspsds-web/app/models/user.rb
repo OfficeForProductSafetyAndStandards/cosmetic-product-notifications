@@ -1,6 +1,6 @@
 class User < Shared::Web::User
   has_many :activities, dependent: :nullify
-  has_many :investigations, dependent: :nullify, foreign_key: "assignee_id", inverse_of: :user
+  has_many :investigations, dependent: :nullify, as: :assignable
   has_many :user_sources, dependent: :delete
 
   has_many :team_users, dependent: :nullify
@@ -46,9 +46,10 @@ class User < Shared::Web::User
     attributes.merge(organisation_id: organisation&.id)
   end
 
-  def display_name
+  def display_name(ignore_visibility_restrictions: false)
     display_name = full_name
-    can_display_teams = organisation.present? && current_user.organisation&.id == organisation.id && teams.any?
+    can_display_teams = ignore_visibility_restrictions || (organisation.present? && current_user.organisation&.id == organisation.id)
+    can_display_teams = can_display_teams && teams.any?
     membership_display = can_display_teams ? teams.map(&:name).join(', ') : organisation&.name
     display_name += " (#{membership_display})" if membership_display.present?
     display_name
@@ -74,15 +75,19 @@ class User < Shared::Web::User
     has_role? :opss_user
   end
 
-  def self.get_assignees_select_options(except: [], use_short_name: false)
+  def self.get_assignees(except: [])
     users_to_exclude = Array(except)
+    self.all - users_to_exclude
+  end
 
-    select_options = { '': nil }
-    (self.all - users_to_exclude).each do |user|
-      label = use_short_name ? user.full_name : user.display_name
-      select_options[label] = user.id
+  def self.get_team_members(user:)
+    users = [].to_set
+    user.teams.each do |team|
+      team.users.each do |team_member|
+        users << team_member
+      end
     end
-    select_options
+    users
   end
 end
 User.all if Rails.env.development?
