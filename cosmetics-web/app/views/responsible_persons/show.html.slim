@@ -1,0 +1,40 @@
+- content_for :page_title, "Responsible Person"
+= render "layouts/rp_navbar"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      | Responsible person
+    = link_to "Add a responsible person", "/",
+            class: "govuk-link--no-visited-state"
+.govuk-grid-row
+  .govuk-grid-column-full
+    table.govuk-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Responsible person
+          td.govuk-table__cell
+            | Example name
+          td.govuk-table__cell
+            = link_to "Edit", "/", class: "govuk-link--no-visited-state"
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Address
+          td.govuk-table__cell
+            | Example address
+          td.govuk-table__cell
+            = link_to "Edit", "/", class: "govuk-link--no-visited-state"
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Email Address
+          td.govuk-table__cell
+            | example@test.com
+          td.govuk-table__cell
+            = link_to "Edit", "/", class: "govuk-link--no-visited-state"
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Phone Number
+          td.govuk-table__cell
+            | 07000000000
+          td.govuk-table__cell
+            = link_to "Edit", "/", class: "govuk-link--no-visited-state"

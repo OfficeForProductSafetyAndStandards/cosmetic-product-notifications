@@ -21,6 +21,7 @@ gem "puma", "~> 3.0"
 gem "pundit"
 gem "rails", "~> 5.2"
 gem "redcarpet"
+gem 'redis-rails'
 gem "rubyzip", ">= 1.2.1"
 gem "sass-rails", "~> 5.0"
 gem "sentry-raven"
@@ -37,7 +38,7 @@ gem "shared-web", path: "./vendor/shared-web"
 
 group :development, :test do
   gem "capybara"
-  gem "roo", "~> 2.8.1"
+  gem "roo", "~> 2.8.2"
   gem "rspec-mocks"
   gem "selenium-webdriver"
 

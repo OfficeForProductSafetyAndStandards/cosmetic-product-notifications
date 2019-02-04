@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_14_114318) do
+ActiveRecord::Schema.define(version: 2019_01_31_143532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,34 @@ ActiveRecord::Schema.define(version: 2019_01_14_114318) do
     t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "responsible_person_id"
+    t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
+  end
+
+  create_table "responsible_persons", force: :cascade do |t|
+    t.string "account_type"
+    t.string "name"
+    t.string "companies_house_number"
+    t.string "email_address"
+    t.string "phone_number"
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "city"
+    t.string "county"
+    t.string "postal_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "team_members", force: :cascade do |t|
+    t.bigint "responsible_person_id"
+    t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["responsible_person_id"], name: "index_team_members_on_responsible_person_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "notifications", "responsible_persons"
+  add_foreign_key "team_members", "responsible_persons"
 end

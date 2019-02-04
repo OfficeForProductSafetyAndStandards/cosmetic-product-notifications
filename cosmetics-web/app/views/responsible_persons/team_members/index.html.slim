@@ -1,0 +1,23 @@
+- content_for :page_title, "Team Members"
+= render "layouts/rp_navbar"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      | Team members
+    = link_to "Invite a colleague", "/",
+            class: "govuk-button govuk-button", role: "button"
+.govuk-grid-row
+  .govuk-grid-column-full
+    table.govuk-table
+      thead.govuk-table__head
+        tr.govuk-table__row
+          th.govuk-table__header[scope="col"]
+            | Name
+          th.govuk-table__header[scope="col"]
+            | Email address
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          td.govuk-table__cell
+            | Jane Doe
+          td.govuk-table__cell
+            | 	jane.doe@responsible-person.com

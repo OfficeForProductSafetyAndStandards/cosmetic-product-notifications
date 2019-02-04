@@ -36,17 +36,17 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show location" do
-    get location_url(@location)
+    get business_location_url(@location.business, @location)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_location_url(@location)
+    get edit_business_location_url(@location.business, @location)
     assert_response :success
   end
 
   test "should update location" do
-    patch location_url(@location), params: {
+    patch business_location_url(@location.business, @location), params: {
       location: {
         name: @location.name,
         business_id: @location.business_id,
@@ -63,7 +63,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy location" do
     assert_difference("Location.count", -1) do
-      delete location_url(@location)
+      delete business_location_url(@location.business, @location)
     end
 
     assert_redirected_to business_url(@location.business, anchor: "locations")

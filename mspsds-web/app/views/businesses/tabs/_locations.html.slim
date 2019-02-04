@@ -11,8 +11,10 @@ hr.govuk-section-break.govuk-section-break--l
             th.govuk-table__header[scope="row" class="govuk-!-width-one-third"] = location.name
             td.govuk-table__cell[class="govuk-!-width-one-half"] = location.summary
             td.govuk-table__cell = location.phone_number
-        = link_to "Edit location", edit_location_path(location), class: "govuk-link mspsds-block-link"
-        = link_to "Remove location", remove_location_path(location), class: "govuk-link mspsds-block-link"
+        = link_to "Edit location", edit_business_location_path(@business, location),
+        class: "govuk-link mspsds-block-link"
+        = link_to "Remove location", remove_business_location_path(@business, location),
+        class: "govuk-link mspsds-block-link"
         p
     - else
       p No locations.
