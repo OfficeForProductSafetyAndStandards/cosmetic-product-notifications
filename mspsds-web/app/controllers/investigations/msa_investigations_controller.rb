@@ -128,10 +128,12 @@ private
   def set_selected_businesses
     if params.has_key?(:businesses)
       @selected_businesses = which_businesses_params
-                                 .select { |key, selected| key != :other_type && selected == "1" }
+                                 .select { |key, selected| key != :other_business_type && selected == "1" }
                                  .keys
+      @other_business_type = which_businesses_params[:other_business_type]
     else
       @selected_businesses = session[:selected_businesses]
+      @other_business_type = session[:other_business_type]
     end
   end
 
@@ -241,6 +243,7 @@ private
 
   def store_selected_businesses
     session[:selected_businesses] = @selected_businesses
+    session[:other_business_type] = @other_business_type
   end
 
   def store_pending_businesses
