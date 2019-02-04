@@ -1,5 +1,4 @@
 = form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
-
   = render "form_validation_display", errors: investigation.errors
   .govuk-form-group class=("govuk-form-group--error" unless investigation.errors[:assignee].empty?)
     .govuk-radios.govuk-radios--conditional data-module="radios"
