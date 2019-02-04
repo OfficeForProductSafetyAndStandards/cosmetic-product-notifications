@@ -211,6 +211,20 @@ class InvestigationTest < ActiveSupport::TestCase
     assert_not(@new_investigation.visible_to(user))
   end
 
+  test "past assignees should be computed" do
+    user = User.find_by(last_name: "User_one")
+    @investigation.assignee = user
+    @investigation.save
+    assert_includes @investigation.past_assignees, user
+  end
+
+  test "past assignee teams should be computed" do
+    team = Team.first
+    @investigation.assignee = team
+    @investigation.save
+    assert_includes @investigation.past_teams, team
+  end
+
   def create_new_private_case
     description = "new_investigation_description"
     @new_investigation = Investigation::Allegation.create(description: description, is_private: true)
