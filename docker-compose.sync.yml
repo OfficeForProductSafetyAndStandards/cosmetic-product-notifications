@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  db:
+    ports:
+      - "5433:5432"
+
+  elasticsearch:
+    ports:
+      - "9200:9200"
+
+  keycloak:
+    env_file:
+      - .env
+      - .env.keycloak
+
+  cosmetics-web:
+    command: bin/rails s -p 3002 -b 0.0.0.0
+    ports:
+      - "3002:3002"
+    env_file:
+      - .env
+      - .env.keycloak.cosmetics
+    volumes:
+      - cosmetics-web-sync:/cosmetics-web:nocopy
+      - shared-web-sync:/cosmetics-web/vendor/shared-web:nocopy
+      - bundle-cache:/usr/local/bundle
+  cosmetics-worker:
+    env_file:
+      - .env
+    volumes:
+      - cosmetics-web-sync:/cosmetics-web:nocopy
+      - shared-web-sync:/cosmetics-web/vendor/shared-web:nocopy
+      - bundle-cache:/usr/local/bundle
+
+  mspsds-web:
+    command: bin/rails s -p 3000 -b 0.0.0.0
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+      - .env.keycloak.mspsds
+    volumes:
+      - mspsds-web-sync:/mspsds-web:nocopy
+      - shared-web-sync:/mspsds-web/vendor/shared-web:nocopy
+      - bundle-cache:/usr/local/bundle
+  mspsds-worker:
+    env_file:
+      - .env
+    volumes:
+      - mspsds-web-sync:/mspsds-web:nocopy
+      - shared-web-sync:/mspsds-web/vendor/shared-web:nocopy
+      - bundle-cache:/usr/local/bundle
+
+
+volumes:
+  cosmetics-web-sync:
+    external: true
+  mspsds-web-sync:
+    external: true
+  shared-web-sync:
+    external: true
