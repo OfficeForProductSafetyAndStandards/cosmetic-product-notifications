@@ -146,7 +146,6 @@ ActiveRecord::Schema.define(version: 2019_01_24_134204) do
     t.string "hazard_type"
     t.boolean "is_closed", default: false
     t.boolean "is_private", default: false, null: false
-    t.text "non_compliant_reason"
     t.string "product_category"
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
