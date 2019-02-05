@@ -2,3 +2,7 @@ require: rubocop-rspec
 
 inherit_gem:
   shared-web: .rubocop.yml
+
+ExampleLength:
+  Exclude:
+    - 'spec/system/**/*'
