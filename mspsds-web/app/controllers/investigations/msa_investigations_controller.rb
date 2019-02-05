@@ -23,10 +23,22 @@ class Investigations::MsaInvestigationsController < ApplicationController
   before_action :store_selected_businesses, ony: %i[update], if: -> {step == :which_businesses}
   before_action :set_business, only: %i[show update], if: -> {step == :business}
   before_action :store_business, only: %i[update], if: -> {step == :business}
+  before_action :set_repeat_step, only: %i[show update], if: -> do
+    %i[corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
+  end
+  before_action :store_repeat_step, only: %i[update], if: -> do
+    %i[corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
+  end
   before_action :set_corrective_action, only: %i[show update], if: -> {step == :corrective_action}
   before_action :store_corrective_action, only: %i[update], if: -> {step == :corrective_action}
   before_action :set_test, only: %i[show update], if: -> {step == :test_results}
   before_action :store_test, only: %i[update], if: -> {step == :test_results}
+  before_action :set_file, only: %i[show update], if: -> do
+    [:risk_assessments, :product_images, :evidence_images, :other_files].include? step
+  end
+  before_action :store_file, only: %i[update], if: -> do
+    [:risk_assessments, :product_images, :evidence_images, :other_files].include? step
+  end
 
 
   #GET /xxx/step
@@ -34,20 +46,8 @@ class Investigations::MsaInvestigationsController < ApplicationController
     case step
     when :business
       return redirect_to next_wizard_path if all_businesses_complete?
-    when :corrective_action
-      unless session[further(step)]
-        return redirect_to next_wizard_path
-      end
-    when :test_results
-      unless session[further(step)]
-        return redirect_to next_wizard_path
-      end
-    when *other_information_types # test_results exists in this array, but has been dealt with above
-      @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
-      @file_blob, * = load_file_attachments
-      unless session[further(step)]
-        return redirect_to next_wizard_path
-      end
+    when :corrective_action, *other_information_types
+      return redirect_to next_wizard_path unless @repeat_step == "Yes"
     end
     render_wizard
   end
@@ -76,20 +76,12 @@ class Investigations::MsaInvestigationsController < ApplicationController
       when :business
         store_business
         return redirect_to wizard_path step
-      when :has_corrective_action
-        store_further_corrective_action
       when :corrective_action
         store_corrective_action
-        store_further_corrective_action
         return redirect_to wizard_path step
       when :other_information
         store_other_information
-      when :test_results
-        store_further step
-        return redirect_to wizard_path step
-      when *other_information_types # test_results exists in this array, but has been dealt with above
-        store_file
-        store_further step
+      when *other_information_types
         return redirect_to wizard_path step
       when steps.last
         return create
@@ -101,11 +93,6 @@ class Investigations::MsaInvestigationsController < ApplicationController
   end
 
 private
-
-  def store_further(step)
-    info = further(step)
-    session[info] = params.permit(info)[info] == "Yes"
-  end
 
   def set_product
     @product = Product.new(product_step_params)
@@ -148,6 +135,13 @@ private
     @business_type = next_business ? next_business["type"] : nil
   end
 
+  def set_repeat_step
+    repeat_step_key = further step
+    @repeat_step = params.key?(repeat_step_key) ?
+                       params.permit(repeat_step_key)[repeat_step_key] :
+                       session[repeat_step_key]
+  end
+
   def set_corrective_action
     @corrective_action = @investigation.corrective_actions.build(corrective_action_params)
     @corrective_action.product = @product
@@ -166,6 +160,12 @@ private
 
   def all_businesses_complete?
     session[:businesses].all? {|entry| entry["business"].present?}
+  end
+
+  def set_file
+    @file_blob, * = load_file_attachments
+    @file_title = get_attachment_metadata_params(:file)[:title]
+    @file_description = get_attachment_metadata_params(:file)[:description]
   end
 
   def clear_session
@@ -299,16 +299,21 @@ private
     end
   end
 
+  def store_repeat_step
+    if params.key? further(step)
+      session[further(step)] = @repeat_step
+    else
+      file_type = step.to_s.humanize(capitalize: false)
+      @investigation.errors.add(further(step), "- select whether or not you have further #{file_type} to record")
+    end
+  end
+
   def store_corrective_action
     if @corrective_action.valid? && @file_blob
       update_blob_metadata @file_blob, corrective_action_file_metadata
       @file_blob.save if @file_blob
       session[:corrective_actions] << {corrective_action: @corrective_action, file_blob_id: @file_blob&.id}
       session.delete :file
-    end
-    if further_corrective_action_params.empty?
-      @corrective_action.errors.add(:further_corrective_action,
-                                    "- please indicate whether or not correction actions have been agreed or taken")
     end
   end
 
@@ -319,43 +324,45 @@ private
       session[:test_results] << {test: @test, file_blob_id: @file_blob&.id}
       session.delete :file
     end
-    if params.key? further(:test_results)
-      store_further :test_results
-    else
-      @test.errors.add(further(:test_results), "- select whether or not you have further test results to record")
-    end
   end
 
   def store_file
-    @file_blob, * = load_file_attachments
-    update_blob_metadata @file_blob, get_attachment_metadata_params(:file)
-    @file_blob.save!
-    if step == :product_images
-      session[:product_files] << @file_blob.id
-    else
-      session[:files] << @file_blob.id
+    if file_valid?
+      update_blob_metadata @file_blob, get_attachment_metadata_params(:file)
+      @file_blob.save
+      if step == :product_images
+        session[:product_files] << @file_blob.id
+      else
+        session[:files] << @file_blob.id
+      end
+      session.delete :file
     end
-    session.delete :file
   end
 
-  def further_corrective_action_params
-    params.permit(:further_corrective_action)
-  end
-
-  def store_further_corrective_action
-    session[:further_corrective_action] = further_corrective_action_params[:further_corrective_action] == "Yes"
+  def file_valid?
+    if @file_blob.nil?
+      @investigation.errors.add(:file, "must be provided")
+    end
+    metadata = get_attachment_metadata_params(:file)
+    if metadata[:title].blank?
+      @investigation.errors.add(:title, "for the file must be provided")
+    end
+    if metadata[:description].blank?
+      @investigation.errors.add(:description, "for the file must be provided")
+    end
+    @investigation.errors.empty?
   end
 
   def store_other_information
-    other_information_types.each do |info|
-      session[further(info)] = other_information_params[info] == "1"
+    other_information_types.each do |key|
+      session[further(key)] = other_information_params[key] == "1" ? "Yes" : "No"
     end
   end
 
   # We use 'further' to refer to the boolean flags indicating
   # whether the user wants to provide another entry of a given type
-  def further(info)
-    ("further_" + info.to_s).to_sym
+  def further(key)
+    ("further_" + key.to_s).to_sym
   end
 
   def records_valid?
@@ -373,7 +380,7 @@ private
     when :business
       return false if @business.errors.any?
     when :has_corrective_action
-      if further_corrective_action_params.empty?
+      unless params.key? :further_corrective_action
         @investigation.errors.add(:further_corrective_action,
                                   "- select whether or not correction actions have been agreed or taken")
       end

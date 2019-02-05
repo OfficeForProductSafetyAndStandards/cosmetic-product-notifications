@@ -1,6 +1,7 @@
 = render "repeatable_info",
         title: "Evidence images",
         scope: :file,
+        model: @investigation,
         hide_break: true,
         other_text: "Are there other evidence images to report",
         further_key: :further_evidence_images do |form|

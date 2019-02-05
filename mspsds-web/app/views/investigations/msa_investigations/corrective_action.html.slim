@@ -25,10 +25,12 @@ h1.govuk-heading-xl
             .govuk-form-group.full-width class=("govuk-form-group--error" if @corrective_action.errors[:further_corrective_action].any?)
               .govuk-radios
                 .govuk-radios__item
-                  = radio_button "", :further_corrective_action, "Yes", class: "govuk-radios__input", value: "Yes"
+                  = radio_button "", :further_corrective_action, "Yes", class: "govuk-radios__input", value: "Yes",
+                          checked: @repeat_step == "Yes"
                   = label :further_corrective_action, "Yes", class: "govuk-label govuk-radios__label"
                 .govuk-radios__item
-                  = radio_button "", :further_corrective_action, "No", class: "govuk-radios__input", value: "No"
+                  = radio_button "", :further_corrective_action, "No", class: "govuk-radios__input", value: "No",
+                          checked: @repeat_step == "No"
                   = label :further_corrective_action, "No", class: "govuk-label govuk-radios__label"
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

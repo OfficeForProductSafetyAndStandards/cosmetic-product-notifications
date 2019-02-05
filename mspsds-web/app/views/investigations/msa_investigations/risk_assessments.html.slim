@@ -1,6 +1,7 @@
 = render "repeatable_info",
         title: "Risk assessments details",
         scope: :file,
+        model: @investigation,
         other_text: "Are there other risk assessments to report",
         further_key: :further_risk_assessments,
         hide_break: true do |form|
