@@ -16,9 +16,9 @@
           th.govuk-table__header[scope="col"]
             | Email address
       tbody.govuk-table__body
-        - @responsible_person.team_members.each do |team_member|
+        - @responsible_person.responsible_person_users.each do |user|
           tr.govuk-table__row
             td.govuk-table__cell
-              = team_member.full_name
+              = user.full_name
             td.govuk-table__cell
-              = team_member.email_address
+              = user.email_address

@@ -1,4 +1,4 @@
-class TeamMember < ApplicationRecord
+class ResponsiblePersonUser < ApplicationRecord
   belongs_to :responsible_person
   belongs_to :user
 

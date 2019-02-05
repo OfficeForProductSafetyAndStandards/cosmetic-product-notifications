@@ -1,7 +1,7 @@
 class ResponsiblePerson < ApplicationRecord
   has_many :notifications, dependent: :destroy
-  has_many :team_members, dependent: :destroy
-  has_many :users, through: :team_members
+  has_many :responsible_person_users, dependent: :destroy
+  has_many :users, through: :responsible_person_users
 
   enum account_type: { business: "business", individual: "individual" }
 
@@ -16,8 +16,8 @@ class ResponsiblePerson < ApplicationRecord
   validates :city, presence: true, on: %i[enter_details create]
   validates :postal_code, presence: true, on: %i[enter_details create]
 
-  def add_team_member(user)
-    team_members << TeamMember.create(user: user)
+  def add_user(user)
+    responsible_person_users << ResponsiblePersonUser.create(user: user)
   end
 
   def address_lines
