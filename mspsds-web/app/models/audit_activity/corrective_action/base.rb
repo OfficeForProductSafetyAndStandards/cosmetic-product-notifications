@@ -2,7 +2,7 @@ class AuditActivity::CorrectiveAction::Base < AuditActivity::Base
   include ActivityAttachable
   with_attachments attachment: "attachment"
 
-  belongs_to :business
+  belongs_to :business, optional: true
   belongs_to :product
 
   private_class_method def self.from(corrective_action)
