@@ -48,12 +48,23 @@ module InvestigationsHelper
         params[:assigned_to_someone_else] == "checked" &&
         params[:assigned_to_someone_else_id].blank?
       excluded_assignees << current_user.id
+
+      teams_with_keys.each do |team_with_key|
+        if query_params[team_with_key[:key]].blank?
+          team = team_with_key[:team]
+          excluded_assignees = assignee_list_with_team(excluded_assignees, team)
+        end
+      end
     end
 
     if params[:assigned_to_me] == "unchecked" &&
         params[:assigned_to_someone_else] == "checked" &&
         params[:assigned_to_someone_else_id].present?
       assignees << params[:assigned_to_someone_else_id]
+      team = Team.find_by(id: params[:assigned_to_someone_else_id])
+      if team.present?
+        assignees = assignee_list_with_team(assignees, team)
+      end
     end
 
     if params[:assigned_to_me] == "checked" &&
@@ -61,6 +72,13 @@ module InvestigationsHelper
         params[:assigned_to_someone_else_id].present?
       assignees << current_user.id
       assignees << params[:assigned_to_someone_else_id]
+    end
+
+    teams_with_keys.each do |team_with_key|
+      if query_params[team_with_key[:key]].present?
+        team = team_with_key[:team]
+        assignees = assignee_list_with_team(assignees, team)
+      end
     end
 
     assignee_terms = format_assignee_terms(assignees)
@@ -79,7 +97,8 @@ module InvestigationsHelper
     set_default_sort_by_filter
     set_default_assignee_filter
     params.permit(:q, :status_open, :status_closed, :page,
-                  :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by)
+                  :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by,
+                  teams_with_keys.map{|t|t[:key]})
   end
 
   def export_params
@@ -111,5 +130,22 @@ module InvestigationsHelper
         name: @investigation.pretty_description
       }
     }
+  end
+
+  def teams_with_keys
+    current_user.teams.map.with_index do |team, index|
+      {
+        key: "assigned_to_team_#{index}".to_sym,
+        team: team
+      }
+    end
+  end
+
+  def assignee_list_with_team(list, team)
+    list << team.id
+    team.users.each do |member|
+      list << member.id
+    end
+    list
   end
 end
