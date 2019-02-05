@@ -3,16 +3,18 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .shade-input {
-    margin: 0 10px 10px 0;
+  margin: 0 10px 10px 0;
 }
 
 .secondary-button {
+  background-color: $govuk-secondary-text-colour;
+
+  &:focus {
     background-color: $govuk-secondary-text-colour;
-    &:focus {
-      background-color: $govuk-secondary-text-colour;
-    }
-    &:hover {
-      background-color: $govuk-text-colour;
-    }
   }
+
+  &:hover {
+    background-color: $govuk-text-colour;
+  }
+}
   

@@ -78,7 +78,7 @@ RSpec.describe ComponentBuildController, type: :controller do
       component = create_component
       post(:update, params: { component_id: component.id, id: 'number_of_shades',
                               number_of_shades: nil })
-      expect(assigns(:component).errors[:shades]).to include('Must not be nil')
+      expect(assigns(:component).errors[:shades]).to include('Please select an option')
     end
 
     it "adds empty string to shades array if add_shade parameter passed" do
