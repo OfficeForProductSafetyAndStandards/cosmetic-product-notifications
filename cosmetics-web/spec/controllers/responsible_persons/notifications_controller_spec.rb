@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
   before do
-    authenticate_user
+    sign_in_test_user
   end
 
   after do
@@ -20,6 +20,16 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       responsible_person = ResponsiblePerson.create
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(response).to render_template('responsible_persons/notifications/index')
+    end
+
+    it "successfully counts pending notification files" do
+      responsible_person = ResponsiblePerson.create
+      notification_file = NotificationFile.create(
+          responsible_person_id: responsible_person.id,
+          user_id: controller.current_user.id
+      )
+      get :index, params: { responsible_person_id: responsible_person.id }
+      expect(assigns(:pending_notification_files)).to eq(1)
     end
   end
 end

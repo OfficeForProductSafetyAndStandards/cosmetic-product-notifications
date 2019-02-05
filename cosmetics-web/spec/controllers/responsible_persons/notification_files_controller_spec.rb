@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe NotificationFilesController, type: :controller do
+RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controller do
   before do
-    allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
+    sign_in_test_user
   end
 
   after do
-    allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
+    sign_out_user
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -23,10 +23,10 @@ RSpec.describe NotificationFilesController, type: :controller do
   # NotificationFilesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}
+      responsible_person = ResponsiblePerson.create
+      get :new, params: { responsible_person_id: responsible_person.id }
       expect(response).to be_successful
     end
   end
@@ -34,14 +34,16 @@ RSpec.describe NotificationFilesController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new NotificationFile" do
+        responsible_person = ResponsiblePerson.create
         expect {
-          post :create, params: { notification_file: valid_attributes }
+          post :create, params: { responsible_person_id: responsible_person.id, notification_file: valid_attributes }
         }.to change(NotificationFile, :count).by(1)
       end
 
-      it "redirects to the created notification_file" do
-        post :create, params: { notification_file: valid_attributes }
-        expect(response).to redirect_to(NotificationFile.last)
+      it "redirects to the notifications for the Responsible Person" do
+        responsible_person = ResponsiblePerson.create
+        post :create, params: { responsible_person_id: responsible_person.id, notification_file: valid_attributes }
+        expect(response).to redirect_to(responsible_person_notifications_path)
       end
     end
   end
