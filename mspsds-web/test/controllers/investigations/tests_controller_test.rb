@@ -42,6 +42,7 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create test result" do
+    test_file = fixture_file_upload('files/testImage.png', 'application/png')
     assert_difference("Test.count") do
       post investigation_tests_path(@investigation), params: {
         test: {
@@ -52,7 +53,10 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
           year: "2018",
           month: "11",
           day: "18",
-          result: "Fail"
+          result: "Fail",
+          file: {
+              file: test_file
+          }
         }
       }
     end

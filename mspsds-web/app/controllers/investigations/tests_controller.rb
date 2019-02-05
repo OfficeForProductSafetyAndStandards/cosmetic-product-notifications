@@ -68,13 +68,9 @@ private
   def test_saved?
     return false unless test_valid?
 
-    attach_files
-    @test.save
-  end
-
-  def attach_files
-    attach_blobs_to_list(@file_blob, @test.documents)
+    # In addition to attaching to the test, we also attach to the investigation, so the file is surfaced in the ui
     attach_blobs_to_list(@file_blob, @investigation.documents)
+    @test.save
   end
 
   def save_attachment
