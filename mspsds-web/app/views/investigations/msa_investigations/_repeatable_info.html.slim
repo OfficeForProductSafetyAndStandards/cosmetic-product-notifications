@@ -7,7 +7,7 @@
     h1.govuk-heading-xl
       span.govuk-caption-xl Report an unsafe or non-compliant product
       = title
-- model ||= nil
+- model ||= @investigation
 - scope ||= nil
 = form_with model: model, scope: scope, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row
@@ -22,14 +22,14 @@
           fieldset.govuk-fieldset
             legend.govuk-fieldset__legend.govuk-fieldset__legend--l class="govuk-!-margin-bottom-1"
               = other_text
-            .govuk-form-group.full-width class=("govuk-form-group--error" if model.errors[pending_symbol].any?)
+            .govuk-form-group.full-width class=("govuk-form-group--error" if model.errors[further_key].any?)
               .govuk-radios
                 .govuk-radios__item
-                  = radio_button "", pending_symbol, "Yes", class: "govuk-radios__input", value: "Yes"
-                  = label pending_symbol, "Yes", class: "govuk-label govuk-radios__label"
+                  = radio_button "", further_key, "Yes", class: "govuk-radios__input", value: "Yes"
+                  = label further_key, "Yes", class: "govuk-label govuk-radios__label"
                 .govuk-radios__item
-                  = radio_button "", pending_symbol, "No", class: "govuk-radios__input", value: "No"
-                  = label pending_symbol, "No", class: "govuk-label govuk-radios__label"
+                  = radio_button "", further_key, "No", class: "govuk-radios__input", value: "No"
+                  = label further_key, "No", class: "govuk-label govuk-radios__label"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"

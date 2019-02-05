@@ -4,7 +4,7 @@
         scope: :test,
         other_text: "Are there other test results to report",
         hide_break: false,
-        pending_symbol: :test_results_pending do |form|
+        further_key: :further_test_results do |form|
   = render "investigations/tests/form", form: form,
           test: @test,
           investigation: @investigation,

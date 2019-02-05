@@ -35,17 +35,17 @@ class Investigations::MsaInvestigationsController < ApplicationController
     when :business
       return redirect_to next_wizard_path if all_businesses_complete?
     when :corrective_action
-      unless session[pending(step)]
+      unless session[further(step)]
         return redirect_to next_wizard_path
       end
     when :test_results
-      unless session[pending(step)]
+      unless session[further(step)]
         return redirect_to next_wizard_path
       end
     when *other_information_types # test_results exists in this array, but has been dealt with above
       @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
       @file_blob, * = load_file_attachments
-      unless session[pending(step)]
+      unless session[further(step)]
         return redirect_to next_wizard_path
       end
     end
@@ -77,19 +77,19 @@ class Investigations::MsaInvestigationsController < ApplicationController
         store_business
         return redirect_to wizard_path step
       when :has_corrective_action
-        store_corrective_action_pending
+        store_further_corrective_action
       when :corrective_action
         store_corrective_action
-        store_corrective_action_pending
+        store_further_corrective_action
         return redirect_to wizard_path step
       when :other_information
         store_other_information
       when :test_results
-        store_is_pending step
+        store_further step
         return redirect_to wizard_path step
       when *other_information_types # test_results exists in this array, but has been dealt with above
         store_file
-        store_is_pending step
+        store_further step
         return redirect_to wizard_path step
       when steps.last
         return create
@@ -102,15 +102,10 @@ class Investigations::MsaInvestigationsController < ApplicationController
 
 private
 
-  def store_is_pending(step)
-    info = pending(step)
+  def store_further(step)
+    info = further(step)
     session[info] = params.permit(info)[info] == "Yes"
   end
-
-  def is_pending_valid?(step)
-    params.key? pending(step)
-  end
-
 
   def set_product
     @product = Product.new(product_step_params)
@@ -178,6 +173,10 @@ private
     session.delete :product
     session.delete :unsafe
     session.delete :non_compliant
+    session.delete :further_corrective_action
+    other_information_types.each do |type|
+      session.delete further(type)
+    end
     session[:corrective_actions] = []
     session[:test_results] = []
     session[:files] = []
@@ -320,10 +319,10 @@ private
       session[:test_results] << {test: @test, file_blob_id: @file_blob&.id}
       session.delete :file
     end
-    if is_pending_valid? :test
-      store_is_pending :test
+    if params.key? further(:test_results)
+      store_further :test_results
     else
-      @test.errors.add(pending(:test_results), "- select whether or not you have further test results to record")
+      @test.errors.add(further(:test_results), "- select whether or not you have further test results to record")
     end
   end
 
@@ -343,18 +342,20 @@ private
     params.permit(:further_corrective_action)
   end
 
-  def store_corrective_action_pending
-    session[:corrective_action_pending] = further_corrective_action_params[:further_corrective_action] == "Yes"
+  def store_further_corrective_action
+    session[:further_corrective_action] = further_corrective_action_params[:further_corrective_action] == "Yes"
   end
 
   def store_other_information
     other_information_types.each do |info|
-      session[pending(info)] = other_information_params[info] == "1"
+      session[further(info)] = other_information_params[info] == "1"
     end
   end
 
-  def pending(info)
-    (info.to_s + "_pending").to_sym
+  # We use 'further' to refer to the boolean flags indicating
+  # whether the user wants to provide another entry of a given type
+  def further(info)
+    ("further_" + info.to_s).to_sym
   end
 
   def records_valid?
