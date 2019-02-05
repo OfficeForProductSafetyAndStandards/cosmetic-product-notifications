@@ -337,10 +337,11 @@ private
       @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
     when :business
       @business.validate
+      return false if @business.errors.any?
     when :has_corrective_action
-      @investigation.errors.add(:base, "Please indicate whether or not correction actions have been agreed or taken") if corrective_action_not_known
+      @investigation.errors.add(:has_corrective_action, "Please indicate whether or not correction actions have been agreed or taken") if corrective_action_not_known
     end
-    @investigation.errors.empty? && @product.errors.empty? && @business.errors.empty?
+    @investigation.errors.empty? && @product.errors.empty?
   end
 
   def validate_none_as_only_selection
