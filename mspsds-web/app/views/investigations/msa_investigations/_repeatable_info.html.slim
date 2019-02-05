@@ -11,7 +11,7 @@
 - scope ||= nil
 = form_with model: model, scope: scope, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row
-  = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
+  = render "form_validation_display", errors: form.object.errors, model_name: "investigation"
   .govuk-grid-row
   = yield(form)
   .govuk-grid-row
@@ -22,7 +22,7 @@
           fieldset.govuk-fieldset
             legend.govuk-fieldset__legend.govuk-fieldset__legend--l class="govuk-!-margin-bottom-1"
               = other_text
-            .govuk-form-group
+            .govuk-form-group.full-width class=("govuk-form-group--error" if model.errors[pending_symbol].any?)
               .govuk-radios
                 .govuk-radios__item
                   = radio_button "", pending_symbol, "Yes", class: "govuk-radios__input", value: "Yes"

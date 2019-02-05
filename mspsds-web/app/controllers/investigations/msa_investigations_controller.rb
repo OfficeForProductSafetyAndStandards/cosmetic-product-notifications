@@ -164,10 +164,9 @@ private
 
   def set_test
     @test = @investigation.tests.build(test_params)
+    @test.product = @product
     @file_blob, * = load_file_attachments :test
-    if @file_blob && @test.related_file == "Yes"
-      @test.documents.attach(@file_blob)
-    end
+    @test.documents.attach(@file_blob) if @file_blob
   end
 
   def all_businesses_complete?
@@ -324,7 +323,7 @@ private
     if is_pending_valid? :test
       store_is_pending :test
     else
-      @test.errors.add(:further_test_results, "- select whether or not you have further test results to record")
+      @test.errors.add(pending(:test_results), "- select whether or not you have further test results to record")
     end
   end
 
@@ -379,6 +378,8 @@ private
       end
     when :corrective_action
       return false if @corrective_action.errors.any?
+    when :test_results
+      return false if @test.errors.any?
     end
     @investigation.errors.empty? && @product.errors.empty?
   end
