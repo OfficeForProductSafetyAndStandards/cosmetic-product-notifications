@@ -17,20 +17,24 @@ class Investigations::MsaInvestigationsController < ApplicationController
   before_action :store_product, only: %i[update], if: -> {step == :product}
   before_action :set_investigation, only: %i[show create update]
   before_action :store_investigation, only: %i[update], if: -> {%i[why_reporting reference_number].include? step}
-  before_action :set_why_reporting, ony: %i[show update], if: -> {step == :why_reporting}
-  before_action :store_why_reporting, ony: %i[update], if: -> {step == :why_reporting}
-  before_action :set_selected_businesses, ony: %i[show update], if: -> {step == :which_businesses}
-  before_action :store_selected_businesses, ony: %i[update], if: -> {step == :which_businesses}
+  before_action :set_why_reporting, only: %i[show update], if: -> {step == :why_reporting}
+  before_action :store_why_reporting, only: %i[update], if: -> {step == :why_reporting}
+  before_action :set_selected_businesses, only: %i[show update], if: -> {step == :which_businesses}
+  before_action :store_selected_businesses, only: %i[update], if: -> {step == :which_businesses}
+  # There is no set_pending_businesses because the business is recovered from the session in set_business
+  before_action :store_pending_businesses, only: %i[update], if: -> {step == :which_businesses}
   before_action :set_business, only: %i[show update], if: -> {step == :business}
   before_action :store_business, only: %i[update], if: -> {step == :business}
   before_action :set_repeat_step, only: %i[show update], if: -> do
-    %i[corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
+    %i[has_corrective_action corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
   end
   before_action :store_repeat_step, only: %i[update], if: -> do
-    %i[corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
+    %i[has_corrective_action corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
   end
   before_action :set_corrective_action, only: %i[show update], if: -> {step == :corrective_action}
   before_action :store_corrective_action, only: %i[update], if: -> {step == :corrective_action}
+  # There is no set_other_information because there is no validation on the page so there is no need to set the model
+  before_action :store_other_information, only: %i[update], if: -> {step == :other_information}
   before_action :set_test, only: %i[show update], if: -> {step == :test_results}
   before_action :store_test, only: %i[update], if: -> {step == :test_results}
   before_action :set_file, only: %i[show update], if: -> do
@@ -70,18 +74,7 @@ class Investigations::MsaInvestigationsController < ApplicationController
   def update
     if records_valid?
       case step
-      when :which_businesses
-        store_selected_businesses
-        store_pending_businesses
-      when :business
-        store_business
-        return redirect_to wizard_path step
-      when :corrective_action
-        store_corrective_action
-        return redirect_to wizard_path step
-      when :other_information
-        store_other_information
-      when *other_information_types
+      when :business, :corrective_action, *other_information_types
         return redirect_to wizard_path step
       when steps.last
         return create
@@ -173,6 +166,7 @@ private
     session.delete :product
     session.delete :unsafe
     session.delete :non_compliant
+    session.delete :other_business_type
     session.delete :further_corrective_action
     other_information_types.each do |type|
       session.delete further(type)
@@ -362,7 +356,11 @@ private
   # We use 'further' to refer to the boolean flags indicating
   # whether the user wants to provide another entry of a given type
   def further(key)
-    ("further_" + key.to_s).to_sym
+    if key == :has_corrective_action
+      :further_corrective_action
+    else
+      ("further_" + key.to_s).to_sym
+    end
   end
 
   def records_valid?
