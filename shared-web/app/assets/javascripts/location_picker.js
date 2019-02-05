@@ -5,12 +5,12 @@ import locationGraph from 'govuk-country-and-territory-autocomplete/dist/locatio
 
 // TODO progressive enhancement for https://github.com/alphagov/govuk-country-and-territory-autocomplete
 
-$(document).ready(function () {
-  var autocompleteElement = document.getElementById('location-autocomplete');
+$(document).ready(() => {
+  const autocompleteElement = document.getElementById('location-autocomplete');
   if (autocompleteElement) {
     openregisterLocationPicker({
       selectElement: autocompleteElement,
-      url: locationGraph
+      url: locationGraph,
     });
   }
 });
