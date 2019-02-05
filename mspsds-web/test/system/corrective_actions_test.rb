@@ -23,6 +23,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
     assert_text @corrective_action.summary
     assert_text "Corrective action recorded"
   end
@@ -102,6 +103,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
     assert_text "Attached: #{attachment_filename}"
     assert_text "View attachment"
   end

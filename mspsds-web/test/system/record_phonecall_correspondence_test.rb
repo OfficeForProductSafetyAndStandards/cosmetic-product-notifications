@@ -38,6 +38,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
     assert_text "Attached: testImage.png"
     assert_text "View attachment"
   end

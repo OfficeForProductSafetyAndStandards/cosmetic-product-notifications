@@ -16,9 +16,9 @@ table.govuk-table
     tr.govuk-table__row
       th.govuk-table__header [scope="row" class="govuk-!-width-one-quarter"]  Date recorded
       td.govuk-table__cell = @investigation.created_at.strftime("%d/%m/%Y")
-    - if @investigation.case_type == "Allegation"
+    - if @investigation.case_type == "allegation"
         tr.govuk-table__row
-          th.govuk-table__header Product type
+          th.govuk-table__header Product category
           td.govuk-table__cell = @investigation.product_category
         tr.govuk-table__row
           th.govuk-table__header  Hazard type
