@@ -1,0 +1,6 @@
+.govuk-form-group
+  span#other-assignee-hint.govuk-hint [class="govuk-!-width-two-thirds"]
+    | Name / Organisation
+  = form.label key, "Assignee", class: "govuk-label"
+  / When there are many users, we should consider loading them with ajax using the autocomplete
+  = form.select key, options_for_select(options, ''), {}, class: "govuk-select", id: "assignee-picker-#{key}"
