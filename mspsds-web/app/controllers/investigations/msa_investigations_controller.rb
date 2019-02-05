@@ -25,6 +25,9 @@ class Investigations::MsaInvestigationsController < ApplicationController
   before_action :store_business, only: %i[update], if: -> {step == :business}
   before_action :set_corrective_action, only: %i[show update], if: -> {step == :corrective_action}
   before_action :store_corrective_action, only: %i[update], if: -> {step == :corrective_action}
+  before_action :set_test, only: %i[show update], if: -> {step == :test_results}
+  before_action :store_test, only: %i[update], if: -> {step == :test_results}
+
 
   #GET /xxx/step
   def show
@@ -36,7 +39,6 @@ class Investigations::MsaInvestigationsController < ApplicationController
         return redirect_to next_wizard_path
       end
     when :test_results
-      set_test
       unless session[pending(step)]
         return redirect_to next_wizard_path
       end
@@ -83,7 +85,6 @@ class Investigations::MsaInvestigationsController < ApplicationController
       when :other_information
         store_other_information
       when :test_results
-        store_test
         store_is_pending step
         return redirect_to wizard_path step
       when *other_information_types # test_results exists in this array, but has been dealt with above
@@ -105,6 +106,11 @@ private
     info = pending(step)
     session[info] = params.permit(info)[info] == "Yes"
   end
+
+  def is_pending_valid?(step)
+    params.key? pending(step)
+  end
+
 
   def set_product
     @product = Product.new(product_step_params)
@@ -153,6 +159,14 @@ private
     @file_blob, * = load_file_attachments :corrective_action
     if @file_blob && @corrective_action.related_file == "Yes"
       @corrective_action.documents.attach(@file_blob)
+    end
+  end
+
+  def set_test
+    @test = @investigation.tests.build(test_params)
+    @file_blob, * = load_file_attachments :test
+    if @file_blob && @test.related_file == "Yes"
+      @test.documents.attach(@file_blob)
     end
   end
 
@@ -301,12 +315,17 @@ private
   end
 
   def store_test
-    set_test
-    @file_blob, * = load_file_attachments :test
-    update_blob_metadata @file_blob, test_file_metadata
-    @file_blob.save if @file_blob
-    session[:test_results] << {test: @test, file_blob_id: @file_blob&.id}
-    session.delete :file
+    if @test.valid? && @file_blob
+      update_blob_metadata @file_blob, test_file_metadata
+      @file_blob.save if @file_blob
+      session[:test_results] << {test: @test, file_blob_id: @file_blob&.id}
+      session.delete :file
+    end
+    if is_pending_valid? :test
+      store_is_pending :test
+    else
+      @test.errors.add(:further_test_results, "- select whether or not you have further test results to record")
+    end
   end
 
   def store_file
