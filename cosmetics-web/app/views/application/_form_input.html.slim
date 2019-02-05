@@ -6,9 +6,9 @@
 - input_class.push("govuk-input--error") if errors.any?
 
 .govuk-form-group class=("govuk-form-group--error" if errors.any?)
+  - if label.present?
+    = form.send(:label, field, label, class: "govuk-label")
   - if errors.any?
     span.govuk-error-message id="#{field}-error"
       = form.object.errors.full_messages_for(field).first
-  - if label.present?
-    = form.send(:label, field, label, class: "govuk-label")
   = form.send(type, field, class: input_class)
