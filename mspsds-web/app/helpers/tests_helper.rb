@@ -14,6 +14,7 @@ module TestsHelper
 
   def set_attachment
     @file_blob, * = load_file_attachments
+    @test.documents.attach(@file_blob)
   end
 
   def update_attachment
