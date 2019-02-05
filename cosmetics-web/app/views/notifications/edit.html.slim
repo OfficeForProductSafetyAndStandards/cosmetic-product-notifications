@@ -4,13 +4,14 @@
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
-            | Check your answers before notifying
+            | Check the cosmetic product details before registering
+    .govuk-grid-column-full
         table.govuk-table
-            caption.govuk-table__caption
-                | Responsible Person
+            caption.govuk-table__caption.govuk-heading-m
+                | Responsible person
             tbody.govuk-table__body
                 tr.govuk-table__row
-                    th.govuk-table__header
+                    th.govuk-table__header[class="govuk-!-width-one-quarter"]
                         | Name
                     td.govuk-table__cell
                         | -
@@ -30,24 +31,41 @@
                     td.govuk-table__cell
                         | -
         table.govuk-table
-            caption.govuk-table__caption
-                | Cosmetics
+            caption.govuk-table__caption.govuk-heading-m
+                | Cosmetics product
             tbody.govuk-table__body
                 tr.govuk-table__row
-                    th.govuk-table__header
+                    th.govuk-table__header[class="govuk-!-width-one-quarter"]
                         | Product name
                     td.govuk-table__cell
                         = @notification.product_name
                 tr.govuk-table__row
                     th.govuk-table__header
-                        | External reference
+                        | Imported
                     td.govuk-table__cell
-                        = @notification.external_reference
+                        = @notification.import_country.present? ? "Yes" : "No"
+                - unless @notification.import_country.nil?
+                    tr.govuk-table__row
+                        th.govuk-table__header
+                            | Imported from
+                        td.govuk-table__cell
+                            = @notification.import_country_for_display
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Number of components
+                    td.govuk-table__cell
+                        = @notification.components.length
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Shades
+                    td.govuk-table__cell
+                        = @notification.components.first.shades&.join(', ') || "N/A"
+    .govuk-grid-column-two-thirds
         h3.govuk-heading-m
-            | Now notify your product
+            | Now register your cosmetic product
         p
-            | By submitting this notification you are confirming that, to the best of your knowledge,
-            | the details you are providing are correct.
+            | By registering this cosmetic product you are confirming that, to the
+            |  best of your knowledge, the details you are providing are correct.
         = form_with url: confirmation_notification_path(@notification), method: :get do |form|
             .govuk-form-group
-                = form.submit "Accept and notify product", name: nil, class: "govuk-button"
+                = form.submit "Accept and register the cosmetics product", name: nil, class: "govuk-button"

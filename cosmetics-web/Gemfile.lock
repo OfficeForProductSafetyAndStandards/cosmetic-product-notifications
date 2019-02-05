@@ -247,6 +247,8 @@ GEM
       netrc (~> 0.8)
     reverse_markdown (1.1.0)
       nokogiri
+    rspec-collection_matchers (1.1.3)
+      rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.2)
@@ -383,6 +385,7 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.2)
   rails-controller-testing
+  rspec-collection_matchers
   rspec-rails
   rubocop-rspec
   sass-rails (~> 5.0)

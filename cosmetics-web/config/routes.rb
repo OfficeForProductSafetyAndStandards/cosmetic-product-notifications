@@ -5,17 +5,21 @@ Rails.application.routes.draw do
 
   get '/manual_entry' => 'manual_entry#create'
 
-  resources :notifications, only: %i[edit] do
+  resources :notifications, only: %i[new, edit] do
     member do
       get 'confirmation'
     end
 
-    resources :manual_entry, only: %i[show update]
+    resources :build, controller: :notification_build, only: %i[show update new]
   end
 
   resources :responsible_persons do
     resources :notification_files, controller: "responsible_persons/notification_files"
     resources :notifications, controller: "responsible_persons/notifications", only: %i[index]
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
+  end
+
+  resources :components do
+    resources :build, controller: :component_build, only: %i[show update new]
   end
 end

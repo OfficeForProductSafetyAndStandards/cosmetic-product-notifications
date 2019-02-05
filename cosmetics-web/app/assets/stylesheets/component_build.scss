@@ -1,0 +1,20 @@
+// Place all the styles related to the component_build controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.shade-input {
+  margin: 0 10px 10px 0;
+}
+
+.secondary-button {
+  background-color: $govuk-secondary-text-colour;
+
+  &:focus {
+    background-color: $govuk-secondary-text-colour;
+  }
+
+  &:hover {
+    background-color: $govuk-text-colour;
+  }
+}
+  

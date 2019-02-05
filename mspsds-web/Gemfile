@@ -21,6 +21,7 @@ gem "puma", "~> 3.0"
 gem "pundit"
 gem "rails", "~> 5.2"
 gem "redcarpet"
+gem 'redis-rails'
 gem "rubyzip", ">= 1.2.1"
 gem "sass-rails", "~> 5.0"
 gem "sentry-raven"

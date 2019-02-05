@@ -22,12 +22,9 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       expect(response).to render_template('responsible_persons/notifications/index')
     end
 
-    it "successfully counts pending notification files" do
+    it "counts pending notification files" do
       responsible_person = ResponsiblePerson.create
-      notification_file = NotificationFile.create(
-          responsible_person_id: responsible_person.id,
-          user_id: controller.current_user.id
-      )
+      NotificationFile.create(responsible_person_id: responsible_person.id, user_id: controller.current_user.id)
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:pending_notification_files)).to eq(1)
     end

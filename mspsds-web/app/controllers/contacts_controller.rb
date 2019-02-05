@@ -21,7 +21,7 @@ class ContactsController < ApplicationController
           redirect_to business_url(@contact.business, anchor: "contacts"),
                       notice: "Contact was successfully created."
         end
-        format.json { render :show, status: :created, contact: @contact }
+        format.json { render :show, status: :created, location: @contact }
       else
         format.html { render :new }
         format.json { render json: @contact.errors, status: :unprocessable_entity }

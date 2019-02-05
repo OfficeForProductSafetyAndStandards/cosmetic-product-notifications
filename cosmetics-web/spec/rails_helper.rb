@@ -42,7 +42,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 # Register headless Chrome as a Selenium driver (default RackTest driver does not support JavaScript)
-Capybara.server = :puma, {Silent: true}
+Capybara.server = :puma, { Silent: true }
 
 Capybara.register_driver :chrome_headless do |app|
   options = ::Selenium::WebDriver::Chrome::Options.new
@@ -51,11 +51,14 @@ Capybara.register_driver :chrome_headless do |app|
   options.add_argument('--no-sandbox')
   options.add_argument('--disable-dev-shm-usage')
   options.add_argument('--window-size=1400,1400')
+  client.read_timeout = 180
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
 Capybara.javascript_driver = :chrome_headless
+
+Capybara.ignore_hidden_elements = false
 
 RSpec.configure do |config|
   config.before(:each, type: :system) do
@@ -101,6 +104,10 @@ def sign_out_user
   allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
 end
 
+def fill_autocomplete(locator, with:)
+  fill_in locator, with: "#{with}\n"
+end
+
 def sign_in_test_user
   stub_user_credentials(user: test_user)
 end
@@ -115,5 +122,5 @@ def test_user
 end
 
 def format_user_for_get_userinfo(user)
-  {sub: user[:id], email: user[:email], given_name: user[:first_name], family_name: user[:last_name]}.to_json
+  { sub: user[:id], email: user[:email], given_name: user[:first_name], family_name: user[:last_name] }.to_json
 end
