@@ -130,9 +130,11 @@ To create an Elasticsearch instance for the current space:
 To create a redis instance for the current space. 
 
     cf marketplace -s redis
-    cf create-service redis tiny-unclustered-3.2 mspsds-redis
+    cf create-service redis tiny-3.2 mspsds-redis-queue
+    cf create-service redis tiny-3.2 mspsds-redis-session
 
-Larger options should be considered if required. The current worker (sidekiq) only works with the unclustered version.
+Larger options should be considered if required.
+The current worker (sidekiq), which uses mspsds-redis-queue only works with the unclustered version.
 
 
 #### S3

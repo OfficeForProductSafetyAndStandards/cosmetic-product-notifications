@@ -30,4 +30,16 @@ RSpec.describe NotificationsController, type: :controller do
       expect(assigns(:notification)).to eq(notification)
     end
   end
+
+  describe "GET /new" do
+    it "creates new notification object" do
+      get :new
+      expect(assigns(:notification)).to be_kind_of(Notification)
+    end
+
+    it "redirects to the notification build controller" do
+      get :new
+      expect(response).to redirect_to(new_notification_build_path(assigns(:notification).id))
+    end
+  end
 end

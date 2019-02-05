@@ -7,12 +7,12 @@ Rails.application.routes.draw do
 
   resources :notification_files
 
-  resources :notifications, only: %i[edit] do
+  resources :notifications, only: %i[new edit] do
     member do
       get :confirmation
     end
 
-    resources :manual_entry, only: %i[show update]
+    resources :build, controller: :notification_build, only: %i[show update new]
   end
 
   resources :responsible_persons, only: %i[show] do
@@ -27,5 +27,9 @@ Rails.application.routes.draw do
         end
       end
     end
+  end
+
+  resources :components do
+    resources :build, controller: :component_build, only: %i[show update new]
   end
 end

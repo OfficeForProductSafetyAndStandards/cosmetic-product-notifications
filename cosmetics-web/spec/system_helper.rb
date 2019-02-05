@@ -27,8 +27,14 @@ end
 
 Capybara.javascript_driver = :chrome_headless
 
+Capybara.ignore_hidden_elements = false
+
 RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :chrome_headless
   end
+end
+
+def fill_autocomplete(locator, with:)
+  fill_in locator, with: "#{with}\n"
 end

@@ -5,3 +5,7 @@ inherit_gem:
 
 RSpec/MultipleExpectations:
   Max: 2
+
+ExampleLength:
+  Exclude:
+    - 'spec/system/**/*'

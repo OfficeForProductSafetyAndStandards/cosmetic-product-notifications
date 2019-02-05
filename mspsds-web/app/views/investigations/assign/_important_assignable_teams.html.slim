@@ -1,0 +1,6 @@
+- investigation.important_assignable_teams.each do |team|
+  .govuk-radios__item
+    = form.radio_button :assignable_id_radio, team.id, class: "govuk-radios__input",
+            checked: investigation.assignee == team
+    = form.label :assignable_id_radio, team.display_name, value: team.id,
+            class: "govuk-label govuk-radios__label"

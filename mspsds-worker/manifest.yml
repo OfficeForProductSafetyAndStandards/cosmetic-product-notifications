@@ -13,5 +13,5 @@ applications:
   services:
     - mspsds-database
     - mspsds-elasticsearch
-    - mspsds-redis
+    - mspsds-queue
     - logit-ssl-drain
