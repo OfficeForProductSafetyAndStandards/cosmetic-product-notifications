@@ -4,15 +4,6 @@ RSpec.describe ResponsiblePerson, type: :model do
   describe "create record" do
     it "succeeds when all required attributes are specified" do
       responsible_person = build(:responsible_person)
-
-      responsible_person.account_type = :individual
-      responsible_person.name = "Responsible Person"
-      responsible_person.email_address = "responsible.person@example.com"
-      responsible_person.phone_number = "01632 960123"
-      responsible_person.address_line_1 = "Street address"
-      responsible_person.city = "City"
-      responsible_person.postal_code = "AB12 3CD"
-
       expect(responsible_person.save).to be true
     end
 
