@@ -80,14 +80,17 @@ class InvestigationsController < ApplicationController
   def assign
     return if request.get?
 
+    authorize @investigation
     ps = assignee_update_params
-    if User.where(id: ps[:assignee_id]).empty?
+
+    potential_assignees = User.where(id: ps[:assignable_id]) + Team.where(id: ps[:assignable_id])
+    if potential_assignees.empty?
       @investigation.errors.add(:assignee, :invalid, message: "should exist")
       respond_to_invalid_data(:assign)
       return
     end
 
-    @investigation.assignee = User.find_by(id: ps[:assignee_id])
+    @investigation.assignee = potential_assignees.first
     respond_to_update(:assign)
   end
 
@@ -137,10 +140,19 @@ private
   end
 
   def assignee_update_params
-    if params[:investigation][:assignee_id].blank?
-      params[:investigation][:assignee_id] = params[:investigation][:assignee_id_radio]
-    end
-    params.require(:investigation).permit(:assignee_id)
+    params[:investigation][:assignable_id] = case params[:investigation][:assignable_id_radio]
+                                             when "Someone in your team"
+                                               params[:investigation][:select_team_member]
+                                             when "Previously assigned"
+                                               params[:investigation][:select_previously_assigned]
+                                             when "Other team"
+                                               params[:investigation][:select_other_team]
+                                             when "Someone else"
+                                               params[:investigation][:select_someone_else]
+                                             else
+                                               params[:investigation][:assignable_id_radio] || params[:investigation][:assignable_id]
+                                             end
+    params.require(:investigation).permit(:assignable_id)
   end
 
   def respond_to_update(origin)

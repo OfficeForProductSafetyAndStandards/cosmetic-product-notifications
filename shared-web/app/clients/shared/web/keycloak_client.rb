@@ -56,7 +56,7 @@ module Shared
         groups = all_groups
         organisations = groups.find { |group| group["name"] == "Organisations" }
 
-        organisations["subGroups"].map do |organisation|
+        organisations["subGroups"].reject(&:blank?).map do |organisation|
           { id: organisation["id"], name: organisation["name"], path: organisation["path"] }
         end
       end
@@ -66,8 +66,8 @@ module Shared
         organisations = groups.find { |group| group["name"] == "Organisations" }
 
         teams = []
-        organisations["subGroups"].each do |organisation|
-          organisation["subGroups"].map do |team|
+        organisations["subGroups"].reject(&:blank?).each do |organisation|
+          organisation["subGroups"].reject(&:blank?).map do |team|
             teams << { id: team["id"], name: team["name"], path: team["path"], organisation_id: organisation["id"] }
           end
         end
@@ -83,8 +83,8 @@ module Shared
         # which calls TeamUser.all, and gets into an infinite loop
         team_users = []
         id = 1
-        users.each do |user|
-          user_groups[user[:id]].each do |group|
+        users.reject(&:blank?).each do |user|
+          user_groups[user[:id]].reject(&:blank?).each do |group|
             team_users << { team_id: group, user_id: user[:id], id: id } if teams.include? group
             id += 1
           end

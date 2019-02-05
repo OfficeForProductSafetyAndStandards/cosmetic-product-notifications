@@ -24,13 +24,13 @@ class Investigation < ApplicationRecord
   settings do
     mappings do
       indexes :status, type: :keyword
-      indexes :assignee_id, type: :keyword
+      indexes :assignable_id, type: :keyword
     end
   end
 
   default_scope { order(updated_at: :desc) }
 
-  belongs_to_active_hash :assignee, class_name: "User", optional: true
+  belongs_to :assignable, polymorphic: true, optional: true
 
   has_many :investigation_products, dependent: :destroy
   has_many :products, through: :investigation_products,
@@ -60,7 +60,7 @@ class Investigation < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       methods: :pretty_id,
-      only: %i[user_title description hazard_type product_category is_closed assignee_id updated_at created_at],
+      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at],
       include: {
         documents: {
           only: [],
@@ -89,6 +89,21 @@ class Investigation < ApplicationRecord
     )
   end
 
+  def assignee
+    begin
+      return User.find(assignable_id) if assignable_type == "User"
+      return Team.find(assignable_id) if assignable_type == "Team"
+    rescue StandardError
+      return nil
+    end
+  end
+
+  def assignee=(entity)
+    self.assignable_id = entity.id
+    self.assignable_type = "User" if entity.is_a?(User)
+    self.assignable_type = "Team" if entity.is_a?(Team)
+  end
+
   def status
     is_closed? ? "Closed" : "Open"
   end
@@ -115,10 +130,40 @@ class Investigation < ApplicationRecord
     "#{case_type.titleize}: #{pretty_id}"
   end
 
+  def can_be_assigned_by(user)
+    return true if assignee.blank?
+    return true if assignee.is_a?(Team) && (user.teams.include? assignee)
+    return true if assignee.is_a?(User) && (user.teams && assignee.teams).any? || assignee == user
+
+    false
+  end
+
+  def important_assignable_people
+    people = [].to_set
+    people << assignee if assignee.is_a? User
+    people << current_user
+    people
+  end
+
   def past_assignees
     activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
-    user_id_list = activities.map(&:assignee_id)
-    User.where(id: user_id_list.uniq)
+    user_id_list = activities.map(&:assignable_id)
+    User.where(id: user_id_list)
+  end
+
+  def important_assignable_teams
+    teams = current_user.teams.to_set
+    Team.get_visible_teams(current_user).each do |team|
+      teams << team
+    end
+    teams << assignee if assignee.is_a? Team
+    teams
+  end
+
+  def past_teams
+    activities = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: id)
+    team_id_list = activities.map(&:assignable_id)
+    Team.where(id: team_id_list)
   end
 
   def past_assignees_except_current
@@ -162,7 +207,7 @@ private
   end
 
   def create_audit_activity_for_assignee
-    if saved_changes.key? :assignee_id
+    if (saved_changes.key? :assignable_id) || (saved_changes.key? :assignable_type)
       AuditActivity::Investigation::UpdateAssignee.from(self)
     end
   end
@@ -188,8 +233,12 @@ private
   end
 
   def send_assignee_email
-    if saved_changes.key? :assignee_id
+    if saved_changes.key?(:assignable_id) && assignee.is_a?(User)
       NotifyMailer.assigned_investigation(id, assignee.full_name, assignee.email).deliver_later
+    elsif saved_changes.key?(:assignable_id) && assignee.is_a?(Team)
+      assignee.users.each do |member|
+        NotifyMailer.assigned_investigation_to_team(id, member.full_name, member.email, assignee.name).deliver_later
+      end
     end
   end
 end
