@@ -20,7 +20,7 @@ class ComponentBuildController < ApplicationController
       when "multiple"
         render_wizard @component
       when ""
-        @component.errors.add :shades, "Must not be nil"
+        @component.errors.add :shades, "Please select an option"
         render step
       end
     when :add_shades

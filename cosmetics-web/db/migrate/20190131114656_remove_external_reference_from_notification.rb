@@ -8,7 +8,7 @@ class RemoveExternalReferenceFromNotification < ActiveRecord::Migration[5.2]
           end
 
           dir.down do
-            t.integer :external_reference
+            t.string :external_reference
           end
         end
       end
