@@ -14,9 +14,9 @@ class Investigations::MsaInvestigationsController < ApplicationController
         :reference_number
   before_action :set_countries, only: %i[show create update]
   before_action :set_product, only: %i[show create update]
-  before_action :store_product, only: %i[update]
+  before_action :store_product, only: %i[update], if: -> { step == :product }
   before_action :set_investigation, only: %i[show create update]
-  before_action :store_investigation, only: %i[update]
+  before_action :store_investigation, only: %i[update], if: -> { %i[why_reporting reference_number].include? step }
   before_action :set_why_reporting, ony: %i[show update], if: -> { step == :why_reporting }
   before_action :store_why_reporting, ony: %i[update], if: -> { step == :why_reporting }
   before_action :set_selected_businesses, ony: %i[show update], if: -> { step == :which_businesses }
@@ -166,11 +166,11 @@ private
   end
 
   def store_investigation
-    session[:investigation] = @investigation.attributes if changed_investigation && @investigation.valid?(step)
+    session[:investigation] = @investigation.attributes if @investigation.valid?(step)
   end
 
   def store_product
-    if changed_product && @product.valid?(step)
+    if @product.valid?(step)
       session[:product] = @product.attributes
     end
   end
@@ -438,13 +438,5 @@ private
 
   def corrective_action_not_known
     pending_corrective_action_params.empty?
-  end
-
-  def changed_investigation
-    %i[why_reporting reference_number].include? step
-  end
-
-  def changed_product
-    step == :product
   end
 end
