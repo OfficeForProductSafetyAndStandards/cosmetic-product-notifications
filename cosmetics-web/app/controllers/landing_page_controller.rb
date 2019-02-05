@@ -1,12 +1,12 @@
 class LandingPageController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :show_dashboard
+  before_action :set_responsible_person
 
   def index; end
 
-  def show_dashboard
+  def set_responsible_person
     return unless user_signed_in? && current_user.responsible_persons.present?
 
-    redirect_to responsible_person_path(current_user.responsible_persons.first)
+    @responsible_person = current_user.responsible_persons.first
   end
 end

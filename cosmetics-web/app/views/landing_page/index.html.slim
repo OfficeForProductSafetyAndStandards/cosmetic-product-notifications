@@ -10,11 +10,15 @@
         h2.govuk-body-l
           | Notification of cosmetic products to be sold or given away in the UK.
         p.masthead-account-links[class="govuk-!-padding-top-2 govuk-!-margin-bottom-5"]
-          => link_to "Create an account", keycloak_registration_url, class: "govuk-button govuk-!-font-weight-bold",
-                  role: "button", draggable: "false"
-          ' or
-          => link_to "sign in", keycloak_login_url, class: "govuk-link govuk-link--no-visited-state"
-          | if you’ve used it before
+          - if @responsible_person.present?
+            => link_to "Show my cosmetic products", responsible_person_notifications_path(@responsible_person),
+                    class: "govuk-button govuk-!-font-weight-bold", role: "button", draggable: "false"
+          - else
+            => link_to "Create an account", keycloak_registration_url, class: "govuk-button govuk-!-font-weight-bold",
+                    role: "button", draggable: "false"
+            ' or
+            => link_to "sign in", keycloak_login_url, class: "govuk-link govuk-link--no-visited-state"
+            | if you’ve used it before
 
 .govuk-width-container
   main#main-content.govuk-main-wrapper.app-main-class[role="main"]
