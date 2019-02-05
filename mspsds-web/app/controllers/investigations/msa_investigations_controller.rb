@@ -7,22 +7,24 @@ class Investigations::MsaInvestigationsController < ApplicationController
   include TestsHelper
   include FileConcern
   set_attachment_names :file
-  set_file_params_key  :file
+  set_file_params_key :file
 
   steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :corrective_action,
         :other_information, :test_results, :risk_assessments, :product_images, :evidence_images, :other_files,
         :reference_number
   before_action :set_countries, only: %i[show create update]
   before_action :set_product, only: %i[show create update]
-  before_action :store_product, only: %i[update], if: -> { step == :product }
+  before_action :store_product, only: %i[update], if: -> {step == :product}
   before_action :set_investigation, only: %i[show create update]
-  before_action :store_investigation, only: %i[update], if: -> { %i[why_reporting reference_number].include? step }
-  before_action :set_why_reporting, ony: %i[show update], if: -> { step == :why_reporting }
-  before_action :store_why_reporting, ony: %i[update], if: -> { step == :why_reporting }
-  before_action :set_selected_businesses, ony: %i[show update], if: -> { step == :which_businesses }
-  before_action :store_selected_businesses, ony: %i[update], if: -> { step == :which_businesses }
-  before_action :set_business, only: %i[show update], if: -> { step == :business }
-  before_action :store_business, only: %i[update], if: -> { step == :business }
+  before_action :store_investigation, only: %i[update], if: -> {%i[why_reporting reference_number].include? step}
+  before_action :set_why_reporting, ony: %i[show update], if: -> {step == :why_reporting}
+  before_action :store_why_reporting, ony: %i[update], if: -> {step == :why_reporting}
+  before_action :set_selected_businesses, ony: %i[show update], if: -> {step == :which_businesses}
+  before_action :store_selected_businesses, ony: %i[update], if: -> {step == :which_businesses}
+  before_action :set_business, only: %i[show update], if: -> {step == :business}
+  before_action :store_business, only: %i[update], if: -> {step == :business}
+  before_action :set_corrective_action, only: %i[show update], if: -> {step == :corrective_action}
+  before_action :store_corrective_action, only: %i[update], if: -> {step == :corrective_action}
 
   #GET /xxx/step
   def show
@@ -30,8 +32,6 @@ class Investigations::MsaInvestigationsController < ApplicationController
     when :business
       return redirect_to next_wizard_path if all_businesses_complete?
     when :corrective_action
-      set_corrective_action
-      set_attachment
       unless session[pending(step)]
         return redirect_to next_wizard_path
       end
@@ -124,7 +124,7 @@ private
   def set_selected_businesses
     if params.has_key?(:businesses)
       @selected_businesses = which_businesses_params
-                                 .select { |key, selected| key != :other_business_type && selected == "1" }
+                                 .select {|key, selected| key != :other_business_type && selected == "1"}
                                  .keys
       @other_business_type = which_businesses_params[:other_business_type]
     else
@@ -143,12 +143,21 @@ private
       @business.locations.build
       @business.build_contact
     end
-    next_business = session[:businesses].find { |entry| entry["business"].nil? }
+    next_business = session[:businesses].find {|entry| entry["business"].nil?}
     @business_type = next_business ? next_business["type"] : nil
   end
 
+  def set_corrective_action
+    @corrective_action = @investigation.corrective_actions.build(corrective_action_params)
+    @corrective_action.product = @product
+    @file_blob, * = load_file_attachments :corrective_action
+    if @file_blob && @corrective_action.related_file == "Yes"
+      @corrective_action.documents.attach(@file_blob)
+    end
+  end
+
   def all_businesses_complete?
-    session[:businesses].all? { |entry| entry["business"].present? }
+    session[:businesses].all? {|entry| entry["business"].present?}
   end
 
   def clear_session
@@ -189,7 +198,7 @@ private
     case step
     when :why_reporting
       params.require(:investigation).permit(
-        :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
+          :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
       )
     when :reference_number
       params.require(:investigation).permit(:reporter_reference)
@@ -232,12 +241,12 @@ private
 
   def test_session_params
     # TODO use this to retrieve a test for editing eg for browser back button
-    { type: Test::Result.name }
+    {type: Test::Result.name}
   end
 
   def which_businesses_params
     params.require(:businesses).permit(
-      :retailer, :distributor, :importer, :manufacturer, :other, :other_business_type, :none
+        :retailer, :distributor, :importer, :manufacturer, :other, :other_business_type, :none
     )
   end
 
@@ -262,7 +271,7 @@ private
                        .select {|relationship, selected| relationship != "other" && selected == "1"}
                        .keys
       businesses << which_businesses_params[:other_business_type] if which_businesses_params[:other] == "1"
-      session[:businesses] = businesses.map {|type| { type: type, business: nil }}
+      session[:businesses] = businesses.map {|type| {type: type, business: nil}}
     end
   end
 
@@ -273,18 +282,22 @@ private
 
   def store_business
     if @business.valid?
-      business_entry = session[:businesses].find { |entry| entry["type"] == params.require(:business)[:business_type] }
+      business_entry = session[:businesses].find {|entry| entry["type"] == params.require(:business)[:business_type]}
       business_entry["business"] = @business
     end
   end
 
   def store_corrective_action
-    set_corrective_action
-    @file_blob, * = load_file_attachments :corrective_action
-    update_blob_metadata @file_blob, corrective_action_file_metadata
-    @file_blob.save if @file_blob
-    session[:corrective_actions] << { corrective_action: @corrective_action, file_blob_id: @file_blob&.id }
-    session.delete :file
+    if @corrective_action.valid? && @file_blob
+      update_blob_metadata @file_blob, corrective_action_file_metadata
+      @file_blob.save if @file_blob
+      session[:corrective_actions] << {corrective_action: @corrective_action, file_blob_id: @file_blob&.id}
+      session.delete :file
+    end
+    if further_corrective_action_params.empty?
+      @corrective_action.errors.add(:further_corrective_action,
+                                    "- please indicate whether or not correction actions have been agreed or taken")
+    end
   end
 
   def store_test
@@ -292,7 +305,7 @@ private
     @file_blob, * = load_file_attachments :test
     update_blob_metadata @file_blob, test_file_metadata
     @file_blob.save if @file_blob
-    session[:test_results] << { test: @test, file_blob_id: @file_blob&.id }
+    session[:test_results] << {test: @test, file_blob_id: @file_blob&.id}
     session.delete :file
   end
 
@@ -308,12 +321,12 @@ private
     session.delete :file
   end
 
-  def pending_corrective_action_params
-    params.permit(:has_action)
+  def further_corrective_action_params
+    params.permit(:further_corrective_action)
   end
 
   def store_corrective_action_pending
-    session[:corrective_action_pending] = pending_corrective_action_params[:has_action] == "Yes"
+    session[:corrective_action_pending] = further_corrective_action_params[:further_corrective_action] == "Yes"
   end
 
   def store_other_information
@@ -339,10 +352,14 @@ private
       @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
       @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
     when :business
-      @business.validate
       return false if @business.errors.any?
     when :has_corrective_action
-      @investigation.errors.add(:has_corrective_action, "Please indicate whether or not correction actions have been agreed or taken") if corrective_action_not_known
+      if further_corrective_action_params.empty?
+        @investigation.errors.add(:further_corrective_action,
+                                  "- select whether or not correction actions have been agreed or taken")
+      end
+    when :corrective_action
+      return false if @corrective_action.errors.any?
     end
     @investigation.errors.empty? && @product.errors.empty?
   end
@@ -436,7 +453,4 @@ private
     which_businesses_params[:other] == "1" && which_businesses_params[:other_business_type].empty?
   end
 
-  def corrective_action_not_known
-    pending_corrective_action_params.empty?
-  end
 end

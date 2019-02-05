@@ -167,13 +167,13 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
 
 
   def choose_no_corrective_action
-    choose "has_action_no", visible: false
+    choose "further_corrective_action_no", visible: false
 
     click_button "Continue"
   end
 
   def choose_corrective_action
-    choose "has_action_yes", visible: false
+    choose "further_corrective_action_yes", visible: false
 
     click_button "Continue"
   end

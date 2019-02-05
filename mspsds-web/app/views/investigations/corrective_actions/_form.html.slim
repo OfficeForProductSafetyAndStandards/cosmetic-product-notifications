@@ -61,18 +61,19 @@ fieldset.govuk-fieldset
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-      | Are there any files related to the action?
-  fieldset.govuk-fieldset
-    .govuk-radios.govuk-radios--conditional data-module="radios"
-      .govuk-radios__item
-        = form.radio_button :related_file, "Yes", class: "govuk-radios__input",
-                "data-aria-controls": "conditional-related-file"
-        = form.label :related_file, "Yes", class: "govuk-label govuk-radios__label"
-      #conditional-related-file.govuk-radios__conditional.govuk-radios__conditional--hidden
-        = render "related_attachment_fields", form: form,
-          file_blob: file_blob, attachment_name: :file
-      .govuk-radios__item
-        = form.radio_button :related_file, "No", class: "govuk-radios__input",
-        "data-aria-controls": "conditional-no-related-file"
-        = form.label :related_file, "No", class: "govuk-label govuk-radios__label"
+    | Are there any files related to the action?
+  .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:related_file].any?)
+    fieldset.govuk-fieldset
+      .govuk-radios.govuk-radios--conditional data-module="radios"
+        .govuk-radios__item
+          = form.radio_button :related_file, "Yes", class: "govuk-radios__input",
+                  "data-aria-controls": "conditional-related-file"
+          = form.label :related_file, "Yes", class: "govuk-label govuk-radios__label"
+        #conditional-related-file.govuk-radios__conditional.govuk-radios__conditional--hidden
+          = render "related_attachment_fields", form: form,
+            file_blob: file_blob, attachment_name: :file
+        .govuk-radios__item
+          = form.radio_button :related_file, "No", class: "govuk-radios__input",
+          "data-aria-controls": "conditional-no-related-file"
+          = form.label :related_file, "No", class: "govuk-label govuk-radios__label"
 br

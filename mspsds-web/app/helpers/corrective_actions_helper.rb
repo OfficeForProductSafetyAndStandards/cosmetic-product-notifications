@@ -15,6 +15,9 @@ module CorrectiveActionsHelper
 
   def set_attachment
     @file_blob, * = load_file_attachments
+    if @file_blob && @corrective_action.related_file == "Yes"
+      @corrective_action.documents.attach(@file_blob)
+    end
   end
 
   def update_attachment
@@ -37,7 +40,8 @@ module CorrectiveActionsHelper
                                               :details,
                                               :day,
                                               :month,
-                                              :year)
+                                              :year,
+                                              :related_file)
   end
 
   def corrective_action_file_metadata
