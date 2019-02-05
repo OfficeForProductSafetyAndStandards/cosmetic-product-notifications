@@ -69,13 +69,9 @@ private
   def corrective_action_saved?
     return false unless corrective_action_valid?
 
-    attach_files
-    @corrective_action.save
-  end
-
-  def attach_files
-    attach_blobs_to_list(@file_blob, @corrective_action.documents)
+    # In addition to attaching to the test, we also attach to the investigation, so the file is surfaced in the ui
     attach_blobs_to_list(@file_blob, @investigation.documents)
+    @corrective_action.save
   end
 
   def save_attachment

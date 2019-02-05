@@ -18,6 +18,7 @@ class CorrectiveActionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create corrective action" do
+    test_file = fixture_file_upload('files/testImage.png', 'application/png')
     assert_difference("CorrectiveAction.count") do
       post investigation_corrective_actions_path(@investigation), params: {
         corrective_action: {
@@ -28,7 +29,11 @@ class CorrectiveActionsControllerTest < ActionDispatch::IntegrationTest
           details: "Test Details",
           year: "2018",
           month: "11",
-          day: "18"
+          day: "18",
+          related_file: "Yes",
+          file: {
+              file: test_file
+          }
         }
       }
     end
