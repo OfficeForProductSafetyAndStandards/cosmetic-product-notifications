@@ -20,7 +20,12 @@ Rails.application.routes.draw do
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
 
     collection do
-      resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
+      resources :account, controller: "responsible_persons/account_wizard", only: %i[show update] do
+        collection do
+          get :create_or_join_existing
+          get :join_existing
+        end
+      end
     end
   end
 end

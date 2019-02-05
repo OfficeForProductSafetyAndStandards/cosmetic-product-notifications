@@ -1,23 +1,34 @@
 class ResponsiblePersons::AccountWizardController < ApplicationController
   include Wicked::Wizard
 
-  steps :create_or_join_existing, :join_existing, :select_type, :enter_details
+  steps :select_type, :enter_details
 
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person, only: %i[show update]
   before_action :store_responsible_person, only: %i[update]
 
-  # GET /responsible_persons/account/step
-  def show
-    case step
-    when :create_or_join_existing
-      create_or_join_existing_responsible_person
+  # GET /responsible_persons/account/create_or_join_existing
+  def create_or_join_existing
+    clear_session
+    case params[:option]
+    when "create_new"
+      redirect_to wizard_path(:select_type)
+    when "join_existing"
+      redirect_to join_existing_account_index_path
     else
-      render_wizard
+      @nothing_selected = true if params[:commit].present?
     end
   end
 
-  # PATCH/PUT /responsible_persons/account/step
+  # GET /responsible_persons/account/join_existing
+  def join_existing; end
+
+  # GET /responsible_persons/account/:step
+  def show
+    render_wizard
+  end
+
+  # PATCH/PUT /responsible_persons/account/:step
   def update
     case step
     when :enter_details
@@ -36,19 +47,6 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
   end
 
 private
-
-  def create_or_join_existing_responsible_person
-    clear_session
-    case params[:option]
-    when "create_new"
-      redirect_to_next :select_type
-    when "join_existing"
-      redirect_to_next :join_existing
-    else
-      @nothing_selected = true if params[:commit].present?
-      render_step :create_or_join_existing
-    end
-  end
 
   def clear_session
     session[:responsible_person] = nil

@@ -21,7 +21,7 @@
       = link_to "Read about being the UK responsible person for cosmetic products (opens in a new tab).", "#",
               class: "govuk-link", target: "_blank", rel: 'noopener'
 
-    = form_with url: wizard_path, method: :get do |form|
+    = form_with url: create_or_join_existing_account_index_path, method: :get do |form|
       .govuk-form-group class=("govuk-form-group--error" if @nothing_selected)
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--m

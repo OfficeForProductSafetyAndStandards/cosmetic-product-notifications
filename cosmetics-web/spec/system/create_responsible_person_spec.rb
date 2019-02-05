@@ -83,7 +83,7 @@ RSpec.describe "Create a responsible person", type: :system do
 end
 
 def create_new_responsible_person
-  visit account_path(:create_or_join_existing)
+  visit create_or_join_existing_account_index_path
 
   assert_text "UK responsible person"
   choose "option_create_new", visible: false
