@@ -12,16 +12,17 @@ class Investigations::MsaInvestigationsController < ApplicationController
   steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :corrective_action,
         :other_information, :test_results, :risk_assessments, :product_images, :evidence_images, :other_files,
         :reference_number
-  before_action :set_product, only: %i[show create update]
-  before_action :set_investigation, only: %i[show create update]
   before_action :set_countries, only: %i[show create update]
+  before_action :set_product, only: %i[show create update]
   before_action :store_product, only: %i[update]
+  before_action :set_investigation, only: %i[show create update]
   before_action :store_investigation, only: %i[update]
   before_action :set_why_reporting, ony: %i[show update], if: -> { step == :why_reporting }
   before_action :store_why_reporting, ony: %i[update], if: -> { step == :why_reporting }
   before_action :set_selected_businesses, ony: %i[show update], if: -> { step == :which_businesses }
   before_action :store_selected_businesses, ony: %i[update], if: -> { step == :which_businesses }
   before_action :set_business, only: %i[show update], if: -> { step == :business }
+  before_action :store_business, only: %i[update], if: -> { step == :business }
 
   #GET /xxx/step
   def show
@@ -271,8 +272,10 @@ private
   end
 
   def store_business
-    business_entry = session[:businesses].find { |entry| entry["type"] == params.require(:business)[:business_type] }
-    business_entry["business"] = @business
+    if @business.valid?
+      business_entry = session[:businesses].find { |entry| entry["type"] == params.require(:business)[:business_type] }
+      business_entry["business"] = @business
+    end
   end
 
   def store_corrective_action
