@@ -9,15 +9,24 @@ Rails.application.routes.draw do
 
   resources :notifications, only: %i[new edit] do
     member do
-      get 'confirmation'
+      get :confirmation
     end
 
     resources :build, controller: :notification_build, only: %i[show update new]
   end
 
-  resources :responsible_persons do
+  resources :responsible_persons, only: %i[show] do
     resources :notifications, controller: "responsible_persons/notifications", only: %i[index]
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
+
+    collection do
+      resources :account, controller: "responsible_persons/account_wizard", only: %i[show update] do
+        collection do
+          get :create_or_join_existing
+          get :join_existing
+        end
+      end
+    end
   end
 
   resources :components do

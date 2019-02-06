@@ -2,24 +2,22 @@ require 'rails_helper'
 
 RSpec.describe NotificationsController, type: :controller do
   before do
-    authenticate_user
+    sign_in_as_member_of_responsible_person(create(:responsible_person))
   end
 
   after do
-    sign_out_user
+    sign_out
   end
 
-  describe "GET /confimation" do
+  describe "GET /confirmation" do
     it "assigns the correct notification" do
-      notification = Notification.create
+      notification = create(:notification)
       get(:confirmation, params: { id: notification.id })
       expect(assigns(:notification)).to eq(notification)
     end
 
     it "marks the notification as complete" do
-      notification = Notification.create
-      notification.state = 'draft_complete'
-      notification.save
+      notification = create(:draft_notification)
       get(:confirmation, params: { id: notification.id })
       expect(notification.reload.state).to eq('notification_complete')
     end
@@ -27,7 +25,7 @@ RSpec.describe NotificationsController, type: :controller do
 
   describe "GET /edit" do
     it "assigns the correct notification" do
-      notification = Notification.create
+      notification = create(:notification)
       get(:edit, params: { id: notification.id })
       expect(assigns(:notification)).to eq(notification)
     end
