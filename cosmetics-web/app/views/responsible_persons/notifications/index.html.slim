@@ -1,6 +1,6 @@
 - content_for :page_title, "Your cosmetic products"
 = render "layouts/rp_navbar"
-- if @pending_notification_files > 0
+- if @pending_notification_files.positive?
   .govuk-grid-row
     .govuk-grid-column-full
       .govuk-error-summary.loading_spinner__container
