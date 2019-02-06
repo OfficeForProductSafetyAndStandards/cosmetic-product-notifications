@@ -25,6 +25,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
 
   test "can add filled in test result to investigation" do
     fill_in_basic_details
+    attach_file "test[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
     click_on "Continue"
 
     assert_text "Confirm test result details"
@@ -37,6 +38,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
 
   test "can go back to the edit page from the confirmation page and not lose data" do
     fill_in_basic_details
+    attach_file "test[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
     click_on "Continue"
 
     # Assert all of the data is still here

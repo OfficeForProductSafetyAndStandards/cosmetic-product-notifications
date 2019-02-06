@@ -303,7 +303,7 @@ private
   end
 
   def store_corrective_action
-    if @corrective_action.valid? && @file_blob
+    if @corrective_action.valid? :ts_flow && @file_blob
       update_blob_metadata @file_blob, corrective_action_file_metadata
       @file_blob.save if @file_blob
       session[:corrective_actions] << {corrective_action: @corrective_action, file_blob_id: @file_blob&.id}
