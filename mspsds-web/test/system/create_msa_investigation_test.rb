@@ -51,7 +51,7 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     choose_corrective_action
 
     assert_selector "h1", text: "Record corrective action"
-    fill_in_corrective_action_details @corrective_action_one
+    fill_in_corrective_action_details @corrective_action_one, with_business: false, with_product: false
     add_corrective_action_attachment(
         filename: corrective_filename_one,
         description: corrective_description_one)
@@ -60,7 +60,7 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     choose_corrective_action
 
     assert_selector "h1", text: "Record corrective action"
-    fill_in_corrective_action_details @corrective_action_two
+    fill_in_corrective_action_details @corrective_action_two, with_business: false, with_product: false
     add_corrective_action_attachment(
         filename: corrective_filename_two,
         description: corrective_description_two)
@@ -73,7 +73,7 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Test results details"
     fill_in_test_results @test
     add_attachment test_result_filename
-    fill_in "Attachment description", with: description
+    fill_in "Attachment description", with: test_result_description
     click_button "Continue"
 
     assert_selector "h1", text: "Risk assessments details"
