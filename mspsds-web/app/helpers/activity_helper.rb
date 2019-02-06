@@ -9,7 +9,8 @@ module ActivityHelper
       "testing_result": "Record test result",
       "corrective_action": "Record corrective action",
       "product": "Add a product to the case",
-      "business": "Add a business to the case"
+      "business": "Add a business to the case",
+      "visibility": @investigation.is_private ? "Unrestrict this case" : "Restrict this case for legal privilege"
     }
   end
 end

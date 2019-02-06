@@ -107,6 +107,7 @@ class InvestigationsController < ApplicationController
     end
 
     @investigation.is_private = ps[:is_private]
+    @investigation.visibility_rationale = ps[:visibility_rationale] if ps[:visibility_rationale]
     respond_to_update(:visibility)
   end
 
@@ -136,7 +137,7 @@ private
   end
 
   def visibility_update_params
-    params.require(:investigation).permit(:is_private)
+    params.require(:investigation).permit(:is_private, :visibility_rationale)
   end
 
   def assignee_update_params

@@ -5,6 +5,7 @@ class Investigation < ApplicationRecord
   include UserService
 
   attr_accessor :status_rationale
+  attr_accessor :visibility_rationale
 
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
@@ -201,7 +202,7 @@ private
   end
 
   def create_audit_activity_for_visibility
-    if saved_changes.key?(:is_private)
+    if saved_changes.key?(:is_private) || visibility_rationale.present?
       AuditActivity::Investigation::UpdateVisibility.from(self)
     end
   end
