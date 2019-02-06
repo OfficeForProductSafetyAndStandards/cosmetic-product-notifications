@@ -54,19 +54,14 @@ module InvestigationsHelper
   end
 
   def compute_excluded_terms
+    # After consultation with designers we chose to ignore teams who are not selected in blacklisting
     excluded_assignees = []
-    teams_with_keys.each do |team_with_key|
-      if query_params[team_with_key[:key]].blank?
-        team = team_with_key[:team]
-        excluded_assignees = assignee_list_with_team(excluded_assignees, team)
-      end
-    end
     excluded_assignees << current_user.id if params[:assigned_to_me] == "unchecked"
-    excluded_assignees = excluded_assignees - [current_user.id] if params[:assigned_to_me] == "checked"
     format_assignee_terms(excluded_assignees)
   end
 
   def compute_included_terms
+    # If 'Me' is not checked, but one of current_users teams is selected, we don't exclude current_user from it
     assignees = []
     teams_with_keys.each do |team_with_key|
       if query_params[team_with_key[:key]].present?
@@ -79,9 +74,7 @@ module InvestigationsHelper
       team = Team.find_by(id: params[:assigned_to_someone_else_id])
       assignees = assignee_list_with_team(assignees, team) if team.present?
     end
-
     assignees << current_user.id if params[:assigned_to_me] == "checked"
-    assignees = assignees - [current_user.id] if params[:assigned_to_me] == "unchecked"
     format_assignee_terms(assignees)
   end
 
@@ -135,7 +128,8 @@ module InvestigationsHelper
     current_user.teams.map.with_index do |team, index|
       {
         key: "assigned_to_team_#{index}".to_sym,
-        team: team
+        team: team,
+        name: current_user.teams.count > 1 ? team.name : "My team"
       }
     end
   end

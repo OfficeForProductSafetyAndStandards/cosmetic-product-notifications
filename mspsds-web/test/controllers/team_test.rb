@@ -54,14 +54,14 @@ class TeamTest < ActionDispatch::IntegrationTest
     assert_includes(response.body, investigation.pretty_id)
   end
 
-  test "assigned to team filter doesn't returns cases assigned a team if someone else is selected" do
+  test "assigned to team filter doesn't returns cases assigned a team if it's wrong team" do
     investigation = Investigation.first
     investigation.assignee = @admin
     investigation.save
     get investigations_path, params: {
       assigned_to_me: "unchecked",
       assigned_to_someone_else: "checked",
-      assigned_to_someone_else_id: nil,
+      assigned_to_someone_else_id: @teams[1].id,
       status_open: "unchecked",
       status_closed: "unchecked"
     }
