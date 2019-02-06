@@ -6,9 +6,9 @@ delete environment.loaders.get('sass').use.find(loader => loader.loader === 'pos
 
 // Copy JSON files to the output, rather than reading them as JS
 environment.loaders.append('json', {
-    type: 'javascript/auto',
-    test: /\.json$/,
-    use: [ { loader: 'file-loader' } ]
+  type: 'javascript/auto',
+  test: /\.json$/,
+  use: [{ loader: 'file-loader' }],
 });
 
 module.exports = environment;
