@@ -1,5 +1,6 @@
 class Team < ActiveHash::Base
   include ActiveHash::Associations
+  include UserService
 
   field :id
   field :name
@@ -9,6 +10,8 @@ class Team < ActiveHash::Base
 
   has_many :team_users, dependent: :nullify
   has_many :users, through: :team_users
+
+  has_many :investigations, dependent: :nullify, as: :assignable
 
   def users
     # has_many through seems not to work with ActiveHash
@@ -24,11 +27,47 @@ class Team < ActiveHash::Base
       self.data = nil
     end
 
+    self.ensure_names_up_to_date
+
     if options.has_key?(:conditions)
       where(options[:conditions])
     else
       @records ||= []
     end
+  end
+
+  def display_name(ignore_visibility_restrictions: false)
+    return name if current_user.organisation == organisation || ignore_visibility_restrictions
+
+    organisation.name
+  end
+
+  def full_name
+    display_name
+  end
+
+  def assignee_short_name
+    display_name
+  end
+
+  def self.ensure_names_up_to_date
+    return if Rails.env.test?
+
+    Rails.cache.fetch(:up_to_date, expires_in: 30.minutes) do
+      Rails.application.config.team_names["organisations"]["opss"].each do |name|
+        found = false
+        self.data.each { |team_data| found = found || team_data[:name] == name }
+        raise "Team name #{name} not found, if recently changed in Keycloak, please update important_team_names.yml" unless found
+      end
+      true
+    end
+  end
+
+  def self.get_visible_teams(user)
+    team_names = Rails.application.config.team_names["organisations"]["opss"]
+    return Team.where(name: team_names) if user.is_opss?
+
+    Team.where(name: team_names[0])
   end
 end
 Team.all if Rails.env.development?

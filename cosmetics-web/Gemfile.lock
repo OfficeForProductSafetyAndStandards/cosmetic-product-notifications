@@ -134,6 +134,11 @@ GEM
     et-orbi (1.1.7)
       tzinfo
     execjs (2.7.0)
+    factory_bot (5.0.0)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.0.0)
+      factory_bot (~> 5.0.0)
+      railties (>= 4.2.0)
     ffi (1.10.0)
     fugit (1.1.8)
       et-orbi (~> 1.1, >= 1.1.7)
@@ -247,6 +252,8 @@ GEM
       netrc (~> 0.8)
     reverse_markdown (1.1.0)
       nokogiri
+    rspec-collection_matchers (1.1.3)
+      rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.2)
@@ -377,12 +384,14 @@ DEPENDENCIES
   aasm
   bootsnap (>= 1.1.0)
   cf-app-utils
+  factory_bot_rails
   jbuilder (~> 2.8)
   mini_magick
   pg (~> 1.1)
   puma (~> 3.0)
   rails (~> 5.2)
   rails-controller-testing
+  rspec-collection_matchers
   rspec-rails
   rubocop-rspec
   sass-rails (~> 5.0)
