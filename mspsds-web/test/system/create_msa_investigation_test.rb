@@ -2,7 +2,7 @@ require "application_system_test_case"
 require_relative "../test_helpers/corrective_action_test_helper"
 
 
-class CreateMsaInvestigationTest < ApplicationSystemTestCase
+class CreateTsInvestigationTest < ApplicationSystemTestCase
   include CorrectiveActionTestHelper
 
   setup do
@@ -16,7 +16,7 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     @corrective_action_two = corrective_actions :two
     @test = tests :two
 
-    visit new_msa_investigation_path
+    visit new_ts_investigation_path
   end
 
   teardown do

@@ -1,4 +1,4 @@
-class Investigations::MsaInvestigationsController < ApplicationController
+class Investigations::TsInvestigationsController < ApplicationController
   include Wicked::Wizard
   include CountriesHelper
   include ProductsHelper
