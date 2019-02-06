@@ -157,12 +157,13 @@ class CreateEnquiryTest < ApplicationSystemTestCase
   end
 
   test "enquiry details should be shown in overview"
-  select_complainant_type_and_continue
-  fill_complainant_details_and_continue
-  fill_enquiry_details_and_continue
+    select_complainant_type_and_continue
+    fill_complainant_details_and_continue
+    fill_enquiry_details_and_continue
 
-  assert_no_text "Product category"
-  assert_text @complainant.name
+    assert_no_text "Product category"
+    assert_text @complainant.name
+  end
 
   def select_complainant_type_and_continue
     choose("complainant[complainant_type]", visible: false, match: :first)
