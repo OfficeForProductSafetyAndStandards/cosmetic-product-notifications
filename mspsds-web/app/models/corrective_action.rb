@@ -1,7 +1,7 @@
 class CorrectiveAction < ApplicationRecord
   include DateConcern
 
-  attr_accessor :related_file
+  attribute :related_file
 
   belongs_to :investigation
   belongs_to :business, optional: true
@@ -13,10 +13,10 @@ class CorrectiveAction < ApplicationRecord
     :date_decided
   end
 
-  validate :date_decided_cannot_be_in_the_future
 
   validates :summary, presence: true
   validates :date_decided, presence: true
+  validate :date_decided_cannot_be_in_the_future
   validates :investigation, presence: true
   validates :product, presence: true
   validates :legislation, presence:true

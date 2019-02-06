@@ -14,7 +14,7 @@ module TestsHelper
 
   def set_attachment
     @file_blob, * = load_file_attachments
-    @test.documents.attach(@file_blob)
+    @test.documents.attach(@file_blob) if @file_blob
   end
 
   def update_attachment
@@ -22,7 +22,7 @@ module TestsHelper
   end
 
   def test_valid?
-    @test.validate(step)
+    @test.validate
     validate_blob_size(@file_blob, @test.errors, "file")
     @test.errors.empty?
   end
