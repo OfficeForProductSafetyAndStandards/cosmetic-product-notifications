@@ -2,15 +2,13 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
   before_action :set_responsible_person
   before_action :set_notification_file
 
-  def new
-  end
+  def new; end
 
   def create
-
     if notification_file_params && notification_file_params[:uploaded_file]
       @notification_file.name = notification_file_params[:uploaded_file].original_filename
       @notification_file.responsible_person = @responsible_person
-      @notification_file.user_id = current_user.id
+      @notification_file.user = current_user
       @notification_file.uploaded_file.attach(notification_file_params[:uploaded_file])
     end
 

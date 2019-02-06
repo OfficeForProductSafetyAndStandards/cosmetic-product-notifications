@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
+  let(:valid_attributes) {
+    { uploaded_file: fixture_file_upload("testImage.png", "image/png") }
+  }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
@@ -10,10 +13,6 @@ RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controlle
   after do
     sign_out
   end
-
-  let(:valid_attributes) {
-    { uploaded_file: fixture_file_upload("testImage.png", "image/png") }
-  }
 
   describe "GET #new" do
     it "returns a success response" do
