@@ -116,7 +116,7 @@ class Investigation < ApplicationRecord
   def visible_to(user: current_user, private: is_private)
     return true unless private
     return true if assignee.present? && (assignee&.organisation == user.organisation)
-    return true if source&.user&.present? && (source&.user&.organisation == user.organisation)
+    return true if source.respond_to?(:user) && source&.user&.present? && (source&.user&.organisation == user.organisation)
     return true if user.is_opss?
 
     false
