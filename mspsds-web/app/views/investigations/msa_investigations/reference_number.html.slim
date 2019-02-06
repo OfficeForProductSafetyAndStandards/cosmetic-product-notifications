@@ -13,7 +13,7 @@
     .govuk-grid-column-one-half
       .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:complainant_reference].any?)]
         span#investigation_complainant_reference.govuk-hint
-          | Give us a reference, ie a case number from your system, use it to help you find your report in the future.
+          | Use an existing case number or reference from your system to help you find your report in the future.
         = form.text_field :complainant_reference, class:"govuk-input",
                 "aria-describedby": "report-title-hint"
   .govuk-grid-row

@@ -4,7 +4,7 @@ class Test::Result < Test
   validates :result, presence: true
   validate :result_file_attached
 
-  enum result: { passed: "Pass", failed: "Fail" }
+  enum result: { passed: "Pass", failed: "Fail", other: "Other" }
 
   def create_audit_activity
     AuditActivity::Test::Result.from(self)

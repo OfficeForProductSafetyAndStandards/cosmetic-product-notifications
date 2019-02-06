@@ -3,7 +3,7 @@ fieldset.govuk-fieldset
     = form.label :trading_name, "Trading name",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span.govuk-hint#business-trading-name-hint
-      |  The name the business is known by (including Ebay / Amazon seller name if relevant)
+      |  The name the business is known by
     = form.text_field :trading_name, class: "govuk-input", aria_describedby: "business-trading-name-hint"
 
 fieldset.govuk-fieldset
@@ -11,7 +11,7 @@ fieldset.govuk-fieldset
     = form.label :legal_name, "Legal name",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span.govuk-hint#business-legal-name-hint
-      |  If different from the trading name
+      |  The registered name of the company (if you have it)
     = form.text_field :legal_name, class: "govuk-input", aria_describedby: "business-legal-name-hint"
 
 fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]

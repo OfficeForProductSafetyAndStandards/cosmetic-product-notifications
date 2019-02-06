@@ -62,7 +62,7 @@ fieldset.govuk-fieldset
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:description].any?)]
-    = form.label :description, "Description",
+    = form.label :description, "Description of product",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-description-hint.govuk-hint
       | For example, 'Orange, 4 socket extension lead'

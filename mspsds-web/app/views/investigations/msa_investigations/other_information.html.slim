@@ -13,7 +13,7 @@
       .govuk-grid-column-one-half class="govuk-!-margin-bottom-9"
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--m class="govuk-!-margin-bottom-1"
-            | Please provide any of the following
+            | What information do you have?
           .govuk-form-group
             .govuk-checkboxes
               .govuk-checkboxes__item
@@ -31,7 +31,7 @@
                 = form.label :risk_assessment, "Risk assessments", class: "govuk-label govuk-checkboxes__label",
                         for: "investigation_risk_assessments"
                 span#risk-assessments-hint.govuk-hint.govuk-checkboxes__hint
-                  | Upload any risk assesment files
+                  | Upload any risk assessments
               .govuk-checkboxes__item
                 = form.check_box :product_images, class: "govuk-checkboxes__input",
                         "aria-describedby": "product-images-hint", name: "product_images",
@@ -39,7 +39,7 @@
                 = form.label :product_images, "Product images", class: "govuk-label govuk-checkboxes__label",
                         for: "investigation_product_images"
                 span#product-images-hint.govuk-hint.govuk-checkboxes__hint
-                  | Images of the product, used for identification
+                  | Images of the product – used for identification
               .govuk-checkboxes__item
                 = form.check_box :evidence_images, class: "govuk-checkboxes__input",
                         "aria-describedby": "evidence-images-hint", name: "evidence_images",
@@ -47,7 +47,7 @@
                 = form.label :evidence_images, "Evidence images", class: "govuk-label govuk-checkboxes__label",
                         for: "investigation_evidence_images"
                 span#evidence-images-hint.govuk-hint.govuk-checkboxes__hint
-                  | Images which show damage injury or other types of evidence
+                  | Images which show damage, injury or other types of evidence
               .govuk-checkboxes__item
                 = form.check_box :other_files, class: "govuk-checkboxes__input",
                         "aria-describedby": "other-files-hint", name: "other_files",
@@ -55,7 +55,7 @@
                 = form.label :other_files, "Other files", class: "govuk-label govuk-checkboxes__label",
                         for: "investigation_other_files"
                 span#other-files-hint.govuk-hint.govuk-checkboxes__hint
-                  | Any other relevant files, such as purchase receipts, case-file downloads etc
+                  | Any other relevant files, such as purchase receipts or case-file downloads
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       button.govuk-button type="submit"

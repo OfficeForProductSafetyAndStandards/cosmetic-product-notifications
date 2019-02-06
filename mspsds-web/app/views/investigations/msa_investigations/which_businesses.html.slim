@@ -53,12 +53,13 @@
                   .govuk-form-group
                     = form.text_field :other_business_type, id: "new-business-type-other", class: "govuk-input",
                             value: @other_business_type || ""
+          .govuk-radios__divider or
           .govuk-form-group
             .govuk-checkboxes
               .govuk-checkboxes__item
                 = form.check_box :none, class: "govuk-checkboxes__input", value: "None",
                         checked: @selected_businesses.include?("none")
-                = form.label :none, "None",
+                = form.label :none, "None of the above",
                         class: "govuk-label govuk-checkboxes__label", for: :investigation_none
   .govuk-grid-row
     .govuk-grid-column-two-thirds
