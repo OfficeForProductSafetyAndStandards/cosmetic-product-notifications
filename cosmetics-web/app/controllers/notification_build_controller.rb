@@ -18,12 +18,17 @@ class NotificationBuildController < ApplicationController
     when :is_imported
       render_is_imported_step
     when :add_product_image
-      params[:image_upload].each do |image|
-        image_upload = @notification.image_uploads.build
-        image_upload.file.attach(image)
+      if params[:image_upload].present?
+        params[:image_upload].each do |image|
+          image_upload = @notification.image_uploads.build
+          image_upload.file.attach(image)
+        end
+        @notification.add_product_image
+        render_wizard @notification
+      else
+        @notification.errors.add :image_uploads, "You must upload at least one product image"
+        render step
       end
-
-      render_wizard @notification
     else
       @notification.update(notification_params)
 

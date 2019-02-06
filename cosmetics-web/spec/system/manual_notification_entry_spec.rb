@@ -148,8 +148,6 @@ private
   def get_notification_from_confirmation_page
     if (match = current_url.match(%r!/notifications/(\d+)/confirmation!))
       notification_id = match.captures[0].to_i
-    else
-      throw "Page URL does not match /notifications/:id/confirmation"
     end
 
     Notification.find(notification_id)

@@ -17,6 +17,7 @@ class Notification < ApplicationRecord
     state :empty, initial: true
     state :product_name_added
     state :import_country_added
+    state :components_complete
     state :draft_complete
     state :notification_complete
 
@@ -29,7 +30,11 @@ class Notification < ApplicationRecord
     end
 
     event :set_single_or_multi_component do
-      transitions from: :import_country_added, to: :draft_complete
+      transitions from: :import_country_added, to: :components_complete
+    end
+
+    event :add_product_image do
+      transitions from: :components_complete, to: :draft_complete
     end
 
     event :submit_notification do
@@ -61,10 +66,12 @@ private
       mandatory_attributes('empty')
     when 'import_country_added'
       %w[components] + mandatory_attributes('product_name_added')
+    when 'components_complete'
+      mandatory_attributes('import_country_added')
     when 'draft_complete'
-      mandatory_attributes('import_country_added')
+      mandatory_attributes('components_complete')
     when 'notification_complete'
-      mandatory_attributes('import_country_added')
+      mandatory_attributes('draft_complete')
     end
   end
 end

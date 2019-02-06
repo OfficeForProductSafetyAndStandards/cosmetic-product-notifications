@@ -6,6 +6,8 @@ RSpec.describe Notification, type: :model do
     notification.stub(:country_from_code)
       .with('country:NZ')
       .and_return('New Zealand')
+
+    @image_upload = ImageUpload.create
   end
 
   describe "updating product_name" do

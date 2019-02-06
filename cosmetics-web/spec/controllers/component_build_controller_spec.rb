@@ -35,7 +35,7 @@ RSpec.describe ComponentBuildController, type: :controller do
     it "redirects to the check your answers page on finish" do
       component = create_component
       get(:show, params: { component_id: component.id, id: 'wicked_finish' })
-      expect(response).to redirect_to(edit_notification_path(component.notification))
+      expect(response).to redirect_to(notification_build_path(component.notification, "add_product_image"))
     end
 
     it "initialises shades array with two empty strings in add_shades step" do
@@ -71,7 +71,7 @@ RSpec.describe ComponentBuildController, type: :controller do
       component = create_component
       post(:update, params: { component_id: component.id, id: 'number_of_shades',
                               number_of_shades: 'single' })
-      expect(response).to redirect_to(edit_notification_path(component.notification))
+      expect(response).to redirect_to(notification_build_path(component.notification, "add_product_image"))
     end
 
     it "adds errors if number_of_shades is empty" do

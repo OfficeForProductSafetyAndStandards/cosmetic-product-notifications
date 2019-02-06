@@ -105,5 +105,11 @@ RSpec.describe NotificationBuildController, type: :controller do
                     image_upload: [@file] })
       expect(assigns[:notification].image_uploads.first.file.filename).to eq('testImage.png')
     end
+
+    it "adds errors if user does not upload images in the add_product_image step" do
+      post(:update, params: { notification_id: @notification.id, id: 'add_product_image',
+        image_upload: [] })
+      expect(assigns[:notification].errors[:image_uploads]).to include('You must upload at least one product image')
+    end
   end
 end
