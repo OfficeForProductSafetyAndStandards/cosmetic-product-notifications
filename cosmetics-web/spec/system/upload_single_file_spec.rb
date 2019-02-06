@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Upload a single file", type: :system do
   before do
-    authenticate_user
+    sign_in_test_user
   end
 
   after do
