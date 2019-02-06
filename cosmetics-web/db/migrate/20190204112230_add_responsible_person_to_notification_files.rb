@@ -5,6 +5,6 @@ class AddResponsiblePersonToNotificationFiles < ActiveRecord::Migration[5.2]
     add_reference :notification_files, :responsible_person, foreign_key: true, index: false
     add_index :notification_files, :responsible_person_id, algorithm: :concurrently
 
-    add_column :notification_files, :user_id, :uuid
+    add_column :notification_files, :user_id, :string
   end
 end

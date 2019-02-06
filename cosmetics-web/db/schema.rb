@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2019_02_04_112230) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
-    t.uuid "user_id"
+    t.string "user_id"
     t.index ["responsible_person_id"], name: "index_notification_files_on_responsible_person_id"
   end
 
