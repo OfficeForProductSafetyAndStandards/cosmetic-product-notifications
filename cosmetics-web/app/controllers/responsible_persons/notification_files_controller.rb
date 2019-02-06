@@ -1,5 +1,4 @@
 class ResponsiblePersons::NotificationFilesController < ApplicationController
-  before_action :set_notification_file
   before_action :set_responsible_person
 
   def new
@@ -30,10 +29,6 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
 private
 
     # Use callbacks to share common setup or constraints between actions.
-  def set_notification_file
-    @notification_file = NotificationFile.find(params[:id])
-  end
-
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
   end

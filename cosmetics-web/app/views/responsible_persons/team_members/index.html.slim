@@ -16,8 +16,9 @@
           th.govuk-table__header[scope="col"]
             | Email address
       tbody.govuk-table__body
-        tr.govuk-table__row
-          td.govuk-table__cell
-            | Jane Doe
-          td.govuk-table__cell
-            | 	jane.doe@responsible-person.com
+        - @responsible_person.responsible_person_users.each do |user|
+          tr.govuk-table__row
+            td.govuk-table__cell
+              = user.full_name
+            td.govuk-table__cell
+              = user.email_address
