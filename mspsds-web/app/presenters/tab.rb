@@ -8,10 +8,6 @@ class Tab
   end
 
   def hide_title
-    if @title == "Overview"
-      true
-    else
-      false
-    end
+    @title == "Overview"
   end
 end
