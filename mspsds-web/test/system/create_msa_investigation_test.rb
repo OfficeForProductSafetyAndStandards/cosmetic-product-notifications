@@ -70,20 +70,20 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Other information and files"
     choose_test_results_and_risk_assessments
 
-    assert_selector "h1", text: "Test results details"
+    assert_selector "h1", text: "Test result details"
     fill_in_test_results @test
     add_attachment test_result_filename
     fill_in "Attachment description", with: test_result_description
     click_button "Continue"
 
-    assert_selector "h1", text: "Risk assessments details"
+    assert_selector "h1", text: "Risk assessment details"
     fill_in "Title", with: risk_assessment_title
     fill_in "Description", with: risk_assessment_description
     add_attachment risk_assessment_title
     choose "further_risk_assessments_yes", visible: false
     click_button "Continue"
 
-    assert_selector "h1", text: "Risk assessments details"
+    assert_selector "h1", text: "Risk assessment details"
     fill_in "Title", with: risk_assessment_title
     fill_in "Description", with: risk_assessment_description
     add_attachment risk_assessment_title
