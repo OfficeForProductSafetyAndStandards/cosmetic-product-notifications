@@ -91,7 +91,7 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     click_button "Continue"
 
     assert_selector "h1", text: "Find this in your system"
-    fill_in_reporter_reference
+    fill_in_complainant_reference
 
     # TODO add assertions for corrective actions once corrective action audit activity bug has been fixed so activities
     # display correctly in investigation
@@ -176,8 +176,8 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
     click_button "Continue"
   end
 
-  def fill_in_reporter_reference
-    fill_in "investigation_reporter_reference", with: @investigation.reporter_reference
+  def fill_in_complainant_reference
+    fill_in "investigation_complainant_reference", with: @investigation.complainant_reference
     click_button "Save"
   end
 

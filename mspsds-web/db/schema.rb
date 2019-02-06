@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 2019_01_30_110940) do
 
   create_table "investigations", id: :serial, force: :cascade do |t|
     t.uuid "assignee_id"
+    t.string "complainant_reference"
     t.datetime "created_at", null: false
     t.text "description"
     t.text "hazard_description"
@@ -137,7 +138,6 @@ ActiveRecord::Schema.define(version: 2019_01_30_110940) do
     t.boolean "is_private", default: false, null: false
     t.text "non_compliant_reason"
     t.string "product_category"
-    t.string "reporter_reference"
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
     t.string "user_title"

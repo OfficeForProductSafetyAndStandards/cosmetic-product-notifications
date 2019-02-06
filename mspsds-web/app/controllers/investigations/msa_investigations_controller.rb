@@ -207,7 +207,7 @@ private
           :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
       )
     when :reference_number
-      params.require(:investigation).permit(:reporter_reference)
+      params.require(:investigation).permit(:complainant_reference)
     end
   end
 

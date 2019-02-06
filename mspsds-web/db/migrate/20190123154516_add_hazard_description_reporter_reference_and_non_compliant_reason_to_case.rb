@@ -4,7 +4,7 @@ class AddHazardDescriptionReporterReferenceAndNonCompliantReasonToCase < ActiveR
       change_table :investigations, bulk: true do |t|
         t.text :hazard_description
         t.text :non_compliant_reason
-        t.string :reporter_reference
+        t.string :complainant_reference
       end
     end
   end
