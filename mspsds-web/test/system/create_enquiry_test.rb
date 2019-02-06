@@ -156,7 +156,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     assert_text "View attachment"
   end
 
-  test "enquiry details should be shown in overview"
+  test "enquiry details should be shown in overview" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
     fill_enquiry_details_and_continue

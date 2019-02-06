@@ -50,11 +50,12 @@ class CreateProjectTest < ApplicationSystemTestCase
     assert_text "Project was successfully created"
   end
 
-  test "project details should show in overview"
-  fill_project_details_and_continue
-  assert_text "Project"
-  assert_no_text "Product category"
-  assert_no_text "Reporter"
+  test "project details should show in overview" do
+    fill_project_details_and_continue
+    assert_text "Project"
+    assert_no_text "Product category"
+    assert_no_text "Reporter"
+  end
 
   def fill_project_details_and_continue
     fill_in "investigation[description]", with: @project.description
