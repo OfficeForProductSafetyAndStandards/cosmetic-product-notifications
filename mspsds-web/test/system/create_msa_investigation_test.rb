@@ -182,6 +182,6 @@ class CreateMsaInvestigationTest < ApplicationSystemTestCase
   end
 
   def add_attachment filename
-    attach_file "attachment-file-input", Rails.root + "test/fixtures/files/#{filename}"
+    attach_file "attachment-file-input", file_fixture(filename)
   end
 end

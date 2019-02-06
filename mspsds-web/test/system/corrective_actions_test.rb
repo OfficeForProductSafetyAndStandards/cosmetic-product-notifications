@@ -19,6 +19,8 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
 
   test "can record corrective action for a case" do
     fill_in_corrective_action_details @corrective_action
+    choose "corrective_action_related_file_yes", visible: false
+    attach_file "attachment-file-input", file_fixture("new_risk_assessment.txt")
     click_on "Continue"
 
     assert_text "Confirm corrective action details"
@@ -31,6 +33,8 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
 
   test "can go back to the edit page from the confirmation page and not lose data" do
     fill_in_corrective_action_details @corrective_action
+    choose "corrective_action_related_file_yes" , visible: false
+    attach_file "attachment-file-input", file_fixture("new_risk_assessment.txt")
     click_on "Continue"
 
     # Assert all of the data is still here
@@ -130,7 +134,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
 
   test "attachment description field is visible when a file is selected" do
     choose "corrective_action_related_file_yes", visible: false
-    attach_file "corrective_action[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
+    attach_file "corrective_action[file][file]", file_fixture("new_risk_assessment.txt")
 
     assert_text "Attachment description"
   end
