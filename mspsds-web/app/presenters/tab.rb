@@ -6,4 +6,12 @@ class Tab
     @title = title
     @render = render
   end
+
+  def hide_title
+    if @title == "Overview"
+      true
+    else
+      false
+    end
+  end
 end

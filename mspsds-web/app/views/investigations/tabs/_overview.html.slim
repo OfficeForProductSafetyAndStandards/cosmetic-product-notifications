@@ -1,7 +1,7 @@
 h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
   | Summary
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-  p.govuk-body[class="govuk-grid-column-two-thirds"]
+  p.govuk-body.govuk-grid-column-two-thirds
     = @investigation.description
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   hr.govuk-section-break.govuk-section-break--s
@@ -16,7 +16,7 @@ table.govuk-table
     tr.govuk-table__row
       th.govuk-table__header [scope="row" class="govuk-!-width-one-quarter"]  Date recorded
       td.govuk-table__cell = @investigation.created_at.strftime("%d/%m/%Y")
-      - if @investigation.case_type == "allegation"
+      - if @investigation.is_a?(Investigation::Allegation)
         tr.govuk-table__row
           th.govuk-table__header Product category
           td.govuk-table__cell = @investigation.product_category
