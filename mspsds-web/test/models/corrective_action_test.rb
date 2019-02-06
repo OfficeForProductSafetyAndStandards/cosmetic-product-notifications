@@ -72,8 +72,8 @@ class CorrectiveActionTest < ActiveSupport::TestCase
     # if it's true, a file must be provided
     corrective_action.related_file = "Yes"
     assert_not corrective_action.save, "expected validation errors when saving the record"
-    test_image1 = file_fixture("testImage.png")
-    corrective_action.documents.attach(io: File.open(test_image1), filename: 'testImage.png')
+    test_image = file_fixture("testImage.png")
+    corrective_action.documents.attach(io: File.open(test_image), filename: 'testImage.png')
     assert corrective_action.save, "unexpected validation errors encountered when saving the record"
   end
 
