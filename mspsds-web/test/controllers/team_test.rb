@@ -23,7 +23,6 @@ class TeamTest < ActionDispatch::IntegrationTest
         groups: [organisations[0][:id], @teams[2].id]
       }
     ].to_json
-    user_groups
     allow(Keycloak::Internal).to receive(:get_user_groups).and_return(user_groups)
 
     TeamUser.all
@@ -194,6 +193,6 @@ class TeamTest < ActionDispatch::IntegrationTest
     investigation.assignee = @teams[2]
     investigation.save
     @investigation_team_three = Investigation.find_by(description: "Investigation for search by product")
-    assert_equal @investigation_team_three.assignee,  @teams[2]
+    assert_equal @investigation_team_three.assignee, @teams[2]
   end
 end

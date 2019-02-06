@@ -30,10 +30,10 @@
               .govuk-checkboxes__item
                 = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
                 = form.label :assigned_to_me, "Me", class: "govuk-checkboxes__label"
-              - teams_with_keys.each do |team|
+              - teams_with_keys.each do |key, team, name|
                 .govuk-checkboxes__item
-                  = form.check_box team[:key], { class: "govuk-checkboxes__input" }, team[:team].id, ""
-                  = form.label team[:key], team[:name], class: "govuk-checkboxes__label"
+                  = form.check_box key, { class: "govuk-checkboxes__input" }, team.id, ""
+                  = form.label key, name, class: "govuk-checkboxes__label"
               .govuk-checkboxes__item
                 = form.check_box :assigned_to_someone_else, { class: "govuk-checkboxes__input",
                         "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"

@@ -44,9 +44,7 @@ module InvestigationsHelper
 
   def no_boxes_checked
     no_people_boxes_checked = params[:assigned_to_me] == "unchecked" && params[:assigned_to_someone_else] == "unchecked"
-    no_teams_checked = true
-    teams_with_keys.each { |team| no_teams_checked = no_teams_checked && query_params[team[:key]].blank? }
-    no_teams_checked && no_people_boxes_checked
+    no_people_boxes_checked && teams_with_keys.all? { |key, _t, _n| query_params[key].blank? }
   end
 
   def assignee_filter_exclusive
@@ -62,20 +60,25 @@ module InvestigationsHelper
 
   def compute_included_terms
     # If 'Me' is not checked, but one of current_users teams is selected, we don't exclude current_user from it
-    assignees = []
-    teams_with_keys.each do |team_with_key|
-      if query_params[team_with_key[:key]].present?
-        team = team_with_key[:team]
-        assignees = assignee_list_with_team(assignees, team)
-      end
-    end
+    assignees = checked_team_assignees
     if params[:assigned_to_someone_else] == "checked"
       assignees << params[:assigned_to_someone_else_id]
       team = Team.find_by(id: params[:assigned_to_someone_else_id])
-      assignees = assignee_list_with_team(assignees, team) if team.present?
+      assignees.concat(assignee_ids_from_team(team)) if team.present?
     end
     assignees << current_user.id if params[:assigned_to_me] == "checked"
-    format_assignee_terms(assignees)
+    format_assignee_terms(assignees.uniq)
+  end
+
+  def checked_team_assignees
+    assignees = []
+    teams_with_keys.each do |key, team, _n|
+      if query_params[key].present?
+        team = team
+        assignees.concat(assignee_ids_from_team(team))
+      end
+    end
+    assignees
   end
 
   def format_assignee_terms(assignee_array)
@@ -90,7 +93,7 @@ module InvestigationsHelper
     set_default_assignee_filter
     params.permit(:q, :status_open, :status_closed, :page,
                   :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by,
-                  teams_with_keys.map { |t| t[:key] })
+                  teams_with_keys.map { |key, _t, _n| key })
   end
 
   def export_params
@@ -126,19 +129,16 @@ module InvestigationsHelper
 
   def teams_with_keys
     current_user.teams.map.with_index do |team, index|
-      {
-        key: "assigned_to_team_#{index}".to_sym,
-        team: team,
-        name: current_user.teams.count > 1 ? team.name : "My team"
-      }
+      # key, team, name
+      [
+        "assigned_to_team_#{index}".to_sym,
+        team,
+        current_user.teams.count > 1 ? team.name : "My team"
+      ]
     end
   end
 
-  def assignee_list_with_team(list, team)
-    list << team.id
-    team.users.each do |member|
-      list << member.id
-    end
-    list
+  def assignee_ids_from_team(team)
+    [team.id] + team.users.map(&:id)
   end
 end
