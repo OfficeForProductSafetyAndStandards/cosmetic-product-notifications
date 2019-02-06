@@ -1,6 +1,10 @@
 @import "shared-imports";
 
 @import "landing-page";
+@import "responsible_persons";
+@import "rp_navbar";
+
+@import 'component_build';
 
 * {
   box-sizing: border-box;

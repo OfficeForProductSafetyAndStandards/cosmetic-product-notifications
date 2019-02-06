@@ -3,6 +3,8 @@ require "application_system_test_case"
 class InvestigationAssigneeTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
+    @user = User.find_by(last_name: "User_one")
+    @team = all_teams.first
     visit assign_investigation_path(investigations(:one))
   end
 
@@ -10,57 +12,30 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     logout
   end
 
-  test "should show selection without radio buttons if the user hasn't been re-assigned" do
-    assert_text "Name / Organisation"
-    assert_no_css "input[type='radio']", visible: false
+  test "should show current user as a radio, and to assign user to case" do
+    assert_text @user.display_name
+    choose @user.display_name, visible: false
+    click_on "Assign"
+
+    assert_text "Assigned to #{@user.display_name}"
+    assert_text "Assigned to\n#{@user.full_name}"
   end
 
-  test "should show user organisations in the assignee list" do
-    fill_in "assignee-picker", with: "Test"
-    assert_text "Test User_one (Office of Product Safety and Standards)"
+  test "should show current users team as a radio, and to assign team to case" do
+    assert_text @team.name
+    choose @team.name, visible: false
+    click_on "Assign"
+
+    assert_text "Assigned to #{@team.name}"
+    assert_text "Assigned to\n#{@team.name}"
   end
 
-  test "should allow to select assignee" do
-    fill_in "assignee-picker", with: "Test"
-    all("li", visible: false, text: "Admin").first.click
+  test "should show current users team as a radio, and to assign team to cas 2" do
+    assert_text @team.name
+    choose @team.name, visible: false
     click_on "Assign"
 
-    assert_text "Assigned to\nTest Admin Change"
-  end
-
-  test "should allow to select a different assignee, the current one should not appear in the list" do
-    fill_in "assignee-picker", with: "Test"
-    all("li", visible: false, text: "Admin").first.click
-    click_on "Assign"
-
-    visit assign_investigation_path(investigations(:one))
-    fill_in "assignee-picker", with: "Test"
-    assert_no_css(".autocomplete__option", text: "Test Admin")
-
-    all("li", visible: false, text: "User_one").first.click
-    click_on "Assign"
-    assert_text "Assigned to\nTest User_one\nOffice of Product Safety and Standards\nChange"
-  end
-
-  test "should show recent assignee as an option when previous assignees have been selected" do
-    fill_in "assignee-picker", with: "Test"
-    all("li", visible: false, text: "Admin").first.click
-    click_on "Assign"
-
-    visit assign_investigation_path(investigations(:one))
-    fill_in "assignee-picker", with: "Test"
-    all("li", visible: false, text: "User_one").first.click
-    click_on "Assign"
-
-    visit assign_investigation_path(investigations(:one))
-    assert_css "input[type='radio']", visible: false
-    assert_text "Test Admin"
-    assert_text "Other"
-  end
-
-  test "should require an actual assignee" do
-    fill_in "assignee-picker", with: "aa@aa.aa"
-    click_on "Assign"
-    assert_text("Assignee should exist")
+    assert_text "Assigned to #{@team.name}"
+    assert_text "Assigned to\n#{@team.name}"
   end
 end
