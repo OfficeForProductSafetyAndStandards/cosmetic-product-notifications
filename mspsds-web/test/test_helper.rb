@@ -133,7 +133,8 @@ private
   def all_teams
     [
       Team.new(id: "aaaaeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 1", path: "/Organisations/Organisation 1/Team 1", organisation_id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b"),
-      Team.new(id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 2", path: "/Organisations/Organisation 1/Team 2", organisation_id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b")
+      Team.new(id: "aaaxzcf8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 2", path: "/Organisations/Organisation 1/Team 2", organisation_id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b"),
+      Team.new(id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 3", path: "/Organisations/Organisation 1/Team 3", organisation_id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b")
     ]
   end
 
