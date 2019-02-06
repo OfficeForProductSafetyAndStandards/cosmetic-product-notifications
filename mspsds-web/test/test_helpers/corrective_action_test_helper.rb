@@ -3,8 +3,6 @@ module CorrectiveActionTestHelper
     fill_in "corrective_action_summary", with: corrective_action.summary
     fill_in "corrective_action_details", with: corrective_action.details
     fill_autocomplete "legislation-picker", with: corrective_action.legislation
-    fill_autocomplete "business-picker", with: corrective_action.business.trading_name
-    fill_autocomplete "product-picker", with: corrective_action.product.name
     fill_in "Day", with: corrective_action.date_decided.day
     fill_in "Month", with: corrective_action.date_decided.month
     fill_in "Year", with: corrective_action.date_decided.year
@@ -15,5 +13,4 @@ module CorrectiveActionTestHelper
     attach_file "corrective_action[file][file]", Rails.root + "test/fixtures/files/#{filename}"
     fill_in "Attachment description", with: description
   end
-
 end
