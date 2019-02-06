@@ -4,7 +4,7 @@ class InvestigationPolicy < ApplicationPolicy
   end
 
   def show?
-    @record.visible_to(@user)
+    @record.visible_to(user: @user)
   end
 
   def assign?
