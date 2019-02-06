@@ -1,12 +1,11 @@
 class ResponsiblePersons::NotificationFilesController < ApplicationController
   before_action :set_responsible_person
+  before_action :set_notification_file
 
   def new
-    @notification_file = NotificationFile.new
   end
 
   def create
-    @notification_file = NotificationFile.new(notification_file_params)
 
     if notification_file_params && notification_file_params[:uploaded_file]
       @notification_file.name = notification_file_params[:uploaded_file].original_filename
@@ -29,6 +28,10 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
 private
 
     # Use callbacks to share common setup or constraints between actions.
+  def set_notification_file
+    @notification_file = NotificationFile.new(notification_file_params)
+  end
+
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
   end
