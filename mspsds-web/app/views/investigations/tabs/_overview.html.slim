@@ -1,22 +1,22 @@
 h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
-    | Summary
+  | Summary
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-    p.govuk-body[class="govuk-grid-column-two-thirds"]
-        = @investigation.description
+  p.govuk-body[class="govuk-grid-column-two-thirds"]
+    = @investigation.description
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-    hr.govuk-section-break.govuk-section-break--s
-        = render "investigations/current_status", investigation: @investigation
-    hr.govuk-section-break.govuk-section-break--s
+  hr.govuk-section-break.govuk-section-break--s
+    = render "investigations/current_status", investigation: @investigation
+  hr.govuk-section-break.govuk-section-break--s
 h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
-    | Report details
+  | Report details
 h3.govuk-heading-m
-    = @investigation.case_type.titleize
+  = @investigation.case_type.titleize
 table.govuk-table
   tbody.govuk-table__body
     tr.govuk-table__row
       th.govuk-table__header [scope="row" class="govuk-!-width-one-quarter"]  Date recorded
       td.govuk-table__cell = @investigation.created_at.strftime("%d/%m/%Y")
-    - if @investigation.case_type == "allegation"
+      - if @investigation.case_type == "allegation"
         tr.govuk-table__row
           th.govuk-table__header Product category
           td.govuk-table__cell = @investigation.product_category
@@ -24,9 +24,10 @@ table.govuk-table
           th.govuk-table__header  Hazard type
           td.govuk-table__cell = @investigation.hazard_type
 - if @investigation.complainant
-    hr.govuk-section-break.govuk-section-break--m
-    h3.govuk-heading-m
-        | Reporter
+  hr.govuk-section-break.govuk-section-break--m
+  h3.govuk-heading-m
+    | Complainant
+  - if @investigation.complainant.can_be_displayed?
     table.govuk-table
       tbody.govuk-table__body
         tr.govuk-table__row
@@ -44,3 +45,5 @@ table.govuk-table
         tr.govuk-table__row
           th.govuk-table__header  Other details
           td.govuk-table__cell = @investigation.complainant.other_details
+  - else
+    p.govuk-body GDPR protected details hidden

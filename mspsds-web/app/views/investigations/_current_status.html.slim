@@ -20,7 +20,8 @@
             div[class="govuk-!-font-size-16"]
               = investigation.assignee.organisation.name
         td.govuk-table__cell [class="govuk-!-font-size-16"]
-          = link_to "Change", assign_investigation_path(investigation)
+          - if investigation.can_be_assigned_by(current_user)
+            = link_to "Change", assign_investigation_path(investigation)
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
           span.govuk-caption-m[class="govuk-!-font-size-16"]

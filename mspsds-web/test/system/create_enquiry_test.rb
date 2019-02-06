@@ -159,7 +159,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
   test "enquiry details should be shown in overview"
   select_complainant_type_and_continue
   fill_complainant_details_and_continue
-  fill_allegation_details_and_continue
+  fill_enquiry_details_and_continue
 
   assert_no_text "Product category"
   assert_text @complainant.name
