@@ -20,7 +20,7 @@ class CorrectiveAction < ApplicationRecord
   validates :investigation, presence: true
   validates :product, presence: true
   validates :legislation, presence:true
-  validate :related_file_validation, on: :ts_flow
+  validate :related_file_validation
 
   validates_length_of :summary, maximum: 1000
   validates_length_of :details, maximum: 1000
