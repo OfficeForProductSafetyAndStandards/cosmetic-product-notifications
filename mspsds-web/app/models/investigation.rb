@@ -10,13 +10,14 @@ class Investigation < ApplicationRecord
   validates :description, presence: true, on: %i[allegation_details question_details]
   validates :hazard_type, presence: true, on: :allegation_details
   validates :product_category, presence: true, on: :allegation_details
+  validates :hazard_description, presence: true, on: :unsafe
+  validates :hazard_type, presence: true, on: :unsafe
+  validates :non_compliant_reason, presence: true, on: :non_compliant
 
   validates_length_of :user_title, maximum: 1000
 
   validates_length_of :description, maximum: 1000
 
-  validate :has_hazard_type_and_description, on: :unsafe
-  validate :has_non_compliant_reason, on: :non_compliant
 
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility
@@ -145,11 +146,6 @@ class Investigation < ApplicationRecord
   def title; end
 
   def case_type; end
-
-  def has_hazard_type_and_description
-    errors.add(:hazard_type, "cannot be blank") if hazard_type.empty?
-    errors.add(:hazard_description, "cannot be blank") if hazard_description.empty?
-  end
 
   def has_non_compliant_reason
     if non_compliant_reason&.empty?
