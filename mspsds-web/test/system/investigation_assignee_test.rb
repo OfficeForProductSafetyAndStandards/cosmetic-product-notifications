@@ -4,7 +4,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
   setup do
     sign_in_as_user
     @user = User.find_by(last_name: "User_one")
-    @team = all_teams.first
+    @team = @user.teams.first
     visit assign_investigation_path(investigations(:one))
   end
 
@@ -22,15 +22,6 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
   end
 
   test "should show current users team as a radio, and to assign team to case" do
-    assert_text @team.name
-    choose @team.name, visible: false
-    click_on "Assign"
-
-    assert_text "Assigned to #{@team.name}"
-    assert_text "Assigned to\n#{@team.name}"
-  end
-
-  test "should show current users team as a radio, and to assign team to cas 2" do
     assert_text @team.name
     choose @team.name, visible: false
     click_on "Assign"

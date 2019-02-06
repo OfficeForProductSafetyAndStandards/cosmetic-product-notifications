@@ -44,7 +44,8 @@ module InvestigationsHelper
 
   def no_boxes_checked
     no_people_boxes_checked = params[:assigned_to_me] == "unchecked" && params[:assigned_to_someone_else] == "unchecked"
-    no_people_boxes_checked && teams_with_keys.all? { |key, _t, _n| query_params[key].blank? }
+    no_team_boxes_checked = teams_with_keys.all? { |key, _t, _n| query_params[key].blank? }
+    no_people_boxes_checked && no_team_boxes_checked
   end
 
   def assignee_filter_exclusive
@@ -61,11 +62,7 @@ module InvestigationsHelper
   def compute_included_terms
     # If 'Me' is not checked, but one of current_users teams is selected, we don't exclude current_user from it
     assignees = checked_team_assignees
-    if params[:assigned_to_someone_else] == "checked"
-      assignees << params[:assigned_to_someone_else_id]
-      team = Team.find_by(id: params[:assigned_to_someone_else_id])
-      assignees.concat(assignee_ids_from_team(team)) if team.present?
-    end
+    assignees.concat(someone_else_assignees)
     assignees << current_user.id if params[:assigned_to_me] == "checked"
     format_assignee_terms(assignees.uniq)
   end
@@ -73,12 +70,16 @@ module InvestigationsHelper
   def checked_team_assignees
     assignees = []
     teams_with_keys.each do |key, team, _n|
-      if query_params[key].present?
-        team = team
-        assignees.concat(assignee_ids_from_team(team))
-      end
+      assignees.concat(assignee_ids_from_team(team)) if query_params[key].present?
     end
     assignees
+  end
+
+  def someone_else_assignees
+    return [] unless params[:assigned_to_someone_else] == "checked"
+
+    team = Team.find_by(id: params[:assigned_to_someone_else_id])
+    team.present? ? assignee_ids_from_team(team) : [params[:assigned_to_someone_else_id]]
   end
 
   def format_assignee_terms(assignee_array)

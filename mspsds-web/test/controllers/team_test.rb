@@ -3,29 +3,7 @@ require "test_helper"
 class TeamTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_user
-    organisations = Organisation.all
-    @teams = Team.all
-    user_groups = [
-      {
-        id: User.find_by(last_name: "User_one").id,
-        groups: [organisations[0][:id], @teams[0].id, @teams[1].id]
-      },
-      {
-        id: User.find_by(last_name: "Admin").id,
-        groups: [organisations[0][:id], @teams[0].id]
-      },
-      {
-        id: User.find_by(last_name: "User_two").id,
-        groups: [organisations[0][:id], @teams[1].id]
-      },
-      {
-        id: User.find_by(last_name: "User_three").id,
-        groups: [organisations[0][:id], @teams[2].id]
-      }
-    ].to_json
-    allow(Keycloak::Internal).to receive(:get_user_groups).and_return(user_groups)
 
-    TeamUser.all
     @user_one = User.find_by(last_name: "User_one")
     @user_two = User.find_by(last_name: "User_two")
     @user_three = User.find_by(last_name: "User_three")
@@ -108,7 +86,7 @@ class TeamTest < ActionDispatch::IntegrationTest
     get investigations_path, params: {
       assigned_to_me: "unchecked",
       assigned_to_someone_else: "checked",
-      assigned_to_someone_else_id: @teams[2].id,
+      assigned_to_someone_else_id: all_teams[2].id,
       assigned_to_team_0: @user_one.teams[0].id,
       assigned_to_team_1: nil
     }
@@ -153,7 +131,7 @@ class TeamTest < ActionDispatch::IntegrationTest
     get investigations_path, params: {
       assigned_to_me: "unchecked",
       assigned_to_someone_else: "checked",
-      assigned_to_someone_else_id: @teams[2].id,
+      assigned_to_someone_else_id: all_teams[2].id,
       assigned_to_team_0: nil,
       assigned_to_team_1: nil
     }
@@ -184,15 +162,15 @@ class TeamTest < ActionDispatch::IntegrationTest
     assert_equal @investigation_user_three.assignee, @user_three
 
     investigation = Investigation.find_by(description: "Investigation with no product")
-    investigation.assignee = @teams[0]
+    investigation.assignee = all_teams[0]
     investigation.save
     @investigation_team_one = Investigation.find_by(description: "Investigation with no product")
-    assert_equal @investigation_team_one.assignee, @teams[0]
+    assert_equal @investigation_team_one.assignee, all_teams[0]
 
     investigation = Investigation.find_by(description: "Investigation for search by product")
-    investigation.assignee = @teams[2]
+    investigation.assignee = all_teams[2]
     investigation.save
     @investigation_team_three = Investigation.find_by(description: "Investigation for search by product")
-    assert_equal @investigation_team_three.assignee, @teams[2]
+    assert_equal @investigation_team_three.assignee, all_teams[2]
   end
 end
