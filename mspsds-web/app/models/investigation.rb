@@ -235,6 +235,10 @@ private
   def send_assignee_email
     if saved_changes.key?(:assignable_id) && assignee.is_a?(User)
       NotifyMailer.assigned_investigation(id, assignee.full_name, assignee.email).deliver_later
+    elsif saved_changes.key?(:assignable_id) && assignee.is_a?(Team)
+      assignee.users.each do |member|
+        NotifyMailer.assigned_investigation_to_team(id, member.full_name, member.email, assignee.name).deliver_later
+      end
     end
   end
 end

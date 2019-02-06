@@ -11,7 +11,6 @@ gem "mini_magick"
 gem "pg", "~> 1.1"
 gem "puma", "~> 3.0"
 gem "rails", "~> 5.2"
-gem 'rails-controller-testing'
 gem "sass-rails", "~> 5.0"
 gem "slim-rails"
 gem "strong_migrations"
@@ -22,6 +21,9 @@ gem "shared-web", path: "./vendor/shared-web"
 
 
 group :development, :test do
+  gem "factory_bot_rails"
+  gem 'rails-controller-testing'
+  gem 'rspec-collection_matchers'
   gem "rspec-rails"
   gem "rubocop-rspec"
 
