@@ -9,7 +9,8 @@ class CorrectiveActionTest < ActiveSupport::TestCase
   end
 
   test "requires an associated investigation, business and product" do
-    corrective_action = CorrectiveAction.create(date_decided: "2018-11-15", summary: "Test summary")
+    corrective_action = create_valid_corrective_action
+    corrective_action.update(investigation: nil, business: nil, product: nil)
     assert_not corrective_action.save, "expected validation errors when saving the record"
     corrective_action.investigation = @investigation
     assert_not corrective_action.save, "expected validation errors when saving the record"
@@ -20,17 +21,16 @@ class CorrectiveActionTest < ActiveSupport::TestCase
   end
 
   test "requires a summary to be specified" do
-    corrective_action = CorrectiveAction.create(investigation: @investigation, business: @business, product: @product, date_decided: "2018-11-15")
+    corrective_action = create_valid_corrective_action
+    corrective_action.summary = nil
     assert_not corrective_action.save, "expected validation errors when saving the record"
-    corrective_action.summary = "Test summary"
-    assert corrective_action.save, "unexpected validation errors encountered when saving the record"
   end
 
   test "requires the summary to be no longer than 1000 characters" do
     more_than_1000_characters = "a" * 1001
     exactly_1000_characters = "a" * 1000
 
-    corrective_action = CorrectiveAction.create(investigation: @investigation, business: @business, product: @product, date_decided: "2018-11-15")
+    corrective_action = create_valid_corrective_action
     corrective_action.summary = more_than_1000_characters
     assert_not corrective_action.save, "expected validation errors when saving the record"
     corrective_action.summary = exactly_1000_characters
@@ -41,7 +41,7 @@ class CorrectiveActionTest < ActiveSupport::TestCase
     more_than_1000_characters = "a" * 1001
     exactly_1000_characters = "a" * 1000
 
-    corrective_action = CorrectiveAction.create(investigation: @investigation, business: @business, product: @product, summary: "Test summary", date_decided: "2018-11-15")
+    corrective_action = create_valid_corrective_action
     corrective_action.details = more_than_1000_characters
     assert_not corrective_action.save, "expected validation errors when saving the record"
     corrective_action.details = exactly_1000_characters
@@ -49,26 +49,54 @@ class CorrectiveActionTest < ActiveSupport::TestCase
   end
 
   test "requires a date to be specified" do
-    corrective_action = CorrectiveAction.create(investigation: @investigation, business: @business, product: @product, summary: "Test summary")
+    corrective_action = create_valid_corrective_action
+    corrective_action.clear_date
     assert_not corrective_action.save, "expected validation errors when saving the record"
-    corrective_action.date_decided = "2018-11-16"
-    assert corrective_action.save, "unexpected validation errors encountered when saving the record"
   end
 
   test "requires the date to not be in the future" do
-    corrective_action = CorrectiveAction.create(investigation: @investigation, business: @business, product: @product, summary: "Test summary")
-    corrective_action.date_decided = Time.zone.tomorrow
+    corrective_action = create_valid_corrective_action
+    corrective_action.set_date(Time.zone.tomorrow)
     assert_not corrective_action.save, "expected validation errors when saving the record"
-    corrective_action.date_decided = Time.zone.today
+    corrective_action.set_date(Time.zone.today)
+    assert corrective_action.save, "unexpected validation errors encountered when saving the record"
+  end
+
+  test "requires the file to not be provided, or for the flag to be set to no file" do
+    corrective_action = create_valid_corrective_action
+
+    # related_file flag must be set
+    corrective_action.related_file = nil
+    assert_not corrective_action.save, "expected validation errors when saving the record"
+
+    # if it's true, a file must be provided
+    corrective_action.related_file = "Yes"
+    assert_not corrective_action.save, "expected validation errors when saving the record"
+    test_image1 = file_fixture("testImage.png")
+    corrective_action.documents.attach(io: File.open(test_image1), filename: 'testImage.png')
     assert corrective_action.save, "unexpected validation errors encountered when saving the record"
   end
 
   test "creates an associated activity when created" do
     assert_difference "Activity.count" do
-      corrective_action = CorrectiveAction.create(investigation: @investigation, business: @business, product: @product, summary: "Test summary", date_decided: "2018-11-15")
+      corrective_action = create_valid_corrective_action
       corrective_action.save!
     end
 
     assert Activity.last.is_a? AuditActivity::CorrectiveAction::Add
+  end
+
+private
+
+  def create_valid_corrective_action
+    CorrectiveAction.create(
+        investigation: @investigation,
+        business: @business,
+        product: @product,
+        summary: "Test summary",
+        date_decided: "2018-11-15",
+        legislation: "Legislation A",
+        related_file: "No"
+    )
   end
 end
