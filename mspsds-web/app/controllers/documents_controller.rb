@@ -36,7 +36,7 @@ class DocumentsController < ApplicationController
     return render :edit unless file_valid?
 
     @file.blob.save
-    audit_class::Update.from(@file.blob, @parent, previous_data) if @parent.class == Investigation
+    audit_class::Update.from(@file.blob, @parent, previous_data) if @parent.is_a? Investigation
     redirect_to @parent
   end
 
@@ -45,7 +45,7 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   def destroy
     @file.destroy
-    audit_class::Destroy.from(@file.blob, @parent) if @parent.class == Investigation
+    audit_class::Destroy.from(@file.blob, @parent) if @parent.is_a? Investigation
     redirect_to @parent, notice: "File was successfully removed"
   end
 
