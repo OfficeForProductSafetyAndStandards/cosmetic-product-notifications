@@ -122,6 +122,12 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     assert_text test_result_description
     assert_text risk_assessment_title
     assert_text risk_assessment_description
+
+    # assert business location saved
+    click_link "tab_businesses"
+    assert_text @business.locations.first.address_line_1
+
+    #TODO assert about contact when MSPSDS-869 is finished
   end
 
   def fill_in_product_page
@@ -155,6 +161,8 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     fill_in "business_trading_name", with: business.trading_name
     fill_in "business_legal_name", with: business.legal_name
     fill_in "business_company_number", with: business.company_number + "unique company number"
+    fill_in "business_contacts_attributes_0_name", with: business.contacts.first.name
+    fill_in "business_locations_attributes_0_address_line_1", with: business.locations.first.address_line_1
     click_button "Continue"
   end
 

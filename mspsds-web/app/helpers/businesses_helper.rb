@@ -35,7 +35,7 @@ module BusinessesHelper
       :trading_name,
       :company_number,
       locations_attributes: %i[id name address_line_1 address_line_2 phone_number county country postal_code],
-      contact_attributes: %i[id name email phone_number job_title]
+      contacts_attributes: %i[id name email phone_number job_title]
     )
   end
 
