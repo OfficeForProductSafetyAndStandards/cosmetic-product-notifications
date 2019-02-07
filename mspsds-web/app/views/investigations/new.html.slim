@@ -6,7 +6,7 @@ h1.govuk-heading-xl
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with local: true, url: new_investigation_path, method: :get do |form|
-      = render "components/govuk_radios", form: form, key: :type, params: {\
+      = render "form_components/govuk_radios", form: form, key: :type, params: {\
               errorMessage: @nothing_selected && {text: "Please select an option before continuing"},
               fieldset: {legend: {text: "What are you creating?", classes: "govuk-fieldset__legend--l" }},
               items: new_item_options.map {|option, label| {text: label, value: option}}}

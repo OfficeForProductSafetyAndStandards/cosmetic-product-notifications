@@ -1,0 +1,10 @@
+- if form && key
+  - params[:name] ||= form.object_name.present? ? "#{form.object_name}[#{key.to_s}]" : key.to_s
+  - if form.object
+    - if form.object.send(key)
+      - item_matching_state = params[:items].find{|item| item[:value] == form.object.send(key) }
+      - item_matching_state[:checked] = true if item_matching_state
+    - if form.object.errors
+      - errorText = form.object.errors[key].first.presence
+      - params[:errorMessage] ||= {text: errorText} if errorText
+= render "components/govuk_radios", params: params

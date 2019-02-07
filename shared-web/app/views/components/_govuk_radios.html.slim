@@ -1,13 +1,3 @@
-- if form && key
-  - params[:name] ||= form.object_name.present? ? "#{form.object_name}[#{key.to_s}]" : key.to_s
-  - if form.object
-    - if p form.object.send(key)
-      - item_matching_state = params[:items].find{|item| item[:value] == form.object.send(key) }
-      - item_matching_state[:checked] = true if item_matching_state
-    - if form.object.errors
-      - errorText = form.object.errors[key].first.presence
-      - params[:errorMessage] ||= {text: errorText} if errorText
-
 / Implementation based on
 / https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/template.njk
 - id_prefix = params[:idPrefix] ? params[:idPrefix] : params[:name]
