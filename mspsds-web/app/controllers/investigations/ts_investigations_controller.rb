@@ -131,7 +131,7 @@ private
   end
 
   def set_repeat_step
-    repeat_step_key = further step
+    repeat_step_key = further_key step
     @repeat_step = if params.key?(repeat_step_key)
                      params.permit(repeat_step_key)[repeat_step_key]
                    else
@@ -173,7 +173,7 @@ private
     session.delete :other_business_type
     session.delete :further_corrective_action
     other_information_types.each do |type|
-      session.delete further(type)
+      session.delete further_key(type)
     end
     session[:corrective_actions] = []
     session[:test_results] = []
@@ -302,11 +302,11 @@ private
   end
 
   def store_repeat_step
-    if params.key? further(step)
-      session[further(step)] = @repeat_step
+    if params.key? further_key(step)
+      session[further_key(step)] = @repeat_step
     else
       file_type = step.to_s.humanize(capitalize: false)
-      @investigation.errors.add(further(step), "- select whether or not you have further #{file_type} to record")
+      @investigation.errors.add(further_key(step), "- select whether or not you have further #{file_type} to record")
     end
   end
 
@@ -357,13 +357,13 @@ private
 
   def store_other_information
     other_information_types.each do |key|
-      session[further(key)] = other_information_params[key] == "1" ? "Yes" : "No"
+      session[further_key(key)] = other_information_params[key] == "1" ? "Yes" : "No"
     end
   end
 
   # We use 'further' to refer to the boolean flags indicating
   # whether the user wants to provide another entry of a given type
-  def further(key)
+  def further_key(key)
     if key == :has_corrective_action
       :further_corrective_action
     else

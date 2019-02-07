@@ -115,6 +115,8 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     assert_text "Retailer"
     assert_text @business_one.trading_name
     assert_text @business_two.trading_name
+    # assert business location saved
+    assert_text @business_one.locations.first.address_line_1
 
     # assert attachments saved
     click_link "tab_attachments"
@@ -123,9 +125,6 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     assert_text risk_assessment_title
     assert_text risk_assessment_description
 
-    # assert business location saved
-    click_link "tab_businesses"
-    assert_text @business.locations.first.address_line_1
 
     #TODO assert about contact when MSPSDS-869 is finished
   end
