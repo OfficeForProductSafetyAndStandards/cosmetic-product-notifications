@@ -1,6 +1,6 @@
 ---
 organisations:
   opss:
-    - OPSS Enforcement
     - OPSS Processing
+    - OPSS Enforcement
     - OPSS Incident Management

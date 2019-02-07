@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Manually enter product details", type: :system do
   before do
-    authenticate_user
+    sign_in_as_member_of_responsible_person(create(:responsible_person))
   end
 
   after do
-    sign_out_user
+    sign_out
   end
 
   it "allows user to complete notification" do
