@@ -1,7 +1,7 @@
 / Implementation based on
 / https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/hint/template.njk
-span id=params[:id] class=["govuk-hint", params[:classes]] *(params[:attributes] || {})
-  - if params[:html]
-    == params[:html]
+span id=options[:id] class=["govuk-hint", options[:classes]] *(options[:attributes] || {})
+  - if options[:html]
+    == options[:html]
   - else
-    = params[:text]
+    = options[:text]

@@ -1,31 +1,31 @@
 / Implementation based on
 / https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/template.njk
-- id_prefix = params[:idPrefix] ? params[:idPrefix] : params[:name]
+- id_prefix = options[:idPrefix] ? options[:idPrefix] : options[:name]
 - described_by = ""
-- is_conditional = params[:items]&.any? {|item| item[:conditional]}
+- is_conditional = options[:items]&.any? {|item| item[:conditional]}
 - radios_html = capture do
-  - if params[:hint]
+  - if options[:hint]
     - hint_id = id_prefix + '-hint'
     - described_by = described_by ? described_by + ' ' + hint_id : hint_id
-    = render "components/govuk_hint", params: {\
+    = render "components/govuk_hint", options: {\
             id: hint_id,
-            classes: params[:hint][:classes],
-            attributes: params[:hint][:attributes],
-            html: params[:hint][:html],
-            text: params[:hint][:text]}
-  - if params[:errorMessage]
+            classes: options[:hint][:classes],
+            attributes: options[:hint][:attributes],
+            html: options[:hint][:html],
+            text: options[:hint][:text]}
+  - if options[:errorMessage]
     - error_id = id_prefix + '-error'
     - described_by = described_by ? described_by + ' ' + error_id : error_id
-    = render "components/govuk_error_message", params: {\
+    = render "components/govuk_error_message", options: {\
             id: error_id,
-            classes: params[:errorMessage] && params[:errorMessage][:classes],
-            attributes: params[:errorMessage] && params[:errorMessage][:attributes],
-            html: params[:errorMessage] && params[:errorMessage][:html],
-            text: params[:errorMessage] && params[:errorMessage][:text]}
+            classes: options[:errorMessage] && options[:errorMessage][:classes],
+            attributes: options[:errorMessage] && options[:errorMessage][:attributes],
+            html: options[:errorMessage] && options[:errorMessage][:html],
+            text: options[:errorMessage] && options[:errorMessage][:text]}
   .govuk-radios [
-      class=[params[:classes], ("govuk-radios--conditional" if is_conditional)]
-      data-module=("radios" if is_conditional) *(params[:attributes] || {})]
-    - params[:items].each_with_index do |item, i|
+      class=[options[:classes], ("govuk-radios--conditional" if is_conditional)]
+      data-module=("radios" if is_conditional) *(options[:attributes] || {})]
+    - options[:items].each_with_index do |item, i|
       - id = item[:id] || "#{id_prefix}-#{i}"
       - conditional_id = 'conditional-' + id
       - if item[:divider]
@@ -36,21 +36,21 @@
         .govuk-radios__item
           input.govuk-radios__input  [
             id=id
-            name=params[:name]
+            name=options[:name]
             type='radio'
             value=item[:value]
             checked=item[:checked]
             disabled=item[:disabled]
             data-aria-controls=(conditional_id if item[:conditional])
-            aria-describeby= (item_hint_id if has_hint) *(params[:attributes] || {})]
-          = render "components/govuk_label", params: {\
+            aria-describeby= (item_hint_id if has_hint) *(options[:attributes] || {})]
+          = render "components/govuk_label", options: {\
                   html: item[:html],
                   text: item[:text],
                   classes: ['govuk-radios__label', (item[:label][:classes] if item[:label])],
                   attributes: item[:label] && item[:label][:attributes],
                   for: id}
           - if has_hint
-            = render "components/govuk_hint", params: {\
+            = render "components/govuk_hint", options: {\
                   id: item_hint_id,
                   classes: 'govuk-radios__hint',
                   attributes: item[:hint] && item[:hint][:attributes],
@@ -60,13 +60,13 @@
           .govuk-radios__conditional class=("govuk-radios__conditional--hidden" unless item[:checked]) id=conditional_id
             == item[:conditional] && item[:conditional][:html]
 
-.govuk-form-group class=[params[:formGroup] && params[:formGroup][:classes], ("govuk-form-group--error" if params[:errorMessage])]
-  - if params[:fieldset]
-    = render "components/govuk_fieldset", params: {\
+.govuk-form-group class=[options[:formGroup] && options[:formGroup][:classes], ("govuk-form-group--error" if options[:errorMessage])]
+  - if options[:fieldset]
+    = render "components/govuk_fieldset", options: {\
             describedBy: described_by,
-            classes: params[:fieldset][:classes],
-            attributes: params[:fieldset][:attributes],
-            legend: params[:fieldset][:legend]}
+            classes: options[:fieldset][:classes],
+            attributes: options[:fieldset][:attributes],
+            legend: options[:fieldset][:legend]}
       = radios_html
   - else
     = radios_html

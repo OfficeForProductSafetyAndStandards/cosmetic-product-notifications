@@ -1,7 +1,7 @@
 / Exmpales in this file are based on  https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/radios.yaml
 h1.govuk-heading-xl Radios Component
 h2.govuk-heading-l Default
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   idPrefix: "example",
   name: "example",
   fieldset: {legend: {text: "Have you changed your name?"}},
@@ -13,7 +13,7 @@ h2.govuk-heading-l Default
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Inline
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   idPrefix: "example'",
   classes: "govuk-radios--inline",
   name: "example-inline",
@@ -26,7 +26,7 @@ h2.govuk-heading-l Inline
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Disabled
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   idPrefix: "example-disabled",
   name: "example-disabled",
   fieldset: {legend: {text: "Have you changed your name?"}},
@@ -38,7 +38,7 @@ h2.govuk-heading-l Disabled
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With Legend as heading
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "idPrefix": "housing-act",
   "name": "housing-act",
   "fieldset": {\
@@ -66,7 +66,7 @@ h2.govuk-heading-l With Legend as heading
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With a medium legend
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "idPrefix": "housing-act",\
   "name": "housing-act",\
   "fieldset": {\
@@ -93,7 +93,7 @@ h2.govuk-heading-l With a medium legend
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With a divider
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "idPrefix": "example-divider",\
   "name": "example",\
   "fieldset": {\
@@ -123,7 +123,7 @@ h2.govuk-heading-l With a divider
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With hints on items
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "idPrefix": "gov",\
   "name": "gov",\
   "fieldset": {\
@@ -153,7 +153,7 @@ h2.govuk-heading-l With hints on items
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Without fieldset
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "name": "colours",\
   "items": [\
     {\
@@ -174,7 +174,7 @@ h2.govuk-heading-l Without fieldset
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With all fieldset attributes
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "idPrefix": "example",\
   "name": "example",\
   "errorMessage": {\
@@ -209,7 +209,7 @@ h2.govuk-heading-l With all fieldset attributes
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With very long option text
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "name": "waste",\
   "hint": {\
     "text": "Nullam id dolor id nibh ultricies vehicula ut id elit."\
@@ -241,7 +241,7 @@ h2.govuk-heading-l With very long option text
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With conditional items
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "idPrefix": "how-contacted",\
   "name": "how-contacted",\
   "fieldset": {\
@@ -277,7 +277,7 @@ h2.govuk-heading-l With conditional items
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Inline with conditional items
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "classes": "govuk-radios--inline",\
   "idPrefix": "how-contacted-inline",\
   "name": "how-contacted-inline",\
@@ -314,7 +314,7 @@ h2.govuk-heading-l Inline with conditional items
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With conditional item checked
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "idPrefix": "how-contacted-checked",\
   "name": "how-contacted-checked",\
   "fieldset": {\
@@ -351,7 +351,7 @@ h2.govuk-heading-l With conditional item checked
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With optional form-group classes showing group error
-= render "components/govuk_radios", params: {\
+= render "components/govuk_radios", options: {\
   "idPrefix": "how-contacted-error",\
   "name": "how-contacted-error",\
   "formGroup": {\

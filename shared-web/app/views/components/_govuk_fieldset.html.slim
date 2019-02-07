@@ -1,17 +1,17 @@
 / Implementation based on
 / https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/fieldset/template.njk
-fieldset.govuk-fieldset *(params[:attributes] || {}) class=params[:classes] aria-describedby=params[:describedBy]
-  - if params[:legend] && (params[:legend][:html] || params[:legend][:text])
-    legend.govuk-fieldset__legend class=params[:legend][:classes]
-      - if params[:legend][:isPageHeading]
+fieldset.govuk-fieldset *(options[:attributes] || {}) class=options[:classes] aria-describedby=options[:describedBy]
+  - if options[:legend] && (options[:legend][:html] || options[:legend][:text])
+    legend.govuk-fieldset__legend class=options[:legend][:classes]
+      - if options[:legend][:isPageHeading]
         h1.govuk-fieldset__heading
-          - if params[:legend][:html]
-            == params[:legend][:html]
+          - if options[:legend][:html]
+            == options[:legend][:html]
           - else
-            = params[:legend][:text]
+            = options[:legend][:text]
       - else
-        - if params[:legend][:html]
-          == params[:legend][:html]
+        - if options[:legend][:html]
+          == options[:legend][:html]
         - else
-          = params[:legend][:text]
+          = options[:legend][:text]
   = yield
