@@ -310,9 +310,9 @@ private
     if @corrective_action.valid? && @file_blob
       update_blob_metadata @file_blob, corrective_action_file_metadata
       @file_blob.save if @file_blob
+    end
       session[:corrective_actions] << { corrective_action: @corrective_action.attributes, file_blob_id: @file_blob&.id }
       session.delete :file
-    end
   end
 
   def store_test
@@ -404,8 +404,8 @@ private
     return false unless records_valid?
 
     @product.save
-    @investigation.save
     @investigation.products << @product
+    @investigation.save
     save_businesses
     save_corrective_actions
     save_test_results

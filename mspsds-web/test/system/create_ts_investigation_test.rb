@@ -23,106 +23,6 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     logout
   end
 
-  test "dummy" do
-    corrective_filename_one = "old_risk_assessment.txt"
-    corrective_description_one = "Test attachment description"
-    corrective_filename_two = "another_risk_assessment.txt"
-    corrective_description_two = "Another test attachment description"
-    test_result_filename = "test_result.txt"
-    test_result_description = "Test attachment description"
-    risk_assessment_title = "new_risk_assessment.txt"
-    risk_assessment_description = "Risk assessment description"
-
-    assert_selector "h1", text: "What product are you reporting?"
-    fill_in_product_page
-
-    assert_text "Why are you reporting this product?"
-    fill_in_why_reporting
-
-    assert_selector "h1", text: "Supply chain information"
-    choose_two_businesses
-
-    assert_selector "h1", text: "Retailer details"
-    fill_in_business_form @business_one
-
-    assert_selector "h1", text: "Advertiser details"
-    fill_in_business_form @business_two
-
-    choose_corrective_action
-
-    assert_selector "h1", text: "Record corrective action"
-    fill_in_corrective_action_details @corrective_action_one, with_business: false, with_product: false
-    add_corrective_action_attachment(
-      filename: corrective_filename_one,
-      description: corrective_description_one
-)
-    click_button "Continue"
-
-    choose_corrective_action
-
-    assert_selector "h1", text: "Record corrective action"
-    fill_in_corrective_action_details @corrective_action_two, with_business: false, with_product: false
-    add_corrective_action_attachment(
-      filename: corrective_filename_two,
-      description: corrective_description_two
-)
-    choose "further_corrective_action_no", visible: false
-    click_button "Continue"
-
-    assert_selector "h1", text: "Other information and files"
-    choose_test_results_and_risk_assessments
-
-    assert_selector "h1", text: "Test result details"
-    fill_in_test_results @test
-    add_attachment test_result_filename
-    fill_in "Attachment description", with: test_result_description
-    click_button "Continue"
-
-    assert_selector "h1", text: "Risk assessment details"
-    fill_in "Title", with: risk_assessment_title
-    fill_in "Description", with: risk_assessment_description
-    add_attachment risk_assessment_title
-    choose "further_risk_assessments_yes", visible: false
-    click_button "Continue"
-
-    assert_selector "h1", text: "Risk assessment details"
-    fill_in "Title", with: risk_assessment_title
-    fill_in "Description", with: risk_assessment_description
-    add_attachment risk_assessment_title
-    choose "further_risk_assessments_no", visible: false
-    click_button "Continue"
-
-    assert_selector "h1", text: "Find this in your system"
-    fill_in_complainant_reference
-
-    # TODO add assertions for corrective actions once corrective action audit activity bug has been fixed so activities
-    # display correctly in investigation
-
-    # assert that product saved
-    click_link "tab_products"
-    assert_text @product.name
-    assert_text @product.product_code
-    assert_text @product.product_type
-    assert_text @product.category
-    assert_text @product.webpage
-    assert_text @product.description
-    assert_text @product.country_of_origin
-
-    # assert that business has saved
-    click_link "tab_businesses"
-    assert_text "Advertiser"
-    assert_text "Retailer"
-    assert_text @business_one.trading_name
-    assert_text @business_two.trading_name
-
-    # assert attachments saved
-    click_link "tab_attachments"
-    assert_text "Passed test: #{@product.name}"
-    assert_text test_result_description
-    assert_text risk_assessment_title
-    assert_text risk_assessment_description
-  end
-
   test "can complete the ts flow" do
     corrective_filename_one = "old_risk_assessment.txt"
     corrective_description_one = "Test attachment description"
@@ -155,7 +55,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     add_corrective_action_attachment(
       filename: corrective_filename_one,
       description: corrective_description_one
-)
+    )
     click_button "Continue"
 
     choose_corrective_action
@@ -165,7 +65,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     add_corrective_action_attachment(
       filename: corrective_filename_two,
       description: corrective_description_two
-)
+    )
     choose "further_corrective_action_no", visible: false
     click_button "Continue"
 
