@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2019_02_05_094834) do
   end
 
   create_table "image_uploads", force: :cascade do |t|
+    t.string "filename"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "notification_id"

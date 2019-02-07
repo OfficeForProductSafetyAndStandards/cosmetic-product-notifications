@@ -38,7 +38,11 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete
+      transitions from: :draft_complete, to: :notification_complete do
+        guard do
+          images_are_present_and_safe?
+        end
+      end
     end
   end
 
@@ -56,6 +60,10 @@ private
         errors.add attribute, "must not be blank"
       end
     }
+  end
+
+  def images_are_present_and_safe?
+    image_uploads.length > 0 && image_uploads.all?(&:marked_as_safe?)
   end
 
   def mandatory_attributes(state)

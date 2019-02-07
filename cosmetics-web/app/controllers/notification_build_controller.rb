@@ -22,6 +22,7 @@ class NotificationBuildController < ApplicationController
         params[:image_upload].each do |image|
           image_upload = @notification.image_uploads.build
           image_upload.file.attach(image)
+          image_upload.filename = image.original_filename
         end
         @notification.add_product_image
         render_wizard @notification
