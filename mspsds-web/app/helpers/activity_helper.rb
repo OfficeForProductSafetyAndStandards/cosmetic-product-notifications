@@ -11,11 +11,8 @@ module ActivityHelper
       "product": "Add a product to the case",
       "business": "Add a business to the case"
     }
-    if @investigation.is_private
-      base_types["visibility"] = "Unrestrict this case"
-    elsif @investigation.visible_to(user: current_user, private: true)
-      base_types["visibility"] = "Restrict this case for legal privilege"
-    end
+    visibility_text = @investigation.is_private ? "Unrestrict this case" : "Restrict this case for legal privilege"
+    base_types["visibility"] = visibility_text if policy(@investigation).visibility?
     base_types
   end
 end

@@ -1,6 +1,8 @@
 require "test_helper"
 
 class InvestigationTest < ActiveSupport::TestCase
+  include Pundit
+  include UserService
   setup do
     sign_in_as_user
     @investigation = investigations(:one)
@@ -181,7 +183,7 @@ class InvestigationTest < ActiveSupport::TestCase
     creator.organisation = organisations[0]
     user = User.find_by(last_name: "User_two")
     user.organisation = organisations[0]
-    assert_equal(@new_investigation.visible_to(user: user), true)
+    assert_equal(policy(@new_investigation).show?(user: user), true)
   end
 
   test "visible to admin" do
@@ -189,7 +191,7 @@ class InvestigationTest < ActiveSupport::TestCase
     logout
     sign_in_as_admin
     user = User.find_by(last_name: "Admin")
-    assert(@new_investigation.visible_to(user: user))
+    assert(policy(@new_investigation).show?(user: user))
   end
 
   test "visible to assignee organisation" do
@@ -199,7 +201,7 @@ class InvestigationTest < ActiveSupport::TestCase
     user = User.find_by(last_name: "User_three")
     user.organisation = organisations[1]
     @new_investigation.assignee = assignee
-    assert(@new_investigation.visible_to(user: user))
+    assert(policy(@new_investigation).show?(user: user))
   end
 
   test "not visible to no-admin, no-source, no-assignee organisation" do
@@ -208,7 +210,7 @@ class InvestigationTest < ActiveSupport::TestCase
     sign_in_as_non_opss_user
     user = User.find_by(last_name: "User_one")
     user.organisation = organisations[1]
-    assert_not(@new_investigation.visible_to(user: user))
+    assert_not(policy(@new_investigation).show?(user: user))
   end
 
   test "past assignees should be computed" do

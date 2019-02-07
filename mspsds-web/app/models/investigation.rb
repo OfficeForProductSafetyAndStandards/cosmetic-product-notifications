@@ -113,15 +113,6 @@ class Investigation < ApplicationRecord
     is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
   end
 
-  def visible_to(user: current_user, private: is_private)
-    return true unless private
-    return true if assignee.present? && (assignee&.organisation == user.organisation)
-    return true if source.respond_to?(:user) && source&.user&.present? && (source&.user&.organisation == user.organisation)
-    return true if user.is_opss?
-
-    false
-  end
-
   def pretty_id
     id_string = id.to_s.rjust(8, '0')
     id_string.insert(4, "-")
