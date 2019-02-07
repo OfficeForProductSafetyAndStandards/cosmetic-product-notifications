@@ -95,8 +95,9 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Find this in your system"
     fill_in_complainant_reference
 
-    # TODO add assertions for corrective actions once corrective action audit activity bug has been fixed so activities
-    # display correctly in investigation
+    # assert that corrective actions saved
+    assert_text @corrective_action_one.summary
+    assert_text @corrective_action_two.summary
 
     # assert that product saved
     click_link "tab_products"
