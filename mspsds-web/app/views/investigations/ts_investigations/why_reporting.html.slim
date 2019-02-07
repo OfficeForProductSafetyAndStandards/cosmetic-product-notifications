@@ -16,8 +16,7 @@
           .govuk-checkboxes__item
             = form.check_box :unsafe, class: "govuk-checkboxes__input", checked: @unsafe,
                     "aria-controls": "conditional-report-report-type-1", "aria-expanded": "false", value: "unsafe"
-            = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label",
-                    for: :investigation_unsafe
+            = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label"
           #conditional-report-report-type-1.govuk-checkboxes__conditional[
             class=("govuk-checkboxes__conditional--hidden" unless @unsafe) ]
             .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)]
@@ -40,8 +39,7 @@
             = form.check_box :non_compliant, class: "govuk-checkboxes__input", checked: @non_compliant,
                     "aria-controls": "conditional-report-report-type-2", "aria-expanded": "false",
                     value: "non-compliant"
-            = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label",
-                    for: :investigation_non_compliant
+            = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label"
           #conditional-report-report-type-2.govuk-checkboxes__conditional[
             class=("govuk-checkboxes__conditional--hidden" unless @non_compliant) ]
             .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:non_compliant_reason].any?)]

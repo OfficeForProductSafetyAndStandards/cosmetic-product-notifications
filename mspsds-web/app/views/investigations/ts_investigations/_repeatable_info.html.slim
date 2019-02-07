@@ -24,11 +24,11 @@
                 .govuk-radios__item
                   = radio_button "", further_key, "Yes", class: "govuk-radios__input", value: "Yes",
                           checked: @repeat_step == "Yes"
-                  = label further_key, "Yes", class: "govuk-label govuk-radios__label"
+                  = label further_key, "Yes", class: "govuk-label govuk-radios__label", value: "Yes"
                 .govuk-radios__item
                   = radio_button "", further_key, "No", class: "govuk-radios__input", value: "No",
                           checked: @repeat_step == "No"
-                  = label further_key, "No", class: "govuk-label govuk-radios__label"
+                  = label further_key, "No", class: "govuk-label govuk-radios__label", value: "no"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"

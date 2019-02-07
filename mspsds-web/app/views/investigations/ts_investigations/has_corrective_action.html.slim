@@ -13,10 +13,10 @@
         .govuk-radios
           .govuk-radios__item
             = form.radio_button :further_corrective_action, "Yes", class: "govuk-radios__input", value: "Yes"
-            = form.label :further_corrective_action, "Yes", class: "govuk-label govuk-radios__label"
+            = form.label :further_corrective_action, "Yes", class: "govuk-label govuk-radios__label", value: "Yes"
           .govuk-radios__item
             = form.radio_button :further_corrective_action, "No", class: "govuk-radios__input", value: "No"
-            = form.label :further_corrective_action, "No", class: "govuk-label govuk-radios__label"
+            = form.label :further_corrective_action, "No", class: "govuk-label govuk-radios__label", value: "No"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"

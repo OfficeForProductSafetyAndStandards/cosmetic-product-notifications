@@ -18,24 +18,20 @@
               .govuk-checkboxes__item
                 = form.check_box :retailer, class: "govuk-checkboxes__input", value: "retailer",
                         checked: @selected_businesses.include?("retailer")
-                = form.label :retailer, "Retailer", class: "govuk-label govuk-checkboxes__label",
-                        for: :businesses_retailer
+                = form.label :retailer, "Retailer", class: "govuk-label govuk-checkboxes__label"
               .govuk-checkboxes__item
                 = form.check_box :distributor, class: "govuk-checkboxes__input", value: "distributor",
                         checked: @selected_businesses.include?("distributor")
-                = form.label :distributor, "Distributor", class: "govuk-label govuk-checkboxes__label",
-                        for: :businesses_distributor
+                = form.label :distributor, "Distributor", class: "govuk-label govuk-checkboxes__label"
               .govuk-checkboxes__item
                 = form.check_box :importer, class: "govuk-checkboxes__input", value: "importer",
                         checked: @selected_businesses.include?("importer")
-                = form.label :importer, "Importer", class: "govuk-label govuk-checkboxes__label",
-                        for: :businesses_importer
+                = form.label :importer, "Importer", class: "govuk-label govuk-checkboxes__label"
               .govuk-checkboxes__item
                 = form.check_box :manufacturer, class: "govuk-checkboxes__input", value: "manufacturer",
                         checked: @selected_businesses.include?("manufacturer")
                 = form.label :manufacturer, "Manufacturer",
-                        class: "govuk-label govuk-checkboxes__label",
-                        for: :investigation_manufacturer
+                        class: "govuk-label govuk-checkboxes__label"
               .govuk-checkboxes__item
                 = form.check_box :other, class: "govuk-checkboxes__input",
                         checked: @selected_businesses.include?("other"),
@@ -43,7 +39,7 @@
                         "aria-controls": "new-business-other-type",
                         "aria-expanded": "false"
                 = form.label :other, "Other",
-                        class: "govuk-label govuk-checkboxes__label", for: :investigation_other
+                        class: "govuk-label govuk-checkboxes__label"
               - other_classes = []
               - other_classes.push "govuk-checkboxes__conditional--hidden" unless @selected_businesses.include?("other")
               #new-business-other-type.govuk-checkboxes__conditional class=other_classes
@@ -57,8 +53,7 @@
               .govuk-checkboxes__item
                 = form.check_box :none, class: "govuk-checkboxes__input", value: "None",
                         checked: @selected_businesses.include?("none")
-                = form.label :none, "None of the above",
-                        class: "govuk-label govuk-checkboxes__label", for: :investigation_none
+                = form.label :none, "None of the above", class: "govuk-label govuk-checkboxes__label"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"

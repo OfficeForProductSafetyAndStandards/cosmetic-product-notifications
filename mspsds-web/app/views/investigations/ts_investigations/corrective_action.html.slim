@@ -27,10 +27,10 @@ h1.govuk-heading-xl
                 .govuk-radios__item
                   = radio_button "", :further_corrective_action, "Yes", class: "govuk-radios__input", value: "Yes",
                           checked: @repeat_step == "Yes"
-                  = label :further_corrective_action, "Yes", class: "govuk-label govuk-radios__label"
+                  = label :further_corrective_action, "Yes", class: "govuk-label govuk-radios__label", value: "Yes"
                 .govuk-radios__item
                   = radio_button "", :further_corrective_action, "No", class: "govuk-radios__input", value: "No",
                           checked: @repeat_step == "No"
-                  = label :further_corrective_action, "No", class: "govuk-label govuk-radios__label"
+                  = label :further_corrective_action, "No", class: "govuk-label govuk-radios__label", value: "No"
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
