@@ -1,0 +1,9 @@
+---
+applications:
+- name: maintenance
+  memory: 128M
+  instances: 1
+  buildpacks:
+    - nodejs_buildpack
+  path: .
+  no-route: true
