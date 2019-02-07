@@ -37,15 +37,34 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user(is_admin: false, user_name: "User_one", organisation: organisations[1], teams: [all_teams[0]])
+  def sign_in_as_user(is_admin: false, user_name: "User_one", organisation: organisations[1], teams: [all_teams[0], all_teams[1]])
     users = all_users
     user = users.detect { |u| u.last_name == user_name }
     user.organisation = organisation
 
+    user_groups = [
+      {
+        id: users[1].id,
+        groups: [organisations[1][:id], all_teams[0].id, all_teams[1].id]
+      },
+      {
+        id: users[0].id,
+        groups: [organisations[1][:id], all_teams[0].id]
+      },
+      {
+        id: users[2].id,
+        groups: [organisations[1][:id], all_teams[1].id]
+      },
+      {
+        id: users[3].id,
+        groups: [organisations[1][:id], all_teams[2].id]
+      }
+    ]
+
     if organisation.present?
       groups = teams.map(&:id)
       groups << organisation.id
-      user_groups = users.map { |u| { id: u[:id], groups: u.last_name == user_name ? groups : [] } }.to_json
+      user_groups = user_groups.map { |group| group[:id] == user.id ? { id: user.id, groups: groups } : group }.to_json
     end
 
     is_mspsds_user = organisation.present?
@@ -132,8 +151,9 @@ private
 
   def all_teams
     [
-      Team.new(id: "aaaaeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 1", path: "/Organisations/Organisation 1/Team 1", organisation_id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b"),
-      Team.new(id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 2", path: "/Organisations/Organisation 1/Team 2", organisation_id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b")
+      Team.new(id: "aaaaeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 1", path: "/Organisations/Office of Product Safety and Standards/Team 1", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b"),
+      Team.new(id: "aaaxzcf8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 2", path: "/Organisations/Office of Product Safety and Standards/Team 2", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b"),
+      Team.new(id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 3", path: "/Organisations/Office of Product Safety and Standards/Team 3", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b")
     ]
   end
 

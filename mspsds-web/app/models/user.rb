@@ -50,9 +50,13 @@ class User < Shared::Web::User
     display_name = full_name
     can_display_teams = ignore_visibility_restrictions || (organisation.present? && current_user.organisation&.id == organisation.id)
     can_display_teams = can_display_teams && teams.any?
-    membership_display = can_display_teams ? teams.map(&:name).join(', ') : organisation&.name
+    membership_display = can_display_teams ? team_names : organisation&.name
     display_name += " (#{membership_display})" if membership_display.present?
     display_name
+  end
+
+  def team_names
+    teams.map(&:name).join(', ')
   end
 
   def assignee_short_name
