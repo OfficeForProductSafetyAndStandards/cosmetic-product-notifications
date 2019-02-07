@@ -1,4 +1,6 @@
-module CorrectiveActionsHelper
+module CorrectiveActionsConcern
+  extend ActiveSupport::Concern
+
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
     authorize @investigation, :show?

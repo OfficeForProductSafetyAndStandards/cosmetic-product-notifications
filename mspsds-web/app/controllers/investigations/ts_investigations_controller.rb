@@ -3,7 +3,7 @@ class Investigations::TsInvestigationsController < ApplicationController
   include Shared::Web::CountriesHelper
   include ProductsHelper
   include BusinessesHelper
-  include CorrectiveActionsHelper
+  include CorrectiveActionsConcern
   include TestsHelper
   include FileConcern
   set_attachment_names :file
@@ -311,8 +311,8 @@ private
       update_blob_metadata @file_blob, corrective_action_file_metadata
       @file_blob.save if @file_blob
     end
-      session[:corrective_actions] << { corrective_action: @corrective_action.attributes, file_blob_id: @file_blob&.id }
-      session.delete :file
+    session[:corrective_actions] << { corrective_action: @corrective_action.attributes, file_blob_id: @file_blob&.id }
+    session.delete :file
   end
 
   def store_test

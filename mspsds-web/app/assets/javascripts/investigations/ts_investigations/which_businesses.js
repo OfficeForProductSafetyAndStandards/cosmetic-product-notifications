@@ -1,12 +1,12 @@
 $(document).ready(function () {
   var normalElements = [
-    document.getElementById('businesses_retailer'),
-    document.getElementById('businesses_distributor'),
-    document.getElementById('businesses_importer'),
-    document.getElementById('businesses_manufacturer')
+    $('#businesses_retailer')[0],
+    $('#businesses_distributor')[0],
+    $('#businesses_importer')[0],
+    $('#businesses_manufacturer')[0]
   ];
-  var elementOther = document.getElementById('businesses_other');
-  var elementNone = document.getElementById('businesses_none');
+  var elementOther = $('#businesses_other')[0];
+  var elementNone = $('#businesses_none')[0];
 
   var deselectOthers = function () {
     normalElements.forEach(function (element) {
