@@ -3,7 +3,7 @@
 fieldset.govuk-fieldset *(params[:attributes] || {}) class=params[:classes] aria-describedby=params[:describedBy]
   - if params[:legend] && (params[:legend][:html] || params[:legend][:text])
     legend.govuk-fieldset__legend class=params[:legend][:classes]
-      - if params[:legend][:is_page_heading]
+      - if params[:legend][:isPageHeading]
         h1.govuk-fieldset__heading
           - if params[:legend][:html]
             == params[:legend][:html]
