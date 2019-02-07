@@ -1,9 +1,5 @@
-.govuk-grid-row
-  .govuk-grid-column-one-half
-    = form_with(model: [business, location], local: true) do |form|
-      = render "form_validation_display", errors: location.errors
       fieldset.govuk-fieldset
-        .govuk-form-group class=[("govuk-form-group--error" if location.errors[:name].any?)]
+        .govuk-form-group class=[("govuk-form-group--error" if @location.errors[:name].any?)]
           = form.label :name, "Name", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
           span.govuk-hint#location-name-hint
             |  E.g. Main office, Warehouse

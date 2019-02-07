@@ -90,13 +90,13 @@ private
 
   def create_valid_corrective_action
     CorrectiveAction.create(
-        investigation: @investigation,
-        business: @business,
-        product: @product,
-        summary: "Test summary",
-        date_decided: "2018-11-15",
-        legislation: "Legislation A",
-        related_file: "No"
+      investigation: @investigation,
+      business: @business,
+      product: @product,
+      summary: "Test summary",
+      date_decided: "2018-11-15",
+      legislation: "Legislation A",
+      related_file: "No"
     )
   end
 end

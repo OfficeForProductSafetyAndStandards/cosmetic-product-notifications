@@ -33,7 +33,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
 
   test "can go back to the edit page from the confirmation page and not lose data" do
     fill_in_corrective_action_details @corrective_action
-    choose "corrective_action_related_file_yes" , visible: false
+    choose "corrective_action_related_file_yes", visible: false
     attach_file "attachment-file-input", file_fixture("new_risk_assessment.txt")
     click_on "Continue"
 

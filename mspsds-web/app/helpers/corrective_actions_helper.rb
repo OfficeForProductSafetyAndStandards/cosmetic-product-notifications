@@ -1,5 +1,4 @@
 module CorrectiveActionsHelper
-
   def set_investigation
     @investigation = Investigation.find(params[:investigation_id])
     authorize @investigation, :show?
@@ -46,9 +45,9 @@ module CorrectiveActionsHelper
 
   def corrective_action_file_metadata
     get_attachment_metadata_params(:file).merge(
-        title: @corrective_action.summary,
-        other_type: "Corrective action document",
-        document_type: :other
+      title: @corrective_action.summary,
+      other_type: "Corrective action document",
+      document_type: :other
     )
   end
 end

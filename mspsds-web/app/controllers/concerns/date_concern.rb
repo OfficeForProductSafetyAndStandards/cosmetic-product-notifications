@@ -1,7 +1,7 @@
 module DateConcern
   extend ActiveSupport::Concern
 
-  included do
+  included do # rubocop:disable Metrics/BlockLength
     attribute :day, :integer
     attribute :month, :integer
     attribute :year, :integer

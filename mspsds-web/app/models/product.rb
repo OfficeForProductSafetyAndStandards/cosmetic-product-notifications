@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  include CountriesHelper
+  include Shared::Web::CountriesHelper
   include Documentable
   include Searchable
   include DateConcern

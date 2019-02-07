@@ -15,10 +15,10 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <keycloak.version>4.3.0.Final</keycloak.version>
+        <keycloak.version>4.8.3.Final</keycloak.version>
         <resteasy.version>3.6.2.Final</resteasy.version>
         <jboss-jaxrs-api_2.0_spec>1.0.1.Final</jboss-jaxrs-api_2.0_spec>
-        <libphonenumber.version>8.9.0</libphonenumber.version>
+        <libphonenumber.version>8.10.4</libphonenumber.version>
     </properties>
 
     <dependencies>

@@ -1,4 +1,3 @@
-
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Summary
@@ -20,13 +19,15 @@ legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           span.govuk-hint
             = link_to "Add a product", new_investigation_product_path(investigation)
             |  to record a corrective action.
+      - elsif investigation.products.size == 1
+        = form.text_field :product_name, value: investigation.products.first.name,
+                disabled: true, class: "govuk-input govuk-!-width-two-thirds"
+        = form.hidden_field :product_id, value: investigation.products.first.id
       - else
         span.govuk-hint
           ' Only products already added to the case are listed.
-        = form.collection_select :product_id, investigation.products, :id, :name,
-                { include_blank: true,
-                selected: investigation.products.size == 1 && investigation.products.first.id },
-                class: "govuk-select", id: "product-picker"
+        = form.collection_select :product_id, @investigation.products, :id, :name,
+                { include_blank: true }, class: "govuk-select", id: "product-picker"
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l

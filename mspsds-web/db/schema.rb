@@ -61,6 +61,18 @@ ActiveRecord::Schema.define(version: 2019_01_30_110940) do
     t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
+  create_table "complainants", id: :serial, force: :cascade do |t|
+    t.string "complainant_type"
+    t.datetime "created_at", null: false
+    t.string "email_address"
+    t.integer "investigation_id"
+    t.string "name"
+    t.text "other_details"
+    t.string "phone_number"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_complainants_on_investigation_id"
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.integer "business_id"
     t.datetime "created_at", null: false
@@ -128,7 +140,8 @@ ActiveRecord::Schema.define(version: 2019_01_30_110940) do
   end
 
   create_table "investigations", id: :serial, force: :cascade do |t|
-    t.uuid "assignee_id"
+    t.uuid "assignable_id"
+    t.string "assignable_type"
     t.string "complainant_reference"
     t.datetime "created_at", null: false
     t.text "description"
@@ -141,7 +154,7 @@ ActiveRecord::Schema.define(version: 2019_01_30_110940) do
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
     t.string "user_title"
-    t.index ["assignee_id"], name: "index_investigations_on_assignee_id"
+    t.index ["assignable_type", "assignable_id"], name: "index_investigations_on_assignable_type_and_assignable_id"
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
@@ -179,18 +192,6 @@ ActiveRecord::Schema.define(version: 2019_01_30_110940) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "reporters", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "email_address"
-    t.integer "investigation_id"
-    t.string "name"
-    t.text "other_details"
-    t.string "phone_number"
-    t.string "reporter_type"
-    t.datetime "updated_at", null: false
-    t.index ["investigation_id"], name: "index_reporters_on_investigation_id"
-  end
-
   create_table "sources", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -220,12 +221,12 @@ ActiveRecord::Schema.define(version: 2019_01_30_110940) do
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "products"
+  add_foreign_key "complainants", "investigations"
   add_foreign_key "corrective_actions", "businesses"
   add_foreign_key "corrective_actions", "investigations"
   add_foreign_key "corrective_actions", "products"
   add_foreign_key "correspondences", "investigations"
   add_foreign_key "locations", "businesses"
-  add_foreign_key "reporters", "investigations"
   add_foreign_key "tests", "investigations"
   add_foreign_key "tests", "products"
 end

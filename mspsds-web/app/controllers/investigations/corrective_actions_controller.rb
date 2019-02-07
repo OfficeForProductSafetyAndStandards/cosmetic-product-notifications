@@ -85,5 +85,4 @@ private
   def corrective_action_session_params
     session[:corrective_action] || {}
   end
-
 end

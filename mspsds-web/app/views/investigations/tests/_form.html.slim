@@ -12,12 +12,16 @@ fieldset.govuk-fieldset
             ' There are no products on this case.
             = link_to "Add a product", new_investigation_product_path(investigation)
             |  to send it for testing.
+        - elsif @investigation.products.size == 1
+          = form.text_field :product_name, value: @investigation.products.first.name,
+          disabled: true, class: "govuk-input govuk-!-width-two-thirds"
+          = form.hidden_field :product_id, value: @investigation.products.first.id
         - else
           span.govuk-hint
             ' Only products already added to the case are listed.
             = link_to "Add a product", new_investigation_product_path(investigation)
-          = form.collection_select :product_id, investigation.products, :id, :name, { include_blank: true },
-                  class: "govuk-select", id: "product-picker"
+          = form.collection_select :product_id, investigation.products, :id, :name,
+                  { include_blank: true }, class: "govuk-select", id: "product-picker"
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Against which legislation?
@@ -53,4 +57,3 @@ fieldset.govuk-fieldset
 
 = render "related_attachment_fields", form: form,
         file_blob: @file_blob, attachment_name: :file, title: "Related attachments"
-

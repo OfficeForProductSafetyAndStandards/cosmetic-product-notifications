@@ -72,24 +72,23 @@ private
 
   def create_valid_test_request
     Test::Request.create(
-        investigation: @investigation,
-        product: @product,
-        date: "2018-11-08",
-        legislation: "Legislation B"
+      investigation: @investigation,
+      product: @product,
+      date: "2018-11-08",
+      legislation: "Legislation B"
     )
   end
 
   def create_valid_test_result
     result = Test::Result.create(
-        investigation: @investigation,
-        product: @product,
-        date: "2018-11-08",
-        result: "Pass",
-        legislation: "Legislation B"
+      investigation: @investigation,
+      product: @product,
+      date: "2018-11-08",
+      result: "Pass",
+      legislation: "Legislation B"
     )
     test_image = file_fixture("testImage.png")
     result.documents.attach(io: File.open(test_image), filename: 'testImage.png')
     result
   end
-
 end

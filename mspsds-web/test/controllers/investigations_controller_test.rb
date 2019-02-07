@@ -4,6 +4,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as_admin
 
+    @assignee = User.find_by(last_name: "User_one")
+
     @investigation_one = investigations(:one)
     @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
     @investigation_one.assignee = User.find_by(last_name: "Admin")
@@ -12,7 +14,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
     @investigation_two = investigations(:two)
     @investigation_two.created_at = Time.zone.parse('2015-07-11 21:00')
-    @investigation_two.assignee = User.find_by(last_name: "User_one")
+    @investigation_two.assignee = @assignee
     @investigation_two.save
 
     @investigation_three = investigations(:three)
@@ -52,12 +54,12 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should assign user to investigation" do
-    id = User.find_by(last_name: "User_one").id
-    investigation_assignee_id = lambda { Investigation.find(@investigation_three.id).assignee_id }
-    assert_changes investigation_assignee_id, from: nil, to: id do
+    user = User.find_by(last_name: "User_one")
+    investigation_assignee = lambda { Investigation.find(@investigation_three.id).assignee }
+    assert_changes investigation_assignee, from: nil, to: user do
       put assign_investigation_url(@investigation_three), params: {
         investigation: {
-          assignee_id: id
+          assignable_id: user.id
         }
       }
     end
@@ -88,23 +90,21 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update assignee from selectable list" do
-    assignee = User.find_by(last_name: "User_one")
     put assign_investigation_url(@investigation_one), params: {
       investigation: {
-        assignee_id: assignee.id
+        assignable_id: @assignee.id
       }
     }
-    assert_equal(Investigation.find(@investigation_one.id).assignee.id, assignee.id)
+    assert_equal(Investigation.find(@investigation_one.id).assignable_id, @assignee.id)
   end
 
   test "should update assignee from radio boxes" do
-    assignee = User.find_by(last_name: "User_one")
     put assign_investigation_url(@investigation_one), params: {
       investigation: {
-        assignee_id_radio: assignee.id
+        assignable_id_radio: @assignee.id
       }
     }
-    assert_equal(Investigation.find(@investigation_one.id).assignee.id, assignee.id)
+    assert_equal(Investigation.find(@investigation_one.id).assignable_id, @assignee.id)
   end
 
   test "status filter should be defaulted to open" do
@@ -202,7 +202,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     get investigations_path, params: {
         assigned_to_me: "checked",
         assigned_to_someone_else: "checked",
-        assigned_to_someone_else_id: @investigation_two.assignee_id,
+        assigned_to_someone_else_id: @investigation_two.assignable_id,
         status_open: "unchecked",
         status_closed: "unchecked"
     }
@@ -216,7 +216,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     get investigations_path, params: {
         assigned_to_me: "unchecked",
         assigned_to_someone_else: "checked",
-        assigned_to_someone_else_id: @investigation_two.assignee_id,
+        assigned_to_someone_else_id: @investigation_two.assignable_id,
         status_open: "unchecked",
         status_closed: "unchecked"
     }

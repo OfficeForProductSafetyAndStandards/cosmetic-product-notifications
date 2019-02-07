@@ -1,8 +1,8 @@
 class ChangeInvestigationBusinessRelationshipToString < ActiveRecord::Migration[5.2]
-  class InvestigationBusiness < ActiveRecord::Base; end
+  class InvestigationBusiness < ApplicationRecord; end
   def up
     safety_assured do
-      change_table(:investigation_businesses) do |t|
+      change_table(:investigation_businesses, bulk: true) do |t|
         t.string :new_relationship
         InvestigationBusiness.in_batches.each_record do |ib|
           ib.update!(new_relationship: from_enum(ib.relationship))
@@ -15,7 +15,7 @@ class ChangeInvestigationBusinessRelationshipToString < ActiveRecord::Migration[
 
   def down
     safety_assured do
-      change_table(:investigation_businesses) do |t|
+      change_table(:investigation_businesses, bulk: true) do |t|
         t.rename :relationship, :new_relationship
         t.integer :relationship, default: 0, null: false
         InvestigationBusiness.in_batches.each_record do |ib|

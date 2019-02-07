@@ -50,7 +50,7 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should unlink business and investigation" do
-    @investigation.add_business  @business, "manufacturer"
+    @investigation.add_business @business, "manufacturer"
     assert_difference "InvestigationBusiness.count", -1 do
       delete unlink_investigation_business_url(@investigation, @business)
     end

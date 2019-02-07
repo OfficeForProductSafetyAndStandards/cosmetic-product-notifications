@@ -6,12 +6,10 @@ ruby File.read(".ruby-version").strip
 # https://github.com/elastic/elasticsearch-rails/issues/239
 gem "will_paginate"
 
-gem "active_hash"
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c593a08"
 gem "axlsx_rails"
 gem "bootsnap", ">= 1.1.0"
 gem "cf-app-utils"
-gem "clamby"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 gem "jbuilder", "~> 2.8"
@@ -23,6 +21,7 @@ gem "puma", "~> 3.0"
 gem "pundit"
 gem "rails", "~> 5.2"
 gem "redcarpet"
+gem 'redis-rails'
 gem "rubyzip", ">= 1.2.1"
 gem "sass-rails", "~> 5.0"
 gem "sentry-raven"
@@ -39,7 +38,7 @@ gem "shared-web", path: "./vendor/shared-web"
 
 group :development, :test do
   gem "capybara"
-  gem "roo", "~> 2.8.1"
+  gem "roo", "~> 2.8.2"
   gem "rspec-mocks"
   gem "selenium-webdriver"
 

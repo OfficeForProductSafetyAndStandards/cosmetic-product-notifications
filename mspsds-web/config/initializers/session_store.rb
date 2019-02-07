@@ -1,3 +1,8 @@
 # Be sure to restart your server when you modify this file.
 
-Rails.application.config.session_store :cookie_store, key: "_mspsds_session"
+# Sidekiq won't have access to the session store, so we shouldn't initialise the connection here
+unless Sidekiq.server?
+  Rails.application.config.session_store :redis_store,
+                                         servers: Rails.application.config_for(:redis_session),
+                                         key: "_mspsds_session"
+end

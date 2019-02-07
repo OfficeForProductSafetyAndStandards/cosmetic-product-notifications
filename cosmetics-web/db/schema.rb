@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_14_114318) do
+ActiveRecord::Schema.define(version: 2019_02_05_094834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 2019_01_14_114318) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "components", force: :cascade do |t|
+    t.string "state"
+    t.string "shades", array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "notification_id"
+    t.index ["notification_id"], name: "index_components_on_notification_id"
+  end
+
   create_table "notification_files", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -44,11 +53,39 @@ ActiveRecord::Schema.define(version: 2019_01_14_114318) do
 
   create_table "notifications", force: :cascade do |t|
     t.string "product_name"
-    t.string "external_reference"
     t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "import_country"
+    t.bigint "responsible_person_id"
+    t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
+  end
+
+  create_table "responsible_person_users", force: :cascade do |t|
+    t.bigint "responsible_person_id"
+    t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["responsible_person_id"], name: "index_responsible_person_users_on_responsible_person_id"
+  end
+
+  create_table "responsible_persons", force: :cascade do |t|
+    t.string "account_type"
+    t.string "name"
+    t.string "companies_house_number"
+    t.string "email_address"
+    t.string "phone_number"
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "city"
+    t.string "county"
+    t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "components", "notifications"
+  add_foreign_key "notifications", "responsible_persons"
+  add_foreign_key "responsible_person_users", "responsible_persons"
 end

@@ -1,5 +1,5 @@
 class Investigations::ProductsController < ApplicationController
-  include CountriesHelper
+  include Shared::Web::CountriesHelper
   include ProductsHelper
   include Pundit
 

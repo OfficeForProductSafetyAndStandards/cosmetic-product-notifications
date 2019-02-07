@@ -1,7 +1,7 @@
 class BusinessesController < ApplicationController
   include BusinessesHelper
   include UrlHelper
-  include CountriesHelper
+  include Shared::Web::CountriesHelper
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]

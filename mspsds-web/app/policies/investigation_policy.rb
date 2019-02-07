@@ -6,4 +6,8 @@ class InvestigationPolicy < ApplicationPolicy
   def show?
     @record.visible_to(@user)
   end
+
+  def assign?
+    @record.can_be_assigned_by(@user)
+  end
 end

@@ -56,9 +56,40 @@ module Shared
         groups = all_groups
         organisations = groups.find { |group| group["name"] == "Organisations" }
 
-        organisations["subGroups"].map do |organisation|
+        organisations["subGroups"].reject(&:blank?).map do |organisation|
           { id: organisation["id"], name: organisation["name"], path: organisation["path"] }
         end
+      end
+
+      def all_teams
+        groups = all_groups
+        organisations = groups.find { |group| group["name"] == "Organisations" }
+
+        teams = []
+        organisations["subGroups"].reject(&:blank?).each do |organisation|
+          organisation["subGroups"].reject(&:blank?).map do |team|
+            teams << { id: team["id"], name: team["name"], path: team["path"], organisation_id: organisation["id"] }
+          end
+        end
+        teams
+      end
+
+      def all_team_users
+        users = all_users
+        user_groups = all_user_groups
+        teams = all_teams.map { |t| t[:id] }.to_set
+
+        # We set ids manually because if we don't ActiveHash will use 'next_id' method when computing @records,
+        # which calls TeamUser.all, and gets into an infinite loop
+        team_users = []
+        id = 1
+        users.reject(&:blank?).each do |user|
+          user_groups[user[:id]].reject(&:blank?).each do |group|
+            team_users << { team_id: group, user_id: user[:id], id: id } if teams.include? group
+            id += 1
+          end
+        end
+        team_users
       end
 
       def all_groups
@@ -67,6 +98,10 @@ module Shared
         end
 
         JSON.parse(response)
+      end
+
+      def registration_url
+        Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/protocol/openid-connect/registrations?client_id=#{Keycloak::Client.client_id}&response_type=code"
       end
 
       def login_url(redirect_uri)

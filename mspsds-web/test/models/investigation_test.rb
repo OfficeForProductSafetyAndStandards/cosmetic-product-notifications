@@ -11,8 +11,8 @@ class InvestigationTest < ActiveSupport::TestCase
     @investigation_with_correspondence = investigations(:search_related_correspondence)
     @correspondence = correspondences(:one)
 
-    @investigation_with_reporter = investigations(:search_related_reporter)
-    @reporter = reporters(:one)
+    @investigation_with_complainant = investigations(:search_related_complainant)
+    @complainant = complainants(:one)
 
     @investigation_with_business = investigations(:search_related_businesses)
     @business = businesses(:biscuit_base)
@@ -145,24 +145,24 @@ class InvestigationTest < ActiveSupport::TestCase
     assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_correspondence.id)
   end
 
-  test "elasticsearch should find reporter name" do
-    query = ElasticsearchQuery.new(@reporter.name, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_reporter.id)
+  test "elasticsearch should find complainant name" do
+    query = ElasticsearchQuery.new(@complainant.name, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_complainant.id)
   end
 
-  test "elasticsearch should find reporter phone number" do
-    query = ElasticsearchQuery.new(@reporter.phone_number, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_reporter.id)
+  test "elasticsearch should find complainant phone number" do
+    query = ElasticsearchQuery.new(@complainant.phone_number, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_complainant.id)
   end
 
-  test "elasticsearch should find reporter email address" do
-    query = ElasticsearchQuery.new(@reporter.email_address, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_reporter.id)
+  test "elasticsearch should find complainant email address" do
+    query = ElasticsearchQuery.new(@complainant.email_address, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_complainant.id)
   end
 
-  test "elasticsearch should find reporter other details" do
-    query = ElasticsearchQuery.new(@reporter.other_details, {}, {})
-    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_reporter.id)
+  test "elasticsearch should find complainant other details" do
+    query = ElasticsearchQuery.new(@complainant.other_details, {}, {})
+    assert_includes(Investigation.full_search(query).records.map(&:id), @investigation_with_complainant.id)
   end
 
   test "elasticsearch should find business name" do
@@ -209,6 +209,20 @@ class InvestigationTest < ActiveSupport::TestCase
     user = User.find_by(last_name: "User_one")
     user.organisation = organisations[1]
     assert_not(@new_investigation.visible_to(user))
+  end
+
+  test "past assignees should be computed" do
+    user = User.find_by(last_name: "User_one")
+    @investigation.assignee = user
+    @investigation.save
+    assert_includes @investigation.past_assignees, user
+  end
+
+  test "past assignee teams should be computed" do
+    team = Team.first
+    @investigation.assignee = team
+    @investigation.save
+    assert_includes @investigation.past_teams, team
   end
 
   def create_new_private_case

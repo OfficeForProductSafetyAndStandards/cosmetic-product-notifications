@@ -19,6 +19,7 @@ class Test::Result < Test
   end
 
 private
+
   def result_file_attached
     if documents.attachments.empty?
       errors.add(:base, :file_missing, message: "Provide the test results file")

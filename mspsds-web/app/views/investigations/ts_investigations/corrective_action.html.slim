@@ -22,7 +22,8 @@ h1.govuk-heading-xl
           fieldset.govuk-fieldset
             legend.govuk-fieldset__legend.govuk-fieldset__legend--l class="govuk-!-margin-bottom-1"
               | Are there other actions to report?
-            .govuk-form-group.full-width class=("govuk-form-group--error" if @corrective_action.errors[:further_corrective_action].any?)
+            .govuk-form-group.full-width{
+              class=("govuk-form-group--error" if @corrective_action.errors[:further_corrective_action].any?) }
               .govuk-radios
                 .govuk-radios__item
                   = radio_button "", :further_corrective_action, "Yes", class: "govuk-radios__input", value: "Yes",

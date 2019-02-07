@@ -19,7 +19,7 @@ class CorrectiveAction < ApplicationRecord
   validate :date_decided_cannot_be_in_the_future
   validates :investigation, presence: true
   validates :product, presence: true
-  validates :legislation, presence:true
+  validates :legislation, presence: true
   validate :related_file_validation
 
   validates_length_of :summary, maximum: 1000

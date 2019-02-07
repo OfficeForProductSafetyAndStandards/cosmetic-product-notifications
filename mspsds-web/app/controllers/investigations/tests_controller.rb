@@ -36,7 +36,6 @@ class Investigations::TestsController < ApplicationController
   def create
     update_attachment
     if test_saved?
-      save_attachment
       redirect_to investigation_url(@investigation), notice: "#{@test.pretty_name.capitalize} was successfully recorded."
     else
       render step
