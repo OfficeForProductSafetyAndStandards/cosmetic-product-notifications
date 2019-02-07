@@ -10,6 +10,7 @@ applications:
   command: freshclam --config-file=clamav/freshclam.conf && freshclam --config-file=clamav/freshclam.conf -d -c 2 && (../deps/0/apt/usr/sbin/clamd -c clamav/clamd.conf &) && bin/sidekiq -C config/sidekiq.yml
   no-route: true
   health-check-type: process
+  stack: cflinuxfs3
   services:
     - cosmetics-database
     - cosmetics-redis
