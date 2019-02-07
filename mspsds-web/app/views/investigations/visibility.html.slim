@@ -3,7 +3,7 @@
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Legal privilege"
 h2.govuk-heading-l
-  = "Visibility"
+  | Visibility
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with(model: @investigation, method: :put, url: visibility_investigation_url(@investigation)) do |form|

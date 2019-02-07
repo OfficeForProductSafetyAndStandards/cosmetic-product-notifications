@@ -7,6 +7,14 @@ class InvestigationPolicy < ApplicationPolicy
     visible_to(user: user)
   end
 
+  def new?
+    show?
+  end
+
+  def status?
+    show?
+  end
+
   def assign?(user: @user)
     can_be_assigned_by(user: user)
   end
@@ -31,5 +39,4 @@ class InvestigationPolicy < ApplicationPolicy
 
     false
   end
-
 end
