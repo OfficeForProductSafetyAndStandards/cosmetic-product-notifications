@@ -15,7 +15,7 @@
       = link_to "Find out how to export cosmetic product zip files from CPNP.",
           "https://docs.google.com/document/d/1QTM-LYmlAk8nnuwYOvtn8-gB5-F6T5u4lgs_2BhzPJ8/edit",
           target: :_blank
-    = form_with model: @notification_file, local: true do |form|
+    = form_with model: [@responsible_person, @notification_file], local: true do |form|
       .govuk-form-group
         .form-group
           = form.label "Upload CPNP zip file", class: "govuk-label"

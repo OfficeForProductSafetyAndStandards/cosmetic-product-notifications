@@ -30,16 +30,20 @@
               .govuk-checkboxes__item
                 = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
                 = form.label :assigned_to_me, "Me", class: "govuk-checkboxes__label"
+              - teams_with_keys.each do |key, team, name|
+                .govuk-checkboxes__item
+                  = form.check_box key, { class: "govuk-checkboxes__input" }, team.id, ""
+                  = form.label key, name, class: "govuk-checkboxes__label"
               .govuk-checkboxes__item
                 = form.check_box :assigned_to_someone_else, { class: "govuk-checkboxes__input",
                         "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
-                = form.label :assigned_to_someone_else, "Someone else", class: "govuk-checkboxes__label"
+                = form.label :assigned_to_someone_else, "Other person or team", class: "govuk-checkboxes__label"
               #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
                 = form.label :assigned_to_someone_else_id, "Name", class: "govuk-label"
                 = form.select :assigned_to_someone_else_id,
-                        compute_select_options(entities: User.get_assignees(except: current_user)),
+                        compute_select_options(entities: User.get_assignees(except: current_user) + Team.all),
                         {},
-                        class: "govuk-select", id: "assignee-picker"
+                        class: "govuk-select", id: "assignee-picker-select_someone_else"
         .govuk-form-group
           fieldset.govuk-fieldset
             .govuk-fieldset__legend--s
