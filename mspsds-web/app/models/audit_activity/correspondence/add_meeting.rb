@@ -22,4 +22,8 @@ class AuditActivity::Correspondence::AddMeeting < AuditActivity::Correspondence:
     body += "<br>#{self.sanitize_text correspondence.details}" if correspondence.details.present?
     body
   end
+
+  def email_update_text
+    "Meeting details added to the #{investigation.case_type.titleize}"
+  end
 end

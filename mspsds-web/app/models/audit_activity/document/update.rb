@@ -25,4 +25,8 @@ class AuditActivity::Document::Update < AuditActivity::Document::Base
   def self.description_changed?(document, previous_data)
     document.metadata[:description] != previous_data[:description]
   end
+
+  def email_update_text
+    "Document attached to the #{investigation.case_type.titleize} was updated"
+  end
 end

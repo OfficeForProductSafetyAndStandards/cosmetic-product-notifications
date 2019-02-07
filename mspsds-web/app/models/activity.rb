@@ -35,6 +35,12 @@ class Activity < ApplicationRecord
     false
   end
 
+  def notify_user
+    NotifyMailer.updated_investigation(id, assignee.full_name, assignee.email, email_update_text).deliver_later
+  end
+
+  def email_update_text; end
+
 private
 
   def pretty_date_stamp

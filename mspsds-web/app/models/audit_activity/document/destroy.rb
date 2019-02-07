@@ -7,4 +7,8 @@ class AuditActivity::Document::Destroy < AuditActivity::Document::Base
   def subtitle_slug
     "#{attachment_type} deleted"
   end
+
+  def email_update_text
+    "Document attached to the #{investigation.case_type.titleize} was removed"
+  end
 end

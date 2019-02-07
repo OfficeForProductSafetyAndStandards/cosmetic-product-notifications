@@ -6,4 +6,8 @@ class AuditActivity::CorrectiveAction::Add < AuditActivity::CorrectiveAction::Ba
   def subtitle_slug
     "Corrective action recorded"
   end
+
+  def email_update_text
+    "Corrective action was added to the #{investigation.case_type.titleize}"
+  end
 end

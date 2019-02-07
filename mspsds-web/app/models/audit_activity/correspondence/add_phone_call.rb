@@ -42,4 +42,8 @@ class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondenc
   def subtitle_slug
     "Phone call"
   end
+
+  def email_update_text
+    "Phone call details added to the #{investigation.case_type.titleize}"
+  end
 end
