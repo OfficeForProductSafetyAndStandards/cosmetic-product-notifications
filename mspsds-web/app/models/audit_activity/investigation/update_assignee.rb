@@ -16,4 +16,24 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
   def title
     "Assigned to #{(User.find_by(id: assignable_id) || Team.find_by(id: assignable_id))&.display_name}"
   end
+
+  def email_update_text
+    "#{investigation.case_type.titleize} was assigned to #{investigation.assignee.display_name}"
+  end
+
+  def users_to_notify
+    activity = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: investigation.id).order("created_at").last
+    previous_assignee = User.find_by(id: activity&.assignable_id) || Team.find_by(id: activity&.assignable_id)
+    new_assignee = investigation.assignee
+
+    assigner = source.user
+    old_users = []
+    old_users = previous_assignee.is_a?(User) ? [previous_assignee] : previous_assignee.users if previous_assignee.present?
+    default_users = new_assignee.is_a?(User) ? [new_assignee] : new_assignee.users
+
+
+    return default_users if previous_assignee.blank? || (old_users.include? assigner)
+
+    (default_users + old_users).uniq
+  end
 end

@@ -35,8 +35,17 @@ class Activity < ApplicationRecord
     false
   end
 
-  def notify_user
-    NotifyMailer.updated_investigation(id, assignee.full_name, assignee.email, email_update_text).deliver_later
+  def notify_relevant_users
+    users_to_notify.each do |user|
+      NotifyMailer.updated_investigation(investigation.id, user.full_name, user.email, email_update_text).deliver_later
+    end
+  end
+
+  def users_to_notify
+    return [investigation.assignee] if investigation.assignee.is_a? User
+    return [] if source&.user&.teams&.include? investigation.assignee
+
+    investigation.assignee.users
   end
 
   def email_update_text; end

@@ -41,6 +41,7 @@ class Investigations::ActivitiesController < ApplicationController
   def create
     respond_to do |format|
       if @activity.save
+        @activity.notify_relevant_users
         format.html do
           redirect_to investigation_url(@investigation), notice: "Comment was successfully added."
         end

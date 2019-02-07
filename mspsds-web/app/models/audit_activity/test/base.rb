@@ -5,13 +5,15 @@ class AuditActivity::Test::Base < AuditActivity::Base
   belongs_to :product
 
   private_class_method def self.from(test, title)
-    activity = self.create(
+    activity = self.new(
       body: self.build_body(test),
       title: title,
       source: UserSource.new(user: current_user),
       investigation: test.investigation,
       product: test.product
     )
+    activity.notify_relevant_users
+    activity.save
     activity.attach_blob test.documents.first.blob if test.documents.attached?
   end
 
