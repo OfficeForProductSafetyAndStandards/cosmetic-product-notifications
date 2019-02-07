@@ -8,14 +8,23 @@ class NotificationsController < ApplicationController
   end
 
     # Check your answers page
-  def edit; end
+  def edit
+    if params[:submit_failed]
+      unless @notification.image_uploads.all?(&:file_exists?)
+        @notification.errors.add :image_uploads, "failed anti virus check"
+      end
+      unless @notification.image_uploads.all?(&:marked_as_safe?)
+        @notification.errors.add :image_uploads, "waiting for files to pass anti virus check..."
+      end
+    end
+  end
 
     # Confirmation page
   def confirmation
     if @notification.may_submit_notification?
       @notification.submit_notification!
     elsif @notification.state != "notification_complete"
-      redirect_to edit_notification_path(@notification)
+      redirect_to edit_notification_path(@notification, submit_failed: true)
     end
   end
 

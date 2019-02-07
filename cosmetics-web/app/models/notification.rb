@@ -50,6 +50,10 @@ class Notification < ApplicationRecord
     country_from_code(import_country) || import_country
   end
 
+  def images_are_present_and_safe?
+    image_uploads.length > 0 && image_uploads.all?(&:marked_as_safe?)
+  end
+
 private
 
   def all_required_attributes_must_be_set
@@ -60,10 +64,6 @@ private
         errors.add attribute, "must not be blank"
       end
     }
-  end
-
-  def images_are_present_and_safe?
-    image_uploads.length > 0 && image_uploads.all?(&:marked_as_safe?)
   end
 
   def mandatory_attributes(state)
