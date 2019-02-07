@@ -1,4 +1,5 @@
 class User < Shared::Web::User
+  has_many :notification_files, dependent: :destroy
   has_many :responsible_person_users, dependent: :destroy
   has_many :responsible_persons, through: :responsible_person_users
 
