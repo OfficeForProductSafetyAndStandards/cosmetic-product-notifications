@@ -2,6 +2,9 @@
   "name": "maintenance",
   "version": "1.0.0",
   "license": "MIT",
+  "engines": {
+    "node": "^10"
+  },
   "scripts": {
     "start": "node server.js"
   },
