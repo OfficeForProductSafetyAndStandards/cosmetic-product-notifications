@@ -1,11 +1,11 @@
 - content_for :page_title, "Responsible Person"
 = render "layouts/rp_navbar"
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
+  .govuk-grid-column-two-thirds[class='govuk-!-padding-bottom-3']
     h1.govuk-heading-xl
       | Responsible person
     = link_to "Add a responsible person", "/",
-            class: "govuk-link--no-visited-state"
+            class: "govuk-link--no-visited-state govuk-body"
 .govuk-grid-row
   .govuk-grid-column-full
     table.govuk-table

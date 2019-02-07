@@ -1,6 +1,6 @@
 - content_for :page_title, "Your cosmetic products"
 = render "layouts/rp_navbar"
-- if @pending_notification_files.positive?
+- if @pending_notification_files_count.positive?
   .govuk-grid-row
     .govuk-grid-column-full
       .govuk-error-summary.loading-spinner__container
@@ -8,7 +8,7 @@
           span.loading-spinner__dot
 
           ' Checking
-          = @pending_notification_files
+          = @pending_notification_files_count
           |  notification files
 
         .govuk-error-summary__body
@@ -20,7 +20,9 @@
       | Your cosmetic products
     p
       b = @responsible_person.name
-      |  has no cosmetic products registered in the UK.
+      '  has
+      = @registered_notifications.count
+      |  cosmetic products registered in the UK.
     p
       | All cosmetic products intended for sale or given away in the UK must be registered in the UK.
     p
@@ -30,10 +32,10 @@
             class: "govuk-button govuk-button", role: "button"
 
 = render "tabs", tabs: [\
-  Tab.new("errors", "Errors", "Files that failed to upload",
+  Tab.new("errors", "Errors (0)", "Files that failed to upload",
         lambda { render "responsible_persons/notifications/tabs/errors" }),
-  Tab.new("unfinished", "Unfinished", "Unfinished cosmetics products",
+  Tab.new("unfinished", "Unfinished (#{@unfinished_notifications.count})", "Unfinished cosmetics products",
         lambda { render "responsible_persons/notifications/tabs/unfinished" }),
-  Tab.new("registered", "Registered", "Registered cosmetics products",
+  Tab.new("registered", "Registered (#{@registered_notifications.count})", "Registered cosmetics products",
         lambda { render "responsible_persons/notifications/tabs/registered" })\
 ]
