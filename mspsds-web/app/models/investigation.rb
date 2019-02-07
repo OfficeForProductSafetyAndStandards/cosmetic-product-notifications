@@ -122,14 +122,6 @@ class Investigation < ApplicationRecord
     "#{case_type.titleize}: #{pretty_id}"
   end
 
-  def can_be_assigned_by(user)
-    return true if assignee.blank?
-    return true if assignee.is_a?(Team) && (user.teams.include? assignee)
-    return true if assignee.is_a?(User) && (user.teams && assignee.teams).any? || assignee == user
-
-    false
-  end
-
   def important_assignable_people
     people = [].to_set
     people << assignee if assignee.is_a? User
