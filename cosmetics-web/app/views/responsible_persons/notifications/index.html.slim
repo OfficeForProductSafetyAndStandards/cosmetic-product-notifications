@@ -6,11 +6,8 @@
       .govuk-error-summary.loading-spinner__container
         h2.govuk-error-summary__title
           span.loading-spinner__dot
-
           ' Checking
-          = @pending_notification_files_count
-          |  notification files
-
+          = pluralize( @pending_notification_files_count, 'notification file')
         .govuk-error-summary__body
           = link_to "Refresh the browser to see uploaded products", url_for,
                   class: "govuk-link--no-visited-state"
@@ -21,8 +18,8 @@
     p
       b = @responsible_person.name
       '  has
-      = @registered_notifications.count
-      |  cosmetic products registered in the UK.
+      = pluralize( @registered_notifications.length, 'cosmetic product')
+      |  registered in the UK.
     p
       | All cosmetic products intended for sale or given away in the UK must be registered in the UK.
     p
@@ -34,8 +31,8 @@
 = render "tabs", tabs: [\
   Tab.new("errors", "Errors (0)", "Files that failed to upload",
         lambda { render "responsible_persons/notifications/tabs/errors" }),
-  Tab.new("unfinished", "Unfinished (#{@unfinished_notifications.count})", "Unfinished cosmetics products",
+  Tab.new("unfinished", "Unfinished (#{@unfinished_notifications.length})", "Unfinished cosmetics products",
         lambda { render "responsible_persons/notifications/tabs/unfinished" }),
-  Tab.new("registered", "Registered (#{@registered_notifications.count})", "Registered cosmetics products",
+  Tab.new("registered", "Registered (#{@registered_notifications.length})", "Registered cosmetics products",
         lambda { render "responsible_persons/notifications/tabs/registered" })\
 ]

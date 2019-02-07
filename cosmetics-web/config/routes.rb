@@ -29,4 +29,6 @@ Rails.application.routes.draw do
   resources :components do
     resources :build, controller: :component_build, only: %i[show update new]
   end
+
+  match "/403", to: "errors#forbidden", via: :all
 end

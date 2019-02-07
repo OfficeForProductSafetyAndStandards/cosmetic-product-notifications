@@ -205,6 +205,8 @@ GEM
     powerpack (0.1.2)
     public_suffix (3.0.3)
     puma (3.12.0)
+    pundit (2.0.1)
+      activesupport (>= 3.0.0)
     raabro (1.1.6)
     rack (2.0.6)
     rack-protection (2.0.5)
@@ -389,6 +391,7 @@ DEPENDENCIES
   mini_magick
   pg (~> 1.1)
   puma (~> 3.0)
+  pundit
   rails (~> 5.2)
   rails-controller-testing
   rspec-collection_matchers
@@ -406,4 +409,4 @@ RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   1.17.1
+   1.17.2
