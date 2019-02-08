@@ -35,7 +35,7 @@ class InvestigationPolicy < ApplicationPolicy
   def can_be_assigned_by(user: @user)
     return true if @record.assignee.blank?
     return true if @record.assignee.is_a?(Team) && (user.teams.include? @record.assignee)
-    return true if @record.assignee.is_a?(User) && (user.teams && @record.assignee.teams).any? || @record.assignee == user
+    return true if @record.assignee.is_a?(User) && (user.teams & @record.assignee.teams).any? || @record.assignee == user
 
     false
   end
