@@ -207,9 +207,9 @@ class InvestigationTest < ActiveSupport::TestCase
   test "not visible to no-admin, no-source, no-assignee organisation" do
     create_new_private_case
     logout
-    sign_in_as_non_opss_user
-    user = User.find_by(last_name: "User_one")
-    user.organisation = organisations[1]
+    sign_in_as_non_opss_user(user_name: "User_two")
+    user = User.find_by(last_name: "User_two")
+    user.organisation = organisations[0]
     assert_not(policy(@new_investigation).show?(user: user))
   end
 

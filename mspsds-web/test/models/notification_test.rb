@@ -106,11 +106,11 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   def prepare_notify_check(who_will_be_notified: [])
-    result = "aaa"
+    result = ""
     allow(result).to receive(:deliver_later)
     allow(NotifyMailer).to receive(:updated_investigation) do |_id, user_name, _user_email, _text|
-      assert_includes who_will_be_notified.map{|user| user.full_name}, user_name
-      assert_not_includes (User.all - who_will_be_notified).map{|user| user.full_name}, user_name
+      assert_includes who_will_be_notified.map(&:full_name), user_name
+      assert_not_includes (User.all - who_will_be_notified).map(&:full_name), user_name
       result
     end
   end

@@ -25,9 +25,9 @@ class InvestigationPolicy < ApplicationPolicy
 
   def visible_to(user:, private: @record.is_private)
     return true unless private
-    return true if @record.assignee.present? && (@record.assignee&.organisation == user.organisation)
-    return true if @record.source.respond_to?(:user) && @record.source&.user&.present? && (@record.source&.user&.organisation == user.organisation)
     return true if user.is_opss?
+    return true if @record.assignee.present? && (@record.assignee&.organisation == user.organisation)
+    return true if @record.source&.user&.present? && (@record.source&.user&.organisation == user.organisation)
 
     false
   end

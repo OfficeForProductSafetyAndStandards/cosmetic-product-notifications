@@ -74,13 +74,14 @@ class ActiveSupport::TestCase
     stub_user_group_data(user_groups: user_groups, users: users)
     stub_user_data(users: users)
     stub_client_config
+    stub_notify_mailer
   end
 
   def stub_notify_mailer
-    result = "aaa"
+    result = ""
     allow(result).to receive(:deliver_later)
-    allow(NotifyMailer).to receive(:assigned_investigation) { result}
-    allow(NotifyMailer).to receive(:assigned_investigation_to_team) { result}
+    allow(NotifyMailer).to receive(:assigned_investigation) { result }
+    allow(NotifyMailer).to receive(:assigned_investigation_to_team) { result }
     allow(NotifyMailer).to receive(:updated_investigation) { result }
   end
 
@@ -88,8 +89,8 @@ class ActiveSupport::TestCase
     sign_in_as_user(user_name: "User_three", organisation: nil)
   end
 
-  def sign_in_as_non_opss_user
-    sign_in_as_user(user_name: "User_one", organisation: organisations[0])
+  def sign_in_as_non_opss_user(user_name: "User_one")
+    sign_in_as_user(user_name: user_name, organisation: organisations[0])
   end
 
   def sign_in_as_admin

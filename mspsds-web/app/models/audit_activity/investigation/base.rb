@@ -8,5 +8,6 @@ class AuditActivity::Investigation::Base < AuditActivity::Base
     )
     activity.notify_relevant_users
     activity.save
+    activity
   end
 end
