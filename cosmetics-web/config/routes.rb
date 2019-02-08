@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get '/manual_entry' => 'manual_entry#create'
 
-  resources :notifications, only: %i[new, edit] do
+  resources :notifications, only: %i[new edit] do
     member do
       get 'confirmation'
     end

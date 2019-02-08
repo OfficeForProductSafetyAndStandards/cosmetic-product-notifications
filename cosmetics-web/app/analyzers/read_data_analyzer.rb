@@ -5,10 +5,10 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
     super(blob)
   end
 
-  def self.accept?(_blob)
-    if _blob.present?
+  def self.accept?(given_blob)
+    if given_blob.present?
       # this analyzer only accepts notification files which are zip
-      notification_file = ::NotificationFile.find_by(id: ActiveStorage::Attachment.find_by(blob_id: _blob.id).record_id)
+      notification_file = ::NotificationFile.find_by(id: ActiveStorage::Attachment.find_by(blob_id: given_blob.id).record_id)
       return true if notification_file.present?
     end
     false
@@ -23,8 +23,10 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
 private
 
   def create_notification_from_file
+    notification_file = ::NotificationFile.find_by(id: ActiveStorage::Attachment.find_by(blob_id: blob.id).record_id)
     @notification = ::Notification.new(product_name: get_notification_current_name,
-                                     state: :draft_complete)
+                                       state: :draft_complete,
+                                       responsible_person: notification_file.responsible_person)
     @notification.save
   end
 
