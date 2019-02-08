@@ -98,6 +98,10 @@ This provisions the app in Cloud Foundry.
 
 This configures rails to use the production database amongst other things.
 
+    cf set-env cosmetics-web COSMETICS_HOST XXX
+
+This is the URL for the website and is used for sending emails.
+
     cf set-env cosmetics-web SECRET_KEY_BASE XXX
 
 This sets the server's encryption key. Generate a new value by running `rake secret` 

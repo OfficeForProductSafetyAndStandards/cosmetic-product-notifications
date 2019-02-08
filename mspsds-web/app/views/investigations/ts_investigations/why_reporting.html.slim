@@ -1,0 +1,53 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      span.govuk-caption-xl Report an unsafe or non-compliant product
+      | Why are you reporting this product?
+    span.govuk-hint
+      | Select all that apply
+= form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
+  = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
+  .govuk-grid-row class="govuk-!-margin-bottom-3"
+    .mspsds-input.govuk-grid-column-two-thirds class="govuk-!-margin-bottom-9"
+      .govuk-form-group
+        .govuk-checkboxes data-module="checkboxes"
+          .govuk-checkboxes__item
+            = form.check_box :unsafe, class: "govuk-checkboxes__input", checked: @unsafe,
+                    "aria-controls": "conditional-report-report-type-1", "aria-expanded": "false", value: "unsafe"
+            = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label"
+          #conditional-report-report-type-1.govuk-checkboxes__conditional[
+            class=("govuk-checkboxes__conditional--hidden" unless @unsafe) ]
+            .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)]
+              .mspsds-autocomplete#hazard-type-auto-complete-container
+                = form.label :hazard_type, "Hazard type", class: "govuk-label", for: "hazard-type-autocomplete"
+                span#hazard-type-category-picker.govuk-hint What kind of danger does the product present?
+                = form.select :hazard_type, hazard_types, { include_blank: true },
+                        class: "govuk-select", id: "hazard-type-picker", aria_describedby: "hazard-type-category-hint"
+
+            .govuk-form-group
+              .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_description].any?)]
+                = form.label :hazard_description, "Hazard details", class: "govuk-label",
+                        for: ":investigation_hazard_description"
+                span.govuk-hint id="allegation-hazard–detail-hint"
+                  | Including any incidents or events that brought it to your attention
+                = form.text_area :hazard_description, class: "govuk-textarea", id: "allegation-hazard–detail",
+                        "aria-describedby": "allegation-hazard–detail-hint", rows: 5
+
+          .govuk-checkboxes__item
+            = form.check_box :non_compliant, class: "govuk-checkboxes__input", checked: @non_compliant,
+                    "aria-controls": "conditional-report-report-type-2", "aria-expanded": "false",
+                    value: "non-compliant"
+            = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label"
+          #conditional-report-report-type-2.govuk-checkboxes__conditional[
+            class=("govuk-checkboxes__conditional--hidden" unless @non_compliant) ]
+            .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:non_compliant_reason].any?)]
+              .govuk-form-group
+                = form.label :non_compliant_reason, "Details of non-compliance", class: "govuk-label",
+                        for: ":investigation_non_compliant_reason"
+                = form.text_area :non_compliant_reason, class: "govuk-textarea", id: "allegation-compliance-detail",
+                        aria_describedby: "allegation-compliance-detail-hint", rows: "5"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form.submit "Continue", class: "govuk-button"

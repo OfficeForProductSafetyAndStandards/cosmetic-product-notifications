@@ -1,0 +1,28 @@
+fieldset.govuk-fieldset
+  - if local_variables.include?(:title)
+    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+      | Browse for file
+  .govuk-form-group
+    - if @file_blob.present?
+      p#current-attachment-details
+        ' Currently selected file:
+        = link_to @file_blob.filename, @file_blob, target: "_blank", rel: 'noopener'
+    = form.fields_for :file do |subform|
+      - if @file_blob.blank?
+        .govuk-form-group class=("govuk-form-group--error" if form.object.errors[:file].any?)
+          = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
+      .govuk-grid-row class="govuk-!-margin-bottom-3"
+        .govuk-grid-column-one-half
+          hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+      .govuk-grid-row class="govuk-!-margin-bottom-3"
+        .govuk-grid-column-two-thirds
+          fieldset.govuk-fieldset
+            .govuk-form-group class=("govuk-form-group--error" if form.object.errors[:title].any?)
+              = subform.label :title, class: "govuk-label"
+                | Title
+              = subform.text_field :title, class: "govuk-input govuk-!-width-two-thirds", value: @file_title
+            .govuk-form-group class=("govuk-form-group--error" if form.object.errors[:description].any?)
+              = subform.label :description, class: "govuk-label"
+                | Description
+              = subform.text_area :description, class: "govuk-textarea", rows: 5, maxlength: 1000,
+                      value: @file_description

@@ -6,7 +6,9 @@ import '../../../vendor/shared-web/app/assets/application/javascripts/location_p
 
 import '../application/javascripts/investigations/attachment_description';
 import '../application/javascripts/investigations/corrective_actions';
+import '../application/javascripts/investigations/hazards';
 import '../application/javascripts/investigations/legislation_picker';
+import '../application/javascripts/investigations/ts_investigations/which_businesses';
 import '../application/javascripts/autocomplete';
 import '../application/javascripts/creation_flow';
 import '../application/javascripts/investigations';

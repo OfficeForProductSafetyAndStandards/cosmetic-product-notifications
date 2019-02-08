@@ -5,15 +5,20 @@ class Investigation < ApplicationRecord
   include UserService
 
   attr_accessor :status_rationale
+  attr_accessor :visibility_rationale
 
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
   validates :product_category, presence: true, on: :allegation_details
+  validates :hazard_description, presence: true, on: :unsafe
+  validates :hazard_type, presence: true, on: :unsafe
+  validates :non_compliant_reason, presence: true, on: :non_compliant
 
   validates_length_of :user_title, maximum: 1000
 
   validates_length_of :description, maximum: 1000
+
 
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility
@@ -112,15 +117,6 @@ class Investigation < ApplicationRecord
     is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
   end
 
-  def visible_to(user)
-    return true unless is_private
-    return true if assignee.present? && (assignee&.organisation == user.organisation)
-    return true if source&.user&.present? && (source&.user&.organisation == user.organisation)
-    return true if user.is_opss?
-
-    false
-  end
-
   def pretty_id
     id_string = id.to_s.rjust(8, '0')
     id_string.insert(4, "-")
@@ -128,14 +124,6 @@ class Investigation < ApplicationRecord
 
   def pretty_description
     "#{case_type.titleize}: #{pretty_id}"
-  end
-
-  def can_be_assigned_by(user)
-    return true if assignee.blank?
-    return true if assignee.is_a?(Team) && (user.teams.include? assignee)
-    return true if assignee.is_a?(User) && (user.teams && assignee.teams).any? || assignee == user
-
-    false
   end
 
   def important_assignable_people
@@ -188,6 +176,20 @@ class Investigation < ApplicationRecord
 
   def case_type; end
 
+  def has_non_compliant_reason
+    if non_compliant_reason&.empty?
+      errors.add(:non_compliant_reason, "cannot be blank")
+    end
+  end
+
+  def add_business(business, relationship)
+    # Could not find a way to add a business to an investigation which allowed us to set the relationship value and
+    # while still triggering the callback to add the audit activity. One possibility is to move the callback to the
+    # InvestigationBusiness model.
+    investigation_businesses.create!(business_id: business.id, relationship: relationship)
+    create_audit_activity_for_business(business)
+  end
+
 private
 
   def create_audit_activity_for_case
@@ -201,7 +203,7 @@ private
   end
 
   def create_audit_activity_for_visibility
-    if saved_changes.key?(:is_private)
+    if saved_changes.key?(:is_private) || visibility_rationale.present?
       AuditActivity::Investigation::UpdateVisibility.from(self)
     end
   end
