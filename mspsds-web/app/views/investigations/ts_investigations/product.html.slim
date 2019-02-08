@@ -1,15 +1,14 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
-.new-product-page
-  span.govuk-caption-xl Report an unsafe or non-compliant product
-  h1.govuk-heading-xl
-    | What product are you reporting?
+span.govuk-caption-xl Report an unsafe or non-compliant product
+h1.govuk-heading-xl
+  | What product are you reporting?
 
-  = form_with model: @product, url: wizard_path, method: :put, local: true do |form|
-    .govuk-grid-row
-      .govuk-grid-column-full
-        = render "form_validation_display", errors: @product.errors, model_name: "product"
-    .govuk-grid-row
-      .govuk-grid-column-one-half
-        = render "products/form", form: form, product: @product, countries: @countries, submit_text: "Continue",
-                search: true
+= form_with model: @product, url: wizard_path, method: :put, local: true do |form|
+  .govuk-grid-row
+    .govuk-grid-column-full
+      = render "form_validation_display", errors: @product.errors, model_name: "product"
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      = render "products/form", form: form, product: @product, countries: @countries, submit_text: "Continue",
+              search: true

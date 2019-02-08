@@ -47,7 +47,7 @@ fieldset.govuk-fieldset
         - Test::Result.results.each do |(result, label)|
           .govuk-radios__item
             = form.radio_button :result, result, class: "govuk-radios__input"
-            = form.label "result_#{result}", label, class: "govuk-label govuk-radios__label"
+            = form.label :result, label, class: "govuk-label govuk-radios__label", value: result
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l

@@ -119,8 +119,7 @@ private
   def set_business
     if params.include?(:business)
       @business = Business.new business_step_params
-      @business.locations.build business_step_params[:locations_attributes]["0"]
-      @business.contacts.build business_step_params[:contacts_attributes]["0"]
+      defaults_on_primary_location @business
     else
       @business = Business.new
       @business.locations.build
@@ -240,17 +239,17 @@ private
   end
 
   def business_session_params
-    # TODO use this to retrieve a business for editing eg for browser back button
+    # TODO MSPSDS-980 use this to retrieve a business for editing eg for browser back button
     {}
   end
 
   def corrective_action_session_params
-    # TODO use this to retrieve a corrective action for editing eg for browser back button
+    # TODO MSPSDS-980 use this to retrieve a corrective action for editing eg for browser back button
     {}
   end
 
   def test_session_params
-    # TODO use this to retrieve a test for editing eg for browser back button
+    # TODO MSPSDS-980 use this to retrieve a test for editing eg for browser back button
     { type: Test::Result.name }
   end
 
