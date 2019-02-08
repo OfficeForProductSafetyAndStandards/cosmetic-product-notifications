@@ -14,5 +14,6 @@
         = form_with(url: wizard_path, method: :put, multipart: true) do |form|
             .govuk-form-group
                 = form.label :image_upload, "Choose file", class: "govuk-label"
-                = form.file_field :image_upload, multiple: true, class: "govuk-file-upload", accept: "image/jpeg, application/pdf, image/png, image/svg+xml"
+                = form.file_field :image_upload, multiple: true, class: "govuk-file-upload", \
+                    accept: "image/jpeg, application/pdf, image/png, image/svg+xml"
             = form.submit "Continue", class: "govuk-button"

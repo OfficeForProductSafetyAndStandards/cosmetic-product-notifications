@@ -116,8 +116,8 @@ RSpec.describe NotificationBuildController, type: :controller do
     it "adds errors if the user uploads an incorrect file type as a label image" do
       post(:update, params: { notification_id: notification.id, id: 'add_product_image',
         image_upload: [text_file] })
-        expect(assigns[:notification].image_uploads.first.errors[:file])
-          .to include("must be one of image/jpeg, application/pdf, image/png, image/svg+xml")
+      expect(assigns[:notification].image_uploads.first.errors[:file])
+        .to include("must be one of image/jpeg, application/pdf, image/png, image/svg+xml")
     end
   end
 end
