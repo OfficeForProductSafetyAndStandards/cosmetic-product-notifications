@@ -1,12 +1,26 @@
 module DateConcern
   extend ActiveSupport::Concern
 
-  included do
+  included do # rubocop:disable Metrics/BlockLength
     attribute :day, :integer
     attribute :month, :integer
     attribute :year, :integer
 
     validate :date_from_components
+
+    # The current implementation is focused on reflecting changes based on the component values changing in the form
+    # This has a side effect of overriding values provided with the setter (using say `record.date = foo`)
+    # The `clear_date` and `set_date` are sensible workarounds, but could be changed into a dynamic setter down the line
+    def clear_date
+      self.day, self.month, self.year, self[@date_key] = nil
+    end
+
+    def set_date(new_date)
+      self.day = new_date.day
+      self.month = new_date.month
+      self.year = new_date.year
+      self[@date_key] = new_date
+    end
 
     after_initialize do
       @date_key = get_date_key

@@ -11,10 +11,14 @@ class Investigation < ApplicationRecord
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
   validates :product_category, presence: true, on: :allegation_details
+  validates :hazard_description, presence: true, on: :unsafe
+  validates :hazard_type, presence: true, on: :unsafe
+  validates :non_compliant_reason, presence: true, on: :non_compliant
 
   validates_length_of :user_title, maximum: 1000
 
   validates_length_of :description, maximum: 1000
+
 
   after_save :send_assignee_email, :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility
@@ -171,6 +175,20 @@ class Investigation < ApplicationRecord
   def title; end
 
   def case_type; end
+
+  def has_non_compliant_reason
+    if non_compliant_reason&.empty?
+      errors.add(:non_compliant_reason, "cannot be blank")
+    end
+  end
+
+  def add_business(business, relationship)
+    # Could not find a way to add a business to an investigation which allowed us to set the relationship value and
+    # while still triggering the callback to add the audit activity. One possibility is to move the callback to the
+    # InvestigationBusiness model.
+    investigation_businesses.create!(business_id: business.id, relationship: relationship)
+    create_audit_activity_for_business(business)
+  end
 
 private
 
