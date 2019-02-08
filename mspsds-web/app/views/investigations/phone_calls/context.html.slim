@@ -22,25 +22,13 @@ main.govuk-main-wrapper role="main"
               | Please include any dialing codes etc
             = form.text_field :phone_number,
                     class: "govuk-input govuk-!-width-two-thirds", aria_describedby: "correspondent-phone-number-hint"
-
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            | Are these consumer contact details?
-          span.govuk-hint class="govuk-!-width-two-thirds"
-            | Consumer contact details are protected by GDPR legislation
-          .govuk-grid-row
-            .govuk-grid-column-one-third
-              .govuk-radios__item
-                = form.radio_button :has_consumer_info, false, class: "govuk-radios__input"
-                = form.label :has_consumer_info, "No", class: "govuk-label govuk-radios__label"
-            .govuk-grid-column-one-third
-              .govuk-radios__item
-                = form.radio_button :has_consumer_info, true, class: "govuk-radios__input"
-                = form.label :has_consumer_info, "Yes", class: "govuk-label govuk-radios__label"
-          p
-        .govuk-form-group
-          fieldset.govuk-fieldset aria-describedby="correspondence-date-hint" role="group"
-            legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-              | Date of call
-            = render "date_input", form: form
+        = render "form_components/govuk_radios", form: form, key: :has_consumer_info,
+                classes: "govuk-radios--inline",
+                fieldset: {legend: {text: "Are these consumer contact details?", classes: "govuk-fieldset__legend--l"}},
+                hint: {text: "Consumer contact details are protected by GDPR legislation"},
+                items: [{text: "No", value: "false"}, {text: "Yes", value: "true"}]
+        = render "components/govuk_fieldset", legend: {text: "Date of call", classes: "govuk-fieldset__legend--l"},
+                attributes: {"aria-describedby": "correspondence-date-hint"}
+          = render "date_input", form: form
         .govuk-form-group
           = form.submit "Continue", class: "govuk-button"

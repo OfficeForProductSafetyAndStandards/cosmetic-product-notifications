@@ -26,7 +26,8 @@ h1.govuk-heading-xl
               fieldset: {legend: {text: "Are these consumer contact details?", classes: "govuk-fieldset__legend--l"}},
               hint: {text: "Consumer contact details are protected by GDPR legislation"},
               items: [{text: "No", value: "false"}, {text: "Yes", value: "true"}]
-      = render "components/govuk_fieldset", legend: {text: "Date sent", classes: "govuk-fieldset__legend--l"}
+      = render "components/govuk_fieldset", legend: {text: "Date sent", classes: "govuk-fieldset__legend--l"},
+              attributes: {"aria-describedby": "correspondence-date-hint"}
         = render "date_input", form: form
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
