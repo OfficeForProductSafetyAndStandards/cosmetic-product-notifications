@@ -48,7 +48,7 @@ class ChangeInvestigationBusinessRelationshipToString < ActiveRecord::Migration[
     when "importer"
       2
     else
-      raise "Unexpected relationship enum title!"
+      0
     end
   end
 end
