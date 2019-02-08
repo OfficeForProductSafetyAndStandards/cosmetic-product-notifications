@@ -801,10 +801,10 @@ globule@^1.0.0:
     lodash "~4.17.10"
     minimatch "~3.0.2"
 
-govuk-frontend@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.5.1.tgz#96082aedfef23bfce6591c3520b06d803be2d7fa"
-  integrity sha512-DDi1HGRTNRH/UmqOYACOR01V+aae36pnHHf5/g08spscJO5AazA/BQTenlNm8WFJ4UAeikb1TrCbgGWJE4Vypw==
+govuk-frontend@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.6.0.tgz#373153a14868b39fe19372c3fb9c3ca9c946e6e1"
+  integrity sha512-JA1tk0MpkxJzoVjJ367JaoRIDHxUK9QqpG11aLlXlhEVcgCX3WBAxsVpx/dC7SwKBmM+F1C4yao0PLQzDFvmkg==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.2:
   version "4.1.15"
