@@ -1,7 +1,6 @@
 - content_for :page_title, "Edit business"
 - content_for :after_header do
   = link_to "Back to business", @business, class: "govuk-back-link"
-.edit-business-page
   = render "business_heading", business: @business
   h2.govuk-heading-l
     | Business details
