@@ -18,7 +18,7 @@
     p
       b = @responsible_person.name
       '  has
-      = pluralize( @registered_notifications.length, 'cosmetic product')
+      = pluralize( @registered_notifications.total_entries, 'cosmetic product')
       |  registered in the UK.
     p
       | All cosmetic products intended for sale or given away in the UK must be registered in the UK.
@@ -31,8 +31,8 @@
 = render "tabs", tabs: [\
   Tab.new("errors", "Errors (0)", "Files that failed to upload",
         lambda { render "responsible_persons/notifications/tabs/errors" }),
-  Tab.new("unfinished", "Unfinished (#{@unfinished_notifications.length})", "Unfinished cosmetics products",
+  Tab.new("unfinished", "Unfinished (#{@unfinished_notifications.total_entries})", "Unfinished cosmetics products",
         lambda { render "responsible_persons/notifications/tabs/unfinished" }),
-  Tab.new("registered", "Registered (#{@registered_notifications.length})", "Registered cosmetics products",
+  Tab.new("registered", "Registered (#{@registered_notifications.total_entries})", "Registered cosmetics products",
         lambda { render "responsible_persons/notifications/tabs/registered" })\
 ]

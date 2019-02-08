@@ -29,3 +29,6 @@
             | EU reference number:
           dd
             | XXXXX
+.govuk-grid-row
+  .govuk-grid-column-full
+    = will_paginate(@registered_notifications, param_name: "registered", params: {anchor: "registered"})
