@@ -4,21 +4,36 @@ services:
   db:
     ports:
       - "5432:5432"
+
   elasticsearch:
     ports:
       - "9200:9200"
+
   keycloak:
     env_file:
       - .env
       - .env.keycloak
-  web:
+
+  cosmetics-web:
+    command: bin/rdebug-ide --host 0.0.0.0 --port 1235 -- bin/rails s -p 3002 -b 0.0.0.0
+    ports:
+      - "1235:1235"
+      - "3002:3002"
+    env_file:
+      - .env
+      - .env.keycloak.cosmetics
+  cosmetics-worker:
+    env_file:
+    - .env
+
+  mspsds-web:
     command: bin/rdebug-ide --host 0.0.0.0 --port 1234 -- bin/rails s -p 3000 -b 0.0.0.0
     ports:
       - "1234:1234"
       - "3000:3000"
     env_file:
       - .env
-      - .env.keycloak
-  worker:
+      - .env.keycloak.mspsds
+  mspsds-worker:
     env_file:
       - .env

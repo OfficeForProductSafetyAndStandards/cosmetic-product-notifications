@@ -35,15 +35,21 @@ Keycloak is automatically deployed to the relevant environment by Travis CI, as 
 
 Login to GOV.UK PaaS and set the relevant space as described in [the root README](../README.md#deployment-from-scratch).
 
+
+#### Database
+
 To create a Keycloak database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
     cf create-service postgres tiny-unencrypted-10.5 keycloak-database
 
+
+#### Keycloak
+
 Running the following commands from the root directory will then package and set up the Keycloak app:
 
-    NO_START=no-start SPACE=<<SPACE>> ./keycloak/deploy.sh
+    NO_START=true SPACE=<<SPACE>> ./keycloak/deploy.sh
 
 Once the app has been created, add the following environment variables to specify the database connection properties:
 
@@ -87,8 +93,11 @@ Set a strong password for the master admin account:
 * Edit the admin user > Credentials
 * Enter and confirm the new password, disable the 'Temporary' option, and click 'Reset Password'
 
+#### Setup clients
+*The instructions in this sections are given for the mspsds client, but should be repeated for all clients required.*
+
 Generate a new client secret for the MSPSDS app:
-* Select realm > MSPSDS > Clients > mspsds-app > Credentials > Regenerate Secret
+* Select realm > OPSS > Clients > mspsds-app > Credentials > Regenerate Secret
 
 Set the client credentials for the MSPSDS app:
 
@@ -100,9 +109,37 @@ Set the client credentials for the MSPSDS app:
 (The client secret is listed on the Keycloak admin console: Clients > mspsds-app > Credentials)
 
 Allow keycloak to redirect back to the app after login
-* Select realm > MSPSDS > Clients > mspsds-app
+* Select realm > OPSS > Clients > mspsds-app
 * Add `https://mspsds-<<SPACE>>.london.cloudapps.digital/*` to the Valid Redirect URIs section and click save
+* Replace all `localhost` values with `https://mspsds-<<SPACE>>.london.cloudapps.digital/`
 
 Follow the steps in [the SMS autheticator README's Configuration section](
 ./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication. Set the 2FA 
 code length to 6.
+
+### Setup event logging
+Setup the system out event listener:
+* Select Events > Config
+* Add "system-out" to the "Event Listeners" section
+
+
+### Troubleshooting
+##### Problem: the keycloak database doesn't exist when running `$ docker-compose up`
+Error message:
+```
+WARN  [org.jboss.jca.core.connectionmanager.pool.strategy.OnePool] (ServerService Thread Pool -- 52) IJ000604: Throwable while attempting to get a new connection: null: javax.resource.ResourceException: IJ031084: Unable to create connection
+[......]
+Caused by: org.postgresql.util.PSQLException: FATAL: database "keycloak" does not exist
+```
+
+The first time `$ docker-compose up` is run in the root directory, a keycloak database is created according to 
+`/postgres/setup-keycloak.sh`. This database shares a docker volume with the dev database.
+
+If the local keycloak database is subsequently dropped but the development database is not, then this script will not 
+run the next time you run `$ docker-compose up`.
+
+To recreate the database, start the postgres command line with
+
+```$ docker-compose exec postgres --username keycloak```
+
+then in the postgres interface run each command from `/postgres/setup-keycloak.sh`.

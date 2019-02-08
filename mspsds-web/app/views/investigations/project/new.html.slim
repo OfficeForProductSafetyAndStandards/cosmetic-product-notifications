@@ -1,0 +1,28 @@
+- content_for :page_title, "New project"
+- content_for :after_header do
+  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
+h1.govuk-heading-xl
+  = "New Project"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with(model: @investigation, url: project_index_path, method: :post) do |form|
+      = render "form_validation_display", errors: @investigation.errors
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Please provide a title
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:user_title].any?)
+          span.govuk-hint#enquiry-title-hint
+            | This will help other users identify this project
+          = form.text_field :user_title, class: "govuk-input", "aria-describedby": "project-title-hint",
+                  maxlength: 1000
+
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Project summary
+        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:description].any?)
+          = form.text_area :description, class: "govuk-textarea", "aria-describedby": "project-description-hint",
+                  rows: 5, maxlength: 1000
+
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

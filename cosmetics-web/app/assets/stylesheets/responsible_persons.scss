@@ -1,0 +1,62 @@
+.product {
+  :first-of-type {
+    border-top: none;
+  }
+
+  :last-of-type {
+    border-bottom: none;
+  }
+
+  display: inline-block;
+
+  .product-data {
+    width: 65%;
+    display: block;
+    float: left;
+
+    dt {
+      min-width: 220px;
+    }
+
+    dd {
+      margin-left: 0;
+    }
+
+    dt,
+    dd {
+      display: inline-block;
+    }
+  }
+}
+
+.loading-spinner__container {
+  border-color: govuk-colour("blue");
+
+  .loading-spinner__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: govuk-colour("black");
+    display: inline-block;
+    margin: 0 10px 3px 0;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+  }
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}

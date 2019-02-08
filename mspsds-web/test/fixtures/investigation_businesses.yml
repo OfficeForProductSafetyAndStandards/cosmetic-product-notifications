@@ -1,0 +1,7 @@
+one:
+  investigation: one
+  business: one
+
+two:
+  investigation: search_related_businesses
+  business: biscuit_base

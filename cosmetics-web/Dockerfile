@@ -12,12 +12,19 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main"  | tee /etc/apt/sources.list.d/google.list
 
-RUN apt-get update && apt-get install -y \ 
-  build-essential \ 
+RUN apt-get update && apt-get install -y \
+  build-essential \
   nodejs \
-  yarn
+  yarn \
+  unzip \
+  google-chrome-stable
 
-WORKDIR /app
+RUN curl -o /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/$CHROMIUM_DRIVER_VERSION/chromedriver_linux64.zip \
+  && unzip /tmp/chromedriver.zip chromedriver -d /usr/bin/ \
+  && rm /tmp/chromedriver.zip \
+  && chmod ugo+rx /usr/bin/chromedriver
+
+WORKDIR /cosmetics-web
 
 COPY ./cosmetics-web .
 COPY ./shared-web ./vendor/shared-web

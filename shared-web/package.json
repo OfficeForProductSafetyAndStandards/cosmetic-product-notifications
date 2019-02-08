@@ -1,21 +1,18 @@
 {
   "name": "shared-web",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
+    "accessible-autocomplete": "^1.6.2",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
+    "eslint": "^5.11.1",
     "eslint-config-airbnb-es5": "^1.2.0",
     "eslint-plugin-react": "^7.11.1",
-    "sass-lint": "^1.12.1"
-  },
-  "dependencies": {
-    "accessible-autocomplete": "^1.6.1",
-    "govuk-country-and-territory-autocomplete": "^0.5.0",
-    "govuk-frontend": "^2.2.0",
+    "govuk-country-and-territory-autocomplete": "^0.5.1",
+    "govuk-frontend": "^2.4.1",
     "html5shiv": "^3.7.3",
     "jquery": "^3.3.1",
-    "jquery-ujs": "^1.2.2"
+    "jquery-ujs": "^1.2.2",
+    "sass-lint": "^1.12.1"
   }
 }

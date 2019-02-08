@@ -1,0 +1,39 @@
+- content_for :page_title, "Your cosmetic products"
+= render "layouts/rp_navbar"
+- if @pending_notification_files.positive?
+  .govuk-grid-row
+    .govuk-grid-column-full
+      .govuk-error-summary.loading-spinner__container
+        h2.govuk-error-summary__title
+          span.loading-spinner__dot
+
+          ' Checking
+          = @pending_notification_files
+          |  notification files
+
+        .govuk-error-summary__body
+          = link_to "Refresh the browser to see uploaded products", url_for,
+                  class: "govuk-link--no-visited-state"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      | Your cosmetic products
+    p
+      b = @responsible_person.name
+      |  has no cosmetic products registered in the UK.
+    p
+      | All cosmetic products intended for sale or given away in the UK must be registered in the UK.
+    p
+      | To continue to sell or give away cosmetic products that were notified to the European Union (EU)
+              before 29 March 2019, you must register your products in the UK by 11:59pm on 27 June 2019.
+    = link_to "Add cosmetics products", new_notification_path,
+            class: "govuk-button govuk-button", role: "button"
+
+= render "tabs", tabs: [\
+  Tab.new("errors", "Errors", "Files that failed to upload",
+        lambda { render "responsible_persons/notifications/tabs/errors" }),
+  Tab.new("unfinished", "Unfinished", "Unfinished cosmetics products",
+        lambda { render "responsible_persons/notifications/tabs/unfinished" }),
+  Tab.new("registered", "Registered", "Registered cosmetics products",
+        lambda { render "responsible_persons/notifications/tabs/registered" })\
+]

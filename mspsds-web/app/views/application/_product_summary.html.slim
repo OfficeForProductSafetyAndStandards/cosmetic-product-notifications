@@ -1,0 +1,44 @@
+.govuk-grid-row.product-summary[class="govuk-!-padding-bottom-3 govuk-!-margin-bottom-3"]
+  .govuk-grid-column-one-third
+    .aspect-ratio-3-2-container
+      .aspect-ratio-contents
+        - if product.images.any?
+          = render "documents/document_preview", document: product.images.first, dimensions: "300x200",
+                  class_name: "product-image"
+        - else
+          p
+            | No images.
+  .govuk-grid-column-two-thirds
+    table.govuk-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Product name
+          td.govuk-table__cell
+            = product.name
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Barcode / serial number
+          td.govuk-table__cell
+            = product.product_code
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Type
+          td.govuk-table__cell
+            = product.product_type
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Category
+          td.govuk-table__cell
+            = product.category
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Webpage
+          td.govuk-table__cell
+            = product.webpage
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Description
+          td.govuk-table__cell
+            = product.description
+    = yield

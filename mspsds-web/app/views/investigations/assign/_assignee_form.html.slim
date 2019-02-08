@@ -1,0 +1,18 @@
+= form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
+  = render "form_validation_display", errors: investigation.errors
+  .govuk-form-group class=("govuk-form-group--error" unless investigation.errors[:assignee].empty?)
+    .govuk-radios.govuk-radios--conditional data-module="radios"
+      = render "investigations/assign/important_assignable_people", form: form, investigation: investigation
+      = render "investigations/assign/team_member_select", form: form
+      = render "investigations/assign/previously_assigned_select", form: form, investigation: investigation
+
+      .govuk-radios__divider Teams
+      = render "investigations/assign/important_assignable_teams", form: form, investigation: investigation
+      = render "investigations/assign/other_team_select", form: form
+
+      .govuk-radios__divider or
+      = render "investigations/assign/someone_else_select", form: form
+
+  .govuk-form-group
+    = form.submit "Assign", class: "govuk-button"
+    p = link_to "Cancel", investigation, class: "mspsds-block-link"

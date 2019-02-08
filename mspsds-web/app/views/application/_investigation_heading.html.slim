@@ -1,0 +1,8 @@
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      p.govuk-caption-xl
+        = investigation.pretty_description
+      = investigation.title
+  - unless local_variables.include?(:hide_heading_info)
+    = render "investigations/heading_info", investigation: investigation

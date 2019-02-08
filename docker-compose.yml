@@ -3,12 +3,13 @@ version: '3'
 services:
   db:
     build:
-      context: ./postgres
+      context: ./db
       dockerfile: Dockerfile
     volumes:
       - postgres-volume:/var/lib/postgresql/data
     env_file:
       - .env.keycloak
+
   elasticsearch:
     build:
       context: .
@@ -18,11 +19,13 @@ services:
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     volumes:
       - elasticsearch-volume:/usr/share/elasticsearch/data
+
   redis:
     image: redis
     hostname: redis
     volumes:
       - redis-volume:/data
+
   keycloak:
     build:
       context: ./keycloak
@@ -33,22 +36,7 @@ services:
     - db
     ports:
       - "8080:8080"
-  web:
-    build:
-      context: .
-      dockerfile: ./web/Dockerfile
-    volumes:
-      - bundle-cache:/usr/local/bundle
-      - npm-cache:/root/.npm
-      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}/web:/app
-      - ${PWD-.}/shared-web:/app/vendor/shared-web
-    depends_on:
-      - db
-      - elasticsearch
-      - keycloak
-      - redis
-      - worker
+
   cosmetics-web:
     build:
       context: .
@@ -57,20 +45,59 @@ services:
       - bundle-cache:/usr/local/bundle
       - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}/cosmetics-web:/app
-      - ${PWD-.}/shared-web:/app/vendor/shared-web
+      - ${PWD-.}/cosmetics-web:/cosmetics-web
+      - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
     depends_on:
       - db
-  worker:
+      - elasticsearch
+      - keycloak
+      - redis
+      - cosmetics-worker
+    env_file:
+        - .env.keycloak.cosmetics
+  cosmetics-worker:
     build:
       context: .
-      dockerfile: ./worker/Dockerfile
+      dockerfile: ./cosmetics-worker/Dockerfile
+    command: bin/sidekiq -C config/sidekiq.yml
+    volumes:
+    - bundle-cache:/usr/local/bundle
+    # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+    - ${PWD-.}/cosmetics-web:/cosmetics-web
+    - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
+    depends_on:
+    - db
+    - elasticsearch
+    - redis
+
+  mspsds-web:
+    build:
+      context: .
+      dockerfile: ./mspsds-web/Dockerfile
+    volumes:
+      - bundle-cache:/usr/local/bundle
+      - npm-cache:/root/.npm
+      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+      - ${PWD-.}/mspsds-web:/mspsds-web
+      - ${PWD-.}/shared-web:/mspsds-web/vendor/shared-web
+    depends_on:
+      - db
+      - elasticsearch
+      - keycloak
+      - redis
+      - mspsds-worker
+    env_file:
+      - .env.keycloak.mspsds
+  mspsds-worker:
+    build:
+      context: .
+      dockerfile: ./mspsds-worker/Dockerfile
     command: bin/sidekiq -C config/sidekiq.yml
     volumes:
       - bundle-cache:/usr/local/bundle
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}/web:/app
-      - ${PWD-.}/shared-web:/app/vendor/shared-web
+      - ${PWD-.}/mspsds-web:/mspsds-web
+      - ${PWD-.}/shared-web:/mspsds-web/vendor/shared-web
     depends_on:
       - db
       - elasticsearch

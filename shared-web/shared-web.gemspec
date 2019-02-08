@@ -1,21 +1,17 @@
 $:.push File.expand_path("lib", __dir__)
 
-# Maintain your gem's version:
-require "shared/web/version"
-
-# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "shared-web"
-  s.version     = Shared::Web::VERSION
+  s.version     = "1.0.0"
   s.authors     = %w(UKGovernmentBEIS)
-  s.homepage    = "https://github.com/UKGovernmentBEIS/beis-mspsds"
-  s.summary     = "Summary of Shared::Web."
-  s.description = "Description of Shared::Web."
-  s.license     = "MIT"
+  s.summary     = "Shared functionality for OPSS applications."
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
-
-  s.add_dependency "rails", "~> 5.2.1"
-
-  s.add_development_dependency "sqlite3"
+  s.add_dependency "active_hash", "2.2.0"
+  s.add_dependency "aws-sdk-s3", "1.30.1"
+  s.add_dependency "clamby", "1.6.1"
+  s.add_dependency "govuk_notify_rails", "2.1.0"
+  s.add_dependency "keycloak", "2.4.1"
+  s.add_dependency "rails", "~> 5.2"
+  s.add_dependency "sidekiq", "5.2.5"
+  s.add_dependency "sidekiq-cron", "1.1.0"
 end

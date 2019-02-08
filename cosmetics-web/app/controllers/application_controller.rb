@@ -1,5 +1,17 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+  include Shared::Web::Concerns::AuthenticationConcern
+
+  include UserService
+  helper Shared::Web::Engine.helpers
+  helper_method :current_user, :user_signed_in?
+
   protect_from_forgery with: :exception
+  before_action :authenticate_user!
+  before_action :create_or_join_responsible_person
+
+  def create_or_join_responsible_person
+    return unless user_signed_in?
+
+    redirect_to create_or_join_existing_account_index_path if current_user.responsible_persons.empty?
+  end
 end

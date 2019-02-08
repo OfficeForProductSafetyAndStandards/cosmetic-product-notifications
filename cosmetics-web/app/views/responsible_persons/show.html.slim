@@ -1,0 +1,34 @@
+- content_for :page_title, "Responsible Person"
+= render "layouts/rp_navbar"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      | Responsible person
+    = link_to "Add a responsible person", "/",
+            class: "govuk-link--no-visited-state"
+.govuk-grid-row
+  .govuk-grid-column-full
+    table.govuk-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Responsible person
+          td.govuk-table__cell
+            = @responsible_person.name
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Address
+          td.govuk-table__cell
+            - @responsible_person.address_lines.each do |address_line|
+              = address_line
+              br
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Email Address
+          td.govuk-table__cell
+            = @responsible_person.email_address
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Phone Number
+          td.govuk-table__cell
+            = @responsible_person.phone_number
