@@ -7,7 +7,7 @@
 - prefix = form.object_name.present? ? "#{form.object_name}_#{key.to_s}" : key.to_s
 - local_assigns[:items].each {|item| item[:id] ||= "#{prefix}_#{item[:value]}"}
 - if form.object
-  - if form.object.send(key)
+  - if form.object.respond_to?(key)
     / Make item checked based on attribute value
     - item_matching_state = items.find{|item| item[:value] == form.object.send(key) }
     - item_matching_state[:checked] = true if item_matching_state
