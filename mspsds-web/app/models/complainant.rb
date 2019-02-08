@@ -2,7 +2,7 @@ class Complainant < ApplicationRecord
   include UserService
   belongs_to :investigation, optional: true
 
-  validates :complainant_type, presence: { message: "Select the complainant type" }
+  validates :complainant_type, presence: { message: "Select complainant type" }
   validates :investigation, presence: true, on: %i[create update]
   validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :complainant_details
 

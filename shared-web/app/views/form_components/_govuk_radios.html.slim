@@ -4,8 +4,11 @@
 / Infer name from attribute key
 - local_assigns[:name] ||= form.object_name.present? ? "#{form.object_name}[#{key.to_s}]" : key.to_s
 / Give items ids based on rails' convention
+/ sanitization taken from https://github.com/rails/rails/blob/7caea98e189c02721b2e944a074c405b033852eb/actionview/lib/action_view/helpers/tags/base.rb#L140
 - prefix = form.object_name.present? ? "#{form.object_name}_#{key.to_s}" : key.to_s
-- local_assigns[:items].each {|item| item[:id] ||= "#{prefix}_#{item[:value]}"}
+- local_assigns[:items].each {|item|\
+      value = item[:value].to_s.gsub(/\s/, "_").gsub(/[^-[[:word:]]]/, "").mb_chars.downcase.to_s; \
+      item[:id] ||= "#{prefix}_#{value}"}
 - if form.object
   - if form.object.respond_to?(key)
     / Make item checked based on attribute value
