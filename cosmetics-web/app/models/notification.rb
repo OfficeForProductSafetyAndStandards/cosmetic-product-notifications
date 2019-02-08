@@ -51,7 +51,7 @@ class Notification < ApplicationRecord
   end
 
   def images_are_present_and_safe?
-    image_uploads.length > 0 && image_uploads.all?(&:marked_as_safe?)
+    !image_uploads.empty? && image_uploads.all?(&:marked_as_safe?)
   end
 
 private
