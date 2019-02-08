@@ -74,7 +74,6 @@ class ActiveSupport::TestCase
     stub_user_group_data(user_groups: user_groups, users: users)
     stub_user_data(users: users)
     stub_client_config
-    stub_notify_mailer
   end
 
   def stub_notify_mailer

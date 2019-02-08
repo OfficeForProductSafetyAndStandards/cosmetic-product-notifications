@@ -4,7 +4,6 @@ class NotificationTest < ActiveSupport::TestCase
   setup do
     sign_in_as_user
     @investigation = Investigation.create(description: "new investigation for notification test")
-    @original_source = @investigation.source
     @user_one = User.find_by(last_name: "User_one")
     @user_three = User.find_by(last_name: "User_three")
   end
@@ -34,11 +33,12 @@ class NotificationTest < ActiveSupport::TestCase
     make_generic_change
   end
 
-  test "should notify creator when case is closed or reopened by someone else" do
+  test "should notify creator and assignee when case is closed or reopened by someone else" do
+    @investigation.assignee = @user_three
+    @investigation.save
     logout
     sign_in_as_admin
-    @investigation.source = @original_source
-    prepare_notify_check(who_will_be_notified: [@user_one])
+    prepare_notify_check(who_will_be_notified: [@user_one, @user_three])
     @investigation.is_closed = !@investigation.is_closed
     @investigation.save
     @investigation.is_closed = !@investigation.is_closed
@@ -46,18 +46,69 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test "should not notify creator when case is closed or reopened by the creator" do
-    prepare_notify_check(who_will_be_notified: [])
+    @investigation.assignee = @user_three
+    @investigation.save
+    prepare_notify_check(who_will_be_notified: [@user_three])
     @investigation.is_closed = !@investigation.is_closed
     @investigation.save
     @investigation.is_closed = !@investigation.is_closed
     @investigation.save
   end
 
+  test "should notify previous assignee if case is assigned to someone else by someone else" do
+    @investigation.assignee = @user_one.teams[0]
+    @investigation.save
+    @investigation.assignee = @user_three
+    @investigation.save
+    prepare_notify_check(who_will_be_notified: [@user_three, @user_one])
+    @investigation.assignee = @user_one
+    @investigation.save
+  end
+
+  test "should not notify previous assignee if case is assigned to someone else by them" do
+    @investigation.assignee = @user_one
+    @investigation.save
+    prepare_notify_check(who_will_be_notified: [@user_three])
+    @investigation.assignee = @user_three
+    @investigation.save
+  end
+
+  test "should notify previous assignee team if case is assigned to someone by someone outside" do
+    @investigation.assignee = @user_one
+    @investigation.save
+    @investigation.assignee = @user_three.teams[0]
+    @investigation.save
+    prepare_notify_check(who_will_be_notified: [@user_three, @user_one])
+    @investigation.assignee = @user_one
+    @investigation.save
+  end
+
+  test "should not notify previous assignee team if case is assigned to someone by someone inside" do
+    @investigation.assignee = @user_three
+    @investigation.save
+    @investigation.assignee = @user_one.teams[0]
+    @investigation.save
+    prepare_notify_check(who_will_be_notified: [@user_three])
+    @investigation.assignee = @user_three
+    @investigation.save
+  end
+
+  test "should notify a person who gets assigned a case" do
+    prepare_notify_check(who_will_be_notified: [@user_three])
+    @investigation.assignee = @user_three
+    @investigation.save
+  end
+
+  test "should notify everyone in team that gets assigned a case" do
+    prepare_notify_check(who_will_be_notified: @user_one.teams[0].users)
+    @investigation.assignee = @user_one.teams[0]
+    @investigation.save
+  end
+
   def prepare_notify_check(who_will_be_notified: [])
     result = "aaa"
     allow(result).to receive(:deliver_later)
-    allow(NotifyMailer).to receive(:updated_investigation) do |id, user_name, _user_email, _text|
-      assert_equal id, @investigation.id
+    allow(NotifyMailer).to receive(:updated_investigation) do |_id, user_name, _user_email, _text|
       assert_includes who_will_be_notified.map{|user| user.full_name}, user_name
       assert_not_includes (User.all - who_will_be_notified).map{|user| user.full_name}, user_name
       result

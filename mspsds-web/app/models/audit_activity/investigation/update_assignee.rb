@@ -31,7 +31,6 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
     old_users = previous_assignee.is_a?(User) ? [previous_assignee] : previous_assignee.users if previous_assignee.present?
     default_users = new_assignee.is_a?(User) ? [new_assignee] : new_assignee.users
 
-
     return default_users if previous_assignee.blank? || (old_users.include? assigner)
 
     (default_users + old_users).uniq
