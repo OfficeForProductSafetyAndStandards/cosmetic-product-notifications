@@ -45,7 +45,7 @@ class Activity < ApplicationRecord
     return [investigation.assignee] if investigation.assignee.is_a? User
     return [] if source&.user&.teams&.include? investigation.assignee
 
-    investigation.assignee.users
+    investigation.assignee&.users || []
   end
 
   def email_update_text; end

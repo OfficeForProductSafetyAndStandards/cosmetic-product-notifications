@@ -74,6 +74,15 @@ class ActiveSupport::TestCase
     stub_user_group_data(user_groups: user_groups, users: users)
     stub_user_data(users: users)
     stub_client_config
+    stub_notify_mailer
+  end
+
+  def stub_notify_mailer
+    result = "aaa"
+    allow(result).to receive(:deliver_later)
+    allow(NotifyMailer).to receive(:assigned_investigation) { result}
+    allow(NotifyMailer).to receive(:assigned_investigation_to_team) { result}
+    allow(NotifyMailer).to receive(:updated_investigation) { result }
   end
 
   def sign_in_as_non_mspsds_user
@@ -89,7 +98,7 @@ class ActiveSupport::TestCase
   end
 
   def all_users
-    [admin_user, test_user(name: "User_one"), test_user(name: "User_two"), test_user(name: "User_three")]
+    [admin_user, test_user(name: "User_one", id: "75fda9a1-786d-4ace-ad20-76afa4f39111"), test_user(name: "User_two"), test_user(name: "User_three")]
   end
 
   def logout
@@ -113,8 +122,8 @@ private
     User.new(id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin")
   end
 
-  def test_user(name: "User_one")
-    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: name)
+  def test_user(name: "User_one", id: SecureRandom.uuid)
+    User.new(id: id, email: "user@example.com", first_name: "Test", last_name: name)
   end
 
   def group_data

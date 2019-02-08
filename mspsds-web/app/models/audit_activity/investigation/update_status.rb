@@ -5,12 +5,12 @@ class AuditActivity::Investigation::UpdateStatus < AuditActivity::Investigation:
   end
 
   def email_update_text
-    "#{investigation.case_type.titleize} status was #{investigation.is_closed? ? 'closed' : 'reopened'}"
+    "#{investigation.case_type.titleize} was #{investigation.is_closed? ? 'closed' : 'reopened'}"
   end
 
   def users_to_notify
-    return super if source == investigation.source && source.present?
+    return super if source&.user == investigation.source&.user && source.present?
 
-    super + [investigation.source&.user]
+    [investigation.source&.user] + super
   end
 end
