@@ -2,7 +2,7 @@ module Investigations::VisibilityHelper
   def visibility_options
     {
       public: "Visible to all",
-      private: "Private"
+      private: "Restricted for legal privilege"
     }
   end
 end

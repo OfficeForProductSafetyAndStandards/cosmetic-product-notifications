@@ -33,6 +33,10 @@ This provisions the app in Cloud Foundry.
 
 This configures rails to use the production database amongst other things.
 
+    cf set-env mspsds-worker MSPSDS_HOST XXX
+
+This is the URL for the website and is used for sending emails.
+
     cf set-env mspsds-worker AWS_ACCESS_KEY_ID XXX
     cf set-env mspsds-worker AWS_SECRET_ACCESS_KEY XXX
     cf set-env mspsds-worker AWS_REGION XXX
@@ -44,8 +48,9 @@ See the S3 section in [the MSPSDS Website README](../mspsds-web/README.md#s3) to
 
 See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value.
 
-    cf set-env mspsds-worker MSPSDS_HOST XXX
+    cf set-env mspsds-worker SENTRY_DSN XXX
+    cf set-env mspsds-worker SENTRY_CURRENT_ENV [int|staging|prod]
 
-This is the URL for the website and is used for sending emails.
+See the Sentry account section in [the root README](../README.md#sentry) to get this value.
 
 The app can then be started using `cf start mspsds-worker`.

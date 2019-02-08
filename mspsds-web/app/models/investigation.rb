@@ -5,6 +5,7 @@ class Investigation < ApplicationRecord
   include UserService
 
   attr_accessor :status_rationale
+  attr_accessor :visibility_rationale
 
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
@@ -112,15 +113,6 @@ class Investigation < ApplicationRecord
     is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
   end
 
-  def visible_to(user)
-    return true unless is_private
-    return true if assignee.present? && (assignee&.organisation == user.organisation)
-    return true if source&.user&.present? && (source&.user&.organisation == user.organisation)
-    return true if user.is_opss?
-
-    false
-  end
-
   def pretty_id
     id_string = id.to_s.rjust(8, '0')
     id_string.insert(4, "-")
@@ -128,14 +120,6 @@ class Investigation < ApplicationRecord
 
   def pretty_description
     "#{case_type.titleize}: #{pretty_id}"
-  end
-
-  def can_be_assigned_by(user)
-    return true if assignee.blank?
-    return true if assignee.is_a?(Team) && (user.teams.include? assignee)
-    return true if assignee.is_a?(User) && (user.teams && assignee.teams).any? || assignee == user
-
-    false
   end
 
   def important_assignable_people
@@ -201,7 +185,7 @@ private
   end
 
   def create_audit_activity_for_visibility
-    if saved_changes.key?(:is_private)
+    if saved_changes.key?(:is_private) || visibility_rationale.present?
       AuditActivity::Investigation::UpdateVisibility.from(self)
     end
   end
