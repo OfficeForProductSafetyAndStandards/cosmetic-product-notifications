@@ -31,8 +31,8 @@ html.govuk-template.app-html-class[lang="en"]
     = stylesheet_pack_tag "application"
     /![endif]
     /[if IE 8]
-      | javascript_pack_tag "application-ie8"
-      | stylesheet_pack_tag "application-ie8"
+      = javascript_pack_tag "application-ie8"
+      = stylesheet_pack_tag "application-ie8"
     = csrf_meta_tags
     meta[property="og:image" content=asset_pack_path("media/govuk-opengraph-image.png")]
 
