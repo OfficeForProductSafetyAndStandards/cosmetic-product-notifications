@@ -10,6 +10,6 @@ applications:
   no-route: true
   services:
     - cosmetics-database
-    - cosmetics-redis
+    - cosmetics-queue
     - logit-ssl-drain
 

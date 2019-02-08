@@ -12,5 +12,5 @@ applications:
   health-check-type: process
   services:
     - cosmetics-database
-    - cosmetics-redis
+    - cosmetics-queue
     - logit-ssl-drain
