@@ -131,6 +131,8 @@ To create a redis instance for the current space.
     cf create-service redis tiny-3.2 mspsds-queue
     cf create-service redis tiny-3.2 mspsds-session
 
+The current worker (sidekiq), which uses `mspsds-queue` only works with an unclustered instance of redis.
+
 
 #### S3
 

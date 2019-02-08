@@ -74,6 +74,8 @@ To create a redis instance for the current space.
     cf marketplace -s redis
     cf create-service redis tiny-3.2 cosmetics-queue
 
+The current worker (sidekiq), which uses `cosmetics-queue` only works with an unclustered instance of redis.
+
 #### S3
 
 When setting up a new environment, you'll also need to create an AWS user called `cosmetics-SPACE-NAME` and keep a note of the Access key ID and secret access key.
