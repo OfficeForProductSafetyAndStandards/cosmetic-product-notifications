@@ -8,6 +8,6 @@ class AuditActivity::CorrectiveAction::Add < AuditActivity::CorrectiveAction::Ba
   end
 
   def email_update_text
-    "Corrective action was added to the #{investigation.case_type.titleize}"
+    "Corrective action was added to the #{investigation.case_type.titleize} by #{source&.show&.titleize}."
   end
 end

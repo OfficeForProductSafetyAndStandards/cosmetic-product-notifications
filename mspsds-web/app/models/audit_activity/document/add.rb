@@ -9,6 +9,6 @@ class AuditActivity::Document::Add < AuditActivity::Document::Base
   end
 
   def email_update_text
-    "Document was attached to the #{investigation.case_type.titleize}"
+    "Document was attached to the #{investigation.case_type.titleize} by #{source&.show&.titleize}."
   end
 end

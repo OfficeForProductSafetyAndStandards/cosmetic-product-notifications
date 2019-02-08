@@ -24,6 +24,6 @@ class AuditActivity::Correspondence::AddMeeting < AuditActivity::Correspondence:
   end
 
   def email_update_text
-    "Meeting details added to the #{investigation.case_type.titleize}"
+    "Meeting details added to the #{investigation.case_type.titleize} by #{source&.show&.titleize}."
   end
 end

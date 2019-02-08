@@ -11,6 +11,6 @@ class AuditActivity::Business::Add < AuditActivity::Business::Base
   end
 
   def email_update_text
-    "Business was added to the #{investigation.case_type}"
+    "Business was added to the #{investigation.case_type} by #{source&.show&.titleize}."
   end
 end

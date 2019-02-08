@@ -18,7 +18,7 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
   end
 
   def email_update_text
-    "#{investigation.case_type.titleize} was assigned to #{investigation.assignee.display_name}"
+    "#{investigation.case_type.titleize} was assigned to #{investigation.assignee.display_name} by #{source&.show&.titleize}."
   end
 
   def users_to_notify

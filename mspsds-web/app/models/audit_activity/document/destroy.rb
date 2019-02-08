@@ -9,6 +9,6 @@ class AuditActivity::Document::Destroy < AuditActivity::Document::Base
   end
 
   def email_update_text
-    "Document attached to the #{investigation.case_type.titleize} was removed"
+    "Document attached to the #{investigation.case_type.titleize} was removed by #{source&.show&.titleize}."
   end
 end
