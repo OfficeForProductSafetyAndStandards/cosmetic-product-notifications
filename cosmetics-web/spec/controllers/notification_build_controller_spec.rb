@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe NotificationBuildController, type: :controller do
   let(:notification) { create(:notification) }
   let(:file) { fixture_file_upload('testImage.png', 'image/png') }
+  let(:text_file) { fixture_file_upload('testText.txt', 'application/text') }
 
   before do
     sign_in_as_member_of_responsible_person(create(:responsible_person))
@@ -110,6 +111,13 @@ RSpec.describe NotificationBuildController, type: :controller do
       post(:update, params: { notification_id: notification.id, id: 'add_product_image',
         image_upload: [] })
       expect(assigns[:notification].errors[:image_uploads]).to include('You must upload at least one product image')
+    end
+
+    it "adds errors if the user uploads an incorrect file type as a label image" do
+      post(:update, params: { notification_id: notification.id, id: 'add_product_image',
+        image_upload: [text_file] })
+        expect(assigns[:notification].image_uploads.first.errors[:file])
+          .to include("must be one of image/jpeg, application/pdf, image/png, image/svg+xml")
     end
   end
 end

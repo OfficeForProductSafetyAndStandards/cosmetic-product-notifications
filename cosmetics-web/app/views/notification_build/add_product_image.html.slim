@@ -5,6 +5,7 @@
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
             | Upload an image of the product label
+        = render 'error_summary', errors: @notification.errors
         p This can be an artwork file or a photo of the label.
         p If you upload a photo text in the image must be legible.
         p The file must be a ‘jpg’, ‘pdf’ ‘png’, or ‘svg’ and no larger than 1gb.
@@ -13,5 +14,5 @@
         = form_with(url: wizard_path, method: :put, multipart: true) do |form|
             .govuk-form-group
                 = form.label :image_upload, "Choose file", class: "govuk-label"
-                = form.file_field :image_upload, multiple: true, class: "govuk-file-upload"
+                = form.file_field :image_upload, multiple: true, class: "govuk-file-upload", accept: "image/jpeg, application/pdf, image/png, image/svg+xml"
             = form.submit "Continue", class: "govuk-button"
