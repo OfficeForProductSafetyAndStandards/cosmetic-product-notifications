@@ -2,6 +2,7 @@
 require 'spec_helper'
 require 'login_helpers'
 require 'responsible_person_helpers'
+require 'notification_file_helpers'
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
@@ -72,4 +73,5 @@ RSpec.configure do |config|
 
   config.include LoginHelpers
   config.include ResponsiblePersonHelpers
+  config.include NotificationFileHelpers
 end
