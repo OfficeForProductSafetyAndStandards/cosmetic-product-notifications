@@ -36,36 +36,50 @@ module InvestigationsHelper
   end
 
   def get_assignee_filter
-    assignees = []
+    return { should: [], must_not: [] } if no_boxes_checked
+    return { should: [], must_not: compute_excluded_terms } if assignee_filter_exclusive
+
+    { should: compute_included_terms, must_not: [] }
+  end
+
+  def no_boxes_checked
+    no_people_boxes_checked = params[:assigned_to_me] == "unchecked" && params[:assigned_to_someone_else] == "unchecked"
+    no_team_boxes_checked = teams_with_keys.all? { |key, _t, _n| query_params[key].blank? }
+    no_people_boxes_checked && no_team_boxes_checked
+  end
+
+  def assignee_filter_exclusive
+    params[:assigned_to_someone_else] == "checked" && params[:assigned_to_someone_else_id].blank?
+  end
+
+  def compute_excluded_terms
+    # After consultation with designers we chose to ignore teams who are not selected in blacklisting
     excluded_assignees = []
+    excluded_assignees << current_user.id if params[:assigned_to_me] == "unchecked"
+    format_assignee_terms(excluded_assignees)
+  end
 
-    if params[:assigned_to_me] == "checked" &&
-        params[:assigned_to_someone_else] == "unchecked"
-      assignees << current_user.id
+  def compute_included_terms
+    # If 'Me' is not checked, but one of current_users teams is selected, we don't exclude current_user from it
+    assignees = checked_team_assignees
+    assignees.concat(someone_else_assignees)
+    assignees << current_user.id if params[:assigned_to_me] == "checked"
+    format_assignee_terms(assignees.uniq)
+  end
+
+  def checked_team_assignees
+    assignees = []
+    teams_with_keys.each do |key, team, _n|
+      assignees.concat(assignee_ids_from_team(team)) if query_params[key].present?
     end
+    assignees
+  end
 
-    if params[:assigned_to_me] == "unchecked" &&
-        params[:assigned_to_someone_else] == "checked" &&
-        params[:assigned_to_someone_else_id].blank?
-      excluded_assignees << current_user.id
-    end
+  def someone_else_assignees
+    return [] unless params[:assigned_to_someone_else] == "checked"
 
-    if params[:assigned_to_me] == "unchecked" &&
-        params[:assigned_to_someone_else] == "checked" &&
-        params[:assigned_to_someone_else_id].present?
-      assignees << params[:assigned_to_someone_else_id]
-    end
-
-    if params[:assigned_to_me] == "checked" &&
-        params[:assigned_to_someone_else] == "checked" &&
-        params[:assigned_to_someone_else_id].present?
-      assignees << current_user.id
-      assignees << params[:assigned_to_someone_else_id]
-    end
-
-    assignee_terms = format_assignee_terms(assignees)
-    excluded_assignee_terms = format_assignee_terms(excluded_assignees)
-    { should: assignee_terms, must_not: excluded_assignee_terms }
+    team = Team.find_by(id: params[:assigned_to_someone_else_id])
+    team.present? ? assignee_ids_from_team(team) : [params[:assigned_to_someone_else_id]]
   end
 
   def format_assignee_terms(assignee_array)
@@ -79,7 +93,8 @@ module InvestigationsHelper
     set_default_sort_by_filter
     set_default_assignee_filter
     params.permit(:q, :status_open, :status_closed, :page,
-                  :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by)
+                  :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by,
+                  teams_with_keys.map { |key, _t, _n| key })
   end
 
   def export_params
@@ -111,5 +126,20 @@ module InvestigationsHelper
         name: @investigation.pretty_description
       }
     }
+  end
+
+  def teams_with_keys
+    current_user.teams.map.with_index do |team, index|
+      # key, team, name
+      [
+        "assigned_to_team_#{index}".to_sym,
+        team,
+        current_user.teams.count > 1 ? team.name : "My team"
+      ]
+    end
+  end
+
+  def assignee_ids_from_team(team)
+    [team.id] + team.users.map(&:id)
   end
 end

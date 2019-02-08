@@ -1,11 +1,11 @@
 - content_for :page_title, "Your cosmetic products"
 = render "layouts/rp_navbar"
-- if @pending_notification_files > 0
+- if @pending_notification_files.positive?
   .govuk-grid-row
     .govuk-grid-column-full
-      .govuk-error-summary.loading_spinner__container
+      .govuk-error-summary.loading-spinner__container
         h2.govuk-error-summary__title
-          span.loading_spinner__dot
+          span.loading-spinner__dot
 
           ' Checking
           = @pending_notification_files
@@ -26,7 +26,7 @@
     p
       | To continue to sell or give away cosmetic products that were notified to the European Union (EU)
               before 29 March 2019, you must register your products in the UK by 11:59pm on 27 June 2019.
-    = link_to "Add cosmetics products", manual_entry_path,
+    = link_to "Add cosmetics products", new_notification_path,
             class: "govuk-button govuk-button", role: "button"
 
 = render "tabs", tabs: [\

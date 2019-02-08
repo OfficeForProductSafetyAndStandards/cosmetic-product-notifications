@@ -33,12 +33,19 @@ This provisions the app in Cloud Foundry.
 
 This configures rails to use the production database amongst other things.
 
-    cf set-env cosmetics-worker NOTIFY_API_KEY XXX
-
-See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value.
-
     cf set-env cosmetics-worker COSMETICS_HOST XXX
 
 This is the URL for the website and is used for sending emails.
+
+    cf set-env cosmetics-worker AWS_ACCESS_KEY_ID XXX
+    cf set-env cosmetics-worker AWS_SECRET_ACCESS_KEY XXX
+    cf set-env cosmetics-worker AWS_REGION XXX
+    cf set-env cosmetics-worker AWS_S3_BUCKET XXX
+
+See the S3 section [above](#s3) to get these values.
+
+    cf set-env cosmetics-worker NOTIFY_API_KEY XXX
+
+See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value.
 
 The app can then be started using `cf start cosmetics-worker`.

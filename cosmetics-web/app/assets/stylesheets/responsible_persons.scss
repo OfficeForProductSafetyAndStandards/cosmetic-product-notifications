@@ -29,10 +29,10 @@
   }
 }
 
-.loading_spinner__container {
+.loading-spinner__container {
   border-color: govuk-colour("blue");
 
-  .loading_spinner__dot {
+  .loading-spinner__dot {
     width: 10px;
     height: 10px;
     border-radius: 100%;
@@ -51,9 +51,11 @@
   0% {
     opacity: 0.2;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0.2;
   }

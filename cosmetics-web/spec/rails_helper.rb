@@ -1,21 +1,15 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'login_helpers'
+require 'responsible_person_helpers'
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
-require "capybara/rspec"
-require "selenium-webdriver"
-Capybara.default_driver = :chrome
-
-ENV["HTTP_HOST"] = "localhost"
-ENV["HTTP_PORT"] = "3003"
-Capybara.server_host = ENV["HTTP_HOST"]
-Capybara.server_port = ENV["HTTP_PORT"]
-Capybara.app_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"
-Capybara.default_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"
+require 'system_helper'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -39,31 +33,6 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
-end
-
-# Register headless Chrome as a Selenium driver (default RackTest driver does not support JavaScript)
-Capybara.server = :puma, { Silent: true }
-
-Capybara.register_driver :chrome_headless do |app|
-  options = ::Selenium::WebDriver::Chrome::Options.new
-
-  options.add_argument('--headless')
-  options.add_argument('--no-sandbox')
-  options.add_argument('--disable-dev-shm-usage')
-  options.add_argument('--window-size=1400,1400')
-  client.read_timeout = 180
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-end
-
-Capybara.javascript_driver = :chrome_headless
-
-Capybara.ignore_hidden_elements = false
-
-RSpec.configure do |config|
-  config.before(:each, type: :system) do
-    driven_by :chrome_headless
-  end
 end
 
 RSpec.configure do |config|
@@ -94,33 +63,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-end
 
-def authenticate_user
-  allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
-end
+  config.include FactoryBot::Syntax::Methods
 
-def sign_out_user
-  allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
-end
-
-def fill_autocomplete(locator, with:)
-  fill_in locator, with: "#{with}\n"
-end
-
-def sign_in_test_user
-  stub_user_credentials(user: test_user)
-end
-
-def stub_user_credentials(user:)
-  allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
-  allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user))
-end
-
-def test_user
-  User.new(id: SecureRandom.uuid, email: "user@test.com", first_name: "Test", last_name: "User")
-end
-
-def format_user_for_get_userinfo(user)
-  { sub: user[:id], email: user[:email], given_name: user[:first_name], family_name: user[:last_name] }.to_json
+  config.include LoginHelpers
+  config.include ResponsiblePersonHelpers
 end

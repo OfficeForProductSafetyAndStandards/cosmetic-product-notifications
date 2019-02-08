@@ -3,7 +3,7 @@ class ResponsiblePersons::NotificationsController < ApplicationController
 
   def index
     @pending_notification_files = NotificationFile.where(
-      ["responsible_person_id = ? and user_id = ?", @responsible_person.id, current_user.id]
+      responsible_person_id: @responsible_person.id, user_id: current_user.id
     ).count
     @notifications = Notification.where(responsible_person_id: @responsible_person.id)
   end

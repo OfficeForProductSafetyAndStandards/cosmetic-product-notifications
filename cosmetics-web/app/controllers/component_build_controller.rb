@@ -16,6 +16,7 @@ class ComponentBuildController < ApplicationController
       case params[:number_of_shades]
       when "single"
         @component.shades = nil
+        @component.save
         redirect_to finish_wizard_path
       when "multiple"
         render_wizard @component
