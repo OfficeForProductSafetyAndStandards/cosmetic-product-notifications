@@ -79,5 +79,4 @@ fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
       = ff.label :job_title, "Job title / description",
               class: "govuk-label"
       = ff.text_field :job_title, class: "govuk-input"
-- submit_text ||= "Save business"
-= form.submit submit_text, class: "govuk-button"
+= form.submit (submit_text ||= "Save business"), class: "govuk-button"
