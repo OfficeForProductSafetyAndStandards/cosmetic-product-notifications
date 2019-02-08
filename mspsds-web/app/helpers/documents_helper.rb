@@ -9,10 +9,6 @@ module DocumentsHelper
     authorize @parent, :show? if @parent.is_a? Investigation
   end
 
-  def audit_class
-    AuditActivity::Document
-  end
-
   def file_collection
     @parent.documents
   end

@@ -57,12 +57,12 @@ fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:country_of_origin].any?)]
     = form.label :country_of_origin, "Country of origin",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    = form.select :country_of_origin, countries, { include_blank: "Unknown" },
+    = form.select :country_of_origin, countries, { include_blank: "" },
             class: "govuk-select", id: "location-autocomplete"
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:description].any?)]
-    = form.label :description, "Description",
+    = form.label :description, "Description of product",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-description-hint.govuk-hint
       | For example, 'Orange, 4 socket extension lead'
@@ -70,4 +70,4 @@ fieldset.govuk-fieldset
             aria_describedby: "report-product-description-hint"
 
 .govuk-form-group class=[input_field_width]
-  = form.submit "Save product", class: "govuk-button"
+  = form.submit local_assigns[:submit_text] || "Save product", class: "govuk-button"
