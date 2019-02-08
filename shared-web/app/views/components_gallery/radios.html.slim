@@ -1,19 +1,19 @@
 / Exmpales in this file are based on  https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/radios.yaml
 h1.govuk-heading-xl Radios Component
 h2.govuk-heading-l Default
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   idPrefix: "example",
   name: "example",
   fieldset: {legend: {text: "Have you changed your name?"}},
   hint: {text: "This includes changing your last name or spelling your name differently."},
   items:[\
     {text: "Yes", value:true},
-    {text: "No", value:false}]}
+    {text: "No", value:false}]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Inline
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   idPrefix: "example'",
   classes: "govuk-radios--inline",
   name: "example-inline",
@@ -21,24 +21,24 @@ h2.govuk-heading-l Inline
   hint: {text: "This includes changing your last name or spelling your name differently."},
   items: [\
     {value: "yes", text: "Yes"},
-    {value: "no", text: "No", checked: true}]}
+    {value: "no", text: "No", checked: true}]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Disabled
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   idPrefix: "example-disabled",
   name: "example-disabled",
   fieldset: {legend: {text: "Have you changed your name?"}},
   hint: {text: "This includes changing your last name or spelling your name differently."},
   items: [\
     {value: "yes", text: "Yes", disabled: true},
-    {value: "no", text: "No", disabled: true}]}
+    {value: "no", text: "No", disabled: true}]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With Legend as heading
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "idPrefix": "housing-act",
   "name": "housing-act",
   "fieldset": {\
@@ -60,13 +60,12 @@ h2.govuk-heading-l With Legend as heading
       "value": "part-3",
       "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 3 of the Housing Act 2004</span> For properties that are within a geographical area defined by a local council"\
     }\
-  ]\
-}
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With a medium legend
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "idPrefix": "housing-act",\
   "name": "housing-act",\
   "fieldset": {\
@@ -87,13 +86,12 @@ h2.govuk-heading-l With a medium legend
       "value": "part-3",\
       "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 3 of the Housing Act 2004</span> For properties that are within a geographical area defined by a local council"\
     }\
-  ]\
-}
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With a divider
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "idPrefix": "example-divider",\
   "name": "example",\
   "fieldset": {\
@@ -117,13 +115,12 @@ h2.govuk-heading-l With a divider
       "value": "create-account",\
       "text": "Create an account"\
     }\
-  ]\
-}
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With hints on items
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "idPrefix": "gov",\
   "name": "gov",\
   "fieldset": {\
@@ -147,13 +144,12 @@ h2.govuk-heading-l With hints on items
         "text": "You’ll have an account if you’ve already proved your identity with either Barclays, CitizenSafe, Digidentity, Experian, Post Office, Royal Mail or SecureIdentity."\
       }\
     }\
-  ]\
-}
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Without fieldset
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "name": "colours",\
   "items": [\
     {\
@@ -168,13 +164,12 @@ h2.govuk-heading-l Without fieldset
       "value": "blue",\
       "text": "Blue"\
     }\
-  ]\
-}
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With all fieldset attributes
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "idPrefix": "example",\
   "name": "example",\
   "errorMessage": {\
@@ -203,13 +198,12 @@ h2.govuk-heading-l With all fieldset attributes
       "text": "No",\
       "checked": true\
     }\
-  ]\
-}
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With very long option text
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "name": "waste",\
   "hint": {\
     "text": "Nullam id dolor id nibh ultricies vehicula ut id elit."\
@@ -235,13 +229,12 @@ h2.govuk-heading-l With very long option text
       "value": "fusce",\
       "text": "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Etiam porta sem malesuada magna mollis euismod. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Sed posuere consectetur est at lobortis."\
     }\
-  ]\
-}
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With conditional items
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "idPrefix": "how-contacted",\
   "name": "how-contacted",\
   "fieldset": {\
@@ -271,13 +264,12 @@ h2.govuk-heading-l With conditional items
         "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" id=\"contact-text-message\">\n"\
       }\
     }\
-  ]\
-  }
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Inline with conditional items
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "classes": "govuk-radios--inline",\
   "idPrefix": "how-contacted-inline",\
   "name": "how-contacted-inline",\
@@ -308,13 +300,12 @@ h2.govuk-heading-l Inline with conditional items
         "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" id=\"contact-text-message\">\n"\
       }\
     }\
-  ]\
-}
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With conditional item checked
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "idPrefix": "how-contacted-checked",\
   "name": "how-contacted-checked",\
   "fieldset": {\
@@ -345,13 +336,12 @@ h2.govuk-heading-l With conditional item checked
         "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" id=\"contact-text-message\">\n"\
       }\
     }\
-  ]\
-}
+  ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With optional form-group classes showing group error
-= render "components/govuk_radios", options: {\
+= render "components/govuk_radios",
   "idPrefix": "how-contacted-error",\
   "name": "how-contacted-error",\
   "formGroup": {\
@@ -385,5 +375,4 @@ h2.govuk-heading-l With optional form-group classes showing group error
         "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" id=\"contact-text-message\">\n"\
       }\
     }\
-  ]\
-}
+  ]

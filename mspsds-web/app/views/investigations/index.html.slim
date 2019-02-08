@@ -55,11 +55,11 @@
               .govuk-checkboxes__item
                 = form.check_box :status_closed, {class: "govuk-checkboxes__input"}, "checked", "unchecked"
                 = form.label :status_closed, "Closed", class: "govuk-checkboxes__label"
-        = render "form_components/govuk_radios", form: form, key: :sort_by, options: {\
+        = render "form_components/govuk_radios", form: form, key: :sort_by,
                 fieldset: {legend: {text: "Sort by", classes: "govuk-fieldset__legend--s"}},
                 items: [{text: "Updated: recent", value: "recent"},
                         {text: "Updated: oldest", value: "oldest"},
-                        {text: "Created: newest", value: "newest"}]}
+                        {text: "Created: newest", value: "newest"}]
         = form.submit "Apply filters", name: nil, class: "govuk-button"
   .govuk-grid-column-three-quarters
     - if @results.any?

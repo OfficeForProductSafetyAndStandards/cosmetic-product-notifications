@@ -12,9 +12,9 @@
           span.govuk-caption-xl = @investigation.pretty_description
           | New activity
       - errorText = "Activity type must not be empty"
-      = render "form_components/govuk_radios", form: form, key: :activity_type, options: {\
+      = render "form_components/govuk_radios", form: form, key: :activity_type,
               errorMessage: @activity_type_empty && {text: errorText},
               items: activity_types.map {|type, label| {text: label, value: type}},
-              fieldset: {legend: {html: header}}}
+              fieldset: {legend: {html: header}}
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

@@ -1,8 +1,8 @@
 / Implementation based on
 / https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/error-message/template.njk
-span.govuk-error-message *(options[:attribute] || {}) id=options[:id] class=options[:classes]
-  - if options[:html]
-    == options[:html]
+span.govuk-error-message *(local_assigns[:attributes] || {}) id=local_assigns[:id] class=local_assigns[:classes]
+  - if local_assigns[:html].present?
+    == html
   - else
-    = options[:text]
+    = text
 
