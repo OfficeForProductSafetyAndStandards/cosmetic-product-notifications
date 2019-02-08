@@ -1,6 +1,7 @@
 class BusinessesController < ApplicationController
   include BusinessesHelper
   include UrlHelper
+  include Shared::Web::CountriesHelper
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
@@ -8,6 +9,7 @@ class BusinessesController < ApplicationController
   before_action :create_business, only: %i[new create]
   before_action :update_business, only: %i[update]
   before_action :build_breadcrumbs, only: %i[show]
+  before_action :set_countries, only: %i[create update new edit]
 
   # GET /businesses
   # GET /businesses.json
