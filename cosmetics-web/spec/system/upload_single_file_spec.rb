@@ -20,7 +20,6 @@ RSpec.describe "Upload a single file", type: :system do
   end
 
   it "set a notification name in dashboard based on the uploaded file" do
-
     allow(Clamby).to receive(:safe?).and_return(true)
 
     visit new_responsible_person_notification_file_path(responsible_person.id)
@@ -30,6 +29,7 @@ RSpec.describe "Upload a single file", type: :system do
 
     5.times do
       break if not page.text.include? "Refresh the browser"
+
       visit responsible_person_notifications_path(responsible_person.id)
     end
 
