@@ -70,4 +70,4 @@ fieldset.govuk-fieldset
             aria_describedby: "report-product-description-hint"
 
 .govuk-form-group class=[input_field_width]
-  = form.submit (submit_text ||= "Save product"), class: "govuk-button"
+  = form.submit local_assigns[:submit_text] || "Save product", class: "govuk-button"

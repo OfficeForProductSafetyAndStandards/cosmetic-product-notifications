@@ -13,6 +13,8 @@ $(document).ready(function () {
       element.checked = false;
     });
     if (elementOther.checked) {
+      // This element must be clicked because it is responsible for showing and hiding a text box, which doesn't happen
+      // if the checked property is manually set to true
       elementOther.click();
       elementNone.checked = true;
     }
