@@ -52,7 +52,10 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
           year: "2018",
           month: "11",
           day: "18",
-          result: "Fail"
+          result: "Fail",
+          file: {
+              file: fixture_file_upload('files/testImage.png', 'application/png')
+          }
         }
       }
     end

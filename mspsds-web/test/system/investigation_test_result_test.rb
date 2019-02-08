@@ -25,6 +25,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
 
   test "can add filled in test result to investigation" do
     fill_in_basic_details
+    attach_file "test[file][file]", file_fixture("new_risk_assessment.txt")
     click_on "Continue"
 
     assert_text "Confirm test result details"
@@ -37,6 +38,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
 
   test "can go back to the edit page from the confirmation page and not lose data" do
     fill_in_basic_details
+    attach_file "test[file][file]", file_fixture("new_risk_assessment.txt")
     click_on "Continue"
 
     # Assert all of the data is still here
@@ -93,8 +95,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     attachment_description = "Test attachment description"
 
     fill_in_basic_details
-    choose "test_related_file_yes", visible: false
-    attach_file "test[file][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    attach_file "test[file][file]", file_fixture(attachment_filename)
     fill_in "Attachment description", with: attachment_description
     click_on "Continue"
 
@@ -109,13 +110,11 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
   end
 
   test "attachment description field is not visible when no file is selected" do
-    choose "test_related_file_yes", visible: false
     assert_no_text "Attachment description"
   end
 
   test "attachment description field is visible when a file is selected" do
-    choose "test_related_file_yes", visible: false
-    attach_file "test[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
+    attach_file "test[file][file]", file_fixture("new_risk_assessment.txt")
 
     assert_text "Attachment description"
   end

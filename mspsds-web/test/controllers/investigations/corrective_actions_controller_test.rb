@@ -28,7 +28,11 @@ class CorrectiveActionsControllerTest < ActionDispatch::IntegrationTest
           details: "Test Details",
           year: "2018",
           month: "11",
-          day: "18"
+          day: "18",
+          related_file: "Yes",
+          file: {
+              file: fixture_file_upload('files/testImage.png', 'application/png')
+          }
         }
       }
     end
@@ -46,7 +50,11 @@ class CorrectiveActionsControllerTest < ActionDispatch::IntegrationTest
         details: "Test Details",
         year: "2018",
         month: "11",
-        day: "18"
+        day: "18",
+        related_file: "Yes",
+        file: {
+            file: fixture_file_upload('files/testImage.png', 'application/png')
+        }
       }
     }
 
