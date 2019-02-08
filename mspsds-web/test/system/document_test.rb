@@ -118,7 +118,7 @@ class DocumentTest < ApplicationSystemTestCase
   end
 
   def attach_file_and_upload
-    attach_file("Browse for file", Rails.root + "test/fixtures/files/old_risk_assessment.txt")
+    attach_file("Browse for file", file_fixture("old_risk_assessment.txt"))
     click_on "Upload"
   end
 end

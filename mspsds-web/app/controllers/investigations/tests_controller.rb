@@ -1,4 +1,5 @@
 class Investigations::TestsController < ApplicationController
+  include TestsHelper
   include FileConcern
   set_attachment_names :file
   set_file_params_key :test
@@ -59,88 +60,23 @@ private
     initialize_file_attachments
   end
 
-  def set_investigation
-    @investigation = Investigation.find(params[:investigation_id])
-    authorize @investigation, :show?
-  end
-
-  def set_test
-    @test = @investigation.tests.build(test_params)
-  end
-
-  def set_attachment
-    @file_blob, * = load_file_attachments
-  end
-
-  def update_attachment
-    update_blob_metadata @file_blob, file_metadata
-  end
-
   def store_test
     session[:test] = @test.attributes if @test.valid?(step)
-  end
-
-  def test_valid?
-    @test.validate(step)
-    validate_blob_size(@file_blob, @test.errors, "file")
-    @test.errors.empty?
   end
 
   def test_saved?
     return false unless test_valid?
 
-    attach_files
+    # In addition to attaching to the test, we also attach to the investigation, so the file is surfaced in the ui
+    attach_blobs_to_list(@file_blob, @investigation.documents)
     @test.save
   end
 
-  def attach_files
-    attach_blobs_to_list(@file_blob, @test.documents)
-    attach_blobs_to_list(@file_blob, @investigation.documents)
-  end
-
   def save_attachment
-    if params[:test][:related_file] == "Yes"
-      @file_blob.save if @file_blob
-    elsif @file_blob
-      @file_blob.purge
-    end
+    @file_blob.save if @file_blob
   end
 
-  def test_params
-    session_params.merge(request_params)
-  end
-
-  def session_params
+  def test_session_params
     session[:test] || {}
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def request_params
-    return {} if params[:test].blank?
-
-    params.require(:test)
-        .permit(:product_id,
-                :legislation,
-                :result,
-                :details,
-                :day,
-                :month,
-                :year)
-        .merge(type: model_type)
-  end
-
-  def model_type
-    params.dig(:test, :is_result) == "true" ? Test::Result.name : Test::Request.name
-  end
-
-  def file_metadata
-    if @test.requested?
-      title = "Test requested: #{@test.product&.name}"
-      document_type = "test_request"
-    else
-      title = "#{@test.result&.capitalize} test: #{@test.product&.name}"
-      document_type = "test_results"
-    end
-    get_attachment_metadata_params(:file).merge(title: title, document_type: document_type)
   end
 end

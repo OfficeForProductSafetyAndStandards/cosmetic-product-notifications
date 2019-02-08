@@ -1,0 +1,19 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      span.govuk-caption-xl Reporting an unsafe product
+      | Find this in your system
+= form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
+  = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
+  .govuk-grid-row class="govuk-!-margin-bottom-3"
+    .govuk-grid-column-one-half
+      .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:complainant_reference].any?)]
+        span#investigation_complainant_reference.govuk-hint
+          | Use an existing case number or reference from your system to help you find your report in the future.
+        = form.text_field :complainant_reference, class: "govuk-input",
+                "aria-describedby": "report-title-hint"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form.submit "Save", class: "govuk-button"

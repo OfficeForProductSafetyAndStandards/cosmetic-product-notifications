@@ -38,6 +38,11 @@
             = product.webpage
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
+            | Country of origin
+          td.govuk-table__cell
+            = country_from_code product.country_of_origin
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
             | Description
           td.govuk-table__cell
             = product.description

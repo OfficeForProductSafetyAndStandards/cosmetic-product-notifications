@@ -32,7 +32,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   test "attaches a transcript file" do
     fill_in_context_form
     click_button "Continue"
-    attach_file("correspondence_phone_call[transcript][file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence_phone_call[transcript][file]", file_fixture("testImage.png"))
     click_button "Continue"
     assert_text("testImage")
     click_button "Continue"

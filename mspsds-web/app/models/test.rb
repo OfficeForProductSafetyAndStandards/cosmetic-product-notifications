@@ -9,6 +9,7 @@ class Test < ApplicationRecord
   validates :investigation, presence: true
   validates :product, presence: true
   validates :date, presence: true
+  validates :legislation, presence: true
 
   validates_length_of :details, maximum: 1000
 

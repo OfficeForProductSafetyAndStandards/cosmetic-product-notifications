@@ -32,7 +32,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   test "attaches the transcript file" do
     fill_in_context_form
     click_button "Continue"
-    attach_file("correspondence_meeting[transcript][file]", Rails.root + "test/fixtures/files/testImage.png")
+    attach_file("correspondence_meeting[transcript][file]", file_fixture("testImage.png"))
     click_button "Continue"
     assert_text("testImage")
     click_button "Continue"
@@ -43,7 +43,7 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
     fill_in_context_form
     click_button "Continue"
     fill_in_content_form
-    attach_file("correspondence_meeting[related_attachment][file]", Rails.root + "test/fixtures/files/testImage2.png")
+    attach_file("correspondence_meeting[related_attachment][file]", file_fixture("testImage2.png"))
     click_button "Continue"
     assert_text("testImage2")
     click_button "Continue"
