@@ -6,7 +6,7 @@ module DocumentsHelper
     @parent = Investigation.find(params[:investigation_id]) if params[:investigation_id]
     @parent = Product.find(params[:product_id]) if params[:product_id]
     @parent = Business.find(params[:business_id]) if params[:business_id]
-    authorize @parent, :show? if @parent.class == Investigation
+    authorize @parent, :show? if @parent.is_a? Investigation
   end
 
   def file_collection

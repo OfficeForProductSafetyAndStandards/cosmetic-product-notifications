@@ -78,6 +78,31 @@ class DocumentTest < ApplicationSystemTestCase
     assert_no_text "long document"
   end
 
+  test "should create activity when adding a document" do
+    attach_file_and_upload
+    fill_in "Document title", with: "long document"
+    fill_in "Description", with: "description"
+    click_on "Save attachment"
+    click_on "Activity"
+    assert_text "Document added"
+  end
+
+  test "should create activity when editing a document" do
+    get_to_edit
+    fill_in "Description", with: "This is a long document"
+    click_on "Update attachment"
+    click_on "Activity"
+    assert_text "Document details updated"
+  end
+
+  test "should create activity when removing a document" do
+    get_to_attachments
+    click_on "Remove document"
+    click_on "Delete attachment"
+    click_on "Activity"
+    assert_text "Document deleted"
+  end
+
   def get_to_edit
     get_to_attachments
     click_on "Edit document"

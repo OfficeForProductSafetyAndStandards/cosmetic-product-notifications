@@ -82,7 +82,6 @@ class InvestigationsController < ApplicationController
   def assign
     return if request.get?
 
-    authorize @investigation
     ps = assignee_update_params
 
     potential_assignees = User.where(id: ps[:assignable_id]) + Team.where(id: ps[:assignable_id])
@@ -109,6 +108,7 @@ class InvestigationsController < ApplicationController
     end
 
     @investigation.is_private = ps[:is_private]
+    @investigation.visibility_rationale = ps[:visibility_rationale] if ps[:visibility_rationale]
     respond_to_update(:visibility)
   end
 
@@ -125,7 +125,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find(params[:id])
-    authorize @investigation, :show?
+    authorize @investigation
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -138,7 +138,7 @@ private
   end
 
   def visibility_update_params
-    params.require(:investigation).permit(:is_private)
+    params.require(:investigation).permit(:is_private, :visibility_rationale)
   end
 
   def assignee_update_params
