@@ -54,6 +54,16 @@ class Notification < ApplicationRecord
     !image_uploads.empty? && image_uploads.all?(&:marked_as_safe?)
   end
 
+  def images_failed_anti_virus_check?
+    image_uploads.any?(&:file_missing?)
+  end
+
+  def images_pending_anti_virus_check?
+    image_uploads.any? { |image| 
+      image.file_exists? && !image.marked_as_safe?
+    }
+  end
+
 private
 
   def all_required_attributes_must_be_set

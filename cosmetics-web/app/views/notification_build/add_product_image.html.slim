@@ -15,5 +15,5 @@
             .govuk-form-group
                 = form.label :image_upload, "Choose file", class: "govuk-label"
                 = form.file_field :image_upload, multiple: true, class: "govuk-file-upload", \
-                    accept: "image/jpeg, application/pdf, image/png, image/svg+xml"
+                    accept: ImageUpload.getContentTypes.join(", ")
             = form.submit "Continue", class: "govuk-button"

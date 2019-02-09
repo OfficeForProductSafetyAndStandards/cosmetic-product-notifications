@@ -10,13 +10,7 @@ class NotificationsController < ApplicationController
     # Check your answers page
   def edit
     if params[:submit_failed]
-      if @notification.image_uploads.all?(&:file_exists?)
-        unless @notification.image_uploads.all?(&:marked_as_safe?)
-          @notification.errors.add :image_uploads, "waiting for files to pass anti virus check..."
-        end
-      else
-        @notification.errors.add :image_uploads, "failed anti virus check"
-      end
+      add_image_upload_errors
     end
   end
 
@@ -33,5 +27,15 @@ private
 
   def set_notification
     @notification = Notification.find(params[:id])
+  end
+
+  def add_image_upload_errors
+    if @notification.images_failed_anti_virus_check?
+      @notification.errors.add :image_uploads, "failed anti virus check"
+    end
+
+    if @notification.images_pending_anti_virus_check?
+      @notification.errors.add :image_uploads, "waiting for files to pass anti virus check..."
+    end
   end
 end
