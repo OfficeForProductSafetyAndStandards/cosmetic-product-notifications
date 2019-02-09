@@ -18,25 +18,29 @@ class ImageUpload < ApplicationRecord
     file_exists? && file.metadata["safe"]
   end
 
-  @@ALLOWED_CONTENT_TYPES = %w[image/jpeg application/pdf image/png image/svg+xml].freeze
+  @allowed_content_types = %w[image/jpeg application/pdf image/png image/svg+xml].freeze
   # 30 MB in Bytes
-  @@MAX_FILE_MEGABYTES_SIZE = 30
+  @max_file_size_bytes = 30000000
 
-  def ImageUpload.getContentTypes
-    return @@ALLOWED_CONTENT_TYPES
+  def self.get_content_types
+    @allowed_content_types
+  end
+
+  def self.get_max_file_size
+    @max_file_size_bytes
   end
 
 private
 
   def attached_file_is_image?
-    unless file.attachment.nil? || @@ALLOWED_CONTENT_TYPES.include?(file.blob.content_type)
-      errors.add :file, "must be one of " + @@ALLOWED_CONTENT_TYPES.join(", ")
+    unless file.attachment.nil? || ImageUpload.get_content_types.include?(file.blob.content_type)
+      errors.add :file, "must be one of " + ImageUpload.get_content_types.join(", ")
     end
   end
 
   def attached_file_is_within_allowed_size?
-    unless file.attachment.nil? || file.blob.byte_size <= @@MAX_FILE_MEGABYTES_SIZE * 1000000
-      errors.add :file, "must be smaller than #{@@MAX_FILE_MEGABYTES_SIZE}MB"
+    unless file.attachment.nil? || file.blob.byte_size <= ImageUpload.get_max_file_size
+      errors.add :file, "must be smaller than #{ImageUpload.get_max_file_size / 1000000}MB"
     end
   end
 end

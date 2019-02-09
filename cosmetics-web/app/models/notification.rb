@@ -59,7 +59,7 @@ class Notification < ApplicationRecord
   end
 
   def images_pending_anti_virus_check?
-    image_uploads.any? { |image| 
+    image_uploads.any? { |image|
       image.file_exists? && !image.marked_as_safe?
     }
   end
