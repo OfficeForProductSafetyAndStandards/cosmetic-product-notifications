@@ -15,20 +15,14 @@
     .govuk-grid-column-full
       hr.govuk-section-break class=("govuk-section-break--visible" unless hide_break)
       div class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
-        .mspsds-input class="govuk-!-margin-bottom-5"
-          fieldset.govuk-fieldset
-            legend.govuk-fieldset__legend.govuk-fieldset__legend--l class="govuk-!-margin-bottom-1"
-              = other_text
-            .govuk-form-group.full-width class=("govuk-form-group--error" if model.errors[further_key].any?)
-              .govuk-radios
-                .govuk-radios__item
-                  = radio_button "", further_key, "Yes", class: "govuk-radios__input", value: "Yes",
-                          checked: @repeat_step == "Yes"
-                  = label further_key, "Yes", class: "govuk-label govuk-radios__label", value: "Yes"
-                .govuk-radios__item
-                  = radio_button "", further_key, "No", class: "govuk-radios__input", value: "No",
-                          checked: @repeat_step == "No"
-                  = label further_key, "No", class: "govuk-label govuk-radios__label", value: "no"
+        - errorText = model.errors.messages[further_key].first
+        = render "components/govuk_radios",
+                name: further_key,
+                errorMessage: errorText && {text: errorText},
+                fieldset: {legend: {text: other_text, classes: "govuk-fieldset__legend--l"}},
+                items: [{text: "Yes", value: "Yes", checked: @repeat_step == "Yes",
+                        id: "further_corrective_action_yes"},
+                        {text: "No", value: "No", checked: @repeat_step == "No", id: "further_corrective_action_no"}]
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"
