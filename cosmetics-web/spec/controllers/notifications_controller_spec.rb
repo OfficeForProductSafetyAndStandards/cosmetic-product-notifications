@@ -36,7 +36,7 @@ RSpec.describe NotificationsController, type: :controller do
     it "adds error if failed attempt to submit when images are pending anti virus check" do
       attach_image_to_draft_with_metadata({})
       get(:edit, params: { id: draft_notification.id, submit_failed: true })
-      expect(assigns(:notification).errors[:image_uploads]).to include("waiting for files to pass anti virus check...")
+      expect(assigns(:notification).errors[:image_uploads]).to include("waiting for files to pass anti virus check. Refresh to update")
     end
 
     it "adds error if failed attempt to submit when images have failed anti virus check" do

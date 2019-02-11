@@ -11,7 +11,7 @@ class ImageUpload < ApplicationRecord
   end
 
   def file_missing?
-    ! file_exists?
+    !file_exists?
   end
 
   def marked_as_safe?
@@ -19,8 +19,7 @@ class ImageUpload < ApplicationRecord
   end
 
   @allowed_content_types = %w[image/jpeg application/pdf image/png image/svg+xml].freeze
-  # 30 MB in Bytes
-  @max_file_size_bytes = 30000000
+  @max_file_size_bytes = 30.megabytes
 
   def self.get_content_types
     @allowed_content_types
@@ -40,7 +39,7 @@ private
 
   def attached_file_is_within_allowed_size?
     unless file.attachment.nil? || file.blob.byte_size <= ImageUpload.get_max_file_size
-      errors.add :file, "must be smaller than #{ImageUpload.get_max_file_size / 1000000}MB"
+      errors.add :file, "must be smaller than #{ImageUpload.get_max_file_size / 1.megabyte}MB"
     end
   end
 end

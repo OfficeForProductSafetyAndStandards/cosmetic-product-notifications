@@ -8,6 +8,10 @@ RSpec.describe ImageUpload, type: :model do
     allow(ImageUpload).to receive(:get_max_file_size).and_return(10)
   end
 
+  after do
+    allow(ImageUpload).to receive(:get_max_file_size).and_call_original
+  end
+
   describe "image validation" do
     it "adds an error if the file is above the allowed filesize" do
       image_upload.file.attach(file)

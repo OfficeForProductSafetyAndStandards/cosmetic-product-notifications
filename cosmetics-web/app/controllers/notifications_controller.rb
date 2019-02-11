@@ -35,7 +35,7 @@ private
     end
 
     if @notification.images_pending_anti_virus_check?
-      @notification.errors.add :image_uploads, "waiting for files to pass anti virus check..."
+      @notification.errors.add :image_uploads, "waiting for files to pass anti virus check. Refresh to update"
     end
   end
 end
