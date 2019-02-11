@@ -1,7 +1,6 @@
 require 'zip'
 
 class ReadDataAnalyzer < ActiveStorage::Analyzer
-
   include AnalyzerHelper
   extend AnalyzerHelper
 
@@ -10,7 +9,7 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
   end
 
   def self.accept?(given_blob)
-    return false unless given_blob.present?
+    return false if given_blob.blank?
 
     # this analyzer only accepts notification files which are zip
     notification_file = get_notification_file_from_blob(given_blob)
@@ -36,8 +35,9 @@ private
 
   def get_notification_current_name
     get_xml_file_content do |xml_file_content|
-      xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
-      return xml_doc.xpath('//currentVersion/generalInfo/productNameList/productName/name').first.text
+      xml_doc = Nokogiri::XML(xml_file_content.insert(71, ' xmlns:sanco-xmlgate="http://sawes.ws.in.xmlgatev2.sanco.cec.eu"'))
+      return xml_doc.xpath('//sanco-xmlgate:currentVersion/sanco-xmlgate:generalInfo/sanco-xmlgate:productNameList/sanco-xmlgate:productName/sanco-xmlgate:name',
+                           'sanco-xmlgate' => "http://sawes.ws.in.xmlgatev2.sanco.cec.eu").first.text
     end
   end
 
@@ -45,7 +45,7 @@ private
     download_blob_to_tempfile do |file|
       Zip::File.open(file.path) do |zip_file|
         zip_file.each do |entry|
-          if entry.name =~ get_xml_file_name_regex
+          if entry.name&.match?(get_xml_file_name_regex)
             yield entry.get_input_stream.read
           end
         end
