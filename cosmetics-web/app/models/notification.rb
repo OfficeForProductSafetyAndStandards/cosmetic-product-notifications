@@ -77,6 +77,10 @@ class Notification < ApplicationRecord
     }
   end
 
+  def to_param
+    reference_number.to_s
+  end
+
 private
 
   def all_required_attributes_must_be_set
