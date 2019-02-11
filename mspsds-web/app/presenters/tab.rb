@@ -1,13 +1,10 @@
 class Tab
-  attr_reader :id, :title, :render
+  attr_reader :id, :title, :render, :hide_title
 
-  def initialize(id, title, render)
+  def initialize(id, title, render, hide_title = false)
     @id = id
     @title = title
     @render = render
-  end
-
-  def hide_title
-    @title == "Overview"
+    @hide_title = hide_title
   end
 end

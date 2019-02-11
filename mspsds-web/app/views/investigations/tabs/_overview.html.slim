@@ -37,13 +37,13 @@ table.govuk-table
           th.govuk-table__header Type
           td.govuk-table__cell = @investigation.complainant.complainant_type
         tr.govuk-table__row
-          th.govuk-table__header  Phone
+          th.govuk-table__header Phone
           td.govuk-table__cell = @investigation.complainant.phone_number
         tr.govuk-table__row
-          th.govuk-table__header  Email
+          th.govuk-table__header Email
           td.govuk-table__cell = @investigation.complainant.email_address
         tr.govuk-table__row
-          th.govuk-table__header  Other details
+          th.govuk-table__header Other details
           td.govuk-table__cell = @investigation.complainant.other_details
   - else
     p.govuk-body GDPR protected details hidden
