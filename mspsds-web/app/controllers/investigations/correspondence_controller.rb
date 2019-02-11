@@ -49,7 +49,7 @@ private
   end
 
   def set_investigation
-    @investigation = Investigation.find(params[:investigation_id])
+    @investigation = Investigation.find(Investigation.reverse_pretty_id(params[:investigation_id]))
     authorize @investigation, :show?
   end
 

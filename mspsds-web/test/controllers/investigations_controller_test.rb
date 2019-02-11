@@ -241,7 +241,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "sort by filter should be defaulted to Updated: recent" do
     get investigations_path
-    assert response.body.index(@investigation_one.id.to_s) < response.body.index(@investigation_two.id.to_s)
+    assert response.body.index(@investigation_one.pretty_id.to_s) < response.body.index(@investigation_two.pretty_id.to_s)
   end
 
   test "should return the most recently updated investigation first if sort by 'Updated: recent' is selected" do
@@ -250,7 +250,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_closed: "unchecked",
         sort_by: "recent"
     }
-    assert response.body.index(@investigation_one.id.to_s) < response.body.index(@investigation_two.id.to_s)
+    assert response.body.index(@investigation_one.pretty_id.to_s) < response.body.index(@investigation_two.pretty_id.to_s)
   end
 
   test "should return the oldest updated investigation first if sort by 'Updated: oldest' is selected" do
@@ -259,7 +259,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_closed: "unchecked",
         sort_by: "oldest"
     }
-    assert response.body.index(@investigation_two.id.to_s) < response.body.index(@investigation_one.id.to_s)
+    assert response.body.index(@investigation_two.pretty_id.to_s) < response.body.index(@investigation_one.pretty_id.to_s)
   end
 
   test "should return the most recently created investigation first if sort by 'Created: newest' is selected" do
@@ -268,7 +268,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_closed: "unchecked",
         sort_by: "newest"
     }
-    assert response.body.index(@investigation_two.id.to_s) < response.body.index(@investigation_one.id.to_s)
+    assert response.body.index(@investigation_two.pretty_id.to_s) < response.body.index(@investigation_one.pretty_id.to_s)
   end
 
   test "should create excel file for list of investigations" do

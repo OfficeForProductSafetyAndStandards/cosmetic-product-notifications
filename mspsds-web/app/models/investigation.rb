@@ -122,6 +122,10 @@ class Investigation < ApplicationRecord
     id_string.insert(4, "-")
   end
 
+  def self.reverse_pretty_id(pretty_id)
+    pretty_id[0..4].to_i * (10**(pretty_id.length - 5)) + pretty_id[5..pretty_id.length].to_i
+  end
+
   def pretty_description
     "#{case_type.titleize}: #{pretty_id}"
   end
@@ -188,6 +192,10 @@ class Investigation < ApplicationRecord
     # InvestigationBusiness model.
     investigation_businesses.create!(business_id: business.id, relationship: relationship)
     create_audit_activity_for_business(business)
+  end
+
+  def to_param
+    pretty_id
   end
 
 private
