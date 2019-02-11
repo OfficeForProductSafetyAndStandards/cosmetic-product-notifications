@@ -8,6 +8,15 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
+  before_create do
+    new_reference_number = nil
+    loop do
+      new_reference_number = SecureRandom.rand(100000000)
+      break unless Notification.where(reference_number: new_reference_number).exists?
+    end
+    self.reference_number = new_reference_number
+  end
+
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_import_country, if: :will_save_change_to_import_country?
 
