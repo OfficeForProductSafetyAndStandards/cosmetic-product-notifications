@@ -8,6 +8,7 @@ applications:
   path: .
   command: bin/rake cf:on_first_instance db:migrate && bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
   no-route: true
+  stack: cflinuxfs3
   services:
     - cosmetics-database
     - cosmetics-queue
