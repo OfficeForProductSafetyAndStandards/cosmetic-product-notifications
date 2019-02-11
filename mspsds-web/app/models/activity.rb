@@ -39,7 +39,7 @@ class Activity < ApplicationRecord
 
   def notify_relevant_users
     users_to_notify.each do |user|
-      NotifyMailer.updated_investigation(investigation.id, user.full_name, user.email, email_update_text).deliver_later
+      NotifyMailer.updated_investigation(investigation.id, user.full_name, user.email, email_update_text, email_subject_text).deliver_later
     end
   end
 
@@ -51,6 +51,10 @@ class Activity < ApplicationRecord
   end
 
   def email_update_text; end
+
+  def email_subject_text
+    "#{investigation.case_type.titleize} updated"
+  end
 
 private
 

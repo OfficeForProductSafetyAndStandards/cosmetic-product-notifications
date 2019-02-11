@@ -23,6 +23,10 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
     "#{investigation.case_type.titleize} was assigned to #{investigation.assignee.display_name} by #{source&.show&.titleize}."
   end
 
+  def email_subject_text
+    "#{investigation.case_type.titleize} was reassigned"
+  end
+
   def users_to_notify
     previous_assignee_id = investigation.saved_changes["assignable_id"][0]
     previous_assignee = (User.find_by(id: previous_assignee_id) || Team.find_by(id: previous_assignee_id))

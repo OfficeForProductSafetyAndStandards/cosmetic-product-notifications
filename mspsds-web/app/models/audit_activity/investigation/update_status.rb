@@ -5,7 +5,11 @@ class AuditActivity::Investigation::UpdateStatus < AuditActivity::Investigation:
   end
 
   def email_update_text
-    "#{investigation.case_type.titleize} was #{investigation.is_closed? ? 'closed' : 'reopened'} by #{source&.show&.titleize}."
+    "#{email_subject_text} by #{source&.show&.titleize}."
+  end
+
+  def email_subject_text
+    "#{investigation.case_type.titleize} was #{investigation.is_closed? ? 'closed' : 'reopened'}"
   end
 
   def users_to_notify
