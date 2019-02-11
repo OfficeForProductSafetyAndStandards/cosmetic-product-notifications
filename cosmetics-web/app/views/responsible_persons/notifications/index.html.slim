@@ -7,7 +7,7 @@
         h2.govuk-error-summary__title
           span.loading-spinner__dot
           ' Checking
-          = pluralize( @pending_notification_files_count, 'notification file')
+          = pluralize(@pending_notification_files_count, 'notification file')
         .govuk-error-summary__body
           = link_to "Refresh the browser to see uploaded products", url_for,
                   class: "govuk-link--no-visited-state"
@@ -18,7 +18,7 @@
     p
       b = @responsible_person.name
       '  has
-      = pluralize( @registered_notifications.total_entries, 'cosmetic product')
+      = pluralize(@registered_notifications.total_entries, 'cosmetic product')
       |  registered in the UK.
     p
       | All cosmetic products intended for sale or given away in the UK must be registered in the UK.

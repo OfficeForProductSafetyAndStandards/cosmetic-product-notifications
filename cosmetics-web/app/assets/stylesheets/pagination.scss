@@ -15,7 +15,8 @@
     pointer-events: none;
     cursor: default;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color:  $govuk-focus-text-colour;
       background: none;
     }
