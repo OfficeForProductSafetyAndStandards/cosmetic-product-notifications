@@ -1,0 +1,6 @@
+$govuk-global-styles: true;
+$govuk-assets-path: '~govuk-frontend/assets/';
+@import "~govuk-frontend/all";
+
+@import "navbar";
+@import "autocomplete";

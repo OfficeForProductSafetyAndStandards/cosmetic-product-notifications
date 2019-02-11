@@ -14,7 +14,6 @@ branches:
 cache:
   directories:
     - "~/bundle-cache"
-    - "~/npm-cache"
 
 stages:
   - Build
@@ -32,7 +31,6 @@ jobs:
     - stage: Build
       before_install:
         - mkdir -p ~/bundle-cache
-        - mkdir -p ~/npm-cache
       install:
         - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./ci/build-docker-images.sh
 

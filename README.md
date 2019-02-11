@@ -38,6 +38,15 @@ if there are changes to the Docker config:
     docker-compose down && docker-compose build && docker-compose up
 
 
+### Mac tips
+
+[Docker shared volume performance is poor on Mac](https://docs.docker.com/docker-for-mac/osxfs-caching/) which can significantly affect e.g. asset compilation.
+You can use docker-sync to speed up runtime:
+
+    gem install docker-sync
+    docker-sync-stack start
+
+
 ### Windows Subsystem for Linux
 
 You will have to install the docker server on Windows, and the docker client on WSL.
@@ -50,6 +59,8 @@ To make this work, make the current path look like a Windows path to appease Doc
 (from https://medium.com/software-development-stories/developing-a-dockerized-web-app-on-windows-subsystem-for-linux-wsl-61efec965080)
 If the web container complains it can find files in the `/app` folder (e.g. `bin/bundle`), that might be sign you're in
 the wrong directory.
+
+You may also want to setup docker-sync using [these instructions](https://github.com/EugenMayer/docker-sync/wiki/docker-sync-on-Windows).
 
 
 ### Accounts
