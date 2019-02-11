@@ -1,0 +1,14 @@
+version: "2"
+
+options:
+  compose-dev-file-path: 'docker-compose.sync.yml'
+  verbose: true
+syncs:
+  cosmetics-web-sync:
+    src: './cosmetics-web'
+    sync_excludes: ['node_modules', 'tmp', 'vendor/shared-web']
+  mspsds-web-sync:
+    src: './mspsds-web'
+    sync_excludes: ['node_modules', 'tmp', 'vendor/shared-web']
+  shared-web-sync:
+    src: './shared-web'
