@@ -27,5 +27,17 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:pending_notification_files_count)).to eq(1)
     end
+
+    it "gets the correct number of unfinished notifications" do
+      Notification.create(responsible_person_id: responsible_person.id, state: "draft_complete")
+      get :index, params: { responsible_person_id: responsible_person.id }
+      expect(assigns(:unfinished_notifications).count).to eq(1)
+    end
+
+    it "gets the correct number of registered notifications" do
+      Notification.create(responsible_person_id: responsible_person.id, state: "notification_complete")
+      get :index, params: { responsible_person_id: responsible_person.id }
+      expect(assigns(:registered_notifications).count).to eq(1)
+    end
   end
 end
