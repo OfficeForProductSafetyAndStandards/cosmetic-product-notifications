@@ -117,7 +117,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-
+    click_on "Activity"
     assert_text "Enquiry logged: #{@enquiry.title}"
     assert_text @enquiry.description
 
@@ -151,9 +151,18 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-
+    click_on "Activity"
     assert_text "Attachment: #{attachment_filename}"
     assert_text "View attachment"
+  end
+
+  test "enquiry details should be shown in overview" do
+    select_complainant_type_and_continue
+    fill_complainant_details_and_continue
+    fill_enquiry_details_and_continue
+
+    assert_no_text "Product category"
+    assert_text @complainant.name
   end
 
   def select_complainant_type_and_continue

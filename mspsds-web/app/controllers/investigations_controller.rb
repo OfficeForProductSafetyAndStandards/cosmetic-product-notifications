@@ -46,6 +46,8 @@ class InvestigationsController < ApplicationController
 
   # GET /cases/new
   def new
+    return redirect_to new_ts_investigation_path unless current_user.is_opss?
+
     case params[:type]
     when "allegation"
       redirect_to new_allegation_path
