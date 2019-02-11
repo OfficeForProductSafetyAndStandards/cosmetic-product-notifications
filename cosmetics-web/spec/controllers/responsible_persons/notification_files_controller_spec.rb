@@ -13,6 +13,7 @@ RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controlle
 
   after do
     sign_out
+    unmock_antivirus
   end
 
   describe "GET #new" do
@@ -24,7 +25,7 @@ RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controlle
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new NotificationFile" do
+      it "a new NotificationFile is removed after processing" do
         expect {
           post :create, params: { responsible_person_id: responsible_person.id, notification_file: valid_attributes }
         }.to change(NotificationFile, :count).by(0)

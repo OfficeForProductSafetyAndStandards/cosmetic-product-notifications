@@ -10,6 +10,7 @@ RSpec.describe "Upload a single file", type: :system do
 
   after do
     sign_out
+    unmock_antivirus
   end
 
   it "enables to upload a file" do
