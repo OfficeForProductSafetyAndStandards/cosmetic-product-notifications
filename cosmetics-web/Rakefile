@@ -5,6 +5,8 @@ require File.expand_path('config/application', __dir__)
 
 Rails.application.load_tasks
 
-task :test do
-  sh 'bin/rspec'
+namespace :test do
+  task :all do
+    sh 'bin/rspec'
+  end
 end
