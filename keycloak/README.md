@@ -42,7 +42,7 @@ To create a Keycloak database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
-    cf create-service postgres tiny-unencrypted-10.5 keycloak-database
+    cf create-service postgres small-10.5 keycloak-database
 
 
 #### Keycloak

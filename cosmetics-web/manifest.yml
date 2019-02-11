@@ -11,6 +11,6 @@ applications:
   stack: cflinuxfs3
   services:
     - cosmetics-database
-    - cosmetics-redis
+    - cosmetics-queue
     - logit-ssl-drain
 

@@ -112,9 +112,7 @@ To create a database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
-    cf create-service postgres tiny-unencrypted-10.5 mspsds-database
-
-Larger database options should be considered if required.
+    cf create-service postgres small-10.5 mspsds-database
 
 
 #### Elasticsearch
@@ -130,11 +128,10 @@ To create an Elasticsearch instance for the current space:
 To create a redis instance for the current space. 
 
     cf marketplace -s redis
-    cf create-service redis tiny-3.2 mspsds-redis-queue
-    cf create-service redis tiny-3.2 mspsds-redis-session
+    cf create-service redis tiny-3.2 mspsds-queue
+    cf create-service redis tiny-3.2 mspsds-session
 
-Larger options should be considered if required.
-The current worker (sidekiq), which uses mspsds-redis-queue only works with the unclustered version.
+The current worker (sidekiq), which uses `mspsds-queue` only works with an unclustered instance of redis.
 
 
 #### S3
