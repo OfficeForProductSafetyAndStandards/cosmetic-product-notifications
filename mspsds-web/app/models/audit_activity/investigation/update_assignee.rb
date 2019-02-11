@@ -24,8 +24,8 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
   end
 
   def users_to_notify
-    activity = AuditActivity::Investigation::UpdateAssignee.where(investigation_id: investigation.id).order("created_at").last
-    previous_assignee = User.find_by(id: activity&.assignable_id) || Team.find_by(id: activity&.assignable_id)
+    previous_assignee_id = investigation.saved_changes["assignable_id"][0]
+    previous_assignee = (User.find_by(id: previous_assignee_id) || Team.find_by(id: previous_assignee_id))
     new_assignee = investigation.assignee
 
     assigner = source.user

@@ -3,14 +3,12 @@ class AuditActivity::Document::Base < AuditActivity::Base
   with_attachments attachment: "document"
 
   private_class_method def self.from(document, investigation, title)
-    activity = self.new(
+    activity = self.create(
       body: self.sanitize_text(document.metadata[:description]),
       source: UserSource.new(user: current_user),
       investigation: investigation,
       title: title
     )
-    activity.notify_relevant_users
-    activity.save
     activity.attach_blob document
   end
 

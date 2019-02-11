@@ -6,7 +6,7 @@ class AuditActivity::CorrectiveAction::Base < AuditActivity::Base
   belongs_to :product
 
   private_class_method def self.from(corrective_action)
-    activity = self.new(
+    activity = self.create(
       title: corrective_action.summary,
       body: self.build_body(corrective_action),
       source: UserSource.new(user: current_user),
@@ -14,8 +14,6 @@ class AuditActivity::CorrectiveAction::Base < AuditActivity::Base
       business: corrective_action.business,
       product: corrective_action.product
     )
-    activity.notify_relevant_users
-    activity.save
     activity.attach_blob corrective_action.documents.first.blob if corrective_action.documents.attached?
   end
 

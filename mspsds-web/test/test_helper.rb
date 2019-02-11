@@ -106,7 +106,9 @@ class ActiveSupport::TestCase
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
-
+    allow(NotifyMailer).to receive(:assigned_investigation).and_call_original
+    allow(NotifyMailer).to receive(:assigned_investigation_to_team).and_call_original
+    allow(NotifyMailer).to receive(:updated_investigation).and_call_original
     reset_user_data
   end
 

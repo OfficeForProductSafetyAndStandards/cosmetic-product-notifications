@@ -7,6 +7,8 @@ class Activity < ApplicationRecord
 
   has_one :source, as: :sourceable, dependent: :destroy
 
+  after_save :notify_relevant_users
+
   def attached_image?
     nil
   end
