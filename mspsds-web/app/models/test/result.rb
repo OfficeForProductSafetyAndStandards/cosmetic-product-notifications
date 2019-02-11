@@ -1,7 +1,7 @@
 class Test::Result < Test
   after_create :create_audit_activity
 
-  validates :result, presence: true
+  validates :result, presence: { message: "Select result of the test"}
   validate :result_file_attached
 
   enum result: { passed: "Pass", failed: "Fail", other: "Other" }

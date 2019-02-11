@@ -33,7 +33,11 @@ en:
   activerecord:
     errors:
       models:
-        corrective_action:
+        test:
           attributes:
             product:
               required: "Select the product which was tested"
+        corrective_action:
+          attributes:
+            product:
+              required: "Select the product the corrective action relates to"

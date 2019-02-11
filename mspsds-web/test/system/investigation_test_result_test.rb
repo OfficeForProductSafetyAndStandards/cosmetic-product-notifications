@@ -19,8 +19,8 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     click_button "Continue"
 
     assert_text "The following errors prevented this test result from being saved"
-    assert_text "Date can't be blank"
-    assert_text "Result can't be blank"
+    assert_text "Enter date of the test"
+    assert_text "Select result of the test"
   end
 
   test "can add filled in test result to investigation" do
