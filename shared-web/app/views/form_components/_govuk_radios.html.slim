@@ -12,7 +12,7 @@
 - if form.object
   - if form.object.respond_to?(key)
     / Make item checked based on attribute value
-    - item_matching_state = items.find{|item| item[:value] == form.object.send(key) }
+    - item_matching_state = items.find{|item| item[:value].to_s == form.object.send(key).to_s }
     - item_matching_state[:checked] = true if item_matching_state
   - if form.object.errors
     - errorText = form.object.errors[key].first.presence
