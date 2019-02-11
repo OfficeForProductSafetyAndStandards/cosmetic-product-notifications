@@ -7,11 +7,11 @@
 hr.govuk-section-break.govuk-section-break--m
 
 = render "tabs", tabs: [\
-  Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" }),
+  Tab.new("overview", "Overview", lambda { render "investigations/tabs/overview" }, true),
   Tab.new("products", "Products", lambda { render "investigations/tabs/products" }),
   Tab.new("businesses", "Businesses", lambda { render "investigations/tabs/businesses" }),
   Tab.new("attachments", "Attachments", lambda { render "investigations/tabs/attachments" }),
-  Tab.new("details", "Full details", lambda { render "investigations/tabs/full_details" })\
+  Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" })\
 ]
 
 .no-print[class="govuk-!-margin-top-3"]

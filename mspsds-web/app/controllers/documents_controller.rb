@@ -8,20 +8,6 @@ class DocumentsController < ApplicationController
   before_action :set_parent
   before_action :set_file, only: %i[edit update remove destroy]
 
-  # POST /documents
-  def create
-    respond_to do |format|
-      if file_valid?
-        save_file
-        format.html { redirect_to @investigation, notice: "File was successfully attached." }
-        format.json { render :show, status: :created, location: @activity }
-      else
-        format.html { redirect_to @investigation, notice: "Failed to attach file" }
-        format.json { render json: @errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # GET /documents/1/edit
   def edit; end
 
@@ -36,7 +22,7 @@ class DocumentsController < ApplicationController
     return render :edit unless file_valid?
 
     @file.blob.save
-    audit_class::Update.from(@file.blob, @parent, previous_data) if @parent.class == Investigation
+    AuditActivity::Document::Update.from(@file.blob, @parent, previous_data) if @parent.is_a? Investigation
     redirect_to @parent
   end
 
@@ -45,7 +31,7 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   def destroy
     @file.destroy
-    audit_class::Destroy.from(@file.blob, @parent) if @parent.class == Investigation
+    AuditActivity::Document::Destroy.from(@file.blob, @parent) if @parent.is_a? Investigation
     redirect_to @parent, notice: "File was successfully removed"
   end
 

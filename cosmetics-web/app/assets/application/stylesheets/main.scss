@@ -1,0 +1,12 @@
+@import "../../../../vendor/shared-web/app/assets/application/stylesheets/main";
+
+@import "landing-page";
+@import "responsible_persons";
+@import "rp_navbar";
+@import "pagination";
+
+@import 'component_build';
+
+* {
+  box-sizing: border-box;
+}

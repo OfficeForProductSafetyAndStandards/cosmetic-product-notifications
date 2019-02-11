@@ -1,0 +1,22 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      span.govuk-caption-xl Report an unsafe or non-compliant product
+      | Has any corrective action been agreed or taken?
+= form_with model: @investigation, scope: "", url: wizard_path, method: :put, local: true do |form|
+  = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
+  .govuk-grid-row class="govuk-!-margin-bottom-3"
+    .govuk-grid-column-two-thirds
+      .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:further_corrective_action].any?)]
+        .govuk-radios
+          .govuk-radios__item
+            = form.radio_button :further_corrective_action, "Yes", class: "govuk-radios__input", value: "Yes"
+            = form.label :further_corrective_action, "Yes", class: "govuk-label govuk-radios__label", value: "Yes"
+          .govuk-radios__item
+            = form.radio_button :further_corrective_action, "No", class: "govuk-radios__input", value: "No"
+            = form.label :further_corrective_action, "No", class: "govuk-label govuk-radios__label", value: "No"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form.submit "Continue", class: "govuk-button"

@@ -1,9 +1,9 @@
 - content_for :page_title, "Add product to case"
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
-.investigation-product-page.products-search-form{ data-investigation-id=@investigation.id.to_s
+.investigation-product-page{ data-investigation-id=@investigation.id.to_s
     data-product-ids=@investigation.product_ids.join(",") }
-  = render "investigation_heading", investigation: @investigation, hide_heading_info: true
+  = render "investigation_heading", investigation: @investigation
   h2.govuk-heading-l
     | Add product
 

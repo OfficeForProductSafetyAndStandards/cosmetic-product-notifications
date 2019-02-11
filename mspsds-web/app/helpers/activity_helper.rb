@@ -1,6 +1,6 @@
 module ActivityHelper
   def activity_types
-    {
+    base_types = {
       "comment": "Add a comment",
       "email": "Record email",
       "phone_call": "Record phone call",
@@ -11,5 +11,8 @@ module ActivityHelper
       "product": "Add a product to the case",
       "business": "Add a business to the case"
     }
+    visibility_text = @investigation.is_private ? "Unrestrict this case" : "Restrict this case for legal privilege"
+    base_types["visibility"] = visibility_text if policy(@investigation).visibility?
+    base_types
   end
 end

@@ -65,19 +65,16 @@ To create a database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
-    cf create-service postgres tiny-unencrypted-10.5 cosmetics-database
-
-Larger database options should be considered if required.
-
+    cf create-service postgres small-10.5 cosmetics-database
 
 #### Redis
 
 To create a redis instance for the current space. 
 
     cf marketplace -s redis
-    cf create-service redis tiny-unclustered-3.2 cosmetics-redis
+    cf create-service redis tiny-3.2 cosmetics-queue
 
-Larger options should be considered if required. The current worker (sidekiq) only works with the unclustered version.
+The current worker (sidekiq), which uses `cosmetics-queue` only works with an unclustered instance of redis.
 
 #### S3
 
@@ -97,6 +94,10 @@ This provisions the app in Cloud Foundry.
     cf set-env cosmetics-web RAILS_ENV production
 
 This configures rails to use the production database amongst other things.
+
+    cf set-env cosmetics-web COSMETICS_HOST XXX
+
+This is the URL for the website and is used for sending emails.
 
     cf set-env cosmetics-web SECRET_KEY_BASE XXX
 

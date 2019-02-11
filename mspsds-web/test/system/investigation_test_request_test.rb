@@ -30,6 +30,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
     assert_text "Test requested: #{@test.product.name}"
     assert_text "Testing requested"
   end
@@ -92,7 +93,6 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     attachment_description = "Test attachment description"
 
     fill_in_basic_details
-    choose "test_related_file_yes", visible: false
     attach_file "test[file][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
     fill_in "Attachment description", with: attachment_description
     click_on "Continue"
@@ -103,17 +103,16 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
     assert_text "Attached: #{attachment_filename}"
     assert_text "View attachment"
   end
 
   test "attachment description field is not visible when no file is selected" do
-    choose "test_related_file_yes", visible: false
     assert_no_text "Attachment description"
   end
 
   test "attachment description field is visible when a file is selected" do
-    choose "test_related_file_yes", visible: false
     attach_file "test[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
 
     assert_text "Attachment description"
