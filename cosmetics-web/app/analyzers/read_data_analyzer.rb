@@ -1,6 +1,10 @@
 require 'zip'
 
 class ReadDataAnalyzer < ActiveStorage::Analyzer
+
+  include AnalyzerHelper
+  extend AnalyzerHelper
+
   def initialize(blob)
     super(blob)
   end
@@ -9,7 +13,7 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
     return false unless given_blob.present?
 
     # this analyzer only accepts notification files which are zip
-    notification_file = ::NotificationFile.find_by(id: given_blob.attachments.first.record_id)
+    notification_file = get_notification_file_from_blob(given_blob)
 
     notification_file.present?
   end
@@ -23,7 +27,7 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
 private
 
   def create_notification_from_file
-    notification_file = ::NotificationFile.find_by(id: ActiveStorage::Attachment.find_by(blob_id: blob.id).record_id)
+    notification_file = get_notification_file_from_blob(blob)
     @notification = ::Notification.new(product_name: get_notification_current_name,
                                        responsible_person: notification_file.responsible_person)
     @notification.notification_file_parsed!
@@ -31,24 +35,26 @@ private
   end
 
   def get_notification_current_name
-    get_xml_file do |xml_file|
-      xml_doc = Nokogiri::XML(xml_file.get_input_stream.read.gsub('sanco-xmlgate:', ''))
-      notification_current_name = xml_doc.
-          xpath('//currentVersion/generalInfo/productNameList/productName/name').first.text
-      notification_current_name
+    get_xml_file_content do |xml_file_content|
+      xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
+      return xml_doc.xpath('//currentVersion/generalInfo/productNameList/productName/name').first.text
     end
   end
 
-  def get_xml_file
+  def get_xml_file_content
     download_blob_to_tempfile do |file|
       Zip::File.open(file.path) do |zip_file|
-        yield zip_file.glob(get_xml_file_name_regex).first
+        zip_file.each do |entry|
+          if entry.name =~ get_xml_file_name_regex
+            yield entry.get_input_stream.read
+          end
+        end
       end
     end
   end
 
   def get_xml_file_name_regex
-    blob.filename.base[0...8] + '*.xml'
+    /[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml/
   end
 
   def delete_notification_file
