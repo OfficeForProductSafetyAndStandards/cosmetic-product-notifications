@@ -227,6 +227,30 @@ class InvestigationTest < ActiveSupport::TestCase
     assert_includes @investigation.past_teams, team
   end
 
+  test "people out of current assignee's team should not be able to re-assign case" do
+    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation.assignee = User.find_by(last_name: "User_one")
+    assert_not policy(investigation).assign?(user: User.find_by(last_name: "User_three"))
+  end
+
+  test "people in current assignee's team should be able to re-assign case" do
+    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation.assignee = User.find_by(last_name: "User_one")
+    assert policy(investigation).assign?(user: User.find_by(last_name: "User_two"))
+  end
+
+  test "people out of currently assigned team should not be able to re-assign case" do
+    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation.assignee = all_teams[0]
+    assert_not policy(investigation).assign?(user: User.find_by(last_name: "User_three"))
+  end
+
+  test "people in currently assigned team should be able to re-assign case" do
+    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation.assignee = all_teams[0]
+    assert policy(investigation).assign?(user: User.find_by(last_name: "Admin"))
+  end
+
   def create_new_private_case
     description = "new_investigation_description"
     @new_investigation = Investigation::Allegation.create(description: description, is_private: true)
