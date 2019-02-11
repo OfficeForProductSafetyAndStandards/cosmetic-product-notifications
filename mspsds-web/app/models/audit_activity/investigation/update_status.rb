@@ -13,6 +13,7 @@ class AuditActivity::Investigation::UpdateStatus < AuditActivity::Investigation:
   end
 
   def users_to_notify
+    return super if investigation.source&.is_a? ReportSource
     return super if source&.user == investigation.source&.user && source.present?
 
     [investigation.source&.user] + super
