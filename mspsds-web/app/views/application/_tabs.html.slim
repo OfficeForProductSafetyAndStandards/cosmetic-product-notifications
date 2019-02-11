@@ -8,5 +8,5 @@
           = tab.title
   - tabs.each do |tab|
     section.govuk-tabs__panel id=tab.id
-      h2.govuk-heading-l[class="govuk-!-margin-bottom-0"] = tab.title
+      h2.govuk-heading-l[class="govuk-!-margin-bottom-0"] = tab.title unless tab.hide_title
       = tab.render.call
