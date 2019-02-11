@@ -59,6 +59,10 @@ class Notification < ApplicationRecord
     country_from_code(import_country) || import_country
   end
 
+  def reference_number_for_display
+    "UKCP-%08d" % reference_number
+  end
+
   def images_are_present_and_safe?
     !image_uploads.empty? && image_uploads.all?(&:marked_as_safe?)
   end
