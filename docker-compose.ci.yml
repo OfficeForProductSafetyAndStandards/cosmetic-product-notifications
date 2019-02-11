@@ -17,7 +17,6 @@ services:
     image: ${DOCKER_USERNAME}/cosmetics-web:${TRAVIS_BUILD_NUMBER}
     volumes:
     - ~/bundle-cache:/usr/local/bundle
-    - ~/npm-cache:/root/.npm
     environment:
     - CI
     - TRAVIS
@@ -36,7 +35,6 @@ services:
     image: ${DOCKER_USERNAME}/mspsds-web:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
-      - ~/npm-cache:/root/.npm
     environment:
       - CI
       - TRAVIS

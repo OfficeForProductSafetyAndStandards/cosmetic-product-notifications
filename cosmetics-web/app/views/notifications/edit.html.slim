@@ -5,6 +5,7 @@
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
             | Check the cosmetic product details before registering
+        = render "error_summary", errors: @notification.errors
     .govuk-grid-column-full
         table.govuk-table
             caption.govuk-table__caption.govuk-heading-m
@@ -59,7 +60,24 @@
                     th.govuk-table__header
                         | Shades
                     td.govuk-table__cell
-                        = @notification.components.first.shades&.join(', ') || "N/A"
+                        = @notification.components.first.shades&.join(", ") || "N/A"
+                tr.govuk-table__row
+                    th.govuk-table__header
+                        | Label image
+                    td.govuk-table__cell
+                        - @notification.image_uploads.each do |image_upload|
+                            - if image_upload.file_exists?
+                                - if image_upload.marked_as_safe?
+                                    = link_to image_upload.filename, url_for(image_upload.file)
+                                - else
+                                        ' Processing image
+                                        = image_upload.filename
+                                        ' ...
+                            - else
+                                    ' Image
+                                    = image_upload.filename
+                                    ' failed anti-virus scan
+                            br
     .govuk-grid-column-two-thirds
         h3.govuk-heading-m
             | Now register your cosmetic product

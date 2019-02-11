@@ -4,6 +4,9 @@ class Notification < ApplicationRecord
 
   belongs_to :responsible_person
   has_many :components, dependent: :destroy
+  has_many :image_uploads, dependent: :destroy
+
+  accepts_nested_attributes_for :image_uploads
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_import_country, if: :will_save_change_to_import_country?
@@ -14,6 +17,7 @@ class Notification < ApplicationRecord
     state :empty, initial: true
     state :product_name_added
     state :import_country_added
+    state :components_complete
     state :draft_complete
     state :notification_complete
     state :notification_file_imported
@@ -27,11 +31,19 @@ class Notification < ApplicationRecord
     end
 
     event :set_single_or_multi_component do
-      transitions from: :import_country_added, to: :draft_complete
+      transitions from: :import_country_added, to: :components_complete
+    end
+
+    event :add_product_image do
+      transitions from: :components_complete, to: :draft_complete
     end
 
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete
+      transitions from: :draft_complete, to: :notification_complete do
+        guard do
+          images_are_present_and_safe?
+        end
+      end
     end
 
     event :notification_file_parsed do
@@ -41,6 +53,20 @@ class Notification < ApplicationRecord
 
   def import_country_for_display
     country_from_code(import_country) || import_country
+  end
+
+  def images_are_present_and_safe?
+    !image_uploads.empty? && image_uploads.all?(&:marked_as_safe?)
+  end
+
+  def images_failed_anti_virus_check?
+    image_uploads.any?(&:file_missing?)
+  end
+
+  def images_pending_anti_virus_check?
+    image_uploads.any? { |image|
+      image.file_exists? && !image.marked_as_safe?
+    }
   end
 
 private
@@ -63,10 +89,12 @@ private
       mandatory_attributes('empty')
     when 'import_country_added'
       %w[components] + mandatory_attributes('product_name_added')
+    when 'components_complete'
+      mandatory_attributes('import_country_added')
     when 'draft_complete'
-      mandatory_attributes('import_country_added')
+      mandatory_attributes('components_complete')
     when 'notification_complete'
-      mandatory_attributes('import_country_added')
+      mandatory_attributes('draft_complete')
     when 'notification_file_imported'
       mandatory_attributes('empty')
     end

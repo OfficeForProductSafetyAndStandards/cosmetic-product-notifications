@@ -96,6 +96,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     fill_in_complainant_reference
 
     # assert that corrective actions saved
+    click_link "tab_activity"
     assert_text @corrective_action_one.summary
     assert_text @corrective_action_two.summary
 

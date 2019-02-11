@@ -3,7 +3,6 @@ class Component < ApplicationRecord
 
   belongs_to :notification
 
-  before_save :update_notification_state
   before_save :add_shades, if: :will_save_change_to_shades?
 
   validates :shades, length: {
@@ -14,7 +13,7 @@ class Component < ApplicationRecord
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
-    state :component_complete
+    state :component_complete, enter: :update_notification_state
 
     event :add_shades do
       transitions from: :empty, to: :component_complete
