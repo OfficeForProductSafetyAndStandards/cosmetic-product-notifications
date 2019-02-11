@@ -85,7 +85,7 @@ You can run the Slim linting with `docker-compose exec mspsds-web bin/slim-lint 
 
 You can run the Sass linting with `docker-compose exec mspsds-web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'`.
 
-You can run the JavaScript linting with `docker-compose exec mspsds-web yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/javascripts`.
+You can run the JavaScript linting with `docker-compose exec mspsds-web yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/application/javascripts`.
 
 You can run the security vulnerability static analysis with `bin/brakeman --no-pager`.
 
