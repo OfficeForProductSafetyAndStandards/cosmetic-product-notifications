@@ -16,6 +16,7 @@ class Notification < ApplicationRecord
     state :import_country_added
     state :draft_complete
     state :notification_complete
+    state :notification_file_imported
 
     event :add_product_name do
       transitions from: :empty, to: :product_name_added
@@ -31,6 +32,10 @@ class Notification < ApplicationRecord
 
     event :submit_notification do
       transitions from: :draft_complete, to: :notification_complete
+    end
+
+    event :notification_file_parsed do
+      transitions from: :empty, to: :notification_file_imported
     end
   end
 
@@ -62,6 +67,8 @@ private
       mandatory_attributes('import_country_added')
     when 'notification_complete'
       mandatory_attributes('import_country_added')
+    when 'notification_file_imported'
+      mandatory_attributes('empty')
     end
   end
 end

@@ -446,6 +446,7 @@ DEPENDENCIES
   redis-rails
   roo (~> 2.8.2)
   rspec-mocks
+  rubyzip (>= 1.2.1)
   sass-rails (~> 5.0)
   selenium-webdriver
   sentry-raven

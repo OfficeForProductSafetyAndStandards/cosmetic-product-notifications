@@ -25,8 +25,8 @@ private
   def create_notification_from_file
     notification_file = ::NotificationFile.find_by(id: ActiveStorage::Attachment.find_by(blob_id: blob.id).record_id)
     @notification = ::Notification.new(product_name: get_notification_current_name,
-                                       state: :draft_complete,
                                        responsible_person: notification_file.responsible_person)
+    @notification.notification_file_parsed!
     @notification.save
   end
 
