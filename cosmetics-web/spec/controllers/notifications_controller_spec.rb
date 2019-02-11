@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe NotificationsController, type: :controller do
+  let(:notification) { create(:notification) }
+  let(:draft_notification) { create(:draft_notification) }
+
   before do
     sign_in_as_member_of_responsible_person(create(:responsible_person))
   end
@@ -17,9 +20,9 @@ RSpec.describe NotificationsController, type: :controller do
     end
 
     it "marks the notification as complete" do
-      notification = create(:draft_notification)
-      get(:confirmation, params: { id: notification.id })
-      expect(notification.reload.state).to eq('notification_complete')
+      attach_image_to_draft_with_metadata(safe: true)
+      get(:confirmation, params: { id: draft_notification.id })
+      expect(draft_notification.reload.state).to eq('notification_complete')
     end
   end
 
@@ -28,6 +31,19 @@ RSpec.describe NotificationsController, type: :controller do
       notification = create(:notification)
       get(:edit, params: { id: notification.id })
       expect(assigns(:notification)).to eq(notification)
+    end
+
+    it "adds error if failed attempt to submit when images are pending anti virus check" do
+      attach_image_to_draft_with_metadata({})
+      get(:edit, params: { id: draft_notification.id, submit_failed: true })
+      expect(assigns(:notification).errors[:image_uploads]).to include("waiting for files to pass anti virus check. Refresh to update")
+    end
+
+    it "adds error if failed attempt to submit when images have failed anti virus check" do
+      draft_notification.image_uploads.build
+      draft_notification.save
+      get(:edit, params: { id: draft_notification.id, submit_failed: true })
+      expect(assigns(:notification).errors[:image_uploads]).to include("failed anti virus check")
     end
   end
 
@@ -41,5 +57,19 @@ RSpec.describe NotificationsController, type: :controller do
       get :new
       expect(response).to redirect_to(new_notification_build_path(assigns(:notification).id))
     end
+  end
+
+private
+
+  def attach_image_to_draft_with_metadata(metadata)
+    draft_notification.image_uploads.build
+
+    image_upload = draft_notification.image_uploads.first
+    image_upload.file.attach(fixture_file_upload("testImage.png", "image/png"))
+    image_upload.save
+
+    blob = image_upload.file.blob
+    blob.metadata = metadata
+    blob.save
   end
 end

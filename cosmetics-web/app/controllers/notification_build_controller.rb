@@ -2,7 +2,7 @@ class NotificationBuildController < ApplicationController
   include Wicked::Wizard
   include Shared::Web::CountriesHelper
 
-  steps :add_product_name, :is_imported, :add_import_country, :single_or_multi_component
+  steps :add_product_name, :is_imported, :add_import_country, :single_or_multi_component, :add_product_image
 
   before_action :set_notification
   before_action :set_countries, only: %i[show update]
@@ -17,6 +17,19 @@ class NotificationBuildController < ApplicationController
       render_single_or_multi_component_step
     when :is_imported
       render_is_imported_step
+    when :add_product_image
+      if params[:image_upload].present?
+        params[:image_upload].each do |image|
+          image_upload = @notification.image_uploads.build
+          image_upload.file.attach(image)
+          image_upload.filename = image.original_filename
+        end
+        @notification.add_product_image
+        render_wizard @notification
+      else
+        @notification.errors.add :image_uploads, "You must upload at least one product image"
+        render step
+      end
     else
       @notification.update(notification_params)
 
@@ -40,7 +53,13 @@ class NotificationBuildController < ApplicationController
 private
 
   def notification_params
-    params.require(:notification).permit(:product_name, :is_imported, :import_country)
+    params.require(:notification)
+      .permit(
+        :product_name,
+        :is_imported,
+        :import_country,
+        image_uploads_attributes: [file: []]
+      )
   end
 
   def set_notification
