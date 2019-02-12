@@ -1,5 +1,6 @@
 / Implementation based on
-/ https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/label/template.njk
+/ https://github.com/alphagov/govuk-frontend/
+/       blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/label/template.njk
 - label_html = capture do
   / 'for' is actually a required attribute, but it can't be accessed directly since `for` is a ruby keyword
   label.govuk-label *(local_assigns[:attributes] || {}) class=local_assigns[:classes] for=local_assigns[:for]

@@ -1,378 +1,403 @@
-/ Exmpales in this file are based on  https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/radios.yaml
+/ Exmpales in this file are based on  https://github.com/alphagov/govuk-frontend/
+/           blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/radios.yaml
 h1.govuk-heading-xl Radios Component
 h2.govuk-heading-l Default
 = render "components/govuk_radios",
-  idPrefix: "example",
-  name: "example",
-  fieldset: {legend: {text: "Have you changed your name?"}},
-  hint: {text: "This includes changing your last name or spelling your name differently."},
-  items:[\
-    {text: "Yes", value:true},
-    {text: "No", value:false}]
+        idPrefix: "example",
+        name: "example",
+        fieldset: { legend: { text: "Have you changed your name?" } },
+        hint: { text: "This includes changing your last name or spelling your name differently." },
+        items: [\
+                { text: "Yes", value: true },
+                { text: "No", value: false }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Inline
 = render "components/govuk_radios",
-  idPrefix: "example'",
-  classes: "govuk-radios--inline",
-  name: "example-inline",
-  fieldset: {legend: {text: "Have you changed your name?"}},
-  hint: {text: "This includes changing your last name or spelling your name differently."},
-  items: [\
-    {value: "yes", text: "Yes"},
-    {value: "no", text: "No", checked: true}]
+        idPrefix: "example'",
+        classes: "govuk-radios--inline",
+        name: "example-inline",
+        fieldset: { legend: { text: "Have you changed your name?" } },
+        hint: { text: "This includes changing your last name or spelling your name differently." },
+        items: [\
+                { value: "yes", text: "Yes" },
+                { value: "no", text: "No", checked: true }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Disabled
 = render "components/govuk_radios",
-  idPrefix: "example-disabled",
-  name: "example-disabled",
-  fieldset: {legend: {text: "Have you changed your name?"}},
-  hint: {text: "This includes changing your last name or spelling your name differently."},
-  items: [\
-    {value: "yes", text: "Yes", disabled: true},
-    {value: "no", text: "No", disabled: true}]
+        idPrefix: "example-disabled",
+        name: "example-disabled",
+        fieldset: { legend: { text: "Have you changed your name?" } },
+        hint: { text: "This includes changing your last name or spelling your name differently." },
+        items: [\
+                { value: "yes", text: "Yes", disabled: true },
+                { value: "no", text: "No", disabled: true }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With Legend as heading
 = render "components/govuk_radios",
-  "idPrefix": "housing-act",
-  "name": "housing-act",
-  "fieldset": {\
-    "legend": {\
-      "text": "Which part of the Housing Act was your licence issued under?",
-      "classes": "govuk-fieldset__legend--l",
-      "isPageHeading": true\
-    }\
-  },
-  "hint": {\
-    "text": "Select one of the options below."\
-  },
-  "items": [\
-    {\
-      "value": "part-2",
-      "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 2 of the Housing Act 2004</span> For properties that are 3 or more stories high and occupied by 5 or more people"\
-    },
-    {\
-      "value": "part-3",
-      "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 3 of the Housing Act 2004</span> For properties that are within a geographical area defined by a local council"\
-    }\
-  ]
+        "idPrefix": "housing-act",
+        "name": "housing-act",
+        "fieldset": { "legend": { "text": "Which part of the Housing Act was your licence issued under?",
+                "classes": "govuk-fieldset__legend--l",
+                "isPageHeading": true } },
+        "hint": { "text": "Select one of the options below." },
+        "items": [{ "value": "part-2",
+                    "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 2 of the Housing Act 2004\
+                    </span> For properties that are 3 or more stories high and occupied by 5 or more people" },
+                { "value": "part-3",
+                  "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 3 of the Housing Act \
+                  2004</span> For properties that are within a geographical area defined by a local council" }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With a medium legend
 = render "components/govuk_radios",
-  "idPrefix": "housing-act",\
-  "name": "housing-act-medium-legend",\
-  "fieldset": {\
-    "legend": {\
-      "text": "Which part of the Housing Act was your licence issued under?",\
+        "idPrefix": "housing-act", \
+  "name": "housing-act-medium-legend", \
+  "fieldset": { \
+    "legend": { \
+      "text": "Which part of the Housing Act was your licence issued under?", \
       "classes": "govuk-fieldset__legend--m"\
-    }\
-  },\
-  "hint": {\
+     }\
+   }, \
+  "hint": { \
     "text": "Select one of the options below."\
-  },\
+   }, \
   "items": [\
-    {\
-      "value": "part-2",\
-      "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 2 of the Housing Act 2004</span> For properties that are 3 or more stories high and occupied by 5 or more people"\
-    },\
-    {\
-      "value": "part-3",\
-      "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 3 of the Housing Act 2004</span> For properties that are within a geographical area defined by a local council"\
-    }\
+    { \
+      "value": "part-2", \
+      "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 2 of the Housing Act 2004</span> For\
+       properties that are 3 or more stories high and occupied by 5 or more people"\
+     }, \
+    { \
+      "value": "part-3", \
+      "html": "<span class=\"govuk-heading-s govuk-!-margin-bottom-1\">Part 3 of the Housing\
+       Act 2004</span> For properties that are within a geographical area defined by a local council"\
+     }\
   ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With a divider
 = render "components/govuk_radios",
-  "idPrefix": "example-divider",\
-  "name": "example-with-divider",\
-  "fieldset": {\
-    "legend": {\
+        "idPrefix": "example-divider", \
+  "name": "example-with-divider", \
+  "fieldset": { \
+    "legend": { \
       "text": "How do you want to sign in?"\
-    }\
-  },\
+     }\
+   }, \
   "items": [\
-    {\
-      "value": "governement-gateway",\
+    { \
+      "value": "governement-gateway", \
       "text": "Use Government Gateway"\
-    },\
-    {\
-      "value": "govuk-verify",\
+     }, \
+    { \
+      "value": "govuk-verify", \
       "text": "Use GOV.UK Verify"\
-    },\
-    {\
+     }, \
+    { \
       "divider": "or"\
-    },\
-    {\
-      "value": "create-account",\
+     }, \
+    { \
+      "value": "create-account", \
       "text": "Create an account"\
-    }\
+     }\
   ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With hints on items
 = render "components/govuk_radios",
-  "idPrefix": "gov",\
-  "name": "gov-with-hints",\
-  "fieldset": {\
-    "legend": {\
-      "text": "How do you want to sign in?",\
+        "idPrefix": "gov", \
+  "name": "gov-with-hints", \
+  "fieldset": { \
+    "legend": { \
+      "text": "How do you want to sign in?", \
       "isPageHeading": true\
-    }\
-  },\
+     }\
+   }, \
   "items": [\
-    {\
-      "value": "gateway",\
-      "text": "Sign in with Government Gateway",\
-      "hint": {\
+    { \
+      "value": "gateway", \
+      "text": "Sign in with Government Gateway", \
+      "hint": { \
         "text": "You'll have a user ID if you've registered for Self Assessment or filed a tax return online before."\
-      }\
-    },\
-    {\
-      "value": "verify",\
-      "text": "Sign in with GOV.UK Verify",\
-      "hint": {\
-        "text": "You’ll have an account if you’ve already proved your identity with either Barclays, CitizenSafe, Digidentity, Experian, Post Office, Royal Mail or SecureIdentity."\
-      }\
-    }\
+       }\
+     }, \
+    { \
+      "value": "verify", \
+      "text": "Sign in with GOV.UK Verify", \
+      "hint": { \
+        "text": "You’ll have an account if you’ve already proved your identity with either Barclays,\
+         CitizenSafe, Digidentity, Experian, Post Office, Royal Mail or SecureIdentity."\
+       }\
+     }\
   ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Without fieldset
 = render "components/govuk_radios",
-  "name": "colours",\
+        "name": "colours", \
   "items": [\
-    {\
-      "value": "red",\
+    { \
+      "value": "red", \
       "text": "Red"\
-    },\
-    {\
-      "value": "green",\
+     }, \
+    { \
+      "value": "green", \
       "text": "Green"\
-    },\
-    {\
-      "value": "blue",\
+     }, \
+    { \
+      "value": "blue", \
       "text": "Blue"\
-    }\
+     }\
   ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With all fieldset attributes
 = render "components/govuk_radios",
-  "idPrefix": "example-with-attributes",\
-  "name": "example-with-attributes",\
-  "errorMessage": {\
+        "idPrefix": "example-with-attributes", \
+  "name": "example-with-attributes", \
+  "errorMessage": { \
     "text": "Please select an option"\
-  },\
-  "fieldset": {\
-    "classes": "app-fieldset--custom-modifier",\
-    "attributes": {\
-      "data-attribute": "value",\
+   }, \
+  "fieldset": { \
+    "classes": "app-fieldset--custom-modifier", \
+    "attributes": { \
+      "data-attribute": "value", \
       "data-second-attribute": "second-value"\
-    },\
-    "legend": {\
+     }, \
+    "legend": { \
       "text": "Have you changed your name?"\
-    }\
-  },\
-  "hint": {\
+     }\
+   }, \
+  "hint": { \
     "text": "This includes changing your last name or spelling your name differently."\
-  },\
+   }, \
   "items": [\
-    {\
-      "value": "yes",\
+    { \
+      "value": "yes", \
       "text": "Yes"\
-    },\
-    {\
-      "value": "no",\
-      "text": "No",\
+     }, \
+    { \
+      "value": "no", \
+      "text": "No", \
       "checked": true\
-    }\
+     }\
   ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With very long option text
 = render "components/govuk_radios",
-  "name": "waste",\
-  "hint": {\
+        "name": "waste", \
+  "hint": { \
     "text": "Nullam id dolor id nibh ultricies vehicula ut id elit."\
-  },\
-  "errorMessage": {\
+   }, \
+  "errorMessage": { \
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."\
-  },\
-  "fieldset": {\
-    "legend": {\
+   }, \
+  "fieldset": { \
+    "legend": { \
       "text": "Maecenas faucibus mollis interdum?"\
-    }\
-  },\
+     }\
+   }, \
   "items": [\
-    {\
-      "value": "nullam",\
-      "text": "Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus."\
-    },\
-    {\
-      "value": "aenean",\
-      "text": "Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec sed odio dui. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum."\
-    },\
-    {\
-      "value": "fusce",\
-      "text": "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Etiam porta sem malesuada magna mollis euismod. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Sed posuere consectetur est at lobortis."\
-    }\
+    { \
+      "value": "nullam", \
+      "text": "Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam. Pellentesque ornare sem\
+       lacinia quam venenatis vestibulum. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at\
+        eget metus."\
+     }, \
+    { \
+      "value": "aenean", \
+      "text": "Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec sed odio dui.\
+       Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.\
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu leo quam.\
+         Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum."\
+     }, \
+    { \
+      "value": "fusce", \
+      "text": "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit\
+       amet risus. Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl\
+        consectetur et. Etiam porta sem malesuada magna mollis euismod. Etiam porta sem malesuada magna mollis euismod.\
+         Donec sed odio dui. Sed posuere consectetur est at lobortis."\
+     }\
   ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With conditional items
 = render "components/govuk_radios",
-  "idPrefix": "how-contacted",\
-  "name": "how-contacted",\
-  "fieldset": {\
-    "legend": {\
+        "idPrefix": "how-contacted", \
+  "name": "how-contacted", \
+  "fieldset": { \
+    "legend": { \
       "text": "How do you want to be contacted?"\
-    }\
-  },\
+     }\
+   }, \
   "items": [\
-    {\
-      "value": "email",\
-      "text": "Email",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"context-email\">Email address</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"context-email\" type=\"text\" id=\"context-email\">\n"\
-      }\
-    },\
-    {\
-      "value": "phone",\
-      "text": "Phone",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"contact-phone\">Phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-phone\" type=\"text\" id=\"contact-phone\">\n"\
-      }\
-    },\
-    {\
-      "value": "text",\
-      "text": "Text message",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" id=\"contact-text-message\">\n"\
-      }\
-    }\
+    { \
+      "value": "email", \
+      "text": "Email", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"context-email\">Email address</label>\n<input class=\"govuk-input \
+        govuk-!-width-one-third\" name=\"context-email\" type=\"text\" id=\"context-email\">\n"\
+       }\
+     }, \
+    { \
+      "value": "phone", \
+      "text": "Phone", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"contact-phone\">Phone number</label>\n<input class=\"govuk-input \
+        govuk-!-width-one-third\" name=\"contact-phone\" type=\"text\" id=\"contact-phone\">\n"\
+       }\
+     }, \
+    { \
+      "value": "text", \
+      "text": "Text message", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n<input \
+        class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" \
+        id=\"contact-text-message\">\n"\
+       }\
+     }\
   ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Inline with conditional items
 = render "components/govuk_radios",
-  "classes": "govuk-radios--inline",\
-  "idPrefix": "how-contacted-inline",\
-  "name": "how-contacted-inline",\
-  "fieldset": {\
-    "legend": {\
+        "classes": "govuk-radios--inline", \
+  "idPrefix": "how-contacted-inline", \
+  "name": "how-contacted-inline", \
+  "fieldset": { \
+    "legend": { \
       "text": "How do you want to be contacted?"\
-    }\
-  },\
+     }\
+   }, \
   "items": [\
-    {\
-      "value": "email",\
-      "text": "Email",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"context-email\">Email address</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"context-email\" type=\"text\" id=\"context-email\">\n"\
-      }\
-    },\
-    {\
-      "value": "phone",\
-      "text": "Phone",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"contact-phone\">Phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-phone\" type=\"text\" id=\"contact-phone\">\n"\
-      }\
-    },\
-    {\
-      "value": "text",\
-      "text": "Text message",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" id=\"contact-text-message\">\n"\
-      }\
-    }\
+    { \
+      "value": "email", \
+      "text": "Email", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"context-email\">Email address</label>\n\
+        <input class=\"govuk-input govuk-!-width-one-third\" name=\"context-email\" type=\"text\" \
+        id=\"context-email\">\n"\
+       }\
+     }, \
+    { \
+      "value": "phone", \
+      "text": "Phone", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"contact-phone\">Phone number</label>\n\
+        <input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-phone\" type=\"text\" \
+        id=\"contact-phone\">\n"\
+       }\
+     }, \
+    { \
+      "value": "text", \
+      "text": "Text message", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\
+        \n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" \
+        id=\"contact-text-message\">\n"\
+       }\
+     }\
   ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With conditional item checked
 = render "components/govuk_radios",
-  "idPrefix": "how-contacted-checked",\
-  "name": "how-contacted-checked",\
-  "fieldset": {\
-    "legend": {\
+        "idPrefix": "how-contacted-checked", \
+  "name": "how-contacted-checked", \
+  "fieldset": { \
+    "legend": { \
       "text": "How do you want to be contacted?"\
-    }\
-  },\
+     }\
+   }, \
   "items": [\
-    {\
-      "value": "email",\
-      "text": "Email",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"context-email\">Email address</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"context-email\" type=\"text\" id=\"context-email\">\n"\
-      }\
-    },\
-    {\
-      "value": "phone",\
-      "text": "Phone",\
-      "checked": true,\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"contact-phone\">Phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-phone\" type=\"text\" id=\"contact-phone\">\n"\
-      }\
-    },\
-    {\
-      "value": "text",\
-      "text": "Text message",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" id=\"contact-text-message\">\n"\
-      }\
-    }\
+    { \
+      "value": "email", \
+      "text": "Email", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"context-email\">Email address</label>\n\
+        <input class=\"govuk-input govuk-!-width-one-third\" name=\"context-email\" type=\"text\" \
+        id=\"context-email\">\n"\
+       }\
+     }, \
+    { \
+      "value": "phone", \
+      "text": "Phone", \
+      "checked": true, \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"contact-phone\">Phone number</label>\n\
+        <input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-phone\" type=\"text\" \
+        id=\"contact-phone\">\n"\
+       }\
+     }, \
+    { \
+      "value": "text", \
+      "text": "Text message", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\
+        \n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" \
+        id=\"contact-text-message\">\n"\
+       }\
+     }\
   ]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With optional form-group classes showing group error
 = render "components/govuk_radios",
-  "idPrefix": "how-contacted-error",\
-  "name": "how-contacted-error",\
-  "formGroup": {\
+        "idPrefix": "how-contacted-error", \
+  "name": "how-contacted-error", \
+  "formGroup": { \
     "classes": "govuk-form-group--error"\
-  },\
-  "fieldset": {\
-    "legend": {\
+   }, \
+  "fieldset": { \
+    "legend": { \
       "text": "How do you want to be contacted?"\
-    }\
-  },\
+     }\
+   }, \
   "items": [\
-    {\
-      "value": "email",\
-      "text": "Email",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"context-email\">Mobile phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"context-email\" type=\"text\" id=\"context-email\">\n"\
-      }\
-    },\
-    {\
-      "value": "phone",\
-      "text": "Phone",\
-      "checked": true,\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"contact-phone\">Phone number</label>\n<span id=\"contact-phone-error\" class=\"govuk-error-message\">Problem with input</span>\n<input class=\"govuk-input govuk-input--error govuk-!-width-one-third\" name=\"contact-phone\" type=\"text\" id=\"contact-phone\" aria-describedby=\"contact-phone-error\">\n"\
-      }\
-    },\
-    {\
-      "value": "text",\
-      "text": "Text message",\
-      "conditional": {\
-        "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n<input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" id=\"contact-text-message\">\n"\
-      }\
-    }\
+    { \
+      "value": "email", \
+      "text": "Email", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"context-email\">Mobile phone number</label>\n\
+        <input class=\"govuk-input govuk-!-width-one-third\" name=\"context-email\" type=\"text\" \
+        id=\"context-email\">\n"\
+       }\
+     }, \
+    { \
+      "value": "phone", \
+      "text": "Phone", \
+      "checked": true, \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"contact-phone\">Phone number</label>\n\
+        <span id=\"contact-phone-error\" class=\"govuk-error-message\">Problem with input</span>\n\
+        <input class=\"govuk-input govuk-input--error govuk-!-width-one-third\" name=\"contact-phone\" \
+        type=\"text\" id=\"contact-phone\" aria-describedby=\"contact-phone-error\">\n"\
+       }\
+     }, \
+    { \
+      "value": "text", \
+      "text": "Text message", \
+      "conditional": { \
+        "html": "<label class=\"govuk-label\" for=\"contact-text-message\">Mobile phone number</label>\n\
+        <input class=\"govuk-input govuk-!-width-one-third\" name=\"contact-text-message\" type=\"text\" \
+        id=\"contact-text-message\">\n"\
+       }\
+     }\
   ]

@@ -24,11 +24,12 @@ main.govuk-main-wrapper role="main"
                     class: "govuk-input govuk-!-width-two-thirds", aria_describedby: "correspondent-phone-number-hint"
         = render "form_components/govuk_radios", form: form, key: :has_consumer_info,
                 classes: "govuk-radios--inline",
-                fieldset: {legend: {text: "Are these consumer contact details?", classes: "govuk-fieldset__legend--l"}},
-                hint: {text: "Consumer contact details are protected by GDPR legislation"},
-                items: [{text: "No", value: "false"}, {text: "Yes", value: "true"}]
-        = render "components/govuk_fieldset", legend: {text: "Date of call", classes: "govuk-fieldset__legend--l"},
-                attributes: {"aria-describedby": "correspondence-date-hint"}
+                fieldset: { legend: { text: "Are these consumer contact details?",
+                        classes: "govuk-fieldset__legend--l" } },
+                hint: { text: "Consumer contact details are protected by GDPR legislation" },
+                items: [{ text: "No", value: "false" }, { text: "Yes", value: "true" }]
+        = render "components/govuk_fieldset", legend: { text: "Date of call", classes: "govuk-fieldset__legend--l" },
+                attributes: { "aria-describedby": "correspondence-date-hint" } do
           = render "date_input", form: form
         .govuk-form-group
           = form.submit "Continue", class: "govuk-button"

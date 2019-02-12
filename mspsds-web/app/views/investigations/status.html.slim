@@ -7,8 +7,8 @@ h2.govuk-heading-l
 = form_with(model: @investigation, method: :put, url: status_investigation_url(@investigation)) do |form|
   = render "form_validation_display", errors: @investigation.errors
   = render "form_components/govuk_radios", form: form, key: :is_closed,
-          fieldset: {legend: {text: "Status"}},
-          items: [{text: "Open", value: "false"}, {text: "Closed", value: "true"}]
+          fieldset: { legend: { text: "Status" } },
+          items: [{ text: "Open", value: "false" }, { text: "Closed", value: "true" }]
   fieldset.govuk-fieldset
     legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       | Comment / rationale

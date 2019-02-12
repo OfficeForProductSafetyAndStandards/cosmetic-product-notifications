@@ -51,7 +51,7 @@ fieldset.govuk-fieldset
           ' Only businesses already added to the case are listed.
         = form.collection_select :business_id, investigation.businesses, :id, :trading_name,
                 { include_blank: true,
-                selected: investigation.businesses.size == 1 && investigation.businesses.first.id },
+                        selected: investigation.businesses.size == 1 && investigation.businesses.first.id },
                 class: "govuk-select", id: "business-picker"
 
 fieldset.govuk-fieldset
@@ -62,7 +62,7 @@ fieldset.govuk-fieldset
   - file_field = capture do
     = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
   = render "form_components/govuk_radios", form: form, key: :related_file,
-          fieldset: {legend: {text: "Are there any files related to the action?",
-                  classes: "govuk-fieldset__legend--l"}},
-          items: [{text: "Yes", value: "Yes", conditional: {html: file_field}},
-                  {text: "No", value: "No"}]
+          fieldset: { legend: { text: "Are there any files related to the action?",
+                  classes: "govuk-fieldset__legend--l" } },
+          items: [{ text: "Yes", value: "Yes", conditional: { html: file_field } },
+                  { text: "No", value: "No" }]

@@ -10,11 +10,11 @@
     = form_with(model: @investigation, method: :put, url: visibility_investigation_url(@investigation)) do |form|
       = render "form_validation_display", errors: @investigation.errors
       = render "form_components/govuk_radios", form: form, key: :is_private,
-              fieldset: {legend: {html: heading_content}},
-              hint: {text: "Restricted cases are visible only to the organisation that created them and the" + \
-                          " organisation to which they are currently assigned."},
-              items: [{text: visibility_options[:public], value: "false"},
-                      {text: visibility_options[:private], value: "true"}]
+              fieldset: { legend: { html: heading_content } },
+              hint: { text: "Restricted cases are visible only to the organisation that created them and the" + \
+                          " organisation to which they are currently assigned." },
+              items: [{ text: visibility_options[:public], value: "false" },
+                      { text: visibility_options[:private], value: "true" }]
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Comment / rationale

@@ -1,8 +1,10 @@
 / Implementation based on
-/ https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/template.njk
-- id_prefix = local_assigns[:idPrefix].presence || name
-- described_by = ""
-- is_conditional = items.any? {|item| item[:conditional]}
+/ https://github.com/alphagov/govuk-frontend/
+/       blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/template.njk
+ruby:
+  id_prefix = local_assigns[:idPrefix].presence || name
+  described_by = ""
+  is_conditional = items.any? { |item| item[:conditional] }
 - radios_html = capture do
   - if local_assigns[:hint].present?
     - hint_id = id_prefix + '-hint'
@@ -12,9 +14,9 @@
     - error_id = id_prefix + '-error'
     - described_by = described_by.present? ? described_by + ' ' + error_id : error_id
     = render "components/govuk_error_message", id: error_id, **errorMessage
-  .govuk-radios [
-      class=[local_assigns[:classes], ("govuk-radios--conditional" if is_conditional)]
-      data-module=("radios" if is_conditional) *(local_assigns[:attributes] || {})]
+  - radios_classes = [local_assigns[:classes]]
+  - radios_classes.push "govuk-radios--conditional" if is_conditional
+  .govuk-radios *(local_assigns[:attributes] || {}) class=radios_classes data-module=("radios" if is_conditional)
     - items.each_with_index do |item, i|
       - id = item[:id] || "#{id_prefix}-#{i}"
       - conditional_id = 'conditional-' + id
@@ -24,7 +26,7 @@
         - has_hint = item[:hint] && (item[:hint][:text] || item[:hint][:html])
         - item_hint_id = id + '-item-hint'
         .govuk-radios__item
-          input.govuk-radios__input [
+          input.govuk-radios__input [*(local_assigns[:attributes] || {})
             id=id
             name=name
             type='radio'
@@ -32,7 +34,7 @@
             checked=item[:checked]
             disabled=item[:disabled]
             data-aria-controls=(conditional_id if item[:conditional])
-            aria-describeby= (item_hint_id if has_hint) *(local_assigns[:attributes] || {})]
+            aria-describeby=(item_hint_id if has_hint)]
           = render "components/govuk_label",
                   html: item[:html],
                   text: item[:text],

@@ -28,15 +28,15 @@
               | Assigned to
             .govuk-checkboxes data-module="checkboxes"
               .govuk-checkboxes__item
-                = form.check_box :assigned_to_me, {class: "govuk-checkboxes__input"}, "checked", "unchecked"
+                = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
                 = form.label :assigned_to_me, "Me", class: "govuk-checkboxes__label"
               - teams_with_keys.each do |key, team, name|
                 .govuk-checkboxes__item
                   = form.check_box key, { class: "govuk-checkboxes__input" }, team.id, ""
                   = form.label key, name, class: "govuk-checkboxes__label"
               .govuk-checkboxes__item
-                = form.check_box :assigned_to_someone_else, {class: "govuk-checkboxes__input",
-                        "data-aria-controls": "conditional-other-assignee"}, "checked", "unchecked"
+                = form.check_box :assigned_to_someone_else, { class: "govuk-checkboxes__input",
+                        "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
                 = form.label :assigned_to_someone_else, "Other person or team", class: "govuk-checkboxes__label"
               #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
                 = form.label :assigned_to_someone_else_id, "Name", class: "govuk-label"
@@ -50,16 +50,16 @@
               | Status
             .govuk-checkboxes
               .govuk-checkboxes__item
-                = form.check_box :status_open, {class: "govuk-checkboxes__input"}, "checked", "unchecked"
+                = form.check_box :status_open, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
                 = form.label :status_open, "Open", class: "govuk-checkboxes__label"
               .govuk-checkboxes__item
-                = form.check_box :status_closed, {class: "govuk-checkboxes__input"}, "checked", "unchecked"
+                = form.check_box :status_closed, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
                 = form.label :status_closed, "Closed", class: "govuk-checkboxes__label"
         = render "form_components/govuk_radios", form: form, key: :sort_by,
-                fieldset: {legend: {text: "Sort by", classes: "govuk-fieldset__legend--s"}},
-                items: [{text: "Updated: recent", value: "recent"},
-                        {text: "Updated: oldest", value: "oldest"},
-                        {text: "Created: newest", value: "newest"}]
+                fieldset: { legend: { text: "Sort by", classes: "govuk-fieldset__legend--s" } },
+                items: [{ text: "Updated: recent", value: "recent" },
+                        { text: "Updated: oldest", value: "oldest" },
+                        { text: "Created: newest", value: "newest" }]
         = form.submit "Apply filters", name: nil, class: "govuk-button"
   .govuk-grid-column-three-quarters
     - if @results.any?

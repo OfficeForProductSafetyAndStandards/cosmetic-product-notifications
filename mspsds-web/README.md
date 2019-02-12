@@ -1,7 +1,7 @@
 # MSPSDS Website
 
 This folder contains the configuration and code for the MSPSDS website.
-This folder also contains the code for the (background worker)[../mspsds-worker/README.md].
+This folder also contains the code for the [background worker](../mspsds-worker/README.md).
 
 
 ## Overview

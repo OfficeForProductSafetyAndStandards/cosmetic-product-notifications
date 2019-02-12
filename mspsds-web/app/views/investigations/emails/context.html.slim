@@ -10,10 +10,10 @@ h1.govuk-heading-xl
   .govuk-grid-column-two-thirds
     = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
       = render "form_validation_display", errors: @correspondence.errors, model_name: "email"
-      = render "components/govuk_fieldset", legend: {text: "Email details", classes: "govuk-fieldset__legend--l"}
+      = render "components/govuk_fieldset", legend: { text: "Email details", classes: "govuk-fieldset__legend--l" } do
         = render "form_components/govuk_radios", form: form, key: :email_direction,
                 classes: "govuk-radios--inline",
-                items: Correspondence::Email.email_directions.map {|value, label| {text: label, value: value}}
+                items: Correspondence::Email.email_directions.map { |value, label| { text: label, value: value } }
         .govuk-form-group [class="govuk-!-width-two-thirds"]
           = form.label :correspondent_name, "Name", class: "govuk-label govuk-!-width-two-thirds"
           = form.text_field :correspondent_name, class: "govuk-input"
@@ -23,11 +23,12 @@ h1.govuk-heading-xl
 
       = render "form_components/govuk_radios", form: form, key: :has_consumer_info,
               classes: "govuk-radios--inline",
-              fieldset: {legend: {text: "Are these consumer contact details?", classes: "govuk-fieldset__legend--l"}},
-              hint: {text: "Consumer contact details are protected by GDPR legislation"},
-              items: [{text: "No", value: "false"}, {text: "Yes", value: "true"}]
-      = render "components/govuk_fieldset", legend: {text: "Date sent", classes: "govuk-fieldset__legend--l"},
-              attributes: {"aria-describedby": "correspondence-date-hint"}
+              fieldset: { legend: { text: "Are these consumer contact details?",
+                      classes: "govuk-fieldset__legend--l" } },
+              hint: { text: "Consumer contact details are protected by GDPR legislation" },
+              items: [{ text: "No", value: "false" }, { text: "Yes", value: "true" }]
+      = render "components/govuk_fieldset", legend: { text: "Date sent", classes: "govuk-fieldset__legend--l" },
+              attributes: { "aria-describedby": "correspondence-date-hint" } do
         = render "date_input", form: form
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

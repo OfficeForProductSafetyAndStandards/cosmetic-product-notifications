@@ -1,34 +1,43 @@
 = form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
   = render "form_validation_display", errors: investigation.errors
-  - items = investigation.important_assignable_people.map {|user| {text: user.display_name,
-          value: user.id, checked: investigation.assignee == user}}
+
   - if current_user.teams.any?
     - someone_in_your_team = capture do
       = render "investigations/assign/assignee_selection", form: form, key: :select_team_member,
               options: compute_select_options(entities: User.get_team_members(user: current_user)),
               accessible_hint: "Name"
-    - items.push({text: "Someone in your team", value: "someone_in_your_team",
-            conditional: {html: someone_in_your_team}})
   - previously_assigned = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
             options: compute_select_options(entities: investigation.past_assignees + investigation.past_teams,
-            ignore_visibility_restrictions: true),
+                    ignore_visibility_restrictions: true),
             accessible_hint: "Select previously assigned person or team"
-  - items.push({text: "Previously assigned", value: "previously_assigned", conditional: {html: previously_assigned}})
-  - items.push({divider: "Teams"})
-  - items.concat(investigation.important_assignable_teams.map {|team| {text: team.display_name,
-          value: team.id, checked: investigation.assignee == team}})
   - other_teams = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_other_team,
             options: compute_select_options(entities: Team.all, ignore_visibility_restrictions: true),
             accessible_hint: "Other team name"
-  - items.push({text: "Other team", value: "other_team", conditional: {html: other_teams}})
-  - items.push({divider: "or"})
+
   - someone_else = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_someone_else,
             options: compute_select_options(entities: User.all),
             accessible_hint: "Name"
-  - items.push({text: "Someone else", value: "someone_else", conditional: {html: someone_else}})
+  ruby:
+    items = investigation.important_assignable_people.map do |user|
+      { text: user.display_name, value: user.id, checked: investigation.assignee == user }
+    end
+    if current_user.teams.any?
+      items.push text: "Someone in your team",
+                 value: "someone_in_your_team",
+                 conditional: { html: someone_in_your_team }
+    end
+    items.push text: "Previously assigned", value: "previously_assigned", conditional: { html: previously_assigned }
+    items.push divider: "Teams"
+    teams = investigation.important_assignable_teams.map do |team|
+      { text: team.display_name, value: team.id, checked: investigation.assignee == team }
+    end
+    items.concat teams
+    items.push text: "Other team", value: "other_team", conditional: { html: other_teams }
+    items.push divider: "or"
+    items.push text: "Someone else", value: "someone_else", conditional: { html: someone_else }
 
   = render "form_components/govuk_radios", form: form, key: :assignable_id_radio, items: items
   .govuk-form-group

@@ -18,13 +18,14 @@ h1.govuk-heading-xl
     .govuk-grid-column-full
       hr.govuk-section-break.govuk-section-break--visible
       div class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
-        - errorText = @corrective_action.errors.messages[:further_corrective_action].first
+        - error_text = @corrective_action.errors.messages[:further_corrective_action].first
         = render "components/govuk_radios",
                 name: :further_corrective_action,
-                errorMessage: errorText && {text: errorText},
-                fieldset: {legend: {text: "Are there other actions to report?", classes: "govuk-fieldset__legend--l"}},
-                items: [{text: "Yes", value: "Yes", checked: @repeat_step == "Yes",
-                        id: "further_corrective_action_yes"},
-                        {text: "No", value: "No", checked: @repeat_step == "No", id: "further_corrective_action_no"}]
+                errorMessage: error_text && { text: error_text },
+                fieldset: { legend: { text: "Are there other actions to report?",
+                        classes: "govuk-fieldset__legend--l" } },
+                items: [{ text: "Yes", value: "Yes", checked: @repeat_step == "Yes",
+                        id: "further_corrective_action_yes" },
+                        { text: "No", value: "No", checked: @repeat_step == "No", id: "further_corrective_action_no" }]
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

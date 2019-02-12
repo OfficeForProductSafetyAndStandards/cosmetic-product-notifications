@@ -10,6 +10,6 @@
       = render "form_validation_display", errors: @investigation.errors, model_name: "investigation",
               prepend_messages_with_keys: false
       = render "form_components/govuk_radios", form: form, key: :further_corrective_action,
-              fieldset: {legend: {html: heading}},
-              items: [{text: "Yes", value: "Yes"}, {text: "No", value: "No"}]
+              fieldset: { legend: { html: heading } },
+              items: [{ text: "Yes", value: "Yes" }, { text: "No", value: "No" }]
       = form.submit "Continue", class: "govuk-button"
