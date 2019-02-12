@@ -7,6 +7,8 @@ class Investigation < ApplicationRecord
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
 
+  scope :this_month, -> { where(created_at: Time.now.beginning_of_month..Time.now.end_of_month) }
+
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
@@ -117,11 +119,6 @@ class Investigation < ApplicationRecord
     is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
   end
 
-  def pretty_id
-    id_string = id.to_s.rjust(8, '0')
-    id_string.insert(4, "-")
-  end
-
   def self.reverse_pretty_id(pretty_id)
     pretty_id[0..4].to_i * (10**(pretty_id.length - 5)) + pretty_id[5..pretty_id.length].to_i
   end
@@ -196,6 +193,11 @@ class Investigation < ApplicationRecord
 
   def to_param
     pretty_id
+  end
+
+  def self.next_pretty_id(id: Investigation.this_month.count)
+    month_count = id.to_s.rjust(4, '0')
+    "#{Time.now.strftime("%y%m")}-#{month_count}"
   end
 
 private
