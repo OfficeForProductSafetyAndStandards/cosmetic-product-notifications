@@ -80,7 +80,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date must be a valid date")
+    assert_text("Enter a real date of the test")
   end
 
   test "date with missing component shows an error" do
@@ -88,7 +88,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date must specify a day, month and year")
+    assert_text("Enter date of the test and include a day, month and year")
   end
 
   test "can add an attachment to the test result" do

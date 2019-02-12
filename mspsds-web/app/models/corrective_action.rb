@@ -13,6 +13,14 @@ class CorrectiveAction < ApplicationRecord
     :date_decided
   end
 
+  def invalid_date_message
+    "Enter a real date when the corrective action was decided"
+  end
+
+  def missing_date_component_message
+    "Enter the date the corrective action was decided and include a day, month and year"
+  end
+
   validates :summary, presence: { message: "Enter a summary of the corrective action" }
   validates :date_decided, presence: { message: "Enter the date the corrective action was decided" }
   validate :date_decided_cannot_be_in_the_future

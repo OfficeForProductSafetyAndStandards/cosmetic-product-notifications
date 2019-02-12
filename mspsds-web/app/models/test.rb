@@ -6,7 +6,6 @@ class Test < ApplicationRecord
 
   has_many_attached :documents
 
-  validates :date, presence: { message: "Enter date of the test" }
   validates :legislation, presence: { message: "Select the legislation that relates to this test" }
 
   validates_length_of :details, maximum: 1000

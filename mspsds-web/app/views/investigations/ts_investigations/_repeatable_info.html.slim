@@ -21,8 +21,8 @@
                 errorMessage: error_text && { text: error_text },
                 fieldset: { legend: { text: other_text, classes: "govuk-fieldset__legend--l" } },
                 items: [{ text: "Yes", value: "Yes", checked: @repeat_step == "Yes",
-                        id: "further_corrective_action_yes" },
-                        { text: "No", value: "No", checked: @repeat_step == "No", id: "further_corrective_action_no" }]
+                        id: "#{further_key}_yes" },
+                        { text: "No", value: "No", checked: @repeat_step == "No", id: "#{further_key}_no" }]
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"
