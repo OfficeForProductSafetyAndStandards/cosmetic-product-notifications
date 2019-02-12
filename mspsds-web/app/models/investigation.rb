@@ -7,7 +7,7 @@ class Investigation < ApplicationRecord
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
 
-  scope :this_month, -> { where(created_at: Time.now.beginning_of_month..Time.now.end_of_month) }
+  scope :this_month, -> { where(created_at: Time.zone.now.beginning_of_month..Time.zone.now.end_of_month) }
 
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
@@ -60,7 +60,9 @@ class Investigation < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :complainant, dependent: :destroy
 
-  before_create :assign_current_user_to_case
+  after_initialize
+
+  before_create :assign_current_user_to_case, :add_pretty_id
 
   after_create :create_audit_activity_for_case
 
@@ -117,10 +119,6 @@ class Investigation < ApplicationRecord
 
   def pretty_visibility
     is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
-  end
-
-  def self.reverse_pretty_id(pretty_id)
-    pretty_id[0..4].to_i * (10**(pretty_id.length - 5)) + pretty_id[5..pretty_id.length].to_i
   end
 
   def pretty_description
@@ -197,7 +195,11 @@ class Investigation < ApplicationRecord
 
   def self.next_pretty_id(id: Investigation.this_month.count)
     month_count = id.to_s.rjust(4, '0')
-    "#{Time.now.strftime("%y%m")}-#{month_count}"
+    "#{Time.zone.now.strftime('%y%m')}-#{month_count}"
+  end
+
+  def add_pretty_id
+    self.pretty_id = Investigation.next_pretty_id
   end
 
 private

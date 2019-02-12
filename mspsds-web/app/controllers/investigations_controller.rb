@@ -118,13 +118,13 @@ private
     @investigation = Investigation.eager_load(:source,
                                               products: { documents_attachments: :blob },
                                               investigation_businesses: { business: :locations },
-                                              documents_attachments: :blob).find(Investigation.reverse_pretty_id(params[:id]))
+                                              documents_attachments: :blob).find_by(pretty_id: params[:pretty_id])
     authorize @investigation, :show?
     preload_activities
   end
 
   def set_investigation
-    @investigation = Investigation.find(Investigation.reverse_pretty_id(params[:id]))
+    @investigation = Investigation.find_by(pretty_id: params[:pretty_id])
     authorize @investigation
   end
 

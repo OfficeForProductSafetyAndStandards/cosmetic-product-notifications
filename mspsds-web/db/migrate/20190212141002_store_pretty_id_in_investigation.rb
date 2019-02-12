@@ -7,7 +7,7 @@ class StorePrettyIdInInvestigation < ActiveRecord::Migration[5.2]
 
           dir.up do
             id = 0
-            Investigation.all.each do |investigation|
+            Investigation.all.order(updated_at: :asc).each do |investigation|
               investigation.update! pretty_id: Investigation.next_pretty_id(id: id)
               id += 1
             end
