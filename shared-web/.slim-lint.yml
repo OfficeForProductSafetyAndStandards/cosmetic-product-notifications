@@ -64,6 +64,8 @@ linters:
       - Style/IfUnlessModifier
       - Style/Next
       - Style/WhileUntilModifier
+      # This one flags some false positives in slim files
+      - Style/IdenticalConditionalBranches
 
   Tab:
     enabled: true
