@@ -6,11 +6,11 @@
 - radios_html = capture do
   - if local_assigns[:hint].present?
     - hint_id = id_prefix + '-hint'
-    - described_by = described_by ? described_by + ' ' + hint_id : hint_id
+    - described_by = described_by.present? ? described_by + ' ' + hint_id : hint_id
     = render "components/govuk_hint", id: hint_id, **hint
   - if local_assigns[:errorMessage].present?
     - error_id = id_prefix + '-error'
-    - described_by = described_by ? described_by + ' ' + error_id : error_id
+    - described_by = described_by.present? ? described_by + ' ' + error_id : error_id
     = render "components/govuk_error_message", id: error_id, **errorMessage
   .govuk-radios [
       class=[local_assigns[:classes], ("govuk-radios--conditional" if is_conditional)]
@@ -45,9 +45,11 @@
           .govuk-radios__conditional class=("govuk-radios__conditional--hidden" unless item[:checked]) id=conditional_id
             == item[:conditional][:html]
 
-.govuk-form-group class=[local_assigns.dig(:formGroup, :classes), ("govuk-form-group--error" if local_assigns[:errorMessage])]
+- form_group_classes = [local_assigns.dig(:formGroup, :classes)]
+- form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
+.govuk-form-group class=form_group_classes
   - if local_assigns[:fieldset].present?
-    = render "components/govuk_fieldset", describedBy: described_by, **fieldset
+    = render "components/govuk_fieldset", describedBy: described_by.presence, **fieldset
       = radios_html
   - else
     = radios_html
