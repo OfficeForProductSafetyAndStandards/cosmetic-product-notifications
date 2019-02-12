@@ -63,7 +63,7 @@ private
   end
 
   def set_notification
-    @notification = Notification.where(reference_number: params[:notification_id]).first
+    @notification = Notification.find_by reference_number: params[:notification_id]
   end
 
   def set_countries

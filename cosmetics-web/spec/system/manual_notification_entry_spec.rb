@@ -159,7 +159,7 @@ private
       reference_number = match.captures[0].to_i
     end
 
-    Notification.where(reference_number: reference_number).first
+    Notification.find_by reference_number: reference_number
   end
 
   # The worker doesn't mark system test images as safe, so we have to do it
