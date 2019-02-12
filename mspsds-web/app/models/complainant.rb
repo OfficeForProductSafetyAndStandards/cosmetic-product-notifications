@@ -14,6 +14,7 @@ class Complainant < ApplicationRecord
   end
 
   def can_be_displayed?
+    return true if investigation.source&.is_a? ReportSource
     return true unless contains_personal_data?
     return true if current_user.organisation == investigation&.source&.user&.organisation
 

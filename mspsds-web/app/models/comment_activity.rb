@@ -13,4 +13,8 @@ class CommentActivity < Activity
   def search_index
     body
   end
+
+  def email_update_text
+    "#{source&.show&.titleize} commented on the #{investigation.case_type}."
+  end
 end

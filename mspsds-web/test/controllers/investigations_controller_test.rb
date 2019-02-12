@@ -67,17 +67,18 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should set status" do
+    investigation = Investigation.create
     is_closed = true
-    investigation_status = lambda { Investigation.find(@investigation_one.id).is_closed }
+    investigation_status = lambda { Investigation.find(investigation.id).is_closed }
     assert_changes investigation_status, from: false, to: is_closed do
-      put status_investigation_url(@investigation_one), params: {
+      put status_investigation_url(investigation), params: {
           investigation: {
               is_closed: is_closed,
               status_rationale: "some rationale"
           }
       }
     end
-    assert_redirected_to investigation_url(@investigation_one)
+    assert_redirected_to investigation_url(investigation)
   end
 
   test "should require status to be open or closed" do
