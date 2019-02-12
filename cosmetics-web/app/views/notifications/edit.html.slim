@@ -68,7 +68,7 @@
                         - @notification.image_uploads.each do |image_upload|
                             - if image_upload.file_exists?
                                 - if image_upload.marked_as_safe?
-                                    = link_to image_upload.filename, url_for(image_upload.file)
+                                    = link_to image_upload.filename, url_for(image_upload.file), target: :_blank
                                 - else
                                         ' Processing image
                                         = image_upload.filename
