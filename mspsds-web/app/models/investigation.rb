@@ -21,8 +21,7 @@ class Investigation < ApplicationRecord
 
   validates_length_of :description, maximum: 1000
 
-
-  after_save :send_assignee_email, :create_audit_activity_for_assignee,
+  after_save :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility
 
   # Elasticsearch index name must be declared in children and parent
@@ -244,16 +243,6 @@ private
 
   def assign_current_user_to_case
     self.source = UserSource.new(user: current_user) if self.source.blank? && current_user.present?
-  end
-
-  def send_assignee_email
-    if saved_changes.key?(:assignable_id) && assignee.is_a?(User)
-      NotifyMailer.assigned_investigation(id, assignee.full_name, assignee.email).deliver_later
-    elsif saved_changes.key?(:assignable_id) && assignee.is_a?(Team)
-      assignee.users.each do |member|
-        NotifyMailer.assigned_investigation_to_team(id, member.full_name, member.email, assignee.name).deliver_later
-      end
-    end
   end
 end
 

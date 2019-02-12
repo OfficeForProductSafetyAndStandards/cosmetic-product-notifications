@@ -51,4 +51,8 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
     output += ')' if correspondence.correspondent_name.present?
     output + "<br>"
   end
+
+  def email_update_text
+    "Email details added to the #{investigation.case_type.titleize} by #{source&.show&.titleize}."
+  end
 end

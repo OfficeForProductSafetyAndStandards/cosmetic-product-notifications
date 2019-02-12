@@ -9,4 +9,8 @@ class AuditActivity::Business::Add < AuditActivity::Business::Base
   def subtitle_slug
     "Business added"
   end
+
+  def email_update_text
+    "Business was added to the #{investigation.case_type} by #{source&.show&.titleize}."
+  end
 end

@@ -7,4 +7,8 @@ class AuditActivity::Business::Destroy < AuditActivity::Business::Base
   def subtitle_slug
     "Business removed"
   end
+
+  def email_update_text
+    "Business was removed from the #{investigation.case_type} by #{source&.show&.titleize}."
+  end
 end
