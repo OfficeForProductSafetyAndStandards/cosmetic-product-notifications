@@ -35,7 +35,9 @@ private
 
   def get_notification_current_name
     get_xml_file_content do |xml_file_content|
-      xml_doc = Nokogiri::XML(xml_file_content.insert(71, ' xmlns:sanco-xmlgate="http://sawes.ws.in.xmlgatev2.sanco.cec.eu"'))
+      xml_file_content = xml_file_content.sub('<sanco-xmlgate:product>',
+                                              '<sanco-xmlgate:product xmlns:sanco-xmlgate="http://sawes.ws.in.xmlgatev2.sanco.cec.eu">')
+      xml_doc = Nokogiri::XML(xml_file_content)
       return xml_doc.xpath('//sanco-xmlgate:currentVersion/sanco-xmlgate:generalInfo/sanco-xmlgate:productNameList/sanco-xmlgate:productName/sanco-xmlgate:name',
                            'sanco-xmlgate' => "http://sawes.ws.in.xmlgatev2.sanco.cec.eu").first.text
     end
