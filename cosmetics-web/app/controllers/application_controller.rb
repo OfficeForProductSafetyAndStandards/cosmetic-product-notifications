@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
   def forbidden
-    redirect_to '/403'
+    render "errors/forbidden"
   end
 end
