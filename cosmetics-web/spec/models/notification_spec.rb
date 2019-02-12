@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe Notification, type: :model do
   before do
     notification = Notification.create
-    notification.stub(:country_from_code)
-      .with('country:NZ')
-      .and_return('New Zealand')
+    allow(notification)
+      .to receive(:country_from_code)
+      .with('country:NZ').and_return("New Zealand")
   end
 
   describe "updating product_name" do
