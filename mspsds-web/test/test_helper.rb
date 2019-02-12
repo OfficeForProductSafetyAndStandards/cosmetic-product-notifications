@@ -80,8 +80,6 @@ class ActiveSupport::TestCase
   def stub_notify_mailer
     result = ""
     allow(result).to receive(:deliver_later)
-    allow(NotifyMailer).to receive(:assigned_investigation) { result }
-    allow(NotifyMailer).to receive(:assigned_investigation_to_team) { result }
     allow(NotifyMailer).to receive(:updated_investigation) { result }
   end
 

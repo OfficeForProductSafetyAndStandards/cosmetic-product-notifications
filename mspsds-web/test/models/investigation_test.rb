@@ -215,15 +215,13 @@ class InvestigationTest < ActiveSupport::TestCase
 
   test "past assignees should be computed" do
     user = User.find_by(last_name: "User_one")
-    @investigation.assignee = user
-    @investigation.save
+    investigation.update(assignee: user)
     assert_includes @investigation.past_assignees, user
   end
 
   test "past assignee teams should be computed" do
     team = Team.first
-    @investigation.assignee = team
-    @investigation.save
+    investigation.update(assignee: team)
     assert_includes @investigation.past_teams, team
   end
 
