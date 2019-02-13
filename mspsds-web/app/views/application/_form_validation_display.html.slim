@@ -1,6 +1,8 @@
 - model_name = "item" if local_assigns[:model_name].blank?
 - if errors&.any?
   ruby:
+    # TODO MSPSDS-989 This is very DateConcern-internals specific - ideally we either treat them properly
+    # or filter them within that concern
     keys = errors.details.keys.without(:day, :month, :year)
     # `full_messages_for` prepends the messages with humanized key, so it can automate validation messages
     #  (e.g. "name" + "must not be blank"). We've previously relied on these messages, but as the system matures,
