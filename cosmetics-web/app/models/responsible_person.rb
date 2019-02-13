@@ -3,6 +3,7 @@ class ResponsiblePerson < ApplicationRecord
   has_many :notification_files, dependent: :destroy
   has_many :responsible_person_users, dependent: :destroy
   has_many :users, through: :responsible_person_users
+  has_many :email_verification_keys
 
   enum account_type: { business: "business", individual: "individual" }
 
