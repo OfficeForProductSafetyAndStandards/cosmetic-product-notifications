@@ -1,6 +1,0 @@
-- investigation.important_assignable_people.each do |user|
-  .govuk-radios__item
-    = form.radio_button :assignable_id_radio, user.id, class: "govuk-radios__input",
-            checked: investigation.assignee == user
-    = form.label :assignable_id_radio, user.display_name, value: user.id,
-            class: "govuk-label govuk-radios__label"
