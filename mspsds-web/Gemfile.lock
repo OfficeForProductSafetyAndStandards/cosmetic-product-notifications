@@ -19,13 +19,13 @@ PATH
       debase (= 0.2.2)
       govuk-lint (= 3.10.0)
       listen (= 3.1.5)
-      rubocop (= 0.63.1)
+      rubocop (= 0.64.0)
       ruby-debug-ide (= 0.6.1)
       selenium-webdriver (= 3.141.0)
       simplecov (= 0.16.1)
       simplecov-console (= 0.4.2)
       slim_lint (= 0.16.1)
-      solargraph (= 0.31.2)
+      solargraph (= 0.31.3)
 
 PATH
   remote: vendor/shared-web
@@ -111,7 +111,7 @@ GEM
       actionpack (>= 3.1)
       axlsx (>= 2.0.1)
     backport (0.3.0)
-    bootsnap (1.3.2)
+    bootsnap (1.4.0)
       msgpack (~> 1.0)
     brakeman (4.4.0)
     builder (3.2.3)
@@ -310,7 +310,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
-    rubocop (0.63.1)
+    rubocop (0.64.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
@@ -371,7 +371,7 @@ GEM
       actionpack
       rack-timeout (>= 0.3.0, < 0.5.0)
       railties
-    solargraph (0.31.2)
+    solargraph (0.31.3)
       backport (~> 0.3)
       htmlentities (~> 4.3, >= 4.3.4)
       jaro_winkler (~> 1.5)
