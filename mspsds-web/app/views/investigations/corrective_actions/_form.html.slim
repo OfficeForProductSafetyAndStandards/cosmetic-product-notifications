@@ -51,7 +51,7 @@ fieldset.govuk-fieldset
           ' Only businesses already added to the case are listed.
         = form.collection_select :business_id, investigation.businesses, :id, :trading_name,
                 { include_blank: true,
-                selected: investigation.businesses.size == 1 && investigation.businesses.first.id },
+                        selected: investigation.businesses.size == 1 && investigation.businesses.first.id },
                 class: "govuk-select", id: "business-picker"
 
 fieldset.govuk-fieldset
@@ -59,22 +59,10 @@ fieldset.govuk-fieldset
     | Further details
   .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:details].any?)
     = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
-
-fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | Are there any documents related to the action to upload?
-  .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:related_file].any?)
-    fieldset.govuk-fieldset
-      .govuk-radios.govuk-radios--conditional data-module="radios"
-        .govuk-radios__item
-          = form.radio_button :related_file, "Yes", class: "govuk-radios__input",
-                  "data-aria-controls": "conditional-related-file"
-          = form.label :related_file, "Yes", class: "govuk-label govuk-radios__label"
-        #conditional-related-file.govuk-radios__conditional.govuk-radios__conditional--hidden
-          = render "related_attachment_fields", form: form,
-            file_blob: file_blob, attachment_name: :file
-        .govuk-radios__item
-          = form.radio_button :related_file, "No", class: "govuk-radios__input",
-          "data-aria-controls": "conditional-no-related-file"
-          = form.label :related_file, "No", class: "govuk-label govuk-radios__label"
-br
+  - file_field = capture do
+    = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
+  = render "form_components/govuk_radios", form: form, key: :related_file,
+          fieldset: { legend: { text: "Are there any files related to the action?",
+                  classes: "govuk-fieldset__legend--l" } },
+          items: [{ text: "Yes", value: "Yes", conditional: { html: file_field } },
+                  { text: "No", value: "No" }]
