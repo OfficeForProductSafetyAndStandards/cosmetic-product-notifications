@@ -65,8 +65,7 @@ class Investigation < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      methods: :pretty_id,
-      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at],
+      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at pretty_id],
       include: {
         documents: {
           only: [],
@@ -191,8 +190,7 @@ class Investigation < ApplicationRecord
   end
 
   def add_pretty_id(id: Investigation.this_month.where.not(pretty_id: nil).count)
-    month_count = id.to_s.rjust(4, '0')
-    pretty_id = "#{created_at.strftime('%y%m')}-#{month_count}"
+    pretty_id = "#{created_at.strftime('%y%m')}-%04d" % id
     self.pretty_id = pretty_id
   end
 
