@@ -392,6 +392,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-rails
   rubocop-rspec
+  rubyzip (>= 1.2.1)
   shared-web!
   shared-web-dev!
   slim-rails
