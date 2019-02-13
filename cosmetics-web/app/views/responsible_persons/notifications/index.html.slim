@@ -15,16 +15,17 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       | Your cosmetic products
-    p
-      b = @responsible_person.name
-      '  has
-      = pluralize(@registered_notifications.total_entries, 'cosmetic product')
-      |  registered in the UK.
-    p
-      | All cosmetic products intended for sale or given away in the UK must be registered in the UK.
-    p
-      | To continue to sell or give away cosmetic products that were notified to the European Union (EU)
-              before 29 March 2019, you must register your products in the UK by 11:59pm on 27 June 2019.
+    - if @registered_notifications.total_entries.zero?
+      p
+        b = @responsible_person.name
+        '  has
+        = pluralize(@registered_notifications.total_entries, 'cosmetic product')
+        |  registered in the UK.
+      p
+        | All cosmetic products intended for sale or given away in the UK must be registered in the UK.
+      p
+        | To continue to sell or give away cosmetic products that were notified to the European Union (EU)
+                before 29 March 2019, you must register your products in the UK by 11:59pm on 27 June 2019.
     = link_to "Add cosmetics products", new_notification_path,
             class: "govuk-button govuk-button", role: "button"
 
