@@ -1,7 +1,6 @@
 require 'zip'
 
 class ReadDataAnalyzer < ActiveStorage::Analyzer
-  include AnalyzerHelper
   extend AnalyzerHelper
 
   def initialize(blob)
@@ -26,7 +25,7 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
 private
 
   def create_notification_from_file
-    notification_file = get_notification_file_from_blob(blob)
+    notification_file = self.class.get_notification_file_from_blob(blob)
     @notification = ::Notification.new(product_name: get_notification_current_name,
                                        responsible_person: notification_file.responsible_person)
     @notification.notification_file_parsed!
@@ -57,8 +56,7 @@ private
   end
 
   def delete_notification_file
-    attachment = ActiveStorage::Attachment.find_by(blob_id: blob.id)
-    notification_file = ::NotificationFile.find_by(id: attachment.record_id)
+    notification_file = self.class.get_notification_file_from_blob(blob)
     notification_file.destroy
   end
 end
