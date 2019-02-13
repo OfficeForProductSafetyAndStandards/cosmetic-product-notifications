@@ -22,6 +22,7 @@ class Notification < ApplicationRecord
 
   validate :all_required_attributes_must_be_set
 
+  # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :product_name_added
@@ -59,6 +60,7 @@ class Notification < ApplicationRecord
       transitions from: :empty, to: :notification_file_imported
     end
   end
+  # rubocop:enable Metrics/BlockLength
 
   def import_country_for_display
     country_from_code(import_country) || import_country
