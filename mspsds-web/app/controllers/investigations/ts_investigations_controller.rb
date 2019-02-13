@@ -119,7 +119,7 @@ private
   def set_business
     if params.include?(:business)
       @business = Business.new business_step_params
-      defaults_on_primary_location @business
+      defaults_on_primary_location @business if @business.locations.any?
     else
       @business = Business.new
       @business.locations.build
@@ -294,8 +294,8 @@ private
       business_entry = session[:businesses].find { |entry| entry[:type] == params.require(:business)[:business_type] }
       contact = @business.contacts.first
       location = @business.locations.first
-      business_entry[:contact] = contact.attributes if contact.valid?
-      business_entry[:location] = location.attributes if location.valid?
+      business_entry[:contact] = contact.attributes if contact&.valid?
+      business_entry[:location] = location.attributes if location&.valid?
       business_entry[:business] = @business.attributes
     end
   end
@@ -383,7 +383,7 @@ private
       @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
       @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
     when :business
-      if @business.errors.any? || @business.contacts.first.errors.any? || @business.locations.first.errors.any?
+      if @business.errors.any? || @business.contacts_have_errors? || @business.locations_have_errors?
         return false
       end
     when :has_corrective_action
@@ -421,8 +421,12 @@ private
   def save_businesses
     session[:businesses].each do |session_business|
       business = Business.create!(session_business[:business])
-      business.contacts << Contact.create!(session_business[:contact].merge(business_id: business.id))
-      business.locations << Location.create!(session_business[:location].merge(business_id: business.id))
+      if session_business[:contact]
+        business.contacts << Contact.create!(session_business[:contact].merge(business_id: business.id))
+      end
+      if session_business[:location]
+        business.locations << Location.create!(session_business[:location].merge(business_id: business.id))
+      end
       @investigation.add_business(business, session_business[:type])
     end
   end
