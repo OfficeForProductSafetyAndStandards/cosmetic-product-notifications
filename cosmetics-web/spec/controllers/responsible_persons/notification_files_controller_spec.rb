@@ -8,14 +8,10 @@ RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controlle
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
-    mock_antivirus
-    mock_read_data_analyzer
   end
 
   after do
     sign_out
-    unmock_antivirus
-    unmock_read_data_analyzer
   end
 
   describe "GET #new" do
