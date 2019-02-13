@@ -30,6 +30,8 @@ module DateConcern
         self.day = date.day
         self.month = date.month
         self.year = date.year
+      else
+        update_from_components
       end
     end
 
@@ -38,14 +40,7 @@ module DateConcern
         self[@date_key] = nil
       end
 
-      unless date_components.any?(&:blank?)
-        date_component_values = date_components.map(&:to_i)
-        if Date.valid_civil?(*date_component_values)
-          # This sets it if it makes sense. Validation then can compare the presence of
-          # date and its components to know if the date parsed correctly
-          self[@date_key] = Date.civil(*date_component_values)
-        end
-      end
+      update_from_components
     end
   end
 
@@ -54,27 +49,48 @@ module DateConcern
     :date
   end
 
+  def missing_date_component_message
+    # Can be overwritten in any class using the helper
+    "must specify a day, month and year"
+  end
+
+  def invalid_date_message
+    # Can be overwritten in any class using the helper
+    "must be a valid date"
+  end
+
+private
+
+  def update_from_components
+    unless date_components.any?(&:blank?)
+      date_component_values = date_components.map(&:to_i)
+      if Date.valid_civil?(*date_component_values)
+        # This sets it if it makes sense. Validation then can compare the presence of
+        # date and its components to know if the date parsed correctly
+        self[@date_key] = Date.civil(*date_component_values)
+      end
+    end
+  end
+
   def date_from_components
     missing_date_components = {
-      day: day, month: month, year: year
+        day: day, month: month, year: year
     }.select { |_, value| value.blank? }
     case missing_date_components.length
     when (1..2) # Date has some components entered, but not all
       missing_date_components.each do |missing_component, _|
-        errors.add(@date_key, "must specify a day, month and year")
+        errors.add(@date_key, missing_date_component_message)
         errors.add(missing_component, "can't be blank")
       end
     when 0
       if self[@date_key].blank?
-        errors.add(@date_key, "must be a valid date")
+        errors.add(@date_key, invalid_date_message)
         errors.add(:day)
         errors.add(:month)
         errors.add(:year)
       end
     end
   end
-
-private
 
   def date_components
     [year, month, day]
