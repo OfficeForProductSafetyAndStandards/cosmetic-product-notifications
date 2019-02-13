@@ -44,7 +44,8 @@ class Activity < ApplicationRecord
   end
 
   def users_to_notify
-    return [investigation.assignee] if investigation.assignee.is_a? User
+    return [investigation.assignee] if (investigation.assignee.is_a? User) && (source.user != investigation.assignee)
+    return [] if investigation.assignee.is_a? User
     return [] if source&.user&.teams&.include? investigation.assignee
 
     investigation.assignee&.users || []
