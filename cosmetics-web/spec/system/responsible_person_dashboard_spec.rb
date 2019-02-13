@@ -28,11 +28,6 @@ RSpec.describe "Responsible person dashboard", type: :system do
     assert_text "Registered (1)"
   end
 
-  it "does not allow user to access another Responsible Person's dashboard" do
-    visit responsible_person_notifications_path(responsible_person_2)
-    assert_text "Access denied"
-  end
-
   it "doesn't count number of loading files from other users in Responsible Person" do
     responsible_person_1.add_user(user_2)
     create(:notification_file, responsible_person: responsible_person_1, user: user_1)

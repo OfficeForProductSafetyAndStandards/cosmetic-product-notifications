@@ -1,5 +1,4 @@
 class ResponsiblePersons::NotificationsController < ApplicationController
-  include ResponsiblePersons::NotificationsHelper
   before_action :set_responsible_person
 
   def index
@@ -16,5 +15,15 @@ private
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
     authorize @responsible_person, :show?
+  end
+
+  def get_unfinished_notifications(page_size)
+    @responsible_person.notifications.where(state: :draft_complete)
+        .paginate(page: params[:unfinished], per_page: page_size)
+  end
+
+  def get_registered_notifications(page_size)
+    @responsible_person.notifications.where(state: :notification_complete)
+        .paginate(page: params[:registered], per_page: page_size)
   end
 end
