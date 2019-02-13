@@ -1,7 +1,7 @@
 class ResponsiblePersons::AccountWizardController < ApplicationController
   include Wicked::Wizard
 
-  steps :select_type, :enter_details
+  steps :select_type, :enter_details, :verify_email
 
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person, only: %i[show update]
@@ -33,7 +33,7 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
     case step
     when :enter_details
       if responsible_person_saved?
-        redirect_to responsible_person_path(@responsible_person)
+        redirect_to next_wizard_path
       else
         render step
       end

@@ -1,0 +1,12 @@
+- content_for :page_title, "Check your email"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      ' Check
+      = @responsible_person.email_address
+    p
+      ' An email has been sent to
+      = @responsible_person.email_address
+    p Click the link in the email to continue creation of the UK responsible person.
