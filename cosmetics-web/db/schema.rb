@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_05_094834) do
+ActiveRecord::Schema.define(version: 2019_02_11_144539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 2019_02_05_094834) do
     t.datetime "updated_at", null: false
     t.string "import_country"
     t.bigint "responsible_person_id"
+    t.integer "reference_number"
+    t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
   end
 
