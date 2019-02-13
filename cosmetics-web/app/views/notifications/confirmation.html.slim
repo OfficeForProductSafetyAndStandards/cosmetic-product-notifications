@@ -6,7 +6,7 @@
             .govuk-panel__body
                 | Your cosmetic notification reference number
                 br
-                strong -
+                strong = @notification.reference_number_for_display
         p We have sent confirmation of this to you
         h3.govuk-heading-m What happens next
         p

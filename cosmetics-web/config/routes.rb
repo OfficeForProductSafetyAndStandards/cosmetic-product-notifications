@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :responsible_persons, only: %i[show] do
     resources :notification_files, controller: "responsible_persons/notification_files", only: %i[new create]
-    resources :notifications, controller: "responsible_persons/notifications", only: %i[index]
+    resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index]
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
 
     collection do

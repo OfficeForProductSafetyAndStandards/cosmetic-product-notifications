@@ -8,6 +8,15 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
+  before_create do
+    new_reference_number = nil
+    loop do
+      new_reference_number = SecureRandom.rand(100000000)
+      break unless Notification.where(reference_number: new_reference_number).exists?
+    end
+    self.reference_number = new_reference_number
+  end
+
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_import_country, if: :will_save_change_to_import_country?
 
@@ -55,6 +64,10 @@ class Notification < ApplicationRecord
     country_from_code(import_country) || import_country
   end
 
+  def reference_number_for_display
+    "UKCP-%08d" % reference_number
+  end
+
   def images_are_present_and_safe?
     !image_uploads.empty? && image_uploads.all?(&:marked_as_safe?)
   end
@@ -67,6 +80,10 @@ class Notification < ApplicationRecord
     image_uploads.any? { |image|
       image.file_exists? && !image.marked_as_safe?
     }
+  end
+
+  def to_param
+    reference_number.to_s
   end
 
 private
