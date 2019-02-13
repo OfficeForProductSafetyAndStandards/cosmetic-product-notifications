@@ -30,4 +30,14 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        test:
+          attributes:
+            product:
+              required: "Select the product which was tested"
+        corrective_action:
+          attributes:
+            product:
+              required: "Select the product the corrective action relates to"

@@ -14,7 +14,7 @@ fieldset.govuk-fieldset
             |  to send it for testing.
         - elsif @investigation.products.size == 1
           = form.text_field :product_name, value: @investigation.products.first.name,
-          disabled: true, class: "govuk-input govuk-!-width-two-thirds"
+                  disabled: true, class: "govuk-input govuk-!-width-two-thirds"
           = form.hidden_field :product_id, value: @investigation.products.first.id
         - else
           span.govuk-hint
@@ -39,15 +39,9 @@ fieldset.govuk-fieldset
   = render "date_input", form: form
 
 - if !test.requested?
-  fieldset.govuk-fieldset
-    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-      | What was the test result?
-    .govuk-form-group class=("govuk-form-group--error" if test.errors[:result].any?)
-      .govuk-radios
-        - Test::Result.results.each do |(result, label)|
-          .govuk-radios__item
-            = form.radio_button :result, result, class: "govuk-radios__input"
-            = form.label :result, label, class: "govuk-label govuk-radios__label", value: result
+  = render "form_components/govuk_radios", form: form, key: :result,
+          fieldset: { legend: { text: "What was the test result?", classes: "govuk-fieldset__legend--l" } },
+          items: Test::Result.results.map { |result, label| { text: label, value: result } }
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
