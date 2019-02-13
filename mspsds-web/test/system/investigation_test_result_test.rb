@@ -19,8 +19,8 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     click_button "Continue"
 
     assert_text "The following errors prevented this test result from being saved"
-    assert_text "Date can't be blank"
-    assert_text "Result can't be blank"
+    assert_text "Enter date of the test"
+    assert_text "Select result of the test"
   end
 
   test "can add filled in test result to investigation" do
@@ -80,7 +80,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date must be a valid date")
+    assert_text("Enter a real date of the test")
   end
 
   test "date with missing component shows an error" do
@@ -88,7 +88,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date must specify a day, month and year")
+    assert_text("Enter date of the test and include a day, month and year")
   end
 
   test "can add an attachment to the test result" do
