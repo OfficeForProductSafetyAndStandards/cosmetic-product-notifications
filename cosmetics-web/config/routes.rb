@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   mount Shared::Web::Engine => '/', as: 'shared_engine'
 
@@ -30,5 +31,10 @@ Rails.application.routes.draw do
     resources :build, controller: :component_build, only: %i[show update new]
   end
 
+  match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+  # This is the page that will show for timeouts, currently showing the same as an internal error
+  match "/503", to: "errors#timeout", via: :all
 end
+# rubocop:enable Metrics/BlockLength

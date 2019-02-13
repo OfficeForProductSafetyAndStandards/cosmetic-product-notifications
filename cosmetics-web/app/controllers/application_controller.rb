@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   include Shared::Web::Concerns::AuthenticationConcern
 
   include Pundit
-  rescue_from Pundit::NotAuthorizedError, with: :forbidden
 
   include UserService
   helper Shared::Web::Engine.helpers
@@ -16,9 +15,5 @@ class ApplicationController < ActionController::Base
     return unless user_signed_in?
 
     redirect_to create_or_join_existing_account_index_path if current_user.responsible_persons.empty?
-  end
-
-  def forbidden
-    render "errors/forbidden"
   end
 end
