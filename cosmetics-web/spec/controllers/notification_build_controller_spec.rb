@@ -7,10 +7,12 @@ RSpec.describe NotificationBuildController, type: :controller do
 
   before do
     sign_in_as_member_of_responsible_person(create(:responsible_person))
+    mock_antivirus
   end
 
   after do
     sign_out
+    unmock_antivirus
   end
 
   describe "GET #new" do

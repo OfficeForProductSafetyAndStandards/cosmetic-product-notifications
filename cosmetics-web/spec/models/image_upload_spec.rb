@@ -6,10 +6,12 @@ RSpec.describe ImageUpload, type: :model do
 
   before do
     allow(ImageUpload).to receive(:get_max_file_size).and_return(10)
+    mock_antivirus
   end
 
   after do
     allow(ImageUpload).to receive(:get_max_file_size).and_call_original
+    unmock_antivirus
   end
 
   describe "image validation" do

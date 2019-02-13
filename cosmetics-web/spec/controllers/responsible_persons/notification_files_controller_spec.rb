@@ -9,11 +9,13 @@ RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controlle
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
     mock_antivirus
+    mock_read_data_analyzer
   end
 
   after do
     sign_out
     unmock_antivirus
+    unmock_read_data_analyzer
   end
 
   describe "GET #new" do
@@ -28,7 +30,7 @@ RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controlle
       it "a new NotificationFile is removed after processing" do
         expect {
           post :create, params: { responsible_person_id: responsible_person.id, notification_file: valid_attributes }
-        }.to change(NotificationFile, :count).by(0)
+        }.to change(NotificationFile, :count).by(1)
       end
 
       it "redirects to the notifications for the Responsible Person" do
