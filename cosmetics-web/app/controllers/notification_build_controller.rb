@@ -43,7 +43,7 @@ class NotificationBuildController < ApplicationController
   end
 
   def new
-    redirect_to wizard_path(steps.first, notification_id: @notification.id)
+    redirect_to wizard_path(steps.first, notification_id: @notification.reference_number)
   end
 
   def finish_wizard_path
@@ -63,7 +63,7 @@ private
   end
 
   def set_notification
-    @notification = Notification.find(params[:notification_id])
+    @notification = Notification.find_by reference_number: params[:notification_id]
   end
 
   def set_countries

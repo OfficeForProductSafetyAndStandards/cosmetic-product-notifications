@@ -156,10 +156,10 @@ private
 
   def get_notification_from_url
     if (match = current_url.match(%r!/notifications/(\d+)/!))
-      notification_id = match.captures[0].to_i
+      reference_number = match.captures[0].to_i
     end
 
-    Notification.find(notification_id)
+    Notification.find_by reference_number: reference_number
   end
 
   # The worker doesn't mark system test images as safe, so we have to do it

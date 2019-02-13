@@ -42,6 +42,11 @@
                         = @notification.product_name
                 tr.govuk-table__row
                     th.govuk-table__header
+                        | Reference number
+                    td.govuk-table__cell
+                        = @notification.reference_number_for_display
+                tr.govuk-table__row
+                    th.govuk-table__header
                         | Imported
                     td.govuk-table__cell
                         = @notification.import_country.present? ? "Yes" : "No"
