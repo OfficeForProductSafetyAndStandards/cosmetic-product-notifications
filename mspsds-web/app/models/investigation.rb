@@ -59,8 +59,6 @@ class Investigation < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :complainant, dependent: :destroy
 
-  after_initialize
-
   before_create :assign_current_user_to_case, :add_pretty_id
 
   after_create :create_audit_activity_for_case
@@ -192,13 +190,10 @@ class Investigation < ApplicationRecord
     pretty_id
   end
 
-  def self.next_pretty_id(id: Investigation.this_month.count)
+  def add_pretty_id(id: Investigation.this_month.where.not(pretty_id: nil).count)
     month_count = id.to_s.rjust(4, '0')
-    "#{Time.zone.now.strftime('%y%m')}-#{month_count}"
-  end
-
-  def add_pretty_id
-    self.pretty_id = Investigation.next_pretty_id
+    pretty_id = "#{created_at.strftime('%y%m')}-#{month_count}"
+    self.pretty_id = pretty_id
   end
 
 private
