@@ -2,6 +2,7 @@
 / With access to the form object, we can infer a lot of information from it
 
 / Infer name from attribute key
+  TODO commonize with radios
 - local_assigns[:name] ||= form.object_name.present? ? "#{form.object_name}[#{key}]" : key.to_s
 / Give items ids based on rails' convention
 / sanitization taken from https://github.com/rails/rails/
