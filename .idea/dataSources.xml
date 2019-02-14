@@ -9,13 +9,21 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/app_test</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="Local Dev DB" uuid="2a3e799a-da8a-49e8-8ef7-2ad8fa687919">
+    <data-source source="LOCAL" name="Local Dev DB Cosmetics">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
       <remarks>$PROJECT_DIR$/config/database.yml</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/app_development</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5433/cosmetics_development</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Local Dev DB MSPSDS">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5433/mspsds_development</jdbc-url>
     </data-source>
   </component>
 </project>

@@ -8,23 +8,23 @@
           dt
             | UK cosmetic product number:
           dd
-            | UKCP-XXXX
+            | UKCP-78424
           dt
             | Your reference number:
           dd
-            | XXXXX
+            | 42962
           dt
             | First notified in EU:
           dd
-            | XX/XX/XXXX
+            | 23/06/2017
           dt
             | EU reference number:
           dd
-            | XXXXX
+            | 31869
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = link_to "Add formulation document and product image to finish registration", "/",
               class: "govuk-link--no-visited-state"
 .govuk-grid-row
   .govuk-grid-column-full.pagination-links
-    = will_paginate(@unfinished_notifications, param_name: "unfinished", params: { anchor: "unfinished" })
+    = will_paginate(@unfinished_notifications, param_name: "unfinished", params: {anchor: "unfinished"})

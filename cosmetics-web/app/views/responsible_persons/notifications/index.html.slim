@@ -18,9 +18,7 @@
     - if @registered_notifications.total_entries.zero?
       p
         b = @responsible_person.name
-        '  has
-        = pluralize(@registered_notifications.total_entries, 'cosmetic product')
-        |  registered in the UK.
+        '  has 0 cosmetic products registered in the UK.
       p
         | All cosmetic products intended for sale or given away in the UK must be registered in the UK.
       p
