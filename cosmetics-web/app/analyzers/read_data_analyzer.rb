@@ -26,17 +26,25 @@ private
 
   def create_notification_from_file
     notification_file = self.class.get_notification_file_from_blob(blob)
-    @notification = ::Notification.new(product_name: get_notification_current_name,
-                                       responsible_person: notification_file.responsible_person)
-    @notification.notification_file_parsed!
-    @notification.save
-  end
 
-  def get_notification_current_name
     get_xml_file_content do |xml_file_content|
-      xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
-      return xml_doc.xpath('//currentVersion/generalInfo/productNameList/productName/name').first.text
+      @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
     end
+
+    name = @xml_doc.xpath('//currentVersion/generalInfo/productNameList/productName/name').first.text
+    cpnp_reference = @xml_doc.xpath('//cpnpReference').first.text
+    is_imported = @xml_doc.xpath('//currentVersion/generalInfo/imported').first.text.casecmp?('Y')
+    imported_country = @xml_doc.xpath('//currentVersion/generalInfo/importedCty').first.text
+    shades = @xml_doc.xpath('//currentVersion/generalInfo/productNameList/productName/shade').first.text
+
+    notification = ::Notification.new(product_name: name,
+                                       cpnp_reference: cpnp_reference,
+                                       cpnp_is_imported: is_imported,
+                                       cpnp_imported_country: imported_country,
+                                       shades: shades,
+                                       responsible_person: notification_file.responsible_person)
+    notification.notification_file_parsed!
+    notification.save
   end
 
   def get_xml_file_content
