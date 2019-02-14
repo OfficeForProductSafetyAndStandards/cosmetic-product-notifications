@@ -2,7 +2,7 @@ h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
   | Summary
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   p.govuk-body.govuk-grid-column-two-thirds
-    = @investigation.description
+    = @investigation.description || @investigation.reason_created
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   hr.govuk-section-break.govuk-section-break--s
     = render "investigations/current_status", investigation: @investigation
