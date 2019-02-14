@@ -36,6 +36,10 @@ update_configs:
   - package_manager: "javascript"
     directory: "/shared-web"
     update_schedule: "live"
+    default_labels:
+    - dependencies
+    - javascript
+    - fixme
 
   - package_manager: "ruby:bundler"
     directory: "/cosmetics-web"
@@ -48,3 +52,7 @@ update_configs:
   - package_manager: "ruby:bundler"
     directory: "/shared-web"
     update_schedule: "live"
+    default_labels:
+    - dependencies
+    - ruby
+    - fixme
