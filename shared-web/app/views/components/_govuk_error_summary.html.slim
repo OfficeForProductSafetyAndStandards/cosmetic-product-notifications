@@ -10,7 +10,7 @@
         tabindex: "-1" }.merge(local_assigns[:attributes] || {})
 .govuk-error-summary *attributes
   h2.govuk-error-summary__title#error-summary-title
-    == local_assigns[:titleHtml] || local_assigns[:titleText]
+    = local_assigns[:titleHtml] || local_assigns[:titleText]
   .govuk-error-summary__body
     - if local_assigns[:descriptionHtml] || local_assigns[:descriptionText]
       p = local_assigns[:descriptionHtml] || local_assigns[:descriptionText]
@@ -18,7 +18,7 @@
       - errorList.each do |item|
         li
           - item_content = capture do
-            == item[:html] || item[:text]
+            = item[:html] || item[:text]
           - if item[:href]
             a href=item[:href] *(item[:attributes] || {})
               = item_content

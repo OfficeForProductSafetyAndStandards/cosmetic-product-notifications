@@ -5,7 +5,7 @@
   / 'for' is actually a required attribute, but it can't be accessed directly since `for` is a ruby keyword
   label.govuk-label *(local_assigns[:attributes] || {}) class=local_assigns[:classes] for=local_assigns[:for]
     - if local_assigns[:html].present?
-      == html
+      = html
     - else
       = text
 - if local_assigns[:isPageHeading]
