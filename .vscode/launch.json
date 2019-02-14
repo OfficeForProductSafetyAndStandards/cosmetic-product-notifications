@@ -5,13 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Docker: Attach to Ruby",
+            "name": "Docker: Attach to MSPSDS",
             "type": "Ruby",
             "request": "attach",
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/mspsds-web",
             "remoteHost": "localhost",
             "remotePort": "1234",
-            "remoteWorkspaceRoot": "/app",
+            "remoteWorkspaceRoot": "/mspsds-web",
+            "showDebuggerOutput": true,
+        },
+        {
+            "name": "Docker: Attach to Cosmetics",
+            "type": "Ruby",
+            "request": "attach",
+            "cwd": "${workspaceRoot}/cosmetics-web",
+            "remoteHost": "localhost",
+            "remotePort": "1235",
+            "remoteWorkspaceRoot": "/cosmetics-web",
             "showDebuggerOutput": true,
         }
     ]
