@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_11_144539) do
+ActiveRecord::Schema.define(version: 2019_02_14_141110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2019_02_11_144539) do
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
     t.string "user_id"
+    t.integer "upload_error"
     t.index ["responsible_person_id"], name: "index_notification_files_on_responsible_person_id"
   end
 
