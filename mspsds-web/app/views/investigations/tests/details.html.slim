@@ -9,7 +9,8 @@ h1.govuk-heading-xl
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with model: @test, scope: :test, local: true, url: wizard_path, method: :put do |form|
-      = render "form_validation_display", errors: @test.errors, model_name: @test.pretty_name
+      = render "form_validation_display", errors: @test.errors, model_name: @test.pretty_name,
+              prepend_messages_with_keys: false
       = render "form", form: form, test: @test, investigation: @investigation, allow_product_linking: true
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

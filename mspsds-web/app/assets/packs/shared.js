@@ -12,9 +12,6 @@ import '../application/javascripts/autocomplete';
 import '../application/javascripts/creation_flow';
 import '../application/javascripts/investigations';
 
-// Styles
-import 'govuk-country-and-territory-autocomplete/dist/location-autocomplete.min.css';
-import 'accessible-autocomplete/dist/accessible-autocomplete.min.css';
 
 // Images
 import 'govuk-frontend/assets/images/favicon.ico';
