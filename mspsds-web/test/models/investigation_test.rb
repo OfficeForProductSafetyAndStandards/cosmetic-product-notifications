@@ -249,6 +249,20 @@ class InvestigationTest < ActiveSupport::TestCase
     assert policy(investigation).assign?(user: User.find_by(last_name: "Admin"))
   end
 
+  test "pretty_id should contain YYMM" do
+    investigation = Investigation.create
+    assert_includes investigation.pretty_id, Time.zone.now.strftime('%y').to_s
+    assert_includes investigation.pretty_id, Time.zone.now.strftime('%m').to_s
+  end
+
+  test "pretty_id should be unique" do
+    10.times do
+      Investigation.create
+    end
+    investigation = Investigation.create
+    assert_equal Investigation.where(pretty_id: investigation.pretty_id).count, 1
+  end
+
   def create_new_private_case
     description = "new_investigation_description"
     @new_investigation = Investigation::Allegation.create(description: description, is_private: true)

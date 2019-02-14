@@ -3,10 +3,12 @@ require 'rails_helper'
 RSpec.describe "Manually enter product details", type: :system do
   before do
     sign_in_as_member_of_responsible_person(create(:responsible_person))
+    mock_antivirus
   end
 
   after do
     sign_out
+    unmock_antivirus
   end
 
   it "allows user to complete notification" do
