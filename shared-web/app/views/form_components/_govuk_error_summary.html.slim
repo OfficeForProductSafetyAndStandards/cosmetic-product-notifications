@@ -4,10 +4,8 @@
 ruby:
   errors = local_assigns[:errors] || form.object.errors
   error_list = errors.details.keys.flat_map do |attribute|
-    # Infer name from attribute key
-    # TODO commonize with radios
-    name = form.object_name.present? ? "#{form.object_name}[#{attribute}]" : attribute.to_s
-    errors.full_messages_for(attribute).map { |message| { text: message, href: "##{name}-error" } }
+    prefix = get_attribute_id_prefix(form, attribute)
+    errors.full_messages_for(attribute).map { |message| { text: message, href: "##{prefix}-error" } }
   end
 - if errors.any?
   = render "components/govuk_error_summary", **local_assigns, titleText: "There is a problem", errorList: error_list
