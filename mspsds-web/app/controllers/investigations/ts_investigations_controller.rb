@@ -422,10 +422,10 @@ private
     session[:businesses].each do |session_business|
       business = Business.create!(session_business[:business])
       if session_business[:contact]
-        business.contacts << Contact.create!(session_business[:contact].merge(business_id: business.id))
+        business.contacts << Contact.new(session_business[:contact])
       end
       if session_business[:location]
-        business.locations << Location.create!(session_business[:location].merge(business_id: business.id))
+        business.locations << Location.new(session_business[:location])
       end
       @investigation.add_business(business, session_business[:type])
     end
