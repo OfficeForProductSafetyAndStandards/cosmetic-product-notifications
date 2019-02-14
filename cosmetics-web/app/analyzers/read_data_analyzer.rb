@@ -31,7 +31,7 @@ private
       @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
     end
 
-    name = @xml_doc.xpath('//currentVersion/generalInfo/productNameList/productName/name').first.text
+    name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName[language='EN']/name").first.text
     cpnp_reference = @xml_doc.xpath('//cpnpReference').first.text
     is_imported = @xml_doc.xpath('//currentVersion/generalInfo/imported').first.text.casecmp?('Y')
     imported_country = @xml_doc.xpath('//currentVersion/generalInfo/importedCty').first.text
