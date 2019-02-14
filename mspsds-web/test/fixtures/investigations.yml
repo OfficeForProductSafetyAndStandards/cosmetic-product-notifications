@@ -8,42 +8,49 @@ one:
   hazard_description: investigation one hazard_description
   non_compliant_reason: investigation one non_compliant_reason
   complainant_reference: investigation one complainant_reference
-
+  pretty_id: 1902-0000
 
 two:
   description: Investigation two description
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0001
 
 three:
   description: Investigation into faulty toys
   is_closed: true
   type: Investigation::Allegation
+  pretty_id: 1902-0002
 
 no_products:
   description: Investigation with no product
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0003
 
 search_related_products:
   description: Investigation for search by product
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0004
 
 search_related_correspondence:
   description: Investigation for search by correspondence
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0005
 
 search_related_businesses:
   description: Investigation for search by business
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0006
 
 search_related_complainant:
   description: Investigation for search by complainant
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0007
 
 no_products_case_titles:
   description: Investigation with no products
@@ -51,6 +58,7 @@ no_products_case_titles:
   hazard_type: Asphyxiation
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0008
 
 one_product:
   description: Investigation with one product
@@ -58,6 +66,7 @@ one_product:
   hazard_type: Asphyxiation
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0009
 
 two_products_with_common_values:
   description: Investigation with two products
@@ -65,6 +74,7 @@ two_products_with_common_values:
   hazard_type: Asphyxiation
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0010
 
 two_products_with_no_common_values:
   description: Investigation with two products
@@ -72,3 +82,4 @@ two_products_with_no_common_values:
   hazard_type: Asphyxiation
   is_closed: false
   type: Investigation::Allegation
+  pretty_id: 1902-0011
