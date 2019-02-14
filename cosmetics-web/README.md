@@ -7,10 +7,8 @@ This folder also contains the code for the [background worker](../cosmetics-work
 
 The site is written in [Ruby on Rails](https://rubyonrails.org/).
 
-We're using the GOV.UK Design System.
-The documentation for this can be found [here](https://design-system.service.gov.uk/).
-
-We're using [Slim](http://slim-lang.com/) as our HTML templating language, vanilla ES5 JavaScript and [Sass](https://sass-lang.com/) for styling.
+We're using [Slim](http://slim-lang.com/) as our HTML templating language, 
+ES6 JavaScript and [Sass](https://sass-lang.com/) for styling transplied with webpack.
 
 
 ## Getting Setup

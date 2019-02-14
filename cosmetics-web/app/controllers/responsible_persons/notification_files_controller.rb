@@ -32,6 +32,7 @@ private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
+    authorize @responsible_person, :show?
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.

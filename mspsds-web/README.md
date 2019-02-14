@@ -1,18 +1,15 @@
 # MSPSDS Website
 
 This folder contains the configuration and code for the MSPSDS website.
-This folder also contains the code for the (background worker)[../mspsds-worker/README.md].
+This folder also contains the code for the [background worker](../mspsds-worker/README.md).
 
 
 ## Overview
 
 The site is written in [Ruby on Rails](https://rubyonrails.org/).
 
-We're using the GOV.UK Design System.
-The documentation for this can be found [here](https://design-system.service.gov.uk/).
-
-We're using [Slim](http://slim-lang.com/) as our HTML templating language, vanilla ES5 JavaScript and [Sass](https://sass-lang.com/) for styling.
-
+We're using [Slim](http://slim-lang.com/) as our HTML templating language, 
+ES6 JavaScript and [Sass](https://sass-lang.com/) for styling transplied with webpack.
 
 ## Getting Setup
 
@@ -65,7 +62,7 @@ RubyMine comes with db inspection tools, too. To connect to the dev db, you'll n
 ### Debugging
 
 Debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up mspsds-web` and then 
-- the `Docker: Attach to Ruby` configuration, if in VS Code.
+- the `Docker: Attach to MSPSDS` configuration, if in VS Code.
 - the `Remote Debug` configuration, if in RubyMine
 Note, that when run in this mode, the website won't launch until the debugger is connected!
 
@@ -81,11 +78,11 @@ You can run the tests with `docker-compose exec mspsds-web bin/rake test`.
 You can run the ruby linting with `docker-compose exec mspsds-web bin/rubocop`.
 Running this with the `--auto-correct` flag set will cause rubocop to attempt to fix as many of the issues as it can.
 
-You can run the Slim linting with `docker-compose exec mspsds-web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app/views`.
+You can run the Slim linting with `docker-compose exec mspsds-web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app vendor`.
 
-You can run the Sass linting with `docker-compose exec mspsds-web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'`.
+You can run the Sass linting with `docker-compose exec mspsds-web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/**/*.scss' 'vendor/**/*.scss'`.
 
-You can run the JavaScript linting with `docker-compose exec mspsds-web yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/javascripts`.
+You can run the JavaScript linting with `docker-compose exec mspsds-web yarn eslint -c vendor/shared-web/.eslintrc.yml app config vendor`.
 
 You can run the security vulnerability static analysis with `bin/brakeman --no-pager`.
 

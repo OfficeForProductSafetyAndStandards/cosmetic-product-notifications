@@ -118,13 +118,13 @@ private
     @investigation = Investigation.eager_load(:source,
                                               products: { documents_attachments: :blob },
                                               investigation_businesses: { business: :locations },
-                                              documents_attachments: :blob).find(params[:id])
+                                              documents_attachments: :blob).find_by(pretty_id: params[:pretty_id])
     authorize @investigation, :show?
     preload_activities
   end
 
   def set_investigation
-    @investigation = Investigation.find(params[:id])
+    @investigation = Investigation.find_by(pretty_id: params[:pretty_id])
     authorize @investigation
   end
 
@@ -143,13 +143,13 @@ private
 
   def assignee_update_params
     params[:investigation][:assignable_id] = case params[:investigation][:assignable_id_radio]
-                                             when "Someone in your team"
+                                             when "someone_in_your_team"
                                                params[:investigation][:select_team_member]
-                                             when "Previously assigned"
+                                             when "previously_assigned"
                                                params[:investigation][:select_previously_assigned]
-                                             when "Other team"
+                                             when "other_team"
                                                params[:investigation][:select_other_team]
-                                             when "Someone else"
+                                             when "someone_else"
                                                params[:investigation][:select_someone_else]
                                              else
                                                params[:investigation][:assignable_id_radio] || params[:investigation][:assignable_id]
