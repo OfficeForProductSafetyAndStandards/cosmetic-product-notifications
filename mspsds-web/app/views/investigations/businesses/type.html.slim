@@ -1,0 +1,36 @@
+- content_for :page_title, "Add business to case"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+.investigation-business-page{ data-investigation-id=@investigation.id
+    data-business-ids=@investigation.business_ids.join(",") }
+  = render "investigation_heading", investigation: @investigation
+  h2.govuk-heading-l
+    | Add business
+  h3.govuk-heading-m [class="govuk-!-margin-bottom-2"] Select business type
+= form_with(model: @business, local: true, url: new_investigation_business_path(@investigation), method: :get) do |form|
+  .govuk-grid-row class="govuk-!-margin-bottom-3"
+    .govuk-grid-column-one-half class="govuk-!-margin-bottom-9"
+      fieldset.govuk-fieldset
+        .govuk-form-group
+          .govuk-radios.govuk-radios--conditional data-module="radios"
+            .govuk-radios__item
+              = form.radio_button :relationship, "Retailer", class: "govuk-radios__input"
+              = form.label :relationship, "Retailer", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :relationship, "Distributor", class: "govuk-radios__input"
+              = form.label :relationship, "Distributor", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :relationship, "Importer", class: "govuk-radios__input"
+              = form.label :relationship, "Importer", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :relationship, "Manufacturer", class: "govuk-radios__input"
+              = form.label :relationship, "Manufacturer", class: "govuk-label govuk-radios__label"
+            .govuk-radios__item
+              = form.radio_button :relationship, "Other", class: "govuk-radios__input",
+                  "data-aria-controls": "conditional-business-other-type"
+              = form.label :relationship, "Other", class: "govuk-label govuk-radios__label"
+            #conditional-business-other-type.govuk-radios__conditional.govuk-radios__conditional--hidden
+              = form.text_field :relationship_other, class: "govuk-input"
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
+        = form.submit "Continue", class: "govuk-button"

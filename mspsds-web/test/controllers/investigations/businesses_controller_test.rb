@@ -42,13 +42,6 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should link business and investigation" do
-    assert_difference "InvestigationBusiness.count" do
-      put link_investigation_business_url(@investigation, @business)
-    end
-    assert_redirected_to investigation_path(@investigation, anchor: "businesses")
-  end
-
   test "should unlink business and investigation" do
     @investigation.add_business @business, "manufacturer"
     assert_difference "InvestigationBusiness.count", -1 do

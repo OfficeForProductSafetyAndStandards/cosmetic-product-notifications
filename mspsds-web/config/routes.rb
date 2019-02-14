@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     end
     resources :businesses, only: %i[new create], controller: "investigations/businesses" do
       member do
-        put :link, path: ''
+        get :type
         get :remove
         delete :unlink, path: ''
       end
