@@ -51,12 +51,12 @@ module DateConcern
 
   def missing_date_component_message
     # Can be overwritten in any class using the helper
-    "must specify a day, month and year"
+    "#{@date_key.to_s.humanize} must specify a day, month and year"
   end
 
   def invalid_date_message
     # Can be overwritten in any class using the helper
-    "must be a valid date"
+    "#{@date_key.to_s.humanize} must be a valid date"
   end
 
 private
@@ -80,14 +80,14 @@ private
     when (1..2) # Date has some components entered, but not all
       missing_date_components.each do |missing_component, _|
         errors.add(@date_key, missing_date_component_message)
-        errors.add(missing_component, "can't be blank")
+        errors.add(missing_component, "")
       end
     when 0
       if self[@date_key].blank?
         errors.add(@date_key, invalid_date_message)
-        errors.add(:day)
-        errors.add(:month)
-        errors.add(:year)
+        errors.add(:day, "")
+        errors.add(:month, "")
+        errors.add(:year, "")
       end
     end
   end

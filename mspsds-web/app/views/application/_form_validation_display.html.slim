@@ -4,18 +4,7 @@
     # TODO MSPSDS-989 This is very DateConcern-internals specific - ideally we either treat them properly
     # or filter them within that concern
     keys = errors.details.keys.without(:day, :month, :year)
-    # `full_messages_for` prepends the messages with humanized key, so it can automate validation messages
-    #  (e.g. "name" + "must not be blank"). We've previously relied on these messages, but as the system matures,
-    #  we make the error messages more aligned with the principles of design system
-    #  (https://design-system.service.gov.uk/components/error-message/)
-    #  for which we'll want full control over the messages.
-    #  While we're transitioning, the `prepend_messages_with_keys` flag allows choice of appropriate behaviour./,
-    prepend_messages_with_keys = true if local_assigns[:prepend_messages_with_keys].nil?
-    error_messages = if prepend_messages_with_keys
-                       keys.map { |key| errors.full_messages_for(key).first }
-                     else
-                       keys.map { |key| errors.messages[key].first }
-                     end
+    error_messages = keys.flat_map { |key| errors.full_messages_for(key) }
   #error_explanation
     h2.govuk-heading-l.govuk-error-message
       = "The following #{'error'.pluralize(error_messages.count)} prevented this #{model_name} from being saved:"

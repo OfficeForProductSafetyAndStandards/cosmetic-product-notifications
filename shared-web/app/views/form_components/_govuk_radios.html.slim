@@ -18,6 +18,6 @@ ruby:
     - item_matching_state = items.find { |item| item[:value].to_s == form.object.send(key).to_s }
     - item_matching_state[:checked] = true if item_matching_state
   - if form.object.errors
-    - error_text = form.object.errors[key].first.presence
+    - error_text = form.object.errors.full_messages_for(key).first.presence
     - local_assigns[:errorMessage] ||= { text: error_text } if error_text
 = render "components/govuk_radios", **local_assigns
