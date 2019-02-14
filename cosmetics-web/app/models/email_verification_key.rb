@@ -4,8 +4,12 @@ class EmailVerificationKey < ApplicationRecord
   before_create :set_key
   before_create :set_expires_at
 
-  def EmailVerificationKey.key_validity_duration
-    return 1.day
+  def self.key_validity_duration
+    1.day
+  end
+
+  def is_expired?
+    expires_at < DateTime.current
   end
 
 private

@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe RemoveExpiredEmailVerificationKeysJob, :type => :job do
-  let(:email_verification_key) {create(:email_verification_key)}
-  let(:expired_email_verification_key) {create(:expired_email_verification_key)}
+RSpec.describe RemoveExpiredEmailVerificationKeysJob, type: :job do
+  let(:email_verification_key) { create(:email_verification_key) }
+  let(:expired_email_verification_key) { create(:expired_email_verification_key) }
 
   before do
     email_verification_key.save
