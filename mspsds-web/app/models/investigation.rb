@@ -7,6 +7,8 @@ class Investigation < ApplicationRecord
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
 
+  scope :this_month, -> { where(created_at: Time.zone.now.beginning_of_month..Time.zone.now.end_of_month) }
+
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
@@ -57,14 +59,13 @@ class Investigation < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :complainant, dependent: :destroy
 
-  before_create :assign_current_user_to_case
+  before_create :assign_current_user_to_case, :add_pretty_id
 
   after_create :create_audit_activity_for_case
 
   def as_indexed_json(*)
     as_json(
-      methods: :pretty_id,
-      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at],
+      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at pretty_id],
       include: {
         documents: {
           only: [],
@@ -114,11 +115,6 @@ class Investigation < ApplicationRecord
 
   def pretty_visibility
     is_private ? ApplicationController.helpers.visibility_options[:private] : ApplicationController.helpers.visibility_options[:public]
-  end
-
-  def pretty_id
-    id_string = id.to_s.rjust(8, '0')
-    id_string.insert(4, "-")
   end
 
   def pretty_description
@@ -187,6 +183,15 @@ class Investigation < ApplicationRecord
     # InvestigationBusiness model.
     investigation_businesses.create!(business_id: business.id, relationship: relationship)
     create_audit_activity_for_business(business)
+  end
+
+  def to_param
+    pretty_id
+  end
+
+  def add_pretty_id(id: Investigation.this_month.where.not(pretty_id: nil).count)
+    pretty_id = "#{created_at.strftime('%y%m')}-%04d" % id
+    self.pretty_id = pretty_id
   end
 
 private
