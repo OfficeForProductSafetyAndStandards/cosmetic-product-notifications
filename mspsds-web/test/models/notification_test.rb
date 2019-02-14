@@ -14,10 +14,17 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test "should notify current assignee when the assignee is a person and there is any change" do
-    @investigation.update(assignee: @user_one)
-    prepare_notify_check(who_will_be_notified: [@user_one])
+    @investigation.update(assignee: @user_two)
+    prepare_notify_check(who_will_be_notified: [@user_two])
     make_generic_change
     assert_equal @number_of_notifications, 1
+  end
+
+  test "should not notify current assignee when the assignee makes the change" do
+    @investigation.update(assignee: @user_one.teams[0])
+    prepare_notify_check(who_will_be_notified: [])
+    make_generic_change
+    assert_equal @number_of_notifications, 0
   end
 
   test "should not notify anyone when the assignee is a team and there is any change done by team users" do
