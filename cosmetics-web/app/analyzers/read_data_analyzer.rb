@@ -28,20 +28,14 @@ private
     notification_file = self.class.get_notification_file_from_blob(blob)
 
     get_xml_file_content do |xml_file_content|
-      @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
+      @xml_info = XMLInfo.new(xml_file_content)
     end
 
-    name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName[language='EN']/name").first.text
-    cpnp_reference = @xml_doc.xpath('//cpnpReference').first.text
-    is_imported = @xml_doc.xpath('//currentVersion/generalInfo/imported').first.text.casecmp?('Y')
-    imported_country = @xml_doc.xpath('//currentVersion/generalInfo/importedCty').first.text
-    shades = @xml_doc.xpath('//currentVersion/generalInfo/productNameList/productName/shade').first.text
-
-    notification = ::Notification.new(product_name: name,
-                                       cpnp_reference: cpnp_reference,
-                                       cpnp_is_imported: is_imported,
-                                       cpnp_imported_country: imported_country,
-                                       shades: shades,
+    notification = ::Notification.new(product_name: @xml_info.product_name,
+                                       cpnp_reference: @xml_info.cpnp_reference,
+                                       cpnp_is_imported: @xml_info.is_imported,
+                                       cpnp_imported_country: @xml_info.imported_country,
+                                       shades: @xml_info.shades,
                                        responsible_person: notification_file.responsible_person)
     notification.notification_file_parsed!
     notification.save
