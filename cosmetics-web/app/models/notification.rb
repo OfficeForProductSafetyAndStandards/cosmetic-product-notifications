@@ -22,6 +22,7 @@ class Notification < ApplicationRecord
 
   validate :all_required_attributes_must_be_set
 
+  # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :product_name_added
@@ -29,6 +30,7 @@ class Notification < ApplicationRecord
     state :components_complete
     state :draft_complete
     state :notification_complete
+    state :notification_file_imported
 
     event :add_product_name do
       transitions from: :empty, to: :product_name_added
@@ -53,7 +55,12 @@ class Notification < ApplicationRecord
         end
       end
     end
+
+    event :notification_file_parsed do
+      transitions from: :empty, to: :notification_file_imported
+    end
   end
+  # rubocop:enable Metrics/BlockLength
 
   def import_country_for_display
     country_from_code(import_country) || import_country
@@ -107,6 +114,8 @@ private
       mandatory_attributes('components_complete')
     when 'notification_complete'
       mandatory_attributes('draft_complete')
+    when 'notification_file_imported'
+      mandatory_attributes('empty')
     end
   end
 end

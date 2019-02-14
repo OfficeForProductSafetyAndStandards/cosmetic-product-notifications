@@ -304,8 +304,8 @@ private
     if params.key? further_key(step)
       session[further_key(step)] = @repeat_step
     else
-      file_type = step.to_s.humanize(capitalize: false)
-      @investigation.errors.add(further_key(step), "- select whether or not you have further #{file_type} to record")
+      file_type = to_item_text(step)
+      @investigation.errors.add(further_key(step), "Select whether or not you have #{file_type} to record")
     end
   end
 
@@ -367,6 +367,14 @@ private
       :further_corrective_action
     else
       ("further_" + key.to_s).to_sym
+    end
+  end
+
+  def to_item_text(key)
+    if key == :has_corrective_action
+      "corrective action"
+    else
+      "further " + key.to_s.humanize(capitalize: false)
     end
   end
 

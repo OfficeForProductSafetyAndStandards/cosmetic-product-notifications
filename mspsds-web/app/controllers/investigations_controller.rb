@@ -143,13 +143,13 @@ private
 
   def assignee_update_params
     params[:investigation][:assignable_id] = case params[:investigation][:assignable_id_radio]
-                                             when "Someone in your team"
+                                             when "someone_in_your_team"
                                                params[:investigation][:select_team_member]
-                                             when "Previously assigned"
+                                             when "previously_assigned"
                                                params[:investigation][:select_previously_assigned]
-                                             when "Other team"
+                                             when "other_team"
                                                params[:investigation][:select_other_team]
-                                             when "Someone else"
+                                             when "someone_else"
                                                params[:investigation][:select_someone_else]
                                              else
                                                params[:investigation][:assignable_id_radio] || params[:investigation][:assignable_id]
