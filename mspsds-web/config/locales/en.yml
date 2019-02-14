@@ -62,6 +62,11 @@ en:
       other_than: "%{attribute} must be other than %{count}"
       odd: "%{attribute} must be odd"
       even: "%{attribute} must be even"
+
+      # Our own
+      date_missing_component: "%{attribute} must specify a day, month and year"
+
+
   activerecord:
     errors:
       models:
@@ -69,7 +74,20 @@ en:
           attributes:
             product:
               required: "Select the product which was tested"
+        test/result:
+          attributes:
+            date:
+              invalid: "Enter a real date of the test"
+              date_missing_component: "Enter date of the test and include a day, month and year"
+        test/request:
+          attributes:
+            date:
+              invalid: "Enter a real date of the test request"
+              date_missing_component: "Enter date of the test request and include a day, month and year"
         corrective_action:
           attributes:
             product:
               required: "Select the product the corrective action relates to"
+            date_decided:
+              invalid: "Enter a real date when the corrective action was decided"
+              date_missing_component: "Enter the date the corrective action was decided and include a day, month and year"
