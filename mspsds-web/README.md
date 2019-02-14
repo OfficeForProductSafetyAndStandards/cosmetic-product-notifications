@@ -62,7 +62,7 @@ RubyMine comes with db inspection tools, too. To connect to the dev db, you'll n
 ### Debugging
 
 Debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up mspsds-web` and then 
-- the `Docker: Attach to Ruby` configuration, if in VS Code.
+- the `Docker: Attach to MSPSDS` configuration, if in VS Code.
 - the `Remote Debug` configuration, if in RubyMine
 Note, that when run in this mode, the website won't launch until the debugger is connected!
 

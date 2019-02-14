@@ -26,7 +26,7 @@ update_configs:
     update_schedule: "live"
 
   - package_manager: "javascript"
-    directory: "/shared-web"
+    directory: "/maintenance"
     update_schedule: "live"
 
   - package_manager: "javascript"
@@ -34,17 +34,25 @@ update_configs:
     update_schedule: "live"
 
   - package_manager: "javascript"
-    directory: "/maintenance"
+    directory: "/shared-web"
     update_schedule: "live"
+    default_labels:
+    - dependencies
+    - javascript
+    - fixme
 
   - package_manager: "ruby:bundler"
     directory: "/cosmetics-web"
     update_schedule: "live"
 
   - package_manager: "ruby:bundler"
-    directory: "/shared-web"
+    directory: "/mspsds-web"
     update_schedule: "live"
 
   - package_manager: "ruby:bundler"
-    directory: "/mspsds-web"
+    directory: "/shared-web"
     update_schedule: "live"
+    default_labels:
+    - dependencies
+    - ruby
+    - fixme
