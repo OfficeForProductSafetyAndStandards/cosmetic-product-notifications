@@ -25,7 +25,7 @@ if [[ ! $APP_DOES_NOT_EXIST ]]; then
     cf unmap-route $COMPONENT $DOMAIN --hostname $HOSTNAME
 fi
 
-cf push -f ./$COMPONENT/manifest.yml $( [[ $APP_DOES_NOT_EXIST ]] && printf %s "--hostname $HOSTNAME" || printf %s "--no-hostname" ) $( [[ $NO_START ]] && printf %s "--no-start" )
+cf push -f ./$COMPONENT/manifest.yml $( [[ $APP_DOES_NOT_EXIST ]] && printf %s "--hostname $HOSTNAME" || printf %s "--no-route" ) $( [[ $NO_START ]] && printf %s "--no-start" )
 
 if [[ ! $APP_DOES_NOT_EXIST ]]; then
     # Route to newly deployed app
