@@ -98,6 +98,7 @@ If you want to update any of the deployed instances, you'll need an account for
 
 We're using AWS to supplement the functionality of GOV.UK PaaS.
 If you want to update any of the deployed instances, you'll need an account - ask someone on the team to invite you.
+If you get an error saying you don't have permission to set something, make sure you have MFA set up. 
 
 
 #### Logit
@@ -118,6 +119,9 @@ Anything which is merged to `master` (via a Pull Request or push) will trigger t
 [Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
 and cause deployments of the various components to the int space on GOV.UK PaaS.
 
+Deployment to research environment does not currently happen automatically, for details see section "Research" in 
+[prototypes](https://regulatorydelivery.atlassian.net/wiki/spaces/MSPSDS/pages/452689949/Prototypes)
+
 Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
 space.
 Please only do this if you are confident that this is a stable commit.
@@ -135,23 +139,10 @@ https://github.com/cloudfoundry/cli#downloads and then run the following command
     cf target -o beis-mspsds
 
 This will log you in and set the correct target organisation.
+The login command without -u -p options will not work in some terminals, in particular git-bash. Passing username and
+password in one line will. 
 
 If you need to create a new environment, you can run `cf create-space SPACE-NAME`, otherwise, select the correct space using `cf target -o beis-mspsds -s SPACE-NAME`.
-
-
-#### Keycloak
-
-See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
-
-
-#### Cosmetics
-
-See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
-
-
-#### MSPSDS
-
-See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
 
 
 #### Logging
@@ -175,6 +166,21 @@ Setting up a logstash filter as follows may be useful:
         match => { "message" => "^%{NUMBER} <%{NUMBER:cf_pri:int}>%{NUMBER:cf_ver:int} %{TIMESTAMP_ISO8601:cf_ts} %{DATA:cf_org}\.%{DATA:cf_env}\.%{DATA:cf_app} %{UUID:cf_app_id} \[%{WORD:cf_type}/%{GREEDYDATA:cf_type_info}\] - - %{GREEDYDATA:msg}$" }
       }
     }
+
+
+#### Keycloak
+
+See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
+
+
+#### Cosmetics
+
+See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
+
+
+#### MSPSDS
+
+See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
 
 
 ## Licence
