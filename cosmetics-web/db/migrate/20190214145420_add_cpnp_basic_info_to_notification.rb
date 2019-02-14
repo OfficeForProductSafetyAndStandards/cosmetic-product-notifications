@@ -1,8 +1,10 @@
 class AddCpnpBasicInfoToNotification < ActiveRecord::Migration[5.2]
-  def change
-    add_column :notifications, :cpnp_reference, :string
-    add_column :notifications, :cpnp_is_imported, :boolean
-    add_column :notifications, :cpnp_imported_country, :string
-    add_column :notifications, :shades, :string
+  safety_assured do
+    change_table :notifications, bulk: true do |t|
+      t.string :cpnp_reference
+      t.boolean :cpnp_is_imported
+      t.string :cpnp_imported_country
+      t.string :shades
+    end
   end
 end
