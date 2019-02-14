@@ -41,7 +41,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
   test "first step should require an option to be selected" do
     click_on "Continue"
-    assert_text "Complainant type can't be blank"
+    assert_text "Select complainant type"
   end
 
   test "first step should allow a complainant type to be selected" do

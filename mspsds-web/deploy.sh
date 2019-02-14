@@ -10,29 +10,25 @@ set -ex
 # SPACE: the space to which you want to deploy
 # If NO_START is set the app won't be started
 
-if cf app mspsds-web; then
-    # We've deployed this app before, get the URL
-    URL=`cf app mspsds-web | grep routes | awk {'print $2'}`
-    HOSTNAME=`echo $URL | cut -d'.' -f 1`
-    DOMAIN=`echo $URL | cut -d'.' -f 2-`
-else 
-    # We haven't deployed this app before
-    HOSTNAME=mspsds-$SPACE
-fi
+DOMAIN=london.cloudapps.digital
+HOSTNAME=mspsds-$SPACE
+COMPONENT=mspsds-web
 
-rm -rf ./mspsds-web/vendor/shared-web/
-cp -a ./shared-web/. ./mspsds-web/vendor/shared-web/
+cf app $COMPONENT || APP_DOES_NOT_EXIST="true"
 
-if [[ $DOMAIN ]]; then
+rm -rf ./$COMPONENT/vendor/shared-web/
+cp -a ./shared-web/. ./$COMPONENT/vendor/shared-web/
+
+if [[ ! $APP_DOES_NOT_EXIST ]]; then
     # Route to the maintenance page
     cf map-route maintenance $DOMAIN --hostname $HOSTNAME
-    cf unmap-route mspsds-web $DOMAIN --hostname $HOSTNAME
+    cf unmap-route $COMPONENT $DOMAIN --hostname $HOSTNAME
 fi
 
-cf push -f ./mspsds-web/manifest.yml $( [[ ! $DOMAIN ]] && printf %s "--hostname $HOSTNAME") $( [[ ${NO_START} ]] && printf %s "--no-start" )
+cf push -f ./$COMPONENT/manifest.yml $( [[ $APP_DOES_NOT_EXIST ]] && printf %s "--hostname $HOSTNAME" || printf %s "--no-hostname" ) $( [[ $NO_START ]] && printf %s "--no-start" )
 
-if [[ $DOMAIN ]]; then
+if [[ ! $APP_DOES_NOT_EXIST ]]; then
     # Route to newly deployed app
-    cf map-route mspsds-web $DOMAIN --hostname $HOSTNAME
+    cf map-route $COMPONENT $DOMAIN --hostname $HOSTNAME
     cf unmap-route maintenance $DOMAIN --hostname $HOSTNAME
 fi

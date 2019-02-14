@@ -1,1 +1,8 @@
 * text=auto eol=lf
+
+## These files are binary and should be left untouched
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.zip binary
+*.pdf binary

@@ -5,6 +5,7 @@ class ResponsiblePersons::NotificationsController < ApplicationController
     @pending_notification_files = NotificationFile.where(
       responsible_person_id: @responsible_person.id, user_id: current_user.id
     ).count
+    @notifications = @responsible_person.notifications
   end
 
 private

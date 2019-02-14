@@ -26,7 +26,7 @@ class NotificationsController < ApplicationController
 private
 
   def set_notification
-    @notification = Notification.find(params[:id])
+    @notification = Notification.find_by reference_number: params[:id]
   end
 
   def add_image_upload_errors

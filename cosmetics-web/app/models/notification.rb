@@ -8,11 +8,21 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
+  before_create do
+    new_reference_number = nil
+    loop do
+      new_reference_number = SecureRandom.rand(100000000)
+      break unless Notification.where(reference_number: new_reference_number).exists?
+    end
+    self.reference_number = new_reference_number
+  end
+
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_import_country, if: :will_save_change_to_import_country?
 
   validate :all_required_attributes_must_be_set
 
+  # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :product_name_added
@@ -20,6 +30,7 @@ class Notification < ApplicationRecord
     state :components_complete
     state :draft_complete
     state :notification_complete
+    state :notification_file_imported
 
     event :add_product_name do
       transitions from: :empty, to: :product_name_added
@@ -44,10 +55,19 @@ class Notification < ApplicationRecord
         end
       end
     end
+
+    event :notification_file_parsed do
+      transitions from: :empty, to: :notification_file_imported
+    end
   end
+  # rubocop:enable Metrics/BlockLength
 
   def import_country_for_display
     country_from_code(import_country) || import_country
+  end
+
+  def reference_number_for_display
+    "UKCP-%08d" % reference_number
   end
 
   def images_are_present_and_safe?
@@ -62,6 +82,10 @@ class Notification < ApplicationRecord
     image_uploads.any? { |image|
       image.file_exists? && !image.marked_as_safe?
     }
+  end
+
+  def to_param
+    reference_number.to_s
   end
 
 private
@@ -90,6 +114,8 @@ private
       mandatory_attributes('components_complete')
     when 'notification_complete'
       mandatory_attributes('draft_complete')
+    when 'notification_file_imported'
+      mandatory_attributes('empty')
     end
   end
 end

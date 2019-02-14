@@ -6,10 +6,7 @@ class Test < ApplicationRecord
 
   has_many_attached :documents
 
-  validates :investigation, presence: true
-  validates :product, presence: true
-  validates :date, presence: true
-  validates :legislation, presence: true
+  validates :legislation, presence: { message: "Select the legislation that relates to this test" }
 
   validates_length_of :details, maximum: 1000
 

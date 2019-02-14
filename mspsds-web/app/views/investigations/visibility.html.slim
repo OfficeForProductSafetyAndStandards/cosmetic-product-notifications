@@ -2,24 +2,19 @@
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = render "minimal_investigation_heading", investigation: @investigation, title: "Legal privilege"
-h2.govuk-heading-l
-  | Visibility
+- heading_content = capture do
+  h2.govuk-heading-l
+    | Visibility
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with(model: @investigation, method: :put, url: visibility_investigation_url(@investigation)) do |form|
       = render "form_validation_display", errors: @investigation.errors
-      .govuk-form-group
-        span.govuk-hint
-          | Restricted cases are visible only to the organisation that created them and the organisation to which they
-          | are currently assigned.
-        fieldset.govuk-fieldset
-          .govuk-radios
-            .govuk-radios__item
-              = form.radio_button :is_private, false, class: "govuk-radios__input"
-              = form.label :is_private, visibility_options[:public], class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :is_private, true, class: "govuk-radios__input"
-              = form.label :is_private, visibility_options[:private], class: "govuk-label govuk-radios__label"
+      = render "form_components/govuk_radios", form: form, key: :is_private,
+              fieldset: { legend: { html: heading_content } },
+              hint: { text: "Restricted cases are visible only to the organisation that created them and the" + \
+                          " organisation to which they are currently assigned." },
+              items: [{ text: visibility_options[:public], value: "false" },
+                      { text: visibility_options[:private], value: "true" }]
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Comment / rationale
