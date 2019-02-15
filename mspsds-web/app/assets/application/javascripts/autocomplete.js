@@ -22,11 +22,11 @@ export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
       }
     });
 
-    // If we display a down arrow we want clicking on it to cause the same effect as clicking on input field,
-    // showing all values. This is a work-around to
+    // If we display a down arrow we want clicking on it to cause the same effect as clicking on
+    // input field, showing all values. This is a work-around to
     // https://github.com/alphagov/accessible-autocomplete/issues/202
     const $downArrow = $(element).parent().find('svg');
-    if($downArrow){
+    if ($downArrow) {
       $downArrow.on('click', () => {
         $enhancedElement.focus();
         $enhancedElement.click();
