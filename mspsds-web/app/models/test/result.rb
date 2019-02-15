@@ -19,14 +19,6 @@ class Test::Result < Test
     false
   end
 
-  def missing_date_component_message
-    "Enter date of the test and include a day, month and year"
-  end
-
-  def invalid_date_message
-    "Enter a real date of the test"
-  end
-
 private
 
   def result_file_attached

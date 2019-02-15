@@ -46,7 +46,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
   test "first step should allow a complainant type to be selected" do
     select_complainant_type_and_continue
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "second step should be complainant details" do
@@ -68,14 +68,14 @@ class CreateAllegationTest < ApplicationSystemTestCase
     select_complainant_type_and_continue
     click_on "Continue"
 
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "second step should allow a valid email address" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
 
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "third step should be allegation details" do

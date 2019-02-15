@@ -41,7 +41,7 @@ h2.govuk-heading-l
           th.govuk-table__header[scope="row"]
             | Country
           td.govuk-table__cell
-            = @location.country
+            = country_from_code @location.country
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Postal code

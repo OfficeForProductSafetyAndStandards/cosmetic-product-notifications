@@ -38,11 +38,11 @@ class DocumentsController < ApplicationController
 private
 
   def set_file
+    @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
     @file = file_collection.find(params[:id]) if params[:id].present?
   end
 
   def file_valid?
-    @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
     if @file.blank? || @file.blob.blank?
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end

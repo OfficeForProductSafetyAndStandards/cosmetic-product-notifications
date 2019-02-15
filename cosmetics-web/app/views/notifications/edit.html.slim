@@ -55,7 +55,7 @@
                         th.govuk-table__header
                             | Imported from
                         td.govuk-table__cell
-                            = @notification.import_country_for_display
+                            = country_from_code @notification.import_country
                 tr.govuk-table__row
                     th.govuk-table__header
                         | Number of components
