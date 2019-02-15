@@ -8,8 +8,8 @@ h2.govuk-heading-l Default
         fieldset: { legend: { text: "Have you changed your name?" } },
         hint: { text: "This includes changing your last name or spelling your name differently." },
         items: [\
-                { text: "Yes", value: true },
-                { text: "No", value: false }]
+                { text: "Yes", value: "true" },
+                { text: "No", value: "false" }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
@@ -39,11 +39,11 @@ h2.govuk-heading-l Disabled
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With Legend as heading
-- html_2 = capture do
+- html2 = capture do
   span.govuk-heading-s class="govuk-!-margin-bottom-1"
     | Part 2 of the Housing Act 2004
   | For properties that are 3 or more stories high and occupied by 5 or more people
-- html_3 = capture do
+- html3 = capture do
   span.govuk-heading-s class="govuk-!-margin-bottom-1"
     | Part 3 of the Housing Act 2004
   | For properties that are within a geographical area defined by a local council
@@ -54,7 +54,7 @@ h2.govuk-heading-l With Legend as heading
                 "classes": "govuk-fieldset__legend--l",
                 "isPageHeading": true } },
         "hint": { "text": "Select one of the options below." },
-        "items": [{ "value": "part-2", "html": html_2 }, { "value": "part-3", "html": html_3 }]
+        "items": [{ "value": "part-2", "html": html2 }, { "value": "part-3", "html": html3 }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
@@ -71,7 +71,7 @@ h2.govuk-heading-l With a medium legend
   "hint": { \
     "text": "Select one of the options below."\
     },
-        "items": [{ "value": "part-2", "html": html_2 }, { "value": "part-3", "html": html_3 }]
+        "items": [{ "value": "part-2", "html": html2 }, { "value": "part-3", "html": html3 }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
