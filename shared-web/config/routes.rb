@@ -8,6 +8,6 @@ Shared::Web::Engine.routes.draw do
   end
 
   if Rails.env.development?
-    get "components/:component" => "components#show"
+    get "components/:component" => "components_gallery#show"
   end
 end

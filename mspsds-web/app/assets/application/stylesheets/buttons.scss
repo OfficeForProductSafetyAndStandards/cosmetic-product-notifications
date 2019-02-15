@@ -1,0 +1,4 @@
+.remove-button {
+  background-color: $govuk-error-colour;
+  box-shadow: 0 $govuk-border-width-form-element 0  darken($govuk-error-colour, 50%);
+}
