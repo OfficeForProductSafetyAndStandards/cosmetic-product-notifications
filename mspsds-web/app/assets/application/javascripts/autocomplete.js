@@ -3,6 +3,7 @@ import accessibleAutocomplete from 'accessible-autocomplete';
 
 export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
   const element = document.getElementById(id);
+
   const options = autocompleteOptions || {};
   if (element) {
     accessibleAutocomplete.enhanceSelectElement({
@@ -30,6 +31,16 @@ export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
       $downArrow.on('click', () => {
         $enhancedElement.focus();
         $enhancedElement.click();
+      });
+    }
+
+    // This adds ability to remove currently selected input
+    const removeButton = document.getElementById("remove-" + id);
+    if (removeButton) {
+      removeButton.addEventListener("click", () => {
+          $enhancedElement.val('');
+          $enhancedElement.click().focus().blur();
+          $(element).parent().find('select').val('');
       });
     }
   }
