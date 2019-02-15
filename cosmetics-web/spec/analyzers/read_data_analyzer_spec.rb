@@ -15,17 +15,17 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
   end
 
   describe "accept" do
-    it "null blob fails" do
+    it "rejects a null blob" do
       expect(ReadDataAnalyzer.accept?(nil)).equal?(false)
     end
 
-    it "zip blob success" do
+    it "accepts a zip blob" do
       expect(ReadDataAnalyzer.accept?(blob)).equal?(true)
     end
   end
 
   describe "metadata" do
-    it "creates a notification and remove a notification file" do
+    it "creates a notification and removes a notification file" do
       expect {
         analyzer.metadata
       }.to change(Notification, :count).by(1).and change(NotificationFile, :count).by(-1)

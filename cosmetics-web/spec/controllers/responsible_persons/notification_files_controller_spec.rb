@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:valid_attributes) {
-    { uploaded_file: fixture_file_upload("testExportFile.zip") }
+    { uploaded_file: fixture_file_upload("/files/testExportFile.zip") }
   }
 
   before do
