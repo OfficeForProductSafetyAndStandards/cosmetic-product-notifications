@@ -41,6 +41,14 @@ class Business < ApplicationRecord
   def pretty_description
     "Business #{id}"
   end
+
+  def contacts_have_errors?
+    contacts&.any? { |contact| contact.errors.any? } || false
+  end
+
+  def locations_have_errors?
+    locations&.any? { |location| location.errors.any? } || false
+  end
 end
 
 Business.import force: true if Rails.env.development? # for auto sync model with elastic search
