@@ -8,7 +8,7 @@
     | Add business
   .govuk-grid-row
     .govuk-grid-column-one-half
-      = form_with(model: @business, url: investigation_businesses_path(@investigation), local: true, method: :post,
+      = form_with(model: @business, url: wizard_path, method: :put,
               html: { autocomplete: :off }) do |form|
         = render "form_validation_display", errors: @business.errors
         h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
