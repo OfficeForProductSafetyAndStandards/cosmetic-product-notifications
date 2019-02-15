@@ -18,7 +18,7 @@ class DocumentTest < ApplicationSystemTestCase
 
   test "First step should require file attachment" do
     click_on "Upload"
-    assert_text "prevented this item from being saved:"
+    assert_text "There is a problem"
   end
 
   test "Second step should be details" do
@@ -29,7 +29,7 @@ class DocumentTest < ApplicationSystemTestCase
   test "details should validate title" do
     attach_file_and_upload
     click_on "Save attachment"
-    assert_text "prevented this item from being saved:"
+    assert_text "There is a problem"
   end
 
   test "details should be valid if title exists" do

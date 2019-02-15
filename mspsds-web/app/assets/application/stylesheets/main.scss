@@ -1,17 +1,18 @@
 @import "../../../../vendor/shared-web/app/assets/application/stylesheets/main";
 
 @import "autocomplete";
+@import "block-link";
+@import "buttons";
+@import "case-card";
 @import "documents";
+@import "form";
 @import "images";
 @import "pagination";
+@import "search-box";
 @import "shared";
 @import "sortable_columns";
-@import "timeline";
-@import "form";
-@import "block-link";
 @import "summary_table";
-@import "case-card";
-@import "search-box";
+@import "timeline";
 
 * {
   box-sizing: border-box;
