@@ -7,7 +7,7 @@
       p.govuk-caption-xl = @parent.pretty_description
       | Add attachment
 = form_with scope: :document, url: wizard_path, method: :put, local: true do |form|
-  = render "form_validation_display", errors: @errors
+  = render "form_components/govuk_error_summary", form: form, errors: @errors
   = form.fields_for :file do |subform|
     .govuk-form-group
       = subform.label :file, "Browse for file", class: "govuk-heading-l"
