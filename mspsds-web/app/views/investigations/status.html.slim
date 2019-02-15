@@ -5,7 +5,7 @@
 h2.govuk-heading-l
   = "#{@investigation.case_type.titleize} status"
 = form_with(model: @investigation, method: :put, url: status_investigation_url(@investigation)) do |form|
-  = render "form_validation_display", errors: @investigation.errors
+  = render "form_components/govuk_error_summary", form: form
   = render "form_components/govuk_radios", form: form, key: :is_closed,
           fieldset: { legend: { text: "Status" } },
           items: [{ text: "Open", value: "false" }, { text: "Closed", value: "true" }]

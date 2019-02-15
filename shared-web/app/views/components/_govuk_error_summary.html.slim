@@ -1,0 +1,26 @@
+/ Implementation based on
+/ https://github.com/alphagov/govuk-frontend/blob/
+/       943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/error-summary/template.njk
+
+- attributes = { \
+        "data-module": "error-summary",
+        "class": local_assigns[:classes],
+        "aria-labelby": "error-summary-title",
+        role: "alert",
+        tabindex: "-1" }.merge(local_assigns[:attributes] || {})
+.govuk-error-summary *attributes
+  h2.govuk-error-summary__title#error-summary-title
+    = local_assigns[:titleHtml] || local_assigns[:titleText]
+  .govuk-error-summary__body
+    - if local_assigns[:descriptionHtml] || local_assigns[:descriptionText]
+      p = local_assigns[:descriptionHtml] || local_assigns[:descriptionText]
+    ul.govuk-list.govuk-error-summary__list
+      - errorList.each do |item|
+        li
+          - item_content = capture do
+            = item[:html] || item[:text]
+          - if item[:href]
+            a href=item[:href] *(item[:attributes] || {})
+              = item_content
+          - else
+            = item_content
