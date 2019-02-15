@@ -14,9 +14,14 @@
             | Product name
           th.govuk-table__header[scope="col"]
             | Reason for failure
+          th.govuk-table__header[scope="col"]
       tbody.govuk-table__body
-        tr.govuk-table__row
-          td.govuk-table__cell
-            | Example product
-          td.govuk-table__cell
-            | Incorrect file type
+        - @erroneous_notification_files .each do |notification_file|
+          tr.govuk-table__row
+            td.govuk-table__cell
+              = notification_file.name
+            td.govuk-table__cell
+              = get_error_message(notification_file.upload_error)
+            td.govuk-table__cell
+              | Dismiss
+    = will_paginate(@erroneous_notification_files, param_name: "errors", params: {anchor: "errors"})

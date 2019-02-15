@@ -28,7 +28,7 @@
             class: "govuk-button govuk-button", role: "button"
 
 = render "tabs", tabs: [\
-  Tab.new("errors", "Errors (0)", "Files that failed to upload",
+  Tab.new("errors", "Errors (#{@erroneous_notification_files.count})", "Files that failed to upload",
         lambda { render "responsible_persons/notifications/tabs/errors" }),
   Tab.new("unfinished", "Unfinished (#{@unfinished_notifications.total_entries})", "Unfinished cosmetics products",
         lambda { render "responsible_persons/notifications/tabs/unfinished" }),

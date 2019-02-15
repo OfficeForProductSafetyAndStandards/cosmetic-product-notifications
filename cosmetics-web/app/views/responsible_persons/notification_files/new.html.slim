@@ -6,7 +6,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       | Upload cosmetic notification file from CPNP
-
+    = render "error_summary", errors: @notification_file.errors
     .govuk-body-m
       | To make registering a cosmetic product as simple as possible
       | , export the product notification zip file from the CPNP.
@@ -20,6 +20,7 @@
         .form-group
           = form.label "Upload CPNP zip file", class: "govuk-label"
           = form.file_field :uploaded_file,
-                  class: "govuk-file-upload", id: "uploaded_file"
+                  class: "govuk-file-upload", id: "uploaded_file", \
+                  accept: "application/zip"
 
       = form.submit "Upload", name: nil, class: "govuk-button"
