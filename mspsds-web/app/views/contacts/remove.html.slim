@@ -32,4 +32,4 @@
           td.govuk-table__cell
             = @contact.job_title
 = form_with url: business_contact_path(@business, @contact), method: :delete do |form|
-    = form.submit "Remove contact", class: "govuk-button", style: "background-color: #df3034"
+    = form.submit "Remove contact", class: "govuk-button remove-button"
