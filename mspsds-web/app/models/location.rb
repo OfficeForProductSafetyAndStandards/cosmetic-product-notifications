@@ -1,4 +1,6 @@
 class Location < ApplicationRecord
+  include Shared::Web::CountriesHelper
+
   default_scope { order(created_at: :asc) }
 
   validates :name, presence: true
@@ -12,14 +14,14 @@ class Location < ApplicationRecord
       address_line_1,
       address_line_2,
       postal_code,
-      country
+      country_from_code(country)
     ].reject(&:blank?).join(", ")
   end
 
   def short
     [
       county,
-      country
+      country_from_code(country)
     ].reject(&:blank?).join(", ")
   end
 end
