@@ -36,7 +36,7 @@ fieldset.govuk-fieldset
   .govuk-form-group
     = form.label :country, "Country",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    = form.select :country_of_origin, @countries, {include_blank: ""},
+    = form.select :country_of_origin, @countries, { include_blank: "" },
             class: "govuk-select", id: "location-autocomplete"
 
 fieldset.govuk-fieldset
