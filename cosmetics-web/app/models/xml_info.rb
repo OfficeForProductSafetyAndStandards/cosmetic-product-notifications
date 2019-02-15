@@ -1,10 +1,9 @@
 class XMLInfo
-
   def initialize(xml_file_content)
     @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
   end
 
-  def product_name(language = 'EN')
+  def product_name(_language = 'EN')
     name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName[language='EN']/name").first&.text
     name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName/name").first&.text if name.blank?
     name
@@ -15,7 +14,7 @@ class XMLInfo
   end
 
   def is_imported
-    @xml_doc.xpath('//currentVersion/generalInfo/imported').first&.text.casecmp?('Y')
+    @xml_doc.xpath('//currentVersion/generalInfo/imported').first&.text&.casecmp?('Y')
   end
 
   def imported_country
