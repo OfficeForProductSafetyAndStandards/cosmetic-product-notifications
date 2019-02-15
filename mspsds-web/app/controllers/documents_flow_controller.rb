@@ -34,11 +34,11 @@ class DocumentsFlowController < ApplicationController
 private
 
   def set_file
+    @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
     @file_blob, * = load_file_attachments
   end
 
   def file_valid?
-    @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
     if @file_blob.blank? && step == :upload
       @errors.add(:base, :file_not_implemented, message: "File can't be blank")
     end

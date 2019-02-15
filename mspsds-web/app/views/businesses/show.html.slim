@@ -4,16 +4,6 @@
 
 = render "business_heading", business: @business
 
-table.govuk-table class="govuk-!-margin-bottom-4"
-  tbody.govuk-table__body
-    tr.govuk-table__row
-      th.govuk-table__header scope="row"
-        | Company number
-      td.govuk-table__cell
-        = @business.company_number
-
-hr.govuk-section-break.govuk-section-break--l
-
 = render "tabs", tabs: [\
   Tab.new("full-detail", "Full detail", lambda { render "businesses/tabs/details" }),
   Tab.new("locations", "Locations", lambda { render "businesses/tabs/locations" }),

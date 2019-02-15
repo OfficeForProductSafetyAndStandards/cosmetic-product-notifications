@@ -6,8 +6,7 @@ h1.govuk-heading-xl
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with(model: @investigation, url: project_index_path, method: :post) do |form|
-      = render "form_validation_display", errors: @investigation.errors
-
+      = render "form_components/govuk_error_summary", form: form
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Please provide a title
