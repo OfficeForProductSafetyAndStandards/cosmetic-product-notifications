@@ -8,5 +8,5 @@ h1.govuk-heading-xl
   .govuk-grid-column-one-half
     = form_with model: @business, url: wizard_path, method: :put, local: true do |form|
       = form.hidden_field :business_type, value: @business_type
-      = render "form_validation_display", errors: @business.errors, model_name: "business"
+      = render "form_components/govuk_error_summary", form: form
       = render "businesses/form", form: form, business: @business, countries: @countries, submit_text: "Continue"
