@@ -40,7 +40,7 @@ class Investigations::ActivitiesController < ApplicationController
   # POST /activities.json
   def create
     respond_to do |format|
-      if @activity.save
+      if @investigation.activities << @activity
         format.html do
           redirect_to investigation_url(@investigation), notice: "Comment was successfully added."
         end
@@ -58,7 +58,6 @@ private
 
   def create_activity
     @activity = CommentActivity.new(body: Activity.sanitize_text(activity_params[:body]))
-    @investigation.activities << @activity
     @activity.source = UserSource.new(user: current_user)
   end
 

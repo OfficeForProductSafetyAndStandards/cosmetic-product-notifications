@@ -39,12 +39,13 @@ class Activity < ApplicationRecord
 
   def notify_relevant_users
     users_to_notify.each do |user|
-      NotifyMailer.updated_investigation(investigation.id, user.full_name, user.email, email_update_text, email_subject_text).deliver_later
+      NotifyMailer.updated_investigation(investigation.pretty_id, user.full_name, user.email, email_update_text, email_subject_text).deliver_later
     end
   end
 
   def users_to_notify
-    return [investigation.assignee] if investigation.assignee.is_a? User
+    return [investigation.assignee] if (investigation.assignee.is_a? User) && (source.user != investigation.assignee)
+    return [] if investigation.assignee.is_a? User
     return [] if source&.user&.teams&.include? investigation.assignee
 
     investigation.assignee&.users || []
