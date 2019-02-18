@@ -23,7 +23,7 @@ fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
     = form.text_field :company_number,
             class: "govuk-input", aria_describedby: "business-company-number-hint"
 
-= form.fields_for :locations, business.primary_location do |ff|
+= form.fields_for :locations, (business.primary_location || Location.new) do |ff|
   fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
     legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       | Address
@@ -56,7 +56,7 @@ fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
       = ff.select :country, countries, { include_blank: "" },
             class: "govuk-select", id: "location-autocomplete"
 
-= form.fields_for :contacts, business.primary_contact do |ff|
+= form.fields_for :contacts, (business.primary_contact || Contact.new) do |ff|
   fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
     legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       | Contact
