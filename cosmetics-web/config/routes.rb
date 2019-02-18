@@ -24,6 +24,10 @@ Rails.application.routes.draw do
           get :create_or_join_existing
           get :join_existing
         end
+
+        member do
+          get 'verify_email'
+        end
       end
     end
   end

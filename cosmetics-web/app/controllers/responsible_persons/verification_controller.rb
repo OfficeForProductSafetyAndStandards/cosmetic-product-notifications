@@ -1,16 +1,11 @@
 class ResponsiblePersons::VerificationController < ApplicationController
   def show
-    email_verification_key = EmailVerificationKey.find_by(
-      responsible_person_id: params[:responsible_person_id],
-        key: params[:key]
+    email_verification_key = EmailVerificationKey.find_by!(
+      "responsible_person_id = ? AND key = ? AND expires_at >= ?", 
+      params[:responsible_person_id], params[:key], DateTime.current
     )
 
-    if email_verification_key.nil? || email_verification_key.is_expired?
-      redirect_to "/404"
-    else
-      email_verification_key.responsible_person.is_email_verified = true
-      email_verification_key.responsible_person.save
-      redirect_to responsible_person_path(email_verification_key.responsible_person)
-    end
+    email_verification_key.responsible_person.update('is_email_verified' => true)
+    redirect_to responsible_person_path(email_verification_key.responsible_person)
   end
 end

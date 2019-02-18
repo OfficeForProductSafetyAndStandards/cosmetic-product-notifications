@@ -33,18 +33,18 @@ RSpec.describe ResponsiblePersons::VerificationController, type: :controller do
     end
 
     it "redirects to 404 if key does not exist" do
-      get :show, params: { responsible_person_id: responsible_person.id, key: "fakekey" }
-
-      expect(response).to redirect_to("/404")
+      expect {
+        get :show, params: { responsible_person_id: responsible_person.id, key: "fakekey" }
+      }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it "redirects to 404 if key has expired" do
       expired_email_verification_key.responsible_person = responsible_person
       expired_email_verification_key.save
 
-      get :show, params: { responsible_person_id: responsible_person.id, key: expired_email_verification_key.key }
-
-      expect(response).to redirect_to("/404")
+      expect {
+        get :show, params: { responsible_person_id: responsible_person.id, key: expired_email_verification_key.key }
+      }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
