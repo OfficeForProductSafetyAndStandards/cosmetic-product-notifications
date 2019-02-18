@@ -1,0 +1,10 @@
+.govuk-form-group
+  span#hint.govuk-hint [class="govuk-!-width-two-thirds govuk-visually-hidden"]
+    = accessible_hint
+  = form.label key, title, class: "govuk-label"
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      = form.select key, options_for_select(options, ''), {}, class: "govuk-select", id: "picker-#{key}"
+    .govuk-grid-column-one-half
+      span style="padding: 1% 0; font-size: x-large" id="remove-picker-#{key}"
+        = "✖"

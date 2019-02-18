@@ -34,7 +34,9 @@ export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
       });
     }
 
-    // This adds ability to remove currently selected input
+    // This adds ability to remove currently selected input by pressing on an X next to it
+    // This is a work-around to
+    // https://github.com/alphagov/accessible-autocomplete/issues/240
     const removeButton = document.getElementById("remove-" + id);
     if (removeButton) {
       removeButton.addEventListener("click", () => {

@@ -43,7 +43,7 @@
                 = form.select :assigned_to_someone_else_id,
                         compute_select_options(entities: User.get_assignees(except: current_user) + Team.all),
                         {},
-                        class: "govuk-select", id: "assignee-picker-select_someone_else"
+                        class: "govuk-select", id: "picker-select_someone_else"
         .govuk-form-group
           fieldset.govuk-fieldset
             .govuk-fieldset__legend--s
