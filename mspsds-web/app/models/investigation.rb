@@ -195,7 +195,7 @@ class Investigation < ApplicationRecord
   end
 
   def add_pretty_id(id: nil)
-    id = id || Investigation.where("created_at < ?", created_at).where("created_at > ?", created_at.beginning_of_month).count
+    id = id || Investigation.where("created_at < ? AND created_at > ?", created_at, created_at.beginning_of_month).count
     pretty_id = "#{created_at.strftime('%y%m')}-%04d" % id
     self.pretty_id = pretty_id
   end
