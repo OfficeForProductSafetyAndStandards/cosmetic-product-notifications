@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2019_02_14_141110) do
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
     t.string "user_id"
-    t.integer "upload_error"
+    t.string "upload_error"
     t.index ["responsible_person_id"], name: "index_notification_files_on_responsible_person_id"
   end
 

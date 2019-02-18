@@ -7,23 +7,26 @@ class NotificationFile < ApplicationRecord
   validate :uploaded_file_is_within_allowed_size?
 
 
-  enum upload_error: [
-      :uploaded_file_not_a_zip,
-      :unzipped_files_not_xml,
-      :unzipped_files_are_pdf,
-      :file_flagged_as_virus,
-      :file_size_too_big,
-      :notification_validation_error,
-      :notification_duplicated,
-      :unknown_error
-  ]
+  enum upload_error: {
+    uploaded_file_not_a_zip: "uploaded_file_not_a_zip",
+    unzipped_files_not_xml: "unzipped_files_not_xml",
+    unzipped_files_are_pdf: "unzipped_files_are_pdf",
+    file_flagged_as_virus: "file_flagged_as_virus",
+    file_size_too_big: "file_size_too_big",
+    notification_validation_error: "notification_validation_error",
+    notification_duplicated: "notification_duplicated",
+    unknown_error: "unknown_error"
+  }
 
   @max_file_size_bytes = 30.megabytes
 
   def self.get_max_file_size
     @max_file_size_bytes
   end
-
+  
+  def get_upload_error_message
+    I18n.t("activerecord.attributes.notification_file.upload_errors.#{self.upload_error}")
+  end
 private
 
   def uploaded_file_is_zip?
