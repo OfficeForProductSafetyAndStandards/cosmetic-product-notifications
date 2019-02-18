@@ -13,7 +13,11 @@ Rails.application.routes.draw do
   end
 
   resources :responsible_persons, only: %i[show] do
-    resources :notification_files, controller: "responsible_persons/notification_files", only: %i[new create]
+    resources :notification_files, controller: "responsible_persons/notification_files", only: %i[new create destroy] do
+      collection do
+        delete :destroy_all
+      end
+    end
     resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index]
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
 

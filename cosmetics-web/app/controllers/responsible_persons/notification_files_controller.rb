@@ -24,6 +24,16 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
     end
   end
 
+  def destroy
+    NotificationFile.delete(params[:id])
+    redirect_to responsible_person_notifications_path(@responsible_person)
+  end
+
+  def destroy_all
+    NotificationFile.delete_all
+    redirect_to responsible_person_notifications_path(@responsible_person)
+  end
+
 private
 
   # Use callbacks to share common setup or constraints between actions.
