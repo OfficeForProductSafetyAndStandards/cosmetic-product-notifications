@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Responsible person dashboard", type: :system do
-  let(:responsible_person_1) {create(:responsible_person_with_user)}
-  let(:responsible_person_2) {create(:responsible_person, email_address: "responsible_person_2@example.com")}
-  let(:user_1) {responsible_person_1.responsible_person_users.first.user}
-  let(:user_2) {create(:user)}
+  let(:responsible_person_1) { create(:responsible_person_with_user) }
+  let(:responsible_person_2) { create(:responsible_person, email_address: "responsible_person_2@example.com") }
+  let(:user_1) { responsible_person_1.responsible_person_users.first.user }
+  let(:user_2) { create(:user) }
 
   before do
     sign_in as_user: user_1

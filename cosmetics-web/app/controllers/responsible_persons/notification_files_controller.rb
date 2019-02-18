@@ -2,8 +2,7 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
   before_action :set_responsible_person
   before_action :set_notification_file
 
-  def new;
-  end
+  def new; end
 
   def create
     if notification_file_params && notification_file_params[:uploaded_file]

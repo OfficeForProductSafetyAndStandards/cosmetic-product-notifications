@@ -23,10 +23,11 @@ class NotificationFile < ApplicationRecord
   def self.get_max_file_size
     @max_file_size_bytes
   end
-  
+
   def get_upload_error_message
     I18n.t("activerecord.attributes.notification_file.upload_errors.#{self.upload_error}")
   end
+
 private
 
   def uploaded_file_is_zip?
