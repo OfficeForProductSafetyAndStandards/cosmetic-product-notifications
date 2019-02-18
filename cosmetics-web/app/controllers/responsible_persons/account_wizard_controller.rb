@@ -1,7 +1,7 @@
 class ResponsiblePersons::AccountWizardController < ApplicationController
   include Wicked::Wizard
 
-  steps :select_type, :enter_details, :verify_email
+  steps :select_type, :enter_details
 
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person, only: %i[show update verify_email]
@@ -58,7 +58,8 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
   end
 
   def finish_wizard_path
-    verify_email_account(@responsible_person)
+    @responsible_person = current_user.responsible_persons.first
+    verify_email_account_path(@responsible_person)
   end
 
 private

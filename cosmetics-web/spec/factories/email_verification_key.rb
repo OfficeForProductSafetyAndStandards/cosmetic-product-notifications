@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :email_verification_key do
-    key { "aaaaaaaaaaa" }
-    expires_at { 2.days.from_now }
     after(:create) do |email_verification_key|
       email_verification_key.key = "aaaaaaaaaaa"
       email_verification_key.expires_at = 2.days.from_now
