@@ -1,5 +1,6 @@
 class ResponsiblePersons::VerificationController < ApplicationController
   before_action :set_responsible_person, only: %i[index resend_email]
+  skip_before_action :create_or_join_responsible_person, only: %i[index resend_email]
   def show
     email_verification_key = EmailVerificationKey.verify_key_for_responsible_person(
       params[:responsible_person_id], 
