@@ -28,7 +28,7 @@ private
     notification_file = self.class.get_notification_file_from_blob(blob)
 
     get_xml_file_content do |xml_file_content|
-      @xml_info = XMLInfo.new(xml_file_content)
+      @xml_info = CPNPExport.new(xml_file_content)
     end
 
     notification = ::Notification.new(product_name: @xml_info.product_name,

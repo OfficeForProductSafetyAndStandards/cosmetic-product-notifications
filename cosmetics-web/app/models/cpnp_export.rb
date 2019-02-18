@@ -1,4 +1,4 @@
-class XMLInfo
+class CPNPExport
   def initialize(xml_file_content)
     @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
   end
