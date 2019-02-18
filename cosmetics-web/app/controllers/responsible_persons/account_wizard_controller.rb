@@ -58,8 +58,7 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
   end
 
   def finish_wizard_path
-    @responsible_person = current_user.responsible_persons.first
-    verify_email_account_path(@responsible_person)
+    verify_email_account(@responsible_person)
   end
 
 private
