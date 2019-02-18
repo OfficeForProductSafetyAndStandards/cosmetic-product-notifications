@@ -8,7 +8,7 @@
       span[class="govuk-!-font-weight-regular"] = product.product_type
     .govuk-grid-column-one-third
       span.govuk-caption-m[class="govuk-!-font-size-16"] Origin
-      span[class="govuk-!-font-weight-regular"] = product.country_of_origin_for_display
+      span[class="govuk-!-font-weight-regular"] = country_from_code product.country_of_origin
     .govuk-grid-column-one-third
       span.govuk-caption-m[class="govuk-!-font-size-16"] Cases
       span[class="govuk-!-font-weight-regular"] = product.investigations.length

@@ -34,6 +34,17 @@ to make translating code between the macros usage and our implementation as clos
 This means that we can use the documentation provided by design system for macro options,
 e.g. see [macro options for radios](https://design-system.service.gov.uk/components/radios/#options-example-default) 
 
+Notable differences from nunjucks:
+- we are not allowing unescaped html in `html` attributes. Instead, the expected use-case is to build the required html
+     in slim and `capture` it, e.g.:
+    ```slim
+    - html = capture do
+      h3 Custom html content
+    = render "components/govuk_label", html: html, for: "someId"
+    ```
+    This renders most `text` and `html` attributes functionally identical, but we are choosing to keep both for consistency
+    with nunjucks templates
+
 ## Rails integration
 To simplify working with rails form helpers, we are also providing a bit of "glue" which infers the values that it
 can from the form object and converts them into appropriate params for the view components. Those can be found

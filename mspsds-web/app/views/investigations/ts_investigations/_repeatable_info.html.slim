@@ -8,7 +8,7 @@
 - scope ||= nil
 = form_with model: model, scope: scope, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row
-  = render "form_validation_display", errors: form.object.errors, model_name: "investigation"
+    = render "form_components/govuk_error_summary", form: form
   .govuk-grid-row
   = yield(form)
   .govuk-grid-row

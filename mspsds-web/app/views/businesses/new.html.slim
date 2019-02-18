@@ -9,5 +9,5 @@ h1.govuk-heading-xl
     h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
       | Business details
     = form_with(model: @business, local: true, html: { autocomplete: :off }) do |form|
-      = render "form_validation_display", errors: @business.errors
+      = render "form_components/govuk_error_summary", form: form
       = render "businesses/form", form: form, business: @business, countries: @countries

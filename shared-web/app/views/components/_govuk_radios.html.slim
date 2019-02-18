@@ -45,7 +45,7 @@ ruby:
             = render "components/govuk_hint", id: item_hint_id, classes: 'govuk-radios__hint', **item[:hint]
         - if item[:conditional]
           .govuk-radios__conditional class=("govuk-radios__conditional--hidden" unless item[:checked]) id=conditional_id
-            == item[:conditional][:html]
+            = item[:conditional][:html]
 
 - form_group_classes = [local_assigns.dig(:formGroup, :classes)]
 - form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]

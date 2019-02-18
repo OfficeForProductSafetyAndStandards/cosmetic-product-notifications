@@ -40,7 +40,7 @@ hr.govuk-section-break.govuk-section-break--l
           th.govuk-table__header[scope="row"]
             | Country of origin
           td.govuk-table__cell
-            = @product.country_of_origin_for_display
+            = country_from_code @product.country_of_origin
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Description
