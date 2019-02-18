@@ -44,7 +44,7 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
           responsible_person_email_verification_key_path(@responsible_person, key)
         ).deliver_later
 
-        redirect_to next_wizard_path
+        redirect_to responsible_person_email_verification_keys_path(@responsible_person)
       else
         render step
       end
@@ -55,10 +55,6 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
         render step
       end
     end
-  end
-
-  def finish_wizard_path
-    verify_email_account(@responsible_person)
   end
 
 private

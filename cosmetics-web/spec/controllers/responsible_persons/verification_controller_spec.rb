@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ResponsiblePersons::VerificationController, type: :controller do
+  let(:email_verification_key) { create(:email_verification_key) }
+  let(:expired_email_verification_key) { create(:expired_email_verification_key) }
+  let(:responsible_person) { create(:responsible_person) }
+
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
   end
@@ -10,10 +14,6 @@ RSpec.describe ResponsiblePersons::VerificationController, type: :controller do
   end
 
   describe "show" do
-    let(:email_verification_key) { create(:email_verification_key) }
-    let(:expired_email_verification_key) { create(:expired_email_verification_key) }
-    let(:responsible_person) { create(:responsible_person) }
-
     it "verifies ResponsiblePerson if email key exists" do
       email_verification_key.responsible_person = responsible_person
       email_verification_key.save
@@ -45,6 +45,14 @@ RSpec.describe ResponsiblePersons::VerificationController, type: :controller do
       expect {
         get :show, params: { responsible_person_id: responsible_person.id, key: expired_email_verification_key.key }
       }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe "resend_email" do
+    it "creates a new verification key" do
+      get :resend_email, params: { responsible_person_id: responsible_person.id }
+
+      expect(responsible_person.email_verification_keys.length).to eq(1)
     end
   end
 end

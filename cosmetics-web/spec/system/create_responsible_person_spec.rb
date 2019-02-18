@@ -28,7 +28,7 @@ RSpec.describe "Create a responsible person", type: :system do
     fill_in "Postcode", with: responsible_person.postal_code
     click_on "Continue"
 
-    assert_current_path(/responsible_persons\/account\/verify_email/)
+    assert_current_path(/responsible_persons\/\d+\/verify/)
   end
 
   it "succeeds with valid business account details" do
@@ -49,7 +49,7 @@ RSpec.describe "Create a responsible person", type: :system do
     fill_in "Postcode", with: responsible_person.postal_code
     click_on "Continue"
 
-    assert_current_path(/responsible_persons\/account\/verify_email/)
+    assert_current_path(/responsible_persons\/\d+\/verify/)
   end
 
   it "requires a Companies House registration number for a business account" do

@@ -16,17 +16,17 @@ Rails.application.routes.draw do
     resources :notification_files, controller: "responsible_persons/notification_files", only: %i[new create]
     resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index]
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
-    resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[show]
+    resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[show index] do
+      collection do
+        get :resend_email
+      end
+    end
 
     collection do
       resources :account, controller: "responsible_persons/account_wizard", only: %i[show update] do
         collection do
           get :create_or_join_existing
           get :join_existing
-        end
-
-        member do
-          get 'verify_email'
         end
       end
     end

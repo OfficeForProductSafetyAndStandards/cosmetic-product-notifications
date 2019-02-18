@@ -1,0 +1,12 @@
+- content_for :page_title, "Check your email"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      ' You need to confirm access to
+      = @responsible_person.email_address
+    p 
+      = link_to "Resend validation link", resend_email_responsible_person_email_verification_keys_path(@responsible_person),
+        class: "govuk-button", role: "button"
+    p
+      = link_to "Change contact person email address", responsible_person_email_verification_keys_path(@responsible_person) + '#',
+        class: "govuk-link"
