@@ -20,7 +20,7 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create and link business" do
     assert_difference ["InvestigationBusiness.count", "Business.count"] do
-      post investigation_businesses_url(@investigation), params: {
+      post new_investigation_business_url(@investigation), params: {
         business: {
           legal_name: @business.legal_name,
           trading_name: @business.trading_name,
@@ -33,7 +33,7 @@ class Investigations::BusinessesControllerTest < ActionDispatch::IntegrationTest
 
   test "should not create business if name is missing" do
     assert_no_difference ["InvestigationBusiness.count", "Business.count"] do
-      post investigation_businesses_url(@investigation), params: {
+      post new_investigation_business_url(@investigation), params: {
         business: {
           legal_name: '',
           company_number: "new company number",
