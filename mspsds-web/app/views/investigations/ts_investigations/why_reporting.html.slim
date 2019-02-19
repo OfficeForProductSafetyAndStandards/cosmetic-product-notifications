@@ -10,7 +10,7 @@
 = form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
   = render "form_components/govuk_error_summary", form: form
   .govuk-grid-row class="govuk-!-margin-bottom-3"
-    .mspsds-input.govuk-grid-column-two-thirds class="govuk-!-margin-bottom-9"
+    .govuk-grid-column-full
       .govuk-form-group
         .govuk-checkboxes data-module="checkboxes"
           .govuk-checkboxes__item
@@ -23,8 +23,9 @@
               .mspsds-autocomplete#hazard-type-auto-complete-container
                 = form.label :hazard_type, "Hazard type", class: "govuk-label", for: "hazard-type-autocomplete"
                 span#hazard-type-category-picker.govuk-hint The primary danger the product presents
-                = form.select :hazard_type, hazard_types, { include_blank: true },
-                        class: "govuk-select", id: "hazard-type-picker", aria_describedby: "hazard-type-category-hint"
+                = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds",
+                        options: hazard_types, key: :hazard_type, form: form, returned_value: :itself,
+                        displayed_value: :itself, show_delete_x: true, aria_describedby: "hazard-type-category-hint"
 
             .govuk-form-group
               .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_description].any?)]
@@ -32,8 +33,8 @@
                         for: ":investigation_hazard_description"
                 span.govuk-hint id="allegation-hazard–detail-hint"
                   | Including any incidents or events that brought it to your attention
-                = form.text_area :hazard_description, class: "govuk-textarea", id: "allegation-hazard–detail",
-                        "aria-describedby": "allegation-hazard–detail-hint", rows: 5
+                = form.text_area :hazard_description, class: "govuk-textarea govuk-!-width-two-thirds",
+                        id: "allegation-hazard–detail", "aria-describedby": "allegation-hazard–detail-hint", rows: 5
 
           .govuk-checkboxes__item
             = form.check_box :non_compliant, class: "govuk-checkboxes__input", checked: @non_compliant,
@@ -46,8 +47,9 @@
               .govuk-form-group
                 = form.label :non_compliant_reason, "Details of non-compliance", class: "govuk-label",
                         for: ":investigation_non_compliant_reason"
-                = form.text_area :non_compliant_reason, class: "govuk-textarea", id: "allegation-compliance-detail",
-                        aria_describedby: "allegation-compliance-detail-hint", rows: "5"
+                = form.text_area :non_compliant_reason, class: "govuk-textarea govuk-!-width-two-thirds",
+                        id: "allegation-compliance-detail", aria_describedby: "allegation-compliance-detail-hint",
+                        rows: "5"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"
