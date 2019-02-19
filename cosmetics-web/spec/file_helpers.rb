@@ -11,11 +11,6 @@ module FileHelpers
     ActiveStorage::Blob.create_after_upload! io: fixture_file_upload(filename).open, filename: filename, content_type: content_type, metadata: metadata
   end
 
-  def upload_file(filename: "testExportFile.zip", content_type: "application/zip")
-    file_path = Rails.root.join('spec', 'fixtures', 'files', filename)
-    fixture_file_upload(file_path, content_type)
-  end
-
   def remove_uploaded_files
     FileUtils.rm_rf(Rails.root.join('tmp', 'storage'))
   end

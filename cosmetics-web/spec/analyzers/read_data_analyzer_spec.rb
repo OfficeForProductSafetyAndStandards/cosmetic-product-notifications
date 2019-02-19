@@ -10,6 +10,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
   end
 
   after do
+    sign_out
     remove_uploaded_files
   end
 
