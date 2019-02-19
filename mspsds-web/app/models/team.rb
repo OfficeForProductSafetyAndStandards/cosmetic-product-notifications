@@ -37,9 +37,13 @@ class Team < ActiveHash::Base
   end
 
   def display_name(ignore_visibility_restrictions: false)
-    return name if current_user.organisation == organisation || ignore_visibility_restrictions
+    return name if (current_user.organisation == organisation) && ignore_visibility_restrictions
 
     organisation.name
+  end
+
+  def display_name_without_restrictions
+    display_name(ignore_visibility_restrictions: true)
   end
 
   def full_name

@@ -55,6 +55,10 @@ class User < Shared::Web::User
     display_name
   end
 
+  def display_name_without_restrictions
+    display_name(ignore_visibility_restrictions: true)
+  end
+
   def team_names
     teams.map(&:name).join(', ')
   end

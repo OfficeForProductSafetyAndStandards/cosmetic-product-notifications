@@ -1,0 +1,7 @@
+- display_method = local_assigns[:ignore_visibility_restrictions] ? :display_name_without_restrictions : :display_name
+.govuk-form-group
+  span#hint.govuk-hint [class="govuk-!-width-two-thirds govuk-visually-hidden"]
+    = accessible_hint
+  = form.label key, local_assigns[:title], class: "govuk-label"
+  = render "autocomplete_select_component", column_class: "govuk-grid-column-one-half", returned_value: :id,
+          displayed_value: display_method, **local_assigns
