@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Create a responsible person", type: :system do
-  
   before do
     sign_in
     stub_notify_mailer

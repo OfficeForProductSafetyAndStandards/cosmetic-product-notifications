@@ -12,9 +12,9 @@ class EmailVerificationKey < ApplicationRecord
     expires_at < DateTime.current
   end
 
-  def EmailVerificationKey.verify_key_for_responsible_person(responsible_person_id, key)
+  def self.verify_key_for_responsible_person(responsible_person_id, key)
     EmailVerificationKey.find_by!(
-      "responsible_person_id = ? AND key = ? AND expires_at >= ?", 
+      "responsible_person_id = ? AND key = ? AND expires_at >= ?",
       responsible_person_id, key, DateTime.current
     )
   end

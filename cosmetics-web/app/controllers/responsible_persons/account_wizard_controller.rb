@@ -41,7 +41,7 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
         NotifyMailer.send_responsible_person_verification_email(
           @responsible_person.email_address,
           current_user.full_name,
-          responsible_person_email_verification_key_path(@responsible_person, key)
+          responsible_person_email_verification_key_url(@responsible_person, key.key)
         ).deliver_later
 
         redirect_to finish_wizard_path
