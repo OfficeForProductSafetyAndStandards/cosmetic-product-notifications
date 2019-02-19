@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 2019_02_15_121322) do
     t.string "legal_name"
     t.string "trading_name", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
   create_table "complainants", id: :serial, force: :cascade do |t|
