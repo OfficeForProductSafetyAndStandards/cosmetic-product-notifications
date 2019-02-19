@@ -20,16 +20,18 @@ fieldset.govuk-fieldset
           span.govuk-hint
             ' Only products already added to the case are listed.
             = link_to "Add a product", new_investigation_product_path(investigation)
-          = form.collection_select :product_id, investigation.products, :id, :name,
-                  { include_blank: true }, class: "govuk-select", id: "product-picker"
+          = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds", returned_value: :id,
+                  displayed_value: :name, options: investigation.products, key: :product_id, form: form,
+                  show_delete_x: true
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Against which legislation?
   .govuk-form-group class=("govuk-form-group--error" if test.errors[:legislation].any?)
     span.govuk-hint
       | Select the relevant legislation from the list.
-    = form.select :legislation, relevant_legislation, { include_blank: true },
-            class: "govuk-select", id: "legislation-picker"
+    = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds",
+            options: relevant_legislation, key: :legislation, form: form, returned_value: :itself,
+            displayed_value: :itself, show_delete_x: true
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     - if test.requested?
@@ -38,16 +40,17 @@ fieldset.govuk-fieldset
       | When was the test conducted?
   = render "date_input", form: form
 
-- if !test.requested?
-  = render "form_components/govuk_radios", form: form, key: :result,
-          fieldset: { legend: { text: "What was the test result?", classes: "govuk-fieldset__legend--l" } },
-          items: Test::Result.results.map { |result, label| { text: label, value: result } }
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - if !test.requested?
+      = render "form_components/govuk_radios", form: form, key: :result,
+              fieldset: { legend: { text: "What was the test result?", classes: "govuk-fieldset__legend--l" } },
+              items: Test::Result.results.map { |result, label| { text: label, value: result } }
+    fieldset.govuk-fieldset
+      legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+        | Further details
+      .govuk-form-group class=("govuk-form-group--error" if test.errors[:details].any?)
+        = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
 
-fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | Further details
-  .govuk-form-group class=("govuk-form-group--error" if test.errors[:details].any?)
-    = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
-
-= render "related_attachment_fields", form: form,
-        file_blob: @file_blob, attachment_name: :file, title: "Related attachments"
+    = render "related_attachment_fields", form: form,
+            file_blob: @file_blob, attachment_name: :file, title: "Related attachments"
