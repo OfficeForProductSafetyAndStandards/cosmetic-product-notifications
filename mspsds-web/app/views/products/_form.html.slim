@@ -7,7 +7,7 @@ fieldset.govuk-fieldset
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-category-hint.govuk-hint
       | The high-level category (for reporting purposes)
-    .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_category].any?)
+    .govuk-form-group class=("govuk-form-group--error" if @product.errors[:product_category].any?)
       = render "autocomplete_select_component", column_class: "govuk-grid-column-one-half",
               options: product_categories, key: :product_category, form: form, show_delete_x: true,
               aria_describedby: "report-product-category-hint"
@@ -51,7 +51,8 @@ fieldset.govuk-fieldset
 
     fieldset.govuk-fieldset
       .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:webpage].any?)]
-        = form.label :webpage, "Webpage", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+        = form.label :webpage, "Webpage",
+                class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
         span#report-product-webpage-hint.govuk-hint
           | A link to the manufacturer's page for this product, or a webpage where it can be bought
         = form.text_field :webpage, class: "govuk-input", aria_describedby: "report-product-webpage-hint"
