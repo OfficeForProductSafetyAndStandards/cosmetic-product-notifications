@@ -7,8 +7,6 @@ class Investigation < ApplicationRecord
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
 
-  scope :this_month, -> { where(created_at: Time.zone.now.beginning_of_month..Time.zone.now.end_of_month) }
-
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
@@ -172,10 +170,10 @@ class Investigation < ApplicationRecord
   def case_type; end
 
   def reason_created
-    return "Product reported because it is unsafe and non-compliant." if hazard_type && non_compliant_reason
-    return "Product reported because it is unsafe." if hazard_type
+    return "Product reported because it is unsafe and non-compliant." if hazard_type.present? && non_compliant_reason.present?
+    return "Product reported because it is unsafe." if hazard_type.present?
 
-    "Product reported because it is non-compliant." if non_compliant_reason
+    "Product reported because it is non-compliant." if non_compliant_reason.present?
   end
 
   def has_non_compliant_reason
@@ -196,9 +194,9 @@ class Investigation < ApplicationRecord
     pretty_id
   end
 
-  def add_pretty_id(id: Investigation.this_month.where("created_at < ?", created_at).count)
-    pretty_id = "#{created_at.strftime('%y%m')}-%04d" % id
-    self.pretty_id = pretty_id
+  def add_pretty_id
+    cases_before = Investigation.where("created_at < ? AND created_at > ?", created_at, created_at.beginning_of_month).count
+    self.pretty_id = "#{created_at.strftime('%y%m')}-%04d" % (cases_before + 1)
   end
 
 private
