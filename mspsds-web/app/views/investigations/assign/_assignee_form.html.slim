@@ -1,5 +1,5 @@
 = form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
-  = render "form_validation_display", errors: investigation.errors
+  = render "form_components/govuk_error_summary", form: form
 
   - if current_user.teams.any?
     - someone_in_your_team = capture do

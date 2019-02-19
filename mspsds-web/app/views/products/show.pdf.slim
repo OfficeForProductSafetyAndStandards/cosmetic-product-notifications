@@ -49,7 +49,7 @@ table[style="width:100%; text-align:left"]
     th
       | Country of origin
     td
-      = @product.country_of_origin_for_display
+      = country_from_code(@product.country_of_origin)
   tr
     th
       | Date placed on the market

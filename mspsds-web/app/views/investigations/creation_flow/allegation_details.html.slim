@@ -6,7 +6,7 @@ h1.govuk-heading-xl
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with model: @investigation, scope: :allegation, local: true, url: wizard_path, method: :put do |form|
-      = render "form_validation_display", errors: @investigation.errors, model_name: "allegation"
+      = render "form_components/govuk_error_summary", form: form
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
