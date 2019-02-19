@@ -1,5 +1,5 @@
 class CPNPExport
-  include AnalyzerHelper
+  include Shared::Web::CountriesHelper
 
   def initialize(xml_file_content)
     @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
@@ -25,5 +25,14 @@ class CPNPExport
 
   def shades
     @xml_doc.xpath('//currentVersion/generalInfo/productNameList/productName/shade').first&.text
+  end
+
+private
+
+  def get_gov_uk_country_code(cpnp_country_code)
+    return if cpnp_country_code.length < 2
+
+    country = all_countries.find { |c| c[1].include? cpnp_country_code }
+    (country && country[1]) || cpnp_country_code
   end
 end
