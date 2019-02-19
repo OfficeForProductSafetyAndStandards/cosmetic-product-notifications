@@ -1,5 +1,5 @@
 class CPNPExport
-  include Shared::Web::CountriesHelper
+  include ::Shared::Web::CountriesHelper
 
   def initialize(xml_file_content)
     @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
