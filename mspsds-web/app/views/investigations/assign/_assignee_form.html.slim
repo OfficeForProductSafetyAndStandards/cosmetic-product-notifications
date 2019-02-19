@@ -3,21 +3,21 @@
 
   - if current_user.teams.any?
     - someone_in_your_team = capture do
-      = render "investigations/assign/autocomplete_select", form: form, key: :select_team_member,
+      = render "investigations/assign/assignee_selection", form: form, key: :select_team_member,
               options: User.get_team_members(user: current_user),
               accessible_hint: "Name", title: "Assignee", show_delete_x: true
   - previously_assigned = capture do
-    = render "investigations/assign/autocomplete_select", form: form, key: :select_previously_assigned,
+    = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
             options: investigation.past_assignees + investigation.past_teams,
                     ignore_visibility_restrictions: true,
             accessible_hint: "Select previously assigned person or team", title: "Assignee", show_delete_x: true
   - other_teams = capture do
-    = render "investigations/assign/autocomplete_select", form: form, key: :select_other_team,
+    = render "investigations/assign/assignee_selection", form: form, key: :select_other_team,
             options: Team.all, ignore_visibility_restrictions: true,
             accessible_hint: "Other team name", title: "Assignee", show_delete_x: true
 
   - someone_else = capture do
-    = render "investigations/assign/autocomplete_select", form: form, key: :select_someone_else,
+    = render "investigations/assign/assignee_selection", form: form, key: :select_someone_else,
             options: User.all,
             accessible_hint: "Name", title: "Assignee"
   ruby:
