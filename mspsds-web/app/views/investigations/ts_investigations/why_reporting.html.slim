@@ -24,8 +24,8 @@
                 = form.label :hazard_type, "Hazard type", class: "govuk-label", for: "hazard-type-autocomplete"
                 span#hazard-type-category-picker.govuk-hint The primary danger the product presents
                 = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds",
-                        options: hazard_types, key: :hazard_type, form: form, returned_value: :itself,
-                        displayed_value: :itself, show_delete_x: true, aria_describedby: "hazard-type-category-hint"
+                        options: hazard_types, key: :hazard_type, form: form, show_delete_x: true,
+                        aria_describedby: "hazard-type-category-hint"
 
             .govuk-form-group
               .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_description].any?)]

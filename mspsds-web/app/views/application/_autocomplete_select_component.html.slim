@@ -1,3 +1,5 @@
+- returned_value = local_assigns[:returned_value] || :itself
+- displayed_value = local_assigns[:displayed_value] || :itself
 .govuk-grid-row
   .govuk-grid-column [class="#{local_assigns[:column_class]}"]
     = form.collection_select key, options, returned_value, displayed_value,

@@ -21,16 +21,14 @@ h1.govuk-heading-xl
       | Product Category
     .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_category].any?)
       = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds",
-              options: product_categories, key: :product_category, form: form, returned_value: :itself,
-              displayed_value: :itself, show_delete_x: true
+              options: product_categories, key: :product_category, form: form, show_delete_x: true
 
   fieldset.govuk-fieldset
     legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       | Hazard Type
     .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)
       = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds",
-              options: hazard_types, key: :hazard_type, form: form, returned_value: :itself,
-              displayed_value: :itself, show_delete_x: true
+              options: hazard_types, key: :hazard_type, form: form, show_delete_x: true
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds

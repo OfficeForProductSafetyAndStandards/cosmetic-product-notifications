@@ -9,8 +9,8 @@ fieldset.govuk-fieldset
       | The high-level category (for reporting purposes)
     .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_category].any?)
       = render "autocomplete_select_component", column_class: "govuk-grid-column-one-half",
-              options: product_categories, key: :product_category, form: form, returned_value: :itself,
-              displayed_value: :itself, show_delete_x: true, aria_describedby: "report-product-category-hint"
+              options: product_categories, key: :product_category, form: form, show_delete_x: true,
+              aria_describedby: "report-product-category-hint"
 .govuk-grid-row
   .govuk-grid-column-one-half
     fieldset.govuk-fieldset
