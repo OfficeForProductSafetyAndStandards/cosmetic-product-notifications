@@ -14,7 +14,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     remove_uploaded_files
   end
 
-  describe "accept" do
+  describe "#accept" do
     it "rejects a null blob" do
       expect(ReadDataAnalyzer.accept?(nil)).equal?(false)
     end
@@ -24,7 +24,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
   end
 
-  describe "metadata" do
+  describe "#metadata" do
     it "creates a notification and removes a notification file" do
       notification_file
       expect {

@@ -1,4 +1,6 @@
 class CPNPExport
+  include AnalyzerHelper
+
   def initialize(xml_file_content)
     @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
   end
@@ -18,7 +20,7 @@ class CPNPExport
   end
 
   def imported_country
-    @xml_doc.xpath('//currentVersion/generalInfo/importedCty').first&.text
+    get_gov_uk_country_code(@xml_doc.xpath('//currentVersion/generalInfo/importedCty').first&.text)
   end
 
   def shades
