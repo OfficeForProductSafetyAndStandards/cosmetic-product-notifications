@@ -4,8 +4,6 @@ $govuk-button-delete-shadow-colour: mix($black, $govuk-error-colour, 50%);
 
 .remove-button {
   background-color: $govuk-error-colour;
-  -webkit-box-shadow: 0 2px 0 $govuk-button-delete-shadow-colour;
-  -moz-box-shadow: 0 2px 0 $govuk-button-delete-shadow-colour;
   box-shadow: 0 $govuk-border-width-form-element 0 $govuk-button-delete-shadow-colour;
 
   &:hover {
