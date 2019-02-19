@@ -2,7 +2,7 @@
   .govuk-grid-column [class="#{local_assigns[:column_class]}"]
     = form.collection_select key, options, returned_value, displayed_value,
             { include_blank: true, selected: local_assigns[:selected] },
-            class: "govuk-select", id: "picker-#{key}"
+            class: "govuk-select", id: "picker-#{key}", aria_describedby: local_assigns[:aria_describedby]
   - if local_assigns[:show_delete_x]
     span style="padding: 1% 0; font-size: x-large" id="remove-picker-#{key}"
       = "✖"

@@ -2,6 +2,6 @@ import $ from 'jquery';
 import { simpleAccessibleAutocomplete } from './autocomplete';
 
 $(document).ready(() => {
-  simpleAccessibleAutocomplete('hazard-type-picker', { showAllValues: true });
-  simpleAccessibleAutocomplete('product-category-picker', { showAllValues: true });
+  simpleAccessibleAutocomplete('picker-hazard_type', { showAllValues: true });
+  simpleAccessibleAutocomplete('picker-product_category', { showAllValues: true });
 });

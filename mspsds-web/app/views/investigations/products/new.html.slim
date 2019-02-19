@@ -11,6 +11,4 @@
     .govuk-grid-row
       .govuk-grid-column-full
         = render "form_components/govuk_error_summary", form: form
-    .govuk-grid-row
-      .govuk-grid-column-one-half
-        = render "products/form", form: form, product: @product, countries: @countries, search: true
+    = render "products/form", form: form, product: @product, countries: @countries, search: true
