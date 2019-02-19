@@ -65,7 +65,7 @@ private
     draft_notification.image_uploads.build
 
     image_upload = draft_notification.image_uploads.first
-    image_upload.file.attach(fixture_file_upload("/files/testImage.png", "image/png"))
+    image_upload.file.attach(fixture_file_upload("/testImage.png", "image/png"))
     image_upload.save
 
     blob = image_upload.file.blob

@@ -2,12 +2,11 @@ require 'rails_helper'
 
 RSpec.describe ReadDataAnalyzer, type: :analyzer do
   let(:responsible_person) { create(:responsible_person) }
-  let(:blob) { create_file_blob }
-  let(:analyzer) { ReadDataAnalyzer.new(blob) }
+  let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob) }
+  let(:analyzer) { ReadDataAnalyzer.new(notification_file.uploaded_file) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
-    create_notification_file(blob)
   end
 
   after do
@@ -20,12 +19,13 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "accepts a zip blob" do
-      expect(ReadDataAnalyzer.accept?(blob)).equal?(true)
+      expect(ReadDataAnalyzer.accept?(notification_file.uploaded_file)).equal?(true)
     end
   end
 
   describe "metadata" do
     it "creates a notification and removes a notification file" do
+      notification_file
       expect {
         analyzer.metadata
       }.to change(Notification, :count).by(1).and change(NotificationFile, :count).by(-1)

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe NotificationBuildController, type: :controller do
   let(:notification) { create(:notification) }
-  let(:file) { fixture_file_upload('/files/testImage.png', 'image/png') }
-  let(:text_file) { fixture_file_upload('/files/testText.txt', 'application/text') }
+  let(:file) { fixture_file_upload('/testImage.png', 'image/png') }
+  let(:text_file) { fixture_file_upload('/testText.txt', 'application/text') }
 
   before do
     sign_in_as_member_of_responsible_person(create(:responsible_person))

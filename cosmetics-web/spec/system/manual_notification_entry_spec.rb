@@ -33,7 +33,7 @@ RSpec.describe "Manually enter product details", type: :system do
     # add_product_image
     attach_file(
       :image_upload,
-      Rails.root + 'spec/fixtures/files/testImage.png'
+      Rails.root + 'spec/fixtures/testImage.png'
 )
     click_button "Continue"
 
@@ -78,7 +78,7 @@ RSpec.describe "Manually enter product details", type: :system do
     # add_product_image
     attach_file(
       :image_upload,
-      Rails.root + 'spec/fixtures/files/testImage.png'
+      Rails.root + 'spec/fixtures/testImage.png'
 )
     click_button "Continue"
 
@@ -129,7 +129,7 @@ RSpec.describe "Manually enter product details", type: :system do
     # add_product_image
     attach_file(
       :image_upload,
-      Rails.root + 'spec/fixtures/files/testImage.png'
+      Rails.root + 'spec/fixtures/testImage.png'
 )
     click_button "Continue"
 

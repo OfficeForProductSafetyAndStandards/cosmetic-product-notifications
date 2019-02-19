@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ImageUpload, type: :model do
   let(:image_upload) { ImageUpload.create }
-  let(:file) { fixture_file_upload("/files/testImage.png", "image/png") }
+  let(:file) { fixture_file_upload("/testImage.png", "image/png") }
 
   before do
     allow(ImageUpload).to receive(:get_max_file_size).and_return(10)
