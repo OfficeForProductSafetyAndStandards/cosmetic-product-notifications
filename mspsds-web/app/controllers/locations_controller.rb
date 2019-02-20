@@ -74,7 +74,7 @@ private
   def create_location
     business = Business.find(params[:business_id])
     @location = business.locations.create(location_params)
-    @location.source = UserSource.new(user: current_user)
+    @location.source = UserSource.new(user: User.current)
   end
 
   # Use callbacks to share common setup or constraints between actions.

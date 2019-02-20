@@ -1,6 +1,5 @@
 class InvestigationsController < ApplicationController
   include InvestigationsHelper
-  include Pundit
   include LoadHelper
 
   before_action :set_search_params, only: %i[index]
@@ -46,7 +45,7 @@ class InvestigationsController < ApplicationController
 
   # GET /cases/new
   def new
-    return redirect_to new_ts_investigation_path unless current_user.is_opss?
+    return redirect_to new_ts_investigation_path unless User.current.is_opss?
 
     case params[:type]
     when "allegation"

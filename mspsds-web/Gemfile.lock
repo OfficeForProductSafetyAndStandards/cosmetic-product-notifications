@@ -37,6 +37,7 @@ PATH
       govuk_notify_rails (= 2.1.0)
       keycloak (= 2.4.1)
       rails (~> 5.2)
+      request_store (= 1.4.1)
       sidekiq (= 5.2.5)
       sidekiq-cron (= 1.1.0)
       webpacker (= 4.0.0.rc.7)

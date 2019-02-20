@@ -1,6 +1,5 @@
 module DocumentsHelper
   include FileConcern
-  include Pundit
 
   def set_parent
     @parent = Investigation.find_by!(pretty_id: params[:investigation_pretty_id]) if params[:investigation_pretty_id]
