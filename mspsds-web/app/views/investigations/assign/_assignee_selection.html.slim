@@ -1,5 +1,5 @@
 .govuk-form-group
-  span#hint.govuk-hint
+  span#hint.govuk-hint [class=" govuk-visually-hidden"]
     = accessible_hint
   = form.label key, "Assignee", class: "govuk-label"
   = render "autocomplete_select_component", column_class: "govuk-grid-column-one-half", returned_value: :id,

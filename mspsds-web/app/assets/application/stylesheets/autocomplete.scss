@@ -140,6 +140,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.autocomplete__remove-button {
+  width: 30px;
+  padding: 3px 0
+}
+
+.autocomplete__remove-icon {
+  stroke: black;
+  fill: transparent;
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
 @include govuk-media-query($from: tablet) {
 
   .autocomplete__hint,
