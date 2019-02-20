@@ -30,6 +30,7 @@
     // Shifts content of body to right by width of scrollbar
     padding-left: calc(100vw - 100%);
 
+    // The use of important here is forced because it is already used in .govuk-skip-link from the design system
     .skip-link-banner {
       margin-left: -20px !important;
       padding-left: 20px !important;
