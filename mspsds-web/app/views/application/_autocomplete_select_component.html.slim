@@ -6,7 +6,7 @@
             { include_blank: true, selected: local_assigns[:selected] },
             class: "govuk-select", id: "picker-#{key}", aria_describedby: local_assigns[:aria_describedby]
   - if local_assigns[:show_delete_x]
-    span id="remove-picker-#{key}"
+    button id="remove-picker-#{key}" class="autocomplete__remove-button" type="button"
       span#delete-hint.govuk-hint [class=" govuk-visually-hidden"]
         | Click this to remove currently selected value
       svg viewbox="0 0 40 40" class="autocomplete__remove-button"

@@ -141,8 +141,10 @@
 }
 
 .autocomplete__remove-button {
+  background: transparent;
+  border-color: transparent;
+  cursor: pointer;
   width: 30px;
-  padding: 3px 0
 }
 
 .autocomplete__remove-icon {

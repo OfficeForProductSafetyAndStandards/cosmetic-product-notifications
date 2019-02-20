@@ -39,6 +39,11 @@ export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
     // https://github.com/alphagov/accessible-autocomplete/issues/240
     const removeButton = document.getElementById(`remove-${id}`);
     if (removeButton) {
+      removeButton.addEventListener('keyPress', () => {
+        $enhancedElement.val('');
+        $enhancedElement.click().focus().blur();
+        $(element).parent().find('select').val('');
+      });
       removeButton.addEventListener('click', () => {
         $enhancedElement.val('');
         $enhancedElement.click().focus().blur();
