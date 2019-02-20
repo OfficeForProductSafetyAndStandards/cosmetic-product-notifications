@@ -94,7 +94,12 @@
 
 
 .mspsds-case-card {
-  @extend %mspsds-card
+  @extend %mspsds-card;
+
+  margin-right: 0;
+  @media screen and (max-width: 640px) {
+    margin-left: 0;
+  }
 }
 
 .mspsds-product-card {

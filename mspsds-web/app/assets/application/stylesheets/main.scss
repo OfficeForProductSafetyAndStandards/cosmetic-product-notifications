@@ -20,18 +20,20 @@
 
 .scrollbar-adjust  {
   // This block prevents content moving when hiding/displaying the scrollbar in the browser
-  header,
-  footer {
-    // Ensures that header and footer background colours fill width of screen
-    margin-left: -20px;
-    padding-left: 20px;
-  }
-  // Shifts content of body to right by width of scrollbar
-  padding-left: calc(100vw - 100%);
+  @media screen and (min-width: 960px) {
+    header,
+    footer {
+      // Ensures that header and footer background colours fill width of screen
+      margin-left: -20px;
+      padding-left: 20px;
+    }
+    // Shifts content of body to right by width of scrollbar
+    padding-left: calc(100vw - 100%);
 
-  .skip-link-banner {
-    margin-left: -20px !important;
-    padding-left: 20px !important;
+    .skip-link-banner {
+      margin-left: -20px !important;
+      padding-left: 20px !important;
+    }
   }
 }
 
