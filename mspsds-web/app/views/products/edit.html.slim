@@ -3,7 +3,7 @@
   = link_to "Back to product", @product, class: "govuk-back-link"
 = render "product_heading", product: @product
 .govuk-grid-row
-  .govuk-grid-column-full
+  .govuk-grid-column-one-half
     = form_with model: @product, local: true do |form|
       = render "form_components/govuk_error_summary", form: form
       = render "form", form: form, product: @product, countries: @countries, search: false

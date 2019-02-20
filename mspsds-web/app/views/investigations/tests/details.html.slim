@@ -6,11 +6,10 @@ h1.govuk-heading-xl
   span.govuk-caption-xl
     = @investigation.pretty_description
   = page_title
-
-= form_with model: @test, scope: :test, local: true, url: wizard_path, method: :put do |form|
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: @test, scope: :test, local: true, url: wizard_path, method: :put do |form|
       = render "form_components/govuk_error_summary", form: form
-  = render "form", form: form, test: @test, investigation: @investigation, allow_product_linking: true
-  .govuk-form-group
-    = form.submit "Continue", class: "govuk-button"
+      = render "form", form: form, test: @test, investigation: @investigation, allow_product_linking: true
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

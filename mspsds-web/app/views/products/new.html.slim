@@ -4,11 +4,8 @@
 
 h1.govuk-heading-xl
   | New product
-
-= form_with model: @product, local: true do |form|
-  .govuk-grid-row
-    .govuk-grid-column-full
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    = form_with model: @product, local: true do |form|
       = render "form_components/govuk_error_summary", form: form
-  .govuk-grid-row
-    .govuk-grid-column-one-half
       = render "form", form: form, product: @product, countries: @countries, search: true
