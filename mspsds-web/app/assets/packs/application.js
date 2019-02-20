@@ -8,3 +8,4 @@
 
 import '../application/stylesheets/main.scss';
 import './shared';
+import '../application/javascripts/autocomplete';

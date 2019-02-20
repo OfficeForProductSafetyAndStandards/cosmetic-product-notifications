@@ -22,7 +22,7 @@ fieldset.govuk-fieldset
             = link_to "Add a product", new_investigation_product_path(investigation)
           = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds", returned_value: :id,
                   displayed_value: :name, options: investigation.products, key: :product_id, form: form,
-                  show_delete_x: true
+                  show_all_values: true
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Against which legislation?
@@ -30,7 +30,7 @@ fieldset.govuk-fieldset
     span.govuk-hint
       | Select the relevant legislation from the list.
     = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds",
-            options: relevant_legislation, key: :legislation, form: form, show_delete_x: true
+            options: relevant_legislation, key: :legislation, form: form, show_all_values: true
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     - if test.requested?

@@ -5,16 +5,16 @@
     - someone_in_your_team = capture do
       = render "investigations/assign/assignee_selection", form: form, key: :select_team_member,
               options: User.get_team_members(user: current_user), accessible_hint: "Name",
-              display_method: :display_name, show_delete_x: true
+              display_method: :display_name, show_all_values: true
   - previously_assigned = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
             options: investigation.past_assignees + investigation.past_teams,
             accessible_hint: "Select previously assigned person or team",
-            display_method: :display_name_without_restrictions, show_delete_x: true
+            display_method: :display_name_without_restrictions, show_all_values: true
   - other_teams = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_other_team,
             options: Team.all, accessible_hint: "Other team name", display_method: :display_name_without_restrictions,
-            show_delete_x: true
+            show_all_values: true
 
   - someone_else = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_someone_else,

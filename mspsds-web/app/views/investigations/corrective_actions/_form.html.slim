@@ -28,7 +28,7 @@ legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           ' Only products already added to the case are listed.
         = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds", returned_value: :id,
                 displayed_value: :name, options: investigation.products, key: :product_id, form: form,
-                show_delete_x: true
+                show_all_values: true
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -37,7 +37,7 @@ fieldset.govuk-fieldset
     span.govuk-hint
       | Select the relevant legislation from the list, or enter a different one.
     = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds",
-            options: relevant_legislation, key: :legislation, form: form, show_delete_x: true
+            options: relevant_legislation, key: :legislation, form: form, show_all_values: true
 
 - if allow_business_linking
   fieldset.govuk-fieldset
@@ -52,7 +52,7 @@ fieldset.govuk-fieldset
           ' Only businesses already added to the case are listed.
         = render "autocomplete_select_component", column_class: "govuk-grid-column-two-thirds", returned_value: :id,
                 displayed_value: :trading_name, options: investigation.businesses, key: :business_id, form: form,
-                show_delete_x: true, selected: (investigation.businesses.size == 1 && investigation.businesses.first.id)
+                show_all_values: true, selected: (investigation.businesses.size == 1 && investigation.businesses.first.id)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

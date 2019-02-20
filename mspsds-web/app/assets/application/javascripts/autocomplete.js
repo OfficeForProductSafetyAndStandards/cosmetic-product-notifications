@@ -52,3 +52,11 @@ export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
     }
   }
 }
+
+export function callAutocompleteWhenReady(id, options) {
+    $(document).ready(() => {
+        console.log('Document ready ')
+        simpleAccessibleAutocomplete(id, options)
+    });
+}
+window.callAutocompleteWhenReady = callAutocompleteWhenReady;
