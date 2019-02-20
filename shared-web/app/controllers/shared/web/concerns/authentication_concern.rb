@@ -4,6 +4,8 @@ module Shared
       module AuthenticationConcern
         extend ActiveSupport::Concern
 
+        include Pundit
+
         include Shared::Web::LoginHelper
 
         def initialize
@@ -15,17 +17,26 @@ module Shared
         end
 
         def authenticate_user!
-          unless user_signed_in? || try_refresh_token
-            redirect_to helpers.keycloak_login_url(request.original_fullpath)
-          end
+          redirect_to helpers.keycloak_login_url(request.original_fullpath) unless user_signed_in? || try_refresh_token
         end
 
         def user_signed_in?
-          Shared::Web::KeycloakClient.instance.user_signed_in?
+          @user_signed_in ||= Shared::Web::KeycloakClient.instance.user_signed_in?
+        end
+
+        def set_current_user
+          return unless user_signed_in?
+
+          user_info = Shared::Web::KeycloakClient.instance.user_info
+          User.current = ::User.find_or_create(user_info)
         end
 
         def cookie_name
           :"keycloak_token_#{ENV['KEYCLOAK_CLIENT_ID']}"
+        end
+
+        def pundit_user
+          User.current
         end
 
       private

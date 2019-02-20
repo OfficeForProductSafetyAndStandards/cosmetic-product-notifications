@@ -1,10 +1,10 @@
 = form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
   = render "form_components/govuk_error_summary", form: form
 
-  - if current_user.teams.any?
+  - if User.current.teams.any?
     - someone_in_your_team = capture do
       = render "investigations/assign/assignee_selection", form: form, key: :select_team_member,
-              options: compute_select_options(entities: User.get_team_members(user: current_user)),
+              options: compute_select_options(entities: User.get_team_members(user: User.current)),
               accessible_hint: "Name"
   - previously_assigned = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
@@ -24,7 +24,7 @@
     items = investigation.important_assignable_people.map do |user|
       { text: user.display_name, value: user.id, checked: investigation.assignee == user }
     end
-    if current_user.teams.any?
+    if User.current.teams.any?
       items.push text: "Someone in your team",
                  value: "someone_in_your_team",
                  conditional: { html: someone_in_your_team }

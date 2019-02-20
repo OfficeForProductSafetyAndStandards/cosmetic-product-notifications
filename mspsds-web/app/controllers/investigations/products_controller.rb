@@ -1,7 +1,6 @@
 class Investigations::ProductsController < ApplicationController
   include Shared::Web::CountriesHelper
   include ProductsHelper
-  include Pundit
 
   before_action :set_investigation
   before_action :set_product, only: %i[link remove unlink]

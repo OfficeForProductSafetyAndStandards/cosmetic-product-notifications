@@ -291,8 +291,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
     logout
     sign_in_as_non_opss_user
-    get investigation_path(@new_investigation)
-    assert_not_includes(response.body, @new_investigation.pretty_id)
+    assert_raise(Pundit::NotAuthorizedError) {
+      get investigation_path(@new_investigation)
+    }
   end
 
   test "should show private investigations to creator" do
