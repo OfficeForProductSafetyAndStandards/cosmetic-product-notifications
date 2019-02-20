@@ -1,5 +1,6 @@
 = form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
   = render "form_components/govuk_error_summary", form: form
+  = yield
 
   - if User.current.teams.any?
     - someone_in_your_team = capture do
@@ -39,7 +40,7 @@
     items.push divider: "or"
     items.push text: "Someone else", value: "someone_else", conditional: { html: someone_else }
 
-  = render "form_components/govuk_radios", form: form, key: :assignable_id_radio, items: items
+  = render "form_components/govuk_radios", form: form, key: :assignable_id, items: items
   .govuk-form-group
     = form.submit "Assign", class: "govuk-button"
     p = link_to "Cancel", investigation, class: "mspsds-block-link"

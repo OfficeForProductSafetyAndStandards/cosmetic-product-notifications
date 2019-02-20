@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   before_action :set_location, only: %i[show edit update remove destroy]
   before_action :create_location, only: %i[create]
-  before_action :assign_business, only: %i[show edit remove]
+  before_action :assign_business, only: %i[show edit update remove create]
 
   # GET /locations/1
   # GET /locations/1.json

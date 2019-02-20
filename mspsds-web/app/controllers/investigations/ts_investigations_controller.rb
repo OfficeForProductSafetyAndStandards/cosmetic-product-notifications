@@ -342,14 +342,14 @@ private
 
   def file_valid?
     if @file_blob.nil?
-      @investigation.errors.add(:file, "must be provided")
+      @investigation.errors.add(:file, "Upload file")
     end
     metadata = get_attachment_metadata_params(:file)
     if metadata[:title].blank?
-      @investigation.errors.add(:title, "for the file must be provided")
+      @investigation.errors.add(:title, "Enter file title")
     end
     if metadata[:description].blank?
-      @investigation.errors.add(:description, "for the file must be provided")
+      @investigation.errors.add(:description, "Enter file description")
     end
     @investigation.errors.empty?
   end
@@ -389,15 +389,10 @@ private
     when :which_businesses
       validate_none_as_only_selection
       @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
-      @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
+      @investigation.errors.add(:other_business, "Enter other business type") if no_other_business_type
     when :business
       if @business.errors.any? || @business.contacts_have_errors? || @business.locations_have_errors?
         return false
-      end
-    when :has_corrective_action
-      unless params.key? :further_corrective_action
-        @investigation.errors.add(:further_corrective_action,
-                                  "- select whether or not correction actions have been agreed or taken")
       end
     when :corrective_action
       return false if @corrective_action.errors.any?
@@ -409,7 +404,7 @@ private
 
   def validate_none_as_only_selection
     if @selected_businesses.include?("none") && @selected_businesses.length > 1
-      @investigation.errors.add(:none, "has to be the only option if selected")
+      @investigation.errors.add(:none, "Select none only if not selecting other businesses")
     end
   end
 
