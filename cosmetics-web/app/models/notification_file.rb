@@ -18,7 +18,12 @@ class NotificationFile < ApplicationRecord
     unknown_error: "unknown_error"
   }
 
+  @allowed_content_types = %w[application/zip application/x-zip-compressed].freeze
   @max_file_size_bytes = 30.megabytes
+
+  def self.get_content_types
+    @allowed_content_types
+  end
 
   def self.get_max_file_size
     @max_file_size_bytes
@@ -31,7 +36,7 @@ class NotificationFile < ApplicationRecord
 private
 
   def uploaded_file_is_zip?
-    unless uploaded_file.attachment.nil? || uploaded_file.blob.content_type == "application/zip"
+    unless uploaded_file.attachment.nil? || NotificationFile.get_content_types.include?(uploaded_file.blob.content_type)
       self.upload_error = "uploaded_file_not_a_zip"
     end
   end

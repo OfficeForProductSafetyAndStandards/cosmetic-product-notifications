@@ -8,7 +8,7 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
   end
 
   def self.accept?(given_blob)
-    return false if given_blob.blank?
+    return false unless given_blob.present? && given_blob.metadata["safe"]
 
     # this analyzer only accepts notification files which are zip
     notification_file = get_notification_file_from_blob(given_blob)
