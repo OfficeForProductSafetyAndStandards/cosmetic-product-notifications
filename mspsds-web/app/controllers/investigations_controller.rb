@@ -85,7 +85,7 @@ class InvestigationsController < ApplicationController
 
     potential_assignees = User.where(id: ps[:assignable_id]) + Team.where(id: ps[:assignable_id])
     if potential_assignees.empty?
-      @investigation.errors.add(:assignee, :invalid, message: "should exist")
+      @investigation.errors.add(:assignable_id, :invalid, message: "Select assignee")
       respond_to_invalid_data(:assign)
       return
     end
@@ -141,7 +141,7 @@ private
   end
 
   def assignee_update_params
-    params[:investigation][:assignable_id] = case params[:investigation][:assignable_id_radio]
+    params[:investigation][:assignable_id] = case params[:investigation][:assignable_id]
                                              when "someone_in_your_team"
                                                params[:investigation][:select_team_member]
                                              when "previously_assigned"
@@ -151,7 +151,7 @@ private
                                              when "someone_else"
                                                params[:investigation][:select_someone_else]
                                              else
-                                               params[:investigation][:assignable_id_radio] || params[:investigation][:assignable_id]
+                                               params[:investigation][:assignable_id]
                                              end
     params.require(:investigation).permit(:assignable_id)
   end

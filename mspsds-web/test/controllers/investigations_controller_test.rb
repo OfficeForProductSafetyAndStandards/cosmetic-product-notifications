@@ -102,7 +102,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should update assignee from radio boxes" do
     put assign_investigation_url(@investigation_one), params: {
       investigation: {
-        assignable_id_radio: @assignee.id
+        assignable_id: @assignee.id
       }
     }
     assert_equal(Investigation.find(@investigation_one.id).assignable_id, @assignee.id)
