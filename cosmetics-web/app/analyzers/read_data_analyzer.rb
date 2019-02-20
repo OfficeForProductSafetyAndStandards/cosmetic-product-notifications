@@ -36,6 +36,7 @@ private
                                        cpnp_is_imported: @xml_info.is_imported,
                                        cpnp_imported_country: @xml_info.imported_country,
                                        shades: @xml_info.shades,
+                                       components: @xml_info.components,
                                        responsible_person: notification_file.responsible_person)
     notification.notification_file_parsed!
     notification.save

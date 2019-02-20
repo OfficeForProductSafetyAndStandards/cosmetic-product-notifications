@@ -3,6 +3,10 @@ class Component < ApplicationRecord
 
   belongs_to :notification
 
+  has_many :exact_formulas
+  has_many :range_formulas
+  has_one_attached :formulation_file
+
   before_save :add_shades, if: :will_save_change_to_shades?
 
   validates :shades, length: {

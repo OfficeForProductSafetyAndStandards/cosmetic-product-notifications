@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_14_145420) do
+ActiveRecord::Schema.define(version: 2019_02_20_140100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,18 @@ ActiveRecord::Schema.define(version: 2019_02_14_145420) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "notification_id"
+    t.integer "notification_type"
+    t.integer "frame_formulation"
     t.index ["notification_id"], name: "index_components_on_notification_id"
+  end
+
+  create_table "exact_formulas", force: :cascade do |t|
+    t.string "inci_name"
+    t.decimal "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "component_id"
+    t.index ["component_id"], name: "index_exact_formulas_on_component_id"
   end
 
   create_table "image_uploads", force: :cascade do |t|
@@ -78,6 +89,15 @@ ActiveRecord::Schema.define(version: 2019_02_14_145420) do
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
   end
 
+  create_table "range_formulas", force: :cascade do |t|
+    t.string "inci_name"
+    t.integer "range"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "component_id"
+    t.index ["component_id"], name: "index_range_formulas_on_component_id"
+  end
+
   create_table "responsible_person_users", force: :cascade do |t|
     t.bigint "responsible_person_id"
     t.string "user_id"
@@ -103,8 +123,10 @@ ActiveRecord::Schema.define(version: 2019_02_14_145420) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "components", "notifications"
+  add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"
   add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
+  add_foreign_key "range_formulas", "components"
   add_foreign_key "responsible_person_users", "responsible_persons"
 end

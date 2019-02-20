@@ -16,18 +16,57 @@ class CPNPExport
   end
 
   def is_imported
-    @xml_doc.xpath('//currentVersion/generalInfo/imported').first&.text&.casecmp?('Y')
+    current_version_info_node.xpath('.//imported').first&.text&.casecmp?('Y')
   end
 
   def imported_country
-    get_gov_uk_country_code(@xml_doc.xpath('//currentVersion/generalInfo/importedCty').first&.text)
+    get_gov_uk_country_code(current_version_info_node.xpath('.//importedCty').first&.text)
   end
 
   def shades
-    @xml_doc.xpath('//currentVersion/generalInfo/productNameList/productName/shade').first&.text
+    current_version_info_node.xpath('.//shade').first&.text
+  end
+
+  def components
+    current_version_component_lists_node.xpath('.//component').collect do |component_node|
+      Component.create(notification_type: notification_type(component_node),
+                       frame_formulation: frame_formulation(component_node),
+                       exact_formulas: exact_formulas(component_node),
+                       range_formulas: range_formulas(component_node))
+    end
   end
 
 private
+  def exact_formulas(component_node)
+    component_node.xpath('.//exactFormulaList/formula').collect do |formula_node|
+      ExactFormula.create(inci_name: formula_node.xpath('.//inciName').first&.text,
+                          quantity: formula_node.xpath('.//quantity').first&.text)
+    end
+  end
+
+  def range_formulas(component_node)
+    component_node.xpath('.//rangeFormulaList/formula').collect do |formula_node|
+      RangeFormula.create(inci_name: formula_node.xpath('.//inciName').first&.text,
+                          range: formula_node.xpath('.//range').first&.text)
+    end
+  end
+
+  def frame_formulation(component_node)
+    component_node.xpath('.//frameFormulation').first&.text.to_i
+  end
+
+  def notification_type(component_node)
+    # notification_type: [ predefined: 1, exact: 2, range: 3 ]
+    component_node.xpath('.//notificationType').first&.text.to_i
+  end
+
+  def current_version_component_lists_node
+    current_version_info_node.xpath('//currentVersion/componentList')
+  end
+
+  def current_version_info_node
+    @xml_doc.xpath('//currentVersion/generalInfo')
+  end
 
   def get_gov_uk_country_code(cpnp_country_code)
     return if cpnp_country_code.length < 2
