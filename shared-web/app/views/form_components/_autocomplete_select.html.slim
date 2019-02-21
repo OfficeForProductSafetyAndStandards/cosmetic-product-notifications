@@ -1,23 +1,27 @@
 ruby:
   returned_value = local_assigns[:returned_value] || :itself
   displayed_value = local_assigns[:displayed_value] || :itself
-  id = "picker-#{key}"
+  id = local_assigns[:id] || "picker-#{key}"
   show_all_values = local_assigns[:show_all_values]
   form_group_classes = [local_assigns.dig(:formGroup, :classes)]
   form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
 
 .govuk-form-group class=form_group_classes
   = local_assigns[:preface_html]
+  - if local_assigns[:hint].present?
+
+  - if local_assigns[:label].present?
+
   - if local_assigns[:errorMessage].present?
     = render "components/govuk_error_message", **errorMessage
   div class=("autocomplete-select-with-remove" if show_all_values)
-    = form.collection_select key, options, returned_value, displayed_value,
+    = form.collection_select key, items, returned_value, displayed_value,
             { include_blank: true, selected: local_assigns[:selected] }, class: "govuk-select",
-            id: id, aria_describedby: local_assigns[:aria_describedby]
+            id: id, **local_assigns
 
   / We decided to only add clear button to autocomplete that shows all values, and hence the dropdown arrow
   - if show_all_values
-    button id="remove-picker-#{key}" class="autocomplete__clear-button" type="button"
+    button id="remove-#{id}" class="autocomplete__clear-button" type="button"
       span#delete-hint.govuk-hint.govuk-visually-hidden
         | Click this to remove currently selected value
       svg viewbox="0 0 40 40" class="autocomplete__clear-button"
