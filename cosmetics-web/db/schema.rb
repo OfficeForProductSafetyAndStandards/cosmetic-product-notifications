@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_20_140100) do
+ActiveRecord::Schema.define(version: 2019_02_21_111331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,25 @@ ActiveRecord::Schema.define(version: 2019_02_20_140100) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "trigger_question_elements", force: :cascade do |t|
+    t.integer "answer_order"
+    t.string "answer"
+    t.integer "element_id"
+    t.integer "element_order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "trigger_question_id"
+    t.index ["trigger_question_id"], name: "index_trigger_question_elements_on_trigger_question_id"
+  end
+
+  create_table "trigger_questions", force: :cascade do |t|
+    t.integer "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "component_id"
+    t.index ["component_id"], name: "index_trigger_questions_on_component_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "components", "notifications"
   add_foreign_key "exact_formulas", "components"
@@ -129,4 +148,6 @@ ActiveRecord::Schema.define(version: 2019_02_20_140100) do
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "range_formulas", "components"
   add_foreign_key "responsible_person_users", "responsible_persons"
+  add_foreign_key "trigger_question_elements", "trigger_questions"
+  add_foreign_key "trigger_questions", "components"
 end

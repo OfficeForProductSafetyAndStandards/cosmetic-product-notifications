@@ -3,8 +3,9 @@ class Component < ApplicationRecord
 
   belongs_to :notification
 
-  has_many :exact_formulas
-  has_many :range_formulas
+  has_many :exact_formulas, dependent: :destroy
+  has_many :range_formulas, dependent: :destroy
+  has_many :trigger_questions, dependent: :destroy
   has_one_attached :formulation_file
 
   before_save :add_shades, if: :will_save_change_to_shades?
