@@ -61,7 +61,7 @@ fieldset.govuk-fieldset
                 options: investigation.businesses, key: :business_id, form: form, show_all_values: true,
                 selected: (investigation.businesses.size == 1 && investigation.businesses.first.id),
                 preface_html: preface_html,
-                errorMessage: error_message_business.present? && {text: error_message_business}
+                errorMessage: error_message_business.present? && { text: error_message_business }
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l

@@ -25,7 +25,7 @@ fieldset.govuk-fieldset
           = render "autocomplete_select_component", returned_value: :id, displayed_value: :name,
                   options: investigation.products, key: :product_id, form: form, show_all_values: true,
                   preface_html: preface_html,
-                  errorMessage: error_message_product.present? && {text: error_message_product}
+                  errorMessage: error_message_product.present? && { text: error_message_product }
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Against which legislation?
@@ -35,7 +35,7 @@ fieldset.govuk-fieldset
   - error_message_legislation = test.errors[:legislation].first
   = render "autocomplete_select_component", options: relevant_legislation, key: :legislation, form: form,
           show_all_values: true, preface_html: preface_html,
-          errorMessage: error_message_legislation.present? && {text: error_message_legislation}
+          errorMessage: error_message_legislation.present? && { text: error_message_legislation }
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     - if test.requested?

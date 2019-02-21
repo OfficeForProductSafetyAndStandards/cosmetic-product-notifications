@@ -1,11 +1,11 @@
-- returned_value = local_assigns[:returned_value] || :itself
-- displayed_value = local_assigns[:displayed_value] || :itself
-- id = "picker-#{key}"
-- show_all_values = local_assigns[:show_all_values]
-- select_class = show_all_values ? "govuk-select-with-remove" : ""
-
-- form_group_classes = [local_assigns.dig(:formGroup, :classes)]
-- form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
+ruby:
+  returned_value = local_assigns[:returned_value] || :itself
+  displayed_value = local_assigns[:displayed_value] || :itself
+  id = "picker-#{key}"
+  show_all_values = local_assigns[:show_all_values]
+  select_class = show_all_values ? "govuk-select-with-remove" : ""
+  form_group_classes = [local_assigns.dig(:formGroup, :classes)]
+  form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
 
 .govuk-form-group class=form_group_classes
   = local_assigns[:preface_html]

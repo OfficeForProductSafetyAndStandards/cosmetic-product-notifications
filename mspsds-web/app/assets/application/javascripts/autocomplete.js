@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import accessibleAutocomplete from 'accessible-autocomplete';
 
-export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
+function simpleAccessibleAutocomplete(id, autocompleteOptions) {
   const element = document.getElementById(id);
 
   const options = autocompleteOptions || {};
@@ -39,24 +39,20 @@ export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
     // https://github.com/alphagov/accessible-autocomplete/issues/240
     const removeButton = document.getElementById(`remove-${id}`);
     if (removeButton) {
-      removeButton.addEventListener('keyPress', () => {
+      const removeCallback = () => {
         $enhancedElement.val('');
         $enhancedElement.click().focus().blur();
         $(element).parent().find('select').val('');
-      });
-      removeButton.addEventListener('click', () => {
-        $enhancedElement.val('');
-        $enhancedElement.click().focus().blur();
-        $(element).parent().find('select').val('');
-      });
+      };
+      removeButton.addEventListener('keyPress', removeCallback);
+      removeButton.addEventListener('click', removeCallback);
     }
   }
 }
 
-export function callAutocompleteWhenReady(id, options) {
-    $(document).ready(() => {
-        console.log('Document ready ')
-        simpleAccessibleAutocomplete(id, options)
-    });
+function callAutocompleteWhenReady(id, options) {
+  $(document).ready(() => {
+    simpleAccessibleAutocomplete(id, options);
+  });
 }
 window.callAutocompleteWhenReady = callAutocompleteWhenReady;
