@@ -1,0 +1,31 @@
+- content_for :page_title, "Alert trading standards"
+- content_for :after_header do
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        p.govuk-caption-xl
+          = @investigation.pretty_description
+        | Compose new alert
+      = form_with(model: @investigation, url: wizard_path) do |form|
+        fieldset.govuk-fieldset
+          .govuk-form-group class=["govuk-!-width-full" + (@investigation.errors[:product_type].any? ? "govuk-form-group--error" : "")]
+            = form.label :summary, "Alert summary",
+                    class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+            span#alert-summary-hint.govuk-hint
+              | This will be used in the email subject line
+            = form.text_field :summary, class: "govuk-input", aria_describedby: "alert-summary-hint"
+
+        fieldset.govuk-fieldset
+          .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:product_type].any?)]
+            = form.label :email_content, "Alert email content",
+                    class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+            span#alert-body-hint.govuk-hint
+              | Include a summary of the incident and what actions you would like people to take
+            - default_text = "More details can be found on the case page: #{investigation_url @investigation}"
+            = form.text_area :email_content, class: "govuk-textarea govuk-!-width-full", rows: 12, maxlength: 1000,
+                    aria_describedby: "alert-body-hint", value: default_text
+        = form.submit "Preview alert", class: "govuk-button"

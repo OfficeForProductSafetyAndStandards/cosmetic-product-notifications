@@ -9,6 +9,7 @@
       h1.govuk-heading-xl
         p.govuk-caption-xl
           = @investigation.pretty_description
-        | XXXAlert Overview
-      p.govuk-body INFORMATION ABOUT THE ALERT SYSTEM
-      = link_to "Continue", next_wizard_path, class: "govuk-button", role: "button", draggable: false
+        | About alerts
+      p.govuk-body
+        | You can issue an alert about this issue if it is a serious product safety incident. All users of the Product safety register will be sent an email notification...
+      = link_to "Compose new alert", next_wizard_path, class: "govuk-button", role: "button", draggable: false

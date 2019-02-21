@@ -1,7 +1,7 @@
 class Investigations::AlertsController < ApplicationController
   include Wicked::Wizard
 
-  steps :overview, :details, :confirmation
+  steps :about_alerts, :compose, :confirmation
 
   before_action :set_investigation
 
