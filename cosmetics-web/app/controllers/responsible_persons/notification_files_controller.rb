@@ -4,6 +4,10 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
 
   def new; end
 
+  def show
+    redirect_to new_responsible_person_notification_file_path(@responsible_person)
+  end
+
   def create
     unless notification_file_params && notification_file_params[:uploaded_file]
       @notification_file.errors.add :uploaded_file, "No file selected"
@@ -28,7 +32,7 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
   end
 
   def destroy_all
-    @responsible_person.notification_files.where(user_id: current_user.id).where.not(upload_error: nil).delete_all
+    @responsible_person.notification_files.where(user_id: User.current.id).where.not(upload_error: nil).delete_all
     redirect_to responsible_person_notifications_path(@responsible_person)
   end
 
