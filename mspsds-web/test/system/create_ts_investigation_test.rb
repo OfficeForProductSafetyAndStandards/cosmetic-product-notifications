@@ -131,7 +131,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   end
 
   def fill_in_product_page
-    fill_autocomplete "picker-product_category", with: @product.category
+    fill_autocomplete "picker-category", with: @product.category
     fill_in "Product type", with: @product.product_type
     fill_in "Product name", with: @product.name
     fill_in "product_product_code", with: @product.product_code

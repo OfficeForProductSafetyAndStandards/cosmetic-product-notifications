@@ -5,7 +5,7 @@ class ActivityEntryTest < ApplicationSystemTestCase
     sign_in_as_admin
     @investigation = investigations(:one)
     visit investigation_path(@investigation)
-    click_on "Add activity"
+    click_on "Add activity", match: :first
   end
 
   teardown do
