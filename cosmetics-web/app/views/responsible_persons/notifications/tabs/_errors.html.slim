@@ -24,7 +24,6 @@
             td.govuk-table__cell
               = notification_file.name
             td.govuk-table__cell
-              / = get_error_message(notification_file.upload_error)
               = notification_file.upload_error_message
             td.govuk-table__cell
               = link_to "Dismiss", responsible_person_notification_file_path(@responsible_person, notification_file),
