@@ -29,7 +29,7 @@ class NotificationFile < ApplicationRecord
     @max_file_size_bytes
   end
 
-  def get_upload_error_message
+  def upload_error_message
     I18n.t("activerecord.attributes.notification_file.upload_errors.#{self.upload_error}")
   end
 
