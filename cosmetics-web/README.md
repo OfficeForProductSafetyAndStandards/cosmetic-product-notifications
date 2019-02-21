@@ -7,10 +7,8 @@ This folder also contains the code for the [background worker](../cosmetics-work
 
 The site is written in [Ruby on Rails](https://rubyonrails.org/).
 
-We're using the GOV.UK Design System.
-The documentation for this can be found [here](https://design-system.service.gov.uk/).
-
-We're using [Slim](http://slim-lang.com/) as our HTML templating language, vanilla ES5 JavaScript and [Sass](https://sass-lang.com/) for styling.
+We're using [Slim](http://slim-lang.com/) as our HTML templating language, 
+ES6 JavaScript and [Sass](https://sass-lang.com/) for styling transplied with webpack.
 
 
 ## Getting Setup
@@ -65,19 +63,16 @@ To create a database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
-    cf create-service postgres tiny-unencrypted-10.5 cosmetics-database
-
-Larger database options should be considered if required.
-
+    cf create-service postgres small-10.5 cosmetics-database
 
 #### Redis
 
 To create a redis instance for the current space. 
 
     cf marketplace -s redis
-    cf create-service redis tiny-unclustered-3.2 cosmetics-redis
+    cf create-service redis tiny-3.2 cosmetics-queue
 
-Larger options should be considered if required. The current worker (sidekiq) only works with the unclustered version.
+The current worker (sidekiq), which uses `cosmetics-queue` only works with an unclustered instance of redis.
 
 #### S3
 

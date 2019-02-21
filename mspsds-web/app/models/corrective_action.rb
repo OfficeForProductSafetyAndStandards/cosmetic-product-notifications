@@ -1,6 +1,8 @@
 class CorrectiveAction < ApplicationRecord
   include DateConcern
 
+  attribute :related_file
+
   belongs_to :investigation
   belongs_to :business, optional: true
   belongs_to :product
@@ -11,12 +13,12 @@ class CorrectiveAction < ApplicationRecord
     :date_decided
   end
 
+  validates :summary, presence: { message: "Enter a summary of the corrective action" }
+  validates :date_decided, presence: { message: "Enter the date the corrective action was decided" }
   validate :date_decided_cannot_be_in_the_future
-
-  validates :summary, presence: true
-  validates :date_decided, presence: true
-  validates :investigation, presence: true
-  validates :product, presence: true
+  validates :legislation, presence: { message: "Select the legislation relevant to the corrective action" }
+  validates :related_file, presence: { message: "Select whether you want to upload a related file" }
+  validate :related_file_attachment_validation
 
   validates_length_of :summary, maximum: 1000
   validates_length_of :details, maximum: 1000
@@ -24,10 +26,18 @@ class CorrectiveAction < ApplicationRecord
   after_create :create_audit_activity
 
   def date_decided_cannot_be_in_the_future
-    errors.add(:date_decided, "can't be in the future") if date_decided.present? && date_decided > Time.zone.today
+    if date_decided.present? && date_decided > Time.zone.today
+      errors.add(:date_decided, "The date of corrective action decision can not be in the future")
+    end
   end
 
   def create_audit_activity
     AuditActivity::CorrectiveAction::Add.from(self)
+  end
+
+  def related_file_attachment_validation
+    if related_file == "Yes" && documents.attachments.empty?
+      errors.add(:base, :file_missing, message: "Provide a related file or select no")
+    end
   end
 end

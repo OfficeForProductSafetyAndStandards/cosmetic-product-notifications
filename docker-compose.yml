@@ -23,8 +23,6 @@ services:
   redis:
     image: redis
     hostname: redis
-    volumes:
-      - redis-volume:/data
 
   keycloak:
     build:
@@ -36,17 +34,20 @@ services:
     - db
     ports:
       - "8080:8080"
+#    This can speed up development when working on themes in keycloak, by not requiring to rebuild the keycloak image
+#    to pickup changes, instead simply restarting the keycloak container
+#    volumes:
+#      - ${PWD-.}/keycloak/govuk-theme/govuk:/opt/jboss/keycloak/themes/govuk
 
   cosmetics-web:
     build:
       context: .
       dockerfile: ./cosmetics-web/Dockerfile
     volumes:
-      - bundle-cache:/usr/local/bundle
-      - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/cosmetics-web:/cosmetics-web
       - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
+      - bundle-cache:/usr/local/bundle
     depends_on:
       - db
       - elasticsearch
@@ -61,10 +62,10 @@ services:
       dockerfile: ./cosmetics-worker/Dockerfile
     command: bin/sidekiq -C config/sidekiq.yml
     volumes:
-    - bundle-cache:/usr/local/bundle
-    # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-    - ${PWD-.}/cosmetics-web:/cosmetics-web
-    - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
+      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+      - ${PWD-.}/cosmetics-web:/cosmetics-web
+      - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
+      - bundle-cache:/usr/local/bundle
     depends_on:
     - db
     - elasticsearch
@@ -75,11 +76,10 @@ services:
       context: .
       dockerfile: ./mspsds-web/Dockerfile
     volumes:
-      - bundle-cache:/usr/local/bundle
-      - npm-cache:/root/.npm
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/mspsds-web:/mspsds-web
       - ${PWD-.}/shared-web:/mspsds-web/vendor/shared-web
+      - bundle-cache:/usr/local/bundle
     depends_on:
       - db
       - elasticsearch
@@ -94,10 +94,10 @@ services:
       dockerfile: ./mspsds-worker/Dockerfile
     command: bin/sidekiq -C config/sidekiq.yml
     volumes:
-      - bundle-cache:/usr/local/bundle
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/mspsds-web:/mspsds-web
       - ${PWD-.}/shared-web:/mspsds-web/vendor/shared-web
+      - bundle-cache:/usr/local/bundle
     depends_on:
       - db
       - elasticsearch
@@ -106,6 +106,4 @@ services:
 volumes:
   postgres-volume:
   elasticsearch-volume:
-  redis-volume:
   bundle-cache:
-  npm-cache:

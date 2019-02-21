@@ -74,14 +74,21 @@ class ActiveSupport::TestCase
     stub_user_group_data(user_groups: user_groups, users: users)
     stub_user_data(users: users)
     stub_client_config
+    stub_notify_mailer
+  end
+
+  def stub_notify_mailer
+    result = ""
+    allow(result).to receive(:deliver_later)
+    allow(NotifyMailer).to receive(:updated_investigation) { result }
   end
 
   def sign_in_as_non_mspsds_user
     sign_in_as_user(user_name: "User_three", organisation: nil)
   end
 
-  def sign_in_as_non_opss_user
-    sign_in_as_user(user_name: "User_one", organisation: organisations[0])
+  def sign_in_as_non_opss_user(user_name: "User_one")
+    sign_in_as_user(user_name: user_name, organisation: organisations[0])
   end
 
   def sign_in_as_admin
@@ -89,7 +96,7 @@ class ActiveSupport::TestCase
   end
 
   def all_users
-    [admin_user, test_user(name: "User_one"), test_user(name: "User_two"), test_user(name: "User_three")]
+    [admin_user, test_user(name: "User_one", id: "75fda9a1-786d-4ace-ad20-76afa4f39111"), test_user(name: "User_two"), test_user(name: "User_three")]
   end
 
   def logout
@@ -97,7 +104,8 @@ class ActiveSupport::TestCase
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
-
+    allow(User).to receive(:current).and_call_original
+    allow(NotifyMailer).to receive(:updated_investigation).and_call_original
     reset_user_data
   end
 
@@ -113,8 +121,8 @@ private
     User.new(id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin")
   end
 
-  def test_user(name: "User_one")
-    User.new(id: SecureRandom.uuid, email: "user@example.com", first_name: "Test", last_name: name)
+  def test_user(name: "User_one", id: SecureRandom.uuid)
+    User.new(id: id, email: "user@example.com", first_name: "Test", last_name: name)
   end
 
   def group_data
@@ -163,6 +171,8 @@ private
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
     allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_opss)
     allow(Keycloak::Client).to receive(:has_role?).with(:mspsds_user).and_return(is_mspsds)
+
+    allow(User).to receive(:current).and_return(user)
   end
 
   def format_user_for_get_userinfo(user, groups)

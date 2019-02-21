@@ -1,12 +1,9 @@
 module BusinessesHelper
   include SearchHelper
-  include UserService
-
-  BUSINESS_SUGGESTION_LIMIT = 3
 
   def defaults_on_primary_location(business)
     business.primary_location.name ||= "Registered office address"
-    business.primary_location.source ||= UserSource.new(user: current_user)
+    business.primary_location.source ||= UserSource.new(user: User.current)
     business
   end
 
@@ -24,13 +21,17 @@ module BusinessesHelper
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
+  def set_countries
+    @countries = all_countries
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def business_params
     params.require(:business).permit(
       :legal_name,
       :trading_name,
       :company_number,
-      locations_attributes: %i[id address_line_1 address_line_2 phone_number county country postal_code],
+      locations_attributes: %i[id name address_line_1 address_line_2 phone_number county country postal_code],
       contacts_attributes: %i[id name email phone_number job_title]
     )
   end
@@ -41,7 +42,7 @@ module BusinessesHelper
       @business.locations.build unless @business.locations.any?
       defaults_on_primary_location(@business)
       @business.contacts.build unless @business.contacts.any?
-      @business.source = UserSource.new(user: current_user)
+      @business.source = UserSource.new(user: User.current)
     else
       @business = Business.new
       @business.locations.build

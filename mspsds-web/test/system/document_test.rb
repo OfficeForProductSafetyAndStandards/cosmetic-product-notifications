@@ -18,7 +18,7 @@ class DocumentTest < ApplicationSystemTestCase
 
   test "First step should require file attachment" do
     click_on "Upload"
-    assert_text "prevented this item from being saved:"
+    assert_text "There is a problem"
   end
 
   test "Second step should be details" do
@@ -29,7 +29,7 @@ class DocumentTest < ApplicationSystemTestCase
   test "details should validate title" do
     attach_file_and_upload
     click_on "Save attachment"
-    assert_text "prevented this item from being saved:"
+    assert_text "There is a problem"
   end
 
   test "details should be valid if title exists" do
@@ -118,7 +118,7 @@ class DocumentTest < ApplicationSystemTestCase
   end
 
   def attach_file_and_upload
-    attach_file("Browse for file", Rails.root + "test/fixtures/files/old_risk_assessment.txt")
+    attach_file("Browse for file", file_fixture("old_risk_assessment.txt"))
     click_on "Upload"
   end
 end

@@ -2,85 +2,14 @@
 - content_for :page_title, page_title
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
-h1.govuk-heading-xl
-  span.govuk-caption-xl
-    = @investigation.pretty_description
-  = page_title
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_with model: @test, scope: :test, local: true, url: wizard_path, method: :put do |form|
-      = render "form_validation_display", errors: @test.errors, model_name: @test.pretty_name
-      = form.hidden_field :is_result, value: !@test.requested?
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          - if @test.requested?
-            | Which product should be tested?
-          - else
-            | Which product was tested?
-        .govuk-form-group.full-width class=("govuk-form-group--error" if @test.errors[:product].any?)
-          - if @investigation.products.empty?
-            span.govuk-hint
-              | There are no products on this case.
-            span.govuk-hint
-              = link_to "Add a product", new_investigation_product_path(@investigation)
-              |  to send it for testing.
-          - elsif @investigation.products.size == 1
-            = form.text_field :product_name, value: @investigation.products.first.name,
-            disabled: true, class: "govuk-input govuk-!-width-two-thirds"
-            = form.hidden_field :product_id, value: @investigation.products.first.id
-          - else
-            span.govuk-hint
-              ' Only products already added to the case are listed.
-            = form.collection_select :product_id, @investigation.products, :id, :name,
-                    { include_blank: true }, class: "govuk-select", id: "product-picker"
-
-      legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-        | Against which legislation?
-      .govuk-form-group class=("govuk-form-group--error" if @test.errors[:legislation].any?)
-        span.govuk-hint
-          | Select the relevant legislation from the list.
-        = form.select :legislation, relevant_legislation, { include_blank: true },
-                class: "govuk-select", id: "legislation-picker"
-      legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-        - if @test.requested?
-          | When did you request testing?
-        - else
-          | When was the test conducted?
-      = render "date_input", form: form
-
-      - if !@test.requested?
-        fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            | What was the test result?
-          .govuk-form-group class=("govuk-form-group--error" if @test.errors[:result].any?)
-            .govuk-radios
-              - Test::Result.results.each do |(result, label)|
-                .govuk-radios__item
-                  = form.radio_button :result, result, class: "govuk-radios__input"
-                  = form.label :result, label, class: "govuk-label govuk-radios__label"
-
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Further details
-        .govuk-form-group class=("govuk-form-group--error" if @test.errors[:details].any?)
-          = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
-
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            | Are there any files related to the action?
-        fieldset.govuk-fieldset
-          .govuk-radios.govuk-radios--conditional data-module="radios"
-            .govuk-radios__item
-              = form.radio_button :related_file, "Yes", class: "govuk-radios__input",
-                      "data-aria-controls": "conditional-related-file"
-              = form.label :related_file, "Yes", class: "govuk-label govuk-radios__label"
-            #conditional-related-file.govuk-radios__conditional.govuk-radios__conditional--hidden
-              = render "related_attachment_fields", form: form,
-                file_blob: @file_blob, attachment_name: :file
-            .govuk-radios__item
-              = form.radio_button :related_file, "No", class: "govuk-radios__input",
-              "data-aria-controls": "conditional-no-related-file"
-              = form.label :related_file, "No", class: "govuk-label govuk-radios__label"
-      br
+= form_with model: @test, scope: :test, local: true, url: wizard_path, method: :put do |form|
+  = render "form_components/govuk_error_summary", form: form
+  h1.govuk-heading-xl
+    span.govuk-caption-xl
+      = @investigation.pretty_description
+    = page_title
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form", form: form, test: @test, investigation: @investigation, allow_product_linking: true
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

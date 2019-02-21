@@ -1,23 +1,14 @@
 - content_for :page_title, "Update status"
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
-= render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
-h2.govuk-heading-l
-  = "#{@investigation.case_type.titleize} status"
 = form_with(model: @investigation, method: :put, url: status_investigation_url(@investigation)) do |form|
-  = render "form_validation_display", errors: @investigation.errors
-  .govuk-form-group
-    fieldset.govuk-fieldset
-      legend.govuk-fieldset__legend
-      h4.govuk-label
-        | Status
-      .govuk-radios
-        .govuk-radios__item
-          = form.radio_button :is_closed, false, class: "govuk-radios__input"
-          = form.label :is_closed, "Open", value: false, class: "govuk-label govuk-radios__label"
-        .govuk-radios__item
-          = form.radio_button :is_closed, true, class: "govuk-radios__input"
-          = form.label :is_closed, "Closed", value: true, class: "govuk-label govuk-radios__label"
+  = render "form_components/govuk_error_summary", form: form
+  = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
+  h2.govuk-heading-l
+    = "#{@investigation.case_type.titleize} status"
+  = render "form_components/govuk_radios", form: form, key: :is_closed,
+          fieldset: { legend: { text: "Status" } },
+          items: [{ text: "Open", value: "false" }, { text: "Closed", value: "true" }]
   fieldset.govuk-fieldset
     legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       | Comment / rationale

@@ -16,8 +16,9 @@ Rails.application.routes.draw do
   resources :enquiry, controller: "investigations/enquiry", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
   resources :project, controller: "investigations/project", only: %i[new create]
+  resources :ts_investigation, controller: "investigations/ts_investigations", only: %i[show new create update]
 
-  resources :investigations, path: "cases", only: %i[index show new],
+  resources :investigations, path: "cases", only: %i[index show new], param: :pretty_id,
             concerns: %i[document_attachable] do
     member do
       put :status

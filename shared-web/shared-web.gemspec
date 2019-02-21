@@ -12,6 +12,8 @@ Gem::Specification.new do |s|
   s.add_dependency "govuk_notify_rails", "2.1.0"
   s.add_dependency "keycloak", "2.4.1"
   s.add_dependency "rails", "~> 5.2"
+  s.add_dependency "request_store", "1.4.1"
   s.add_dependency "sidekiq", "5.2.5"
   s.add_dependency "sidekiq-cron", "1.1.0"
+  s.add_dependency "webpacker", "4.0.0.rc.7"
 end

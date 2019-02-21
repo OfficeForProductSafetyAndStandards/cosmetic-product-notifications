@@ -18,25 +18,28 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
   test "cannot add test result without a date or result" do
     click_button "Continue"
 
-    assert_text "The following errors prevented this test result from being saved"
-    assert_text "Date can't be blank"
-    assert_text "Result can't be blank"
+    assert_text "There is a problem"
+    assert_text "Enter date of the test"
+    assert_text "Select result of the test"
   end
 
   test "can add filled in test result to investigation" do
     fill_in_basic_details
+    attach_file "test[file][file]", file_fixture("new_risk_assessment.txt")
     click_on "Continue"
 
     assert_text "Confirm test result details"
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
     assert_text "Passed test: #{@test.product.name}"
     assert_text "Test result recorded"
   end
 
   test "can go back to the edit page from the confirmation page and not lose data" do
     fill_in_basic_details
+    attach_file "test[file][file]", file_fixture("new_risk_assessment.txt")
     click_on "Continue"
 
     # Assert all of the data is still here
@@ -77,7 +80,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date must be a valid date")
+    assert_text("Enter a real date of the test")
   end
 
   test "date with missing component shows an error" do
@@ -85,7 +88,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date must specify a day, month and year")
+    assert_text("Enter date of the test and include a day, month and year")
   end
 
   test "can add an attachment to the test result" do
@@ -93,8 +96,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     attachment_description = "Test attachment description"
 
     fill_in_basic_details
-    choose "test_related_file_yes", visible: false
-    attach_file "test[file][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
+    attach_file "test[file][file]", file_fixture(attachment_filename)
     fill_in "Attachment description", with: attachment_description
     click_on "Continue"
 
@@ -104,18 +106,17 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
     assert_text "Attached: #{attachment_filename}"
     assert_text "View attachment"
   end
 
   test "attachment description field is not visible when no file is selected" do
-    choose "test_related_file_yes", visible: false
     assert_no_text "Attachment description"
   end
 
   test "attachment description field is visible when a file is selected" do
-    choose "test_related_file_yes", visible: false
-    attach_file "test[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
+    attach_file "test[file][file]", file_fixture("new_risk_assessment.txt")
 
     assert_text "Attachment description"
   end

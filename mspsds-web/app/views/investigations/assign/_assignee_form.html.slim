@@ -1,18 +1,46 @@
 = form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
-  = render "form_validation_display", errors: investigation.errors
-  .govuk-form-group class=("govuk-form-group--error" unless investigation.errors[:assignee].empty?)
-    .govuk-radios.govuk-radios--conditional data-module="radios"
-      = render "investigations/assign/important_assignable_people", form: form, investigation: investigation
-      = render "investigations/assign/team_member_select", form: form
-      = render "investigations/assign/previously_assigned_select", form: form, investigation: investigation
+  = render "form_components/govuk_error_summary", form: form
+  = yield
 
-      .govuk-radios__divider Teams
-      = render "investigations/assign/important_assignable_teams", form: form, investigation: investigation
-      = render "investigations/assign/other_team_select", form: form
+  - if User.current.teams.any?
+    - someone_in_your_team = capture do
+      = render "investigations/assign/assignee_selection", form: form, key: :select_team_member,
+              options: compute_select_options(entities: User.get_team_members(user: User.current)),
+              accessible_hint: "Name"
+  - previously_assigned = capture do
+    = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
+            options: compute_select_options(entities: investigation.past_assignees + investigation.past_teams,
+                    ignore_visibility_restrictions: true),
+            accessible_hint: "Select previously assigned person or team"
+  - other_teams = capture do
+    = render "investigations/assign/assignee_selection", form: form, key: :select_other_team,
+            options: compute_select_options(entities: Team.all, ignore_visibility_restrictions: true),
+            accessible_hint: "Other team name"
 
-      .govuk-radios__divider or
-      = render "investigations/assign/someone_else_select", form: form
+  - someone_else = capture do
+    = render "investigations/assign/assignee_selection", form: form, key: :select_someone_else,
+            options: compute_select_options(entities: User.all),
+            accessible_hint: "Name"
+  ruby:
+    items = investigation.important_assignable_people.map do |user|
+      { text: user.display_name, value: user.id, checked: investigation.assignee == user }
+    end
+    if User.current.teams.any?
+      items.push text: "Someone in your team",
+                 value: "someone_in_your_team",
+                 conditional: { html: someone_in_your_team }
+    end
+    items.push text: "Previously assigned", value: "previously_assigned", conditional: { html: previously_assigned }
+    items.push divider: "Teams"
+    teams = investigation.important_assignable_teams.map do |team|
+      { text: team.display_name, value: team.id, checked: investigation.assignee == team }
+    end
+    items.concat teams
+    items.push text: "Other team", value: "other_team", conditional: { html: other_teams }
+    items.push divider: "or"
+    items.push text: "Someone else", value: "someone_else", conditional: { html: someone_else }
 
+  = render "form_components/govuk_radios", form: form, key: :assignable_id, items: items
   .govuk-form-group
     = form.submit "Assign", class: "govuk-button"
     p = link_to "Cancel", investigation, class: "mspsds-block-link"

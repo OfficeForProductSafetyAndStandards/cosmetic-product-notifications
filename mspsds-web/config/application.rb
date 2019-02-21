@@ -7,7 +7,6 @@ require "action_view/railtie"
 require "action_mailer/railtie"
 require "active_job/railtie"
 require "rails/test_unit/railtie"
-require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -32,8 +31,6 @@ module Mspsds
     # Setup sentry (from https://github.com/getsentry/raven-ruby/blob/369fe6c5e2389b8c13b71e47d688a719e5c20df7/examples/rails-5.0/config/application.rb)
     config.rails_activesupport_breadcrumbs = true
 
-    config.exceptions_app = self.routes
-
     require 'raven/breadcrumbs/logger'
 
     Raven.configure do |config|
@@ -44,5 +41,8 @@ module Mspsds
     # This is the requests' timeout value in seconds. 15 is the default set by Slowpoke
     # Dev environments need longer due to occasional asset compilation
     Slowpoke.timeout = Rails.env.production? ? 15 : 180
+
+    config.exceptions_app = self.routes
+    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
   end
 end

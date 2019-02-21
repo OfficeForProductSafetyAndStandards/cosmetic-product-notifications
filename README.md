@@ -38,6 +38,20 @@ if there are changes to the Docker config:
     docker-compose down && docker-compose build && docker-compose up
 
 
+### Design system
+Projects in this repository use the [GOV.UK design system](https://design-system.service.gov.uk). 
+To aid it, the shared-web gem provides an implementation of some of the components - see 
+the [README](shared-web/README.md#design-system-components) for more details. 
+
+### Mac tips
+
+[Docker shared volume performance is poor on Mac](https://docs.docker.com/docker-for-mac/osxfs-caching/) which can significantly affect e.g. asset compilation.
+You can use docker-sync to speed up runtime:
+
+    gem install docker-sync
+    docker-sync-stack start
+
+
 ### Windows Subsystem for Linux
 
 You will have to install the docker server on Windows, and the docker client on WSL.
@@ -50,6 +64,8 @@ To make this work, make the current path look like a Windows path to appease Doc
 (from https://medium.com/software-development-stories/developing-a-dockerized-web-app-on-windows-subsystem-for-linux-wsl-61efec965080)
 If the web container complains it can find files in the `/app` folder (e.g. `bin/bundle`), that might be sign you're in
 the wrong directory.
+
+You may also want to setup docker-sync using [these instructions](https://github.com/EugenMayer/docker-sync/wiki/docker-sync-on-Windows).
 
 
 ### Accounts
@@ -82,6 +98,7 @@ If you want to update any of the deployed instances, you'll need an account for
 
 We're using AWS to supplement the functionality of GOV.UK PaaS.
 If you want to update any of the deployed instances, you'll need an account - ask someone on the team to invite you.
+If you get an error saying you don't have permission to set something, make sure you have MFA set up. 
 
 
 #### Logit
@@ -102,6 +119,9 @@ Anything which is merged to `master` (via a Pull Request or push) will trigger t
 [Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
 and cause deployments of the various components to the int space on GOV.UK PaaS.
 
+Deployment to research environment does not currently happen automatically, for details see section "Research" in 
+[prototypes](https://regulatorydelivery.atlassian.net/wiki/spaces/MSPSDS/pages/452689949/Prototypes)
+
 Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
 space.
 Please only do this if you are confident that this is a stable commit.
@@ -119,23 +139,10 @@ https://github.com/cloudfoundry/cli#downloads and then run the following command
     cf target -o beis-mspsds
 
 This will log you in and set the correct target organisation.
+The login command without -u -p options will not work in some terminals, in particular git-bash. Passing username and
+password in one line will. 
 
 If you need to create a new environment, you can run `cf create-space SPACE-NAME`, otherwise, select the correct space using `cf target -o beis-mspsds -s SPACE-NAME`.
-
-
-#### Keycloak
-
-See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
-
-
-#### Cosmetics
-
-See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
-
-
-#### MSPSDS
-
-See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
 
 
 #### Logging
@@ -159,6 +166,21 @@ Setting up a logstash filter as follows may be useful:
         match => { "message" => "^%{NUMBER} <%{NUMBER:cf_pri:int}>%{NUMBER:cf_ver:int} %{TIMESTAMP_ISO8601:cf_ts} %{DATA:cf_org}\.%{DATA:cf_env}\.%{DATA:cf_app} %{UUID:cf_app_id} \[%{WORD:cf_type}/%{GREEDYDATA:cf_type_info}\] - - %{GREEDYDATA:msg}$" }
       }
     }
+
+
+#### Keycloak
+
+See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
+
+
+#### Cosmetics
+
+See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
+
+
+#### MSPSDS
+
+See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
 
 
 ## Licence

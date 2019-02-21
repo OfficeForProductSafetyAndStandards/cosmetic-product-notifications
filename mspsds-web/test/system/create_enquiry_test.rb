@@ -40,12 +40,12 @@ class CreateEnquiryTest < ApplicationSystemTestCase
 
   test "first step should require an option to be selected" do
     click_on "Continue"
-    assert_text "Complainant type can't be blank"
+    assert_text "Select complainant type"
   end
 
   test "first step should allow a complainant type to be selected" do
     select_complainant_type_and_continue
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "second step should be complainant details" do
@@ -67,14 +67,14 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     select_complainant_type_and_continue
     click_on "Continue"
 
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "second step should allow a valid email address" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
 
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "third step should be enquiry details" do
@@ -117,7 +117,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-
+    click_on "Activity"
     assert_text "Enquiry logged: #{@enquiry.title}"
     assert_text @enquiry.description
 
@@ -151,9 +151,18 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-
+    click_on "Activity"
     assert_text "Attachment: #{attachment_filename}"
     assert_text "View attachment"
+  end
+
+  test "enquiry details should be shown in overview" do
+    select_complainant_type_and_continue
+    fill_complainant_details_and_continue
+    fill_enquiry_details_and_continue
+
+    assert_no_text "Product category"
+    assert_text @complainant.name
   end
 
   def select_complainant_type_and_continue

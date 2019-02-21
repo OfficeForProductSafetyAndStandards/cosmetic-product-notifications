@@ -1,12 +1,13 @@
 - content_for :page_title, @page_title
 - content_for :after_header do
   = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
-h1.govuk-heading-xl
-  = @page_title
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_with model: @investigation, scope: :allegation, local: true, url: wizard_path, method: :put do |form|
-      = render "form_validation_display", errors: @investigation.errors, model_name: "allegation"
+
+= form_with model: @investigation, scope: :allegation, local: true, url: wizard_path, method: :put do |form|
+  = render "form_components/govuk_error_summary", form: form
+  h1.govuk-heading-xl
+    = @page_title
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -34,7 +35,7 @@ h1.govuk-heading-xl
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Are there any files or images related to the allegation?
-        .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation))
+        .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation.errors))
           - if @file_blob.present?
             p#current-attachment-details
               ' Currently selected file:

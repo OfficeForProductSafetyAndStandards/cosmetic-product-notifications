@@ -2,7 +2,11 @@ require "test_helper"
 
 class InvestigationTest < ActiveSupport::TestCase
   include Pundit
-  include UserService
+  # Pundit requires this method to be able to call policies
+  def pundit_user
+    User.current
+  end
+
   setup do
     sign_in_as_user
     @investigation = investigations(:one)
@@ -33,15 +37,15 @@ class InvestigationTest < ActiveSupport::TestCase
   test "should create an activity when business is added to investigation" do
     @investigation = Investigation::Allegation.create
     assert_difference"Activity.count" do
-      @business = Business.new(trading_name: 'Test Company')
-      @investigation.businesses << @business
+      @business = businesses :new_business
+      @investigation.add_business @business, "manufacturer"
     end
   end
 
   test "should create an activity when business is removed from investigation" do
     @investigation = Investigation::Allegation.create
-    @business = Business.new(trading_name: 'Test Company')
-    @investigation.businesses << @business
+    @business = businesses :new_business
+    @investigation.add_business @business, "retailer"
     assert_difference"Activity.count" do
       @investigation.businesses.delete(@business)
     end
@@ -50,14 +54,14 @@ class InvestigationTest < ActiveSupport::TestCase
   test "should create an activity when product is added to investigation" do
     @investigation = Investigation::Allegation.create
     assert_difference"Activity.count" do
-      @product = Product.new(name: 'Test Product')
+      @product = Product.new(name: 'Test Product', product_type: "test product type", category: "test product category")
       @investigation.products << @product
     end
   end
 
   test "should create an activity when product is removed from investigation" do
     @investigation = Investigation::Allegation.create
-    @product = Product.new(name: 'Test Product')
+    @product = Product.new(name: 'Test Product', product_type: "test product type", category: "test product category")
     @investigation.products << @product
     assert_difference"Activity.count" do
       @investigation.products.delete(@product)
@@ -207,24 +211,60 @@ class InvestigationTest < ActiveSupport::TestCase
   test "not visible to no-admin, no-source, no-assignee organisation" do
     create_new_private_case
     logout
-    sign_in_as_non_opss_user
-    user = User.find_by(last_name: "User_one")
-    user.organisation = organisations[1]
+    sign_in_as_non_opss_user(user_name: "User_two")
+    user = User.find_by(last_name: "User_two")
+    user.organisation = organisations[0]
     assert_not(policy(@new_investigation).show?(user: user))
   end
 
   test "past assignees should be computed" do
     user = User.find_by(last_name: "User_one")
-    @investigation.assignee = user
-    @investigation.save
+    @investigation.update(assignee: user)
     assert_includes @investigation.past_assignees, user
   end
 
   test "past assignee teams should be computed" do
     team = Team.first
-    @investigation.assignee = team
-    @investigation.save
+    @investigation.update(assignee: team)
     assert_includes @investigation.past_teams, team
+  end
+
+  test "people out of current assignee's team should not be able to re-assign case" do
+    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation.assignee = User.find_by(last_name: "User_one")
+    assert_not policy(investigation).assign?(user: User.find_by(last_name: "User_three"))
+  end
+
+  test "people in current assignee's team should be able to re-assign case" do
+    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation.assignee = User.find_by(last_name: "User_one")
+    assert policy(investigation).assign?(user: User.find_by(last_name: "User_two"))
+  end
+
+  test "people out of currently assigned team should not be able to re-assign case" do
+    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation.assignee = all_teams[0]
+    assert_not policy(investigation).assign?(user: User.find_by(last_name: "User_three"))
+  end
+
+  test "people in currently assigned team should be able to re-assign case" do
+    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation.assignee = all_teams[0]
+    assert policy(investigation).assign?(user: User.find_by(last_name: "Admin"))
+  end
+
+  test "pretty_id should contain YYMM" do
+    investigation = Investigation.create
+    assert_includes investigation.pretty_id, Time.zone.now.strftime('%y').to_s
+    assert_includes investigation.pretty_id, Time.zone.now.strftime('%m').to_s
+  end
+
+  test "pretty_id should be unique" do
+    10.times do
+      Investigation.create
+    end
+    investigation = Investigation.create
+    assert_equal Investigation.where(pretty_id: investigation.pretty_id).count, 1
   end
 
   def create_new_private_case

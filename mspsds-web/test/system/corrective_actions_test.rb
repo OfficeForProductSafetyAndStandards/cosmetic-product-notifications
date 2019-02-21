@@ -1,6 +1,8 @@
 require "application_system_test_case"
+require_relative "../test_helpers/corrective_action_test_helper"
 
 class CorrectiveActionsTest < ApplicationSystemTestCase
+  include CorrectiveActionTestHelper
   setup do
     sign_in_as_user
 
@@ -16,19 +18,24 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   end
 
   test "can record corrective action for a case" do
-    fill_in_basic_details
+    fill_in_corrective_action_details @corrective_action
+    choose "corrective_action_related_file_yes", visible: false
+    attach_file "attachment-file-input", file_fixture("new_risk_assessment.txt")
     click_on "Continue"
 
     assert_text "Confirm corrective action details"
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
     assert_text @corrective_action.summary
     assert_text "Corrective action recorded"
   end
 
   test "can go back to the edit page from the confirmation page and not lose data" do
-    fill_in_basic_details
+    fill_in_corrective_action_details @corrective_action
+    choose "corrective_action_related_file_yes", visible: false
+    attach_file "attachment-file-input", file_fixture("new_risk_assessment.txt")
     click_on "Continue"
 
     # Assert all of the data is still here
@@ -49,14 +56,14 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   end
 
   test "session data doesn't persist between reloads" do
-    fill_in_basic_details
+    fill_in_corrective_action_details @corrective_action
     visit new_investigation_corrective_action_path(@investigation)
 
     assert_no_field with: @corrective_action.legislation
   end
 
   test "session data is cleared after completion" do
-    fill_in_basic_details
+    fill_in_corrective_action_details @corrective_action
     click_on "Continue"
     click_on "Continue"
 
@@ -68,7 +75,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   test "cannot create a corrective action without specifying the date decided" do
     click_button "Continue"
 
-    assert_text "Date decided can't be blank"
+    assert_text "Enter the date the corrective action was decided"
   end
 
   test "invalid date shows an error" do
@@ -77,7 +84,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text "Date decided must be a valid date"
+    assert_text "Enter a real date when the corrective action was decided"
   end
 
   test "date with missing component shows an error" do
@@ -85,15 +92,15 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text "Date decided must specify a day, month and year"
+    assert_text "Enter the date the corrective action was decided and include a day, month and year"
   end
 
   test "can add an attachment when recording a corrective action" do
     attachment_filename = "new_risk_assessment.txt"
     attachment_description = "Test attachment description"
 
-    fill_in_basic_details
-    add_attachment filename: attachment_filename, description: attachment_description
+    fill_in_corrective_action_details @corrective_action
+    add_corrective_action_attachment filename: attachment_filename, description: attachment_description
     click_on "Continue"
 
     assert_text "Confirm corrective action details"
@@ -102,6 +109,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
     assert_text "Attached: #{attachment_filename}"
     assert_text "View attachment"
   end
@@ -110,8 +118,8 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
     attachment_filename = "new_risk_assessment.txt"
     attachment_description = "Test attachment description"
 
-    fill_in_basic_details
-    add_attachment filename: attachment_filename, description: attachment_description
+    fill_in_corrective_action_details @corrective_action
+    add_corrective_action_attachment filename: attachment_filename, description: attachment_description
     click_on "Continue"
     click_on "Continue"
 
@@ -128,25 +136,8 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
 
   test "attachment description field is visible when a file is selected" do
     choose "corrective_action_related_file_yes", visible: false
-    attach_file "corrective_action[file][file]", Rails.root + "test/fixtures/files/new_risk_assessment.txt"
+    attach_file "corrective_action[file][file]", file_fixture("new_risk_assessment.txt")
 
     assert_text "Attachment description"
-  end
-
-  def fill_in_basic_details
-    fill_in "corrective_action_summary", with: @corrective_action.summary
-    fill_in "corrective_action_details", with: @corrective_action.details
-    fill_autocomplete "legislation-picker", with: @corrective_action.legislation
-    fill_autocomplete "product-picker", with: @corrective_action.product.name
-    fill_autocomplete "business-picker", with: @corrective_action.business.trading_name
-    fill_in "Day", with: @corrective_action.date_decided.day
-    fill_in "Month", with: @corrective_action.date_decided.month
-    fill_in "Year", with: @corrective_action.date_decided.year
-  end
-
-  def add_attachment(filename:, description:)
-    choose "corrective_action_related_file_yes", visible: false
-    attach_file "corrective_action[file][file]", Rails.root + "test/fixtures/files/#{filename}"
-    fill_in "Attachment description", with: description
   end
 end

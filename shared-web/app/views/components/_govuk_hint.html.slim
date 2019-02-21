@@ -1,0 +1,5 @@
+/ Implementation based on
+/ https://github.com/alphagov/govuk-frontend/
+/       blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/hint/template.njk
+span *(local_assigns[:attributes] || {}) id=id class=["govuk-hint", local_assigns[:classes]]
+  = local_assigns[:html] || local_assigns[:text]

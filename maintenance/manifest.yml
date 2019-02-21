@@ -6,4 +6,4 @@ applications:
   buildpacks:
     - nodejs_buildpack
   path: .
-  no-route: true
+  stack: cflinuxfs3

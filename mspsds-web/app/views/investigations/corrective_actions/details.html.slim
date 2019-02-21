@@ -2,89 +2,20 @@
 - content_for :page_title, page_title
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
-h1.govuk-heading-xl
-  span.govuk-caption-xl
-    = @investigation.pretty_description
-  = page_title
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_with model: @corrective_action, local: true, url: wizard_path, method: :put do |form|
-      = render "form_validation_display", errors: @corrective_action.errors, model_name: "action"
 
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Summary
-        .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:summary].any?)
-          = form.text_field :summary, class: "govuk-input govuk-!-width-two-thirds", maxlength: 1000
-
-      legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-        | When was this action decided?
-      = render "date_input", form: form
-
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Which product is subject to action?
-        .govuk-form-group.full-width class=("govuk-form-group--error" if @corrective_action.errors[:product].any?)
-          - if @investigation.products.empty?
-            span.govuk-hint
-              | There are no products on this case.
-            span.govuk-hint
-              = link_to "Add a product", new_investigation_product_path(@investigation)
-              |  to record a corrective action.
-          - elsif @investigation.products.size == 1
-            = form.text_field :product_name, value: @investigation.products.first.name,
-            disabled: true, class: "govuk-input govuk-!-width-two-thirds"
-            = form.hidden_field :product_id, value: @investigation.products.first.id
-          - else
-            span.govuk-hint
-              ' Only products already added to the case are listed.
-            = form.collection_select :product_id, @investigation.products, :id, :name,
-                    { include_blank: true }, class: "govuk-select", id: "product-picker"
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Under which legislation?
-        .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:legislation].any?)
-          span.govuk-hint
-            | Select the relevant legislation from the list, or enter a different one.
-          = form.select :legislation, relevant_legislation, { include_blank: true },
-                  class: "govuk-select", id: "legislation-picker"
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Which business is responsible?
-        .govuk-form-group.full-width class=("govuk-form-group--error" if @corrective_action.errors[:business].any?)
-          - if @investigation.businesses.empty?
-            span.govuk-hint
-              | There are no businesses associated with this case.
-          - else
-            span.govuk-hint
-              ' Only businesses already added to the case are listed.
-            = form.collection_select :business_id, @investigation.businesses, :id, :trading_name,
-                    { include_blank: true,
-                    selected: @investigation.businesses.size == 1 && @investigation.businesses.first.id },
-                    class: "govuk-select", id: "business-picker"
-
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Further details
-        .govuk-form-group class=("govuk-form-group--error" if @corrective_action.errors[:details].any?)
-          = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
-
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            | Are there any files related to the action?
-        fieldset.govuk-fieldset
-          .govuk-radios.govuk-radios--conditional data-module="radios"
-            .govuk-radios__item
-              = form.radio_button :related_file, "Yes", class: "govuk-radios__input",
-                      "data-aria-controls": "conditional-related-file"
-              = form.label :related_file, "Yes", class: "govuk-label govuk-radios__label"
-            #conditional-related-file.govuk-radios__conditional.govuk-radios__conditional--hidden
-              = render "related_attachment_fields", form: form,
-                file_blob: @file_blob, attachment_name: :file
-            .govuk-radios__item
-              = form.radio_button :related_file, "No", class: "govuk-radios__input",
-              "data-aria-controls": "conditional-no-related-file"
-              = form.label :related_file, "No", class: "govuk-label govuk-radios__label"
-      br
+= form_with model: @corrective_action, local: true, url: wizard_path, method: :put do |form|
+  = render "form_components/govuk_error_summary", form: form
+  h1.govuk-heading-xl
+    span.govuk-caption-xl
+      = @investigation.pretty_description
+    = page_title
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "investigations/corrective_actions/form", form: form,
+            corrective_action: @corrective_action,
+            investigation: @investigation,
+            file_blob: @file_blob,
+            allow_product_linking: true,
+            allow_business_linking: true
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

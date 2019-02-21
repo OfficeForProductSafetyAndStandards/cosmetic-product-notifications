@@ -41,12 +41,12 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
   test "first step should require an option to be selected" do
     click_on "Continue"
-    assert_text "Complainant type can't be blank"
+    assert_text "Select complainant type"
   end
 
   test "first step should allow a complainant type to be selected" do
     select_complainant_type_and_continue
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "second step should be complainant details" do
@@ -68,14 +68,14 @@ class CreateAllegationTest < ApplicationSystemTestCase
     select_complainant_type_and_continue
     click_on "Continue"
 
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "second step should allow a valid email address" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
 
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "third step should be allegation details" do
@@ -125,6 +125,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_allegation_details_and_continue
 
     assert_current_path(/cases\/\d+/)
+    click_on "Activity"
 
     assert_text "Allegation logged: #{@allegation.title}"
     assert_text "Product category: #{@allegation.product_category}"
@@ -161,9 +162,18 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_allegation_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-
+    click_on "Activity"
     assert_text "Attachment: #{attachment_filename}"
     assert_text "View attachment"
+  end
+
+  test "allegation details should be shown in overview" do
+    select_complainant_type_and_continue
+    fill_complainant_details_and_continue
+    fill_allegation_details_and_continue
+
+    assert_text @allegation.product_category
+    assert_text @complainant.name
   end
 
   def select_complainant_type_and_continue

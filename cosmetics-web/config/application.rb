@@ -6,7 +6,6 @@ require "action_controller/railtie"
 require "action_view/railtie"
 require "action_mailer/railtie"
 require "active_job/railtie"
-require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -30,7 +29,11 @@ module Cosmetics
     # config.active_record.raise_in_transactional_callbacks = true
 
     config.eager_load_paths << Rails.root.join("presenters")
+
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = 'cosmetics-mailers'
+
+    config.exceptions_app = self.routes
+    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
   end
 end

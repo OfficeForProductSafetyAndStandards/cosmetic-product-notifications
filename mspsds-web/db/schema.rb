@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_29_155220) do
+ActiveRecord::Schema.define(version: 2019_02_18_161633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 2019_01_29_155220) do
     t.string "legal_name"
     t.string "trading_name", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_number"], name: "index_businesses_on_company_number", unique: true
   end
 
   create_table "complainants", id: :serial, force: :cascade do |t|
@@ -122,7 +121,7 @@ ActiveRecord::Schema.define(version: 2019_01_29_155220) do
     t.integer "business_id"
     t.datetime "created_at", null: false
     t.integer "investigation_id"
-    t.integer "relationship", default: 0, null: false
+    t.string "relationship"
     t.datetime "updated_at", null: false
     t.index ["business_id"], name: "index_investigation_businesses_on_business_id"
     t.index ["investigation_id", "business_id"], name: "index_on_investigation_id_and_business_id", unique: true
@@ -142,16 +141,21 @@ ActiveRecord::Schema.define(version: 2019_01_29_155220) do
   create_table "investigations", id: :serial, force: :cascade do |t|
     t.uuid "assignable_id"
     t.string "assignable_type"
+    t.string "complainant_reference"
     t.datetime "created_at", null: false
     t.text "description"
+    t.text "hazard_description"
     t.string "hazard_type"
     t.boolean "is_closed", default: false
     t.boolean "is_private", default: false, null: false
+    t.text "non_compliant_reason"
+    t.string "pretty_id"
     t.string "product_category"
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
     t.string "user_title"
     t.index ["assignable_type", "assignable_id"], name: "index_investigations_on_assignable_type_and_assignable_id"
+    t.index ["pretty_id"], name: "index_investigations_on_pretty_id"
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
