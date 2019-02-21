@@ -39,13 +39,19 @@ function simpleAccessibleAutocomplete(id, autocompleteOptions) {
     // https://github.com/alphagov/accessible-autocomplete/issues/240
     const removeButton = document.getElementById(`remove-${id}`);
     if (removeButton) {
-      const removeCallback = () => {
+      const removeValue = () => {
         $enhancedElement.val('');
         $enhancedElement.click().focus().blur();
         $(element).parent().find('select').val('');
       };
-      removeButton.addEventListener('keyPress', removeCallback);
-      removeButton.addEventListener('click', removeCallback);
+      removeButton.addEventListener('keypress', (e) => {
+        if (e.keyCode === 13 || e.keyCode === 32) {
+          removeValue();
+        }
+      });
+      removeButton.addEventListener('click', () => {
+        removeValue();
+      });
     }
   }
 }

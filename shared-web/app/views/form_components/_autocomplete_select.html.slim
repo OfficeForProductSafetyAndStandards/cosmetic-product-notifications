@@ -3,7 +3,6 @@ ruby:
   displayed_value = local_assigns[:displayed_value] || :itself
   id = "picker-#{key}"
   show_all_values = local_assigns[:show_all_values]
-  select_class = show_all_values ? "govuk-select-with-remove" : ""
   form_group_classes = [local_assigns.dig(:formGroup, :classes)]
   form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
 
@@ -11,15 +10,17 @@ ruby:
   = local_assigns[:preface_html]
   - if local_assigns[:errorMessage].present?
     = render "components/govuk_error_message", **errorMessage
-  div class=select_class
+  div class=("autocomplete-select-with-remove" if show_all_values)
     = form.collection_select key, options, returned_value, displayed_value,
             { include_blank: true, selected: local_assigns[:selected] }, class: "govuk-select",
             id: id, aria_describedby: local_assigns[:aria_describedby]
+
+  / We decided to only add clear button to autocomplete that shows all values, and hence the dropdown arrow
   - if show_all_values
-    button id="remove-picker-#{key}" class="autocomplete__remove-button" type="button"
-      span#delete-hint.govuk-hint [class=" govuk-visually-hidden"]
+    button id="remove-picker-#{key}" class="autocomplete__clear-button" type="button"
+      span#delete-hint.govuk-hint.govuk-visually-hidden
         | Click this to remove currently selected value
-      svg viewbox="0 0 40 40" class="autocomplete__remove-button"
-        path class="autocomplete__remove-icon" d="M 10,10 L 30,30 M 30,10 L 10,30"
+      svg viewbox="0 0 40 40" class="autocomplete__clear-button"
+        path class="autocomplete__clear-icon" d="M 10,10 L 30,30 M 30,10 L 10,30"
   javascript:
     window.callAutocompleteWhenReady("#{id}", { showAllValues: "#{show_all_values}" });

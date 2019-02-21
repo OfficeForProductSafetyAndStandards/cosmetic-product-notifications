@@ -140,6 +140,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.autocomplete__clear-button {
+  background: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  width: 30px;
+}
+
+.autocomplete__clear-icon {
+  stroke: #000000;
+  fill: transparent;
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
 @include govuk-media-query($from: tablet) {
 
   .autocomplete__hint,
