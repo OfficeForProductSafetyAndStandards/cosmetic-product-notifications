@@ -19,16 +19,14 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Product Category
-        - error_message_product = @investigation.errors[:product_category].first
         = render "form_components/autocomplete_select", items: product_categories, key: :product_category, form: form,
-                show_all_values: true, errorMessage: error_message_product.present? && { text: error_message_product }
+                show_all_values: true
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Hazard Type
-        - error_message_hazard = @investigation.errors[:hazard_type].first
         = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
-                show_all_values: true, errorMessage: error_message_hazard.present? && { text: error_message_hazard }
+                show_all_values: true
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l

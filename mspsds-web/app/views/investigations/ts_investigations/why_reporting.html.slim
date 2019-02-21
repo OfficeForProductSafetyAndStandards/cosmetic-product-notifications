@@ -25,8 +25,7 @@
                 span#hazard-type-category-picker.govuk-hint The primary danger the product presents
               - error_message_hazard = @investigation.errors[:hazard_type].first
               = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
-                      show_all_values: true, aria_describedby: "hazard-type-category-hint", preface_html: preface_html,
-                      errorMessage: error_message_hazard.present? && { text: error_message_hazard }
+                      show_all_values: true, aria_describedby: "hazard-type-category-hint", preface_html: preface_html
 
             .govuk-form-group
               .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_description].any?)]

@@ -3,21 +3,21 @@ ruby:
   displayed_value = local_assigns[:displayed_value] || :itself
   id = local_assigns[:id] || "picker-#{key}"
   show_all_values = local_assigns[:show_all_values]
+  if form.object.errors
+     error_text = form.object.errors.full_messages_for(key).first.presence
+     local_assigns[:errorMessage] ||= {text: error_text} if error_text
+  end
   form_group_classes = [local_assigns.dig(:formGroup, :classes)]
   form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
 
 .govuk-form-group class=form_group_classes
   = local_assigns[:preface_html]
-  - if local_assigns[:hint].present?
-
-  - if local_assigns[:label].present?
-
   - if local_assigns[:errorMessage].present?
-    = render "components/govuk_error_message", **errorMessage
+    = render "components/govuk_error_message", **local_assigns[:errorMessage]
   div class=("autocomplete-select-with-remove" if show_all_values)
     = form.collection_select key, items, returned_value, displayed_value,
             { include_blank: true, selected: local_assigns[:selected] }, class: "govuk-select",
-            id: id, **local_assigns
+            id: id
 
   / We decided to only add clear button to autocomplete that shows all values, and hence the dropdown arrow
   - if show_all_values
