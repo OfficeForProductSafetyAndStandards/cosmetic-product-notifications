@@ -14,6 +14,14 @@ class Investigations::AlertsController < ApplicationController
     render_wizard
   end
 
+  def update
+    # if records_valid?
+      redirect_to next_wizard_path
+    # else
+    #   render_wizard
+    # end
+  end
+
   private
 
   def set_investigation
