@@ -24,19 +24,25 @@ legend.govuk-fieldset__legend.govuk-fieldset__legend--l
                 disabled: true, class: "govuk-input govuk-!-width-two-thirds"
         = form.hidden_field :product_id, value: investigation.products.first.id
       - else
-        span.govuk-hint
-          ' Only products already added to the case are listed.
+        - preface_html = capture do
+          span.govuk-hint
+            ' Only products already added to the case are listed.
+        - error_message_product = corrective_action.errors[:product].first
         = render "autocomplete_select_component", returned_value: :id, displayed_value: :name,
-                options: investigation.products, key: :product_id, form: form, show_all_values: true
+                options: investigation.products, key: :product_id, form: form, show_all_values: true,
+                preface_html: preface_html,
+                errorMessage: error_message_product.present? && { text: error_message_product }
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Under which legislation?
-  .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:legislation].any?)
+  - preface_html = capture do
     span.govuk-hint
       | Select the relevant legislation from the list, or enter a different one.
-    = render "autocomplete_select_component", options: relevant_legislation, key: :legislation, form: form,
-            show_all_values: true
+  - error_message_legislation = corrective_action.errors[:legislation].first
+  = render "autocomplete_select_component", options: relevant_legislation, key: :legislation, form: form,
+          show_all_values: true, preface_html: preface_html,
+          errorMessage: error_message_legislation.present? && { text: error_message_legislation }
 
 - if allow_business_linking
   fieldset.govuk-fieldset
@@ -47,11 +53,15 @@ fieldset.govuk-fieldset
         span.govuk-hint
           | There are no businesses associated with this case.
       - else
-        span.govuk-hint
-          ' Only businesses already added to the case are listed.
+        - preface_html = capture do
+          span.govuk-hint
+            ' Only businesses already added to the case are listed.
+        - error_message_business = corrective_action.errors[:business].first
         = render "autocomplete_select_component", returned_value: :id, displayed_value: :trading_name,
                 options: investigation.businesses, key: :business_id, form: form, show_all_values: true,
-                selected: (investigation.businesses.size == 1 && investigation.businesses.first.id)
+                selected: (investigation.businesses.size == 1 && investigation.businesses.first.id),
+                preface_html: preface_html,
+                errorMessage: error_message_business.present? && {text: error_message_business}
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l

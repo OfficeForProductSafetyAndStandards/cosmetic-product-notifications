@@ -19,12 +19,14 @@
             = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label"
           #conditional-report-report-type-1.govuk-checkboxes__conditional[
             class=("govuk-checkboxes__conditional--hidden" unless @unsafe) ]
-            .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)]
-              .mspsds-autocomplete#hazard-type-auto-complete-container
+            .mspsds-autocomplete#hazard-type-auto-complete-container
+              - preface_html = capture do
                 = form.label :hazard_type, "Hazard type", class: "govuk-label", for: "hazard-type-autocomplete"
                 span#hazard-type-category-picker.govuk-hint The primary danger the product presents
-                = render "autocomplete_select_component", options: hazard_types, key: :hazard_type, form: form,
-                        show_all_values: true, aria_describedby: "hazard-type-category-hint"
+              - error_message_hazard = @investigation.errors[:hazard_type].first
+              = render "autocomplete_select_component", options: hazard_types, key: :hazard_type, form: form,
+                      show_all_values: true, aria_describedby: "hazard-type-category-hint", preface_html: preface_html,
+                      errorMessage: error_message_hazard.present? && { text: error_message_hazard }
 
             .govuk-form-group
               .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_description].any?)]

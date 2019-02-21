@@ -19,17 +19,17 @@ h1.govuk-heading-xl
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Product Category
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_category].any?)
-          = render "autocomplete_select_component", options: product_categories, key: :product_category, form: form,
-                  show_all_values: true
+        - error_message_product = @investigation.errors[:product_category].first
+        = render "autocomplete_select_component", options: product_categories, key: :product_category, form: form,
+                show_all_values: true, errorMessage: error_message_product.present? && { text: error_message_product }
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Hazard Type
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)
-          = render "autocomplete_select_component", options: hazard_types, key: :hazard_type, form: form,
-                  show_all_values: true
-    
+        - error_message_hazard = @investigation.errors[:hazard_type].first
+        = render "autocomplete_select_component", options: hazard_types, key: :hazard_type, form: form,
+                show_all_values: true, errorMessage: error_message_hazard.present? && { text: error_message_hazard }
+
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Are there any files or images related to the allegation?

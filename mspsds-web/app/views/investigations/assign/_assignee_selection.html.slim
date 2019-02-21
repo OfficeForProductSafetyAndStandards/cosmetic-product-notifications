@@ -1,8 +1,8 @@
 .govuk-grid-row
   .govuk-grid-column-one-half
-    .govuk-form-group
+    - preface_html = capture do
       span#hint.govuk-hint [class=" govuk-visually-hidden"]
         = accessible_hint
-      = form.label key, "Assignee", class: "govuk-label"
-      = render "autocomplete_select_component", returned_value: :id, displayed_value: local_assigns[:display_method],
-              **local_assigns
+    = form.label key, "Assignee", class: "govuk-label"
+    = render "autocomplete_select_component", returned_value: :id, displayed_value: local_assigns[:display_method],
+            preface_html: preface_html, **local_assigns

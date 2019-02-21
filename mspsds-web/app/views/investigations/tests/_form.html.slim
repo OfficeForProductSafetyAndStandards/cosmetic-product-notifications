@@ -17,19 +17,25 @@ fieldset.govuk-fieldset
                   disabled: true, class: "govuk-input govuk-!-width-two-thirds"
           = form.hidden_field :product_id, value: @investigation.products.first.id
         - else
-          span.govuk-hint
-            ' Only products already added to the case are listed.
-            = link_to "Add a product", new_investigation_product_path(investigation)
+          - preface_html = capture do
+            span.govuk-hint
+              ' Only products already added to the case are listed.
+              = link_to "Add a product", new_investigation_product_path(investigation)
+          - error_message_product = test.errors[:product].first
           = render "autocomplete_select_component", returned_value: :id, displayed_value: :name,
-                  options: investigation.products, key: :product_id, form: form, show_all_values: true
+                  options: investigation.products, key: :product_id, form: form, show_all_values: true,
+                  preface_html: preface_html,
+                  errorMessage: error_message_product.present? && {text: error_message_product}
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Against which legislation?
-  .govuk-form-group class=("govuk-form-group--error" if test.errors[:legislation].any?)
+  - preface_html = capture do
     span.govuk-hint
       | Select the relevant legislation from the list.
-    = render "autocomplete_select_component", options: relevant_legislation, key: :legislation, form: form,
-            show_all_values: true
+  - error_message_legislation = test.errors[:legislation].first
+  = render "autocomplete_select_component", options: relevant_legislation, key: :legislation, form: form,
+          show_all_values: true, preface_html: preface_html,
+          errorMessage: error_message_legislation.present? && {text: error_message_legislation}
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     - if test.requested?
