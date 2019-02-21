@@ -17,23 +17,17 @@ fieldset.govuk-fieldset
                   disabled: true, class: "govuk-input govuk-!-width-two-thirds"
           = form.hidden_field :product_id, value: @investigation.products.first.id
         - else
-          - preface_html = capture do
-            span.govuk-hint
-              ' Only products already added to the case are listed.
-              = link_to "Add a product", new_investigation_product_path(investigation)
-          - error_message_product = test.errors[:product].first
+          - span_html = capture do
+            ' Only products already added to the case are listed.
+            = link_to "Add a product", new_investigation_product_path(investigation)
           = render "form_components/autocomplete_select", returned_value: :id, displayed_value: :name,
                   items: investigation.products, key: :product_id, form: form, show_all_values: true,
-                  preface_html: preface_html
+                  span: {html: span_html}
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Against which legislation?
-  - preface_html = capture do
-    span.govuk-hint
-      | Select the relevant legislation from the list.
-  - error_message_legislation = test.errors[:legislation].first
   = render "form_components/autocomplete_select", items: relevant_legislation, key: :legislation, form: form,
-          show_all_values: true, preface_html: preface_html
+          show_all_values: true, hint: {text: "Select the relevant legislation from the list."}
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     - if test.requested?

@@ -11,9 +11,22 @@ ruby:
   form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
 
 .govuk-form-group class=form_group_classes
-  = local_assigns[:preface_html]
+  - if local_assigns[:label]
+    - if local_assigns[:label][:html]
+      = local_assigns[:label][:html]
+    - elsif local_assigns[:label][:text]
+      = form.label key, local_assigns[:label][:text], class: local_assigns[:label][:classes] || "govuk-label", for: id
+
+  - if local_assigns[:hint]
+    span.govuk-hint class=local_assigns[:hint][:classes]
+      - if local_assigns[:hint][:html]
+        = local_assigns[:hint][:html]
+      - elsif local_assigns[:hint][:text]
+        = local_assigns[:hint][:text]
+
   - if local_assigns[:errorMessage].present?
     = render "components/govuk_error_message", **local_assigns[:errorMessage]
+
   div class=("autocomplete-select-with-remove" if show_all_values)
     = form.collection_select key, items, returned_value, displayed_value,
             { include_blank: true, selected: local_assigns[:selected] }, class: "govuk-select",
