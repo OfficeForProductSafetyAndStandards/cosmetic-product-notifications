@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :team_members, controller: "responsible_persons/team_members", only: %i[index new]
+    resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create]
 
     resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[show index] do
       collection do
