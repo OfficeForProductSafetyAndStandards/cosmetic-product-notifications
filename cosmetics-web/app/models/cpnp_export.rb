@@ -73,7 +73,6 @@ private
   end
 
   def notification_type(component_node)
-    # notification_type: [ predefined: 1, exact: 2, range: 3 ]
     component_node.xpath('.//notificationType').first&.text.to_i
   end
 

@@ -1,5 +1,6 @@
 class Component < ApplicationRecord
   include AASM
+  include CPNPHelper
 
   belongs_to :notification
 
@@ -29,6 +30,14 @@ class Component < ApplicationRecord
     return if self[:shades].nil?
 
     self[:shades] = self[:shades].select(&:present?)
+  end
+
+  def sub_category
+    get_parent_category(sub_sub_category)
+  end
+
+  def root_category
+    get_parent_category(sub_category)
   end
 
 private
