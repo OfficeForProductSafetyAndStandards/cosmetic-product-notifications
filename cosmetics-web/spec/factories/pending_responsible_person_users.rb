@@ -1,8 +1,17 @@
 FactoryBot.define do
   factory :pending_responsible_person_user do
-    email_address { "MyString" }
+    email_address { "user@example.com" }
     responsible_person { nil }
-    key { "MyString" }
-    expires_at { "2019-02-21 11:13:56" }
+    after(:create) do |pending_responsible_person_user|
+      pending_responsible_person_user.key = "aaaaaaaaaaa"
+      pending_responsible_person_user.expires_at = 2.days.from_now
+    end
+
+    factory :expired_pending_responsible_person_user do
+      after(:create) do |pending_responsible_person_user|
+        pending_responsible_person_user.key = "bbbbbbbbbbb"
+        pending_responsible_person_user.expires_at = 4.days.ago
+      end
+    end
   end
 end
