@@ -19,7 +19,7 @@ class ResponsiblePersons::VerificationController < ApplicationController
 
     NotifyMailer.send_responsible_person_verification_email(
       @responsible_person.email_address,
-      current_user.full_name,
+      User.current.full_name,
       responsible_person_email_verification_key_url(@responsible_person, key.key)
     ).deliver_later
 
