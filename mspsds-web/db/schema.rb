@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_18_161633) do
+ActiveRecord::Schema.define(version: 2019_02_21_164203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 2019_02_18_161633) do
     t.index ["correspondence_id"], name: "index_activities_on_correspondence_id"
     t.index ["investigation_id"], name: "index_activities_on_investigation_id"
     t.index ["product_id"], name: "index_activities_on_product_id"
+  end
+
+  create_table "alerts", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "investigation_id"
+    t.string "summary"
+    t.datetime "updated_at", null: false
+    t.index ["investigation_id"], name: "index_alerts_on_investigation_id"
   end
 
   create_table "businesses", id: :serial, force: :cascade do |t|
@@ -149,7 +158,9 @@ ActiveRecord::Schema.define(version: 2019_02_18_161633) do
     t.boolean "is_closed", default: false
     t.boolean "is_private", default: false, null: false
     t.text "non_compliant_reason"
+    t.text "planned_corrective_action_description"
     t.string "pretty_id"
+    t.text "previous_corrective_action_description"
     t.string "product_category"
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
@@ -222,6 +233,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_161633) do
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"
   add_foreign_key "activities", "products"
+  add_foreign_key "alerts", "investigations"
   add_foreign_key "complainants", "investigations"
   add_foreign_key "corrective_actions", "businesses"
   add_foreign_key "corrective_actions", "investigations"
