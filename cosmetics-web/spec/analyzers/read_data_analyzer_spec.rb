@@ -61,5 +61,40 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       expect(notification.cpnp_is_imported).equal?(false)
       expect(notification.cpnp_imported_country).equal?("")
     end
+
+    it "creates a notification populated with relevant number of components" do
+      notification_file
+      expect {
+        analyzer.metadata
+      }.to change(Component, :count).by(1)
+    end
+
+    it "creates a notification populated with relevant notification type" do
+      analyzer.metadata
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.components.first.notification_type).equal?(1)
+    end
+
+    it "creates a notification populated with relevant sub-sub-category" do
+      analyzer.metadata
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.components.first.sub_sub_category).equal?(262)
+    end
+
+    it "creates a notification populated with relevant number of trigger questions and trigger elements" do
+      notification_file
+      expect {
+        analyzer.metadata
+      }.to change(TriggerQuestion, :count).by(7).and change(TriggerQuestionElement, :count).by(7)
+    end
+
+    it "creates a notification populated with relevant fram formulation" do
+      analyzer.metadata
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.components.first.frame_formulation).equal?(263)
+    end
   end
 end
