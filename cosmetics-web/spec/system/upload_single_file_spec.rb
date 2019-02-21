@@ -28,7 +28,7 @@ RSpec.describe "Upload a single file", type: :system do
     expect(page).to have_text("No file selected")
   end
 
-  it "set a notification name in dashboard based on the uploaded file" do
+  it "set basic info of notification based on the uploaded file" do
     visit new_responsible_person_notification_file_path(responsible_person)
     page.attach_file('notification_file[uploaded_file]',
                      Rails.root + 'spec/fixtures/testExportFile.zip')
@@ -42,5 +42,6 @@ RSpec.describe "Upload a single file", type: :system do
 
     click_link "tab_unfinished"
     expect(page).to have_text("CTPA moisture conditioner")
+    expect(page).to have_text("1000094")
   end
 end

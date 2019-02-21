@@ -11,6 +11,7 @@ export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
       showAllValues: options.showAllValues,
       preserveNullOptions: true,
     });
+
     // In the case that the user deletes the entry from the field, we want this to be reflected in
     // the underlying select. This is a work-around to
     // https://github.com/alphagov/accessible-autocomplete/issues/205
@@ -20,5 +21,16 @@ export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
         $(element).val('');
       }
     });
+
+    // If we display a down arrow we want clicking on it to cause the same effect as clicking on
+    // input field, showing all values. This is a work-around to
+    // https://github.com/alphagov/accessible-autocomplete/issues/202
+    const $downArrow = $(element).parent().find('svg');
+    if ($downArrow) {
+      $downArrow.on('click', () => {
+        $enhancedElement.focus();
+        $enhancedElement.click();
+      });
+    }
   }
 }

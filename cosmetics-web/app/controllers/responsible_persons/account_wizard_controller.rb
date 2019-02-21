@@ -67,7 +67,7 @@ private
   def responsible_person_saved?
     return false unless responsible_person_valid?
 
-    @responsible_person.add_user(current_user)
+    @responsible_person.add_user(User.current)
     @responsible_person.save
   end
 

@@ -1,6 +1,5 @@
 class Investigations::ActivitiesController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
-  include Pundit
 
   before_action :set_investigation
   before_action :create_activity, only: %i[create]
@@ -40,7 +39,7 @@ class Investigations::ActivitiesController < ApplicationController
   # POST /activities.json
   def create
     respond_to do |format|
-      if @activity.save
+      if @investigation.activities << @activity
         format.html do
           redirect_to investigation_url(@investigation), notice: "Comment was successfully added."
         end
@@ -58,12 +57,11 @@ private
 
   def create_activity
     @activity = CommentActivity.new(body: Activity.sanitize_text(activity_params[:body]))
-    @investigation.activities << @activity
-    @activity.source = UserSource.new(user: current_user)
+    @activity.source = UserSource.new(user: User.current)
   end
 
   def set_investigation
-    @investigation = Investigation.find_by(pretty_id: params[:investigation_pretty_id])
+    @investigation = Investigation.find_by!(pretty_id: params[:investigation_pretty_id])
     authorize @investigation, :show?
   end
 

@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
+  let(:user) { build(:user) }
   let(:responsible_person) { create(:responsible_person) }
   let(:responsible_person_2) { create(:responsible_person, email_address: "responsible_person_2@example.com") }
 
   before do
-    sign_in_as_member_of_responsible_person(responsible_person)
+    sign_in_as_member_of_responsible_person(responsible_person, user: user)
   end
 
   after do
@@ -24,7 +25,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
     end
 
     it "counts pending notification files" do
-      NotificationFile.create(responsible_person_id: responsible_person.id, user_id: controller.current_user.id)
+      NotificationFile.create(responsible_person: responsible_person, user_id: user.id)
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:pending_notification_files_count)).to eq(1)
     end

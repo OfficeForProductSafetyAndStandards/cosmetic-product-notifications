@@ -1,9 +1,9 @@
 - content_for :page_title, "Edit product"
 - content_for :after_header do
   = link_to "Back to product", @product, class: "govuk-back-link"
-= render "product_heading", product: @product
-.govuk-grid-row
-  .govuk-grid-column-full
-    = form_with model: @product, local: true do |form|
-      = render "form_validation_display", errors: @product.errors, model_name: "product"
+= form_with model: @product, local: true do |form|
+  = render "form_components/govuk_error_summary", form: form
+  = render "product_heading", product: @product
+  .govuk-grid-row
+    .govuk-grid-column-full
       = render "form", form: form, product: @product, countries: @countries, search: false

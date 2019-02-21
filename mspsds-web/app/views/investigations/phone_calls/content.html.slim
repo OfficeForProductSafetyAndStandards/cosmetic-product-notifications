@@ -2,14 +2,14 @@
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
 main.govuk-main-wrapper role="main"
-  h1.govuk-heading-xl
-    span.govuk-caption-xl
+  = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
+    = render "form_components/govuk_error_summary", form: form
+    h1.govuk-heading-xl
+      span.govuk-caption-xl
       = @investigation.pretty_description
-    | Record phone call
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
-        = render "form_validation_display", model_name: "phone call", errors: @correspondence.errors
+      | Record phone call
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Summary

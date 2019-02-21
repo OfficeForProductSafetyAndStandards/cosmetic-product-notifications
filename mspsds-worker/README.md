@@ -23,6 +23,7 @@ described in [the root README](../README.md#deployment).
 ### Deployment from scratch
 
 This assumes that you've run [the deployment from scratch steps for the MSPSDS website](../mspsds-web/README.md#deployment-from-scratch).
+For smooth process you should only deploy worker after you deployed web. 
 Running the following commands from the root directory will then setup the worker app.
 
     NO_START=true ./mspsds-worker/deploy.sh

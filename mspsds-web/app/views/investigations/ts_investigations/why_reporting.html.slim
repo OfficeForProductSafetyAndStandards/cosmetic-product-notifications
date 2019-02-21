@@ -1,14 +1,14 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      span.govuk-caption-xl Report an unsafe or non-compliant product
-      | Why are you reporting this product?
-    span.govuk-hint
-      | Select all that apply
 = form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
-  = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
+  = render "form_components/govuk_error_summary", form: form
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        span.govuk-caption-xl Report an unsafe or non-compliant product
+        | Why are you reporting this product?
+      span.govuk-hint
+        | Select all that apply
   .govuk-grid-row class="govuk-!-margin-bottom-3"
     .mspsds-input.govuk-grid-column-two-thirds class="govuk-!-margin-bottom-9"
       .govuk-form-group
@@ -22,7 +22,7 @@
             .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)]
               .mspsds-autocomplete#hazard-type-auto-complete-container
                 = form.label :hazard_type, "Hazard type", class: "govuk-label", for: "hazard-type-autocomplete"
-                span#hazard-type-category-picker.govuk-hint What kind of danger does the product present?
+                span#hazard-type-category-picker.govuk-hint The primary danger the product presents
                 = form.select :hazard_type, hazard_types, { include_blank: true },
                         class: "govuk-select", id: "hazard-type-picker", aria_describedby: "hazard-type-category-hint"
 

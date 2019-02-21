@@ -12,7 +12,8 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
 
     @notification_file.name = notification_file_params[:uploaded_file].original_filename
     @notification_file.responsible_person = @responsible_person
-    @notification_file.user = current_user
+    @notification_file.user = User.current
+    @notification_file.uploaded_file.attach(notification_file_params[:uploaded_file])
 
     if @notification_file.save
       redirect_to responsible_person_notifications_path(@responsible_person)

@@ -1,7 +1,6 @@
 # This class serves as as a common base controller extended by the different types of correspondence
 class Investigations::CorrespondenceController < ApplicationController
   include FileConcern
-  include Pundit
   include Wicked::Wizard
   steps :context, :content, :confirmation
 
@@ -49,7 +48,7 @@ private
   end
 
   def set_investigation
-    @investigation = Investigation.find_by(pretty_id: params[:investigation_pretty_id])
+    @investigation = Investigation.find_by!(pretty_id: params[:investigation_pretty_id])
     authorize @investigation, :show?
   end
 

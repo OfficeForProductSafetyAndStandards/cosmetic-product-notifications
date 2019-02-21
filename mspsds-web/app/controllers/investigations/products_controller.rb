@@ -1,7 +1,6 @@
 class Investigations::ProductsController < ApplicationController
   include Shared::Web::CountriesHelper
   include ProductsHelper
-  include Pundit
 
   before_action :set_investigation
   before_action :set_product, only: %i[link remove unlink]
@@ -56,7 +55,7 @@ private
   end
 
   def set_investigation
-    @investigation = Investigation.find_by(pretty_id: params[:investigation_pretty_id])
+    @investigation = Investigation.find_by!(pretty_id: params[:investigation_pretty_id])
     authorize @investigation, :show?
   end
 end

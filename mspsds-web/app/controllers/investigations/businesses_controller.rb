@@ -1,6 +1,5 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
-  include Pundit
   include Shared::Web::CountriesHelper
 
   before_action :set_investigation
@@ -55,7 +54,7 @@ private
   end
 
   def set_investigation
-    @investigation = Investigation.find_by(pretty_id: params[:investigation_pretty_id])
+    @investigation = Investigation.find_by!(pretty_id: params[:investigation_pretty_id])
     authorize @investigation, :show?
   end
 end
