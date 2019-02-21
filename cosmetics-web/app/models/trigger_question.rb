@@ -1,5 +1,5 @@
 class TriggerQuestion < ApplicationRecord
   belongs_to :component
 
-  has_many :trigger_question_elements
+  has_many :trigger_question_elements, dependent: :destroy
 end

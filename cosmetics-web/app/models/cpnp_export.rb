@@ -39,6 +39,7 @@ class CPNPExport
   end
 
 private
+
   def trigger_questions(component_node)
     component_node.xpath('.//quetionList/question').collect do |question_node|
       question_id = question_node.xpath('.//questionID').first&.text.to_i
