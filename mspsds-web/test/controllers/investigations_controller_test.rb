@@ -102,7 +102,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should update assignee from radio boxes" do
     put assign_investigation_url(@investigation_one), params: {
       investigation: {
-        assignable_id_radio: @assignee.id
+        assignable_id: @assignee.id
       }
     }
     assert_equal(Investigation.find(@investigation_one.id).assignable_id, @assignee.id)
@@ -291,8 +291,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
     logout
     sign_in_as_non_opss_user
-    get investigation_path(@new_investigation)
-    assert_not_includes(response.body, @new_investigation.pretty_id)
+    assert_raise(Pundit::NotAuthorizedError) {
+      get investigation_path(@new_investigation)
+    }
   end
 
   test "should show private investigations to creator" do

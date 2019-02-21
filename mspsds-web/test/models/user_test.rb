@@ -18,6 +18,8 @@ class UserTest < ActiveSupport::TestCase
 
     @user = User.find_by(last_name: "User_one")
     @admin = User.find_by(last_name: "Admin")
+
+    allow(User).to receive(:current).and_return(@user)
   end
 
   teardown do

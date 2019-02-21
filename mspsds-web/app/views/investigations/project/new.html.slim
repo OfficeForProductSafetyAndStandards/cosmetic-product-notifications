@@ -1,12 +1,12 @@
 - content_for :page_title, "New project"
 - content_for :after_header do
   = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
-h1.govuk-heading-xl
-  = "New Project"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_with(model: @investigation, url: project_index_path, method: :post) do |form|
-      = render "form_components/govuk_error_summary", form: form
+= form_with(model: @investigation, url: project_index_path, method: :post) do |form|
+  = render "form_components/govuk_error_summary", form: form
+  h1.govuk-heading-xl
+    = "New Project"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Please provide a title

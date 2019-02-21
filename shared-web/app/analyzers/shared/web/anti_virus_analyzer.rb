@@ -2,7 +2,13 @@ module Shared
   module Web
     class AntiVirusAnalyzer < ActiveStorage::Analyzer
       def initialize(blob)
-        config = { daemonize: true }
+        config = {
+          daemonize: true,
+          error_clamscan_missing: true,
+          error_clamscan_client_error: true,
+          error_file_missing: true,
+          error_file_virus: false
+        }
         config[:config_file] = "clamav/clamd.conf" if Rails.env.production?
         Clamby.configure(config)
         super(blob)
@@ -14,18 +20,16 @@ module Shared
 
       def metadata
         download_blob_to_tempfile do |file|
-          is_safe = Clamby.safe? file.path
-          purge_blob unless is_safe
-          { safe: is_safe }
+          if Clamby.safe? file.path
+            { safe: true }
+          else
+            Rails.logger.warn "#{@blob.id} detected as virus, removing."
+            attachments = ActiveStorage::Attachment.where(blob_id: @blob.id)
+            attachments.each(&:destroy)
+            @blob.purge_later
+            { safe: false }
+          end
         end
-      end
-
-    private
-
-      def purge_blob
-        attachments = ActiveStorage::Attachment.where(blob_id: @blob.id)
-        attachments.each(&:destroy)
-        @blob.purge
       end
     end
   end
