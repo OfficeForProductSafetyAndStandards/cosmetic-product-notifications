@@ -4,6 +4,12 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       | Invite a team member
+    - if params[:user_already_exists]
+      span.govuk-error-message
+        | User is already a member of this team
+    - if params[:blank_input]
+      span.govuk-error-message
+        | Please enter an email address
     p Inviting a team member will allow them to:
     ul.govuk-list.govuk-list--bullet
         li see all cosmetic products

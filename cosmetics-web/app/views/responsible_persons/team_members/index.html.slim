@@ -16,10 +16,22 @@
             | Name
           th.govuk-table__header[scope="col"]
             | Email address
+          th.govuk-table__header[scope="col"]
+            | Status
       tbody.govuk-table__body
+        - @responsible_person.pending_responsible_person_users.each do |user|
+          tr.govuk-table__row
+            td.govuk-table__cell
+              | -
+            td.govuk-table__cell
+              = user.email_address
+            td.govuk-table__cell
+              | Pending
         - @responsible_person.responsible_person_users.each do |user|
           tr.govuk-table__row
             td.govuk-table__cell
               = user.full_name
             td.govuk-table__cell
               = user.email_address
+            td.govuk-table__cell
+              | -
