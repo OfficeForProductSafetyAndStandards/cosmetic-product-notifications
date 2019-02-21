@@ -8,7 +8,7 @@ class AuditActivity::Test::Base < AuditActivity::Base
     activity = self.create(
       body: self.build_body(test),
       title: title,
-      source: UserSource.new(user: current_user),
+      source: UserSource.new(user: User.current),
       investigation: test.investigation,
       product: test.product
     )

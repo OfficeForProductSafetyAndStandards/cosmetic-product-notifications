@@ -1,13 +1,12 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
-span.govuk-caption-xl Report an unsafe or non-compliant product
-h1.govuk-heading-xl
-  | Record corrective action
-
-.govuk-grid-row
-  = form_with model: @corrective_action, url: wizard_path, method: :put, local: true do |form|
+= form_with model: @corrective_action, url: wizard_path, method: :put, local: true do |form|
+  = render "form_components/govuk_error_summary", form: form
+  h1.govuk-heading-xl
+    span.govuk-caption-xl Report an unsafe or non-compliant product
+    | Record corrective action
+  .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = render "form_components/govuk_error_summary", form: form
       = render "investigations/corrective_actions/form", form: form,
               corrective_action: @corrective_action,
               investigation: @investigation,

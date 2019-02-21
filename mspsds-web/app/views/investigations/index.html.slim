@@ -41,7 +41,7 @@
               #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
                 = form.label :assigned_to_someone_else_id, "Name", class: "govuk-label"
                 = form.select :assigned_to_someone_else_id,
-                        compute_select_options(entities: User.get_assignees(except: current_user) + Team.all),
+                        compute_select_options(entities: User.get_assignees(except: User.current) + Team.all),
                         {},
                         class: "govuk-select", id: "picker-select_someone_else"
         .govuk-form-group

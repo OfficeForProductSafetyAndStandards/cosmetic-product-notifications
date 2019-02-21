@@ -1,14 +1,15 @@
 - content_for :page_title, "Edit location"
 - content_for :after_header do
   = link_to "Back to business", @business, class: "govuk-back-link"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    .govuk-heading-xl
-      span.govuk-caption-xl
-        = "Business: #{@business.trading_name}"
-      | Edit location
+
+= form_with(model: @location, url: business_location_path(@business, @location), local: true) do |form|
+  = render "form_components/govuk_error_summary", form: form
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .govuk-heading-xl
+        span.govuk-caption-xl
+          = "Business: #{@business.trading_name}"
+        | Edit location
   .govuk-grid-row
     .govuk-grid-column-one-half
-      = form_with(model: @location, url: business_location_path(@business, @location), local: true) do |form|
-        = render "form_components/govuk_error_summary", form: form
-        = render "form", form: form
+      = render "form", form: form

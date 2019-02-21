@@ -1,6 +1,5 @@
 class Investigations::BusinessesController < ApplicationController
   include BusinessesHelper
-  include Pundit
   include Shared::Web::CountriesHelper
 
   before_action :set_investigation

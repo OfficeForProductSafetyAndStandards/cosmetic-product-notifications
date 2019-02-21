@@ -104,6 +104,7 @@ class ActiveSupport::TestCase
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
+    allow(User).to receive(:current).and_call_original
     allow(NotifyMailer).to receive(:updated_investigation).and_call_original
     reset_user_data
   end
@@ -170,6 +171,8 @@ private
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
     allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_opss)
     allow(Keycloak::Client).to receive(:has_role?).with(:mspsds_user).and_return(is_mspsds)
+
+    allow(User).to receive(:current).and_return(user)
   end
 
   def format_user_for_get_userinfo(user, groups)

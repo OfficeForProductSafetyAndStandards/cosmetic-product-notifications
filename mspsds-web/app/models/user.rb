@@ -12,8 +12,6 @@ class User < Shared::Web::User
     team_users.map(&:team)
   end
 
-  include UserService
-
   def self.find_or_create(attributes)
     groups = attributes.delete(:groups)
     organisation = Organisation.find_by_path(groups) # rubocop:disable Rails/DynamicFindBy
@@ -48,7 +46,7 @@ class User < Shared::Web::User
 
   def display_name(ignore_visibility_restrictions: false)
     display_name = full_name
-    can_display_teams = ignore_visibility_restrictions || (organisation.present? && current_user.organisation&.id == organisation.id)
+    can_display_teams = ignore_visibility_restrictions || (organisation.present? && organisation.id == User.current.organisation&.id)
     can_display_teams = can_display_teams && teams.any?
     membership_display = can_display_teams ? team_names : organisation&.name
     display_name += " (#{membership_display})" if membership_display.present?
@@ -64,7 +62,7 @@ class User < Shared::Web::User
   end
 
   def assignee_short_name
-    if organisation.present? && organisation.id != current_user&.organisation&.id
+    if organisation.present? && organisation.id != User.current.organisation&.id
       organisation.name
     else
       full_name

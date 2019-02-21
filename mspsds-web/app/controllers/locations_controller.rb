@@ -3,7 +3,7 @@ class LocationsController < ApplicationController
 
   before_action :set_location, only: %i[show edit update remove destroy]
   before_action :create_location, only: %i[create]
-  before_action :assign_business, only: %i[show edit remove]
+  before_action :assign_business, only: %i[show edit update remove create]
   before_action :set_countries, only: %i[create update new edit]
 
   # GET /locations/1
@@ -77,7 +77,7 @@ private
   def create_location
     business = Business.find(params[:business_id])
     @location = business.locations.create(location_params)
-    @location.source = UserSource.new(user: current_user)
+    @location.source = UserSource.new(user: User.current)
   end
 
   # Use callbacks to share common setup or constraints between actions.

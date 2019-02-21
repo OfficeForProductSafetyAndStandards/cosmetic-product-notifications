@@ -1,10 +1,11 @@
 = form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
   = render "form_components/govuk_error_summary", form: form
+  = yield
 
-  - if current_user.teams.any?
+  - if User.current.teams.any?
     - someone_in_your_team = capture do
       = render "investigations/assign/assignee_selection", form: form, key: :select_team_member,
-              options: User.get_team_members(user: current_user), accessible_hint: "Name",
+              options: User.get_team_members(user: User.current), accessible_hint: "Name",
               display_method: :display_name, show_all_values: true
   - previously_assigned = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
@@ -23,7 +24,7 @@
     items = investigation.important_assignable_people.map do |user|
       { text: user.display_name, value: user.id, checked: investigation.assignee == user }
     end
-    if current_user.teams.any?
+    if User.current.teams.any?
       items.push text: "Someone in your team",
                  value: "someone_in_your_team",
                  conditional: { html: someone_in_your_team }
@@ -38,7 +39,7 @@
     items.push divider: "or"
     items.push text: "Someone else", value: "someone_else", conditional: { html: someone_else }
 
-  = render "form_components/govuk_radios", form: form, key: :assignable_id_radio, items: items
+  = render "form_components/govuk_radios", form: form, key: :assignable_id, items: items
   .govuk-form-group
     = form.submit "Assign", class: "govuk-button"
     p = link_to "Cancel", investigation, class: "mspsds-block-link"

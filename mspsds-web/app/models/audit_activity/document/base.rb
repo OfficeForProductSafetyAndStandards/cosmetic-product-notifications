@@ -5,7 +5,7 @@ class AuditActivity::Document::Base < AuditActivity::Base
   private_class_method def self.from(document, investigation, title)
     activity = self.create(
       body: self.sanitize_text(document.metadata[:description]),
-      source: UserSource.new(user: current_user),
+      source: UserSource.new(user: User.current),
       investigation: investigation,
       title: title
     )
