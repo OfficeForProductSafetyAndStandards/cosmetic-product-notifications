@@ -15,7 +15,8 @@ RSpec.describe "Upload a single file", type: :system do
 
   it "enables to upload a file" do
     visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_file', Rails.root + 'spec/fixtures/testExportFile.zip')
+    page.attach_file('notification_file[uploaded_file]',
+                     Rails.root + 'spec/fixtures/testExportFile.zip')
     click_button "Upload"
 
     expect(page).to have_text("Your cosmetic products")
@@ -29,7 +30,7 @@ RSpec.describe "Upload a single file", type: :system do
 
   it "set a notification name in dashboard based on the uploaded file" do
     visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_file',
+    page.attach_file('notification_file[uploaded_file]',
                      Rails.root + 'spec/fixtures/testExportFile.zip')
     click_button "Upload"
 
