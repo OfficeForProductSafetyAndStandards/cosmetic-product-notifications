@@ -5,8 +5,8 @@ class LandingPageController < ApplicationController
   def index; end
 
   def set_responsible_person
-    return unless user_signed_in? && current_user.responsible_persons.present?
+    return if User.current&.responsible_persons.blank?
 
-    @responsible_person = current_user.responsible_persons.first
+    @responsible_person = User.current.responsible_persons.first
   end
 end

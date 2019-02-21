@@ -1,6 +1,5 @@
 module InvestigationsHelper
   include SearchHelper
-  include UserService
 
   def search_for_investigations(page_size = Investigation.count)
     result = Investigation.full_search(search_query)
@@ -55,15 +54,15 @@ module InvestigationsHelper
   def compute_excluded_terms
     # After consultation with designers we chose to ignore teams who are not selected in blacklisting
     excluded_assignees = []
-    excluded_assignees << current_user.id if params[:assigned_to_me] == "unchecked"
+    excluded_assignees << User.current.id if params[:assigned_to_me] == "unchecked"
     format_assignee_terms(excluded_assignees)
   end
 
   def compute_included_terms
-    # If 'Me' is not checked, but one of current_users teams is selected, we don't exclude current_user from it
+    # If 'Me' is not checked, but one of current users teams is selected, we don't exclude current user from it
     assignees = checked_team_assignees
     assignees.concat(someone_else_assignees)
-    assignees << current_user.id if params[:assigned_to_me] == "checked"
+    assignees << User.current.id if params[:assigned_to_me] == "checked"
     format_assignee_terms(assignees.uniq)
   end
 
@@ -129,12 +128,12 @@ module InvestigationsHelper
   end
 
   def teams_with_keys
-    current_user.teams.map.with_index do |team, index|
+    User.current.teams.map.with_index do |team, index|
       # key, team, name
       [
         "assigned_to_team_#{index}".to_sym,
         team,
-        current_user.teams.count > 1 ? team.name : "My team"
+        User.current.teams.count > 1 ? team.name : "My team"
       ]
     end
   end

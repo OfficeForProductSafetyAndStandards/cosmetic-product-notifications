@@ -2,7 +2,6 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
   include AttachmentConcern
-  include UserService
 
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
@@ -122,7 +121,7 @@ class Investigation < ApplicationRecord
   def important_assignable_people
     people = [].to_set
     people << assignee if assignee.is_a? User
-    people << current_user
+    people << User.current
     people
   end
 
@@ -133,8 +132,8 @@ class Investigation < ApplicationRecord
   end
 
   def important_assignable_teams
-    teams = current_user.teams.to_set
-    Team.get_visible_teams(current_user).each do |team|
+    teams = User.current.teams.to_set
+    Team.get_visible_teams(User.current).each do |team|
       teams << team
     end
     teams << assignee if assignee.is_a? Team
@@ -170,10 +169,10 @@ class Investigation < ApplicationRecord
   def case_type; end
 
   def reason_created
-    return "Product reported because it is unsafe and non-compliant." if hazard_type && non_compliant_reason
-    return "Product reported because it is unsafe." if hazard_type
+    return "Product reported because it is unsafe and non-compliant." if hazard_type.present? && non_compliant_reason.present?
+    return "Product reported because it is unsafe." if hazard_type.present?
 
-    "Product reported because it is non-compliant." if non_compliant_reason
+    "Product reported because it is non-compliant." if non_compliant_reason.present?
   end
 
   def has_non_compliant_reason
@@ -240,7 +239,7 @@ private
   end
 
   def assign_current_user_to_case
-    self.source = UserSource.new(user: current_user) if self.source.blank? && current_user.present?
+    self.source = UserSource.new(user: User.current) if self.source.blank? && User.current
   end
 end
 

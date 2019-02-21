@@ -1,6 +1,6 @@
 class HomepageController < ApplicationController
   def show
-    if current_user.is_opss?
+    if User.current.is_opss?
       redirect_to investigations_path
     else
       render "non_opss"
