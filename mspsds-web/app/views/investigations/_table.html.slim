@@ -2,12 +2,10 @@
   - if search_result[:record].present?
     - if policy(search_result[:record]).show?
       - if search_result.respond_to?("highlight")
-        = render "highlight_card", investigation: search_result[:record], highlights: search_result.highlight,
-                card_class: "mspsds-case-card--index"
+        = render "highlight_card", investigation: search_result[:record], highlights: search_result.highlight
       - else
-        = render "case_card", investigation: search_result[:record], sorted_by: sorted_by,
-                card_class: "mspsds-case-card--index"
+        = render "case_card", investigation: search_result[:record], sorted_by: sorted_by
     - else
-      = render "restricted_card", investigation: search_result[:record], card_class: "mspsds-case-card--index"
+      = render "restricted_card", investigation: search_result[:record]
 - if search_results.empty?
   p[class="govuk-!-font-weight-bold"] No cases found.

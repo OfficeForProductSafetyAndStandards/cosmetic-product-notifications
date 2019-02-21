@@ -100,14 +100,6 @@
   @extend %mspsds-card;
 }
 
-// add this class when displaying the card in an index page (as opposed to a tab for example)
-.mspsds-case-card--index {
-  margin-left: -15px;
-  @media screen and (max-width: 640px) {
-    margin-left: 0;
-  }
-}
-
 .mspsds-product-card {
   @extend %mspsds-card;
 

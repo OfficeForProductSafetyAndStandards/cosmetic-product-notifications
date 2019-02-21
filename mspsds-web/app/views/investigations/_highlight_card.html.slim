@@ -1,10 +1,6 @@
 - displayable_highlights = get_displayable_highlights(highlights, investigation)
-ruby:
-  additional_classes = [
-    ("mspsds-case-card--closed" if investigation.is_closed?),
-    local_assigns[:card_class]
-  ].reject(&:blank?)
-.govuk-grid-row.mspsds-case-card class=additional_classes
+
+.govuk-grid-row.mspsds-case-card class=[("mspsds-case-card--closed" if investigation.is_closed?)]
   .govuk-grid-column-one-half
     span.govuk-caption-m[class="govuk-!-font-size-16"]
       = investigation.pretty_description
