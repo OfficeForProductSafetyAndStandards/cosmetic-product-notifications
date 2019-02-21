@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_111331) do
+ActiveRecord::Schema.define(version: 2019_02_21_134903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_111331) do
     t.bigint "notification_id"
     t.integer "notification_type"
     t.integer "frame_formulation"
+    t.integer "sub_sub_category"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 

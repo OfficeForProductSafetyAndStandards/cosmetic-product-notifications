@@ -30,6 +30,7 @@ class CPNPExport
   def components
     current_version_component_lists_node.xpath('.//component').collect do |component_node|
       Component.create(notification_type: notification_type(component_node),
+                       sub_sub_category: sub_sub_category(component_node),
                        frame_formulation: frame_formulation(component_node),
                        exact_formulas: exact_formulas(component_node),
                        range_formulas: range_formulas(component_node),
@@ -73,6 +74,10 @@ private
   def notification_type(component_node)
     # notification_type: [ predefined: 1, exact: 2, range: 3 ]
     component_node.xpath('.//notificationType').first&.text.to_i
+  end
+
+  def sub_sub_category(component_node)
+    component_node.xpath('.//categorie3').first&.text.to_i
   end
 
   def current_version_component_lists_node
