@@ -5,8 +5,8 @@ fieldset.govuk-fieldset
     - label_class = "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     = render "form_components/autocomplete_select", items: product_categories, key: :product_category, form: form,
             show_all_values: true, aria_describedby: "report-product-category-hint",
-            label: {text: "Product category", classes: label_class},
-            hint: {text: "The high-level category (for reporting purposes)"}
+            label: { text: "Product category", classes: label_class },
+            hint: { text: "The high-level category (for reporting purposes)" }
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:product_type].any?)]

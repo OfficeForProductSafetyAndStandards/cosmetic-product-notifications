@@ -22,12 +22,12 @@ fieldset.govuk-fieldset
             = link_to "Add a product", new_investigation_product_path(investigation)
           = render "form_components/autocomplete_select", returned_value: :id, displayed_value: :name,
                   items: investigation.products, key: :product_id, form: form, show_all_values: true,
-                  span: {html: span_html}
+                  span: { html: span_html }
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Against which legislation?
   = render "form_components/autocomplete_select", items: relevant_legislation, key: :legislation, form: form,
-          show_all_values: true, hint: {text: "Select the relevant legislation from the list."}
+          show_all_values: true, hint: { text: "Select the relevant legislation from the list." }
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     - if test.requested?

@@ -22,7 +22,7 @@
             .mspsds-autocomplete#hazard-type-auto-complete-container
               = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
                       show_all_values: true, aria_describedby: "hazard-type-category-hint",
-                      label: {text: "Hazard type"}, hint: {text: "The primary danger the product presents"}
+                      label: { text: "Hazard type" }, hint: { text: "The primary danger the product presents" }
 
             .govuk-form-group
               .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_description].any?)]

@@ -5,25 +5,18 @@ ruby:
   show_all_values = local_assigns[:show_all_values]
   if form.object.errors
      error_text = form.object.errors.full_messages_for(key).first.presence
-     local_assigns[:errorMessage] ||= {text: error_text} if error_text
+     local_assigns[:errorMessage] ||= { text: error_text } if error_text
   end
   form_group_classes = [local_assigns.dig(:formGroup, :classes)]
   form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
 
 .govuk-form-group class=form_group_classes
   - if local_assigns[:label]
-    - if local_assigns[:label][:html]
-      = local_assigns[:label][:html]
-    - elsif local_assigns[:label][:text]
-      = form.label key, local_assigns[:label][:text], class: local_assigns[:label][:classes] || "govuk-label", for: id
-
+    = form.label key, local_assigns[:label][:html] || local_assigns[:label][:text],
+            class: local_assigns[:label][:classes] || "govuk-label", for: id
   - if local_assigns[:hint]
     span.govuk-hint class=local_assigns[:hint][:classes]
-      - if local_assigns[:hint][:html]
-        = local_assigns[:hint][:html]
-      - elsif local_assigns[:hint][:text]
-        = local_assigns[:hint][:text]
-
+      = local_assigns[:hint][:html] || local_assigns[:hint][:text]
   - if local_assigns[:errorMessage].present?
     = render "components/govuk_error_message", **local_assigns[:errorMessage]
 

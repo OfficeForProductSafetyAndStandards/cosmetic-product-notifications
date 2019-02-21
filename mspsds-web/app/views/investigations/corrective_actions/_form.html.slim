@@ -26,14 +26,14 @@ legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       - else
         = render "form_components/autocomplete_select", returned_value: :id, displayed_value: :name,
                 items: investigation.products, key: :product_id, form: form, show_all_values: true,
-                hint: {text: "Only products already added to the case are listed.}
+                hint: { text: "Only products already added to the case are listed." }
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Under which legislation?
   = render "form_components/autocomplete_select", items: relevant_legislation, key: :legislation, form: form,
           show_all_values: true,
-          hint: {text: "Select the relevant legislation from the list, or enter a different one."}
+          hint: { text: "Select the relevant legislation from the list, or enter a different one." }
 
 - if allow_business_linking
   fieldset.govuk-fieldset
@@ -47,7 +47,7 @@ fieldset.govuk-fieldset
         = render "form_components/autocomplete_select", returned_value: :id, displayed_value: :trading_name,
                 items: investigation.businesses, key: :business_id, form: form, show_all_values: true,
                 selected: (investigation.businesses.size == 1 && investigation.businesses.first.id),
-                hint: {text: "Only businesses already added to the case are listed."}
+                hint: { text: "Only businesses already added to the case are listed." }
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
