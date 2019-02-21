@@ -1,6 +1,5 @@
 class Team < ActiveHash::Base
   include ActiveHash::Associations
-  include UserService
 
   field :id
   field :name
@@ -37,7 +36,7 @@ class Team < ActiveHash::Base
   end
 
   def display_name(ignore_visibility_restrictions: false)
-    return name if current_user.organisation == organisation || ignore_visibility_restrictions
+    return name if User.current.organisation == organisation || ignore_visibility_restrictions
 
     organisation.name
   end

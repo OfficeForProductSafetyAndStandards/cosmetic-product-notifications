@@ -28,6 +28,14 @@ module Shared
         end
       end
 
+      def self.current
+        RequestStore.store[:current_user]
+      end
+
+      def self.current=(user)
+        RequestStore.store[:current_user] = user
+      end
+
       def full_name
         "#{first_name} #{last_name}"
       end
