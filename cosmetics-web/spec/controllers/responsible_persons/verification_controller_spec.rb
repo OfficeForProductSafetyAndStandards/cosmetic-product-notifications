@@ -15,8 +15,7 @@ RSpec.describe ResponsiblePersons::VerificationController, type: :controller do
 
   describe "show" do
     it "verifies ResponsiblePerson if email key exists" do
-      email_verification_key.responsible_person = responsible_person
-      email_verification_key.save
+      email_verification_key.update responsible_person: responsible_person
 
       get :show, params: { responsible_person_id: responsible_person.id, key: email_verification_key.key }
 
@@ -24,8 +23,7 @@ RSpec.describe ResponsiblePersons::VerificationController, type: :controller do
     end
 
     it "Redirect to responsible person page if email key exists" do
-      email_verification_key.responsible_person = responsible_person
-      email_verification_key.save
+      email_verification_key.update responsible_person: responsible_person
 
       get :show, params: { responsible_person_id: responsible_person.id, key: email_verification_key.key }
 
@@ -39,8 +37,7 @@ RSpec.describe ResponsiblePersons::VerificationController, type: :controller do
     end
 
     it "redirects to 404 if key has expired" do
-      expired_email_verification_key.responsible_person = responsible_person
-      expired_email_verification_key.save
+      expired_email_verification_key.update responsible_person: responsible_person
 
       expect {
         get :show, params: { responsible_person_id: responsible_person.id, key: expired_email_verification_key.key }
@@ -50,9 +47,11 @@ RSpec.describe ResponsiblePersons::VerificationController, type: :controller do
 
   describe "resend_email" do
     it "creates a new verification key" do
+      stub_notify_mailer
+
       get :resend_email, params: { responsible_person_id: responsible_person.id }
 
-      expect(responsible_person.email_verification_keys.length).to eq(1)
+      expect(NotifyMailer).to have_received(:send_responsible_person_verification_email)
     end
   end
 end

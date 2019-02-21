@@ -4,7 +4,7 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
   steps :select_type, :enter_details
 
   skip_before_action :create_or_join_responsible_person
-  before_action :set_responsible_person, only: %i[show update verify_email]
+  before_action :set_responsible_person, only: %i[show update]
   before_action :store_responsible_person, only: %i[update]
 
   # GET /responsible_persons/account/create_or_join_existing
@@ -28,23 +28,16 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
     render_wizard
   end
 
-  # GET /responsible_persons/account/verify_email
-  def verify_email; end
-
   # PATCH/PUT /responsible_persons/account/:step
   def update
     case step
     when :enter_details
       if responsible_person_saved?
-        key = @responsible_person.email_verification_keys.create
-
         NotifyMailer.send_responsible_person_verification_email(
-          @responsible_person.email_address,
-          User.current.full_name,
-          responsible_person_email_verification_key_url(@responsible_person, key.key)
-        ).deliver_later
+          @responsible_person, User.current.full_name
+).deliver_later
 
-        redirect_to finish_wizard_path
+        redirect_to responsible_person_email_verification_keys_path(@responsible_person)
       else
         render step
       end
@@ -55,11 +48,6 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
         render step
       end
     end
-  end
-
-  def finish_wizard_path
-    @responsible_person = User.current.responsible_persons.first
-    responsible_person_email_verification_keys_path(@responsible_person)
   end
 
 private
