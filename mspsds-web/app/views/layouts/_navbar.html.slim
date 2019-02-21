@@ -9,9 +9,6 @@ nav.app-navigation.govuk-clearfix
       = link_to "Businesses", businesses_path, "data-topnav": "businesses", class: "govuk-link--no-visited-state"
     li[class=(params[:controller] == "products" && "app-navigation--current-page")]
       = link_to "Products", products_path, "data-topnav": "products", class: "govuk-link--no-visited-state"
-  - if User.current.is_opss?
-    .creation
-      = link_to "Create new", new_investigation_path, class: "govuk-button govuk-button--start", role: "button"
-  - else
-    .creation
-      = link_to "Create new", new_ts_investigation_path, class: "govuk-button govuk-button--start", role: "button"
+  .creation
+    = link_to "Create new", User.current.is_opss? ? new_investigation_path : new_ts_investigation_path,
+            class: "govuk-button govuk-button--start", role: "button"
