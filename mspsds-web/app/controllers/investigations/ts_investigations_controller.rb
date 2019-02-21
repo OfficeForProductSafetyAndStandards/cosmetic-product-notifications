@@ -117,14 +117,10 @@ private
   end
 
   def set_business
-    if params.include?(:business)
-      @business = Business.new business_step_params
-      defaults_on_primary_location @business if @business.locations.any?
-    else
-      @business = Business.new
-      @business.locations.build
-      @business.contacts.build
-    end
+    @business = Business.new business_step_params
+    @business.contacts.build unless @business.primary_contact
+    @business.locations.build unless @business.primary_location
+    defaults_on_primary_location @business
     next_business = session[:businesses].find { |entry| entry[:business].nil? }
     @business_type = next_business ? next_business[:type] : nil
   end
@@ -294,8 +290,14 @@ private
       business_entry = session[:businesses].find { |entry| entry[:type] == params.require(:business)[:business_type] }
       contact = @business.contacts.first
       location = @business.locations.first
-      business_entry[:contact] = contact.attributes if contact&.valid?
-      business_entry[:location] = location.attributes if location&.valid?
+      if contact.attributes.values.any?(&:present?)
+        business_entry[:contact] = contact.attributes if contact.valid?
+      end
+      # Defaults_on_primary_location adds a default value to the location name field but we don't want to consider this
+      # value when determining if the location form has been completed
+      if location.attributes.reject { |k, _| k == "name" }.values.any?(&:present?)
+        business_entry[:location] = location.attributes if location&.valid?
+      end
       business_entry[:business] = @business.attributes
     end
   end

@@ -8,19 +8,15 @@
           dt
             | UK cosmetic product number:
           dd
-            | UKCP-78424
+            = notification.reference_number_for_display
           dt
             | Your reference number:
           dd
             | 42962
           dt
-            | First notified in EU:
-          dd
-            | 23/06/2017
-          dt
             | EU reference number:
           dd
-            | 31869
+            = notification.cpnp_reference
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = link_to "Add formulation document and product image to finish registration", "/",

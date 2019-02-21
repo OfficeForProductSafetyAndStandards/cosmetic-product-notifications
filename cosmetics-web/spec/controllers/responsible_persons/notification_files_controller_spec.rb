@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:valid_attributes) {
-    { uploaded_file: fixture_file_upload("testExportFile.zip") }
+    { uploaded_file: fixture_file_upload("/testExportFile.zip") }
   }
 
   before do
@@ -23,7 +23,7 @@ RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controlle
 
   describe "POST #create" do
     context "with valid params" do
-      it "a new NotificationFile is removed after processing" do
+      it "a new NotificationFile is created" do
         expect {
           post :create, params: { responsible_person_id: responsible_person.id, notification_file: valid_attributes }
         }.to change(NotificationFile, :count).by(1)
