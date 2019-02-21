@@ -1,0 +1,28 @@
+.govuk-grid-row
+  .govuk-grid-column-one-third
+    = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      p.govuk-caption-xl
+        = @investigation.pretty_description
+      | Preview your alert
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    table
+      tbody
+        tr
+          th From
+          td
+            | The Office of Product Safety and Standards
+        tr
+          th To
+          td
+            span.placeholder-no-brackets email address
+        tr.email-message-meta
+          th Subject
+          td
+            = @email_subject
+    .email-message-body
+      p.govuk-body = @email_content
