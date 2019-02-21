@@ -101,6 +101,12 @@ This is the URL for the website and is used for sending emails.
 
 This sets the server's encryption key. Generate a new value by running `rake secret` 
 
+    cf set-env cosmetics-web BASIC_AUTH_ENABLED true
+    cf set-env cosmetics-web BASIC_AUTH_USERNAME XXX
+    cf set-env cosmetics-web BASIC_AUTH_PASSWORD XXX
+
+This enables and sets the username and password for HTTP Basic Authentication.
+
     cf set-env cosmetics-web AWS_ACCESS_KEY_ID XXX
     cf set-env cosmetics-web AWS_SECRET_ACCESS_KEY XXX
     cf set-env cosmetics-web AWS_REGION XXX
