@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Shared::Web::Concerns::AuthenticationConcern
+  include HttpAuthConcern
 
   helper Shared::Web::Engine.helpers
 
