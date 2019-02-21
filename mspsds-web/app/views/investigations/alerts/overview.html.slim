@@ -1,0 +1,14 @@
+- content_for :page_title, "Alert trading standards"
+- content_for :after_header do
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        p.govuk-caption-xl
+          = @investigation.pretty_description
+        | XXXAlert Overview
+      p.govuk-body INFORMATION ABOUT THE ALERT SYSTEM
+      = link_to "Continue", next_wizard_path, class: "govuk-button", role: "button", draggable: false
