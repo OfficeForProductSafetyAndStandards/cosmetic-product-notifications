@@ -1,6 +1,6 @@
 # Cosmetics Background Worker
 
-This folder contains the configuration to setup the worker processes which support the (cosmetics website)[../cosmetics-web/README.md].
+This folder contains the configuration to setup the worker processes which support the (Cosmetics website)[../cosmetics-web/README.md].
 The codebase is shared with the website.
 
 
@@ -25,7 +25,7 @@ described in [the root README](../README.md#deployment).
 This assumes that you've run [the deployment from scratch steps for the Cosmetics website](../cosmetics-web/README.md#deployment-from-scratch).
 Running the following commands from the root directory will then setup the worker app.
 
-    NO_START=no-start ./cosmetics-worker/deploy.sh
+    NO_START=true ./cosmetics-worker/deploy.sh
 
 This provisions the app in Cloud Foundry.
 
@@ -42,10 +42,15 @@ This is the URL for the website and is used for sending emails.
     cf set-env cosmetics-worker AWS_REGION XXX
     cf set-env cosmetics-worker AWS_S3_BUCKET XXX
 
-See the S3 section [above](#s3) to get these values.
+See the S3 section in [the Cosmetics website README](../cosmetics-web/README.md#s3) to get these values.
 
     cf set-env cosmetics-worker NOTIFY_API_KEY XXX
 
 See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value.
+
+    cf set-env cosmetics-worker SENTRY_DSN XXX
+    cf set-env cosmetics-worker SENTRY_CURRENT_ENV [int|staging|prod]
+
+See the Sentry account section in [the root README](../README.md#sentry) to get this value.
 
 The app can then be started using `cf start cosmetics-worker`.

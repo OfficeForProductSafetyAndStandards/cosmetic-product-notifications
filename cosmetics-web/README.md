@@ -1,14 +1,15 @@
 # Cosmetics Website
 
-This folder contains the code for the Cosmetics website.
+This folder contains the configuration and code for the Cosmetics website.
 This folder also contains the code for the [background worker](../cosmetics-worker/README.md).
+
 
 ## Overview
 
 The site is written in [Ruby on Rails](https://rubyonrails.org/).
 
 We're using [Slim](http://slim-lang.com/) as our HTML templating language, 
-ES6 JavaScript and [Sass](https://sass-lang.com/) for styling transplied with webpack.
+ES6 JavaScript and [Sass](https://sass-lang.com/) for styling transpiled with webpack.
 
 
 ## Getting Setup
@@ -30,6 +31,7 @@ if there are new migrations:
 
     docker-compose exec cosmetics-web bin/rake db:migrate
 
+
 ## Tests
 
 You can run the tests with `docker-compose exec cosmetics-web bin/rspec`.
@@ -37,13 +39,14 @@ You can run the tests with `docker-compose exec cosmetics-web bin/rspec`.
 You can run the ruby linting with `docker-compose exec cosmetics-web bin/rubocop`.
 Running this with the `--auto-correct` flag set will cause rubocop to attempt to fix as many of the issues as it can.
 
-You can run the Slim linting with `docker-compose exec cosmetics-web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app/views`.
+You can run the Slim linting with `docker-compose exec cosmetics-web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app vendor`.
 
-You can run the Sass linting with `docker-compose exec cosmetics-web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/assets/stylesheets/**/*.scss'`.
+You can run the Sass linting with `docker-compose exec cosmetics-web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/**/*.scss' 'vendor/**/*.scss'`.
 
-You can run the JavaScript linting with `docker-compose exec cosmetics-web yarn eslint -c vendor/shared-web/.eslintrc.yml app/assets/javascripts`.
+You can run the JavaScript linting with `docker-compose exec cosmetics-web yarn eslint -c vendor/shared-web/.eslintrc.yml app config vendor`.
 
 You can run the security vulnerability static analysis with `bin/brakeman --no-pager`.
+
 
 ## Deployment
 
@@ -51,6 +54,10 @@ The website code is automatically deployed to the relevant environment by Travis
 CI as described in [the root README](../README.md#deployment).
 
 The int Cosmetics website is hosted [here](https://cosmetics-int.london.cloudapps.digital/).
+
+The staging Cosmetics website is hosted [here](https://cosmetics-staging.london.cloudapps.digital/).
+
+The production Cosmetics website is hosted [here](https://cosmetics-prod.london.cloudapps.digital/).
 
 
 ### Deployment from scratch
@@ -95,7 +102,7 @@ This configures rails to use the production database amongst other things.
 
     cf set-env cosmetics-web COSMETICS_HOST XXX
 
-This is the URL for the website and is used for sending emails.
+This is the URL for the website and is used for generating redirect links.
 
     cf set-env cosmetics-web SECRET_KEY_BASE XXX
 
@@ -107,6 +114,11 @@ This sets the server's encryption key. Generate a new value by running `rake sec
     cf set-env cosmetics-web AWS_S3_BUCKET XXX
 
 See the S3 section [above](#s3) to get these values.
+
+    cf set-env cosmetics-web SENTRY_DSN XXX
+    cf set-env cosmetics-web SENTRY_CURRENT_ENV [int|staging|prod]
+
+See the Sentry account section in [the root README](../README.md#sentry) to get this value.
 
 The app can then be started using `cf start cosmetics-web`.
 
