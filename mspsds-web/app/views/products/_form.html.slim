@@ -8,7 +8,7 @@ fieldset.govuk-fieldset
       span#report-product-category-hint.govuk-hint
         | The high-level category (for reporting purposes)
     - error_message = product.errors[:category].first
-    = render "autocomplete_select_component", options: product_categories, key: :product_category, form: form,
+    = render "form_components/autocomplete_select", options: product_categories, key: :product_category, form: form,
             show_all_values: true, aria_describedby: "report-product-category-hint", preface_html: preface_html,
             errorMessage: error_message.present? && { text: error_message }
 

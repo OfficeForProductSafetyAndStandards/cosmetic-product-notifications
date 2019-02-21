@@ -24,7 +24,7 @@
                 = form.label :hazard_type, "Hazard type", class: "govuk-label", for: "hazard-type-autocomplete"
                 span#hazard-type-category-picker.govuk-hint The primary danger the product presents
               - error_message_hazard = @investigation.errors[:hazard_type].first
-              = render "autocomplete_select_component", options: hazard_types, key: :hazard_type, form: form,
+              = render "form_components/autocomplete_select", options: hazard_types, key: :hazard_type, form: form,
                       show_all_values: true, aria_describedby: "hazard-type-category-hint", preface_html: preface_html,
                       errorMessage: error_message_hazard.present? && { text: error_message_hazard }
 

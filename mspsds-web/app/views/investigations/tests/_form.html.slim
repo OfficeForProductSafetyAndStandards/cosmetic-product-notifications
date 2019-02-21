@@ -22,7 +22,7 @@ fieldset.govuk-fieldset
               ' Only products already added to the case are listed.
               = link_to "Add a product", new_investigation_product_path(investigation)
           - error_message_product = test.errors[:product].first
-          = render "autocomplete_select_component", returned_value: :id, displayed_value: :name,
+          = render "form_components/autocomplete_select", returned_value: :id, displayed_value: :name,
                   options: investigation.products, key: :product_id, form: form, show_all_values: true,
                   preface_html: preface_html,
                   errorMessage: error_message_product.present? && { text: error_message_product }
@@ -33,7 +33,7 @@ fieldset.govuk-fieldset
     span.govuk-hint
       | Select the relevant legislation from the list.
   - error_message_legislation = test.errors[:legislation].first
-  = render "autocomplete_select_component", options: relevant_legislation, key: :legislation, form: form,
+  = render "form_components/autocomplete_select", options: relevant_legislation, key: :legislation, form: form,
           show_all_values: true, preface_html: preface_html,
           errorMessage: error_message_legislation.present? && { text: error_message_legislation }
 
