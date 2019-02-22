@@ -7,14 +7,12 @@ module Shared
 
       # Collect metadata from all of the other analyzers to add to the blob
       def metadata
-        collected_metadata = []
         Rails.application.config.document_analyzers.each do |analyzer_class|
           if analyzer_class.accept? @blob
             analyzer = analyzer_class.new @blob
-            collected_metadata.push(analyzer.metadata)
+            @blob.metadata.merge!(analyzer.metadata)
           end
         end
-        collected_metadata.reduce(:merge)
       end
     end
   end
