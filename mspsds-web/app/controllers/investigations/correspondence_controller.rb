@@ -1,7 +1,6 @@
 # This class serves as as a common base controller extended by the different types of correspondence
 class Investigations::CorrespondenceController < ApplicationController
   include FileConcern
-  include Pundit
   include Wicked::Wizard
   steps :context, :content, :confirmation
 

@@ -71,7 +71,7 @@ private
   def create_contact
     business = Business.find(params[:business_id])
     @contact = business.contacts.create(contact_params)
-    @contact.source = UserSource.new(user: current_user)
+    @contact.source = UserSource.new(user: User.current)
   end
 
     # Use callbacks to share common setup or constraints between actions.

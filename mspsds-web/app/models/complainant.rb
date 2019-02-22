@@ -1,5 +1,4 @@
 class Complainant < ApplicationRecord
-  include UserService
   belongs_to :investigation, optional: true
 
   validates :complainant_type, presence: { message: "Select complainant type" }
@@ -16,7 +15,7 @@ class Complainant < ApplicationRecord
   def can_be_displayed?
     return true if investigation.source&.is_a? ReportSource
     return true unless contains_personal_data?
-    return true if current_user.organisation == investigation&.source&.user&.organisation
+    return true if User.current.organisation == investigation&.source&.user&.organisation
 
     false
   end

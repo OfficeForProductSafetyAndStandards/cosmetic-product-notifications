@@ -117,14 +117,10 @@ private
   end
 
   def set_business
-    if params.include?(:business)
-      @business = Business.new business_step_params
-      defaults_on_primary_location @business if @business.locations.any?
-    else
-      @business = Business.new
-      @business.locations.build
-      @business.contacts.build
-    end
+    @business = Business.new business_step_params
+    @business.contacts.build unless @business.primary_contact
+    @business.locations.build unless @business.primary_location
+    defaults_on_primary_location @business
     next_business = session[:businesses].find { |entry| entry[:business].nil? }
     @business_type = next_business ? next_business[:type] : nil
   end
@@ -294,8 +290,14 @@ private
       business_entry = session[:businesses].find { |entry| entry[:type] == params.require(:business)[:business_type] }
       contact = @business.contacts.first
       location = @business.locations.first
-      business_entry[:contact] = contact.attributes if contact&.valid?
-      business_entry[:location] = location.attributes if location&.valid?
+      if contact.attributes.values.any?(&:present?)
+        business_entry[:contact] = contact.attributes if contact.valid?
+      end
+      # Defaults_on_primary_location adds a default value to the location name field but we don't want to consider this
+      # value when determining if the location form has been completed
+      if location.attributes.reject { |k, _| k == "name" }.values.any?(&:present?)
+        business_entry[:location] = location.attributes if location&.valid?
+      end
       business_entry[:business] = @business.attributes
     end
   end
@@ -342,14 +344,14 @@ private
 
   def file_valid?
     if @file_blob.nil?
-      @investigation.errors.add(:file, "must be provided")
+      @investigation.errors.add(:file, "Upload file")
     end
     metadata = get_attachment_metadata_params(:file)
     if metadata[:title].blank?
-      @investigation.errors.add(:title, "for the file must be provided")
+      @investigation.errors.add(:title, "Enter file title")
     end
     if metadata[:description].blank?
-      @investigation.errors.add(:description, "for the file must be provided")
+      @investigation.errors.add(:description, "Enter file description")
     end
     @investigation.errors.empty?
   end
@@ -389,15 +391,10 @@ private
     when :which_businesses
       validate_none_as_only_selection
       @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
-      @investigation.errors.add(:other_business, "type can't be blank") if no_other_business_type
+      @investigation.errors.add(:other_business, "Enter other business type") if no_other_business_type
     when :business
       if @business.errors.any? || @business.contacts_have_errors? || @business.locations_have_errors?
         return false
-      end
-    when :has_corrective_action
-      unless params.key? :further_corrective_action
-        @investigation.errors.add(:further_corrective_action,
-                                  "- select whether or not correction actions have been agreed or taken")
       end
     when :corrective_action
       return false if @corrective_action.errors.any?
@@ -409,7 +406,7 @@ private
 
   def validate_none_as_only_selection
     if @selected_businesses.include?("none") && @selected_businesses.length > 1
-      @investigation.errors.add(:none, "has to be the only option if selected")
+      @investigation.errors.add(:none, "Select none only if not selecting other businesses")
     end
   end
 
