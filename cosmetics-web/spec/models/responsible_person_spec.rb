@@ -12,48 +12,48 @@ RSpec.describe ResponsiblePerson, type: :model do
       responsible_person.account_type = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors.messages[:account_type].join).to include("can't be blank")
+      expect(responsible_person.errors.messages[:account_type]).to include("Account type can't be blank")
     end
 
     it "fails if a name is not specified" do
       responsible_person.name = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:name].join).to include("can't be blank")
+      expect(responsible_person.errors[:name]).to include("Name can't be blank")
     end
 
     it "fails if an email address is not specified" do
       responsible_person.email_address = nil
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:email_address].join).to include("can't be blank")
+      expect(responsible_person.errors[:email_address]).to include("Email address can't be blank")
     end
 
     it "fails if a phone number is not specified" do
       responsible_person.phone_number = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:phone_number].join).to include("can't be blank")
+      expect(responsible_person.errors[:phone_number]).to include("Phone number can't be blank")
     end
 
     it "fails if a street address is not specified" do
       responsible_person.address_line_1 = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:address_line_1].join).to include("can't be blank")
+      expect(responsible_person.errors[:address_line_1]).to include("Building and street can't be blank")
     end
 
     it "fails if a city is not specified" do
       responsible_person.city = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:city].join).to include("can't be blank")
+      expect(responsible_person.errors[:city]).to include("Town or city can't be blank")
     end
 
     it "fails if a postal code is not specified" do
       responsible_person.postal_code = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:postal_code].join).to include("can't be blank")
+      expect(responsible_person.errors[:postal_code]).to include("Postcode can't be blank")
     end
 
     it "fails if the email address is not unique" do
@@ -61,14 +61,14 @@ RSpec.describe ResponsiblePerson, type: :model do
       responsible_person.email_address = "duplicate@example.com"
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:email_address].join).to include("has already been taken")
+      expect(responsible_person.errors[:email_address]).to include("has already been taken")
     end
 
     it "fails if the email address format is invalid" do
       responsible_person.email_address = "invalid_format"
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:email_address].join).to include("is invalid")
+      expect(responsible_person.errors[:email_address]).to include("Email address is invalid")
     end
 
     it "succeeds if a Companies House number is not specified for individual account type" do
@@ -83,7 +83,7 @@ RSpec.describe ResponsiblePerson, type: :model do
       responsible_person.companies_house_number = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:companies_house_number].join).to include("can't be blank")
+      expect(responsible_person.errors[:companies_house_number]).to include("Companies House registration number can't be blank")
     end
 
     it "fails if the Companies House number is not unique for business account type" do
@@ -91,7 +91,7 @@ RSpec.describe ResponsiblePerson, type: :model do
       responsible_person = build(:business_responsible_person, companies_house_number: "12345678")
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:companies_house_number].join).to include("has already been taken")
+      expect(responsible_person.errors[:companies_house_number]).to include("has already been taken")
     end
   end
 end
