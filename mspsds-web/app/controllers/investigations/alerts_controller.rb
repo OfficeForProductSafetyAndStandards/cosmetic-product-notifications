@@ -7,7 +7,9 @@ class Investigations::AlertsController < ApplicationController
   before_action :set_default_description, only: %i[show update], if: -> { step == :compose }
   before_action :set_alert, only: %i[show update], if: -> { %i[compose preview].include? step }
   before_action :store_alert, only: :update, if: -> { step == :compose }
+
   def new
+    clear_session
     redirect_to wizard_path(steps.first)
   end
 
@@ -19,11 +21,16 @@ class Investigations::AlertsController < ApplicationController
     if alert_valid?
       redirect_to next_wizard_path
     else
+      @alert.errors.each {|e| p e}
       render_wizard
     end
   end
 
 private
+
+  def clear_session
+    session.delete(:alert)
+  end
 
   def alert_valid?
     @alert.valid?
@@ -47,10 +54,18 @@ private
   end
 
   def store_alert
-    session[:alert] = @alert
+    session[:alert] = @alert.attributes
   end
 
   def alert_params
+    alert_session_params.merge(alert_request_params).symbolize_keys
+  end
+
+  def alert_session_params
+    session[:alert] || {}
+  end
+
+  def alert_request_params
     return {} unless params.has_key? :alert
 
     params.require(:alert).permit(:summary, :description)
