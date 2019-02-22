@@ -20,6 +20,11 @@ Rails.application.routes.draw do
     end
     resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index]
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
+    resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[show index] do
+      collection do
+        get :resend_email
+      end
+    end
 
     collection do
       resources :account, controller: "responsible_persons/account_wizard", only: %i[show update] do
