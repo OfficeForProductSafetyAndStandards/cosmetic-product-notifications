@@ -1,0 +1,4 @@
+#config/cucumber.yml
+##YAML Template
+
+html_report: --format html --out cosmetics_automated_regression_test_report.html
