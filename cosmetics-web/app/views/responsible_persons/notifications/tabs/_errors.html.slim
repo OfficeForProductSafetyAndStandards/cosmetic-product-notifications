@@ -26,6 +26,7 @@
             td.govuk-table__cell
               = notification_file.upload_error_message
             td.govuk-table__cell
-              = link_to "Dismiss", responsible_person_notification_file_path(@responsible_person, notification_file),
-                      class: "govuk-link--no-visited-state", method: :delete
+              = form_with url: responsible_person_notification_file_path(@responsible_person, notification_file),
+                      method: :delete do |form|
+                = form.submit "Dismiss", class: "govuk-link--no-visited-state dismiss-link", role: "link"
     = will_paginate(@erroneous_notification_files, param_name: "errors", params: { anchor: "errors" })

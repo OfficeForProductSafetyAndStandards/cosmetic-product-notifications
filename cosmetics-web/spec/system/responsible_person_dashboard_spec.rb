@@ -80,12 +80,18 @@ RSpec.describe "Responsible person dashboard", type: :system do
     assert_text "Previous 1 2 Next"
   end
 
-  it "correctly dismisses all erroneous notifications" do
+  it "only dismisses all erroneous notifications for the current user" do
     create_list(:notification_file, 11, responsible_person: responsible_person_1, user: user_1,
-          upload_error: "uploaded_file_not_a_zip")
+                upload_error: "uploaded_file_not_a_zip")
+    responsible_person_1.add_user(user_2)
+    create_list(:notification_file, 11, responsible_person: responsible_person_1, user: user_2,
+                upload_error: "uploaded_file_not_a_zip")
     visit responsible_person_notifications_path(responsible_person_1)
     click_button "Dismiss all failed files"
-    assert_text "Errors (0)"
+    sign_out
+    sign_in as_user: user_2
+    visit responsible_person_notifications_path(responsible_person_1)
+    assert_text "Errors (11)"
   end
 
   it "correctly dismisses a single erroneous notification" do
