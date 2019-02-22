@@ -8,6 +8,9 @@
   @include govuk-responsive-margin(1, "bottom");
   @include govuk-responsive-padding(2);
 
+  margin-left: 0;
+  margin-right: 0;
+
   & a {
     &::before {
       content: " ";
@@ -94,7 +97,7 @@
 
 
 .mspsds-case-card {
-  @extend %mspsds-card
+  @extend %mspsds-card;
 }
 
 .mspsds-product-card {
