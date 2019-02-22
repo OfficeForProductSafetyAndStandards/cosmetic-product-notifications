@@ -6,16 +6,15 @@ class NotificationFile < ApplicationRecord
   validate :uploaded_file_is_zip?
   validate :uploaded_file_is_within_allowed_size?
 
-
   enum upload_error: {
-    uploaded_file_not_a_zip: "uploaded_file_not_a_zip",
-    unzipped_files_not_xml: "unzipped_files_not_xml",
-    unzipped_files_are_pdf: "unzipped_files_are_pdf",
-    file_flagged_as_virus: "file_flagged_as_virus",
-    file_size_too_big: "file_size_too_big",
-    notification_validation_error: "notification_validation_error",
-    notification_duplicated: "notification_duplicated",
-    unknown_error: "unknown_error"
+      uploaded_file_not_a_zip: "uploaded_file_not_a_zip",
+      unzipped_files_not_xml: "unzipped_files_not_xml",
+      unzipped_files_are_pdf: "unzipped_files_are_pdf",
+      file_flagged_as_virus: "file_flagged_as_virus",
+      file_size_too_big: "file_size_too_big",
+      notification_validation_error: "notification_validation_error",
+      notification_duplicated: "notification_duplicated",
+      unknown_error: "unknown_error"
   }
 
   @allowed_content_types = %w[application/zip application/x-zip-compressed].freeze

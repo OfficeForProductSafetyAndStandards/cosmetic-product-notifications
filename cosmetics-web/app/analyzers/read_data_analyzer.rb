@@ -8,13 +8,10 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
   end
 
   def self.accept?(given_blob)
-    return false unless given_blob.present? && given_blob.metadata["safe"] &&
-      NotificationFile.get_content_types.include?(given_blob.content_type)
+    return false unless given_blob.present? && given_blob.metadata["safe"]
 
-    # this analyzer only accepts notification files which are zip
     notification_file = get_notification_file_from_blob(given_blob)
-
-    notification_file.present?
+    notification_file.present? && notification_file.upload_error.blank?
   end
 
   def metadata
@@ -36,7 +33,7 @@ private
           notification_file.update(upload_error: :unzipped_files_not_xml)
         end
       else
-        @xml_info = CPNPExport.new(xml_file_content)
+        @xml_info = CpnpExport.new(xml_file_content)
 
         notification = ::Notification.new(product_name: @xml_info.product_name,
                                           cpnp_reference: @xml_info.cpnp_reference,

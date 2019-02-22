@@ -37,9 +37,10 @@ RSpec.describe "Upload a single file", type: :system do
   end
 
   it "shows an error when the uploaded file exceeds the file limit" do
+    allow(NotificationFile).to receive(:get_max_file_size).and_return(10)
     visit new_responsible_person_notification_file_path(responsible_person)
     page.attach_file('notification_file[uploaded_file]',
-                     Rails.root + 'spec/fixtures/testLargeZip.zip')
+                     Rails.root + 'spec/fixtures/testExportFile.zip')
     click_button "Upload"
     expect(page).to have_text("Uploaded file exceeds size limit")
   end
