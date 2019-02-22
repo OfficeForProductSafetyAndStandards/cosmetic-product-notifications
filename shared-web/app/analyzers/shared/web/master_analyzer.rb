@@ -13,6 +13,7 @@ module Shared
             @blob.metadata.merge!(analyzer.metadata)
           end
         end
+        @blob.metadata
       end
     end
   end

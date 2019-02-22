@@ -8,7 +8,8 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
   end
 
   def self.accept?(given_blob)
-    return false unless given_blob.present? && given_blob.metadata["safe"]
+    return false unless given_blob.present? && given_blob.metadata["safe"] &&
+        NotificationFile.get_content_types.include?(given_blob.content_type)
 
     # this analyzer only accepts notification files which are zip
     notification_file = get_notification_file_from_blob(given_blob)
@@ -22,31 +23,51 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
     {}
   end
 
-private
+  private
 
   def create_notification_from_file
     notification_file = self.class.get_notification_file_from_blob(blob)
 
     get_xml_file_content do |xml_file_content|
-      @xml_info = CPNPExport.new(xml_file_content)
-    end
+      if xml_file_content.blank?
+        if contains_pdf?
+          notification_file.update(upload_error: :unzipped_files_are_pdf)
+        else
+          notification_file.update(upload_error: :unzipped_files_not_xml)
+        end
+      else
+        @xml_info = CPNPExport.new(xml_file_content)
 
-    notification = ::Notification.new(product_name: @xml_info.product_name,
-                                       cpnp_reference: @xml_info.cpnp_reference,
-                                       cpnp_is_imported: @xml_info.is_imported,
-                                       cpnp_imported_country: @xml_info.imported_country,
-                                       shades: @xml_info.shades,
-                                       responsible_person: notification_file.responsible_person)
-    notification.notification_file_parsed!
-    notification.save
+        notification = ::Notification.new(product_name: @xml_info.product_name,
+                                          cpnp_reference: @xml_info.cpnp_reference,
+                                          cpnp_is_imported: @xml_info.is_imported,
+                                          cpnp_imported_country: @xml_info.imported_country,
+                                          shades: @xml_info.shades,
+                                          responsible_person: notification_file.responsible_person)
+        notification.notification_file_parsed!
+        notification.save
+      end
+    end
   end
 
   def get_xml_file_content
     download_blob_to_tempfile do |file|
-      Zip::File.open(file.path) do |zip_file|
-        zip_file.each do |entry|
+      Zip::File.open(file.path) do |zipped_files|
+        zipped_files.each do |entry|
           if entry.name&.match?(get_xml_file_name_regex)
             yield entry.get_input_stream.read
+          end
+        end
+      end
+    end
+  end
+
+  def contains_pdf?
+    download_blob_to_tempfile do |file|
+      Zip::File.open(file.path) do |zipped_files|
+        zipped_files.each do |entry|
+          if entry.name&.match?(/.*\.pdf/)
+            return true
           end
         end
       end
