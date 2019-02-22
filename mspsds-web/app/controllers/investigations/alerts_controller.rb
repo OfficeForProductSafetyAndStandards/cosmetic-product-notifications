@@ -28,6 +28,7 @@ class Investigations::AlertsController < ApplicationController
   end
 
   def create
+    @alert.source = UserSource.new(user: current_user)
     @alert.save
     redirect_to investigation_path(@investigation), notice: "Alert sent XXXX"
   end
