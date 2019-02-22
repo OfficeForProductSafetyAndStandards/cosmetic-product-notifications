@@ -98,7 +98,7 @@ RSpec.describe "Responsible person dashboard", type: :system do
     create(:notification_file, responsible_person: responsible_person_1, user: user_1,
            upload_error: "uploaded_file_not_a_zip")
     visit responsible_person_notifications_path(responsible_person_1)
-    click_link "Dismiss"
+    click_button "Dismiss"
     assert_text "Errors (0)"
   end
 end
