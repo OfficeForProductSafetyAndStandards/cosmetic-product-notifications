@@ -9,7 +9,7 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
 
   def self.accept?(given_blob)
     return false unless given_blob.present? && given_blob.metadata["safe"] &&
-        NotificationFile.get_content_types.include?(given_blob.content_type)
+      NotificationFile.get_content_types.include?(given_blob.content_type)
 
     # this analyzer only accepts notification files which are zip
     notification_file = get_notification_file_from_blob(given_blob)
@@ -23,7 +23,7 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
     {}
   end
 
-  private
+private
 
   def create_notification_from_file
     notification_file = self.class.get_notification_file_from_blob(blob)
