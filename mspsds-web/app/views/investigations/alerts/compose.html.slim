@@ -10,22 +10,22 @@
         p.govuk-caption-xl
           = @investigation.pretty_description
         | Compose new alert
-      = form_with model: @investigation, url: wizard_path, scope: :alert do |form|
+      = form_with model: @alert, url: wizard_path, scope: :alert do |form|
         fieldset.govuk-fieldset
-          .govuk-form-group class=["govuk-!-width-full" + (@investigation.errors[:product_type].any? ? "govuk-form-group--error" : "")]
-            = form.label :email_subject, "Alert summary",
+          .govuk-form-group class=["govuk-!-width-full" + (@alert.errors[:summary].any? ? "govuk-form-group--error" : "")]
+            = form.label :summary, "Alert summary",
                     class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-            span#alert-email_subject-hint.govuk-hint
+            span#alert-summary-hint.govuk-hint
               | This will be used in the email subject line
-            = form.text_field :email_subject, class: "govuk-input", aria_describedby: "alert-email_subject-hint"
+            = form.text_field :summary, class: "govuk-input", aria_describedby: "alert-email_subject-hint"
 
         fieldset.govuk-fieldset
-          .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:product_type].any?)]
-            = form.label :email_content, "Alert email content",
+          .govuk-form-group class=[("govuk-form-group--error" if @alert.errors[:description].any?)]
+            = form.label :description, "Alert email content",
                     class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-            span#alert-body-hint.govuk-hint
+            span#alert-description-hint.govuk-hint
               | Include a summary of the incident and what actions you would like people to take
             - default_text = "\n\n\nMore details can be found on the case page: #{investigation_url @investigation}"
-            = form.text_area :email_content, class: "govuk-textarea govuk-!-width-full", rows: 12, maxlength: 1000,
-                    aria_describedby: "alert-body-hint", value: default_text
+            = form.text_area :description, class: "govuk-textarea govuk-!-width-full", rows: 12, maxlength: 1000,
+                    aria_describedby: "alert-description-hint", value: default_text
         = form.submit "Preview alert", class: "govuk-button"
