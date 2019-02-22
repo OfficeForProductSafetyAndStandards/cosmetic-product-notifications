@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_164203) do
+ActiveRecord::Schema.define(version: 2019_02_22_165902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_164203) do
   end
 
   create_table "activities", id: :serial, force: :cascade do |t|
+    t.bigint "alert_id"
     t.text "body"
     t.bigint "business_id"
     t.bigint "correspondence_id"
@@ -229,6 +230,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_164203) do
     t.index ["product_id"], name: "index_tests_on_product_id"
   end
 
+  add_foreign_key "activities", "alerts"
   add_foreign_key "activities", "businesses"
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"
