@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_14_145420) do
+ActiveRecord::Schema.define(version: 2019_02_14_152945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 2019_02_14_145420) do
     t.datetime "updated_at", null: false
     t.bigint "notification_id"
     t.index ["notification_id"], name: "index_components_on_notification_id"
+  end
+
+  create_table "email_verification_keys", force: :cascade do |t|
+    t.string "key"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "responsible_person_id"
+    t.index ["responsible_person_id"], name: "index_email_verification_keys_on_responsible_person_id"
   end
 
   create_table "image_uploads", force: :cascade do |t|
@@ -99,10 +108,12 @@ ActiveRecord::Schema.define(version: 2019_02_14_145420) do
     t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_email_verified", default: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "components", "notifications"
+  add_foreign_key "email_verification_keys", "responsible_persons"
   add_foreign_key "image_uploads", "notifications"
   add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
