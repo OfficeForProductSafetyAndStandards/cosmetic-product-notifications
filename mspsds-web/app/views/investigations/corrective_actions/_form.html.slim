@@ -24,19 +24,16 @@ legend.govuk-fieldset__legend.govuk-fieldset__legend--l
                 disabled: true, class: "govuk-input govuk-!-width-two-thirds"
         = form.hidden_field :product_id, value: investigation.products.first.id
       - else
-        span.govuk-hint
-          ' Only products already added to the case are listed.
-        = form.collection_select :product_id, @investigation.products, :id, :name,
-                { include_blank: true }, class: "govuk-select", id: "product-picker"
+        = render "form_components/autocomplete_select", key: :product_id, form: form, show_all_values: true,
+                items: investigation.products.map { |product| [product.name, product.id] },
+                hint: { text: "Only products already added to the case are listed." }
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Under which legislation?
-  .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:legislation].any?)
-    span.govuk-hint
-      | Select the relevant legislation from the list, or enter a different one.
-    = form.select :legislation, relevant_legislation, { include_blank: true },
-            class: "govuk-select", id: "legislation-picker"
+  = render "form_components/autocomplete_select", items: relevant_legislation, key: :legislation, form: form,
+          show_all_values: true,
+          hint: { text: "Select the relevant legislation from the list, or enter a different one." }
 
 - if allow_business_linking
   fieldset.govuk-fieldset
@@ -47,12 +44,10 @@ fieldset.govuk-fieldset
         span.govuk-hint
           | There are no businesses associated with this case.
       - else
-        span.govuk-hint
-          ' Only businesses already added to the case are listed.
-        = form.collection_select :business_id, investigation.businesses, :id, :trading_name,
-                { include_blank: true,
-                        selected: investigation.businesses.size == 1 && investigation.businesses.first.id },
-                class: "govuk-select", id: "business-picker"
+        = render "form_components/autocomplete_select", key: :business_id, form: form, show_all_values: true,
+                items: investigation.businesses.map { |business| [business.trading_name, business.id] },
+                selected: (investigation.businesses.size == 1 && investigation.businesses.first.id),
+                hint: { text: "Only businesses already added to the case are listed." }
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l

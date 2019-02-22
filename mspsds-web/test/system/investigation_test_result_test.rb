@@ -122,8 +122,8 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
   end
 
   def fill_in_basic_details
-    fill_autocomplete "product-picker", with: @test.product.name
-    fill_autocomplete "legislation-picker", with: @test.legislation
+    fill_autocomplete "picker-product_id", with: @test.product.name
+    fill_autocomplete "picker-legislation", with: @test.legislation
     fill_in "test_details", with: @test.details
     fill_in "Day", with: @test.date.day
     fill_in "Month", with: @test.date.month

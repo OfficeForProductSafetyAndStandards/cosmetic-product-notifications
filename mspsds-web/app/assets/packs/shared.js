@@ -5,12 +5,8 @@ import GOVUKFrontend from 'govuk-frontend';
 import '../../../vendor/shared-web/app/assets/application/javascripts/location_picker';
 
 import '../application/javascripts/investigations/attachment_description';
-import '../application/javascripts/investigations/corrective_actions';
-import '../application/javascripts/investigations/legislation_picker';
 import '../application/javascripts/investigations/ts_investigations/which_businesses';
 import '../application/javascripts/autocomplete';
-import '../application/javascripts/creation_flow';
-import '../application/javascripts/investigations';
 
 
 // Images
