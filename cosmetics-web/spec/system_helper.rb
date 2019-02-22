@@ -40,3 +40,9 @@ end
 def fill_autocomplete(locator, with:)
   fill_in locator, with: "#{with}\n"
 end
+
+def stub_notify_mailer
+  result = double
+  allow(result).to receive(:deliver_later)
+  allow(NotifyMailer).to receive(:send_responsible_person_verification_email) { result }
+end
