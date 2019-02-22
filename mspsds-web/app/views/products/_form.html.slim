@@ -1,14 +1,12 @@
 - input_field_width = search ? "govuk-!-width-full" : "govuk-!-width-two-thirds"
 - text_field_width = search ? "govuk-!-width-full" : "govuk-!-width-one-half"
-
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:category].any?)]
-    = form.label :category, "Product category",
-            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    span#report-product-category-hint.govuk-hint
-      | The high-level category (for reporting purposes)
-    = form.select :category, product_categories, { include_blank: true },
-            class: "govuk-select", id: "product-category-picker", aria_describedby: "report-product-category-hint"
+    - label_class = "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    = render "form_components/autocomplete_select", items: product_categories, key: :category, form: form,
+            show_all_values: true, aria_describedby: "report-product-category-hint",
+            label: { text: "Product category", classes: label_class },
+            hint: { text: "The high-level category (for reporting purposes)" }
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:product_type].any?)]
@@ -48,7 +46,8 @@ fieldset.govuk-fieldset
 
 fieldset.govuk-fieldset
   .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:webpage].any?)]
-    = form.label :webpage, "Webpage", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+    = form.label :webpage, "Webpage",
+            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-webpage-hint.govuk-hint
       | A link to the manufacturer's page for this product, or a webpage where it can be bought
     = form.text_field :webpage, class: "govuk-input", aria_describedby: "report-product-webpage-hint"
