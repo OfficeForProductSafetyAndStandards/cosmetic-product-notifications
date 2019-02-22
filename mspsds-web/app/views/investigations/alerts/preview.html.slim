@@ -2,27 +2,31 @@
   .govuk-grid-column-one-third
     = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      p.govuk-caption-xl
-        = @investigation.pretty_description
-      | Preview your alert
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    table
-      tbody
-        tr
-          th From
-          td
-            | The Office of Product Safety and Standards
-        tr
-          th To
-          td
-            span.placeholder-no-brackets email address
-        tr.email-message-meta
-          th Subject
-          td
-            = @alert.summary
-    .email-message-body
-      p.govuk-body = @alert.description
+= form_with model: @alert, local: true, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        p.govuk-caption-xl
+          = @investigation.pretty_description
+        | Preview your alert
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      table
+        tbody
+          tr
+            th From
+            td
+              | The Office of Product Safety and Standards
+          tr
+            th To
+            td
+              span.placeholder-no-brackets email address
+          tr.email-message-meta
+            th Subject
+            td
+              = @alert.summary
+      .email-message-body
+        p.govuk-body = @alert.description
+
+  // TODO calculate number of people
+  = form.submit "Send to XXXX people", class: "govuk-button"
