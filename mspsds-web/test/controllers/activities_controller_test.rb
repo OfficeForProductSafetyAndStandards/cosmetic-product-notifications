@@ -33,6 +33,19 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to comment_investigation_activities_path(@investigation)
   end
 
+  test "adding a comment should trigger one round of notifications" do
+    user_two = User.find_by(last_name: "User_two")
+    @investigation.update(assignee: user_two)
+    prepare_notify_check(who_will_be_notified: [user_two])
+    post investigation_activities_path(@investigation), params: {
+      comment_activity: {
+        body: "Generic comment"
+      }
+    }
+
+    assert_equal @number_of_notifications, 1
+  end
+
   test "email should go to new email flow" do
     get new_investigation_activity_path(@investigation), params: {
       commit: "Continue",
@@ -103,5 +116,16 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_redirected_to new_investigation_business_path(@investigation)
+  end
+
+  def prepare_notify_check(who_will_be_notified: [])
+    result = ""
+    @number_of_notifications = 0
+    allow(result).to receive(:deliver_later)
+    allow(NotifyMailer).to receive(:updated_investigation) do |_id, user_name, _user_email, _text|
+      @number_of_notifications += 1
+      assert_includes who_will_be_notified.map(&:full_name), user_name
+      result
+    end
   end
 end

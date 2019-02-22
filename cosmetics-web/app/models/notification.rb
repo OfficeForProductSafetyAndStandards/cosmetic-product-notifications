@@ -62,10 +62,6 @@ class Notification < ApplicationRecord
   end
   # rubocop:enable Metrics/BlockLength
 
-  def import_country_for_display
-    country_from_code(import_country) || import_country
-  end
-
   def reference_number_for_display
     "UKCP-%08d" % reference_number
   end

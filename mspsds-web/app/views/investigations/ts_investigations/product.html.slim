@@ -1,13 +1,10 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
-span.govuk-caption-xl Report an unsafe or non-compliant product
-h1.govuk-heading-xl
-  | What product are you reporting?
-
 = form_with model: @product, url: wizard_path, method: :put, local: true do |form|
-  .govuk-grid-row
-    .govuk-grid-column-full
-      = render "form_validation_display", errors: @product.errors, model_name: "product"
+  = render "form_components/govuk_error_summary", form: form
+  h1.govuk-heading-xl
+    span.govuk-caption-xl Report an unsafe or non-compliant product
+    | What product are you reporting?
   .govuk-grid-row
     .govuk-grid-column-one-half
       = render "products/form", form: form, product: @product, countries: @countries, submit_text: "Continue",
