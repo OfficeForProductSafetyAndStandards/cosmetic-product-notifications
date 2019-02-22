@@ -23,6 +23,6 @@
         tr.email-message-meta
           th Subject
           td
-            = @email_subject
+            = @alert.summary
     .email-message-body
-      p.govuk-body = @email_content
+      p.govuk-body = @alert.description

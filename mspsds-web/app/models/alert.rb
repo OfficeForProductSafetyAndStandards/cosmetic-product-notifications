@@ -2,5 +2,7 @@ class Alert < ApplicationRecord
   include Searchable
   include Documentable
 
-  has_one :investigation
+  belongs_to :investigation
+
+  validates :summary, presence: true
 end
