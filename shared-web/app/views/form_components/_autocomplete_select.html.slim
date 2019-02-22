@@ -1,19 +1,14 @@
 ruby:
-  returned_value = local_assigns[:returned_value] || :itself
-  displayed_value = local_assigns[:displayed_value] || :itself
   id = local_assigns[:id] || "picker-#{key}"
   show_all_values = local_assigns[:show_all_values]
-  if form.object.errors
+  if form.object&.errors
      error_text = form.object.errors.full_messages_for(key).first.presence
      local_assigns[:errorMessage] ||= { text: error_text } if error_text
   end
   form_group_classes = [local_assigns.dig(:formGroup, :classes)]
   form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
   selected_value = local_assigns[:selected]
-  begin
-    selected_value ||= form.object.send(key)
-  rescue
-  end
+  selected_value ||= form.object.send(key) if form.object.respond_to?(key)
 
 .govuk-form-group class=form_group_classes
   - if local_assigns[:label]
@@ -24,18 +19,15 @@ ruby:
       = local_assigns[:hint][:html] || local_assigns[:hint][:text]
   - if local_assigns[:errorMessage].present?
     = render "components/govuk_error_message", **local_assigns[:errorMessage]
+  div class=("autocomplete-select-with-clear" if show_all_values)
+    = form.select key, items, { include_blank: true, selected: selected_value }, class: "govuk-select", id: id
 
-  div class=("autocomplete-select-with-remove" if show_all_values)
-    = form.collection_select key, items, returned_value, displayed_value,
-            { include_blank: true, selected: selected_value },
-            class: "govuk-select",
-            id: id
-
-  / We decided to only add clear button to autocomplete that shows all values, and hence the dropdown arrow
+  / The clear button is only needed when the select box is showing all values (and a dropdown arrow)
+  / See https://github.com/alphagov/accessible-autocomplete/issues/240#issuecomment-455859918 for more info
   - if show_all_values
-    button id="remove-#{id}" class="autocomplete__clear-button" type="button"
+    button id="clear-#{id}" class="autocomplete__clear-button" type="button"
       span#delete-hint.govuk-hint.govuk-visually-hidden
-        | Click this to remove currently selected value
+        | Click this to clear currently selected value
       svg viewbox="0 0 40 40" class="autocomplete__clear-button"
         path class="autocomplete__clear-icon" d="M 10,10 L 30,30 M 30,10 L 10,30"
   javascript:

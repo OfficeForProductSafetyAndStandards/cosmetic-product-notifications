@@ -37,7 +37,7 @@ function simpleAccessibleAutocomplete(id, autocompleteOptions) {
     // This adds ability to remove currently selected input by pressing on an X next to it
     // This is a work-around to
     // https://github.com/alphagov/accessible-autocomplete/issues/240
-    const removeButton = document.getElementById(`remove-${id}`);
+    const removeButton = document.getElementById(`clear-${id}`);
     if (removeButton) {
       const removeValue = () => {
         $enhancedElement.val('');
@@ -45,6 +45,7 @@ function simpleAccessibleAutocomplete(id, autocompleteOptions) {
         $(element).parent().find('select').val('');
       };
       removeButton.addEventListener('keypress', (e) => {
+        // Trigger on enter or space click only
         if (e.keyCode === 13 || e.keyCode === 32) {
           removeValue();
         }

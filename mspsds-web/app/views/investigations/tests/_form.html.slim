@@ -20,8 +20,8 @@ fieldset.govuk-fieldset
           - span_html = capture do
             ' Only products already added to the case are listed.
             = link_to "Add a product", new_investigation_product_path(investigation)
-          = render "form_components/autocomplete_select", returned_value: :id, displayed_value: :name,
-                  items: investigation.products, key: :product_id, form: form, show_all_values: true,
+          = render "form_components/autocomplete_select", key: :product_id, form: form, show_all_values: true,
+                  items: investigation.products.map { |product| [product.name, product.id] },
                   span: { html: span_html }
 
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
