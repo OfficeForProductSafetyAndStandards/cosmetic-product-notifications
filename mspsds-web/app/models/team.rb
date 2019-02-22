@@ -41,10 +41,6 @@ class Team < ActiveHash::Base
     organisation.name
   end
 
-  def display_name_without_restrictions
-    display_name(ignore_visibility_restrictions: true)
-  end
-
   def full_name
     display_name
   end

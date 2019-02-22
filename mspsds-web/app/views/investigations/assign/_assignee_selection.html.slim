@@ -1,6 +1,9 @@
+ruby:
+  ignore_restrictions = local_assigns[:ignore_restrictions]
+  actual_items = items.map { |item| [item.display_name(ignore_visibility_restrictions: ignore_restrictions), item.id] }
+
 .govuk-grid-row
   .govuk-grid-column-one-half
     = form.label key, "Assignee", class: "govuk-label"
     = render "form_components/autocomplete_select", key: key, show_all_values: local_assigns[:show_all_values],
-            items: items.map { |item| [item.send(display_method), item.id] }, form: form,
-            hint: { text: accessible_hint, classes: "govuk-visually-hidden" }
+            items: actual_items, form: form, hint: { text: accessible_hint, classes: "govuk-visually-hidden" }

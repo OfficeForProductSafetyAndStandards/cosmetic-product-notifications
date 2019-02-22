@@ -5,21 +5,19 @@
   - if User.current.teams.any?
     - someone_in_your_team = capture do
       = render "investigations/assign/assignee_selection", form: form, key: :select_team_member,
-              items: User.get_team_members(user: User.current), accessible_hint: "Name",
-              display_method: :display_name, show_all_values: true
+              items: User.get_team_members(user: User.current), accessible_hint: "Name", show_all_values: true
   - previously_assigned = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
-            items: investigation.past_assignees + investigation.past_teams,
-            accessible_hint: "Select previously assigned person or team",
-            display_method: :display_name_without_restrictions, show_all_values: true
+            items: investigation.past_assignees + investigation.past_teams, ignore_restrictions: true,
+            accessible_hint: "Select previously assigned person or team", show_all_values: true
   - other_teams = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_other_team,
-            items: Team.all, accessible_hint: "Other team name", display_method: :display_name_without_restrictions,
+            items: Team.all, accessible_hint: "Other team name", ignore_restrictions: true,
             show_all_values: true
 
   - someone_else = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_someone_else,
-            items: User.all, accessible_hint: "Name", display_method: :display_name
+            items: User.all, accessible_hint: "Name"
   ruby:
     items = investigation.important_assignable_people.map do |user|
       { text: user.display_name, value: user.id, checked: investigation.assignee == user }
