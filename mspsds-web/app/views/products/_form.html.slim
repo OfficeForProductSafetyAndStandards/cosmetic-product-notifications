@@ -1,8 +1,5 @@
-- input_field_width = search ? "govuk-!-width-full" : "govuk-!-width-two-thirds"
-- text_field_width = search ? "govuk-!-width-full" : "govuk-!-width-one-half"
-
 fieldset.govuk-fieldset
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:category].any?)]
+  .govuk-form-group class=("govuk-form-group--error" if product.errors[:category].any?)
     = form.label :category, "Product category",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-category-hint.govuk-hint
@@ -11,7 +8,7 @@ fieldset.govuk-fieldset
             class: "govuk-select", id: "product-category-picker", aria_describedby: "report-product-category-hint"
 
 fieldset.govuk-fieldset
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:product_type].any?)]
+  .govuk-form-group class=("govuk-form-group--error" if product.errors[:product_type].any?)
     = form.label :product_type, "Product type",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-type-hint.govuk-hint
@@ -21,7 +18,7 @@ fieldset.govuk-fieldset
     = form.text_field :product_type, class: "govuk-input", aria_describedby: "report-product-type-hint"
 
 fieldset.govuk-fieldset
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:name].any?)]
+  .govuk-form-group class=("govuk-form-group--error" if product.errors[:name].any?)
     = form.label :name, "Product name",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-name-hint.govuk-hint
@@ -31,7 +28,7 @@ fieldset.govuk-fieldset
     = form.text_field :name, class: "govuk-input", aria_describedby: "report-product-name-hint"
 
 fieldset.govuk-fieldset
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:product_code].any?)]
+  .govuk-form-group class=("govuk-form-group--error" if product.errors[:product_code].any?)
     = form.label :product_code, "Barcode (or serial number)",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-code-hint.govuk-hint
@@ -39,7 +36,7 @@ fieldset.govuk-fieldset
     = form.text_field :product_code, class: "govuk-input", aria_describedby: "report-product-code-hint"
 
 fieldset.govuk-fieldset
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:batch_number].any?)]
+  .govuk-form-group class=("govuk-form-group--error" if product.errors[:batch_number].any?)
     = form.label :batch_number, "Batch number",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-batch-number-hint.govuk-hint
@@ -47,21 +44,21 @@ fieldset.govuk-fieldset
     = form.text_field :batch_number, class: "govuk-input", aria_describedby: "report-batch-number-hint"
 
 fieldset.govuk-fieldset
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:webpage].any?)]
+  .govuk-form-group class=("govuk-form-group--error" if product.errors[:webpage].any?)
     = form.label :webpage, "Webpage", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-webpage-hint.govuk-hint
       | A link to the manufacturer's page for this product, or a webpage where it can be bought
     = form.text_field :webpage, class: "govuk-input", aria_describedby: "report-product-webpage-hint"
 
 fieldset.govuk-fieldset
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:country_of_origin].any?)]
+  .govuk-form-group class=("govuk-form-group--error" if product.errors[:country_of_origin].any?)
     = form.label :country_of_origin, "Country of origin",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     = form.select :country_of_origin, countries, { include_blank: "" },
             class: "govuk-select", id: "location-autocomplete"
 
 fieldset.govuk-fieldset
-  .govuk-form-group class=[text_field_width, ("govuk-form-group--error" if product.errors[:description].any?)]
+  .govuk-form-group class=("govuk-form-group--error" if product.errors[:description].any?)
     = form.label :description, "Description of product",
             class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
     span#report-product-description-hint.govuk-hint
@@ -69,5 +66,5 @@ fieldset.govuk-fieldset
     = form.text_area :description, class: "govuk-textarea", rows: 5, maxlength: 1000,
             aria_describedby: "report-product-description-hint"
 
-.govuk-form-group class=[input_field_width]
+.govuk-form-group
   = form.submit local_assigns[:submit_text] || "Save product", class: "govuk-button"

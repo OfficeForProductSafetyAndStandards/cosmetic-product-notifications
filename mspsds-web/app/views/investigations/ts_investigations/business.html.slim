@@ -1,9 +1,9 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
 = form_with model: @business, url: wizard_path, method: :put, local: true do |form|
-  = render "form_components/govuk_error_summary", form: form
   .govuk-grid-row
-    .govuk-grid-column-one-half
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl
         span.govuk-caption-xl Report an unsafe or non-compliant product
         = "#{@business_type.capitalize} details"

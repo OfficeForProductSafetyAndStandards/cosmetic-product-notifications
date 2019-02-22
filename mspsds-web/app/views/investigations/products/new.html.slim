@@ -3,10 +3,10 @@
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 .investigation-product-page
   = form_with model: @product, url: investigation_products_path(@investigation), local: true do |form|
-    = render "form_components/govuk_error_summary", form: form
-    = render "investigation_heading", investigation: @investigation
-    h2.govuk-heading-l
-      | Add product
     .govuk-grid-row
-      .govuk-grid-column-one-half
+      .govuk-grid-column-two-thirds-from-desktop
+        = render "form_components/govuk_error_summary", form: form
+        = render "investigation_heading", investigation: @investigation
+        h2.govuk-heading-l
+          | Add product
         = render "products/form", form: form, product: @product, countries: @countries, search: true
