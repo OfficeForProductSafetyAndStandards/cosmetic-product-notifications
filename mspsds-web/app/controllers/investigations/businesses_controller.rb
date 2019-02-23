@@ -10,6 +10,7 @@ class Investigations::BusinessesController < ApplicationController
   validates :name, presence: true
   before_action :set_investigation, only: %i[update new show remove unlink]
   before_action :set_business, only: %i[remove unlink]
+  before_action :set_countries, only: %i[show]
   before_action :set_business_locally, only: %i[update new show]
   before_action :store_business, only: %i[update]
   before_action :set_investigation_business
@@ -37,7 +38,6 @@ class Investigations::BusinessesController < ApplicationController
       @business = Business.new(business_params)
       if @business.valid?
         @business.save
-        p session[:relationship]
         @investigation.add_business(@business, session[:relationship])
         redirect_to_investigation_businesses_tab "Business was successfully created."
       end
@@ -65,6 +65,8 @@ private
 
   def set_business_locally
     @business = Business.new
+    @business.locations.build
+    @business.contacts.build
   end
 
   def store_business
