@@ -1,18 +1,24 @@
-.product {
-  :first-of-type {
-    border-top: none;
-  }
+.product-list {
+  padding-left: 0;
+}
 
-  :last-of-type {
-    border-bottom: none;
-  }
+.product {
 
   display: inline-block;
+  border-bottom: 1px solid $govuk-border-colour;
+  padding-bottom: 20px;
+
+  .product-title {
+    text-decoration: none;
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+  }
 
   .product-data {
     width: 65%;
     display: block;
-    float: left;
 
     dt {
       min-width: 220px;
