@@ -26,12 +26,12 @@ private
   def create_notification_from_file
     begin
       get_product_xml_file do |product_xml_file|
-        @xml_info = CpnpExport.new(product_xml_file)
-        notification = ::Notification.new(product_name: @xml_info.product_name,
-                                          cpnp_reference: @xml_info.cpnp_reference,
-                                          cpnp_is_imported: @xml_info.is_imported,
-                                          cpnp_imported_country: @xml_info.imported_country,
-                                          shades: @xml_info.shades,
+        cpnp_export_info = CpnpExport.new(product_xml_file)
+        notification = ::Notification.new(product_name: cpnp_export_info.product_name,
+                                          cpnp_reference: cpnp_export_info.cpnp_reference,
+                                          cpnp_is_imported: cpnp_export_info.is_imported,
+                                          cpnp_imported_country: cpnp_export_info.imported_country,
+                                          shades: cpnp_export_info.shades,
                                           responsible_person: @notification_file.responsible_person)
         notification.notification_file_parsed!
         notification.save
