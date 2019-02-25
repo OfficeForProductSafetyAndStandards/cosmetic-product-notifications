@@ -2,7 +2,7 @@
   .govuk-grid-column-two-thirds
     ul.product-list
       - @registered_notifications.each do |notification|
-        .product
+        li.product
           h3
             = link_to notification.product_name, "/", class: "govuk-link--no-visited-state product-title"
           .govuk-body-s.product-data
