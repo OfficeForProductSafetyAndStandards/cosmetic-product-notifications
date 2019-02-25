@@ -6,8 +6,8 @@ class Test < ApplicationRecord
 
   has_many_attached :documents
 
+  before_validation :trim_end_line
   validates :legislation, presence: { message: "Select the legislation that relates to this test" }
-
   validates_length_of :details, maximum: 1000
 
   def initialize(*args)
@@ -19,4 +19,12 @@ class Test < ApplicationRecord
   def pretty_name; end
 
   def requested?; end
+
+private
+
+  # Browsers treat end of line as one character when checking input length, but send it as \r\n, 2 characters
+  # To keep max length consistent we need to reverse that
+  def trim_end_line
+    self.details = details.gsub("\r\n", "\n") if self.details
+  end
 end

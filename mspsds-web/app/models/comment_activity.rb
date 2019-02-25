@@ -1,4 +1,5 @@
 class CommentActivity < Activity
+  before_validation :trim_end_line
   validates :body, presence: true
   validates_length_of :body, maximum: 1000
 
@@ -16,5 +17,13 @@ class CommentActivity < Activity
 
   def email_update_text
     "#{source&.show&.titleize} commented on the #{investigation.case_type}."
+  end
+
+private
+
+  # Browsers treat end of line as one character when checking input length, but send it as \r\n, 2 characters
+  # To keep max length consistent we need to reverse that
+  def trim_end_line
+    self.body = body.gsub("\r\n", "\n") if self.body
   end
 end
