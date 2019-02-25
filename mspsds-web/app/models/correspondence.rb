@@ -1,8 +1,10 @@
 class Correspondence < ApplicationRecord
   include DateConcern
+  include SanitizationHelper
   belongs_to :investigation, optional: true
 
-  before_validation :strip_whitespace, :trim_end_line
+  before_validation :strip_whitespace
+  before_validation { trim_line_endings(:details) }
 
   validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :context
   validates_presence_of :correspondence_date, on: :context
@@ -33,13 +35,5 @@ class Correspondence < ApplicationRecord
     return true if User.current.organisation == investigation&.source&.user&.organisation
 
     false
-  end
-
-private
-
-  # Browsers treat end of line as one character when checking input length, but send it as \r\n, 2 characters
-  # To keep max length consistent we need to reverse that
-  def trim_end_line
-    self.details.gsub!("\r\n", "\n") if self.details
   end
 end

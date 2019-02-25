@@ -4,6 +4,7 @@ class Product < ApplicationRecord
   include Searchable
   include DateConcern
   include AttachmentConcern
+  include SanitizationHelper
 
   def get_date_key
     :date_placed_on_market
@@ -11,7 +12,7 @@ class Product < ApplicationRecord
 
   index_name [Rails.env, "products"].join("_")
 
-  before_validation :trim_end_line
+  before_validation { trim_line_endings(:description) }
   validates :name, presence: true
   validates :product_type, presence: true
   validates :category, presence: true
@@ -33,14 +34,6 @@ class Product < ApplicationRecord
 
   def pretty_description
     "Product #{id}"
-  end
-
-private
-
-  # Browsers treat end of line as one character when checking input length, but send it as \r\n, 2 characters
-  # To keep max length consistent we need to reverse that
-  def trim_end_line
-    self.description.gsub!("\r\n", "\n") if self.description
   end
 end
 

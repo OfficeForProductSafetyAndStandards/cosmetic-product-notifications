@@ -1,5 +1,6 @@
 class CorrectiveAction < ApplicationRecord
   include DateConcern
+  include SanitizationHelper
 
   attribute :related_file
 
@@ -13,7 +14,7 @@ class CorrectiveAction < ApplicationRecord
     :date_decided
   end
 
-  before_validation :trim_end_line
+  before_validation { trim_line_endings(:summary, :details) }
   validates :summary, presence: { message: "Enter a summary of the corrective action" }
   validates :date_decided, presence: { message: "Enter the date the corrective action was decided" }
   validate :date_decided_cannot_be_in_the_future
@@ -40,14 +41,5 @@ class CorrectiveAction < ApplicationRecord
     if related_file == "Yes" && documents.attachments.empty?
       errors.add(:base, :file_missing, message: "Provide a related file or select no")
     end
-  end
-
-private
-
-  # Browsers treat end of line as one character when checking input length, but send it as \r\n, 2 characters
-  # To keep max length consistent we need to reverse that
-  def trim_end_line
-    self.summary.gsub!("\r\n", "\n") if self.summary
-    self.details.gsub!("\r\n", "\n") if self.details
   end
 end

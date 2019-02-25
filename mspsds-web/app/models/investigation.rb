@@ -2,11 +2,12 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
   include AttachmentConcern
+  include SanitizationHelper
 
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
 
-  before_validation :trim_end_line
+  before_validation { trim_line_endings(:user_title, :description, :non_compliant_reason, :hazard_description) }
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
@@ -242,15 +243,6 @@ private
 
   def assign_current_user_to_case
     self.source = UserSource.new(user: User.current) if self.source.blank? && User.current
-  end
-
-  # Browsers treat end of line as one character when checking input length, but send it as \r\n, 2 characters
-  # To keep max length consistent we need to reverse that
-  def trim_end_line
-    self.user_title.gsub!("\r\n", "\n") if self.user_title
-    self.description.gsub!("\r\n", "\n") if self.description
-    self.non_compliant_reason.gsub!("\r\n", "\n") if self.non_compliant_reason
-    self.hazard_description.gsub!("\r\n", "\n") if self.hazard_description
   end
 end
 
