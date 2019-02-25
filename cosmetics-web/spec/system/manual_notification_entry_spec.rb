@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "Manually enter product details", type: :system do
+  let(:responsible_person) { create(:responsible_person) }
+
   before do
-    sign_in_as_member_of_responsible_person(create(:responsible_person))
     mock_antivirus_api
+    sign_in_as_member_of_responsible_person(responsible_person)
   end
 
   after do
@@ -12,7 +14,7 @@ RSpec.describe "Manually enter product details", type: :system do
   end
 
   it "allows user to complete notification" do
-    visit new_notification_path
+    visit new_responsible_person_notification_path(responsible_person)
 
     # add_product_name
     fill_in :notification_product_name, with: "Super Shampoo"
@@ -31,10 +33,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # add_product_image
-    attach_file(
-      :image_upload,
-      Rails.root + 'spec/fixtures/testImage.png'
-)
+    attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
 
     mark_images_as_safe
@@ -53,7 +52,7 @@ RSpec.describe "Manually enter product details", type: :system do
   end
 
   it "allows user to complete notification for imported cosmetics" do
-    visit new_notification_path
+    visit new_responsible_person_notification_path(responsible_person)
 
     # add_product_name
     fill_in :notification_product_name, with: "Super Shampoo"
@@ -76,10 +75,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # add_product_image
-    attach_file(
-      :image_upload,
-      Rails.root + 'spec/fixtures/testImage.png'
-)
+    attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
 
     mark_images_as_safe
@@ -99,7 +95,7 @@ RSpec.describe "Manually enter product details", type: :system do
   end
 
   it "allows user to complete notification for cosmetics with multiple shades" do
-    visit new_notification_path
+    visit new_responsible_person_notification_path(responsible_person)
 
     # add_product_name
     fill_in :notification_product_name, with: "Super Shampoo"
@@ -127,10 +123,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # add_product_image
-    attach_file(
-      :image_upload,
-      Rails.root + 'spec/fixtures/testImage.png'
-)
+    attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
 
     mark_images_as_safe

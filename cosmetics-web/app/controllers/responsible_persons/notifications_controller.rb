@@ -2,6 +2,7 @@ require 'will_paginate/array'
 
 class ResponsiblePersons::NotificationsController < ApplicationController
   before_action :set_responsible_person
+  before_action :set_notification, only: %i[edit confirmation]
 
   def index
     @pending_notification_files_count = 0
@@ -22,6 +23,27 @@ class ResponsiblePersons::NotificationsController < ApplicationController
     @registered_notifications = get_registered_notifications(10)
   end
 
+  def new
+    @notification = Notification.create(responsible_person: @responsible_person)
+    redirect_to new_notification_build_path(@notification)
+  end
+
+  # Check your answers page
+  def edit
+    if params[:submit_failed]
+      add_image_upload_errors
+    end
+  end
+
+  # Confirmation page
+  def confirmation
+    if @notification.may_submit_notification?
+      @notification.submit_notification!
+    elsif @notification.state != "notification_complete"
+      redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
+    end
+  end
+
 private
 
   def set_responsible_person
@@ -29,13 +51,29 @@ private
     authorize @responsible_person, :show?
   end
 
+  def set_notification
+    @notification = Notification.find_by reference_number: params[:reference_number]
+  end
+
   def get_unfinished_notifications(page_size)
-    @responsible_person.notifications.where(state: %i[notification_file_imported draft_complete])
-        .paginate(page: params[:unfinished], per_page: page_size)
+    @responsible_person.notifications
+      .where(state: %i[notification_file_imported draft_complete])
+      .paginate(page: params[:unfinished], per_page: page_size)
   end
 
   def get_registered_notifications(page_size)
-    @responsible_person.notifications.where(state: :notification_complete)
-        .paginate(page: params[:registered], per_page: page_size)
+    @responsible_person.notifications
+      .where(state: :notification_complete)
+      .paginate(page: params[:registered], per_page: page_size)
+  end
+
+  def add_image_upload_errors
+    if @notification.images_failed_anti_virus_check?
+      @notification.errors.add :image_uploads, "failed anti virus check"
+    end
+
+    if @notification.images_pending_anti_virus_check?
+      @notification.errors.add :image_uploads, "waiting for files to pass anti virus check. Refresh to update"
+    end
   end
 end
