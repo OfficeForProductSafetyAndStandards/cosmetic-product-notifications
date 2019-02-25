@@ -15,21 +15,21 @@
         .govuk-form-group
           .govuk-radios.govuk-radios--conditional data-module="radios"
             .govuk-radios__item
-              = form.radio_button :relationship, "Retailer", class: "govuk-radios__input"
-              = form.label :relationship, "Retailer", class: "govuk-label govuk-radios__label"
+              = form.radio_button :type, "Retailer", class: "govuk-radios__input"
+              = form.label :type, "Retailer", class: "govuk-label govuk-radios__label"
             .govuk-radios__item
-              = form.radio_button :relationship, "Distributor", class: "govuk-radios__input"
-              = form.label :relationship, "Distributor", class: "govuk-label govuk-radios__label"
+              = form.radio_button :type, "Distributor", class: "govuk-radios__input"
+              = form.label :type, "Distributor", class: "govuk-label govuk-radios__label"
             .govuk-radios__item
-              = form.radio_button :relationship, "Importer", class: "govuk-radios__input"
-              = form.label :relationship, "Importer", class: "govuk-label govuk-radios__label"
+              = form.radio_button :type, "Importer", class: "govuk-radios__input"
+              = form.label :type, "Importer", class: "govuk-label govuk-radios__label"
             .govuk-radios__item
-              = form.radio_button :relationship, "Manufacturer", class: "govuk-radios__input"
-              = form.label :relationship, "Manufacturer", class: "govuk-label govuk-radios__label"
+              = form.radio_button :type, "Manufacturer", class: "govuk-radios__input"
+              = form.label :type, "Manufacturer", class: "govuk-label govuk-radios__label"
             .govuk-radios__item
-              = form.radio_button :relationship, "Other", class: "govuk-radios__input",
+              = form.radio_button :type, "Other", class: "govuk-radios__input",
                   "data-aria-controls": "conditional-business-other-type"
-              = form.label :relationship, "Other", class: "govuk-label govuk-radios__label"
+              = form.label :type, "Other", class: "govuk-label govuk-radios__label"
             #conditional-business-other-type.govuk-radios__conditional.govuk-radios__conditional--hidden
-              = form.text_field :relationship_other, class: "govuk-input"
+              = form.text_field :type_other, class: "govuk-input"
         = form.submit "Continue", class: "govuk-button"
