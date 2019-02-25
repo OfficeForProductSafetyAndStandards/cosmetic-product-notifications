@@ -26,7 +26,7 @@ private
   # Browsers treat end of line as one character when checking input length, but send it as \r\n, 2 characters
   # To keep max length consistent we need to reverse that
   def trim_end_line
-    self.name = name.gsub("\r\n", "\n") if self.name
-    self.other_details = other_details.gsub("\r\n", "\n") if self.other_details
+    self.name.gsub!("\r\n", "\n") if self.name
+    self.other_details.gsub!("\r\n", "\n") if self.other_details
   end
 end
