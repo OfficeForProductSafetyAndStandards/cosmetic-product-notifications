@@ -2,10 +2,12 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
   include AttachmentConcern
+  include SanitizationHelper
 
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
 
+  before_validation { trim_line_endings(:user_title, :description, :non_compliant_reason, :hazard_description) }
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
@@ -14,9 +16,10 @@ class Investigation < ApplicationRecord
   validates :hazard_type, presence: true, on: :unsafe
   validates :non_compliant_reason, presence: true, on: :non_compliant
 
-  validates_length_of :user_title, maximum: 1000
-
-  validates_length_of :description, maximum: 1000
+  validates_length_of :user_title, maximum: 100
+  validates_length_of :description, maximum: 10000
+  validates_length_of :non_compliant_reason, maximum: 10000
+  validates_length_of :hazard_description, maximum: 10000
 
   after_save :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility

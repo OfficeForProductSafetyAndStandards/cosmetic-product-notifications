@@ -28,8 +28,8 @@
                         for: ":investigation_hazard_description"
                 span.govuk-hint id="allegation-hazard–detail-hint"
                   | Including any incidents or events that brought it to your attention
-                = form.text_area :hazard_description, class: "govuk-textarea",
-                        id: "allegation-hazard–detail", "aria-describedby": "allegation-hazard–detail-hint", rows: 5
+                = form.text_area :hazard_description, class: "govuk-textarea", id: "allegation-hazard–detail",
+                        "aria-describedby": "allegation-hazard–detail-hint", rows: 5, maxlength: 10000
 
           .govuk-checkboxes__item
             = form.check_box :non_compliant, class: "govuk-checkboxes__input", checked: @non_compliant,
@@ -43,5 +43,5 @@
                 = form.label :non_compliant_reason, "Details of non-compliance", class: "govuk-label",
                         for: ":investigation_non_compliant_reason"
                 = form.text_area :non_compliant_reason, class: "govuk-textarea", id: "allegation-compliance-detail",
-                        aria_describedby: "allegation-compliance-detail-hint", rows: "5"
+                        aria_describedby: "allegation-compliance-detail-hint", rows: "5", maxlength: 10000
       = form.submit "Continue", class: "govuk-button"

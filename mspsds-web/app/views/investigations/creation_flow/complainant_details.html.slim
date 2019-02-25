@@ -25,6 +25,6 @@
           span.govuk-hint#other-details-hint
             | Location, business/authority name, reference numbers, etc.
           = form.text_area :other_details, class: "govuk-textarea", "aria-describedby": "other-details-hint",
-                  rows: 5, maxlength: 1000
+                  rows: 5, maxlength: 10000
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

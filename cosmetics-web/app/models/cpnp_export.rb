@@ -1,4 +1,4 @@
-class CPNPExport
+class CpnpExport
   include ::Shared::Web::CountriesHelper
 
   def initialize(xml_file_content)

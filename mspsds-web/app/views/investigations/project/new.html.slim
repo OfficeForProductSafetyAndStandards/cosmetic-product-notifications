@@ -14,14 +14,14 @@
           span.govuk-hint#enquiry-title-hint
             | This will help other users identify this project
           = form.text_field :user_title, class: "govuk-input", "aria-describedby": "project-title-hint",
-                  maxlength: 1000
+                  maxlength: 100
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Project summary
         .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:description].any?)
           = form.text_area :description, class: "govuk-textarea", "aria-describedby": "project-description-hint",
-                  rows: 5, maxlength: 1000
+                  rows: 5, maxlength: 10000
 
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
