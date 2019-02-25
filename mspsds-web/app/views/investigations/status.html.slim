@@ -15,6 +15,6 @@
     .govuk-form-group
       span.govuk-hint
         | Why are you setting it to this status?
-      = form.text_area :status_rationale, class: "govuk-textarea govuk-!-width-two-thirds", rows: 5
+      = form.text_area :status_rationale, class: "govuk-textarea govuk-!-width-two-thirds", rows: 5, maxlength: 10000
   .govuk-form-group
     = form.submit "Save", class: "govuk-button"

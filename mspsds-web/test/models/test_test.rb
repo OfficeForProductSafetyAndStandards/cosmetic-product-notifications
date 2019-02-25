@@ -29,14 +29,14 @@ class TestTest < ActiveSupport::TestCase
     assert_not test_request.save, "expected test to fail validation"
   end
 
-  test "requires the details to be no longer than 1000 characters" do
-    more_than_1000_characters = "a" * 1001
-    exactly_1000_characters = "a" * 1000
+  test "requires the details to be no longer than 50000 characters" do
+    more_than_50000_characters = "a" * 50001
+    exactly_50000_characters = "a" * 50000
 
     test_request = create_valid_test_request
-    test_request.details = more_than_1000_characters
+    test_request.details = more_than_50000_characters
     assert_not test_request.save, "expected test to fail validation"
-    test_request.details = exactly_1000_characters
+    test_request.details = exactly_50000_characters
     assert test_request.save, "expected test to validate and save"
   end
 
