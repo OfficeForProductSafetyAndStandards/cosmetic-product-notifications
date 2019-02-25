@@ -183,6 +183,13 @@ See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
 See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
 
 
+## BrowserStack
+
+[![BrowserStack](https://user-images.githubusercontent.com/7760/34738829-7327ddc4-f561-11e7-97e2-2fe0474eaf05.png)](https://www.browserstack.com)
+
+We use [BrowserStack](https://www.browserstack.com) to test our service from a variety of different browsers and systems.
+
+
 ## Licence
 
 Unless stated otherwise, the codebase is released under the MIT License. This covers both the codebase and any sample code in the documentation.

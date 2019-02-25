@@ -24,5 +24,5 @@ fieldset.govuk-fieldset
             .govuk-form-group class=("govuk-form-group--error" if form.object.errors[:description].any?)
               = subform.label :description, class: "govuk-label"
                 | Description
-              = subform.text_area :description, class: "govuk-textarea", rows: 5, maxlength: 1000,
+              = subform.text_area :description, class: "govuk-textarea", rows: 5, maxlength: 10000,
                       value: @file_description

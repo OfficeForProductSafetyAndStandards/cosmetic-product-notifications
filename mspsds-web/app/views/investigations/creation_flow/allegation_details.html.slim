@@ -1,14 +1,12 @@
 - content_for :page_title, @page_title
 - content_for :after_header do
   = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
-
 = form_with model: @investigation, scope: :allegation, local: true, url: wizard_path, method: :put do |form|
   = render "form_components/govuk_error_summary", form: form
   h1.govuk-heading-xl
     = @page_title
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What is being alleged?
@@ -16,21 +14,19 @@
           span.govuk-hint#enquiry-description-hint
             | Please give as much detail as possible
           = form.text_area :description, class: "govuk-textarea", "aria-describedby": "enquiry-description-hint",
-                  rows: 5, maxlength: 1000
+                  rows: 5, maxlength: 10000
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Product Category
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:product_category].any?)
-          = form.select :product_category, product_categories, { include_blank: true },
-                  class: "govuk-select", id: "product-category-picker"
+        = render "form_components/autocomplete_select", items: product_categories, key: :product_category, form: form,
+                show_all_values: true
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Hazard Type
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:hazard_type].any?)
-          = form.select :hazard_type, hazard_types, { include_blank: true },
-                  class: "govuk-select", id: "hazard-type-picker"
+        = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
+                show_all_values: true
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l

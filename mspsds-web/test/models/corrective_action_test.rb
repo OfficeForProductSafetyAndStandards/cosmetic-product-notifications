@@ -26,25 +26,25 @@ class CorrectiveActionTest < ActiveSupport::TestCase
     assert_not corrective_action.save, "expected validation errors when saving the record"
   end
 
-  test "requires the summary to be no longer than 1000 characters" do
-    more_than_1000_characters = "a" * 1001
-    exactly_1000_characters = "a" * 1000
+  test "requires the summary to be no longer than 10000 characters" do
+    more_than_10000_characters = "a" * 10001
+    exactly_10000_characters = "a" * 10000
 
     corrective_action = create_valid_corrective_action
-    corrective_action.summary = more_than_1000_characters
+    corrective_action.summary = more_than_10000_characters
     assert_not corrective_action.save, "expected validation errors when saving the record"
-    corrective_action.summary = exactly_1000_characters
+    corrective_action.summary = exactly_10000_characters
     assert corrective_action.save, "unexpected validation errors encountered when saving the record"
   end
 
-  test "requires the details to be no longer than 1000 characters" do
-    more_than_1000_characters = "a" * 1001
-    exactly_1000_characters = "a" * 1000
+  test "requires the details to be no longer than 50000 characters" do
+    more_than_50000_characters = "a" * 50001
+    exactly_50000_characters = "a" * 50000
 
     corrective_action = create_valid_corrective_action
-    corrective_action.details = more_than_1000_characters
+    corrective_action.details = more_than_50000_characters
     assert_not corrective_action.save, "expected validation errors when saving the record"
-    corrective_action.details = exactly_1000_characters
+    corrective_action.details = exactly_50000_characters
     assert corrective_action.save, "unexpected validation errors encountered when saving the record"
   end
 
