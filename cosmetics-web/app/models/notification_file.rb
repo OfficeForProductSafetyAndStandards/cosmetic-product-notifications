@@ -14,6 +14,7 @@ class NotificationFile < ApplicationRecord
       file_size_too_big: "file_size_too_big",
       notification_validation_error: "notification_validation_error",
       notification_duplicated: "notification_duplicated",
+      product_file_not_found: "product_file_not_found",
       unknown_error: "unknown_error"
   }
 

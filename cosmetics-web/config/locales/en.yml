@@ -36,6 +36,7 @@ en:
           file_size_too_big: "Uploaded file exceeds size limit"
           notification_validation_error: "Unknown error"
           notification_duplicated: "A notification for this file already exists"
+          product_file_not_found: "Product file not found"
           unknown_error: "Unknown error"
   errors:
     format: "%{message}"
