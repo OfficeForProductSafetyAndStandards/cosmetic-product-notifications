@@ -1,12 +1,12 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      span.govuk-caption-xl Report an unsafe or non-compliant product
-      | Supply chain information
 = form_with model: @investigation, scope: :businesses, url: wizard_path, method: :put, local: true do |form|
-  = render "form_validation_display", errors: @investigation.errors, model_name: "investigation"
+  = render "form_components/govuk_error_summary", form: form
+  .govuk-grid-row#which-businesses-page
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        span.govuk-caption-xl Report an unsafe or non-compliant product
+        | Supply chain information
   .govuk-grid-row class="govuk-!-margin-bottom-3"
     .govuk-grid-column-one-half class="govuk-!-margin-bottom-9"
       fieldset.govuk-fieldset

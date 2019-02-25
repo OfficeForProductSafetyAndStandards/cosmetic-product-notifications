@@ -67,17 +67,18 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should set status" do
+    investigation = Investigation.create
     is_closed = true
-    investigation_status = lambda { Investigation.find(@investigation_one.id).is_closed }
+    investigation_status = lambda { Investigation.find(investigation.id).is_closed }
     assert_changes investigation_status, from: false, to: is_closed do
-      put status_investigation_url(@investigation_one), params: {
+      put status_investigation_url(investigation), params: {
           investigation: {
               is_closed: is_closed,
               status_rationale: "some rationale"
           }
       }
     end
-    assert_redirected_to investigation_url(@investigation_one)
+    assert_redirected_to investigation_url(investigation)
   end
 
   test "should require status to be open or closed" do
@@ -101,7 +102,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should update assignee from radio boxes" do
     put assign_investigation_url(@investigation_one), params: {
       investigation: {
-        assignable_id_radio: @assignee.id
+        assignable_id: @assignee.id
       }
     }
     assert_equal(Investigation.find(@investigation_one.id).assignable_id, @assignee.id)
@@ -241,7 +242,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "sort by filter should be defaulted to Updated: recent" do
     get investigations_path
-    assert response.body.index(@investigation_one.id.to_s) < response.body.index(@investigation_two.id.to_s)
+    assert response.body.index(@investigation_one.pretty_id.to_s) < response.body.index(@investigation_two.pretty_id.to_s)
   end
 
   test "should return the most recently updated investigation first if sort by 'Updated: recent' is selected" do
@@ -250,7 +251,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_closed: "unchecked",
         sort_by: "recent"
     }
-    assert response.body.index(@investigation_one.id.to_s) < response.body.index(@investigation_two.id.to_s)
+    assert response.body.index(@investigation_one.pretty_id.to_s) < response.body.index(@investigation_two.pretty_id.to_s)
   end
 
   test "should return the oldest updated investigation first if sort by 'Updated: oldest' is selected" do
@@ -259,7 +260,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_closed: "unchecked",
         sort_by: "oldest"
     }
-    assert response.body.index(@investigation_two.id.to_s) < response.body.index(@investigation_one.id.to_s)
+    assert response.body.index(@investigation_two.pretty_id.to_s) < response.body.index(@investigation_one.pretty_id.to_s)
   end
 
   test "should return the most recently created investigation first if sort by 'Created: newest' is selected" do
@@ -268,7 +269,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_closed: "unchecked",
         sort_by: "newest"
     }
-    assert response.body.index(@investigation_two.id.to_s) < response.body.index(@investigation_one.id.to_s)
+    assert response.body.index(@investigation_two.pretty_id.to_s) < response.body.index(@investigation_one.pretty_id.to_s)
   end
 
   test "should create excel file for list of investigations" do
@@ -290,8 +291,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
     logout
     sign_in_as_non_opss_user
-    get investigation_path(@new_investigation)
-    assert_not_includes(response.body, @new_investigation.pretty_id)
+    assert_raise(Pundit::NotAuthorizedError) {
+      get investigation_path(@new_investigation)
+    }
   end
 
   test "should show private investigations to creator" do

@@ -1,7 +1,6 @@
 class Investigations::BusinessesController < ApplicationController
   include ActiveModel::Validations
   include BusinessesHelper
-  include Pundit
   include Shared::Web::CountriesHelper
   include Wicked::Wizard
   skip_before_action :setup_wizard, only: %i[remove unlink]
@@ -125,7 +124,7 @@ private
   end
 
   def set_investigation
-    @investigation = Investigation.find(params[:investigation_id])
+    @investigation = Investigation.find_by!(pretty_id: params[:investigation_pretty_id])
     authorize @investigation, :show?
   end
 end

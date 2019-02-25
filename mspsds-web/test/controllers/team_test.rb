@@ -144,32 +144,27 @@ class TeamTest < ActionDispatch::IntegrationTest
 
   def prepare_assigned_cases
     investigation = Investigation.find_by(description: "Investigation one description")
-    investigation.assignee = @user_one
-    investigation.save
+    investigation.update(assignee: @user_one)
     @investigation_user_one = Investigation.find_by(description: "Investigation one description")
     assert_equal @investigation_user_one.assignee, @user_one
 
     investigation = Investigation.find_by(description: "Investigation two description")
-    investigation.assignee = @admin
-    investigation.save
+    investigation.update(assignee: @admin)
     @investigation_admin = Investigation.find_by(description: "Investigation two description")
     assert_equal @investigation_admin.assignee, @admin
 
     investigation = Investigation.find_by(description: "Investigation for search by correspondence")
-    investigation.assignee = @user_three
-    investigation.save
+    investigation.update(assignee: @user_three)
     @investigation_user_three = Investigation.find_by(description: "Investigation for search by correspondence")
     assert_equal @investigation_user_three.assignee, @user_three
 
     investigation = Investigation.find_by(description: "Investigation with no product")
-    investigation.assignee = all_teams[0]
-    investigation.save
+    investigation.update(assignee: all_teams[0])
     @investigation_team_one = Investigation.find_by(description: "Investigation with no product")
     assert_equal @investigation_team_one.assignee, all_teams[0]
 
     investigation = Investigation.find_by(description: "Investigation for search by product")
-    investigation.assignee = all_teams[2]
-    investigation.save
+    investigation.update(assignee: all_teams[2])
     @investigation_team_three = Investigation.find_by(description: "Investigation for search by product")
     assert_equal @investigation_team_three.assignee, all_teams[2]
   end

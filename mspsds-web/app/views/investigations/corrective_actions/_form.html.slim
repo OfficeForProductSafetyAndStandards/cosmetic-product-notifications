@@ -24,19 +24,16 @@ legend.govuk-fieldset__legend.govuk-fieldset__legend--l
                 disabled: true, class: "govuk-input govuk-!-width-two-thirds"
         = form.hidden_field :product_id, value: investigation.products.first.id
       - else
-        span.govuk-hint
-          ' Only products already added to the case are listed.
-        = form.collection_select :product_id, @investigation.products, :id, :name,
-                { include_blank: true }, class: "govuk-select", id: "product-picker"
+        = render "form_components/autocomplete_select", key: :product_id, form: form, show_all_values: true,
+                items: investigation.products.map { |product| [product.name, product.id] },
+                hint: { text: "Only products already added to the case are listed." }
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Under which legislation?
-  .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:legislation].any?)
-    span.govuk-hint
-      | Select the relevant legislation from the list, or enter a different one.
-    = form.select :legislation, relevant_legislation, { include_blank: true },
-            class: "govuk-select", id: "legislation-picker"
+  = render "form_components/autocomplete_select", items: relevant_legislation, key: :legislation, form: form,
+          show_all_values: true,
+          hint: { text: "Select the relevant legislation from the list, or enter a different one." }
 
 - if allow_business_linking
   fieldset.govuk-fieldset
@@ -47,34 +44,20 @@ fieldset.govuk-fieldset
         span.govuk-hint
           | There are no businesses associated with this case.
       - else
-        span.govuk-hint
-          ' Only businesses already added to the case are listed.
-        = form.collection_select :business_id, investigation.businesses, :id, :trading_name,
-                { include_blank: true,
-                selected: investigation.businesses.size == 1 && investigation.businesses.first.id },
-                class: "govuk-select", id: "business-picker"
+        = render "form_components/autocomplete_select", key: :business_id, form: form, show_all_values: true,
+                items: investigation.businesses.map { |business| [business.trading_name, business.id] },
+                selected: (investigation.businesses.size == 1 && investigation.businesses.first.id),
+                hint: { text: "Only businesses already added to the case are listed." }
 
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Further details
   .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:details].any?)
     = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
-
-fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | Are there any documents related to the action to upload?
-  .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:related_file].any?)
-    fieldset.govuk-fieldset
-      .govuk-radios.govuk-radios--conditional data-module="radios"
-        .govuk-radios__item
-          = form.radio_button :related_file, "Yes", class: "govuk-radios__input",
-                  "data-aria-controls": "conditional-related-file"
-          = form.label :related_file, "Yes", class: "govuk-label govuk-radios__label"
-        #conditional-related-file.govuk-radios__conditional.govuk-radios__conditional--hidden
-          = render "related_attachment_fields", form: form,
-            file_blob: file_blob, attachment_name: :file
-        .govuk-radios__item
-          = form.radio_button :related_file, "No", class: "govuk-radios__input",
-          "data-aria-controls": "conditional-no-related-file"
-          = form.label :related_file, "No", class: "govuk-label govuk-radios__label"
-br
+  - file_field = capture do
+    = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
+  = render "form_components/govuk_radios", form: form, key: :related_file,
+          fieldset: { legend: { text: "Are there any files related to the action?",
+                  classes: "govuk-fieldset__legend--l" } },
+          items: [{ text: "Yes", value: "Yes", conditional: { html: file_field } },
+                  { text: "No", value: "No" }]

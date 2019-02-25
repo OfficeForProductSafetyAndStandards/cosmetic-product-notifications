@@ -1,26 +1,26 @@
+- @unfinished_notifications.each do |notification|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .product
+        h2
+          = link_to notification.product_name, "/", class: "govuk-link--no-visited-state"
+        .govuk-body-s.product-data
+          dt
+            | UK cosmetic product number:
+          dd
+            = notification.reference_number_for_display
+          dt
+            | Your reference number:
+          dd
+            | 42962
+          dt
+            | EU reference number:
+          dd
+            = notification.cpnp_reference
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = link_to "Add formulation document and product image to finish registration", "/",
+              class: "govuk-link--no-visited-state"
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
-    .product
-      h2
-        = link_to "uploaded_file.zip", "/", class: "govuk-link--no-visited-state"
-      .govuk-body-s.product-data
-        dt
-          | UK cosmetic product number:
-        dd
-          | UKCP-78424
-        dt
-          | Your reference number:
-        dd
-          | 42962
-        dt
-          | First notified in EU:
-        dd
-          | 23/06/2017
-        dt
-          | EU reference number:
-        dd
-          | 31869
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = link_to "Add formulation document and product image to finish registration", "/",
-            class: "govuk-link--no-visited-state"
+  .govuk-grid-column-full.pagination-links
+    = will_paginate(@unfinished_notifications, param_name: "unfinished", params: { anchor: "unfinished" })

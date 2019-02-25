@@ -2,20 +2,20 @@
 - content_for :page_title, page_title
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
-h1.govuk-heading-xl
-  span.govuk-caption-xl
-    = @investigation.pretty_description
-  = page_title
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_with model: @corrective_action, local: true, url: wizard_path, method: :put do |form|
-      = render "form_validation_display", errors: @corrective_action.errors, model_name: "action"
-      = render "investigations/corrective_actions/form", form: form,
-              corrective_action: @corrective_action,
-              investigation: @investigation,
-              file_blob: @file_blob,
-              allow_product_linking: true,
-              allow_business_linking: true
 
+= form_with model: @corrective_action, local: true, url: wizard_path, method: :put do |form|
+  = render "form_components/govuk_error_summary", form: form
+  h1.govuk-heading-xl
+    span.govuk-caption-xl
+      = @investigation.pretty_description
+    = page_title
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "investigations/corrective_actions/form", form: form,
+            corrective_action: @corrective_action,
+            investigation: @investigation,
+            file_blob: @file_blob,
+            allow_product_linking: true,
+            allow_business_linking: true
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

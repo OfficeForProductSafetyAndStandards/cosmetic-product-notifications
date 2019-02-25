@@ -42,7 +42,7 @@ To create a Keycloak database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
-    cf create-service postgres tiny-unencrypted-10.5 keycloak-database
+    cf create-service postgres small-10.5 keycloak-database
 
 
 #### Keycloak
@@ -114,8 +114,8 @@ Allow keycloak to redirect back to the app after login
 * Replace all `localhost` values with `https://mspsds-<<SPACE>>.london.cloudapps.digital/`
 
 Follow the steps in [the SMS autheticator README's Configuration section](
-./providers/sms-authenticator/README.md#Configuration) to enable SMS two factor authentication. Set the 2FA 
-code length to 6.
+https://github.com/UKGovernmentBEIS/keycloak-sms-authenticator-sns/blob/develop/README.md#Configuration) 
+to enable SMS two factor authentication. Set the 2FA code length to 6.
 
 ### Setup event logging
 Setup the system out event listener:

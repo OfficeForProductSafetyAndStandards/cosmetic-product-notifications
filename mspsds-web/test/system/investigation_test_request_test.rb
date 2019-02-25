@@ -18,8 +18,8 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
   test "cannot add test request without a date" do
     click_button "Continue"
 
-    assert_text "The following errors prevented this testing request from being saved"
-    assert_text "Date can't be blank"
+    assert_text "There is a problem"
+    assert_text "Enter date of the test request"
   end
 
   test "can add filled in test request to investigation" do
@@ -77,7 +77,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date must be a valid date")
+    assert_text("Enter a real date of the test request")
   end
 
   test "date with missing component shows an error" do
@@ -85,7 +85,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Date must specify a day, month and year")
+    assert_text("Enter date of the test request and include a day, month and year")
   end
 
   test "can add an attachment to the test request" do
@@ -119,8 +119,8 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
   end
 
   def fill_in_basic_details
-    fill_autocomplete "product-picker", with: @test.product.name
-    fill_autocomplete "legislation-picker", with: @test.legislation
+    fill_autocomplete "picker-product_id", with: @test.product.name
+    fill_autocomplete "picker-legislation", with: @test.legislation
     fill_in "test_details", with: @test.details
     fill_in "Day", with: @test.date.day
     fill_in "Month", with: @test.date.month

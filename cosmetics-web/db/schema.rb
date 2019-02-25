@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_05_094834) do
+ActiveRecord::Schema.define(version: 2019_02_14_152945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,12 +45,30 @@ ActiveRecord::Schema.define(version: 2019_02_05_094834) do
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
+  create_table "email_verification_keys", force: :cascade do |t|
+    t.string "key"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "responsible_person_id"
+    t.index ["responsible_person_id"], name: "index_email_verification_keys_on_responsible_person_id"
+  end
+
+  create_table "image_uploads", force: :cascade do |t|
+    t.string "filename"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "notification_id"
+    t.index ["notification_id"], name: "index_image_uploads_on_notification_id"
+  end
+
   create_table "notification_files", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
     t.string "user_id"
+    t.string "upload_error"
     t.index ["responsible_person_id"], name: "index_notification_files_on_responsible_person_id"
   end
 
@@ -61,6 +79,12 @@ ActiveRecord::Schema.define(version: 2019_02_05_094834) do
     t.datetime "updated_at", null: false
     t.string "import_country"
     t.bigint "responsible_person_id"
+    t.integer "reference_number"
+    t.string "cpnp_reference"
+    t.boolean "cpnp_is_imported"
+    t.string "cpnp_imported_country"
+    t.string "shades"
+    t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
   end
 
@@ -85,10 +109,13 @@ ActiveRecord::Schema.define(version: 2019_02_05_094834) do
     t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_email_verified", default: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "components", "notifications"
+  add_foreign_key "email_verification_keys", "responsible_persons"
+  add_foreign_key "image_uploads", "notifications"
   add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "responsible_person_users", "responsible_persons"

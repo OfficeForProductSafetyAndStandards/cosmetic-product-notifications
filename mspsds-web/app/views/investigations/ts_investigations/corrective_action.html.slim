@@ -1,13 +1,12 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
-span.govuk-caption-xl Report an unsafe or non-compliant product
-h1.govuk-heading-xl
-  | Record corrective action
-
-.govuk-grid-row
-  = form_with model: @corrective_action, url: wizard_path, method: :put, local: true do |form|
+= form_with model: @corrective_action, url: wizard_path, method: :put, local: true do |form|
+  = render "form_components/govuk_error_summary", form: form
+  h1.govuk-heading-xl
+    span.govuk-caption-xl Report an unsafe or non-compliant product
+    | Record corrective action
+  .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = render "form_validation_display", errors: @corrective_action.errors, model_name: "corrective_action"
       = render "investigations/corrective_actions/form", form: form,
               corrective_action: @corrective_action,
               investigation: @investigation,
@@ -17,20 +16,14 @@ h1.govuk-heading-xl
     .govuk-grid-column-full
       hr.govuk-section-break.govuk-section-break--visible
       div class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
-        .mspsds-input class="govuk-!-margin-bottom-5"
-          fieldset.govuk-fieldset
-            legend.govuk-fieldset__legend.govuk-fieldset__legend--l class="govuk-!-margin-bottom-1"
-              | Are there other actions to report?
-            .govuk-form-group.full-width{
-              class=("govuk-form-group--error" if @corrective_action.errors[:further_corrective_action].any?) }
-              .govuk-radios
-                .govuk-radios__item
-                  = radio_button "", :further_corrective_action, "Yes", class: "govuk-radios__input", value: "Yes",
-                          checked: @repeat_step == "Yes"
-                  = label :further_corrective_action, "Yes", class: "govuk-label govuk-radios__label", value: "Yes"
-                .govuk-radios__item
-                  = radio_button "", :further_corrective_action, "No", class: "govuk-radios__input", value: "No",
-                          checked: @repeat_step == "No"
-                  = label :further_corrective_action, "No", class: "govuk-label govuk-radios__label", value: "No"
+        - error_text = @corrective_action.errors.messages[:further_corrective_action].first
+        = render "components/govuk_radios",
+                name: :further_corrective_action,
+                errorMessage: error_text && { text: error_text },
+                fieldset: { legend: { text: "Are there other actions to report?",
+                        classes: "govuk-fieldset__legend--l" } },
+                items: [{ text: "Yes", value: "Yes", checked: @repeat_step == "Yes",
+                        id: "further_corrective_action_yes" },
+                        { text: "No", value: "No", checked: @repeat_step == "No", id: "further_corrective_action_no" }]
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

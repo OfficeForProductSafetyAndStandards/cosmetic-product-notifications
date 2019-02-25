@@ -2,12 +2,12 @@
 - content_for :after_header do
   = link_to "Back to list", businesses_path, class: "govuk-back-link"
 
-h1.govuk-heading-xl
-  | New business
-.govuk-grid-row
-  .govuk-grid-column-one-half
-    h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
-      | Business details
-    = form_with(model: @business, local: true, html: { autocomplete: :off }) do |form|
-      = render "form_validation_display", errors: @business.errors
+= form_with(model: @business, local: true, html: { autocomplete: :off }) do |form|
+  = render "form_components/govuk_error_summary", form: form
+  h1.govuk-heading-xl
+    | New business
+  .govuk-grid-row
+    .govuk-grid-column-one-half
+      h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+        | Business details
       = render "businesses/form", form: form, business: @business, countries: @countries

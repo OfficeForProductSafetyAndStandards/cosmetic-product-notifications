@@ -20,12 +20,6 @@ class KeycloakTest < ApplicationSystemTestCase
     assert_current_path products_path
   end
 
-  test "non-MSPSDS user is denied access" do
-    visit root_path
-    sign_in email: "non-mspsds@example.com", password: "password"
-    assert_text "Access denied"
-  end
-
   def sign_in(email:, password:)
     assert_selector "h1", text: "Sign in to Market Surveillance & Product Safety"
     fill_in "Email address", with: email

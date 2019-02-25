@@ -41,12 +41,12 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
   test "first step should require an option to be selected" do
     click_on "Continue"
-    assert_text "Complainant type can't be blank"
+    assert_text "Select complainant type"
   end
 
   test "first step should allow a complainant type to be selected" do
     select_complainant_type_and_continue
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "second step should be complainant details" do
@@ -68,14 +68,14 @@ class CreateAllegationTest < ApplicationSystemTestCase
     select_complainant_type_and_continue
     click_on "Continue"
 
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "second step should allow a valid email address" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
 
-    assert_no_text "prevented this complainant from being saved"
+    assert_no_text "There is a problem"
   end
 
   test "third step should be allegation details" do
@@ -197,8 +197,8 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
   def fill_allegation_details_and_continue
     fill_in "allegation[description]", with: @allegation.description
-    fill_autocomplete "hazard-type-picker", with: @allegation.hazard_type
-    fill_autocomplete "product-category-picker", with: @allegation.product_category
+    fill_autocomplete "picker-hazard_type", with: @allegation.hazard_type
+    fill_autocomplete "picker-product_category", with: @allegation.product_category
     click_on "Continue"
   end
 end

@@ -15,7 +15,7 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
         investigation.description,
         investigation.product_category,
         investigation.hazard_type,
-        investigation.assignee ? investigation.assignee.email : "Unassigned",
+        investigation.assignee ? investigation.assignee.display_name : "Unassigned",
         investigation.source&.show,
         complainant.present? ? (complainant.can_be_displayed? ? complainant&.name : "Restricted") : "",
         complainant.present? ? (complainant.can_be_displayed? ? complainant&.email_address : "Restricted") : "",

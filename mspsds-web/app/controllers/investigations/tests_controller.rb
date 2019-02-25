@@ -6,7 +6,6 @@ class Investigations::TestsController < ApplicationController
 
   include Wicked::Wizard
   steps :details, :confirmation
-  include Pundit
 
   before_action :set_investigation
   before_action :set_test, only: %i[show create update]
@@ -61,7 +60,7 @@ private
   end
 
   def store_test
-    session[:test] = @test.attributes if @test.valid?(step)
+    session[:test] = @test.attributes
   end
 
   def test_saved?
