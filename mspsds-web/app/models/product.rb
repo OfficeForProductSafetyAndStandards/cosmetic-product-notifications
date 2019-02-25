@@ -15,7 +15,7 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :product_type, presence: true
   validates :category, presence: true
-  validates_length_of :description, maximum: 1000
+  validates_length_of :description, maximum: 10000
 
   has_many_attached :documents
 

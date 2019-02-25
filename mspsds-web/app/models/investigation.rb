@@ -16,9 +16,9 @@ class Investigation < ApplicationRecord
   validates :non_compliant_reason, presence: true, on: :non_compliant
 
   validates_length_of :user_title, maximum: 100
-  validates_length_of :description, maximum: 1000
-  validates_length_of :non_compliant_reason, maximum: 1000
-  validates_length_of :hazard_description, maximum: 1000
+  validates_length_of :description, maximum: 10000
+  validates_length_of :non_compliant_reason, maximum: 10000
+  validates_length_of :hazard_description, maximum: 10000
 
   after_save :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility

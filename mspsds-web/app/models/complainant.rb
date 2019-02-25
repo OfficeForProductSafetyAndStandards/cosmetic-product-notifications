@@ -6,8 +6,8 @@ class Complainant < ApplicationRecord
   validates :investigation, presence: true, on: %i[create update]
   validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :complainant_details
 
-  validates_length_of :name, maximum: 1000
-  validates_length_of :other_details, maximum: 1000
+  validates_length_of :name, maximum: 100
+  validates_length_of :other_details, maximum: 10000
 
   def contains_personal_data?
     complainant_type == "Consumer"

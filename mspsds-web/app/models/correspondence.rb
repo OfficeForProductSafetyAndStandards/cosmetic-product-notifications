@@ -6,7 +6,7 @@ class Correspondence < ApplicationRecord
 
   validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :context
   validates_presence_of :correspondence_date, on: :context
-  validates_length_of :details, maximum: 1000
+  validates_length_of :details, maximum: 50000
 
   def get_date_key
     :correspondence_date

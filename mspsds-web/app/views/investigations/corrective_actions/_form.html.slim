@@ -53,7 +53,7 @@ fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Further details
   .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:details].any?)
-    = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
+    = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 50000
   - file_field = capture do
     = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
   = render "form_components/govuk_radios", form: form, key: :related_file,

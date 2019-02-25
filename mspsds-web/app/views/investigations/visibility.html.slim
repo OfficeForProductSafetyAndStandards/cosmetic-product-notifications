@@ -22,6 +22,7 @@
           span.govuk-hint
             | Visibility should only be restricted where there are legal privilege concerns that mean businesses under
             | investigation should not be exposed.
-          = form.text_area :visibility_rationale, class: "govuk-textarea govuk-!-width-two-thirds", rows: 5
+          = form.text_area :visibility_rationale, class: "govuk-textarea govuk-!-width-two-thirds", rows: 5,
+                  maxlength: 10000
       .govuk-form-group
         = form.submit "Save", class: "govuk-button"

@@ -21,8 +21,8 @@ class CorrectiveAction < ApplicationRecord
   validates :related_file, presence: { message: "Select whether you want to upload a related file" }
   validate :related_file_attachment_validation
 
-  validates_length_of :summary, maximum: 1000
-  validates_length_of :details, maximum: 1000
+  validates_length_of :summary, maximum: 10000
+  validates_length_of :details, maximum: 50000
 
   after_create :create_audit_activity
 

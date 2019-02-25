@@ -1,7 +1,7 @@
 class CommentActivity < Activity
   before_validation :trim_end_line
   validates :body, presence: true
-  validates_length_of :body, maximum: 1000
+  validates_length_of :body, maximum: 10000
 
   def title
     "Comment: #{source&.show&.titleize}"
