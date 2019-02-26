@@ -51,7 +51,7 @@ class AlertTest < ApplicationSystemTestCase
     result = ""
     @number_of_emails_sent = 0
     allow(result).to receive(:deliver_later)
-    allow(AlertMailer).to receive(:alert) do |_id, user_name, _user_email, _text|
+    allow(NotifyMailer).to receive(:alert) do |_id, _user_name, _user_email, _text|
       @number_of_emails_sent += 1
       result
     end

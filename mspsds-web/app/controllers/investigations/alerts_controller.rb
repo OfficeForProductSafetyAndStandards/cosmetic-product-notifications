@@ -20,9 +20,9 @@ class Investigations::AlertsController < ApplicationController
   def update
     if alert_valid?
       return create if step == steps.last
+
       redirect_to next_wizard_path
     else
-      @alert.errors.each {|e| p e}
       render_wizard
     end
   end
