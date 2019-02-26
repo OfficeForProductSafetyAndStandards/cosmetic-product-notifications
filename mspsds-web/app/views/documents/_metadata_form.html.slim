@@ -12,7 +12,7 @@
         .govuk-form-group
           = subform.label :title, "Document title", class: "govuk-label"
           = subform.text_field :title, value: document.metadata["title"], class: "govuk-input govuk-!-width-two-thirds"
-        = render "form_components/text_area", key: :description, form: subform, value: document.metadata["description"],
+        = render "form_components/govuk_textarea", key: :description, form: subform, value: document.metadata["description"],
                 label: { text: "Description" }
         .govuk-form-group
           .govuk-grid-row

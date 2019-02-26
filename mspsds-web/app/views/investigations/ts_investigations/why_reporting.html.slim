@@ -23,7 +23,7 @@
                       aria_describedby: "hazard-type-category-hint", label: { text: "Hazard type" }
 
             .govuk-form-group
-              = render "form_components/text_area", key: :hazard_description, form: form,
+              = render "form_components/govuk_textarea", key: :hazard_description, form: form,
                       label: { text: "Hazard details" },
                       hint: { text: "Including any incidents or events that brought it to your attention" }
 
@@ -34,6 +34,6 @@
             = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label"
           #conditional-report-report-type-2.govuk-checkboxes__conditional[
             class=("govuk-checkboxes__conditional--hidden" unless @non_compliant) ]
-            = render "form_components/text_area", key: :non_compliant_reason, form: form,
+            = render "form_components/govuk_textarea", key: :non_compliant_reason, form: form,
                     label: { text: "Details of non-compliance" }
       = form.submit "Continue", class: "govuk-button"

@@ -20,7 +20,7 @@
         .govuk-form-group class=("govuk-form-group--error" if @complainant.errors[:email_address].any?)
           = form.label :email_address, class: "govuk-label"
           = form.text_field :email_address, class: "govuk-input govuk-!-width-two-thirds", maxlength: 1000
-        = render "form_components/text_area", key: :other_details, form: form,
+        = render "form_components/govuk_textarea", key: :other_details, form: form,
                 label: { text: "Other details" },
                 hint: { text: "Location, business/authority name, reference numbers, etc." }
       .govuk-form-group

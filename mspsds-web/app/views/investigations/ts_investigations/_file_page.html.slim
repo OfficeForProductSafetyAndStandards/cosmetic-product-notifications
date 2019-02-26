@@ -21,6 +21,6 @@ fieldset.govuk-fieldset
               = subform.label :title, class: "govuk-label"
                 | Title
               = subform.text_field :title, class: "govuk-input govuk-!-width-two-thirds", value: @file_title
-            = render "form_components/text_area", key: :description, form: subform, value: @file_description,
+            = render "form_components/govuk_textarea", key: :description, form: subform, value: @file_description,
                     label: { text: "Description" },
                     hint: { text: "For example, 'Orange, 4 socket extension lead'" }

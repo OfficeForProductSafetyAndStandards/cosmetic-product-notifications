@@ -11,5 +11,5 @@
         = @investigation.pretty_description
       | Add comment
     = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|
-      = render "form_components/text_area", key: :body, form: form, classes: "govuk-!-width-full"
+      = render "form_components/govuk_textarea", key: :body, form: form, classes: "govuk-!-width-full"
       = form.submit "Continue", class: "govuk-button"

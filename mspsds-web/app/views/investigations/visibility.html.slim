@@ -20,7 +20,7 @@
           | Comment / rationale
         - hint_text = "Visibility should only be restricted where there are legal privilege concerns that mean "
         - hint_text += "businesses under investigation should not be exposed."
-        = render "form_components/text_area", key: :visibility_rationale, form: form,
+        = render "form_components/govuk_textarea", key: :visibility_rationale, form: form,
                 classes: "govuk-!-width-two-thirds",
                 hint: { text: hint_text }
       .govuk-form-group

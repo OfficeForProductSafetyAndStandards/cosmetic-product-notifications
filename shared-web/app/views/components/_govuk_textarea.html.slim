@@ -4,7 +4,7 @@
 ruby:
   described_by = ""
   has_hint = local_assigns[:hint].present?
-  has_hint = has_hint && (local_assigns[:hint][:text].present? || local_assigns[:hint][:html].present?) if has_hint
+  has_hint = local_assigns[:hint][:text].present? || local_assigns[:hint][:html].present? if has_hint
   has_error = local_assigns[:errorMessage].present?
   rows = local_assigns[:rows] || 5
 
@@ -14,7 +14,7 @@ ruby:
   area_classes.push("govuk-textarea--error") if local_assigns[:errorMessage].present?
 
 .govuk-form-group class=form_group_classes id=local_assigns[:group_id]
-  = render "components/govuk_label", for: local_assigns[:id], **local_assigns[:label]
+  = render "components/govuk_label", for: id, **label
 
   - if has_hint
     - hint_id = local_assigns[:id] + '-hint'
@@ -28,9 +28,9 @@ ruby:
 
   textarea[*(local_assigns[:attributes] || {})
                 class=area_classes
-                id=local_assigns[:id]
+                id=id
                 rows=rows
-                name=local_assigns[:name]
+                name=name
                 maxlength=local_assigns[:max_length]
                 aria-describedby=described_by
                 autocomplete=local_assigns[:autocomplete]]

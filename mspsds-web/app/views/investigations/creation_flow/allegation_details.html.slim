@@ -12,7 +12,7 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What is being alleged?
-        = render "form_components/text_area", key: :description, form: form,
+        = render "form_components/govuk_textarea", key: :description, form: form,
                 hint: { text: "Please give as much detail as possible" }
 
       fieldset.govuk-fieldset
