@@ -25,13 +25,11 @@
                       aria_describedby: "hazard-type-category-hint", label: { text: "Hazard type" }
 
             .govuk-form-group
-              .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:hazard_description].any?)]
-                = form.label :hazard_description, "Hazard details", class: "govuk-label",
-                        for: ":investigation_hazard_description"
-                span.govuk-hint id="allegation-hazard–detail-hint"
-                  | Including any incidents or events that brought it to your attention
-                = form.text_area :hazard_description, class: "govuk-textarea", id: "allegation-hazard–detail",
-                        "aria-describedby": "allegation-hazard–detail-hint", rows: 5, maxlength: 10000
+              - label_classes = "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+              = render "form_components/text_area", key: :hazard_description, form: form, max_length: 10000,
+                      describedBy: "allegation-hazard–detail-hint",
+                      label: { text: "Hazard details", classes: label_classes },
+                      hint: { text: "Including any incidents or events that brought it to your attention" }
 
           .govuk-checkboxes__item
             = form.check_box :non_compliant, class: "govuk-checkboxes__input", checked: @non_compliant,
@@ -40,11 +38,7 @@
             = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label"
           #conditional-report-report-type-2.govuk-checkboxes__conditional[
             class=("govuk-checkboxes__conditional--hidden" unless @non_compliant) ]
-            .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:non_compliant_reason].any?)]
-              .govuk-form-group
-                = form.label :non_compliant_reason, "Details of non-compliance", class: "govuk-label",
-                        for: ":investigation_non_compliant_reason"
-                = form.text_area :non_compliant_reason, class: "govuk-textarea",
-                        id: "allegation-compliance-detail", aria_describedby: "allegation-compliance-detail-hint",
-                        rows: "5", maxlength: 10000
+            = render "form_components/text_area", key: :non_compliant_reason, form: form, max_length: 10000,
+                    describedBy: "allegation-compliance-detail-hint",
+                    label: { text: "Details of non-compliance" }
   = form.submit "Continue", class: "govuk-button"

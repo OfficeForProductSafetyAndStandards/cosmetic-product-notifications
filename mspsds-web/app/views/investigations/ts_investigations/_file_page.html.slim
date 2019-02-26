@@ -21,8 +21,7 @@ fieldset.govuk-fieldset
               = subform.label :title, class: "govuk-label"
                 | Title
               = subform.text_field :title, class: "govuk-input govuk-!-width-two-thirds", value: @file_title
-            .govuk-form-group class=("govuk-form-group--error" if form.object.errors[:description].any?)
-              = subform.label :description, class: "govuk-label"
-                | Description
-              = subform.text_area :description, class: "govuk-textarea", rows: 5, maxlength: 10000,
-                      value: @file_description
+            = render "form_components/text_area", key: :description, form: subform, max_length: 10000,
+                    describedBy: "report-product-description-hint", value: @file_description,
+                    label: { text: "Description" },
+                    hint: { text: "For example, 'Orange, 4 socket extension lead'" }

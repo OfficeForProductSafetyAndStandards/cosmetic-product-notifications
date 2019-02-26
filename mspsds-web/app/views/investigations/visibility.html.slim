@@ -18,11 +18,10 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Comment / rationale
-        .govuk-form-group
-          span.govuk-hint
-            | Visibility should only be restricted where there are legal privilege concerns that mean businesses under
-            | investigation should not be exposed.
-          = form.text_area :visibility_rationale, class: "govuk-textarea govuk-!-width-two-thirds", rows: 5,
-                  maxlength: 10000
+        - hint_text = "Visibility should only be restricted where there are legal privilege concerns that mean "
+        - hint_text += "businesses under investigation should not be exposed."
+        = render "form_components/text_area", key: :visibility_rationale, form: form, max_length: 10000,
+                classes: "govuk-!-width-two-thirds",
+                hint: { text: hint_text }
       .govuk-form-group
         = form.submit "Save", class: "govuk-button"

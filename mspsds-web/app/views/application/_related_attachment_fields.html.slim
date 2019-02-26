@@ -11,7 +11,6 @@ fieldset.govuk-fieldset
       - if file_blob.blank?
         .govuk-form-group
           = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
-      #attachment-description.govuk-form-group
-          = subform.label :description, "Attachment description", class: "govuk-label"
-          = subform.text_area :description, value: file_blob&.metadata&.dig(:description),
-                class: "govuk-textarea", rows: 5, maxlength: 10000
+      = render "form_components/text_area", key: :description, value: file_blob&.metadata&.dig(:description),
+              form: subform, label: { text: "Attachment description" },
+              group_id: "attachment-description"

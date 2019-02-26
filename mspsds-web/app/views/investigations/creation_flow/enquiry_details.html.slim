@@ -11,11 +11,9 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What is the enquiry?
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:description].any?)
-          span.govuk-hint#enquiry-description-hint
-            | Please give as much detail as possible
-          = form.text_area :description, class: "govuk-textarea", "aria-describedby": "enquiry-description-hint",
-                  rows: 5, maxlength: 10000
+        = render "form_components/text_area", key: :description, form: form, max_length: 10000,
+                describedBy: "enquiry-description-hint",
+                hint: { text: "Please give as much detail as possible" }
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
