@@ -1,22 +1,19 @@
+/ This partial acts as glue between rails form helpers and the component textarea
+/ With access to the form object, we can infer a lot of information from it
+
 ruby:
+  # Infer name and id_prefix from attribute key
+  local_assigns[:name] ||= get_attribute_name(form, key)
+  local_assigns[:id] ||= get_attribute_id_prefix(form, key)
+  local_assigns[:value] ||= form.object.send(key) if form.object.respond_to?(key)
+  local_assigns[:max_length] ||= 10000
+  local_assigns[:label][:classes] ||= "govuk-label" if local_assigns[:label].present?
+  # TODO: govuk component seems to require label, but we don't always define it. Perhaps we should?
+  # Need to discuss with a designer, this prevents crashes for now
+  local_assigns[:label] = { text: "" } if local_assigns[:label].blank?
   if form.object&.errors
     error_text = form.object.errors.full_messages_for(key).first.presence
     local_assigns[:errorMessage] ||= { text: error_text } if error_text
   end
-  form_group_classes = [local_assigns.dig(:formGroup, :classes)]
-  form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
-  max_length = local_assigns[:max_length] || 10000
-  value = local_assigns[:value]
-  value ||= form.object.send(key) if form.object.respond_to?(key)
 
-.govuk-form-group class=form_group_classes id=local_assigns[:group_id]
-  - if local_assigns[:label]
-    = form.label key, local_assigns[:label][:html] || local_assigns[:label][:text],
-            class: local_assigns[:label][:classes] || "govuk-label"
-  - if local_assigns[:hint]
-    span.govuk-hint class=local_assigns[:hint][:classes]
-      = local_assigns[:hint][:html] || local_assigns[:hint][:text]
-  - if local_assigns[:errorMessage].present?
-    = render "components/govuk_error_message", **local_assigns[:errorMessage]
-  = form.text_area key, class: "govuk-textarea", "aria-describedby": local_assigns[:describedBy] || key,
-          rows: 5, maxlength: max_length, value: value
+= render "components/govuk_textarea", **local_assigns
