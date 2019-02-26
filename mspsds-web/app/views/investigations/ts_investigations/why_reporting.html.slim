@@ -1,16 +1,14 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
 = form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
-  = render "form_components/govuk_error_summary", form: form
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl
         span.govuk-caption-xl Report an unsafe or non-compliant product
         | Why are you reporting this product?
       span.govuk-hint
         | Select all that apply
-  .govuk-grid-row class="govuk-!-margin-bottom-3"
-    .govuk-grid-column-two-thirds
       .govuk-form-group
         .govuk-checkboxes data-module="checkboxes"
           .govuk-checkboxes__item
@@ -41,4 +39,4 @@
             = render "form_components/text_area", key: :non_compliant_reason, form: form, max_length: 10000,
                     describedBy: "allegation-compliance-detail-hint",
                     label: { text: "Details of non-compliance" }
-  = form.submit "Continue", class: "govuk-button"
+      = form.submit "Continue", class: "govuk-button"

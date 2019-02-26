@@ -2,18 +2,20 @@
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = form_with(model: @investigation, method: :put, url: status_investigation_url(@investigation)) do |form|
-  = render "form_components/govuk_error_summary", form: form
-  = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
-  h2.govuk-heading-l
-    = "#{@investigation.case_type.titleize} status"
-  = render "form_components/govuk_radios", form: form, key: :is_closed,
-          fieldset: { legend: { text: "Status" } },
-          items: [{ text: "Open", value: "false" }, { text: "Closed", value: "true" }]
-  fieldset.govuk-fieldset
-    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-      | Comment / rationale
-    = render "form_components/text_area", key: :status_rationale, form: form, max_length: 10000,
-            describedBy: "report-product-description-hint", classes: "govuk-!-width-two-thirds",
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
+      h2.govuk-heading-l
+        = "#{@investigation.case_type.titleize} status"
+      = render "form_components/govuk_radios", form: form, key: :is_closed,
+              fieldset: { legend: { text: "Status" } },
+              items: [{ text: "Open", value: "false" }, { text: "Closed", value: "true" }]
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Comment / rationale
+        = render "form_components/text_area", key: :status_rationale, form: form, max_length: 10000,
+            describedBy: "report-product-description-hint",
             hint: { text: "Why are you setting it to this status?" }
-  .govuk-form-group
-    = form.submit "Save", class: "govuk-button"
+      .govuk-form-group
+        = form.submit "Save", class: "govuk-button"

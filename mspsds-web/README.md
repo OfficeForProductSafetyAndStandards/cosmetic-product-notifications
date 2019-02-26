@@ -176,6 +176,11 @@ This sets the http auth username and password for access to the pgHero dashboard
 
 See the Sentry account section in [the root README](../README.md#sentry) to get this value.
 
+    cf set-env mspsds-web HEALTH_CHECK_USERNAME XXX
+    cf set-env mspsds-web HEALTH_CHECK_PASSWORD XXX
+
+This enables and adds basic auth to the health check endpoint at `/health/all` which can be polled to check the site status.
+
 The app can then be started using `cf start mspsds-web`.
 
 
