@@ -1,0 +1,12 @@
+.my_teams__user {
+  margin: 0;
+  border-top: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid $govuk-border-colour;
+  & + & {
+    border-top: 0;
+  }
+}
+
+.my_teams__user_name, .my_teams__user_email {
+  display: inline;
+}

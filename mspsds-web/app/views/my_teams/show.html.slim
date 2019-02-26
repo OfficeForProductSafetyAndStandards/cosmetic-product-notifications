@@ -1,0 +1,25 @@
+- content_for :page_title, "My teams"
+- content_for :after_header do
+  / TODO MSPSDS-1046 - confirm route back
+  = link_to "Back", root_path, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    h1.govuk-heading-xl Team members
+    - @teams.each do |team|
+      h2.govuk-heading-m = team.display_name
+      / TODO MSPSDS-1047 Adding users
+      / = form_with model: @new_user, url: my_teams_path, method: :put do |form|
+      /   = form.text_field :email_address
+      /   = form.hidden_field :team, value: team.id
+      ul.govuk-list
+        - team.users.each do |person|
+          li.my_teams__user class="govuk-!-padding-top-3 govuk-!-padding-bottom-3"
+            h3.govuk-heading-s class="govuk-!-margin-bottom-2"
+              span.my_teams__user_name = person.full_name
+              '
+              span.govuk-caption-m.my_teams__user_email = person.email
+            ul.govuk-list class="govuk-!-margin-0"
+              / TODO MSPSDS-1046 add ticks/crosses https://github.com/alphagov/notifications-admin/blob/master/app/assets/stylesheets/components/tick-cross.scss
+                Also think about invisible items
+              li ✔ Team admin
