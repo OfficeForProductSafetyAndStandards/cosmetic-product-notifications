@@ -13,12 +13,6 @@ set -ex
 # Circumvent the cloudfoundry asset compilation step - https://github.com/cloudfoundry/ruby-buildpack/blob/master/src/ruby/finalize/finalize.go#L213
 cp -a ./shared-worker/public/. ./cosmetics-web/public/
 
-# Copy the apt packages to be installed
-cp ./shared-worker/apt.yml ./cosmetics-web/apt.yml
-
-# Copy the clamav configuration
-cp -a ./shared-worker/clamav/. ./cosmetics-web/clamav/
-
 rm -rf ./cosmetics-web/vendor/shared-web/
 cp -a ./shared-web ./cosmetics-web/vendor/shared-web
 
