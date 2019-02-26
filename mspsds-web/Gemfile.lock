@@ -113,7 +113,7 @@ GEM
       actionpack (>= 3.1)
       axlsx (>= 2.0.1)
     backport (0.3.0)
-    bootsnap (1.4.0)
+    bootsnap (1.4.1)
       msgpack (~> 1.0)
     brakeman (4.4.0)
     builder (3.2.3)
