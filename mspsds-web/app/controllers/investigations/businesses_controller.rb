@@ -66,7 +66,7 @@ private
   end
 
   def assign_type
-    session[:type] = business_type_params[:type] == "Other" ? business_type_params[:type_other] : business_type_params[:type]
+    session[:type] = business_type_params[:type] == "other" ? business_type_params[:type_other] : business_type_params[:type]
   end
 
   def clear_session
@@ -79,7 +79,7 @@ private
     if step == :type
       if business_type_params[:type].nil?
         @business.errors.add(:base, "Please select a business type")
-      elsif business_type_params[:type] == "Other" && business_type_params[:type_other].blank?
+      elsif business_type_params[:type] == "other" && business_type_params[:type_other].blank?
         @business.errors.add(:base, "Please enter a business type \"Other\"")
       end
     else
