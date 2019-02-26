@@ -32,8 +32,11 @@ class AlertTest < ApplicationSystemTestCase
     assert_text @alert.description
 
     click_on "Send to XXXX people"
-    assert_equal(1, @numer_of_emails_sent)
-    assert_redirected_to(investigation_path(@investigation), notice: "Alert sent XXXX")
+
+    expected_number_of_emails_sent = User.all.length
+    assert_equal(expected_number_of_emails_sent, @number_of_emails_sent)
+    assert_text @investigation.title
+    assert_text "Alert sent XXXX"
   end
 
   def fill_in_activity_selection
