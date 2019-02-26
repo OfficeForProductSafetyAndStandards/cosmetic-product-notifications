@@ -25,7 +25,6 @@ gem 'redis-rails'
 gem "rubyzip", ">= 1.2.1"
 gem "sentry-raven"
 gem "slim-rails"
-gem "slowpoke"
 gem "strong_migrations"
 gem "wicked"
 gem "wicked_pdf"

@@ -41,6 +41,7 @@ PATH
       request_store (= 1.4.1)
       sidekiq (= 5.2.5)
       sidekiq-cron (= 1.1.0)
+      slowpoke (= 0.2.1)
       webpacker (= 4.0.0.rc.7)
 
 GEM
@@ -455,7 +456,6 @@ DEPENDENCIES
   shared-web!
   shared-web-dev!
   slim-rails
-  slowpoke
   strong_migrations
   wicked
   wicked_pdf
