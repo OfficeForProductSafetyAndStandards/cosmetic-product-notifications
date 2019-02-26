@@ -42,6 +42,8 @@ class InvestigationPolicy < ApplicationPolicy
   end
 
   def can_raise_alert?(user: @user)
+    return false if @record.is_private
+
     user.is_opss?
   end
 end
