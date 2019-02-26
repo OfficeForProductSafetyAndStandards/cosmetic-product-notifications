@@ -15,6 +15,7 @@
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Comment / rationale
         = render "form_components/govuk_textarea", key: :status_rationale, form: form, max_length: 10000,
-            hint: { text: "Why are you setting it to this status?" }
+                hint: { text: "Why are you setting it to this status?" },
+                label: { text: "Status change rationale", classes: "govuk-visually-hidden" }
       .govuk-form-group
         = form.submit "Save", class: "govuk-button"

@@ -13,7 +13,8 @@
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What is being alleged?
         = render "form_components/govuk_textarea", key: :description, form: form, max_length: 10000,
-                hint: { text: "Please give as much detail as possible" }
+                hint: { text: "Please give as much detail as possible" },
+                label: { text: "Allegation description", classes: "govuk-visually-hidden" }
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l

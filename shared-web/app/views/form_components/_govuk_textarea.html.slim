@@ -6,9 +6,6 @@ ruby:
   local_assigns[:name] ||= get_attribute_name(form, key)
   local_assigns[:id] ||= get_attribute_id_prefix(form, key)
   local_assigns[:value] ||= form.object.send(key) if form.object.respond_to?(key)
-  # TODO: govuk component seems to require label, but we don't always define it. Perhaps we should?
-  # Need to discuss with a designer, this prevents crashes for now
-  local_assigns[:label] = { text: "" } if local_assigns[:label].blank?
   if form.object&.errors
     error_text = form.object.errors.full_messages_for(key).first.presence
     local_assigns[:errorMessage] ||= { text: error_text } if error_text
