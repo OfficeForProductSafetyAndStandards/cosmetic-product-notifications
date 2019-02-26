@@ -66,7 +66,7 @@ private
   end
 
   def assign_type
-    session[:type] = business_type_params[:type] == "Other" ? business_type_params[:type_other] : business_type_params[:type]
+    session[:type] = business_type_params[:type] == "other" ? business_type_params[:type_other] : business_type_params[:type]
   end
 
   def clear_session
@@ -116,6 +116,7 @@ private
   end
 
   def business_type_params
+    p params
     params.require(:business).permit(:type, :type_other)
   end
 

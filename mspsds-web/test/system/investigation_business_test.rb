@@ -43,7 +43,7 @@ class InvestigationBusinessTest < ApplicationSystemTestCase
     assert_text "Please enter a business type"
   end
 
-  test "should delete business" do
+  test "should unlink business" do
     visit remove_investigation_business_path(@investigation, @business)
     assert_text @business.trading_name
     click_on "Remove business"

@@ -8,28 +8,14 @@
     | Add business
   h3.govuk-heading-m [class="govuk-!-margin-bottom-2"] Select business type
 = form_with(model: @business, local: true, url: wizard_path, method: :put) do |form|
-  = render "form_validation_display", errors: @business.errors
-  .govuk-grid-row class="govuk-!-margin-bottom-3"
-    .govuk-grid-column-one-half class="govuk-!-margin-bottom-9"
-      fieldset.govuk-fieldset
-        .govuk-form-group
-          .govuk-radios.govuk-radios--conditional data-module="radios"
-            .govuk-radios__item
-              = form.radio_button :type, "Retailer", class: "govuk-radios__input"
-              = form.label :type, "Retailer", class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :type, "Distributor", class: "govuk-radios__input"
-              = form.label :type, "Distributor", class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :type, "Importer", class: "govuk-radios__input"
-              = form.label :type, "Importer", class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :type, "Manufacturer", class: "govuk-radios__input"
-              = form.label :type, "Manufacturer", class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :type, "Other", class: "govuk-radios__input",
-                  "data-aria-controls": "conditional-business-other-type"
-              = form.label :type, "Other", class: "govuk-label govuk-radios__label"
-            #conditional-business-other-type.govuk-radios__conditional.govuk-radios__conditional--hidden
-              = form.text_field :type_other, class: "govuk-input"
-        = form.submit "Continue", class: "govuk-button"
+  = render "form_components/govuk_error_summary", form: form
+  - other = capture do
+    = form.text_field :type_other, class: "govuk-input govuk-!-width-one-third"
+  = render "form_components/govuk_radios", form: form, key: :type,
+          items: [{text: "Retailer", value: "retailer"},
+                  {text: "Manufacturer", value: "manufacturer"},
+                  {text: "Importer", value: "importer",},
+                  {text: "Distributor", value: "distributor",},
+                  {text: "Manufacturer", value: "manufacturer",},
+                  {text: "Other", value: "other", conditional: {html: other}}]
+  = form.submit "Continue", class: "govuk-button"

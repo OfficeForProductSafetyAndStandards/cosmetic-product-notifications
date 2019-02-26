@@ -10,7 +10,7 @@
     .govuk-grid-column-one-half
       = form_with(model: @business, url: wizard_path, method: :put,
               html: { autocomplete: :off }) do |form|
-        = render "form_validation_display", errors: @business.errors
+        = render "form_components/govuk_error_summary", form: form
         h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
           | Business details
         = render "businesses/form", form: form, business: @business, countries: @countries

@@ -10,7 +10,7 @@
     = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
             items: investigation.past_assignees + investigation.past_teams, ignore_restrictions: true,
             accessible_hint: "Select previously assigned person or team", show_all_values: true
-  - other_teams = capture do
+ - other_teams = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_other_team,
             items: Team.all, accessible_hint: "Other team name", ignore_restrictions: true,
             show_all_values: true
