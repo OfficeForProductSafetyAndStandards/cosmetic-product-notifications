@@ -3,13 +3,11 @@
   = link_to "Back to business", @business, class: "govuk-back-link"
 
 = form_with(model: @location, url: business_location_path(@business, @location), local: true) do |form|
-  = render "form_components/govuk_error_summary", form: form
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
       .govuk-heading-xl
         span.govuk-caption-xl
           = "Business: #{@business.trading_name}"
         | Edit location
-  .govuk-grid-row
-    .govuk-grid-column-one-half
       = render "form", form: form

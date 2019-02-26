@@ -3,11 +3,11 @@
   = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
 
 = form_with model: @investigation, scope: :enquiry, local: true, url: wizard_path, method: :put do |form|
-  = render "form_components/govuk_error_summary", form: form
-  h1.govuk-heading-xl
-    = @page_title
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-xl
+        = @page_title
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What is the enquiry?
@@ -15,7 +15,7 @@
           span.govuk-hint#enquiry-description-hint
             | Please give as much detail as possible
           = form.text_area :description, class: "govuk-textarea", "aria-describedby": "enquiry-description-hint",
-                  rows: 5, maxlength: 1000
+                  rows: 5, maxlength: 10000
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -24,7 +24,7 @@
           span.govuk-hint#enquiry-title-hint
             | This will help other users identify this enquiry
           = form.text_field :user_title, class: "govuk-input", "aria-describedby": "enquiry-title-hint",
-                  maxlength: 1000
+                  maxlength: 100
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
