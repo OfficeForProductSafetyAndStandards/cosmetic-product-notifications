@@ -1,5 +1,6 @@
 class Investigations::AlertsController < ApplicationController
   include Wicked::Wizard
+  include Pundit
 
   steps :about_alerts, :compose, :preview
 
@@ -49,7 +50,7 @@ private
 
   def set_investigation
     @investigation = Investigation.find_by!(pretty_id: params[:investigation_pretty_id])
-    authorize @investigation, :show?
+    authorize @investigation, :can_raise_alert?
   end
 
   def set_alert
