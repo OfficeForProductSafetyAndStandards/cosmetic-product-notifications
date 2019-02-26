@@ -22,7 +22,6 @@ gem "rails", "~> 5.2"
 gem "redcarpet"
 gem 'redis-rails'
 gem "rubyzip", ">= 1.2.1"
-gem "sentry-raven"
 gem "slim-rails"
 gem "strong_migrations"
 gem "wicked"

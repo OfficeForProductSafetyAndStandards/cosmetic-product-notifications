@@ -40,6 +40,7 @@ PATH
       mini_magick (= 4.9.3)
       rails (~> 5.2)
       request_store (= 1.4.1)
+      sentry-raven (= 2.9.0)
       sidekiq (= 5.2.5)
       sidekiq-cron (= 1.1.0)
       slowpoke (= 0.2.1)
@@ -452,7 +453,6 @@ DEPENDENCIES
   rspec-mocks
   rubyzip (>= 1.2.1)
   selenium-webdriver
-  sentry-raven
   shared-web!
   shared-web-dev!
   slim-rails
