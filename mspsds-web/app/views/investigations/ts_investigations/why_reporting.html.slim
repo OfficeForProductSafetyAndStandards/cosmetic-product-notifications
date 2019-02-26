@@ -24,7 +24,7 @@
 
             .govuk-form-group
               - label_classes = "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-              = render "form_components/text_area", key: :hazard_description, form: form, max_length: 10000,
+              = render "form_components/text_area", key: :hazard_description, form: form,
                       describedBy: "allegation-hazard–detail-hint",
                       label: { text: "Hazard details", classes: label_classes },
                       hint: { text: "Including any incidents or events that brought it to your attention" }
@@ -36,7 +36,7 @@
             = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label"
           #conditional-report-report-type-2.govuk-checkboxes__conditional[
             class=("govuk-checkboxes__conditional--hidden" unless @non_compliant) ]
-            = render "form_components/text_area", key: :non_compliant_reason, form: form, max_length: 10000,
+            = render "form_components/text_area", key: :non_compliant_reason, form: form,
                     describedBy: "allegation-compliance-detail-hint",
                     label: { text: "Details of non-compliance" }
       = form.submit "Continue", class: "govuk-button"
