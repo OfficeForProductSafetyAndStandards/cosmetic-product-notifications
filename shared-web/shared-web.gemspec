@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.add_dependency "clamby", "1.6.1"
   s.add_dependency "govuk_notify_rails", "2.1.0"
   s.add_dependency "keycloak", "2.4.1"
+  s.add_dependency "lograge", "0.10.0"
   s.add_dependency "mini_magick", "4.9.3"
   s.add_dependency "rails", "~> 5.2"
   s.add_dependency "request_store", "1.4.1"

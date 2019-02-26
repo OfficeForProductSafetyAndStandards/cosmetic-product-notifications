@@ -36,6 +36,7 @@ PATH
       clamby (= 1.6.1)
       govuk_notify_rails (= 2.1.0)
       keycloak (= 2.4.1)
+      lograge (= 0.10.0)
       mini_magick (= 4.9.3)
       rails (~> 5.2)
       request_store (= 1.4.1)
@@ -439,7 +440,6 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   jbuilder (~> 2.8)
-  lograge
   okcomputer
   pg (~> 1.1)
   pghero
