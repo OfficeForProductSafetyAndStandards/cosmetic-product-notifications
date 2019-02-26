@@ -1,5 +1,5 @@
 default: &default
-  :host: 'elasticsearch'
+  :url: "http://elasticsearch:9200"
   :transport_options:
     :request:
       :timeout: 5

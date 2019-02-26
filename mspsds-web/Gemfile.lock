@@ -229,6 +229,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     notifications-ruby-client (3.0.0)
       jwt (>= 1.5, < 3)
+    okcomputer (1.17.3)
     parallel (1.13.0)
     parser (2.6.0.0)
       ast (~> 2.4.0)
@@ -438,6 +439,7 @@ DEPENDENCIES
   elasticsearch-rails
   jbuilder (~> 2.8)
   lograge
+  okcomputer
   pg (~> 1.1)
   pghero
   puma (~> 3.0)
