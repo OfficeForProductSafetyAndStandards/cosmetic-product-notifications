@@ -66,7 +66,6 @@ fieldset.govuk-fieldset
 fieldset.govuk-fieldset
   - label_classes = "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
   = render "form_components/text_area", key: :description, form: form,
-          describedBy: "report-product-description-hint",
           label: { text: "Description of product", classes: label_classes },
           hint: { text: "For example, 'Orange, 4 socket extension lead'" }
 

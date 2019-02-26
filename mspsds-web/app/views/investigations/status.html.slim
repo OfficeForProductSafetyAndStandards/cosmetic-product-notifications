@@ -15,7 +15,6 @@
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Comment / rationale
         = render "form_components/text_area", key: :status_rationale, form: form,
-            describedBy: "report-product-description-hint",
             hint: { text: "Why are you setting it to this status?" }
       .govuk-form-group
         = form.submit "Save", class: "govuk-button"

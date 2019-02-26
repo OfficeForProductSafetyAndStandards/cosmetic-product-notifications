@@ -35,7 +35,6 @@
           = form.label :email_subject, "Subject line", class: "govuk-label"
           = form.text_field :email_subject, class: "govuk-input govuk-!-width-two-thirds"
         = render "form_components/text_area", key: :details, form: form,
-                describedBy: "report-product-description-hint",
                 label: { text: "Body" }
 
       = render "related_attachment_fields", form: form,
