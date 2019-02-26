@@ -9,11 +9,12 @@ module ActivityHelper
       "testing_result": "Record test result",
       "corrective_action": "Record corrective action",
       "product": "Add a product to the case",
-      "business": "Add a business to the case",
-      "alert": "Alert trading standards"
+      "business": "Add a business to the case"
     }
     visibility_text = @investigation.is_private ? "Unrestrict this case" : "Restrict this case for legal privilege"
     base_types["visibility"] = visibility_text if policy(@investigation).visibility?
+    base_types["alert"] = "Alert trading standards" if policy(@investigation).can_raise_alert?
+
     base_types
   end
 end

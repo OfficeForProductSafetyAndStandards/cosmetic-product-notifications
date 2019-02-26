@@ -40,4 +40,8 @@ class InvestigationPolicy < ApplicationPolicy
 
     false
   end
+
+  def can_raise_alert?(user: @user)
+    user.is_opss?
+  end
 end
