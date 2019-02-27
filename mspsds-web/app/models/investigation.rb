@@ -251,8 +251,7 @@ private
                                        User.current.full_name,
                                        User.current.email,
                                        title,
-                                       case_type
-    ).deliver_later
+                                       case_type).deliver_later
   end
 end
 

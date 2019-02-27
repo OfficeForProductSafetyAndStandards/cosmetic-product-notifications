@@ -81,6 +81,7 @@ class ActiveSupport::TestCase
     result = ""
     allow(result).to receive(:deliver_later)
     allow(NotifyMailer).to receive(:updated_investigation) { result }
+    allow(NotifyMailer).to receive(:investigation_created) { result }
   end
 
   def sign_in_as_non_mspsds_user
@@ -106,6 +107,7 @@ class ActiveSupport::TestCase
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
     allow(User).to receive(:current).and_call_original
     allow(NotifyMailer).to receive(:updated_investigation).and_call_original
+    allow(NotifyMailer).to receive(:investigation_created).and_call_original
     reset_user_data
   end
 

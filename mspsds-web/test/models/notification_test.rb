@@ -15,28 +15,28 @@ class NotificationTest < ActiveSupport::TestCase
 
   test "should notify current assignee when the assignee is a person and there is any change" do
     @investigation.update(assignee: @user_two)
-    prepare_notify_check(who_will_be_notified: [@user_two])
+    mock_updated_investigation(who_will_be_notified: [@user_two])
     make_generic_change
     assert_equal @number_of_notifications, 1
   end
 
   test "should not notify current assignee when the assignee makes the change" do
     @investigation.update(assignee: @user_one.teams[0])
-    prepare_notify_check(who_will_be_notified: [])
+    mock_updated_investigation(who_will_be_notified: [])
     make_generic_change
     assert_equal @number_of_notifications, 0
   end
 
   test "should not notify anyone when the assignee is a team and there is any change done by team users" do
     @investigation.update(assignee: @user_one.teams[0])
-    prepare_notify_check(who_will_be_notified: [])
+    mock_updated_investigation(who_will_be_notified: [])
     make_generic_change
     assert_equal @number_of_notifications, 0
   end
 
   test "should notify all team members when the assignee is a team and there is any change done by outsiders" do
     @investigation.update(assignee: @user_three.teams[0])
-    prepare_notify_check(who_will_be_notified: [@user_three])
+    mock_updated_investigation(who_will_be_notified: [@user_three])
     make_generic_change
     assert_equal @number_of_notifications, 1
   end
@@ -45,7 +45,7 @@ class NotificationTest < ActiveSupport::TestCase
     @investigation.update(assignee: @user_three)
     logout
     sign_in_as_admin
-    prepare_notify_check(who_will_be_notified: [@user_one, @user_three])
+    mock_updated_investigation(who_will_be_notified: [@user_one, @user_three])
     @investigation.update(is_closed: !@investigation.is_closed)
     assert_equal @number_of_notifications, 1
     @investigation.update(is_closed: !@investigation.is_closed)
@@ -54,7 +54,7 @@ class NotificationTest < ActiveSupport::TestCase
 
   test "should not notify creator when case is closed or reopened by the creator" do
     @investigation.update(assignee: @user_three)
-    prepare_notify_check(who_will_be_notified: [@user_three])
+    mock_updated_investigation(who_will_be_notified: [@user_three])
     @investigation.update(is_closed: !@investigation.is_closed)
     assert_equal @number_of_notifications, 1
     @investigation.update(is_closed: !@investigation.is_closed)
@@ -64,14 +64,14 @@ class NotificationTest < ActiveSupport::TestCase
   test "should notify previous assignee if case is assigned to someone else by someone else" do
     @investigation.update(assignee: @user_one.teams[0])
     @investigation.update(assignee: @user_three)
-    prepare_notify_check(who_will_be_notified: [@user_three, @user_one])
+    mock_updated_investigation(who_will_be_notified: [@user_three, @user_one])
     @investigation.update(assignee: @user_one)
     assert_equal @number_of_notifications, 2
   end
 
   test "should not notify previous assignee if case is assigned to someone else by them" do
     @investigation.update(assignee: @user_one)
-    prepare_notify_check(who_will_be_notified: [@user_three])
+    mock_updated_investigation(who_will_be_notified: [@user_three])
     @investigation.update(assignee: @user_three)
     assert_equal @number_of_notifications, 1
   end
@@ -79,7 +79,7 @@ class NotificationTest < ActiveSupport::TestCase
   test "should notify previous assignee team if case is assigned to someone by someone outside" do
     @investigation.update(assignee: @user_one)
     @investigation.update(assignee: @user_three.teams[0])
-    prepare_notify_check(who_will_be_notified: [@user_three, @user_one])
+    mock_updated_investigation(who_will_be_notified: [@user_three, @user_one])
     @investigation.update(assignee: @user_one)
     assert_equal @number_of_notifications, 2
   end
@@ -87,19 +87,19 @@ class NotificationTest < ActiveSupport::TestCase
   test "should not notify previous assignee team if case is assigned to someone by someone inside" do
     @investigation.update(assignee: @user_three)
     @investigation.update(assignee: @user_one.teams[0])
-    prepare_notify_check(who_will_be_notified: [@user_three])
+    mock_updated_investigation(who_will_be_notified: [@user_three])
     @investigation.update(assignee: @user_three)
     assert_equal @number_of_notifications, 1
   end
 
   test "should notify a person who gets assigned a case" do
-    prepare_notify_check(who_will_be_notified: [@user_three])
+    mock_updated_investigation(who_will_be_notified: [@user_three])
     @investigation.update(assignee: @user_three)
     assert_equal @number_of_notifications, 1
   end
 
   test "should notify everyone in team that gets assigned a case" do
-    prepare_notify_check(who_will_be_notified: @user_one.teams[0].users)
+    mock_updated_investigation(who_will_be_notified: @user_one.teams[0].users)
     @investigation.update(assignee: @user_one.teams[0])
     assert_equal @number_of_notifications, 2
   end
@@ -107,16 +107,34 @@ class NotificationTest < ActiveSupport::TestCase
   test "previous assignee is computed correctly" do
     @investigation.update(assignee: @user_one)
     @investigation.update(assignee: @user_two)
-    prepare_notify_check(who_will_be_notified: [@user_three, @user_two])
+    mock_updated_investigation(who_will_be_notified: [@user_three, @user_two])
     @investigation.update(assignee: @user_three)
     assert_equal @number_of_notifications, 2
   end
 
-  def prepare_notify_check(who_will_be_notified: [])
+  test "notifies current user when investigation created" do
+    mock_investigation_created(who_will_be_notified: [@user_one])
+    @investigation_two = investigations :two
+    Investigation.create(@investigation_two.attributes.merge(id: 123))
+    assert_equal @number_of_notifications, 1
+  end
+
+  def mock_updated_investigation(who_will_be_notified: [])
     result = ""
     @number_of_notifications = 0
     allow(result).to receive(:deliver_later)
     allow(NotifyMailer).to receive(:updated_investigation) do |_id, user_name, _user_email, _text|
+      @number_of_notifications += 1
+      assert_includes who_will_be_notified.map(&:full_name), user_name
+      result
+    end
+  end
+
+  def mock_investigation_created(who_will_be_notified: [])
+    result = ""
+    @number_of_notifications = 0
+    allow(result).to receive(:deliver_later)
+    allow(NotifyMailer).to receive(:investigation_created) do |_id, user_name, _user_email, _investigation_title, _investigation_type|
       @number_of_notifications += 1
       assert_includes who_will_be_notified.map(&:full_name), user_name
       result

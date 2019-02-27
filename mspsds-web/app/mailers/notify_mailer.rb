@@ -18,11 +18,11 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_reference('Case created')
 
     set_personalisation(
-        name: name,
-        case_title: investigation_title,
-        case_type: investigation_type,
-        case_id: investigation_pretty_id,
-        investigation_url: investigation_url(pretty_id: investigation_pretty_id)
+      name: name,
+      case_title: investigation_title,
+      case_type: investigation_type,
+      case_id: investigation_pretty_id,
+      investigation_url: investigation_url(pretty_id: investigation_pretty_id)
     )
 
     mail(to: email)
