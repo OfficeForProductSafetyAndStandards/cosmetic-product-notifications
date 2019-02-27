@@ -1,12 +1,10 @@
 class Investigations::BusinessesController < ApplicationController
-  include ActiveModel::Validations
   include BusinessesHelper
   include Shared::Web::CountriesHelper
   include Wicked::Wizard
   skip_before_action :setup_wizard, only: %i[remove unlink]
   steps :type, :details
 
-  validates :name, presence: true
   before_action :set_investigation, only: %i[update new show remove unlink]
   before_action :set_business, only: %i[remove unlink]
   before_action :set_countries, only: %i[update show]
