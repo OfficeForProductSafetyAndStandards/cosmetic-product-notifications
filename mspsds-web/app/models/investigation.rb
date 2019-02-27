@@ -22,8 +22,7 @@ class Investigation < ApplicationRecord
   validates_length_of :hazard_description, maximum: 10000
 
   after_save :create_audit_activity_for_assignee,
-             :create_audit_activity_for_status, :create_audit_activity_for_visibility,
-             :send_confirmation_email
+             :create_audit_activity_for_status, :create_audit_activity_for_visibility
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
@@ -62,7 +61,7 @@ class Investigation < ApplicationRecord
 
   before_create :assign_current_user_to_case, :add_pretty_id
 
-  after_create :create_audit_activity_for_case
+  after_create :create_audit_activity_for_case, :send_confirmation_email
 
   def as_indexed_json(*)
     as_json(
