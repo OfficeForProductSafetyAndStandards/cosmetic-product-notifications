@@ -19,9 +19,8 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Project summary
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:description].any?)
-          = form.text_area :description, class: "govuk-textarea", "aria-describedby": "project-description-hint",
-                  rows: 5, maxlength: 10000
+        = render "form_components/govuk_textarea", key: :description, form: form, max_length: 10000,
+                label: { text: "Project description", classes: "govuk-visually-hidden" }
 
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
