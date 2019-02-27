@@ -9,6 +9,8 @@ Keycloak.realm = "opss"
 # Realm url (only used if the installation file is not present)
 Keycloak.auth_server_url = ""
 
-# Load organisations, teams and users on app startup
-Organisation.all unless Rails.env.test? || Sidekiq.server?
-User.all unless Rails.env.test? || Sidekiq.server?
+Rails.application.config.after_initialize do
+  # Load organisations, teams and users on app startup
+  Organisation.all unless Rails.env.test? || Sidekiq.server?
+  User.all unless Rails.env.test? || Sidekiq.server?
+end

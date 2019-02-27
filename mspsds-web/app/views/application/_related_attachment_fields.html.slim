@@ -14,4 +14,4 @@ fieldset.govuk-fieldset
       #attachment-description.govuk-form-group
           = subform.label :description, "Attachment description", class: "govuk-label"
           = subform.text_area :description, value: file_blob&.metadata&.dig(:description),
-                class: "govuk-textarea", rows: 5, maxlength: 1000
+                class: "govuk-textarea", rows: 5, maxlength: 10000

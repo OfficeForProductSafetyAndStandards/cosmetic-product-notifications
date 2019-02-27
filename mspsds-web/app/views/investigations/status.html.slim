@@ -2,19 +2,21 @@
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 = form_with(model: @investigation, method: :put, url: status_investigation_url(@investigation)) do |form|
-  = render "form_components/govuk_error_summary", form: form
-  = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
-  h2.govuk-heading-l
-    = "#{@investigation.case_type.titleize} status"
-  = render "form_components/govuk_radios", form: form, key: :is_closed,
-          fieldset: { legend: { text: "Status" } },
-          items: [{ text: "Open", value: "false" }, { text: "Closed", value: "true" }]
-  fieldset.govuk-fieldset
-    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-      | Comment / rationale
-    .govuk-form-group
-      span.govuk-hint
-        | Why are you setting it to this status?
-      = form.text_area :status_rationale, class: "govuk-textarea govuk-!-width-two-thirds", rows: 5
-  .govuk-form-group
-    = form.submit "Save", class: "govuk-button"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
+      h2.govuk-heading-l
+        = "#{@investigation.case_type.titleize} status"
+      = render "form_components/govuk_radios", form: form, key: :is_closed,
+              fieldset: { legend: { text: "Status" } },
+              items: [{ text: "Open", value: "false" }, { text: "Closed", value: "true" }]
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Comment / rationale
+        .govuk-form-group
+          span.govuk-hint
+            | Why are you setting it to this status?
+          = form.text_area :status_rationale, class: "govuk-textarea", rows: 5, maxlength: 10000
+      .govuk-form-group
+        = form.submit "Save", class: "govuk-button"

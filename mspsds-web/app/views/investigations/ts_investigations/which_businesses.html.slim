@@ -1,14 +1,12 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
 = form_with model: @investigation, scope: :businesses, url: wizard_path, method: :put, local: true do |form|
-  = render "form_components/govuk_error_summary", form: form
   .govuk-grid-row#which-businesses-page
-    .govuk-grid-column-two-thirds
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl
         span.govuk-caption-xl Report an unsafe or non-compliant product
         | Supply chain information
-  .govuk-grid-row class="govuk-!-margin-bottom-3"
-    .govuk-grid-column-one-half class="govuk-!-margin-bottom-9"
       fieldset.govuk-fieldset
         .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:businesses].any?)]
           legend.govuk-fieldset__legend.govuk-fieldset__legend--m class="govuk-!-margin-bottom-1"
@@ -54,6 +52,4 @@
                 = form.check_box :none, class: "govuk-checkboxes__input", value: "None",
                         checked: @selected_businesses.include?("none")
                 = form.label :none, "None of the above", class: "govuk-label govuk-checkboxes__label"
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
       = form.submit "Continue", class: "govuk-button"

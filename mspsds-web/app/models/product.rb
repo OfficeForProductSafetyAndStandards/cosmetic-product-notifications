@@ -4,6 +4,7 @@ class Product < ApplicationRecord
   include Searchable
   include DateConcern
   include AttachmentConcern
+  include SanitizationHelper
 
   def get_date_key
     :date_placed_on_market
@@ -11,9 +12,11 @@ class Product < ApplicationRecord
 
   index_name [Rails.env, "products"].join("_")
 
+  before_validation { trim_line_endings(:description) }
   validates :name, presence: true
   validates :product_type, presence: true
   validates :category, presence: true
+  validates_length_of :description, maximum: 10000
 
   has_many_attached :documents
 
