@@ -20,6 +20,7 @@
               '
               span.govuk-caption-m.my_teams__user_email = person.email
             ul.govuk-list class="govuk-!-margin-0"
-              / TODO MSPSDS-1046 add ticks/crosses https://github.com/alphagov/notifications-admin/blob/master/app/assets/stylesheets/components/tick-cross.scss
-                Also think about invisible items
-              li ✔ Team admin
+              li
+                span class="tick-cross-#{"tick"}"
+                  span.govuk-visually-hidden Can
+                  | Manage team membership
