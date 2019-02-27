@@ -29,16 +29,27 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
 
   def users_to_notify
     previous_assignee_id = investigation.saved_changes["assignable_id"][0]
-    previous_assignee = (User.find_by(id: previous_assignee_id) || Team.find_by(id: previous_assignee_id))
+    previous_assignee = User.find_by(id: previous_assignee_id)
     new_assignee = investigation.assignee
-
     assigner = source.user
-    old_users = []
-    old_users = previous_assignee.is_a?(User) ? [previous_assignee] : previous_assignee.users if previous_assignee.present?
-    default_users = new_assignee.is_a?(User) ? [new_assignee] : new_assignee.users
 
-    return default_users if previous_assignee.blank? || (old_users.include? assigner)
+    old_users = previous_assignee.present? ? [previous_assignee] : []
+    default_users = new_assignee.is_a?(User) ? [new_assignee] : []
+    return default_users if old_users.include? assigner
 
     (default_users + old_users).uniq
+  end
+
+  def teams_to_notify
+    previous_assignee_id = investigation.saved_changes["assignable_id"][0]
+    previous_assignee = Team.find_by(id: previous_assignee_id)
+    new_assignee = investigation.assignee
+    assigner = source.user
+
+    new_teams = new_assignee.is_a?(Team) ? [new_assignee] : []
+    return new_teams if previous_assignee.blank?
+    return new_teams if previous_assignee.users.include? assigner
+
+    (new_teams + [previous_assignee]).uniq
   end
 end
