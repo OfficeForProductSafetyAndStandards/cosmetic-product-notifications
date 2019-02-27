@@ -22,7 +22,8 @@ class Investigation < ApplicationRecord
   validates_length_of :hazard_description, maximum: 10000
 
   after_save :create_audit_activity_for_assignee,
-             :create_audit_activity_for_status, :create_audit_activity_for_visibility
+             :create_audit_activity_for_status, :create_audit_activity_for_visibility,
+             :send_confirmation_email
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
@@ -243,6 +244,15 @@ private
 
   def assign_current_user_to_case
     self.source = UserSource.new(user: User.current) if self.source.blank? && User.current
+  end
+
+  def send_confirmation_email
+    NotifyMailer.investigation_created(pretty_id,
+                                       User.current.full_name,
+                                       User.current.email,
+                                       title,
+                                       case_type
+    ).deliver_later
   end
 end
 

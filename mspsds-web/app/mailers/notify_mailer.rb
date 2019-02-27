@@ -12,4 +12,19 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     mail(to: email)
   end
+
+  def investigation_created(investigation_pretty_id, name, email, investigation_title, investigation_type)
+    set_template('6da8e1d5-eb4d-4f9a-9c3c-948ef57d6136')
+    set_reference('Case created')
+
+    set_personalisation(
+        name: name,
+        case_title: investigation_title,
+        case_type: investigation_type,
+        case_id: investigation_pretty_id,
+        investigation_url: investigation_url(pretty_id: investigation_pretty_id)
+    )
+
+    mail(to: email)
+  end
 end
