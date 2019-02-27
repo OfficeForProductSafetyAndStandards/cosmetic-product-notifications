@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do
       collection do
-        get 'join/:key', action: :join
+        get 'join/:key', action: :join, as: 'join'
       end
     end
 
