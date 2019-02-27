@@ -80,7 +80,7 @@ class ActiveSupport::TestCase
   def stub_notify_mailer
     result = ""
     allow(result).to receive(:deliver_later)
-    allow(NotifyMailer).to receive(:updated_investigation) { result }
+    allow(NotifyMailer).to receive(:investigation_updated) { result }
     allow(NotifyMailer).to receive(:investigation_created) { result }
   end
 
@@ -106,7 +106,7 @@ class ActiveSupport::TestCase
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
     allow(User).to receive(:current).and_call_original
-    allow(NotifyMailer).to receive(:updated_investigation).and_call_original
+    allow(NotifyMailer).to receive(:investigation_updated).and_call_original
     allow(NotifyMailer).to receive(:investigation_created).and_call_original
     reset_user_data
   end
