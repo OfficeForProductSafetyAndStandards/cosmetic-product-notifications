@@ -1,14 +1,14 @@
 - content_for :page_title, "Add business to case"
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
-  = render "investigation_heading", investigation: @investigation
-  h2.govuk-heading-l
-    | Add business
-  .govuk-grid-row
-    .govuk-grid-column-one-half
-      = form_with(model: @business, url: wizard_path, method: :put,
-              html: { autocomplete: :off }) do |form|
-        = render "form_components/govuk_error_summary", form: form
-        h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
-          | Business details
-        = render "businesses/form", form: form, business: @business, countries: @countries
+= render "investigation_heading", investigation: @investigation
+h2.govuk-heading-l
+  | Add business
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    = form_with(model: @business, url: wizard_path, method: :put,
+            html: { autocomplete: :off }) do |form|
+      = render "form_components/govuk_error_summary", form: form
+      h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+        | Business details
+      = render "businesses/form", form: form, business: @business, countries: @countries
