@@ -8,58 +8,85 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
   end
 
   def self.accept?(given_blob)
-    return false if given_blob.blank?
+    return false unless given_blob.present? && given_blob.metadata["safe"]
 
-    # this analyzer only accepts notification files which are zip
     notification_file = get_notification_file_from_blob(given_blob)
-
-    notification_file.present?
+    notification_file.present? && notification_file.upload_error.blank?
   end
 
   def metadata
+    @notification_file = self.class.get_notification_file_from_blob(blob)
     create_notification_from_file
-    delete_notification_file
+    delete_notification_file if @notification_file.upload_error.blank?
     {}
   end
 
 private
 
   def create_notification_from_file
-    notification_file = self.class.get_notification_file_from_blob(blob)
-
-    get_xml_file_content do |xml_file_content|
-      @xml_info = CPNPExport.new(xml_file_content)
+    begin
+      get_product_xml_file do |product_xml_file|
+        cpnp_export_info = CpnpExport.new(product_xml_file)
+        notification = ::Notification.new(product_name: cpnp_export_info.product_name,
+                                          cpnp_reference: cpnp_export_info.cpnp_reference,
+                                          cpnp_is_imported: cpnp_export_info.is_imported,
+                                          cpnp_imported_country: cpnp_export_info.imported_country,
+                                          shades: cpnp_export_info.shades,
+                                          components: cpnp_export_info.components,
+                                          responsible_person: @notification_file.responsible_person)
+        notification.notification_file_parsed!
+        notification.save
+      end
+    rescue UnexpectedPdfFileError
+      @notification_file.update(upload_error: :unzipped_files_are_pdf)
+    rescue ProductFileNotFoundError
+      @notification_file.update(upload_error: :product_file_not_found)
+    rescue UnexpectedFileError
+      @notification_file.update(upload_error: :unzipped_files_not_xml)
     end
-
-    notification = ::Notification.new(product_name: @xml_info.product_name,
-                                       cpnp_reference: @xml_info.cpnp_reference,
-                                       cpnp_is_imported: @xml_info.is_imported,
-                                       cpnp_imported_country: @xml_info.imported_country,
-                                       shades: @xml_info.shades,
-                                       components: @xml_info.components,
-                                       responsible_person: notification_file.responsible_person)
-    notification.notification_file_parsed!
-    notification.save
   end
 
-  def get_xml_file_content
-    download_blob_to_tempfile do |file|
-      Zip::File.open(file.path) do |zip_file|
-        zip_file.each do |entry|
-          if entry.name&.match?(get_xml_file_name_regex)
-            yield entry.get_input_stream.read
+  def get_product_xml_file
+    download_blob_to_tempfile do |zip_file|
+      Zip::File.open(zip_file.path) do |files|
+        file_found = false
+        files.each do |file|
+          if file_is_pdf?(file)
+            raise UnexpectedPdfFileError
+          elsif file_is_product_xml?(file)
+            file_found = true
+            yield file.get_input_stream.read
           end
         end
+        raise ProductFileNotFoundError unless file_found
       end
     end
+  end
+
+  def file_is_product_xml?(file)
+    file.name&.match?(get_xml_file_name_regex)
+  end
+
+  def file_is_pdf?(file)
+    file.name&.match?(/.*\.pdf/)
   end
 
   def get_xml_file_name_regex
     /[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml/
   end
 
+  end
+
   def delete_notification_file
-    notification_file = self.class.get_notification_file_from_blob(blob)
-    notification_file.destroy
+    @notification_file.destroy
+  end
+
+  class UnexpectedPdfFileError < StandardError
+  end
+
+  class UnexpectedFileError < StandardError
+  end
+
+  class ProductFileNotFoundError < StandardError
   end
 end

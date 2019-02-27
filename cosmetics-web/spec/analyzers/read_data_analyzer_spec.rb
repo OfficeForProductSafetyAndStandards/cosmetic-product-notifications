@@ -26,9 +26,9 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
 
   describe "#metadata" do
     it "creates a notification and removes a notification file" do
-      notification_file
+      analyzer_instance = analyzer
       expect {
-        analyzer.metadata
+        analyzer_instance.metadata
       }.to change(Notification, :count).by(1).and change(NotificationFile, :count).by(-1)
     end
 

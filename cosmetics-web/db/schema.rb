@@ -48,6 +48,15 @@ ActiveRecord::Schema.define(version: 2019_02_21_134903) do
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
+  create_table "email_verification_keys", force: :cascade do |t|
+    t.string "key"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "responsible_person_id"
+    t.index ["responsible_person_id"], name: "index_email_verification_keys_on_responsible_person_id"
+  end
+
   create_table "exact_formulas", force: :cascade do |t|
     t.string "inci_name"
     t.decimal "quantity"
@@ -71,6 +80,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_134903) do
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
     t.string "user_id"
+    t.string "upload_error"
     t.index ["responsible_person_id"], name: "index_notification_files_on_responsible_person_id"
   end
 
@@ -120,6 +130,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_134903) do
     t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_email_verified", default: false
   end
 
   create_table "trigger_question_elements", force: :cascade do |t|
@@ -143,6 +154,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_134903) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "components", "notifications"
+  add_foreign_key "email_verification_keys", "responsible_persons"
   add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"
   add_foreign_key "notification_files", "responsible_persons"

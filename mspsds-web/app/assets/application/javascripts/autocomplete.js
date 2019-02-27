@@ -1,8 +1,9 @@
 import $ from 'jquery';
 import accessibleAutocomplete from 'accessible-autocomplete';
 
-export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
+function simpleAccessibleAutocomplete(id, autocompleteOptions) {
   const element = document.getElementById(id);
+
   const options = autocompleteOptions || {};
   if (element) {
     accessibleAutocomplete.enhanceSelectElement({
@@ -32,5 +33,33 @@ export function simpleAccessibleAutocomplete(id, autocompleteOptions) {
         $enhancedElement.click();
       });
     }
+
+    // This adds ability to remove currently selected input by pressing on an X next to it
+    // This is a work-around to
+    // https://github.com/alphagov/accessible-autocomplete/issues/240
+    const removeButton = document.getElementById(`clear-${id}`);
+    if (removeButton) {
+      const removeValue = () => {
+        $enhancedElement.val('');
+        $enhancedElement.click().focus().blur();
+        $(element).parent().find('select').val('');
+      };
+      removeButton.addEventListener('keypress', (e) => {
+        // Trigger on enter or space click only
+        if (e.keyCode === 13 || e.keyCode === 32) {
+          removeValue();
+        }
+      });
+      removeButton.addEventListener('click', () => {
+        removeValue();
+      });
+    }
   }
 }
+
+function callAutocompleteWhenReady(id, options) {
+  $(document).ready(() => {
+    simpleAccessibleAutocomplete(id, options);
+  });
+}
+window.callAutocompleteWhenReady = callAutocompleteWhenReady;
