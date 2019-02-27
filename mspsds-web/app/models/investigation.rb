@@ -247,11 +247,13 @@ private
   end
 
   def send_confirmation_email
-    NotifyMailer.investigation_created(pretty_id,
+    if User.current
+      NotifyMailer.investigation_created(pretty_id,
                                        User.current.full_name,
                                        User.current.email,
                                        title,
                                        case_type).deliver_later
+    end
   end
 end
 
