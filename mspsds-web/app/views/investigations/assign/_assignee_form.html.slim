@@ -7,9 +7,10 @@
       = render "investigations/assign/assignee_selection", form: form, key: :select_team_member,
               items: User.get_team_members(user: User.current), accessible_hint: "Name", show_all_values: true
   - previously_assigned = capture do
-    = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
-            items: investigation.past_assignees + investigation.past_teams, ignore_restrictions: true,
-            accessible_hint: "Select previously assigned person or team", show_all_values: true
+    - unless @suggested_previous_assignees.empty?
+      = render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
+              items: @suggested_previous_assignees, ignore_restrictions: true,
+              accessible_hint: "Select previously assigned person or team", show_all_values: true
   - other_teams = capture do
     = render "investigations/assign/assignee_selection", form: form, key: :select_other_team,
             items: Team.all, accessible_hint: "Other team name", ignore_restrictions: true,
@@ -27,7 +28,10 @@
                  value: "someone_in_your_team",
                  conditional: { html: someone_in_your_team }
     end
-    items.push text: "Previously assigned", value: "previously_assigned", conditional: { html: previously_assigned }
+
+    unless @suggested_previous_assignees.empty?
+      items.push text: "Previously assigned", value: "previously_assigned", conditional: { html: previously_assigned }
+    end
     items.push divider: "Teams"
     teams = investigation.important_assignable_teams.map do |team|
       { text: team.display_name, value: team.id, checked: investigation.assignee == team }

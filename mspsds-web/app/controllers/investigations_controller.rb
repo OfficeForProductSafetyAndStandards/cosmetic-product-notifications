@@ -79,7 +79,7 @@ class InvestigationsController < ApplicationController
   # GET /cases/1/assign
   # PUT /cases/1/assign
   def assign
-    return if request.get?
+    (@suggested_previous_assignees = suggested_previous_assignees) && return if request.get?
 
     ps = assignee_update_params
 
@@ -89,7 +89,6 @@ class InvestigationsController < ApplicationController
       respond_to_invalid_data(:assign)
       return
     end
-
     @investigation.assignee = potential_assignees.first
     respond_to_update(:assign)
   end
