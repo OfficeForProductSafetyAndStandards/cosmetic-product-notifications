@@ -1,5 +1,6 @@
 class CpnpExport
   include ::Shared::Web::CountriesHelper
+  include CpnpNotificationInfo
 
   def initialize(xml_file_content)
     @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
@@ -69,15 +70,15 @@ private
   end
 
   def frame_formulation(component_node)
-    component_node.xpath('.//frameFormulation').first&.text.to_i
+    get_frame_formulation(component_node.xpath('.//frameFormulation').first&.text.to_i)
   end
 
   def notification_type(component_node)
-    component_node.xpath('.//notificationType').first&.text.to_i
+    get_notification_type(component_node.xpath('.//notificationType').first&.text.to_i)
   end
 
   def sub_sub_category(component_node)
-    component_node.xpath('.//categorie3').first&.text.to_i
+    get_category(component_node.xpath('.//categorie3').first&.text.to_i)
   end
 
   def current_version_component_lists_node

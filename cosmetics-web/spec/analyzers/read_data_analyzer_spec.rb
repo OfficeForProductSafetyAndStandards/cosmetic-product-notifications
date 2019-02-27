@@ -73,14 +73,14 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       analyzer.metadata
       notification = Notification.order(created_at: :asc).last
 
-      expect(notification.components.first.notification_type).equal?(1)
+      expect(notification.components.first.notification_type).equal?('predefined')
     end
 
     it "creates a notification populated with relevant sub-sub-category" do
       analyzer.metadata
       notification = Notification.order(created_at: :asc).last
 
-      expect(notification.components.first.sub_sub_category).equal?(262)
+      expect(notification.components.first.sub_sub_category).equal?('Hair conditioner')
     end
 
     it "creates a notification populated with relevant number of trigger questions and trigger elements" do
@@ -90,11 +90,11 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       }.to change(TriggerQuestion, :count).by(7).and change(TriggerQuestionElement, :count).by(7)
     end
 
-    it "creates a notification populated with relevant fram formulation" do
+    it "creates a notification populated with relevant frame formulation" do
       analyzer.metadata
       notification = Notification.order(created_at: :asc).last
 
-      expect(notification.components.first.frame_formulation).equal?(263)
+      expect(notification.components.first.frame_formulation).equal?('Hair Conditioner')
     end
   end
 end

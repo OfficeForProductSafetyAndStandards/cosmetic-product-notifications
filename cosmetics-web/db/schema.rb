@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(version: 2019_02_21_134903) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "notification_id"
-    t.integer "notification_type"
-    t.integer "frame_formulation"
-    t.integer "sub_sub_category"
+    t.string "notification_type"
+    t.string "frame_formulation"
+    t.string "sub_sub_category"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 

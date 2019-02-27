@@ -25,8 +25,8 @@ class AddFormulationToComponents < ActiveRecord::Migration[5.2]
 
   safety_assured do
     change_table :components, bulk: true do |t|
-      t.integer :notification_type
-      t.integer :frame_formulation
+      t.string :notification_type
+      t.string :frame_formulation
     end
   end
 end

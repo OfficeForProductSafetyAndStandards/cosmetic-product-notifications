@@ -1,6 +1,6 @@
 class Component < ApplicationRecord
   include AASM
-  include CPNPHelper
+  include UkNotificationInfo
 
   belongs_to :notification
 
@@ -44,5 +44,9 @@ private
 
   def update_notification_state
     notification.set_single_or_multi_component!
+  end
+
+  def get_parent_category(category)
+    PARENT_OF_CATEGORY[category]
   end
 end
