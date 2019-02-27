@@ -21,6 +21,7 @@ class Notification < ApplicationRecord
   before_save :add_import_country, if: :will_save_change_to_import_country?
 
   validate :all_required_attributes_must_be_set
+  validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: "Notification duplicated"}
 
   # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
