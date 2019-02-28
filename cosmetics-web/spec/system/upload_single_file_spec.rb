@@ -45,6 +45,42 @@ RSpec.describe "Upload a single file", type: :system do
     expect(page).to have_text("Uploaded file exceeds size limit")
   end
 
+  it "shows an error when the uploaded file contains PDF files" do
+    visit new_responsible_person_notification_file_path(responsible_person)
+    page.attach_file('notification_file[uploaded_file]',
+                     Rails.root + 'spec/fixtures/testZippedPDF.zip')
+    click_button "Upload"
+    expect(page).to have_text("The unzipped files are PDF files")
+  end
+
+  it "shows an error when the uploaded file does not contain product XML files" do
+    visit new_responsible_person_notification_file_path(responsible_person)
+    page.attach_file('notification_file[uploaded_file]',
+                     Rails.root + 'spec/fixtures/testNoProductFile.zip')
+    click_button "Upload"
+    expect(page).to have_text("The ZIP file does not contain product XML files")
+  end
+
+  it "shows an error when the uploaded file already exists for this RP" do
+    visit new_responsible_person_notification_file_path(responsible_person)
+    page.attach_file('notification_file[uploaded_file]',
+                     Rails.root + 'spec/fixtures/testExportFile.zip')
+    click_button "Upload"
+    visit new_responsible_person_notification_file_path(responsible_person)
+    page.attach_file('notification_file[uploaded_file]',
+                     Rails.root + 'spec/fixtures/testExportFile.zip')
+    click_button "Upload"
+    expect(page).to have_text("A notification for this product already exists for this responsible person")
+  end
+
+  it "shows an error when the uploaded file is missing product data" do
+    visit new_responsible_person_notification_file_path(responsible_person)
+    page.attach_file('notification_file[uploaded_file]',
+                     Rails.root + 'spec/fixtures/testExportWithMissingData.zip')
+    click_button "Upload"
+    expect(page).to have_text("There is missing data in the notification")
+  end
+
   it "set basic info of notification based on the uploaded file" do
     visit new_responsible_person_notification_file_path(responsible_person)
     page.attach_file('notification_file[uploaded_file]',
