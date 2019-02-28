@@ -97,7 +97,7 @@ module Shared
         response = Rails.cache.fetch(cache_key, expires_in: 5.minutes) do
           Keycloak::Internal.get_group(group_id)
         end
-        JSON.parse(response)["attributes"]
+        JSON.parse(response)["attributes"] || {}
       end
 
       def all_groups
