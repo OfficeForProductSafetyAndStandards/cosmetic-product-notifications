@@ -5,6 +5,6 @@
     ol class="govuk-breadcrumbs__list"
       - breadcrumbs[:ancestors].each do |a|
         li class="govuk-breadcrumbs__list-item"
-          = link_to a[:name], a[:path]
+          = link_to a[:name], a[:path], class: "govuk-breadcrumbs__link"
       li class="govuk-breadcrumbs__list-item"
         = breadcrumbs[:current][:name]
