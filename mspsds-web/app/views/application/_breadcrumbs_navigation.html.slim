@@ -1,10 +1,7 @@
 - if breadcrumbs[:is_simple_link]
-  = link_to breadcrumbs[:link_text], breadcrumbs[:link_to], class: "govuk-back-link"
+  = link_to breadcrumbs[:text], breadcrumbs[:href], class: "govuk-back-link"
 - else
-  .govuk-breadcrumbs
-    ol class="govuk-breadcrumbs__list"
-      - breadcrumbs[:ancestors].each do |a|
-        li class="govuk-breadcrumbs__list-item"
-          = link_to a[:name], a[:path], class: "govuk-breadcrumbs__link"
-      li class="govuk-breadcrumbs__list-item"
-        = breadcrumbs[:current][:name]
+  = render "components/govuk_breadcrumbs",
+          items: breadcrumbs[:items],
+          classes: local_assigns[:classes],
+          attributes: local_assigns[:attributes]
