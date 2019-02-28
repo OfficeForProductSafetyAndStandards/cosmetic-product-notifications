@@ -1,18 +1,21 @@
-.teams__user {
+.teams--user {
   margin: 0;
   border-top: 1px solid $govuk-border-colour;
   border-bottom: 1px solid $govuk-border-colour;
+
   & + & {
     border-top: 0;
   }
 }
 
-.teams__user_name, .teams__user_email {
+.teams--user-name,
+.teams--user-email {
   display: inline;
 }
 
 // The tick-cross styling has been adapted from
 // https://github.com/alphagov/notifications-admin/blob/master/app/assets/stylesheets/components/tick-cross.scss
+$semi-transparent-white: rgba(govuk-colour("white"), 0.6);
 
 %tick-cross {
 
@@ -47,7 +50,7 @@
     color: $govuk-secondary-text-colour;
     background-image: url('../images/cross-grey.png');
 
-    box-shadow: inset 20px 0 0 0 rgba(255, 255, 255, 0.6);
+    box-shadow: inset 20px 0 0 0 $semi-transparent-white;
 
     @if $govuk-is-ie8 {
       background-image: url('../images/cross-grey-16px.png');
