@@ -1,3 +1,40 @@
+.product-list {
+  padding-left: 0;
+}
+
+.product {
+
+  display: inline-block;
+  border-bottom: 1px solid $govuk-border-colour;
+  padding-bottom: 20px;
+
+  .product-title {
+    text-decoration: none;
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  .product-data {
+    width: 65%;
+    display: block;
+
+    dt {
+      min-width: 220px;
+    }
+
+    dd {
+      margin-left: 0;
+    }
+
+    dt,
+    dd {
+      display: inline-block;
+    }
+  }
+}
+
 .loading-spinner__container {
   border-color: govuk-colour("blue");
 
@@ -13,37 +50,6 @@
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
     animation-duration: 1s;
-  }
-}
-
-.product {
-  :first-of-type {
-    border-top: none;
-  }
-
-  :last-of-type {
-    border-bottom: none;
-  }
-
-  display: inline-block;
-
-  .product-data {
-    width: 65%;
-    display: block;
-    float: left;
-
-    dt {
-      min-width: 220px;
-    }
-
-    dd {
-      margin-left: 0;
-    }
-
-    dt,
-    dd {
-      display: inline-block;
-    }
   }
 }
 
