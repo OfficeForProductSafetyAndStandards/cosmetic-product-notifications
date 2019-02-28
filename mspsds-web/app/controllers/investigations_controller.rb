@@ -5,6 +5,7 @@ class InvestigationsController < ApplicationController
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[assign status visibility]
   before_action :set_investigation_with_associations, only: %i[show]
+  before_action :set_suggested_previous_assignees, only: :assign
   before_action :build_breadcrumbs, only: %i[show]
 
   # GET /cases
@@ -79,7 +80,7 @@ class InvestigationsController < ApplicationController
   # GET /cases/1/assign
   # PUT /cases/1/assign
   def assign
-    (@suggested_previous_assignees = suggested_previous_assignees) && return if request.get?
+    return if request.get?
 
     ps = assignee_update_params
 
@@ -189,5 +190,9 @@ private
 
   def build_breadcrumbs
     @breadcrumbs = build_breadcrumb_structure
+  end
+
+  def set_suggested_previous_assignees
+    @suggested_previous_assignees = suggested_previous_assignees
   end
 end
