@@ -1,6 +1,6 @@
 class CreatePendingResponsiblePersonUsers < ActiveRecord::Migration[5.2]
   disable_ddl_transaction!
-  
+
   def change
     create_table :pending_responsible_person_users do |t|
       t.string :email_address

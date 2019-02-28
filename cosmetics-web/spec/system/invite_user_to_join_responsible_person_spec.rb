@@ -22,7 +22,7 @@ RSpec.describe "Invite a user to join a responsible person", type: :system do
     fill_in "Email address", with: "inviteduser@example.com"
     click_on "Send invitation"
 
-    expect(current_path).to eq(responsible_person_team_members_path(responsible_person))
+    expect(page).to have_current_path(responsible_person_team_members_path(responsible_person))
     expect(NotifyMailer).to have_received(:send_responsible_person_invite_email)
   end
 
@@ -33,7 +33,7 @@ RSpec.describe "Invite a user to join a responsible person", type: :system do
 
     visit join_responsible_person_team_members_path(responsible_person, pending_responsible_person_user.key)
 
-    expect(current_path).to eq(responsible_person_path(responsible_person))
+    expect(page).to have_current_path(responsible_person_path(responsible_person))
     expect(responsible_person.reload.responsible_person_users.size).to eq(1)
   end
 end

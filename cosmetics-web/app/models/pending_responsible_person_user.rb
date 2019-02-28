@@ -8,7 +8,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
     1.day
   end
 
-  private
+private
 
   def set_key
     new_key = nil

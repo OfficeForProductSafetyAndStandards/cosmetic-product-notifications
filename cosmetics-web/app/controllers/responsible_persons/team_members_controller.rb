@@ -10,7 +10,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
     # Check if the user is already a member of the team
     if @responsible_person.responsible_person_users.any? { |user| user.email_address == team_member_params[:email_address] }
-        return redirect_to new_responsible_person_team_member_path(@responsible_person, user_already_exists: true)
+      return redirect_to new_responsible_person_team_member_path(@responsible_person, user_already_exists: true)
     end
 
     NotifyMailer.send_responsible_person_invite_email(@responsible_person, team_member_params[:email_address], User.current.full_name).deliver_later
@@ -23,7 +23,8 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
       User.current.email,
       params[:key],
       params[:responsible_person_id],
-      DateTime.current)  
+      DateTime.current
+)
 
     if pending_responsible_person_user.any?
       @responsible_person.add_user(User.current)

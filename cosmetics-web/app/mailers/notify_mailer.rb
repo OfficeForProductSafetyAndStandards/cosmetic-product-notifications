@@ -17,7 +17,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
   def send_responsible_person_invite_email(responsible_person, invited_email_address, inviting_user_name)
     PendingResponsiblePersonUser.where(
-      responsible_person_id: responsible_person.id, 
+      responsible_person_id: responsible_person.id,
       email_address: invited_email_address
     ).delete_all
 
