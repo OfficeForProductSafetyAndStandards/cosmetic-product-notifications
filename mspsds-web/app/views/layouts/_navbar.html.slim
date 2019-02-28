@@ -1,14 +1,17 @@
 nav.app-navigation.govuk-clearfix
   ul.app-navigation__list
     - unless User.current.is_opss?
-      li[class=(params[:controller] == "homepage" && "app-navigation--current-page")]
+      li class=(params[:controller] == "homepage" ? "app-navigation--current-page" : nil)
         = link_to "Home", '/', "data-topnav": "homepage", class: "govuk-link--no-visited-state"
-    li[class=(params[:controller] == "investigations" && "app-navigation--current-page")]
+    li class=(params[:controller] == "investigations" ? "app-navigation--current-page" : nil)
       = link_to "Cases", investigations_path, "data-topnav": "investigations", class: "govuk-link--no-visited-state"
-    li[class=(params[:controller] == "businesses" && "app-navigation--current-page")]
+    li class=(params[:controller] == "businesses" ? "app-navigation--current-page" : nil)
       = link_to "Businesses", businesses_path, "data-topnav": "businesses", class: "govuk-link--no-visited-state"
-    li[class=(params[:controller] == "products" && "app-navigation--current-page")]
+    li class=(params[:controller] == "products" ? "app-navigation--current-page" : nil)
       = link_to "Products", products_path, "data-topnav": "products", class: "govuk-link--no-visited-state"
-  .creation
-    = link_to "Create new", User.current.is_opss? ? new_investigation_path : new_ts_investigation_path,
-            class: "govuk-button govuk-button--start", role: "button"
+    li.right-aligned class=(params[:controller] == "teams" ? "app-navigation--current-page" : nil)
+      - if User.current.teams.count > 1
+        = link_to "My teams", my_teams_path, "data-topnav": "products", class: "govuk-link--no-visited-state"
+      - else
+        - team = User.current.teams.first
+        = link_to team.display_name, team_path(team), "data-topnav": "products", class: "govuk-link--no-visited-state"

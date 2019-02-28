@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :set_my_teams, only: :my_teams
-  before_action :set_team , only: :show
+  before_action :set_team, only: :show
 
   def index
     redirect_to :my_teams
@@ -10,8 +10,7 @@ class TeamsController < ApplicationController
     render :index
   end
 
-  def show
-  end
+  def show; end
 
 private
 
@@ -22,5 +21,4 @@ private
   def set_team
     @team = Team.find(params[:id])
   end
-
 end
