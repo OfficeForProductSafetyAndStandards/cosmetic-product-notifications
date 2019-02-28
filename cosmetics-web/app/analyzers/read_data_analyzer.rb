@@ -38,10 +38,17 @@ private
 
         if notification.errors.messages.present?
           if notification.errors.messages[:cpnp_reference].include? "Notification duplicated"
+            Rails.logger.error "File Upload Error: A notification for this product already
+              exists for this responsible person"
             raise NotificationDuplicationError
           elsif notification.errors.messages.values.any? { |message| message.include?("must not be blank") }
+            missing_values = []
+            messages.each { |key, value| missing_values << key if value.include? "must not be blank"}
+            Rails.logger.error "File Upload Error: There is missing data in the
+              notification: #{missing_values.join(', ')}"
             raise NotificationMissingDataError
           else
+            Rails.logger.error "File Upload Error: Notification validation error"
             raise NotificationValidationError
           end
         end
