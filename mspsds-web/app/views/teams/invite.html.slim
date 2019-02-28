@@ -1,0 +1,13 @@
+- content_for :page_title, "My teams"
+- content_for :after_header do
+  / TODO MSPSDS-1047 - confirm route back
+  = link_to "Back", root_path, class: "govuk-back-link"
+
+= form_with model: @new_user, url: invite_team_path(@team), method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-xl Invite a team member
+      = form.label :email_address
+      = form.text_field :email_address
+      = form.submit "Send invitation email", class: "govuk-button"

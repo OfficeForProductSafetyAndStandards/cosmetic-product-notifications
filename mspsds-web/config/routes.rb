@@ -76,7 +76,12 @@ Rails.application.routes.draw do
   resources :products, except: %i[new create destroy], concerns: %i[document_attachable]
 
   get "your-teams" => "teams#index"
-  resources :teams, only: %i[index show]
+  resources :teams, only: %i[index show] do
+    member do
+      get :invite
+      put :invite
+    end
+  end
 
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all
