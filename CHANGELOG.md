@@ -9,11 +9,13 @@ All notable changes to this project will be documented in this file.
 - Increase character limits on text inputs.
 - Make error summaries more consistent across pages.
 - Add a healthcheck endpoint.
+- Enable sidekiq UI.
 
 <!-- ### Cosmetics -->
 
 ### Next release checklist
 - [ ] Add `HEALTH_CHECK_USERNAME` and `HEALTH_CHECK_PASSWORD` environment variables.
+- [ ] Add `SIDEKIQ_USERNAME` and `SIDEKIQ_PASSWORD` environment variables.
 
 
 ## 2019-02-21
