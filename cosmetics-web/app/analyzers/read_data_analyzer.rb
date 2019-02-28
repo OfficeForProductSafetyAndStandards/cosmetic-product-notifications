@@ -2,6 +2,7 @@ require 'zip'
 
 class ReadDataAnalyzer < ActiveStorage::Analyzer
   extend AnalyzerHelper
+  include CpnpStaticFiles
 
   def initialize(blob)
     super(blob)
@@ -43,12 +44,18 @@ private
       @notification_file.update(upload_error: :product_file_not_found)
     rescue UnexpectedFileError
       @notification_file.update(upload_error: :unzipped_files_not_xml)
+    rescue UnexpectedStaticFilesError
+      @notification_file.update(upload_error: :static_files_differs)
     end
   end
 
   def get_product_xml_file
     download_blob_to_tempfile do |zip_file|
       Zip::File.open(zip_file.path) do |files|
+        if invalid_static_files(files)
+          raise UnexpectedStaticFilesError
+        end
+
         file_found = false
         files.each do |file|
           if file_is_pdf?(file)
@@ -60,6 +67,17 @@ private
         end
         raise ProductFileNotFoundError unless file_found
       end
+    end
+  end
+
+  def invalid_static_files(files)
+    files.any? do |file|
+      differs = is_static_file(file) && static_file_contents_differs(file)
+      if differs
+        Rails.logger.error "***** WARNING - different static file was detected! *****"
+        Rails.logger.error "Filename: #{file.name}"
+      end
+      differs
     end
   end
 
@@ -75,10 +93,11 @@ private
     /[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml/
   end
 
-  end
-
   def delete_notification_file
     @notification_file.destroy
+  end
+
+  class UnexpectedStaticFilesError < StandardError
   end
 
   class UnexpectedPdfFileError < StandardError
