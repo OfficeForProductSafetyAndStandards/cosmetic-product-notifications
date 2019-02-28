@@ -38,14 +38,14 @@ class Activity < ApplicationRecord
 
     teams_to_notify.each do |team|
       if team.team_recipient_email.present?
-        NotifyMailer.updated_investigation(investigation.pretty_id, team.name, team.team_recipient_email, email_update_text, email_subject_text).deliver_later
+        NotifyMailer.investigation_updated(investigation.pretty_id, team.name, team.team_recipient_email, email_update_text, email_subject_text).deliver_later
       else
         users_who_need_notification = users_who_need_notification + team.users
       end
     end
 
     users_who_need_notification.uniq.each do |user|
-      NotifyMailer.updated_investigation(investigation.pretty_id, user.full_name, user.email, email_update_text, email_subject_text).deliver_later
+      NotifyMailer.investigation_updated(investigation.pretty_id, user.full_name, user.email, email_update_text, email_subject_text).deliver_later
     end
   end
 

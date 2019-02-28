@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Shared::Web::Concerns::AuthenticationConcern
+  include Shared::Web::Concerns::RavenConfigurationConcern
   include HttpAuthConcern
 
   helper Shared::Web::Engine.helpers
@@ -7,6 +8,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   before_action :set_current_user
+  before_action :set_raven_context
   before_action :create_or_join_responsible_person
 
   def create_or_join_responsible_person
