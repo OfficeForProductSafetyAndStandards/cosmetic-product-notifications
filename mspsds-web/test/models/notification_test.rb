@@ -133,7 +133,7 @@ class NotificationTest < ActiveSupport::TestCase
   def mock_investigation_created(who_will_be_notified: [])
     notify_mailer_return_value = ""
     @number_of_notifications = 0
-    allow(notify_mailer_return_value ).to receive(:deliver_later)
+    allow(notify_mailer_return_value).to receive(:deliver_later)
     allow(NotifyMailer).to receive(:investigation_created) do |_id, user_name, _user_email, _investigation_title, _investigation_type|
       @number_of_notifications += 1
       assert_includes who_will_be_notified.map(&:full_name), user_name
