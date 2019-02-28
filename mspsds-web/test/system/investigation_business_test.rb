@@ -39,7 +39,7 @@ class InvestigationBusinessTest < ApplicationSystemTestCase
   end
 
   test "cannot allow business type other to be empty" do
-    select_business_type_other
+    choose "business_type_other", visible: false
     assert_text 'Please enter a business type "Other"'
   end
 
