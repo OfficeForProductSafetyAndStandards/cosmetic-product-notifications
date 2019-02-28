@@ -30,14 +30,14 @@ en:
       notification_file:
         upload_errors:
           uploaded_file_not_a_zip: "Uploaded file is not a ZIP file"
-          unzipped_files_not_xml: "Unzipped files are not XML files"
-          unzipped_files_are_pdf: "Unzipped files are PDF files"
-          file_flagged_as_virus: "Uploaded file flagged as a virus"
           file_size_too_big: "Uploaded file exceeds size limit"
-          notification_validation_error: "Unknown error"
-          notification_duplicated: "A notification for this file already exists"
+          file_flagged_as_virus: "Uploaded file flagged as a virus"
+          unzipped_files_are_pdf: "Unzipped files are PDF files"
           product_file_not_found: "Product file not found"
-          unknown_error: "Unknown error"
+          notification_duplicated: "A notification for this file already exists for this Responsible Person"
+          notification_validation_error: "Something went wrong, try again or manually register product"
+          notification_missing_data: "There is missing data in the notification"
+          unknown_error: "Something went wrong, try again or manually register product"
   errors:
     format: "%{message}"
     messages:

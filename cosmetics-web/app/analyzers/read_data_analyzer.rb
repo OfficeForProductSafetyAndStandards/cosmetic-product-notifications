@@ -35,13 +35,27 @@ private
                                           responsible_person: @notification_file.responsible_person)
         notification.notification_file_parsed!
         notification.save
+
+        if notification.errors.messages.present?
+          if notification.errors.messages[:cpnp_reference].include? "Notification duplicated"
+            raise NotificationDuplicationError
+          elsif notification.errors.messages.values.any? { |message| message.include?("must not be blank") }
+            raise NotificationMissingDataError
+          else
+            raise NotificationValidationError
+          end
+        end
       end
     rescue UnexpectedPdfFileError
       @notification_file.update(upload_error: :unzipped_files_are_pdf)
     rescue ProductFileNotFoundError
       @notification_file.update(upload_error: :product_file_not_found)
-    rescue UnexpectedFileError
-      @notification_file.update(upload_error: :unzipped_files_not_xml)
+    rescue NotificationDuplicationError
+      @notification_file.update(upload_error: :notification_duplicated)
+    rescue NotificationMissingDataError
+      @notification_file.update(upload_error: :notification_missing_data)
+    rescue NotificationValidationError
+      @notification_file.update(upload_error: :notification_validation_error)
     end
   end
 
@@ -81,9 +95,15 @@ private
   class UnexpectedPdfFileError < StandardError
   end
 
-  class UnexpectedFileError < StandardError
+  class ProductFileNotFoundError < StandardError
   end
 
-  class ProductFileNotFoundError < StandardError
+  class NotificationDuplicationError < StandardError
+  end
+
+  class NotificationMissingDataError < StandardError
+  end
+
+  class NotificationValidationError < StandardError
   end
 end
