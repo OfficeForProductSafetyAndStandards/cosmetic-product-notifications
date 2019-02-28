@@ -5,7 +5,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
 
   before do
-    sign_in_as_member_of_responsible_person(responsible_person, user: user)
+    sign_in_as_member_of_responsible_person(responsible_person, user)
   end
 
   after do
