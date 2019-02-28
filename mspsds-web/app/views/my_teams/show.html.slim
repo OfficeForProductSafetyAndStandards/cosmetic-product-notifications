@@ -13,14 +13,15 @@
       /   = form.text_field :email_address
       /   = form.hidden_field :team, value: team.id
       ul.govuk-list
-        - team.users.each do |person|
+        - team.users.each do |user|
           li.my_teams__user class="govuk-!-padding-top-3 govuk-!-padding-bottom-3"
             h3.govuk-heading-s class="govuk-!-margin-bottom-2"
-              span.my_teams__user_name = person.full_name
+              span.my_teams__user_name = user.full_name
               '
-              span.govuk-caption-m.my_teams__user_email = person.email
+              span.govuk-caption-m.my_teams__user_email = user.email
             ul.govuk-list class="govuk-!-margin-0"
               li
-                span class="tick-cross-#{"tick"}"
-                  span.govuk-visually-hidden Can
+                - is_admin = user.is_team_admin?
+                span class="tick-cross-#{is_admin ? "tick" : "cross"}"
+                  span.govuk-visually-hidden = is_admin ? "Can" : "Cannot"
                   | Manage team membership

@@ -1704,6 +1704,13 @@
         "containerId" : "68531a90-8123-44ae-9bc7-21df38edbe52"
       } ],
       "mspsds-app" : [ {
+        "id": "e6aed038-289d-4aca-8a07-21537f618a81",
+        "name": "team_admin",
+        "description": "Users with team-admin roles are allowed to change team memberships in mspsds",
+        "composite": false,
+        "clientRole": true,
+        "containerId": "629299db-762e-49a8-aeff-b6e5f64b9e52"
+      },{
         "id" : "a06d9d2f-18b8-46c8-8111-ebf89f5579a8",
         "name" : "opss_user",
         "description" : "OPSS users",
