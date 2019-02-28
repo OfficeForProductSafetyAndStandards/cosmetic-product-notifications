@@ -33,7 +33,7 @@ en:
           file_size_too_big: "The uploaded file exceeds the size limit"
           file_flagged_as_virus: "The uploaded file has been flagged as a virus"
           unzipped_files_are_pdf: "The unzipped files are PDF files"
-          product_file_not_found: "The ZIP file does not contain product XML files"
+          product_file_not_found: "The ZIP file does not contain a product XML file"
           notification_duplicated: "A notification for this product already exists for this responsible person"
           notification_validation_error: "Try again or manually register the product"
           notification_missing_data: "There is missing data in the notification"

@@ -44,8 +44,8 @@ private
         if notification.errors.messages.present?
           if notification.errors.messages[:cpnp_reference].include? "Notification duplicated"
             Rails.logger.error "File Upload Error: A notification for this product already
-              exists for this responsible person"
-            raise NotificationDuplicationError
+              exists for this responsible person (CPNP reference no. #{notification.cpnp_reference})"
+            raise DuplicateNotificationError
           elsif notification.errors.messages.values.any? { |message| message.include?("must not be blank") }
             missing_values = []
             messages.each { |key, value| missing_values << key if value.include? "must not be blank"}
@@ -53,7 +53,7 @@ private
               notification: #{missing_values.join(', ')}"
             raise NotificationMissingDataError
           else
-            Rails.logger.error "File Upload Error: Notification validation error"
+            Rails.logger.error "File Upload Error: Notification validation error. #{notification.errors.messages}"
             raise NotificationValidationError
           end
         end
@@ -62,7 +62,7 @@ private
       @notification_file.update(upload_error: :unzipped_files_are_pdf)
     rescue ProductFileNotFoundError
       @notification_file.update(upload_error: :product_file_not_found)
-    rescue NotificationDuplicationError
+    rescue DuplicateNotificationError
       @notification_file.update(upload_error: :notification_duplicated)
     rescue NotificationMissingDataError
       @notification_file.update(upload_error: :notification_missing_data)
@@ -70,6 +70,8 @@ private
       @notification_file.update(upload_error: :notification_validation_error)
     rescue DraftNotificationError
       @notification_file.update(upload_error: :draft_notification_error)
+    rescue
+      @notification_file.update(upload_error: :unknown_error)
     end
   end
 
@@ -112,7 +114,7 @@ private
   class ProductFileNotFoundError < StandardError
   end
 
-  class NotificationDuplicationError < StandardError
+  class DuplicateNotificationError < StandardError
   end
 
   class NotificationMissingDataError < StandardError
