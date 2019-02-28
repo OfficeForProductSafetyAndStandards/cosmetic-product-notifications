@@ -29,15 +29,15 @@ en:
         postal_code: "Postcode"
       notification_file:
         upload_errors:
-          uploaded_file_not_a_zip: "Uploaded file is not a ZIP file"
-          file_size_too_big: "Uploaded file exceeds size limit"
-          file_flagged_as_virus: "Uploaded file flagged as a virus"
-          unzipped_files_are_pdf: "Unzipped files are PDF files"
-          product_file_not_found: "Product file not found"
-          notification_duplicated: "A notification for this file already exists for this Responsible Person"
-          notification_validation_error: "Something went wrong, try again or manually register product"
+          uploaded_file_not_a_zip: "The uploaded file is not a ZIP file"
+          file_size_too_big: "The uploaded file exceeds the size limit"
+          file_flagged_as_virus: "The uploaded file has been flagged as a virus"
+          unzipped_files_are_pdf: "The unzipped files are PDF files"
+          product_file_not_found: "The ZIP file does not contain product XML files"
+          notification_duplicated: "A notification for this product already exists for this responsible person"
+          notification_validation_error: "Try again or manually register the product"
           notification_missing_data: "There is missing data in the notification"
-          unknown_error: "Something went wrong, try again or manually register product"
+          unknown_error: "Try again or manually register the product"
   errors:
     format: "%{message}"
     messages:
