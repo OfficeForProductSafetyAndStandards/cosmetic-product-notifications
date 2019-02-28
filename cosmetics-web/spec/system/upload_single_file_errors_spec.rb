@@ -53,10 +53,7 @@ RSpec.describe "Upload a single file errors", type: :system do
   end
 
   it "shows an error when a product with the same CPNP reference already exists for this RP" do
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('notification_file[uploaded_file]',
-                     Rails.root + 'spec/fixtures/testExportFile.zip')
-    click_button "Upload"
+    Notification.create(responsible_person: responsible_person, cpnp_reference: "1000094")
     visit new_responsible_person_notification_file_path(responsible_person)
     page.attach_file('notification_file[uploaded_file]',
                      Rails.root + 'spec/fixtures/testExportFile.zip')
@@ -64,12 +61,12 @@ RSpec.describe "Upload a single file errors", type: :system do
     expect(page).to have_text("A notification for this product already exists for this responsible person")
   end
 
-  it "shows an error when the uploaded file is missing product data" do
+  it "shows an error when the uploaded file can not be validated" do
     visit new_responsible_person_notification_file_path(responsible_person)
     page.attach_file('notification_file[uploaded_file]',
                      Rails.root + 'spec/fixtures/testExportWithMissingData.zip')
     click_button "Upload"
-    expect(page).to have_text("There is missing data in the notification")
+    expect(page).to have_text("Try again or manually register the product")
   end
 
   it "shows an error when the uploaded file contains a draft notification" do

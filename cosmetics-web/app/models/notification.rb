@@ -22,7 +22,7 @@ class Notification < ApplicationRecord
 
   validate :all_required_attributes_must_be_set
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: "Notification duplicated" },
-            :allow_nil => true
+            allow_nil: true
 
   # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do

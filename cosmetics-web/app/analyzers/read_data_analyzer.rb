@@ -46,12 +46,6 @@ private
             Rails.logger.error "File Upload Error: A notification for this product already
               exists for this responsible person (CPNP reference no. #{notification.cpnp_reference})"
             raise DuplicateNotificationError
-          elsif notification.errors.messages.values.any? { |message| message.include?("must not be blank") }
-            missing_values = []
-            messages.each { |key, value| missing_values << key if value.include? "must not be blank"}
-            Rails.logger.error "File Upload Error: There is missing data in the
-              notification: #{missing_values.join(', ')}"
-            raise NotificationMissingDataError
           else
             Rails.logger.error "File Upload Error: Notification validation error. #{notification.errors.messages}"
             raise NotificationValidationError
@@ -64,13 +58,11 @@ private
       @notification_file.update(upload_error: :product_file_not_found)
     rescue DuplicateNotificationError
       @notification_file.update(upload_error: :notification_duplicated)
-    rescue NotificationMissingDataError
-      @notification_file.update(upload_error: :notification_missing_data)
     rescue NotificationValidationError
       @notification_file.update(upload_error: :notification_validation_error)
     rescue DraftNotificationError
       @notification_file.update(upload_error: :draft_notification_error)
-    rescue
+    rescue StandardError
       @notification_file.update(upload_error: :unknown_error)
     end
   end

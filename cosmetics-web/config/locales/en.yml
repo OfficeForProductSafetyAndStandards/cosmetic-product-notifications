@@ -36,7 +36,6 @@ en:
           product_file_not_found: "The ZIP file does not contain a product XML file"
           notification_duplicated: "A notification for this product already exists for this responsible person"
           notification_validation_error: "Try again or manually register the product"
-          notification_missing_data: "There is missing data in the notification"
           draft_notification_error: "The uploaded file is for a draft notification"
           unknown_error: "Try again or manually register the product"
   errors:

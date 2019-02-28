@@ -14,7 +14,6 @@ class NotificationFile < ApplicationRecord
       product_file_not_found: "product_file_not_found",
       notification_duplicated: "notification_duplicated",
       notification_validation_error: "notification_validation_error",
-      notification_missing_data: "notification_missing_data",
       draft_notification_error: "draft_notification_error",
       unknown_error: "unknown_error"
   }
