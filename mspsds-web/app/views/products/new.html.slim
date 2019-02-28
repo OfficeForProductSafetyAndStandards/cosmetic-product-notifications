@@ -3,9 +3,9 @@
   = link_to "Back to list", products_path, class: "govuk-back-link"
 
 = form_with model: @product, local: true do |form|
-  = render "form_components/govuk_error_summary", form: form
-  h1.govuk-heading-xl
-    | New product
   .govuk-grid-row
-    .govuk-grid-column-one-half
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-xl
+        | New product
       = render "form", form: form, product: @product, countries: @countries, search: true
