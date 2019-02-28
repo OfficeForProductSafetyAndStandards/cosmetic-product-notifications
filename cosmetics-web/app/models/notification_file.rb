@@ -15,6 +15,7 @@ class NotificationFile < ApplicationRecord
       notification_duplicated: "notification_duplicated",
       notification_validation_error: "notification_validation_error",
       notification_missing_data: "notification_missing_data",
+      draft_notification_error: "draft_notification_error",
       unknown_error: "unknown_error"
   }
 

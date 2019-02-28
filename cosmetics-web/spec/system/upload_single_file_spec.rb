@@ -81,6 +81,14 @@ RSpec.describe "Upload a single file", type: :system do
     expect(page).to have_text("There is missing data in the notification")
   end
 
+  it "shows an error when the uploaded file contains a draft notification" do
+    visit new_responsible_person_notification_file_path(responsible_person)
+    page.attach_file('notification_file[uploaded_file]',
+                     Rails.root + 'spec/fixtures/testDraftNotification.zip')
+    click_button "Upload"
+    expect(page).to have_text("The uploaded file is for a draft notification")
+  end
+
   it "set basic info of notification based on the uploaded file" do
     visit new_responsible_person_notification_file_path(responsible_person)
     page.attach_file('notification_file[uploaded_file]',

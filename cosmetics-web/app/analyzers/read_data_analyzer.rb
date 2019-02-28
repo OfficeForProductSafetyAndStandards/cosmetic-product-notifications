@@ -27,14 +27,19 @@ private
     begin
       get_product_xml_file do |product_xml_file|
         cpnp_export_info = CpnpExport.new(product_xml_file)
-        notification = ::Notification.new(product_name: cpnp_export_info.product_name,
-                                          cpnp_reference: cpnp_export_info.cpnp_reference,
-                                          cpnp_is_imported: cpnp_export_info.is_imported,
-                                          cpnp_imported_country: cpnp_export_info.imported_country,
-                                          shades: cpnp_export_info.shades,
-                                          responsible_person: @notification_file.responsible_person)
-        notification.notification_file_parsed!
-        notification.save
+        if cpnp_export_info.notification_status == "DR"
+          Rails.logger.error "File Upload Error: Draft notification uploaded"
+          raise DraftNotificationError
+        else
+          notification = ::Notification.new(product_name: cpnp_export_info.product_name,
+                                            cpnp_reference: cpnp_export_info.cpnp_reference,
+                                            cpnp_is_imported: cpnp_export_info.is_imported,
+                                            cpnp_imported_country: cpnp_export_info.imported_country,
+                                            shades: cpnp_export_info.shades,
+                                            responsible_person: @notification_file.responsible_person)
+          notification.notification_file_parsed!
+          notification.save
+        end
 
         if notification.errors.messages.present?
           if notification.errors.messages[:cpnp_reference].include? "Notification duplicated"
@@ -63,6 +68,8 @@ private
       @notification_file.update(upload_error: :notification_missing_data)
     rescue NotificationValidationError
       @notification_file.update(upload_error: :notification_validation_error)
+    rescue DraftNotificationError
+      @notification_file.update(upload_error: :draft_notification_error)
     end
   end
 
@@ -112,5 +119,8 @@ private
   end
 
   class NotificationValidationError < StandardError
+  end
+
+  class DraftNotificationError < StandardError
   end
 end
