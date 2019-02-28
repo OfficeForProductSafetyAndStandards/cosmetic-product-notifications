@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - Add a healthcheck endpoint.
 - Enable sidekiq UI.
 - Send confirmation email to current user on creation of a case.
+- Add support for team mailboxes. When a team with one is supposed to be notified, the email will be sent just to
+team mailbox, rather than to all of its members. 
 
 <!-- ### Cosmetics -->
 

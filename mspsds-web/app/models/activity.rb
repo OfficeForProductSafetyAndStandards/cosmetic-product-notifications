@@ -50,15 +50,17 @@ class Activity < ApplicationRecord
   end
 
   def users_to_notify
-    users = []
-    users << investigation.assignee if (investigation.assignee.is_a? User) && (source.user != investigation.assignee)
-    users
+    return [] unless investigation.assignee.is_a? User
+    return [] if source.user == investigation.assignee
+
+    [investigation.assignee]
   end
 
   def teams_to_notify
-    teams = []
-    teams << investigation.assignee if (investigation.assignee.is_a? Team) && (source&.user&.teams&.exclude? investigation.assignee)
-    teams
+    return [] unless investigation.assignee.is_a? Team
+    return [] if source&.user&.teams&.include? investigation.assignee
+
+    [investigation.assignee]
   end
 
   def email_update_text; end
