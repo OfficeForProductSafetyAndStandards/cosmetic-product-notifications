@@ -75,8 +75,8 @@ Rails.application.routes.draw do
 
   resources :products, concerns: %i[document_attachable]
 
-  # TODO MSPSDS-1046 can we turn it into `my-teams`?
-  resource :my_teams, only: %i[show]
+  get "my-teams" => "teams#my_teams"
+  resources :teams, only: %i[index]
 
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all

@@ -14,11 +14,11 @@
       /   = form.hidden_field :team, value: team.id
       ul.govuk-list
         - team.users.each do |user|
-          li.my_teams__user class="govuk-!-padding-top-3 govuk-!-padding-bottom-3"
+          li.teams__user class="govuk-!-padding-top-3 govuk-!-padding-bottom-3"
             h3.govuk-heading-s class="govuk-!-margin-bottom-2"
-              span.my_teams__user_name = user.full_name
+              span.teams__user_name = user.full_name
               '
-              span.govuk-caption-m.my_teams__user_email = user.email
+              span.govuk-caption-m.teams__user_email = user.email
             ul.govuk-list class="govuk-!-margin-0"
               li
                 - is_admin = user.is_team_admin?
