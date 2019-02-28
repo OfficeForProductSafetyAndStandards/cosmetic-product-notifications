@@ -13,7 +13,7 @@ ruby:
   area_classes = ["govuk-textarea", local_assigns[:classes]]
   area_classes.push("govuk-textarea--error") if local_assigns[:errorMessage].present?
 
-.govuk-form-group class=form_group_classes id=local_assigns[:group_id]
+.govuk-form-group class=form_group_classes
   = render "components/govuk_label", for: id, **label
 
   - if has_hint
