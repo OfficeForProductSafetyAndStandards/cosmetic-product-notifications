@@ -5,7 +5,7 @@ class Investigations::AlertsController < ApplicationController
   steps :about_alerts, :compose, :preview
 
   before_action :set_investigation
-  before_action :set_default_description, only: %i[show update], if: -> { step == :compose }
+  before_action :set_default_field_values, only: %i[show update], if: -> { step == :compose }
   before_action :set_alert, only: %i[show update], if: -> { %i[compose preview].include? step }
   before_action :store_alert, only: :update, if: -> { step == :compose }
 
@@ -43,7 +43,10 @@ private
   def alert_valid?
     @alert.valid?
     if @alert.description.blank? || @alert.description == @default_description
-      @alert.errors.add(:description, "Please provide email content XXXXXX")
+      @alert.errors.add(:description, "Please provide alert content XXXXXX")
+    end
+    if @alert.summary.blank? || @alert.summary == @default_summary
+      @alert.errors.add(:summary, "Please provide an alert subject XXXXXX")
     end
     @alert.errors.none?
   end
@@ -57,7 +60,8 @@ private
     @alert = Alert.new alert_params.merge(investigation_id: @investigation.id)
   end
 
-  def set_default_description
+  def set_default_field_values
+    @default_summary = "Product safety alert: "
     @default_description = "\r\n\r\n\r\nMore details can be found on the case page: #{investigation_url @investigation}"
   end
 
