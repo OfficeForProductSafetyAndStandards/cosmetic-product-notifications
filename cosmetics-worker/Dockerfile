@@ -8,12 +8,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install -y \
   build-essential \
   nodejs \
-  yarn \
-  clamav \
-  clamav-daemon
-
-# Run ClamAV as root to avoid permissions issues
-RUN sed -i 's/User clamav/User root/g' /etc/clamav/clamd.conf
+  yarn
 
 WORKDIR /cosmetics-web
 
