@@ -17,5 +17,5 @@
             li
               - is_admin = user.is_team_admin?
               span class="tick-cross-#{is_admin ? "tick" : "cross"}"
-                span.govuk-visually-hidden = is_admin ? "Can" : "Cannot"
+                span.govuk-visually-hidden = is_admin ? "Can " : "Cannot "
                 | Manage team membership
