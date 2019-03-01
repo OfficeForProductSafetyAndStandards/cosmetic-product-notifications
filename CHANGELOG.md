@@ -11,12 +11,14 @@ All notable changes to this project will be documented in this file.
 - Add a healthcheck endpoint.
 - Enable sidekiq UI.
 - Send confirmation email to current user on creation of a case.
+- Allow users to view their team members.
 
 <!-- ### Cosmetics -->
 
 ### Next release checklist
 - [ ] Add `HEALTH_CHECK_USERNAME` and `HEALTH_CHECK_PASSWORD` environment variables.
 - [ ] Add `SIDEKIQ_USERNAME` and `SIDEKIQ_PASSWORD` environment variables.
+- [ ] Add `team_admin` role to mspsds client on keycloak
 
 
 ## 2019-02-21
