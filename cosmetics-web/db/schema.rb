@@ -136,8 +136,8 @@ ActiveRecord::Schema.define(version: 2019_02_21_134903) do
   create_table "trigger_question_elements", force: :cascade do |t|
     t.integer "answer_order"
     t.string "answer"
-    t.integer "element_id"
     t.integer "element_order"
+    t.string "element"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "trigger_question_id"
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_134903) do
   end
 
   create_table "trigger_questions", force: :cascade do |t|
-    t.integer "question_id"
+    t.string "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "component_id"

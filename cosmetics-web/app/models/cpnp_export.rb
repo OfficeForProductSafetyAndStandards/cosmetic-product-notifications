@@ -43,14 +43,14 @@ private
 
   def trigger_questions(component_node)
     component_node.xpath('.//quetionList/question').collect do |question_node|
-      question_id = question_node.xpath('.//questionID').first&.text.to_i
+      question = trigger_rules_question(question_node)
       question_elements = question_node.xpath('.//questionElement').collect do |question_element_node|
         TriggerQuestionElement.create(answer_order: question_element_node.xpath('.//answerOrder').first&.text.to_i,
                                       answer: question_element_node.xpath('.//answer').first&.text,
-                                      element_id: question_element_node.xpath('.//elementID').first&.text.to_i,
-                                      element_order: question_element_node.xpath('.//elementOrder').first&.text.to_i)
+                                      element_order: question_element_node.xpath('.//elementOrder').first&.text.to_i,
+                                      element: trigger_rules_question_element(question_element_node))
       end
-      TriggerQuestion.create(question_id: question_id,
+      TriggerQuestion.create(question: question,
                              trigger_question_elements: question_elements)
     end
   end
@@ -67,6 +67,14 @@ private
       RangeFormula.create(inci_name: formula_node.xpath('.//inciName').first&.text,
                           range: formula_node.xpath('.//range').first&.text)
     end
+  end
+
+  def trigger_rules_question_element(question_element_node)
+    get_trigger_rules_question_element(question_element_node.xpath('.//elementID').first&.text.to_i)
+  end
+
+  def trigger_rules_question(question_node)
+    get_trigger_rules_question(question_node.xpath('.//questionID').first&.text.to_i)
   end
 
   def frame_formulation(component_node)

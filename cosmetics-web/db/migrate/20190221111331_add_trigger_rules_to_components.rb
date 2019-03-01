@@ -3,7 +3,7 @@ class AddTriggerRulesToComponents < ActiveRecord::Migration[5.2]
 
   def change
     create_table :trigger_questions do |t|
-      t.integer :question_id
+      t.string :question
 
       t.timestamps
     end
@@ -14,8 +14,8 @@ class AddTriggerRulesToComponents < ActiveRecord::Migration[5.2]
     create_table :trigger_question_elements do |t|
       t.integer :answer_order
       t.string :answer
-      t.integer :element_id
       t.integer :element_order
+      t.string :element
 
       t.timestamps
     end
