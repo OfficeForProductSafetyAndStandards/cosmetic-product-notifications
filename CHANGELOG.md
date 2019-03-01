@@ -18,8 +18,9 @@ All notable changes to this project will be documented in this file.
 ### Next release checklist
 - [ ] Add `HEALTH_CHECK_USERNAME` and `HEALTH_CHECK_PASSWORD` environment variables.
 - [ ] Add `SIDEKIQ_USERNAME` and `SIDEKIQ_PASSWORD` environment variables.
+- [ ] Deploy the antivirus API.
+- [ ] Add `ANTIVIRUS_URL`, `ANTIVIRUS_USERNAME` and `ANTIVIRUS_PASSWORD` environment variables.
 - [ ] Add `team_admin` role to mspsds client on keycloak
-
 
 ## 2019-02-21
 ### General
