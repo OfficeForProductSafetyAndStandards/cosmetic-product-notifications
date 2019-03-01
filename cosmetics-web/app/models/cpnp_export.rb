@@ -2,12 +2,13 @@ class CpnpExport
   include ::Shared::Web::CountriesHelper
   include CpnpNotificationInfo
 
-  def initialize(xml_file_content)
+  def initialize(xml_file_content, language = 'EN')
     @xml_doc = Nokogiri::XML(xml_file_content.gsub('sanco-xmlgate:', ''))
+    @language = language
   end
 
-  def product_name(_language = 'EN')
-    name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName[language='EN']/name").first&.text
+  def product_name()
+    name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName[language='#{@language}']/name").first&.text
     name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName/name").first&.text if name.blank?
     name
   end
@@ -30,7 +31,8 @@ class CpnpExport
 
   def components
     current_version_component_lists_node.xpath('.//component').collect do |component_node|
-      Component.create(notification_type: notification_type(component_node),
+      Component.create(name: component_name(component_node),
+                       notification_type: notification_type(component_node),
                        sub_sub_category: sub_sub_category(component_node),
                        frame_formulation: frame_formulation(component_node),
                        exact_formulas: exact_formulas(component_node),
@@ -83,6 +85,10 @@ private
 
   def notification_type(component_node)
     get_notification_type(component_node.xpath('.//notificationType').first&.text.to_i)
+  end
+
+  def component_name(component_node)
+    component_node.xpath(".//componentName[language='#{@language}']/name").first&.text
   end
 
   def sub_sub_category(component_node)
