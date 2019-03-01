@@ -36,11 +36,14 @@ PATH
       clamby (= 1.6.1)
       govuk_notify_rails (= 2.1.0)
       keycloak (= 2.4.1)
+      lograge (= 0.10.0)
       mini_magick (= 4.9.3)
       rails (~> 5.2)
       request_store (= 1.4.1)
+      sentry-raven (= 2.9.0)
       sidekiq (= 5.2.5)
       sidekiq-cron (= 1.1.0)
+      slowpoke (= 0.2.1)
       webpacker (= 4.0.0.rc.7)
 
 GEM
@@ -438,7 +441,6 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   jbuilder (~> 2.8)
-  lograge
   okcomputer
   pg (~> 1.1)
   pghero
@@ -451,11 +453,9 @@ DEPENDENCIES
   rspec-mocks
   rubyzip (>= 1.2.1)
   selenium-webdriver
-  sentry-raven
   shared-web!
   shared-web-dev!
   slim-rails
-  slowpoke
   strong_migrations
   wicked
   wicked_pdf
