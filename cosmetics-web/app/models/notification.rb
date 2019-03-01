@@ -108,6 +108,10 @@ class Notification < ApplicationRecord
     reference_number.to_s
   end
 
+  def formulation_required?
+    components.any?(&:formulation_required?)
+  end
+
 private
 
   def all_required_attributes_must_be_set

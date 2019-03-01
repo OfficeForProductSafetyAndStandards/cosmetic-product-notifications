@@ -51,6 +51,17 @@ class Component < ApplicationRecord
   def display_root_category
     get_category_name(root_category)
   end
+  
+  def formulation_required?
+    case notification_type
+    when "range"
+      !formulation_file.attached? && range_formulas&.length == 0
+    when "exact"
+      !formulation_file.attached? && exact_formulas&.length == 0
+    else
+      false
+    end
+  end
 
 private
 
