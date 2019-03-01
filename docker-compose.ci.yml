@@ -12,6 +12,9 @@ services:
       - NOTIFY_API_KEY='fake-key'
     image: ${DOCKER_USERNAME}/keycloak:${TRAVIS_BUILD_NUMBER}
   
+  antivirus:
+    image: ${DOCKER_USERNAME}/antivirus:${TRAVIS_BUILD_NUMBER}
+
   cosmetics-web:
     command: tail -f /dev/null
     image: ${DOCKER_USERNAME}/cosmetics-web:${TRAVIS_BUILD_NUMBER}
