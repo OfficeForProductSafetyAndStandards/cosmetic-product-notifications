@@ -28,14 +28,14 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
   end
 
   def users_to_notify
-    compute_relevant_entities(model: User, compute_users_from_entity: Proc.new{|user| [user]})
+    compute_relevant_entities(model: User, compute_users_from_entity: Proc.new { |user| [user] })
   end
 
   def teams_to_notify
-    compute_relevant_entities(model: Team, compute_users_from_entity: Proc.new{|team| team.users})
+    compute_relevant_entities(model: Team, compute_users_from_entity: Proc.new { |team| team.users })
   end
 
-  def compute_relevant_entities(model: , compute_users_from_entity:)
+  def compute_relevant_entities(model:, compute_users_from_entity:)
     previous_assignee_id = investigation.saved_changes["assignable_id"][0]
     previous_assignee = model.find_by(id: previous_assignee_id)
     new_assignee = investigation.assignee
