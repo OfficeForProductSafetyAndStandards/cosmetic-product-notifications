@@ -1,5 +1,0 @@
----
-packages:
-  - debconf
-  - clamav
-  - clamav-daemon
