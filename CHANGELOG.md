@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Make error summaries more consistent across pages.
 - Add a healthcheck endpoint.
 - Enable sidekiq UI.
+- Send confirmation email to current user on creation of a case.
 
 <!-- ### Cosmetics -->
 
