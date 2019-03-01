@@ -1,7 +1,7 @@
 module FileHelpers
   def mock_antivirus_api
     response = double
-    allow(response).to receive(:body).and_return({safe: true}.to_json)
+    allow(response).to receive(:body).and_return({ safe: true }.to_json)
     allow(RestClient::Request).to receive(:execute).with(hash_including(url: ENV["ANTIVIRUS_URL"])).and_return(response)
   end
 
