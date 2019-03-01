@@ -1,14 +1,8 @@
 class TeamsController < ApplicationController
-  before_action :set_my_teams, only: :my_teams
+  before_action :set_my_teams, only: :index
   before_action :set_team, only: :show
 
-  def index
-    redirect_to :my_teams
-  end
-
-  def my_teams
-    render :index
-  end
+  def index; end
 
   def show; end
 
