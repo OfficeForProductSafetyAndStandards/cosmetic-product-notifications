@@ -7,6 +7,7 @@ COMPONENTS=(
     'db'
     'elasticsearch'
     'keycloak'
+    'antivirus'
     'cosmetics-web'
     'cosmetics-worker'
     'mspsds-web'

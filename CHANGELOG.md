@@ -19,6 +19,8 @@ team mailbox, rather than to all of its members.
 ### Next release checklist
 - [ ] Add `HEALTH_CHECK_USERNAME` and `HEALTH_CHECK_PASSWORD` environment variables.
 - [ ] Add `SIDEKIQ_USERNAME` and `SIDEKIQ_PASSWORD` environment variables.
+- [ ] Deploy the antivirus API.
+- [ ] Add `ANTIVIRUS_URL`, `ANTIVIRUS_USERNAME` and `ANTIVIRUS_PASSWORD` environment variables.
 
 
 ## 2019-02-21
