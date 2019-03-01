@@ -5,12 +5,12 @@ RSpec.describe "Upload a single file errors", type: :system do
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
-    mock_antivirus
+    mock_antivirus_api
   end
 
   after do
     sign_out
-    unmock_antivirus
+    unmock_antivirus_api
   end
 
   it "shows an error when no file is selected for upload" do
