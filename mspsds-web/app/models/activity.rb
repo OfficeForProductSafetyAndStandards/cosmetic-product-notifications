@@ -34,19 +34,24 @@ class Activity < ApplicationRecord
   end
 
   def notify_relevant_users
-    users_who_need_notification = users_to_notify
+    entities_to_notify.each do |entity|
+      NotifyMailer.investigation_updated(investigation.pretty_id, entity[:name], entity[:email], email_update_text, email_subject_text).deliver_later
+    end
+  end
+
+  def entities_to_notify
+    entities = users_to_notify.map {|user| {name: user.full_name, email: user.email}}
 
     teams_to_notify.each do |team|
       if team.team_recipient_email.present?
-        NotifyMailer.investigation_updated(investigation.pretty_id, team.name, team.team_recipient_email, email_update_text, email_subject_text).deliver_later
+        entities << {name: team.name, email: team.team_recipient_email}
       else
-        users_who_need_notification = users_who_need_notification + team.users
+        users_from_team = team.users.map {|user| {name: user.full_name, email: user.email}}
+        entities.concat(users_from_team)
       end
     end
 
-    users_who_need_notification.uniq.each do |user|
-      NotifyMailer.investigation_updated(investigation.pretty_id, user.full_name, user.email, email_update_text, email_subject_text).deliver_later
-    end
+    entities.uniq
   end
 
   def users_to_notify

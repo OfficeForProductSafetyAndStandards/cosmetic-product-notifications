@@ -28,28 +28,24 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
   end
 
   def users_to_notify
-    previous_assignee_id = investigation.saved_changes["assignable_id"][0]
-    previous_assignee = User.find_by(id: previous_assignee_id)
-    new_assignee = investigation.assignee
-    assigner = source.user
-
-    old_users = previous_assignee.present? ? [previous_assignee] : []
-    default_users = new_assignee.is_a?(User) ? [new_assignee] : []
-    return default_users if old_users.include? assigner
-
-    (default_users + old_users).uniq
+    compute_relevant_entities(model: User, compute_users_from_entity: Proc.new{|user| [user]})
   end
 
   def teams_to_notify
+    compute_relevant_entities(model: Team, compute_users_from_entity: Proc.new{|team| team.users})
+  end
+
+  def compute_relevant_entities(model: , compute_users_from_entity:)
     previous_assignee_id = investigation.saved_changes["assignable_id"][0]
-    previous_assignee = Team.find_by(id: previous_assignee_id)
+    previous_assignee = model.find_by(id: previous_assignee_id)
     new_assignee = investigation.assignee
     assigner = source.user
 
-    new_teams = new_assignee.is_a?(Team) ? [new_assignee] : []
-    return new_teams if previous_assignee.blank?
-    return new_teams if previous_assignee.users.include? assigner
+    old_users = previous_assignee.present? ? compute_users_from_entity.call(previous_assignee) : []
+    old_entities = previous_assignee.present? ? [previous_assignee] : []
+    new_entities = new_assignee.is_a?(model) ? [new_assignee] : []
+    return new_entities if old_users.include? assigner
 
-    (new_teams + [previous_assignee]).uniq
+    (new_entities + old_entities).uniq
   end
 end
