@@ -1,5 +1,6 @@
 class NotificationsController < ApplicationController
   skip_before_action :redirect_poison_centre_user
+  before_action :authorize_user!
 
   def index
     @notifications = get_registered_notifications(10)
@@ -10,6 +11,10 @@ class NotificationsController < ApplicationController
   end
 
 private
+
+  def authorize_user!
+    raise Pundit::NotAuthorizedError unless poison_centre_user?
+  end
 
   def get_registered_notifications(page_size)
     Notification.where(state: :notification_complete)
