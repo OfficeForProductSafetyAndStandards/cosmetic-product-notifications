@@ -1,0 +1,44 @@
+# Antivirus server
+
+This folder contains the code for an antivirus API.
+
+
+## Overview
+
+The site is written in [Ruby](https://www.ruby-lang.org/en/) using [Sinatra](http://sinatrarb.com/) and uses the [clamav](https://www.clamav.net/) to scan the files.
+
+
+## Getting Setup
+
+The antivirus server should be running if you've followed the steps in [the root README](../README.md#getting-setup).
+
+
+## Deployment
+
+* Run `docker build -t $DOCKER_USERNAME/antivirus .` from this directory.
+* Login using the docker CLI and run `docker push $DOCKER_USERNAME/antivirus`.
+* Login using the CloudFoundry CLI and then run `cf push --docker-image $DOCKER_USERNAME/antivirus --hostname antivirus-$SPACE` from this directory.
+
+
+### Deployment from scratch
+
+Set the following environment variables:
+
+    cf set-env antivirus APP_ENV production
+
+This will configure sinatra to run in production mode.
+
+    cf set-env antivirus ANTIVIRUS_USERNAME XXX
+    cf set-env antivirus ANTIVIRUS_PASSWORD XXX
+
+This will set HTTP basic auth for the API.
+
+
+### Configuring clients
+
+Set the following environment variables on clients (e.g. the workers):
+
+    cf set-env mspsds-worker ANTIVIRUS_URL XXX
+    cf set-env mspsds-worker ANTIVIRUS_USERNAME XXX
+    cf set-env mspsds-worker ANTIVIRUS_PASSWORD XXX
+

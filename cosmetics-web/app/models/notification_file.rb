@@ -8,13 +8,13 @@ class NotificationFile < ApplicationRecord
 
   enum upload_error: {
       uploaded_file_not_a_zip: "uploaded_file_not_a_zip",
-      unzipped_files_not_xml: "unzipped_files_not_xml",
-      unzipped_files_are_pdf: "unzipped_files_are_pdf",
-      file_flagged_as_virus: "file_flagged_as_virus",
       file_size_too_big: "file_size_too_big",
-      notification_validation_error: "notification_validation_error",
-      notification_duplicated: "notification_duplicated",
+      file_flagged_as_virus: "file_flagged_as_virus",
+      unzipped_files_are_pdf: "unzipped_files_are_pdf",
       product_file_not_found: "product_file_not_found",
+      notification_duplicated: "notification_duplicated",
+      notification_validation_error: "notification_validation_error",
+      draft_notification_error: "draft_notification_error",
       unknown_error: "unknown_error"
   }
 

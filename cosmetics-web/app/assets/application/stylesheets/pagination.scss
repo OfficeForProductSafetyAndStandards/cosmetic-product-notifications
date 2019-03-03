@@ -30,4 +30,8 @@
 
 .pagination-links {
   margin-top: 50px;
+
+  a:visited {
+    color: $govuk-link-colour;
+  }
 }
