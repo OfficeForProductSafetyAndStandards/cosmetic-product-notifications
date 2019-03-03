@@ -13,7 +13,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
   end
 
   describe "GET #index" do
-    it "assigns @responsible_person" do
+    it "assigns the correct Responsible Person" do
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:responsible_person)).to eq(responsible_person)
     end
@@ -27,6 +27,15 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       create(:notification_file, responsible_person: responsible_person, user: user)
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:pending_notification_files_count)).to eq(1)
+    end
+
+    it "excludes pending notification files for other users" do
+      other_user = build(:user, email: "other.user@example.com")
+      responsible_person.add_user(other_user)
+
+      create(:notification_file, responsible_person: responsible_person, user: other_user)
+      get :index, params: { responsible_person_id: responsible_person.id }
+      expect(assigns(:pending_notification_files_count)).to eq(0)
     end
 
     it "gets the correct number of unfinished notifications from manual journey" do
@@ -54,7 +63,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       expect(assigns(:registered_notifications).count).to eq(1)
     end
 
-    it "does not allow user to access another Responsible Person's dashboard" do
+    it "does not allow the user to access another Responsible Person's dashboard" do
       other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
       expect { get :index, params: { responsible_person_id: other_responsible_person.id } }
           .to raise_error(Pundit::NotAuthorizedError)
@@ -62,12 +71,12 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
   end
 
   describe "GET /new" do
-    it "creates new notification" do
+    it "creates a new notification" do
       get :new, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:notification)).to be_kind_of(Notification)
     end
 
-    it "associates new notification with Responsible Person" do
+    it "associates the new notification with current Responsible Person" do
       get :new, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:notification).responsible_person).to eq(responsible_person)
     end
@@ -75,6 +84,13 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
     it "redirects to the notification build controller" do
       get :new, params: { responsible_person_id: responsible_person.id }
       expect(response).to redirect_to(new_notification_build_path(assigns(:notification).reference_number))
+    end
+
+    it "does not allow the user to create a new notification for a Responsible Person they not belong to" do
+      other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
+      expect {
+        get :new, params: { responsible_person_id: other_responsible_person.id }
+      }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
@@ -87,7 +103,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       expect(assigns(:notification)).to eq(notification)
     end
 
-    it "adds error if failed attempt to submit when images are pending anti virus check" do
+    it "adds error if failed attempt to submit when images are pending antivirus check" do
       attach_image_to_draft_with_metadata({})
       get :edit, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number,
                            submit_failed: true }
@@ -100,6 +116,14 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       get :edit, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number,
                            submit_failed: true }
       expect(assigns(:notification).errors[:image_uploads]).to include("failed anti virus check")
+    end
+
+    it "does not allow the user to edit notification for a Responsible Person they not belong to" do
+      other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
+      other_notification = create(:draft_notification, responsible_person: other_responsible_person)
+      expect {
+        get :edit, params: { responsible_person_id: other_responsible_person.id, reference_number: other_notification.reference_number }
+      }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
