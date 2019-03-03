@@ -2,7 +2,7 @@ require 'will_paginate/array'
 
 class ResponsiblePersons::NotificationsController < ApplicationController
   before_action :set_responsible_person
-  before_action :set_notification, only: %i[edit confirmation]
+  before_action :set_notification, only: %i[show edit confirmation]
 
   def index
     @pending_notification_files_count = 0
@@ -22,6 +22,8 @@ class ResponsiblePersons::NotificationsController < ApplicationController
 
     @registered_notifications = get_registered_notifications(10)
   end
+
+  def show; end
 
   def new
     @notification = Notification.create(responsible_person: @responsible_person)

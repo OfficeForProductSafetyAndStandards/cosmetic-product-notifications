@@ -70,6 +70,28 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
     end
   end
 
+  describe "GET /show" do
+    let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+
+    it "assigns the correct notification" do
+      get :show, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
+      expect(assigns(:notification)).to eq(notification)
+    end
+
+    it "renders the index template" do
+      get :show, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
+      expect(response).to render_template('responsible_persons/notifications/show')
+    end
+
+    it "does not allow the user to show a notification for a Responsible Person they not belong to" do
+      other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
+      other_notification = create(:registered_notification, responsible_person: other_responsible_person)
+      expect {
+        get :show, params: { responsible_person_id: other_responsible_person.id, reference_number: other_notification.reference_number }
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
+  end
+
   describe "GET /new" do
     it "creates a new notification" do
       get :new, params: { responsible_person_id: responsible_person.id }
@@ -95,12 +117,11 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
   end
 
   describe "GET /edit" do
-    let(:notification) { create(:notification, responsible_person: responsible_person) }
     let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
 
     it "assigns the correct notification" do
-      get :edit, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
-      expect(assigns(:notification)).to eq(notification)
+      get :edit, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number }
+      expect(assigns(:notification)).to eq(draft_notification)
     end
 
     it "adds error if failed attempt to submit when images are pending antivirus check" do
@@ -128,12 +149,11 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
   end
 
   describe "GET /confirmation" do
-    let(:notification) { create(:notification, responsible_person: responsible_person) }
     let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
 
     it "assigns the correct notification" do
-      get :confirmation, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
-      expect(assigns(:notification)).to eq(notification)
+      get :confirmation, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number }
+      expect(assigns(:notification)).to eq(draft_notification)
     end
 
     it "marks the notification as complete" do

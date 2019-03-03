@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index new edit] do
+    resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
       member do
         get :confirmation
       end
