@@ -53,6 +53,7 @@ private
 
   def set_notification
     @notification = Notification.find_by reference_number: params[:reference_number]
+    authorize @notification
   end
 
   def get_unfinished_notifications(page_size)
