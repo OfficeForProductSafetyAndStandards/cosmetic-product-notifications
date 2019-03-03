@@ -1,4 +1,6 @@
 class NotificationsController < ApplicationController
+  skip_before_action :redirect_poison_centre_user
+
   def index
     @notifications = get_registered_notifications(10)
   end
