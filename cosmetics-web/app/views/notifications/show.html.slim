@@ -1,0 +1,74 @@
+- content_for :page_title, "Product details"
+- content_for :after_header do
+  = link_to "Back", notifications_path, class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-full
+    table.govuk-table
+      caption.govuk-table__caption.govuk-heading-m
+        | Responsible person
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[class="govuk-!-width-one-quarter"]
+            | Name
+          td.govuk-table__cell
+            = @notification.responsible_person.name
+        tr.govuk-table__row
+          th.govuk-table__header
+            | Email address
+          td.govuk-table__cell
+            = @notification.responsible_person.email_address
+        tr.govuk-table__row
+          th.govuk-table__header
+            | Phone number
+          td.govuk-table__cell
+            = @notification.responsible_person.phone_number
+        tr.govuk-table__row
+          th.govuk-table__header
+            | Address
+          td.govuk-table__cell
+            - @notification.responsible_person.address_lines.each do |address_line|
+              = address_line
+              br
+    table.govuk-table
+      caption.govuk-table__caption.govuk-heading-m
+        | Cosmetic product
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[class="govuk-!-width-one-quarter"]
+            | Product name
+          td.govuk-table__cell
+            = @notification.product_name
+        tr.govuk-table__row
+          th.govuk-table__header
+            | Reference number
+          td.govuk-table__cell
+            = @notification.reference_number_for_display
+        tr.govuk-table__row
+          th.govuk-table__header
+            | Imported
+          td.govuk-table__cell
+            = @notification.import_country.present? ? "Yes" : "No"
+        - unless @notification.import_country.nil?
+          tr.govuk-table__row
+            th.govuk-table__header
+              | Imported from
+            td.govuk-table__cell
+              = country_from_code @notification.import_country
+        tr.govuk-table__row
+          th.govuk-table__header
+            | Number of components
+          td.govuk-table__cell
+            = @notification.components.length
+        tr.govuk-table__row
+          th.govuk-table__header
+            | Shades
+          td.govuk-table__cell
+            = @notification.components.first&.shades&.join(", ") || @notification.shades || "N/A"
+        tr.govuk-table__row
+          th.govuk-table__header
+            | Label image
+          td.govuk-table__cell
+            - @notification.image_uploads.each do |image|
+              - if image.file_exists? && image.marked_as_safe?
+                = link_to image.filename, url_for(image.file), target: "_blank", rel: "noopener"
+                br
