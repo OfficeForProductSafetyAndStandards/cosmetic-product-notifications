@@ -45,6 +45,16 @@ class ResponsiblePersons::NotificationsController < ApplicationController
     end
   end
 
+  def formulation_upload
+    notification = Notification.find_by reference_number: params[:reference_number]
+    if notification.formulation_required?
+      component = notification.components.find(&:formulation_required?)
+      redirect_to new_responsible_person_notification_component_formulation_path(notification.responsible_person, notification, component)
+    else
+      redirect_to responsible_person_notifications_path(notification.responsible_person)
+    end
+  end
+
 private
 
   def set_responsible_person

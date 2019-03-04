@@ -45,6 +45,14 @@ Rails.application.routes.draw do
       member do
         post :confirm
       end
+
+      member do
+        get :formulation_upload
+      end
+
+      resources :components do
+        resources :formulation, controller: "formulation_upload", only: %w[new create]
+      end
     end
   end
 
