@@ -5,12 +5,12 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds-from-desktop
     h1.govuk-heading-xl = @team.display_name
-    h2.govuk-heading-l Members
+    h2.govuk-heading-m Team Members
     ul.govuk-list
       - @team.users.each do |user|
         li.teams--user class="govuk-!-padding-top-3 govuk-!-padding-bottom-3"
-          h3.govuk-heading-s class="govuk-!-margin-bottom-2"
-            span.teams--user-name = user.full_name
+          h3.teams--user-contact class="govuk-!-margin-bottom-2"
+            span.govuk-heading-s.teams--user-name = user.full_name
             '
             span.govuk-caption-m.teams--user-email = user.email
           ul.govuk-list class="govuk-!-margin-0"
