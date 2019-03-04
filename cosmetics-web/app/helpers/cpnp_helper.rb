@@ -15,6 +15,10 @@ module CpnpHelper
     TRIGGER_RULES_QUESTION_ELEMENT_NAME[trigger_rules_question_element]
   end
 
+  def get_unit_name(unit)
+    UNIT_NAME[unit]
+  end
+
   CATEGORY_NAME = {
       skin_products: "Skin products",
       skin_care_products: "Skin care products",
