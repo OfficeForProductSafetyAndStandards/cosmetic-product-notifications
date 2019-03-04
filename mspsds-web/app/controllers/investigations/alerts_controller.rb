@@ -8,6 +8,8 @@ class Investigations::AlertsController < ApplicationController
   before_action :set_default_field_values, only: %i[show update], if: -> { step == :compose }
   before_action :set_alert, only: %i[show update], if: -> { %i[compose preview].include? step }
   before_action :store_alert, only: :update, if: -> { step == :compose }
+  before_action :set_user_count, only: :show, if: -> { step == :preview }
+  before_action :get_preview, only: :show, if: -> { step == :preview }
 
   def new
     clear_session
@@ -81,5 +83,20 @@ private
     return {} unless params.has_key? :alert
 
     params.require(:alert).permit(:summary, :description)
+  end
+
+  def set_user_count
+    @user_count = User.all.length
+  end
+
+  def get_preview
+    @preview = NotificationsClient.instance.generate_template_preview(
+        '47fb7df9-2370-4307-9f86-69455597cdc1',
+        personalisation: {
+          name: "DUMMY VALUES XXXXX",
+          email_text: @alert.description,
+          subject_text: @alert.summary
+        }
+    )
   end
 end
