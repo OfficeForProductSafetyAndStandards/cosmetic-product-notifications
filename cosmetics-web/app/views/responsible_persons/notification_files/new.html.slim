@@ -4,8 +4,9 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with model: [@responsible_person, @notification_file], local: true do |form|
-      = render "form_components/govuk_error_summary", form: form
+    = form_with url: responsible_person_notification_files_path(@responsible_person), method: :post,
+            local: true do |form|
+      / = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl
         | Upload cosmetic notification file from CPNP
       .govuk-body-m
@@ -20,7 +21,7 @@
         .govuk-form-group
           .form-group
             = form.label "Upload CPNP zip file", class: "govuk-label"
-            = form.file_field :uploaded_file,
+            = form.file_field :uploaded_files, multiple: true,
                     class: "govuk-file-upload", accept: "application/zip"
 
         = form.submit "Upload", class: "govuk-button"
