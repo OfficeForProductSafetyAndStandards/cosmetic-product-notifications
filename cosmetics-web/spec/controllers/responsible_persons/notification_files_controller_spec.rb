@@ -30,7 +30,7 @@ RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controlle
       end
 
       it "redirects to the notifications for the Responsible Person" do
-        post :create, params: { responsible_person_id: responsible_person.id, uploaded_files: valid_attributes}
+        post :create, params: { responsible_person_id: responsible_person.id, uploaded_files: valid_attributes }
         expect(response).to redirect_to(responsible_person_notifications_path)
       end
     end

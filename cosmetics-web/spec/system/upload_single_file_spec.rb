@@ -15,7 +15,7 @@ RSpec.describe "Upload a single file", type: :system do
 
   it "enables to upload a file" do
     visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('notification_file[uploaded_file]',
+    page.attach_file('uploaded_files',
                      Rails.root + 'spec/fixtures/testExportFile.zip')
     click_button "Upload"
 
@@ -24,7 +24,7 @@ RSpec.describe "Upload a single file", type: :system do
 
   it "set basic info of notification based on the uploaded file" do
     visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('notification_file[uploaded_file]',
+    page.attach_file('uploaded_files',
                      Rails.root + 'spec/fixtures/testExportFile.zip')
     click_button "Upload"
 
