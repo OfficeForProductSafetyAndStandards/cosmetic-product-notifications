@@ -11,25 +11,45 @@
         p.govuk-caption-xl
           = @investigation.pretty_description
         | Preview your alert
+  / .govuk-grid-row
+  /   .govuk-grid-column-two-thirds
+  /     table
+  /       tbody
+  /         tr
+  /           th From
+  /           td
+  /             | The Office of Product Safety and Standards
+  /         tr
+  /           th To
+  /           td
+  /             span.placeholder-no-brackets email address
+  /         tr.email-message-meta
+  /           th Subject
+  /           td
+  /             = @alert.summary
+  /     .email-message-body
+  /       p.govuk-body = @alert.description
+  /
+
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      table
-        tbody
-          tr
-            th From
-            td
-              | The Office of Product Safety and Standards
-          tr
-            th To
-            td
-              span.placeholder-no-brackets email address
-          tr.email-message-meta
-            th Subject
-            td
-              = @alert.summary
-      .email-message-body
-        p.govuk-body = @alert.description
-
+      .email-message
+        table.email-message-meta.govuk-table
+          tbody.govuk-table__body
+            tr.govuk-table__row
+              th.govuk-table__header From
+              td.govuk-table__cell
+                | The Office of Product Safety and Standards
+            tr.govuk-table__row
+              th.govuk-table__header To
+              td.govuk-table__cell
+                span.placeholder-no-brackets = "All users (#{@user_count} people)"
+            tr.email-message-meta.govuk-table__row
+              th.govuk-table__header Subject
+              td.govuk-table__cell
+                = @alert.summary
+        .email-message-body
+          == @preview.html
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       p.govuk-body
