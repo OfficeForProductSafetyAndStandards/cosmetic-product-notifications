@@ -140,6 +140,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.autocomplete-select-with-clear {
+  width: calc(100% - 48px);
+  float: left;
+}
+
 .autocomplete__clear-button {
   background: transparent;
   border-color: transparent;
