@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
   s.add_dependency "sidekiq", "5.2.5"
   s.add_dependency "sidekiq-cron", "1.1.0"
   s.add_dependency "slowpoke", "0.2.1"
-  s.add_dependency "webpacker", "4.0.0.rc.7"
+  s.add_dependency "webpacker", "4.0.0.rc.8"
 end
