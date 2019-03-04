@@ -6,7 +6,8 @@
   .govuk-grid-column-two-thirds
     = form_with url: responsible_person_notification_files_path(@responsible_person), method: :post,
             local: true do |form|
-      / = render "form_components/govuk_error_summary", form: form
+      - if @errors
+        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
       h1.govuk-heading-xl
         | Upload cosmetic notification file from CPNP
       .govuk-body-m
