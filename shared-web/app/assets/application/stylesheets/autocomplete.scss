@@ -149,8 +149,9 @@
 }
 
 .autocomplete__clear-button:focus {
-  outline: 3px solid #ffbf47;
-  outline-offset: 0; }
+  outline: 3px solid $govuk-focus-colour;
+  outline-offset: 0;
+}
 
 .autocomplete__clear-viewbox {
   cursor: pointer;
