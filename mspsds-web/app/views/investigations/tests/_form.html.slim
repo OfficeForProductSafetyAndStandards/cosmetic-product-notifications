@@ -43,8 +43,8 @@ fieldset.govuk-fieldset
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Further details
-  .govuk-form-group class=("govuk-form-group--error" if test.errors[:details].any?)
-    = form.text_area :details, class: "govuk-textarea", rows: 5, maxlength: 1000
+  = render "form_components/govuk_textarea", key: :details, form: form, max_length: 50000,
+          label: { text: "Test details", classes: "govuk-visually-hidden" }
 
-= render "related_attachment_fields", form: form,
-        file_blob: @file_blob, attachment_name: :file, title: "Related attachments"
+= render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file,
+        title: "Related attachments"

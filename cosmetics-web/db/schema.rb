@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_14_152945) do
+ActiveRecord::Schema.define(version: 2019_02_27_121321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2019_02_14_152945) do
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
     t.string "user_id"
+    t.string "upload_error"
     t.index ["responsible_person_id"], name: "index_notification_files_on_responsible_person_id"
   end
 
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(version: 2019_02_14_152945) do
     t.boolean "cpnp_is_imported"
     t.string "cpnp_imported_country"
     t.string "shades"
+    t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
   end

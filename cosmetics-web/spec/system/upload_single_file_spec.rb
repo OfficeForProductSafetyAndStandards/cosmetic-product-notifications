@@ -5,17 +5,18 @@ RSpec.describe "Upload a single file", type: :system do
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
-    mock_antivirus
+    mock_antivirus_api
   end
 
   after do
     sign_out
-    unmock_antivirus
+    unmock_antivirus_api
   end
 
   it "enables to upload a file" do
     visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_file', Rails.root + 'spec/fixtures/testExportFile.zip')
+    page.attach_file('notification_file[uploaded_file]',
+                     Rails.root + 'spec/fixtures/testExportFile.zip')
     click_button "Upload"
 
     expect(page).to have_text("Your cosmetic products")
@@ -23,7 +24,7 @@ RSpec.describe "Upload a single file", type: :system do
 
   it "set basic info of notification based on the uploaded file" do
     visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_file',
+    page.attach_file('notification_file[uploaded_file]',
                      Rails.root + 'spec/fixtures/testExportFile.zip')
     click_button "Upload"
 

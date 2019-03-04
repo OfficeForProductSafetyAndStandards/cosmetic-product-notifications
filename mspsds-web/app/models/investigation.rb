@@ -2,10 +2,12 @@ class Investigation < ApplicationRecord
   include Searchable
   include Documentable
   include AttachmentConcern
+  include SanitizationHelper
 
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
 
+  before_validation { trim_line_endings(:user_title, :description, :non_compliant_reason, :hazard_description) }
   validates :user_title, presence: true, on: :enquiry_details
   validates :description, presence: true, on: %i[allegation_details enquiry_details]
   validates :hazard_type, presence: true, on: :allegation_details
@@ -14,9 +16,10 @@ class Investigation < ApplicationRecord
   validates :hazard_type, presence: true, on: :unsafe
   validates :non_compliant_reason, presence: true, on: :non_compliant
 
-  validates_length_of :user_title, maximum: 1000
-
-  validates_length_of :description, maximum: 1000
+  validates_length_of :user_title, maximum: 100
+  validates_length_of :description, maximum: 10000
+  validates_length_of :non_compliant_reason, maximum: 10000
+  validates_length_of :hazard_description, maximum: 10000
 
   after_save :create_audit_activity_for_assignee,
              :create_audit_activity_for_status, :create_audit_activity_for_visibility
@@ -58,7 +61,7 @@ class Investigation < ApplicationRecord
 
   before_create :assign_current_user_to_case, :add_pretty_id
 
-  after_create :create_audit_activity_for_case
+  after_create :create_audit_activity_for_case, :send_confirmation_email
 
   def as_indexed_json(*)
     as_json(
@@ -240,6 +243,16 @@ private
 
   def assign_current_user_to_case
     self.source = UserSource.new(user: User.current) if self.source.blank? && User.current
+  end
+
+  def send_confirmation_email
+    if User.current
+      NotifyMailer.investigation_created(pretty_id,
+                                       User.current.full_name,
+                                       User.current.email,
+                                       title,
+                                       case_type).deliver_later
+    end
   end
 end
 

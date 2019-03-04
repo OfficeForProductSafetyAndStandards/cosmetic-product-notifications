@@ -58,15 +58,15 @@ private
 
   def build_breadcrumb_structure
     {
-      ancestors: [
-        {
-          name: "Businesses",
-          path: businesses_path
-        }
-      ],
-      current: {
-        name: @business.trading_name
-      }
+        items: [
+            {
+                text: "Businesses",
+                href: businesses_path
+            },
+            {
+                text: @business.trading_name
+            }
+        ]
     }
   end
 end

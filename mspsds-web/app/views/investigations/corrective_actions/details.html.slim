@@ -4,13 +4,13 @@
   = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
 
 = form_with model: @corrective_action, local: true, url: wizard_path, method: :put do |form|
-  = render "form_components/govuk_error_summary", form: form
-  h1.govuk-heading-xl
-    span.govuk-caption-xl
-      = @investigation.pretty_description
-    = page_title
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-xl
+        span.govuk-caption-xl
+          = @investigation.pretty_description
+        = page_title
       = render "investigations/corrective_actions/form", form: form,
             corrective_action: @corrective_action,
             investigation: @investigation,

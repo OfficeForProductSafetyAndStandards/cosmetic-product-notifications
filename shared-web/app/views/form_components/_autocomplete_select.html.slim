@@ -13,7 +13,7 @@ ruby:
 .govuk-form-group class=form_group_classes
   - if local_assigns[:label]
     = form.label key, local_assigns[:label][:html] || local_assigns[:label][:text],
-            class: local_assigns[:label][:classes] || "govuk-label", for: id
+            class: local_assigns[:label][:classes] || "govuk-label", for: local_assigns[:label][:for] || id
   - if local_assigns[:hint]
     span.govuk-hint class=local_assigns[:hint][:classes]
       = local_assigns[:hint][:html] || local_assigns[:hint][:text]

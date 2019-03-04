@@ -1,4 +1,4 @@
-class CPNPExport
+class CpnpExport
   include ::Shared::Web::CountriesHelper
 
   def initialize(xml_file_content)
@@ -13,6 +13,10 @@ class CPNPExport
 
   def cpnp_reference
     @xml_doc.xpath('//cpnpReference').first&.text
+  end
+
+  def notification_status
+    @xml_doc.xpath('//status').first&.text
   end
 
   def is_imported
