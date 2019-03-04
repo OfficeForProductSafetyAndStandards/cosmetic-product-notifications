@@ -1,0 +1,16 @@
+/ Implementation based on
+/ https://github.com/alphagov/govuk-frontend/
+/     blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/breadcrumbs/template.njk
+
+- attributes = (local_assigns[:attributes] || {})
+.govuk-breadcrumbs *attributes class=local_assigns[:classes]
+  ol class="govuk-breadcrumbs__list"
+    - items.each do |item|
+      - item_content = capture do
+        = item[:html].presence || item[:text]
+      - if item[:href]
+        li class="govuk-breadcrumbs__list-item"
+          = link_to item_content, item[:href], class: "govuk-breadcrumbs__link", **(item[:attributes] || {})
+      - else
+        li class="govuk-breadcrumbs__list-item" aria-current="page"
+          = item_content

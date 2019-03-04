@@ -10,6 +10,15 @@ module Keycloak
   end
 
   module Internal
+    def self.get_group(group_id)
+      proc = lambda { |token|
+        request_uri = Keycloak::Admin.full_url("groups/#{group_id}")
+        Keycloak.generic_request(token["access_token"], request_uri, nil, nil, "GET")
+      }
+
+      default_call(proc)
+    end
+
     def self.get_user_groups
       proc = lambda { |token|
         request_uri = Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/admin/user-groups"
@@ -58,7 +67,8 @@ module Shared
         teams = []
         organisations["subGroups"].reject(&:blank?).each do |organisation|
           organisation["subGroups"].reject(&:blank?).map do |team|
-            teams << { id: team["id"], name: team["name"], path: team["path"], organisation_id: organisation["id"] }
+            team_recipient_email = group_attributes(team["id"])["teamRecipientEmail"]&.first
+            teams << { id: team["id"], name: team["name"], path: team["path"], organisation_id: organisation["id"], team_recipient_email: team_recipient_email }
           end
         end
         teams
@@ -80,6 +90,14 @@ module Shared
           end
         end
         team_users
+      end
+
+      def group_attributes(group_id)
+        cache_key = "keycloak_group_#{group_id}".to_sym
+        response = Rails.cache.fetch(cache_key, expires_in: 5.minutes) do
+          Keycloak::Internal.get_group(group_id)
+        end
+        JSON.parse(response)["attributes"] || {}
       end
 
       def all_groups
