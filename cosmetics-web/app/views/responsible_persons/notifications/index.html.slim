@@ -1,5 +1,6 @@
 - content_for :page_title, "Your cosmetic products"
-= render "layouts/rp_navbar"
+- content_for :after_header do
+  = render "layouts/navbar"
 - if @pending_notification_files_count.positive?
   .govuk-grid-row
     .govuk-grid-column-full
