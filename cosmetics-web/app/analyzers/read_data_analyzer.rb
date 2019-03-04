@@ -44,8 +44,8 @@ private
       @notification_file.update(upload_error: :product_file_not_found)
     rescue UnexpectedFileError
       @notification_file.update(upload_error: :unzipped_files_not_xml)
-    rescue UnexpectedStaticFilesError
-      @notification_file.update(upload_error: :static_files_differs)
+    rescue UnknownError
+      @notification_file.update(upload_error: :unknown_error)
     end
   end
 
@@ -53,7 +53,7 @@ private
     download_blob_to_tempfile do |zip_file|
       Zip::File.open(zip_file.path) do |files|
         if invalid_static_files(files)
-          raise UnexpectedStaticFilesError
+          raise UnknownError, "UnknownError - a different static file was detected! Filename: #{file.name}"
         end
 
         file_found = false
@@ -72,32 +72,24 @@ private
 
   def invalid_static_files(files)
     files.any? do |file|
-      differs = is_static_file(file) && static_file_contents_differs(file)
-      if differs
-        Rails.logger.error "***** WARNING - different static file was detected! *****"
-        Rails.logger.error "Filename: #{file.name}"
-      end
-      differs
+      static_file?(file) && file_contents_differs?(file)
     end
   end
 
   def file_is_product_xml?(file)
-    file.name&.match?(get_xml_file_name_regex)
+    file.name&.match?(product_xml_file_name_regex)
   end
 
   def file_is_pdf?(file)
     file.name&.match?(/.*\.pdf/)
   end
 
-  def get_xml_file_name_regex
+  def product_xml_file_name_regex
     /[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml/
   end
 
   def delete_notification_file
     @notification_file.destroy
-  end
-
-  class UnexpectedStaticFilesError < StandardError
   end
 
   class UnexpectedPdfFileError < StandardError
@@ -107,5 +99,8 @@ private
   end
 
   class ProductFileNotFoundError < StandardError
+  end
+
+  class UnknownError < StandardError
   end
 end

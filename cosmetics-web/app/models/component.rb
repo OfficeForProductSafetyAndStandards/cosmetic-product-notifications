@@ -1,6 +1,6 @@
 class Component < ApplicationRecord
   include AASM
-  include UkNotificationInfo
+  include NotificationProperties
 
   belongs_to :notification
 
@@ -10,12 +10,6 @@ class Component < ApplicationRecord
   has_one_attached :formulation_file
 
   before_save :add_shades, if: :will_save_change_to_shades?
-
-  validates :shades, length: {
-    minimum: 2,
-    allow_nil: true,
-    message: "Shades must have at least two entries"
-  }
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
@@ -43,7 +37,7 @@ class Component < ApplicationRecord
 private
 
   def update_notification_state
-    notification.set_single_or_multi_component!
+    notification&.set_single_or_multi_component!
   end
 
   def get_parent_category(category)

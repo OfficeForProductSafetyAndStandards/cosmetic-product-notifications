@@ -29,7 +29,6 @@ en:
         postal_code: "Postcode"
       notification_file:
         upload_errors:
-          static_files_differs: "Unexpected files in the ZIP file"
           uploaded_file_not_a_zip: "Uploaded file is not a ZIP file"
           unzipped_files_not_xml: "Unzipped files are not XML files"
           unzipped_files_are_pdf: "Unzipped files are PDF files"

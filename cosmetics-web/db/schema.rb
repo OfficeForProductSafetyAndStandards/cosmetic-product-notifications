@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 2019_03_01_135223) do
 
   create_table "range_formulas", force: :cascade do |t|
     t.string "inci_name"
-    t.integer "range"
+    t.string "range"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "component_id"

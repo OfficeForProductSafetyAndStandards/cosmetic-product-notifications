@@ -7,7 +7,6 @@ class NotificationFile < ApplicationRecord
   validate :uploaded_file_is_within_allowed_size?
 
   enum upload_error: {
-      static_files_differs: "static_files_differs",
       uploaded_file_not_a_zip: "uploaded_file_not_a_zip",
       unzipped_files_not_xml: "unzipped_files_not_xml",
       unzipped_files_are_pdf: "unzipped_files_are_pdf",
