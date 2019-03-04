@@ -112,6 +112,10 @@ class Notification < ApplicationRecord
     components.any?(&:formulation_required?)
   end
 
+  def is_multicomponent?
+    components.length > 1
+  end
+
 private
 
   def all_required_attributes_must_be_set
