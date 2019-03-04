@@ -9,15 +9,14 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
 
   def create
     @errors = []
-    @no_of_files_limit = 40
 
     unless uploaded_files_params
       @errors << { text: "No files selected", href: "#" }
       return render :new
     end
 
-    if uploaded_files_params.length > @no_of_files_limit
-      @errors << { text: "Too many files selected. Please select no more than #{@no_of_files_limit} files", href: "#" }
+    if uploaded_files_params.length > NotificationFile.get_no_of_files_limit
+      @errors << { text: "Too many files selected. Please select no more than #{NotificationFile.get_no_of_files_limit} files", href: "#" }
       return render :new
     end
 

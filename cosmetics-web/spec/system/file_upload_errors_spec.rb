@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Upload a single file errors", type: :system do
+RSpec.describe "File upload errors", type: :system do
   let(:responsible_person) { create(:responsible_person) }
 
   before do
@@ -17,6 +17,17 @@ RSpec.describe "Upload a single file errors", type: :system do
     visit new_responsible_person_notification_file_path(responsible_person)
     click_button "Upload"
     expect(page).to have_text("No files selected")
+  end
+
+  it "shows an error when too many files are selected for upload" do
+    allow(NotificationFile).to receive(:get_no_of_files_limit).and_return(2)
+    visit new_responsible_person_notification_file_path(responsible_person)
+    page.attach_file('uploaded_files',
+                     [Rails.root + 'spec/fixtures/testExportFile.zip',
+                      Rails.root + 'spec/fixtures/testExportFile.zip',
+                      Rails.root + 'spec/fixtures/testExportFile.zip'])
+    click_button "Upload"
+    expect(page).to have_text("Too many files selected. Please select no more than 2 files")
   end
 
   it "shows an error when the uploaded file has the wrong file type" do
