@@ -13,7 +13,7 @@ nav.app-navigation.govuk-clearfix
     - if User.current.teams.present?
       li.right-aligned class=(params[:controller] == "teams" ? "app-navigation--current-page" : nil)
         - if User.current.teams.count > 1
-          = link_to "My teams", my_teams_path, "data-topnav": "products", class: "govuk-link--no-visited-state"
+          = link_to "Your teams", your_teams_path, "data-topnav": "teams", class: "govuk-link--no-visited-state"
         - else
           - team = User.current.teams.first
-          = link_to team.display_name, team_path(team), "data-topnav": "products", class: "govuk-link--no-visited-state"
+          = link_to team.display_name, team_path(team), "data-topnav": "teams", class: "govuk-link--no-visited-state"

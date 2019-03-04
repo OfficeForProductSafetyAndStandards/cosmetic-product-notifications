@@ -75,7 +75,7 @@ Rails.application.routes.draw do
 
   resources :products, concerns: %i[document_attachable]
 
-  get "my-teams" => "teams#index"
+  get "your-teams" => "teams#index"
   resources :teams, only: %i[index show]
 
   match "/404", to: "errors#not_found", via: :all

@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_my_teams, only: :index
+  before_action :set_user_teams, only: :index
   before_action :set_team, only: :show
 
   def index; end
@@ -8,7 +8,7 @@ class TeamsController < ApplicationController
 
 private
 
-  def set_my_teams
+  def set_user_teams
     @teams = User.current.teams
   end
 
