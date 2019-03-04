@@ -17,6 +17,10 @@ class CpnpExport
     @xml_doc.xpath("//cpnpReference").first&.text
   end
 
+  def notification_status
+    @xml_doc.xpath('//status').first&.text
+  end
+
   def is_imported
     current_version_info_node.xpath(".//imported").first&.text&.casecmp?("Y")
   end

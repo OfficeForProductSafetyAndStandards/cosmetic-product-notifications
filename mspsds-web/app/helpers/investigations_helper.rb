@@ -115,15 +115,15 @@ module InvestigationsHelper
 
   def build_breadcrumb_structure
     {
-      ancestors: [
-        {
-          name: "Cases",
-          path: investigations_path
-        }
-      ],
-      current: {
-        name: @investigation.pretty_description
-      }
+        items: [
+            {
+                text: "Cases",
+                href: investigations_path
+            },
+            {
+                text: @investigation.pretty_description
+            }
+        ]
     }
   end
 

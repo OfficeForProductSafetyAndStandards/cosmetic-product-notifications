@@ -1,3 +1,5 @@
+return if Sidekiq.server?
+
 OkComputer.mount_at = ENV["HEALTH_CHECK_USERNAME"].present? && "health"
 OkComputer.require_authentication(ENV["HEALTH_CHECK_USERNAME"], ENV["HEALTH_CHECK_PASSWORD"])
 
