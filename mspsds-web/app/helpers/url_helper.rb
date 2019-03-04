@@ -31,8 +31,8 @@ module UrlHelper
     investigation = Investigation.find_by!(pretty_id: case_id)
     {
       is_simple_link: true,
-      link_text: "Back to #{investigation.pretty_description}",
-      link_to: investigation
+      text: "Back to #{investigation.pretty_description}",
+      href: investigation
     }
   end
 end
