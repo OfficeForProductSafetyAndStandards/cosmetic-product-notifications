@@ -8,14 +8,12 @@
     h2.govuk-heading-m Team Members
     ul.govuk-list
       - @team.users.each do |user|
-        li.teams--user class="govuk-!-padding-top-3 govuk-!-padding-bottom-3"
-          h3.teams--user-contact class="govuk-!-margin-bottom-2"
+        li.teams--user class="govuk-!-padding-top-3 govuk-!-padding-bottom-3 govuk-!-margin-0"
+          h3.teams--user-contact
             span.govuk-heading-s.teams--user-name = user.full_name
             '
             span.govuk-caption-m.teams--user-email = user.email
-          ul.govuk-list class="govuk-!-margin-0"
-            li
-              - is_admin = user.is_team_admin?
-              span class="tick-cross-#{is_admin ? "tick" : "cross"}"
-                span.govuk-visually-hidden = is_admin ? "Can " : "Cannot "
-                | Manage team membership
+          - if user.is_team_admin?
+            ul.govuk-list.permissions
+              li: span.tick-cross-tick
+                | Can invite team members

@@ -1,5 +1,4 @@
 .teams--user {
-  margin: 0;
   border-top: 1px solid $govuk-border-colour;
   border-bottom: 1px solid $govuk-border-colour;
 
@@ -18,13 +17,25 @@
 }
 
 .teams--user-contact {
-  margin-top: 0;
+  margin: 0;
   padding-right: 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   color: $govuk-secondary-text-colour;
   font-weight: normal;
+}
+
+.permissions {
+  margin: 0;
+
+  .teams--user-contact + & {
+    margin-top: 10px;
+  }
+
+  & > li {
+    margin: 0;
+  }
 }
 
 
