@@ -4,6 +4,20 @@
     .govuk-grid-column-one-third
       = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 
+- if @investigation.is_private
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        p.govuk-caption-xl
+          = @investigation.pretty_description
+        | You cannot send an alert about a restricted case
+      p.govuk-body
+        | Email alerts can only be sent for cases that are not restricted.
+        |  To send an alert about this case you need to unrestrict it.
+
+      = link_to "Change case visibility", visibility_investigation_path(@investigation),
+              class: "govuk-button", role: "button", draggable: false
+-else
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl
@@ -24,5 +38,6 @@
           | Only send an alert if this is a serious product safety issue.
       = link_to "Compose new alert", next_wizard_path, class: "govuk-button", role: "button", draggable: false
 
-      p.govuk-body
-        = link_to "Cancel", investigation_path(@investigation), class: 'govuk-link govuk-link--no-visited-state'
+p.govuk-body
+  = link_to "Cancel", investigation_path(@investigation), class: 'govuk-link govuk-link--no-visited-state'
+

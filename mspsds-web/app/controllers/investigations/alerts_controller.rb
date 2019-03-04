@@ -93,7 +93,7 @@ private
     @preview = NotificationsClient.instance.generate_template_preview(
         '47fb7df9-2370-4307-9f86-69455597cdc1',
         personalisation: {
-          name: "DUMMY VALUES XXXXX",
+          name: "<Name>",
           email_text: @alert.description,
           subject_text: @alert.summary
         }
