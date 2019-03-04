@@ -61,7 +61,7 @@ class Investigation < ApplicationRecord
 
   before_create :assign_current_user_to_case, :add_pretty_id
 
-  after_create :create_audit_activity_for_case
+  after_create :create_audit_activity_for_case, :send_confirmation_email
 
   def as_indexed_json(*)
     as_json(
@@ -243,6 +243,16 @@ private
 
   def assign_current_user_to_case
     self.source = UserSource.new(user: User.current) if self.source.blank? && User.current
+  end
+
+  def send_confirmation_email
+    if User.current
+      NotifyMailer.investigation_created(pretty_id,
+                                       User.current.full_name,
+                                       User.current.email,
+                                       title,
+                                       case_type).deliver_later
+    end
   end
 end
 
