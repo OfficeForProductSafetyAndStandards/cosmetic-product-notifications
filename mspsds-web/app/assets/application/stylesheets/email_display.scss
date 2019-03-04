@@ -48,9 +48,9 @@ $email-message-gutter: $govuk-gutter * 2;
     margin: 0;
     position: relative;
 
-  h2 {
-    @include govuk-font(27, $weight: bold)
-  }
+    h2 {
+      @include govuk-font(27, $weight: bold)
+    }
 
     table {
       margin: 0 0 20px 0;
