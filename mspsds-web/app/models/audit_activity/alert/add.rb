@@ -1,14 +1,25 @@
 class AuditActivity::Alert::Add < AuditActivity::Base
+  extend ActionView::Helpers::NumberHelper
   belongs_to :alert
   belongs_to :investigation
 
   def self.from(alert)
     self.create(
-      title: "Alert: #{alert.summary}",
-      body: alert.description,
+      title: "Product safety alert sent",
+      body: build_body(alert),
       source: UserSource.new(user: current_user),
       investigation: alert.investigation,
       alert: alert
     )
+  end
+
+  def self.build_body(alert)
+    [
+        "From: **DUMMY EMAIL ADDRESS**",
+        "To: **All users** (#{number_with_delimiter(User.all.length, delimiter: ',')} people)",
+        "Subject: **#{alert.summary}**",
+        "Date sent: **#{alert.created_at.strftime('%d/%m/%Y')}**",
+        "<br>" + alert.description
+    ].join("<br>")
   end
 end
