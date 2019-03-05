@@ -1,6 +1,7 @@
 class Investigations::AlertsController < ApplicationController
   include Wicked::Wizard
   include Pundit
+  include ActionView::Helpers::NumberHelper
 
   steps :about_alerts, :compose, :preview
 
@@ -8,7 +9,7 @@ class Investigations::AlertsController < ApplicationController
   before_action :set_default_field_values, only: %i[show update], if: -> { step == :compose }
   before_action :set_alert, only: %i[show update], if: -> { %i[compose preview].include? step }
   before_action :store_alert, only: :update, if: -> { step == :compose }
-  before_action :set_user_count, only: :show, if: -> { step == :preview }
+  before_action :set_user_count, only: %i[show update create], if: -> { step == :preview }
   before_action :get_preview, only: :show, if: -> { step == :preview }
 
   def new
@@ -31,9 +32,8 @@ class Investigations::AlertsController < ApplicationController
   end
 
   def create
-    @alert.source = UserSource.new(user: current_user)
     @alert.save
-    redirect_to investigation_path(@investigation), notice: "Alert sent XXXX"
+    redirect_to investigation_path(@investigation), notice: "Email alert sent to #{@user_count} users"
   end
 
 private
@@ -86,7 +86,7 @@ private
   end
 
   def set_user_count
-    @user_count = User.all.length
+    @user_count = number_with_delimiter(User.all.length, delimiter: ',')
   end
 
   def get_preview
