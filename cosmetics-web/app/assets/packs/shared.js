@@ -2,6 +2,8 @@
 import Rails from 'rails-ujs';
 import GOVUKFrontend from 'govuk-frontend';
 
+import '../application/javascripts/bulk_file_upload_error_handling'
+
 import '../../../vendor/shared-web/app/assets/application/javascripts/location_picker';
 
 // Styles

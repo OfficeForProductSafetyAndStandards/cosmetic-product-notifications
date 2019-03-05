@@ -5,7 +5,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with url: responsible_person_notification_files_path(@responsible_person), method: :post,
-            local: true do |form|
+            data: {max_no_of_files: NotificationFile.get_no_of_files_limit}, id: "file-upload-form", local: true do |form|
       - if @errors
         = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
       h1.govuk-heading-xl
