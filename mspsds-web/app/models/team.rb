@@ -4,6 +4,7 @@ class Team < ActiveHash::Base
   field :id
   field :name
   field :path
+  field :team_recipient_email
 
   belongs_to :organisation
 
