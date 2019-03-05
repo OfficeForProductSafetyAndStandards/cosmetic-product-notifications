@@ -1,16 +1,9 @@
 class PoisonCentres::NotificationsController < ApplicationController
+  include QueryHelper
   def index
-    @notifications = get_registered_notifications(10)
-    query = query_params[:q] || ""
-    @result = Notification.full_search(
-      query: {
-       multi_match: {
-         query: query,
-         fuzziness: "AUTO"
-       }
-      }
-                                       )
-    @result = @result.paginate(page: 1, per_page: 10)
+    @query = query_params[:q] || ""
+    result = Notification.full_search(build_query).paginate(page: params[:page], per_page: 10)
+    @notifications = result.records
   end
 
   def show
@@ -18,7 +11,7 @@ class PoisonCentres::NotificationsController < ApplicationController
     authorize @notification, policy_class: PoisonCentreNotificationPolicy
   end
 
-private
+  private
 
   def authorize_user!
     raise Pundit::NotAuthorizedError unless poison_centre_user?
@@ -33,3 +26,4 @@ private
     params.permit(:q)
   end
 end
+                                                                

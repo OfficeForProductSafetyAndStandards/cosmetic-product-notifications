@@ -3,17 +3,18 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       | Search cosmetic products
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = render "results", results: @notifications
-.govuk-grid-row
-  .govuk-grid-column-full.pagination-links
-    = will_paginate @notifications
 
 .govuk-grid-row
   .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
     = form_with(method: :get, class: "mspsds-search") do |form|
       .search-box
         = form.label "Keywords", class: "govuk-label--s"
-        = form.text_field :q, class: "govuk-input"
+        = form.text_field :q, class: "govuk-input", value: @query
         = form.submit "Search", name: nil, class: "search-box--submit"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = render "results", results: @notifications
+.govuk-grid-row
+  .govuk-grid-column-full.pagination-links
+    = will_paginate @notifications
