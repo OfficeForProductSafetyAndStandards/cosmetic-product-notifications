@@ -66,6 +66,9 @@ private
     rescue DraftNotificationError => e
       Rails.logger.error e.message
       @notification_file.update(upload_error: :draft_notification_error)
+    rescue UnexpectedStaticFilesError => e
+      Rails.logger.error e.message
+      @notification_file.update(upload_error: :unknown_error)
     rescue StandardError
       Rails.logger.error "StandardError"
       @notification_file.update(upload_error: :unknown_error)
@@ -78,7 +81,7 @@ private
     download_blob_to_tempfile do |zip_file|
       Zip::File.open(zip_file.path) do |files|
         if invalid_static_files(files)
-          raise UnknownError, "UnknownError - a different static file was detected!"
+          raise UnexpectedStaticFilesError, "UnexpectedStaticFilesError - a different static file was detected!"
         end
 
         file_found = false
@@ -147,6 +150,9 @@ private
   end
 
   class DraftNotificationError < FileUploadError
+  end
+
+  class UnexpectedStaticFilesError < FileUploadError
   end
 
   class UnknownError < FileUploadError
