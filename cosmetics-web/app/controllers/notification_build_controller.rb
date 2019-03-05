@@ -64,6 +64,7 @@ private
 
   def set_notification
     @notification = Notification.find_by reference_number: params[:notification_reference_number]
+    authorize @notification
   end
 
   def set_countries
@@ -75,7 +76,7 @@ private
     when "single"
       @notification.components.build
       @notification.save
-      redirect_to new_notification_component_build_path(@notification, @notification.components.first)
+      redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
     when "multiple"
       # TODO COSBETA-10 Implement multiple components
       @notification.components.build

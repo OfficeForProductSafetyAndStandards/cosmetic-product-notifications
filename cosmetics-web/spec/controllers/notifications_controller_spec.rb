@@ -49,7 +49,7 @@ RSpec.describe NotificationsController, type: :controller do
       end
 
       it "renders the show template" do
-        get :show, params: { reference_number: notification }
+        get :show, params: { reference_number: notification.reference_number }
         expect(response).to render_template("notifications/show")
       end
     end

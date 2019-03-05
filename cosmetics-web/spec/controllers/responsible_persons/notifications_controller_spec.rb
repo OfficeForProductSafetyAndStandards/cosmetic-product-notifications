@@ -105,7 +105,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
 
     it "redirects to the notification build controller" do
       get :new, params: { responsible_person_id: responsible_person.id }
-      expect(response).to redirect_to(new_notification_build_path(assigns(:notification).reference_number))
+      expect(response).to redirect_to(new_responsible_person_notification_build_path(assigns(:responsible_person), assigns(:notification).reference_number))
     end
 
     it "does not allow the user to create a new notification for a Responsible Person they not belong to" do

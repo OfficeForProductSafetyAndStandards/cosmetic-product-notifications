@@ -4,12 +4,7 @@ Rails.application.routes.draw do
 
   root 'landing_page#index'
 
-  resources :notifications, param: :reference_number, only: %i[index show] do
-    resources :build, controller: :notification_build, only: %i[show update new]
-    resources :components do
-      resources :build, controller: :component_build, only: %i[show update new]
-    end
-  end
+  resources :notifications, param: :reference_number, only: %i[index show]
 
   resources :responsible_persons, only: %i[show] do
     collection do
@@ -36,6 +31,11 @@ Rails.application.routes.draw do
     end
 
     resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
+      resources :build, controller: :notification_build, only: %i[show update new]
+      resources :components do
+        resources :build, controller: :component_build, only: %i[show update new]
+      end
+
       member do
         get :confirmation
       end

@@ -27,7 +27,7 @@ class ResponsiblePersons::NotificationsController < ApplicationController
 
   def new
     @notification = Notification.create(responsible_person: @responsible_person)
-    redirect_to new_notification_build_path(@notification)
+    redirect_to new_responsible_person_notification_build_path(@responsible_person, @notification)
   end
 
   # Check your answers page
