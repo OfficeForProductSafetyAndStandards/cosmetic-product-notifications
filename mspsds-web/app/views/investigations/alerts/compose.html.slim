@@ -21,16 +21,20 @@
           = form.text_field :summary, class: "govuk-input", aria_describedby: "alert-email_subject-hint",
                   value: @alert.summary.presence || @default_summary
 
+      - description_label = capture do
+        = form.label :description, "Alert content",
+                class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+      - hint_text = "Include a summary of the incident and what actions you’d like recipients to take." + \
+        "Recipients will need to view the case to see attachments and images."
       fieldset.govuk-fieldset
-        .govuk-form-group class=[("govuk-form-group--error" if @alert.errors[:description].any?)]
-          = form.label :description, "Alert content",
-                  class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-          span#alert-description-hint.govuk-hint
-            | Include a summary of the incident and what actions you’d like recipients to take.
-            |  Recipients will need to view the case to see attachments and images.
-          = form.text_area :description, class: "govuk-textarea govuk-!-width-full", rows: 12, maxlength: 1000,
-                  aria_describedby: "alert-description-hint",
-                  value: (@alert.description.presence || @default_description)
+        = render "form_components/govuk_textarea",
+                form: form,
+                key: :description,
+                rows: 12,
+                maxlength: 1000,
+                value: (@alert.description.presence || @default_description),
+                label: { html: description_label },
+                hint: { text: hint_text}
       = form.submit "Preview alert", class: "govuk-button"
 
   p.govuk-body
