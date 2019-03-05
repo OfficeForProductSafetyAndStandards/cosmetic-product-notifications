@@ -44,10 +44,10 @@ private
 
   def alert_valid?
     @alert.valid?
-    if @alert.description.blank? || @alert.description == @default_description
+    if @alert.description == @default_description
       @alert.errors.add(:description, "Enter alert content")
     end
-    if @alert.summary.blank? || @alert.summary == @default_summary
+    if @alert.summary == @default_summary
       @alert.errors.add(:summary, "Enter an alert summary")
     end
     @alert.errors.none?
@@ -94,7 +94,7 @@ private
 
   def get_preview
     @preview = NotificationsClient.instance.generate_template_preview(
-      '47fb7df9-2370-4307-9f86-69455597cdc1',
+      NotifyMailer::TEMPLATES[:alert],
         personalisation: {
           name: "<Name>",
           email_text: @alert.description,

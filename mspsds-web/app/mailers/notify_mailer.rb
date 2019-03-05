@@ -1,6 +1,14 @@
 class NotifyMailer < GovukNotifyRails::Mailer
+
+  TEMPLATES =
+    {
+        investigation_updated: '10a5c3a6-9cc7-4edb-9536-37605e2c15ba',
+        investigation_created: '6da8e1d5-eb4d-4f9a-9c3c-948ef57d613',
+        alert: '47fb7df9-2370-4307-9f86-69455597cdc1'
+    }
+
   def investigation_updated(investigation_pretty_id, name, email, update_text, subject_text)
-    set_template('10a5c3a6-9cc7-4edb-9536-37605e2c15ba')
+    set_template(TEMPLATES[:investigation_updated])
     set_reference('Case updated')
 
     set_personalisation(
@@ -14,7 +22,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def alert(name, email, email_text, subject_text)
-    set_template('47fb7df9-2370-4307-9f86-69455597cdc1')
+    set_template(TEMPLATES[:alert])
     set_reference('Alert')
 
     set_personalisation(
@@ -27,7 +35,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def investigation_created(investigation_pretty_id, name, email, investigation_title, investigation_type)
-    set_template('6da8e1d5-eb4d-4f9a-9c3c-948ef57d6136')
+    set_template(TEMPLATES[:investigation_created])
     set_reference('Case created')
 
     set_personalisation(

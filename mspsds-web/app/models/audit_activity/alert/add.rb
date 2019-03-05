@@ -7,7 +7,7 @@ class AuditActivity::Alert::Add < AuditActivity::Base
     self.create(
       title: "Product safety alert sent",
       body: build_body(alert),
-      source: UserSource.new(user: current_user),
+      source: UserSource.new(user: User.current),
       investigation: alert.investigation,
       alert: alert
     )
