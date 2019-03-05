@@ -75,7 +75,6 @@ class Investigations::TsInvestigationsController < ApplicationController
   # PATCH/PUT /xxx
   def update
     if records_valid?
-      puts "valid"
       case step
       when :business, :corrective_action, *other_information_types
         return redirect_to wizard_path step
