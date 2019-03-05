@@ -50,22 +50,22 @@ private
         end
       end
     rescue UnexpectedPdfFileError => e
-      Rails.logger.error e.message
+      Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :unzipped_files_are_pdf)
     rescue ProductFileNotFoundError => e
-      Rails.logger.error e.message
+      Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :product_file_not_found)
     rescue DuplicateNotificationError => e
-      Rails.logger.error e.message
+      Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :notification_duplicated)
     rescue NotificationValidationError => e
-      Rails.logger.error e.message
+      Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :notification_validation_error)
     rescue DraftNotificationError => e
-      Rails.logger.error e.message
+      Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :draft_notification_error)
-    rescue StandardError
-      Rails.logger.error "StandardError"
+    rescue StandardError => e
+      Sidekiq.logger.error "StandardError: #{e}"
       @notification_file.update(upload_error: :unknown_error)
     end
   end
