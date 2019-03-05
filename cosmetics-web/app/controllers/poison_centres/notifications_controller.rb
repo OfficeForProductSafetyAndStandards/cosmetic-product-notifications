@@ -1,6 +1,16 @@
 class PoisonCentres::NotificationsController < ApplicationController
   def index
     @notifications = get_registered_notifications(10)
+    query = query_params[:q] || ""
+    @result = Notification.full_search({
+                                         query: {
+                                          multi_match: {
+                                            query: query,
+                                            fuzziness: "AUTO"
+                                          }
+                                         }
+                                       })
+    @result = @result.paginate(page: 1, per_page: 10)
   end
 
   def show

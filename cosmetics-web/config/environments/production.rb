@@ -78,4 +78,14 @@ Rails.application.configure do
   # Store uploaded files on the local file system on test, and in S3 on production.
   # (see config/storage.yml for options)
   config.active_storage.service = :amazon
+
+  config.after_initialize do
+    unless Sidekiq.server?
+      ActiveRecord::Base.descendants.each do |model|
+        if model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
+          model.import force: true
+        end
+      end
+    end
+  end
 end

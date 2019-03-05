@@ -1,4 +1,7 @@
 class Notification < ApplicationRecord
+  include Searchable
+
+  index_name [Rails.env, "notifications"].join("_")
   include AASM
   include Shared::Web::CountriesHelper
 
@@ -27,6 +30,12 @@ class Notification < ApplicationRecord
   validate :all_required_attributes_must_be_set
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
             allow_nil: true
+
+  def as_indexed_json(*)
+    as_json(
+      only: %i[product_name]
+    )
+  end
 
   # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
@@ -119,3 +128,6 @@ private
     end
   end
 end
+
+Notification.import force: true if Rails.env.development? # for auto sync model with elastic search
+
