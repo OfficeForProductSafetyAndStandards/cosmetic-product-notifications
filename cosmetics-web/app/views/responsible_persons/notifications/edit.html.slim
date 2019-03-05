@@ -4,36 +4,11 @@
           class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    = render "form_components/govuk_error_summary", errors: @notification.errors
     h1.govuk-heading-xl
       | Check the cosmetic product details before registering
-    = render "error_summary", errors: @notification.errors
   .govuk-grid-column-full
-    table.govuk-table
-      caption.govuk-table__caption.govuk-heading-m
-        | Responsible person
-      tbody.govuk-table__body
-        tr.govuk-table__row
-          th.govuk-table__header[class="govuk-!-width-one-quarter"]
-            | Name
-          td.govuk-table__cell
-            = @notification.responsible_person.name
-        tr.govuk-table__row
-          th.govuk-table__header
-            | Email address
-          td.govuk-table__cell
-            = @notification.responsible_person.email_address
-        tr.govuk-table__row
-          th.govuk-table__header
-            | Phone number
-          td.govuk-table__cell
-            = @notification.responsible_person.phone_number
-        tr.govuk-table__row
-          th.govuk-table__header
-            | Address
-          td.govuk-table__cell
-            - @notification.responsible_person.address_lines.each do |address_line|
-              = address_line
-              br
+    = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
     table.govuk-table
       caption.govuk-table__caption.govuk-heading-m
         | Cosmetics product
