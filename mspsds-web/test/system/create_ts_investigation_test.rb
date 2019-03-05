@@ -144,9 +144,9 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   def fill_in_why_reporting
     page.check :investigation_unsafe, visible: false
     fill_autocomplete "picker-hazard_type", with: @investigation.hazard_type, visible: false
-    fill_in "allegation-hazard–detail", with: @investigation.hazard_description, visible: false
+    fill_in "investigation_hazard_description", with: @investigation.hazard_description, visible: false
     page.check :investigation_non_compliant, visible: false
-    fill_in "allegation-compliance-detail", with: @investigation.non_compliant_reason, visible: false
+    fill_in "investigation_non_compliant_reason", with: @investigation.non_compliant_reason, visible: false
     click_button "Continue"
   end
 

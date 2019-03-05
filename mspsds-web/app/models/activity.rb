@@ -34,17 +34,38 @@ class Activity < ApplicationRecord
   end
 
   def notify_relevant_users
-    users_to_notify.each do |user|
-      NotifyMailer.updated_investigation(investigation.pretty_id, user.full_name, user.email, email_update_text, email_subject_text).deliver_later
+    entities_to_notify.each do |entity|
+      NotifyMailer.investigation_updated(investigation.pretty_id, entity[:name], entity[:email], email_update_text, email_subject_text).deliver_later
     end
   end
 
+  def entities_to_notify
+    entities = users_to_notify.map { |user| { name: user.full_name, email: user.email } }
+
+    teams_to_notify.each do |team|
+      if team.team_recipient_email.present?
+        entities << { name: team.name, email: team.team_recipient_email }
+      else
+        users_from_team = team.users.map { |user| { name: user.full_name, email: user.email } }
+        entities.concat(users_from_team)
+      end
+    end
+
+    entities.uniq
+  end
+
   def users_to_notify
-    return [investigation.assignee] if (investigation.assignee.is_a? User) && (source.user != investigation.assignee)
-    return [] if investigation.assignee.is_a? User
+    return [] unless investigation.assignee.is_a? User
+    return [] if source.user == investigation.assignee
+
+    [investigation.assignee]
+  end
+
+  def teams_to_notify
+    return [] unless investigation.assignee.is_a? Team
     return [] if source&.user&.teams&.include? investigation.assignee
 
-    investigation.assignee&.users || []
+    [investigation.assignee]
   end
 
   def email_update_text; end
