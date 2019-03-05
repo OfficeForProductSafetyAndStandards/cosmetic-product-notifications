@@ -60,8 +60,8 @@ private
 
   def set_alert
     @alert = Alert.new alert_params.merge(
-        investigation_id: @investigation.id,
-        source: UserSource.new(user: current_user)
+      investigation_id: @investigation.id,
+      source: UserSource.new(user: current_user)
     )
   end
 
@@ -94,7 +94,7 @@ private
 
   def get_preview
     @preview = NotificationsClient.instance.generate_template_preview(
-        '47fb7df9-2370-4307-9f86-69455597cdc1',
+      '47fb7df9-2370-4307-9f86-69455597cdc1',
         personalisation: {
           name: "<Name>",
           email_text: @alert.description,

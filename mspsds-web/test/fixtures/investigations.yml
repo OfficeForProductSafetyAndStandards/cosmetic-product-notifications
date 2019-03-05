@@ -83,3 +83,9 @@ two_products_with_no_common_values:
   is_closed: false
   type: Investigation::Allegation
   pretty_id: 1902-0011
+
+private:
+  description: private investigation
+  product_category: Alarms
+  is_private: true
+  pretty_id: 1902-0011
