@@ -8,6 +8,7 @@ class NotificationsController < ApplicationController
 
   def show
     @notification = Notification.find_by reference_number: params[:reference_number]
+    authorize @notification, policy_class: PoisonCentreNotificationPolicy
   end
 
 private
