@@ -64,8 +64,8 @@ private
     rescue DraftNotificationError => e
       Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :draft_notification_error)
-    rescue StandardError
-      Sidekiq.logger.error "StandardError"
+    rescue StandardError => e
+      Sidekiq.logger.error "StandardError: #{e}"
       @notification_file.update(upload_error: :unknown_error)
     end
   end
