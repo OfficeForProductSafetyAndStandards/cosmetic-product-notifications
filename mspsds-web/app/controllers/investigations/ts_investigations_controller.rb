@@ -53,6 +53,8 @@ class Investigations::TsInvestigationsController < ApplicationController
     when :corrective_action, *other_information_types
       return redirect_to next_wizard_path unless @repeat_step == "Yes"
     end
+    @repeat_step = nil
+    session.delete further_key(step)
     render_wizard
   end
 
@@ -73,6 +75,7 @@ class Investigations::TsInvestigationsController < ApplicationController
   # PATCH/PUT /xxx
   def update
     if records_valid?
+      puts "valid"
       case step
       when :business, :corrective_action, *other_information_types
         return redirect_to wizard_path step
@@ -306,8 +309,8 @@ private
     if params.key? further_key(step)
       session[further_key(step)] = @repeat_step
     else
-      file_type = to_item_text(step)
-      @investigation.errors.add(further_key(step), "Select whether or not you have #{file_type} to record")
+      further_page_type = to_item_text(step)
+      @investigation.errors.add(further_key(step), "Select whether or not you have #{further_page_type} to record")
     end
   end
 
