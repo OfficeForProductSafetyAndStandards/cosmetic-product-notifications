@@ -18,4 +18,8 @@ private
     Notification.where(state: :notification_complete)
       .paginate(page: params[:page], per_page: page_size)
   end
+
+  def query_params
+    params.permit(:q)
+  end
 end

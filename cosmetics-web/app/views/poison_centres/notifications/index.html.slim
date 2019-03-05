@@ -9,3 +9,11 @@
 .govuk-grid-row
   .govuk-grid-column-full.pagination-links
     = will_paginate @notifications
+
+.govuk-grid-row
+  .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
+    = form_with(method: :get, class: "mspsds-search") do |form|
+      .mspsds-search-box
+        = form.label "Keywords", class: "govuk-label--s"
+        = form.text_field :q, class: "govuk-input"
+        = form.submit "Search", name: nil, class: "mspsds-search-box--submit"
