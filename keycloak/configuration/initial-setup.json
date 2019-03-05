@@ -1779,7 +1779,11 @@
         "id" : "a26a4dac-4f47-464d-b84f-048c4b8e9602",
         "name" : "OPSS Enforcement",
         "path" : "/Organisations/Office for Product Safety and Standards/OPSS Enforcement",
-        "attributes" : { },
+        "attributes": {
+          "teamRecipientEmail": [
+            "enforcement@example.com"
+          ]
+        },
         "realmRoles" : [ ],
         "clientRoles" : { },
         "subGroups" : [ ]

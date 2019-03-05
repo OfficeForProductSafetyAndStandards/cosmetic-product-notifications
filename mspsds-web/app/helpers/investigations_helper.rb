@@ -115,15 +115,15 @@ module InvestigationsHelper
 
   def build_breadcrumb_structure
     {
-      ancestors: [
-        {
-          name: "Cases",
-          path: investigations_path
-        }
-      ],
-      current: {
-        name: @investigation.pretty_description
-      }
+        items: [
+            {
+                text: "Cases",
+                href: investigations_path
+            },
+            {
+                text: @investigation.pretty_description
+            }
+        ]
     }
   end
 
@@ -140,5 +140,12 @@ module InvestigationsHelper
 
   def assignee_ids_from_team(team)
     [team.id] + team.users.map(&:id)
+  end
+
+  def suggested_previous_assignees
+    all_past_assignees = @investigation.past_assignees + @investigation.past_teams
+    return [] if all_past_assignees.empty? || all_past_assignees == [User.current]
+
+    all_past_assignees || []
   end
 end
