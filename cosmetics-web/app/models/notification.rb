@@ -33,7 +33,12 @@ class Notification < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      only: %i[product_name]
+      only: %i[product_name],
+      include: {
+        responsible_person: {
+          only: %i[name]
+        }
+      }
     )
   end
 
