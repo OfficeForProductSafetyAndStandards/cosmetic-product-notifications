@@ -45,10 +45,10 @@ private
   def alert_valid?
     @alert.valid?
     if @alert.description.blank? || @alert.description == @default_description
-      @alert.errors.add(:description, "Please provide alert content XXXXXX")
+      @alert.errors.add(:description, "Enter alert content")
     end
     if @alert.summary.blank? || @alert.summary == @default_summary
-      @alert.errors.add(:summary, "Please provide an alert subject XXXXXX")
+      @alert.errors.add(:summary, "Enter an alert summary")
     end
     @alert.errors.none?
   end
@@ -59,7 +59,10 @@ private
   end
 
   def set_alert
-    @alert = Alert.new alert_params.merge(investigation_id: @investigation.id)
+    @alert = Alert.new alert_params.merge(
+        investigation_id: @investigation.id,
+        source: UserSource.new(user: current_user)
+    )
   end
 
   def set_default_field_values
