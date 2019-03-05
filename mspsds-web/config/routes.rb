@@ -40,9 +40,8 @@ Rails.application.routes.draw do
         delete :unlink, path: ''
       end
     end
-    resources :businesses, only: %i[new create], controller: "investigations/businesses" do
+    resources :businesses, only: %i[update show new create], controller: "investigations/businesses" do
       member do
-        put :link, path: ''
         get :remove
         delete :unlink, path: ''
       end

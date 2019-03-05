@@ -5,6 +5,7 @@ class InvestigationsController < ApplicationController
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[assign status visibility]
   before_action :set_investigation_with_associations, only: %i[show]
+  before_action :set_suggested_previous_assignees, only: :assign
   before_action :build_breadcrumbs, only: %i[show]
 
   # GET /cases
@@ -89,7 +90,6 @@ class InvestigationsController < ApplicationController
       respond_to_invalid_data(:assign)
       return
     end
-
     @investigation.assignee = potential_assignees.first
     respond_to_update(:assign)
   end
@@ -190,5 +190,9 @@ private
 
   def build_breadcrumbs
     @breadcrumbs = build_breadcrumb_structure
+  end
+
+  def set_suggested_previous_assignees
+    @suggested_previous_assignees = suggested_previous_assignees
   end
 end
