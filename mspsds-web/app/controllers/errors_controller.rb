@@ -1,6 +1,4 @@
 class ErrorsController < ApplicationController
-  skip_before_action :authorize_user
-
   def not_found
     render status: :not_found, formats: [:html]
   end

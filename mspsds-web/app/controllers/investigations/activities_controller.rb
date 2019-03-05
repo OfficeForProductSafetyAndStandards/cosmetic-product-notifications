@@ -1,6 +1,5 @@
 class Investigations::ActivitiesController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
-  include Pundit
 
   before_action :set_investigation
   before_action :create_activity, only: %i[create]
@@ -60,7 +59,7 @@ private
 
   def create_activity
     @activity = CommentActivity.new(body: Activity.sanitize_text(activity_params[:body]))
-    @activity.source = UserSource.new(user: current_user)
+    @activity.source = UserSource.new(user: User.current)
   end
 
   def set_investigation

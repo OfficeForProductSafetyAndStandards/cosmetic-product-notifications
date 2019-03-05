@@ -2,7 +2,11 @@ require "test_helper"
 
 class InvestigationTest < ActiveSupport::TestCase
   include Pundit
-  include UserService
+  # Pundit requires this method to be able to call policies
+  def pundit_user
+    User.current
+  end
+
   setup do
     sign_in_as_user
     @investigation = investigations(:one)

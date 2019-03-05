@@ -1,14 +1,13 @@
 - content_for :page_title, "Add contact"
 - content_for :after_header do
   = link_to "Back to business", @business, class: "govuk-back-link"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    .govuk-heading-xl
-      span.govuk-caption-xl
-        = "Business: #{@business.trading_name}"
-      | Add contact
+
+= form_with(model: @contact, url: business_contacts_path(@business), local: true) do |form|
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_with(model: @contact, url: business_contacts_path(@business), local: true) do |form|
-        = render "form_components/govuk_error_summary", form: form
-        = render "form", form: form
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      .govuk-heading-xl
+        span.govuk-caption-xl
+          = "Business: #{@business.trading_name}"
+        | Add contact
+      = render "form", form: form

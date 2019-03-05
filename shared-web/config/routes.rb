@@ -1,3 +1,13 @@
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
+
+if Rails.env.production?
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    ActiveSupport::SecurityUtils.secure_compare(username, ENV["SIDEKIQ_USERNAME"]) &&
+      ActiveSupport::SecurityUtils.secure_compare(password, ENV["SIDEKIQ_PASSWORD"])
+  end
+end
+
 Shared::Web::Engine.routes.draw do
   resource :session, only: %i[new] do
     member do
@@ -5,6 +15,10 @@ Shared::Web::Engine.routes.draw do
       get :signin
       delete :logout
     end
+  end
+
+  unless Rails.env.production? && !ENV["SIDEKIQ_USERNAME"]
+    mount Sidekiq::Web => "/sidekiq"
   end
 
   if Rails.env.development?

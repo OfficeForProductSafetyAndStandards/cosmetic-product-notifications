@@ -1,12 +1,9 @@
 module BusinessesHelper
   include SearchHelper
-  include UserService
-
-  BUSINESS_SUGGESTION_LIMIT = 3
 
   def defaults_on_primary_location(business)
     business.primary_location.name ||= "Registered office address"
-    business.primary_location.source ||= UserSource.new(user: current_user)
+    business.primary_location.source ||= UserSource.new(user: User.current)
     business
   end
 
@@ -45,7 +42,7 @@ module BusinessesHelper
       @business.locations.build unless @business.locations.any?
       defaults_on_primary_location(@business)
       @business.contacts.build unless @business.contacts.any?
-      @business.source = UserSource.new(user: current_user)
+      @business.source = UserSource.new(user: User.current)
     else
       @business = Business.new
       @business.locations.build
@@ -61,15 +58,15 @@ private
 
   def build_breadcrumb_structure
     {
-      ancestors: [
-        {
-          name: "Businesses",
-          path: businesses_path
-        }
-      ],
-      current: {
-        name: @business.trading_name
-      }
+        items: [
+            {
+                text: "Businesses",
+                href: businesses_path
+            },
+            {
+                text: @business.trading_name
+            }
+        ]
     }
   end
 end

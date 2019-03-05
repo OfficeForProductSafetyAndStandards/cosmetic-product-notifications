@@ -1,18 +1,20 @@
-= render "documents/document_preview", document: document, dimensions: "480x320"
-hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-width-one-third"]
-
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
+= form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form, errors: @errors
+  = yield
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "documents/document_preview", document: document, dimensions: "480x320"
+      hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible"]
       .govuk-fieldset__legend--l = "#{image_document_text(document).titleize} details"
       = form.fields_for :file do |subform|
         .govuk-form-group
           = subform.label :title, "Document title", class: "govuk-label"
           = subform.text_field :title, value: document.metadata["title"], class: "govuk-input govuk-!-width-two-thirds"
-        .govuk-form-group
-          = subform.label :description, class: "govuk-label"
-          = subform.text_area :description, value: document.metadata["description"], rows: 5, class: "govuk-textarea"
+        = render "form_components/govuk_textarea", key: :description, form: subform,
+                value: document.metadata["description"], max_length: 10000,
+                label: { text: "Description" }
         .govuk-form-group
           .govuk-grid-row
             .govuk-grid-column-one-third

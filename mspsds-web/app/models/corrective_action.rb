@@ -1,5 +1,6 @@
 class CorrectiveAction < ApplicationRecord
   include DateConcern
+  include SanitizationHelper
 
   attribute :related_file
 
@@ -13,6 +14,7 @@ class CorrectiveAction < ApplicationRecord
     :date_decided
   end
 
+  before_validation { trim_line_endings(:summary, :details) }
   validates :summary, presence: { message: "Enter a summary of the corrective action" }
   validates :date_decided, presence: { message: "Enter the date the corrective action was decided" }
   validate :date_decided_cannot_be_in_the_future
@@ -20,8 +22,8 @@ class CorrectiveAction < ApplicationRecord
   validates :related_file, presence: { message: "Select whether you want to upload a related file" }
   validate :related_file_attachment_validation
 
-  validates_length_of :summary, maximum: 1000
-  validates_length_of :details, maximum: 1000
+  validates_length_of :summary, maximum: 10000
+  validates_length_of :details, maximum: 50000
 
   after_create :create_audit_activity
 

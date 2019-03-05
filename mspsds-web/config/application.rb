@@ -28,20 +28,11 @@ module Mspsds
     # This changes Rails timezone, but keeps ActiveRecord in UTC
     config.time_zone = "Europe/London"
 
-    # Setup sentry (from https://github.com/getsentry/raven-ruby/blob/369fe6c5e2389b8c13b71e47d688a719e5c20df7/examples/rails-5.0/config/application.rb)
-    config.rails_activesupport_breadcrumbs = true
-
-    config.exceptions_app = self.routes
-
-    require 'raven/breadcrumbs/logger'
-
-    Raven.configure do |config|
-      config.dsn = ENV['SENTRY_DSN']
-      config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
-    end
-
     # This is the requests' timeout value in seconds. 15 is the default set by Slowpoke
     # Dev environments need longer due to occasional asset compilation
     Slowpoke.timeout = Rails.env.production? ? 15 : 180
+
+    config.exceptions_app = self.routes
+    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
   end
 end

@@ -1,6 +1,5 @@
 module ProductsHelper
   include SearchHelper
-  include UserService
 
   SUGGESTED_PRODUCTS_LIMIT = 4
 
@@ -72,7 +71,7 @@ module ProductsHelper
   def create_product
     if params[:product].present?
       @product = Product.new(product_params)
-      @product.source = UserSource.new(user: current_user)
+      @product.source = UserSource.new(user: User.current)
     else
       @product = Product.new
     end
@@ -98,15 +97,15 @@ private
 
   def build_breadcrumb_structure
     {
-      ancestors: [
-        {
-          name: "Products",
-          path: products_path
-        }
-      ],
-      current: {
-        name: @product.name
-      }
+        items: [
+            {
+                text: "Products",
+                href: products_path
+            },
+            {
+                text: @product.name
+            }
+        ]
     }
   end
 end

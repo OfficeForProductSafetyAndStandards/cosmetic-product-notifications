@@ -57,7 +57,7 @@ class ActiveSupport::TestCase
       },
       {
         id: users[3].id,
-        groups: [organisations[1][:id], all_teams[2].id]
+        groups: [organisations[1][:id], all_teams[2].id, all_teams[3].id]
       }
     ]
 
@@ -80,8 +80,9 @@ class ActiveSupport::TestCase
   def stub_notify_mailer
     result = ""
     allow(result).to receive(:deliver_later)
-    allow(NotifyMailer).to receive(:updated_investigation) { result }
     allow(NotifyMailer).to receive(:alert) { result }
+    allow(NotifyMailer).to receive(:investigation_updated) { result }
+    allow(NotifyMailer).to receive(:investigation_created) { result }
   end
 
   def sign_in_as_non_mspsds_user
@@ -105,8 +106,10 @@ class ActiveSupport::TestCase
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
-    allow(NotifyMailer).to receive(:updated_investigation).and_call_original
     allow(NotifyMailer).to receive(:alert).and_call_original
+    allow(NotifyMailer).to receive(:investigation_updated).and_call_original
+    allow(NotifyMailer).to receive(:investigation_created).and_call_original
+    allow(User).to receive(:current).and_call_original
     reset_user_data
   end
 
@@ -123,7 +126,7 @@ private
   end
 
   def test_user(name: "User_one", id: SecureRandom.uuid)
-    User.new(id: id, email: "user@example.com", first_name: "Test", last_name: name)
+    User.new(id: id, email: "#{name}@example.com", first_name: "Test", last_name: name)
   end
 
   def group_data
@@ -162,7 +165,8 @@ private
     [
       Team.new(id: "aaaaeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 1", path: "/Organisations/Office of Product Safety and Standards/Team 1", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b"),
       Team.new(id: "aaaxzcf8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 2", path: "/Organisations/Office of Product Safety and Standards/Team 2", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b"),
-      Team.new(id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 3", path: "/Organisations/Office of Product Safety and Standards/Team 3", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b")
+      Team.new(id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 3", path: "/Organisations/Office of Product Safety and Standards/Team 3", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b"),
+      Team.new(id: "cccceef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 4", path: "/Organisations/Office of Product Safety and Standards/Team 4", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", team_recipient_email: "team@example.com")
     ]
   end
 
@@ -172,6 +176,8 @@ private
     allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
     allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_opss)
     allow(Keycloak::Client).to receive(:has_role?).with(:mspsds_user).and_return(is_mspsds)
+
+    allow(User).to receive(:current).and_return(user)
   end
 
   def format_user_for_get_userinfo(user, groups)
@@ -189,6 +195,13 @@ private
 
   def stub_user_group_data(user_groups:, users: [])
     Shared::Web::KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
+    allow(Keycloak::Internal).to receive(:get_group) do |group_id|
+      result = {}
+      all_teams.each do|team|
+        result = { "attributes": { "teamRecipientEmail": [team.team_recipient_email] } } if group_id == team.id
+      end
+      result.to_json
+    end
     allow(Keycloak::Internal).to receive(:get_groups).and_return(group_data)
     allow(Keycloak::Internal).to receive(:all_groups).and_return(JSON.parse(group_data))
     allow(Keycloak::Internal).to receive(:all_organisations).and_call_original
@@ -196,6 +209,7 @@ private
     allow(Keycloak::Internal).to receive(:all_users).and_return(users)
     allow(Keycloak::Internal).to receive(:get_user_groups).and_return(user_groups)
     allow(Keycloak::Internal).to receive(:all_team_users).and_call_original
+
     load_keycloak_data
   end
 

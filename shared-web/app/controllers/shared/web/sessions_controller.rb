@@ -1,6 +1,6 @@
 module Shared
   module Web
-    class SessionsController < ApplicationController
+    class SessionsController < Shared::Web::ApplicationController
       skip_before_action :authenticate_user!
 
       def new

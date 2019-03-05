@@ -28,11 +28,16 @@ module Cosmetics
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
 
-    config.exceptions_app = self.routes
-
     config.eager_load_paths << Rails.root.join("presenters")
+
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = 'cosmetics-mailers'
+
+    # Set the request timeout in seconds. The default set by Slowpoke is 15 seconds.
+    # Use a longer timeout on development environments to allow for asset compilation.
+    Slowpoke.timeout = Rails.env.production? ? 15 : 180
+
+    config.exceptions_app = self.routes
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
   end
 end

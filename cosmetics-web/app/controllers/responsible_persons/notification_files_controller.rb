@@ -4,28 +4,40 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
 
   def new; end
 
+  def show
+    redirect_to new_responsible_person_notification_file_path(@responsible_person)
+  end
+
   def create
-    if notification_file_params && notification_file_params[:uploaded_file]
-      @notification_file.name = notification_file_params[:uploaded_file].original_filename
-      @notification_file.responsible_person = @responsible_person
-      @notification_file.user = current_user
-      @notification_file.uploaded_file.attach(notification_file_params[:uploaded_file])
+    unless notification_file_params && notification_file_params[:uploaded_file]
+      @notification_file.errors.add :uploaded_file, "No file selected"
+      return render :new
     end
 
-    respond_to do |format|
-      if @notification_file.save
-        format.html { redirect_to responsible_person_notifications_path(@responsible_person) }
-        format.json { render :show, status: :created, location: @notification_file }
-      else
-        format.html { render :new }
-        format.json { render json: @notification_file.errors, status: :unprocessable_entity }
-      end
+    @notification_file.name = notification_file_params[:uploaded_file].original_filename
+    @notification_file.responsible_person = @responsible_person
+    @notification_file.user = User.current
+
+    if @notification_file.save
+      redirect_to responsible_person_notifications_path(@responsible_person)
+    else
+      render :new
     end
+  end
+
+  def destroy
+    NotificationFile.delete(params[:id])
+    redirect_to responsible_person_notifications_path(@responsible_person)
+  end
+
+  def destroy_all
+    @responsible_person.notification_files.where(user_id: User.current.id).where.not(upload_error: nil).delete_all
+    redirect_to responsible_person_notifications_path(@responsible_person)
   end
 
 private
 
-    # Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_notification_file
     @notification_file = NotificationFile.new(notification_file_params)
   end
@@ -35,7 +47,7 @@ private
     authorize @responsible_person, :show?
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
   def notification_file_params
     if params.has_key?(:notification_file)
       params.require(:notification_file).permit(:name, :uploaded_file)
