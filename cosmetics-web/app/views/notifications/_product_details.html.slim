@@ -40,5 +40,5 @@ table.govuk-table
         td.govuk-table__cell
           - notification.image_uploads.each do |image|
             - if image.file_exists? && image.marked_as_safe?
-              = link_to image.filename, url_for(image.file), target: "_blank", rel: "noopener"
+              = link_to image.filename, url_for(image.file)
               br
