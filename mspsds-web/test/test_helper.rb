@@ -37,7 +37,7 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user(is_admin: false, user_name: "User_one", organisation: organisations[1], teams: [all_teams[0], all_teams[1]])
+  def sign_in_as_user(is_admin: false, user_name: "User_one", organisation: opss_organisation, teams: [all_teams[0], all_teams[1]])
     users = all_users
     user = users.detect { |u| u.last_name == user_name }
     user.organisation = organisation
@@ -45,19 +45,19 @@ class ActiveSupport::TestCase
     user_groups = [
       {
         id: users[1].id,
-        groups: [organisations[1][:id], all_teams[0].id, all_teams[1].id]
+        groups: [opss_organisation[:id], all_teams[0].id, all_teams[1].id]
       },
       {
         id: users[0].id,
-        groups: [organisations[1][:id], all_teams[0].id]
+        groups: [opss_organisation[:id], all_teams[0].id]
       },
       {
         id: users[2].id,
-        groups: [organisations[1][:id], all_teams[1].id]
+        groups: [opss_organisation[:id], all_teams[1].id]
       },
       {
         id: users[3].id,
-        groups: [organisations[1][:id], all_teams[2].id, all_teams[3].id]
+        groups: [opss_organisation[:id], all_teams[2].id, all_teams[3].id]
       }
     ]
 
@@ -68,7 +68,7 @@ class ActiveSupport::TestCase
     end
 
     is_mspsds_user = organisation.present?
-    is_opss_user = organisation&.name == organisations[1].name
+    is_opss_user = organisation&.name == opss_organisation.name
 
     stub_user_credentials(user: user, groups: groups, is_admin: is_admin, is_opss: is_opss_user, is_mspsds: is_mspsds_user)
     stub_user_group_data(user_groups: user_groups, users: users)
@@ -90,11 +90,23 @@ class ActiveSupport::TestCase
   end
 
   def sign_in_as_non_opss_user(user_name: "User_one")
-    sign_in_as_user(user_name: user_name, organisation: organisations[0])
+    sign_in_as_user(user_name: user_name, organisation: non_opss_organisation)
   end
 
   def sign_in_as_admin
-    sign_in_as_user(is_admin: true, user_name: "Admin", organisation: organisations[1])
+    sign_in_as_user(is_admin: true, user_name: "Admin", organisation: opss_organisation)
+  end
+
+  def set_user_as_opss(user)
+    user.organisation = opss_organisation
+    # Keycloak bases this role on the group membership
+    allow(Keycloak::Internal).to receive(:has_role?).with(user.id, :opss_user).and_return(true)
+  end
+
+  def set_user_as_non_opss(user)
+    user.organisation = non_opss_organisation
+    # Keycloak bases this role on the group membership
+    allow(Keycloak::Internal).to receive(:has_role?).with(user.id, :opss_user).and_return(false)
   end
 
   def all_users
@@ -155,10 +167,15 @@ private
   end
 
   def organisations
-    [
-      Organisation.new(id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1"),
-      Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2")
-    ]
+    [non_opss_organisation, opss_organisation]
+  end
+
+  def non_opss_organisation
+    Organisation.new(id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1")
+  end
+
+  def opss_organisation
+    Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2")
   end
 
   def all_teams
