@@ -72,6 +72,13 @@ To create a database for the current space:
     cf enable-service-access postgres
     cf create-service postgres small-10.5 cosmetics-database
 
+#### Elasticsearch
+
+To create an Elasticsearch instance for the current space:
+
+    cf marketplace -s elasticsearch
+    cf create-service elasticsearch tiny-6.x cosmetics-elasticsearch
+
 #### Redis
 
 To create a redis instance for the current space. 
