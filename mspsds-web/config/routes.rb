@@ -78,8 +78,8 @@ Rails.application.routes.draw do
   get "your-teams" => "teams#index"
   resources :teams, only: %i[index show] do
     member do
-      get :invite
-      put :invite
+      get :invite_to, path: "invite"
+      put :invite_to, path: "invite"
     end
   end
 

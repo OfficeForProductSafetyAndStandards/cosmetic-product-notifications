@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
   before_action :set_user_teams, only: :index
-  before_action :set_team, only: %i[show invite]
-  before_action :set_new_user, only: :invite
+  before_action :set_team, only: %i[show invite_to]
+  before_action :set_new_user, only: :invite_to
 
   # GET /teams, GET /my-teams
   def index; end
@@ -9,7 +9,7 @@ class TeamsController < ApplicationController
   def show; end
 
   # GET, PUT /teams/:id/invite
-  def invite
+  def invite_to
     if request.put? && @new_user.valid?
       existing_user = User.find_by email_address: @new_user.email_address
       if existing_user

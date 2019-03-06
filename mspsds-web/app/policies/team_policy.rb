@@ -3,7 +3,7 @@ class TeamPolicy < ApplicationPolicy
     user.teams.include? team
   end
 
-  def invite?(user: @user, team: @record)
-    user.teams.include? team && user.is_team_admin?
+  def invite_to?(user: @user, team: @record)
+    user.is_team_admin? && (user.teams.include? team)
   end
 end

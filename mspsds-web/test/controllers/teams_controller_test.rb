@@ -17,7 +17,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_raises Pundit::NotAuthorizedError do
-      get invite_team_url(@another_team)
+      get invite_to_team_url(@another_team)
     end
   end
 
@@ -25,7 +25,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
     set_user_as_not_team_admin
 
     assert_raises Pundit::NotAuthorizedError do
-      get invite_team_url(@my_team)
+      get invite_to_team_url(@my_team)
     end
   end
 
