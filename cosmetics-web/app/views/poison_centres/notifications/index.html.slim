@@ -1,0 +1,11 @@
+- content_for :page_title, "Search cosmetic products"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      | Search cosmetic products
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = render "results", results: @notifications
+.govuk-grid-row
+  .govuk-grid-column-full.pagination-links
+    = will_paginate @notifications
