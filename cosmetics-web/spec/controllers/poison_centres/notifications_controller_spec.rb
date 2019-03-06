@@ -7,6 +7,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   let(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
   let(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
 
+  let(:distinct_notification) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "bbbb") }
+  let(:similar_notification_one) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaaa") }
+  let(:similar_notification_two) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaab") }
+
   after do
     sign_out
   end
@@ -46,20 +50,20 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
     describe "search on #index" do
       before do
-        create(:registered_notification, responsible_person: responsible_person_1, product_name: "bbbb")
-        create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaaa")
-        create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaab")
+        distinct_notification
+        similar_notification_one
+        similar_notification_two
         Notification.import force: true
       end
 
       it "finds the correct notification" do
         get :index, params: { q: "bbbb" }
-        expect(assigns(:notifications).records.to_a).to eq([Notification.find_by(product_name: "bbbb")])
+        expect(assigns(:notifications).records.to_a).to eq([distinct_notification])
       end
 
       it "finds similar notifications with fuzzy search" do
         get :index, params: { q: "aaaa" }
-        expect(assigns(:notifications).records.to_a.sort).to eq([Notification.find_by(product_name: "aaaa"), Notification.find_by(product_name: "aaab")].sort)
+        expect(assigns(:notifications).records.to_a.sort).to eq([similar_notification_one, similar_notification_two].sort)
       end
     end
 

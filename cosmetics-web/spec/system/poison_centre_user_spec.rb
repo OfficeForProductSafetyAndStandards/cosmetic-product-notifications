@@ -21,16 +21,18 @@ RSpec.describe "Poison Centre user", type: :system do
   end
 
   it "can view a list of all registered notifications" do
+    notifications = rp_1_notifications + rp_2_notifications
+    Notification.import force: true
     visit root_path
 
-    (rp_1_notifications + rp_2_notifications).each do |notification|
+    notifications.each do |notification|
       assert_text notification.product_name
     end
   end
 
   it "cannot see any drafts in the list of notifications" do
     draft_notification = create(:draft_notification)
-
+    Notification.import force: true
     visit root_path
 
     assert_no_text draft_notification.product_name
@@ -38,7 +40,7 @@ RSpec.describe "Poison Centre user", type: :system do
 
   it "is able to see the product details for a registered notification" do
     notification = rp_1_notifications.first
-
+    Notification.import force: true
     visit root_path
     click_on notification.product_name
 
@@ -51,7 +53,7 @@ RSpec.describe "Poison Centre user", type: :system do
 
   it "is able to see the Responsible Person details for a registered notification" do
     notification = rp_1_notifications.first
-
+    Notification.import force: true
     visit root_path
     click_on notification.product_name
 
