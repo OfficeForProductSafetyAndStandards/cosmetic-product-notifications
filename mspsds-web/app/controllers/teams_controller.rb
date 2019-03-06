@@ -13,6 +13,7 @@ private
   end
 
   def set_team
-    @team = Team.find(params[:id])
+    @team = Team.find_by!(id: params[:id])
+    authorize @team
   end
 end
