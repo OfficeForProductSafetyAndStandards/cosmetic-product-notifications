@@ -26,7 +26,7 @@ class TeamsController < ApplicationController
       end
 
       # TODO MSPSDS-1047 Show success message
-      redirect_to :my_teams
+      redirect_to :team
     end
   end
 
@@ -38,7 +38,7 @@ private
 
   def set_team
     @team = Team.find_by!(id: params[:id])
-    authorize @team
+    authorize @team, :show?
   end
 
   def set_new_user
