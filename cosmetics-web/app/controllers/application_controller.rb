@@ -18,7 +18,7 @@ private
   def redirect_poison_centre_user
     return unless user_signed_in?
 
-    redirect_to notifications_path if poison_centre_user?
+    redirect_to poison_centre_notifications_path if poison_centre_user?
   end
 
   def create_or_join_responsible_person

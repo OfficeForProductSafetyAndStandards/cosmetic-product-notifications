@@ -2,9 +2,11 @@
 Rails.application.routes.draw do
   mount Shared::Web::Engine => '/', as: 'shared_engine'
 
-  root 'landing_page#index'
+  root "landing_page#index"
 
-  resources :notifications, param: :reference_number, only: %i[index show]
+  scope module: "poison_centres", as: "poison_centre" do
+    resources :notifications, param: :reference_number, only: %i[index show]
+  end
 
   resources :responsible_persons, only: %i[show] do
     collection do

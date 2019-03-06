@@ -2,7 +2,7 @@ ruby:
   notification_path = if local_assigns[:responsible_person].present?
                         responsible_person_notification_path(responsible_person, notification)
                       else
-                        notification_path(notification)
+                        poison_centre_notification_path(notification)
                       end
 li.product
   h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NotificationsController, type: :controller do
+RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   let(:responsible_person_1) { create(:responsible_person, email_address: "one@example.com") }
   let(:responsible_person_2) { create(:responsible_person, email_address: "two@example.com") }
 
