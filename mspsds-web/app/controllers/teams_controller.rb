@@ -38,7 +38,7 @@ private
 
   def set_team
     @team = Team.find_by!(id: params[:id])
-    authorize @team, :show?
+    authorize @team
   end
 
   def set_new_user
