@@ -19,10 +19,8 @@
             "https://docs.google.com/document/d/1QTM-LYmlAk8nnuwYOvtn8-gB5-F6T5u4lgs_2BhzPJ8/edit",
             target: :_blank
 
-        .govuk-form-group
-          .form-group
-            = form.label "Upload CPNP zip file", class: "govuk-label"
-            = form.file_field :uploaded_files, multiple: true,
-                    class: "govuk-file-upload", accept: "application/zip"
-
+        .govuk-form-group#file-upload-form-group[class= ("govuk-form-group--error" if @errors)]
+          = form.label "Upload CPNP zip file", class: "govuk-label"
+          = form.file_field :uploaded_files, multiple: true,
+                  class: "govuk-file-upload", accept: "application/zip"
         = form.submit "Upload", class: "govuk-button"

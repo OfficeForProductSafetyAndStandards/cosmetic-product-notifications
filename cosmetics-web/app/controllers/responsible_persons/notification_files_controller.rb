@@ -9,23 +9,26 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
 
   def create
     @errors = []
-
     unless uploaded_files_params
-      @errors << { text: "No files selected", href: "#" }
+      @errors << { text: "No files selected", href: "#file-upload-form-group" }
       return render :new
     end
 
-    if uploaded_files_params.length > NotificationFile.get_no_of_files_limit
-      @errors << { text: "Too many files selected. Please select no more than #{NotificationFile.get_no_of_files_limit} files", href: "#" }
+    if uploaded_files_params.length > NotificationFile.get_max_number_of_files
+      @errors << {
+          text: "Too many files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
+          href: "#file-upload-form-group"
+      }
       return render :new
     end
 
     uploaded_files_params.each do |uploaded_file|
-      notification_file = NotificationFile.new
+      notification_file = NotificationFile.new(
+        name: uploaded_file.original_filename,
+        responsible_person: @responsible_person,
+        user: User.current
+      )
       notification_file.uploaded_file.attach(uploaded_file)
-      notification_file.name = uploaded_file.original_filename
-      notification_file.responsible_person = @responsible_person
-      notification_file.user = User.current
 
       unless notification_file.save
         render :new

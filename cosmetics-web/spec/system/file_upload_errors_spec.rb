@@ -20,7 +20,7 @@ RSpec.describe "File upload errors", type: :system do
   end
 
   it "shows an error when too many files are selected for upload" do
-    allow(NotificationFile).to receive(:get_no_of_files_limit).and_return(2)
+    allow(NotificationFile).to receive(:get_max_number_of_files).and_return(2)
     visit new_responsible_person_notification_file_path(responsible_person)
     page.attach_file('uploaded_files',
                      [Rails.root + 'spec/fixtures/testExportFile.zip',
