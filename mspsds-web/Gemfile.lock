@@ -98,7 +98,7 @@ GEM
     arel (9.0.0)
     ast (2.4.0)
     aws-eventstream (1.0.1)
-    aws-partitions (1.141.0)
+    aws-partitions (1.142.0)
     aws-sdk-core (3.46.2)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
@@ -440,9 +440,6 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   jbuilder (~> 2.8)
-  lograge
-  mini_magick
-  notifications-ruby-client (>= 3.1.0)
   okcomputer
   pg (~> 1.1)
   pghero
