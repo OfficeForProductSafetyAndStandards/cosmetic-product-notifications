@@ -8,7 +8,7 @@
         h1.govuk-heading-xl
           span.govuk-caption-xl Report an unsafe or non-compliant product
           | Has any corrective action been agreed or taken?
-      = render "form_components/govuk_radios", form: form, key: :further_corrective_action,
+      = render "form_components/govuk_radios", form: form, key: :further_has_corrective_action,
               fieldset: { legend: { html: heading } },
               items: [{ text: "Yes", value: "Yes" }, { text: "No", value: "No" }]
       = form.submit "Continue", class: "govuk-button"

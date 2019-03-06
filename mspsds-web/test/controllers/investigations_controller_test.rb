@@ -48,11 +48,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should generate investigation pdf" do
-    get investigation_url(@investigation_one, format: :pdf)
-    assert_response :success
-  end
-
   test "should assign user to investigation" do
     user = User.find_by(last_name: "User_one")
     investigation_assignee = lambda { Investigation.find(@investigation_three.id).assignee }
