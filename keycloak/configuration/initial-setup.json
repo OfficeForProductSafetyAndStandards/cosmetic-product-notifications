@@ -1712,6 +1712,13 @@
         "containerId" : "68531a90-8123-44ae-9bc7-21df38edbe52"
       } ],
       "mspsds-app" : [ {
+        "id": "e6aed038-289d-4aca-8a07-21537f618a81",
+        "name": "team_admin",
+        "description": "Users with team-admin roles are allowed to change team memberships in mspsds",
+        "composite": false,
+        "clientRole": true,
+        "containerId": "629299db-762e-49a8-aeff-b6e5f64b9e52"
+      },{
         "id" : "a06d9d2f-18b8-46c8-8111-ebf89f5579a8",
         "name" : "opss_user",
         "description" : "OPSS users",
@@ -1978,7 +1985,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "user" ],
     "clientRoles" : {
-      "realm-management" : [ "view-users", "manage-users" ],
+      "realm-management" : [ "view-users", "manage-users", "view-clients" ],
       "account" : [ "manage-account", "view-profile" ],
       "mspsds-app" : [ "user" ]
     },
@@ -1991,9 +1998,40 @@
     "enabled" : true,
     "totp" : false,
     "emailVerified" : true,
-    "firstName" : "Test",
+    "firstName" : "Team Admin",
     "lastName" : "User",
     "email" : "user@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "HCXH4zH0mvTter5NLZQy1q6EsoKRwFplx0Di8+m86pUl2cc/YyvN9bqpqZLhTuGla9VLPKuhsN5wroazRa+RTw==",
+      "salt" : "mXBi7b5Q27vP57SouaGWxQ==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1536192555744,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ],
+      "mspsds-app" : [ "user", "team_admin" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/Organisations/Office for Product Safety and Standards/OPSS Enforcement" ]
+  }, {
+    "id" : "dbbc495b-475e-419a-a151-2e61c6f9fdce",
+    "createdTimestamp" : 1536192541350,
+    "username" : "user2@example.com",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "Second Test",
+    "lastName" : "User",
+    "email" : "user2@example.com",
     "credentials" : [ {
       "type" : "password",
       "hashedSaltedValue" : "HCXH4zH0mvTter5NLZQy1q6EsoKRwFplx0Di8+m86pUl2cc/YyvN9bqpqZLhTuGla9VLPKuhsN5wroazRa+RTw==",
@@ -2014,7 +2052,7 @@
       "mspsds-app" : [ "user" ]
     },
     "notBefore" : 0,
-    "groups" : [ "/Organisations/Office for Product Safety and Standards" ]
+    "groups" : [ "/Organisations/Office for Product Safety and Standards/OPSS Enforcement" ]
   } ],
   "scopeMappings" : [ {
     "clientScope" : "offline_access",
@@ -2023,7 +2061,7 @@
   "clientScopeMappings" : {
     "realm-management" : [ {
       "client" : "mspsds-app",
-      "roles" : [ "view-users" ]
+      "roles" : [ "view-users", "view-clients" ]
     } ],
     "mspsds-app" : [ {
       "clientScope" : "roles",

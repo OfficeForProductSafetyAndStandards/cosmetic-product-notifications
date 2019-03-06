@@ -73,6 +73,10 @@ class User < Shared::Web::User
     has_role? :opss_user
   end
 
+  def is_team_admin?
+    has_role? :team_admin
+  end
+
   def self.get_assignees(except: [])
     users_to_exclude = Array(except)
     self.all - users_to_exclude
