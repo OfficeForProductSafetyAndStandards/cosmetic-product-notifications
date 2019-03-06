@@ -8,7 +8,7 @@ class TeamsController < ApplicationController
 
   def show; end
 
-  # GET, PUT /teams/:id/invite
+  # GET /teams/:id/invite, PUT /teams/:id
   def invite_to
     if request.put? && @new_user.valid?
       existing_user = User.find_by email_address: @new_user.email_address
@@ -26,7 +26,7 @@ class TeamsController < ApplicationController
       end
 
       # TODO MSPSDS-1047 Show success message
-      redirect_to :team
+      render :show
     end
   end
 

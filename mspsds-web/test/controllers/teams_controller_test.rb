@@ -30,6 +30,10 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Inviting existing user from same org adds them to the team" do
+    put team_url(@my_team), params: { new_user: {
+        email_address: "newUser@example.com"
+    } }
+    assert_response :success
     # Check added
     # Check email sent
   end
