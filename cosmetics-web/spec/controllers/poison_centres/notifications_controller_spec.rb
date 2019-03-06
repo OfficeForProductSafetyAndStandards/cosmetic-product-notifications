@@ -14,24 +14,29 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as a Poison Centre user" do
     before do
       sign_in_as_poison_centre_user
+
     end
 
     describe "GET #index" do
       it "gets all registered notifications" do
+        p Notification.all.count
+        Notification.import force: true
         get :index
-        expect(assigns(:notifications)).to eq(rp_1_notifications + rp_2_notifications)
+        expect(assigns(:notifications).records.to_a).to eq(rp_1_notifications + rp_2_notifications)
       end
 
       it "excludes draft notifications" do
         draft_notification = create(:draft_notification, responsible_person: responsible_person_1)
+        Notification.import force: true
         get :index
-        expect(assigns(:notifications)).not_to include(draft_notification)
+        expect(assigns(:notifications).records.to_a).not_to include(draft_notification)
       end
 
       it "excludes unfinished imported notifications" do
         imported_notification = create(:imported_notification, responsible_person: responsible_person_1)
+        Notification.import force: true
         get :index
-        expect(assigns(:notifications)).not_to include(imported_notification)
+        expect(assigns(:notifications).records.to_a).not_to include(imported_notification)
       end
 
       it "renders the index template" do
