@@ -67,7 +67,7 @@
     p
       | By registering this cosmetic product you are confirming that, to the
       |  best of your knowledge, the details you are providing are correct.
-    = form_with url: confirmation_responsible_person_notification_path(@responsible_person, @notification),
-            method: :get do |form|
+    = form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification),
+            method: :post do |form|
       .govuk-form-group
-        = form.submit "Accept and register the cosmetics product", name: nil, class: "govuk-button"
+        = form.submit "Accept and register the cosmetics product", class: "govuk-button"

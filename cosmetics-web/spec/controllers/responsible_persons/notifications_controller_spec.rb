@@ -148,17 +148,17 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
     end
   end
 
-  describe "GET /confirmation" do
+  describe "POST /confirm" do
     let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
 
     it "assigns the correct notification" do
-      get :confirmation, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number }
+      post :confirm, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number }
       expect(assigns(:notification)).to eq(draft_notification)
     end
 
     it "marks the notification as complete" do
       attach_image_to_draft_with_metadata(safe: true)
-      get :confirmation, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number }
+      post :confirm, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number }
       expect(draft_notification.reload.state).to eq('notification_complete')
     end
   end
