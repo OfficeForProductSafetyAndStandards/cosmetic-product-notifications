@@ -14,12 +14,7 @@ module Searchable
           strings: {
             match_mapping_type: "string",
             mapping: {
-              type: "text",
-              fields: {
-                sort: {
-                  type: "icu_collation_keyword"
-                }
-              }
+              type: "text"
             }
           }
         }, {

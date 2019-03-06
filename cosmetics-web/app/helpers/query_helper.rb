@@ -8,7 +8,7 @@ module QueryHelper
       query: {
         bool: {
           must: match_params,
-          filter: filter_params,
+          filter: filter_params
         }
       }
     }
@@ -24,11 +24,9 @@ module QueryHelper
 
   def multi_match
     {
-      query: {
-        multi_match: {
-          query: @query,
-          fuzziness: "AUTO"
-        }
+      multi_match: {
+        query: @query,
+        fuzziness: "AUTO"
       }
     }
   end

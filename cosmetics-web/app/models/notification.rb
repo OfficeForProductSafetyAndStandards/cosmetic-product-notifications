@@ -31,9 +31,15 @@ class Notification < ApplicationRecord
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
             allow_nil: true
 
+  settings do
+    mappings do
+      indexes :state, type: :keyword
+    end
+  end
+
   def as_indexed_json(*)
     as_json(
-      only: %i[product_name, state],
+      only: %i[product_name state],
       include: {
         responsible_person: {
           only: %i[name]
