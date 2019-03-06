@@ -19,6 +19,14 @@ module CpnpHelper
     UNIT_NAME[unit]
   end
 
+  def get_exposure_route_name(exposure_route)
+    EXPOSURE_ROUTE_NAME[exposure_route]
+  end
+
+  def get_exposure_condition_name(exposure_condition)
+    EXPOSURE_CONDITION_NAME[exposure_condition]
+  end
+
   CATEGORY_NAME = {
       skin_products: "Skin products",
       skin_care_products: "Skin care products",
@@ -408,5 +416,16 @@ module CpnpHelper
       greater_than_25_less_than_50_percent: "> 25 - ≤ 50%",
       greater_than_50_less_than_75_percent: "> 50 - ≤ 75%",
       greater_than_75_less_than_100_percent: "> 75 - ≤ 100%"
+  }.freeze
+
+  EXPOSURE_ROUTE_NAME = {
+      dermal: "Dermal",
+      oral: "Oral",
+      inhalation: "Inhalation"
+  }.freeze
+
+  EXPOSURE_CONDITION_NAME = {
+      rinse_off: "Rinse off",
+      leave_on: "Leave on"
   }.freeze
 end
