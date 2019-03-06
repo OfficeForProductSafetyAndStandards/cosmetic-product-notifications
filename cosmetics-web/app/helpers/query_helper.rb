@@ -1,9 +1,28 @@
 module QueryHelper
   def build_query
-    @query.present? ? fuzzy_match : { }
+    filtered_query
   end
 
-  def fuzzy_match
+  def filtered_query
+    {
+      query: {
+        bool: {
+          must: match_params,
+          filter: filter_params,
+        }
+      }
+    }
+  end
+
+  def match_params
+    if @query.present?
+      multi_match
+    else
+      match_all
+    end
+  end
+
+  def multi_match
     {
       query: {
         multi_match: {
@@ -11,6 +30,18 @@ module QueryHelper
           fuzziness: "AUTO"
         }
       }
+    }
+  end
+
+  def filter_params
+    {
+      term: { "state": "notification_complete" }
+    }
+  end
+
+  def match_all
+    {
+      match_all: {}
     }
   end
 end
