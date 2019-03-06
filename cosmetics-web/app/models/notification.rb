@@ -38,6 +38,8 @@ class Notification < ApplicationRecord
   end
 
   def as_indexed_json(*)
+    return { state: state } unless state == "notification_complete"
+
     as_json(
       only: %i[product_name state],
       include: {
