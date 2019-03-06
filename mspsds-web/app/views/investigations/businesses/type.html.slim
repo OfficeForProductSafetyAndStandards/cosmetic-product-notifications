@@ -12,10 +12,10 @@
       - other = capture do
         = form.text_field :type_other, class: "govuk-input govuk-!-width-one-third"
       = render "form_components/govuk_radios", form: form, key: :type,
+        errorMessage: { text: "Please select a business type" },
         items: [{ text: "Retailer", value: "retailer" },
                 { text: "Manufacturer", value: "manufacturer" },
                 { text: "Importer", value: "importer" },
                 { text: "Distributor", value: "distributor" },
-                { text: "Manufacturer", value: "manufacturer" },
                 { text: "Other", value: "other", conditional: { html: other } }]
       = form.submit "Continue", class: "govuk-button"
