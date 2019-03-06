@@ -141,4 +141,11 @@ module InvestigationsHelper
   def assignee_ids_from_team(team)
     [team.id] + team.users.map(&:id)
   end
+
+  def suggested_previous_assignees
+    all_past_assignees = @investigation.past_assignees + @investigation.past_teams
+    return [] if all_past_assignees.empty? || all_past_assignees == [User.current]
+
+    all_past_assignees || []
+  end
 end

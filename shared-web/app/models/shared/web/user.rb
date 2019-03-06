@@ -36,6 +36,10 @@ module Shared
         RequestStore.store[:current_user] = user
       end
 
+      def has_role?(role)
+        Shared::Web::KeycloakClient.instance.has_role? role
+      end
+
       def full_name
         "#{first_name} #{last_name}"
       end

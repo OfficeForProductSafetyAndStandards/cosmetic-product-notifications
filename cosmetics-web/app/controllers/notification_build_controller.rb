@@ -43,11 +43,11 @@ class NotificationBuildController < ApplicationController
   end
 
   def new
-    redirect_to wizard_path(steps.first, notification_id: @notification.reference_number)
+    redirect_to wizard_path(steps.first)
   end
 
   def finish_wizard_path
-    edit_notification_path(@notification)
+    edit_responsible_person_notification_path(@notification.responsible_person, @notification)
   end
 
 private
@@ -63,7 +63,8 @@ private
   end
 
   def set_notification
-    @notification = Notification.find_by reference_number: params[:notification_id]
+    @notification = Notification.find_by reference_number: params[:notification_reference_number]
+    authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
   end
 
   def set_countries
@@ -75,7 +76,7 @@ private
     when "single"
       @notification.components.build
       @notification.save
-      redirect_to new_component_build_path(@notification.components.first)
+      redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
     when "multiple"
       # TODO COSBETA-10 Implement multiple components
       @notification.components.build
