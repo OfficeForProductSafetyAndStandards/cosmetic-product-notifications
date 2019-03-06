@@ -31,6 +31,9 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
       notification_file.uploaded_file.attach(uploaded_file)
 
       unless notification_file.save
+        @errors.concat(notification_file.errors.full_messages.map { |message|
+          { text: message, href: "#file-upload-form-group" }
+        })
         render :new
       end
     end
