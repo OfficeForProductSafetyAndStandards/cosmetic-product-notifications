@@ -55,11 +55,8 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete do
-        guard do
-          images_are_present_and_safe?
-        end
-      end
+      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
+      transitions from: :notification_file_imported, to: :notification_complete
     end
 
     event :notification_file_parsed do
