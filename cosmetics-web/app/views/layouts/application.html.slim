@@ -14,6 +14,11 @@
       strong[class="govuk-!-font-weight-bold"]
         = notice
 
+  - if confirmation
+    .confirmation-banner[aria-labelledby="confirmation-banner-title" tabindex="-1"]
+      h2#confirmation-banner-title.confirmation-banner__title
+        = confirmation
+
   main#main-content.govuk-main-wrapper.app-main-class[role="main"]
     = yield
 

@@ -39,7 +39,7 @@ class ResponsiblePersons::NotificationsController < ApplicationController
 
   def confirm
     if @notification.submit_notification!
-      redirect_to responsible_person_notifications_path(@responsible_person, anchor: "registered")
+      redirect_to responsible_person_notifications_path(@responsible_person), confirmation: "#{@notification.product_name} registered"
     else
       redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
     end
