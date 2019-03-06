@@ -103,11 +103,6 @@ RSpec.describe ComponentBuildController, type: :controller do
       expect(assigns(:component).shades).to eq(["blue", ""])
     end
 
-    it "re-renders add_shades if less than two non blank shades are present" do
-      post(:update, params: params.merge(id: :add_shades, component: { shades: ["red", ""] }))
-      expect(response).to render_template("component_build/add_shades")
-    end
-
     it "does not allow the user to update a notification component for a Responsible Person they not belong to" do
       expect {
         post(:update, params: other_responsible_person_params.merge(id: :add_shades, component: { shades: %w[red blue] }))

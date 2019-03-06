@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_27_121321) do
+ActiveRecord::Schema.define(version: 2019_03_01_135223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,10 @@ ActiveRecord::Schema.define(version: 2019_02_27_121321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "notification_id"
+    t.string "notification_type"
+    t.string "frame_formulation"
+    t.string "sub_sub_category"
+    t.string "name"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
@@ -52,6 +56,15 @@ ActiveRecord::Schema.define(version: 2019_02_27_121321) do
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
     t.index ["responsible_person_id"], name: "index_email_verification_keys_on_responsible_person_id"
+  end
+
+  create_table "exact_formulas", force: :cascade do |t|
+    t.string "inci_name"
+    t.decimal "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "component_id"
+    t.index ["component_id"], name: "index_exact_formulas_on_component_id"
   end
 
   create_table "image_uploads", force: :cascade do |t|
@@ -89,6 +102,15 @@ ActiveRecord::Schema.define(version: 2019_02_27_121321) do
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
   end
 
+  create_table "range_formulas", force: :cascade do |t|
+    t.string "inci_name"
+    t.string "range"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "component_id"
+    t.index ["component_id"], name: "index_range_formulas_on_component_id"
+  end
+
   create_table "responsible_person_users", force: :cascade do |t|
     t.bigint "responsible_person_id"
     t.string "user_id"
@@ -113,11 +135,34 @@ ActiveRecord::Schema.define(version: 2019_02_27_121321) do
     t.boolean "is_email_verified", default: false
   end
 
+  create_table "trigger_question_elements", force: :cascade do |t|
+    t.integer "answer_order"
+    t.string "answer"
+    t.integer "element_order"
+    t.string "element"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "trigger_question_id"
+    t.index ["trigger_question_id"], name: "index_trigger_question_elements_on_trigger_question_id"
+  end
+
+  create_table "trigger_questions", force: :cascade do |t|
+    t.string "question"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "component_id"
+    t.index ["component_id"], name: "index_trigger_questions_on_component_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "components", "notifications"
   add_foreign_key "email_verification_keys", "responsible_persons"
+  add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"
   add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
+  add_foreign_key "range_formulas", "components"
   add_foreign_key "responsible_person_users", "responsible_persons"
+  add_foreign_key "trigger_question_elements", "trigger_questions"
+  add_foreign_key "trigger_questions", "components"
 end
