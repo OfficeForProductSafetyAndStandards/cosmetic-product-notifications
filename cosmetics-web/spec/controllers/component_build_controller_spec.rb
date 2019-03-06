@@ -101,13 +101,6 @@ RSpec.describe ComponentBuildController, type: :controller do
                               component: { shades: %w[red blue] }, remove_shade_with_id: 0 })
       expect(assigns(:component).shades).to eq(['blue', ''])
     end
-
-    it "rerenders add_shades if less than two non blank shades are present" do
-      component = create_component
-      post(:update, params: { component_id: component.id, id: 'add_shades',
-                              component: { shades: ['red', ''] } })
-      expect(response).to render_template("component_build/add_shades")
-    end
   end
 
 private
