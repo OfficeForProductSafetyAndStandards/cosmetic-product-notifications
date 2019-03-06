@@ -184,26 +184,18 @@ class InvestigationTest < ActiveSupport::TestCase
   test "visible to creator organisation" do
     create_new_private_case
     creator = User.find_by(last_name: "User_one")
-    creator.organisation = organisations[0]
+    set_user_as_non_opss(creator)
     user = User.find_by(last_name: "User_two")
-    user.organisation = organisations[0]
+    set_user_as_non_opss(user)
     assert_equal(policy(@new_investigation).show?(user: user), true)
-  end
-
-  test "visible to admin" do
-    create_new_private_case
-    logout
-    sign_in_as_admin
-    user = User.find_by(last_name: "Admin")
-    assert(policy(@new_investigation).show?(user: user))
   end
 
   test "visible to assignee organisation" do
     create_new_private_case
     assignee = User.find_by(last_name: "User_two")
-    assignee.organisation = organisations[1]
+    set_user_as_opss(assignee)
     user = User.find_by(last_name: "User_three")
-    user.organisation = organisations[1]
+    set_user_as_opss(user)
     @new_investigation.assignee = assignee
     assert(policy(@new_investigation).show?(user: user))
   end
@@ -213,7 +205,7 @@ class InvestigationTest < ActiveSupport::TestCase
     logout
     sign_in_as_non_opss_user(user_name: "User_two")
     user = User.find_by(last_name: "User_two")
-    user.organisation = organisations[0]
+    set_user_as_non_opss(user)
     assert_not(policy(@new_investigation).show?(user: user))
   end
 
