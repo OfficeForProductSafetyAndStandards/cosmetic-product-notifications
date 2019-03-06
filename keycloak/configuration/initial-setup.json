@@ -1670,8 +1670,16 @@
         "containerId" : "b0d6493b-9303-44ba-8f2b-3ab0d5370ba7"
       } ],
       "cosmetics-app" : [ {
+        "id" : "972c0edd-30e0-4eeb-af05-a92cf4a6eacf",
+        "name" : "poison_centre_user",
+        "description" : "Role assigned to Poison Centre users granting them access to all registered products.",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "121ec424-71bc-4403-829a-44cf4fcb05c5"
+      }, {
         "id" : "28c3ce58-446d-46ef-9a10-47d41f800319",
         "name" : "user",
+        "description" : "Default role assigned to all users.",
         "composite" : false,
         "clientRole" : true,
         "containerId" : "121ec424-71bc-4403-829a-44cf4fcb05c5"
@@ -1704,6 +1712,13 @@
         "containerId" : "68531a90-8123-44ae-9bc7-21df38edbe52"
       } ],
       "mspsds-app" : [ {
+        "id": "e6aed038-289d-4aca-8a07-21537f618a81",
+        "name": "team_admin",
+        "description": "Users with team-admin roles are allowed to change team memberships in mspsds",
+        "composite": false,
+        "clientRole": true,
+        "containerId": "629299db-762e-49a8-aeff-b6e5f64b9e52"
+      },{
         "id" : "a06d9d2f-18b8-46c8-8111-ebf89f5579a8",
         "name" : "opss_user",
         "description" : "OPSS users",
@@ -1822,6 +1837,16 @@
         "subGroups" : [ ]
       } ]
     } ]
+  }, {
+    "id" : "79dd8eab-e5db-4c66-a6e0-23399a112704",
+    "name" : "Poison Centres",
+    "path" : "/Poison Centres",
+    "attributes" : { },
+    "realmRoles" : [ "user" ],
+    "clientRoles" : {
+      "cosmetics-app" : [ "poison_centre_user" ]
+    },
+    "subGroups" : [ ]
   } ],
   "defaultRoles" : [ "user" ],
   "requiredCredentials" : [ "password" ],
@@ -1896,6 +1921,37 @@
     "notBefore" : 0,
     "groups" : [ ]
   }, {
+    "id" : "ece05a23-25bd-4be1-9a65-deda1dac3f8c",
+    "createdTimestamp" : 1551023248353,
+    "username" : "poison.centre@example.com",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "Poison Centre User",
+    "email" : "poison.centre@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "ForaPZR13SJy9s3suSTFB/uinTvPeuVy8dPvAJAc5Cnm0H25uZVrnNyI+jE09z/cid7IjLGqNDYKb8MD6VlkoA==",
+      "salt" : "9ELJ76uBFQLRRXSyBxFb/w==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1551023312682,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ],
+      "cosmetics-app" : [ "user" ],
+      "mspsds-app" : [ "user" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/Poison Centres" ]
+  }, {
     "id" : "8f825c3b-af73-43f1-b9fe-d405c7addf82",
     "createdTimestamp" : 1547209967480,
     "username" : "service-account-cosmetics-app",
@@ -1929,7 +1985,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "user" ],
     "clientRoles" : {
-      "realm-management" : [ "view-users", "manage-users" ],
+      "realm-management" : [ "view-users", "manage-users", "view-clients" ],
       "account" : [ "manage-account", "view-profile" ],
       "mspsds-app" : [ "user" ]
     },
@@ -1942,9 +1998,40 @@
     "enabled" : true,
     "totp" : false,
     "emailVerified" : true,
-    "firstName" : "Test",
+    "firstName" : "Team Admin",
     "lastName" : "User",
     "email" : "user@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "HCXH4zH0mvTter5NLZQy1q6EsoKRwFplx0Di8+m86pUl2cc/YyvN9bqpqZLhTuGla9VLPKuhsN5wroazRa+RTw==",
+      "salt" : "mXBi7b5Q27vP57SouaGWxQ==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1536192555744,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ],
+      "mspsds-app" : [ "user", "team_admin" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/Organisations/Office for Product Safety and Standards/OPSS Enforcement" ]
+  }, {
+    "id" : "dbbc495b-475e-419a-a151-2e61c6f9fdce",
+    "createdTimestamp" : 1536192541350,
+    "username" : "user2@example.com",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "Second Test",
+    "lastName" : "User",
+    "email" : "user2@example.com",
     "credentials" : [ {
       "type" : "password",
       "hashedSaltedValue" : "HCXH4zH0mvTter5NLZQy1q6EsoKRwFplx0Di8+m86pUl2cc/YyvN9bqpqZLhTuGla9VLPKuhsN5wroazRa+RTw==",
@@ -1965,7 +2052,7 @@
       "mspsds-app" : [ "user" ]
     },
     "notBefore" : 0,
-    "groups" : [ "/Organisations/Office for Product Safety and Standards" ]
+    "groups" : [ "/Organisations/Office for Product Safety and Standards/OPSS Enforcement" ]
   } ],
   "scopeMappings" : [ {
     "clientScope" : "offline_access",
@@ -1974,7 +2061,7 @@
   "clientScopeMappings" : {
     "realm-management" : [ {
       "client" : "mspsds-app",
-      "roles" : [ "view-users" ]
+      "roles" : [ "view-users", "view-clients" ]
     } ],
     "mspsds-app" : [ {
       "clientScope" : "roles",

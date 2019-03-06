@@ -4,10 +4,9 @@
 set -ex
 
 COMPONENTS=(
-    'db'
-    'elasticsearch'
-    'keycloak'
     'antivirus'
+    'db'
+    'keycloak'
     'cosmetics-web'
     'cosmetics-worker'
     'mspsds-web'

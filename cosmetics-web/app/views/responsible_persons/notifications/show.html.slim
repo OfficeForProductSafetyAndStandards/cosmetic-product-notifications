@@ -1,0 +1,10 @@
+- content_for :page_title, "Product details"
+- content_for :after_header do
+  = link_to "Back", responsible_person_notifications_path(@responsible_person, anchor: "registered"),
+          class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-full
+    h1.govuk-heading-xl
+      = @notification.product_name
+    = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
+    = render "notifications/product_details", notification: @notification
