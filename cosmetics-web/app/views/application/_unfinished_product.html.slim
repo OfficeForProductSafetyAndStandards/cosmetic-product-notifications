@@ -1,0 +1,19 @@
+li.product
+  h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+    = link_to notification.product_name,
+            edit_responsible_person_notification_path(notification.responsible_person, notification),
+            class: "product-title govuk-link--no-visited-state"
+  .product-data.govuk-body-s
+    dt
+      | UK cosmetic product number:
+    dd
+      = notification.reference_number_for_display
+
+    - if notification.cpnp_reference.present?
+      dt
+        | EU reference number:
+      dd
+        = notification.cpnp_reference
+  p.add-documents
+    = link_to "Add formulation document to complete registration", "#",
+            class: "govuk-link--no-visited-state"
