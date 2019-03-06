@@ -45,7 +45,7 @@ class AlertTest < ApplicationSystemTestCase
     assert_selector :h1, text: "You cannot send an alert about a restricted case"
 
     click_on "Change case visibility"
-    assert_selector :h1, text: "Legal privelege"
+    assert_selector :h1, text: "Legal privilege"
   end
 
   def fill_in_activity_selection

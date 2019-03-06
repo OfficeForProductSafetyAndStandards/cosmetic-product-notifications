@@ -33,14 +33,12 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       p.govuk-body
-        | If you’re not happy you can
-        '
+        ' If you’re not happy you can
         = link_to "edit your message", previous_wizard_path, class: "govuk-link"
         | .
       p.govuk-body
         | Alerts may take up to 5 minutes to send.
 
-  // TODO calculate number of people
   = form.submit "Send to #{@user_count} people", class: "govuk-button"
 
 p.govuk-body
