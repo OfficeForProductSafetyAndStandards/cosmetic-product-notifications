@@ -31,7 +31,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_personalisation(
       responsible_person_name: responsible_person_name,
       inviting_user_name: inviting_user_name,
-      invite_url: join_responsible_person_team_members_url(responsible_person_id, pending_responsible_person_user.key)
+      invite_url: join_responsible_person_team_members_url(responsible_person_id)
     )
 
     mail(to: invited_email_address)

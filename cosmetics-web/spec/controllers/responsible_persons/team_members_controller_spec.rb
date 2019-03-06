@@ -59,19 +59,19 @@ RSpec.describe ResponsiblePersons::TeamMembersController, type: :controller do
   describe "GET #join" do
     it "adds user with a pending invite to the responsible person" do
       responsible_person.update responsible_person_users: []
-      get(:join, params: { key: pending_responsible_person_user.key, responsible_person_id: responsible_person.id })
+      get(:join, params: { responsible_person_id: responsible_person.id })
 
       expect(responsible_person.reload.responsible_person_users.size).to eq(1)
     end
 
     it "deletes any existing invites to the responsible person for this user" do
-      get(:join, params: { key: pending_responsible_person_user.key, responsible_person_id: responsible_person.id })
+      get(:join, params: { responsible_person_id: responsible_person.id })
 
       expect(responsible_person.reload.pending_responsible_person_users.size).to eq(0)
     end
 
     it "redirects to the responsible person team members page" do
-      get(:join, params: { key: pending_responsible_person_user.key, responsible_person_id: responsible_person.id })
+      get(:join, params: { responsible_person_id: responsible_person.id })
 
       expect(response).to redirect_to(responsible_person_path(responsible_person))
     end

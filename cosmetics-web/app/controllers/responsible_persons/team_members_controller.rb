@@ -19,9 +19,8 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
   def join
     pending_responsible_person_user = PendingResponsiblePersonUser.where(
-      "email_address = ? AND key = ? AND responsible_person_id = ? AND expires_at > ?",
+      "email_address = ? AND responsible_person_id = ? AND expires_at > ?",
       User.current.email,
-      params[:key],
       params[:responsible_person_id],
       DateTime.current
 )

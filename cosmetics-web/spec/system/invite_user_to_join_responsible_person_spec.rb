@@ -31,7 +31,7 @@ RSpec.describe "Invite a user to join a responsible person", type: :system do
     pending_responsible_person_user = PendingResponsiblePersonUser.create(email_address: user.email)
     pending_responsible_person_user.update responsible_person: responsible_person
 
-    visit join_responsible_person_team_members_path(responsible_person, pending_responsible_person_user.key)
+    visit join_responsible_person_team_members_path(responsible_person)
 
     expect(page).to have_current_path(responsible_person_path(responsible_person))
     expect(responsible_person.reload.responsible_person_users.size).to eq(1)

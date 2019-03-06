@@ -4,7 +4,6 @@ class CreatePendingResponsiblePersonUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :pending_responsible_person_users do |t|
       t.string :email_address
-      t.string :key
       t.datetime :expires_at
 
       t.timestamps
