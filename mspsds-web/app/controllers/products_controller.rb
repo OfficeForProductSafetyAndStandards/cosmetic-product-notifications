@@ -6,8 +6,7 @@ class ProductsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_product, only: %i[show edit update destroy]
-  before_action :create_product, only: %i[new create]
-  before_action :set_countries, only: %i[create update new edit]
+  before_action :set_countries, only: %i[update edit]
   before_action :build_breadcrumbs, only: %i[show]
 
   # GET /products
@@ -27,27 +26,8 @@ class ProductsController < ApplicationController
     end
   end
 
-  # GET /products/new
-  def new
-    @products = advanced_product_search(@product)
-  end
-
   # GET /products/1/edit
   def edit; end
-
-  # POST /products
-  # POST /products.json
-  def create
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to @product, notice: "Product was successfully created." }
-        format.json { render :show, status: :created, location: @product }
-      else
-        format.html { render :new }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
