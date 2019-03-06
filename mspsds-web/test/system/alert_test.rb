@@ -42,10 +42,10 @@ class AlertTest < ApplicationSystemTestCase
   test "requires a restricted case be derestricted before raising an alert" do
     @private_investigaton = investigations :private
     fill_in_activity_selection
-    assert_selector :h1, text: "You cannot send an alert about a restricted case"
+    assert_selector "h1", text: "You cannot send an alert about a restricted case"
 
     click_on "Change case visibility"
-    assert_selector :h1, text: "Legal privilege"
+    assert_selector "h1", text: "Legal privilege"
   end
 
   def fill_in_activity_selection
