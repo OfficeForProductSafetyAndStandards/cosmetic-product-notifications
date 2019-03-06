@@ -1,11 +1,10 @@
 class NotifyMailer < GovukNotifyRails::Mailer
-
   TEMPLATES =
     {
         investigation_updated: '10a5c3a6-9cc7-4edb-9536-37605e2c15ba',
         investigation_created: '6da8e1d5-eb4d-4f9a-9c3c-948ef57d613',
         alert: '47fb7df9-2370-4307-9f86-69455597cdc1'
-    }
+    }.freeze
 
   def investigation_updated(investigation_pretty_id, name, email, update_text, subject_text)
     set_template(TEMPLATES[:investigation_updated])

@@ -15,7 +15,7 @@ class AuditActivity::Alert::Add < AuditActivity::Base
 
   def self.build_body(alert)
     [
-        "From: **DUMMY EMAIL ADDRESS**",
+        "From: **Office for Product Safety and Standards**",
         "To: **All users** (#{number_with_delimiter(User.all.length, delimiter: ',')} people)",
         "Subject: **#{alert.summary}**",
         "Date sent: **#{alert.created_at.strftime('%d/%m/%Y')}**",
