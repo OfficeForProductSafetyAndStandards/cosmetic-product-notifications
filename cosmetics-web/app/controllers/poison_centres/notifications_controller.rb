@@ -11,7 +11,7 @@ class PoisonCentres::NotificationsController < ApplicationController
     authorize @notification, policy_class: PoisonCentreNotificationPolicy
   end
 
-  private
+private
 
   def authorize_user!
     raise Pundit::NotAuthorizedError unless poison_centre_user?
