@@ -18,9 +18,6 @@ RSpec.describe "Poison Centre user", type: :system do
   it "is redirected to the notifications index page" do
     visit root_path
     assert_current_path(/notifications/)
-
-    visit responsible_person_notifications_path(responsible_person_1)
-    assert_current_path(/notifications/)
   end
 
   it "can view a list of all registered notifications" do

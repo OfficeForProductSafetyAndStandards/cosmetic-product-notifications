@@ -1,7 +1,4 @@
 class PoisonCentres::NotificationsController < ApplicationController
-  skip_before_action :redirect_poison_centre_user
-  before_action :authorize_user!
-
   def index
     @notifications = get_registered_notifications(10)
   end

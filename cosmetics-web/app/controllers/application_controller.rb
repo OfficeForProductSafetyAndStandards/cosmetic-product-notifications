@@ -10,15 +10,13 @@ class ApplicationController < ActionController::Base
   before_action :set_current_user
   before_action :set_raven_context
 
-  before_action :redirect_poison_centre_user
+  before_action :authorize_user!
   before_action :create_or_join_responsible_person
 
 private
 
-  def redirect_poison_centre_user
-    return unless user_signed_in?
-
-    redirect_to poison_centre_notifications_path if poison_centre_user?
+  def authorize_user!
+    raise Pundit::NotAuthorizedError if poison_centre_user?
   end
 
   def create_or_join_responsible_person
