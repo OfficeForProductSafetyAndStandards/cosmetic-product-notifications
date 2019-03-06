@@ -15,22 +15,23 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: email_address)
   end
 
-  def send_responsible_person_invite_email(responsible_person, invited_email_address, inviting_user_name)
+  def send_responsible_person_invite_email(responsible_person_id, responsible_person_name, invited_email_address, inviting_user_name)
     PendingResponsiblePersonUser.where(
-      responsible_person_id: responsible_person.id,
+      responsible_person_id: responsible_person_id,
       email_address: invited_email_address
     ).delete_all
 
-    pending_responsible_person_user = PendingResponsiblePersonUser.create(email_address: invited_email_address)
-    pending_responsible_person_user.update responsible_person: responsible_person
+    pending_responsible_person_user = PendingResponsiblePersonUser.create(
+      email_address: invited_email_address,
+      responsible_person_id: responsible_person_id)
 
     set_template('a473bca1-ff6d-4cee-88f6-83a2592727f4')
     set_reference('Invite user to join responsible person')
 
     set_personalisation(
-      responsible_person_name: responsible_person.name,
+      responsible_person_name: responsible_person_name,
       inviting_user_name: inviting_user_name,
-      invite_url: join_responsible_person_team_members_url(responsible_person, pending_responsible_person_user.key)
+      invite_url: join_responsible_person_team_members_url(responsible_person_id, pending_responsible_person_user.key)
     )
 
     mail(to: invited_email_address)
