@@ -76,9 +76,9 @@ private
   def business_valid?
     if step == :type
       if business_type_params[:type].nil?
-        @business.errors.add(:base, "Please select a business type")
+        @business.errors.add(:type, "Please select a business type")
       elsif business_type_params[:type] == "other" && business_type_params[:type_other].blank?
-        @business.errors.add(:base, "Please enter a business type \"Other\"")
+        @business.errors.add(:type, "Please enter a business type \"Other\"")
       end
     else
       @business.valid?
