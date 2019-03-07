@@ -456,9 +456,6 @@ DEPENDENCIES
   slim-rails
   strong_migrations
   wicked
-  will_paginate
-  wicked_pdf
-  wkhtmltopdf-binary
 
 RUBY VERSION
    ruby 2.5.3p105
