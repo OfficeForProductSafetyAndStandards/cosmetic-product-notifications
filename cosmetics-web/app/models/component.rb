@@ -56,25 +56,24 @@ class Component < ApplicationRecord
   end
   
   def formulation_required?
-    case notification_type
-    when "range"
+    if range?
       !formulation_file.attached? && range_formulas&.empty?
-    when "exact"
+    elsif exact?
       !formulation_file.attached? && exact_formulas&.empty?
     else
       false
     end
   end
 
-  @allowed_content_types = %w[application/pdf application/rtf text/plain].freeze
-  @max_file_size_bytes = 30.megabytes
+  ALLOWED_CONTENT_TYPES = %w[application/pdf application/rtf text/plain].freeze
+  MAX_FILE_SIZE_BYTES = 30.megabytes
 
   def self.get_content_types
-    @allowed_content_types
+    ALLOWED_CONTENT_TYPES
   end
 
   def self.get_max_file_size
-    @max_file_size_bytes
+    MAX_FILE_SIZE_BYTES
   end
 
 private
