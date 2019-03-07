@@ -7,8 +7,18 @@ RSpec.describe "Poison Centre user", type: :system do
   let!(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
   let!(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
 
+  let!(:draft_notification) { create(:draft_notification, responsible_person: responsible_person_1) }
+  let!(:imported_notification) { create(:imported_notification, responsible_person: responsible_person_1) }
+
   before do
+    rp_1_notifications
+    rp_2_notifications
+    draft_notification
+    imported_notification
+
     sign_in_as_poison_centre_user
+    Notification.elasticsearch.import force: true
+    visit root_path
   end
 
   after do
@@ -16,32 +26,21 @@ RSpec.describe "Poison Centre user", type: :system do
   end
 
   it "is redirected to the notifications index page" do
-    visit root_path
     assert_current_path(/notifications/)
   end
 
   it "can view a list of all registered notifications" do
-    notifications = rp_1_notifications + rp_2_notifications
-    Notification.elasticsearch.import force: true
-    visit root_path
-
-    notifications.each do |notification|
+    (rp_1_notifications + rp_2_notifications).each do |notification|
       assert_text notification.product_name
     end
   end
 
   it "cannot see any drafts in the list of notifications" do
-    draft_notification = create(:draft_notification)
-    Notification.elasticsearch.import force: true
-    visit root_path
-
     assert_no_text draft_notification.product_name
   end
 
   it "is able to see the product details for a registered notification" do
     notification = rp_1_notifications.first
-    Notification.elasticsearch.import force: true
-    visit root_path
     click_on notification.product_name
 
     assert_value for_attribute: "Product name", to_be: notification.product_name
@@ -53,8 +52,6 @@ RSpec.describe "Poison Centre user", type: :system do
 
   it "is able to see the Responsible Person details for a registered notification" do
     notification = rp_1_notifications.first
-    Notification.elasticsearch.import force: true
-    visit root_path
     click_on notification.product_name
 
     assert_value for_attribute: "Name", to_be: notification.responsible_person.name

@@ -7,6 +7,9 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   let(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
   let(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
 
+  let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person_1) }
+  let(:imported_notification) { create(:imported_notification, responsible_person: responsible_person_1) }
+
   let(:distinct_notification) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "bbbb") }
   let(:similar_notification_one) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaaa") }
   let(:similar_notification_two) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaab") }
@@ -21,29 +24,28 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     end
 
     describe "GET #index" do
-      it "gets all registered notifications" do
-        notifications = rp_1_notifications + rp_2_notifications
+      before do
+        rp_1_notifications
+        rp_2_notifications
+        draft_notification
+        imported_notification
         Notification.elasticsearch.import force: true
         get :index
-        expect(assigns(:notifications).records.to_a.sort).to eq(notifications.sort)
+      end
+
+      it "gets all registered notifications" do
+        expect(assigns(:notifications).records.to_a.sort).to eq((rp_1_notifications + rp_2_notifications).sort)
       end
 
       it "excludes draft notifications" do
-        draft_notification = create(:draft_notification, responsible_person: responsible_person_1)
-        Notification.elasticsearch.import force: true
-        get :index
         expect(assigns(:notifications).records.to_a).not_to include(draft_notification)
       end
 
       it "excludes unfinished imported notifications" do
-        imported_notification = create(:imported_notification, responsible_person: responsible_person_1)
-        Notification.elasticsearch.import force: true
-        get :index
         expect(assigns(:notifications).records.to_a).not_to include(imported_notification)
       end
 
       it "renders the index template" do
-        get :index
         expect(response).to render_template("notifications/index")
       end
     end
