@@ -21,9 +21,10 @@ class NotifyMailer < GovukNotifyRails::Mailer
       email_address: invited_email_address
     ).delete_all
 
-    pending_responsible_person_user = PendingResponsiblePersonUser.create(
+    PendingResponsiblePersonUser.create(
       email_address: invited_email_address,
-      responsible_person_id: responsible_person_id)
+      responsible_person_id: responsible_person_id
+)
 
     set_template('a473bca1-ff6d-4cee-88f6-83a2592727f4')
     set_reference('Invite user to join responsible person')
