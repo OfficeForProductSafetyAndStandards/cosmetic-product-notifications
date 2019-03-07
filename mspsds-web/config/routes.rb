@@ -59,7 +59,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :businesses, except: %i[new create], concerns: %i[document_attachable] do
+  resources :businesses, except: %i[new create destroy], concerns: %i[document_attachable] do
     resources :locations do
       member do
         get :remove

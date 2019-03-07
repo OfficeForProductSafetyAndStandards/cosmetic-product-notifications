@@ -5,7 +5,7 @@ class BusinessesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_business, only: %i[show edit update destroy]
+  before_action :set_business, only: %i[show edit update]
   before_action :update_business, only: %i[update]
   before_action :build_breadcrumbs, only: %i[show]
   before_action :set_countries, only: %i[update edit]
@@ -36,16 +36,6 @@ class BusinessesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /businesses/1
-  # DELETE /businesses/1.json
-  def destroy
-    @business.destroy
-    respond_to do |format|
-      format.html { redirect_to businesses_url, notice: "Business was successfully deleted." }
-      format.json { head :no_content }
     end
   end
 
