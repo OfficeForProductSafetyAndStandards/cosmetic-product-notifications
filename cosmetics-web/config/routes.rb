@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       end
 
       member do
-        get :confirmation
+        post :confirm
       end
     end
   end

@@ -2,6 +2,7 @@
 
 .govuk-width-container
   = render "layouts/phase_banner"
+  = yield :after_header
 
   - if alert
     .govuk-error-summary[aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary"]
@@ -12,6 +13,11 @@
     .govuk-inset-text[class="govuk-!-margin-0" tabindex="-1"]
       strong[class="govuk-!-font-weight-bold"]
         = notice
+
+  - if confirmation
+    .confirmation-banner[aria-labelledby="confirmation-banner-title" tabindex="-1"]
+      h2#confirmation-banner-title.confirmation-banner__title
+        = confirmation
 
   main#main-content.govuk-main-wrapper.app-main-class[role="main"]
     = yield

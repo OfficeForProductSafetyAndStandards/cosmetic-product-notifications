@@ -1,12 +1,17 @@
 @import "../../../../vendor/shared-web/app/assets/application/stylesheets/main";
 
 @import "component_build";
+@import "confirmation-banner";
 @import "landing-page";
+@import "navbar";
 @import "pagination";
 @import "products";
 @import "responsible_persons";
-@import "rp_navbar";
 
 * {
   box-sizing: border-box;
+}
+
+.no-wrap {
+  white-space: nowrap;
 }
