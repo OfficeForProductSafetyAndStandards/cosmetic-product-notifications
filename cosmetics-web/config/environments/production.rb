@@ -80,6 +80,7 @@ Rails.application.configure do
   # (see config/storage.yml for options)
   config.active_storage.service = :amazon
 
+  # Index all relevant records with elasticsearch
   config.after_initialize do
     unless Sidekiq.server?
       ActiveRecord::Base.descendants.each do |model|

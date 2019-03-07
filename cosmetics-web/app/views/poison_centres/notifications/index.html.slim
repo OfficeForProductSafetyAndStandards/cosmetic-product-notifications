@@ -6,7 +6,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
-    = form_with(method: :get, class: "mspsds-search") do |form|
+    = form_with(method: :get) do |form|
       .search-box
         = form.label :q, "Keywords", class: "govuk-label--s"
         = form.text_field :q, class: "govuk-input", value: @query

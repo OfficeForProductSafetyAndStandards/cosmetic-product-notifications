@@ -1,7 +1,6 @@
 class Notification < ApplicationRecord
   include Searchable
 
-  index_name [Rails.env, "notifications"].join("_")
   include AASM
   include Shared::Web::CountriesHelper
 
@@ -11,6 +10,7 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
+  index_name [Rails.env, "notifications"].join("_")
   scope :elasticsearch, -> { where(state: "notification_complete") }
 
   before_create do
@@ -33,18 +33,16 @@ class Notification < ApplicationRecord
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
             allow_nil: true
 
-  settings do
-    mappings do
-      indexes :state, type: :keyword
-    end
-  end
-
   def as_indexed_json(*)
     as_json(
-      only: %i[product_name state],
+      only: %i[product_name],
       include: {
         responsible_person: {
           only: %i[name]
+        },
+        components: {
+          only: %i[sub_sub_category],
+          methods: %i[sub_category root_category]
         }
       }
     )
