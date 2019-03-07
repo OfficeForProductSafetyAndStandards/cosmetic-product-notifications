@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 module Searchable
   extend ActiveSupport::Concern
 
@@ -50,3 +51,4 @@ module Searchable
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
