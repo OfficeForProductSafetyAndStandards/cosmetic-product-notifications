@@ -1,7 +1,10 @@
 class LocationsController < ApplicationController
+  include Shared::Web::CountriesHelper
+
   before_action :set_location, only: %i[show edit update remove destroy]
   before_action :create_location, only: %i[create]
   before_action :assign_business, only: %i[show edit update remove create]
+  before_action :set_countries, only: %i[create update new edit]
 
   # GET /locations/1
   # GET /locations/1.json
@@ -85,5 +88,9 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def location_params
     params.require(:location).permit(:business_id, :name, :address_line_1, :address_line_2, :phone_number, :locality, :country, :postal_code)
+  end
+
+  def set_countries
+    @countries = all_countries
   end
 end

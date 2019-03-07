@@ -1,5 +1,6 @@
 - displayable_highlights = get_displayable_highlights(highlights, investigation)
-.govuk-grid-row class=(investigation.is_closed ? "mspsds-case-card mspsds-case-card--closed" : "mspsds-case-card")
+
+.govuk-grid-row.mspsds-case-card class=[("mspsds-case-card--closed" if investigation.is_closed?)]
   .govuk-grid-column-one-half
     span.govuk-caption-m[class="govuk-!-font-size-16"]
       = investigation.pretty_description

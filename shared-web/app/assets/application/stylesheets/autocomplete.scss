@@ -140,6 +140,36 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.autocomplete-select-with-clear {
+  width: calc(100% - 48px);
+  float: left;
+}
+
+.autocomplete__clear-button {
+  background: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  width: 44px;
+  margin: 0 2px;
+}
+
+.autocomplete__clear-button:focus {
+  outline: 3px solid $govuk-focus-colour;
+  outline-offset: 0;
+}
+
+.autocomplete__clear-viewbox {
+  cursor: pointer;
+  width: 30px;
+}
+
+.autocomplete__clear-icon {
+  stroke: govuk-colour("black");
+  fill: transparent;
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
 @include govuk-media-query($from: tablet) {
 
   .autocomplete__hint,

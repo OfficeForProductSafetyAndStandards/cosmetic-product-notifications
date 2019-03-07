@@ -33,7 +33,11 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
     case step
     when :enter_details
       if responsible_person_saved?
-        redirect_to responsible_person_path(@responsible_person)
+        NotifyMailer.send_responsible_person_verification_email(
+          @responsible_person, User.current.full_name
+).deliver_later
+
+        redirect_to responsible_person_email_verification_keys_path(@responsible_person)
       else
         render step
       end

@@ -1,18 +1,24 @@
-.product {
-  :first-of-type {
-    border-top: none;
-  }
+.product-list {
+  padding-left: 0;
+}
 
-  :last-of-type {
-    border-bottom: none;
-  }
+.product {
 
   display: inline-block;
+  border-bottom: 1px solid $govuk-border-colour;
+  padding-bottom: 20px;
+
+  .product-title {
+    text-decoration: none;
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+  }
 
   .product-data {
     width: 65%;
     display: block;
-    float: left;
 
     dt {
       min-width: 220px;
@@ -45,6 +51,19 @@
     animation-timing-function: ease-in-out;
     animation-duration: 1s;
   }
+}
+
+.dismiss-link {
+  background: none;
+  border: none;
+  padding: 0;
+
+  // optional
+  font-family: arial, sans-serif; //input has OS specific font-family
+  font: inherit;
+  text-decoration: underline;
+  color: $govuk-link-colour;
+  cursor: pointer;
 }
 
 @keyframes fadeInOpacity {

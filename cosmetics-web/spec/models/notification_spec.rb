@@ -26,11 +26,5 @@ RSpec.describe Notification, type: :model do
 
       expect(notification.errors[:product_name]).to include('must not be blank')
     end
-
-    it "returns an english country name from import_country_for_display" do
-      notification = Notification.create
-      notification.import_country = 'country:NZ'
-      expect(notification.import_country_for_display).to eq('New Zealand')
-    end
   end
 end

@@ -4,6 +4,7 @@ class Team < ActiveHash::Base
   field :id
   field :name
   field :path
+  field :team_recipient_email
 
   belongs_to :organisation
 
@@ -36,7 +37,7 @@ class Team < ActiveHash::Base
   end
 
   def display_name(ignore_visibility_restrictions: false)
-    return name if User.current.organisation == organisation || ignore_visibility_restrictions
+    return name if (User.current.organisation == organisation) || ignore_visibility_restrictions
 
     organisation.name
   end

@@ -20,7 +20,13 @@ class Notification < ApplicationRecord
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_import_country, if: :will_save_change_to_import_country?
 
+  def self.duplicate_notification_message
+    "Notification duplicated"
+  end
+
   validate :all_required_attributes_must_be_set
+  validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
+            allow_nil: true
 
   # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
@@ -61,10 +67,6 @@ class Notification < ApplicationRecord
     end
   end
   # rubocop:enable Metrics/BlockLength
-
-  def import_country_for_display
-    country_from_code(import_country) || import_country
-  end
 
   def reference_number_for_display
     "UKCP-%08d" % reference_number
