@@ -51,10 +51,10 @@ class Investigations::TsInvestigationsController < ApplicationController
     when :business
       return redirect_to next_wizard_path if all_businesses_complete?
     when :corrective_action, *other_information_types
-      return redirect_to next_wizard_path unless @repeat_step == "Yes"
+      return redirect_to next_wizard_path if @repeat_step == "No"
     end
-    @repeat_step = nil
-    session.delete further_key(step)
+    # Preventing repeat step radio button from inheriting previous value
+    clear_repeat_step
     render_wizard
   end
 
@@ -492,5 +492,10 @@ private
 
   def no_other_business_type
     which_businesses_params[:other] == "1" && which_businesses_params[:other_business_type].empty?
+  end
+
+  def clear_repeat_step
+    @repeat_step = nil
+    session.delete further_key(step)
   end
 end
