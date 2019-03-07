@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_product, only: %i[show edit update destroy]
+  before_action :set_product, only: %i[show edit update]
   before_action :set_countries, only: %i[update edit]
   before_action :build_breadcrumbs, only: %i[show]
 
