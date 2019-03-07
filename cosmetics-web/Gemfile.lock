@@ -22,6 +22,8 @@ PATH
     shared-web (1.0.0)
       active_hash (= 2.2.1)
       aws-sdk-s3 (= 1.30.1)
+      elasticsearch-model (= 6.0.0)
+      elasticsearch-rails (= 6.0.0)
       govuk_notify_rails (= 2.1.0)
       keycloak (= 2.4.1)
       lograge (= 0.10.0)
@@ -34,6 +36,7 @@ PATH
       sidekiq-cron (= 1.1.0)
       slowpoke (= 0.2.1)
       webpacker (= 4.0.2)
+      will_paginate (~> 3.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -135,6 +138,19 @@ GEM
     docile (1.3.1)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
+    elasticsearch (6.1.0)
+      elasticsearch-api (= 6.1.0)
+      elasticsearch-transport (= 6.1.0)
+    elasticsearch-api (6.1.0)
+      multi_json
+    elasticsearch-model (6.0.0)
+      activesupport (> 3)
+      elasticsearch (> 1)
+      hashie
+    elasticsearch-rails (6.0.0)
+    elasticsearch-transport (6.1.0)
+      faraday
+      multi_json
     erubi (1.8.0)
     et-orbi (1.1.7)
       tzinfo
@@ -158,6 +174,7 @@ GEM
     govuk_notify_rails (2.1.0)
       notifications-ruby-client (>= 2.9.0)
       rails (>= 4.1.0)
+    hashie (3.6.0)
     hirb (0.7.3)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
@@ -424,7 +441,6 @@ DEPENDENCIES
   slim-rails
   strong_migrations
   wicked
-  will_paginate (~> 3.1.0)
 
 RUBY VERSION
    ruby 2.5.3p105

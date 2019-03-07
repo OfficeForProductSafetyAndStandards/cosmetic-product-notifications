@@ -1,6 +1,7 @@
 class Component < ApplicationRecord
   include AASM
   include NotificationProperties
+  include CpnpHelper
 
   belongs_to :notification
 
@@ -34,6 +35,21 @@ class Component < ApplicationRecord
 
   def root_category
     get_parent_category(sub_category)
+  end
+
+  # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
+  def display_sub_category
+    get_category_name(sub_category)
+  end
+
+  # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
+  def display_sub_sub_category
+    get_category_name(sub_sub_category)
+  end
+
+  # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
+  def display_root_category
+    get_category_name(root_category)
   end
 
 private

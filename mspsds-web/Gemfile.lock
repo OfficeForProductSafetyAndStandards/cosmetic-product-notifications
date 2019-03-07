@@ -33,6 +33,8 @@ PATH
     shared-web (1.0.0)
       active_hash (= 2.2.1)
       aws-sdk-s3 (= 1.30.1)
+      elasticsearch-model (= 6.0.0)
+      elasticsearch-rails (= 6.0.0)
       govuk_notify_rails (= 2.1.0)
       keycloak (= 2.4.1)
       lograge (= 0.10.0)
@@ -45,6 +47,7 @@ PATH
       sidekiq-cron (= 1.1.0)
       slowpoke (= 0.2.1)
       webpacker (= 4.0.2)
+      will_paginate (~> 3.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -435,8 +438,6 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   capybara
   cf-app-utils
-  elasticsearch-model
-  elasticsearch-rails
   jbuilder (~> 2.8)
   okcomputer
   pg (~> 1.1)
@@ -456,6 +457,8 @@ DEPENDENCIES
   strong_migrations
   wicked
   will_paginate
+  wicked_pdf
+  wkhtmltopdf-binary
 
 RUBY VERSION
    ruby 2.5.3p105

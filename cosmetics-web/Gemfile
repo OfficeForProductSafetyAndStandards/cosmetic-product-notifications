@@ -15,7 +15,6 @@ gem "rubyzip", ">= 1.2.1"
 gem "slim-rails"
 gem "strong_migrations"
 gem "wicked"
-gem 'will_paginate', '~> 3.1.0'
 
 gem "shared-web", path: "./vendor/shared-web"
 

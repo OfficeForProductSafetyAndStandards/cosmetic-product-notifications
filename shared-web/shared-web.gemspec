@@ -8,6 +8,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "active_hash", "2.2.1"
   s.add_dependency "aws-sdk-s3", "1.30.1"
+  s.add_dependency "elasticsearch-model", "6.0.0"
+  s.add_dependency "elasticsearch-rails", "6.0.0"
   s.add_dependency "govuk_notify_rails", "2.1.0"
   s.add_dependency "keycloak", "2.4.1"
   s.add_dependency "lograge", "0.10.0"
@@ -20,4 +22,5 @@ Gem::Specification.new do |s|
   s.add_dependency "sidekiq-cron", "1.1.0"
   s.add_dependency "slowpoke", "0.2.1"
   s.add_dependency "webpacker", "4.0.2"
+  s.add_dependency "will_paginate", "~> 3.1.0"
 end
