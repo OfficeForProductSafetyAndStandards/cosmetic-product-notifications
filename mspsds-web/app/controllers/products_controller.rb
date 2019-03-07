@@ -20,9 +20,6 @@ class ProductsController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.pdf do
-        render pdf: @product.id.to_s
-      end
     end
   end
 

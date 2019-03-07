@@ -2,7 +2,7 @@
 / https://github.com/alphagov/govuk-frontend/
 /       blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/template.njk
 ruby:
-  id_prefix = local_assigns[:idPrefix].presence || name
+  id_prefix = (local_assigns[:idPrefix].presence || name).to_s
   described_by = ""
   is_conditional = items.any? { |item| item[:conditional] }
 - radios_html = capture do

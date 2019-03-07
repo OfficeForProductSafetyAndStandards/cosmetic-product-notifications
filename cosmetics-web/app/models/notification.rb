@@ -35,8 +35,8 @@ class Notification < ApplicationRecord
     state :import_country_added
     state :components_complete
     state :draft_complete
-    state :notification_complete
     state :notification_file_imported
+    state :notification_complete
 
     event :add_product_name do
       transitions from: :empty, to: :product_name_added
@@ -54,16 +54,14 @@ class Notification < ApplicationRecord
       transitions from: :components_complete, to: :draft_complete
     end
 
-    event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete do
-        guard do
-          images_are_present_and_safe?
-        end
-      end
-    end
-
     event :notification_file_parsed do
       transitions from: :empty, to: :notification_file_imported
+    end
+
+    event :submit_notification do
+      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
+      # TODO COSBETA-26 Implement full transition logic for imported files (including formulation upload)
+      transitions from: :notification_file_imported, to: :notification_complete
     end
   end
   # rubocop:enable Metrics/BlockLength
