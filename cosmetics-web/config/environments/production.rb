@@ -84,7 +84,11 @@ Rails.application.configure do
     unless Sidekiq.server?
       ActiveRecord::Base.descendants.each do |model|
         if model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
-          model.import force: true
+          if model.respond_to?(:elasticsearch)
+            model.elasticsearch.import force: true
+          else
+            model.import force: true
+          end
         end
       end
     end

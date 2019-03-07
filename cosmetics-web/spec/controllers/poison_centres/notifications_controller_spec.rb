@@ -23,21 +23,21 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     describe "GET #index" do
       it "gets all registered notifications" do
         notifications = rp_1_notifications + rp_2_notifications
-        Notification.import force: true
+        Notification.elasticsearch.import force: true
         get :index
         expect(assigns(:notifications).records.to_a.sort).to eq(notifications.sort)
       end
 
       it "excludes draft notifications" do
         draft_notification = create(:draft_notification, responsible_person: responsible_person_1)
-        Notification.import force: true
+        Notification.elasticsearch.import force: true
         get :index
         expect(assigns(:notifications).records.to_a).not_to include(draft_notification)
       end
 
       it "excludes unfinished imported notifications" do
         imported_notification = create(:imported_notification, responsible_person: responsible_person_1)
-        Notification.import force: true
+        Notification.elasticsearch.import force: true
         get :index
         expect(assigns(:notifications).records.to_a).not_to include(imported_notification)
       end
@@ -53,7 +53,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         distinct_notification
         similar_notification_one
         similar_notification_two
-        Notification.import force: true
+        Notification.elasticsearch.import force: true
       end
 
       it "finds the correct notification" do

@@ -1,45 +1,26 @@
 module QueryHelper
   def build_query
-    filtered_query
+    return match_all_query if @query.blank?
+
+    multi_match_query
   end
 
-  def filtered_query
+  def multi_match_query
     {
       query: {
-        bool: {
-          must: match_params,
-          filter: filter_params
+        multi_match: {
+          query: @query,
+          fuzziness: "AUTO"
         }
       }
     }
   end
 
-  def match_params
-    if @query.present?
-      multi_match
-    else
-      match_all
-    end
-  end
-
-  def multi_match
+  def match_all_query
     {
-      multi_match: {
-        query: @query,
-        fuzziness: "AUTO"
+      query: {
+        match_all: {}
       }
-    }
-  end
-
-  def filter_params
-    {
-      term: { "state": "notification_complete" }
-    }
-  end
-
-  def match_all
-    {
-      match_all: {}
     }
   end
 end

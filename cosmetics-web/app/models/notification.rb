@@ -11,6 +11,8 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
+  scope :elasticsearch, -> { where(state: "notification_complete") }
+
   before_create do
     new_reference_number = nil
     loop do
@@ -38,8 +40,6 @@ class Notification < ApplicationRecord
   end
 
   def as_indexed_json(*)
-    return { state: state } unless state == "notification_complete"
-
     as_json(
       only: %i[product_name state],
       include: {
@@ -142,4 +142,4 @@ private
   end
 end
 
-Notification.import force: true if Rails.env.development? # for auto sync model with elastic search
+Notification.elasticsearch.import force: true if Rails.env.development? # for auto sync model with elastic search
