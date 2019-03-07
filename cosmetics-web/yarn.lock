@@ -708,10 +708,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
-"@rails/webpacker@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@rails/webpacker/-/webpacker-4.0.1.tgz#4e20f1115dd583e4410cf3f895bfd1dd717155a3"
-  integrity sha512-P9wDoB4TpsiQOudTIzusUXsZhToxBE8B+yN9KdVIBCzJnZFaCXHbSc72JoHnTKM+3YKP1od+j4TM4uS0rglmow==
+"@rails/webpacker@4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@rails/webpacker/-/webpacker-4.0.2.tgz#2c2e96527500b060a84159098449ddb1615c65e8"
+  integrity sha512-TDj/+UHnWaEg8X21E3cGKvptm3BbW1aUtOAXtrYwpK9tkiWq+Dc40Gm2RIZW7rU3jxDDBZgPRiqvr5B0dorIVw==
   dependencies:
     "@babel/core" "^7.3.4"
     "@babel/plugin-proposal-class-properties" "^7.3.4"
@@ -2897,10 +2897,10 @@ eslint-visitor-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
   integrity sha512-qzm/XxIbxm/FHyH341ZrbnMUpe+5Bocte9xkmFMzPMjRaZMcXww+MpBptFvtU+79L362nqiLhekCxCxDPaUMBQ==
 
-eslint@5.15.0:
-  version "5.15.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.15.0.tgz#f313a2f7c7628d39adeefdba4a9c41f842012c9e"
-  integrity sha512-xwG7SS5JLeqkiR3iOmVgtF8Y6xPdtr6AAsN6ph7Q6R/fv+3UlKYoika8SmNzmb35qdRF+RfTY35kMEdtbi+9wg==
+eslint@5.15.1:
+  version "5.15.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.15.1.tgz#8266b089fd5391e0009a047050795b1d73664524"
+  integrity sha512-NTcm6vQ+PTgN3UBsALw5BMhgO6i5EpIjQF/Xb5tIh3sk9QhrFafujUOczGz4J24JBlzWclSB9Vmx8d+9Z6bFCg==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.9.1"
@@ -7367,10 +7367,10 @@ shallow-clone@^1.0.0:
 shared-web@./vendor/shared-web:
   version "1.0.0"
   dependencies:
-    "@rails/webpacker" "4.0.1"
+    "@rails/webpacker" "4.0.2"
     accessible-autocomplete "1.6.2"
     copy-webpack-plugin "5.0.0"
-    eslint "5.15.0"
+    eslint "5.15.1"
     eslint-config-airbnb-base "13.1.0"
     eslint-plugin-import "2.16.0"
     govuk-country-and-territory-autocomplete "0.5.1"
