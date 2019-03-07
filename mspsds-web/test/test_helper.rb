@@ -75,7 +75,6 @@ class ActiveSupport::TestCase
     stub_user_data(users: users)
     stub_client_config
     stub_notify_mailer
-    stub_notifications_client
   end
 
   def stub_notify_mailer
@@ -84,13 +83,6 @@ class ActiveSupport::TestCase
     allow(NotifyMailer).to receive(:alert) { result }
     allow(NotifyMailer).to receive(:investigation_updated) { result }
     allow(NotifyMailer).to receive(:investigation_created) { result }
-  end
-
-  def stub_notifications_client
-    stubbed_notifications_client = double("NotificationsClient")
-    stubbed_template = double(html: '<p>stubbed email preview template</p>')
-    allow(Notifications::Client).to receive(:new) { stubbed_notifications_client }
-    allow(stubbed_notifications_client).to receive(:generate_template_preview) { stubbed_template }
   end
 
   def sign_in_as_non_mspsds_user

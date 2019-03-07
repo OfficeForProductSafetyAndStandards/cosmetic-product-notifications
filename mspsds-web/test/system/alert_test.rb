@@ -5,9 +5,7 @@ class AlertTest < ApplicationSystemTestCase
     sign_in_as_user
     @investigation = investigations(:one)
     @alert = alerts :one
-    visit investigation_path(@investigation)
-
-    first(:link, "Add activity").click
+    go_to_new_activity_for_investigation @investigation
   end
 
   teardown do
@@ -22,6 +20,7 @@ class AlertTest < ApplicationSystemTestCase
 
   test "sends notify email" do
     stub_email_alert
+    stub_email_preview @alert
     fill_in_activity_selection
     click_on "Compose new alert"
 
@@ -31,21 +30,33 @@ class AlertTest < ApplicationSystemTestCase
     assert_text @alert.summary
     assert_text @alert.description
 
-    click_on "Send to XXXX people"
-
     expected_number_of_emails_sent = User.all.length
+
+    click_on "Send to #{expected_number_of_emails_sent} people"
+
     assert_equal(expected_number_of_emails_sent, @number_of_emails_sent)
     assert_text @investigation.title
-    assert_text "Alert sent XXXX"
+    assert_text "Email alert sent to #{expected_number_of_emails_sent} users"
   end
 
   test "requires a restricted case be derestricted before raising an alert" do
-    @private_investigaton = investigations :private
+    @private_investigation = investigations :private
+    @alert = alerts :on_private_investigation
+    stub_email_preview @alert
+
+    go_to_new_activity_for_investigation @private_investigation
     fill_in_activity_selection
+
     assert_selector "h1", text: "You cannot send an alert about a restricted case"
 
     click_on "Change case visibility"
     assert_selector "h1", text: "Legal privilege"
+  end
+
+  def go_to_new_activity_for_investigation investigation
+    visit investigation_path(investigation)
+
+    first(:link, "Add activity").click
   end
 
   def fill_in_activity_selection
@@ -67,5 +78,12 @@ class AlertTest < ApplicationSystemTestCase
       @number_of_emails_sent += 1
       result
     end
+  end
+
+  def stub_email_preview alert
+    stubbed_notifications_client = double("NotificationsClient")
+    stubbed_template = double("TemplatePreview", html: "<p>#{alert.description}</p>")
+    allow(Notifications::Client).to receive(:new) { stubbed_notifications_client }
+    allow(stubbed_notifications_client).to receive(:generate_template_preview) { stubbed_template }
   end
 end
