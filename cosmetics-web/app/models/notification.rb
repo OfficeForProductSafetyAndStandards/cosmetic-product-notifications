@@ -41,8 +41,7 @@ class Notification < ApplicationRecord
           only: %i[name]
         },
         components: {
-          only: %i[sub_sub_category],
-          methods: %i[sub_category root_category]
+          methods: %i[display_sub_category display_sub_sub_category display_root_category]
         }
       }
     )
