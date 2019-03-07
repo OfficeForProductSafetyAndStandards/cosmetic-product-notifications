@@ -1,4 +1,6 @@
 class Notification < ApplicationRecord
+  include Searchable
+
   include AASM
   include Shared::Web::CountriesHelper
 
@@ -7,6 +9,9 @@ class Notification < ApplicationRecord
   has_many :image_uploads, dependent: :destroy
 
   accepts_nested_attributes_for :image_uploads
+
+  index_name [Rails.env, "notifications"].join("_")
+  scope :elasticsearch, -> { where(state: "notification_complete") }
 
   before_create do
     new_reference_number = nil
@@ -27,6 +32,21 @@ class Notification < ApplicationRecord
   validate :all_required_attributes_must_be_set
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
             allow_nil: true
+  validates :cpnp_reference, presence: true, on: :file_upload
+
+  def as_indexed_json(*)
+    as_json(
+      only: %i[product_name],
+      include: {
+        responsible_person: {
+          only: %i[name]
+        },
+        components: {
+          methods: %i[display_sub_category display_sub_sub_category display_root_category]
+        }
+      }
+    )
+  end
 
   # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
@@ -119,3 +139,5 @@ private
     end
   end
 end
+
+Notification.elasticsearch.import force: true if Rails.env.development? # for auto sync model with elastic search
