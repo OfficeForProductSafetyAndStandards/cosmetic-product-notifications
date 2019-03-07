@@ -38,9 +38,6 @@ class InvestigationsController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.pdf do
-        render pdf: @investigation.id.to_s
-      end
     end
   end
 
