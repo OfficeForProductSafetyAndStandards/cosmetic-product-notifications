@@ -22,7 +22,7 @@ namespace :cpnp_import do
       if parent_id.present?
         parent_english_category_name = xml_doc.xpath("//category[id=#{parent_id} and lngId='EN']/name").first&.text
         parent_category_key_name = get_category_key_name(parent_english_category_name)
-        parent_hash_command += string_label_pair(category_key_name, parent_category_key_name)
+        parent_hash_command += label_string_pair(category_key_name, parent_category_key_name)
       end
     end
     puts(end_command(parent_hash_command))
@@ -80,8 +80,8 @@ def print_three_mapping_data_structures(variable_name, file_name, main_tag, id_t
       end
     end
     if !category_key_name_exist_in_set || enable_duplication
-      enum_command += string_string_pair(category_key_name, category_key_name)
-      view_hash_command += string_string_pair(category_key_name, english_category_name.delete('"'))
+      enum_command += label_string_pair(category_key_name, category_key_name)
+      view_hash_command += label_string_pair(category_key_name, english_category_name.delete('"'))
     end
 
     mapping_hash_command += int_string_pair(id, category_key_name)
@@ -105,11 +105,11 @@ def end_command(command)
 end
 
 def string_string_pair(str1, str2)
-  "\t" + str1 + ': "' + str2 + '",' + "\n"
+  "\t" + '"' + str1 + '": "' + str2 + '",' + "\n"
 end
 
-def string_label_pair(str1, label2)
-  "\t" + str1 + ": :" + label2 + ",\n"
+def label_string_pair(str1, str2)
+  "\t" + str1 + ': "' + str2 + '",' + "\n"
 end
 
 def int_string_pair(int1, str2)

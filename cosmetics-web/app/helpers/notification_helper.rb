@@ -14,8 +14,4 @@ module NotificationHelper
       "EU (before Brexit)"
     end
   end
-
-  def product_shades(notification)
-    notification.components.first&.shades&.join(", ") || notification.shades || "N/A"
-  end
 end

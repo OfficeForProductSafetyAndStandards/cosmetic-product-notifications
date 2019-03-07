@@ -1,0 +1,32 @@
+table.govuk-table
+  caption.govuk-table__caption.govuk-heading-m
+    = "Component #{component.name}"
+  tbody.govuk-table__body
+    tr.govuk-table__row
+      th.govuk-table__header[class="govuk-!-width-one-quarter"]
+        | Category
+      td.govuk-table__cell
+        = component_categories(component)
+    tr.govuk-table__row
+      th.govuk-table__header
+        | Shades
+      td.govuk-table__cell
+        = component_shades(component)
+    tr.govuk-table__row
+      th.govuk-table__header
+        | Type
+      td.govuk-table__cell
+        = component_type(component)
+    tr.govuk-table__row
+      th.govuk-table__header
+        | Frame formulation
+      td.govuk-table__cell
+        = component_frame_formulation(component)
+
+    - if component.exact?
+      - component.exact_formulas.each do |formula|
+        = render "notifications/exact_formula_details", exact_formula: formula
+
+    - if component.range?
+      - component.range_formulas.each do |formula|
+        = render "notifications/range_formula_details", range_formula: formula

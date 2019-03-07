@@ -43,6 +43,6 @@ private
   end
 
   def get_parent_category(category)
-    PARENT_OF_CATEGORY[category]
+    PARENT_OF_CATEGORY[category.to_sym]
   end
 end

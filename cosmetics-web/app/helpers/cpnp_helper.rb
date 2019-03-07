@@ -1,31 +1,41 @@
 module CpnpHelper
+  def get_notification_type_name(notification_type)
+    NOTIFICATION_TYPE[notification_type&.to_sym]
+  end
+
   def get_category_name(category)
-    CATEGORY_NAME[category]
+    CATEGORY_NAME[category&.to_sym]
   end
 
   def get_frame_formulation_name(frame_formulation)
-    FRAME_FORMULATION_NAME[frame_formulation]
+    FRAME_FORMULATION_NAME[frame_formulation&.to_sym]
   end
 
   def get_trigger_rules_question_name(trigger_rules_question)
-    TRIGGER_RULES_QUESTION_NAME[trigger_rules_question]
+    TRIGGER_RULES_QUESTION_NAME[trigger_rules_question&.to_sym]
   end
 
   def get_trigger_rules_question_element_name(trigger_rules_question_element)
-    TRIGGER_RULES_QUESTION_ELEMENT_NAME[trigger_rules_question_element]
+    TRIGGER_RULES_QUESTION_ELEMENT_NAME[trigger_rules_question_element&.to_sym]
   end
 
   def get_unit_name(unit)
-    UNIT_NAME[unit]
+    UNIT_NAME[unit&.to_sym]
   end
 
   def get_exposure_route_name(exposure_route)
-    EXPOSURE_ROUTE_NAME[exposure_route]
+    EXPOSURE_ROUTE_NAME[exposure_route&.to_sym]
   end
 
   def get_exposure_condition_name(exposure_condition)
-    EXPOSURE_CONDITION_NAME[exposure_condition]
+    EXPOSURE_CONDITION_NAME[exposure_condition&.to_sym]
   end
+
+  NOTIFICATION_TYPE = {
+      predefined: "Predefined formula",
+      exact: "Exact formula",
+      range: "Range formula"
+  }
 
   CATEGORY_NAME = {
       skin_products: "Skin products",
@@ -376,7 +386,8 @@ module CpnpHelper
       please_specify_the_inci_name_and_the_concentration_of_xanthine_derivatives_eg_caffeine_theophylline_theobromine_plant_extracts_containing_xanthine_derivatives_eg_paulinia_cupana_guarana_extractspowders_if_xanthine_derivatives_are_not_present_or_present_below_05_in_the_cosmetic_product_then_not_applicable_must_be_checked: "Please specify the INCI name and the concentration of xanthine derivatives (e.g. caffeine, theophylline, theobromine, plant extracts containing xanthine derivatives e.g. paulinia cupana (guarana) extracts/powders). If xanthine derivatives are not present or present below 0.5% in the cosmetic product, then 'not applicable' must be checked.",
       please_specify_the_inci_name_and_concentration_of_the_cationic_surfactants_with_two_or_more_chain_lengths_below_c12_if_the_surfactant_is_used_for_non_preservative_purpose_if_cationic_surfactants_with_two_or_more_chain_lengths_below_c12_are_not_present_in_the_product_then_not_applicable_must_be_checked: "Please specify the INCI name and concentration of the cationic surfactants with two or more chain lengths below C12 if the surfactant is used for non preservative purpose. If cationic surfactants with two or more chain lengths below C12 are not present in the product, then 'not applicable' must be checked.",
       please_specify_the_inci_name_and_concentration_of_each_propellant_if_propellants_are_not_present_in_the_product_then_not_applicable_must_be_checked: "Please specify the INCI name and concentration of each propellant. If propellants are not present in the product, then 'not applicable' must be checked.",
-      please_specify_the_concentration_of_hydrogen_peroxide_if_hydrogen_peroxide_is_not_present_in_the_product_then_not_applicable_must_be_checked_: "Please specify the concentration of hydrogen peroxide. If hydrogen peroxide is not present in the product, then 'not applicable' must be checked.",
+      please_specify_the_concentration_of_hydrogen_peroxide_if_hydrogen_peroxide_is_not_present_in_the_product_then_not_applicable_must_be_checked_: "Please specify the concentration of hydrogen peroxide. If hydrogen peroxide is not present in the product, then 'not applicable' must be checked.
+",
       please_specify_the_inci_name_and_the_concentration_of_the_compounds_that_release_hydrogen_peroxide_if_compounds_releasing_hydrogen_peroxide_are_not_present_in_the_product_then_not_applicable_must_be_checked: "Please specify the INCI name and the concentration of the compounds that release hydrogen peroxide. If compounds releasing hydrogen peroxide are not present in the product, then 'not applicable' must be checked.",
       please_specify_the_inci_name_and_concentration_of_each_reducing_agent_if_reducing_agents_are_not_present_in_the_product_then_not_applicable_must_be_checked: "Please specify the INCI name and concentration of each reducing agent. If reducing agent(s) are not present in the product, then 'not applicable' must be checked.",
       please_specify_the_inci_name_and_concentration_of_each_persulfate_if_persulfates_are_not_present_in_the_product_then_not_applicable_must_be_checked: "Please specify the INCI name and concentration of each persulfate. If persulfate(s) are not present in the product, then 'not applicable' must be checked.",

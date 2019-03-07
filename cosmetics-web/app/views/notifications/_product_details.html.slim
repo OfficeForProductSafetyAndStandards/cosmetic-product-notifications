@@ -42,3 +42,6 @@ table.govuk-table
             - if image.file_exists? && image.marked_as_safe?
               = link_to image.filename, url_for(image.file)
               br
+
+- notification.components.each do |component|
+  = render "notifications/component_details", component: component
