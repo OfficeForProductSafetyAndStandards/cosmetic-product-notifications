@@ -75,7 +75,8 @@ class Notification < ApplicationRecord
     end
 
     event :notification_file_parsed do
-      transitions from: :empty, to: :notification_file_imported
+      transitions from: :empty, to: :notification_file_imported, guard: :formulation_required?
+      transitions from: :empty, to: :draft_complete
     end
 
     event :submit_notification do
