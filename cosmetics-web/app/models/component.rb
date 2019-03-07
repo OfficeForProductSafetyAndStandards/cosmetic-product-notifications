@@ -58,9 +58,9 @@ class Component < ApplicationRecord
   def formulation_required?
     case notification_type
     when "range"
-      !formulation_file.attached? && range_formulas&.length == 0
+      !formulation_file.attached? && range_formulas&.empty?
     when "exact"
-      !formulation_file.attached? && exact_formulas&.length == 0
+      !formulation_file.attached? && exact_formulas&.empty?
     else
       false
     end
