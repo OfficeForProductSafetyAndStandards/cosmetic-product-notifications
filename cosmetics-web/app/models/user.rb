@@ -16,4 +16,8 @@ class User < Shared::Web::User
   def poison_centre_user?
     has_role? :poison_centre_user
   end
+
+  def poison_centre_or_msa_user?
+    (has_role? :msa_user) || (has_role? :poison_centre_user)
+  end
 end

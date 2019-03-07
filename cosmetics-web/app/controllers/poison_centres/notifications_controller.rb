@@ -12,7 +12,7 @@ class PoisonCentres::NotificationsController < ApplicationController
 private
 
   def authorize_user!
-    raise Pundit::NotAuthorizedError unless poison_centre_user?
+    raise Pundit::NotAuthorizedError unless poison_centre_or_msa_user?
   end
 
   def search_registered_notifications(page_size)

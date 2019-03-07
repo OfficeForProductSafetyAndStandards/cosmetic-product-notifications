@@ -84,6 +84,28 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     end
   end
 
+  describe "When signed in as an MSA user" do
+    before do
+      sign_in_as_msa_user
+    end
+
+    describe "GET #index" do
+      it "renders the index template" do
+        get :index
+        expect(response).to render_template("notifications/index")
+      end
+    end
+
+    describe "GET #show" do
+      let(:notification) { rp_1_notifications.first }
+
+      it "renders the show template" do
+        get :show, params: { reference_number: notification.reference_number }
+        expect(response).to render_template("notifications/show")
+      end
+    end
+  end
+
   describe "When signed in as a Responsible Person user" do
     before do
       sign_in_as_member_of_responsible_person(responsible_person_1)
