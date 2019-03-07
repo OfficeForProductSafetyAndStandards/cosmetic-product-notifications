@@ -15,76 +15,62 @@ RSpec.describe "File upload errors", type: :system do
 
   it "shows an error when no file is selected for upload" do
     visit new_responsible_person_notification_file_path(responsible_person)
-    click_button "Upload"
+    click_button "Continue"
     expect(page).to have_text("No files selected")
   end
 
   it "shows an error when too many files are selected for upload" do
     allow(NotificationFile).to receive(:get_max_number_of_files).and_return(2)
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     [Rails.root + 'spec/fixtures/testExportFile.zip',
-                      Rails.root + 'spec/fixtures/testExportFile.zip',
-                      Rails.root + 'spec/fixtures/testExportFile.zip'])
-    click_button "Upload"
+    upload_files ["testExportFile.zip"] * 3
     expect(page).to have_text("Too many files selected. Please select no more than 2 files")
   end
 
   it "shows an error when the uploaded file has the wrong file type" do
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     Rails.root + 'spec/fixtures/testImage.png')
-    click_button "Upload"
+    upload_file "testImage.png"
     expect(page).to have_text("The uploaded file is not a ZIP file")
   end
 
   it "shows an error when the uploaded file exceeds the file limit" do
     allow(NotificationFile).to receive(:get_max_file_size).and_return(10)
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     Rails.root + 'spec/fixtures/testExportFile.zip')
-    click_button "Upload"
+    upload_file "testExportFile.zip"
     expect(page).to have_text("The uploaded file exceeds the size limit")
   end
 
   it "shows an error when the uploaded file contains PDF files" do
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     Rails.root + 'spec/fixtures/testZippedPDF.zip')
-    click_button "Upload"
+    upload_file "testZippedPDF.zip"
     expect(page).to have_text("The unzipped files are PDF files")
   end
 
   it "shows an error when the uploaded file does not contain a product XML file" do
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     Rails.root + 'spec/fixtures/testNoProductFile.zip')
-    click_button "Upload"
+    upload_file "testNoProductFile.zip"
     expect(page).to have_text("The ZIP file does not contain a product XML file")
   end
 
-  it "shows an error when a product with the same CPNP reference already exists for this RP" do
-    Notification.create(responsible_person: responsible_person, cpnp_reference: "1000094")
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     Rails.root + 'spec/fixtures/testExportFile.zip')
-    click_button "Upload"
+  it "shows an error when a product with the same CPNP reference already exists for this Responsible Person" do
+    create(:registered_notification, responsible_person: responsible_person, cpnp_reference: "1000094")
+    upload_file "testExportFile.zip"
     expect(page).to have_text("A notification for this product already exists for this responsible person")
   end
 
   it "shows an error when the uploaded file can not be validated" do
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     Rails.root + 'spec/fixtures/testExportWithMissingData.zip')
-    click_button "Upload"
+    upload_file "testExportWithMissingData.zip"
     expect(page).to have_text("Try again or manually register the product")
   end
 
   it "shows an error when the uploaded file contains a draft notification" do
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     Rails.root + 'spec/fixtures/testDraftNotification.zip')
-    click_button "Upload"
+    upload_file "testDraftNotification.zip"
     expect(page).to have_text("The uploaded file is for a draft notification")
+  end
+
+private
+
+  def upload_file(filename)
+    upload_files([filename])
+  end
+
+  def upload_files(filenames)
+    visit new_responsible_person_notification_file_path(responsible_person)
+    attach_file "uploaded_files", (filenames.map { |filename| Rails.root + "spec/fixtures/#{filename}" })
+    click_button "Continue"
   end
 end

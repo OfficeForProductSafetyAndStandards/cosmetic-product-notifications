@@ -4,4 +4,5 @@ module CpnpNotificationProperties
   include CpnpNotificationFrameFormulations
   include CpnpNotificationTriggerRules
   include CpnpNotificationUnits
+  include CpnpNotificationExposures
 end

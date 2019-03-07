@@ -17,7 +17,7 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
     user_member_of_associated_responsible_person?
   end
 
-  def confirmation?
+  def confirm?
     create?
   end
 
