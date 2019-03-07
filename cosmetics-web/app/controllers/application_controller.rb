@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   before_action :authorize_user!
   before_action :create_or_join_responsible_person
 
+  add_flash_types :confirmation
+
 private
 
   def authorize_user!

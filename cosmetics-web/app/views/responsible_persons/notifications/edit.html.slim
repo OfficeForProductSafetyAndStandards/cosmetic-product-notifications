@@ -27,13 +27,13 @@
           th.govuk-table__header
             | Imported
           td.govuk-table__cell
-            = @notification.import_country.present? ? "Yes" : "No"
-        - unless @notification.import_country.nil?
+            = product_imported?(@notification) ? "Yes" : "No"
+        - if product_imported?(@notification)
           tr.govuk-table__row
             th.govuk-table__header
               | Imported from
             td.govuk-table__cell
-              = country_from_code @notification.import_country
+              = product_import_country(@notification)
         tr.govuk-table__row
           th.govuk-table__header
             | Number of components
@@ -43,7 +43,7 @@
           th.govuk-table__header
             | Shades
           td.govuk-table__cell
-            = @notification.components.first&.shades&.join(", ") || @notification.shades || "N/A"
+            = product_shades(@notification)
         tr.govuk-table__row
           th.govuk-table__header
             | Label image
@@ -67,7 +67,7 @@
     p
       | By registering this cosmetic product you are confirming that, to the
       |  best of your knowledge, the details you are providing are correct.
-    = form_with url: confirmation_responsible_person_notification_path(@responsible_person, @notification),
-            method: :get do |form|
+    = form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification),
+            method: :post do |form|
       .govuk-form-group
-        = form.submit "Accept and register the cosmetics product", name: nil, class: "govuk-button"
+        = form.submit "Accept and register the cosmetics product", class: "govuk-button"

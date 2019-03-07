@@ -36,9 +36,8 @@ RSpec.describe "Manually enter product details", type: :system do
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
 
-    mark_images_as_safe
-
     # Check your answers page
+    notification = get_notification_from_edit_page_url
     expect_check_your_answers_value("Product name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
@@ -47,8 +46,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Accept and register the cosmetics product"
 
     # Check notification was completed
-    notification = get_notification_from_url
-    expect(notification.state).to eq("notification_complete")
+    expect(notification.reload.state).to eq("notification_complete")
   end
 
   it "associates responsible person with notification" do
@@ -73,8 +71,6 @@ RSpec.describe "Manually enter product details", type: :system do
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
-
-    mark_images_as_safe
 
     # Check your answers page
     expect_check_your_answers_value("Name", responsible_person.name)
@@ -109,9 +105,8 @@ RSpec.describe "Manually enter product details", type: :system do
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
 
-    mark_images_as_safe
-
     # Check your answers page
+    notification = get_notification_from_edit_page_url
     expect_check_your_answers_value("Product name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "Yes")
     expect_check_your_answers_value("Imported from", "New Zealand")
@@ -121,8 +116,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Accept and register the cosmetics product"
 
     # Check notification was completed
-    notification = get_notification_from_url
-    expect(notification.state).to eq("notification_complete")
+    expect(notification.reload.state).to eq("notification_complete")
   end
 
   it "allows user to complete notification for cosmetics with multiple shades" do
@@ -157,9 +151,8 @@ RSpec.describe "Manually enter product details", type: :system do
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
 
-    mark_images_as_safe
-
     # Check your answers page
+    notification = get_notification_from_edit_page_url
     expect_check_your_answers_value("Product name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
@@ -169,8 +162,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Accept and register the cosmetics product"
 
     # Check notification was completed
-    notification = get_notification_from_url
-    expect(notification.state).to eq("notification_complete")
+    expect(notification.reload.state).to eq("notification_complete")
   end
 
 private
@@ -180,23 +172,11 @@ private
     expect(row).to have_text(value)
   end
 
-  def get_notification_from_url
-    if (match = current_url.match(%r!/notifications/(\d+)/!))
+  def get_notification_from_edit_page_url
+    if (match = current_url.match(%r!/notifications/(\d+)/edit!))
       reference_number = match.captures[0].to_i
     end
 
     Notification.find_by reference_number: reference_number
-  end
-
-  # The worker doesn't mark system test images as safe, so we have to do it
-  # manually to allow the manual journey to finish.
-  def mark_images_as_safe
-    notification = get_notification_from_url
-
-    notification.image_uploads.each do |image_upload|
-      blob = image_upload.file.blob
-      blob.metadata = { safe: true }
-      blob.save
-    end
   end
 end
