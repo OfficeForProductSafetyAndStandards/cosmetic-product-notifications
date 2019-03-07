@@ -21,8 +21,5 @@
           = form.text_field :q, class: "govuk-input"
           = form.submit "Search", name: nil, class: "mspsds-search-box--submit"
   .govuk-grid-column-three-quarters
-    p
-      /TODO remove the link below
-      = link_to "Create new business", new_business_path, class: "govuk-!-font-size-19 govuk-!-font-weight-bold"
     = render "table", businesses: @businesses
     = will_paginate @businesses
