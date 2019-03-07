@@ -1,4 +1,10 @@
-module QueryHelper
+class ElasticsearchQuery
+  attr_accessor :query
+
+  def initialize(query)
+    @query = query
+  end
+
   def build_query
     return match_all_query if @query.blank?
 

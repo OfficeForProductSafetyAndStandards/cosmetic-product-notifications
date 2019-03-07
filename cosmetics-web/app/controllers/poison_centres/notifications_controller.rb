@@ -1,8 +1,7 @@
 class PoisonCentres::NotificationsController < ApplicationController
-  include QueryHelper
   def index
-    @query = query_params[:q]
-    result = Notification.full_search(build_query).paginate(page: params[:page], per_page: 10)
+    query = ElasticsearchQuery.new(query_params[:q])
+    result = Notification.full_search(query).paginate(page: params[:page], per_page: 10)
     @notifications = result.records
   end
 
