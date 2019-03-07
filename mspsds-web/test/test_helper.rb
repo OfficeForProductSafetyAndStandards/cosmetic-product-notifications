@@ -87,8 +87,10 @@ class ActiveSupport::TestCase
   end
 
   def stub_notifications_client
-    result = '<p>stubbed email preview template</p>'
-    allow(NotificationsClient.instance).to receive(:generate_template_preview) { result }
+    stubbed_notifications_client = double("NotificationsClient")
+    stubbed_template = double(html: '<p>stubbed email preview template</p>')
+    allow(Notifications::Client).to receive(:new) { stubbed_notifications_client }
+    allow(stubbed_notifications_client).to receive(:generate_template_preview) { stubbed_template }
   end
 
   def sign_in_as_non_mspsds_user
