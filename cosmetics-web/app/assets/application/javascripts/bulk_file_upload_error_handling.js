@@ -3,12 +3,18 @@ import $ from 'jquery';
 $(document).ready(() => {
     const fileUploadForm = document.getElementById('file-upload-form');
     const fileInput = document.getElementById('uploaded_files');
-    const max_number_of_files = fileUploadForm.dataset.maxNoOfFiles;
+    const maxNumberOfFiles = fileUploadForm.dataset.maxNumberOfFiles;
+    const tooManyFilesErrorSummary = document.getElementById('too-many-files-error-summary');
+    const fileUploadFormGroup = document.getElementById('file-upload-form-group');
+    const fileUploadErrorMessage = document.getElementById('file-upload-error-message');
 
     fileUploadForm.addEventListener('submit', function (event) {
-        if (fileInput.files.length > max_number_of_files) {
+        if (fileInput.files.length > maxNumberOfFiles) {
             event.preventDefault();
-            location.reload();
+            tooManyFilesErrorSummary.style.display = "inline";
+            fileUploadFormGroup.classList.add("govuk-form-group--error");
+            fileUploadErrorMessage.innerHTML =
+                `Too many files selected. Please select no more than ${maxNumberOfFiles} files`;
         }
     });
 });
