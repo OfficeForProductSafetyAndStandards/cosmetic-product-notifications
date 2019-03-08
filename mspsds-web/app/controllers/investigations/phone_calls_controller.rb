@@ -15,7 +15,8 @@ private
   def file_metadata
     get_attachment_metadata_params(:transcript).merge(
       title: correspondence_params["overview"],
-      description: "Call transcript"
+      description: "Call transcript",
+      has_consumer_info: correspondence_params["has_consumer_info"]
     )
   end
 

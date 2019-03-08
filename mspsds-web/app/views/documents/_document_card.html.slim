@@ -1,11 +1,11 @@
-- sensitive = document.metadata[:sensitive]
+- sensitive = document.metadata[:has_consumer_info]
 - title = sensitive ? document_sensitive_title : document.metadata[:title]
 - description = sensitive ? document_sensitive_body : document.metadata[:description]
 
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-one-third
     = render "documents/document_preview", document: document, dimensions: "300x200",
-            sensitive: document.metadata[:sensitive]
+            sensitive: document.metadata[:has_consumer_info]
   .govuk-grid-column-two-thirds
     h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = title
     span.govuk-caption-m[class="govuk-!-font-size-16"] = formatted_file_updated_date(document)
