@@ -18,9 +18,6 @@ class Component < ApplicationRecord
 
   before_save :add_shades, if: :will_save_change_to_shades?
 
-  validate :attached_file_is_correct_type?
-  validate :attached_file_is_within_allowed_size?
-
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :component_complete, enter: :update_notification_state

@@ -81,8 +81,6 @@ class Notification < ApplicationRecord
 
     event :submit_notification do
       transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
-      # TODO COSBETA-26 Implement full transition logic for imported files (including formulation upload)
-      transitions from: :notification_file_imported, to: :notification_complete
     end
   end
   # rubocop:enable Metrics/BlockLength
