@@ -9,14 +9,6 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
     activity.attach_blob(correspondence.email_attachment.blob, :email_attachment) if correspondence.email_attachment.attached?
   end
 
-  def subtitle_slug
-    "Email recorded"
-  end
-
-  def sensitive_title
-    "Email added"
-  end
-
   def self.build_body correspondence
     body = ""
     body += self.build_correspondent_details correspondence
@@ -54,6 +46,14 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
     output += self.sanitize_text correspondence.email_address
     output += ')' if correspondence.correspondent_name.present?
     output + "<br>"
+  end
+
+  def subtitle_slug
+    "Email recorded"
+  end
+
+  def sensitive_title
+    "Email added"
   end
 
   def email_update_text
