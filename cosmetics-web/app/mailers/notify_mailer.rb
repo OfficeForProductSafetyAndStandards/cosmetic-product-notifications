@@ -1,6 +1,6 @@
 class NotifyMailer < GovukNotifyRails::Mailer
   def send_responsible_person_verification_email(responsible_person_id, email_address, user_name)
-    key = EmailVerificationKeys.create(
+    key = EmailVerificationKey.create(
       responsible_person_id: responsible_person_id
 )
 
