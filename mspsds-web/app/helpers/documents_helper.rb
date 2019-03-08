@@ -75,7 +75,7 @@ module DocumentsHelper
   end
 
   def document_sensitive_body
-    "This attachment is restricted because it has been marked as container GDPR protected data. " +
-    "Contact the case owner if you need access."
+    "This attachment is restricted because it has been marked as containing GDPR protected data. " +
+      "Contact the case owner if you need access."
   end
 end

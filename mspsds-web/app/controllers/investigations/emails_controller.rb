@@ -23,7 +23,7 @@ private
     get_attachment_metadata_params(:email_file)
         .merge(common_file_metadata)
         .merge(
-            description: "Original email as a file"
+          description: "Original email as a file"
         )
   end
 

@@ -1,4 +1,3 @@
 - if parent.documents.attached?
   - parent.documents.each do |document|
-    - document.methods.sort.each do |m| p m end
     = render "documents/document_card", document: document, parent: parent
