@@ -51,21 +51,29 @@ class CpnpExport
 private
 
   def cmrs(component_node)
-    component_node.xpath(".//cmrList/cmr").collect do |cmr_node|
-      Cmr.create(name: cmr_node.xpath(".//name").first&.text,
-                 cas_number: cmr_node.xpath(".//casNumber").first&.text,
-                 ec_number: cmr_node.xpath(".//ecNumber").first&.text)
+    has_cmr = component_node.xpath(".//hasCmr") == "N" ? false : true
+
+    if has_cmr
+      component_node.xpath(".//cmrList/cmr").collect do |cmr_node|
+        Cmr.create(name: cmr_node.xpath(".//name").first&.text,
+                   cas_number: cmr_node.xpath(".//casNumber").first&.text,
+                   ec_number: cmr_node.xpath(".//ecNumber").first&.text)
+      end
     end
   end
 
   def nano_materials(component_node)
-    component_node.xpath(".//nanoList").collect do |nano_list_node|
-      nano_elements = nano_list_node.xpath(".//nano").collect do |nano_element_node|
-        nano_element(nano_element_node)
+    has_nano = component_node.xpath(".//hasNano") == "N" ? false : true
+
+    if has_nano
+      component_node.xpath(".//nanoList").collect do |nano_list_node|
+        nano_elements = nano_list_node.xpath(".//nano").collect do |nano_element_node|
+          nano_element(nano_element_node)
+        end
+        NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
+                            exposure_route: exposure_route(nano_list_node),
+                            nano_elements: nano_elements)
       end
-      NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
-                          exposure_route: exposure_route(nano_list_node),
-                          nano_elements: nano_elements)
     end
   end
 
@@ -81,11 +89,11 @@ private
   end
 
   def exposure_condition(nano_list_node)
-    get_exposure_condition(nano_list_node.xpath(".//exposureCondition").first&.text.to_i)
+    get_exposure_condition(normalize_number_text(nano_list_node.xpath(".//exposureCondition").first&.text))
   end
 
   def exposure_route(nano_list_node)
-    get_exposure_route(nano_list_node.xpath(".//exposureRoute/exposureID").first&.text.to_i)
+    get_exposure_route(normalize_number_text(nano_list_node.xpath(".//exposureRoute/exposureID").first&.text))
   end
 
   def trigger_questions(component_node)
@@ -102,11 +110,11 @@ private
     TriggerQuestionElement.create(answer_order: question_element_node.xpath(".//answerOrder").first&.text.to_i,
                                   answer: question_element_node.xpath(".//answer").first&.text,
                                   element_order: question_element_node.xpath(".//elementOrder").first&.text.to_i,
-                                  element: get_trigger_rules_question_element(question_element_node.xpath(".//elementID").first&.text.to_i))
+                                  element: get_trigger_rules_question_element(normalize_number_text(question_element_node.xpath(".//elementID").first&.text)))
   end
 
   def trigger_rules_question(question_node)
-    get_trigger_rules_question(question_node.xpath(".//questionID").first&.text.to_i)
+    get_trigger_rules_question(normalize_number_text(question_node.xpath(".//questionID").first&.text))
   end
 
   def exact_formulas(component_node)
@@ -119,12 +127,12 @@ private
   def range_formulas(component_node)
     component_node.xpath(".//rangeFormulaList/formula").collect do |formula_node|
       RangeFormula.create(inci_name: formula_node.xpath(".//inciName").first&.text,
-                          range: get_unit(formula_node.xpath(".//range").first&.text.to_i))
+                          range: get_unit(normalize_number_text(formula_node.xpath(".//range").first&.text)))
     end
   end
 
   def frame_formulation(component_node)
-    get_frame_formulation(component_node.xpath(".//frameFormulation").first&.text.to_i)
+    get_frame_formulation(normalize_number_text(component_node.xpath(".//frameFormulation").first&.text))
   end
 
   def notification_type(component_node)
@@ -140,7 +148,11 @@ private
   end
 
   def sub_sub_category(component_node)
-    get_category(component_node.xpath(".//categorie3").first&.text.to_i)
+    get_category(normalize_number_text(component_node.xpath(".//categorie3").first&.text))
+  end
+
+  def normalize_number_text(num_text)
+    num_text.to_i < 100000 ? num_text.to_i + 100000 : num_text.to_i
   end
 
   def current_version_component_lists_node
