@@ -33,6 +33,10 @@ class Activity < ApplicationRecord
     false
   end
 
+  def sensitive_title
+    ""
+  end
+
   def notify_relevant_users
     entities_to_notify.each do |entity|
       NotifyMailer.investigation_updated(investigation.pretty_id, entity[:name], entity[:email], email_update_text, email_subject_text).deliver_later

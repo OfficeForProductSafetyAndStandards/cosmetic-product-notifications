@@ -13,6 +13,10 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
     "Email recorded"
   end
 
+  def sensitive_title
+    "Email added"
+  end
+
   def self.build_body correspondence
     body = ""
     body += self.build_correspondent_details correspondence
@@ -54,5 +58,9 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
 
   def email_update_text
     "Email details added to the #{investigation.case_type.titleize} by #{source&.show&.titleize}."
+  end
+
+  def activity_type
+    "email"
   end
 end

@@ -25,5 +25,12 @@ li
       - if activity.business_id
         = link_to "View business details", business_url(activity.business_id), class: "mspsds-block-link"
       - if activity.has_attachment?
-        - activity.attachments.each do |name, attachment|
-          = link_to "View #{name}", attachment, class: "mspsds-block-link", target: "_blank", rel: 'noopener'
+        - if activity.sensitive?
+          - attachments_string = pluralize(activity.attachments.count, 'attachment')
+          br
+          p
+            = "The #{activity.activity_type} has #{attachments_string}"
+
+        - else
+          - activity.attachments.each do |name, attachment|
+            = link_to "View #{name}", attachment, class: "mspsds-block-link", target: "_blank", rel: 'noopener'
