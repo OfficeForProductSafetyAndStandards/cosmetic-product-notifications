@@ -40,18 +40,12 @@ Rails.application.routes.draw do
       resources :build, controller: :notification_build, only: %i[show update new]
       resources :components do
         resources :build, controller: :component_build, only: %i[show update new]
+        resources :formulation, controller: "formulation_upload", only: %w[new create]
       end
 
       member do
         post :confirm
-      end
-
-      member do
-        get :formulation_upload
-      end
-
-      resources :components do
-        resources :formulation, controller: "formulation_upload", only: %w[new create]
+        get :upload_formulation
       end
     end
   end

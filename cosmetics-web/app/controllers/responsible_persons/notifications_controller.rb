@@ -2,7 +2,7 @@ require 'will_paginate/array'
 
 class ResponsiblePersons::NotificationsController < ApplicationController
   before_action :set_responsible_person
-  before_action :set_notification, only: %i[show edit confirm]
+  before_action :set_notification, only: %i[show edit confirm upload_formulation]
 
   def index
     @pending_notification_files_count = 0
@@ -45,13 +45,12 @@ class ResponsiblePersons::NotificationsController < ApplicationController
     end
   end
 
-  def formulation_upload
-    notification = Notification.find_by reference_number: params[:reference_number]
-    if notification.formulation_required?
-      component = notification.components.find(&:formulation_required?)
-      redirect_to new_responsible_person_notification_component_formulation_path(notification.responsible_person, notification, component)
+  def upload_formulation
+    if @notification.formulation_required?
+      component = @notification.components.find(&:formulation_required?)
+      redirect_to new_responsible_person_notification_component_formulation_path(@responsible_person, @notification, component)
     else
-      redirect_to responsible_person_notifications_path(notification.responsible_person)
+      redirect_to responsible_person_notifications_path(@responsible_person)
     end
   end
 

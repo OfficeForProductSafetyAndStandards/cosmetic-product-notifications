@@ -2,6 +2,10 @@ class Component < ApplicationRecord
   include AASM
   include NotificationProperties
   include CpnpHelper
+  include FileUploadConcern
+  set_attachment_name :formulation_file
+  set_allowed_types %w[application/pdf application/rtf text/plain].freeze
+  set_max_file_size 30.megabytes
 
   belongs_to :notification
 
@@ -54,7 +58,7 @@ class Component < ApplicationRecord
   def display_root_category
     get_category_name(root_category)
   end
-  
+
   def formulation_required?
     if range?
       !formulation_file.attached? && range_formulas&.empty?
@@ -65,17 +69,6 @@ class Component < ApplicationRecord
     end
   end
 
-  ALLOWED_CONTENT_TYPES = %w[application/pdf application/rtf text/plain].freeze
-  MAX_FILE_SIZE_BYTES = 30.megabytes
-
-  def self.get_content_types
-    ALLOWED_CONTENT_TYPES
-  end
-
-  def self.get_max_file_size
-    MAX_FILE_SIZE_BYTES
-  end
-
 private
 
   def update_notification_state
@@ -84,17 +77,5 @@ private
 
   def get_parent_category(category)
     PARENT_OF_CATEGORY[category]
-  end
-
-  def attached_file_is_correct_type?
-    unless formulation_file.attachment.nil? || Component.get_content_types.include?(formulation_file.blob.content_type)
-      errors.add :formulation_file, "must be one of " + Component.get_content_types.join(", ")
-    end
-  end
-
-  def attached_file_is_within_allowed_size?
-    unless formulation_file.attachment.nil? || formulation_file.blob.byte_size <= Component.get_max_file_size
-      errors.add :formulation_file, "must be smaller than #{Component.get_max_file_size / 1.megabyte}MB"
-    end
   end
 end

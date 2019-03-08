@@ -17,5 +17,10 @@ li.product
   - if notification.formulation_required?
     p.add-documents
       = link_to "Add formulation document and product image to finish registration",
-              formulation_upload_responsible_person_notification_path(notification.responsible_person, notification),
+              upload_formulation_responsible_person_notification_path(notification.responsible_person, notification),
               class: "govuk-link--no-visited-state"
+  - else
+    p
+      = link_to "Confirm and register this product",
+        edit_responsible_person_notification_path(notification.responsible_person, notification),
+        class: "govuk-link--no-visited-state"

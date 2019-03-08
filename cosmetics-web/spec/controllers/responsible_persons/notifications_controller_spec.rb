@@ -168,13 +168,13 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
   describe "GET #formulation_upload" do
     it "redirects to the notifications overview if all components have complete formulations" do
       notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component])
-      get :formulation_upload, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
+      get :upload_formulation, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
       expect(response).to redirect_to(responsible_person_notifications_path(responsible_person))
     end
 
     it "redirects to the formulation upload page if not all components have complete formulations" do
       notification = Notification.create(responsible_person_id: responsible_person.id, components: [ranges_component])
-      get :formulation_upload, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
+      get :upload_formulation, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
       expect(response).to redirect_to(new_responsible_person_notification_component_formulation_path(responsible_person, notification, ranges_component))
     end
   end

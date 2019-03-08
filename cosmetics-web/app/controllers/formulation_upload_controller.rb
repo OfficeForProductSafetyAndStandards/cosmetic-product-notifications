@@ -9,12 +9,10 @@ class FormulationUploadController < ApplicationController
       @component.formulation_file.attach(file_upload)
 
       if @component.save
-        redirect_to formulation_upload_responsible_person_notification_path(@responsible_person, @notification)
+        redirect_to upload_formulation_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
       else
         @component.formulation_file.purge
-        @component.errors.messages[:formulation_file].each do |message|
-          @error_list.push(text: message)
-        end
+        @error_list = @component.errors.messages[:formulation_file].map { |message| { text: message } }
         render :new
       end
     else
@@ -27,8 +25,7 @@ private
 
   def set_models
     @error_list = []
-    @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
-    @notification = Notification.find_by reference_number: params[:notification_reference_number]
     @component = Component.find(params[:component_id])
+    authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
   end
 end
