@@ -1,36 +1,36 @@
+- label_class = "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
 fieldset.govuk-fieldset
-  .govuk-form-group class=[("govuk-form-group--error" if @location.errors[:name].any?)]
-    = form.label :name, "Name", class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    span.govuk-hint#location-name-hint
-      |  E.g. Main office, Warehouse
-    = form.text_field :name, class: "govuk-input search-term", aria_describedby: "location-name-number-hint"
+  - label_html = capture do
+    .div class=label_class Name
+  = render "form_components/govuk_textinput", key: :name, form: form,
+          label: { html: label_html },
+          hint: { text: "E.g. Main office, Warehouse" }
 
 fieldset.govuk-fieldset
-  .govuk-form-group
-    = form.label :address_line_1, "Building and street",
-            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    = form.text_field :address_line_1, class: "govuk-input search-term"
-
-  .govuk-form-group
-    = form.text_field :address_line_2, class: "govuk-input search-term"
-
-fieldset.govuk-fieldset
-  .govuk-form-group
-    = form.label :city, "Town or city",
-            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    = form.text_field :city, class: "govuk-input search-term"
+  - label_html = capture do
+    .div class=label_class Building and street
+  = render "form_components/govuk_textinput", key: :address_line_1, form: form,
+          label: { html: label_html }
+  = render "form_components/govuk_textinput", key: :address_line_2, form: form,
+          label: { text: "Address line two", classes: "govuk-visually-hidden" }
 
 fieldset.govuk-fieldset
-  .govuk-form-group
-    = form.label :county, "County",
-            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    = form.text_field :county, class: "govuk-input search-term"
+  - label_html = capture do
+    .div class=label_class Town or city
+  = render "form_components/govuk_textinput", key: :city, form: form,
+          label: { html: label_html }
 
 fieldset.govuk-fieldset
-  .govuk-form-group
-    = form.label :postal_code, "Postcode",
-            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    = form.text_field :postal_code, class: "govuk-input search-term govuk-!-width-one-half"
+  - label_html = capture do
+    .div class=label_class County
+  = render "form_components/govuk_textinput", key: :county, form: form,
+          label: { html: label_html }
+
+fieldset.govuk-fieldset
+  - label_html = capture do
+    .div class=label_class Postcode
+  = render "form_components/govuk_textinput", key: :postal_code, form: form, classes: "govuk-!-width-one-half",
+          label: { html: label_html }
 
 fieldset.govuk-fieldset
   .govuk-form-group
