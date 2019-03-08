@@ -13,7 +13,7 @@ product_iphone:
   sourceable: iphone (Product)
 
 investigation_one:
-  type:
+  type: UserSource
   sourceable: one (Investigation)
 
 investigation_two:
