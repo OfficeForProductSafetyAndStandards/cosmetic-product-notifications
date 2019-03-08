@@ -34,7 +34,7 @@ class Activity < ApplicationRecord
   end
 
   def sensitive_title
-    ""
+    # where necessary should be implemented by subclasses
   end
 
   def notify_relevant_users

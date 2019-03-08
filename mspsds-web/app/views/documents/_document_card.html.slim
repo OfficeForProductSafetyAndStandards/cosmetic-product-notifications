@@ -5,11 +5,12 @@
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-one-third
     = render "documents/document_preview", document: document, dimensions: "300x200",
-            sensitive: document.metadata[:has_consumer_info]
+            sensitive: sensitive
   .govuk-grid-column-two-thirds
     h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = title
     span.govuk-hint[class=" govuk-!-font-size-16"] = formatted_file_updated_date(document)
-    p = render "components/govuk_badge", text: "RESTRICTED ACCESS", classes: "govuk-badge--grey"
+    - if sensitive
+      p = render "components/govuk_badge", text: "RESTRICTED ACCESS", classes: "govuk-badge--grey"
     p = description
     - unless sensitive
       p
