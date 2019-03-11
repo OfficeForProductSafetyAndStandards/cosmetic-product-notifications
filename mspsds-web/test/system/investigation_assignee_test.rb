@@ -16,17 +16,17 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     assert_text @user.display_name
     choose @user.display_name, visible: false
     click_on "Assign"
-    assert_text "Assigned to\n#{@user.full_name}"
+    within("#overview") { assert_text "Assigned to#{@user.full_name}" }
     click_on "Activity"
-    assert_text "Assigned to #{@user.display_name}"
+    within("#activity") { assert_text "Assigned to #{@user.display_name}" }
   end
 
   test "should show current users team as a radio, and to assign team to case" do
     assert_text @team.name
     choose @team.name, visible: false
     click_on "Assign"
-    assert_text "Assigned to\n#{@team.name}"
+    within("#overview") { assert_text "Assigned to#{@team.name}" }
     click_on "Activity"
-    assert_text "Assigned to #{@team.name}"
+    within("#activity") { assert_text "Assigned to #{@team.name}" }
   end
 end
