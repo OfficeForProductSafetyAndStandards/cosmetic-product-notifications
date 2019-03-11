@@ -12,3 +12,7 @@
     /TODO: replace it with the concat person details (COSBETA-158)
     = render "notifications/contact_person_details", contact_person: @notification.responsible_person
     = render "notifications/product_details", notification: @notification
+
+  - if !@notification.formulation_required?
+  .govuk-grid-column-two-thirds
+    = render "notifications/product_registration"
