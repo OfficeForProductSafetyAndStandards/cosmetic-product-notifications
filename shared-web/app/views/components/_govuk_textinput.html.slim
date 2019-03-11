@@ -1,6 +1,6 @@
 / Implementation based on
 / https://github.com/alphagov/govuk-frontend/
-/ blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/input/template.njk
+/ blob/b863be549f502a6829a5d261976c3bcb8ebdf4d2/src/components/input/template.njk
 ruby:
   described_by = ""
   has_hint = local_assigns[:hint].present?
@@ -34,5 +34,5 @@ ruby:
                 pattern=local_assigns[:pattern]
                 disabled=local_assigns[:disabled]
                 maxlength=local_assigns[:max_length]
-                aria-describedby=described_by
+                aria-describedby=described_by.presence
                 autocomplete=local_assigns[:autocomplete]]

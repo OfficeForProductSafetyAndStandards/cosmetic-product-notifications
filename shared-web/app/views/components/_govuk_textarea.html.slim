@@ -32,6 +32,6 @@ ruby:
                 rows=rows
                 name=name
                 maxlength=local_assigns[:max_length]
-                aria-describedby=described_by
+                aria-describedby=described_by.presence
                 autocomplete=local_assigns[:autocomplete]]
         = local_assigns[:value]
