@@ -5,7 +5,8 @@ class ActivityEntryTest < ApplicationSystemTestCase
     sign_in_as_admin
     @investigation = investigations(:one)
     visit investigation_path(@investigation)
-    click_on "Add activity"
+    click_on "Activity"
+    within("#activity") { click_on "Add activity" }
   end
 
   teardown do
