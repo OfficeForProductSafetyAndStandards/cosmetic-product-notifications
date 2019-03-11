@@ -80,7 +80,7 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
+      transitions from: :draft_complete, to: :notification_complete
     end
   end
   # rubocop:enable Metrics/BlockLength
