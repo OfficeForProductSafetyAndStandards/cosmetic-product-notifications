@@ -56,7 +56,7 @@ public class RegistrationMobileNumber implements FormAction {
         String formattedPhoneNumber = convertInternationalPrefix(phoneNumber);
 
         String region;
-        if (isPossibleNationalNumber(formattedPhoneNumber)) {
+        if (isPossibleNationalMobileNumber(formattedPhoneNumber)) {
             region = "GB";
         } else if (isInternationalNumber(formattedPhoneNumber)) {
             region = null;
@@ -80,7 +80,7 @@ public class RegistrationMobileNumber implements FormAction {
         return trimmedPhoneNumber;
     }
 
-    private static boolean isPossibleNationalNumber(String phoneNumber) {
+    private static boolean isPossibleNationalMobileNumber(String phoneNumber) {
         return phoneNumber.trim().startsWith("+44") || phoneNumber.trim().startsWith("07");
     }
 
