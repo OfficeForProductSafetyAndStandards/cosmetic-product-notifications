@@ -136,6 +136,16 @@ ActiveRecord::Schema.define(version: 2019_03_05_143843) do
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
   end
 
+  create_table "pending_responsible_person_users", force: :cascade do |t|
+    t.string "email_address"
+    t.string "key"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "responsible_person_id"
+    t.index ["responsible_person_id"], name: "index_pending_responsible_person_users_on_responsible_person_id"
+  end
+
   create_table "range_formulas", force: :cascade do |t|
     t.string "inci_name"
     t.string "range"
@@ -198,6 +208,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_143843) do
   add_foreign_key "nano_materials", "components"
   add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
+  add_foreign_key "pending_responsible_person_users", "responsible_persons"
   add_foreign_key "range_formulas", "components"
   add_foreign_key "responsible_person_users", "responsible_persons"
   add_foreign_key "trigger_question_elements", "trigger_questions"

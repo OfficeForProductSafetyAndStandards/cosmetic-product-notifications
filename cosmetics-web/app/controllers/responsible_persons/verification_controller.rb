@@ -19,7 +19,7 @@ class ResponsiblePersons::VerificationController < ApplicationController
   def resend_email
     EmailVerificationKey.where(responsible_person: @responsible_person).delete_all
     NotifyMailer.send_responsible_person_verification_email(
-      @responsible_person, User.current.full_name
+      @responsible_person.id, @responsible_person.email_address, User.current.full_name
 ).deliver_later
 
     redirect_to responsible_person_email_verification_keys_path(@responsible_person)
