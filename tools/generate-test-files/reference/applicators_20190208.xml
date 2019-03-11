@@ -1,0 +1,695 @@
+
+			<applicatorList>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>BG</lngId>
+					<name>Друго</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>CS</lngId>
+					<name>Jin&#xe9;</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>DA</lngId>
+					<name>Andet</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>DE</lngId>
+					<name>Sonstige</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>EL</lngId>
+					<name>Άλλο</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>EN</lngId>
+					<name>Other</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>ES</lngId>
+					<name>Otros</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>ET</lngId>
+					<name>Muu</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>FI</lngId>
+					<name>Muu</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>FR</lngId>
+					<name>Autres</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>HR</lngId>
+					<name>ostalo</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>HU</lngId>
+					<name>Egy&#xe9;b</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>IT</lngId>
+					<name>Altro</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>LT</lngId>
+					<name>Kita</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>LV</lngId>
+					<name>Cits</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>MT</lngId>
+					<name>Oħrajn</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>NL</lngId>
+					<name>Andere</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>PL</lngId>
+					<name>Inne</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>PT</lngId>
+					<name>Outro</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>RO</lngId>
+					<name>Altele</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>SK</lngId>
+					<name>In&#xe9;</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>SL</lngId>
+					<name>drugo</name>
+				</applicator>
+				
+				<applicator>
+					<id>99998</id>
+					<lngId>SV</lngId>
+					<name>Annan</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>BG</lngId>
+					<name>Кърпа/гъба/пластир/тампон</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>CS</lngId>
+					<name>Ubrousek/houba/n&#xe1;plast/tampon</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>DA</lngId>
+					<name>Serviet/svamp/klud/kvast/pude</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>DE</lngId>
+					<name>Tuch/Schwamm/Pflaster/Bausch</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>EL</lngId>
+					<name>Πετσέτα/σπόγγος/επίθεμα/ταμπόν</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>EN</lngId>
+					<name>Wipe/sponge/patch/pad</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>ES</lngId>
+					<name>Bayeta/esponja/parche/algodoncito</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>ET</lngId>
+					<name>M&#xe4;rg lapp/k&#xe4;sn/plaaster/padjake</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>FI</lngId>
+					<name>Pyyhe/sieni/lappu/tyyny</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>FR</lngId>
+					<name>Lingette/&#xe9;ponge/compresse/tampon</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>HR</lngId>
+					<name>maramica/spužva/flaster/jastučić</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>HU</lngId>
+					<name>T&#xf6;rlőkendő/szivacs/tapasz/vattakorong</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>IT</lngId>
+					<name>Salvietta/spugna/cerotto/cotone</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>LT</lngId>
+					<name>Servetėlė/ kempinė/ pleistras/ tamponas</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>LV</lngId>
+					<name>Salvete/sūklis/plāksteris/paliktnis</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>MT</lngId>
+					<name>Ċarruta/sponża/biċċa/kuxxinett</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>NL</lngId>
+					<name>Doekje/sponsje/lapje/kussentje</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>PL</lngId>
+					<name>Chusteczka/gąbka/plaster/płatek</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>PT</lngId>
+					<name>Toalhete/esponja/emplastro/compressa</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>RO</lngId>
+					<name>Șervețel/burete/compresă/tampon</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>SK</lngId>
+					<name>Utierka/špongia/n&#xe1;plasť/tamp&#xf3;n</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>SL</lngId>
+					<name>robček/goba/obliž/vložek</name>
+				</applicator>
+				
+				<applicator>
+					<id>100001</id>
+					<lngId>SV</lngId>
+					<name>Servett/svamp/pl&#xe5;ster/pad</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>BG</lngId>
+					<name>Продукти на капсули</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>CS</lngId>
+					<name>Př&#xed;pravky v tobolk&#xe1;ch</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>DA</lngId>
+					<name>Indkapslede produkter</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>DE</lngId>
+					<name>Verkapselte Produkte</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>EL</lngId>
+					<name>Εγκαψυλιωμένα προϊόντα</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>EN</lngId>
+					<name>Encapsulated products</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>ES</lngId>
+					<name>Productos en c&#xe1;psula</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>ET</lngId>
+					<name>Kapseldatud tooted</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>FI</lngId>
+					<name>Kapseloidut valmisteet</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>FR</lngId>
+					<name>Produits encapsul&#xe9;s</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>HR</lngId>
+					<name>Proizvodi u kapsulama</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>HU</lngId>
+					<name>Kapszul&#xe1;zott term&#xe9;kek</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>IT</lngId>
+					<name>Prodotti in capsule</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>LT</lngId>
+					<name>Gaminiai kapsulėmis</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>LV</lngId>
+					<name>Kapsulveida līdzekļi</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>MT</lngId>
+					<name>Prodotti inkapsulati</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>NL</lngId>
+					<name>Producten in capsulevorm</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>PL</lngId>
+					<name>Produkty w kapsułkach</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>PT</lngId>
+					<name>Produtos encapsulados</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>RO</lngId>
+					<name>Produse &#xee;ncapsulate</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>SK</lngId>
+					<name>V&#xfd;robky v kapsul&#xe1;ch</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>SL</lngId>
+					<name>Izdelki v obliki kapsul</name>
+				</applicator>
+				
+				<applicator>
+					<id>100002</id>
+					<lngId>SV</lngId>
+					<name>Produkter i kapsel</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>BG</lngId>
+					<name>Съд със спрей под налягане</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>CS</lngId>
+					<name>Tlakov&#xe1; n&#xe1;dobka rozprašovače</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>DA</lngId>
+					<name>Trykbeholder – spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>DE</lngId>
+					<name>Druckbeh&#xe4;lter – sprayprodukt</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>EL</lngId>
+					<name>Δοχείο υπό πίεση - σπρέϋ</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>EN</lngId>
+					<name>Pressurised spray container</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>ES</lngId>
+					<name>Envase presurizado - spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>ET</lngId>
+					<name>R&#xf5;hu all olev mahuti – pihustatav toode</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>FI</lngId>
+					<name>Painepakkaus, spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>FR</lngId>
+					<name>Conditionnement pressuris&#xe9; - spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>HR</lngId>
+					<name>raspršivač</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>HU</lngId>
+					<name>Nyom&#xe1;s alatti  csomagol&#xe1;s - spray term&#xe9;k</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>IT</lngId>
+					<name>Contenitore pressurizzato - spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>LT</lngId>
+					<name>Slėginė  purškalo talpyklė</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>LV</lngId>
+					<name>Aerosola baloniņš zem spiediena</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>MT</lngId>
+					<name>Kontenitur ta’ sprej taht pressjoni</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>NL</lngId>
+					<name>Houder onder druk spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>PL</lngId>
+					<name>pojemnik pod ciśnieniem – wyr&#xf3;b aerozolowy</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>PT</lngId>
+					<name>Recipiente pulverizador sob press&#xe3;o</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>RO</lngId>
+					<name>Recipient spray sub presiune</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>SK</lngId>
+					<name>Tlakov&#xe1; n&#xe1;dobka rozprašovača</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>SL</lngId>
+					<name>Razpršilna embalaža pod tlakom</name>
+				</applicator>
+				
+				<applicator>
+					<id>100003</id>
+					<lngId>SV</lngId>
+					<name>Tryckbeh&#xe5;llare, spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>BG</lngId>
+					<name>Съд под налягане за продукт, различен от спрей</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>CS</lngId>
+					<name>Tlakov&#xe1; n&#xe1;dobka - nejedn&#xe1; se o rozprašovač</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>DA</lngId>
+					<name>Trykbeholder – andet end spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>DE</lngId>
+					<name>Druckbeh&#xe4;lter – aber kein sprayprodukt</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>EL</lngId>
+					<name>Δοχείο υπό πίεση - προϊόν που δεν είναι σπρέϋ</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>EN</lngId>
+					<name>Pressurised container - non spray product</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>ES</lngId>
+					<name>Envase presurizado – producto no dispensado en spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>ET</lngId>
+					<name>R&#xf5;hu all olev mahuti – mitte pihustatav toode</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>FI</lngId>
+					<name>Painepakkaus, muu kuin spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>FR</lngId>
+					<name>Conditionnement pressuris&#xe9; - autre que spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>HR</lngId>
+					<name>Spremnik pod tlakom – proizvod koji nije u obliku spreja</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>HU</lngId>
+					<name>Nyom&#xe1;s alatti csomagol&#xe1;s - nem spray term&#xe9;k</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>IT</lngId>
+					<name>Contenitore pressurizzato - non spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>LT</lngId>
+					<name>Slėginė talpyklė</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>LV</lngId>
+					<name>Baloniņš zem spiediena — neizsmidzināmviela</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>MT</lngId>
+					<name>Kontenitur taht pressjoni - prodott li mhux sprej</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>NL</lngId>
+					<name>Houder onder druk geen spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>PL</lngId>
+					<name>pojemnik pod ciśnieniem – inny niż wyr&#xf3;b aerozolowy</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>PT</lngId>
+					<name>Recipiente sob press&#xe3;o –produto n&#xe3;o pulveriz&#xe1;vel</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>RO</lngId>
+					<name>Recipient sub presiune - produs altul decat spray</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>SK</lngId>
+					<name>Tlakov&#xe1; n&#xe1;dobka - nejedn&#xe1; sa o rozprašovač</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>SL</lngId>
+					<name>Embalaža pod tlakom – ni razpršilo</name>
+				</applicator>
+				
+				<applicator>
+					<id>100004</id>
+					<lngId>SV</lngId>
+					<name>Tryckbeh&#xe5;llare, icke-spray</name>
+				</applicator>
+				
+			</applicatorList>
+			

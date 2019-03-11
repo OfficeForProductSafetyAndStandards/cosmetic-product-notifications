@@ -1,0 +1,17 @@
+
+			<questionList>
+				
+				<question>
+					<applicatorId>100003</applicatorId>
+					<questionId>100014</questionId>	
+					<notificationType>1</notificationType>	
+				</question>
+				
+				<question>
+					<applicatorId>100003</applicatorId>
+					<questionId>100014</questionId>	
+					<notificationType>3</notificationType>	
+				</question>
+				
+			</questionList>
+			

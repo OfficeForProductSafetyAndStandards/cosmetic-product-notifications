@@ -1,0 +1,7043 @@
+
+			<rule19Ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (над 0,1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (nad 0,1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (over 0,1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (&#xfc;ber 0,1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>ΦΩΣΦΟΡΙΚΟ ΤΡΙΑΙΘΥΛΙΟ (άνω του 0,1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (ABOVE 0.1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (m&#xe1;s del 0,1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (&#xfc;le 0,1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (yli 0,1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (au-del&#xe0; de 0,1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (IZNAD 0.1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (0,1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (superiore allo 0,1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (daugiau nei 0,1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (virs 0,1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>FOSFAT TAt-TRIETIL (aktar minn 0,1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (meer dan 0,1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (ponad 0,1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (superior a 0,1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (peste 0,1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (ABOVE 0.1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (nad 0,1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>10</id>	
+					<name>TRIETHYL PHOSPHATE (mer &#xe4;n 0,1&#xa0;%)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (над 0,1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (nad 0,1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (over 0,1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (&#xfc;ber 0,1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>ΧΛΩΡΙΚΟ ΚΑΛΙΟ (άνω του 0,1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (ABOVE 0.1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (m&#xe1;s del 0,1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (&#xfc;le 0,1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (yli 0,1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (au-del&#xe0; de 0,1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (IZNAD 0.1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (0,1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (superiore allo 0,1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (daugiau nei 0,1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (virs 0,1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>KLORAT TAL-POTASSJU (aktar minn 0,1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (meer dan 0,1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (ponad 0,1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (superior a 0,1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (peste 0,1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (ABOVE 0.1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (nad 0,1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>11</id>	
+					<name>POTASSIUM CHLORATE (mer &#xe4;n 0,1&#xa0;%)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (над 0,1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (nad 0,1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (over 0,1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (&#xfc;ber 0,1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>ΧΛΩΡΙΚΟ ΝΑΤΡΙΟ (άνω του 0,1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (ABOVE 0.1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (m&#xe1;s del 0,1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (&#xfc;le 0,1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (yli 0,1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (au-del&#xe0; de 0,1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (IZNAD 0.1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (0,1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (superiore allo 0,1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (daugiau nei 0,1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (virs 0,1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>KLORAT TAS-SODJU (aktar minn 0,1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (meer dan 0,1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (ponad 0,1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (superior a 0,1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (peste 0,1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (ABOVE 0.1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (nad 0,1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>12</id>	
+					<name>SODIUM CHLORATE (mer &#xe4;n 0,1&#xa0;%)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (над 0,1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (nad 0,1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (over 0,1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (&#xfc;ber 0,1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>ΘΕΙΙΚΟΣ ΧΑΛΚΟΣ (άνω του 0,1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (ABOVE 0.1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (m&#xe1;s del 0,1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (&#xfc;le 0,1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (yli 0,1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (au-del&#xe0; de 0,1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (IZNAD 0.1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (0,1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (superiore allo 0,1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (daugiau nei 0,1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (virs 0,1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>SULFAT TAR-RAM (aktar minn 0,1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (meer dan 0,1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (ponad 0,1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (superior a 0,1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (peste 0,1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (ABOVE 0.1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (nad 0,1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>13</id>	
+					<name>COPPER SULFATE (mer &#xe4;n 0,1&#xa0;%)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (над 0,1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (nad 0,1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (over 0,1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (&#xfc;ber 0,1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>ΧΛΩΡΙΟΠΛΑΤΙΝΙΚΟ ΟΞΥ (άνω του 0,1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (ABOVE 0.1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (m&#xe1;s del 0,1%)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (&#xfc;le 0,1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID (yli 0,1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID (au-del&#xe0; de 0,1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID (IZNAD 0.1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (0,1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (superiore allo 0,1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (daugiau nei 0,1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (virs 0,1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>AĊIDU KLOROPLATINIKU (aktar minn 0,1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (meer dan 0,1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID (ponad 0,1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (superior a 0,1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (peste 0,1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (ABOVE 0.1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID  (nad 0,1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>14</id>	
+					<name>CHLOROPLATINIC ACID (mer &#xe4;n 0,1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>ΠΕΝΤΑΝΙΟ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTAN (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>15</id>	
+					<name>PENTANE (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>ΚΥΚΛΟΕΞΑΝΙΟ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>ĊIKLOEŻAN (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>16</id>	
+					<name>CYCLOHEXANE (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>ΤΟΛΟΥΟΛΙΟ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUWEN (above 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>17</id>	
+					<name>TOLUENE (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>ΥΔΡΟΓΟΝΩΜΕΝΟ ΔΩΔΕΚΕΝΙΟ ΔΙΜΕΡΕΣ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>DIDODEĊEN IDROĠENAT (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>18</id>	
+					<name>HYDROGENATED DIDODECENE (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ΙΣΟΠΕΝΤΑΝΙΟ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTAN (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>19</id>	
+					<name>ISOPENTANE (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL)  (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>20</id>	
+					<name>n-PROPYL ALCOHOL (INCI = PROPYL ALCOHOL) (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>ν-ΒΟΥΤΥΛΙΚΗ ΑΛΚΟΟΛΗ (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>ALKOĦOL n-BUTIL (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>21</id>	
+					<name>n-BUTYL ALCOHOL (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>τ-ΒΟΥΤΥΛΙΚΗ ΑΛΚΟΟΛΗ (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>ALKOĦOL t-BUTIL (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>22</id>	
+					<name>t-BUTYL ALCOHOL (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>ΦΟΥΡΦΟΥΡΥΛΙΚΗ ΑΛΚΟΟΛΗ (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>ALKOĦOL FURFURIL (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>23</id>	
+					<name>FURFURYL ALCOHOL (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ΑΙΘΥΛΑΙΘΕΡΑΣ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER  (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (daugiau nei  5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETER ETILU (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>24</id>	
+					<name>ETHYL ETHER (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>25</id>	
+					<name>Ethylene glycol only (INCI = GLYCOL) (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>ΒΕΝΖΥΛΙΚΗ ΑΛΚΟΟΛΗ (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL  (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>ALKOĦOL BENŻIL (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>26</id>	
+					<name>BENZYL ALCOHOL (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>ΕΞΥΛΙΚΗ ΑΛΚΟΟΛΗ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL  (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>ALKOĦOL EŻIL (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>27</id>	
+					<name>HEXYL ALCOHOL (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (над 10 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (nad 10 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (over 10%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (&#xfc;ber 10%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>ΜΕΘΟΞΥΙΣΟΠΡΟΠΑΝΟΛΗ (άνω του 10%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (ABOVE 10%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (m&#xe1;s del 10 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (&#xfc;le 10%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (yli 10 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (au-del&#xe0; de 10&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (IZNAD 10 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (10% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (superiore al 10%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (above 10%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (virs 10%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METOSSISOPROPANOL (aktar minn 10%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (meer dan 10%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (ponad 10%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (superior a 10 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (peste 10%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (ABOVE 10%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (nad 10 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>28</id>	
+					<name>METHOXYISOPROPANOL (mer &#xe4;n 10 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (над 0,1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (nad 0,1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (over 0,1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (&#xfc;ber 0,1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>μ-ΚΡΕΣΟΛΗ, o-ΚΡΕΣΟΛΗ, p-ΚΡΕΣΟΛΗ, ΜΕΙΓΜΑ ΚΡΕΣΟΛΩΝ (άνω του 0,1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (ABOVE 0.1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (m&#xe1;s del 0,1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (&#xfc;le 0,1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (yli 0,1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL, p-CRESOL, MIXED CRESOLS (au-del&#xe0; de 0,1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (IZNAD 0.1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (0,1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (superiori allo 0,1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (daugiau nei 0,1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (virs 0,1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-KRESOL, o-KRESOL,  p-KRESOL, KRESOLI MĦALLTA (aktar minn 0,1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (meer dan 0,1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (ponad 0,1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (superior a 0,1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (peste 0,1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (ABOVE 0.1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (nad 0,1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>29</id>	
+					<name>m-CRESOL, o-CRESOL,  p-CRESOL, MIXED CRESOLS (mer &#xe4;n 0,1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (над 0,2 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (nad 0,2 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (over 0,2%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (&#xfc;ber 0,2%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>ΦΟΡΜΑΛΔΕΫΔΗ (άνω του 0,2%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (ABOVE 0.2%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (m&#xe1;s del 0,2 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (&#xfc;le 0,2%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (yli 0,2 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (au-del&#xe0; de 0,2&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (IZNAD 0.2 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (0,2% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (superiore allo 0,2%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (daugiau nei 0,2%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (virs 0,2%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEID (aktar minn 0,2%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (meer dan 0,2%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (ponad 0,2%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (superior a 0,2 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (peste 0,2%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (ABOVE 0.2%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (nad 0,2 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>30</id>	
+					<name>FORMALDEHYDE (mer &#xe4;n 0,2 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ΑΚΕΤΟΝΗ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>AĊETUN  (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE  (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>31</id>	
+					<name>ACETONE (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK  (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>32</id>	
+					<name>MEK (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK  (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>33</id>	
+					<name>MIBK (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>ΚΥΚΛΟΕΞΑΝΟΝΗ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE   (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>ĊIKLOEŻANON (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE  (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>34</id>	
+					<name>CYCLOHEXANONE (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>ΜΕΘΥΛΟΠΥΡΡΟΛΙΔΟΝΗ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE   (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>CYCLOHEXANONE  (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>PIRROLIDON METIL (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE  (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>35</id>	
+					<name>METHYL PYRROLIDONE (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (над 0,1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (nad 0,1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (over 0,1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (&#xfc;ber 0,1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>ΟΞΙΚΟ ΜΕΘΥΛΙΟ (άνω του 0,1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (ABOVE 0.1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (m&#xe1;s del 0,1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (&#xfc;le 0,1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE (yli 0,1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE (au-del&#xe0; de 0,1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE (IZNAD 0.1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (0,1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (superiore allo 0,1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (daugiau nei  0,1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (virs 0,1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>AĊETAT METIL (aktar minn 0,1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (meer dan 0,1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (ponad 0,1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (superior a 0,1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (peste 0,1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (ABOVE 0.1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE  (nad 0,1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>36</id>	
+					<name>METHYL ACETATE (mer &#xe4;n 0,1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ΟΞΙΚΟ ΑΙΘΥΛΙΟ (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>AĊETAT ETIL (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>37</id>	
+					<name>ETHYL ACETATE (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>ΟΞΙΚΟ ΒΟΥΤΥΛΙΟ (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTOXYETHYL ACETATE (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>AĊETAT BUTIL (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>38</id>	
+					<name>BUTYL ACETATE (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>ΒΕΝΖΟΪΚΟ ΒΕΝΖΥΛΙΟ (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZOAT BENZIL (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>40</id>	
+					<name>BENZYL BENZOATE (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (над 0,1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (nad 0,1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (over 0,1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (&#xfc;ber 0,1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>ΔΙΜΕΘΥΛΟΤΟΛΥΛΟΑΜΙΝΗ (άνω του 0,1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (ABOVE 0.1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (m&#xe1;s del 0,1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (&#xfc;le 0,1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (yli 0,1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (au-del&#xe0; de 0,1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (IZNAD 0.1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (0,1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (superiore allo 0,1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (daugiau nei 0,1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (virs 0,1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETILTOLILAMIN (aktar minn 0,1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (meer dan 0,1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (ponad 0,1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (superior a 0,1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (peste 0,1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (ABOVE 0.1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (nad 0,1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>41</id>	
+					<name>DIMETHYLTOLYLAMINE (mer &#xe4;n 0,1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (над 1 %)&quot;</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (nad 1 %)&quot;</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (over 1%)&quot;</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (&#xfc;ber 1%)&quot;</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>ΥΔΡΟΞΥΛΑΜΙΝΗ HCL, ΘΕΙΙΚΗ ΥΔΡΟΞΥΛΑΜΙΝΗ (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (m&#xe1;s del 1 %)&quot;</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (&#xfc;le 1%)&quot;</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (yli 1 %)&quot;</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (au-del&#xe0; de 1&#xa0;%)&quot;</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (1% felett)&quot;</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (superiore all&apos;1%)&quot;</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (daugiau nei 1%)&quot;</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (virs 1%)&quot;</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HCL IDROSSILAMIN HCL; SULFAT TAL-IDROSSILAMIN (aktar minn 1%)&quot;</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (meer dan 1%)&quot;</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (ponad 1%)&quot;</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (superior a 1 %)&quot;</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (peste 1%)&quot;</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (nad 1 %)&quot;</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>42</id>	
+					<name>&quot;HYDROXYLAMINE HCL; HYDROXYLAMINE SULFATE (mer &#xe4;n 1 %)&quot;</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>ΘΕΙΙΚΗ ΒΡΥΚΙΝΗ</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>SULFAT TAL-BRUĊIN</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>43</id>	
+					<name>BRUCINE SULFATE</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (над 5 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (nad 5 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (over 5%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (&#xfc;ber 5%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>ΤΕΡΕΒΙΝΘΙΝΗ (άνω του 5%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (ABOVE 5%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (m&#xe1;s del 5 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (&#xfc;le 5%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (yli 5 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (au-del&#xe0; de 5&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (IZNAD 5 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (5% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE  (superiore al 5%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (daugiau nei 5%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (virs 5%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINA (aktar minn 5%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (meer dan 5%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (ponad 5%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (superior a 5 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (peste 5%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (ABOVE 5%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (nad 5 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>44</id>	
+					<name>TURPENTINE (mer &#xe4;n 5 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (над 0,1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (nad 0,1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (over 0,1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (&#xfc;ber 0,1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>ΒΟΥΤΥΡΟΛΑΚΤΟΝΗ (άνω του 0,1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (ABOVE 0.1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (m&#xe1;s del 0,1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (&#xfc;le 0,1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (yli 0,1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (au-del&#xe0; de 0,1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (IZNAD 0.1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (0,1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (superiore allo 0,1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (daugiau nei 0,1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (virs 0,1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTIROLAKTON (aktar minn 0,1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (meer dan 0,1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (ponad 0,1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (superior a 0,1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (peste 0,1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (ABOVE 0.1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (nad 0,1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>45</id>	
+					<name>BUTYROLACTONE (mer &#xe4;n 0,1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>ГЛИКОЛОВИ ЕТЕРИ (неполимерни) (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLYCOLETHERY (nikoliv polymery) (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLYCOLETHERE (ikke polymerer) (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLYCOLETHER (keine Polymere (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>ΓΛΥΚΟΛΑΙΘΕΡΕΣ (όχι πολυμερή) (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLYCOL ETHERS (NOT POLYMERS) (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>&#xc9;TERES GLIC&#xd3;LICOS (no pol&#xed;meros) (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GL&#xdc;KOOLEETRID (v.a pol&#xfc;meerid) (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLYKOLIEETTERIT (ei polymeerit) (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>&#xc9;THERS DE GLYCOL (non polym&#xe8;res) (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLIKOLNI ETERI (NE POLIMERI) (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLIKOL-&#xc9;TEREK (nem polimerek) (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>ETERI DI GLICOLE (non polimeri) (superiori all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLIKOLIO ETERIAI (ne polimerai) (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLIKOLA ĒTERI (nav polimēri) (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>ETERS TAL-GLIKOL (mhux polimeri) (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLYCOLETHERS (geen polymeren) (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>ETERY GLIKOLU (niebędące polimerami) (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>&#xc9;TERES DE GLICOL (n&#xe3;o pol&#xed;meros) (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>ETERI DE GLICOL (nu polimeri) (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLYCOL ETHERS (NOT POLYMERS) (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLIKOLNI ETRI (ne polimeri) (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>46</id>	
+					<name>GLYKOLETRAR (ej polymerer) (mer &#xe4;n 1&#xa0;%)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (над 10 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (nad 10 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (over 10%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (&#xfc;ber 10%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>ΠΡΟΠΥΛΕΝΟΓΛΥΚΟΛΗ (άνω του 10%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (ABOVE 10%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (m&#xe1;s del 10 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (&#xfc;le 10%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (yli 10 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (au-del&#xe0; de 10&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (IZNAD 10 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (10% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (superiore al 10%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (daugiau nei 10%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (virs 10%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>GLIKOL PROPILEN (aktar minn 10%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (meer dan 10%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (ponad 10%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (superior a 10 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (peste 10%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (ABOVE 10%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (nad 10 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>47</id>	
+					<name>PROPYLENE GLYCOL (mer &#xe4;n 10 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Βουτοξυαιθανόλη (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>BUTOXYETHANOL (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>BUTOXYETHANOL (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butossietanol (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>BUTOXYETHANOL (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>48</id>	
+					<name>Butoxyethanol (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Οξικό βουτοξυαιθύλιο (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>BUTOXYETHYL ACETATE (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>BUTOXYETHYL ACETATE (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butossietil aċetat (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>BUTOXYETHYL ACETATE (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>49</id>	
+					<name>Butoxyethyl acetate (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Αιθοξυδιγλυκόλη (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>ETHOXYDIGLYCOL (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>ETHOXYDIGLYCOL (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Etossidiglikol (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>ETHOXYDIGLYCOL (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>50</id>	
+					<name>Ethoxydiglycol (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Βουτοξυδιγλυκόλη (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>BUTOXYDIGLYCOL (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>BUTOXYDIGLYCOL (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butossidiglikol (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>BUTOXYDIGLYCOL (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>51</id>	
+					<name>Butoxydiglycol (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Οξική αιθοξυδιγλυκόλη (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>ETHOXYDIGLYCOL ACETATE (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>ETHOXYDIGLYCOL ACETATE (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Etossidiglikol aċetat (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>ETHOXYDIGLYCOL ACETATE (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>52</id>	
+					<name>Ethoxydiglycol acetate (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Οξικός βουτυλαιθέρας-2 (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>BUTETH-2 ACETATE (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>BUTETH-2 ACETATE (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Butet-2 aċetat (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>BUTETH-2 ACETATE (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>53</id>	
+					<name>Buteth-2 acetate (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (над 1 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (nad 1 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (over 1%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (&#xfc;ber 1%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>ΔΙΑΙΘΟΞΥΔΙΓΛΥΚΟΛΗ (άνω του 1%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (ABOVE 1%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (m&#xe1;s del 1 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (&#xfc;le 1%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (yli 1 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (au-del&#xe0; de 1&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (IZNAD 1 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (1% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (superiore all&apos;1%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (daugiau nei 1%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (virs 1%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETOSSIDIGLIKOL (aktar minn 1%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (meer dan 1%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (ponad 1%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (superior a 1 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (peste 1%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (ABOVE 1%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (nad 1 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>54</id>	
+					<name>DIETHOXYDIGLYCOL (mer &#xe4;n 1 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (над 10 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (nad 10 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (over 10%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (&#xfc;ber 10%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>ΟΞΙΚΟ ΜΕΘΟΞΥΙΣΟΠΡΟΠΥΛΙΟ (άνω του 10%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (ABOVE 10%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (m&#xe1;s del 10 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (&#xfc;le 10%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (yli 10 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (au-del&#xe0; de 10&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (IZNAD 10 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (10% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (superiore al 10%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (daugiau nei 10%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (virs 10%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METOSSIISOPROPIL AĊETATE (aktar minn 10%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (meer dan 10%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (ponad 10%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (superior a 10 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (peste 10%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (ABOVE 10%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (nad 10 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>56</id>	
+					<name>METHOXYISOPROPYL ACETATE (mer &#xe4;n 10 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (над 10 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (nad 10 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (over 10%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (&#xfc;ber 10%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 ΜΕΘΥΛΑΙΘΕΡΑΣ (άνω του 10%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (ABOVE 10%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (m&#xe1;s del 10 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (&#xfc;le 10%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (yli 10 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (au-del&#xe0; de 10&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER  (IZNAD 10 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (10% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (superiore al 10%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (daugiau nei 10%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (virs 10%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 ETER METIL (aktar minn 10%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (meer dan 10%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (ponad 10%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (superior a 10 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (peste 10%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (ABOVE 10%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (nad 10 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>57</id>	
+					<name>PPG-2 METHYL ETHER (mer &#xe4;n 10 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (над 10 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (nad 10 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (over 10%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (&#xfc;ber 10%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>ΔΙΠΡΟΠΥΛΕΝΟΓΛΥΚΟΛΗ (άνω του 10%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (ABOVE 10%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (m&#xe1;s del 10 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (&#xfc;le 10%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (yli 10 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (au-del&#xe0; de 10&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (IZNAD 10 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (10% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (superiore al 10%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>PPG-2 METHYL ETHER (daugiau nei 10%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (virs 10%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPILEN GLIKOL (aktar minn 10%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (meer dan 10%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (ponad 10%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (superior a 10 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (peste 10%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (ABOVE 10%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (nad 10 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>58</id>	
+					<name>DIPROPYLENE GLYCOL (mer &#xe4;n 10 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (над 10 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (nad 10 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (over 10%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (&#xfc;ber 10%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>ΔΙΜΕΘΥΛΑΙΘΕΡΑΣ ΔΙΠΡΟΠΥΛΕΝΟΓΛΥΚΟΛΗΣ (άνω του 10%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (ABOVE 10%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (m&#xe1;s del 10 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (&#xfc;le 10%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (yli 10 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (au-del&#xe0; de 10&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (IZNAD 10 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (10% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (superiore al 10%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (daugiau nei 10%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (virs 10%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPILEN GLIKOL DIMETIL ETER (aktar minn 10%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (meer dan 10%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (ponad 10%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (superior a 10 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (peste 10%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (ABOVE 10%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (nad 10 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>59</id>	
+					<name>DIPROPYLENE GLYCOL DIMETHYL ETHER (mer &#xe4;n 10 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (над 10 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (nad 10 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (over 10%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (&#xfc;ber 10%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>ΙΣΟΒΟΡΝΥΛΑΙΘΕΡΑΣ ΔΙΠΡΟΠΥΛΕΝΟΓΛΥΚΟΛΗΣ (άνω του 10%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (ABOVE 10%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (m&#xe1;s del 10 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (&#xfc;le 10%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (yli 10 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (au-del&#xe0; de 10&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER  (IZNAD 10 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (10% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (superiore al 10%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (daugiau nei 10%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (virs 10%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPILEN GLIKOL ISOBORNIL ETER (aktar minn 10%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (meer dan 10%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (ponad 10%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (superior a 10 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (peste 10%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (ABOVE 10%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (nad 10 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>60</id>	
+					<name>DIPROPYLENE GLYCOL ISOBORNYL ETHER (mer &#xe4;n 10 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (над 10 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (nad 10 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (over 10%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (&#xfc;ber 10%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 ΟΞΙΚΟΣ ΜΕΘΥΛΑΙΘΕΡΑΣ (άνω του 10%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (ABOVE 10%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (m&#xe1;s del 10 %)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (&#xfc;le 10%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (yli 10 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (au-del&#xe0; de 10&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (IZNAD 10 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (10% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (superiore al 10%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (daugiau nei 10%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (virs 10%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 AĊETAT TAL-ETER METIL (aktar minn 10%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (meer dan 10%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (ponad 10%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (superior a 10 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (peste 10%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (ABOVE 10%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (nad 10 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>61</id>	
+					<name>PPG-2 METHYL ETHER ACETATE (mer &#xe4;n 10 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (над 10 %)</name>
+					<lngId>BG</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (nad 10 %)</name>
+					<lngId>CS</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (over 10%)</name>
+					<lngId>DA</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (&#xfc;ber 10%)</name>
+					<lngId>DE</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>ΒΟΥΤΥΛΑΙΘΕΡΑΣ ΠΡΟΠΥΛΕΝΟΓΛΥΚΟΛΗΣ (άνω του 10%)</name>
+					<lngId>EL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (ABOVE 10%)</name>
+					<lngId>EN</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>P ROPYLENE GLYCOL BUTYL ETHER (m&#xe1;s del 10%)</name>
+					<lngId>ES</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (&#xfc;le 10%)</name>
+					<lngId>ET</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (yli 10 %)</name>
+					<lngId>FI</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (au-del&#xe0; de 10&#xa0;%)</name>
+					<lngId>FR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (IZNAD 10 %)</name>
+					<lngId>HR</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (10% felett)</name>
+					<lngId>HU</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (superiore al 10%)</name>
+					<lngId>IT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (daugiau nei 10%)</name>
+					<lngId>LT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (virs 10%)</name>
+					<lngId>LV</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPILEN GLIKOL BUTIL ETER (aktar minn 10%)</name>
+					<lngId>MT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (meer dan 10%)</name>
+					<lngId>NL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (ponad 10%)</name>
+					<lngId>PL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (superior a 10 %)</name>
+					<lngId>PT</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (peste 10%)</name>
+					<lngId>RO</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (ABOVE 10%)</name>
+					<lngId>SK</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (nad 10 %)</name>
+					<lngId>SL</lngId>
+				</ingredient>
+				
+				<ingredient>
+					<id>62</id>	
+					<name>PROPYLENE GLYCOL BUTYL ETHER (mer &#xe4;n 10 %)</name>
+					<lngId>SV</lngId>
+				</ingredient>
+				
+			</rule19Ingredient>
+			

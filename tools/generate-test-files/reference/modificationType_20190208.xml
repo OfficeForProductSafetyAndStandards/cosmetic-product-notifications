@@ -1,0 +1,1799 @@
+
+			<modificationTypeList>
+				
+				<type>
+					<id>1</id>	
+					<description>Nazivi proizvoda</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Nome(s) do produto</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Denumirea (denumirile) produsului (produselor)</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>N&#xe1;zov (n&#xe1;zvy) v&#xfd;robku</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Ime(-na) izdelka</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Valmisteen nimi/nimet</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Produktnamn</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Productna(a)m(en)</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Product name(s)</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Наименование(я) на продукта(ите)</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>N&#xe1;zev př&#xed;pravku</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Produktnavn(e)</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Produktname(n)</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Toote nimi (nimed)</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Ονομασία(-ες) προϊόντος</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Denominaci&#xf3;n del producto</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Nom du ou des produits</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Nome/i del prodotto</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Līdzekļa nosaukums(-i)</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Gaminio pavadinimas (-ai)</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Term&#xe9;kn&#xe9;v (term&#xe9;knevek)</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Isem/Ismijiet tal-prodott</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>1</id>	
+					<description>Nazwa(-y) produktu</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Podaci o odgovornoj osobi</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Dados da pessoa respons&#xe1;vel</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Datele persoanei responsabile</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Inform&#xe1;cie o zodpovednej osobe</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Podatki o odgovorni osebi</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Vastuuhenkil&#xf6;n tiedot</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Uppgifter om ansvarig person</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Responsible person details</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Данни за отговорното лице</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>&#xda;daje o odpovědn&#xe9; osobě</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Oplysninger om ansvarlig person</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Angaben zur verantwortlichen Person</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Vastutava isiku andmed</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Στοιχεία υπεύθυνου</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Datos del responsable</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Coordonn&#xe9;es de la personne responsable</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Informazioni sulla persona responsabile</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Informācija par atbildīgo personu</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Atsakingo asmens duomenys</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>A felelős szem&#xe9;ly adatai</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Dettalji tal-persuna responsabbli</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Gegevens van de verantwoordelijke persoon</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>2</id>	
+					<description>Dane osoby odpowiedzialnej</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Podaci osobe za kontakt</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Dados da pessoa a contactar</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Datele persoanei de contact</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Inform&#xe1;cie o kontaktnej osobe</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Podatki o kontaktni osebi</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Yhteyshenkil&#xf6;n tiedot</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Uppgifter om kontaktperson</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Informazioni sulla persona di contatto</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Gegevens van de contactpersoon</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Dane osoby wyznaczonej do kontakt&#xf3;w</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Contact person details</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Данни за лицето за контакт</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>&#xda;daje o kontaktn&#xed; osobě</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Oplysninger om kontaktperson</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Angaben zum Ansprechpartner</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Kontaktisiku andmed</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Στοιχεία υπεύθυνου επικοινωνίας</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Datos de la persona de contacto</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Coordonn&#xe9;es de la personne de contact</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Informācija par kontaktpersonu</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Asmens ryšiams duomenys</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>A kapcsolattart&#xf3; adatai</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>3</id>	
+					<description>Dettalji tal-persuna ta&apos; kuntatt</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Država članica u kojoj je proizvod prvi put stavljen na tržište</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Estado-Membro da primeira coloca&#xe7;&#xe3;o no mercado</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Statul membru &#xee;n care a fost introdus pe piață prima dată</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Člensk&#xfd; št&#xe1;t prv&#xe9;ho uvedenia na trh</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Država članica, v kateri je bil izdelek prvič dan na trg</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>J&#xe4;senvaltio, jossa valmiste saatettiin ensimm&#xe4;isen kerran markkinoille</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Medlemsstat d&#xe4;r produkten f&#xf6;rst sl&#xe4;pptes ut p&#xe5; marknaden</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Stat Membru li fih tpoġġew għall-ewwel darba fis-suq</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Państwo członkowskie, w kt&#xf3;rym produkt został po raz pierwszy wprowadzony do obrotu</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Member State of first placing on the market</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Държава на първо пускане на пазара</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Člensk&#xfd; st&#xe1;t prvn&#xed;ho uveden&#xed; na trh</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Medlemsstat, hvor produktet f&#xf8;rste gang blev bragt i oms&#xe6;tning</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Mitgliedstaat des erstmaligen Inverkehrbringens</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Liikmesriik, kus [...] esmakordselt turule viidi</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Κράτος μέλος πρώτης διάθεσης στην αγορά</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Estado miembro de la primera comercializaci&#xf3;n</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>&#xc9;tat membre de premi&#xe8;re mise sur le march&#xe9;</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Stato membro della prima immissione sul mercato</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Dalībvalsts, kur pirmo reizi laists tirgū</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Gaminį rinkai pateikusi valstybė narė</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Az első forgalomba hozatal helye szerinti tag&#xe1;llam</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>4</id>	
+					<description>Lidstaat waar het product voor het eerst in de handel is gebracht</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Država podrijetla</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Pa&#xed;s de origem</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Țara de origine</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Krajina p&#xf4;vodu</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Država izvora</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Alkuper&#xe4;maa</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Ursprungsland</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Country of origin</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Държава на произход</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Země původu</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Oprindelsesland</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Herkunftsland</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>P&#xe4;ritoluriik</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Χώρα προέλευσης</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Pa&#xed;s de origen</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Pays d&apos;origine</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Paese di origine</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Izcelsmes valsts</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Kilmės šalis</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Sz&#xe1;rmaz&#xe1;si orsz&#xe1;g</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Pajjiż tal-oriġini</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Land van oorsprong</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>5</id>	
+					<description>Państwo pochodzenia</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Nazivi komponente</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Nome do componente</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Denumirea (denumirile) componentei (componentelor)</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>N&#xe1;zov (n&#xe1;zvy) zložiek</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Ime(-na) komponente</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Ainesosan nimi/nimet</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Komponentnamn</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Component name(s)</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Наименование(я) на компонента(ите)</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>N&#xe1;zev/n&#xe1;zvy složky</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Komponentnavn(e)</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Komponentenname(n)</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Komponendi nimi (komponentide nimed)</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Ονομασία(-ες) συστατικού</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Denominaci&#xf3;n del componente</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Nom du ou des composants</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Nome/i del componente</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Komponenta nosaukums(-i)</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Komponento pavadinimas (-ai)</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Az alkot&#xf3;elem neve (nevei)</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Isem/Ismijiet tal-komponent</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Componentna(a)m(en)</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>6</id>	
+					<description>Nazwa(-y) elementu zestawu</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A ili 1B)</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A ou 1B)</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>Substanțe CMR (categoria 1A sau 1B)</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>Karcinog&#xe9;nna, mutag&#xe9;nna l&#xe1;tka alebo l&#xe1;tka poškodzuj&#xfa;ca reprodukciu (1A alebo 1B)</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A ali 1B)</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR-aineet (kategoria 1A tai 1B)</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR-&#xe4;mnen (1A eller 1B)</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>R&#xe1;kkeltő, mutag&#xe9;n vagy reprodukci&#xf3;t k&#xe1;ros&#xed;t&#xf3; (1A. vagy 1B. kateg&#xf3;ria)</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>KMR (1.A vai 1.B kategorija)</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A or 1B)</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A или 1B)</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A nebo 1B)</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A eller 1B)</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR-Stoffe (1A oder 1B)</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A v&#xf5;i 1B)</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>ΚΜΤ (1A ή 1B)</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A o 1B)</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>Substances CMR (1A ou 1B)</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>Sostanze CMR (1A o 1B)</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A arba 1B)</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A jew 1B)</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A of 1B)</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>7</id>	
+					<description>CMR (1A lub 1B)</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterijal</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterial</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterial</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomateri&#xe1;l</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterial</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomateriaali</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterial</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomateriaal</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterial</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Наноматериал</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomateri&#xe1;l</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomateriale</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterial</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterjal</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Νανοϋλικό</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterial</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomat&#xe9;riau</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomateriale</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomateriāls</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomedžiaga</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanoanyag</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomaterjal</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>8</id>	
+					<description>Nanomateriał</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Formulacija i/ili kategorija</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Categorias e/ou formula&#xe7;&#xf5;es-quadro</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Categorii și/sau formulări-cadru</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kateg&#xf3;rie a/alebo r&#xe1;mcov&#xe9; zloženie</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategorije in/ali okvirne formulacije</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Tuoteryhm&#xe4;t ja/tai kehyskoostumukset</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategorier och/eller ramformuleringar</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Formulation and/or categories</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Категории и/или рамкови формулации</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategorie a/nebo r&#xe1;mcov&#xe1; složen&#xed;</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategorier og/eller rammeformuleringer</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategorien und/oder Rahmenrezepturen</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategooriad ja/v&#xf5;i t&#xfc;&#xfc;pkoostised</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Κατηγορίες ή/και ομαδικές τυποποιήσεις</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Categor&#xed;as o formulaciones marco</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Cat&#xe9;gories et/ou formulations-cadres</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Categorie e/o formulazioni quadro</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategorijas un/vai pamatsastāvi</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategorijos ir / arba pagrindinės formulės</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kateg&#xf3;ri&#xe1;k &#xe9;s/vagy rokon &#xf6;sszet&#xe9;telű term&#xe9;kcsoportok</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategoriji u/jew formulazzjonijiet ta&apos; qafas</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Categorie&#xeb;n en/of raamrecepturen</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>9</id>	
+					<description>Kategorie lub receptury ramowe</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Izvorna deklaracija i izvorno pakiranje</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Embalagem original e/ou rotulagem original</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Ambalaj original și/sau etichetare originală</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Origin&#xe1;lne balenie a/alebo origin&#xe1;lne označenie</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Originalna embalaža in/ali originalna etiketa</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Alkuper&#xe4;inen pakkaus ja/tai alkuper&#xe4;inen merkint&#xe4;</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Originalf&#xf6;rpackning och/eller originalm&#xe4;rkning</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Oorspronkelijke verpakking en/of oorspronkelijk etiket</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Original labelling and/or original packaging</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Оригинална опаковка и/или оригинален етикет</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Origin&#xe1;ln&#xed; vnějš&#xed; obal a/nebo origin&#xe1;ln&#xed; označen&#xed;</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Oprindelig emballage og/eller oprindelig m&#xe6;rkning</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Originalverpackung und/oder Originaletikett</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Originaalpakend ja/v&#xf5;i originaalm&#xe4;rgis</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Αρχική συσκευασία ή/και αρχική επισήμανση</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Envase o etiquetado de origen</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Emballage original et/ou &#xe9;tiquetage original</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Contenitore originale e/o etichettatura originale</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Oriģinālais iepakojums un/vai oriģinālais marķējums</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Autentiška pakuotė / autentiška etiketė</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Eredeti csomagol&#xe1;s &#xe9;s/vagy eredeti c&#xed;mk&#xe9;z&#xe9;s</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Imballaġġ oriġinali u/jew tikketta oriġinali</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>10</id>	
+					<description>Oryginalne opakowanie lub oryginalne oznakowanie</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Proizvod nije proizveden više</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Produto j&#xe1; n&#xe3;o fabricado</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Produsul nu se mai fabrică</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>V&#xfd;robok sa už nevyr&#xe1;ba</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Izdelek se več ne proizvaja</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Tuotetta ei en&#xe4;&#xe4; valmisteta</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Produkten tillverkas inte l&#xe4;ngre</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Product not manufactured anymore</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Продуктът повече не се произвежда</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Př&#xed;pravek se již nevyr&#xe1;b&#xed;</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Produkt, der ikke fremstilles l&#xe6;ngere</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Produkt wird nicht mehr hergestellt</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Toote valmistamine on l&#xf5;petatud</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Το προϊόν δεν παρασκευάζεται πλέον</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Este producto ya no se fabrica</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Le produit n&apos;est plus fabriqu&#xe9;</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Prodotto non pi&#xf9; fabbricato</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Līdzekli vairs neražo</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Gaminys daugiau nebegaminamas</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>A term&#xe9;ket m&#xe1;r nem gy&#xe1;rtj&#xe1;k</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Prodott li ma għadux jiġi mmanifatturat</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Product dat niet meer wordt vervaardigd</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>11</id>	
+					<description>Produkt nie jest już wytwarzany</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Proizvod spreman za stavljanje na tržište ili proizvod već dostupan na tržištu</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Produto pronto para ser colocado no mercado / Produto j&#xe1; existente no mercado</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Produs gata de comercializare / produs comercializat deja</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>V&#xfd;robok pripraven&#xfd; na uvedenie na trh/V&#xfd;robok uveden&#xfd; na trh</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Izdelek, pripravljen za dajanje na trg / Izdelek že na trgu</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Valmiste on valmis markkinoille saatettavaksi / valmiste on jo markkinoilla</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Produkten klar att saluf&#xf6;ras / Produkten saluf&#xf6;rs redan</description>
+					<lngId>SV</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Το προϊόν είναι έτοιμο για διάθεση στην αγορά / Το προϊόν υπάρχει ήδη στην αγορά</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Produit pr&#xea;t &#xe0; &#xea;tre mis sur le march&#xe9; / Produit d&#xe9;j&#xe0; pr&#xe9;sent sur le march&#xe9;</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>&quot;Prodotto pronto per l&apos;immissione sul mercato/ Prodotto gi&#xe0; presente sul mercato&quot;</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Product ready to go on the market or product already on the market</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Продуктът е готов за пускане на пазара/ Продуктът вече е на пазара</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Př&#xed;pravek je připraven k uveden&#xed; na trh / v&#xfd;robek se již na trh dod&#xe1;v&#xe1;</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Produkt klar til markedsf&#xf8;ring eller produkt allerede markedsf&#xf8;rt</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Produkt bereit zum Inverkehrbringen / Produkt wurde bereits in Verkehr gebracht</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Toode on turuleviimiseks valmis/ Toode on turule viidud</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>El producto est&#xe1; listo para su comercializaci&#xf3;n, o ya est&#xe1; en el mercado</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Līdzeklis gatavs tirgum / Līdzeklis jau ir tirgū</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Gaminys paruoštas pateikti rinkai / Gaminys  jau tiekiamas rinkai</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>A term&#xe9;k forgalomba hozatalra k&#xe9;sz / A term&#xe9;k m&#xe1;r forgalomban van</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Prodott li lest biex jitqiegħed fis-suq / Prodott li diġ&#xe0; qiegħed fis-suq</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Product dat klaar is om in de handel te worden gebracht / Product dat reeds in de handel is gebracht</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>12</id>	
+					<description>Produkt gotowy do wprowadzenia do obrotu / Produkt już wprowadzony do obrotu</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Дата на прекратяване на отговорността на отговорното лице</description>
+					<lngId>BG</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Datum skončen&#xed; odpovědnosti dotyčn&#xe9; odpovědn&#xe9; osoby</description>
+					<lngId>CS</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Slutdato for den ansvarlige persons ansvar</description>
+					<lngId>DA</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Ende des Mandats der verantwortlichen Person</description>
+					<lngId>DE</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Ημερομηνία τερματισμού της ευθύνης του υπεύθυνου προσώπου</description>
+					<lngId>EL</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>End date of responsibility of the responsible person</description>
+					<lngId>EN</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Fecha de fin de responsabilidad de la persona responsable</description>
+					<lngId>ES</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Vastutava isiku vastutusaja l&#xf5;ppkuup&#xe4;ev</description>
+					<lngId>ET</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Vastuuhenkil&#xf6;n vastuun p&#xe4;&#xe4;ttymisp&#xe4;iv&#xe4;</description>
+					<lngId>FI</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Date de fin de la responsabilit&#xe9; de la personne responsable</description>
+					<lngId>FR</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Datum prestanka odgovornosti odgovorne osobe</description>
+					<lngId>HR</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>A felelős szem&#xe9;ly megb&#xed;z&#xe1;s&#xe1;nak v&#xe9;ge</description>
+					<lngId>HU</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Termine del mandato della persona responsabile</description>
+					<lngId>IT</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Atsakingo asmens atsakomybės laikotarpio pabaigos data</description>
+					<lngId>LT</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Atbildīgās personas atbildības beigu termiņš</description>
+					<lngId>LV</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Data tat-tmiem tar-responsabbilt&#xe0; tal-persuna responsabbli</description>
+					<lngId>MT</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Einddatum van het mandaat van de verantwoordelijke persoon</description>
+					<lngId>NL</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Data, z kt&#xf3;rą osoba odpowiedzialna przestaje być odpowiedzialna za produkt</description>
+					<lngId>PL</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Data do termo da responsabilidade da pessoa respons&#xe1;vel</description>
+					<lngId>PT</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Data &#xee;ncetării răspunderii persoanei responsabile</description>
+					<lngId>RO</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>D&#xe1;tum, ktor&#xfd;m sa konč&#xed; zodpovednosť zodpovednej osoby</description>
+					<lngId>SK</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Datum prenehanja odgovornosti odgovorne osebe</description>
+					<lngId>SL</lngId>
+				</type>
+				
+				<type>
+					<id>13</id>	
+					<description>Datum d&#xe5; den ansvariga personens ansvar upph&#xf6;r</description>
+					<lngId>SV</lngId>
+				</type>
+				
+			</modificationTypeList>
+			

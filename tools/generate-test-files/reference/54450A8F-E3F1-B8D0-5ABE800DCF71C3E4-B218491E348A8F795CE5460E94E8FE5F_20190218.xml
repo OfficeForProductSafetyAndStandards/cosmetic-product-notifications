@@ -1,0 +1,530 @@
+
+			 	<?xml version="1.0" encoding="utf-8"?>
+				<sanco-xmlgate:product>
+					<sanco-xmlgate:productUUID>54450A8F-E3F1-B8D0-5ABE800DCF71C3E4-B218491E348A8F795CE5460E94E8FE5F</sanco-xmlgate:productUUID>
+					<sanco-xmlgate:cpnpReference>1005904</sanco-xmlgate:cpnpReference>
+					<sanco-xmlgate:industryReference>N/A</sanco-xmlgate:industryReference>
+					<sanco-xmlgate:orgID>765</sanco-xmlgate:orgID>					
+					<sanco-xmlgate:status>AC</sanco-xmlgate:status> 
+					<sanco-xmlgate:hasComponent>N</sanco-xmlgate:hasComponent>
+					<sanco-xmlgate:currentVersion>
+						<sanco-xmlgate:generalInfo>
+							<sanco-xmlgate:productNameList>
+								
+									<sanco-xmlgate:productName>	
+										<sanco-xmlgate:name>Beautify Facial Night Cream</sanco-xmlgate:name>	
+										<sanco-xmlgate:shade></sanco-xmlgate:shade>
+										<sanco-xmlgate:language>EN</sanco-xmlgate:language>						
+									</sanco-xmlgate:productName>	
+																			
+							</sanco-xmlgate:productNameList>
+							<sanco-xmlgate:contactID>277</sanco-xmlgate:contactID>
+							<sanco-xmlgate:orgID>765</sanco-xmlgate:orgID>	
+							<sanco-xmlgate:under3year>N</sanco-xmlgate:under3year>
+							<sanco-xmlgate:mstCty>GB</sanco-xmlgate:mstCty>
+							<sanco-xmlgate:imported>N</sanco-xmlgate:imported>	
+							<sanco-xmlgate:importedCty></sanco-xmlgate:importedCty>
+							<sanco-xmlgate:packagingPhoto>	
+								
+							</sanco-xmlgate:packagingPhoto>
+							<sanco-xmlgate:labelPhoto>								
+															
+							</sanco-xmlgate:labelPhoto>
+							<sanco-xmlgate:label></sanco-xmlgate:label>
+							<sanco-xmlgate:isMixed></sanco-xmlgate:isMixed>
+							<sanco-xmlgate:phMinValue></sanco-xmlgate:phMinValue>
+							<sanco-xmlgate:phMaxValue></sanco-xmlgate:phMaxValue>
+							<sanco-xmlgate:stillOnTheMarket></sanco-xmlgate:stillOnTheMarket>
+							<sanco-xmlgate:readyForMarket>Y</sanco-xmlgate:readyForMarket>							
+							<sanco-xmlgate:modificationType>UP</sanco-xmlgate:modificationType>
+							<sanco-xmlgate:modificationComment></sanco-xmlgate:modificationComment>
+							<sanco-xmlgate:modificationDate>2018-11-20T11:11:58.00</sanco-xmlgate:modificationDate>
+						</sanco-xmlgate:generalInfo>						
+						<sanco-xmlgate:componentList>
+							 
+							<sanco-xmlgate:component>
+								<sanco-xmlgate:componentNameList>
+																							
+								</sanco-xmlgate:componentNameList>
+								<sanco-xmlgate:hasCmr>N</sanco-xmlgate:hasCmr>
+								<sanco-xmlgate:cmrList>
+																						
+								</sanco-xmlgate:cmrList>
+								<sanco-xmlgate:hasNano>N</sanco-xmlgate:hasNano>
+								<sanco-xmlgate:nanoList>
+									<sanco-xmlgate:exposureCondition>-1</sanco-xmlgate:exposureCondition>
+									<sanco-xmlgate:exposureRoute>
+																				
+									</sanco-xmlgate:exposureRoute>
+																		
+								</sanco-xmlgate:nanoList>								
+								<sanco-xmlgate:categorie1>100003</sanco-xmlgate:categorie1>	
+								<sanco-xmlgate:categorie2>100004</sanco-xmlgate:categorie2>
+								<sanco-xmlgate:categorie3>100005</sanco-xmlgate:categorie3>	
+								<sanco-xmlgate:physicalForm>3</sanco-xmlgate:physicalForm>									
+								<sanco-xmlgate:specialApplicator>N</sanco-xmlgate:specialApplicator>
+								<sanco-xmlgate:applicator>-1</sanco-xmlgate:applicator>	
+								
+									<sanco-xmlgate:frameFormulation>100006</sanco-xmlgate:frameFormulation>
+									<sanco-xmlgate:frameFormulationOther></sanco-xmlgate:frameFormulationOther>									
+									<sanco-xmlgate:frameFormulationNumber>1.1 - 2013</sanco-xmlgate:frameFormulationNumber>
+									<sanco-xmlgate:acutePoisoningInfo></sanco-xmlgate:acutePoisoningInfo>									
+									<sanco-xmlgate:notificationType>2</sanco-xmlgate:notificationType>
+									<sanco-xmlgate:hasEthanol></sanco-xmlgate:hasEthanol>
+									<sanco-xmlgate:ethanolValue></sanco-xmlgate:ethanolValue>
+									<sanco-xmlgate:isoPropanolValue></sanco-xmlgate:isoPropanolValue>
+									
+									<sanco-xmlgate:quetionList>
+											
+											<sanco-xmlgate:question>
+												<sanco-xmlgate:questionID>100026</sanco-xmlgate:questionID>
+																							
+													<sanco-xmlgate:questionElement>
+														<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+														<sanco-xmlgate:answer>123</sanco-xmlgate:answer>
+														<sanco-xmlgate:elementID>100042</sanco-xmlgate:elementID>
+														<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+													</sanco-xmlgate:questionElement>
+													
+											</sanco-xmlgate:question>
+											
+											<sanco-xmlgate:question>
+												<sanco-xmlgate:questionID>100027</sanco-xmlgate:questionID>
+																							
+													<sanco-xmlgate:questionElement>
+														<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+														<sanco-xmlgate:answer>124</sanco-xmlgate:answer>
+														<sanco-xmlgate:elementID>100043</sanco-xmlgate:elementID>
+														<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+													</sanco-xmlgate:questionElement>
+													
+											</sanco-xmlgate:question>
+											
+											<sanco-xmlgate:question>
+												<sanco-xmlgate:questionID>100011</sanco-xmlgate:questionID>
+																							
+													<sanco-xmlgate:questionElement>
+														<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+														<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+														<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+														<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+													</sanco-xmlgate:questionElement>
+													
+											</sanco-xmlgate:question>
+											
+											<sanco-xmlgate:question>
+												<sanco-xmlgate:questionID>100012</sanco-xmlgate:questionID>
+																							
+													<sanco-xmlgate:questionElement>
+														<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+														<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+														<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+														<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+													</sanco-xmlgate:questionElement>
+													
+											</sanco-xmlgate:question>
+											
+											<sanco-xmlgate:question>
+												<sanco-xmlgate:questionID>100024</sanco-xmlgate:questionID>
+																							
+													<sanco-xmlgate:questionElement>
+														<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+														<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+														<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+														<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+													</sanco-xmlgate:questionElement>
+													
+											</sanco-xmlgate:question>
+											
+											<sanco-xmlgate:question>
+												<sanco-xmlgate:questionID>100025</sanco-xmlgate:questionID>
+																							
+													<sanco-xmlgate:questionElement>
+														<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+														<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+														<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+														<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+													</sanco-xmlgate:questionElement>
+													
+											</sanco-xmlgate:question>
+														
+									</sanco-xmlgate:quetionList>
+									<sanco-xmlgate:hasFormulaFile></sanco-xmlgate:hasFormulaFile>
+									<sanco-xmlgate:formulaFile>
+										<sanco-xmlgate:fileName></sanco-xmlgate:fileName>
+										<sanco-xmlgate:file>https://webgate.acceptance.ec.europa.eu/cpnp/main/index.cfm?event=main.product.productDoc&amp;identifier=-1</sanco-xmlgate:file>
+									</sanco-xmlgate:formulaFile>
+									<sanco-xmlgate:exactFormulaList>
+														
+									</sanco-xmlgate:exactFormulaList>							
+									
+									<sanco-xmlgate:rangeFormulaList>
+														
+									</sanco-xmlgate:rangeFormulaList>
+								
+								<sanco-xmlgate:packagingPhoto>
+										
+												<sanco-xmlgate:file>
+													<sanco-xmlgate:title>beautify-facial-night-cream-packaging.jpg</sanco-xmlgate:title>
+													<sanco-xmlgate:link>https://webgate.acceptance.ec.europa.eu/cpnp/main/index.cfm?event=main.document.getDocument&amp;identifier=16866&amp;isNew=false</sanco-xmlgate:link>
+												</sanco-xmlgate:file>
+											
+								</sanco-xmlgate:packagingPhoto>
+								<sanco-xmlgate:labelPhoto>
+										
+												<sanco-xmlgate:file>
+													<sanco-xmlgate:title>beautify-facial-night-cream-label.jpg</sanco-xmlgate:title>
+													<sanco-xmlgate:link>https://webgate.acceptance.ec.europa.eu/cpnp/main/index.cfm?event=main.document.getDocument&amp;identifier=16867&amp;isNew=false</sanco-xmlgate:link>
+												</sanco-xmlgate:file>
+																			
+								</sanco-xmlgate:labelPhoto>
+								<sanco-xmlgate:label></sanco-xmlgate:label> 
+							</sanco-xmlgate:component>
+							
+						</sanco-xmlgate:componentList>
+					</sanco-xmlgate:currentVersion>
+					
+					<sanco-xmlgate:versionList>
+					
+						<sanco-xmlgate:version>
+							<sanco-xmlgate:generalInfo>
+								<sanco-xmlgate:productNameList>
+									
+									<sanco-xmlgate:productName>	
+										<sanco-xmlgate:name>Beautify Facial Night Cream</sanco-xmlgate:name>	
+										<sanco-xmlgate:shade></sanco-xmlgate:shade>
+										<sanco-xmlgate:language>EN</sanco-xmlgate:language>						
+									</sanco-xmlgate:productName>	
+													
+								</sanco-xmlgate:productNameList>
+								<sanco-xmlgate:contactID>277</sanco-xmlgate:contactID>
+								<sanco-xmlgate:orgID>765</sanco-xmlgate:orgID>
+								<sanco-xmlgate:under3year>N</sanco-xmlgate:under3year>	
+								<sanco-xmlgate:mstCty>GB</sanco-xmlgate:mstCty>
+								<sanco-xmlgate:imported>N</sanco-xmlgate:imported>	
+								<sanco-xmlgate:importedCty></sanco-xmlgate:importedCty>
+								<sanco-xmlgate:packagingPhoto>	
+									
+								</sanco-xmlgate:packagingPhoto>
+								<sanco-xmlgate:labelPhoto>								
+																
+								</sanco-xmlgate:labelPhoto>
+								<sanco-xmlgate:label></sanco-xmlgate:label>
+								<sanco-xmlgate:isMixed></sanco-xmlgate:isMixed>
+								<sanco-xmlgate:phMinValue></sanco-xmlgate:phMinValue>
+								<sanco-xmlgate:phMaxValue></sanco-xmlgate:phMaxValue>
+								<sanco-xmlgate:stillOnTheMarket></sanco-xmlgate:stillOnTheMarket>
+								<sanco-xmlgate:readyForMarket>Y</sanco-xmlgate:readyForMarket>							
+								<sanco-xmlgate:modificationType>UP</sanco-xmlgate:modificationType>
+								<sanco-xmlgate:modificationComment></sanco-xmlgate:modificationComment>
+								<sanco-xmlgate:modificationDate>2018-11-20T11:11:58.00</sanco-xmlgate:modificationDate>								
+							</sanco-xmlgate:generalInfo>
+							<sanco-xmlgate:componentList>
+								 
+									<sanco-xmlgate:component>
+										<sanco-xmlgate:componentNameList>
+																									
+										</sanco-xmlgate:componentNameList>
+										<sanco-xmlgate:hasCmr>N</sanco-xmlgate:hasCmr>
+										<sanco-xmlgate:cmrList>
+																								
+										</sanco-xmlgate:cmrList>
+										<sanco-xmlgate:hasNano>N</sanco-xmlgate:hasNano>										
+										<sanco-xmlgate:nanoList>
+											<sanco-xmlgate:exposureCondition>-1</sanco-xmlgate:exposureCondition>
+											<sanco-xmlgate:exposureRoute>
+																						
+											</sanco-xmlgate:exposureRoute>
+																				
+										</sanco-xmlgate:nanoList>
+										<sanco-xmlgate:categorie1>100003</sanco-xmlgate:categorie1>	
+										<sanco-xmlgate:categorie2>100004</sanco-xmlgate:categorie2>
+										<sanco-xmlgate:categorie3>100005</sanco-xmlgate:categorie3>	
+										<sanco-xmlgate:physicalForm>3</sanco-xmlgate:physicalForm>											
+										<sanco-xmlgate:specialApplicator>N</sanco-xmlgate:specialApplicator>
+										<sanco-xmlgate:applicator>-1</sanco-xmlgate:applicator>	
+											
+										
+											<sanco-xmlgate:frameFormulation>100006</sanco-xmlgate:frameFormulation>
+											<sanco-xmlgate:frameFormulationOther></sanco-xmlgate:frameFormulationOther>
+											<sanco-xmlgate:frameFormulationNumber>1.1 - 2013</sanco-xmlgate:frameFormulationNumber>
+											<sanco-xmlgate:acutePoisoningInfo></sanco-xmlgate:acutePoisoningInfo>									
+											<sanco-xmlgate:notificationType>1</sanco-xmlgate:notificationType>
+											<sanco-xmlgate:hasEthanol></sanco-xmlgate:hasEthanol>
+											<sanco-xmlgate:ethanolValue></sanco-xmlgate:ethanolValue>
+											<sanco-xmlgate:isoPropanolValue></sanco-xmlgate:isoPropanolValue>
+											
+											<sanco-xmlgate:quetionList>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100026</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>123</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>100042</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100027</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>124</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>100043</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100011</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100012</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100024</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100025</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+																
+											</sanco-xmlgate:quetionList>
+											<sanco-xmlgate:hasFormulaFile></sanco-xmlgate:hasFormulaFile>
+											<sanco-xmlgate:formulaFile>
+												<sanco-xmlgate:fileName></sanco-xmlgate:fileName>
+												<sanco-xmlgate:file>https://webgate.acceptance.ec.europa.eu/cpnp/main/index.cfm?event=main.product.productDoc&amp;identifier=-1</sanco-xmlgate:file>
+											</sanco-xmlgate:formulaFile>
+											<sanco-xmlgate:exactFormulaList>
+																
+											</sanco-xmlgate:exactFormulaList>							
+											
+											<sanco-xmlgate:rangeFormulaList>
+																
+											</sanco-xmlgate:rangeFormulaList>										
+										
+										
+										<sanco-xmlgate:packagingPhoto>	
+											
+										</sanco-xmlgate:packagingPhoto>
+										<sanco-xmlgate:labelPhoto>								
+																		
+										</sanco-xmlgate:labelPhoto>
+										<sanco-xmlgate:label></sanco-xmlgate:label> 
+									</sanco-xmlgate:component>
+								
+							</sanco-xmlgate:componentList>
+						</sanco-xmlgate:version>
+						
+						<sanco-xmlgate:version>
+							<sanco-xmlgate:generalInfo>
+								<sanco-xmlgate:productNameList>
+									
+									<sanco-xmlgate:productName>	
+										<sanco-xmlgate:name>Beautify Facial Night Cream</sanco-xmlgate:name>	
+										<sanco-xmlgate:shade></sanco-xmlgate:shade>
+										<sanco-xmlgate:language>EN</sanco-xmlgate:language>						
+									</sanco-xmlgate:productName>	
+													
+								</sanco-xmlgate:productNameList>
+								<sanco-xmlgate:contactID>277</sanco-xmlgate:contactID>
+								<sanco-xmlgate:orgID>765</sanco-xmlgate:orgID>
+								<sanco-xmlgate:under3year>N</sanco-xmlgate:under3year>	
+								<sanco-xmlgate:mstCty>GB</sanco-xmlgate:mstCty>
+								<sanco-xmlgate:imported>N</sanco-xmlgate:imported>	
+								<sanco-xmlgate:importedCty></sanco-xmlgate:importedCty>
+								<sanco-xmlgate:packagingPhoto>	
+									
+								</sanco-xmlgate:packagingPhoto>
+								<sanco-xmlgate:labelPhoto>								
+																
+								</sanco-xmlgate:labelPhoto>
+								<sanco-xmlgate:label></sanco-xmlgate:label>
+								<sanco-xmlgate:isMixed></sanco-xmlgate:isMixed>
+								<sanco-xmlgate:phMinValue></sanco-xmlgate:phMinValue>
+								<sanco-xmlgate:phMaxValue></sanco-xmlgate:phMaxValue>
+								<sanco-xmlgate:stillOnTheMarket></sanco-xmlgate:stillOnTheMarket>
+								<sanco-xmlgate:readyForMarket>Y</sanco-xmlgate:readyForMarket>							
+								<sanco-xmlgate:modificationType>AC</sanco-xmlgate:modificationType>
+								<sanco-xmlgate:modificationComment></sanco-xmlgate:modificationComment>
+								<sanco-xmlgate:modificationDate>2018-11-12T15:11:20.00</sanco-xmlgate:modificationDate>								
+							</sanco-xmlgate:generalInfo>
+							<sanco-xmlgate:componentList>
+								 
+									<sanco-xmlgate:component>
+										<sanco-xmlgate:componentNameList>
+																									
+										</sanco-xmlgate:componentNameList>
+										<sanco-xmlgate:hasCmr>N</sanco-xmlgate:hasCmr>
+										<sanco-xmlgate:cmrList>
+																								
+										</sanco-xmlgate:cmrList>
+										<sanco-xmlgate:hasNano>N</sanco-xmlgate:hasNano>										
+										<sanco-xmlgate:nanoList>
+											<sanco-xmlgate:exposureCondition>-1</sanco-xmlgate:exposureCondition>
+											<sanco-xmlgate:exposureRoute>
+																						
+											</sanco-xmlgate:exposureRoute>
+																				
+										</sanco-xmlgate:nanoList>
+										<sanco-xmlgate:categorie1>100003</sanco-xmlgate:categorie1>	
+										<sanco-xmlgate:categorie2>100004</sanco-xmlgate:categorie2>
+										<sanco-xmlgate:categorie3>100005</sanco-xmlgate:categorie3>	
+										<sanco-xmlgate:physicalForm>3</sanco-xmlgate:physicalForm>											
+										<sanco-xmlgate:specialApplicator>N</sanco-xmlgate:specialApplicator>
+										<sanco-xmlgate:applicator>-1</sanco-xmlgate:applicator>	
+											
+										
+											<sanco-xmlgate:frameFormulation>100006</sanco-xmlgate:frameFormulation>
+											<sanco-xmlgate:frameFormulationOther></sanco-xmlgate:frameFormulationOther>
+											<sanco-xmlgate:frameFormulationNumber>1.1 - 2013</sanco-xmlgate:frameFormulationNumber>
+											<sanco-xmlgate:acutePoisoningInfo></sanco-xmlgate:acutePoisoningInfo>									
+											<sanco-xmlgate:notificationType>1</sanco-xmlgate:notificationType>
+											<sanco-xmlgate:hasEthanol></sanco-xmlgate:hasEthanol>
+											<sanco-xmlgate:ethanolValue></sanco-xmlgate:ethanolValue>
+											<sanco-xmlgate:isoPropanolValue></sanco-xmlgate:isoPropanolValue>
+											
+											<sanco-xmlgate:quetionList>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100026</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>123</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>100042</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100027</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>124</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>100043</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100011</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100012</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100024</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+													
+													<sanco-xmlgate:question>
+														<sanco-xmlgate:questionID>100025</sanco-xmlgate:questionID>
+																									
+															<sanco-xmlgate:questionElement>
+																<sanco-xmlgate:answerOrder>1</sanco-xmlgate:answerOrder>
+																<sanco-xmlgate:answer>NA</sanco-xmlgate:answer>
+																<sanco-xmlgate:elementID>1</sanco-xmlgate:elementID>
+																<sanco-xmlgate:elementOrder>1</sanco-xmlgate:elementOrder>
+															</sanco-xmlgate:questionElement>
+															
+													</sanco-xmlgate:question>
+																
+											</sanco-xmlgate:quetionList>
+											<sanco-xmlgate:hasFormulaFile></sanco-xmlgate:hasFormulaFile>
+											<sanco-xmlgate:formulaFile>
+												<sanco-xmlgate:fileName></sanco-xmlgate:fileName>
+												<sanco-xmlgate:file>https://webgate.acceptance.ec.europa.eu/cpnp/main/index.cfm?event=main.product.productDoc&amp;identifier=-1</sanco-xmlgate:file>
+											</sanco-xmlgate:formulaFile>
+											<sanco-xmlgate:exactFormulaList>
+																
+											</sanco-xmlgate:exactFormulaList>							
+											
+											<sanco-xmlgate:rangeFormulaList>
+																
+											</sanco-xmlgate:rangeFormulaList>										
+										
+										
+										<sanco-xmlgate:packagingPhoto>	
+											
+										</sanco-xmlgate:packagingPhoto>
+										<sanco-xmlgate:labelPhoto>								
+																		
+										</sanco-xmlgate:labelPhoto>
+										<sanco-xmlgate:label></sanco-xmlgate:label> 
+									</sanco-xmlgate:component>
+								
+							</sanco-xmlgate:componentList>
+						</sanco-xmlgate:version>
+						
+					</sanco-xmlgate:versionList>										
+				</sanco-xmlgate:product>
+				
+			

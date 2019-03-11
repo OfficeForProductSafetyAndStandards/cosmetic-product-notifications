@@ -1,0 +1,971 @@
+
+			<physicalFormList>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>BG</lngId>
+					<name>Друго</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>CS</lngId>
+					<name>Ostatn&#xed;</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>DA</lngId>
+					<name>Andet</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>DE</lngId>
+					<name>Sonstige</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>EL</lngId>
+					<name>Άλλο</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>EN</lngId>
+					<name>Other</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>ES</lngId>
+					<name>Otros</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>ET</lngId>
+					<name>Muu</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>FI</lngId>
+					<name>Muu</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>FR</lngId>
+					<name>Autres</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>HR</lngId>
+					<name>Ostalo</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>HU</lngId>
+					<name>Egy&#xe9;b</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>IT</lngId>
+					<name>Altro</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>LT</lngId>
+					<name>Kita</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>LV</lngId>
+					<name>Cits</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>MT</lngId>
+					<name>Oħrajn</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>NL</lngId>
+					<name>Andere</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>PL</lngId>
+					<name>Inne</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>PT</lngId>
+					<name>Outra</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>RO</lngId>
+					<name>Altele</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>SK</lngId>
+					<name>In&#xe9;</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>SL</lngId>
+					<name>drugo</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>-2</id>
+					<lngId>SV</lngId>
+					<name>Annan</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>BG</lngId>
+					<name>Твърда / компактна пудра</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>CS</lngId>
+					<name>Pevn&#xfd;/komprimovan&#xfd; pr&#xe1;šek</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>DA</lngId>
+					<name>Fast pudder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>DE</lngId>
+					<name>Fester/gepresster Puder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>EL</lngId>
+					<name>Συμπαγής/συμπιεσμένη σκόνη</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>EN</lngId>
+					<name>Solid/pressed powder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>ES</lngId>
+					<name>S&#xf3;lido o polvo compacto</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>ET</lngId>
+					<name>Kompakt-/presspuuder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>FI</lngId>
+					<name>Kiinte&#xe4; puuteri / puristepuuteri</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>FR</lngId>
+					<name>Poudre solide/compacte</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>HR</lngId>
+					<name>Puder u kamenu/kompaktni puder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>HU</lngId>
+					<name>Szil&#xe1;rd por/pr&#xe9;selt p&#xfa;der</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>IT</lngId>
+					<name>Polvere compatta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>LT</lngId>
+					<name>Kieta / kompaktinė pudra</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>LV</lngId>
+					<name>Ciets/presēts pulveris</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>MT</lngId>
+					<name>Trab solidu/ippressat</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>NL</lngId>
+					<name>Vast/geperst poeder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>PL</lngId>
+					<name>W stanie stałym/proszek prasowany</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>PT</lngId>
+					<name>S&#xf3;lida/p&#xf3; compacto</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>RO</lngId>
+					<name>Pudră compactă/solidă</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>SK</lngId>
+					<name>Tuh&#xe1; l&#xe1;tka/lisovan&#xfd; pr&#xe1;šok</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>SL</lngId>
+					<name>trden/stisnjen prašek</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>1</id>
+					<lngId>SV</lngId>
+					<name>Fast/pressat puder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>BG</lngId>
+					<name>Некомпактна пудра</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>CS</lngId>
+					<name>Sypk&#xfd; pr&#xe1;šek</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>DA</lngId>
+					<name>L&#xf8;st pudder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>DE</lngId>
+					<name>Loser Puder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>EL</lngId>
+					<name>Χαλαρή σκόνη</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>EN</lngId>
+					<name>Loose powder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>ES</lngId>
+					<name>Polvo vol&#xe1;til</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>ET</lngId>
+					<name>Tolmpuuder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>FI</lngId>
+					<name>Irtopuuteri</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>FR</lngId>
+					<name>Poudre</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>HR</lngId>
+					<name>Puder u prahu</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>HU</lngId>
+					<name>Porhany&#xf3;s por</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>IT</lngId>
+					<name>Polvere libera</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>LT</lngId>
+					<name>Biri pudra</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>LV</lngId>
+					<name>Irdens pulveris</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>MT</lngId>
+					<name>Trab maħlul</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>NL</lngId>
+					<name>Los poeder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>PL</lngId>
+					<name>Proszek sypki</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>PT</lngId>
+					<name>P&#xf3; solto</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>RO</lngId>
+					<name>Pudră liberă</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>SK</lngId>
+					<name>Sypk&#xfd; pr&#xe1;šok</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>SL</lngId>
+					<name>raztresen prašek</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>2</id>
+					<lngId>SV</lngId>
+					<name>L&#xf6;st puder</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>BG</lngId>
+					<name>Крем/ паста</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>CS</lngId>
+					<name>Kr&#xe9;m/pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>DA</lngId>
+					<name>Creme / pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>DE</lngId>
+					<name>Creme / Paste</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>EL</lngId>
+					<name>Κρέμα / πάστα/ τζελ</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>EN</lngId>
+					<name>Cream / paste</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>ES</lngId>
+					<name>Crema / pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>ET</lngId>
+					<name>Kreem/pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>FI</lngId>
+					<name>Voide/tahna</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>FR</lngId>
+					<name>Cr&#xe8;me/p&#xe2;te</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>HR</lngId>
+					<name>Krema / pasta / gel</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>HU</lngId>
+					<name>Kr&#xe9;m/paszta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>IT</lngId>
+					<name>Crema/pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>LT</lngId>
+					<name>Kremas / pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>LV</lngId>
+					<name>Kr&#xbf;ms/pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>MT</lngId>
+					<name>Krema / pejst</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>NL</lngId>
+					<name>Cr&#xe8;me/pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>PL</lngId>
+					<name>Krem / pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>PT</lngId>
+					<name>Creme / pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>RO</lngId>
+					<name>Crem&#xbf;/past&#xbf;</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>SK</lngId>
+					<name>Kr&#xe9;m/pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>SL</lngId>
+					<name>krema/pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>3</id>
+					<lngId>SV</lngId>
+					<name>Kr&#xe4;m / pasta</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>BG</lngId>
+					<name>Течност</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>CS</lngId>
+					<name>Tekutina</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>DA</lngId>
+					<name>Flydende</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>DE</lngId>
+					<name>Fl&#xfc;ssigkeit</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>EL</lngId>
+					<name>Υγρό</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>EN</lngId>
+					<name>Liquid</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>ES</lngId>
+					<name>L&#xed;quido</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>ET</lngId>
+					<name>Vedelik</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>FI</lngId>
+					<name>Neste</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>FR</lngId>
+					<name>Liquide</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>HR</lngId>
+					<name>Tekućina</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>HU</lngId>
+					<name>Folyad&#xe9;k</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>IT</lngId>
+					<name>Liquido</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>LT</lngId>
+					<name>Skystis</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>LV</lngId>
+					<name>Šķidrums</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>MT</lngId>
+					<name>Likwidu</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>NL</lngId>
+					<name>Vloeistof</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>PL</lngId>
+					<name>Płyn</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>PT</lngId>
+					<name>L&#xed;quida</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>RO</lngId>
+					<name>Lichid</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>SK</lngId>
+					<name>Tekutina</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>SL</lngId>
+					<name>tekočina</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>4</id>
+					<lngId>SV</lngId>
+					<name>Flytande</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>BG</lngId>
+					<name>Пяна</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>CS</lngId>
+					<name>Pěna</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>DA</lngId>
+					<name>Skum</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>DE</lngId>
+					<name>Schaum</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>EL</lngId>
+					<name>Αφρός</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>EN</lngId>
+					<name>Foam</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>ES</lngId>
+					<name>Espuma</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>ET</lngId>
+					<name>Vaht</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>FI</lngId>
+					<name>Vaahto</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>FR</lngId>
+					<name>Mousse</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>HR</lngId>
+					<name>Pjena</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>HU</lngId>
+					<name>Hab</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>IT</lngId>
+					<name>Schiuma</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>LT</lngId>
+					<name>Putos</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>LV</lngId>
+					<name>Putas</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>MT</lngId>
+					<name>Fowm</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>NL</lngId>
+					<name>Schuim</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>PL</lngId>
+					<name>Pianka</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>PT</lngId>
+					<name>Espuma</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>RO</lngId>
+					<name>Spumă</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>SK</lngId>
+					<name>Pena</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>SL</lngId>
+					<name>pena</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>5</id>
+					<lngId>SV</lngId>
+					<name>Skum</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>BG</lngId>
+					<name>Спрей</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>CS</lngId>
+					<name>Sprej</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>DA</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>DE</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>EL</lngId>
+					<name>Σπρέι</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>EN</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>ES</lngId>
+					<name>Pulverizador</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>ET</lngId>
+					<name>Pihus</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>FI</lngId>
+					<name>Suihke</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>FR</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>HR</lngId>
+					<name>Raspršivač</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>HU</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>IT</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>LT</lngId>
+					<name>Purškiamasis skystis</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>LV</lngId>
+					<name>Izsmidzināms līdzeklis</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>MT</lngId>
+					<name>Sprej</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>NL</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>PL</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>PT</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>RO</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>SK</lngId>
+					<name>Sprej</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>SL</lngId>
+					<name>razpršilec</name>
+				</physicalForm>
+				
+				<physicalForm>
+					<id>6</id>
+					<lngId>SV</lngId>
+					<name>Spray</name>
+				</physicalForm>
+				
+			</physicalFormList>
+			

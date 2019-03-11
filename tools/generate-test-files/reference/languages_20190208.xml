@@ -1,0 +1,135 @@
+
+			<languageList>
+				
+				<language>
+					<id>AA</id>					
+					<name>Multilingual</name>
+				</language>
+				
+				<language>
+					<id>BG</id>					
+					<name>български</name>
+				</language>
+				
+				<language>
+					<id>CS</id>					
+					<name>čeština</name>
+				</language>
+				
+				<language>
+					<id>DA</id>					
+					<name>dansk</name>
+				</language>
+				
+				<language>
+					<id>DE</id>					
+					<name>Deutsch</name>
+				</language>
+				
+				<language>
+					<id>EL</id>					
+					<name>ελληνικά</name>
+				</language>
+				
+				<language>
+					<id>EN</id>					
+					<name>English</name>
+				</language>
+				
+				<language>
+					<id>ES</id>					
+					<name>español</name>
+				</language>
+				
+				<language>
+					<id>ET</id>					
+					<name>eesti keel</name>
+				</language>
+				
+				<language>
+					<id>FI</id>					
+					<name>suomi</name>
+				</language>
+				
+				<language>
+					<id>FR</id>					
+					<name>français</name>
+				</language>
+				
+				<language>
+					<id>HR</id>					
+					<name>Hrvatski</name>
+				</language>
+				
+				<language>
+					<id>HU</id>					
+					<name>magyar</name>
+				</language>
+				
+				<language>
+					<id>IS</id>					
+					<name>Íslenska</name>
+				</language>
+				
+				<language>
+					<id>IT</id>					
+					<name>italiano</name>
+				</language>
+				
+				<language>
+					<id>LT</id>					
+					<name>lietuvių kalba</name>
+				</language>
+				
+				<language>
+					<id>LV</id>					
+					<name>latviešu valoda</name>
+				</language>
+				
+				<language>
+					<id>MT</id>					
+					<name>Malti</name>
+				</language>
+				
+				<language>
+					<id>NL</id>					
+					<name>Nederlands</name>
+				</language>
+				
+				<language>
+					<id>NO</id>					
+					<name>Norske</name>
+				</language>
+				
+				<language>
+					<id>PL</id>					
+					<name>polski</name>
+				</language>
+				
+				<language>
+					<id>PT</id>					
+					<name>português</name>
+				</language>
+				
+				<language>
+					<id>RO</id>					
+					<name>română</name>
+				</language>
+				
+				<language>
+					<id>SK</id>					
+					<name>slovenčina</name>
+				</language>
+				
+				<language>
+					<id>SL</id>					
+					<name>slovenščina</name>
+				</language>
+				
+				<language>
+					<id>SV</id>					
+					<name>svenska</name>
+				</language>
+				
+			</languageList>
+			

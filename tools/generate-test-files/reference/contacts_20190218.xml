@@ -1,0 +1,35 @@
+
+			<contactList>
+				
+				<contact>
+					<id>954</id>	
+					<orgId>765</orgId>
+					<countryId>GB</countryId>
+					<name>Amanda Arthur</name>					
+					<street>Sackville House</street>					
+					<city>London</city>
+					<postCode>W1J0DR</postCode>
+					<email>aisom@ctpa.org.uk</email>
+					<phone>02072908974</phone>
+					<fax></fax>
+					<additionalPhone1></additionalPhone1>
+					<additionalPhone2></additionalPhone2>
+				</contact>
+				
+				<contact>
+					<id>277</id>	
+					<orgId>765</orgId>
+					<countryId>GB</countryId>
+					<name>Amanda Isom</name>					
+					<street>Josaron House, 5-7 John Princes Street</street>					
+					<city>London</city>
+					<postCode>W1G 0JN</postCode>
+					<email>aisom@ctpa.org.uk</email>
+					<phone>02072908974</phone>
+					<fax></fax>
+					<additionalPhone1></additionalPhone1>
+					<additionalPhone2></additionalPhone2>
+				</contact>
+				
+			</contactList>
+			
