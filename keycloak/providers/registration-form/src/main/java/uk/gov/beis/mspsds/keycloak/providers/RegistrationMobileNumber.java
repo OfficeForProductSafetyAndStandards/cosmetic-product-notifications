@@ -61,7 +61,7 @@ public class RegistrationMobileNumber implements FormAction {
         } else if (isInternationalNumber(formattedPhoneNumber)) {
             region = null;
         } else {
-            return true; // If the number cannot be interpreted as an international or possible UK phone number, do not attempt to validate it.
+            return false; // If the number cannot be interpreted as an international or possible UK phone number, do not attempt to validate it.
         }
 
         try {
