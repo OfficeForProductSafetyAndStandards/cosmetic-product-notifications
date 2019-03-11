@@ -1,23 +1,26 @@
+- notification = local_assigns[:notification]
 table.govuk-table
   caption.govuk-table__caption.govuk-heading-m
-    | Cosmetic product
+    | Product
   tbody.govuk-table__body
     tr.govuk-table__row
-      th.govuk-table__header[class="govuk-!-width-one-quarter"]
-        | Product name
+      th.govuk-table__header[class="govuk-!-width-one-third"]
+        | Name
       td.govuk-table__cell
         = notification.product_name
-    tr.govuk-table__row
-      th.govuk-table__header
-        | Reference number
-      td.govuk-table__cell
-        = notification.reference_number_for_display
+    /TODO: add industry number to a notification and read it from the xml file
+    / - if notification.industry_number.present?
+    /   tr.govuk-table__row
+    /     th.govuk-table__header
+    /       | Reference number
+    /     td.govuk-table__cell
+    /       = notification.industry_number
     tr.govuk-table__row
       th.govuk-table__header
         | Imported
       td.govuk-table__cell
-        = product_imported?(notification) ? "Yes" : "No"
-    - if product_imported?(notification)
+        = product_imported?(notification)
+    - if product_imported?(notification) == "Yes"
       tr.govuk-table__row
         th.govuk-table__header
           | Imported from
@@ -32,7 +35,7 @@ table.govuk-table
       th.govuk-table__header
         | Shades
       td.govuk-table__cell
-        = product_shades(notification)
+        == non_or_bullet_list_html(notification.shades.split)
     - if notification.image_uploads.present?
       tr.govuk-table__row
         th.govuk-table__header

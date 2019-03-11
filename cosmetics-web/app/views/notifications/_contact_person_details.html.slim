@@ -1,0 +1,20 @@
+- contact_person = local_assigns[:contact_person]
+table.govuk-table
+  caption.govuk-table__caption.govuk-heading-m
+    | Contact person
+  tbody.govuk-table__body
+    tr.govuk-table__row
+      th.govuk-table__header[class="govuk-!-width-one-third"]
+        | Name
+      td.govuk-table__cell
+        = contact_person.name
+    tr.govuk-table__row
+      th.govuk-table__header
+        | Email address
+      td.govuk-table__cell
+        = contact_person.email_address
+    tr.govuk-table__row
+      th.govuk-table__header
+        | Phone number
+      td.govuk-table__cell
+        = contact_person.phone_number

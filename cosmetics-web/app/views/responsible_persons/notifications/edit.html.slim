@@ -6,5 +6,9 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       = @notification.product_name
+  .govuk-grid-column-full
+    = render "notifications/product_overview", notification: @notification
     = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
+    /TODO: replace it with the concat person details (COSBETA-158)
+    = render "notifications/contact_person_details", contact_person: @notification.responsible_person
     = render "notifications/product_details", notification: @notification

@@ -8,7 +8,7 @@ class Component < ApplicationRecord
   has_many :range_formulas, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, dependent: :destroy
-  has_many :nano_materials, dependent: :destroy
+  has_one :nano_material, dependent: :destroy
   has_one_attached :formulation_file
 
   before_save :add_shades, if: :will_save_change_to_shades?

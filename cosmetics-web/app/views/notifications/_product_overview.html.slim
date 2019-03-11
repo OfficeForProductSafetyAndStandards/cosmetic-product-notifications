@@ -1,0 +1,36 @@
+- notification = local_assigns[:notification]
+.govuk-grid-row
+  .govuk-grid-column-one-third
+    p.govuk-body-m
+      | UK cosmetic product number:
+  .govuk-grid-column-two-thirds
+    p.govuk-body-m
+      = notification.reference_number_for_display
+
+/TODO: add industry number to a notification and read it from the xml file
+/- if notification.industry_number.present?
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      p.govuk-body-m
+        | Reference number
+    .govuk-grid-column-two-thirds
+      p.govuk-body-m
+        = notification.industry_number
+
+- if notification.notification_file_imported?
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      p.govuk-body-m
+        | EU reference number:
+    .govuk-grid-column-two-thirds
+      p.govuk-body-m
+        = notification.cpnp_reference
+  /TODO: add first notified date
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      p.govuk-body-m
+        | First notified in the EU:
+    .govuk-grid-column-two-thirds
+      p.govuk-body-m
+        | 2016/09/21
+br

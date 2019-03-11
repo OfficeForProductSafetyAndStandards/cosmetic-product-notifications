@@ -32,9 +32,9 @@ module CpnpHelper
   end
 
   NOTIFICATION_TYPE = {
-      predefined: "Predefined formula",
-      exact: "Exact formula",
-      range: "Range formula"
+      predefined: "Frame formulation",
+      exact: "Exact concentration",
+      range: "Concentration ranges"
   }
 
   CATEGORY_NAME = {
