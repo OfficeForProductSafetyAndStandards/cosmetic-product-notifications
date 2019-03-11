@@ -59,13 +59,6 @@ module Shared
               }
             ]
           end
-
-          # TODO: These lines fix the issue of not updating the updated_at in Elasticsearch.
-          # Same issue is pointed out in the following link. We can remove it once that PR is merged.
-          # https://github.com/elastic/elasticsearch-rails/pull/703
-          after_update do |document|
-            document.__elasticsearch__.update_document_attributes updated_at: document.updated_at
-          end
         end
       end
     end

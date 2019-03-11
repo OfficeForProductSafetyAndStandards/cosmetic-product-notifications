@@ -138,7 +138,6 @@ ActiveRecord::Schema.define(version: 2019_03_05_143843) do
 
   create_table "pending_responsible_person_users", force: :cascade do |t|
     t.string "email_address"
-    t.string "key"
     t.datetime "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
