@@ -7,6 +7,13 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   let(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
   let(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
 
+  let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person_1) }
+  let(:imported_notification) { create(:imported_notification, responsible_person: responsible_person_1) }
+
+  let(:distinct_notification) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "bbbb") }
+  let(:similar_notification_one) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaaa") }
+  let(:similar_notification_two) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaab") }
+
   after do
     sign_out
   end
@@ -17,26 +24,48 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     end
 
     describe "GET #index" do
-      it "gets all registered notifications" do
+      before do
+        rp_1_notifications
+        rp_2_notifications
+        draft_notification
+        imported_notification
+        Notification.elasticsearch.import force: true
         get :index
-        expect(assigns(:notifications)).to eq(rp_1_notifications + rp_2_notifications)
+      end
+
+      it "gets all registered notifications" do
+        expect(assigns(:notifications).records.to_a.sort).to eq((rp_1_notifications + rp_2_notifications).sort)
       end
 
       it "excludes draft notifications" do
-        draft_notification = create(:draft_notification, responsible_person: responsible_person_1)
-        get :index
-        expect(assigns(:notifications)).not_to include(draft_notification)
+        expect(assigns(:notifications).records.to_a).not_to include(draft_notification)
       end
 
       it "excludes unfinished imported notifications" do
-        imported_notification = create(:imported_notification, responsible_person: responsible_person_1)
-        get :index
-        expect(assigns(:notifications)).not_to include(imported_notification)
+        expect(assigns(:notifications).records.to_a).not_to include(imported_notification)
       end
 
       it "renders the index template" do
-        get :index
         expect(response).to render_template("notifications/index")
+      end
+    end
+
+    describe "search on #index" do
+      before do
+        distinct_notification
+        similar_notification_one
+        similar_notification_two
+        Notification.elasticsearch.import force: true
+      end
+
+      it "finds the correct notification" do
+        get :index, params: { q: "bbbb" }
+        expect(assigns(:notifications).records.to_a).to eq([distinct_notification])
+      end
+
+      it "finds similar notifications with fuzzy search" do
+        get :index, params: { q: "aaaa" }
+        expect(assigns(:notifications).records.to_a.sort).to eq([similar_notification_one, similar_notification_two].sort)
       end
     end
 

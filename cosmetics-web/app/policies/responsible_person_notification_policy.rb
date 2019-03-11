@@ -21,6 +21,10 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
     create?
   end
 
+  def upload_formulation?
+    update?
+  end
+
 private
 
   def user_member_of_associated_responsible_person?
