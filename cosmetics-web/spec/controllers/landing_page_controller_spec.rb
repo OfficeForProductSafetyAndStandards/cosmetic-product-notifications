@@ -29,7 +29,7 @@ RSpec.describe LandingPageController, type: :controller do
       responsible_person_1.add_user(user)
       responsible_person_2.add_user(user)
 
-      sign_in_as_member_of_responsible_person(create(:responsible_person), user: user)
+      sign_in_as_member_of_responsible_person(create(:responsible_person), user)
     end
 
     after do

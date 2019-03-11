@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
   let(:user) { build(:user) }
   let(:responsible_person) { create(:responsible_person) }
+  let(:predefined_component) { create(:component) }
+  let(:ranges_component) { create(:ranges_component) }
 
   before do
-    sign_in_as_member_of_responsible_person(responsible_person, user: user)
+    sign_in_as_member_of_responsible_person(responsible_person, user)
   end
 
   after do
@@ -160,6 +162,20 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       attach_image_to_draft_with_metadata(safe: true)
       post :confirm, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number }
       expect(draft_notification.reload.state).to eq('notification_complete')
+    end
+  end
+
+  describe "GET #formulation_upload" do
+    it "redirects to the notifications overview if all components have complete formulations" do
+      notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component])
+      get :upload_formulation, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
+      expect(response).to redirect_to(responsible_person_notifications_path(responsible_person))
+    end
+
+    it "redirects to the formulation upload page if not all components have complete formulations" do
+      notification = Notification.create(responsible_person_id: responsible_person.id, components: [ranges_component])
+      get :upload_formulation, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
+      expect(response).to redirect_to(new_responsible_person_notification_component_formulation_path(responsible_person, notification, ranges_component))
     end
   end
 

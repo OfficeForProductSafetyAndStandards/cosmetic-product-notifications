@@ -1,4 +1,6 @@
 class Notification < ApplicationRecord
+  include Searchable
+
   include AASM
   include Shared::Web::CountriesHelper
 
@@ -7,6 +9,9 @@ class Notification < ApplicationRecord
   has_many :image_uploads, dependent: :destroy
 
   accepts_nested_attributes_for :image_uploads
+
+  index_name [Rails.env, "notifications"].join("_")
+  scope :elasticsearch, -> { where(state: "notification_complete") }
 
   before_create do
     new_reference_number = nil
@@ -27,6 +32,21 @@ class Notification < ApplicationRecord
   validate :all_required_attributes_must_be_set
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
             allow_nil: true
+  validates :cpnp_reference, presence: true, on: :file_upload
+
+  def as_indexed_json(*)
+    as_json(
+      only: %i[product_name],
+      include: {
+        responsible_person: {
+          only: %i[name]
+        },
+        components: {
+          methods: %i[display_sub_category display_sub_sub_category display_root_category]
+        }
+      }
+    )
+  end
 
   # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
@@ -55,13 +75,12 @@ class Notification < ApplicationRecord
     end
 
     event :notification_file_parsed do
-      transitions from: :empty, to: :notification_file_imported
+      transitions from: :empty, to: :notification_file_imported, guard: :formulation_required?
+      transitions from: :empty, to: :draft_complete
     end
 
     event :submit_notification do
       transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
-      # TODO COSBETA-26 Implement full transition logic for imported files (including formulation upload)
-      transitions from: :notification_file_imported, to: :notification_complete
     end
   end
   # rubocop:enable Metrics/BlockLength
@@ -96,6 +115,14 @@ class Notification < ApplicationRecord
     reference_number.to_s
   end
 
+  def formulation_required?
+    components.any?(&:formulation_required?)
+  end
+
+  def is_multicomponent?
+    components.length > 1
+  end
+
 private
 
   def all_required_attributes_must_be_set
@@ -127,3 +154,5 @@ private
     end
   end
 end
+
+Notification.elasticsearch.import force: true if Rails.env.development? # for auto sync model with elastic search

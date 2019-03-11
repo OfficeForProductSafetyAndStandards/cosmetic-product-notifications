@@ -18,7 +18,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :team_members, controller: "responsible_persons/team_members", only: %i[index]
+    resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do
+      collection do
+        get :join
+      end
+    end
 
     resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[show index] do
       collection do
@@ -36,10 +40,12 @@ Rails.application.routes.draw do
       resources :build, controller: :notification_build, only: %i[show update new]
       resources :components do
         resources :build, controller: :component_build, only: %i[show update new]
+        resources :formulation, controller: "formulation_upload", only: %w[new create]
       end
 
       member do
         post :confirm
+        get :upload_formulation
       end
     end
   end
