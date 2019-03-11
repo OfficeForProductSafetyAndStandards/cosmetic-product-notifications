@@ -75,13 +75,12 @@ class Notification < ApplicationRecord
     end
 
     event :notification_file_parsed do
-      transitions from: :empty, to: :notification_file_imported
+      transitions from: :empty, to: :notification_file_imported, guard: :formulation_required?
+      transitions from: :empty, to: :draft_complete
     end
 
     event :submit_notification do
       transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
-      # TODO COSBETA-26 Implement full transition logic for imported files (including formulation upload)
-      transitions from: :notification_file_imported, to: :notification_complete
     end
   end
   # rubocop:enable Metrics/BlockLength
@@ -106,6 +105,14 @@ class Notification < ApplicationRecord
 
   def to_param
     reference_number.to_s
+  end
+
+  def formulation_required?
+    components.any?(&:formulation_required?)
+  end
+
+  def is_multicomponent?
+    components.length > 1
   end
 
 private
