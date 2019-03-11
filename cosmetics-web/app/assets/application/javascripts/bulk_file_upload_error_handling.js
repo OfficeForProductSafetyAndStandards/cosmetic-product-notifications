@@ -4,7 +4,7 @@ $(document).ready(() => {
     const fileUploadForm = document.getElementById('file-upload-form');
     const fileInput = document.getElementById('uploaded_files');
     const maxNumberOfFiles = fileUploadForm.dataset.maxNumberOfFiles;
-    const errorSummary = document.getElementById('error-summary-js');
+    const errorSummary = document.getElementsByClassName('error-summary-js')[0];
     const fileUploadFormGroup = document.getElementById('file-upload-form-group');
     const fileUploadErrorMessage = document.getElementById('file-upload-error-message');
 

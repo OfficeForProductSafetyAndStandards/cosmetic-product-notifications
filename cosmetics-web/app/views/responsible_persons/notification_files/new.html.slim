@@ -5,13 +5,13 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with url: responsible_person_notification_files_path(@responsible_person), method: :post,
-            data: {"max-number-of-files": NotificationFile.get_max_number_of_files},
+            data: { "max-number-of-files": NotificationFile.get_max_number_of_files },
             id: "file-upload-form", local: true do |form|
-      span#error-summary-js
-        - unless @errors.present?
-          = render "components/govuk_error_summary", titleText: "There is a problem", errorList: [{text: "Too many "\
-              "files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
-              href: "#uploaded_files"}]
+      span.error-summary-js
+        - if @errors.blank?
+          = render "components/govuk_error_summary", titleText: "There is a problem", errorList: [{ text: "Too many" + \
+              " files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
+              href: "#uploaded_files" }]
       span#error-summary
         - if @errors
           = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
