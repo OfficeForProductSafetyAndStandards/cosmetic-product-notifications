@@ -34,17 +34,17 @@ class DocumentTest < ApplicationSystemTestCase
 
   test "details should be valid if title exists" do
     attach_file_and_upload
-    fill_in "Document title", with: "long document"
+    fill_in "Document title", with: "document title"
     click_on "Save attachment"
     assert_current_path(/cases\/\d+/)
   end
 
   test "Document data should be in attachments" do
     attach_file_and_upload
-    fill_in "Document title", with: "long document"
+    fill_in "Document title", with: "document title"
     click_on "Save attachment"
     click_on "Attachments"
-    assert_text "long document"
+    within("#attachments") { assert_text "document title" }
   end
 
   test "should not attach a file without actually saving it" do
@@ -56,10 +56,10 @@ class DocumentTest < ApplicationSystemTestCase
 
   test "should allow to edit file title" do
     get_to_edit
-    fill_in "Document title", with: "short document"
+    fill_in "Document title", with: "updated document title"
     click_on "Update attachment"
     click_on "Attachments"
-    assert_text "short document"
+    within("#attachments") { assert_text "updated document title" }
   end
 
   test "should allow to edit file description" do
@@ -67,7 +67,7 @@ class DocumentTest < ApplicationSystemTestCase
     fill_in "Description", with: "This is a long document"
     click_on "Update attachment"
     click_on "Attachments"
-    assert_text "This is a long document"
+    within("#attachments") { assert_text "This is a long document" }
   end
 
   test "should allow to delete a document" do
@@ -75,16 +75,19 @@ class DocumentTest < ApplicationSystemTestCase
     click_on "Remove document"
     click_on "Delete attachment"
     click_on "Attachments"
-    assert_no_text "long document"
+    within "#attachments" do
+      assert_no_text "document title"
+      assert_text "No attachments"
+    end
   end
 
   test "should create activity when adding a document" do
     attach_file_and_upload
-    fill_in "Document title", with: "long document"
+    fill_in "Document title", with: "document title"
     fill_in "Description", with: "description"
     click_on "Save attachment"
     click_on "Activity"
-    assert_text "Document added"
+    within("#activity") { assert_text "Document added" }
   end
 
   test "should create activity when editing a document" do
@@ -92,7 +95,7 @@ class DocumentTest < ApplicationSystemTestCase
     fill_in "Description", with: "This is a long document"
     click_on "Update attachment"
     click_on "Activity"
-    assert_text "Document details updated"
+    within("#activity") { assert_text "Document details updated" }
   end
 
   test "should create activity when removing a document" do
@@ -100,7 +103,7 @@ class DocumentTest < ApplicationSystemTestCase
     click_on "Remove document"
     click_on "Delete attachment"
     click_on "Activity"
-    assert_text "Document deleted"
+    within("#activity") { assert_text "Document deleted" }
   end
 
   def get_to_edit
@@ -111,7 +114,7 @@ class DocumentTest < ApplicationSystemTestCase
 
   def get_to_attachments
     attach_file_and_upload
-    fill_in "Document title", with: "long document"
+    fill_in "Document title", with: "document title"
     fill_in "Description", with: "description"
     click_on "Save attachment"
     click_on "Attachments"
