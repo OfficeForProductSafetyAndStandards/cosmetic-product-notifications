@@ -5,16 +5,29 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with url: responsible_person_notification_files_path(@responsible_person), method: :post,
-            local: true do |form|
-      - if @errors
-        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+            data: { "max-number-of-files": NotificationFile.get_max_number_of_files },
+            id: "file-upload-form", local: true do |form|
+      span.error-summary-js
+        - if @errors.blank?
+          = render "components/govuk_error_summary", titleText: "There is a problem", errorList: [{ text: "Too many" + \
+              " files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
+              href: "#uploaded_files" }]
+      span#error-summary
+        - if @errors
+          = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
       h1.govuk-heading-xl
         | Upload your EU notification files
 
-      .govuk-form-group#file-upload-form-group class=("govuk-form-group--error" if @errors.present?)
-        = form.label :uploaded_files, "Upload EU notification files", class: "govuk-heading-m"
+      .govuk-body-m
+        = link_to "Find out how to export cosmetic product zip files from CPNP.",
+            "https://docs.google.com/document/d/1QTM-LYmlAk8nnuwYOvtn8-gB5-F6T5u4lgs_2BhzPJ8/edit",
+            target: :_blank
+      .govuk-form-group#file-upload-form-group[class= ("govuk-form-group--error" if @errors.present?)]
+        = form.label :uploaded_files, "Upload EU notification files", class: "govuk-label"
         span.govuk-hint
           | To select multiple files, hold the ‘Shift’ key when selecting them.
-        = form.file_field :uploaded_files, multiple: true, accept: "application/zip", class: "govuk-file-upload"
-
-      = form.submit "Continue", class: "govuk-button"
+        span#file-upload-error-message.govuk-error-message
+          = @errors.last[:text] if @errors.present?
+        = form.file_field :uploaded_files, multiple: true,
+                class: "govuk-file-upload", accept: "application/zip"
+      = form.submit "Continue", data: { disable_with: false }, class: "govuk-button", id: "submit-button"
