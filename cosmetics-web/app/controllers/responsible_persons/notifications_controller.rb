@@ -2,7 +2,7 @@ require 'will_paginate/array'
 
 class ResponsiblePersons::NotificationsController < ApplicationController
   before_action :set_responsible_person
-  before_action :set_notification, only: %i[show edit confirmation]
+  before_action :set_notification, only: %i[show edit confirm upload_formulation]
 
   def index
     @pending_notification_files_count = 0
@@ -37,12 +37,20 @@ class ResponsiblePersons::NotificationsController < ApplicationController
     end
   end
 
-  # Confirmation page
-  def confirmation
-    if @notification.may_submit_notification?
-      @notification.submit_notification!
-    elsif @notification.state != "notification_complete"
+  def confirm
+    if @notification.submit_notification!
+      redirect_to responsible_person_notifications_path(@responsible_person), confirmation: "#{@notification.product_name} registered"
+    else
       redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
+    end
+  end
+
+  def upload_formulation
+    if @notification.formulation_required?
+      component = @notification.components.find(&:formulation_required?)
+      redirect_to new_responsible_person_notification_component_formulation_path(@responsible_person, @notification, component)
+    else
+      redirect_to responsible_person_notifications_path(@responsible_person)
     end
   end
 

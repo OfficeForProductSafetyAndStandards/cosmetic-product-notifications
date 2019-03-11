@@ -2,16 +2,10 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version").strip
 
-# Will Paginate must be installed before elasticsearch
-# https://github.com/elastic/elasticsearch-rails/issues/239
-gem "will_paginate"
-
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c593a08"
 gem "axlsx_rails"
 gem "bootsnap", ">= 1.1.0"
 gem "cf-app-utils"
-gem "elasticsearch-model"
-gem "elasticsearch-rails"
 gem "jbuilder", "~> 2.8"
 gem "okcomputer"
 gem "pg", "~> 1.1"
@@ -25,8 +19,6 @@ gem "rubyzip", ">= 1.2.1"
 gem "slim-rails"
 gem "strong_migrations"
 gem "wicked"
-gem "wicked_pdf"
-gem "wkhtmltopdf-binary"
 
 gem "shared-web", path: "./vendor/shared-web"
 

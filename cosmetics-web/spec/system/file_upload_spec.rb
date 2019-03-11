@@ -13,38 +13,42 @@ RSpec.describe "File upload", type: :system do
     unmock_antivirus_api
   end
 
-  it "enables to upload a single file" do
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     Rails.root + 'spec/fixtures/testExportFile.zip')
-    click_button "Upload"
-
+  it "allows a single file to be uploaded" do
+    upload_file "testExportFile.zip"
     expect(page).to have_text("Your cosmetic products")
   end
 
-  it "enables to upload multiple files" do
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     [Rails.root + 'spec/fixtures/testExportFile.zip',
-                      Rails.root + 'spec/fixtures/testExportFile2.zip'])
-    click_button "Upload"
+  it "allows multiple files to be uploaded" do
+    upload_files %w[testExportFile.zip testExportFile2.zip]
     expect(page).to have_text("Your cosmetic products")
   end
 
-  it "set basic info of notification based on the uploaded file" do
-    visit new_responsible_person_notification_file_path(responsible_person)
-    page.attach_file('uploaded_files',
-                     Rails.root + 'spec/fixtures/testExportFile.zip')
-    click_button "Upload"
+  it "sets basic info of notification based on the uploaded file" do
+    upload_file "testExportFile.zip"
+    wait_until_processing_complete
+    click_link "tab_unfinished"
 
+    expect(page).to have_text("CTPA moisture conditioner")
+    expect(page).to have_text("1000094")
+  end
+
+private
+
+  def upload_file(filename)
+    upload_files([filename])
+  end
+
+  def upload_files(filenames)
+    visit new_responsible_person_notification_file_path(responsible_person)
+    attach_file "uploaded_files", (filenames.map { |filename| Rails.root + "spec/fixtures/#{filename}" })
+    click_button "Continue"
+  end
+
+  def wait_until_processing_complete
     5.times do
-      break if not page.text.include? "Refresh the browser"
+      break unless page.text.include? "Refresh the browser"
 
       visit responsible_person_notifications_path(responsible_person)
     end
-
-    click_link "tab_unfinished"
-    expect(page).to have_text("CTPA moisture conditioner")
-    expect(page).to have_text("1000094")
   end
 end

@@ -44,23 +44,6 @@ class UpdateProductTest < ApplicationSystemTestCase
     assert_text updated_product.country_of_origin_for_display
   end
 
-  test "should create new product" do
-    visit new_product_path
-    fill_in_product_details(@product)
-    click_on "Save product"
-
-    assert_current_path(/products\/\d+/)
-
-    assert_text @product.name
-    assert_text @product.product_code
-    assert_text @product.batch_number
-    assert_text @product.product_type
-    assert_text @product.category
-    assert_text @product.webpage
-    assert_text @product.description
-    assert_text @product.country_of_origin_for_display
-  end
-
   def fill_in_product_details(product)
     fill_in "product[name]", with: product.name
     fill_in "product[product_code]", with: product.product_code
