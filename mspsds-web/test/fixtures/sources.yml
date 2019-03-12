@@ -37,11 +37,11 @@ business_three:
   sourceable: three (Business)
 
 activity_one:
-  type:
+  type: UserSource
   sourceable: one (Activity)
 
 activity_two:
-  type:
+  type: UserSource
   sourceable: two (Activity)
 
 location_one:
