@@ -6,7 +6,8 @@ module Shared
       end
 
       def get_attribute_id_prefix(form, attribute)
-        form.object_name.present? ? "#{form.object_name}_#{attribute}" : attribute.to_s
+        initial_name = form.object_name.present? ? "#{form.object_name}_#{attribute}" : attribute.to_s
+        initial_name.gsub(/[\[\]_]+/,"_")
       end
     end
   end

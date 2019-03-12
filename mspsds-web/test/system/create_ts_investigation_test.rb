@@ -161,8 +161,8 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     fill_in "business_trading_name", with: business.trading_name
     fill_in "business_legal_name", with: business.legal_name
     fill_in "business_company_number", with: business.company_number + "unique company number"
-    fill_in "business[contacts_attributes][0]_name", with: business.contacts.first.name
-    fill_in "business[locations_attributes][0]_address_line_1", with: business.locations.first.address_line_1
+    fill_in "business_contacts_attributes_0_name", with: business.contacts.first.name
+    fill_in "business_locations_attributes_0_address_line_1", with: business.locations.first.address_line_1
     click_button "Continue"
   end
 
