@@ -4,7 +4,8 @@ class KeycloakTest < ApplicationSystemTestCase
   test "can login" do
     visit root_path
     sign_in email: "admin@example.com", password: "password"
-    assert_text "Signed in successfully."
+    assert_current_path root_path
+    assert_selector "a", text: "Sign out"
   end
 
   test "can logout" do
