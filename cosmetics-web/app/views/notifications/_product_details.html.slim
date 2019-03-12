@@ -8,13 +8,12 @@ table.govuk-table
         | Name
       td.govuk-table__cell
         = notification.product_name
-    /TODO: add industry number to a notification and read it from the xml file
-    / - if notification.industry_number.present?
-    /   tr.govuk-table__row
-    /     th.govuk-table__header
-    /       | Reference number
-    /     td.govuk-table__cell
-    /       = notification.industry_number
+    - if notification.industry_reference.present?
+      tr.govuk-table__row
+        th.govuk-table__header[scope="row"]
+          | Reference number
+        td.govuk-table__cell
+          = notification.industry_reference
     tr.govuk-table__row
       th.govuk-table__header
         | Imported

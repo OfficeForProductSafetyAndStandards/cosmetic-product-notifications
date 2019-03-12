@@ -17,6 +17,10 @@ class CpnpExport
     @xml_doc.xpath("//cpnpReference").first&.text
   end
 
+  def industry_reference
+    @xml_doc.xpath("//industryReference").first&.text
+  end
+
   def notification_status
     @xml_doc.xpath('//status').first&.text
   end
