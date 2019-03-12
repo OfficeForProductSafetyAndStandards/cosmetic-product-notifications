@@ -50,6 +50,7 @@ class ResponsiblePersons::NotificationsController < ApplicationController
       component = @notification.components.find(&:formulation_required?)
       redirect_to new_responsible_person_notification_component_formulation_path(@responsible_person, @notification, component)
     else
+      @notification.formulation_file_uploaded!
       redirect_to responsible_person_notifications_path(@responsible_person)
     end
   end
