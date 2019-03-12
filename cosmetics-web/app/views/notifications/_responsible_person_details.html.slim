@@ -4,12 +4,12 @@ table.govuk-table
     | Responsible person
   tbody.govuk-table__body
     tr.govuk-table__row
-      th.govuk-table__header[class="govuk-!-width-one-third"]
+      th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
         | Name
       td.govuk-table__cell
         = responsible_person.name
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Address
       td.govuk-table__cell
         - responsible_person.address_lines.each do |address_line|

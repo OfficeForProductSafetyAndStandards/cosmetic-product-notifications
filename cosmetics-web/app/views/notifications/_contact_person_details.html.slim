@@ -4,17 +4,17 @@ table.govuk-table
     | Contact person
   tbody.govuk-table__body
     tr.govuk-table__row
-      th.govuk-table__header[class="govuk-!-width-one-third"]
+      th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
         | Name
       td.govuk-table__cell
         = contact_person.name
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Email address
       td.govuk-table__cell
         = contact_person.email_address
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Phone number
       td.govuk-table__cell
         = contact_person.phone_number

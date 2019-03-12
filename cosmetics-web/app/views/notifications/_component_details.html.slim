@@ -4,64 +4,64 @@ table.govuk-table
     = "Component #{component.name}"
   tbody.govuk-table__body
     tr.govuk-table__row
-      th.govuk-table__header[class="govuk-!-width-one-third"]
+      th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
         | Shades
       td.govuk-table__cell
         == non_or_bullet_list_html(component.shades)
 
     /TODO: if post Brexit?
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | CMR
       td.govuk-table__cell
         == non_or_bullet_list_html(component.cmrs)
 
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Nanomaterials
       td.govuk-table__cell
         == non_or_bullet_list_html(component.nano_material&.nano_elements)
     - if component.nano_material&.nano_elements.present?
       tr.govuk-table__row
-        th.govuk-table__header
+        th.govuk-table__header[scope="row"]
           | Application instruction
         td.govuk-table__cell
           = component.nano_material&.exposure_route
       tr.govuk-table__row
-        th.govuk-table__header
+        th.govuk-table__header[scope="row"]
           | Exposure condition
         td.govuk-table__cell
           = component.nano_material&.exposure_condition
 
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Category of product
       td.govuk-table__cell
         = get_category_name(component.root_category)
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         = "Category of #{get_category_name(component.root_category)}"
       td.govuk-table__cell
         = get_category_name(component.sub_category)
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         = "Category of #{get_category_name(component.sub_category)}"
       td.govuk-table__cell
         = get_category_name(component.sub_sub_category)
 
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Formulation given as
       td.govuk-table__cell
         = get_notification_type_name(component.notification_type)
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Frame formulation
       td.govuk-table__cell
         = get_frame_formulation_name(component.frame_formulation)
 
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Formulation
       td.govuk-table__cell
         - if component.exact? && component.exact_formulas.present?

@@ -4,7 +4,7 @@ table.govuk-table
     | Product
   tbody.govuk-table__body
     tr.govuk-table__row
-      th.govuk-table__header[class="govuk-!-width-one-third"]
+      th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
         | Name
       td.govuk-table__cell
         = notification.product_name
@@ -15,29 +15,29 @@ table.govuk-table
         td.govuk-table__cell
           = notification.industry_reference
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Imported
       td.govuk-table__cell
         = product_imported?(notification)
     - if product_imported?(notification) == "Yes"
       tr.govuk-table__row
-        th.govuk-table__header
+        th.govuk-table__header[scope="row"]
           | Imported from
         td.govuk-table__cell
           = product_import_country(notification)
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Number of components
       td.govuk-table__cell
         = notification.components.length
     tr.govuk-table__row
-      th.govuk-table__header
+      th.govuk-table__header[scope="row"]
         | Shades
       td.govuk-table__cell
         == non_or_bullet_list_html(notification.shades.split)
     - if notification.image_uploads.present?
       tr.govuk-table__row
-        th.govuk-table__header
+        th.govuk-table__header[scope="row"]
           | Label image
         td.govuk-table__cell
           - notification.image_uploads.each do |image|
