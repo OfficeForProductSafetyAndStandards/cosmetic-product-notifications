@@ -111,8 +111,9 @@ module Shared
         JSON.parse(response)
       end
 
-      def registration_url
-        Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/protocol/openid-connect/registrations?client_id=#{Keycloak::Client.client_id}&response_type=code"
+      def registration_url(redirect_uri)
+        params = URI.encode_www_form(client_id: Keycloak::Client.client_id, response_type: "code", redirect_uri: redirect_uri)
+        Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/protocol/openid-connect/registrations?#{params}"
       end
 
       def login_url(redirect_uri)
