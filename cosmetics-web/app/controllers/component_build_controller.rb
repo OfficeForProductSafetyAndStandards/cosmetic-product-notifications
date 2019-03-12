@@ -1,7 +1,7 @@
 class ComponentBuildController < ApplicationController
   include Wicked::Wizard
 
-  steps :number_of_shades, :add_shades
+  steps :number_of_shades, :add_shades, :contains_nanomaterials, :add_nanomaterial
 
   before_action :set_component
 
@@ -13,20 +13,14 @@ class ComponentBuildController < ApplicationController
   def update
     case step
     when :number_of_shades
-      case params[:number_of_shades]
-      when "single"
-        @component.shades = nil
-        @component.add_shades
-        @component.save
-        redirect_to finish_wizard_path
-      when "multiple"
-        render_wizard @component
-      when ""
-        @component.errors.add :shades, "Please select an option"
-        render step
-      end
+      render_number_of_shades
     when :add_shades
       render_add_shades
+    when :contains_nanomaterials
+      render_contains_nanomaterials
+    else
+      @component.update(component_params)
+      render_wizard @component
     end
   end
 
@@ -47,6 +41,21 @@ private
 
   def component_params
     params.require(:component).permit(shades: [])
+  end
+
+  def render_number_of_shades
+    case params[:number_of_shades]
+    when "single"
+      @component.shades = nil
+      @component.add_shades
+      @component.save
+      redirect_to wizard_path(:contains_nanomaterials, component_id: @component.id)
+    when "multiple"
+      render_wizard @component
+    when ""
+      @component.errors.add :shades, "Please select an option"
+      render step
+    end
   end
 
   def render_add_shades
@@ -72,6 +81,18 @@ private
         end
         render step
       end
+    end
+  end
+
+  def render_contains_nanomaterials
+    case params[:contains_nanomaterials]
+    when "yes"
+      render_wizard @component
+    when "no"
+      redirect_to finish_wizard_path
+    when ""
+      @component.errors.add :nano_materials, "Please select an option"
+      render step
     end
   end
 end
