@@ -41,7 +41,7 @@
               - other_classes = []
               - other_classes.push "govuk-checkboxes__conditional--hidden" unless @selected_businesses.include?("other")
               #new-business-other-type.govuk-checkboxes__conditional class=other_classes
-                = render "form_components/govuk_textinput", key: :other_business_type, form: form,
+                = render "form_components/govuk_input", key: :other_business_type, form: form,
                         value: @other_business_type,
                         label: { text: "Other type", classes: "govuk-visually-hidden" }
           .govuk-radios__divider or

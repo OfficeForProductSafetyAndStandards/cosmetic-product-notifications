@@ -13,7 +13,7 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Summary
-        = render "form_components/govuk_textinput", key: :overview, form: form, classes: "govuk-!-width-two-thirds",
+        = render "form_components/govuk_input", key: :overview, form: form, classes: "govuk-!-width-two-thirds",
                 label: { text: "Summary", classes: "govuk-visually-hidden" },
                 hint: { text: "Give an overview of the email" }
       fieldset.govuk-fieldset
@@ -30,7 +30,7 @@
             span.govuk-hint
               | Upload the email as a file, or enter the subject and body below
             = subform.file_field :file, class: "govuk-file-upload"
-        = render "form_components/govuk_textinput", key: :email_subject, form: form,
+        = render "form_components/govuk_input", key: :email_subject, form: form,
                 classes: "govuk-!-width-two-thirds",
                 label: { text: "Subject line" }
         = render "form_components/govuk_textarea", key: :details, form: form, max_length: 50000,

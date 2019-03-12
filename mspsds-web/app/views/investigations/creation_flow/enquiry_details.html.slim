@@ -18,7 +18,7 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Please provide a title
-        = render "form_components/govuk_textinput", key: :user_title, form: form, max_length: 100,
+        = render "form_components/govuk_input", key: :user_title, form: form, attributes: { maxlength: 100 },
                 label: { text: "Title", classes: "govuk-visually-hidden" },
                 hint: { text: "This will help other users identify this enquiry" }
 

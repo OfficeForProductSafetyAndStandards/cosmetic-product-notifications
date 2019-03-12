@@ -14,10 +14,10 @@
         = render "form_components/govuk_radios", form: form, key: :email_direction,
                 classes: "govuk-radios--inline",
                 items: Correspondence::Email.email_directions.map { |value, label| { text: label, value: value } }
-        = render "form_components/govuk_textinput", key: :correspondent_name, form: form,
+        = render "form_components/govuk_input", key: :correspondent_name, form: form,
                 classes: "govuk-!-width-two-thirds",
                 label: { text: "Name" }
-        = render "form_components/govuk_textinput", key: :email_address, form: form,
+        = render "form_components/govuk_input", key: :email_address, form: form,
                 classes: "govuk-!-width-two-thirds",
                 label: { text: "Email address" }
 

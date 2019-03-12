@@ -1,7 +1,7 @@
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Summary
-  = render "form_components/govuk_textinput", key: :summary, form: form,
+  = render "form_components/govuk_input", key: :summary, form: form,
           classes: "govuk-!-width-two-thirds",
           label: { text: "Summary", classes: "govuk-visually-hidden" }
 
@@ -21,7 +21,7 @@ legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             = link_to "Add a product", new_investigation_product_path(investigation)
             |  to record a corrective action.
       - elsif investigation.products.size == 1
-        = render "form_components/govuk_textinput", key: :product_name, form: form, disabled: true,
+        = render "form_components/govuk_input", key: :product_name, form: form, attributes: { disabled: true },
                 classes: "govuk-!-width-two-thirds", value: investigation.products.first.name,
                 label: { text: "Product name", classes: "govuk-visually-hidden" }
         = form.hidden_field :product_id, value: investigation.products.first.id

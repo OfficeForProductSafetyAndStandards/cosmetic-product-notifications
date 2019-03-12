@@ -2,34 +2,34 @@
 fieldset.govuk-fieldset
   - label_html = capture do
     .div class=label_class Name
-  = render "form_components/govuk_textinput", key: :name, form: form,
+  = render "form_components/govuk_input", key: :name, form: form,
           label: { html: label_html },
           hint: { text: "E.g. Main office, Warehouse" }
 
 fieldset.govuk-fieldset
   - label_html = capture do
     .div class=label_class Building and street
-  = render "form_components/govuk_textinput", key: :address_line_1, form: form,
+  = render "form_components/govuk_input", key: :address_line_1, form: form,
           label: { html: label_html }
-  = render "form_components/govuk_textinput", key: :address_line_2, form: form,
+  = render "form_components/govuk_input", key: :address_line_2, form: form,
           label: { text: "Address line two", classes: "govuk-visually-hidden" }
 
 fieldset.govuk-fieldset
   - label_html = capture do
     .div class=label_class Town or city
-  = render "form_components/govuk_textinput", key: :city, form: form,
+  = render "form_components/govuk_input", key: :city, form: form,
           label: { html: label_html }
 
 fieldset.govuk-fieldset
   - label_html = capture do
     .div class=label_class County
-  = render "form_components/govuk_textinput", key: :county, form: form,
+  = render "form_components/govuk_input", key: :county, form: form,
           label: { html: label_html }
 
 fieldset.govuk-fieldset
   - label_html = capture do
     .div class=label_class Postcode
-  = render "form_components/govuk_textinput", key: :postal_code, form: form, classes: "govuk-!-width-one-half",
+  = render "form_components/govuk_input", key: :postal_code, form: form, classes: "govuk-!-width-one-half",
           label: { html: label_html }
 
 fieldset.govuk-fieldset

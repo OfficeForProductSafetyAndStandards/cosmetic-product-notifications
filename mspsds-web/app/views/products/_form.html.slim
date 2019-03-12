@@ -14,9 +14,9 @@ fieldset.govuk-fieldset
     | In plain English, what is it?
     br
     | For example, ‘dishwasher, soft toy, chainsaw...’
-  = render "form_components/govuk_textinput", key: :product_type, form: form,
+  = render "form_components/govuk_input", key: :product_type, form: form,
           classes: "govuk-!-width-two-thirds",
-          label: { html: label_html },
+          label: { text: "Product category", classes: label_class },
           hint: { html: hint_html }
 
 fieldset.govuk-fieldset
@@ -26,7 +26,7 @@ fieldset.govuk-fieldset
     | Brand, model name, model number, etc.
     br
     | For example, ‘Bosch Series 2 SMS25EI00G’
-  = render "form_components/govuk_textinput", key: :name, form: form,
+  = render "form_components/govuk_input", key: :name, form: form,
           classes: "govuk-!-width-two-thirds",
           label: { html: label_html },
           hint: { html: hint_html }
@@ -34,21 +34,21 @@ fieldset.govuk-fieldset
 fieldset.govuk-fieldset
   - label_html = capture do
     .div class=label_class Barcode (or serial number)
-  = render "form_components/govuk_textinput", key: :product_code, form: form, classes: "govuk-!-width-two-thirds",
+  = render "form_components/govuk_input", key: :product_code, form: form, classes: "govuk-!-width-two-thirds",
           label: { html: label_html },
           hint: { text: "If you have this data, it makes it easier to correctly identify the product" }
 
 fieldset.govuk-fieldset
   - label_html = capture do
     .div class=label_class Batch number
-  = render "form_components/govuk_textinput", key: :batch_number, form: form, classes: "govuk-!-width-two-thirds",
+  = render "form_components/govuk_input", key: :batch_number, form: form, classes: "govuk-!-width-two-thirds",
           label: { html: label_html },
           hint: { text: "Particularly important if only a specific batch of a product is being reported" }
 
 fieldset.govuk-fieldset
   - label_html = capture do
     .div class=label_class Webpage
-  = render "form_components/govuk_textinput", key: :webpage, form: form, classes: "govuk-!-width-two-thirds",
+  = render "form_components/govuk_input", key: :webpage, form: form, classes: "govuk-!-width-two-thirds",
           label: { html: label_html },
           hint: { text: "A link to the manufacturer's page for this product, or a webpage where it can be bought" }
 

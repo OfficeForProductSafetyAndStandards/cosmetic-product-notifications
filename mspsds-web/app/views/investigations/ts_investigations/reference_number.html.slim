@@ -7,7 +7,7 @@
       h1.govuk-heading-xl
         span.govuk-caption-xl Reporting an unsafe product
         | Find this in your system
-      = render "form_components/govuk_textinput", key: :complainant_reference, form: form,
+      = render "form_components/govuk_input", key: :complainant_reference, form: form,
               label: { text: "Reference number", classes: "govuk-visually-hidden" },
               hint: { text: "Use an existing case number or reference from your system to help you find your report" + \
               "in the future." }
