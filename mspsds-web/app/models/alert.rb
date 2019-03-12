@@ -14,7 +14,7 @@ class Alert < ApplicationRecord
   after_save :send_alert_email
 
   def send_alert_email
-    SendAlertJob.perform summary, description
+    SendAlertJob.perform_later User.all, summary, description
   end
 
   def create_audit_activity

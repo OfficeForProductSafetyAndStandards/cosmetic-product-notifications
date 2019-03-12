@@ -1,6 +1,6 @@
 class SendAlertJob < ApplicationJob
-  def self.perform(email_subject, email_body)
-    User.all.each do |user|
+  def self.perform_later(recipients, email_subject, email_body)
+    recipients.each do |user|
       NotifyMailer.alert(
         user.full_name,
         user.email,

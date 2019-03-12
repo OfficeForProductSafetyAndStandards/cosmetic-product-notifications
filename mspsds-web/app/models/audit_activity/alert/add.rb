@@ -19,7 +19,8 @@ class AuditActivity::Alert::Add < AuditActivity::Base
         "To: **All users** (#{number_with_delimiter(User.all.length, delimiter: ',')} people)",
         "Subject: **#{alert.summary}**",
         "Date sent: **#{alert.created_at.strftime('%d/%m/%Y')}**",
-        "<br>" + alert.description
+        "",
+        alert.description
     ].join("<br>")
   end
 end
