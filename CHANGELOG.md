@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 ### MSPSDS
 - Allow users to view their team members.
+- When emails and phone calls are marked as GDPR senstive, prevent other users from viewing them or their attachments.
 
 <!-- ### Cosmetics -->
 

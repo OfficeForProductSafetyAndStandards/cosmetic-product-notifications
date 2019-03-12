@@ -1,4 +1,8 @@
-- if document.metadata["safe"]
+- if local_assigns[:sensitive]
+  .document-without-preview
+    = image_pack_tag "media/application/images/document_placeholder.png"
+    span.document-filetype = document_file_extension(document)
+- elsif document.metadata["safe"]
   - if document.image?
     - class_name = local_assigns[:class_name] || "image-with-preview"
     = link_to render("documents/image_tag", image: document, dimensions: dimensions, class_name: class_name),
