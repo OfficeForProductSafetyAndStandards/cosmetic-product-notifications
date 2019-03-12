@@ -122,7 +122,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     assert test_request.save
   end
 
-  test "conceals information on phonecalls with customer info" do
+  test "conceals information on emails with customer info" do
     fill_in_context_form
     choose :correspondence_email_has_consumer_info_true, visible: false
     click_button "Continue"

@@ -1,6 +1,7 @@
-- sensitive = document.metadata[:has_consumer_info]
-- title = sensitive ? document_sensitive_title : document.metadata[:title]
-- description = sensitive ? document_sensitive_body : document.metadata[:description]
+ruby:
+  sensitive = document.metadata[:has_consumer_info]
+  title = sensitive ? document_sensitive_title : document.metadata[:title]
+  safe = document.metadata["safe"]
 
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-one-third
@@ -10,11 +11,12 @@
     h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = title
     span.govuk-hint[class=" govuk-!-font-size-16"] = formatted_file_updated_date(document)
     - if sensitive
-      p = render "components/govuk_badge", text: "RESTRICTED ACCESS", classes: "govuk-badge--grey"
-    p = description
-    - unless sensitive
+      p = render "components/govuk_badge", text: "Restricted access", classes: "govuk-badge--grey"
+      p = document_sensitive_body
+    - else
+      p = document.metadata[:description]
       p
-        - if document.metadata["safe"]
+        - if safe
           = link_to "View #{pretty_type_description(document)}",
                   document, class: "govuk-link mspsds-block-link", target: '_blank', rel: 'noopener'
         = link_to "Edit #{image_document_text(document)}",
