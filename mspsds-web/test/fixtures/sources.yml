@@ -24,6 +24,10 @@ investigation_no_products:
   type:
   sourceable: no_products (Investigation)
 
+investigation_private:
+  type:
+  sourceable: private (Investigation)
+
 business_one:
   type:
   sourceable: one (Business)

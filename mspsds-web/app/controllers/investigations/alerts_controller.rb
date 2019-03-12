@@ -55,7 +55,12 @@ private
 
   def set_investigation
     @investigation = Investigation.find_by!(pretty_id: params[:investigation_pretty_id])
-    authorize @investigation, :can_raise_alert?
+    authorize_investigation
+  end
+
+  def authorize_investigation
+    authorize @investigation, :user_allowed_to_raise_alert?
+    authorize @investigation, :investigation_restricted? if %i[compose preview].include? step
   end
 
   def set_alert
