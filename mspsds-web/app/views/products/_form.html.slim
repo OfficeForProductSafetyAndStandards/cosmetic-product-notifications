@@ -1,4 +1,4 @@
-- label_class = "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+- label_class = "govuk-label--m govuk-!-margin-bottom-2"
 fieldset.govuk-fieldset
   / Ideally the width class should affect he input only, not the whole form group, but we're limited by MSPSDS-1045
   .govuk-form-group class=["govuk-!-width-two-thirds", ("govuk-form-group--error" if product.errors[:category].any?)]
@@ -8,48 +8,38 @@ fieldset.govuk-fieldset
             hint: { text: "The high-level category (for reporting purposes)" }
 
 fieldset.govuk-fieldset
-  - label_html = capture do
-    .div class=label_class Product type
   - hint_html = capture do
     | In plain English, what is it?
     br
     | For example, ‘dishwasher, soft toy, chainsaw...’
   = render "form_components/govuk_input", key: :product_type, form: form,
           classes: "govuk-!-width-two-thirds",
-          label: { text: "Product category", classes: label_class },
+          label: { text: "Product type", classes: label_class },
           hint: { html: hint_html }
 
 fieldset.govuk-fieldset
-  - label_html = capture do
-    .div class=label_class Product name
   - hint_html = capture do
     | Brand, model name, model number, etc.
     br
     | For example, ‘Bosch Series 2 SMS25EI00G’
   = render "form_components/govuk_input", key: :name, form: form,
           classes: "govuk-!-width-two-thirds",
-          label: { html: label_html },
+          label: { text: "Product name", classes: label_class },
           hint: { html: hint_html }
 
 fieldset.govuk-fieldset
-  - label_html = capture do
-    .div class=label_class Barcode (or serial number)
   = render "form_components/govuk_input", key: :product_code, form: form, classes: "govuk-!-width-two-thirds",
-          label: { html: label_html },
+          label: { text: "Barcode (or serial number)", classes: label_class },
           hint: { text: "If you have this data, it makes it easier to correctly identify the product" }
 
 fieldset.govuk-fieldset
-  - label_html = capture do
-    .div class=label_class Batch number
   = render "form_components/govuk_input", key: :batch_number, form: form, classes: "govuk-!-width-two-thirds",
-          label: { html: label_html },
+          label: { text: "Batch number", classes: label_class },
           hint: { text: "Particularly important if only a specific batch of a product is being reported" }
 
 fieldset.govuk-fieldset
-  - label_html = capture do
-    .div class=label_class Webpage
   = render "form_components/govuk_input", key: :webpage, form: form, classes: "govuk-!-width-two-thirds",
-          label: { html: label_html },
+          label: { text: "Webpage", classes: label_class },
           hint: { text: "A link to the manufacturer's page for this product, or a webpage where it can be bought" }
 
 fieldset.govuk-fieldset
@@ -62,10 +52,8 @@ fieldset.govuk-fieldset
               class: "govuk-select", id: "location-autocomplete"
 
 fieldset.govuk-fieldset
-  - label_html = capture do
-    .div class=label_class Description of product
   = render "form_components/govuk_textarea", key: :description, form: form, max_length: 10000,
-          label: { html: label_html },
+          label: { text: "Description of product", classes: label_class },
           hint: { text: "For example, 'Orange, 4 socket extension lead'" }
 
 .govuk-form-group

@@ -1,23 +1,17 @@
-- label_class = "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+- label_class = "govuk-label--m govuk-!-margin-bottom-2"
 fieldset.govuk-fieldset
-  - label_html = capture do
-    .div class=label_class Trading name
   = render "form_components/govuk_input", key: :trading_name, form: form,
-          label: { html: label_html },
+          label: { text: "Trading name", classes: label_class },
           hint: { text: "The name the business is known by" }
 
 fieldset.govuk-fieldset
-  - label_html = capture do
-    .div class=label_class Legal name
   = render "form_components/govuk_input", key: :legal_name, form: form,
-          label: { html: label_html },
+          label: { text: "Legal name", classes: label_class },
           hint: { text: "The registered name of the company (if you have it)" }
 
 fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
-  - label_html = capture do
-    .div class=label_class Company number
   = render "form_components/govuk_input", key: :company_number, form: form,
-          label: { html: label_html },
+          label: { text: "Company number", classes: label_class },
           hint: { text: "If you have this information" }
 
 = form.fields_for :locations, business.primary_location do |ff|
