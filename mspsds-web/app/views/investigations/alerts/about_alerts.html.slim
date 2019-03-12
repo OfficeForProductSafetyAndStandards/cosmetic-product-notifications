@@ -11,7 +11,7 @@
         p.govuk-caption-xl
           = @investigation.pretty_description
         | You cannot send an alert about a restricted case
-      p.govuk-body
+      p
         | Email alerts can only be sent for cases that are not restricted.
         |  To send an alert about this case you need to unrestrict it.
 
@@ -24,12 +24,12 @@
         p.govuk-caption-xl
           = @investigation.pretty_description
         | About alerts
-      p.govuk-body
+      p
         | When you send an alert:
         ul.govuk-list.govuk-list--bullet
           li all users of this service will be sent an email
           li they’ll be given a link back to this case to view more details
-      p.govuk-body
+
         | Recipients will need an account on this service the view the case.
       .govuk-warning-text
         span.govuk-warning-text__icon aria-hidden="true" !
@@ -38,5 +38,5 @@
           | Only send an alert if this is a serious product safety issue.
       = link_to "Compose new alert", next_wizard_path, class: "govuk-button", role: "button", draggable: false
 
-p.govuk-body
+p
   = link_to "Cancel", investigation_path(@investigation), class: 'govuk-link govuk-link--no-visited-state'

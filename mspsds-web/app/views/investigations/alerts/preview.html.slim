@@ -32,14 +32,14 @@
           == @preview.html
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      p.govuk-body
+      p
         ' If you’re not happy you can
         = link_to "edit your message", previous_wizard_path, class: "govuk-link"
         | .
-      p.govuk-body
+      p
         | Alerts may take up to 5 minutes to send.
 
   = form.submit "Send to #{@user_count} people", class: "govuk-button"
 
-p.govuk-body
+p
   = link_to "Cancel", investigation_path(@investigation), class: 'govuk-link govuk-link--no-visited-state'
