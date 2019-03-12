@@ -79,6 +79,10 @@ class Notification < ApplicationRecord
       transitions from: :empty, to: :draft_complete
     end
 
+    event :formulation_file_uploaded do
+      transitions from: :notification_file_imported, to: :draft_complete, guard: :formulation_present?
+    end
+
     event :submit_notification do
       transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
     end
@@ -109,6 +113,10 @@ class Notification < ApplicationRecord
 
   def formulation_required?
     components.any?(&:formulation_required?)
+  end
+
+  def formulation_present?
+    components.none?(&:formulation_required?)
   end
 
   def is_multicomponent?

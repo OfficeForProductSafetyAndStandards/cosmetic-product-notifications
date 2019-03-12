@@ -56,17 +56,19 @@ public class RegistrationMobileNumber implements FormAction {
         String formattedPhoneNumber = convertInternationalPrefix(phoneNumber);
 
         String region;
-        if (isPossibleNationalNumber(formattedPhoneNumber)) {
+        if (isPossibleNationalMobileNumber(formattedPhoneNumber)) {
             region = "GB";
         } else if (isInternationalNumber(formattedPhoneNumber)) {
             region = null;
         } else {
-            return true; // If the number cannot be interpreted as an international or possible UK phone number, do not attempt to validate it.
+            return false; // If the number cannot be interpreted as an international or possible UK phone number, do not attempt to validate it.
         }
 
         try {
             PhoneNumber parsedPhoneNumber = PhoneNumberUtil.getInstance().parse(formattedPhoneNumber, region);
-            return PhoneNumberUtil.getInstance().isValidNumber(parsedPhoneNumber);
+            boolean isValidNumber = PhoneNumberUtil.getInstance().isValidNumber(parsedPhoneNumber);
+            boolean isFixedLineOrMobile = isFixedLineOrMobile(parsedPhoneNumber);
+            return isValidNumber && isFixedLineOrMobile;
         } catch (NumberParseException e) {
             return false;
         }
@@ -80,12 +82,19 @@ public class RegistrationMobileNumber implements FormAction {
         return trimmedPhoneNumber;
     }
 
-    private static boolean isPossibleNationalNumber(String phoneNumber) {
+    private static boolean isPossibleNationalMobileNumber(String phoneNumber) {
         return phoneNumber.trim().startsWith("+44") || phoneNumber.trim().startsWith("07");
     }
 
     private static boolean isInternationalNumber(String phoneNumber) {
         return phoneNumber.trim().startsWith("+");
+    }
+
+    private static boolean isFixedLineOrMobile(PhoneNumber phoneNumber) {
+        PhoneNumberUtil.PhoneNumberType phoneNumberType = PhoneNumberUtil.getInstance().getNumberType(phoneNumber);
+        boolean isMobile = phoneNumberType == PhoneNumberUtil.PhoneNumberType.MOBILE;
+        boolean isFixedLineOrMobile = phoneNumberType == PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE;
+        return isMobile || isFixedLineOrMobile;
     }
 
     @Override
