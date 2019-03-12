@@ -1,7 +1,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .timeline
-      ul.govuk-list.timeline-list
+      ul.govuk-list
         - activities.each do |activity|
           = render "investigations/activities/activity_card", activity: activity
-        li.timeline-item
+        li
