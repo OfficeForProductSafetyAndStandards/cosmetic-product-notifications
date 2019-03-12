@@ -59,7 +59,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :businesses, concerns: %i[document_attachable] do
+  resources :businesses, except: %i[new create destroy], concerns: %i[document_attachable] do
     resources :locations do
       member do
         get :remove
@@ -72,7 +72,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products, concerns: %i[document_attachable]
+  resources :products, except: %i[new create destroy], concerns: %i[document_attachable]
+
+  get "your-teams" => "teams#index"
+  resources :teams, only: %i[index show]
 
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all

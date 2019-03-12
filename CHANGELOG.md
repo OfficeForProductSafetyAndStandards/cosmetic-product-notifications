@@ -2,11 +2,18 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-<!-- ### MSPSDS -->
+### MSPSDS
+- Allow users to view their team members.
 
 <!-- ### Cosmetics -->
 
-<!-- ### Next release checklist -->
+### Next release checklist
+- [ ] Add `team_admin` role to mspsds client on keycloak
+- [ ] Allow mspsds to view clients info on keycloak
+    # Log into keycloak admin app, click on `Clients` and select `mspsds-app`
+    # In the `Service Account Roles` tab, select `realm-management` from the dropdown and assign the `view-clients` role
+    # In the `Scope` tab, select `realm-management` from the dropdown and assign the `view-clients` role
+- [ ] Add `view_clients` role to mspsds service account roles on `realm-management`
 
 
 ## 2019-03-07

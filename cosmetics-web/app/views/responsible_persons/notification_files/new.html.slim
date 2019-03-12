@@ -1,26 +1,33 @@
 - content_for :page_title, "Upload cosmetic notification file"
 - content_for :after_header do
-  = link_to "Back", root_path, class: "govuk-back-link"
+  = link_to "Back", responsible_person_notifications_path(@responsible_person), class: "govuk-back-link"
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_with model: [@responsible_person, @notification_file], local: true do |form|
-      = render "form_components/govuk_error_summary", form: form
+    = form_with url: responsible_person_notification_files_path(@responsible_person), method: :post,
+            data: { "max-number-of-files": NotificationFile.get_max_number_of_files },
+            id: "file-upload-form", local: true do |form|
+      span.error-summary-js
+        - if @errors.blank?
+          = render "components/govuk_error_summary", titleText: "There is a problem", errorList: [{ text: "Too many" + \
+              " files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
+              href: "#uploaded_files" }]
+      span#error-summary
+        - if @errors
+          = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
       h1.govuk-heading-xl
-        | Upload cosmetic notification file from CPNP
-      .govuk-body-m
-        | To make registering a cosmetic product as simple as possible
-        | , export the product notification zip file from the CPNP.
+        | Upload your EU notification files
 
       .govuk-body-m
         = link_to "Find out how to export cosmetic product zip files from CPNP.",
             "https://docs.google.com/document/d/1QTM-LYmlAk8nnuwYOvtn8-gB5-F6T5u4lgs_2BhzPJ8/edit",
             target: :_blank
-
-        .govuk-form-group
-          .form-group
-            = form.label "Upload CPNP zip file", class: "govuk-label"
-            = form.file_field :uploaded_file,
-                    class: "govuk-file-upload", accept: "application/zip"
-
-        = form.submit "Upload", class: "govuk-button"
+      .govuk-form-group#file-upload-form-group[class= ("govuk-form-group--error" if @errors.present?)]
+        = form.label :uploaded_files, "Upload EU notification files", class: "govuk-label"
+        span.govuk-hint
+          | To select multiple files, hold the ‘Shift’ key when selecting them.
+        span#file-upload-error-message.govuk-error-message
+          = @errors.last[:text] if @errors.present?
+        = form.file_field :uploaded_files, multiple: true,
+                class: "govuk-file-upload", accept: "application/zip"
+      = form.submit "Continue", data: { disable_with: false }, class: "govuk-button", id: "submit-button"

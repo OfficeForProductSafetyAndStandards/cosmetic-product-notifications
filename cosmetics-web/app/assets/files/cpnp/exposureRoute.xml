@@ -1,0 +1,419 @@
+
+			<exposureRouteList>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>BG</lngId>
+						<name>Приложение върху кожата</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>CS</lngId>
+						<name>Derm&#xe1;ln&#xed; aplikace</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>DA</lngId>
+						<name>Dermal</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>DE</lngId>
+						<name>Dermal</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>EL</lngId>
+						<name>Διά του δέρματος</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>EN</lngId>
+						<name>Dermal</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>ES</lngId>
+						<name>Cut&#xe1;neo</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>ET</lngId>
+						<name>Nahakaudne</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>FI</lngId>
+						<name>Ihokosketus</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>FR</lngId>
+						<name>Pour la peau</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>HR</lngId>
+						<name>Dermalno</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>HU</lngId>
+						<name>Bőr&#xf6;n &#xe1;t</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>IT</lngId>
+						<name>Cutaneo</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>LT</lngId>
+						<name>Odos priežiūros</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>LV</lngId>
+						<name>Caur ādu</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>MT</lngId>
+						<name>Derrmali</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>NL</lngId>
+						<name>Huid</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>PL</lngId>
+						<name>Do użytku zewnętrznego</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>PT</lngId>
+						<name>Cut&#xe2;neo</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>RO</lngId>
+						<name>Dermic</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>SK</lngId>
+						<name>Na pokožku</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>SL</lngId>
+						<name>Dermalno</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>3</id>
+						<lngId>SV</lngId>
+						<name>Dermal</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>BG</lngId>
+						<name>Приложение в устната кухина</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>CS</lngId>
+						<name>Peror&#xe1;ln&#xed; aplikace</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>DA</lngId>
+						<name>Oral</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>DE</lngId>
+						<name>Oral</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>EL</lngId>
+						<name>Από το στόμα</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>EN</lngId>
+						<name>Oral</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>ES</lngId>
+						<name>Oral</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>ET</lngId>
+						<name>Suukaudne</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>FI</lngId>
+						<name>Suun kautta</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>FR</lngId>
+						<name>Oral</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>HR</lngId>
+						<name>Oralno</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>HU</lngId>
+						<name>Sz&#xe1;jon &#xe1;t</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>IT</lngId>
+						<name>Orale</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>LT</lngId>
+						<name>Burnos priežiūros</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>LV</lngId>
+						<name>Caur muti</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>MT</lngId>
+						<name>Orali</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>NL</lngId>
+						<name>Mond</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>PL</lngId>
+						<name>Do użytku wewnętrznego</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>PT</lngId>
+						<name>Oral</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>RO</lngId>
+						<name>Oral</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>SK</lngId>
+						<name>Na &#xfa;stnu hygienu</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>SL</lngId>
+						<name>Oralno</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>4</id>
+						<lngId>SV</lngId>
+						<name>Oral</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>BG</lngId>
+						<name>Вдишване</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>CS</lngId>
+						<name>Inhalace</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>DA</lngId>
+						<name>Inhalation</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>DE</lngId>
+						<name>Inhalation</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>EL</lngId>
+						<name>Εισπνοή</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>EN</lngId>
+						<name>Inhalation</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>ES</lngId>
+						<name>Inhalaci&#xf3;n</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>ET</lngId>
+						<name>Sissehingamine</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>FI</lngId>
+						<name>Hengitt&#xe4;minen</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>FR</lngId>
+						<name>Inhalation</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>HR</lngId>
+						<name>Udisanjem</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>HU</lngId>
+						<name>Bel&#xe9;legz&#xe9;ssel</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>IT</lngId>
+						<name>Inalazione</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>LT</lngId>
+						<name>Inhaliacijai</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>LV</lngId>
+						<name>Ieelpo</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>MT</lngId>
+						<name>Nifs</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>NL</lngId>
+						<name>Inademing</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>PL</lngId>
+						<name>Do stosowania w formie inhalacji</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>PT</lngId>
+						<name>Inala&#xe7;&#xe3;o</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>RO</lngId>
+						<name>Inhalare</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>SK</lngId>
+						<name>Na vdychovanie</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>SL</lngId>
+						<name>Inhalacijsko</name>
+					</exposureRoute>
+				
+					<exposureRoute>
+						<id>5</id>
+						<lngId>SV</lngId>
+						<name>Inhalation</name>
+					</exposureRoute>
+				
+			</exposureRouteList>
+			

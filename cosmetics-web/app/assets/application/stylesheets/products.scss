@@ -1,0 +1,47 @@
+.product-list {
+  padding-left: 0;
+}
+
+.product {
+  display: inline-block;
+  border-bottom: 1px solid $govuk-border-colour;
+  padding-bottom: 20px;
+  padding-top: 30px;
+  width: 100%;
+
+  &:first-of-type {
+    padding-top: 0;
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .product-title {
+    text-decoration: none;
+  }
+
+  .product-data {
+    display: block;
+    margin-bottom: 0;
+    width: 55%;
+
+    dt,
+    dd {
+      display: inline-block;
+    }
+
+    dt {
+      min-width: 220px;
+    }
+
+    dd {
+      margin-left: 0;
+    }
+  }
+
+  .add-documents {
+    margin-top: 20px;
+  }
+}

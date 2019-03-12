@@ -1,7 +1,9 @@
 - content_for :page_title, "Single or multi component"
 - content_for :after_header do
-  = link_to "Back", notification_build_path(@component.notification, :single_or_multi_component),
-    class: "govuk-back-link"
+  = link_to "Back",
+          responsible_person_notification_build_path(@component.notification.responsible_person,
+                                                     @component.notification, :single_or_multi_component),
+          class: "govuk-back-link"
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl

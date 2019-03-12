@@ -4,9 +4,6 @@ services:
   db:
     image: ${DOCKER_USERNAME}/db:${TRAVIS_BUILD_NUMBER}
   
-  elasticsearch:
-    image: ${DOCKER_USERNAME}/elasticsearch:${TRAVIS_BUILD_NUMBER}
-
   keycloak:
     environment:
       - NOTIFY_API_KEY='fake-key'

@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -78,4 +79,20 @@ Rails.application.configure do
   # Store uploaded files on the local file system on test, and in S3 on production.
   # (see config/storage.yml for options)
   config.active_storage.service = :amazon
+
+  # Index all relevant records with elasticsearch
+  config.after_initialize do
+    unless Sidekiq.server?
+      ActiveRecord::Base.descendants.each do |model|
+        if model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
+          if model.respond_to?(:elasticsearch)
+            model.elasticsearch.import force: true
+          else
+            model.import force: true
+          end
+        end
+      end
+    end
+  end
 end
+# rubocop:enable Metrics/BlockLength
