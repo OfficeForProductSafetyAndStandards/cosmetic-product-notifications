@@ -1,8 +1,6 @@
 - content_for :page_title, "Alert trading standards"
 - content_for :after_header do
-  .govuk-grid-row
-    .govuk-grid-column-one-third
-      = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 
 - if @investigation.is_private
   .govuk-grid-row
@@ -24,13 +22,11 @@
         p.govuk-caption-xl
           = @investigation.pretty_description
         | About alerts
-      p
-        | When you send an alert:
-        ul.govuk-list.govuk-list--bullet
-          li all users of this service will be sent an email
-          li they’ll be given a link back to this case to view more details
-
-        | Recipients will need an account on this service the view the case.
+      p When you send an alert:
+      ul.govuk-list.govuk-list--bullet
+        li all users of this service will be sent an email
+        li they’ll be given a link back to this case to view more details
+      p Recipients will need an account on this service the view the case.
       .govuk-warning-text
         span.govuk-warning-text__icon aria-hidden="true" !
         strong.govuk-warning-text__text
