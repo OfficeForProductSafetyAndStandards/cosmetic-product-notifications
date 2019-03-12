@@ -15,18 +15,18 @@ $(document).ready(() => {
 
   fileUploadForm.addEventListener('submit', (event) => {
     if (fileInput.files.length === 0) {
-      errorSummary.style.display = 'inline';
-      fileUploadFormGroup.classList.add('govuk-form-group--error');
-      fileUploadErrorMessage.innerHTML = noFilesSelectedMessage;
-      errorSummaryText.innerHTML = noFilesSelectedMessage;
+      // errorSummary.style.display = 'inline';
+      // fileUploadFormGroup.classList.add('govuk-form-group--error');
+      // fileUploadErrorMessage.innerHTML = noFilesSelectedMessage;
+      // errorSummaryText.innerHTML = noFilesSelectedMessage;
     }
 
     if (fileInput.files.length > maxNumberOfFiles) {
-      event.preventDefault();
-      errorSummary.style.display = 'inline';
-      fileUploadFormGroup.classList.add('govuk-form-group--error');
-      fileUploadErrorMessage.innerHTML = tooManyFilesMessage;
-      errorSummaryText.innerHTML = tooManyFilesMessage;
+      // event.preventDefault();
+      // errorSummary.style.display = 'inline';
+      // fileUploadFormGroup.classList.add('govuk-form-group--error');
+      // fileUploadErrorMessage.innerHTML = tooManyFilesMessage;
+      // errorSummaryText.innerHTML = tooManyFilesMessage;
     }
   });
 });

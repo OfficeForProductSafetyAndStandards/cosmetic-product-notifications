@@ -1,6 +1,7 @@
 // JS
 import Rails from 'rails-ujs';
 import GOVUKFrontend from 'govuk-frontend';
+import Dropzone from 'dropzone';
 
 import '../application/javascripts/bulk_file_upload_error_handling';
 

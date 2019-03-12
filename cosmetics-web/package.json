@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
+    "dropzone": "5.5.1",
     "shared-web": "./vendor/shared-web"
   }
 }
