@@ -2,8 +2,6 @@ require "test_helper"
 
 class OrganisationTest < ActiveSupport::TestCase
   setup do
-    sign_in_as_user
-
     @organisations = [
       { id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1", subGroups: [] },
       { id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Organisation 2", path: "/Organisations/Organisation 2", subGroups: [] },
@@ -19,16 +17,18 @@ class OrganisationTest < ActiveSupport::TestCase
   end
 
   teardown do
-    logout
+    allow(Keycloak::Internal).to receive(:get_groups).and_call_original
   end
 
   test "all Keycloak organisations are added" do
+    Rails.cache.delete(:keycloak_groups)
     all_organisations = Organisation.all
 
     assert_same_elements @organisations.map { |org| org[:id] }, all_organisations.pluck(:id)
   end
 
   test "all organisation properties are populated" do
+    Rails.cache.delete(:keycloak_groups)
     all_organisations = Organisation.all
 
     assert_same_elements @organisations.map { |org| org[:name] }, all_organisations.pluck(:name)
@@ -36,6 +36,7 @@ class OrganisationTest < ActiveSupport::TestCase
   end
 
   test "all non-organisation groups are excluded" do
+    Rails.cache.delete(:keycloak_groups)
     all_organisations = Organisation.all
 
     assert_not_includes all_organisations.pluck(:name), "Group 1"
