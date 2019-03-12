@@ -1,6 +1,5 @@
 class AuditActivity::Alert::Add < AuditActivity::Base
   extend ActionView::Helpers::NumberHelper
-  belongs_to :alert
   belongs_to :investigation
 
   def self.from(alert)
@@ -8,8 +7,7 @@ class AuditActivity::Alert::Add < AuditActivity::Base
       title: "Product safety alert sent",
       body: build_body(alert),
       source: UserSource.new(user: User.current),
-      investigation: alert.investigation,
-      alert: alert
+      investigation: alert.investigation
     )
   end
 
