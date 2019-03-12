@@ -66,7 +66,9 @@ public class RegistrationMobileNumber implements FormAction {
 
         try {
             PhoneNumber parsedPhoneNumber = PhoneNumberUtil.getInstance().parse(formattedPhoneNumber, region);
-            return PhoneNumberUtil.getInstance().isValidNumber(parsedPhoneNumber);
+            boolean isValidNumber = PhoneNumberUtil.getInstance().isValidNumber(parsedPhoneNumber);
+            boolean isFixedLineOrMobile = isFixedLineOrMobile(parsedPhoneNumber);
+            return isValidNumber && isFixedLineOrMobile;
         } catch (NumberParseException e) {
             return false;
         }
@@ -86,6 +88,13 @@ public class RegistrationMobileNumber implements FormAction {
 
     private static boolean isInternationalNumber(String phoneNumber) {
         return phoneNumber.trim().startsWith("+");
+    }
+
+    private static boolean isFixedLineOrMobile(PhoneNumber phoneNumber) {
+        PhoneNumberUtil.PhoneNumberType phoneNumberType = PhoneNumberUtil.getInstance().getNumberType(phoneNumber);
+        boolean isMobile = phoneNumberType == PhoneNumberUtil.PhoneNumberType.MOBILE;
+        boolean isFixedLineOrMobile = phoneNumberType == PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE;
+        return isMobile || isFixedLineOrMobile;
     }
 
     @Override
