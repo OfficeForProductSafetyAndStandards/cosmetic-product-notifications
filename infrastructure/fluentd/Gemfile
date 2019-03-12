@@ -1,0 +1,7 @@
+source "https://rubygems.org"
+
+ruby File.read(".ruby-version").strip
+
+gem "fluentd", "~> 1.4"
+gem "fluent-plugin-remote_syslog", "~> 1.0"
+gem "fluent-plugin-s3", "~> 1.1"
