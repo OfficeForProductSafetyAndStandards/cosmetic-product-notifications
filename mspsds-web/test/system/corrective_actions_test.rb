@@ -4,7 +4,7 @@ require_relative "../test_helpers/corrective_action_test_helper"
 class CorrectiveActionsTest < ApplicationSystemTestCase
   include CorrectiveActionTestHelper
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
 
     @investigation = investigations(:one)
     @corrective_action = corrective_actions(:one)
@@ -14,7 +14,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "can record corrective action for a case" do
