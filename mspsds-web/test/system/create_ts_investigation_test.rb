@@ -6,7 +6,8 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   include CorrectiveActionTestHelper
 
   setup do
-    sign_in_as_non_opss_user
+    mock_out_keycloak_and_notify
+    set_user_as_non_opss(User.current)
 
     @product = products(:one)
     @investigation = investigations(:one)
@@ -20,7 +21,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "can complete the ts flow" do
