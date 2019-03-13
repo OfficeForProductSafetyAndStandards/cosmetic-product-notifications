@@ -66,6 +66,7 @@ tr.govuk-table__row
       /TODO, but what if no file is present yet?
       | FILE NAME SHOULD BE HERE
 
-- if component.trigger_questions.present?
+- if component.trigger_questions
   - component.trigger_questions.each do |question|
-    = render "notifications/trigger_question_details", trigger_question: question
+    - if trigger_question_answer_is_present?(question)
+      = render "notifications/trigger_question_details", trigger_question: question
