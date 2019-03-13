@@ -13,7 +13,7 @@ class AuditActivity::Investigation::AddProject < AuditActivity::Investigation::A
     body
   end
 
-  def sensitive_body?
+  def sensitive?
     false
   end
 end

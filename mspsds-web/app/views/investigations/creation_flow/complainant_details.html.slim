@@ -11,17 +11,16 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What are their contact details?
-        .govuk-form-group class=("govuk-form-group--error" if @complainant.errors[:name].any?)
-          = form.label :name, class: "govuk-label"
-          = form.text_field :name, class: "govuk-input govuk-!-width-two-thirds", maxlength: 1000
-        .govuk-form-group class=("govuk-form-group--error" if @complainant.errors[:phone_number].any?)
-          = form.label :phone_number, class: "govuk-label"
-          = form.text_field :phone_number, class: "govuk-input govuk-!-width-two-thirds", maxlength: 1000
-        .govuk-form-group class=("govuk-form-group--error" if @complainant.errors[:email_address].any?)
-          = form.label :email_address, class: "govuk-label"
-          = form.text_field :email_address, class: "govuk-input govuk-!-width-two-thirds", maxlength: 1000
+        = render "form_components/govuk_input", key: :name, form: form, attributes: { maxlength: 1000 },
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Name" }
+        = render "form_components/govuk_input", key: :phone_number, form: form, attributes: { maxlength: 1000 },
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Phone number" }
+        = render "form_components/govuk_input", key: :email_address, form: form, attributes: { maxlength: 1000 },
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Email address" }
         = render "form_components/govuk_textarea", key: :other_details, form: form, max_length: 10000,
-                label: { text: "Other details" },
-                hint: { text: "Location, business/authority name, reference numbers, etc." }
+                label: { text: "Other details" }
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
