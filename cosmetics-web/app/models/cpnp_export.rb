@@ -18,7 +18,13 @@ class CpnpExport
   end
 
   def industry_reference
-    @xml_doc.xpath("//industryReference").first&.text
+    industry_reference_value = @xml_doc.xpath("//industryReference").first&.text
+    if industry_reference_value == "N/A"
+      industry_reference = nil
+    else
+      industry_reference = industry_reference_value
+    end
+    industry_reference
   end
 
   def notification_status

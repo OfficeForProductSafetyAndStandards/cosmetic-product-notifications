@@ -5,12 +5,11 @@
     dd
       = notification.reference_number_for_display
 
-    /TODO: add industry number to a notification and read it from the xml file
-    /- if notification.industry_number.present?
-    dt
-      | Reference number
-    dd
-      = 123456
+    - if notification.industry_reference.present?
+      dt
+        | Reference number
+      dd
+        = notification.industry_reference
 
     - if notification.cpnp_reference
       dt
