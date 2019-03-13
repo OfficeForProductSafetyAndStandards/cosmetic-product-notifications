@@ -2,7 +2,7 @@ require "test_helper"
 
 class NotificationTest < ActiveSupport::TestCase
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     @investigation = Investigation.create(description: "new investigation for notification test")
     @user_one = User.find_by(last_name: "User_one")
     @user_two = User.find_by(last_name: "User_two")
@@ -10,7 +10,7 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should notify current assignee when the assignee is a person and there is any change" do
@@ -43,13 +43,12 @@ class NotificationTest < ActiveSupport::TestCase
 
   test "should notify creator and assignee when case is closed or reopened by someone else" do
     @investigation.update(assignee: @user_three)
-    logout
-    sign_in_as_admin
+    sign_in_as User.find_by(last_name: "Admin")
     mock_investigation_updated(who_will_be_notified: [@user_one, @user_three].map(&:email))
     @investigation.update(is_closed: !@investigation.is_closed)
-    assert_equal @number_of_notifications, 1
+    assert_equal 2, @number_of_notifications
     @investigation.update(is_closed: !@investigation.is_closed)
-    assert_equal @number_of_notifications, 2
+    assert_equal 4, @number_of_notifications
   end
 
   test "should not notify creator when case is closed or reopened by the creator" do
