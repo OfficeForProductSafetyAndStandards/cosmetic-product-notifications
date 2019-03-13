@@ -24,6 +24,7 @@ class Notification < ApplicationRecord
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_import_country, if: :will_save_change_to_import_country?
+  after_save :update_elasticsearch_index
 
   def self.duplicate_notification_message
     "Notification duplicated"
@@ -89,12 +90,6 @@ class Notification < ApplicationRecord
   end
   # rubocop:enable Metrics/BlockLength
 
-  after_save do
-    if saved_changes.key?(:status) && status == "notification_complete"
-     __elasticsearch__.index_document
-    end
-  end
-
   def reference_number_for_display
     "UKCP-%08d" % reference_number
   end
@@ -157,6 +152,12 @@ private
       mandatory_attributes('draft_complete')
     when 'notification_file_imported'
       mandatory_attributes('empty')
+    end
+  end
+
+  def update_elasticsearch_index
+    if saved_changes.key?(:status) && status == "notification_complete"
+      __elasticsearch__.index_document
     end
   end
 end
