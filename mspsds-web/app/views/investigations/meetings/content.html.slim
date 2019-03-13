@@ -12,11 +12,10 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Summary
-        .govuk-form-group
-          span.govuk-hint#correspondence-summary-hint
-            | Give an overview of the meeting
-          = form.text_field :overview,
-                  class: "govuk-input govuk-!-width-two-thirds", aria_describedby: "correspondence-summary-hint"
+        = render "form_components/govuk_input", key: :overview, form: form,
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Summary", classes: "govuk-visually-hidden" },
+                hint: { text: "Give an overview of the meeting" }
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Details

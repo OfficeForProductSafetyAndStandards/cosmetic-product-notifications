@@ -153,7 +153,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   def choose_two_businesses
     page.check "businesses_retailer", visible: false
     page.check "businesses_other", visible: false
-    fill_in "new-business-type-other", with: "advertiser"
+    fill_in "Other type", with: "advertiser"
     click_button "Continue"
   end
 
