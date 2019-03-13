@@ -164,7 +164,6 @@ module Shared
 
         JSON.parse(response)
       end
-
     end
   end
 end

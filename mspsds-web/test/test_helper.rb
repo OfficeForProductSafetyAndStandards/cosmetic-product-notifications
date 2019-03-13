@@ -20,7 +20,7 @@ class ActiveSupport::TestCase
 
   def initialize *args
     @keycloak_client_instance = Shared::Web::KeycloakClient.instance
-    super *args
+    super(*args)
   end
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
@@ -41,7 +41,6 @@ class ActiveSupport::TestCase
   def setup
     self.class.import_into_elasticsearch
   end
-
 
   # On top of mocking out external services, this method also sets the user to an initial,
   # sensible value, but it should only be run once per test.
@@ -187,5 +186,4 @@ private
   def format_user_for_get_users(users)
     users.map { |user| { id: user[:id], email: user[:email], firstName: user[:first_name], lastName: user[:last_name] } }.to_json
   end
-
 end
