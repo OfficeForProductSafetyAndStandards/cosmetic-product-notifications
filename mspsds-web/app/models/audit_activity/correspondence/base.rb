@@ -11,7 +11,7 @@ class AuditActivity::Correspondence::Base < AuditActivity::Base
     )
   end
 
-  def sensitive_body?
+  def sensitive?
     !correspondence.can_be_displayed?
   end
 end
