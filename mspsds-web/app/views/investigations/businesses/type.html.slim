@@ -10,7 +10,9 @@
         | Add business
       h3.govuk-heading-m [class="govuk-!-margin-bottom-2"] Select business type
       - other = capture do
-        = form.text_field :type_other, class: "govuk-input govuk-!-width-one-third"
+        = render "form_components/govuk_input", key: :type_other, form: form,
+                classes: "govuk-!-width-one-third",
+                label: { text: "Other type", classes: "govuk-visually-hidden" }
       = render "form_components/govuk_radios", form: form, key: :type,
         items: [{ text: "Retailer", value: "retailer" },
                 { text: "Manufacturer", value: "manufacturer" },
