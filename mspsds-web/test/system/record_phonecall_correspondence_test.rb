@@ -87,6 +87,20 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     assert_current_path(/cases\/\d+/)
   end
 
+  test "conceals information on phonecalls with customer info" do
+    fill_in_context_form
+    choose :correspondence_phone_call_has_consumer_info_true, visible: false
+    click_button "Continue"
+    fill_in_content_form
+    click_button "Continue"
+    click_button "Continue"
+    click_on "Activity"
+    within id: "activity" do
+      assert_equal("Phone call added", first('h3').text)
+      assert_equal("RESTRICTED ACCESS", first(".govuk-badge").text)
+    end
+  end
+
   def fill_in_context_form
     fill_in "correspondence_phone_call[correspondent_name]", with: @correspondence.correspondent_name
     fill_in "correspondence_phone_call[phone_number]", with: @correspondence.phone_number
