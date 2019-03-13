@@ -1,25 +1,26 @@
 - notification = local_assigns[:notification]
-.govuk-body-s
-  dt
-    | UK cosmetic product number
-  dd
-    = notification.reference_number_for_display
-
-  /TODO: add industry number to a notification and read it from the xml file
-  /- if notification.industry_number.present?
-  dt
-    | Reference number
-  dd
-    = 123456
-
-  - if notification.notification_file_imported?
+.product
+  .check-your-answers.product-data.govuk-body-s
     dt
-      | EU reference number
+      | UK cosmetic product number
     dd
-      = notification.cpnp_reference
-    /TODO: add first notified date
+      = notification.reference_number_for_display
+
+    /TODO: add industry number to a notification and read it from the xml file
+    /- if notification.industry_number.present?
     dt
-      | First notified in the EU
+      | Reference number
     dd
-      | 2016/09/21
-br
+      = 123456
+
+    - if notification.cpnp_is_imported?
+      dt
+        | EU reference number
+      dd
+        = notification.cpnp_reference
+      /TODO: add first notified date
+      dt
+        | First notified in the EU
+      dd
+        | 2016/09/21
+

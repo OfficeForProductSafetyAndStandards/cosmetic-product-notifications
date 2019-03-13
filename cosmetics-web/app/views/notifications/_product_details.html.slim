@@ -1,5 +1,5 @@
 - notification = local_assigns[:notification]
-table.govuk-table
+table.govuk-table.check-your-answers-table
   caption.govuk-table__caption.govuk-heading-m
     | Product
   tbody.govuk-table__body
@@ -43,7 +43,17 @@ table.govuk-table
           - notification.image_uploads.each do |image|
             - if image.file_exists? && image.marked_as_safe?
               = link_to image.filename, url_for(image.file)
-              br
-
-- notification.components.each do |component|
-  = render "notifications/component_details", component: component
+    - if notification.components.count == 1
+      = render "notifications/component_details", component: notification.components.first
+    -else
+      - notification.components.each do |component|
+        table.govuk-table
+          caption.govuk-table__caption.govuk-heading-m
+            = "#{component.name}"
+          tbody.govuk-table__body
+            tr.govuk-table__row
+              th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
+                | Shades
+              td.govuk-table__cell
+                == non_or_bullet_list_html(component.shades)
+          = render "notifications/component_details", component: component
