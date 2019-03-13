@@ -21,7 +21,7 @@
               = investigation.assignee.organisation.name
         td.govuk-table__cell [class="govuk-!-font-size-16"]
           - if policy(investigation).assign?
-            = link_to "Change", assign_investigation_path(investigation)
+            = link_to "Change", new_investigation_assign_path(investigation)
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
           span.govuk-caption-m[class="govuk-!-font-size-16"]
