@@ -24,7 +24,6 @@ class Notification < ApplicationRecord
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
   before_save :add_import_country, if: :will_save_change_to_import_country?
-  after_save :update_elasticsearch_index
 
   def self.duplicate_notification_message
     "Notification duplicated"
@@ -85,7 +84,8 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
+      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?,
+                  after: Proc.new { update_elasticsearch_index }
     end
   end
   # rubocop:enable Metrics/BlockLength
