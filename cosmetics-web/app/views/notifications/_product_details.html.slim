@@ -34,7 +34,7 @@ table.govuk-table.check-your-answers-table
       th.govuk-table__header[scope="row"]
         | Shades
       td.govuk-table__cell
-        == non_or_bullet_list_html(notification.shades.split)
+        = render "none_or_bullet_list", entities_list: notification.shades.split
     - if notification.image_uploads.present?
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
@@ -47,7 +47,7 @@ table.govuk-table.check-your-answers-table
       = render "notifications/component_details", component: notification.components.first
     -else
       - notification.components.each do |component|
-        table.govuk-table
+        table.govuk-table.check-your-answers-table
           caption.govuk-table__caption.govuk-heading-m
             = "#{component.name}"
           tbody.govuk-table__body
@@ -55,5 +55,5 @@ table.govuk-table.check-your-answers-table
               th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
                 | Shades
               td.govuk-table__cell
-                == non_or_bullet_list_html(component.shades)
+                = render "none_or_bullet_list", entities_list: component.shades
           = render "notifications/component_details", component: component

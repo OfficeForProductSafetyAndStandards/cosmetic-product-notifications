@@ -5,13 +5,14 @@ tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | CMR
   td.govuk-table__cell
-    == non_or_bullet_list_html(component.cmrs)
+    = render "none_or_bullet_list", entities_list: component.cmrs
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Nanomaterials
   td.govuk-table__cell
-    == non_or_bullet_list_html(component.nano_material&.nano_elements)
+
+    = render "none_or_bullet_list", entities_list: component.nano_material&.nano_elements
 - if component.nano_material&.nano_elements.present?
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
@@ -56,11 +57,11 @@ tr.govuk-table__row
     | Formulation
   td.govuk-table__cell
     - if component.exact? && component.exact_formulas.present?
-      == non_or_bullet_list_html(component.exact_formulas)
+      = render "none_or_bullet_list", entities_list: component.exact_formulas
     - elsif component.range? && component.range_formulas.present?
-      == non_or_bullet_list_html(component.range_formulas)
+      = render "none_or_bullet_list", entities_list: component.range_formulas
     - else
-      /TODO
+      /TODO, but what if no file is present yet?
       | FILE NAME SHOULD BE HERE
 
 - if component.trigger_questions.present?

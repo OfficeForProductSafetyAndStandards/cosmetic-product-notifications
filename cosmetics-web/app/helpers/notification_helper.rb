@@ -20,18 +20,4 @@ module NotificationHelper
       "EU (before Brexit)"
     end
   end
-
-  def non_or_bullet_list_html(entities_list)
-    if entities_list.blank?
-      return "None"
-    elsif entities_list.length == 1
-      return entities_list.first
-    end
-
-    bullet_list = "<ul class='govuk-list govuk-list--bullet'>"
-    entities_list.each do |entity|
-      bullet_list += "<li>#{entity}</li>"
-    end
-    bullet_list + "</ul>"
-  end
 end

@@ -1,0 +1,10 @@
+- entities_list = local_assigns[:entities_list]
+- if entities_list.blank?
+  | None
+- elsif entities_list.count == 1
+  = entities_list.first
+- else
+  ul.govuk-list.govuk-list--bullet
+    - entities_list.each do |entity|
+      li
+        = entity
