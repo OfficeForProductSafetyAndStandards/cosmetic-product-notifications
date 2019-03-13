@@ -1,1 +1,41 @@
-h1 TODO - this
+- content_for :page_title, "Add nanomaterial"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+
+    = form_with url: wizard_path, method: :put do |form|
+      - heading_material = capture do
+        h1.govuk-heading-xl Which nanomaterials does the cosmetic product contain?
+      = render "form_components/govuk_radios", form: form, key: :nano_material_index,
+              errorMessage: @no_nano_material_selected && { text: "Please select an option before continuing" },
+              fieldset: { legend: { html: heading_material } },
+              items: nano_materials.each_with_index.map {|nano_material, i| {text: nano_material[:iupac_name], value: i}}
+
+      - heading_expose_route = capture do
+        h2.govuk-heading-l How would the user be exposed to the nanomaterials?
+      = render "form_components/govuk_radios", form: form, key: :nano_material_exposure_route,
+              errorMessage: @no_exposure_route_selected && { text: "Please select an option before continuing" },
+              fieldset: { legend: { html: heading_expose_route } },
+              items: exposure_routes.each_with_index.map {|exposure_route, i| {text: exposure_route, value: i}}
+
+      - heading_expose_condition = capture do
+        h2.govuk-heading-l How is the user instructed to apply the cosmetic product?
+      = render "form_components/govuk_radios", form: form, key: :nano_material_exposure_condition,
+              errorMessage: @no_exposure_condition_selected && { text: "Please select an option before continuing" },
+              fieldset: {legend: {html: heading_expose_condition}},
+              items: exposure_conditions.each_with_index.map {|exposure_condition, i| {text: exposure_condition, value: i}}
+
+      - heading_uv_filter = capture do
+        h2.govuk-heading-l Is this nanomaterial used as a UV filter?
+      = render "form_components/govuk_radios", form: form, key: :nano_material_uv_filter,
+              fieldset: { legend: { html: heading_uv_filter } },
+              items: [{ text: "Yes", value: true }, { text: "No", value: false }]
+
+      - heading_colorant = capture do
+        h2.govuk-heading-l Is this used as a colorant?
+      = render "form_components/govuk_radios", form: form, key: :nano_material_colorant,
+              fieldset: { legend: { html: heading_colorant } },
+              items: [{ text: "Yes", value: true }, { text: "No", value: false }]
+
+      = form.submit "Continue", class: "govuk-button"

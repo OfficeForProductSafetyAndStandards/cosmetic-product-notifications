@@ -80,7 +80,7 @@ RSpec.describe ComponentBuildController, type: :controller do
 
     it "skips add_shades step if user doesn't want to add shades" do
       post(:update, params: params.merge(id: :number_of_shades, number_of_shades: "single"))
-      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :add_product_image))
+      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :contains_nanomaterials))
     end
 
     it "adds errors if number_of_shades is empty" do

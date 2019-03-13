@@ -32,6 +32,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
@@ -68,6 +72,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
@@ -98,6 +106,10 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # number_of_shades
+    choose("No")
+    click_button "Continue"
+
+    # nano_materials
     choose("No")
     click_button "Continue"
 
@@ -145,6 +157,10 @@ RSpec.describe "Manually enter product details", type: :system do
     inputs.each_with_index do |input, i|
       input.set shades[i]
     end
+    click_button "Continue"
+
+    # nano_materials
+    choose("No")
     click_button "Continue"
 
     # add_product_image

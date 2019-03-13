@@ -1,5 +1,8 @@
 class ComponentBuildController < ApplicationController
   include Wicked::Wizard
+  include NanoMaterialsHelper
+
+  helper NanoMaterialsHelper
 
   steps :number_of_shades, :add_shades, :contains_nanomaterials, :add_nanomaterial
 
@@ -18,6 +21,8 @@ class ComponentBuildController < ApplicationController
       render_add_shades
     when :contains_nanomaterials
       render_contains_nanomaterials
+    when :add_nanomaterial
+      render_add_nanomaterial
     else
       @component.update(component_params)
       render_wizard @component
@@ -94,5 +99,33 @@ private
       @component.errors.add :nano_materials, "Please select an option"
       render step
     end
+  end
+
+  def render_add_nanomaterial
+    if params[:nano_material_index].nil?
+      @no_nano_material_selected = true
+    end
+    if params[:nano_material_exposure_route].nil?
+      @no_exposure_route_selected = true
+    end
+    if params[:nano_material_exposure_condition].nil?
+      @no_exposure_condition_selected = true
+    end
+
+    if @no_nano_material_selected || @no_exposure_route_selected || @no_exposure_condition_selected
+      return render step
+    end
+
+    selected_nano_material = nano_materials[params[:nano_material_index].to_i]
+    selected_exposure_route = exposure_routes[params[:nano_material_exposure_route].to_i]
+    selected_exposure_condition = exposure_conditions[params[:nano_material_exposure_condition].to_i]
+
+    nano_material = @component.nano_materials.build(
+        exposure_condition: selected_exposure_condition,
+        exposure_route: selected_exposure_route
+    )
+    nano_material.nano_elements.build(selected_nano_material)
+
+    render_wizard @component
   end
 end
