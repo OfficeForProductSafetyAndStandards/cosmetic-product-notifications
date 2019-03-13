@@ -3,7 +3,14 @@
 - elsif entities_list.count == 1
   = entities_list.first
 - else
-  ul.govuk-list.govuk-list--bullet
+  ul.govuk-list.govuk-list--bullet.entity-list
     - entities_list.each do |entity|
-      li
-        = entity
+      - if key_name
+        li
+          dt
+            = entity[key_name]
+          dd
+            = entity[value_name]
+      - else
+        li
+          = entity
