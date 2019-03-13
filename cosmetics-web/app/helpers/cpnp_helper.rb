@@ -35,7 +35,7 @@ module CpnpHelper
       predefined: "Frame formulation",
       exact: "Exact concentration",
       range: "Concentration ranges"
-  }
+  }.freeze
 
   CATEGORY_NAME = {
       skin_products: "Skin products",

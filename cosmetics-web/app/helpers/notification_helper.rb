@@ -6,6 +6,7 @@ module NotificationHelper
     if notification.cpnp_reference.present? #TODO: check if product is pre-brexit
       return "Manufactured in EU before Brexit"
     end
+
     "No"
   end
 

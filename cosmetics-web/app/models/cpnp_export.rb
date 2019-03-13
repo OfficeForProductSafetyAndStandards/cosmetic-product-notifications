@@ -55,29 +55,27 @@ class CpnpExport
 private
 
   def cmrs(component_node)
-    has_cmr = component_node.xpath(".//hasCmr") == "N" ? false : true
+    has_cmr = component_node.xpath(".//hasCmr") != "N"
+    return unless has_cmr
 
-    if has_cmr
-      component_node.xpath(".//cmrList/cmr").collect do |cmr_node|
-        Cmr.create(name: cmr_node.xpath(".//name").first&.text,
-                   cas_number: cmr_node.xpath(".//casNumber").first&.text,
-                   ec_number: cmr_node.xpath(".//ecNumber").first&.text)
-      end
+    component_node.xpath(".//cmrList/cmr").collect do |cmr_node|
+      Cmr.create(name: cmr_node.xpath(".//name").first&.text,
+                 cas_number: cmr_node.xpath(".//casNumber").first&.text,
+                 ec_number: cmr_node.xpath(".//ecNumber").first&.text)
     end
   end
 
   def nano_material(component_node)
-    has_nano = component_node.xpath(".//hasNano") == "N" ? false : true
+    has_nano = component_node.xpath(".//hasNano") != "N"
+    return unless has_nano
 
-    if has_nano
-      nano_list_node = component_node.xpath(".//nanoList").first
-      nano_elements = nano_list_node&.xpath(".//nano").collect do |nano_element_node|
-        nano_element(nano_element_node)
-      end
-      NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
-                          exposure_route: exposure_route(nano_list_node),
-                          nano_elements: nano_elements)
+    nano_list_node = component_node.xpath(".//nanoList").first
+    nano_elements = nano_list_node&.xpath(".//nano").collect do |nano_element_node|
+      nano_element(nano_element_node)
     end
+    NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
+                        exposure_route: exposure_route(nano_list_node),
+                        nano_elements: nano_elements)
   end
 
   def nano_element(nano_element_node)
@@ -92,11 +90,11 @@ private
   end
 
   def exposure_condition(nano_list_node)
-    get_exposure_condition(nano_list_node&.xpath(".//exposureCondition").first&.text)
+    get_exposure_condition(nano_list_node&.xpath(".//exposureCondition")&.first&.text)
   end
 
   def exposure_route(nano_list_node)
-    get_exposure_route(nano_list_node&.xpath(".//exposureRoute/exposureID").first&.text)
+    get_exposure_route(nano_list_node&.xpath(".//exposureRoute/exposureID")&.first&.text)
   end
 
   def trigger_questions(component_node)
