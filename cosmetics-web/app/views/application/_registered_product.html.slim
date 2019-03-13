@@ -12,17 +12,28 @@ li.product
       | First registered in the UK:
     dd
       = notification.created_at.strftime("%d/%m/%Y")
+    br
     dt
       | Last modified:
     dd
       = notification.updated_at.strftime("%d/%m/%Y")
+    br
     dt
       | UK cosmetic product number:
     dd
       = notification.reference_number_for_display
+    br
 
     - if notification.cpnp_reference.present?
       dt
         | EU reference number:
       dd
         = notification.cpnp_reference
+      br
+
+    - if notification.cpnp_notification_date.present?
+      dt
+        | EU registration date:
+      dd
+        = notification.cpnp_notification_date.strftime("%d/%m/%Y")
+      br
