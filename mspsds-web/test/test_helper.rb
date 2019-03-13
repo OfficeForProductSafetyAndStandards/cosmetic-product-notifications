@@ -47,19 +47,19 @@ class ActiveSupport::TestCase
   # To change currently logged in user afterwards call `sign_in_as(...)`
   def mock_out_keycloak_and_notify(user_name: "User_one", team_admin: false)
     @users = [admin_user,
-              test_user(name: "User_one", id: "75fda9a1-786d-4ace-ad20-76afa4f39111"),
+              test_user(name: "User_one"),
               test_user(name: "User_two"),
               test_user(name: "User_three")].map(&:attributes)
     @organisations = organisations.map(&:attributes)
     @teams = all_teams.map(&:attributes)
     @team_users = [
-        { id: next_id, user_id: @users[1][:id], team_id: all_teams[0].id },
-        { id: next_id, user_id: @users[1][:id], team_id: all_teams[1].id },
-        { id: next_id, user_id: @users[0][:id], team_id: all_teams[0].id },
-        { id: next_id, user_id: @users[2][:id], team_id: all_teams[1].id },
-        { id: next_id, user_id: @users[3][:id], team_id: all_teams[2].id },
-        { id: next_id, user_id: @users[3][:id], team_id: all_teams[3].id }
-    ]
+        { user_id: @users[1][:id], team_id: all_teams[0].id },
+        { user_id: @users[1][:id], team_id: all_teams[1].id },
+        { user_id: @users[0][:id], team_id: all_teams[0].id },
+        { user_id: @users[2][:id], team_id: all_teams[1].id },
+        { user_id: @users[3][:id], team_id: all_teams[2].id },
+        { user_id: @users[3][:id], team_id: all_teams[3].id }
+    ].each_with_index.map { |team_user, id| team_user.merge(id: id) }
 
     allow(@keycloak_client_instance).to receive(:all_organisations) { @organisations }
     allow(@keycloak_client_instance).to receive(:all_teams) { @teams }
@@ -135,11 +135,6 @@ class ActiveSupport::TestCase
   end
 
 private
-
-  def next_id
-    @id ||= 0
-    @id += 1
-  end
 
   def admin_user
     id = SecureRandom.uuid
