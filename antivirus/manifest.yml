@@ -6,4 +6,4 @@ applications:
   stack: cflinuxfs3
   disk_quota: 2G
   services:
-    - logit-ssl-drain
+    - opss-log-drain

@@ -11,6 +11,7 @@ We're using [fluentd](https://www.fluentd.org/) to aggregate the logs and send t
 Create or target a common space using `cf create-space common` or `cf target -o beis-mspsds -s common`.
 
 Deploy the fluentd app by running `cf push --no-start --hostname <fluentd hostname>` from the `fluentd` folder.
+`<fluentd hostname>` can be anything but the full domain will be used again below.
 
 Once the app has been created, add the following environment variables for the Logit and S3 credentials.
 The values can be found on the respective websites.
@@ -23,7 +24,7 @@ The values can be found on the respective websites.
 
 Once the environment variables are set, start the app using `cf start fluentd`.
 
-To start sending logs from an application, create a log drain on the specific space using `cf cups opss-log-drain -l https://<fluentd domain>`
+To start sending logs from an application, create a log drain on the specific space using `cf cups opss-log-drain -l https://<fluentd domain from above>`
 Then bind the service to each application using e.g. `cf bind-service mspsds-web opss-log-drain`.
 
 
