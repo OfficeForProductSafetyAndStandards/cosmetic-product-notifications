@@ -103,14 +103,6 @@ module Shared
         JSON.parse(response)["attributes"] || {}
       end
 
-      def all_groups
-        response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
-          Keycloak::Internal.get_groups
-        end
-
-        JSON.parse(response)
-      end
-
       def registration_url(redirect_uri)
         params = URI.encode_www_form(client_id: Keycloak::Client.client_id, response_type: "code", redirect_uri: redirect_uri)
         Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/protocol/openid-connect/registrations?#{params}"
@@ -163,6 +155,14 @@ module Shared
         end
 
         JSON.parse(response).collect { |user| [user["id"], user["groups"]] }.to_h
+      end
+
+      def all_groups
+        response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
+          Keycloak::Internal.get_groups
+        end
+
+        JSON.parse(response)
       end
     end
   end

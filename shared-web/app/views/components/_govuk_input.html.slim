@@ -1,0 +1,32 @@
+/ Implementation based on
+/ https://github.com/alphagov/govuk-frontend/
+/ blob/b863be549f502a6829a5d261976c3bcb8ebdf4d2/src/components/input/template.njk
+ruby:
+  described_by = ""
+  form_group_classes = [local_assigns.dig(:formGroup, :classes)]
+  form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
+  input_classes = ["govuk-input", local_assigns[:classes]]
+  input_classes.push("govuk-input--error") if local_assigns[:errorMessage].present?
+
+.govuk-form-group class=form_group_classes
+  = render "components/govuk_label", for: id, **label
+
+  - if local_assigns[:hint].present?
+    - hint_id = local_assigns[:id] + '-hint'
+    - described_by = described_by.present? ? described_by + ' ' + hint_id : hint_id
+    = render "components/govuk_hint", id: hint_id, **local_assigns[:hint]
+
+  - if local_assigns[:errorMessage].present?
+    - error_id = local_assigns[:id] + '-error'
+    - described_by = described_by.present? ? described_by + ' ' + error_id : error_id
+    = render "components/govuk_error_message", id: error_id, **errorMessage
+
+  input[*(local_assigns[:attributes] || {})
+                class=input_classes
+                id=id
+                name=name
+                type=(local_assigns[:type] || 'text')
+                value=local_assigns[:value]
+                pattern=local_assigns[:pattern]
+                aria-describedby=described_by.presence
+                autocomplete=local_assigns[:autocomplete]]

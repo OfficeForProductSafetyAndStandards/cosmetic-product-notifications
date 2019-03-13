@@ -2,14 +2,14 @@ require "application_system_test_case"
 
 class AlertTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     @investigation = investigations(:one)
     @alert = alerts :one
     go_to_new_activity_for_investigation @investigation
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "prepopulates email content with link to case" do
@@ -71,12 +71,8 @@ class AlertTest < ApplicationSystemTestCase
   end
 
   def stub_email_alert
-    result = ""
-    @number_of_emails_sent = 0
-    allow(result).to receive(:deliver_later)
-    allow(NotifyMailer).to receive(:alert) do |_id, _user_name, _user_email, _text|
-      @number_of_emails_sent += 1
-      result
+    allow(SendAlertJob).to receive(:perform_later) do |recipients, _user_name, _user_email|
+      @number_of_emails_sent = recipients.length
     end
   end
 

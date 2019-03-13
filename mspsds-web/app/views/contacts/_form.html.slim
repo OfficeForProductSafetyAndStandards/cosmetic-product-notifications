@@ -1,15 +1,10 @@
 .govuk-fieldset
-  .govuk-form-group
-    = form.label :name, "Name", class: "govuk-label"
-    = form.text_field :name, class: "govuk-input govuk-!-width-two-thirds"
-  .govuk-form-group
-    = form.label :email, "Email", class: "govuk-label"
-    = form.text_field :email, class: "govuk-textarea govuk-!-width-two-thirds"
-  .govuk-form-group
-    = form.label :phone_number, "Phone number", class: "govuk-label"
-    = form.text_field :phone_number, class: "govuk-input govuk-!-width-two-thirds"
-  .govuk-form-group
-    = form.label :job_title, "Job title / description", class: "govuk-label"
-    = form.text_field :job_title, class: "govuk-input govuk-!-width-two-thirds"
-  .govuk-form-group
-    = form.submit "Save", class: "govuk-button"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_input", key: :name, form: form, label: { text: "Name" }
+      = render "form_components/govuk_input", key: :email, form: form, label: { text: "Email" }
+      = render "form_components/govuk_input", key: :phone_number, form: form, label: { text: "Phone number" }
+      = render "form_components/govuk_input", key: :job_title, form: form,
+              label: { text: "Job title / description" }
+      .govuk-form-group
+        = form.submit "Save", class: "govuk-button"

@@ -3,11 +3,11 @@ require "application_system_test_case"
 class UpdateProductTest < ApplicationSystemTestCase
   setup do
     @product = products(:one)
-    sign_in_as_user
+    mock_out_keycloak_and_notify
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "edit page fields should be populated with product attributes" do
