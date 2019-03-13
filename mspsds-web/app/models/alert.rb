@@ -14,7 +14,8 @@ class Alert < ApplicationRecord
   after_save :send_alert_email
 
   def send_alert_email
-    SendAlertJob.perform_later User.all, summary, description
+    users_details = User.all.map { |user| { full_name: user.full_name, email: user.email } }
+    SendAlertJob.perform_later(users_details, summary, description)
   end
 
   def create_audit_activity
