@@ -17,7 +17,7 @@ class AuditActivity::Investigation::Add < AuditActivity::Investigation::Base
     details
   end
 
-  def sensitive_body?
+  def sensitive?
     return false if investigation.complainant.blank?
 
     !investigation.complainant&.can_be_displayed?
