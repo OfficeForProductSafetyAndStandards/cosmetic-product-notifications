@@ -89,6 +89,12 @@ class Notification < ApplicationRecord
   end
   # rubocop:enable Metrics/BlockLength
 
+  after_save do
+    if saved_changes.key?(:status) && status == "notification_complete"
+     __elasticsearch__.index_document
+    end
+  end
+
   def reference_number_for_display
     "UKCP-%08d" % reference_number
   end
