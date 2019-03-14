@@ -66,13 +66,17 @@ class Component < ApplicationRecord
     end
   end
 
+  def self.get_parent_category(category)
+    PARENT_OF_CATEGORY[category&.to_sym]
+  end
+
+  def self.get_parent_of_categories
+    PARENT_OF_CATEGORY
+  end
+
 private
 
   def update_notification_state
     notification&.set_single_or_multi_component!
-  end
-
-  def get_parent_category(category)
-    PARENT_OF_CATEGORY[category&.to_sym]
   end
 end

@@ -1,10 +1,9 @@
 class ComponentBuildController < ApplicationController
   include Wicked::Wizard
   include NanoMaterialsHelper
+  include CategoryHelper
 
-  helper NanoMaterialsHelper
-
-  steps :number_of_shades, :add_shades, :contains_nanomaterials, :add_nanomaterial
+  steps :number_of_shades, :add_shades, :contains_nanomaterials, :add_nanomaterial, :select_category
 
   before_action :set_component
 
@@ -45,7 +44,7 @@ private
   end
 
   def component_params
-    params.require(:component).permit(shades: [])
+    params.require(:component).permit(:sub_sub_category, shades: [])
   end
 
   def render_number_of_shades
