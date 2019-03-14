@@ -1,0 +1,10 @@
+---
+applications:
+- name: fluentd
+  memory: 100M
+  instances: 1
+  buildpacks:
+    - ruby_buildpack
+  path: .
+  command: bin/fluentd -c ./fluent.conf -p ./plugins/
+  stack: cflinuxfs3
