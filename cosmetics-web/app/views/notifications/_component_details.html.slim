@@ -1,5 +1,3 @@
-- component = local_assigns[:component]
-
 /TODO: if post Brexit?
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
@@ -62,10 +60,11 @@ tr.govuk-table__row
     - elsif component.range? && component.range_formulas
       = render "none_or_bullet_list", entities_list: format_range_formulas(component.range_formulas),
               key_name: :inci_name, value_name: :range
+    - elsif component.formulation_file.filename
+      = component.formulation_file.filename
     - else
-      /TODO, but what if no file is present yet?
-      | FILE NAME SHOULD BE HERE
-
+      = link_to "Add formulation document",
+        new_responsible_person_notification_component_formulation_path(@notification.responsible_person, @notification, component)
 - if component.trigger_questions
   - component.trigger_questions.each do |question|
     - if trigger_question_answer_is_present?(question)
