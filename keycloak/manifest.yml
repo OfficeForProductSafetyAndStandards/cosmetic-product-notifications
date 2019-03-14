@@ -10,4 +10,4 @@ applications:
   stack: cflinuxfs3
   services:
     - keycloak-database
-    - logit-ssl-drain
+    - opss-log-drain
