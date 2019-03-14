@@ -6,7 +6,7 @@ $timeline-item-margin-bottom: 20px;
   padding: 10px;
   margin: 0 auto $timeline-item-margin-bottom;
 
-  ul {
+  > ul {
     list-style-type: none;
     position: relative;
     margin: 0 0 20px 0;
@@ -21,7 +21,7 @@ $timeline-item-margin-bottom: 20px;
       height: calc(100% + #{$timeline-item-margin-bottom});
     }
 
-    li {
+    > li {
       margin: 4px 0 $timeline-item-margin-bottom 25px;
       position: relative;
       display: block;
@@ -54,7 +54,7 @@ $timeline-item-margin-bottom: 20px;
         top: 0;
       }
 
-      h3 {
+      > h3 {
         margin-top: 0.5em;
         margin-bottom: 0;
       }

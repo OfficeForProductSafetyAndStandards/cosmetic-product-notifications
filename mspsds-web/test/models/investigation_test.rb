@@ -77,7 +77,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "case title should match when no products are present on the case" do
-    investigation = investigations(:no_products_case_titles)
+    investigation = investigations(:no_products_case_title)
     assert_equal "Alarms – Asphyxiation (no product specified)", investigation.title
   end
 
