@@ -79,7 +79,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
       it "renders the show template" do
         get :show, params: { reference_number: notification.reference_number }
-        expect(response).to render_template("notifications/show")
+        expect(response).to render_template("notifications/show_poison_centre")
       end
     end
   end
@@ -101,7 +101,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
       it "renders the show template" do
         get :show, params: { reference_number: notification.reference_number }
-        expect(response).to render_template("notifications/show")
+        expect(response).to render_template("notifications/show_msa")
       end
     end
   end

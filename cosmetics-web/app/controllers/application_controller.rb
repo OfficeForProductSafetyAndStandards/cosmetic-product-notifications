@@ -33,6 +33,6 @@ private
   end
 
   def poison_centre_or_msa_user?
-    User.current&.poison_centre_or_msa_user?
+    User.current&.poison_centre_user? || User.current&.msa_user?
   end
 end
