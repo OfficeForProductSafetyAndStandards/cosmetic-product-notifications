@@ -2,6 +2,5 @@ table.govuk-table
   caption.govuk-table__caption
     = get_trigger_rules_question_name(trigger_question.question)
   tbody.govuk-table__body
-    - if trigger_question.trigger_question_elements
-      - trigger_question.trigger_question_elements.each do |element|
-        = render "notifications/trigger_question_element_details", trigger_question_element: element
+    - trigger_question.trigger_question_elements.each do |element|
+    = render "notifications/trigger_question_element_details", trigger_question_element: element
