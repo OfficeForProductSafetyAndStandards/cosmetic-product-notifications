@@ -201,9 +201,15 @@ private
 
   def stub_user_management
     allow(@keycloak_client_instance).to receive(:add_user_to_team), &method(:add_user_to_team)
+    allow(@keycloak_client_instance).to receive(:create_user) do |email|
+      @users.push id: SecureRandom.uuid, email: email, username: email
+    end
+    allow(@keycloak_client_instance).to receive(:send_required_actions_welcome_email).and_return(true)
   end
 
   def restore_user_management
     allow(@keycloak_client_instance).to receive(:add_user_to_team).and_call_original
+    allow(@keycloak_client_instance).to receive(:create_user).and_call_original
+    allow(@keycloak_client_instance).to receive(:send_required_actions_welcome_email).and_call_original
   end
 end

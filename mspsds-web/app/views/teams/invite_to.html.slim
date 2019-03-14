@@ -2,7 +2,7 @@
 - content_for :after_header do
   = link_to "Back", team_path(@team), class: "govuk-back-link"
 
-= form_with model: @new_user, url: team_path(@team), method: :put do |form|
+= form_with model: @new_user, url: invite_to_team_path(@team), method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form

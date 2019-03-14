@@ -35,6 +35,23 @@ module Keycloak
       }
       default_call(proc)
     end
+
+    def self.create_user(user_rep)
+      proc = lambda { |token|
+        request_uri = Keycloak::Admin.full_url("users/")
+        Keycloak.generic_request(token["access_token"], request_uri, nil, user_rep, "POST")
+      }
+      default_call(proc)
+    end
+
+    def self.execute_actions_email(user_id, actions, client_id, redirect_uri)
+      proc = lambda { |token|
+        request_uri = Keycloak::Admin.full_url("users/#{user_id}/execute-actions-email")
+        query_params = {client_id: client_id, redirect_uri: redirect_uri}
+        Keycloak.generic_request(token["access_token"], request_uri, query_params, actions, "PUT")
+      }
+      default_call(proc)
+    end
   end
 end
 
@@ -51,11 +68,12 @@ module Shared
         super
       end
 
-      def all_users
+      def all_users(force: false)
+        Rails.cache.delete(:keycloak_users) if force
         response = Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
           Keycloak::Internal.get_users
         end
-        user_groups = all_user_groups
+        user_groups = all_user_groups(force: force)
 
         JSON.parse(response).map do |user|
           { id: user["id"], email: user["email"], groups: user_groups[user["id"]], first_name: user["firstName"], last_name: user["lastName"] }
@@ -85,9 +103,9 @@ module Shared
         teams
       end
 
-      def all_team_users
-        users = all_users
-        user_groups = all_user_groups
+      def all_team_users(force: false)
+        users = all_users(force: force)
+        user_groups = all_user_groups(force: force)
         teams = all_teams.map { |t| t[:id] }.to_set
 
         # We set ids manually because if we don't ActiveHash will use 'next_id' method when computing @records,
@@ -159,13 +177,19 @@ module Shared
         @internal.add_user_group user_id, group_id
       end
 
-      def create_user(user)
-        # TODO MSPSDS-1047
+      def create_user(email)
+        @internal.create_user email: email, username: email, enabled: true
+      end
+
+      def send_required_actions_welcome_email(user_id, redirect_uri)
+        required_actions = %w(sms_auth_check_mobile UPDATE_PASSWORD UPDATE_PROFILE VERIFY_EMAIL)
+        @internal.execute_actions_email user_id, required_actions, "mspsds-app", redirect_uri
       end
 
     private
 
-      def all_user_groups
+      def all_user_groups(force: false)
+        Rails.cache.delete(:keycloak_user_groups) if force
         response = Rails.cache.fetch(:keycloak_user_groups, expires_in: 5.minutes) do
           Keycloak::Internal.get_user_groups
         end

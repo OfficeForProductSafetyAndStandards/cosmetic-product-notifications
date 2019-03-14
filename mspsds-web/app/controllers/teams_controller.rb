@@ -8,7 +8,7 @@ class TeamsController < ApplicationController
 
   def show; end
 
-  # GET /teams/:id/invite, PUT /teams/:id
+  # GET /teams/:id/invite, PUT /teams/:id/invite
   def invite_to
     if request.put? && @new_user.valid?
       existing_user = User.find_by email: @new_user.email_address
@@ -26,17 +26,17 @@ class TeamsController < ApplicationController
           end
         else
           # TODO MSPSDS-1047 Raise better error
-          @new_user.errors.add(:email_address, "#{@new_user.email_address.capitalize} belongs to another organisation and connot be added to team #{@team.display_name}")
+          @new_user.errors.add(:email_address, "#{@new_user.email_address.capitalize} does not belong to this organisation and connot be added to team #{@team.display_name}.")
         end
       else
-        raise "not implemented"
-        # TODO MSPSDS-1047 Create user in correct group
-        # TODO MSPSDS-1047 Send registration email
+        user = User.create_new @new_user.email_address
+        @team.add_user user
+        Shared::Web::KeycloakClient.instance.send_required_actions_welcome_email user.id, root_url
       end
 
       # TODO MSPSDS-1047 Show success message
       if @new_user.errors.empty?
-        render :show
+        redirect_to @team, status: :see_other
       else
         render :invite_to, status: :bad_request
       end

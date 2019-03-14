@@ -40,8 +40,8 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
                                   .find {|u| (u.teams & User.current.teams).empty?}
     email_address = user_in_my_org_not_team.email
     assert_difference "@my_team.users.count" => 1, "User.count" => 0 do
-      put team_url(@my_team), params: { new_user: { email_address: email_address } }
-      assert_response :success
+      put invite_to_team_url(@my_team), params: { new_user: { email_address: email_address } }
+      assert_response :see_other
     end
     expect(NotifyMailer).to have_received(:user_added_to_team)
                                 .with(hash_including(email: email_address, team_id: @my_team.id))
@@ -50,7 +50,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
   test "Inviting existing user from same team returns error" do
     email_address = @my_team.users.find { |u| u != User.current }.email
     assert_difference "@my_team.users.count" => 0, "User.count" => 0 do
-      put team_url(@my_team), params: { new_user: { email_address: email_address } }
+      put invite_to_team_url(@my_team), params: { new_user: { email_address: email_address } }
       assert_response :bad_request
     end
     expect(NotifyMailer).not_to have_received(:user_added_to_team)
@@ -59,7 +59,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
 
   test "Inviting to team I'm not a member of is forbidden" do
     assert_raises Pundit::NotAuthorizedError do
-      put team_url(@another_team), params: { new_user: { email_address: "email@address" } }
+      put invite_to_team_url(@another_team), params: { new_user: { email_address: "email@address" } }
     end
   end
 
@@ -67,7 +67,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
     non_opss_user = Organisation.all.find{|o| o != User.current.organisation}.users
     email_address = non_opss_user.first.email
     assert_difference "@my_team.users.count" => 0, "User.count" => 0 do
-      put team_url(@my_team), params: { new_user: { email_address: email_address } }
+      put invite_to_team_url(@my_team), params: { new_user: { email_address: email_address } }
       assert_response :bad_request
     end
     expect(NotifyMailer).not_to have_received(:user_added_to_team)
@@ -75,8 +75,12 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Inviting new user creates the account and adds them to the team" do
-    # TODO
-    # Check added
-    # Check email sent
+    kc = Shared::Web::KeycloakClient.instance
+
+    assert_difference "@my_team.users.count" => 1, "User.count" => 1 do
+      put invite_to_team_url(@my_team), params: { new_user: { email_address: "new_user@example.com" } }
+      assert_response :see_other
+      expect(kc).to have_received(:send_required_actions_welcome_email)
+    end
   end
 end
