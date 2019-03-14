@@ -17,12 +17,6 @@ li.product
         = notification.cpnp_reference
       br
 
-    - if notification.cpnp_notification_date.present?
-      dt
-        | EU registration date:
-      dd
-        = notification.cpnp_notification_date.strftime("%d/%m/%Y")
-
     p.add-documents
       - if notification.formulation_required?
         = link_to "Add formulation document and product image to finish registration",

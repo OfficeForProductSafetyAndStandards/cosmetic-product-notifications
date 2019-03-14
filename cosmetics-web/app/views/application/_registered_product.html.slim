@@ -30,10 +30,3 @@ li.product
       dd
         = notification.cpnp_reference
       br
-
-    - if notification.cpnp_notification_date.present?
-      dt
-        | EU registration date:
-      dd
-        = notification.cpnp_notification_date.strftime("%d/%m/%Y")
-      br
