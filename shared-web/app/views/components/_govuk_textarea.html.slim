@@ -32,6 +32,9 @@ ruby:
                 rows=rows
                 name=name
                 maxlength=local_assigns[:max_length]
-                aria-describedby=described_by
+                aria-describedby=described_by.presence
                 autocomplete=local_assigns[:autocomplete]]
+        / If the first new line of the textarea is empty, HTML swallows it, so here we add it back in. TODO check this
+        / non-apply operating systems.
+        = "\r\n"
         = local_assigns[:value]

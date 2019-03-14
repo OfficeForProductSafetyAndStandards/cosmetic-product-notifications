@@ -15,12 +15,12 @@ class CreateAllegationTest < ApplicationSystemTestCase
       description: "Allegation description"
     )
 
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     visit new_allegation_path
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "can be reached via create page" do

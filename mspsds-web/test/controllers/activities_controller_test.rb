@@ -2,14 +2,14 @@ require "test_helper"
 
 class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin
+    mock_out_keycloak_and_notify(user_name: "Admin")
     @investigation = investigations(:one)
     @activity = activities(:one)
     @activity.source = sources(:activity_one)
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should create activity" do
@@ -116,6 +116,15 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_redirected_to new_investigation_business_path(@investigation)
+  end
+
+  test "Alert trading standards should go to new alert page" do
+    get new_investigation_activity_path(@investigation), params: {
+        commit: "Continue",
+        activity_type: "alert"
+    }
+
+    assert_redirected_to new_investigation_alert_path(@investigation)
   end
 
   def mock_investigation_updated(who_will_be_notified: [])

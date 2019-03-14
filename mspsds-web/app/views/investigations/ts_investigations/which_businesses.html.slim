@@ -41,10 +41,9 @@
               - other_classes = []
               - other_classes.push "govuk-checkboxes__conditional--hidden" unless @selected_businesses.include?("other")
               #new-business-other-type.govuk-checkboxes__conditional class=other_classes
-                .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:other_business].any?)]
-                  .govuk-form-group
-                    = form.text_field :other_business_type, id: "new-business-type-other", class: "govuk-input",
-                            value: @other_business_type || ""
+                = render "form_components/govuk_input", key: :other_business_type, form: form,
+                        value: @other_business_type,
+                        label: { text: "Other type", classes: "govuk-visually-hidden" }
           .govuk-radios__divider or
           .govuk-form-group
             .govuk-checkboxes

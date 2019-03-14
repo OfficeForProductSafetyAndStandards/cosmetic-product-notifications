@@ -9,7 +9,6 @@ module Shared
 
       def signin
         request_and_store_token(auth_code, params[:request_path])
-        flash[:notice] = "Signed in successfully." if Shared::Web::KeycloakClient.instance.user_signed_in?
         redirect_path = main_app.root_path
         redirect_path = params[:request_path] if is_relative(params[:request_path])
         redirect_to redirect_path
@@ -18,7 +17,7 @@ module Shared
       end
 
       def logout
-        flash[:notice] = "Signed out successfully." if Shared::Web::KeycloakClient.instance.logout
+        Shared::Web::KeycloakClient.instance.logout
         redirect_to main_app.root_path
       end
 
