@@ -47,7 +47,7 @@ module Keycloak
     def self.execute_actions_email(user_id, actions, client_id, redirect_uri)
       proc = lambda { |token|
         request_uri = Keycloak::Admin.full_url("users/#{user_id}/execute-actions-email")
-        query_params = {client_id: client_id, redirect_uri: redirect_uri}
+        query_params = { client_id: client_id, redirect_uri: redirect_uri }
         Keycloak.generic_request(token["access_token"], request_uri, query_params, actions, "PUT")
       }
       default_call(proc)

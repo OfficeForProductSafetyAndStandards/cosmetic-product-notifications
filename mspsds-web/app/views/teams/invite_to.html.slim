@@ -8,6 +8,6 @@
       = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl Invite a team member
       = render "form_components/govuk_input", form: form, key: :email_address,
-              label: {text: "Email address", classes: "govuk-label--m"},
+              label: { text: "Email address", classes: "govuk-label--m" },
               hint: { text: "This should be their work address" }
       = form.submit "Send invitation email", class: "govuk-button"

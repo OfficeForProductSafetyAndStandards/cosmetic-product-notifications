@@ -37,7 +37,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
 
   test "Inviting existing user from same org adds them to the team" do
     user_in_my_org_not_team = User.current.organisation.users
-                                  .find {|u| (u.teams & User.current.teams).empty?}
+                                  .find { |u| (u.teams & User.current.teams).empty? }
     email_address = user_in_my_org_not_team.email
     assert_difference "@my_team.users.count" => 1, "User.count" => 0 do
       put invite_to_team_url(@my_team), params: { new_user: { email_address: email_address } }
@@ -64,7 +64,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Inviting existing user from different org doesn't add and shows error" do
-    non_opss_user = Organisation.all.find{|o| o != User.current.organisation}.users
+    non_opss_user = Organisation.all.find { |o| o != User.current.organisation }.users
     email_address = non_opss_user.first.email
     assert_difference "@my_team.users.count" => 0, "User.count" => 0 do
       put invite_to_team_url(@my_team), params: { new_user: { email_address: email_address } }
