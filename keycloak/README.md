@@ -99,12 +99,13 @@ Set a strong password for the master admin account:
 Generate a new client secret for the MSPSDS app:
 * Select realm > OPSS > Clients > mspsds-app > Credentials > Regenerate Secret
 
-Set the client credentials for the MSPSDS app:
+Create the client credentials for the MSPSDS app:
 
-    cf set-env mspsds-web KEYCLOAK_AUTH_URL https://keycloak-<<SPACE>>.london.cloudapps.digital/auth
-    cf set-env mspsds-web KEYCLOAK_CLIENT_ID mspsds-app
-    cf set-env mspsds-web KEYCLOAK_CLIENT_SECRET <<SECRET>>
-    cf restage mspsds-web
+    cf cups mspsds-auth-env -p '{
+        "KEYCLOAK_AUTH_URL": "https://keycloak-<<SPACE>>.london.cloudapps.digital/auth",
+        "KEYCLOAK_CLIENT_ID": "mspsds-app",
+        "KEYCLOAK_CLIENT_SECRET": "XXX"
+    }'
 
 (The client secret is listed on the Keycloak admin console: Clients > mspsds-app > Credentials)
 
