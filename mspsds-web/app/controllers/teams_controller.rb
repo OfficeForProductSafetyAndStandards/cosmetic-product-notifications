@@ -14,12 +14,16 @@ class TeamsController < ApplicationController
       existing_user = User.find_by email: @new_user.email_address
       if existing_user
         if existing_user.organisation == @team.organisation
-          @team.add_user existing_user
-          NotifyMailer.user_added_to_team(
-              name: existing_user.full_name,
-              email: existing_user.email,
-              team_id: @team.id,
-              team_name: @team.name)
+          if @team.users.include? existing_user
+            @new_user.errors.add(:email_address, "#{@new_user.email_address.capitalize} is already a member of #{@team.display_name}")
+          else
+            @team.add_user existing_user
+            NotifyMailer.user_added_to_team(
+                name: existing_user.full_name,
+                email: existing_user.email,
+                team_id: @team.id,
+                team_name: @team.name)
+          end
         else
           # TODO MSPSDS-1047 Raise better error
           @new_user.errors.add(:email_address, "#{@new_user.email_address.capitalize} belongs to another organisation and connot be added to team #{@team.display_name}")
@@ -34,7 +38,7 @@ class TeamsController < ApplicationController
       if @new_user.errors.empty?
         render :show
       else
-        render :invite_to
+        render :invite_to, status: :bad_request
       end
     end
   end

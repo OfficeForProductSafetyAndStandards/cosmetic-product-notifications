@@ -6,6 +6,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
     set_user_as_team_admin(User.current)
     @my_team = User.current.teams.first
     @another_team = Team.all.find { |t| !User.current.teams.include?(t) }
+    @user_in_my_team = @my_team.users.find { |u| u != User.current }
     @users_in_my_org = User.current.organisation.users.reject {|u| u == User.current}
     @user_in_my_org_not_team = @users_in_my_org.find {|u| (u.teams & User.current.teams).empty?}
   end
@@ -40,9 +41,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
   test "Inviting existing user from same org adds them to the team" do
     email_address = @user_in_my_org_not_team.email
     assert_difference "@my_team.users.count" => 1, "User.count" => 0 do
-      put team_url(@my_team), params: { new_user: {
-          email_address: email_address
-      } }
+      put team_url(@my_team), params: { new_user: { email_address: email_address } }
       assert_response :success
     end
     expect(NotifyMailer).to have_received(:user_added_to_team)
@@ -50,7 +49,13 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Inviting existing user from same team returns error" do
-    # TODO
+    email_address = @user_in_my_team.email
+    assert_difference "@my_team.users.count" => 0, "User.count" => 0 do
+      put team_url(@my_team), params: { new_user: { email_address: email_address } }
+      assert_response :bad_request
+    end
+    expect(NotifyMailer).not_to have_received(:user_added_to_team)
+                                .with(hash_including(email: email_address, team_id: @my_team.id))
   end
 
   test "Inviting to team I'm not a member of is forbidden" do
