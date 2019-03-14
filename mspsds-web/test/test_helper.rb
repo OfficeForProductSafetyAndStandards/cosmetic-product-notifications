@@ -97,11 +97,13 @@ class ActiveSupport::TestCase
 
     allow(NotifyMailer).to receive(:investigation_updated).and_call_original
     allow(NotifyMailer).to receive(:investigation_created).and_call_original
+    allow(NotifyMailer).to receive(:alert).and_call_original
   end
 
   def stub_notify_mailer
     result = ""
     allow(result).to receive(:deliver_later)
+    allow(NotifyMailer).to receive(:alert) { result }
     allow(NotifyMailer).to receive(:investigation_updated) { result }
     allow(NotifyMailer).to receive(:investigation_created) { result }
   end

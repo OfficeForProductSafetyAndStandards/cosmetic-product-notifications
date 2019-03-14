@@ -46,6 +46,10 @@ update_configs:
     update_schedule: "live"
 
   - package_manager: "ruby:bundler"
+    directory: "/infrastructure/fluentd"
+    update_schedule: "live"
+
+  - package_manager: "ruby:bundler"
     directory: "/mspsds-web"
     update_schedule: "live"
 

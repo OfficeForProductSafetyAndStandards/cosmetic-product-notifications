@@ -7,8 +7,8 @@ set -ex
 # CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
 
-if [[ $(./ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| )) ]]; then
-    ./ci/install-cf.sh
+if [[ $(./infrastructure/ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| )) ]]; then
+    ./infrastructure/ci/install-cf.sh
     cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-mspsds' -s $SPACE
     ./$COMPONENT/deploy.sh $SPACE
     cf logout
