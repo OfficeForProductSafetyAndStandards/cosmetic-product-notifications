@@ -282,7 +282,24 @@ h2.govuk-heading-l Inline with conditional items
   "items": contact_items
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
-
+- contact_items = [\
+    { \
+      "value": "email", \
+      "text": "Email", \
+      "conditional": { "html": html_email }\
+    }, \
+    { \
+      "value": "phone", \
+      "checked": true,
+      "text": "Phone", \
+          "conditional": { "html": html_phone }\
+    }, \
+    { \
+      "value": "text", \
+      "text": "Text message", \
+      "conditional": { "html": html_text }\
+    }\
+  ]
 h2.govuk-heading-l With conditional item checked
 = render "components/govuk_radios",
         "idPrefix": "how-contacted-checked", \
@@ -295,7 +312,29 @@ h2.govuk-heading-l With conditional item checked
   "items": contact_items
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
-
+- html_phone = capture do
+  label.govuk-label for="contact-phone" Phone number
+  span#contact-phone-error.govuk-error-message Problem with input
+  input.govuk-input.govuk-input--error [
+    class="govuk-!-width-one-third" name="contact-phone" type="text" id="contact-phone"]
+- contact_items = [\
+    { \
+      "value": "email", \
+      "text": "Email", \
+      "conditional": { "html": html_email }\
+    }, \
+    { \
+      "value": "phone", \
+      "checked": true,
+        "text": "Phone", \
+          "conditional": { "html": html_phone }\
+    }, \
+    { \
+      "value": "text", \
+      "text": "Text message", \
+      "conditional": { "html": html_text }\
+    }\
+  ]
 h2.govuk-heading-l With optional form-group classes showing group error
 = render "components/govuk_radios",
         "idPrefix": "how-contacted-error", \
