@@ -11,6 +11,6 @@
   	  p
         | You are assigning this project to:
         strong = " #{@potential_assignees.first.display_name}"
-      
-  = form.submit "Continue", class: "govuk-button"
+      - if 
+  = form.submit "Assign", class: "govuk-button"
   p = link_to "Cancel", @investigation, class: "govuk-link mspsds-block-link"
