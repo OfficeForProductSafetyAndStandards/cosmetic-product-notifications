@@ -30,12 +30,12 @@ tr.govuk-table__row
     = get_category_name(component.root_category)
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
-    = "Category of #{get_category_name(component.root_category).downcase}"
+    = "Category of #{get_category_name(component.root_category)&.downcase}"
   td.govuk-table__cell
     = get_category_name(component.sub_category)
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
-    = "Category of #{get_category_name(component.sub_category).downcase}"
+    = "Category of #{get_category_name(component.sub_category)&.downcase}"
   td.govuk-table__cell
     = get_category_name(component.sub_sub_category)
 
@@ -60,8 +60,8 @@ tr.govuk-table__row
     - elsif component.range? && component.range_formulas
       = render "none_or_bullet_list", entities_list: format_range_formulas(component.range_formulas),
               key_name: :inci_name, value_name: :range
-    - elsif component.formulation_file.filename
-      = component.formulation_file.filename
+    - elsif component.formulation_file&.attached?
+      = component&.formulation_file&.filename
     - else
       = link_to "Add formulation document",
         new_responsible_person_notification_component_formulation_path(@notification.responsible_person, @notification, component)

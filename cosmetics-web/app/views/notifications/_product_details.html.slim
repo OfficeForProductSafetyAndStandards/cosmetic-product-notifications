@@ -36,22 +36,23 @@ table.govuk-table.check-your-answers-table
         - if notification.cpnp_reference
           = render "none_or_bullet_list", entities_list: [notification.shades]
         - else
-          = render "none_or_bullet_list", entities_list: notification.shades.split(%r{,\s*})
+          = render "none_or_bullet_list", entities_list: notification.shades&.split(%r{,\s*})
     - if notification.image_uploads.present?
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
           | Label image
         td.govuk-table__cell
           - notification.image_uploads.each do |image|
-            - if image.file_exists? && image.marked_as_safe?
-              = link_to image.filename, url_for(image.file)
+            ul.govuk-list
+              - if image.file_exists? && image.marked_as_safe?
+                li = link_to image.filename, url_for(image.file)
     - if notification.components.count == 1
       = render "notifications/component_details", component: notification.components.first
     -else
-      - notification.components.each do |component|
+      - notification.components.each_with_index do |component, i|
         table.govuk-table.check-your-answers-table
           caption.govuk-table__caption.govuk-heading-m
-            = "#{component.name}"
+            = component.name.presence || "Component #{i + 1}"
           tbody.govuk-table__body
             tr.govuk-table__row
               th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]

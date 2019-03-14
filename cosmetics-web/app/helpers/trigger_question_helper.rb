@@ -3,7 +3,7 @@ module TriggerQuestionHelper
     if question.trigger_question_elements.count == 1 &&
         question.trigger_question_elements.first.element == "inciname" &&
         question.trigger_question_elements.first.answer == "NA"
-        false
+      false
     else
       true
     end

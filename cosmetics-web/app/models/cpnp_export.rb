@@ -19,11 +19,11 @@ class CpnpExport
 
   def industry_reference
     industry_reference_value = @xml_doc.xpath("//industryReference").first&.text
-    if industry_reference_value == "N/A"
-      industry_reference = nil
-    else
-      industry_reference = industry_reference_value
-    end
+    industry_reference = if industry_reference_value == "N/A"
+                           nil
+                         else
+                           industry_reference_value
+                         end
     industry_reference
   end
 
@@ -76,7 +76,7 @@ private
     return unless has_nano
 
     nano_list_node = component_node.xpath(".//nanoList").first
-    nano_elements = nano_list_node&.xpath(".//nano").collect do |nano_element_node|
+    nano_elements = nano_list_node&.xpath(".//nano")&.collect do |nano_element_node|
       nano_element(nano_element_node)
     end
     NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
