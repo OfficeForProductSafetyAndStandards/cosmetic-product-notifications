@@ -6,9 +6,7 @@ class Investigations::AssignController < ApplicationController
   steps :choose, :confirm_assignment_change
 
   def show
-    if step == :confirm_assignment_change
-      set_potential_assignee
-    end
+    set_potential_assignee
     render_wizard
   end
 
@@ -18,13 +16,11 @@ class Investigations::AssignController < ApplicationController
   end
 
   def update
-    if step == :choose
-
-    end
     redirect_to next_wizard_path
   end
 
   def create
+    set_potential_assignee
     @investigation.assignee = @potential_assignees.first
     @investigation.save
     redirect_to investigation_url(@investigation)
@@ -67,7 +63,6 @@ private
 
   def set_potential_assignee
     @potential_assignees = User.where(id: session[:assignable_id]) + Team.where(id: session[:assignable_id])
-
   end
 
   def respond_to_update(origin)
