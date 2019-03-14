@@ -49,7 +49,8 @@ class ActiveSupport::TestCase
     @users = [admin_user,
               test_user(name: "User_one"),
               test_user(name: "User_two"),
-              test_user(name: "User_three")].map(&:attributes)
+              test_user(name: "User_three"),
+              test_user(name: "Ts_user", ts_user: true)].map(&:attributes)
     @organisations = organisations.map(&:attributes)
     @teams = all_teams.map(&:attributes)
     @team_users = []
@@ -108,7 +109,7 @@ class ActiveSupport::TestCase
   end
 
   def set_user_as_non_opss(user)
-    user.organisation = non_opss_organisation
+    user.organisation = Organisation.find(non_opss_organisation.id)
     # Keycloak bases this role on the group membership
     set_kc_user_group(user.id, non_opss_organisation.id)
     allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :opss_user).and_return(false)
@@ -143,10 +144,11 @@ private
     User.new(id: id, email: "admin@example.com", first_name: "Test", last_name: "Admin")
   end
 
-  def test_user(name: "User_one", id: SecureRandom.uuid)
+  def test_user(name: "User_one", ts_user: false)
+    id = SecureRandom.uuid
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :mspsds_user).and_return(true)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true) unless ts_user
     User.new(id: id, email: "#{name}@example.com", first_name: "Test", last_name: name)
   end
 
@@ -169,6 +171,7 @@ private
     add_user_to_opss_team user_id: @users[2][:id], team_id: @teams[1][:id]
     add_user_to_opss_team user_id: @users[3][:id], team_id: @teams[2][:id]
     add_user_to_opss_team user_id: @users[3][:id], team_id: @teams[3][:id]
+    set_user_as_non_opss User.find(@users[4][:id])
   end
 
   def add_user_to_team(user_id, team_id)
