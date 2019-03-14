@@ -28,8 +28,8 @@ class InvestigationTest < ActiveSupport::TestCase
     reset_keycloak_and_notify_mocks
   end
 
-  test "should create activities when investigation is created" do
-    assert_difference"Activity.count", 2 do
+  test "should create activity when investigation is created" do
+    assert_difference "Activity.count" do
       @investigation = Investigation::Allegation.create
     end
   end
