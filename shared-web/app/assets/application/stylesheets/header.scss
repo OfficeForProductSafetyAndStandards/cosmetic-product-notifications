@@ -1,0 +1,17 @@
+$navbar-link-colour: #ffffff;
+
+.sign-out-link {
+  background: none;
+  border: none;
+  color: $navbar-link-colour;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 700;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  cursor: pointer; 
+}
