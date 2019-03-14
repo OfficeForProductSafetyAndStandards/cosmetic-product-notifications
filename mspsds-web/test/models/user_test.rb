@@ -2,36 +2,27 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   setup do
-    sign_in_as_user
-
-    user = User.find_by(last_name: "User_one")
-    admin = User.find_by(last_name: "Admin")
-    organisations = Organisation.all
-
-    user_groups = [
-      { id: user[:id], groups: [organisations[0][:id]] },
-      { id: admin[:id], groups: [organisations[1][:id]] }
-    ].to_json
-
-    allow(Keycloak::Internal).to receive(:get_user_groups).and_return(user_groups)
-    User.all
-
+    mock_out_keycloak_and_notify
     @user = User.find_by(last_name: "User_one")
     @admin = User.find_by(last_name: "Admin")
-
-    allow(User).to receive(:current).and_return(@user)
+    set_user_as_non_opss(@user)
+    set_user_as_opss(@admin)
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
-  test "display name includes user's organisation" do
+  test "display name includes user's organisation for non-org-member viewers" do
+    sign_in_as @admin
     assert_equal "Test User_one (Organisation 1)", @user.display_name
+
+    sign_in_as @user
     assert_equal "Test Admin (Office of Product Safety and Standards)", @admin.display_name
   end
 
   test "assignee short name is full name when user's organisation is same as that of current user" do
+    sign_in_as @user
     assert_equal "Test User_one", @user.assignee_short_name
   end
 

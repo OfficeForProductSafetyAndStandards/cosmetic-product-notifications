@@ -2,9 +2,11 @@ require "test_helper"
 
 class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin
+    mock_out_keycloak_and_notify(user_name: "Admin")
 
     @assignee = User.find_by(last_name: "User_one")
+    @non_opss_user = User.find_by(last_name: "User_two")
+    set_user_as_non_opss(@non_opss_user)
 
     @investigation_one = investigations(:one)
     @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
@@ -30,7 +32,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should get index" do
@@ -274,18 +276,16 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not show private investigations to everyone" do
     create_new_private_case
+    sign_in_as @non_opss_user
 
-    logout
-    sign_in_as_non_opss_user
     get investigations_path
     assert_includes(response.body, "restricted")
   end
 
   test "should not show case to someone without access" do
     create_new_private_case
+    sign_in_as @non_opss_user
 
-    logout
-    sign_in_as_non_opss_user
     assert_raise(Pundit::NotAuthorizedError) {
       get investigation_path(@new_investigation)
     }

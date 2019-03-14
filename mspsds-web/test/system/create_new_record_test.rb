@@ -2,12 +2,12 @@ require "application_system_test_case"
 
 class CreateNewRecordTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     visit new_investigation_path
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "can be reached via home page" do
