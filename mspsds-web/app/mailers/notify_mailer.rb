@@ -47,4 +47,9 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     mail(to: email)
   end
+
+  def user_added_to_team(name:, email:, team_id:, team_name:)
+    # TODO MSPSDS-1407 DO THIS
+    mail(to: email)
+  end
 end

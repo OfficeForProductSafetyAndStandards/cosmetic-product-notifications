@@ -27,6 +27,14 @@ module Keycloak
 
       default_call(proc)
     end
+
+    def self.add_user_group(user_id, group_id)
+      proc = lambda { |token|
+        request_uri = Keycloak::Admin.full_url("users/#{user_id}/groups/#{group_id}")
+        Keycloak.generic_request(token["access_token"], request_uri, nil, nil, "PUT")
+      }
+      default_call(proc)
+    end
   end
 end
 
@@ -145,6 +153,14 @@ module Shared
         else
           @internal.has_role? user_id, role
         end
+      end
+
+      def add_user_to_team(user_id, group_id)
+        @internal.add_user_group user_id, group_id
+      end
+
+      def create_user(user)
+        # TODO MSPSDS-1047
       end
 
     private

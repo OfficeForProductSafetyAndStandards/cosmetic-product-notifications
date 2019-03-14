@@ -2061,7 +2061,7 @@
   "clientScopeMappings" : {
     "realm-management" : [ {
       "client" : "mspsds-app",
-      "roles" : [ "view-users", "view-clients" ]
+      "roles" : [ "view-users", "manage-users", "view-clients" ]
     } ],
     "mspsds-app" : [ {
       "clientScope" : "roles",
