@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_admin
+    mock_out_keycloak_and_notify(user_name: "Admin")
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
     @correspondence = correspondences(:email)
@@ -10,7 +10,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "first step should be context" do

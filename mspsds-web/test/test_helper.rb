@@ -18,6 +18,11 @@ require "rspec/mocks/standalone"
 class ActiveSupport::TestCase
   include ::RSpec::Mocks::ExampleMethods
 
+  def initialize *args
+    @keycloak_client_instance = Shared::Web::KeycloakClient.instance
+    super(*args)
+  end
+
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
@@ -37,90 +42,92 @@ class ActiveSupport::TestCase
     self.class.import_into_elasticsearch
   end
 
-  def sign_in_as_user(is_admin: false, user_name: "User_one", organisation: opss_organisation, teams: [all_teams[0], all_teams[1]])
-    users = all_users
-    user = users.detect { |u| u.last_name == user_name }
-    user.organisation = organisation
+  # On top of mocking out external services, this method also sets the user to an initial,
+  # sensible value, but it should only be run once per test.
+  # To change currently logged in user afterwards call `sign_in_as(...)`
+  def mock_out_keycloak_and_notify(user_name: "User_one", team_admin: false)
+    @users = [admin_user,
+              test_user(name: "User_one"),
+              test_user(name: "User_two"),
+              test_user(name: "User_three")].map(&:attributes)
+    @organisations = organisations.map(&:attributes)
+    @teams = all_teams.map(&:attributes)
+    @team_users = [
+        { user_id: @users[1][:id], team_id: all_teams[0].id },
+        { user_id: @users[1][:id], team_id: all_teams[1].id },
+        { user_id: @users[0][:id], team_id: all_teams[0].id },
+        { user_id: @users[2][:id], team_id: all_teams[1].id },
+        { user_id: @users[3][:id], team_id: all_teams[2].id },
+        { user_id: @users[3][:id], team_id: all_teams[3].id }
+    ].each_with_index.map { |team_user, id| team_user.merge(id: id) }
 
-    user_groups = [
-      {
-        id: users[1].id,
-        groups: [opss_organisation[:id], all_teams[0].id, all_teams[1].id]
-      },
-      {
-        id: users[0].id,
-        groups: [opss_organisation[:id], all_teams[0].id]
-      },
-      {
-        id: users[2].id,
-        groups: [opss_organisation[:id], all_teams[1].id]
-      },
-      {
-        id: users[3].id,
-        groups: [opss_organisation[:id], all_teams[2].id, all_teams[3].id]
-      }
-    ]
+    allow(@keycloak_client_instance).to receive(:all_organisations) { @organisations }
+    allow(@keycloak_client_instance).to receive(:all_teams) { @teams }
+    allow(@keycloak_client_instance).to receive(:all_team_users) { @team_users }
+    allow(@keycloak_client_instance).to receive(:all_users) { @users }
+    Organisation.all
+    Team.all
+    TeamUser.all
+    User.all
+    user = User.find_by(last_name: user_name)
+    set_user_as_opss(user)
+    set_user_as_team_admin(user) if team_admin
+    sign_in_as user
 
-    if organisation.present?
-      groups = teams.map(&:id)
-      groups << organisation.id
-      user_groups = user_groups.map { |group| group[:id] == user.id ? { id: user.id, groups: groups } : group }.to_json
-    end
-
-    is_mspsds_user = organisation.present?
-    is_opss_user = organisation&.name == opss_organisation.name
-
-    stub_user_credentials(user: user, groups: groups, is_admin: is_admin, is_opss: is_opss_user, is_mspsds: is_mspsds_user)
-    stub_user_group_data(user_groups: user_groups, users: users)
-    stub_user_data(users: users)
-    stub_client_config
     stub_notify_mailer
+
+    user
+  end
+
+  def sign_in_as(user)
+    allow(@keycloak_client_instance).to receive(:user_signed_in?).and_return(true)
+    allow(@keycloak_client_instance).to receive(:user_info).and_return(user.attributes)
+    User.current = user
+  end
+
+  def reset_keycloak_and_notify_mocks
+    allow(@keycloak_client_instance).to receive(:has_role?).and_call_original
+    allow(@keycloak_client_instance).to receive(:user_signed_in?).and_call_original
+    allow(@keycloak_client_instance).to receive(:user_info).and_call_original
+    allow(@keycloak_client_instance).to receive(:all_users).and_call_original
+    allow(@keycloak_client_instance).to receive(:all_organisations).and_call_original
+    allow(@keycloak_client_instance).to receive(:all_teams).and_call_original
+    allow(@keycloak_client_instance).to receive(:all_team_users).and_call_original
+    Rails.cache.delete(:keycloak_users)
+
+    allow(NotifyMailer).to receive(:investigation_updated).and_call_original
+    allow(NotifyMailer).to receive(:investigation_created).and_call_original
+    allow(NotifyMailer).to receive(:alert).and_call_original
   end
 
   def stub_notify_mailer
     result = ""
     allow(result).to receive(:deliver_later)
+    allow(NotifyMailer).to receive(:alert) { result }
     allow(NotifyMailer).to receive(:investigation_updated) { result }
     allow(NotifyMailer).to receive(:investigation_created) { result }
-  end
-
-  def sign_in_as_non_mspsds_user
-    sign_in_as_user(user_name: "User_three", organisation: nil)
-  end
-
-  def sign_in_as_non_opss_user(user_name: "User_one")
-    sign_in_as_user(user_name: user_name, organisation: non_opss_organisation)
-  end
-
-  def sign_in_as_admin
-    sign_in_as_user(is_admin: true, user_name: "Admin", organisation: opss_organisation)
   end
 
   def set_user_as_opss(user)
     user.organisation = opss_organisation
     # Keycloak bases this role on the group membership
-    allow(Keycloak::Internal).to receive(:has_role?).with(user.id, :opss_user).and_return(true)
+    set_kc_user_group(user.id, opss_organisation.id)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :opss_user).and_return(true)
   end
 
   def set_user_as_non_opss(user)
     user.organisation = non_opss_organisation
     # Keycloak bases this role on the group membership
-    allow(Keycloak::Internal).to receive(:has_role?).with(user.id, :opss_user).and_return(false)
+    set_kc_user_group(user.id, non_opss_organisation.id)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :opss_user).and_return(false)
   end
 
-  def all_users
-    [admin_user, test_user(name: "User_one", id: "75fda9a1-786d-4ace-ad20-76afa4f39111"), test_user(name: "User_two"), test_user(name: "User_three")]
+  def set_user_as_team_admin(user = User.current)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :team_admin).and_return(true)
   end
 
-  def logout
-    allow(Keycloak::Client).to receive(:auth_server_url).and_call_original
-    allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
-    allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
-    allow(Keycloak::Client).to receive(:has_role?).and_call_original
-    allow(User).to receive(:current).and_call_original
-    allow(NotifyMailer).to receive(:investigation_updated).and_call_original
-    allow(NotifyMailer).to receive(:investigation_created).and_call_original
-    reset_user_data
+  def set_user_as_not_team_admin(user = User.current)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :team_admin).and_return(false)
   end
 
   def assert_same_elements(expected, actual, msg = nil)
@@ -132,36 +139,18 @@ class ActiveSupport::TestCase
 private
 
   def admin_user
-    User.new(id: SecureRandom.uuid, email: "admin@example.com", first_name: "Test", last_name: "Admin")
+    id = SecureRandom.uuid
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :mspsds_user).and_return(true)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true)
+    User.new(id: id, email: "admin@example.com", first_name: "Test", last_name: "Admin")
   end
 
   def test_user(name: "User_one", id: SecureRandom.uuid)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :mspsds_user).and_return(true)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true)
     User.new(id: id, email: "#{name}@example.com", first_name: "Test", last_name: name)
-  end
-
-  def group_data
-    [
-      {
-        id: "13763657-d228-4209-a3de-523dcab13810",
-        name: "Group 1",
-        path: "/Group 1",
-        subGroups: []
-      }, {
-        id: "512c85e6-5a7f-4289-95e2-a78c0e40f05c",
-        name: "Organisations",
-        path: "/Organisations",
-        subGroups: organisations.map do |org|
-          result = org.attributes.merge(subGroups: [])
-          result = result.merge(subGroups: all_teams.map(&:attributes)) if org.name == "Office of Product Safety and Standards"
-          result
-        end
-      }, {
-        id: "10036801-2182-4c5b-92d9-b34b1e0a421b",
-        name: "Group 2",
-        path: "/Group 2",
-        subGroups: []
-      }
-    ].to_json
   end
 
   def organisations
@@ -176,6 +165,12 @@ private
     Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2")
   end
 
+  def set_kc_user_group(user_id, group_id)
+    mock_user = @users.find { |u| u[:id] == user_id }
+    mock_user[:groups] ||= []
+    mock_user[:groups].push group_id
+  end
+
   def all_teams
     [
       Team.new(id: "aaaaeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 1", path: "/Organisations/Office of Product Safety and Standards/Team 1", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b"),
@@ -185,63 +180,7 @@ private
     ]
   end
 
-  def stub_user_credentials(user:, groups:, is_admin: false, is_opss: true, is_mspsds: true)
-    allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
-    allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(user, groups))
-    allow(Keycloak::Client).to receive(:has_role?).with(:admin).and_return(is_admin)
-    allow(Keycloak::Client).to receive(:has_role?).with(:opss_user).and_return(is_opss)
-    allow(Keycloak::Client).to receive(:has_role?).with(:mspsds_user).and_return(is_mspsds)
-
-    allow(User).to receive(:current).and_return(user)
-  end
-
-  def format_user_for_get_userinfo(user, groups)
-    { sub: user[:id], email: user[:email], groups: groups, given_name: user[:first_name], family_name: user[:last_name] }.to_json
-  end
-
-  def stub_client_config
-    allow(Keycloak::Client).to receive(:auth_server_url).and_return("localhost")
-  end
-
-  def stub_user_data(users:)
-    allow(Keycloak::Internal).to receive(:get_users).and_return(format_user_for_get_users(users))
-    User.all
-  end
-
-  def stub_user_group_data(user_groups:, users: [])
-    Shared::Web::KeycloakClient.instance # Instantiate the class to create the get_groups method before stubbing it
-    allow(Keycloak::Internal).to receive(:get_group) do |group_id|
-      result = {}
-      all_teams.each do|team|
-        result = { "attributes": { "teamRecipientEmail": [team.team_recipient_email] } } if group_id == team.id
-      end
-      result.to_json
-    end
-    allow(Keycloak::Internal).to receive(:get_groups).and_return(group_data)
-    allow(Keycloak::Internal).to receive(:all_groups).and_return(JSON.parse(group_data))
-    allow(Keycloak::Internal).to receive(:all_organisations).and_call_original
-    allow(Keycloak::Internal).to receive(:all_teams).and_return(all_teams.map(&:attributes))
-    allow(Keycloak::Internal).to receive(:all_users).and_return(users)
-    allow(Keycloak::Internal).to receive(:get_user_groups).and_return(user_groups)
-    allow(Keycloak::Internal).to receive(:all_team_users).and_call_original
-
-    load_keycloak_data
-  end
-
-  def load_keycloak_data
-    Organisation.all
-    Team.all
-    TeamUser.all
-  end
-
   def format_user_for_get_users(users)
     users.map { |user| { id: user[:id], email: user[:email], firstName: user[:first_name], lastName: user[:last_name] } }.to_json
-  end
-
-  def reset_user_data
-    allow(Keycloak::Internal).to receive(:get_groups).and_call_original
-    allow(Keycloak::Internal).to receive(:get_users).and_call_original
-    allow(Keycloak::Internal).to receive(:get_user_groups).and_call_original
-    Rails.cache.delete(:keycloak_users)
   end
 end

@@ -14,4 +14,4 @@ applications:
     - mspsds-database
     - mspsds-elasticsearch
     - mspsds-queue
-    - logit-ssl-drain
+    - opss-log-drain

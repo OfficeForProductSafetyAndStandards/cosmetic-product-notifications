@@ -2,7 +2,7 @@ require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     @product_one = products(:one)
     @product_one.source = sources(:product_one)
     @product_iphone = products(:iphone)
@@ -15,7 +15,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should get index" do

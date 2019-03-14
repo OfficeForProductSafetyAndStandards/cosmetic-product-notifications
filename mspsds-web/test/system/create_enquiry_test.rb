@@ -14,12 +14,12 @@ class CreateEnquiryTest < ApplicationSystemTestCase
       description: "Enquiry description"
     )
 
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     visit new_enquiry_path
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "can be reached via create page" do
@@ -85,10 +85,10 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     assert_text "What is the enquiry?"
   end
 
-  test "third step should require na enquiry title and description" do
+  test "third step should require an enquiry title and description" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
-    click_on "Continue"
+    click_on "Create enquiry"
 
     assert_text "User title can't be blank"
     assert_text "Description can't be blank"
@@ -187,6 +187,6 @@ class CreateEnquiryTest < ApplicationSystemTestCase
   def fill_enquiry_details_and_continue
     fill_in "enquiry[user_title]", with: @enquiry.user_title
     fill_in "enquiry[description]", with: @enquiry.description
-    click_on "Continue"
+    click_on "Create enquiry"
   end
 end
