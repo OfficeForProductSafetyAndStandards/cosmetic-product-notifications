@@ -2,12 +2,12 @@ require "application_system_test_case"
 
 class InvestigationHighlightTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     visit root_path
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should display highlight title" do

@@ -4,11 +4,3 @@
       p.govuk-caption-xl
         | Business
       = business.trading_name
-  .govuk-grid-column-one-third
-    table.govuk-table.summary-table
-      tbody.govuk-table__body
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            span.govuk-caption-m[class="govuk-!-font-size-16"]
-              | Cases
-            = business.investigations.count

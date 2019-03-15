@@ -3,11 +3,11 @@ require "application_system_test_case"
 class UpdateProductTest < ApplicationSystemTestCase
   setup do
     @product = products(:one)
-    sign_in_as_user
+    mock_out_keycloak_and_notify
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "edit page fields should be populated with product attributes" do
@@ -42,23 +42,6 @@ class UpdateProductTest < ApplicationSystemTestCase
     assert_text updated_product.product_type
     assert_text updated_product.category
     assert_text updated_product.country_of_origin_for_display
-  end
-
-  test "should create new product" do
-    visit new_product_path
-    fill_in_product_details(@product)
-    click_on "Save product"
-
-    assert_current_path(/products\/\d+/)
-
-    assert_text @product.name
-    assert_text @product.product_code
-    assert_text @product.batch_number
-    assert_text @product.product_type
-    assert_text @product.category
-    assert_text @product.webpage
-    assert_text @product.description
-    assert_text @product.country_of_origin_for_display
   end
 
   def fill_in_product_details(product)

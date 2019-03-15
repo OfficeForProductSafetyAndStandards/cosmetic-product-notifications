@@ -13,4 +13,5 @@ applications:
   services:
     - cosmetics-database
     - cosmetics-queue
-    - logit-ssl-drain
+    - cosmetics-elasticsearch
+    - opss-log-drain

@@ -4,9 +4,6 @@ services:
   db:
     image: ${DOCKER_USERNAME}/db:${TRAVIS_BUILD_NUMBER}
   
-  elasticsearch:
-    image: ${DOCKER_USERNAME}/elasticsearch:${TRAVIS_BUILD_NUMBER}
-
   keycloak:
     environment:
       - NOTIFY_API_KEY='fake-key'
@@ -45,6 +42,7 @@ services:
       - TRAVIS_JOB_ID
       - TRAVIS_PULL_REQUEST
       - COVERALLS_PARALLEL
+      - NOTIFY_API_KEY='fake-key'
   mspsds-worker:
     command: tail -f /dev/null
     image: ${DOCKER_USERNAME}/mspsds-worker:${TRAVIS_BUILD_NUMBER}

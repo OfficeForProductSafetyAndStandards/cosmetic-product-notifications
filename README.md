@@ -87,7 +87,6 @@ you'll need an account for [GOV.UK Notify](https://www.notifications.service.gov
 - ask someone on the team to invite you.
 
 
-
 #### GOV.UK Platform as a Service
 
 If you want to update any of the deployed instances, you'll need an account for
@@ -99,18 +98,6 @@ If you want to update any of the deployed instances, you'll need an account for
 We're using AWS to supplement the functionality of GOV.UK PaaS.
 If you want to update any of the deployed instances, you'll need an account - ask someone on the team to invite you.
 If you get an error saying you don't have permission to set something, make sure you have MFA set up. 
-
-
-#### Logit
-
-We're using [Logit](https://logit.io) as a hosted log management solution.
-If you want to view the logs, you'll need an account - ask someone on the team to invite you.
-
-
-#### Sentry
-
-We're using [Sentry](https://sentry.io) to monitor exceptions.
-If you want to view the exceptions, you'll need an account - ask someone on the team to invite you.
 
 
 ## Deployment
@@ -145,28 +132,13 @@ password in one line will.
 If you need to create a new environment, you can run `cf create-space SPACE-NAME`, otherwise, select the correct space using `cf target -o beis-mspsds -s SPACE-NAME`.
 
 
-#### Logging
+#### Antivirus API
 
-To enable logging to Logit for the current space:
+See [antivirus/README.md](antivirus/README.md#deployment-from-scratch).
 
-    cf cups logit-ssl-drain -l syslog-tls://ENDPOINT:PORT
+#### Maintenance page
 
-Where the endpoint can be obtained from Logit.
-
-Setting up a logstash filter as follows may be useful:
-
-    if [message] =~ "\[RTR\/" {
-      grok {
-        # Cloud Foundry RTR logs
-        match => { "message" => "^%{NUMBER} <%{NUMBER:cf_pri:int}>%{NUMBER:cf_ver:int} %{TIMESTAMP_ISO8601:cf_ts} %{DATA:cf_org}\.%{DATA:cf_env}\.%{DATA:cf_app} %{UUID:cf_app_id} \[%{WORD:cf_type}/%{GREEDYDATA:cf_type_info}\] - - %{HOSTNAME:server_host} - \[%{TIMESTAMP_ISO8601:server_ts}\] \"%{WORD:verb} %{URIPATHPARAM:path} %{PROG:http_spec}\" %{BASE10NUM:status:int} %{BASE10NUM:request_bytes_received:int} %{BASE10NUM:body_bytes_sent:int} \"%{GREEDYDATA:referer}\" \"%{GREEDYDATA:http_user_agent}\" \"%{IPORHOST:src_host}:%{POSINT:src_port:int}\" \"%{IPORHOST:dst_host}:%{POSINT:dst_port:int}\" x_forwarded_for:\"%{GREEDYDATA:x_forwarded_for}\" x_forwarded_proto:\"%{GREEDYDATA:x_forwarded_proto}\" vcap_request_id:\"%{NOTSPACE:vcap_request_id}\" response_time:%{NUMBER:response_time_sec:float} app_id:\"%{UUID:cf_app_id}\" app_index:\"%{BASE10NUM:cf_app_index:int}\" %{GREEDYDATA:extra_headers}$" }
-      }
-    } else if [message] =~ "\[APP\/" {
-      grok {
-        # Cloud Foundry APP logs
-        match => { "message" => "^%{NUMBER} <%{NUMBER:cf_pri:int}>%{NUMBER:cf_ver:int} %{TIMESTAMP_ISO8601:cf_ts} %{DATA:cf_org}\.%{DATA:cf_env}\.%{DATA:cf_app} %{UUID:cf_app_id} \[%{WORD:cf_type}/%{GREEDYDATA:cf_type_info}\] - - %{GREEDYDATA:msg}$" }
-      }
-    }
-
+See [maintenance/README.md](maintenance/README.md#deployment).
 
 #### Keycloak
 
@@ -181,6 +153,11 @@ See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
 #### MSPSDS
 
 See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
+
+
+#### Other infrastructure
+
+See [infrastructure/README.md](infrastructure/README.md).
 
 
 ## BrowserStack

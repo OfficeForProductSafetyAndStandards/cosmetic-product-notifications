@@ -17,6 +17,11 @@ class CpnpExport
     @xml_doc.xpath("//cpnpReference").first&.text
   end
 
+  def cpnp_notification_date
+    dates = @xml_doc.xpath("//modificationDate").map { |element| Time.zone.parse(element.text) }
+    dates.min
+  end
+
   def notification_status
     @xml_doc.xpath('//status').first&.text
   end
@@ -42,24 +47,71 @@ class CpnpExport
                        frame_formulation: frame_formulation(component_node),
                        exact_formulas: exact_formulas(component_node),
                        range_formulas: range_formulas(component_node),
-                       trigger_questions: trigger_questions(component_node))
+                       trigger_questions: trigger_questions(component_node),
+                       cmrs: cmrs(component_node),
+                       nano_materials: nano_materials(component_node))
     end
   end
 
 private
 
+  def cmrs(component_node)
+    component_node.xpath(".//cmrList/cmr").collect do |cmr_node|
+      Cmr.create(name: cmr_node.xpath(".//name").first&.text,
+                 cas_number: cmr_node.xpath(".//casNumber").first&.text,
+                 ec_number: cmr_node.xpath(".//ecNumber").first&.text)
+    end
+  end
+
+  def nano_materials(component_node)
+    component_node.xpath(".//nanoList").collect do |nano_list_node|
+      nano_elements = nano_list_node.xpath(".//nano").collect do |nano_element_node|
+        nano_element(nano_element_node)
+      end
+      NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
+                          exposure_route: exposure_route(nano_list_node),
+                          nano_elements: nano_elements)
+    end
+  end
+
+  def nano_element(nano_element_node)
+    NanoElement.create(inci_name: nano_element_node.xpath(".//inciName").first&.text,
+                       inn_name: nano_element_node.xpath(".//innName").first&.text,
+                       iupac_name: nano_element_node.xpath(".//iupacName").first&.text,
+                       xan_name: nano_element_node.xpath(".//xanName").first&.text,
+                       cas_number: nano_element_node.xpath(".//casNumber").first&.text,
+                       ec_number: nano_element_node.xpath(".//ecNumber").first&.text,
+                       einecs_number: nano_element_node.xpath(".//einecsNumber").first&.text,
+                       elincs_number: nano_element_node.xpath(".//elincsNumber").first&.text)
+  end
+
+  def exposure_condition(nano_list_node)
+    get_exposure_condition(nano_list_node.xpath(".//exposureCondition").first&.text.to_i)
+  end
+
+  def exposure_route(nano_list_node)
+    get_exposure_route(nano_list_node.xpath(".//exposureRoute/exposureID").first&.text.to_i)
+  end
+
   def trigger_questions(component_node)
     component_node.xpath(".//quetionList/question").collect do |question_node|
-      question = trigger_rules_question(question_node)
       question_elements = question_node.xpath(".//questionElement").collect do |question_element_node|
-        TriggerQuestionElement.create(answer_order: question_element_node.xpath(".//answerOrder").first&.text.to_i,
-                                      answer: question_element_node.xpath(".//answer").first&.text,
-                                      element_order: question_element_node.xpath(".//elementOrder").first&.text.to_i,
-                                      element: trigger_rules_question_element(question_element_node))
+        trigger_rules_element(question_element_node)
       end
-      TriggerQuestion.create(question: question,
+      TriggerQuestion.create(question: trigger_rules_question(question_node),
                              trigger_question_elements: question_elements)
     end
+  end
+
+  def trigger_rules_element(question_element_node)
+    TriggerQuestionElement.create(answer_order: question_element_node.xpath(".//answerOrder").first&.text.to_i,
+                                  answer: question_element_node.xpath(".//answer").first&.text,
+                                  element_order: question_element_node.xpath(".//elementOrder").first&.text.to_i,
+                                  element: get_trigger_rules_question_element(question_element_node.xpath(".//elementID").first&.text.to_i))
+  end
+
+  def trigger_rules_question(question_node)
+    get_trigger_rules_question(question_node.xpath(".//questionID").first&.text.to_i)
   end
 
   def exact_formulas(component_node)
@@ -74,14 +126,6 @@ private
       RangeFormula.create(inci_name: formula_node.xpath(".//inciName").first&.text,
                           range: get_unit(formula_node.xpath(".//range").first&.text.to_i))
     end
-  end
-
-  def trigger_rules_question_element(question_element_node)
-    get_trigger_rules_question_element(question_element_node.xpath(".//elementID").first&.text.to_i)
-  end
-
-  def trigger_rules_question(question_node)
-    get_trigger_rules_question(question_node.xpath(".//questionID").first&.text.to_i)
   end
 
   def frame_formulation(component_node)

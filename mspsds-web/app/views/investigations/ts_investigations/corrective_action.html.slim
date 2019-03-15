@@ -18,7 +18,7 @@
       hr.govuk-section-break.govuk-section-break--visible
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
-      - error_text = @corrective_action.errors.messages[:further_corrective_action].first
+      - error_text = @investigation.errors.messages[:further_corrective_action].first
       = render "components/govuk_radios",
               name: :further_corrective_action,
               errorMessage: error_text && { text: error_text },

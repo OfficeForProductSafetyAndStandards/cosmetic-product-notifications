@@ -23,11 +23,11 @@ RSpec.describe "Responsible person dashboard", type: :system do
     assert_text "Errors (1)"
   end
 
-  it "only shows user the unfinished notifications belonging to their Responsible Person" do
+  it "only shows user the incomplete notifications belonging to their Responsible Person" do
     create(:draft_notification, responsible_person: responsible_person_1)
     create(:draft_notification, responsible_person: responsible_person_2)
     visit responsible_person_notifications_path(responsible_person_1)
-    assert_text "Unfinished (1)"
+    assert_text "Incomplete (1)"
   end
 
   it "only shows user the registered notifications belonging to their Responsible Person" do

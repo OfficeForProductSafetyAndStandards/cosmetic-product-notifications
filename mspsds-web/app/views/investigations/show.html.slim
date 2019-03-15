@@ -15,6 +15,3 @@ hr.govuk-section-break.govuk-section-break--m
   Tab.new("attachments", "Attachments", lambda { render "investigations/tabs/attachments" }),
   Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" })\
 ]
-
-.no-print[class="govuk-!-margin-top-3"]
-  = link_to "Create PDF document", investigation_path(@investigation, format: :pdf)

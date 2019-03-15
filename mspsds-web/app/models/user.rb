@@ -65,16 +65,16 @@ class User < Shared::Web::User
     end
   end
 
-  def has_role?(role)
-    Shared::Web::KeycloakClient.instance.has_role? role
-  end
-
   def is_mspsds_user?
     has_role? :mspsds_user
   end
 
   def is_opss?
     has_role? :opss_user
+  end
+
+  def is_team_admin?
+    has_role? :team_admin
   end
 
   def self.get_assignees(except: [])

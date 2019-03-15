@@ -51,8 +51,10 @@ class Investigations::TsInvestigationsController < ApplicationController
     when :business
       return redirect_to next_wizard_path if all_businesses_complete?
     when :corrective_action, *other_information_types
-      return redirect_to next_wizard_path unless @repeat_step == "Yes"
+      return redirect_to next_wizard_path if @repeat_step == "No"
     end
+    # Preventing repeat step radio button from inheriting previous value
+    clear_repeat_step
     render_wizard
   end
 
@@ -306,8 +308,8 @@ private
     if params.key? further_key(step)
       session[further_key(step)] = @repeat_step
     else
-      file_type = to_item_text(step)
-      @investigation.errors.add(further_key(step), "Select whether or not you have #{file_type} to record")
+      further_page_type = to_item_text(step)
+      @investigation.errors.add(further_key(step), "Select whether or not you have #{further_page_type} to record")
     end
   end
 
@@ -391,7 +393,7 @@ private
     when :which_businesses
       validate_none_as_only_selection
       @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
-      @investigation.errors.add(:other_business, "Enter other business type") if no_other_business_type
+      @investigation.errors.add(:other_business_type, "Enter other business type") if no_other_business_type
     when :business
       if @business.errors.any? || @business.contacts_have_errors? || @business.locations_have_errors?
         return false
@@ -490,5 +492,10 @@ private
 
   def no_other_business_type
     which_businesses_params[:other] == "1" && which_businesses_params[:other_business_type].empty?
+  end
+
+  def clear_repeat_step
+    @repeat_step = nil
+    session.delete further_key(step)
   end
 end

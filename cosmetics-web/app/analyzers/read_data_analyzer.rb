@@ -37,9 +37,10 @@ private
                                             cpnp_reference: cpnp_export_info.cpnp_reference,
                                             cpnp_is_imported: cpnp_export_info.is_imported,
                                             cpnp_imported_country: cpnp_export_info.imported_country,
+                                            cpnp_notification_date: cpnp_export_info.cpnp_notification_date,
                                             responsible_person: @notification_file.responsible_person)
-          notification.notification_file_parsed!
-          notification.save
+          notification.notification_file_parsed
+          notification.save(context: :file_upload)
         end
 
         if notification.errors.messages.present?
@@ -70,9 +71,7 @@ private
       Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :unknown_error)
     rescue StandardError => e
-      Sidekiq.logger.error "StandardError: #{e}"
-      @notification_file.update(upload_error: :unknown_error)
-    rescue UnknownError
+      Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
       @notification_file.update(upload_error: :unknown_error)
     end
   end
@@ -153,8 +152,5 @@ private
   end
 
   class UnexpectedStaticFilesError < FileUploadError
-  end
-
-  class UnknownError < FileUploadError
   end
 end

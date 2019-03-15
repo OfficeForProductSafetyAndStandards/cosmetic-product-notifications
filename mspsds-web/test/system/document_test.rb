@@ -3,13 +3,13 @@ require "application_system_test_case"
 class DocumentTest < ApplicationSystemTestCase
   include UrlHelper
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
 
     visit new_document_flow_path(investigations(:no_products))
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "First step should be file upload" do

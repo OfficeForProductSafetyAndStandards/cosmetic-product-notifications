@@ -43,6 +43,14 @@ namespace :cpnp_import do
   task :units do
     print_three_mapping_data_structures("unit", "units", "unit", "id", "name", false, false, true)
   end
+
+  task :exposure_routes do
+    print_three_mapping_data_structures("exposure_route", "exposureRoute", "exposureRoute")
+  end
+
+  task :exposure_conditions do
+    print_three_mapping_data_structures("exposure_condition", "exposureConditions", "exposureCondition")
+  end
 end
 
 def print_three_mapping_data_structures(variable_name, file_name, main_tag, id_tag_name = "id", description_tag_name = "name",

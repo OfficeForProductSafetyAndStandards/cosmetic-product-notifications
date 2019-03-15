@@ -1,0 +1,25 @@
+ruby:
+  sensitive = document.metadata[:has_consumer_info]
+  title = sensitive ? document_sensitive_title : document.metadata[:title]
+  safe = document.metadata["safe"]
+
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-one-third
+    = render "documents/document_preview", document: document, dimensions: "300x200",
+            sensitive: sensitive
+  .govuk-grid-column-two-thirds
+    h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = title
+    span.govuk-hint[class=" govuk-!-font-size-16"] = formatted_file_updated_date(document)
+    - if sensitive
+      p = render "components/govuk_badge", text: "Restricted access", classes: "govuk-badge--grey"
+      p = document_sensitive_body
+    - else
+      p = document.metadata[:description]
+      p
+        - if safe
+          = link_to "View #{pretty_type_description(document)}",
+                  document, class: "govuk-link mspsds-block-link", target: '_blank', rel: 'noopener'
+        = link_to "Edit #{image_document_text(document)}",
+                edit_associated_document_path(parent, document), class: "govuk-link mspsds-block-link"
+        = link_to "Remove #{image_document_text(document)}",
+                remove_associated_document_path(parent, document), class: "govuk-link mspsds-block-link"

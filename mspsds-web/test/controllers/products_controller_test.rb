@@ -2,7 +2,7 @@ require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     @product_one = products(:one)
     @product_one.source = sources(:product_one)
     @product_iphone = products(:iphone)
@@ -15,33 +15,12 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should get index" do
     get products_url
     assert_response :success
-  end
-
-  test "should get new" do
-    get new_product_url
-    assert_response :success
-  end
-
-  test "should create product" do
-    assert_difference("Product.count") do
-      post products_url, params: { product: {
-        batch_number: @product_one.batch_number,
-        product_type: @product_one.product_type,
-        category: @product_one.category,
-        description: @product_one.description,
-        product_code: @product_one.product_code,
-        webpage: @product_one.webpage,
-        name: @product_one.name
-      } }
-    end
-
-    assert_redirected_to product_url(Product.last)
   end
 
   test "should show product" do
@@ -65,13 +44,5 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       name: @product_one.name
     } }
     assert_redirected_to product_url(@product_one)
-  end
-
-  test "should destroy product" do
-    assert_difference("Product.count", -1) do
-      delete product_url(@product_one)
-    end
-
-    assert_redirected_to products_url
   end
 end

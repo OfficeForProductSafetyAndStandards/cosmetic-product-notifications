@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class InvestigationBusinessTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     @investigation = investigations(:one)
     @business = businesses(:three)
     @business.source = sources(:business_three)
@@ -12,7 +12,7 @@ class InvestigationBusinessTest < ApplicationSystemTestCase
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "create a business on investigation" do
@@ -64,8 +64,8 @@ class InvestigationBusinessTest < ApplicationSystemTestCase
     fill_in "business[legal_name]", with: @business.legal_name
     fill_in "business[trading_name]", with: @business.trading_name
     fill_in "business[company_number]", with: @business.company_number
-    fill_in "business[locations_attributes][0][address_line_1]", with: @location.address_line_1
-    fill_in "business[locations_attributes][0][postal_code]", with: @location.postal_code
-    fill_in "business[contacts_attributes][0][name]", with: @contact.name
+    fill_in "business_locations_attributes_0_address_line_1", with: @location.address_line_1
+    fill_in "business_locations_attributes_0_postal_code", with: @location.postal_code
+    fill_in "business_contacts_attributes_0_name", with: @contact.name
   end
 end

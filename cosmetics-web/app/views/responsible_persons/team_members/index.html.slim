@@ -1,10 +1,11 @@
 - content_for :page_title, "Team Members"
-= render "layouts/rp_navbar"
+- content_for :after_header do
+  = render "layouts/navbar"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       | Team members
-    = link_to "Invite a colleague", "/",
+    = link_to "Invite a colleague", new_responsible_person_team_member_path,
             class: "govuk-button govuk-button", role: "button"
 .govuk-grid-row
   .govuk-grid-column-full
@@ -15,10 +16,22 @@
             | Name
           th.govuk-table__header[scope="col"]
             | Email address
+          th.govuk-table__header[scope="col"]
+            | Status
       tbody.govuk-table__body
+        - @responsible_person.pending_responsible_person_users.each do |user|
+          tr.govuk-table__row
+            td.govuk-table__cell
+              | -
+            td.govuk-table__cell
+              = user.email_address
+            td.govuk-table__cell
+              | Pending
         - @responsible_person.responsible_person_users.each do |user|
           tr.govuk-table__row
             td.govuk-table__cell
               = user.full_name
             td.govuk-table__cell
               = user.email_address
+            td.govuk-table__cell
+              | -

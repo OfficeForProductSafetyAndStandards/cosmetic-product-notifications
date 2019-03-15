@@ -22,11 +22,11 @@ html.govuk-template.app-html-class[lang="en"]
     link[rel="apple-touch-icon" sizes="167x167" href=asset_pack_path("media/images/govuk-apple-touch-icon-167x167.png")]
     link[rel="apple-touch-icon" sizes="152x152" href=asset_pack_path("media/images/govuk-apple-touch-icon-152x152.png")]
     link[rel="apple-touch-icon" href=asset_pack_path("media/images/govuk-apple-touch-icon.png")]
-    /![if !IE 8]
+    /![if gt IE 8]><!
     = javascript_pack_tag "application"
     = stylesheet_pack_tag "application"
-    /![endif]
-    /[if IE 8]
+    /!<![endif]
+    /[if lte IE 8]
       = javascript_pack_tag "application-ie8"
       = stylesheet_pack_tag "application-ie8"
     = csrf_meta_tags
@@ -106,4 +106,5 @@ html.govuk-template.app-html-class[lang="en"]
               | © Crown copyright
 
     javascript:
+      if (typeof window.GOVUKFrontend === 'undefined') document.body.className = document.body.className.replace('js-enabled', '')
       window.GOVUKFrontend.initAll()

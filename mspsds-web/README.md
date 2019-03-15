@@ -19,6 +19,10 @@ Initialise the database:
 
     docker-compose run mspsds-web bin/rake db:create db:schema:load
 
+You can add some sample data using:
+
+    docker-compose run mspsds-web bin/rake db:seed
+
 Restart the website (which may have crashed):
 
     docker-compose restart mspsds-web

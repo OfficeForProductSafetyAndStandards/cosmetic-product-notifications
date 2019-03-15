@@ -17,10 +17,10 @@
     div class="govuk-!-margin-bottom-0"
       = form_with(model: @search, scope: "", url: investigations_path, method: :get,
               class: "mspsds-search") do |form|
-        .mspsds-search-box
-          = form.label "Keywords", class: "govuk-label--s"
-          = form.text_field :q, class: "govuk-input"
-          = form.submit "Search", name: nil, class: "mspsds-search-box--submit"
+        .search-box
+          = render "form_components/govuk_input", key: :q, form: form,
+                  label: { text: "Keywords", classes: "govuk-label--s" }
+          = form.submit "Search", name: nil, class: "search-box--submit"
         hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
         .govuk-form-group
           fieldset.govuk-fieldset
@@ -61,6 +61,8 @@
                         { text: "Created: newest", value: "newest" }]
         = form.submit "Apply filters", name: nil, class: "govuk-button"
   .govuk-grid-column-three-quarters
+    = link_to "Create new", User.current.is_opss? ? new_investigation_path : new_ts_investigation_path,
+            class: "govuk-button govuk-!-margin-bottom-3", role: "button"
     - if @results.any?
       = render "table", search_results: @results, sorted_by: query_params[:sort_by]
       = will_paginate @investigations

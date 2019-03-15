@@ -1,0 +1,281 @@
+
+			<exposureConditionList>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>BG</lngId>
+						<name>С отмиване</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>CS</lngId>
+						<name>Opl&#xe1;chnout</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>DA</lngId>
+						<name>Skyl af</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>DE</lngId>
+						<name>Ab-/auszusp&#xfc;len</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>EL</lngId>
+						<name>Έκπλυση</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>EN</lngId>
+						<name>Rinse off</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>ES</lngId>
+						<name>Aclarar</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>ET</lngId>
+						<name>Mahaloputatav</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>FI</lngId>
+						<name>Huuhdellaan pois</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>FR</lngId>
+						<name>&#xc0; rincer</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>HR</lngId>
+						<name>Ispire se</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>HU</lngId>
+						<name>Le&#xf6;bl&#xed;tendő</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>IT</lngId>
+						<name>Risciacquare</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>LT</lngId>
+						<name>Nuplaunamas</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>LV</lngId>
+						<name>Noskalo</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>MT</lngId>
+						<name>Laħlaħ</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>NL</lngId>
+						<name>Product dat wordt af-, uit- of weggespoeld</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>PL</lngId>
+						<name>Spłukać</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>PT</lngId>
+						<name>Enxaguar</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>RO</lngId>
+						<name>&#xce;ndepărtare prin clătire</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>SK</lngId>
+						<name>Zm&#xfd;vateľn&#xe9;</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>SL</lngId>
+						<name>Sprati</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>1</id>
+						<lngId>SV</lngId>
+						<name>Rinse off</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>BG</lngId>
+						<name>Без отмиване</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>CS</lngId>
+						<name>Nesm&#xfd;vat</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>DA</lngId>
+						<name>Efterlad p&#xe5;</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>DE</lngId>
+						<name>Nicht ab-/auszusp&#xfc;len</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>EL</lngId>
+						<name>Παραμονή</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>EN</lngId>
+						<name>Leave on</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>ES</lngId>
+						<name>Dejar puesto</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>ET</lngId>
+						<name>Pealej&#xe4;etav</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>FI</lngId>
+						<name>Ei huuhdella pois</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>FR</lngId>
+						<name>Sans rin&#xe7;age</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>HR</lngId>
+						<name>Ne ispire se</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>HU</lngId>
+						<name>Nem le&#xf6;bl&#xed;tendő</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>IT</lngId>
+						<name>Lasciare in posa</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>LT</lngId>
+						<name>Nenuplaunamas</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>LV</lngId>
+						<name>Nenoskalo</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>MT</lngId>
+						<name>Ħallih hemm</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>NL</lngId>
+						<name>Product dat niet wordt af-, uit- of weggespoeld</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>PL</lngId>
+						<name>Nie spłukiwać</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>PT</lngId>
+						<name>Deixar ficar</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>RO</lngId>
+						<name>Fără clătire</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>SK</lngId>
+						<name>Nezm&#xfd;vateľn&#xe9;</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>SL</lngId>
+						<name>Pustiti</name>
+					</exposureCondition>
+				
+					<exposureCondition>
+						<id>2</id>
+						<lngId>SV</lngId>
+						<name>Leave on</name>
+					</exposureCondition>
+				
+			</exposureConditionList>
+			

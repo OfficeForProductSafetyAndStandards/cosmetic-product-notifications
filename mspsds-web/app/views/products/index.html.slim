@@ -7,8 +7,5 @@
     h1.govuk-heading-xl
       | Products
   .govuk-grid-column-full
-    p
-      /TODO remove the link below
-      = link_to "Create new product", new_product_path, class: "govuk-!-font-size-19 govuk-!-font-weight-bold"
     = render "table", products: @products
     = will_paginate @products

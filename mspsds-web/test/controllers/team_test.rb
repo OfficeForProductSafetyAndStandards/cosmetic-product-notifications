@@ -2,7 +2,7 @@ require "test_helper"
 
 class TeamTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
 
     @user_one = User.find_by(last_name: "User_one")
     @user_two = User.find_by(last_name: "User_two")
@@ -13,7 +13,7 @@ class TeamTest < ActionDispatch::IntegrationTest
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "team users can see each other by get team members" do

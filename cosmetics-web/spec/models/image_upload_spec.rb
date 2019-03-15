@@ -5,11 +5,11 @@ RSpec.describe ImageUpload, type: :model do
   let(:file) { fixture_file_upload("/testImage.png", "image/png") }
 
   before do
-    allow(ImageUpload).to receive(:get_max_file_size).and_return(10)
+    allow(ImageUpload).to receive(:max_file_size).and_return(10)
   end
 
   after do
-    allow(ImageUpload).to receive(:get_max_file_size).and_call_original
+    allow(ImageUpload).to receive(:max_file_size).and_call_original
   end
 
   describe "image validation" do

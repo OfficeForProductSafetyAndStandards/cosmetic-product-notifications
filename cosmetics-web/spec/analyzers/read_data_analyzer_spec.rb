@@ -6,6 +6,8 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
   let(:notification_file_shades_import) { create(:notification_file, uploaded_file: create_file_blob("testWithShadesAndImport.zip")) }
   let(:notification_file_multi_component_exact_formula) { create(:notification_file, uploaded_file: create_file_blob("testMultiComponentExactFormula.zip")) }
   let(:notification_file_manual_ranges_trigger_rules) { create(:notification_file, uploaded_file: create_file_blob("testManualRangesTriggerRules.zip")) }
+  let(:notification_file_nano_materials_cmr) { create(:notification_file, uploaded_file: create_file_blob("testWithNanomaterialsAndCmrs.zip")) }
+  let(:notification_file_formulation_required) { create(:notification_file, uploaded_file: create_file_blob("testFormulationRequiredExportFile.zip")) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
@@ -48,6 +50,14 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.cpnp_reference).equal?("1000094")
+    end
+
+    it "creates a notification populated with relevant cpnp date" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance.metadata
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.cpnp_notification_date.to_s).equal?("2012-02-08 16:02:34 UTC")
     end
 
     it "creates a notification populated with relevant shades" do
@@ -124,6 +134,38 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       expect {
         analyzer_instance.metadata
       }.to change(RangeFormula, :count).by(2)
+    end
+
+    it "creates a notification populated with relevant number of cmr" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_nano_materials_cmr.uploaded_file)
+      expect {
+        analyzer_instance.metadata
+      }.to change(Cmr, :count).by(2)
+    end
+
+    it "creates a notification populated with relevant number of nanomaterials and nanoelement" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_nano_materials_cmr.uploaded_file)
+      expect {
+        analyzer_instance.metadata
+      }.to change(NanoMaterial, :count).by(1).and change(NanoElement, :count).by(1)
+    end
+
+    it "creates a notification in the draft_complete state if no formulation information is needed" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance.metadata
+
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.state).to eq("draft_complete")
+    end
+
+    it "creates a notification in the notification_file_imported state if formulation information is required" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_formulation_required.uploaded_file)
+      analyzer_instance.metadata
+
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.state).to eq("notification_file_imported")
     end
   end
 end

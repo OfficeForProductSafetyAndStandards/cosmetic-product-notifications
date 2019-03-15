@@ -36,7 +36,10 @@ module Shared
       include Singleton
 
       def initialize
+        # The gem we're using has its api split across these three classes
         @client = Keycloak::Client
+        @admin = Keycloak::Admin
+        @internal = Keycloak::Internal
         super
       end
 
@@ -100,16 +103,9 @@ module Shared
         JSON.parse(response)["attributes"] || {}
       end
 
-      def all_groups
-        response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
-          Keycloak::Internal.get_groups
-        end
-
-        JSON.parse(response)
-      end
-
-      def registration_url
-        Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/protocol/openid-connect/registrations?client_id=#{Keycloak::Client.client_id}&response_type=code"
+      def registration_url(redirect_uri)
+        params = URI.encode_www_form(client_id: Keycloak::Client.client_id, response_type: "code", redirect_uri: redirect_uri)
+        Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/protocol/openid-connect/registrations?#{params}"
       end
 
       def login_url(redirect_uri)
@@ -142,8 +138,13 @@ module Shared
         { id: user["sub"], email: user["email"], groups: user["groups"], first_name: user["given_name"], last_name: user["family_name"] }
       end
 
-      def has_role?(role)
-        @client.has_role? role
+      def has_role?(user_id, role)
+        if User.current && (User.current.id == user_id)
+          # This is faster, as it uses the already fetched claims
+          @client.has_role? role
+        else
+          @internal.has_role? user_id, role
+        end
       end
 
     private
@@ -154,6 +155,14 @@ module Shared
         end
 
         JSON.parse(response).collect { |user| [user["id"], user["groups"]] }.to_h
+      end
+
+      def all_groups
+        response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
+          Keycloak::Internal.get_groups
+        end
+
+        JSON.parse(response)
       end
     end
   end

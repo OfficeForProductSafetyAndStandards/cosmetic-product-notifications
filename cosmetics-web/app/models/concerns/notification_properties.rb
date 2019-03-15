@@ -6,4 +6,5 @@ module NotificationProperties
   include NotificationFrameFormulations
   include NotificationTriggerRules
   include NotificationUnits
+  include NotificationExposures
 end

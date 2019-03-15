@@ -35,17 +35,18 @@ class ComponentBuildController < ApplicationController
   end
 
   def finish_wizard_path
-    notification_build_path(@component.notification, :add_product_image)
+    responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
   end
 
 private
 
-  def component_params
-    params.require(:component).permit(shades: [])
-  end
-
   def set_component
     @component = Component.find(params[:component_id])
+    authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
+  end
+
+  def component_params
+    params.require(:component).permit(shades: [])
   end
 
   def render_add_shades

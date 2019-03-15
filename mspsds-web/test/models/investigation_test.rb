@@ -8,7 +8,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     @investigation = investigations(:one)
 
     @investigation_with_product = investigations(:search_related_products)
@@ -25,7 +25,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should create activities when investigation is created" do
@@ -77,7 +77,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "case title should match when no products are present on the case" do
-    investigation = investigations(:no_products_case_titles)
+    investigation = investigations(:no_products_case_title)
     assert_equal "Alarms – Asphyxiation (no product specified)", investigation.title
   end
 
@@ -184,37 +184,27 @@ class InvestigationTest < ActiveSupport::TestCase
   test "visible to creator organisation" do
     create_new_private_case
     creator = User.find_by(last_name: "User_one")
-    creator.organisation = organisations[0]
+    set_user_as_non_opss(creator)
     user = User.find_by(last_name: "User_two")
-    user.organisation = organisations[0]
+    set_user_as_non_opss(user)
     assert_equal(policy(@new_investigation).show?(user: user), true)
-  end
-
-  test "visible to admin" do
-    create_new_private_case
-    logout
-    sign_in_as_admin
-    user = User.find_by(last_name: "Admin")
-    assert(policy(@new_investigation).show?(user: user))
   end
 
   test "visible to assignee organisation" do
     create_new_private_case
     assignee = User.find_by(last_name: "User_two")
-    assignee.organisation = organisations[1]
+    set_user_as_opss(assignee)
     user = User.find_by(last_name: "User_three")
-    user.organisation = organisations[1]
+    set_user_as_opss(user)
     @new_investigation.assignee = assignee
     assert(policy(@new_investigation).show?(user: user))
   end
 
   test "not visible to no-admin, no-source, no-assignee organisation" do
     create_new_private_case
-    logout
-    sign_in_as_non_opss_user(user_name: "User_two")
-    user = User.find_by(last_name: "User_two")
-    user.organisation = organisations[0]
-    assert_not(policy(@new_investigation).show?(user: user))
+    sign_in_as User.find_by(last_name: "User_two")
+    set_user_as_non_opss(User.current)
+    assert_not(policy(@new_investigation).show?(user: User.current))
   end
 
   test "past assignees should be computed" do

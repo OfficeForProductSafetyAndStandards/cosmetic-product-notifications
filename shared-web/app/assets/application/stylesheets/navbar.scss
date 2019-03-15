@@ -47,16 +47,9 @@
     }
   }
 
-  .creation {
+  .right-aligned {
     position: absolute;
-    right: 4px;
-    top: 9px;
-    z-index: 1;
-
-    .govuk-button--start {
-      font-size: 1rem;
-      margin: 0;
-    }
+    right: 0;
   }
 }
 

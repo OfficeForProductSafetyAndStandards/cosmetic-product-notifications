@@ -39,6 +39,10 @@ module Shared
       def full_name
         "#{first_name} #{last_name}"
       end
+
+      def has_role?(role)
+        KeycloakClient.instance.has_role? id, role
+      end
     end
   end
 end
