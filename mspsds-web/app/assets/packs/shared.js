@@ -4,9 +4,9 @@ import GOVUKFrontend from 'govuk-frontend';
 
 import 'shared-web/app/assets/application/javascripts/location_picker';
 
-import 'application/javascripts/investigations/attachment_description';
-import 'application/javascripts/investigations/ts_investigations/which_businesses';
-import 'application/javascripts/autocomplete';
+import '../application/javascripts/investigations/attachment_description';
+import '../application/javascripts/investigations/ts_investigations/which_businesses';
+import '../application/javascripts/autocomplete';
 
 
 // Images
@@ -20,7 +20,7 @@ import 'govuk-frontend/assets/images/govuk-apple-touch-icon.png';
 import 'govuk-frontend/assets/images/govuk-opengraph-image.png';
 import 'govuk-frontend/assets/images/govuk-logotype-crown.png';
 
-import 'application/images/document_placeholder.png';
+import '../application/images/document_placeholder.png';
 
 Rails.start();
 window.GOVUKFrontend = GOVUKFrontend;

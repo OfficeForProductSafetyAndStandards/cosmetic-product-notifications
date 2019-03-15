@@ -7,5 +7,5 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import 'html5shiv';
-import 'application/stylesheets/ie8/main.scss';
+import '../application/stylesheets/ie8/main.scss';
 import './shared';
