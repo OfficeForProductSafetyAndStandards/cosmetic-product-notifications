@@ -3,12 +3,12 @@ require "application_system_test_case"
 class CreateProjectTest < ApplicationSystemTestCase
   setup do
     @project = Investigation::Project.new(description: "new project description", user_title: "project title")
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     visit new_project_path
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "can be reached via create page" do
@@ -29,12 +29,12 @@ class CreateProjectTest < ApplicationSystemTestCase
   end
 
   test "first step should require a description" do
-    click_on "Continue"
+    click_on "Create project"
     assert_text "Description can't be blank"
   end
 
   test "third step should require title" do
-    click_on "Continue"
+    click_on "Create project"
     assert_text "User title can't be blank"
   end
 
@@ -60,6 +60,6 @@ class CreateProjectTest < ApplicationSystemTestCase
   def fill_project_details_and_continue
     fill_in "investigation[description]", with: @project.description
     fill_in "investigation[user_title]", with: @project.user_title
-    click_on "Continue"
+    click_on "Create project"
   end
 end

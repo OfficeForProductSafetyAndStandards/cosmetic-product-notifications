@@ -2,7 +2,7 @@ require "test_helper"
 
 class Investigations::ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin
+    mock_out_keycloak_and_notify(user_name: "Admin")
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
     @product = products(:iphone)
@@ -10,7 +10,7 @@ class Investigations::ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should get new" do

@@ -12,9 +12,9 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Who was the meeting with?
-        .govuk-form-group
-          = form.label :correspondent_name, "Name", class: "govuk-label govuk-!-width-two-thirds"
-          = form.text_field :correspondent_name, class: "govuk-input govuk-!-width-two-thirds"
+        = render "form_components/govuk_input", key: :correspondent_name, form: form,
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Name" }
       .govuk-form-group
         fieldset.govuk-fieldset aria-describedby="correspondence-date-hint" role="group"
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l

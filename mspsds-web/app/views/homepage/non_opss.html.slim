@@ -2,74 +2,32 @@
 - content_for :after_header do
   = render "layouts/navbar"
 
-section.mspsds-pagetitle
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl.mspsds-pagetitle
-        |  Market Surveillance & Product Safety
-section.mspsds-pagebody
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      p.govuk-body-l
-        |  Use this service to report unsafe or non-compliant products and related work.
-      p.govuk-body-l
-        =link_to new_ts_investigation_path,
-                class: "govuk-button govuk-button--start", role: "button", draggable: "false"
-          |  Open a new case
-  hr.govuk-section-break.govuk-section-break--visible[class="govuk-!-margin-bottom-9"]
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h2.govuk-heading-l
-        | Report an unsafe product
-      p.govuk-body
-        |  Trading standards are required to notify OPSS about any products which pose a serious danger to the
-        |  public – in order to meet that requirement, there are a number of pieces of information we need:
-      p
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    h1.govuk-heading-xl
+      |  Product safety database
+    p.govuk-body-l
+      |  Report, track and share product safety information.
+    = link_to new_ts_investigation_path,
+            class: "govuk-button govuk-button--start", role: "button", draggable: "false"
+      | Open a new case
 
-      ul.govuk-list[class="govuk-!-margin-bottom-9"]
-        li
-          h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-            | Product
-          p.govuk-body
-            |  Information to identify the product. This may include any or all of: category and type, make and model,
-            |  unique IDs such as barcodes or serial numbers, web-pages where it may be viewed or purchased, any other
-            |  descriptive information useful to identify the specific product (especially where the other
-            |  information is not available).
-        li
-          h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-            | Hazard
-          p.govuk-body
-            |  Information that describes the danger posed to the public, including details of any incidents or
-            |  events that may have occured.
-        li
-          h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-            | Supply chain
-          p.govuk-body
-            |  Information that describes businesses involved, and their roles in the supply chain, including
-            |  registered business names, company numbers, address and contact details as available.
-        li
-          h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-            | Corrective action
-          p.govuk-body
-            |  Information that describes corrective actions taken (by you or any business), including details of
-            |  date, legislation and documentary evidence where applicable.
-        li
-          h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-            | Suporting images and attachments
-          p.govuk-body
-            |  Files that supplement the report, including any or all of: test results, risk assessments, product
-            |  images, images showing damage or injury caused, receipts of purchase, or any other relevant file.
-        li
-          h3.govuk-heading-m[class="govuk-!-margin-bottom-1"]
-            | Your system reference
-          p.govuk-body
-            |  The case number or equivalent on your system, that will aid in cross-referencing, should the need arise.
-  hr.govuk-section-break.govuk-section-break--visible[class="govuk-!-margin-bottom-9"]
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h2.govuk-heading-l
-        | Ask an enquiry
-      p.govuk-body
-        |  Use this service to ask a question about policy, legislation, testing or other technical aspect, and we'll
-        |  ensure it’s passed to the correct person or department to answer it.
-      p
+hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class=["govuk-!-margin-top-0"]
+
+.govuk-grid-row
+  .govuk-grid-column-one-third
+    h2.govuk-heading-m
+      = link_to "Your cases", investigations_path(assigned_to_me: "checked"),
+              class: "govuk-link govuk-link--no-visited-state"
+    p Cases you’ve opened or you’re assigned to.
+
+  .govuk-grid-column-one-third
+    h2.govuk-heading-m
+      = link_to "All cases", investigations_path, class: "govuk-link govuk-link--no-visited-state"
+    p All cases in the product safety database
+
+  .govuk-grid-column-one-third
+    / TODO add this column (uncomment these lines and check content) and set the path accordingly in MSPSDS-1095
+    / h2.govuk-heading-m
+    /   = link_to "About this service", about_path, class: "govuk-link govuk-link--no-visited-state"
+    / p How and when to use this service.
