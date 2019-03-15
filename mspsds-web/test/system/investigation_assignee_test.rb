@@ -5,7 +5,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     sign_in_as_user
     @user = User.find_by(last_name: "User_one")
     @team = @user.teams.first
-    visit assign_investigation_path(investigations(:one))
+    visit new_investigation_assign_path(investigations(:one))
   end
 
   teardown do
@@ -32,7 +32,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     assert_text "Assigned to #{@team.name}"
   end
 
-  test "should add comment current to assignment activity" do
+  test "should add comment to assignment activity" do
     assert_text @team.name
     choose @team.name, visible: false
     click_on "Continue"

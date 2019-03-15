@@ -16,14 +16,18 @@ class Investigations::AssignController < ApplicationController
   end
 
   def update
-    redirect_to next_wizard_path
+    if assignee_valid?
+  redirect_to next_wizard_path
+else
+  render step
+end
   end
 
   def create
     @investigation.assignee = @potential_assignees.first
-    @investigation.assignee_comment = params[:investigation][:assignee_comment]
+    @investigation.assignee_rationale = params[:investigation][:assignee_rationale]
     @investigation.save
-    respond_to_update
+    redirect_to investigation_url(@investigation), notice: "#{@investigation.case_type.titleize} was successfully updated."
   end
 
 private
@@ -37,7 +41,7 @@ private
     authorize @investigation, :show?
   end
 
-  def filter_assignee_params
+  def assignee_params
     params[:investigation][:assignable_id] = case params[:investigation][:assignable_id]
                                              when "someone_in_your_team"
                                                params[:investigation][:select_team_member]
@@ -54,30 +58,21 @@ private
   end
 
   def store_assignee
-    filter_assignee_params
-    session[:assignable_id] = params[:investigation][:assignable_id]
-    if session[:assignable_id].blank?
-      @investigation.errors.add(:assignable_id, :invalid, message: "Select assignee")
-      respond_to_invalid_data
-      return
+    session[:assignable_id] = assignee_params[:assignable_id]
+  end
+
+  def assignee_valid?
+    if step == :choose
+      if session[:assignable_id].blank?
+        @investigation.errors.add(:assignable_id, :invalid, message: "Select assignee")
+        respond_to_invalid_data
+      end
     end
+    @investigation.errors.empty?
   end
 
   def find_potential_assignee
     @potential_assignees = User.where(id: session[:assignable_id]) + Team.where(id: session[:assignable_id])
-  end
-
-  def respond_to_update
-    respond_to do |format|
-      if @investigation.save
-        format.html { redirect_to @investigation, notice: "#{@investigation.case_type.titleize} was successfully updated." }
-        format.json { render :show, status: :ok, location: @investigation }
-      else
-        @investigation.restore_attributes
-        format.html { render step }
-        format.json { render json: @investigation.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   def respond_to_invalid_data

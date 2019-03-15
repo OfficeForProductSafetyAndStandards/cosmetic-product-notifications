@@ -12,10 +12,11 @@
         | You are assigning this project to:
         - @team_name = @potential_assignees.first.respond_to?(:name) ? "#{@potential_assignees.first.name} — " : nil
         strong = " #{@team_name}#{@potential_assignees.first.display_name}"
-  .govuk-form-group
-    = render "form_components/govuk_textarea", key: :assignee_comment, form: form, max_length: 5000,
-                classes: "govuk-!-width-two-thirds",
-                rows: "3",
-                label: { text: "Message to new assignee (optional)" }
+      .govuk-form-group
+        = render "form_components/govuk_textarea", key: :assignee_rationale, form: form,
+                    classes: "govuk-!-width-two-thirds",
+                    rows: "3",
+                    label: { text: "Message to new assignee (optional)" },
+                    attributes: { maxlength: 5000 }
   = form.submit "Confirm change", class: "govuk-button"
   p = link_to "Cancel", @investigation, class: "govuk-link mspsds-block-link"
