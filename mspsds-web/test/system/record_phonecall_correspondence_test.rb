@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_admin
+    mock_out_keycloak_and_notify(user_name: "Admin")
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
     @correspondence = correspondences(:phone_call)
@@ -10,7 +10,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "first step should be context" do
@@ -85,6 +85,20 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
     click_button "Continue"
     assert_current_path(/cases\/\d+/)
+  end
+
+  test "conceals information on phonecalls with customer info" do
+    fill_in_context_form
+    choose :correspondence_phone_call_has_consumer_info_true, visible: false
+    click_button "Continue"
+    fill_in_content_form
+    click_button "Continue"
+    click_button "Continue"
+    click_on "Activity"
+    within id: "activity" do
+      assert_equal("Phone call added", first('h3').text)
+      assert_equal("RESTRICTED ACCESS", first(".govuk-badge").text)
+    end
   end
 
   def fill_in_context_form

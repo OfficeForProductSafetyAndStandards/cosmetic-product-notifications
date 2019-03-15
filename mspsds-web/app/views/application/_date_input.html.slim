@@ -6,29 +6,19 @@
     .govuk-date-input__item
       / The ids for these fields follow a special convention to work with ActiveRecord dates:
       / https://guides.rubyonrails.org/form_helpers.html#using-date-and-time-form-helpers-model-object-helpers
-      .govuk-form-group
-        = form.label :day, "Day", class: "govuk-label govuk-date-input__label"
-        = form.text_field :day,
-                class: "govuk-input govuk-date-input__input govuk-input--width-2" \
-                            + (form.object.errors[:day].present? ? " govuk-input--error" : ""),
-                pattern: "[0-9]*",
-                type: "number",
-                value: form.object.day
+      - error_class_day = form.object.errors[:day].present? ? " govuk-input--error" : ""
+      = render "form_components/govuk_input", key: :day, form: form, pattern: "[0-9]*", type: "number",
+              classes: "govuk-date-input__input govuk-input--width-2 #{error_class_day}",
+              label: { text: "Day", classes: "govuk-date-input__label" }
+
     .govuk-date-input__item
-      .govuk-form-group
-        = form.label :month, "Month", class: "govuk-label govuk-date-input__label"
-        = form.text_field :month,
-                class: "govuk-input govuk-date-input__input govuk-input--width-2"\
-                            + (form.object.errors[:month].present? ? " govuk-input--error" : ""),
-                pattern: "[0-9]*",
-                type: "number",
-                value: form.object.month
+      - error_class_month = form.object.errors[:month].present? ? " govuk-input--error" : ""
+      = render "form_components/govuk_input", key: :month, form: form, pattern: "[0-9]*", type: "number",
+              classes: "govuk-date-input__input govuk-input--width-2 #{error_class_month}",
+              label: { text: "Month", classes: "govuk-date-input__label" }
+
     .govuk-date-input__item
-      .govuk-form-group
-        = form.label :year, "Year", class: "govuk-label govuk-date-input__label"
-        = form.text_field :year,
-                class: "govuk-input govuk-date-input__input govuk-input--width-4"\
-                            + (form.object.errors[:year].present? ? " govuk-input--error" : ""),
-                pattern: "[0-9]*",
-                type: "number",
-                value: form.object.year
+      - error_class_year = form.object.errors[:year].present? ? " govuk-input--error" : ""
+      = render "form_components/govuk_input", key: :year, form: form, pattern: "[0-9]*", type: "number",
+              classes: "govuk-date-input__input govuk-input--width-4 #{error_class_year}",
+              label: { text: "Year", classes: "govuk-date-input__label" }

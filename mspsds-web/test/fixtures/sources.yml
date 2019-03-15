@@ -13,16 +13,56 @@ product_iphone:
   sourceable: iphone (Product)
 
 investigation_one:
-  type:
+  type: UserSource
   sourceable: one (Investigation)
 
 investigation_two:
-  type:
+  type: UserSource
   sourceable: two (Investigation)
 
 investigation_no_products:
-  type:
+  type: UserSource
   sourceable: no_products (Investigation)
+
+investigation_private:
+  type: UserSource
+  sourceable: private (Investigation)
+
+investigation_three:
+  type: UserSource
+  sourceable: three (Investigation)
+
+investigation_search_related_products:
+  type: UserSource
+  sourceable: search_related_products (Investigation)
+
+investigation_search_related_correspondence:
+  type: UserSource
+  sourceable: search_related_correspondence (Investigation)
+
+investigation_search_related_businesses:
+  type: UserSource
+  sourceable: search_related_businesses (Investigation)
+
+investigation_search_related_complainant:
+  type: UserSource
+  sourceable: search_related_complainant (Investigation)
+
+investigation_no_products_case_title:
+  type: UserSource
+  sourceable: no_products_case_title (Investigation)
+
+investigation_one_product:
+  type: UserSource
+  sourceable: one_product (Investigation)
+
+investigation_two_products_with_common_values:
+  type: UserSource
+  sourceable: two_products_with_common_values (Investigation)
+
+investigation_two_products_with_no_common_values:
+  type: UserSource
+  sourceable: two_products_with_no_common_values (Investigation)
 
 business_one:
   type:
@@ -37,11 +77,11 @@ business_three:
   sourceable: three (Business)
 
 activity_one:
-  type:
+  type: UserSource
   sourceable: one (Activity)
 
 activity_two:
-  type:
+  type: UserSource
   sourceable: two (Activity)
 
 location_one:

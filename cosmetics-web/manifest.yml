@@ -12,5 +12,5 @@ applications:
     - cosmetics-database
     - cosmetics-elasticsearch
     - cosmetics-queue
-    - logit-ssl-drain
+    - opss-log-drain
 

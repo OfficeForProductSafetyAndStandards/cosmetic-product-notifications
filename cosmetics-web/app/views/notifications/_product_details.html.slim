@@ -42,3 +42,9 @@ table.govuk-table
             - if image.file_exists? && image.marked_as_safe?
               = link_to image.filename, url_for(image.file)
               br
+    - if notification.cpnp_notification_date.present?
+      tr.govuk-table__row
+        th.govuk-table__header
+          | EU notification date
+        td.govuk-table__cell
+          = notification.cpnp_notification_date.strftime("%d/%m/%Y")

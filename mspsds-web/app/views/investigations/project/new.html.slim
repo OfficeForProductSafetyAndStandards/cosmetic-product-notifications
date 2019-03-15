@@ -10,11 +10,9 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | Please provide a title
-        .govuk-form-group class=("govuk-form-group--error" if @investigation.errors[:user_title].any?)
-          span.govuk-hint#enquiry-title-hint
-            | This will help other users identify this project
-          = form.text_field :user_title, class: "govuk-input", "aria-describedby": "project-title-hint",
-                  maxlength: 100
+        = render "form_components/govuk_input", key: :user_title, form: form, attributes: { maxlength: 100 },
+                label: { text: "Title", classes: "govuk-visually-hidden" },
+                hint: { text: "This will help other users identify this project" }
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
@@ -23,4 +21,4 @@
                 label: { text: "Project description", classes: "govuk-visually-hidden" }
 
       .govuk-form-group
-        = form.submit "Continue", class: "govuk-button"
+        = form.submit "Create project", class: "govuk-button"

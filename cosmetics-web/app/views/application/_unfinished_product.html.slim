@@ -4,16 +4,20 @@ li.product
             edit_responsible_person_notification_path(notification.responsible_person, notification),
             class: "product-title govuk-link--no-visited-state"
   .product-data.govuk-body-s
-    dt
-      | UK cosmetic product number:
-    dd
-      = notification.reference_number_for_display
+    dl
+      .govuk-clearfix
+        dt
+          | UK cosmetic product number:
+        dd
+          = notification.reference_number_for_display
 
-    - if notification.cpnp_reference.present?
-      dt
-        | EU reference number:
-      dd
-        = notification.cpnp_reference
+      - if notification.cpnp_reference.present?
+        .govuk-clearfix
+          dt
+            | EU reference number:
+          dd
+            = notification.cpnp_reference
+
     p.add-documents
       - if notification.formulation_required?
         = link_to "Add formulation document and product image to finish registration",

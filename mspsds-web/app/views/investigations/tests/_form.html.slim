@@ -13,8 +13,9 @@ fieldset.govuk-fieldset
           = link_to "Add a product", new_investigation_product_path(investigation)
           |  to send it for testing.
       - elsif @investigation.products.size == 1
-        = form.text_field :product_name, value: @investigation.products.first.name,
-                disabled: true, class: "govuk-input govuk-!-width-two-thirds"
+        = render "form_components/govuk_input", key: :product_name, form: form, attributes: { disabled: true },
+                classes: "govuk-!-width-two-thirds", value: @investigation.products.first.name,
+                label: { text: "Product name", classes: "govuk-visually-hidden" }
         = form.hidden_field :product_id, value: @investigation.products.first.id
       - else
         - span_html = capture do

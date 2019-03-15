@@ -13,6 +13,8 @@ module ActivityHelper
     }
     visibility_text = @investigation.is_private ? "Unrestrict this case" : "Restrict this case for legal privilege"
     base_types["visibility"] = visibility_text if policy(@investigation).visibility?
+    base_types["alert"] = "Send email alert about this case" if policy(@investigation).user_allowed_to_raise_alert?
+
     base_types
   end
 end

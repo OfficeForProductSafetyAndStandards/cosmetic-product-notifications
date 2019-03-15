@@ -1,0 +1,25 @@
+.govuk-badge {
+  @include govuk-font($size: 14);
+  border: 2px solid govuk-colour("blue");
+  color: govuk-colour("blue");
+  font-weight: bold;
+  padding: 0 govuk-spacing(1);
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.govuk-badge--red {
+  border-color: govuk-colour("red");
+  color: govuk-colour("red");
+}
+
+.govuk-badge--green {
+  border-color: govuk-colour("green");
+  color: govuk-colour("green");
+}
+
+.govuk-badge--grey {
+  border-color: $govuk-secondary-text-colour;
+  color: $govuk-secondary-text-colour;
+}
+
