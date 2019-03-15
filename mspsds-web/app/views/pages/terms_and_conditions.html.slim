@@ -1,3 +1,13 @@
 .govuk-grid-row
   .govuk-grid-column-one-half-from-desktop
     p = I18n.t "terms_and_conditions"
+- if @referred
+  button id="close-terms" class="govuk-button" type="button"
+    | Close
+  javascript:
+    const element = document.getElementById("close-terms");
+    if(element){
+      element.addEventListener('click', () => {
+          window.close();
+      });
+    }
