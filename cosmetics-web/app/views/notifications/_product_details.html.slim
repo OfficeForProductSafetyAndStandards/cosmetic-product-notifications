@@ -1,8 +1,8 @@
-table.govuk-table.check-your-answers-table
+table.govuk-table.check-your-answers-table#product-table
   caption.govuk-table__caption.govuk-heading-m
     | Product
   tbody.govuk-table__body
-    tr.govuk-table__row#product_name_row
+    tr.govuk-table__row
       th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
         | Name
       td.govuk-table__cell
@@ -33,10 +33,7 @@ table.govuk-table.check-your-answers-table
       th.govuk-table__header[scope="row"]
         | Shades
       td.govuk-table__cell
-        - if notification.shades.present?
-          = render "none_or_bullet_list", entities_list: [notification.shades]
-        - else
-          = render "none_or_bullet_list", entities_list: notification.components.first.shades
+        = display_shades(notification)
     - if notification.image_uploads.present?
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]

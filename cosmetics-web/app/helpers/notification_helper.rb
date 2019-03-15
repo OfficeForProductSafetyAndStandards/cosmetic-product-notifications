@@ -3,7 +3,7 @@ module NotificationHelper
     if notification.import_country.present? || notification.cpnp_imported_country.present?
       return "Yes"
     end
-    if notification.cpnp_reference.present? #TODO: check if product is pre-brexit
+    if notification.cpnp_reference.present? #TODO COSBETA-165: check if product is pre-brexit
       return "Manufactured in EU before Brexit"
     end
 
