@@ -17,10 +17,10 @@ class Investigations::AssignController < ApplicationController
 
   def update
     if assignee_valid?
-  redirect_to next_wizard_path
-else
-  render step
-end
+      return redirect_to next_wizard_path
+    else
+      render_wizard
+    end
   end
 
   def create
@@ -65,7 +65,6 @@ private
     if step == :choose
       if session[:assignable_id].blank?
         @investigation.errors.add(:assignable_id, :invalid, message: "Select assignee")
-        respond_to_invalid_data
       end
     end
     @investigation.errors.empty?
@@ -73,12 +72,5 @@ private
 
   def find_potential_assignee
     @potential_assignees = User.where(id: session[:assignable_id]) + Team.where(id: session[:assignable_id])
-  end
-
-  def respond_to_invalid_data
-    respond_to do |format|
-      format.html { render step }
-      format.json { render json: @corrective_action.errors, status: :unprocessable_entity }
-    end
   end
 end
