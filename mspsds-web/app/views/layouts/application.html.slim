@@ -106,4 +106,5 @@ html.govuk-template.app-html-class[lang="en"]
               | © Crown copyright
 
     javascript:
+      if (typeof window.GOVUKFrontend === 'undefined') document.body.className = document.body.className.replace('js-enabled', '')
       window.GOVUKFrontend.initAll()
