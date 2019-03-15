@@ -5,7 +5,7 @@
 - else
   ul.govuk-list.govuk-list--bullet.entity-list
     - entities_list.each do |entity|
-      - if key_name
+      - if local_assigns[:key_name].present? && local_assigns[:value_name].present?
         li
           dt
             = entity[key_name]

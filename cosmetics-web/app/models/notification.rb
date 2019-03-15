@@ -84,8 +84,11 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?,
-                  after: Proc.new { update_elasticsearch_index }
+      transitions from: :draft_complete, to: :notification_complete, after: Proc.new { update_elasticsearch_index } do
+        guard do
+          cpnp_reference.present? || images_are_present_and_safe?
+        end
+      end
     end
   end
   # rubocop:enable Metrics/BlockLength

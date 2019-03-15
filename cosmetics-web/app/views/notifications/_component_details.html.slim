@@ -3,7 +3,8 @@ tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | CMR
   td.govuk-table__cell
-    = render "none_or_bullet_list", entities_list: component.cmrs
+
+    = render "none_or_bullet_list", entities_list: component.cmrs.map{ |cmr| cmr.display_name }
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
@@ -67,5 +68,5 @@ tr.govuk-table__row
         new_responsible_person_notification_component_formulation_path(@notification.responsible_person, @notification, component)
 - if component.trigger_questions
   - component.trigger_questions.each do |question|
-    - if trigger_question_answer_is_present?(question)
+    - if question.applicable?
       = render "notifications/trigger_question_details", trigger_question: question

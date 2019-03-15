@@ -1,7 +1,7 @@
 class Cmr < ApplicationRecord
   belongs_to :component
 
-  def to_s
+  def display_name
     [name, ec_number, cas_number].join(', ')
   end
 end
