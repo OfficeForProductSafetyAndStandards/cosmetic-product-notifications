@@ -43,8 +43,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
       put invite_to_team_url(@my_team), params: { new_user: { email_address: email_address } }
       assert_response :see_other
     end
-    expect(NotifyMailer).to have_received(:user_added_to_team)
-                                .with(hash_including(email: email_address, team_id: @my_team.id))
+    expect(NotifyMailer).to have_received(:user_added_to_team).with(email_address, any_args)
   end
 
   test "Inviting existing user from same team returns error" do
@@ -53,8 +52,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
       put invite_to_team_url(@my_team), params: { new_user: { email_address: email_address } }
       assert_response :bad_request
     end
-    expect(NotifyMailer).not_to have_received(:user_added_to_team)
-                                .with(hash_including(email: email_address, team_id: @my_team.id))
+    expect(NotifyMailer).not_to have_received(:user_added_to_team).with(email_address, any_args)
   end
 
   test "Inviting to team I'm not a member of is forbidden" do
@@ -70,8 +68,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
       put invite_to_team_url(@my_team), params: { new_user: { email_address: email_address } }
       assert_response :bad_request
     end
-    expect(NotifyMailer).not_to have_received(:user_added_to_team)
-                                    .with(hash_including(email: email_address, team_id: @my_team.id))
+    expect(NotifyMailer).not_to have_received(:user_added_to_team).with(email_address, any_args)
   end
 
   test "Inviting new user creates the account and adds them to the team" do
