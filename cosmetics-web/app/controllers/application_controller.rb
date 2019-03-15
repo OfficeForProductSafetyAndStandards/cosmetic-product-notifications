@@ -18,11 +18,11 @@ class ApplicationController < ActionController::Base
 private
 
   def authorize_user!
-    raise Pundit::NotAuthorizedError if poison_centre_user?
+    raise Pundit::NotAuthorizedError if poison_centre_or_msa_user?
   end
 
   def create_or_join_responsible_person
-    return unless user_signed_in? && !poison_centre_user?
+    return unless user_signed_in? && !poison_centre_or_msa_user?
 
     if User.current.responsible_persons.empty?
       redirect_to create_or_join_existing_account_index_path
@@ -32,7 +32,7 @@ private
     end
   end
 
-  def poison_centre_user?
-    User.current&.poison_centre_user?
+  def poison_centre_or_msa_user?
+    User.current&.poison_centre_user? || User.current&.msa_user?
   end
 end
