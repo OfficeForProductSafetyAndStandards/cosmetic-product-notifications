@@ -18,10 +18,11 @@ class TeamsController < ApplicationController
             @new_user.errors.add(:email_address, "#{@new_user.email_address.capitalize} is already a member of #{@team.display_name}")
           else
             @team.add_user existing_user
-            NotifyMailer.user_added_to_team existing_user.email,
+            email = NotifyMailer.user_added_to_team existing_user.email,
                                             name: existing_user.full_name,
                                             team_id: @team.id,
                                             team_name: @team.name
+            email.deliver_later
           end
         else
           # TODO MSPSDS-1047 Raise better error
