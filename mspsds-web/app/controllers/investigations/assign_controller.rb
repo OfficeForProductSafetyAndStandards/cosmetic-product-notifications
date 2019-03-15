@@ -1,12 +1,12 @@
 class Investigations::AssignController < ApplicationController
   include Wicked::Wizard
   before_action :set_investigation
+  before_action :find_potential_assignee, only: %i[show create]
   before_action :store_assignee, only: %i[update]
 
   steps :choose, :confirm_assignment_change
 
   def show
-    set_potential_assignee
     render_wizard
   end
 
@@ -20,10 +20,10 @@ class Investigations::AssignController < ApplicationController
   end
 
   def create
-    set_potential_assignee
     @investigation.assignee = @potential_assignees.first
+    @investigation.assignee_comment = params[:investigation][:assignee_comment]
     @investigation.save
-    redirect_to investigation_url(@investigation)
+    respond_to_update
   end
 
 private
@@ -37,8 +37,8 @@ private
     authorize @investigation, :show?
   end
 
-  def store_assignee
-      params[:investigation][:assignable_id] = case params[:investigation][:assignable_id]
+  def filter_assignee_params
+    params[:investigation][:assignable_id] = case params[:investigation][:assignable_id]
                                              when "someone_in_your_team"
                                                params[:investigation][:select_team_member]
                                              when "previously_assigned"
@@ -50,29 +50,31 @@ private
                                              else
                                                params[:investigation][:assignable_id]
                                              end
-      params.require(:investigation).permit(:assignable_id)
-      session[:assignable_id] = params[:investigation][:assignable_id]
-      if session[:assignable_id].blank?
-        @investigation.errors.add(:assignable_id, :invalid, message: "Select assignee")
-        respond_to_invalid_data
-        return
-      else
-    end
-    
+    params.require(:investigation).permit(:assignable_id)
   end
 
-  def set_potential_assignee
+  def store_assignee
+    filter_assignee_params
+    session[:assignable_id] = params[:investigation][:assignable_id]
+    if session[:assignable_id].blank?
+      @investigation.errors.add(:assignable_id, :invalid, message: "Select assignee")
+      respond_to_invalid_data
+      return
+    end
+  end
+
+  def find_potential_assignee
     @potential_assignees = User.where(id: session[:assignable_id]) + Team.where(id: session[:assignable_id])
   end
 
-  def respond_to_update(origin)
+  def respond_to_update
     respond_to do |format|
       if @investigation.save
         format.html { redirect_to @investigation, notice: "#{@investigation.case_type.titleize} was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes
-        format.html { render origin }
+        format.html { render step }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end
     end
@@ -81,11 +83,7 @@ private
   def respond_to_invalid_data
     respond_to do |format|
       format.html { render step }
-        format.json { render json: @corrective_action.errors, status: :unprocessable_entity }
+      format.json { render json: @corrective_action.errors, status: :unprocessable_entity }
     end
-  end
-
-  def assign_params
-    params.require(:assign).permit(:business_id, :name, :email, :phone_number, :job_title)
   end
 end

@@ -28,4 +28,4 @@
             | Last updated
           span = "#{time_ago_in_words(investigation.updated_at)} ago"
         td.govuk-table__cell [class="govuk-!-font-size-16"]
-          = link_to "Add activity", new_investigation_activity_path(@investigation)
+          = link_to "Add activity", new_investigation_activity_path(investigation)
