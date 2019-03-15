@@ -6,6 +6,12 @@ class User < Shared::Web::User
   has_many :team_users, dependent: :nullify
   has_many :teams, through: :team_users
 
+  has_one :user_attributes
+
+  # Getters and setters for each UserAttributes column should be added here so they can be accessed directly
+  # from the User object via delegation.
+  delegate :has_viewed_introduction, :has_viewed_introduction=, to: :get_user_attributes
+
   def teams
     # has_many through seems not to work with ActiveHash
     # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
@@ -82,6 +88,7 @@ class User < Shared::Web::User
     self.all - users_to_exclude
   end
 
+
   def self.get_team_members(user:)
     users = [].to_set
     user.teams.each do |team|
@@ -91,5 +98,10 @@ class User < Shared::Web::User
     end
     users
   end
+
+  def get_user_attributes
+    UserAttributes.find_or_create_by(user_id: id)
+  end
 end
+
 User.all if Rails.env.development?
