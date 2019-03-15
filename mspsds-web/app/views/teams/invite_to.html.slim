@@ -5,9 +5,21 @@
 = form_with model: @new_user, url: invite_to_team_path(@team), method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
-      = render "form_components/govuk_error_summary", form: form
+      - if form.object.errors.added? :email_address, :member_of_another_organisation
+        / We treat this message specially due to the new line characters
+        - error_html = capture do
+          - form.object.errors.full_messages_for(:email_address).first.split("\n").each_with_index do |line, i|
+            - if i != 0
+              br
+            = line
+        - prefix = get_attribute_id_prefix(form, :email_address)
+        = render "components/govuk_error_summary", titleText: "There is a problem",
+                  errorList: [{ html: error_html, href: "##{prefix}-error" }]
+      - else
+        = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl Invite a team member
       = render "form_components/govuk_input", form: form, key: :email_address,
+              errorMessage: (error_html ? { html: error_html } : nil),
               label: { text: "Email address", classes: "govuk-label--m" },
               hint: { text: "This should be their work address" }
       = form.submit "Send invitation email", class: "govuk-button"
