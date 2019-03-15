@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Shared::Web::Concerns::AuthenticationConcern
+  include AuthenticationConcern
   include Shared::Web::Concerns::RavenConfigurationConcern
 
   helper Shared::Web::Engine.helpers
@@ -11,6 +11,6 @@ class ApplicationController < ActionController::Base
   before_action :authorize_user
 
   def authorize_user
-    raise Pundit::NotAuthorizedError unless User.current&.is_mspsds_user?
+    raise Pundit::NotAuthorizedError unless User.current&.is_mspsds_user? || no_need_to_authenticate
   end
 end

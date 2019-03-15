@@ -78,6 +78,8 @@ Rails.application.routes.draw do
   get "your-teams" => "teams#index"
   resources :teams, only: %i[index show]
 
+  get "terms_and_conditions" => "pages#terms_and_conditions"
+
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all
   match "/500", to: "errors#internal_server_error", via: :all

@@ -30,6 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  terms_and_conditions: "Waiting for actual content"
   errors:
     format: "%{message}"
     messages:
