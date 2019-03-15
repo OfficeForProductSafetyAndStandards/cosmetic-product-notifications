@@ -2,7 +2,7 @@
 import Rails from 'rails-ujs';
 import GOVUKFrontend from 'govuk-frontend';
 
-import '../../../vendor/shared-web/app/assets/application/javascripts/location_picker';
+import 'shared-web/app/assets/application/javascripts/location_picker';
 
 import '../application/javascripts/investigations/attachment_description';
 import '../application/javascripts/investigations/ts_investigations/which_businesses';
