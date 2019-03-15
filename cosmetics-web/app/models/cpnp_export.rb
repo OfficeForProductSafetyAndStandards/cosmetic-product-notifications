@@ -56,8 +56,7 @@ class CpnpExport
 private
 
   def cmrs(component_node)
-    has_cmr = component_node.xpath(".//hasCmr") != "N"
-    return unless has_cmr
+    return if component_node.xpath(".//hasCmr") != "N"
 
     component_node.xpath(".//cmrList/cmr").collect do |cmr_node|
       Cmr.create(name: cmr_node.xpath(".//name").first&.text,
@@ -67,8 +66,7 @@ private
   end
 
   def nano_material(component_node)
-    has_nano = component_node.xpath(".//hasNano") != "N"
-    return unless has_nano
+    return if component_node.xpath(".//hasNano") != "N"
 
     nano_list_node = component_node.xpath(".//nanoList").first
     nano_elements = nano_list_node&.xpath(".//nano")&.collect do |nano_element_node|
@@ -112,11 +110,11 @@ private
     TriggerQuestionElement.create(answer_order: question_element_node.xpath(".//answerOrder").first&.text.to_i,
                                   answer: question_element_node.xpath(".//answer").first&.text,
                                   element_order: question_element_node.xpath(".//elementOrder").first&.text.to_i,
-                                  element: get_trigger_rules_question_element(normalize_number_text(question_element_node.xpath(".//elementID").first&.text)))
+                                  element: get_trigger_rules_question_element(normalize_id(question_element_node.xpath(".//elementID").first&.text)))
   end
 
   def trigger_rules_question(question_node)
-    get_trigger_rules_question(normalize_number_text(question_node.xpath(".//questionID").first&.text))
+    get_trigger_rules_question(normalize_id(question_node.xpath(".//questionID").first&.text))
   end
 
   def exact_formulas(component_node)
@@ -134,7 +132,7 @@ private
   end
 
   def frame_formulation(component_node)
-    get_frame_formulation(normalize_number_text(component_node.xpath(".//frameFormulation").first&.text))
+    get_frame_formulation(normalize_id(component_node.xpath(".//frameFormulation").first&.text))
   end
 
   def notification_type(component_node)
@@ -150,11 +148,11 @@ private
   end
 
   def sub_sub_category(component_node)
-    get_category(normalize_number_text(component_node.xpath(".//categorie3").first&.text))
+    get_category(normalize_id(component_node.xpath(".//categorie3").first&.text))
   end
 
-  def normalize_number_text(num_text)
-    num_text.to_i < 100000 ? num_text.to_i + 100000 : num_text.to_i
+  def normalize_id(id_string)
+    id_string.to_i < 100000 ? id_string.to_i + 100000 : id_string.to_i
   end
 
   def current_version_component_lists_node

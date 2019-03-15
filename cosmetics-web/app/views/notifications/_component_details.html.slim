@@ -3,21 +3,20 @@ tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | CMR
   td.govuk-table__cell
-
     = render "none_or_bullet_list", entities_list: component.cmrs.map{ |cmr| cmr.display_name }
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Nanomaterials
   td.govuk-table__cell
-
-    = render "none_or_bullet_list", entities_list: component.nano_materials.first&.nano_elements
+    = render "none_or_bullet_list",
+            entities_list: component.nano_materials.first&.nano_elements&.map{ |nano_element| nano_element.display_name }
 - if component.nano_materials.first&.nano_elements.present?
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Application instruction
     td.govuk-table__cell
-      = component.nano_material.first&.exposure_route
+      = component.nano_materials.first&.exposure_route
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Exposure condition
