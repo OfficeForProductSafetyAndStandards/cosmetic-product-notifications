@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_admin
+    mock_out_keycloak_and_notify(user_name: "Admin")
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
     @correspondence = correspondences(:email)
@@ -10,7 +10,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "first step should be context" do
@@ -120,6 +120,20 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     assert_not test_request.save
     test_request.details = exactly_50000_characters
     assert test_request.save
+  end
+
+  test "conceals information on emails with customer info" do
+    fill_in_context_form
+    choose :correspondence_email_has_consumer_info_true, visible: false
+    click_button "Continue"
+    fill_in_content_form
+    click_button "Continue"
+    click_button "Continue"
+    click_on "Activity"
+    within id: "activity" do
+      assert_equal("Email added", first('h3').text)
+      assert_equal("RESTRICTED ACCESS", first(".govuk-badge").text)
+    end
   end
 
   def fill_in_context_form

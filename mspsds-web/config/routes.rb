@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     resources :emails, controller: "investigations/emails", only: %i[show new create update]
     resources :phone_calls, controller: "investigations/phone_calls", only: %i[show new create update]
     resources :meetings, controller: "investigations/meetings", only: %i[show new create update]
+    resources :alerts, controller: "investigations/alerts", only: %i[show new create update]
     resources :tests, controller: "investigations/tests", only: %i[show create update] do
       collection do
         get :new_request

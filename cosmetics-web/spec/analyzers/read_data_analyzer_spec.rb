@@ -52,6 +52,14 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       expect(notification.cpnp_reference).equal?("1000094")
     end
 
+    it "creates a notification populated with relevant cpnp date" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance.metadata
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.cpnp_notification_date.to_s).equal?("2012-02-08 16:02:34 UTC")
+    end
+
     it "creates a notification populated with relevant shades" do
       analyzer_instance = ReadDataAnalyzer.new(notification_file_shades_import.uploaded_file)
       analyzer_instance.metadata

@@ -4,11 +4,11 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @investigation = investigations(:one)
     @product = products(:one)
-    sign_in_as_user
+    mock_out_keycloak_and_notify
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should redirect new test request action to first wizard step" do

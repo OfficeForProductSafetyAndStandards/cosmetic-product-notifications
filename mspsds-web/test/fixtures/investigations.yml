@@ -52,7 +52,7 @@ search_related_complainant:
   type: Investigation::Allegation
   pretty_id: 1902-0007
 
-no_products_case_titles:
+no_products_case_title:
   description: Investigation with no products
   product_category: Alarms
   hazard_type: Asphyxiation
@@ -83,3 +83,9 @@ two_products_with_no_common_values:
   is_closed: false
   type: Investigation::Allegation
   pretty_id: 1902-0011
+
+private:
+  description: private investigation
+  product_category: Alarms
+  is_private: true
+  pretty_id: 1902-0012

@@ -5,7 +5,7 @@ class CorrectiveActionTest < ActiveSupport::TestCase
     @investigation = investigations(:one)
     @business = businesses(:one)
     @product = products(:one)
-    sign_in_as_user
+    mock_out_keycloak_and_notify
   end
 
   test "requires an associated investigation, business and product" do

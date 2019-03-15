@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class InvestigationTestResultTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_user
+    mock_out_keycloak_and_notify
 
     @investigation = investigations(:one)
     @test = tests(:one)
@@ -12,7 +12,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "cannot add test result without a date or result" do

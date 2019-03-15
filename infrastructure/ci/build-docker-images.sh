@@ -20,7 +20,7 @@ function docker_tag_exists {
 echo "Logging into DockerHub"
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
-CHANGED_COMPONENTS="$(./ci/get-changed-components.sh)"
+CHANGED_COMPONENTS="$(./infrastructure/ci/get-changed-components.sh)"
 
 for COMPONENT in "${COMPONENTS[@]}"; do
     if [[ $CHANGED_COMPONENTS =~ ((^| )$COMPONENT($| )) ]]; then

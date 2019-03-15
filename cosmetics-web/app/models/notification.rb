@@ -84,7 +84,8 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
+      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?,
+                  after: Proc.new { update_elasticsearch_index }
     end
   end
   # rubocop:enable Metrics/BlockLength
@@ -151,6 +152,12 @@ private
       mandatory_attributes('draft_complete')
     when 'notification_file_imported'
       mandatory_attributes('empty')
+    end
+  end
+
+  def update_elasticsearch_index
+    if saved_changes.key?(:status) && status == "notification_complete"
+      __elasticsearch__.index_document
     end
   end
 end

@@ -12,17 +12,24 @@ private
     Correspondence::Email
   end
 
+  def common_file_metadata
+    {
+        title: correspondence_params["overview"],
+        has_consumer_info: correspondence_params["has_consumer_info"]
+    }
+  end
+
   def email_file_metadata
-    get_attachment_metadata_params(:email_file).merge(
-      title: correspondence_params["overview"],
-      description: "Original email as a file"
-    )
+    get_attachment_metadata_params(:email_file)
+        .merge(common_file_metadata)
+        .merge(
+          description: "Original email as a file"
+        )
   end
 
   def email_attachment_metadata
-    get_attachment_metadata_params(:email_attachment).merge(
-      title: correspondence_params["overview"]
-    )
+    get_attachment_metadata_params(:email_attachment)
+        .merge(common_file_metadata)
   end
 
   def request_params

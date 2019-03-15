@@ -40,4 +40,12 @@ class InvestigationPolicy < ApplicationPolicy
 
     false
   end
+
+  def user_allowed_to_raise_alert?(user: @user)
+    user.is_opss?
+  end
+
+  def investigation_restricted?
+    !@record.is_private
+  end
 end

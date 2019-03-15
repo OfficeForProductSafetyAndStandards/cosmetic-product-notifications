@@ -2,11 +2,11 @@ require 'test_helper'
 
 class ErrorsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as_admin
+    mock_out_keycloak_and_notify(user_name: "Admin")
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "should get not_found" do

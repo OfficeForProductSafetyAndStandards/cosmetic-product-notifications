@@ -2,14 +2,14 @@ require "application_system_test_case"
 
 class ActivityEntryTest < ApplicationSystemTestCase
   setup do
-    sign_in_as_admin
+    mock_out_keycloak_and_notify(user_name: "Admin")
     @investigation = investigations(:one)
     visit investigation_path(@investigation)
     click_on "Add activity"
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "Should go to an activity selection page" do

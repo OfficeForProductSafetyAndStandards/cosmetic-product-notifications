@@ -17,8 +17,8 @@
       = form_with(model: @search, scope: "", url: businesses_path, method: :get,
               class: "mspsds-search") do |form|
         .search-box
-          = form.label "Keywords", class: "govuk-label--s"
-          = form.text_field :q, class: "govuk-input"
+          = render "form_components/govuk_input", key: :q, form: form,
+                  label: { text: "Keywords", classes: "govuk-label--s" }
           = form.submit "Search", name: nil, class: "search-box--submit"
   .govuk-grid-column-three-quarters
     = render "table", businesses: @businesses

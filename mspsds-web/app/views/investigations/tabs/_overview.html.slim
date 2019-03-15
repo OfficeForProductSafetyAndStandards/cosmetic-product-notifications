@@ -1,7 +1,7 @@
 h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
   | Summary
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
-  p.govuk-body.govuk-grid-column-two-thirds
+  p.govuk-grid-column-two-thirds
     = @investigation.description || @investigation.reason_created
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   hr.govuk-section-break.govuk-section-break--s
@@ -46,4 +46,4 @@ table.govuk-table
           th.govuk-table__header Other details
           td.govuk-table__cell = @investigation.complainant.other_details
   - else
-    p.govuk-body GDPR protected details hidden
+    p GDPR protected details hidden

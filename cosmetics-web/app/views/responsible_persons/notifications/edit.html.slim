@@ -61,6 +61,12 @@
                 = image_upload.filename
                 ' failed anti-virus scan
               br
+        - if @notification.cpnp_notification_date.present?
+          tr.govuk-table__row
+            th.govuk-table__header
+              | EU notification date
+            td.govuk-table__cell
+              = @notification.cpnp_notification_date.strftime("%d/%m/%Y")
   .govuk-grid-column-two-thirds
     h3.govuk-heading-m
       | Now register your cosmetic product

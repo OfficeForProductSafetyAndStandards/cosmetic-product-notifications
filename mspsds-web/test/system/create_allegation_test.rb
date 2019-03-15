@@ -15,12 +15,12 @@ class CreateAllegationTest < ApplicationSystemTestCase
       description: "Allegation description"
     )
 
-    sign_in_as_user
+    mock_out_keycloak_and_notify
     visit new_allegation_path
   end
 
   teardown do
-    logout
+    reset_keycloak_and_notify_mocks
   end
 
   test "can be reached via create page" do
@@ -89,7 +89,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
   test "third step should require a description" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
-    click_on "Continue"
+    click_on "Create allegation"
 
     assert_text "Description can't be blank"
   end
@@ -97,7 +97,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
   test "third step should require a product type and hazard type to be selected" do
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
-    click_on "Continue"
+    click_on "Create allegation"
 
     assert_text "Product category can't be blank"
     assert_text "Hazard type can't be blank"
@@ -199,6 +199,6 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_in "allegation[description]", with: @allegation.description
     fill_autocomplete "picker-hazard_type", with: @allegation.hazard_type
     fill_autocomplete "picker-product_category", with: @allegation.product_category
-    click_on "Continue"
+    click_on "Create allegation"
   end
 end

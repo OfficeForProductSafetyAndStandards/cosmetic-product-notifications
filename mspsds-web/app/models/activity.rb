@@ -29,8 +29,12 @@ class Activity < ApplicationRecord
     return text.to_s.strip.gsub(/[*_~]/) { |match| "\\#{match}" } if text
   end
 
-  def sensitive_body?
+  def sensitive?
     false
+  end
+
+  def sensitive_title
+    # where necessary should be implemented by subclasses
   end
 
   def notify_relevant_users
