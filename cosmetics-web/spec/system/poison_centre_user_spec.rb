@@ -55,8 +55,6 @@ RSpec.describe "Poison Centre user", type: :system do
     click_on notification.product_name
 
     assert_value_in_table(get_responsible_person_table, "Name", notification.responsible_person.name)
-    assert_value_in_table(get_responsible_person_table, "Email address", notification.responsible_person.email_address)
-    assert_value_in_table(get_responsible_person_table, "Phone number", notification.responsible_person.phone_number)
     assert_value_in_table(get_responsible_person_table, "Address", notification.responsible_person.address_lines.join)
   end
 
@@ -68,10 +66,10 @@ private
   end
 
   def get_product_table
-    find_by(id: "product-table")
+    find("#product-table")
   end
 
   def get_responsible_person_table
-    find_by(id: "responsible-person-table")
+    find("#responsible-person-table")
   end
 end
