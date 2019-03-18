@@ -3650,10 +3650,10 @@ gonzales-pe-sl@^4.2.3:
   dependencies:
     minimist "1.1.x"
 
-govuk-country-and-territory-autocomplete@0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/govuk-country-and-territory-autocomplete/-/govuk-country-and-territory-autocomplete-0.5.1.tgz#6db13e6c29789a9b02e2d80878a6a1b36a38edd2"
-  integrity sha512-tfBzqd9SXjX+jlNEwFPv53R2tpuMOq8pyfnRI+023ak+1OEfLCGFqS7PlOMN4Af4+Cg6lv7R+Cue5Q07j/ECpw==
+govuk-country-and-territory-autocomplete@0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/govuk-country-and-territory-autocomplete/-/govuk-country-and-territory-autocomplete-0.5.2.tgz#5f92d667bcd671f0428be9f79210819f418e09ac"
+  integrity sha512-pefgqT8m+hh98UCestfg+Z0JsWd+gU36Pv/Gt7JT/MbHqm07ub/5niwWuqmsMHikW9OQsbPrA2xTV7gTCkO/+Q==
   dependencies:
     accessible-autocomplete "^1.6.2"
     openregister-picker-engine "^1.2.1"
@@ -7374,7 +7374,7 @@ shared-web@./vendor/shared-web:
     eslint "5.15.2"
     eslint-config-airbnb-base "13.1.0"
     eslint-plugin-import "2.16.0"
-    govuk-country-and-territory-autocomplete "0.5.1"
+    govuk-country-and-territory-autocomplete "0.5.2"
     govuk-frontend "2.8.0"
     html5shiv "3.7.3"
     jquery "3.3.1"
