@@ -17,8 +17,6 @@ module Shared
         end
 
         def authenticate_user!
-          return if no_need_to_authenticate
-
           redirect_to helpers.keycloak_login_url(request.original_fullpath) unless user_signed_in? || try_refresh_token
         end
 
@@ -53,11 +51,6 @@ module Shared
               false
             end
           end
-        end
-
-        def no_need_to_authenticate
-          # Can be overridden in projects
-          false
         end
       end
     end

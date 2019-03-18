@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, :authorize_user
   before_action :set_referred
 
   def terms_and_conditions; end

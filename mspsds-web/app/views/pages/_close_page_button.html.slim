@@ -1,10 +1,4 @@
 button id="close-page" class="govuk-button" type="button" style="display: none;"
   | Close
 javascript:
-  const element = document.getElementById("close-page");
-  element.style.display = "block";
-  if(element){
-    element.addEventListener('click', () => {
-      window.close();
-    });
-  }
+  window.closePageOnClick("close-page");

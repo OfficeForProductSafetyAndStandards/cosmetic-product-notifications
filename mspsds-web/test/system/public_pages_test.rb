@@ -1,13 +1,6 @@
 require "application_system_test_case"
 
 class PublicPagesHelper < ApplicationSystemTestCase
-  setup do
-  end
-
-  teardown do
-    reset_keycloak_and_notify_mocks
-  end
-
   test "Should allow to see terms and conditions when not logged in" do
     visit "/terms-and-conditions"
     assert_current_path(/terms-and-conditions/)
