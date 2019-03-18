@@ -180,7 +180,7 @@ class Investigation < ApplicationRecord
   end
 
   def has_non_compliant_reason
-    if non_compliant_reason&.empty?
+    if non_compliant_reason.empty?
       errors.add(:non_compliant_reason, "cannot be blank")
     end
   end
