@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_12_160326) do
+ActiveRecord::Schema.define(version: 2019_03_13_115313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 2019_03_12_160326) do
     t.boolean "cpnp_is_imported"
     t.string "cpnp_imported_country"
     t.string "shades"
+    t.datetime "cpnp_notification_date"
     t.string "industry_reference"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true

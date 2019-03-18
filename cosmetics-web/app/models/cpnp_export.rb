@@ -17,6 +17,11 @@ class CpnpExport
     @xml_doc.xpath("//cpnpReference").first&.text
   end
 
+  def cpnp_notification_date
+    dates = @xml_doc.xpath("//modificationDate").map { |element| Time.zone.parse(element.text) }
+    dates.min
+  end
+
   def industry_reference
     industry_reference_value = @xml_doc.xpath("//industryReference").first&.text
     industry_reference = if industry_reference_value == "N/A"

@@ -15,6 +15,10 @@ module LoginHelpers
     sign_in(as_user: user, with_roles: [:poison_centre_user])
   end
 
+  def sign_in_as_msa_user(user: build(:user))
+    sign_in(as_user: user, with_roles: [:msa_user])
+  end
+
   def sign_out
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original

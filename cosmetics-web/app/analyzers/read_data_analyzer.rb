@@ -38,6 +38,7 @@ private
                                             industry_reference: cpnp_export_info.industry_reference,
                                             cpnp_is_imported: cpnp_export_info.is_imported,
                                             cpnp_imported_country: cpnp_export_info.imported_country,
+                                            cpnp_notification_date: cpnp_export_info.cpnp_notification_date,
                                             responsible_person: @notification_file.responsible_person)
           notification.notification_file_parsed
           notification.save(context: :file_upload)

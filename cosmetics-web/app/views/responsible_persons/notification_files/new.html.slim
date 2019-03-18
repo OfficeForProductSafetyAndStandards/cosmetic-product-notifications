@@ -21,7 +21,7 @@
       .govuk-body-m
         = link_to "Find out how to export cosmetic product zip files from CPNP.",
             "https://docs.google.com/document/d/1QTM-LYmlAk8nnuwYOvtn8-gB5-F6T5u4lgs_2BhzPJ8/edit",
-            target: :_blank
+            target: :_blank, rel: 'noopener'
       .govuk-form-group#file-upload-form-group[class= ("govuk-form-group--error" if @errors.present?)]
         = form.label :uploaded_files, "Upload EU notification files", class: "govuk-label"
         span.govuk-hint
