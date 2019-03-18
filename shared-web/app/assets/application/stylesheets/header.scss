@@ -1,17 +1,28 @@
 $navbar-link-colour: #ffffff;
 
-.sign-out-link {
+@mixin de-buttonify() {
   background: none;
   border: none;
-  color: $navbar-link-colour;
-  text-decoration: none;
+  outline: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.sign-out-link {
   font-size: 16px;
-  font-family: "nta", Arial, sans-serif;
   font-weight: 700;
+
+  &:not(:focus) {
+    color: $navbar-link-colour;
+  }
 
   &:hover {
     text-decoration: underline;
   }
 
-  cursor: pointer; 
+  @include de-buttonify();
+  @include govuk-link-common;
+  padding: 0;
 }
