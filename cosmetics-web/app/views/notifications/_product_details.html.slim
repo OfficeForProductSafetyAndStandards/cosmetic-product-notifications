@@ -33,7 +33,7 @@ table.govuk-table.check-your-answers-table#product-table
       th.govuk-table__header[scope="row"]
         | Shades
       td.govuk-table__cell
-        = product_shades(notification)
+        = display_shades(notification)
     - if notification.image_uploads.present?
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
