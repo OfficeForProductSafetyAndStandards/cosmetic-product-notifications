@@ -5,7 +5,8 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds-from-desktop
     h1.govuk-heading-xl = @team.display_name
-    a.govuk-button role="button" href=invite_to_team_url Invite a team member
+    - if User.current.is_team_admin?
+      a.govuk-button role="button" href=invite_to_team_url Invite a team member
     h2.govuk-heading-m Team Members
     ul.govuk-list
       - @team.users.each do |user|

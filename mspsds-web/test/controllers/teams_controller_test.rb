@@ -29,6 +29,8 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
 
   test "Team invite pages are visible to users with team_admin role only" do
     set_user_as_not_team_admin
+    get team_url(@my_team)
+    assert_not_includes(response.body, "Invite a team member")
 
     assert_raises Pundit::NotAuthorizedError do
       get invite_to_team_url(@my_team)
