@@ -38,12 +38,12 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # Check your answers page
     notification = get_notification_from_edit_page_url
-    expect_check_your_answers_value("Product name", "Super Shampoo")
+    expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
-    expect_check_your_answers_value("Shades", "N/A")
+    expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetics product"
+    click_button "Accept and register the cosmetic product"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -107,19 +107,19 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # Check your answers page
     notification = get_notification_from_edit_page_url
-    expect_check_your_answers_value("Product name", "Super Shampoo")
+    expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "Yes")
     expect_check_your_answers_value("Imported from", "New Zealand")
     expect_check_your_answers_value("Number of components", "1")
-    expect_check_your_answers_value("Shades", "N/A")
+    expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetics product"
+    click_button "Accept and register the cosmetic product"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
   end
 
-  it "allows user to complete notification for cosmetics with multiple shades" do
+  it "allows user to complete notification for cosmetic with multiple shades" do
     visit new_responsible_person_notification_path(responsible_person)
 
     # add_product_name
@@ -153,13 +153,13 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # Check your answers page
     notification = get_notification_from_edit_page_url
-    expect_check_your_answers_value("Product name", "Super Shampoo")
+    expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
-    expect_check_your_answers_value("Shades", "Red, Blue, Yellow")
+    expect_check_your_answers_value("Shades", "RedBlueYellow")
     expect_check_your_answers_value("Label image", "testImage.png")
 
-    click_button "Accept and register the cosmetics product"
+    click_button "Accept and register the cosmetic product"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -168,8 +168,17 @@ RSpec.describe "Manually enter product details", type: :system do
 private
 
   def expect_check_your_answers_value(attribute_name, value)
-    row = first('tr', text: attribute_name)
+    row = find('tr', text: attribute_name, match: :first)
     expect(row).to have_text(value)
+  end
+
+  def expect_check_your_answer(table, attribute_name, value)
+    row = table.find('tr', text: attribute_name)
+    expect(row).to have_text(value)
+  end
+
+  def get_product_table
+    find_by_id("product-table")
   end
 
   def get_notification_from_edit_page_url
