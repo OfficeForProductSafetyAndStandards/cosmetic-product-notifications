@@ -6,7 +6,7 @@
     "@rails/webpacker": "4.0.2",
     "accessible-autocomplete": "1.6.2",
     "copy-webpack-plugin": "5.0.1",
-    "eslint": "5.15.2",
+    "eslint": "5.15.3",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.16.0",
     "govuk-country-and-territory-autocomplete": "0.5.2",
