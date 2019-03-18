@@ -50,17 +50,17 @@ table.govuk-table.check-your-answers-table#product-table
           | EU notification date
         td.govuk-table__cell
           = notification.cpnp_notification_date.strftime("%d/%m/%Y")
-        - if notification.components.count == 1
-          = render "notifications/component_details", component: notification.components.first
-        - else
-          - notification.components.each_with_index do |component, i|
-            table.govuk-table.check-your-answers-table
-              caption.govuk-table__caption.govuk-heading-m
-                = component.name.presence || "Component #{i + 1}"
-              tbody.govuk-table__body
-                tr.govuk-table__row
-                  th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
-                    | Shades
-                  td.govuk-table__cell
-                    = render "none_or_bullet_list", entities_list: component.shades
-              = render "notifications/component_details", component: component
+    - if notification.components.count == 1
+      = render "notifications/component_details", component: notification.components.first
+    - else
+      - notification.components.each_with_index do |component, i|
+        table.govuk-table.check-your-answers-table
+          caption.govuk-table__caption.govuk-heading-m
+            = component.name.presence || "Component #{i + 1}"
+          tbody.govuk-table__body
+            tr.govuk-table__row
+              th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
+                | Shades
+              td.govuk-table__cell
+                = render "none_or_bullet_list", entities_list: component.shades
+          = render "notifications/component_details", component: component

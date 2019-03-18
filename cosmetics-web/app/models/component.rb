@@ -73,8 +73,6 @@ private
   end
 
   def get_parent_category(category)
-    unless category.nil?
-      PARENT_OF_CATEGORY[category.to_sym]
-    end
+    PARENT_OF_CATEGORY[category&.to_sym]
   end
 end

@@ -3,15 +3,13 @@ tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | CMR
   td.govuk-table__cell
-
     = render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Nanomaterials
   td.govuk-table__cell
-
-    = render "none_or_bullet_list", entities_list: component.nano_material&.nano_elements
+    = render "none_or_bullet_list", entities_list: component.nano_material&.nano_elements&.map(&:display_name)
 - if component.nano_material&.nano_elements.present?
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
