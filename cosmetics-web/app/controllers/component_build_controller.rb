@@ -93,7 +93,7 @@ private
     when "yes"
       render_wizard @component
     when "no"
-      redirect_to finish_wizard_path
+      redirect_to wizard_path(:select_category, component_id: @component.id)
     when ""
       @component.errors.add :nano_materials, "Please select an option"
       render step

@@ -34,11 +34,11 @@ class Component < ApplicationRecord
   end
 
   def sub_category
-    get_parent_category(sub_sub_category)
+    Component.get_parent_category(sub_sub_category)
   end
 
   def root_category
-    get_parent_category(sub_category)
+    Component.get_parent_category(sub_category)
   end
 
   # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
