@@ -87,7 +87,6 @@ private
     params.fetch(:responsible_person, {}).permit(
       :account_type,
       :name,
-      :companies_house_number,
       :email_address,
       :phone_number,
       :address_line_1,

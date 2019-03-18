@@ -70,28 +70,5 @@ RSpec.describe ResponsiblePerson, type: :model do
       expect(responsible_person.save).to be false
       expect(responsible_person.errors[:email_address]).to include("Email address is invalid")
     end
-
-    it "succeeds if a Companies House number is not specified for individual account type" do
-      responsible_person.account_type = :individual
-      responsible_person.companies_house_number = nil
-
-      expect(responsible_person.save).to be true
-    end
-
-    it "fails if a Companies House number is not specified for business account type" do
-      responsible_person.account_type = :business
-      responsible_person.companies_house_number = nil
-
-      expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:companies_house_number]).to include("Companies House registration number can't be blank")
-    end
-
-    it "fails if the Companies House number is not unique for business account type" do
-      create(:business_responsible_person, companies_house_number: "12345678")
-      responsible_person = build(:business_responsible_person, companies_house_number: "12345678")
-
-      expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:companies_house_number]).to include("has already been taken")
-    end
   end
 end
