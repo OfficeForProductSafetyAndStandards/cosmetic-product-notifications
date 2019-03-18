@@ -63,7 +63,7 @@ private
 
   def assignee_valid?
     if step == :choose
-      if session[:assignable_id].blank?
+      if (User.find_by(id: session[:assignable_id]) || Team.find_by(id: session[:assignable_id])) == nil
         @investigation.errors.add(:assignable_id, :invalid, message: "Select assignee")
       end
     end
@@ -71,6 +71,8 @@ private
   end
 
   def find_potential_assignee
-    @potential_assignees = User.where(id: session[:assignable_id]) + Team.where(id: session[:assignable_id])
+    any_user = User.where(id: session[:assignable_id]).any?
+    any_team = Team.where(id: session[:assignable_id]).any?
+    @potential_assignees = ((User.where(id: session[:assignable_id]) if any_user) || (Team.where(id: session[:assignable_id]) if any_team))
   end
 end
