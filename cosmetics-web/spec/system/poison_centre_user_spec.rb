@@ -44,9 +44,8 @@ RSpec.describe "Poison Centre user", type: :system do
     click_on notification.product_name
 
     assert_value_in_table(get_product_table, "Name", notification.product_name)
-    assert_value_in_table(get_product_table, "Reference number", notification.reference_number)
-    assert_value_in_table(get_product_table, "Number of components", notification.components.count)
     assert_value_in_table(get_product_table, "Imported", "No")
+    assert_value_in_table(get_product_table, "Number of components", notification.components.count)
     assert_value_in_table(get_product_table, "Shades", "None")
   end
 
