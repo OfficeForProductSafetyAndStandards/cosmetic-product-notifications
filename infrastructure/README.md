@@ -47,7 +47,33 @@ See [the root README](../README.md#amazon-web-services) for more details about s
 
 ### Metrics
 
-TODO MSPSDS-786: Probably using https://github.com/alphagov/paas-metric-exporter as a base
+Our metrics are sent to an ELK stack and S3 using [the paas-metric-exporter app](./paas-metric-exporter).
+
+
+#### Deployment
+
+Create or target a common space using `cf create-space common` or `cf target -o beis-mspsds -s common`.
+
+Deploy the app by running `cf push --no-start` from the `paas-metric-exporter` folder.
+Once the app has been created, define the following environment variables:
+
+Set the metrics to be logged to stdout using:
+    
+    cf set-env metric-exporter DEBUG true
+
+Tell the app to connect to the London PaaS API
+
+    cf set-env metric-exporter API_ENDPOINT https://api.london.cloud.service.gov.uk
+
+Provide some credentials (these should be for a user with only the "Space auditor" permission on the spaces to be monitored) to connect to the API with:
+
+    cf set-env metric-exporter USERNAME XXX
+    cf set-env metric-exporter PASSWORD XXX
+
+Follow the instructions above to create and bind the `opss-log-drain` to the `metric-exporter` app.
+
+Finally, start the app using `cf start metric-exporter`.
+Running `cf logs metric-exporter` should show metrics from all of the spaces that the user has the "Space auditor" permission for.
 
 
 ### Uptime check
