@@ -4,3 +4,6 @@
 [submodule "keycloak/providers/sms-authenticator"]
 	path = keycloak/providers/sms-authenticator
 	url = https://github.com/UKGovernmentBEIS/keycloak-sms-authenticator-sns.git
+[submodule "infrastructure/paas-metric-exporter"]
+	path = infrastructure/paas-metric-exporter
+	url = https://github.com/alphagov/paas-metric-exporter.git
