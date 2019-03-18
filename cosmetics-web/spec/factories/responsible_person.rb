@@ -11,7 +11,6 @@ FactoryBot.define do
 
     factory :business_responsible_person do
       account_type { :business }
-      companies_house_number { "12345678" }
     end
 
     factory :responsible_person_with_user do
