@@ -14,6 +14,6 @@ class IntroductionsController < ApplicationController
   end
 
   def set_has_viewed_introduction
-    User.current.update has_viewed_introduction: true
+    User.current.has_viewed_introduction = true
   end
 end

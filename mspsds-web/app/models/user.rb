@@ -10,7 +10,7 @@ class User < Shared::Web::User
 
   # Getters and setters for each UserAttributes column should be added here so they can be accessed directly
   # from the User object via delegation.
-  delegate :update, :has_viewed_introduction, :has_viewed_introduction=, to: :get_user_attributes
+  delegate :has_viewed_introduction, :has_viewed_introduction=, to: :get_user_attributes
 
   def teams
     # has_many through seems not to work with ActiveHash
@@ -87,7 +87,6 @@ class User < Shared::Web::User
     users_to_exclude = Array(except)
     self.all - users_to_exclude
   end
-
 
   def self.get_team_members(user:)
     users = [].to_set
