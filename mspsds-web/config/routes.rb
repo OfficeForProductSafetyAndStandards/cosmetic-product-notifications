@@ -79,6 +79,7 @@ Rails.application.routes.draw do
   resources :teams, only: %i[index show]
 
   get "terms_and_conditions" => "pages#terms_and_conditions"
+  get "about" => "pages#about"
 
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all

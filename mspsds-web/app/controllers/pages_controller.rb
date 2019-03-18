@@ -1,9 +1,9 @@
 class PagesController < ApplicationController
-  def show
-
+  def terms_and_conditions
+    @referred = params[:referred]
   end
 
-  def terms_and_conditions
+  def about
     @referred = params[:referred]
   end
 end
