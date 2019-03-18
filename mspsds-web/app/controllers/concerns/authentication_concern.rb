@@ -5,6 +5,8 @@ module AuthenticationConcern
     public_addresses.each do |address|
       return true if request.original_fullpath.include? address
     end
+
+    false
   end
 
   def public_addresses
