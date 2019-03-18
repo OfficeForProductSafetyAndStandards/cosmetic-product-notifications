@@ -7,8 +7,12 @@
     .govuk-grid-column-two-thirds-from-desktop
       - if form.object.errors.added? :email_address, :member_of_another_organisation
         / We treat this message specially due to the new line characters
+        / The extra logic here isn't ideal - moving it to a generic nl2br helper or removing the long-winded error
+          message in the future would both be advisable.
+        - message = form.object.errors.full_messages_for(:email_address).first
         - error_html = capture do
-          - form.object.errors.full_messages_for(:email_address).first.split("\n").each_with_index do |line, i|
+          / Effectively run nl2br on the message.
+          - message.split("\n").each_with_index do |line, i|
             - if i != 0
               br
             = line
