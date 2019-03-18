@@ -4,7 +4,7 @@ tr.govuk-table__row
     | CMR
   td.govuk-table__cell
 
-    = render "none_or_bullet_list", entities_list: component.cmrs.map{ |cmr| cmr.display_name }
+    = render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
@@ -65,7 +65,8 @@ tr.govuk-table__row
       = component&.formulation_file&.filename
     - else
       = link_to "Add formulation document",
-        new_responsible_person_notification_component_formulation_path(@notification.responsible_person, @notification, component)
+              new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
+                      @notification, component)
 - if component.trigger_questions
   - component.trigger_questions.each do |question|
     - if question.applicable?

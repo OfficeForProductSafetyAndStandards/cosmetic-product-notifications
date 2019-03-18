@@ -68,10 +68,10 @@ private
   end
 
   def get_product_table
-    find_by_id("product-table")
+    find_by(id: "product-table")
   end
 
   def get_responsible_person_table
-    find_by_id("responsible-person-table")
+    find_by(id: "responsible-person-table")
   end
 end

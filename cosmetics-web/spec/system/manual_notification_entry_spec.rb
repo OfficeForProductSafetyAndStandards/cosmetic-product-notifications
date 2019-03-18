@@ -178,7 +178,7 @@ private
   end
 
   def get_product_table
-    find_by_id("product-table")
+    find_by(id: "product-table")
   end
 
   def get_notification_from_edit_page_url
