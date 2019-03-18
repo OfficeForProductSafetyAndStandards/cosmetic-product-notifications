@@ -61,7 +61,6 @@ private
                                             name: user.full_name,
                                             team_page_url: team_url(@team),
                                             team_name: @team.name,
-                                            service_name: "Product safety database",
                                             inviting_team_member_name: User.current.full_name
     email.deliver_later
   end

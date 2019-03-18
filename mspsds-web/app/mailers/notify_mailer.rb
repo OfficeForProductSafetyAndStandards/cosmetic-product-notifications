@@ -49,9 +49,18 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: email)
   end
 
-  def user_added_to_team(email, personalisation)
+  def user_added_to_team(email,
+                         name:,
+                         team_page_url:,
+                         team_name:,
+                         inviting_team_member_name:)
     set_template(TEMPLATES[:user_added_to_team])
-    set_personalisation(personalisation)
+    set_personalisation(
+      name: name,
+      team_page_url: team_page_url,
+      team_name: team_name,
+      inviting_team_member_name: inviting_team_member_name
+    )
     mail(to: email)
   end
 end
