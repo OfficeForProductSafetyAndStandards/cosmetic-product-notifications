@@ -6,7 +6,7 @@ class User < Shared::Web::User
   has_many :team_users, dependent: :nullify
   has_many :teams, through: :team_users
 
-  has_one :user_attributes
+  has_one :user_attributes, dependent: :destroy
 
   # Getters and setters for each UserAttributes column should be added here so they can be accessed directly
   # from the User object via delegation.
@@ -20,7 +20,7 @@ class User < Shared::Web::User
 
   def self.find_or_create(attributes)
     groups = attributes.delete(:groups)
-    organisation = Organisation.find_by_path(groups) # rubocop:disable Rails/DynamicFindBy
+    organisation = Organisation.find_by(path: groups)
     user = User.find_by(id: attributes[:id]) || User.create(attributes.merge(organisation_id: organisation&.id))
     user
   end
