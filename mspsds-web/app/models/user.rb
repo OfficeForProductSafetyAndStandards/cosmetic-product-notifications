@@ -12,10 +12,12 @@ class User < Shared::Web::User
     team_users.map(&:team)
   end
 
-  def self.create_new(email_address)
+  def self.create_and_send_invite(email_address, team, redirect_url)
     Shared::Web::KeycloakClient.instance.create_user email_address
     User.all(force: true)
-    User.find_by(email: email_address)
+    user = User.find_by(email: email_address)
+    team.add_user user
+    Shared::Web::KeycloakClient.instance.send_required_actions_welcome_email user.id, redirect_url
   end
 
   def self.find_or_create(attributes)

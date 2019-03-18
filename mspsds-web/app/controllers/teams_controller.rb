@@ -16,7 +16,7 @@ class TeamsController < ApplicationController
     if existing_user
       invite_existing_user_if_able existing_user
     else
-      create_and_invite_new_user
+      User.create_and_send_invite @new_user.email_address, @team, root_url
     end
 
     if @new_user.errors.empty?
@@ -63,11 +63,5 @@ private
                                             team_name: @team.name,
                                             inviting_team_member_name: User.current.full_name
     email.deliver_later
-  end
-
-  def create_and_invite_new_user
-    user = User.create_new @new_user.email_address
-    @team.add_user user
-    Shared::Web::KeycloakClient.instance.send_required_actions_welcome_email user.id, root_url
   end
 end
