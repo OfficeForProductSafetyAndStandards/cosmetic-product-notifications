@@ -1,0 +1,9 @@
+button id="close-page" class="govuk-button" type="button"
+  | Close
+javascript:
+  const element = document.getElementById("close-page");
+  if(element){
+    element.addEventListener('click', () => {
+      window.close();
+    });
+  }

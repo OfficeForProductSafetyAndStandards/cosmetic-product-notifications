@@ -17,4 +17,9 @@ class PublicPagesHelper < ApplicationSystemTestCase
     visit "/about"
     assert_current_path(/about/)
   end
+
+  test "Should allow to see privacy policy page when not logged in" do
+    visit "/privacy_policy"
+    assert_current_path(/privacy_policy/)
+  end
 end

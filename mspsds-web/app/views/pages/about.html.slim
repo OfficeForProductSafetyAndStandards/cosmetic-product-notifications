@@ -8,12 +8,4 @@
     p = "Here is some content about the page"
 
 - if @referred
-  button id="close-terms" class="govuk-button" type="button"
-    | Close
-  javascript:
-    const element = document.getElementById("close-terms");
-    if(element){
-      element.addEventListener('click', () => {
-          window.close();
-      });
-    }
+  = render "close_page_button"
