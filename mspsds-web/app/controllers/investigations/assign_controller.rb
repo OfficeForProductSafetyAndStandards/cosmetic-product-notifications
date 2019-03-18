@@ -17,7 +17,7 @@ class Investigations::AssignController < ApplicationController
 
   def update
     if assignee_valid?
-      return redirect_to next_wizard_path
+      redirect_to next_wizard_path
     else
       render_wizard
     end
