@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.summary     = "Shared development dependencies for OPSS applications."
 
   # Test & static analysis dependencies
-  s.add_dependency "brakeman", "4.4.0"
+  s.add_dependency "brakeman", "4.5.0"
   s.add_dependency "capybara", "3.14.0"
   s.add_dependency "coveralls", "0.8.22"
   s.add_dependency "govuk-lint", "3.11.0"

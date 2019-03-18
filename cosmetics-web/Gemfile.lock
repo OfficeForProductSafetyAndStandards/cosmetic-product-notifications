@@ -2,7 +2,7 @@ PATH
   remote: vendor/shared-web/dev
   specs:
     shared-web-dev (1.0.0)
-      brakeman (= 4.4.0)
+      brakeman (= 4.5.0)
       capybara (= 3.14.0)
       coveralls (= 0.8.22)
       debase (= 0.2.2)
@@ -111,7 +111,7 @@ GEM
     backport (0.3.0)
     bootsnap (1.4.1)
       msgpack (~> 1.0)
-    brakeman (4.4.0)
+    brakeman (4.5.0)
     builder (3.2.3)
     capybara (3.14.0)
       addressable
