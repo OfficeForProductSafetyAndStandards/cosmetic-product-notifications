@@ -21,9 +21,8 @@ class Investigation < ApplicationRecord
   validates_length_of :non_compliant_reason, maximum: 10000
   validates_length_of :hazard_description, maximum: 10000
 
-  after_save :create_audit_activity_for_status, :create_audit_activity_for_visibility
-
-  after_update :create_audit_activity_for_assignee
+  after_update :create_audit_activity_for_assignee, :create_audit_activity_for_status,
+               :create_audit_activity_for_visibility
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
