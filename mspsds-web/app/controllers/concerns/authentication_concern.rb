@@ -10,6 +10,6 @@ module AuthenticationConcern
   end
 
   def public_addresses
-    %w[terms_and_conditions about privacy_policy]
+    %w[terms-and-conditions about privacy-policy]
   end
 end

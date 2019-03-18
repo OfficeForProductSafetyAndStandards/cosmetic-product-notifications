@@ -9,8 +9,8 @@ class PublicPagesHelper < ApplicationSystemTestCase
   end
 
   test "Should allow to see terms and conditions when not logged in" do
-    visit "/terms_and_conditions"
-    assert_current_path(/terms_and_conditions/)
+    visit "/terms-and-conditions"
+    assert_current_path(/terms-and-conditions/)
   end
 
   test "Should allow to see about page when not logged in" do
@@ -19,7 +19,7 @@ class PublicPagesHelper < ApplicationSystemTestCase
   end
 
   test "Should allow to see privacy policy page when not logged in" do
-    visit "/privacy_policy"
-    assert_current_path(/privacy_policy/)
+    visit "/privacy-policy"
+    assert_current_path(/privacy-policy/)
   end
 end
