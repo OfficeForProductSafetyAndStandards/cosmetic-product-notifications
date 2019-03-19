@@ -8,13 +8,17 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
   end
 
   def create
+    p "INSIDE CREATE ================================"
+    p uploaded_files_params
+    p "LENGTH ============"
+    # p uploaded_files_params&.keys.length
     @errors = []
     if uploaded_files_params.nil?
       @errors << { text: "No files selected", href: "#uploaded_files" }
       return render :new
     end
 
-    if uploaded_files_params.length > NotificationFile.get_max_number_of_files
+    if uploaded_files_params.values.length > NotificationFile.get_max_number_of_files
       @errors << {
           text: "Too many files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
           href: "#uploaded_files"
@@ -22,7 +26,9 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
       return render :new
     end
 
-    uploaded_files_params.each do |uploaded_file|
+    uploaded_files_params.values.each do |uploaded_file|
+      p "UPLOADED FILE ======================================"
+      p uploaded_file
       notification_file = NotificationFile.new(
         name: uploaded_file.original_filename,
         responsible_person: @responsible_person,
@@ -60,6 +66,8 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def uploaded_files_params
+    p "PARAMS ------------------------------------"
+    p params
     if params.has_key?(:uploaded_files)
       params.require(:uploaded_files)
     end

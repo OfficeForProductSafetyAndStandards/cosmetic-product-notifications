@@ -4,6 +4,7 @@ import GOVUKFrontend from 'govuk-frontend';
 import Dropzone from 'dropzone';
 
 import '../application/javascripts/bulk_file_upload_error_handling';
+import '../application/javascripts/dropzone_config';
 
 import '../../../vendor/shared-web/app/assets/application/javascripts/location_picker';
 

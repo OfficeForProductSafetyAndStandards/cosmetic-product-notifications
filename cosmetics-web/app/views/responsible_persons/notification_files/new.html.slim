@@ -22,12 +22,16 @@
         = link_to "Find out how to export cosmetic product zip files from CPNP.",
             "https://docs.google.com/document/d/1QTM-LYmlAk8nnuwYOvtn8-gB5-F6T5u4lgs_2BhzPJ8/edit",
             target: :_blank
-      .govuk-form-group#file-upload-form-group[class= ("govuk-form-group--error" if @errors.present?)]
-        = form.label :uploaded_files, "Upload EU notification files", class: "govuk-label"
-        span.govuk-hint
-          | To select multiple files, hold the ‘Shift’ key when selecting them.
-        span#file-upload-error-message.govuk-error-message
-          = @errors.last[:text] if @errors.present?
-        = form.file_field :file, multiple: true,
-                class: "govuk-file-upload", accept: "application/zip"
+      .dropzone-previews
+        #preview-template
+          = render "file_upload_preview"
+      .fallback
+        .govuk-form-group#file-upload-form-group[class= ("govuk-form-group--error" if @errors.present?)]
+          = form.label :uploaded_files, "Upload EU notification files", class: "govuk-label"
+          span.govuk-hint
+            | To select multiple files, hold the ‘Shift’ key when selecting them.
+          span#file-upload-error-message.govuk-error-message
+            = @errors.last[:text] if @errors.present?
+          = form.file_field :file, multiple: true,
+                  class: "govuk-file-upload", accept: "application/zip"
       = form.submit "Continue", data: { disable_with: false }, class: "govuk-button", id: "submit-button"

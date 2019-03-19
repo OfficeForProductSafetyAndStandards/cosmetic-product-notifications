@@ -20,7 +20,7 @@ class NotificationFile < ApplicationRecord
 
   @allowed_content_types = %w[application/zip application/x-zip-compressed].freeze
   @max_file_size_bytes = 30.megabytes
-  @max_number_of_files = 3
+  @max_number_of_files = 10
 
   def self.get_content_types
     @allowed_content_types
