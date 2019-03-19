@@ -9,6 +9,7 @@
         / We treat this message specially due to the new line characters
         / The extra logic here isn't ideal - moving it to a generic nl2br helper or removing the long-winded error
           message in the future would both be advisable.
+        / TODO MSPSDS-1113 Standardise line ending handling
         - message = form.object.errors.full_messages_for(:email_address).first
         - error_html = capture do
           / Effectively run nl2br on the message.
