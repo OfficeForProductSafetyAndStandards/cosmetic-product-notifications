@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   include LoadHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[assign status visibility]
+  before_action :set_investigation, only: %i[assign status visibility edit_summary]
   before_action :set_investigation_with_associations, only: %i[show]
   before_action :set_suggested_previous_assignees, only: :assign
   before_action :build_breadcrumbs, only: %i[show]
@@ -108,6 +108,20 @@ class InvestigationsController < ApplicationController
     respond_to_update(:visibility)
   end
 
+  def edit_summary
+    return if request.get?
+
+    ps = edit_summary_update_params
+    if ps[:description].blank?
+      @investigation.errors.add(:description, :invalid, message: "Summary can't be empty")
+      respond_to_invalid_data(:edit_summary)
+      return
+    end
+
+    @investigation.description = ps[:description]
+    respond_to_update(:edit_summary)
+  end
+
 private
 
   def set_investigation_with_associations
@@ -135,6 +149,10 @@ private
 
   def visibility_update_params
     params.require(:investigation).permit(:is_private, :visibility_rationale)
+  end
+
+  def edit_summary_update_params
+    params.require(:investigation).permit(:description)
   end
 
   def assignee_update_params

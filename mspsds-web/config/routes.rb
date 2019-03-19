@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       get :assign
       put :visibility
       get :visibility
+      put :edit_summary
+      get :edit_summary
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do
       collection do

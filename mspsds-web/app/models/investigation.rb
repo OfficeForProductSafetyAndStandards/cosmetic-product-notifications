@@ -22,7 +22,7 @@ class Investigation < ApplicationRecord
   validates_length_of :hazard_description, maximum: 10000
 
   after_update :create_audit_activity_for_assignee, :create_audit_activity_for_status,
-               :create_audit_activity_for_visibility
+               :create_audit_activity_for_visibility, :create_audit_activity_for_summary
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
@@ -223,6 +223,12 @@ private
   def create_audit_activity_for_assignee
     if (saved_changes.key? :assignable_id) || (saved_changes.key? :assignable_type)
       AuditActivity::Investigation::UpdateAssignee.from(self)
+    end
+  end
+
+  def create_audit_activity_for_summary
+    if saved_changes.key?(:description)
+      AuditActivity::Investigation::UpdateSummary.from(self)
     end
   end
 
