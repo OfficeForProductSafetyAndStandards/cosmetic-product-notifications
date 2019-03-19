@@ -1,5 +1,5 @@
 class Tab
-  attr_reader :id, :title, :render, :hide_title, :item_count
+  attr_reader :id, :title, :render, :item_count, :hide_title
 
   def initialize(id, title, render, item_count = '', hide_title = false)
     @id = id
