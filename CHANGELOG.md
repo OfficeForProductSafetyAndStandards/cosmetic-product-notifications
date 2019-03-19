@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Provide "send email alert about this case" functionality.
 - Allow users to view their team members.
 - When emails and phone calls are marked as GDPR senstive, prevent other users from viewing them or their attachments.
+- Cases are assigned to their creator by default
 - Allow team_admin users to add new team members.
 
 <!-- ### Cosmetics -->
