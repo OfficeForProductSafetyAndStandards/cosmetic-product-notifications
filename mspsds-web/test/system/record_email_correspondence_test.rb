@@ -132,7 +132,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     click_on "Activity"
     within id: "activity" do
       assert_equal("Email added", first('h3').text)
-      assert_equal("RESTRICTED ACCESS", first(".govuk-badge").text)
+      assert_equal("RESTRICTED ACCESS", first(".hmcts-badge").text)
     end
   end
 
