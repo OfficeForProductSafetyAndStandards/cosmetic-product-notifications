@@ -1,0 +1,32 @@
+h1.govuk-heading-xl Breadcrumbs component
+h2.govuk-heading-l Default
+= render "components/banner", text: "Information for user"
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l Information
+= render "components/banner", text: "Information for user", type: :information
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l Information with html
+- html_item = capture do
+  h3 Banner Heading
+  ul
+    li Banner point 1
+    li Banner point 2
+    li Banner point 3
+
+= render "components/banner", html: html_item
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l Success
+= render "components/banner", text: "Successful action", type: :success
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l Warning
+= render "components/banner", text: "Warning", type: :warning
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
