@@ -1,3 +1,13 @@
+/ Implementation based on https://github.com/hmcts/frontend/blob/master/src/components/banner/template.njk
+  for which documentation can be found here: https://hmcts-design-system.herokuapp.com/components/banner
+
+/ parameters accepted by this component are:
+    type(optional): accepts strings or symbols. Accepted values are warning, string, information
+    classes(optional): accepts an array, classes will be added to the outermost div of the banner
+    iconFallbackText(optional): text to be used for the icon by eg a screenreader
+    html: html content for the banner
+    text: text content for the banner (ignored if html is also provided)
+
 ruby:
   banner_classes = ["hmcts-banner"]
   banner_classes.push "hmcts-banner--#{type.to_s}" if local_assigns[:type] && type.to_sym != :information
