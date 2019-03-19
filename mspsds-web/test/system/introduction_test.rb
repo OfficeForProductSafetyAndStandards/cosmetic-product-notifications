@@ -17,13 +17,13 @@ class IntroductionTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Report, track and share product safety information"
     click_on "Continue"
 
-    assert_selector "h1", text: "Report unsafe and non-compliant products"
+    assert_current_path "/introduction/report_products"
     click_on "Continue"
 
-    assert_selector "h1", text: "Track and manage investigations"
+    assert_current_path "/introduction/track_investigations"
     click_on "Continue"
 
-    assert_selector "h1", text: "Share national data on products, incidents and businesses"
+    assert_current_path "/introduction/share_data"
     click_on "Get started"
 
     assert_text "Open a new case"
@@ -37,11 +37,13 @@ class IntroductionTest < ApplicationSystemTestCase
   end
 
   test "users will not be shown the introduction twice" do
-    assert_selector "h1", text: "Report, track and share product safety information"
-
+    assert_current_path '/introduction/overview'
+    click_on "Continue"
+    click_on "Continue"
+    click_on "Continue"
+    click_on "Get started"
     visit '/'
-
-    assert_current_path "/"
+    assert_current_path '/'
   end
 
   test "does not show introduction to opss users" do

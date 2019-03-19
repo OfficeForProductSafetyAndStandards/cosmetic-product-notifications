@@ -12,7 +12,7 @@ class HomepageControllerTest < ActionDispatch::IntegrationTest
   test "displays introduction for non_opss users who have not viewed introduction before" do
     set_user_as_non_opss(@user)
     get "/"
-    assert_redirected_to new_introduction_path
+    assert_redirected_to introduction_overview_path
   end
 
   test "displays homepage for non_opss users who have viewed introduction before" do

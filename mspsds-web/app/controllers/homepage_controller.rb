@@ -5,7 +5,7 @@ class HomepageController < ApplicationController
     elsif User.current.has_viewed_introduction
       render "non_opss"
     else
-      redirect_to new_introduction_path
+      redirect_to introduction_overview_path
     end
   end
 end
