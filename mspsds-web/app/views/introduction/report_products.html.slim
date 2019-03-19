@@ -1,4 +1,4 @@
-- content_for :page_title, "Report products - Product safety database - GOV.UK"
+- content_for :page_title, "Report products"
 - content_for :after_header do
   = render "skip_introduction"
 
@@ -9,4 +9,5 @@
       p.govuk-body-l
         | Trading Standards officers must use this service to report serious product safety incidents to The Office for
         |  Product Safety and Standards.
-      = link_to "Continue", introduction_track_investigations_path, class: "govuk-button", role: "button", draggable: false
+      = link_to "Continue", introduction_track_investigations_path,
+              class: "govuk-button", role: "button", draggable: false
