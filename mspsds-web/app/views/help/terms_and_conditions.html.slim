@@ -2,10 +2,9 @@
 - content_for :after_header do
   = render "layouts/navbar"
 
-h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
+h1.govuk-heading-l = "Market Surveillance Product Safety Digital Service Terms of Use"
 .govuk-grid-row
   .govuk-grid-column-one-half-from-desktop
-
     p
       | These Terms and conditions (
       b = "Terms"
@@ -21,7 +20,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       | Please also familiarise yourself with the terms of our
       = link_to " privacy policy", help_privacy_policy_path
       |  that applies to your use of the Service.
-    h2
+    h2.govuk-heading-m
       | Who we are
     p
       | The Service is managed by the Office for Product Safety and Standards (
@@ -32,7 +31,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
     p
       | If you have any questions relating to these Terms or the Service you can contact us by emailing:
       | OPSS.enquiries@beis.gov.uk
-    h2
+    h2.govuk-heading-m
       | What's in these Terms?
     p
       | These Terms tell you the rules for using the Service.
@@ -80,14 +79,14 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       li = link_to "General terms",
               help_terms_and_conditions_path(anchor: "general_terms")
 
-    h3 id="using_the_service" Using the Service
+    h3.govuk-heading-m id="using_the_service" Using the Service
     p
       | You agree to use the Service only for lawful purposes.
     p
       | You must use the Service in a way that does not infringe the rights of, or restrict or inhibit the use and
       |  enjoyment of, the Service by anyone else.
 
-    h3 id="how_service_works" How the Service works
+    h3.govuk-heading-m id="how_service_works" How the Service works
     p
       | The Service provides a market surveillance product safety data hub.  The Service exchanges data with external
       |  sources and allows different registered users to complete various tasks.
@@ -102,7 +101,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       |  a registered user of the Service. To use those areas of the Service you will need to log in
       = link_to " here", keycloak_login_url
 
-    h3 id="by_using_you_accept_terms" By using the Service you accept these Terms
+    h3.govuk-heading-m id="by_using_you_accept_terms" By using the Service you accept these Terms
     p
       | By using the Service you confirm that you accept these Terms and that you agree to comply with them.
     p
@@ -110,7 +109,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
     p
       | We recommend that you print a copy of these Terms for future reference.
 
-    h3 id="may_make_changes_terms" We may make changes to these Terms
+    h3.govuk-heading-m id="may_make_changes_terms" We may make changes to these Terms
     p
       | We amend these Terms from time to time. Every time you wish to use the Service, please check these Terms
       |  to ensure you understand the Terms that apply at that time.
@@ -119,7 +118,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
     p
       | These Terms were most recently updated on 18/03/2019.
 
-    h3 id="may_make_changes_service" We may make changes to the Service
+    h3.govuk-heading-m id="may_make_changes_service" We may make changes to the Service
     p
       | We may update and change the Service from time to time to reflect changes in the scope of the
       |  operational function of the Service, changes in legislation that may affect the Service and/or the
@@ -127,7 +126,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
     p
       | We will try to give you reasonable notice of any major changes.
 
-    h3 id="may_withdraw_service" We may suspend or withdraw the Service
+    h3.govuk-heading-m id="may_withdraw_service" We may suspend or withdraw the Service
     p
       | The Service is made available free of charge.
     p
@@ -139,12 +138,12 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       |  internet connection are aware of these Terms and other applicable terms and conditions
       |  and that they comply with them.
 
-    h3 id="only_for_uk" The Service is only for users in the UK
+    h3.govuk-heading-m id="only_for_uk" The Service is only for users in the UK
     p
       | The Service is directed to users in the United Kingdom. We do not represent that content
       |  available on or through the Service is appropriate for use or available in other locations.
 
-    h3 id="keep_your_account_safe" You must keep your account details safe
+    h3.govuk-heading-m id="keep_your_account_safe" You must keep your account details safe
     p
       | If you choose, or you are provided with, a user identification code, password or any other piece
       |  of information as part of our security procedures, you must treat such information as confidential.
@@ -157,7 +156,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       | If you know or suspect that anyone other than you knows your user identification code or password,
       |  you must promptly notify us at OPSS.enquiries@beis.gov.uk
 
-    h3 id="our_content" Our content on the Service
+    h3.govuk-heading-m id="our_content" Our content on the Service
     p
       | Most of our content on the Service is subject to
       = link_to " Crown copyright protection", "http://www.nationalarchives.gov.uk/information-management/" + \
@@ -185,7 +184,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       = link_to "Contact us", "https://www.gov.uk/contact/govuk"
       |  if you want to reproduce a piece of content but are not sure if it is covered by Crown copyright or the OGL
 
-    h3 id="your_content" Your content on the Service
+    h3.govuk-heading-m id="your_content" Your content on the Service
     p
       | Whenever you make use of a feature that allows you to upload content to the Service or to make contact
       |  with other users of the Service you must comply with the 'Prohibited uses of the Service' clause set out below.
@@ -205,7 +204,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
     p
       | You are solely responsible for securing and backing up your content.
 
-    h3 id="other_content" Other content on the Service
+    h3.govuk-heading-m id="other_content" Other content on the Service
     p
       | The Service may include information and materials uploaded by other users of the Service.
       |  This information and these materials have not been verified or approved by us.
@@ -214,7 +213,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       | If you wish to complain about information and materials uploaded by other users please contact us by emailing:
       |  OPSS.enquiries@beis.gov.uk
 
-    h3 id="do_not_rely" Do not rely on information made available through the Service
+    h3.govuk-heading-m id="do_not_rely" Do not rely on information made available through the Service
     p
       | We do not give any guarantees, conditions or warranties about the accuracy or completeness of any content
       |  available on or through the Service.  We are not liable for any loss or damage that may come
@@ -232,7 +231,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       | We do not publish advice on the Service. You should get professional or specialist advice before doing
       |  anything on the basis of the content of the Service.
 
-    h3 id="linking_to" Linking to the Service
+    h3.govuk-heading-m id="linking_to" Linking to the Service
     p
       | We welcome and encourage other websites to link to the homepage of the Service, provided you do so in a way
       |  that is fair and legal and does not damage our reputation or take advantage of it.
@@ -246,7 +245,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
     p
       | We reserve the right to withdraw linking permission without notice.
 
-    h3 id="linking_from" Linking from the Service
+    h3.govuk-heading-m id="linking_from" Linking from the Service
     p
       | The Service links to websites that are managed by other government departments and agencies,
       |  service providers or other organisations. We do not have any control over the content on these websites.
@@ -261,7 +260,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       | You should read all terms and conditions, privacy policies and end user licences that relate to these websites
       |  before you use them.
 
-    h3 id="prohibited_use" Prohibited uses of the Service
+    h3.govuk-heading-m id="prohibited_use" Prohibited uses of the Service
     p
       | You may use the Service only for lawful purposes. You may not use the Service:
     ul.govuk-list.govuk-list--bullet
@@ -288,7 +287,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
           li any software used in the provision of the Service; and/or
           li any equipment or network or software owned or used by any third party.
 
-    h3 id="request_to_remove_content" Requests to remove content
+    h3.govuk-heading-m id="request_to_remove_content" Requests to remove content
     p
       | You can ask for content to be removed from the Service. We will remove content:
     ul.govuk-list.govuk-list--bullet
@@ -307,7 +306,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       |  and the
       = link_to " Data Protection Act.", "https://www.gov.uk/data-protection"
 
-    h3 id="no_viruses" We are not responsible for viruses and you must not introduce them
+    h3.govuk-heading-m id="no_viruses" We are not responsible for viruses and you must not introduce them
     p
       | We make every effort to check and test the Service for viruses at every stage of production.
       |  You must make sure that the way you use the Service does not expose you to the risk of viruses,
@@ -327,7 +326,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       | We will report any attacks or attempts to gain unauthorised access to the Service
       |  to the relevant law enforcement authorities and share information about you with them.
 
-    h3 id="our_responsibility" Our responsibility for loss or damage suffered by you
+    h3.govuk-heading-m id="our_responsibility" Our responsibility for loss or damage suffered by you
     p
       | We are not liable for any loss or damage that may come from using the Service. This includes:
     ul.govuk-list.govuk-list--bullet
@@ -359,12 +358,12 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       li fraudulent misrepresentation; and/or
       li any other liability which cannot be excluded or limited under applicable law.
 
-    h3 id="personal_information" How we may use your personal information
+    h3.govuk-heading-m id="personal_information" How we may use your personal information
     p
       | We will only use your personal information as set out in our
       = link_to " privacy policy.", help_privacy_policy_path
 
-    h3 id="general_terms" General terms
+    h3.govuk-heading-m id="general_terms" General terms
     p
       | We are not liable if we fail to comply with these Terms because of circumstances beyond our reasonable control.
     p
@@ -376,7 +375,7 @@ h1 = "Market Surveillance Product Safety Digital Service Terms of Use"
       | If any terms of these Terms are held to be invalid, unenforceable or illegal for any reason,
       |  the remaining terms will still apply.
 
-    h3 id="which_country_laws" Which country's laws apply to these Terms?
+    h3.govuk-heading-m id="which_country_laws" Which country's laws apply to these Terms?
     p
       | Unless you are a member of the public using the Service, these Terms, their subject matter
       |  and their formation (and any non-contractual disputes or claims) are governed by English law.
