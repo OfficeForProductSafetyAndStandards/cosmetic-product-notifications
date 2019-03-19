@@ -1,11 +1,11 @@
 h1.govuk-heading-xl Breadcrumbs component
 h2.govuk-heading-l Default
-= render "components/banner", text: "Information for user"
+= render "components/hmcts_banner", text: "Information for user"
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Information
-= render "components/banner", text: "Information for user", type: :information
+= render "components/hmcts_banner", text: "Information for user", type: :information
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
@@ -17,16 +17,21 @@ h2.govuk-heading-l Information with html
     li Banner point 2
     li Banner point 3
 
-= render "components/banner", html: html_item
+= render "components/hmcts_banner", html: html_item
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Success
-= render "components/banner", text: "Successful action", type: :success
+= render "components/hmcts_banner", text: "Successful action", type: :success
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l Warning
-= render "components/banner", text: "Warning", type: :warning
+= render "components/hmcts_banner", text: "Warning body", type: :warning
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l With icon fallback text supplied
+= render "components/hmcts_banner", text: "Warning body", iconFallbackText: "Warning icon fallback text", type: :warning
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
