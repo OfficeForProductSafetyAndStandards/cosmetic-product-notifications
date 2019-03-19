@@ -78,9 +78,13 @@ Rails.application.routes.draw do
   get "your-teams" => "teams#index"
   resources :teams, only: %i[index show]
 
-  get "terms-and-conditions" => "pages#terms_and_conditions"
-  get "privacy-policy" => "pages#privacy_policy"
-  get "about" => "pages#about"
+  namespace :help do
+    get :terms_and_conditions, path: "terms-and-conditions"
+    get :privacy_policy, path: "privacy-policy"
+    get :about
+  end
+
+
 
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all

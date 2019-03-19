@@ -1,4 +1,4 @@
-class PagesController < ApplicationController
+class HelpController < ApplicationController
   skip_before_action :authenticate_user!, :authorize_user
   before_action :set_referred
 
