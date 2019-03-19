@@ -46,7 +46,7 @@ class ActiveSupport::TestCase
   # sensible value, but it should only be run once per test.
   # To change currently logged in user afterwards call `sign_in_as(...)`
   def mock_out_keycloak_and_notify(user_name: "User_one")
-    @users = [admin_user,
+    @users = [test_user(name: "User_four"),
               test_user(name: "User_one"),
               test_user(name: "User_two"),
               test_user(name: "User_three"),
@@ -135,14 +135,6 @@ class ActiveSupport::TestCase
   end
 
 private
-
-  def admin_user
-    id = SecureRandom.uuid
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :mspsds_user).and_return(true)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true)
-    User.new(id: id, email: "admin@example.com", first_name: "Test", last_name: "Admin")
-  end
 
   def test_user(name: "User_one", ts_user: false)
     id = SecureRandom.uuid
