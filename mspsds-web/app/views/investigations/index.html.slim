@@ -11,6 +11,9 @@
         span.govuk-caption-m = "#{@results.count} #{'result'.pluralize(@results.count)}"
       - else
         | Cases
+  .govuk-grid-column-one-third[style="text-align:right"]
+    = link_to "Create new", User.current.is_opss? ? new_investigation_path : new_ts_investigation_path,
+            class: "govuk-button govuk-!-margin-bottom-3", role: "button"
 
 .govuk-grid-row
   .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
@@ -61,8 +64,6 @@
                         { text: "Created: newest", value: "newest" }]
         = form.submit "Apply filters", name: nil, class: "govuk-button"
   .govuk-grid-column-three-quarters
-    = link_to "Create new", User.current.is_opss? ? new_investigation_path : new_ts_investigation_path,
-            class: "govuk-button govuk-!-margin-bottom-3", role: "button"
     - if @results.any?
       = render "table", search_results: @results, sorted_by: query_params[:sort_by]
       = will_paginate @investigations
