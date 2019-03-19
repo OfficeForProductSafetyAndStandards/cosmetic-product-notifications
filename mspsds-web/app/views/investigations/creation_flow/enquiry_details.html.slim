@@ -11,7 +11,7 @@
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           | What is the enquiry?
-        = render "form_components/govuk_textarea", key: :description, form: form, max_length: 10000,
+        = render "form_components/govuk_textarea", key: :description, form: form, attributes: { maxlength: 10000 },
                 hint: { text: "Please give as much detail as possible" },
                 label: { text: "Enquiry description", classes: "govuk-visually-hidden" }
 
