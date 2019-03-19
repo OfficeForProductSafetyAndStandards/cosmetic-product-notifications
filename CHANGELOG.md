@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
     # Log into keycloak admin app, click on `Clients` and select `mspsds-app`
     # In the `Service Account Roles` tab, select `realm-management` from the dropdown and assign the `manage-users` role
     # In the `Scope` tab, select `realm-management` from the dropdown and assign the `manage-users` role
+- [ ] Delete mspsds `admin` role (Clients->mspsds-app->roles->admin->delete)
 
 
 ## 2019-03-07
