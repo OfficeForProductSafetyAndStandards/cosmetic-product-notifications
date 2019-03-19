@@ -21,7 +21,7 @@ class Investigations::BusinessesController < ApplicationController
   def create
     if @business.save
       @investigation.add_business(@business, session[:type])
-      redirect_to_investigation_businesses_tab "Business was successfully created."
+      redirect_to_investigation_businesses_tab success: "Business was successfully created."
     else
       render_wizard
     end
@@ -51,7 +51,7 @@ class Investigations::BusinessesController < ApplicationController
     @investigation.businesses.delete(@business)
     respond_to do |format|
       format.html do
-        redirect_to_investigation_businesses_tab "Business was successfully removed."
+        redirect_to_investigation_businesses_tab success: "Business was successfully removed."
       end
       format.json { head :no_content }
     end
@@ -117,8 +117,8 @@ private
     params.require(:business).permit(:type, :type_other)
   end
 
-  def redirect_to_investigation_businesses_tab(notice)
-    redirect_to investigation_path(@investigation, anchor: "businesses"), notice: notice
+  def redirect_to_investigation_businesses_tab(flash)
+    redirect_to investigation_path(@investigation, anchor: "businesses"), flash: flash
   end
 
   def set_investigation

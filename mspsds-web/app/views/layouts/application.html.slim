@@ -79,10 +79,9 @@ html.govuk-template.app-html-class[lang="en"]
           h2#error-summary-title.govuk-error-summary__title
             = alert
 
-      - if notice
-        .govuk-inset-text[class="govuk-!-margin-0" tabindex="-1"]
-          strong[class="govuk-!-font-weight-bold"]
-            = notice
+      - %i[success information warning].each do |key|
+        - if flash[key]
+          = render "components/hmcts_banner", text: flash[key], type: key
 
       main#main-content.govuk-main-wrapper.app-main-class[role="main"]
         = yield

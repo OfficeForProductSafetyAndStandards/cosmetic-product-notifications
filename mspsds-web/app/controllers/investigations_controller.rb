@@ -156,7 +156,11 @@ private
   def respond_to_update(origin)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "#{@investigation.case_type.titleize} was successfully updated." }
+        format.html {
+          redirect_to @investigation, flash: {
+              success: "#{@investigation.case_type.titleize} was successfully updated."
+          }
+        }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes
