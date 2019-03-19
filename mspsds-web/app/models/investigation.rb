@@ -172,13 +172,6 @@ class Investigation < ApplicationRecord
 
   def case_type; end
 
-  def reason_created
-    return "Product reported because it is unsafe and non-compliant." if hazard_type.present? && non_compliant_reason.present?
-    return "Product reported because it is unsafe." if hazard_type.present?
-
-    "Product reported because it is non-compliant." if non_compliant_reason.present?
-  end
-
   def has_non_compliant_reason
     if non_compliant_reason.empty?
       errors.add(:non_compliant_reason, "cannot be blank")

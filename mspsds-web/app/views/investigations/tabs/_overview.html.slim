@@ -2,7 +2,7 @@ h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
   | Summary
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-two-thirds
-    p = @investigation.description || @investigation.reason_created
+    p = @investigation.description
     p = link_to "Edit summary", edit_summary_investigation_path(@investigation)
 
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
