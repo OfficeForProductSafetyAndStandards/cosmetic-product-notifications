@@ -14,8 +14,8 @@ class ComponentBuildController < ApplicationController
 
   def show
     @component.shades = ['', ''] if step == :add_shades && @component.shades.nil?
-    if step == :add_cmrs && @component.cmrs.size < 3
-      cmrs_needed = 3 - @component.cmrs.size
+    if step == :add_cmrs && @component.cmrs.size < NUMBER_OF_CMRS
+      cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
       cmrs_needed.times { @component.cmrs.create(name: '', cas_number: '') }
     end
     render_wizard
@@ -113,8 +113,8 @@ private
   end
 
   def render_add_nanomaterial
-    if params[:nano_material_index].nil?
-      @no_nano_material_selected = true
+    if nano_elements_not_selected
+      @no_nano_element_selected = true
     end
     if params[:nano_material_exposure_route].nil?
       @no_exposure_route_selected = true
@@ -123,11 +123,10 @@ private
       @no_exposure_condition_selected = true
     end
 
-    if @no_nano_material_selected || @no_exposure_route_selected || @no_exposure_condition_selected
+    if @no_nano_element_selected || @no_exposure_route_selected || @no_exposure_condition_selected
       return render step
     end
 
-    selected_nano_material = nano_materials[params[:nano_material_index].to_i]
     selected_exposure_route = exposure_routes[params[:nano_material_exposure_route].to_i]
     selected_exposure_condition = exposure_conditions[params[:nano_material_exposure_condition].to_i]
 
@@ -135,9 +134,21 @@ private
         exposure_condition: selected_exposure_condition,
         exposure_route: selected_exposure_route
     )
-    nano_material.nano_elements.build(selected_nano_material)
+
+    nano_elements.each do |key, nano_element|
+      if params[key.to_sym] == "1"
+        nano_material.nano_elements.build(nano_element)
+      end
+    end
 
     render_wizard @component
+  end
+
+  def nano_elements_not_selected
+    nano_elements.each do |key, _nano_element|
+      return false if params[key.to_sym] == "1"
+    end
+    true
   end
 
   def render_add_cmrs
@@ -154,4 +165,6 @@ private
     end
     render_wizard @component
   end
+
+  NUMBER_OF_CMRS = 10
 end

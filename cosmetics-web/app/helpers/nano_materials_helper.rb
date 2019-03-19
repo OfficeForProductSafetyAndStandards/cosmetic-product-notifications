@@ -1,16 +1,20 @@
 module NanoMaterialsHelper
-  # def create_nano_element(nano_element_id)
-  #   get_nano_elements[nano_element_id]
-  # end
+  def nano_elements
+    {
+        titanium: {iupac_name: "Titanium dioxide"},
+        triazine: {iupac_name: "Tris-biphenyl triazine"},
+        carbon: {iupac_name: "Carbon black"},
+        other: {iupac_name: "Other"}
+    }
+  end
 
-  def nano_materials
-    [
-        {iupac_name: "Titanium dioxide"},
-        {iupac_name: "Zinc oxide"},
-        {iupac_name: "Tris-biphenyl triazine"},
-        {iupac_name: "Carbon black"},
-        {iupac_name: "Other"}
-    ]
+  def nano_elements_label
+    {
+        titanium: "This product contains Titanium dioxide as a UV filter",
+        triazine: "This product contains Tris-biphenyl triazine as a UV filter",
+        carbon: "This product contains Carbon black as a colorant",
+        other: "Other"
+    }
   end
 
   def exposure_routes
