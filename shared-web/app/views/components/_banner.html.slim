@@ -1,0 +1,26 @@
+ruby:
+  banner_classes = "banner"
+  if local_assigns[:type] && type != :information
+    banner_classes += " banner--#{type.to_s}"
+  elsif local_assigns[:classes]
+    banner_classes += " #{classes}"
+  end
+  content = capture do
+    local_assigns[:html] || local_assigns[:text]
+  end
+
+div class=banner_classes
+  .banner__message
+    -if local_assigns[:icon_fallback_test]
+      span.hmcts-banner__assistive = local_assigns[:iconFallbackText]
+    = content
+    - if local_assigns[:type] && type.to_sym == :success
+      svg.banner__icon[role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 25 25" height="25" width="25"]
+        path[d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z"]
+    - elsif local_assigns[:type] && type.to_sym == :warning
+      svg.banner__icon[fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25"]
+        path[d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z"]
+    - elsif local_assigns[:type] && type.to_sym == :information
+      svg.banner__icon[fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25"]
+        path[d="M13.7,18.5h-2.4v-2.4h2.4V18.5z M12.5,13.7c-0.7,0-1.2-0.5-1.2-1.2V7.7c0-0.7,0.5-1.2,1.2-1.2s1.2,0.5,1.2,1.2v4.8\
+          C13.7,13.2,13.2,13.7,12.5,13.7z M12.5,0.5c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12S19.1,0.5,12.5,0.5z"]
