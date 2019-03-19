@@ -3,12 +3,21 @@ class ComponentBuildController < ApplicationController
   include NanoMaterialsHelper
   include CategoryHelper
 
-  steps :number_of_shades, :add_shades, :contains_nanomaterials, :add_nanomaterial, :select_category
+  steps :number_of_shades,
+        :add_shades,
+        :add_cmrs,
+        :contains_nanomaterials,
+        :add_nanomaterial,
+        :select_category
 
   before_action :set_component
 
   def show
     @component.shades = ['', ''] if step == :add_shades && @component.shades.nil?
+    if step == :add_cmrs && @component.cmrs.size < 3
+      cmrs_needed = 3 - @component.cmrs.size
+      cmrs_needed.times { @component.cmrs.create(name: '', cas_number: '') }
+    end
     render_wizard
   end
 
@@ -22,6 +31,8 @@ class ComponentBuildController < ApplicationController
       render_contains_nanomaterials
     when :add_nanomaterial
       render_add_nanomaterial
+    when :add_cmrs
+      render_add_cmrs
     else
       @component.update(component_params)
       render_wizard @component
@@ -53,7 +64,7 @@ private
       @component.shades = nil
       @component.add_shades
       @component.save
-      redirect_to wizard_path(:contains_nanomaterials, component_id: @component.id)
+      redirect_to wizard_path(:add_cmrs, component_id: @component.id)
     when "multiple"
       render_wizard @component
     when ""
@@ -93,6 +104,7 @@ private
     when "yes"
       render_wizard @component
     when "no"
+      @component.nano_materials.destroy_all
       redirect_to wizard_path(:select_category, component_id: @component.id)
     when ""
       @component.errors.add :nano_materials, "Please select an option"
@@ -125,6 +137,21 @@ private
     )
     nano_material.nano_elements.build(selected_nano_material)
 
+    render_wizard @component
+  end
+
+  def render_add_cmrs
+    cmrs = params[:cmrs]
+    cmrs.each do |index , cmr|
+      cmr_name = cmr[:name]
+      cmr_cas_number = cmr[:cas_number]
+
+      if !cmr_name.nil? && cmr_name != '' && !cmr_cas_number.nil? && cmr_cas_number != ''
+        @component.cmrs[index.to_i].update name: cmr_name, cas_number: cmr_cas_number
+      else
+        @component.cmrs[index.to_i].destroy
+      end
+    end
     render_wizard @component
   end
 end
