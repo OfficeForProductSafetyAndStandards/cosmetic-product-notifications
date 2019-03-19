@@ -6,8 +6,7 @@ The codebase is shared with the website.
 
 ## Overview
 
-We're using [Sidekiq](https://github.com/mperham/sidekiq) as our background processor to do things like send emails and
-handle attachments.
+We're using [Sidekiq](https://github.com/mperham/sidekiq) as our background processor to do things like send emails and handle attachments.
 
 We're processing attachments using our [antivirus API](../antivirus) for antivirus checking and [Imagemagick](http://imagemagick.org) for thumbnailing.
 
