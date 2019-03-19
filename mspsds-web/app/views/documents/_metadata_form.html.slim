@@ -13,7 +13,7 @@
                 value: document.metadata["title"],
                 label: { text: "Document title" }
         = render "form_components/govuk_textarea", key: :description, form: subform,
-                value: document.metadata["description"], max_length: 10000,
+                value: document.metadata["description"], attributes: { maxlength: 10000 },
                 label: { text: "Description" }
         .govuk-form-group
           .govuk-grid-row
