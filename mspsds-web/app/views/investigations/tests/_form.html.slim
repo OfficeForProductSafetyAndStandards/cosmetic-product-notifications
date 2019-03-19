@@ -44,7 +44,7 @@ fieldset.govuk-fieldset
 fieldset.govuk-fieldset
   legend.govuk-fieldset__legend.govuk-fieldset__legend--l
     | Further details
-  = render "form_components/govuk_textarea", key: :details, form: form, max_length: 50000,
+  = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
           label: { text: "Test details", classes: "govuk-visually-hidden" }
 
 = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file,
