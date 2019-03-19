@@ -17,9 +17,9 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     choose @user.display_name, visible: false
     click_on "Continue"
     click_on "Confirm change"
-    assert_text "Assigned to\n#{@user.display_name}"
+    assert_text "Assigned to\nTest User_one\nOffice of Product Safety and Standards"
     click_on "Activity"
-    assert_text "Assigned to #{@user.display_name}"
+    assert_text "Assigned to Test User_one\nOffice of Product Safety and Standards"
   end
 
   test "should show current users team as a radio, and to assign team to case" do
