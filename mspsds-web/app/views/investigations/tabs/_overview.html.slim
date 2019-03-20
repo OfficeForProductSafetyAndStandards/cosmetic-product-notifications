@@ -3,7 +3,7 @@ h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-two-thirds
     p = @investigation.description
-    p = link_to "Edit summary", edit_summary_investigation_path(@investigation)
+    p = link_to "Edit summary", edit_summary_investigation_path(@investigation), class: "govuk-link--no-visited-state"
 
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   hr.govuk-section-break.govuk-section-break--s
