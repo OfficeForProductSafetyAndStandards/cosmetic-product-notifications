@@ -9,8 +9,8 @@
               title: "Who do you want to assign the #{@investigation.case_type} to?"
       - if @investigation.assignee.present?
         p
-          | Currently assigned to:
-          strong = " #{@investigation.assignee.display_name}"
+          ' Currently assigned to:
+          strong = @investigation.assignee.display_name
       - else
         p Nobody is assigned yet
 
@@ -23,6 +23,6 @@
         = "You do not have permission to assign this #{@investigation.case_type}."
         br
         ' Contact
-        strong = "#{@investigation.assignee.display_name}"
+        strong = @investigation.assignee.display_name
         | to change assignment.
       = link_to "Return to case", @investigation, class: "govuk-button"
