@@ -8,13 +8,10 @@
 
 hr.govuk-section-break.govuk-section-break--m
 
-= render "tabs", tabs: [\
-  Tab.new("overview", "Overview", lambda { render "investigations/tabs/overview" }, '', true),
-  Tab.new("products", "Products", lambda { render "investigations/tabs/products" },
-          " (#{@investigation.products.count})"),
-  Tab.new("businesses", "Businesses", lambda { render "investigations/tabs/businesses" },
-          " (#{@investigation.businesses.count})"),
-  Tab.new("attachments", "Attachments", lambda { render "investigations/tabs/attachments" },
-          " (#{@investigation.documents.count})"),
-  Tab.new("activity", "Activity", lambda { render "investigations/tabs/activity" })\
+= render "components/tabs", tabs: [\
+  Tab.new("overview", "Overview", "Summary", lambda { render "investigations/tabs/overview" }),
+  Tab.new("products", "Products (#{@investigation.products.count})", "Products", lambda { render "investigations/tabs/products" }),
+  Tab.new("businesses", "Businesses (#{@investigation.businesses.count})", "Businesses", lambda { render "investigations/tabs/businesses" }),
+  Tab.new("attachments", "Attachments (#{@investigation.documents.count})", "Attachments", lambda { render "investigations/tabs/attachments" }),
+  Tab.new("activity", "Activity", "Activity", lambda { render "investigations/tabs/activity" })\
 ]

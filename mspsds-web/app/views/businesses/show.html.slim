@@ -4,13 +4,9 @@
 
 = render "business_heading", business: @business
 
-= render "tabs", tabs: [\
-  Tab.new("full-detail", "Full detail", lambda { render "businesses/tabs/details" }),
-  Tab.new("locations", "Locations", lambda { render "businesses/tabs/locations" },
-          " (#{@business.locations.count})"),
-  Tab.new("contacts", "Contacts", lambda { render "businesses/tabs/contacts" },
-          " (#{@business.contacts.count})"),
-  Tab.new("attachments", "Attachments", lambda { render "businesses/tabs/attachments" },
-          " (#{@business.documents.count})"),
-  Tab.new("cases", "Cases", lambda { render "businesses/tabs/cases" })\
+= render "components/tabs", tabs: [\
+  Tab.new("full-detail", "Full detail", "Full detail", lambda { render "businesses/tabs/details" }),
+  Tab.new("locations", "Locations (#{@business.locations.count})", "Locations", lambda { render "businesses/tabs/locations" }),
+  Tab.new("contacts", "Contacts (#{@business.contacts.count})", "Contacts", lambda { render "businesses/tabs/contacts" }),
+  Tab.new("cases", "Cases", "Cases", lambda { render "businesses/tabs/cases" })\
 ]
