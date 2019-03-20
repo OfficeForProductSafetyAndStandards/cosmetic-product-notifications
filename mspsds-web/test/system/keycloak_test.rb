@@ -11,9 +11,7 @@ class KeycloakTest < ApplicationSystemTestCase
 
   test "can login" do
     visit root_path
-    sign_in email: "admin@example.com", password: "password"
-    click_on "Skip introduction"
-    assert_current_path root_path
+    sign_in email: "user@example.com", password: "password"
     assert_selector "a", text: "Sign out"
   end
 

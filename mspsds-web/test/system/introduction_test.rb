@@ -2,8 +2,8 @@ require "application_system_test_case"
 
 class IntroductionTest < ApplicationSystemTestCase
   setup do
-    @user = mock_out_keycloak_and_notify
-    set_user_as_non_opss(@user)
+    mock_out_keycloak_and_notify
+    set_user_as_non_opss User.current
 
     visit '/'
   end
@@ -47,7 +47,7 @@ class IntroductionTest < ApplicationSystemTestCase
   end
 
   test "does not show introduction to opss users" do
-    set_user_as_opss @user
+    set_user_as_opss User.current
 
     visit '/'
 
