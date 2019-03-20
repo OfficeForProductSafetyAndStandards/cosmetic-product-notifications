@@ -1,0 +1,9 @@
+- content_for :page_title, "About"
+- content_for :after_header do
+  = render "layouts/navbar"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    / TODO: Add link to slides deom here when MSPSDS-1094 is done
+    p = "Here is some content about the page"
+= render "close_page_button"
