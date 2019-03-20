@@ -23,7 +23,6 @@ en:
   activerecord:
     attributes:
       responsible_person:
-        companies_house_number: "Companies House registration number"
         address_line_1: "Building and street"
         city: "Town or city"
         postal_code: "Postcode"

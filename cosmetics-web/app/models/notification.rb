@@ -84,11 +84,22 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?,
-                  after: Proc.new { update_elasticsearch_index }
+      transitions from: :draft_complete, to: :notification_complete, after: Proc.new { update_elasticsearch_index } do
+        guard do
+          cpnp_reference.present? || images_are_present_and_safe?
+        end
+      end
     end
   end
   # rubocop:enable Metrics/BlockLength
+
+  def imported?
+    notification.state == :notification_file_imported ? cpnp_is_imported : import_country.present?
+  end
+
+  def imported_country
+    notification.state == :notification_file_imported ? cpnp_imported_country : import_country
+  end
 
   def reference_number_for_display
     "UKCP-%08d" % reference_number

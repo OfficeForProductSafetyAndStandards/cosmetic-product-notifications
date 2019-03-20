@@ -1,6 +1,7 @@
 - content_for :page_title, "Remove attachment"
 - content_for :after_header do
-  = link_to "Back", associated_documents_path(@parent), class: "govuk-back-link"
+  = link_to "Back", polymorphic_path(@parent), class: "govuk-back-link"
+
 = render "page_heading", title: "Remove attachment"
 
 .govuk-grid-row

@@ -1,0 +1,25 @@
+.check-your-answers-table {
+  th {
+    vertical-align: top;
+  }
+}
+
+.entity-list {
+  display: block;
+  margin-bottom: 0;
+  width: 45%;
+
+  dt,
+  dd {
+    display: inline-block;
+  }
+
+  dt {
+    min-width: 100px;
+  }
+
+  dd {
+    margin-left: 0;
+    float: right;
+  }
+}

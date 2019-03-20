@@ -14,16 +14,13 @@
 
     - if @responsible_person.business?
       p[class="govuk-!-margin-bottom-9"]
-        | Find your company information, including registration number on
+        | Find your company information on
         br
         = link_to "Companies House (opens in a new tab)", "https://beta.companieshouse.gov.uk",
                 class: "govuk-link", target: "_blank", rel: "noopener"
         | .
 
     = form_with model: @responsible_person, url: wizard_path, method: :put do |form|
-      - if @responsible_person.business?
-        = render "form_input", form: form, field: :companies_house_number, label: "Companies House registration number"
-
       = render "form_input", form: form, field: :name, label: name_label
       = render "form_input", form: form, field: :email_address, type: :email_field, label: "Email address"
       = render "form_input", form: form, field: :phone_number, type: :telephone_field, label: "Phone number",
