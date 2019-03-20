@@ -8,11 +8,11 @@ class InvestigationPolicy < ApplicationPolicy
   end
 
   def new?
-    show?
+    visible_to(user: @user)
   end
 
   def status?
-    show?
+    visible_to(user: @user)
   end
 
   def assign?(user: @user)
@@ -24,7 +24,7 @@ class InvestigationPolicy < ApplicationPolicy
   end
 
   def edit_summary?
-    show?
+    visible_to(user: @user)
   end
 
   def visible_to(user:, private: @record.is_private)

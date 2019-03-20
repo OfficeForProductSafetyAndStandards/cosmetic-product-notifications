@@ -54,7 +54,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     user = User.find_by(last_name: "User_one")
     investigation_assignee = lambda { Investigation.find(@investigation_three.id).assignee }
     assert_changes investigation_assignee, from: nil, to: user do
-      put assign_investigation_url(@investigation_three), params: {
+      patch assign_investigation_url(@investigation_three), params: {
         investigation: {
           assignable_id: user.id
         }
@@ -68,7 +68,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     is_closed = true
     investigation_status = lambda { Investigation.find(investigation.id).is_closed }
     assert_changes investigation_status, from: false, to: is_closed do
-      put status_investigation_url(investigation), params: {
+      patch status_investigation_url(investigation), params: {
           investigation: {
               is_closed: is_closed,
               status_rationale: "some rationale"
@@ -79,7 +79,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should require status to be open or closed" do
-    put status_investigation_url(@investigation_one), params: {
+    patch status_investigation_url(@investigation_one), params: {
       investigation: {
         status_rationale: "some rationale"
       }
@@ -93,7 +93,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     investigation = Investigation.create(description: old_description)
     investigation_status = lambda { Investigation.find(investigation.id).description }
     assert_changes investigation_status, from: old_description, to: new_description do
-      put edit_summary_investigation_url(investigation), params: {
+      patch edit_summary_investigation_url(investigation), params: {
         investigation: {
           description: new_description
         }
@@ -103,7 +103,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should require description to not be empty" do
-    put edit_summary_investigation_url(@investigation_one), params: {
+    patch edit_summary_investigation_url(@investigation_one), params: {
       investigation: {
         description: ""
       }
@@ -112,7 +112,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update assignee from selectable list" do
-    put assign_investigation_url(@investigation_one), params: {
+    patch assign_investigation_url(@investigation_one), params: {
       investigation: {
         assignable_id: @assignee.id
       }
@@ -121,7 +121,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update assignee from radio boxes" do
-    put assign_investigation_url(@investigation_one), params: {
+    patch assign_investigation_url(@investigation_one), params: {
       investigation: {
         assignable_id: @assignee.id
       }
@@ -325,7 +325,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   def create_new_private_case
     description = "new_investigation_description"
     Investigation::Allegation.create(user_title: "title", description: description)
-    put visibility_investigation_url(Investigation.find_by(description: description)), params: {
+    patch visibility_investigation_url(Investigation.find_by(description: description)), params: {
       investigation: {
         is_private: true
       }

@@ -1,4 +1,4 @@
-= form_with(model: investigation, method: :put, url: assign_investigation_url(investigation)) do |form|
+= form_with(model: investigation, url: assign_investigation_url(investigation)) do |form|
   = render "form_components/govuk_error_summary", form: form
   = yield
 
