@@ -21,5 +21,5 @@ fieldset.govuk-fieldset
                     classes: "govuk-!-width-two-thirds",
                     label: { text: "Title" }
             = render "form_components/govuk_textarea", key: :description, form: subform, value: @file_description,
-                    max_length: 10000, label: { text: "Description" },
+                    attributes: { maxlength: 10000 }, label: { text: "Description" },
                     hint: { text: "For example, 'Orange, 4 socket extension lead'" }

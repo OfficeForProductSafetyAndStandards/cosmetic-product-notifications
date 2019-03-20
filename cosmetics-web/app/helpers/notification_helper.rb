@@ -1,6 +1,13 @@
 module NotificationHelper
   def product_imported?(notification)
-    notification.import_country.present? || notification.cpnp_reference.present?
+    if notification.import_country.present? || notification.cpnp_imported_country.present?
+      return "Yes"
+    end
+    if notification.cpnp_reference.present? #TODO COSBETA-165: check if product is pre-brexit
+      return "Manufactured in EU before Brexit"
+    end
+
+    "No"
   end
 
   def product_import_country(notification)
@@ -13,9 +20,5 @@ module NotificationHelper
     else
       "EU (before Brexit)"
     end
-  end
-
-  def product_shades(notification)
-    notification.components.first&.shades&.join(", ") || notification.shades || "N/A"
   end
 end

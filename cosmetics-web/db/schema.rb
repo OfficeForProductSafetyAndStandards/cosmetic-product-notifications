@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 2019_03_18_114749) do
     t.boolean "cpnp_is_imported"
     t.string "cpnp_imported_country"
     t.string "shades"
+    t.string "industry_reference"
     t.datetime "cpnp_notification_date"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
