@@ -1,0 +1,19 @@
+- content_for :page_title, "Will these cosmetic products be notified in the EU?"
+- content_for :after_header do
+    = link_to "Back", wizard_path(:have_products_been_notified_in_eu), class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with url: wizard_path, method: :put do |form|
+        h1.govuk-heading-xl
+          | Will these cosmetic products be notified in the EU?
+        p
+          | The EU Cosmetic Product Notification Portal (CPNP) allows you to export
+          | ZIP files containing XML files for each notification.
+        p
+          | You can upload notification files only as ZIP files containing XML files
+          | on the UK cosmetic product registration service.
+        = render "components/govuk_radios",
+                name: :answer,
+                items: [{ text: "Yes, the products will be notified in the EU", value: "yes", id: "answer_yes" },
+                        { text: "No", value: "no", id: "answer_no" }]
+        = form.submit "Continue", class: "govuk-button"
