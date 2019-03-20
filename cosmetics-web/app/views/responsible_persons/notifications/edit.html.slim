@@ -18,4 +18,4 @@
     = render "notifications/product_details", notification: @notification
 
   - if @notification.may_submit_notification?
-    = render "notifications/product_registration", notification: @notification, responsible_person: @notification.responsible_person
+    = render "notifications/product_registration", notification: @notification, responsible_person: @responsible_person

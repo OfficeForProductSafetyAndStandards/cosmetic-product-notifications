@@ -71,7 +71,8 @@ tr.govuk-table__row
                   class: "govuk-link--no-visited-state"
       - else
         = link_to "Add formulation document",
-                new_responsible_person_notification_component_formulation_path(@notification.responsible_person, @notification, component),
+                new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
+                        @notification, component),
                 class: "govuk-link--no-visited-state"
 
 - if component.trigger_questions
