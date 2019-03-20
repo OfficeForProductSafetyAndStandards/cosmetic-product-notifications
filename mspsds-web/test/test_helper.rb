@@ -45,38 +45,28 @@ class ActiveSupport::TestCase
   # On top of mocking out external services, this method also sets the user to an initial,
   # sensible value, but it should only be run once per test.
   # To change currently logged in user afterwards call `sign_in_as(...)`
-  def mock_out_keycloak_and_notify(user_name: "User_one", team_admin: false)
+  def mock_out_keycloak_and_notify(user_name: "User_one")
     @users = [admin_user,
               test_user(name: "User_one"),
               test_user(name: "User_two"),
-              test_user(name: "User_three")].map(&:attributes)
+              test_user(name: "User_three"),
+              test_user(name: "Ts_user", ts_user: true)].map(&:attributes)
     @organisations = organisations.map(&:attributes)
     @teams = all_teams.map(&:attributes)
-    @team_users = [
-        { user_id: @users[1][:id], team_id: all_teams[0].id },
-        { user_id: @users[1][:id], team_id: all_teams[1].id },
-        { user_id: @users[0][:id], team_id: all_teams[0].id },
-        { user_id: @users[2][:id], team_id: all_teams[1].id },
-        { user_id: @users[3][:id], team_id: all_teams[2].id },
-        { user_id: @users[3][:id], team_id: all_teams[3].id }
-    ].each_with_index.map { |team_user, id| team_user.merge(id: id) }
+    @team_users = []
 
     allow(@keycloak_client_instance).to receive(:all_organisations) { @organisations }
     allow(@keycloak_client_instance).to receive(:all_teams) { @teams }
     allow(@keycloak_client_instance).to receive(:all_team_users) { @team_users }
     allow(@keycloak_client_instance).to receive(:all_users) { @users }
+    stub_user_management
     Organisation.all
     Team.all
     TeamUser.all
     User.all
-    user = User.find_by(last_name: user_name)
-    set_user_as_opss(user)
-    set_user_as_team_admin(user) if team_admin
-    sign_in_as user
-
+    set_default_group_memberships
+    sign_in_as User.find_by(last_name: user_name)
     stub_notify_mailer
-
-    user
   end
 
   def sign_in_as(user)
@@ -94,10 +84,12 @@ class ActiveSupport::TestCase
     allow(@keycloak_client_instance).to receive(:all_teams).and_call_original
     allow(@keycloak_client_instance).to receive(:all_team_users).and_call_original
     Rails.cache.delete(:keycloak_users)
+    restore_user_management
 
+    allow(NotifyMailer).to receive(:alert).and_call_original
     allow(NotifyMailer).to receive(:investigation_updated).and_call_original
     allow(NotifyMailer).to receive(:investigation_created).and_call_original
-    allow(NotifyMailer).to receive(:alert).and_call_original
+    allow(NotifyMailer).to receive(:user_added_to_team).and_call_original
   end
 
   def stub_notify_mailer
@@ -106,17 +98,18 @@ class ActiveSupport::TestCase
     allow(NotifyMailer).to receive(:alert) { result }
     allow(NotifyMailer).to receive(:investigation_updated) { result }
     allow(NotifyMailer).to receive(:investigation_created) { result }
+    allow(NotifyMailer).to receive(:user_added_to_team) { result }
   end
 
   def set_user_as_opss(user)
-    user.organisation = opss_organisation
+    user.organisation = Organisation.find(opss_organisation.id)
     # Keycloak bases this role on the group membership
     set_kc_user_group(user.id, opss_organisation.id)
     allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :opss_user).and_return(true)
   end
 
   def set_user_as_non_opss(user)
-    user.organisation = non_opss_organisation
+    user.organisation = Organisation.find(non_opss_organisation.id)
     # Keycloak bases this role on the group membership
     set_kc_user_group(user.id, non_opss_organisation.id)
     allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :opss_user).and_return(false)
@@ -128,6 +121,11 @@ class ActiveSupport::TestCase
 
   def set_user_as_not_team_admin(user = User.current)
     allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :team_admin).and_return(false)
+  end
+
+  def add_user_to_opss_team(user_id:, team_id:)
+    set_user_as_opss User.find(user_id)
+    add_user_to_team user_id, team_id
   end
 
   def assert_same_elements(expected, actual, msg = nil)
@@ -146,10 +144,11 @@ private
     User.new(id: id, email: "admin@example.com", first_name: "Test", last_name: "Admin")
   end
 
-  def test_user(name: "User_one", id: SecureRandom.uuid)
+  def test_user(name: "User_one", ts_user: false)
+    id = SecureRandom.uuid
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :mspsds_user).and_return(true)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true) unless ts_user
     User.new(id: id, email: "#{name}@example.com", first_name: "Test", last_name: name)
   end
 
@@ -163,6 +162,22 @@ private
 
   def opss_organisation
     Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2")
+  end
+
+  def set_default_group_memberships
+    add_user_to_opss_team user_id: @users[0][:id], team_id: @teams[0][:id]
+    add_user_to_opss_team user_id: @users[1][:id], team_id: @teams[0][:id]
+    add_user_to_opss_team user_id: @users[1][:id], team_id: @teams[1][:id]
+    add_user_to_opss_team user_id: @users[2][:id], team_id: @teams[1][:id]
+    add_user_to_opss_team user_id: @users[3][:id], team_id: @teams[2][:id]
+    add_user_to_opss_team user_id: @users[3][:id], team_id: @teams[3][:id]
+    set_user_as_non_opss User.find(@users[4][:id])
+  end
+
+  def add_user_to_team(user_id, team_id)
+    tu = TeamUser.add user_id: user_id, team_id: team_id
+    @team_users.push tu.attributes
+    set_kc_user_group(user_id, team_id)
   end
 
   def set_kc_user_group(user_id, group_id)
@@ -182,5 +197,19 @@ private
 
   def format_user_for_get_users(users)
     users.map { |user| { id: user[:id], email: user[:email], firstName: user[:first_name], lastName: user[:last_name] } }.to_json
+  end
+
+  def stub_user_management
+    allow(@keycloak_client_instance).to receive(:add_user_to_team), &method(:add_user_to_team)
+    allow(@keycloak_client_instance).to receive(:create_user) do |email|
+      @users.push id: SecureRandom.uuid, email: email, username: email
+    end
+    allow(@keycloak_client_instance).to receive(:send_required_actions_welcome_email).and_return(true)
+  end
+
+  def restore_user_management
+    allow(@keycloak_client_instance).to receive(:add_user_to_team).and_call_original
+    allow(@keycloak_client_instance).to receive(:create_user).and_call_original
+    allow(@keycloak_client_instance).to receive(:send_required_actions_welcome_email).and_call_original
   end
 end

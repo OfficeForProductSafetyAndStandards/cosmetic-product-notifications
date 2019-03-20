@@ -31,10 +31,10 @@ html.govuk-template.app-html-class[lang="en"]
       = stylesheet_pack_tag "application-ie8"
     = csrf_meta_tags
     meta[property="og:image" content=asset_pack_path("media/images/govuk-opengraph-image.png")]
-  body.govuk-template__body.app-body-class.scrollbar-adjust
+  body.govuk-template__body.app-body-class
     script
       | document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
-    a.govuk-skip-link.skip-link-banner[href="#main-content"]
+    a.govuk-skip-link[href="#main-content"]
       | Skip to main content
 
     header.govuk-header[role="banner" data-module="header"]
@@ -70,11 +70,9 @@ html.govuk-template.app-html-class[lang="en"]
           strong.govuk-tag.govuk-phase-banner__content__tag
             | beta
           span.govuk-phase-banner__text
-            | This is a new service – your
-            '
-            = link_to "feedback", "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank
-            '
-            | will help us to improve it.
+            ' This is a new service – your
+            = link_to "feedback", "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank, rel: 'noopener'
+            |  will help us to improve it.
       = yield :after_header
       - if alert
         .govuk-error-summary[aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary"]
@@ -124,4 +122,5 @@ html.govuk-template.app-html-class[lang="en"]
               | © Crown copyright
 
     javascript:
+      if (typeof window.GOVUKFrontend === 'undefined') document.body.className = document.body.className.replace('js-enabled', '')
       window.GOVUKFrontend.initAll()

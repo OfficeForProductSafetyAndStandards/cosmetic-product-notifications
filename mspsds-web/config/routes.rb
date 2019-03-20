@@ -76,7 +76,12 @@ Rails.application.routes.draw do
   resources :products, except: %i[new create destroy], concerns: %i[document_attachable]
 
   get "your-teams" => "teams#index"
-  resources :teams, only: %i[index show]
+  resources :teams, only: %i[index show] do
+    member do
+      get :invite_to, path: "invite"
+      put :invite_to, path: "invite"
+    end
+  end
 
   namespace :help do
     get :terms_and_conditions, path: "terms-and-conditions"

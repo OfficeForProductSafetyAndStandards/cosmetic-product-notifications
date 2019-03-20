@@ -65,8 +65,17 @@ en:
 
       # Our own
       date_missing_component: "%{attribute} must specify a day, month and year"
+    attributes:
+      email_address:
+        invalid: "Enter a real email address"
 
-
+  activemodel:
+    errors:
+      models:
+        new_user:
+          attributes:
+            email_address:
+              member_of_another_organisation: "You cannot invite this person to join your team because they are already a member of another team from a different organisation.\n\nTo join your team they will need to leave their current organisation"
   activerecord:
     errors:
       models:

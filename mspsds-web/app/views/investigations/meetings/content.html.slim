@@ -30,7 +30,7 @@
             span.govuk-hint
               | Upload the transcript if you have one, or enter notes below
             = subform.file_field :file, class: "govuk-file-upload"
-        = render "form_components/govuk_textarea", key: :details, form: form, max_length: 50000,
+        = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
                   label: { text: "Notes", classes: "govuk-!-width-two-thirds" }
 
         = render "related_attachment_fields", form: form,

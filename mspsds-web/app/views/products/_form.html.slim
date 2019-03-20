@@ -52,7 +52,7 @@ fieldset.govuk-fieldset
               class: "govuk-select", id: "location-autocomplete"
 
 fieldset.govuk-fieldset
-  = render "form_components/govuk_textarea", key: :description, form: form, max_length: 10000,
+  = render "form_components/govuk_textarea", key: :description, form: form, attributes: { maxlength: 10000 },
           label: { text: "Description of product", classes: label_class },
           hint: { text: "For example, 'Orange, 4 socket extension lead'" }
 
