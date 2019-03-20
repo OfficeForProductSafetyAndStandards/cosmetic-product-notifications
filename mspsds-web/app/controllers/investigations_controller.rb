@@ -57,23 +57,6 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  # GET /cases/1/status
-  # PUT /cases/1/status
-  def status
-    return if request.get?
-
-    ps = status_update_params
-    if ps[:is_closed].blank?
-      @investigation.errors.add(:status, :invalid, message: "Status should be closed or open")
-      respond_to_invalid_data(:status)
-      return
-    end
-
-    @investigation.is_closed = ps[:is_closed]
-    @investigation.status_rationale = ps[:status_rationale] if ps[:status_rationale]
-    respond_to_update(:status)
-  end
-
   # GET /cases/1/assign
   # PUT /cases/1/assign
   def assign
@@ -91,38 +74,46 @@ class InvestigationsController < ApplicationController
     respond_to_update(:assign)
   end
 
+  # GET /cases/1/status
+  # PUT /cases/1/status
+  def status
+    edit(model_keys: %i[is_closed status_rationale], action_key: :status,
+         error_message: "Status should be closed or open")
+  end
+
   # GET /cases/1/visibility
   # PUT /cases/1/visibility
   def visibility
-    return if request.get?
-
-    ps = visibility_update_params
-    if ps[:is_private].blank?
-      @investigation.errors.add(:pretty_visibility, :invalid, message: "Visibility needs to be private or public")
-      respond_to_invalid_data(:visibility)
-      return
-    end
-
-    @investigation.is_private = ps[:is_private]
-    @investigation.visibility_rationale = ps[:visibility_rationale] if ps[:visibility_rationale]
-    respond_to_update(:visibility)
+    edit(model_keys: %i[is_private visibility_rationale], action_key: :visibility,
+         error_message: "Visibility needs to be private or public")
   end
 
+  # GET /cases/1/edit_summary
+  # PUT /cases/1/edit_summary
   def edit_summary
-    return if request.get?
-
-    ps = edit_summary_update_params
-    if ps[:description].blank?
-      @investigation.errors.add(:description, :invalid, message: "Summary can't be empty")
-      respond_to_invalid_data(:edit_summary)
-      return
-    end
-
-    @investigation.description = ps[:description]
-    respond_to_update(:edit_summary)
+    edit(model_keys: [:description], action_key: :edit_summary, error_message: "Summary can't be empty")
   end
 
 private
+
+  def edit(model_keys:, action_key:, error_message:)
+    return if request.get?
+
+    ps = params.require(:investigation).permit(model_keys)
+    important_model_key = model_keys.first
+
+    if ps[important_model_key].blank?
+      @investigation.errors.add(important_model_key, :invalid, message: error_message)
+      respond_to_invalid_data(action_key)
+      return
+    end
+
+    model_keys.each do |model_key|
+      @investigation.send("#{model_key}=", ps[model_key]) if ps[model_key]
+    end
+
+    respond_to_update(action_key)
+  end
 
   def set_investigation_with_associations
     @investigation = Investigation.eager_load(:source,

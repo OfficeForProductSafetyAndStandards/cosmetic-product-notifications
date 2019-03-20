@@ -504,6 +504,7 @@ private
     return "Product reported because it is unsafe and non-compliant." if @unsafe && @non_compliant
     return "Product reported because it is unsafe." if @unsafe
     return "Product reported because it is non-compliant." if @non_compliant
+
     ""
   end
 end
