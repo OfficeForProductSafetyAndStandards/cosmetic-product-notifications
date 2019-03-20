@@ -60,7 +60,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     fill_in "complainant[email_address]", with: "invalid_email_address"
     click_on "Continue"
 
-    assert_text "Email address is invalid"
+    assert_text "Enter a real email address"
   end
 
   test "second step should allow an empty email address" do

@@ -10,7 +10,7 @@ class LandingPageController < ApplicationController
 private
 
   def redirect_poison_centre_users
-    redirect_to poison_centre_notifications_path if poison_centre_user?
+    redirect_to poison_centre_notifications_path if poison_centre_or_msa_user?
   end
 
   def set_responsible_person

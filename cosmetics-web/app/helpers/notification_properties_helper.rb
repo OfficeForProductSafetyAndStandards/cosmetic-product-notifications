@@ -1,31 +1,41 @@
-module CpnpHelper
+module NotificationPropertiesHelper
+  def get_notification_type_name(notification_type)
+    NOTIFICATION_TYPE[notification_type&.to_sym]
+  end
+
   def get_category_name(category)
-    CATEGORY_NAME[category]
+    CATEGORY_NAME[category&.to_sym]
   end
 
   def get_frame_formulation_name(frame_formulation)
-    FRAME_FORMULATION_NAME[frame_formulation]
+    FRAME_FORMULATION_NAME[frame_formulation&.to_sym]
   end
 
   def get_trigger_rules_question_name(trigger_rules_question)
-    TRIGGER_RULES_QUESTION_NAME[trigger_rules_question]
+    TRIGGER_RULES_QUESTION_NAME[trigger_rules_question&.to_sym]
   end
 
   def get_trigger_rules_question_element_name(trigger_rules_question_element)
-    TRIGGER_RULES_QUESTION_ELEMENT_NAME[trigger_rules_question_element]
+    TRIGGER_RULES_QUESTION_ELEMENT_NAME[trigger_rules_question_element&.to_sym]
   end
 
   def get_unit_name(unit)
-    UNIT_NAME[unit]
+    UNIT_NAME[unit&.to_sym]
   end
 
   def get_exposure_route_name(exposure_route)
-    EXPOSURE_ROUTE_NAME[exposure_route]
+    EXPOSURE_ROUTE_NAME[exposure_route&.to_sym]
   end
 
   def get_exposure_condition_name(exposure_condition)
-    EXPOSURE_CONDITION_NAME[exposure_condition]
+    EXPOSURE_CONDITION_NAME[exposure_condition&.to_sym]
   end
+
+  NOTIFICATION_TYPE = {
+      predefined: "Frame formulation",
+      exact: "Exact concentration",
+      range: "Concentration ranges"
+  }.freeze
 
   CATEGORY_NAME = {
       skin_products: "Skin products",

@@ -62,7 +62,7 @@ module Fluent::Plugin
 
     def prepare_data_to_send(_tag, _time, record)
       # Just forward on the message
-      "#{record['message']}\n"
+      record['message']
     end
 
     def connect
