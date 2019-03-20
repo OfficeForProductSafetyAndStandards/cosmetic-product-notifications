@@ -91,7 +91,7 @@ class InvestigationsController < ApplicationController
   # GET /cases/1/edit_summary
   # PUT /cases/1/edit_summary
   def edit_summary
-    edit(model_keys: [:description], action_key: :edit_summary, error_message: "Summary can't be empty")
+    edit(model_keys: [:description], action_key: :edit_summary, error_message: "Summary can not be empty")
   end
 
 private

@@ -87,6 +87,30 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_includes(response.body, "Status should be closed or open")
   end
 
+  test "should set description" do
+    old_description = "old"
+    new_description = "description"
+    investigation = Investigation.create(description: old_description)
+    investigation_status = lambda { Investigation.find(investigation.id).description }
+    assert_changes investigation_status, from: old_description, to: new_description do
+      put edit_summary_investigation_url(investigation), params: {
+        investigation: {
+          description: new_description
+        }
+      }
+    end
+    assert_redirected_to investigation_url(investigation)
+  end
+
+  test "should require description to not be empty" do
+    put edit_summary_investigation_url(@investigation_one), params: {
+      investigation: {
+        description: ""
+      }
+    }
+    assert_includes(response.body, "Summary can not be empty")
+  end
+
   test "should update assignee from selectable list" do
     put assign_investigation_url(@investigation_one), params: {
       investigation: {
