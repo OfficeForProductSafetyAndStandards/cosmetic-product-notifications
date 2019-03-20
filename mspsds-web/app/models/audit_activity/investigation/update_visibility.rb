@@ -6,6 +6,14 @@ class AuditActivity::Investigation::UpdateVisibility < AuditActivity::Investigat
   end
 
   def email_update_text
-    "#{investigation.case_type.titleize} visibility was #{investigation.is_private ? 'restricted' : 'unrestricted'} by #{source&.show&.titleize}."
+    "#{investigation.case_type.titleize} visibility was #{investigation.is_private ? 'restricted' : 'unrestricted'} by #{source&.show&.titleize}.\n"
+    + visibility_rationale_email_text.to_s
+  end
+
+  def visibility_rationale_email_text
+    if investigation.visibility_rationale.present?
+      "\nComment provided:\n
+      #{investigation.visibility_rationale}"
+    end
   end
 end

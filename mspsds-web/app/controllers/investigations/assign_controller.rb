@@ -1,12 +1,13 @@
 class Investigations::AssignController < ApplicationController
   include Wicked::Wizard
   before_action :set_investigation
-  before_action :find_potential_assignee, only: %i[show create]
+  before_action :potential_assignee, only: %i[show create]
   before_action :store_assignee, only: %i[update]
 
   steps :choose, :confirm_assignment_change
 
   def show
+    @potential_assignee = potential_assignee
     render_wizard
   end
 
@@ -24,7 +25,7 @@ class Investigations::AssignController < ApplicationController
   end
 
   def create
-    @investigation.assignee = @potential_assignees.first
+    @investigation.assignee = potential_assignee
     @investigation.assignee_rationale = params[:investigation][:assignee_rationale]
     @investigation.save
     redirect_to investigation_url(@investigation), notice: "#{@investigation.case_type.titleize} was successfully updated."
@@ -63,16 +64,14 @@ private
 
   def assignee_valid?
     if step == :choose
-      if (User.find_by(id: session[:assignable_id]) || Team.find_by(id: session[:assignable_id])) == nil
+      if potential_assignee == nil
         @investigation.errors.add(:assignable_id, :invalid, message: "Select assignee")
       end
     end
     @investigation.errors.empty?
   end
 
-  def find_potential_assignee
-    any_user = User.where(id: session[:assignable_id]).any?
-    any_team = Team.where(id: session[:assignable_id]).any?
-    @potential_assignees = ((User.where(id: session[:assignable_id]) if any_user) || (Team.where(id: session[:assignable_id]) if any_team))
+  def potential_assignee
+    User.find_by(id: session[:assignable_id]) || Team.find_by(id: session[:assignable_id])
   end
 end

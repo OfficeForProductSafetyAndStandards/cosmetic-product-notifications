@@ -22,7 +22,7 @@
       p
         = "You do not have permission to assign this #{@investigation.case_type}."
         br
-        | Contact
-        strong = " #{@investigation.assignee.display_name} "
+        ' Contact
+        strong = "#{@investigation.assignee.display_name}"
         | to change assignment.
       = link_to "Return to case", @investigation, class: "govuk-button"
