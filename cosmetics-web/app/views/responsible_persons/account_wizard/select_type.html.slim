@@ -7,11 +7,11 @@
       .govuk-form-group class=("govuk-form-group--error" if @responsible_person.errors[:account_type].any?)
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--xl
-            | Is the UK responsible person a business or individual?
+            | Is the UK responsible person a business or an individual?
 
           - if @responsible_person.errors[:account_type].any?
             span.govuk-error-message#account_type-error
-              | Please select an option before continuing
+              | Select an option before continuing
 
           .govuk-radios
             .govuk-radios__item
