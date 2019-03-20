@@ -83,6 +83,14 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :help do
+    get :terms_and_conditions, path: "terms-and-conditions"
+    get :privacy_policy, path: "privacy-policy"
+    get :about
+  end
+
+
+
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
