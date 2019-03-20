@@ -6,6 +6,6 @@ class AuditActivity::Investigation::UpdateVisibility < AuditActivity::Investigat
   end
 
   def email_update_text
-  "#{investigation.case_type.titleize} visibility was #{investigation.is_private ? 'restricted' : 'unrestricted'} by #{source&.show&.titleize}."
+    "#{investigation.case_type.titleize} visibility was #{investigation.is_private ? 'restricted' : 'unrestricted'} by #{source&.show&.titleize}."
   end
 end
