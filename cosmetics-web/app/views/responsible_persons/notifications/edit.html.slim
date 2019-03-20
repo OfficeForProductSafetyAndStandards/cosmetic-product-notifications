@@ -4,6 +4,9 @@
           class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    - if @errors.present?
+      = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+
     h1.govuk-heading-xl
       = @notification.product_name
     = render "notifications/product_overview", notification: @notification
@@ -15,6 +18,4 @@
     = render "notifications/product_details", notification: @notification
 
   - if @notification.may_submit_notification?
-    .govuk-grid-column-two-thirds
-      = render "notifications/product_registration",
-              notification: @notification, responsible_person: @notification.responsible_person
+    = render "notifications/product_registration", notification: @notification, responsible_person: @notification.responsible_person
