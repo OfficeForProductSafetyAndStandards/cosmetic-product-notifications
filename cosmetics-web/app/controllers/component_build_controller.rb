@@ -8,7 +8,10 @@ class ComponentBuildController < ApplicationController
         :add_cmrs,
         :contains_nanomaterials,
         :add_nanomaterial,
-        :select_category
+        :select_category,
+        :select_formulation_type,
+        :select_frame_formulation,
+        :upload_formulation
 
   before_action :set_component
 
@@ -33,6 +36,12 @@ class ComponentBuildController < ApplicationController
       render_add_nanomaterial
     when :add_cmrs
       render_add_cmrs
+    when :select_formulation_type
+      render_select_formulation_type
+    when :select_frame_formulation
+      render_select_frame_formulation
+    when :upload_formulation
+      render_upload_formulation
     else
       @component.update(component_params)
       render_wizard @component
@@ -48,6 +57,7 @@ class ComponentBuildController < ApplicationController
   end
 
 private
+  NUMBER_OF_CMRS = 10
 
   def set_component
     @component = Component.find(params[:component_id])
@@ -55,7 +65,7 @@ private
   end
 
   def component_params
-    params.require(:component).permit(:sub_sub_category, shades: [])
+    params.require(:component).permit(:sub_sub_category, :notification_type, :frame_formulation, shades: [])
   end
 
   def render_number_of_shades
@@ -166,5 +176,30 @@ private
     render_wizard @component
   end
 
-  NUMBER_OF_CMRS = 10
+  def render_select_formulation_type
+    @component.update(component_params)
+    if @component.predefined?
+      @component.formulation_file.delete if @component.formulation_file.attached?
+      render_wizard @component
+    else
+      @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
+      redirect_to wizard_path(:upload_formulation, component_id: @component.id)
+    end
+  end
+
+  def render_select_frame_formulation
+    @component.update(component_params)
+    redirect_to finish_wizard_path
+  end
+
+  def render_upload_formulation
+    if params[:formulation_file].present?
+      file_upload = params[:formulation_file]
+      @component.formulation_file.attach(file_upload)
+      render_wizard @component
+    else
+      @component.errors.add :formulation_file, "Please upload a file"
+      render step
+    end
+  end
 end

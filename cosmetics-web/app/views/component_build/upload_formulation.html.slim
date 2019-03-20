@@ -1,0 +1,25 @@
+- content_for :page_title, "Add formulation"
+- content_for :after_header do
+  = link_to "Back",
+          responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_formulation_type),
+          class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = render 'error_summary', errors: @component.errors
+    h1.govuk-heading-xl
+      - if @component.notification.is_multicomponent?
+        ' Upload formulation document for component
+        = @component.name
+      - else
+        | Upload the formulation document
+    - if @component.exact?
+      p This should be the exact concentration.
+    - if @component.range?
+      p This should be as ranges concentration.
+    p For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.
+    = form_with(url: wizard_path, method: :put) do |form|
+      .govuk-form-group
+        = form.label :formulation_file, "File type can be a ‘pdf', 'rtf' or ‘txt’.", class: "govuk-label"
+        = form.file_field :formulation_file, class: "govuk-file-upload", \
+                    accept: Component.allowed_types.join(",")
+      = form.submit "Continue", class: "govuk-button"
