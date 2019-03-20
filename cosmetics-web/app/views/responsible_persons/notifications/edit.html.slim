@@ -4,76 +4,18 @@
           class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = render "form_components/govuk_error_summary", errors: @notification.errors
+    - if @errors.present?
+      = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+
     h1.govuk-heading-xl
-      | Check the cosmetic product details before registering
+      = @notification.product_name
+    = render "notifications/product_overview", notification: @notification
+
   .govuk-grid-column-full
     = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
-    table.govuk-table
-      caption.govuk-table__caption.govuk-heading-m
-        | Cosmetics product
-      tbody.govuk-table__body
-        tr.govuk-table__row
-          th.govuk-table__header[class="govuk-!-width-one-quarter"]
-            | Product name
-          td.govuk-table__cell
-            = @notification.product_name
-        tr.govuk-table__row
-          th.govuk-table__header
-            | Reference number
-          td.govuk-table__cell
-            = @notification.reference_number_for_display
-        tr.govuk-table__row
-          th.govuk-table__header
-            | Imported
-          td.govuk-table__cell
-            = product_imported?(@notification) ? "Yes" : "No"
-        - if product_imported?(@notification)
-          tr.govuk-table__row
-            th.govuk-table__header
-              | Imported from
-            td.govuk-table__cell
-              = product_import_country(@notification)
-        tr.govuk-table__row
-          th.govuk-table__header
-            | Number of components
-          td.govuk-table__cell
-            = @notification.components.length
-        tr.govuk-table__row
-          th.govuk-table__header
-            | Shades
-          td.govuk-table__cell
-            = product_shades(@notification)
-        tr.govuk-table__row
-          th.govuk-table__header
-            | Label image
-          td.govuk-table__cell
-            - @notification.image_uploads.each do |image_upload|
-              - if image_upload.file_exists?
-                - if image_upload.marked_as_safe?
-                  = link_to image_upload.filename, url_for(image_upload.file)
-                - else
-                  ' Processing image
-                  = image_upload.filename
-                  ' ...
-              - else
-                ' Image
-                = image_upload.filename
-                ' failed anti-virus scan
-              br
-        - if @notification.cpnp_notification_date.present?
-          tr.govuk-table__row
-            th.govuk-table__header
-              | EU notification date
-            td.govuk-table__cell
-              = @notification.cpnp_notification_date.strftime("%d/%m/%Y")
-  .govuk-grid-column-two-thirds
-    h3.govuk-heading-m
-      | Now register your cosmetic product
-    p
-      | By registering this cosmetic product you are confirming that, to the
-      |  best of your knowledge, the details you are providing are correct.
-    = form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification),
-            method: :post do |form|
-      .govuk-form-group
-        = form.submit "Accept and register the cosmetics product", class: "govuk-button"
+    /TODO: replace it with the contact person details (COSBETA-158)
+    = render "notifications/contact_person_details", contact_person: @notification.responsible_person
+    = render "notifications/product_details", notification: @notification
+
+  - if @notification.may_submit_notification?
+    = render "notifications/product_registration", notification: @notification, responsible_person: @responsible_person
