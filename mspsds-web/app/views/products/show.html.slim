@@ -8,6 +8,7 @@
 hr.govuk-section-break.govuk-section-break--m
 = render "components/tabs", tabs: [\
   Tab.new("full-detail", "Full detail", "Full detail", lambda { render "products/tabs/details" }),
-  Tab.new("attachments", "Attachments (#{@product.documents.count})", "Attachments", lambda { render "products/tabs/attachments" }),
+  Tab.new("attachments", "Attachments (#{@product.documents.count})", "Attachments",
+  lambda { render "products/tabs/attachments" }),
   Tab.new("cases", "Cases", "Cases", lambda { render "products/tabs/cases" })\
 ]
