@@ -202,6 +202,14 @@ class Investigation < ApplicationRecord
     self.pretty_id = "#{created_at.strftime('%y%m')}-%04d" % (cases_before + 1)
   end
 
+  def can_display_child_object?(child_has_gdpr_sensitive_data)
+    return true if self.source&.is_a? ReportSource
+    return true unless child_has_gdpr_sensitive_data
+    return true if User.current.organisation == self.source&.user&.organisation
+
+    false
+  end
+
 private
 
   def create_audit_activity_for_case
