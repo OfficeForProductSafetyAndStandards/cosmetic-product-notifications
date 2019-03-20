@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 2019_03_20_164234) do
     t.string "shades"
     t.string "industry_reference"
     t.datetime "cpnp_notification_date"
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true

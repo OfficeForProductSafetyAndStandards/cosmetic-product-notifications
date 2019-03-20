@@ -45,7 +45,7 @@ private
   end
 
   def manual_journey_path(notified_before_eu_exit)
-    new_responsible_person_notification_path(@responsible_person, notified_before_eu_exit: notified_before_eu_exit)
+    new_responsible_person_notification_path(@responsible_person, notified_before_eu_exit)
   end
 
   def bulk_upload_path
