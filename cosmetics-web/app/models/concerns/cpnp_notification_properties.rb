@@ -5,4 +5,6 @@ module CpnpNotificationProperties
   include CpnpNotificationTriggerRules
   include CpnpNotificationUnits
   include CpnpNotificationExposures
+  include CpnpNotificationPhysicalForms
+  include CpnpNotificationSpecialApplicators
 end
