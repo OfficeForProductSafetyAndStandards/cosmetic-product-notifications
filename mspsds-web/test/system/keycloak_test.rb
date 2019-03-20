@@ -1,10 +1,17 @@
 require "application_system_test_case"
 
 class KeycloakTest < ApplicationSystemTestCase
+  setup do
+    sign_out_if_signed_in
+  end
+
+  teardown do
+    sign_out_if_signed_in
+  end
+
   test "can login" do
     visit root_path
     sign_in email: "user@example.com", password: "password"
-    assert_current_path investigations_path
     assert_selector "a", text: "Sign out"
   end
 
@@ -26,5 +33,9 @@ class KeycloakTest < ApplicationSystemTestCase
     fill_in "Email address", with: email
     fill_in "Password", with: password
     click_on "Continue"
+  end
+
+  def sign_out_if_signed_in
+    click_link('Sign out') if has_link?('Sign out')
   end
 end

@@ -38,12 +38,12 @@ class Notification < ApplicationRecord
     as_json(
       only: %i[product_name],
       include: {
-        responsible_person: {
-          only: %i[name]
-        },
-        components: {
-          methods: %i[display_sub_category display_sub_sub_category display_root_category]
-        }
+          responsible_person: {
+              only: %i[name]
+          },
+          components: {
+              methods: %i[display_sub_category display_sub_sub_category display_root_category]
+          }
       }
     )
   end
@@ -84,7 +84,8 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete, after: Proc.new { update_elasticsearch_index } do
+      transitions from: :draft_complete, to: :notification_complete,
+                  after: Proc.new { __elasticsearch__.index_document } do
         guard do
           cpnp_reference.present? || images_are_present_and_safe?
         end
@@ -163,12 +164,6 @@ private
       mandatory_attributes('draft_complete')
     when 'notification_file_imported'
       mandatory_attributes('empty')
-    end
-  end
-
-  def update_elasticsearch_index
-    if saved_changes.key?(:status) && status == "notification_complete"
-      __elasticsearch__.index_document
     end
   end
 end

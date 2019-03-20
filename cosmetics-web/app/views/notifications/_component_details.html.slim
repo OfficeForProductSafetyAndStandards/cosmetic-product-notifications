@@ -15,12 +15,12 @@ tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Application instruction
     td.govuk-table__cell
-      = component.nano_material&.exposure_route
+      = component.nano_material.exposure_route
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Exposure condition
     td.govuk-table__cell
-      = component.nano_material&.exposure_condition
+      = component.nano_material.exposure_condition
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
@@ -29,12 +29,12 @@ tr.govuk-table__row
     = get_category_name(component.root_category)
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
-    = "Category of #{get_category_name(component.root_category)&.downcase}"
+    = "Category of #{get_category_name(component.root_category)&.downcase&.singularize}"
   td.govuk-table__cell
     = get_category_name(component.sub_category)
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
-    = "Category of #{get_category_name(component.sub_category)&.downcase}"
+    = "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}"
   td.govuk-table__cell
     = get_category_name(component.sub_sub_category)
 
@@ -49,22 +49,32 @@ tr.govuk-table__row
   td.govuk-table__cell
     = get_frame_formulation_name(component.frame_formulation)
 
-tr.govuk-table__row
-  th.govuk-table__header[scope="row"]
-    | Formulation
-  td.govuk-table__cell
-    - if component.exact? && component.exact_formulas
-      = render "none_or_bullet_list", entities_list: component.exact_formulas,
-              key_name: :inci_name, value_name: :quantity
-    - elsif component.range? && component.range_formulas
-      = render "none_or_bullet_list", entities_list: format_range_formulas(component.range_formulas),
-              key_name: :inci_name, value_name: :range
-    - elsif component.formulation_file&.attached?
-      = component&.formulation_file&.filename
-    - else
-      = link_to "Add formulation document",
-              new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
-                      @notification, component)
+- if !component.predefined?
+  tr.govuk-table__row
+    th.govuk-table__header[scope="row"]
+      | Formulation
+    td.govuk-table__cell
+      - if component.exact? && component.exact_formulas.present?
+        = render "none_or_bullet_list", entities_list: component.exact_formulas,
+                key_name: :inci_name, value_name: :quantity
+      - elsif component.range? && component.range_formulas.present?
+        = render "none_or_bullet_list", entities_list: format_range_formulas(component.range_formulas),
+                key_name: :inci_name, value_name: :range
+      - elsif component.formulation_file.attached?
+        - if component.formulation_file.metadata["safe"]
+          = link_to component.formulation_file.filename, url_for(component.formulation_file)
+        - else
+          = "Processing file #{component.formulation_file.filename} ..."
+          br
+          = link_to "Refresh",
+                  edit_responsible_person_notification_path(@responsible_person, @notification),
+                  class: "govuk-link--no-visited-state"
+      - else
+        = link_to "Add formulation document",
+                new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
+                        @notification, component),
+                class: "govuk-link--no-visited-state"
+
 - if component.trigger_questions
   - component.trigger_questions.each do |question|
     - if question.applicable?

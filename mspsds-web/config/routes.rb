@@ -13,6 +13,15 @@ Rails.application.routes.draw do
     end
   end
 
+
+  namespace :introduction do
+    get :overview
+    get :report_products
+    get :track_investigations
+    get :share_data
+    get :skip
+  end
+
   resources :enquiry, controller: "investigations/enquiry", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
   resources :project, controller: "investigations/project", only: %i[new create]
