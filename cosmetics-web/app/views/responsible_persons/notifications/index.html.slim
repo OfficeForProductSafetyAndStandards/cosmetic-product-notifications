@@ -19,16 +19,16 @@
     - if @registered_notifications.total_entries.zero?
       p
         b => @responsible_person.name
-        | has no cosmetic products registered in the UK.
+        | has no cosmetic products notified in the UK.
       p
-        | All cosmetic products intended for sale or given away in the UK must be registered in the UK.
+        | All cosmetic products intended for sale or given away in the UK must be notified in the UK.
       p
         | To continue to sell or give away cosmetic products that were notified to the European Union (EU) before
         span.no-wrap<> 29 March 2019,
-        | you must register your products in the UK within 90 days of the UK leaving the EU – that is
-        span.no-wrap<> 11:00pm on 27 June 2019.
+        | you must submit your product notifications in the UK within 90 days of the UK leaving the EU – that is
+        span.no-wrap<> by 11pm on 27 June 2019.
       p
-        | You do not have to register cosmetic products discontinued before
+        | You do not have to submit notifications for cosmetic products discontinued before
         span.no-wrap<> 29 March 2019.
 
     = link_to "Add cosmetic products", new_responsible_person_notification_file_path(@responsible_person),
@@ -39,6 +39,6 @@
         lambda { render "responsible_persons/notifications/tabs/errors" }),
   Tab.new("unfinished", "Incomplete (#{@unfinished_notifications.total_entries})", "Incomplete registrations",
         lambda { render "responsible_persons/notifications/tabs/unfinished" }),
-  Tab.new("registered", "Registered (#{@registered_notifications.total_entries})", "Registered cosmetic products",
+  Tab.new("notified", "Notified (#{@registered_notifications.total_entries})", "Notified cosmetic products",
         lambda { render "responsible_persons/notifications/tabs/registered" })\
 ]
