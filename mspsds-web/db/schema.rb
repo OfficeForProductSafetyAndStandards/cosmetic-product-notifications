@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_164203) do
+ActiveRecord::Schema.define(version: 2019_03_15_135803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,6 +225,13 @@ ActiveRecord::Schema.define(version: 2019_02_21_164203) do
     t.datetime "updated_at", null: false
     t.index ["investigation_id"], name: "index_tests_on_investigation_id"
     t.index ["product_id"], name: "index_tests_on_product_id"
+  end
+
+  create_table "user_attributes", primary_key: "user_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.boolean "has_viewed_introduction", default: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_attributes_on_user_id"
   end
 
   add_foreign_key "activities", "businesses"
