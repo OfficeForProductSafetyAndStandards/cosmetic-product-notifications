@@ -2,6 +2,7 @@ class Correspondence < ApplicationRecord
   include DateConcern
   include SanitizationHelper
   belongs_to :investigation, optional: true
+  has_one :activity
 
   before_validation :strip_whitespace
   before_validation { trim_line_endings(:details) }
@@ -32,7 +33,7 @@ class Correspondence < ApplicationRecord
   def can_be_displayed?
     return true if investigation.source&.is_a? ReportSource
     return true unless has_consumer_info
-    return true if User.current.organisation == investigation&.source&.user&.organisation
+    return true if User.current.organisation == activity&.source&.user&.organisation
 
     false
   end

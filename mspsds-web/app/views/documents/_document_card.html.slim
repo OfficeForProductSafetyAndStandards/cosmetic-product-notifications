@@ -1,8 +1,8 @@
 ruby:
   sensitive = document.metadata[:has_consumer_info]
+  sensitive = !document.attachments.find_by(record_type: "Correspondence").record.can_be_displayed? if sensitive
   title = sensitive ? document_sensitive_title : document.metadata[:title]
   safe = document.metadata["safe"]
-
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-one-third
     = render "documents/document_preview", document: document, dimensions: "300x200",
