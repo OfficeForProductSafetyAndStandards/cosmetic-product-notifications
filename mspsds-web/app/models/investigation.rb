@@ -206,6 +206,7 @@ class Investigation < ApplicationRecord
     return true if self.source&.is_a? ReportSource
     return true unless child_has_gdpr_sensitive_data
     return true if User.current.organisation == self.source&.user&.organisation
+    return true if self.assignee && (self.assignee.teams & User.current.teams).any?
 
     false
   end
