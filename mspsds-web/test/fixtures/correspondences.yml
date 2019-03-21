@@ -8,6 +8,9 @@ one:
   phone_number: 111111
 
 email:
+  overview: Overview for correspondences(:email)
+  details: Details for correspondences(:email)
+  email_subject: Email subject for correspondences(:email)
   correspondent_name: Jane Smith
   contact_method: email
   email_address: jane.smith@example.com
