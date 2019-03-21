@@ -150,6 +150,14 @@ class Notification < ApplicationRecord
     notified_post_eu_exit? && image_uploads.empty?
   end
 
+  def get_valid_multicomponents
+    components.select(&:is_valid_multicomponent?)
+  end
+
+  def get_unvalid_multicomponents
+    components - get_valid_multicomponents
+  end
+
 private
 
   def all_required_attributes_must_be_set

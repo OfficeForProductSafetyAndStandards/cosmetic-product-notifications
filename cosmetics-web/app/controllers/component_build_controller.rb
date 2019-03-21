@@ -3,7 +3,8 @@ class ComponentBuildController < ApplicationController
   include NanoMaterialsHelper
   include CategoryHelper
 
-  steps :number_of_shades,
+  steps :add_component_name,
+        :number_of_shades,
         :add_shades,
         :add_cmrs,
         :contains_nanomaterials,
@@ -49,11 +50,19 @@ class ComponentBuildController < ApplicationController
   end
 
   def new
-    redirect_to wizard_path(steps.first, component_id: @component.id)
+    if @component.notification.is_multicomponent?
+      redirect_to wizard_path(steps.first, component_id: @component.id)
+    else
+      redirect_to wizard_path(:number_of_shades, component_id: @component.id)
+    end
   end
 
   def finish_wizard_path
-    responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
+    if @component.notification.is_multicomponent?
+      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
+    else
+      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
+    end
   end
 
 private
@@ -65,7 +74,7 @@ private
   end
 
   def component_params
-    params.require(:component).permit(:sub_sub_category, :notification_type, :frame_formulation, shades: [])
+    params.require(:component).permit(:name, :sub_sub_category, :notification_type, :frame_formulation, shades: [])
   end
 
   def render_number_of_shades
@@ -196,7 +205,7 @@ private
     if params[:formulation_file].present?
       file_upload = params[:formulation_file]
       @component.formulation_file.attach(file_upload)
-      render_wizard @component
+      redirect_to finish_wizard_path
     else
       @component.errors.add :formulation_file, "Please upload a file"
       render step

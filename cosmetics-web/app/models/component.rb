@@ -74,6 +74,10 @@ class Component < ApplicationRecord
     PARENT_OF_CATEGORY
   end
 
+  def is_valid_multicomponent?
+    !(name.nil? || name == "")
+  end
+
 private
 
   def update_notification_state
