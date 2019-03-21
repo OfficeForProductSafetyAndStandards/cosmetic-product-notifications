@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   setup do
-    mock_out_keycloak_and_notify(user_name: "Admin")
+    mock_out_keycloak_and_notify
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
     @correspondence = correspondences(:email)
@@ -132,7 +132,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     click_on "Activity"
     within id: "activity" do
       assert_equal("Email added", first('h3').text)
-      assert_equal("RESTRICTED ACCESS", first(".govuk-badge").text)
+      assert_equal("RESTRICTED ACCESS", first(".hmcts-badge").text)
     end
   end
 

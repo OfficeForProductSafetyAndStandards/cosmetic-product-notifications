@@ -24,7 +24,7 @@ class Investigations::CreationFlowController < ApplicationController
   # POST /xxx
   def create
     if investigation_saved?
-      redirect_to investigation_path(@investigation), notice: success_message
+      redirect_to investigation_path(@investigation), flash: { success: success_message }
     else
       render step
     end

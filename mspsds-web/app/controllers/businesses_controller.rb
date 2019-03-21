@@ -30,7 +30,7 @@ class BusinessesController < ApplicationController
   def update
     respond_to do |format|
       if @business.save
-        format.html { redirect_to @business, notice: "Business was successfully updated." }
+        format.html { redirect_to @business, flash: { success: "Business was successfully updated." } }
         format.json { render :show, status: :ok, location: @business }
       else
         format.html { render :edit }

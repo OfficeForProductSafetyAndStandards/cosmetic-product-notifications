@@ -1,0 +1,11 @@
+/ Implementation based on https://github.com/hmcts/frontend/blob/master/src/components/badge/template.njk
+  for which documentation can be found here: https://hmcts-design-system.herokuapp.com/components/badge
+
+/ parameters accepted by this component are:
+    classes(optional): accepts an array, classes will be added to the outermost span of the badge
+        the badge is blue by default. It can be made grey, red or green by passing the class
+        'hmcts-govuk-badge--<<color>>' here
+    text: text content for the badge
+
+span.hmcts-badge class=local_assigns[:classes]
+  = local_assigns[:text]
