@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   include LoadHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[status visibility edit_summary]
+  before_action :set_investigation, only: %i[status visibility edit_summary update]
   before_action :set_investigation_with_associations, only: %i[show]
   before_action :build_breadcrumbs, only: %i[show]
 
@@ -56,27 +56,7 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  # GET /cases/1/status
-  # PUT /cases/1/status
-  def status
-    edit
-  end
-
-  # GET /cases/1/visibility
-  # PUT /cases/1/visibility
-  def visibility
-    edit
-  end
-
-  # GET /cases/1/edit_summary
-  # PUT /cases/1/edit_summary
-  def edit_summary
-    edit
-  end
-
-private
-
-  def edit
+  def update
     return if request.get?
 
     ps = update_params
@@ -84,8 +64,24 @@ private
       @investigation.send("#{key}=", ps[key]) if params.require(:investigation).key?(key)
     end
 
-    respond_to_update
+    viewed_page = ""
+    viewed_page = "investigations/edit_summary" if params.require(:investigation).key?(:description)
+    viewed_page = "investigations/status" if params.require(:investigation).key?(:is_closed)
+    viewed_page = "investigations/visibility" if params.require(:investigation).key?(:is_private)
+
+    respond_to_update(viewed_page)
   end
+
+  # GET /cases/1/status
+  def status; end
+
+  # GET /cases/1/visibility
+  def visibility; end
+
+  # GET /cases/1/edit_summary
+  def edit_summary; end
+
+private
 
   def set_investigation_with_associations
     @investigation = Investigation.eager_load(:source,
@@ -111,7 +107,7 @@ private
     %i[description is_closed status_rationale is_private visibility_rationale]
   end
 
-  def respond_to_update
+  def respond_to_update(viewed_page)
     respond_to do |format|
       if @investigation.valid?(:edit)
         @investigation.save
@@ -123,7 +119,7 @@ private
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes
-        format.html { render action_name }
+        format.html { render viewed_page }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end
     end

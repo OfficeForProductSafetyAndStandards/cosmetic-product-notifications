@@ -27,14 +27,11 @@ Rails.application.routes.draw do
   resources :project, controller: "investigations/project", only: %i[new create]
   resources :ts_investigation, controller: "investigations/ts_investigations", only: %i[show new create update]
 
-  resources :investigations, path: "cases", only: %i[index show new], param: :pretty_id,
+  resources :investigations, path: "cases", only: %i[index update show new], param: :pretty_id,
             concerns: %i[document_attachable] do
     member do
-      patch :status
       get :status
-      patch :visibility
       get :visibility
-      patch :edit_summary
       get :edit_summary
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do
