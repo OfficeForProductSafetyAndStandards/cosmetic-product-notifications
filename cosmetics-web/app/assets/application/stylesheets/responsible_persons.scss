@@ -17,8 +17,6 @@
 }
 
 .dismiss-link {
-  background: none;
-  border: none;
   padding: 0;
 
   // optional
@@ -26,7 +24,8 @@
   font: inherit;
   text-decoration: underline;
   color: $govuk-link-colour;
-  cursor: pointer;
+  @include remove-default-button-styling;
+  @include govuk-link-common;
 }
 
 @keyframes fadeInOpacity {
