@@ -94,7 +94,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
 
   test "conceals information from other organisations on phonecalls with customer info" do
     other_org_user = User.find_by last_name: "Ts_user"
-    @investigation.source.update(user_id: other_org_user.id)
+    set_investigation_source! @investigation, other_org_user
     fill_in_context_form
     choose :correspondence_phone_call_has_consumer_info_true, visible: false
     click_button "Continue"
