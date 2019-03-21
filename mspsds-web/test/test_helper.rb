@@ -45,8 +45,8 @@ class ActiveSupport::TestCase
   # On top of mocking out external services, this method also sets the user to an initial,
   # sensible value, but it should only be run once per test.
   # To change currently logged in user afterwards call `sign_in_as(...)`
-  def mock_out_keycloak_and_notify(user_name: "User_one")
-    @users = [admin_user,
+  def mock_out_keycloak_and_notify(last_name: "User_one")
+    @users = [test_user(name: "User_four"),
               test_user(name: "User_one"),
               test_user(name: "User_two"),
               test_user(name: "User_three"),
@@ -65,7 +65,7 @@ class ActiveSupport::TestCase
     TeamUser.all
     User.all
     set_default_group_memberships
-    sign_in_as User.find_by(last_name: user_name)
+    sign_in_as User.find_by(last_name: last_name)
     stub_notify_mailer
   end
 
@@ -135,14 +135,6 @@ class ActiveSupport::TestCase
   end
 
 private
-
-  def admin_user
-    id = SecureRandom.uuid
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :mspsds_user).and_return(true)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true)
-    User.new(id: id, email: "admin@example.com", first_name: "Test", last_name: "Admin")
-  end
 
   def test_user(name: "User_one", ts_user: false)
     id = SecureRandom.uuid

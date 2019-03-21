@@ -2,7 +2,7 @@ require "test_helper"
 
 class BusinessesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    mock_out_keycloak_and_notify(user_name: "Admin")
+    mock_out_keycloak_and_notify
     @business_one = businesses(:one)
     @business_two = businesses(:two)
     @business_one.source = sources(:business_one)
