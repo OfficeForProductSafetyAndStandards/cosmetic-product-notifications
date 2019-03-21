@@ -60,7 +60,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     is_closed = true
     investigation_status = lambda { Investigation.find(investigation.id).is_closed }
     assert_changes investigation_status, from: false, to: is_closed do
-      patch status_investigation_url(investigation), params: {
+      patch investigation_url(investigation), params: {
           investigation: {
               is_closed: is_closed,
               status_rationale: "some rationale"
@@ -76,7 +76,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     investigation = Investigation.create(description: old_description)
     investigation_status = lambda { Investigation.find(investigation.id).description }
     assert_changes investigation_status, from: old_description, to: new_description do
-      patch edit_summary_investigation_url(investigation), params: {
+      patch investigation_url(investigation), params: {
         investigation: {
           description: new_description
         }
@@ -86,7 +86,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should require description to not be empty" do
-    patch edit_summary_investigation_url(@investigation_one), params: {
+    patch investigation_url(@investigation_one), params: {
       investigation: {
         description: ""
       }
@@ -290,7 +290,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   def create_new_private_case
     description = "new_investigation_description"
     Investigation::Allegation.create(user_title: "title", description: description)
-    patch visibility_investigation_url(Investigation.find_by(description: description)), params: {
+    patch investigation_url(Investigation.find_by(description: description)), params: {
       investigation: {
         is_private: true
       }
