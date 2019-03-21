@@ -3,9 +3,8 @@ class InvestigationsController < ApplicationController
   include LoadHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[assign status visibility edit_summary]
+  before_action :set_investigation, only: %i[status visibility edit_summary]
   before_action :set_investigation_with_associations, only: %i[show]
-  before_action :set_suggested_previous_assignees, only: :assign
   before_action :build_breadcrumbs, only: %i[show]
 
   # GET /cases
@@ -57,12 +56,6 @@ class InvestigationsController < ApplicationController
     end
   end
 
-  # GET /cases/1/assign
-  # PUT /cases/1/assign
-  def assign
-    edit
-  end
-
   # GET /cases/1/status
   # PUT /cases/1/status
   def status
@@ -111,37 +104,22 @@ private
   def update_params
     return {} if params[:investigation].blank?
 
-    handle_assign_params
     params.require(:investigation).permit(editable_keys)
   end
 
   def editable_keys
-    %i[description is_closed status_rationale is_private visibility_rationale assignable_id]
-  end
-
-  def handle_assign_params
-    relevant_params = params.require(:investigation)
-    return unless relevant_params.key?(:assignable_id) || relevant_params.key?(:select_someone_else)
-
-    params[:investigation][:assignable_id] = case params[:investigation][:assignable_id]
-                                             when "someone_in_your_team"
-                                               params[:investigation][:select_team_member]
-                                             when "previously_assigned"
-                                               params[:investigation][:select_previously_assigned]
-                                             when "other_team"
-                                               params[:investigation][:select_other_team]
-                                             when "someone_else"
-                                               params[:investigation][:select_someone_else]
-                                             else
-                                               params[:investigation][:assignable_id]
-                                             end
+    %i[description is_closed status_rationale is_private visibility_rationale]
   end
 
   def respond_to_update
     respond_to do |format|
       if @investigation.valid?(:edit)
         @investigation.save
-        format.html { redirect_to @investigation, notice: "#{@investigation.case_type.titleize} was successfully updated." }
+        format.html {
+          redirect_to @investigation, flash: {
+              success: "#{@investigation.case_type.titleize} was successfully updated."
+          }
+        }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes

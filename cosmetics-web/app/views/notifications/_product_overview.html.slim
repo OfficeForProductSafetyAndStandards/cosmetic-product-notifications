@@ -17,8 +17,8 @@
           | EU reference number
         dd
           = notification.cpnp_reference
-        /TODO: add first notified date
+      - if notification.cpnp_notification_date.present?
         dt
           | First notified in the EU
         dd
-          | 2016/09/21
+          = notification.cpnp_notification_date.strftime("%d/%m/%Y")

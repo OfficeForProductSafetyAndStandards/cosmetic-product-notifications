@@ -13,6 +13,15 @@ Rails.application.routes.draw do
     end
   end
 
+
+  namespace :introduction do
+    get :overview
+    get :report_products
+    get :track_investigations
+    get :share_data
+    get :skip
+  end
+
   resources :enquiry, controller: "investigations/enquiry", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
   resources :project, controller: "investigations/project", only: %i[new create]
@@ -23,8 +32,6 @@ Rails.application.routes.draw do
     member do
       patch :status
       get :status
-      patch :assign
-      get :assign
       patch :visibility
       get :visibility
       patch :edit_summary
@@ -35,6 +42,7 @@ Rails.application.routes.draw do
         get :comment
       end
     end
+
     resources :products, only: %i[new create], controller: "investigations/products" do
       member do
         put :link, path: ''
@@ -49,6 +57,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :assign, controller: "investigations/assign", only: %i[show new create update]
     resources :corrective_actions, controller: "investigations/corrective_actions", only: %i[show new create update]
     resources :emails, controller: "investigations/emails", only: %i[show new create update]
     resources :phone_calls, controller: "investigations/phone_calls", only: %i[show new create update]
@@ -84,6 +93,14 @@ Rails.application.routes.draw do
       put :invite_to, path: "invite"
     end
   end
+
+  namespace :help do
+    get :terms_and_conditions, path: "terms-and-conditions"
+    get :privacy_policy, path: "privacy-policy"
+    get :about
+  end
+
+
 
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all

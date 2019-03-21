@@ -10,7 +10,7 @@ gem "jbuilder", "~> 2.8"
 gem "okcomputer"
 gem "pg", "~> 1.1"
 gem "pghero"
-gem "puma", "~> 3.0"
+gem "puma", "~> 3.12"
 gem "pundit"
 gem "rails", "~> 5.2"
 gem "redcarpet"
@@ -24,7 +24,6 @@ gem "shared-web", path: "./vendor/shared-web"
 
 
 group :development, :test do
-  gem "capybara"
   gem "roo", "~> 2.8.2"
   gem "rspec-mocks"
   gem "selenium-webdriver"

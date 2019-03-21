@@ -6,6 +6,7 @@ class Investigation < ApplicationRecord
 
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
+  attr_accessor :assignee_rationale
 
   before_validation { trim_line_endings(:user_title, :description, :non_compliant_reason, :hazard_description) }
 

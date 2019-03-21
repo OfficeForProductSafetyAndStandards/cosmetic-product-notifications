@@ -18,7 +18,7 @@ class Investigations::ProductsController < ApplicationController
     respond_to do |format|
       if @product.valid?
         @investigation.products << @product
-        format.html { redirect_to_investigation_products_tab "Product was successfully created." }
+        format.html { redirect_to_investigation_products_tab success: "Product was successfully created." }
         format.json { render :show, status: :created, location: @investigation }
       else
         set_countries
@@ -32,7 +32,7 @@ class Investigations::ProductsController < ApplicationController
   # PUT /cases/1/products/2
   def link
     @investigation.products << @product
-    redirect_to_investigation_products_tab "Product was successfully linked."
+    redirect_to_investigation_products_tab success: "Product was successfully linked."
   end
 
   def remove; end
@@ -42,7 +42,7 @@ class Investigations::ProductsController < ApplicationController
     @investigation.products.delete(@product)
     respond_to do |format|
       format.html do
-        redirect_to_investigation_products_tab "Product was successfully removed."
+        redirect_to_investigation_products_tab success: "Product was successfully removed."
       end
       format.json { head :no_content }
     end
@@ -50,8 +50,8 @@ class Investigations::ProductsController < ApplicationController
 
 private
 
-  def redirect_to_investigation_products_tab(notice)
-    redirect_to investigation_path(@investigation, anchor: "products"), notice: notice
+  def redirect_to_investigation_products_tab(flash)
+    redirect_to investigation_path(@investigation, anchor: "products"), flash: flash
   end
 
   def set_investigation

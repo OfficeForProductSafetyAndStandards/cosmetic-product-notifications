@@ -226,6 +226,13 @@ ActiveRecord::Schema.define(version: 2019_03_21_122934) do
     t.index ["product_id"], name: "index_tests_on_product_id"
   end
 
+  create_table "user_attributes", primary_key: "user_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.boolean "has_viewed_introduction", default: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_attributes_on_user_id"
+  end
+
   add_foreign_key "activities", "businesses"
   add_foreign_key "activities", "correspondences"
   add_foreign_key "activities", "investigations"

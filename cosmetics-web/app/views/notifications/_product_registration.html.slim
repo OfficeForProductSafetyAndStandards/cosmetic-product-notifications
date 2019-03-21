@@ -1,9 +1,11 @@
-h3.govuk-heading-m
-  | Now register your cosmetic product
-p
-  | By registering this cosmetic product, you confirm that the details you
-  |  provide are correct to the best of your knowledge.
-= form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification),
-        method: :post do |form|
-  .govuk-form-group
-    = form.submit "Accept and register the cosmetic product", class: "govuk-button"
+.govuk-grid-column-two-thirds
+  h3.govuk-heading-m
+    | Now register your cosmetic product
+  p
+    | By registering this cosmetic product, you confirm that the details
+      you provide are correct to the best of your knowledge.
+
+  = form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification),
+          method: :post do |form|
+    .govuk-form-group
+      = form.submit "Accept and register the cosmetic product", class: "govuk-button"
