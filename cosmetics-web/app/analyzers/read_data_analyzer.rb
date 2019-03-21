@@ -26,6 +26,7 @@ private
 
   def create_notification_from_file
     begin
+      # rubocop:disable Metrics/BlockLength
       get_product_xml_file do |product_xml_file|
         cpnp_export_info = CpnpExport.new(product_xml_file)
         if cpnp_export_info.notification_status == "DR"
@@ -77,6 +78,7 @@ private
       Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
       @notification_file.update(upload_error: :unknown_error)
     end
+    # rubocop:enable Metrics/BlockLength
   end
 
   def get_product_xml_file
