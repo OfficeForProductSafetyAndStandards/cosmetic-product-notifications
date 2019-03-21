@@ -5,8 +5,8 @@ class UserTest < ActiveSupport::TestCase
     mock_out_keycloak_and_notify
     @user = User.find_by(last_name: "User_one")
     @user_four = User.find_by(last_name: "User_four")
-    set_user_as_non_opss(@user)
-    set_user_as_opss(@user_four)
+    mock_user_as_non_opss(@user)
+    mock_user_as_opss(@user_four)
   end
 
   teardown do
@@ -42,5 +42,10 @@ class UserTest < ActiveSupport::TestCase
 
     assert_includes options, @user
     assert_not_includes options, @user_four
+  end
+
+  test "don't load non-mspsds users" do
+    User.all
+    assert_not User.find_by(last_name: "Non_mspsds_user")
   end
 end
