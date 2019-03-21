@@ -21,9 +21,9 @@ class Investigations::CorrespondenceController < ApplicationController
       attach_files
       save_attachments
       audit_class.from(@correspondence, @investigation)
-      redirect_to investigation_path @investigation, notice: 'Correspondence was successfully recorded'
+      redirect_to investigation_path @investigation, flash: { success: 'Correspondence was successfully recorded' }
     else
-      redirect_to investigation_path(@investigation), notice: "Correspondence could not be saved."
+      redirect_to investigation_path(@investigation), flash: { warning: "Correspondence could not be saved." }
     end
   end
 

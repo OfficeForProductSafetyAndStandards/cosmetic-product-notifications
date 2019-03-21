@@ -26,7 +26,7 @@ class LocationsController < ApplicationController
       if @location.save
         format.html do
           redirect_to business_url(@location.business, anchor: "locations"),
-                      notice: "Location was successfully created."
+                      flash: { success: "Location was successfully created." }
         end
         format.json { render :show, status: :created, location: @location }
       else
@@ -43,7 +43,7 @@ class LocationsController < ApplicationController
       if @location.update(location_params)
         format.html do
           redirect_to business_url(@location.business, anchor: "locations"),
-                      notice: "Location was successfully updated."
+                      flash: { success: "Location was successfully updated." }
         end
         format.json { render :show, status: :ok, location: @location }
       else
@@ -62,7 +62,7 @@ class LocationsController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_to business_url(@location.business, anchor: "locations"),
-                    notice: "Location was successfully deleted."
+                    flash: { success: "Location was successfully deleted." }
       end
       format.json { head :no_content }
     end
