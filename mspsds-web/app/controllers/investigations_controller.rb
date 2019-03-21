@@ -60,55 +60,42 @@ class InvestigationsController < ApplicationController
   # GET /cases/1/assign
   # PUT /cases/1/assign
   def assign
-    get_valid_update_hash = Proc.new do |ps|
-      potential_assignees = User.where(id: ps[:assignable_id]) + Team.where(id: ps[:assignable_id])
-      potential_assignees.first.present? ? { assignee: potential_assignees.first } : {}
-    end
-    edit(model_keys: %i[assignable_id assignable_type], get_valid_update_hash: get_valid_update_hash,
-         custom_params: assignee_update_params,
-         error_message: "Select assignee")
+    edit
   end
 
   # GET /cases/1/status
   # PUT /cases/1/status
   def status
-    get_valid_update_hash = Proc.new { |ps| ps if ps[:is_closed].present? }
-    edit(model_keys: %i[is_closed status_rationale], get_valid_update_hash: get_valid_update_hash,
-         error_message: "Status should be closed or open")
+    edit
   end
 
   # GET /cases/1/visibility
   # PUT /cases/1/visibility
   def visibility
-    get_valid_update_hash = Proc.new { |ps| ps if ps[:is_private].present? }
-    edit(model_keys: %i[is_private visibility_rationale], get_valid_update_hash: get_valid_update_hash,
-         error_message: "Visibility needs to be private or public")
+    edit
   end
 
   # GET /cases/1/edit_summary
   # PUT /cases/1/edit_summary
   def edit_summary
-    get_valid_update_hash = Proc.new { |ps| ps if ps[:description].present? }
-    edit(model_keys: [:description], get_valid_update_hash: get_valid_update_hash,
-         error_message: "Summary can not be empty")
+    edit
   end
 
 private
 
-  def edit(model_keys:, error_message:, get_valid_update_hash:, custom_params: nil)
+  def edit
     return if request.get?
 
-    ps = custom_params || params.require(:investigation).permit(model_keys)
-    update_hash = get_valid_update_hash.call(ps)
-
-    if update_hash.blank?
-      @investigation.errors.add(model_keys.first, :invalid, message: error_message)
-      respond_to_invalid_data
-      return
+    ps = update_params
+    potential_assignees = User.where(id: ps[:assignable_id]) + Team.where(id: ps[:assignable_id])
+    @investigation.assignee = potential_assignees.first if action_name == "assign"
+    %i[description is_closed status_rationale is_private visibility_rationale].each do |key|
+      @investigation.send("#{key}=", ps[key]) if params.require(:investigation).key?(key)
     end
 
-    update_hash.each do |key, value|
-      @investigation.send("#{key}=", value) if value
+    if @investigation.invalid?(:edit)
+      respond_to_invalid_data
+      return
     end
 
     respond_to_update
@@ -128,7 +115,7 @@ private
     authorize @investigation
   end
 
-  def assignee_update_params
+  def update_params
     return {} if params[:investigation].blank?
 
     params[:investigation][:assignable_id] = case params[:investigation][:assignable_id]
@@ -143,7 +130,10 @@ private
                                              else
                                                params[:investigation][:assignable_id]
                                              end
-    params.require(:investigation).permit(:assignable_id)
+    params.require(:investigation).permit(:assignable_id,
+                                          :description,
+                                          :is_closed, :status_rationale,
+                                          :is_private, :visibility_rationale)
   end
 
   def respond_to_update

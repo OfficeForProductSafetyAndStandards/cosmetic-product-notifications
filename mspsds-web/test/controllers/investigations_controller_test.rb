@@ -20,7 +20,12 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     @investigation_two.save
 
     @investigation_three = investigations(:three)
+    @investigation_three.assignee = @non_opss_user
+    @investigation_three.save
+
     @investigation_no_products = investigations(:no_products)
+    @investigation_no_products.assignee = @non_opss_user
+    @investigation_no_products.save
 
     # The updated_at values must be set separately in order to be respected
     @investigation_one.updated_at = Time.zone.parse('2017-07-11 21:00')
@@ -52,19 +57,19 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should assign user to investigation" do
     user = User.find_by(last_name: "User_one")
-    investigation_assignee = lambda { Investigation.find(@investigation_three.id).assignee }
-    assert_changes investigation_assignee, from: nil, to: user do
-      patch assign_investigation_url(@investigation_three), params: {
+    investigation_assignee = lambda { Investigation.find(@investigation_one.id).assignee }
+    assert_changes investigation_assignee, from: User.current, to: user do
+      patch assign_investigation_url(@investigation_one), params: {
         investigation: {
           assignable_id: user.id
         }
       }
     end
-    assert_redirected_to investigation_url(@investigation_three)
+    assert_redirected_to investigation_url(@investigation_one)
   end
 
   test "should set status" do
-    investigation = Investigation.create
+    investigation = Investigation.create(description: "new description")
     is_closed = true
     investigation_status = lambda { Investigation.find(investigation.id).is_closed }
     assert_changes investigation_status, from: false, to: is_closed do
@@ -76,15 +81,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       }
     end
     assert_redirected_to investigation_url(investigation)
-  end
-
-  test "should require status to be open or closed" do
-    patch status_investigation_url(@investigation_one), params: {
-      investigation: {
-        status_rationale: "some rationale"
-      }
-    }
-    assert_includes(response.body, "Status should be closed or open")
   end
 
   test "should set description" do
@@ -108,7 +104,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         description: ""
       }
     }
-    assert_includes(response.body, "Summary can not be empty")
+    assert_includes(response.body, "blank")
   end
 
   test "should update assignee from selectable list" do

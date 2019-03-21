@@ -16,6 +16,9 @@ class Investigation < ApplicationRecord
   validates :hazard_type, presence: true, on: :unsafe
   validates :non_compliant_reason, presence: true, on: :non_compliant
 
+  validates :description, presence: true, on: :edit
+  validates :assignable_id, presence: { message: "Select assignee" }, on: :edit
+
   validates_length_of :user_title, maximum: 100
   validates_length_of :description, maximum: 10000
   validates_length_of :non_compliant_reason, maximum: 10000
@@ -105,7 +108,7 @@ class Investigation < ApplicationRecord
   end
 
   def assignee=(entity)
-    self.assignable_id = entity.id
+    self.assignable_id = entity&.id
     self.assignable_type = "User" if entity.is_a?(User)
     self.assignable_type = "Team" if entity.is_a?(Team)
   end
