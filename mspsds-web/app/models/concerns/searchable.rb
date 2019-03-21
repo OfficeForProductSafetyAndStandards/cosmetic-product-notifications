@@ -4,6 +4,7 @@ module Searchable
 
   included do
     include Shared::Web::Concerns::Searchable
+    include Elasticsearch::Model::Callbacks
 
     # TODO: These lines fix the issue of not updating the updated_at in Elasticsearch.
     # Same issue is pointed out in the following link. We can remove it once that PR is merged.

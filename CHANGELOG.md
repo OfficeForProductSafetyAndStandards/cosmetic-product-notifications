@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Provide "send email alert about this case" functionality.
 - Allow users to view their team members.
 - When emails and phone calls are marked as GDPR senstive, prevent other users from viewing them or their attachments.
+- Show introduction slides the first time a non_opss user logs in.
 - Cases are assigned to their creator by default
 - Allow team_admin users to add new team members.
 
@@ -22,6 +23,7 @@ All notable changes to this project will be documented in this file.
     # Log into keycloak admin app, click on `Clients` and select `mspsds-app`
     # In the `Service Account Roles` tab, select `realm-management` from the dropdown and assign the `manage-users` role
     # In the `Scope` tab, select `realm-management` from the dropdown and assign the `manage-users` role
+- [ ] Delete mspsds `admin` role (Clients->mspsds-app->roles->admin->delete)
 
 
 ## 2019-03-07

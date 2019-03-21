@@ -6,7 +6,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   include InvestigationTestHelper
 
   setup do
-    mock_out_keycloak_and_notify(user_name: "Admin")
+    mock_out_keycloak_and_notify
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
     set_investigation_source! @investigation, User.current
@@ -104,7 +104,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     click_on "Activity"
     within id: "activity" do
       assert_equal("Phone call added", first('h3').text)
-      assert_equal("RESTRICTED ACCESS", first(".govuk-badge").text)
+      assert_equal("RESTRICTED ACCESS", first(".hmcts-badge").text)
     end
   end
 

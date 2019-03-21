@@ -1,7 +1,8 @@
 class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigation::Base
   def self.from(investigation)
     title = investigation.assignee.id.to_s
-    super(investigation, title)
+    body = investigation.assignee_rationale
+    super(investigation, title, self.sanitize_text(body))
   end
 
   def subtitle_slug
@@ -20,7 +21,11 @@ class AuditActivity::Investigation::UpdateAssignee < AuditActivity::Investigatio
   end
 
   def email_update_text
-    "#{investigation.case_type.titleize} was assigned to #{investigation.assignee.display_name} by #{source&.show&.titleize}."
+    body = []
+    body << "#{investigation.case_type.titleize} was assigned to #{investigation.assignee.display_name} by #{source&.show&.titleize}."
+    body << "\nComment provided by #{source&.show&.titleize}:" if investigation.visibility_rationale.present?
+    body << investigation.assignee_rationale if investigation.assignee_rationale.present?
+    body.join("\n")
   end
 
   def email_subject_text

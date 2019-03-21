@@ -12,7 +12,7 @@ ruby:
     h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = title
     span.govuk-hint[class=" govuk-!-font-size-16"] = formatted_file_updated_date(document)
     - if sensitive
-      p = render "components/govuk_badge", text: "Restricted access", classes: "govuk-badge--grey"
+      p = render "components/hmcts_badge", text: "Restricted access", classes: "hmcts-badge--grey"
       p = document_sensitive_body
     - else
       p = document.metadata[:description]

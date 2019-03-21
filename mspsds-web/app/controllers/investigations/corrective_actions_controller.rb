@@ -29,7 +29,7 @@ class Investigations::CorrectiveActionsController < ApplicationController
     respond_to do |format|
       update_attachment
       if corrective_action_saved?
-        format.html { redirect_to investigation_url(@investigation), notice: "Corrective action was successfully recorded." }
+        format.html { redirect_to investigation_url(@investigation), flash: { success: "Corrective action was successfully recorded." } }
         format.json { render :show, status: :created, location: @corrective_action }
       else
         format.html { render step }
