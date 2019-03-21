@@ -1,0 +1,85 @@
+- content_for :page_title, "About"
+- content_for :after_header do
+  = render "layouts/navbar"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    h1.govuk-heading-xl Product safety database about page and guidance
+    h2.govuk-heading-l Purpose of the Product safety database
+    p
+      | The Product safety database is designed to improve information sharing amongst
+        UK market surveillance authorities.
+        It replaces two EU systems for managing product safety issues; ICSMS and RAPEX.
+    p
+      | The ambition for the service is to build a shared system for managing product safety cases across the UK.
+        This means that when an organisation is investigating a product in the future they will have
+        a better set of information to draw on. For example, finding test results for similar products or seeing if
+        the manufacturer has been looked into before.
+        This will reduce duplication and improve the quality of product safety and
+        market surveillance activity in the UK.
+
+    h2.govuk-heading-l What you can do
+    p
+      | There are three main functions of the service:
+      ul.govuk-list.govuk-list--bullet
+        li Report serious product safety risks so that other MSAs are alerted
+        li Manage routine product safety cases and projects
+        li Refer a case to a different organisation
+        li Find information on businesses and products
+
+    h2.govuk-heading-l Case confidentiality
+    p
+      | Most information on the Product safety database is open to all users by default.
+        Some information is restricted when needed.
+
+    h3.govuk-heading-m Cases proceeding to court
+    p
+      | When a potential enforcement action has reached the point that a market surveillance authority
+        has decided to take legal action then the case should be restricted.
+        When a case is restricted only people who belong to that specific organisation will be able to see
+        the details of the case. For everyone else it will say ‘case restricted’.
+
+    h3.govuk-heading-m GDPR
+    p
+      | Personal information about members of the public who have reported something to a MSA should not be
+        widely shared.
+        When you add details or correspondence from a member of the public you should mark it as personal.
+        This will stop people outside your organisation from accessing their details.
+
+    h2.govuk-heading-l Who should access the service
+    p
+      | The Product safety database is only available to people who work for Market Surveillance Authorities.
+        This includes local authority trading standards, the Office for Product Safety and Standards and
+        UK government bodies which have market surveillance powers.
+
+    h3.govuk-heading-m Invite someone to your organisation
+    p
+      | Every organisation has an organisation administrator. This administrator is able to invite new people to
+        the Product safety database. They can do this by clicking on the team name and then ‘invite a team member’
+    p
+      | The administrator should only invite people who are in their organisation and who would normally have access to
+        product safety cases and information in their organisation.
+
+    h3.govuk-heading-m Find your organisation’s administrator
+    p
+      | To find out who your organisation’s administrator is go to your team and look for the person who has
+        a tick next to their name where it says ‘Can invite team members.’
+
+    h2.govuk-heading-l What is a serious risk
+    p
+      | There is no single definition of a serious risk. When assessing risk people should refer to
+        an accepted risk assessment methodology, for example the EU RAPEX guidelines:
+      br
+      a href=["https://ec.europa.eu/consumers/consumer-safety/rag/#/screen/home"]
+        | https://ec.europa.eu/consumers/consumer-safety/rag/#/screen/home
+
+    h2.govuk-heading-l Where you should go for further support
+    p
+      ' If you need further support with how to use the service please contact OPPS by emailing
+      a [href="mailto:OPSS.enquiries@beis.gov.uk"] OPSS.enquiries@beis.gov.uk
+
+    h2.govuk-heading-l Feedback and suggestions
+    p
+      | Use the feedback link at the top of each page to provide feedback to the development team.
+        The service is being continually developed so all feedback is greatly appreciated.
+= render "close_page_button"
