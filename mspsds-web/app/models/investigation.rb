@@ -187,7 +187,8 @@ class Investigation < ApplicationRecord
   def reason_created
     return "Product reported because it is unsafe and non-compliant." if hazard_description && non_compliant_reason
     return "Product reported because it is unsafe." if hazard_description
-    return "Product reported because it is non-compliant."
+
+    "Product reported because it is non-compliant."
   end
 
 private
