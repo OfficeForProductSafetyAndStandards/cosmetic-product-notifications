@@ -74,6 +74,21 @@ tr.govuk-table__row
                 new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
                         @notification, component),
                 class: "govuk-link--no-visited-state"
+tr.govuk-table__row
+  th.govuk-table__header[scope="row"]
+    | Physical form
+  td.govuk-table__cell
+    = get_physical_form_name(component.physical_form)
+tr.govuk-table__row
+  th.govuk-table__header[scope="row"]
+    | Special applicator
+  td.govuk-table__cell
+    = get_special_applicator_name(component.special_applicator)
+tr.govuk-table__row
+  th.govuk-table__header[scope="row"]
+    | Important information for poison centres
+  td.govuk-table__cell
+    = component.acute_poisoning_info
 
 - if component.trigger_questions
   - component.trigger_questions.each do |question|
