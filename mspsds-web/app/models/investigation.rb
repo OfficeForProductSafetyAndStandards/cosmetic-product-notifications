@@ -93,11 +93,18 @@ class Investigation < ApplicationRecord
   end
 
   def assignee
-    (User.where(id: assignable_id) + Team.where(id: assignable_id)).first
+    begin
+      return User.find(assignable_id) if assignable_type == "User"
+      return Team.find(assignable_id) if assignable_type == "Team"
+    rescue StandardError
+      return nil
+    end
   end
 
   def assignee=(entity)
     self.assignable_id = entity&.id
+    self.assignable_type = "User" if entity.is_a?(User)
+    self.assignable_type = "Team" if entity.is_a?(Team)
   end
 
   def status
@@ -211,12 +218,16 @@ private
   end
 
   def create_audit_activity_for_assignee
-    if (saved_changes.key? :assignable_id) && User.current
+    # TODO: User.current check is here to avoid triggering activity and emails from migrations
+    # Can be safely removed once the migration PopulateAssigneeAndDescription has run
+    if ((saved_changes.key? :assignable_id) || (saved_changes.key? :assignable_type)) && User.current
       AuditActivity::Investigation::UpdateAssignee.from(self)
     end
   end
 
   def create_audit_activity_for_summary
+    # TODO: User.current check is here to avoid triggering activity and emails from migrations
+    # Can be safely removed once the migration PopulateAssigneeAndDescription has run
     if saved_changes.key?(:description) && User.current
       AuditActivity::Investigation::UpdateSummary.from(self)
     end

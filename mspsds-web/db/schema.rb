@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(version: 2019_03_21_122934) do
 
   create_table "investigations", id: :serial, force: :cascade do |t|
     t.uuid "assignable_id"
+    t.string "assignable_type"
     t.string "complainant_reference"
     t.datetime "created_at", null: false
     t.text "description"
@@ -162,7 +163,7 @@ ActiveRecord::Schema.define(version: 2019_03_21_122934) do
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
     t.string "user_title"
-    t.index ["assignable_id"], name: "index_investigations_on_assignable_id"
+    t.index ["assignable_type", "assignable_id"], name: "index_investigations_on_assignable_type_and_assignable_id"
     t.index ["pretty_id"], name: "index_investigations_on_pretty_id"
   end
 

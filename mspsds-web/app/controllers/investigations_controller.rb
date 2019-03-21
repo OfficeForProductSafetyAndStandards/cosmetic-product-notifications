@@ -56,20 +56,29 @@ class InvestigationsController < ApplicationController
     end
   end
 
+  # PATCH /cases/1
+  # PATCH /cases/1.json
   def update
     return if request.get?
 
-    ps = update_params
-    editable_keys.each do |key|
-      @investigation.send("#{key}=", ps[key]) if params.require(:investigation).key?(key)
+    @investigation.update(update_params)
+    is_valid = @investigation.valid?(:edit)
+    saved = is_valid ? @investigation.save : false
+
+    respond_to do |format|
+      if saved
+        format.html {
+          redirect_to @investigation, flash: {
+            success: "#{@investigation.case_type.titleize} was successfully updated."
+          }
+        }
+        format.json { render :show, status: :ok, location: @investigation }
+      else
+        viewed_page = request.referer.split('/').last
+        format.html { render viewed_page }
+        format.json { render json: @investigation.errors, status: :unprocessable_entity }
+      end
     end
-
-    viewed_page = ""
-    viewed_page = "investigations/edit_summary" if params.require(:investigation).key?(:description)
-    viewed_page = "investigations/status" if params.require(:investigation).key?(:is_closed)
-    viewed_page = "investigations/visibility" if params.require(:investigation).key?(:is_private)
-
-    respond_to_update(viewed_page)
   end
 
   # GET /cases/1/status
@@ -105,24 +114,6 @@ private
 
   def editable_keys
     %i[description is_closed status_rationale is_private visibility_rationale]
-  end
-
-  def respond_to_update(viewed_page)
-    respond_to do |format|
-      if @investigation.valid?(:edit)
-        @investigation.save
-        format.html {
-          redirect_to @investigation, flash: {
-              success: "#{@investigation.case_type.titleize} was successfully updated."
-          }
-        }
-        format.json { render :show, status: :ok, location: @investigation }
-      else
-        @investigation.restore_attributes
-        format.html { render viewed_page }
-        format.json { render json: @investigation.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   def preload_activities

@@ -90,8 +90,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       investigation: {
         description: ""
       }
-    }
-    assert_includes(response.body, "blank")
+    }, headers: { "HTTP_REFERER": '/edit_summary' }
+    assert_includes(response.body, "Description can&#39;t be blank")
   end
 
   test "status filter should be defaulted to open" do
