@@ -191,6 +191,12 @@ class Investigation < ApplicationRecord
     self.pretty_id = "#{created_at.strftime('%y%m')}-%04d" % (cases_before + 1)
   end
 
+  def reason_created
+    return "Product reported because it is unsafe and non-compliant." if hazard_description && non_compliant_reason
+    return "Product reported because it is unsafe." if hazard_description
+    return "Product reported because it is non-compliant."
+  end
+
 private
 
   def create_audit_activity_for_case
@@ -210,13 +216,13 @@ private
   end
 
   def create_audit_activity_for_assignee
-    if (saved_changes.key? :assignable_id)
+    if (saved_changes.key? :assignable_id) && User.current
       AuditActivity::Investigation::UpdateAssignee.from(self)
     end
   end
 
   def create_audit_activity_for_summary
-    if saved_changes.key?(:description)
+    if saved_changes.key?(:description) && User.current
       AuditActivity::Investigation::UpdateSummary.from(self)
     end
   end

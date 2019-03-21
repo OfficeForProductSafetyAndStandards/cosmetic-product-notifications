@@ -95,7 +95,7 @@ private
 
   def set_investigation
     @investigation = Investigation.new(investigation_step_params.except(:unsafe, :non_compliant))
-    @investigation.description = reason_created if step == :why_reporting
+    @investigation.description = @investigation.reason_created if step == :why_reporting
   end
 
   def set_why_reporting
@@ -498,13 +498,5 @@ private
   def clear_repeat_step
     @repeat_step = nil
     session.delete further_key(step)
-  end
-
-  def reason_created
-    return "Product reported because it is unsafe and non-compliant." if @unsafe && @non_compliant
-    return "Product reported because it is unsafe." if @unsafe
-    return "Product reported because it is non-compliant." if @non_compliant
-
-    ""
   end
 end
