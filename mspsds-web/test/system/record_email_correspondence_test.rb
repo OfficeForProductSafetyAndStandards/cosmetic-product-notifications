@@ -1,10 +1,14 @@
 require "application_system_test_case"
+require_relative "../test_helpers/investigation_test_helper"
 
 class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
+  include InvestigationTestHelper
+
   setup do
     mock_out_keycloak_and_notify(user_name: "Admin")
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
+    set_investigation_source! @investigation, User.current
     @correspondence = correspondences(:email)
     visit new_investigation_email_url(@investigation)
   end
@@ -50,7 +54,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     assert_text("View email file")
 
     click_on "Attachments"
-    assert_text("correspondence overview")
+    assert_text(@correspondence.overview)
     assert_text("Original email as a file")
   end
 
@@ -70,7 +74,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     assert_text("View email attachment")
 
     click_on "Attachments"
-    assert_text("correspondence overview")
+    assert_text(@correspondence.overview)
   end
 
   test "third step should be confirmation" do
@@ -115,14 +119,19 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   test "requires details to be no longer than 50000 characters" do
     more_than_50000_characters = "a" * 50001
     exactly_50000_characters = "a" * 50000
-    test_request = Correspondence.create(investigation: @investigation, correspondence_date: @correspondence.correspondence_date)
+    test_request = Correspondence.create(
+      investigation: @investigation,
+      correspondence_date: @correspondence.correspondence_date
+    )
     test_request.details = more_than_50000_characters
     assert_not test_request.save
     test_request.details = exactly_50000_characters
     assert test_request.save
   end
 
-  test "conceals information on emails with customer info" do
+  test "conceals information from other organisations on emails with customer info" do
+    other_org_user = User.find_by last_name: "Ts_user"
+    set_investigation_source! @investigation, other_org_user
     fill_in_context_form
     choose :correspondence_email_has_consumer_info_true, visible: false
     click_button "Continue"
@@ -136,6 +145,54 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     end
   end
 
+  test "does not conceal consumer information from assignee" do
+    other_org_user = User.find_by last_name: "Ts_user"
+    set_investigation_source! @investigation, other_org_user
+    set_investigation_assignee! @investigation, User.current
+    fill_in_context_form
+    choose :correspondence_email_has_consumer_info_true, visible: false
+    click_button "Continue"
+    fill_in_content_form
+    click_button "Continue"
+    click_button "Continue"
+    click_on "Activity"
+    within id: "activity" do
+      assert_equal(@correspondence.overview, first('h3').text)
+    end
+  end
+
+  test "does not conceal consumer information from assignee's team" do
+    other_org_user = User.find_by last_name: "Ts_user"
+    same_team_user = User.find_by last_name: "User_one"
+    set_investigation_source! @investigation, other_org_user
+    set_investigation_assignee! @investigation, same_team_user
+    fill_in_context_form
+    choose :correspondence_email_has_consumer_info_true, visible: false
+    click_button "Continue"
+    fill_in_content_form
+    click_button "Continue"
+    click_button "Continue"
+    click_on "Activity"
+    within id: "activity" do
+      assert_equal(@correspondence.overview, first('h3').text)
+    end
+  end
+
+  test "does not conceal information from same organisation on emails with customer info" do
+    same_org_user = User.find_by last_name: "User_three"
+    set_investigation_source! @investigation, same_org_user
+    fill_in_context_form
+    choose :correspondence_email_has_consumer_info_true, visible: false
+    click_button "Continue"
+    fill_in_content_form
+    click_button "Continue"
+    click_button "Continue"
+    click_on "Activity"
+    within id: "activity" do
+      assert_equal(@correspondence.overview, first('h3').text)
+    end
+  end
+
   def fill_in_context_form
     choose("correspondence_email[email_direction]", visible: false, option: :inbound)
     fill_in "correspondence_email[correspondent_name]", with: @correspondence.correspondent_name
@@ -146,8 +203,8 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   def fill_in_content_form
-    fill_in "correspondence_email[overview]", with: "correspondence overview"
-    fill_in "correspondence_email[email_subject]", with: "email subject"
-    fill_in "correspondence_email[details]", with: "email body"
+    fill_in "correspondence_email[overview]", with: @correspondence.overview
+    fill_in "correspondence_email[email_subject]", with: @correspondence.email_subject
+    fill_in "correspondence_email[details]", with: @correspondence.details
   end
 end
