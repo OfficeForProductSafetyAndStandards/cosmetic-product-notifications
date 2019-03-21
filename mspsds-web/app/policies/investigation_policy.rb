@@ -1,5 +1,4 @@
 class InvestigationPolicy < ApplicationPolicy
-
   def show?(user: @user)
     visible_to(user: user)
   end

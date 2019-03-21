@@ -45,7 +45,7 @@ class ActiveSupport::TestCase
   # On top of mocking out external services, this method also sets the user to an initial,
   # sensible value, but it should only be run once per test.
   # To change currently logged in user afterwards call `sign_in_as(...)`
-  def mock_out_keycloak_and_notify(user_name: "User_one")
+  def mock_out_keycloak_and_notify(last_name: "User_one")
     @users = [test_user(name: "User_four"),
               test_user(name: "User_one"),
               test_user(name: "User_two"),
@@ -65,7 +65,7 @@ class ActiveSupport::TestCase
     TeamUser.all
     User.all
     set_default_group_memberships
-    sign_in_as User.find_by(last_name: user_name)
+    sign_in_as User.find_by(last_name: last_name)
     stub_notify_mailer
   end
 
