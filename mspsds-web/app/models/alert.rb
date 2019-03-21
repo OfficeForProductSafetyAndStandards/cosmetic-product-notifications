@@ -7,9 +7,7 @@ class Alert < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
 
   validates_presence_of :summary, message: "Enter the alert subject"
-  validates_presence_of :description, message: "Enter the alert subject"
-
-
+  validates_presence_of :description, message: "Enter the alert description"
 
   after_save :create_audit_activity
 
