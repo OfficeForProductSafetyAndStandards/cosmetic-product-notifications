@@ -13,7 +13,7 @@ html.govuk-template.app-html-class[lang="en"]
     meta[charset="utf-8"]
     title
       = yield :page_title
-      |  - Market Surveillance & Product Safety
+      |  - Product safety database - GOV.UK
     meta[name="viewport" content="width=device-width, initial-scale=1"]
     meta[name="theme-color" content="blue"]
     link[rel="shortcut icon" type="image/x-icon" href=asset_pack_path("media/images/favicon.ico")]
@@ -79,10 +79,9 @@ html.govuk-template.app-html-class[lang="en"]
           h2#error-summary-title.govuk-error-summary__title
             = alert
 
-      - if notice
-        .govuk-inset-text[class="govuk-!-margin-0" tabindex="-1"]
-          strong[class="govuk-!-font-weight-bold"]
-            = notice
+      - %i[success information warning].each do |key|
+        - if flash[key]
+          = render "components/hmcts_banner", text: flash[key], type: key
 
       main#main-content.govuk-main-wrapper.app-main-class[role="main"]
         = yield

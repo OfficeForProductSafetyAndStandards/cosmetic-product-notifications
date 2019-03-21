@@ -43,12 +43,12 @@ class Investigations::ActivitiesController < ApplicationController
     respond_to do |format|
       if @investigation.activities << @activity
         format.html do
-          redirect_to investigation_url(@investigation), notice: "Comment was successfully added."
+          redirect_to investigation_url(@investigation), flash: { success: "Comment was successfully added." }
         end
         format.json { render :show, status: :created, location: @activity }
       else
         format.html do
-          redirect_to investigation_url(@investigation), notice: "Comment was not successfully added."
+          redirect_to investigation_url(@investigation), flash: { success: "Comment was not successfully added." }
         end
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
