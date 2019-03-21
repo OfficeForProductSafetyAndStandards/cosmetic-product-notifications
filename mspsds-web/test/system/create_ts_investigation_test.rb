@@ -96,6 +96,9 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Find this in your system"
     fill_in_complainant_reference
 
+    assert_selector "h1", text: "Case created"
+    click_on "View case"
+
     # assert that corrective actions saved
     click_link "tab_activity"
     assert_text @corrective_action_one.summary
@@ -190,7 +193,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
 
   def fill_in_complainant_reference
     fill_in "investigation_complainant_reference", with: @investigation.complainant_reference
-    click_button "Save"
+    click_button "Create case"
   end
 
   def add_attachment filename
