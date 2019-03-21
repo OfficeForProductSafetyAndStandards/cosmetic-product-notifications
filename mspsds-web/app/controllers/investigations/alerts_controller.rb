@@ -44,11 +44,11 @@ private
 
   def alert_valid?
     @alert.valid?
+    if @alert.summary == @default_summary
+      @alert.errors.add(:summary, "Enter the alert subject")
+    end
     if @alert.description == @default_description
       @alert.errors.add(:description, "Enter alert content")
-    end
-    if @alert.summary == @default_summary
-      @alert.errors.add(:summary, "Enter an alert summary")
     end
     @alert.errors.none?
   end
