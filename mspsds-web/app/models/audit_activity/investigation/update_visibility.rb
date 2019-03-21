@@ -2,7 +2,7 @@ class AuditActivity::Investigation::UpdateVisibility < AuditActivity::Investigat
   def self.from(investigation)
     title = "#{investigation.case_type.titleize} visibility
             #{investigation.is_private ? 'Restricted' : 'Unrestricted'}"
-    super(investigation, title, investigation.visibility_rationale)
+    super(investigation, title, self.sanitize_text(investigation.visibility_rationale))
   end
 
   def email_update_text

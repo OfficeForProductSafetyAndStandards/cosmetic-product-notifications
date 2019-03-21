@@ -32,8 +32,6 @@ Rails.application.routes.draw do
     member do
       put :status
       get :status
-      put :assign
-      get :assign
       put :visibility
       get :visibility
     end
@@ -42,6 +40,7 @@ Rails.application.routes.draw do
         get :comment
       end
     end
+
     resources :products, only: %i[new create], controller: "investigations/products" do
       member do
         put :link, path: ''
@@ -56,6 +55,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :assign, controller: "investigations/assign", only: %i[show new create update]
     resources :corrective_actions, controller: "investigations/corrective_actions", only: %i[show new create update]
     resources :emails, controller: "investigations/emails", only: %i[show new create update]
     resources :phone_calls, controller: "investigations/phone_calls", only: %i[show new create update]
