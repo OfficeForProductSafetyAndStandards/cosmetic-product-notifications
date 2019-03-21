@@ -6,25 +6,39 @@ class User < Shared::Web::User
   has_many :team_users, dependent: :nullify
   has_many :teams, through: :team_users
 
+  has_one :user_attributes, dependent: :destroy
+
+  # Getters and setters for each UserAttributes column should be added here so they can be accessed directly
+  # from the User object via delegation.
+  delegate :has_viewed_introduction, :has_viewed_introduction!, to: :get_user_attributes
+
   def teams
     # has_many through seems not to work with ActiveHash
     # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
     team_users.map(&:team)
   end
 
+  def self.create_and_send_invite(email_address, team, redirect_url)
+    Shared::Web::KeycloakClient.instance.create_user email_address
+    User.all(force: true)
+    user = User.find_by(email: email_address)
+    team.add_user user
+    Shared::Web::KeycloakClient.instance.send_required_actions_welcome_email user.id, redirect_url
+  end
+
   def self.find_or_create(attributes)
     groups = attributes.delete(:groups)
-    organisation = Organisation.find_by_path(groups) # rubocop:disable Rails/DynamicFindBy
+    organisation = Organisation.find_by(path: groups)
     user = User.find_by(id: attributes[:id]) || User.create(attributes.merge(organisation_id: organisation&.id))
     user
   end
 
   def self.all(options = {})
     begin
-      all_users = Shared::Web::KeycloakClient.instance.all_users
+      all_users = Shared::Web::KeycloakClient.instance.all_users(force: options[:force])
       self.data = all_users.map { |user| populate_organisation(user) }
       Team.all
-      TeamUser.all
+      TeamUser.all(force: options[:force])
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
       self.data = nil
@@ -91,5 +105,10 @@ class User < Shared::Web::User
     end
     users
   end
+
+  def get_user_attributes
+    UserAttributes.find_or_create_by(user_id: id)
+  end
 end
+
 User.all if Rails.env.development?

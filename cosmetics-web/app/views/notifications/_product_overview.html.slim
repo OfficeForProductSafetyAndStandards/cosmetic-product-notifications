@@ -1,0 +1,24 @@
+.product
+  .check-your-answers.product-data.govuk-body-s
+    dl
+      dt
+        | UK cosmetic product number
+      dd
+        = notification.reference_number_for_display
+
+      - if notification.industry_reference.present?
+        dt
+          | Reference number
+        dd
+          = notification.industry_reference
+
+      - if notification.cpnp_reference
+        dt
+          | EU reference number
+        dd
+          = notification.cpnp_reference
+      - if notification.cpnp_notification_date.present?
+        dt
+          | First notified in the EU
+        dd
+          = notification.cpnp_notification_date.strftime("%d/%m/%Y")

@@ -28,8 +28,8 @@ class InvestigationTest < ActiveSupport::TestCase
     reset_keycloak_and_notify_mocks
   end
 
-  test "should create activities when investigation is created" do
-    assert_difference"Activity.count" do
+  test "should create activity when investigation is created" do
+    assert_difference "Activity.count" do
       @investigation = Investigation::Allegation.create
     end
   end
@@ -255,6 +255,11 @@ class InvestigationTest < ActiveSupport::TestCase
     end
     investigation = Investigation.create
     assert_equal Investigation.where(pretty_id: investigation.pretty_id).count, 1
+  end
+
+  test "assigns to current user by default" do
+    investigation = Investigation.create
+    assert_equal User.current, investigation.assignee
   end
 
   def create_new_private_case

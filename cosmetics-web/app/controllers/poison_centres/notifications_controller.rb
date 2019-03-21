@@ -7,12 +7,17 @@ class PoisonCentres::NotificationsController < ApplicationController
   def show
     @notification = Notification.find_by reference_number: params[:reference_number]
     authorize @notification, policy_class: PoisonCentreNotificationPolicy
+    if User.current&.poison_centre_user?
+      render "show_poison_centre"
+    else
+      render "show_msa"
+    end
   end
 
 private
 
   def authorize_user!
-    raise Pundit::NotAuthorizedError unless poison_centre_user?
+    raise Pundit::NotAuthorizedError unless poison_centre_or_msa_user?
   end
 
   def search_registered_notifications(page_size)

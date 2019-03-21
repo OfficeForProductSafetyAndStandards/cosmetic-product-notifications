@@ -13,6 +13,15 @@ Rails.application.routes.draw do
     end
   end
 
+
+  namespace :introduction do
+    get :overview
+    get :report_products
+    get :track_investigations
+    get :share_data
+    get :skip
+  end
+
   resources :enquiry, controller: "investigations/enquiry", only: %i[show new create update]
   resources :allegation, controller: "investigations/allegation", only: %i[show new create update]
   resources :project, controller: "investigations/project", only: %i[new create]
@@ -76,7 +85,20 @@ Rails.application.routes.draw do
   resources :products, except: %i[new create destroy], concerns: %i[document_attachable]
 
   get "your-teams" => "teams#index"
-  resources :teams, only: %i[index show]
+  resources :teams, only: %i[index show] do
+    member do
+      get :invite_to, path: "invite"
+      put :invite_to, path: "invite"
+    end
+  end
+
+  namespace :help do
+    get :terms_and_conditions, path: "terms-and-conditions"
+    get :privacy_policy, path: "privacy-policy"
+    get :about
+  end
+
+
 
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all

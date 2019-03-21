@@ -14,4 +14,5 @@ footer.govuk-footer[role="contentinfo"]
           | © Crown copyright
 
 javascript:
+  if (typeof window.GOVUKFrontend === 'undefined') document.body.className = document.body.className.replace('js-enabled', '')
   window.GOVUKFrontend.initAll()

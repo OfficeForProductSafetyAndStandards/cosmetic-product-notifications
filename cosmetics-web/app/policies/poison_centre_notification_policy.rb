@@ -1,15 +1,15 @@
 class PoisonCentreNotificationPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all if user.poison_centre_user?
+      scope.all if user.poison_centre_user? || user.msa_user?
     end
   end
 
   def index?
-    user.poison_centre_user?
+    show?
   end
 
   def show?
-    user.poison_centre_user?
+    user.poison_centre_user? || user.msa_user?
   end
 end

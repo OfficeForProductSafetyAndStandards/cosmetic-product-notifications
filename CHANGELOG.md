@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 - Provide "send email alert about this case" functionality.
 - Allow users to view their team members.
 - When emails and phone calls are marked as GDPR senstive, prevent other users from viewing them or their attachments.
+- Show introduction slides the first time a non_opss user logs in.
+- Cases are assigned to their creator by default
+- Allow team_admin users to add new team members.
 
 <!-- ### Cosmetics -->
 
@@ -15,8 +18,11 @@ All notable changes to this project will be documented in this file.
     # Log into keycloak admin app, click on `Clients` and select `mspsds-app`
     # In the `Service Account Roles` tab, select `realm-management` from the dropdown and assign the `view-clients` role
     # In the `Scope` tab, select `realm-management` from the dropdown and assign the `view-clients` role
-- [ ] Add `view_clients` role to mspsds service account roles on `realm-management`
 - [ ] Update the apps to send their logs to `opss-log-drain`.
+- [ ] Allow mspsds to manage users info on keycloak
+    # Log into keycloak admin app, click on `Clients` and select `mspsds-app`
+    # In the `Service Account Roles` tab, select `realm-management` from the dropdown and assign the `manage-users` role
+    # In the `Scope` tab, select `realm-management` from the dropdown and assign the `manage-users` role
 
 
 ## 2019-03-07

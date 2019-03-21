@@ -22,8 +22,8 @@ class Investigation < ApplicationRecord
   validates_length_of :non_compliant_reason, maximum: 10000
   validates_length_of :hazard_description, maximum: 10000
 
-  after_save :create_audit_activity_for_assignee,
-             :create_audit_activity_for_status, :create_audit_activity_for_visibility
+  after_update :create_audit_activity_for_assignee, :create_audit_activity_for_status,
+               :create_audit_activity_for_visibility
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
@@ -61,7 +61,7 @@ class Investigation < ApplicationRecord
   has_one :source, as: :sourceable, dependent: :destroy
   has_one :complainant, dependent: :destroy
 
-  before_create :assign_current_user_to_case, :add_pretty_id
+  before_create :set_source_to_current_user, :assign_to_current_user, :add_pretty_id
 
   after_create :create_audit_activity_for_case, :send_confirmation_email
 
@@ -181,7 +181,7 @@ class Investigation < ApplicationRecord
   end
 
   def has_non_compliant_reason
-    if non_compliant_reason&.empty?
+    if non_compliant_reason.empty?
       errors.add(:non_compliant_reason, "cannot be blank")
     end
   end
@@ -243,8 +243,12 @@ private
     AuditActivity::Business::Destroy.from(business, self)
   end
 
-  def assign_current_user_to_case
-    self.source = UserSource.new(user: User.current) if self.source.blank? && User.current
+  def set_source_to_current_user
+    self.source = UserSource.new(user: User.current) if source.blank? && User.current
+  end
+
+  def assign_to_current_user
+    self.assignee = User.current if assignee.blank? && User.current
   end
 
   def send_confirmation_email

@@ -1,6 +1,6 @@
 linters:
   CommentControlStatement:
-    enabled: true
+    enabled: false
 
   ControlStatementSpacing:
     enabled: true
