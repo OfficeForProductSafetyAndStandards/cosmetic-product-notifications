@@ -34,7 +34,7 @@
     = link_to "Add cosmetic products", new_responsible_person_notification_file_path(@responsible_person),
             class: "govuk-button govuk-button", role: "button"
 
-= render "tabs", tabs: [\
+= render "components/tabs", tabs: [\
   Tab.new("errors", "Errors (#{@erroneous_notification_files.total_entries})", "Files that failed to upload",
         lambda { render "responsible_persons/notifications/tabs/errors" }),
   Tab.new("unfinished", "Incomplete (#{@unfinished_notifications.total_entries})", "Incomplete registrations",
