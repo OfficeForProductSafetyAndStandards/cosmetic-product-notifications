@@ -1,6 +1,5 @@
 class Investigation::Enquiry < Investigation
-  validates :user_title, presence: true, on: %i[enquiry_details]
-  validates :description, presence: true, on: %i[enquiry_details]
+  validates :user_title, :description, presence: true, on: :enquiry_details
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")

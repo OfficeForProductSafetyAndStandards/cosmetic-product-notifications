@@ -8,13 +8,6 @@ class Investigation < ApplicationRecord
   attr_accessor :visibility_rationale
 
   before_validation { trim_line_endings(:user_title, :description, :non_compliant_reason, :hazard_description) }
-  validates :user_title, presence: true, on: :enquiry_details
-  validates :description, presence: true, on: %i[allegation_details enquiry_details]
-  validates :hazard_type, presence: true, on: :allegation_details
-  validates :product_category, presence: true, on: :allegation_details
-  validates :hazard_description, presence: true, on: :unsafe
-  validates :hazard_type, presence: true, on: :unsafe
-  validates :non_compliant_reason, presence: true, on: :non_compliant
 
   validates :description, presence: true, on: :edit
   validates :assignable_id, presence: { message: "Select assignee" }, on: :edit
