@@ -50,19 +50,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should assign user to investigation" do
-    user = User.find_by(last_name: "User_one")
-    investigation_assignee = lambda { Investigation.find(@investigation_three.id).assignee }
-    assert_changes investigation_assignee, from: nil, to: user do
-      put assign_investigation_url(@investigation_three), params: {
-        investigation: {
-          assignable_id: user.id
-        }
-      }
-    end
-    assert_redirected_to investigation_url(@investigation_three)
-  end
-
   test "should set status" do
     investigation = Investigation.create
     is_closed = true
@@ -85,24 +72,6 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     assert_includes(response.body, "Status should be closed or open")
-  end
-
-  test "should update assignee from selectable list" do
-    put assign_investigation_url(@investigation_one), params: {
-      investigation: {
-        assignable_id: @assignee.id
-      }
-    }
-    assert_equal(Investigation.find(@investigation_one.id).assignable_id, @assignee.id)
-  end
-
-  test "should update assignee from radio boxes" do
-    put assign_investigation_url(@investigation_one), params: {
-      investigation: {
-        assignable_id: @assignee.id
-      }
-    }
-    assert_equal(Investigation.find(@investigation_one.id).assignable_id, @assignee.id)
   end
 
   test "status filter should be defaulted to open" do
