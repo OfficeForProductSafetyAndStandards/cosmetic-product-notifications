@@ -200,7 +200,7 @@ class InvestigationTest < ActiveSupport::TestCase
     assert(policy(@new_investigation).show?(user: user))
   end
 
-  test "not visible to no-admin, no-source, no-assignee organisation" do
+  test "not visible to no-source, no-assignee organisation" do
     create_new_private_case
     sign_in_as User.find_by(last_name: "User_two")
     set_user_as_non_opss(User.current)
@@ -240,7 +240,7 @@ class InvestigationTest < ActiveSupport::TestCase
   test "people in currently assigned team should be able to re-assign case" do
     investigation = Investigation::Allegation.create(description: "new_investigation_description")
     investigation.assignee = all_teams[0]
-    assert policy(investigation).assign?(user: User.find_by(last_name: "Admin"))
+    assert policy(investigation).assign?(user: User.find_by(last_name: "User_four"))
   end
 
   test "pretty_id should contain YYMM" do
