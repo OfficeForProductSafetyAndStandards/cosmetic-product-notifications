@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ContactsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    mock_out_keycloak_and_notify(user_name: "Admin")
+    mock_out_keycloak_and_notify
     @contact = contacts(:one)
   end
 
