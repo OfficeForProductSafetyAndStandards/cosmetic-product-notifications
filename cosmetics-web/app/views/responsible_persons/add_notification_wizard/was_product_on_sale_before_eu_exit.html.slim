@@ -4,10 +4,11 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with url: wizard_path, method: :put do |form|
-        h1.govuk-heading-xl
-            | Was this product on sale before the UK left the European Union?
-        = render "components/govuk_radios",
-                name: :answer,
-                items: [{ text: "Yes", value: "yes", id: "answer_yes" },
-                        { text: "No", value: "no", id: "answer_no" }]
-        = form.submit "Continue", class: "govuk-button"
+      h1.govuk-heading-xl
+        | Was this product on sale before the UK left the European Union?
+      = render "components/govuk_radios",
+          name: :answer,
+          errorMessage: @error_text.present? && { text: @error_text },
+          items: [{ text: "Yes", value: "yes", id: "answer_yes" },
+            { text: "No", value: "no", id: "answer_no" }]
+      = form.submit "Continue", class: "govuk-button"

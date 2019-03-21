@@ -12,26 +12,42 @@ class ResponsiblePersons::AddNotificationWizardController < ApplicationControlle
   end
 
   def update
-    map = {
-        have_products_been_notified_in_eu: {
-            "yes" => wizard_path(:do_you_have_files_from_eu_notification),
-            "no" => wizard_path(:will_products_be_notified_in_eu)
-        },
-        will_products_be_notified_in_eu: {
-            "yes" => wizard_path(:register_on_eu_system),
-            "no" => wizard_path(:was_product_on_sale_before_eu_exit)
-        },
-        do_you_have_files_from_eu_notification: {
-            "yes" => bulk_upload_path,
-            "no" => manual_journey_path(notified_before_eu_exit: false)
-        },
-        was_product_on_sale_before_eu_exit: {
-            "yes" => manual_journey_path(notified_before_eu_exit: true),
-            "no" => manual_journey_path(notified_before_eu_exit: false)
-        }
-    }
+    answer = params[:answer]
+    if answer != "yes" && answer != "no"
+      @error_text = "Please select an answer"
+      return render step
+    end
 
-    redirect_to map[step][params[:answer]]
+    case step
+    when :have_products_been_notified_in_eu
+      case answer
+      when "yes"
+        redirect_to wizard_path(:do_you_have_files_from_eu_notification)
+      when "no"
+        redirect_to wizard_path(:will_products_be_notified_in_eu)
+      end
+    when :will_products_be_notified_in_eu
+      case answer
+      when "yes"
+        redirect_to wizard_path(:register_on_eu_system)
+      when "no"
+        redirect_to wizard_path(:was_product_on_sale_before_eu_exit)
+      end
+    when :do_you_have_files_from_eu_notification
+      case answer
+      when "yes"
+        redirect_to bulk_upload_path
+      when "no"
+        redirect_to manual_journey_path(notified_before_eu_exit: false)
+      end
+    when :was_product_on_sale_before_eu_exit
+      case answer
+      when "yes"
+        redirect_to manual_journey_path(notified_before_eu_exit: true)
+      when "no"
+        redirect_to manual_journey_path(notified_before_eu_exit: false)
+      end
+    end
   end
 
   def new

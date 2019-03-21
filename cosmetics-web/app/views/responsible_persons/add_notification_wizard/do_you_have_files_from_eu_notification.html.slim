@@ -12,7 +12,9 @@
         strong
           ' export
         ' your data as ZIP files for all cosmetic products.
+
       = render "components/govuk_radios", name: :answer,
+        errorMessage: @error_text.present? && { text: @error_text },
         items: [{ text: "Yes", value: "yes", id: "answer_yes" },
           { text: "No", value: "no", id: "answer_no" }]
       = form.submit "Continue", class: "govuk-button"

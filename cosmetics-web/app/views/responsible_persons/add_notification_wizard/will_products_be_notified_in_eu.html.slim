@@ -13,7 +13,8 @@
           | You can upload notification files only as ZIP files containing XML files
           | on the UK cosmetic product registration service.
         = render "components/govuk_radios",
-                name: :answer,
-                items: [{ text: "Yes, the products will be notified in the EU", value: "yes", id: "answer_yes" },
-                        { text: "No", value: "no", id: "answer_no" }]
+          name: :answer,
+          errorMessage: @error_text.present? && { text: @error_text },
+          items: [{ text: "Yes, the products will be notified in the EU", value: "yes", id: "answer_yes" },
+            { text: "No", value: "no", id: "answer_no" }]
         = form.submit "Continue", class: "govuk-button"
