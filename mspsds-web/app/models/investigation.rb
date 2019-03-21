@@ -99,18 +99,11 @@ class Investigation < ApplicationRecord
   end
 
   def assignee
-    begin
-      return User.find(assignable_id) if assignable_type == "User"
-      return Team.find(assignable_id) if assignable_type == "Team"
-    rescue StandardError
-      return nil
-    end
+    (User.where(id: assignable_id) + Team.where(id: assignable_id)).first
   end
 
   def assignee=(entity)
     self.assignable_id = entity&.id
-    self.assignable_type = "User" if entity.is_a?(User)
-    self.assignable_type = "Team" if entity.is_a?(Team)
   end
 
   def status
@@ -217,7 +210,7 @@ private
   end
 
   def create_audit_activity_for_assignee
-    if (saved_changes.key? :assignable_id) || (saved_changes.key? :assignable_type)
+    if (saved_changes.key? :assignable_id)
       AuditActivity::Investigation::UpdateAssignee.from(self)
     end
   end

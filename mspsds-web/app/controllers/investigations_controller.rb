@@ -87,15 +87,8 @@ private
     return if request.get?
 
     ps = update_params
-    potential_assignees = User.where(id: ps[:assignable_id]) + Team.where(id: ps[:assignable_id])
-    @investigation.assignee = potential_assignees.first if action_name == "assign"
-    %i[description is_closed status_rationale is_private visibility_rationale].each do |key|
+    editable_keys.each do |key|
       @investigation.send("#{key}=", ps[key]) if params.require(:investigation).key?(key)
-    end
-
-    if @investigation.invalid?(:edit)
-      respond_to_invalid_data
-      return
     end
 
     respond_to_update
@@ -118,6 +111,18 @@ private
   def update_params
     return {} if params[:investigation].blank?
 
+    handle_assign_params
+    params.require(:investigation).permit(editable_keys)
+  end
+
+  def editable_keys
+    %i[description is_closed status_rationale is_private visibility_rationale assignable_id]
+  end
+
+  def handle_assign_params
+    relevant_params = params.require(:investigation)
+    return unless relevant_params.key?(:assignable_id) || relevant_params.key?(:select_someone_else)
+
     params[:investigation][:assignable_id] = case params[:investigation][:assignable_id]
                                              when "someone_in_your_team"
                                                params[:investigation][:select_team_member]
@@ -130,15 +135,12 @@ private
                                              else
                                                params[:investigation][:assignable_id]
                                              end
-    params.require(:investigation).permit(:assignable_id,
-                                          :description,
-                                          :is_closed, :status_rationale,
-                                          :is_private, :visibility_rationale)
   end
 
   def respond_to_update
     respond_to do |format|
-      if @investigation.save
+      if @investigation.valid?(:edit)
+        @investigation.save
         format.html { redirect_to @investigation, notice: "#{@investigation.case_type.titleize} was successfully updated." }
         format.json { render :show, status: :ok, location: @investigation }
       else
@@ -146,13 +148,6 @@ private
         format.html { render action_name }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def respond_to_invalid_data
-    respond_to do |format|
-      format.html { render action_name }
-      format.json { render json: @investigation.errors, status: :unprocessable_entity }
     end
   end
 
