@@ -8,6 +8,10 @@ class CorrectiveActionTest < ActiveSupport::TestCase
     mock_out_keycloak_and_notify
   end
 
+  teardown do
+    reset_keycloak_and_notify_mocks
+  end
+
   test "requires an associated investigation, business and product" do
     corrective_action = create_valid_corrective_action
     corrective_action.update(investigation: nil, business: nil, product: nil)
