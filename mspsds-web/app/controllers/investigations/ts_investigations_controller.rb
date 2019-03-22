@@ -288,8 +288,15 @@ private
   end
 
   def store_business
+    current_business_type = params.require(:business)[:business_type]
+    # Ideally we'd use the "value" of the button here, separate from the literally displayed text, but due to
+    # differences in how this is handled between ie8 and normal browsers, that's not practical
+    if params[:commit] == "Skip this page"
+      session[:businesses].delete_if { |entry| entry[:type] == current_business_type }
+      return
+    end
     if @business.valid?
-      business_entry = session[:businesses].find { |entry| entry[:type] == params.require(:business)[:business_type] }
+      business_entry = session[:businesses].find { |entry| entry[:type] == current_business_type }
       contact = @business.contacts.first
       location = @business.locations.first
       if contact.attributes.values.any?(&:present?)
