@@ -7,7 +7,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl
-        p.govuk-caption-xl
+        span.govuk-caption-xl
           = @investigation.pretty_description
         | Compose new alert
       = render "form_components/govuk_input",
@@ -15,7 +15,7 @@
               key: :summary,
               label: { text: "Alert subject", classes: "govuk-label--m" },
               hint: { text: "This will be used in the email subject line." },
-              value: (@alert.summary.presence || @default_summary)
+              value: (@alert.summary.presence || @alert.default_summary)
 
       - description_hint_text = "Include a summary of the incident and what actions you’d like recipients to take." + \
         "Recipients will need to view the case to see attachments and images."
@@ -24,7 +24,7 @@
               key: :description,
               rows: 12,
               maxlength: 1000,
-              value: (@alert.description.presence || @default_description),
+              value: (@alert.description.presence || @alert.default_description),
               label: { text: "Alert content", classes: "govuk-label--m" },
               hint: { text: description_hint_text }
 
