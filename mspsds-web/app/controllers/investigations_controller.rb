@@ -4,7 +4,7 @@ class InvestigationsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[status visibility edit_summary update created]
-  before_action :set_action, only: %i[status visibility edit_summary]
+  before_action :clear_session, only: %i[status visibility edit_summary]
   before_action :set_investigation_with_associations, only: %i[show]
   before_action :build_breadcrumbs, only: %i[show]
 
@@ -65,7 +65,6 @@ class InvestigationsController < ApplicationController
     @investigation.update(update_params)
     respond_to do |format|
       if @investigation.save(context: :edit)
-        session[:viewed_page] = nil
         format.html {
           redirect_to @investigation, flash: {
             success: "#{@investigation.case_type.titleize} was successfully updated."
@@ -73,6 +72,8 @@ class InvestigationsController < ApplicationController
         }
         format.json { render :show, status: :ok, location: @investigation }
       else
+        @investigation.restore_attributes
+        session[:viewed_page] ||= request.referer.split('/').last
         format.html { render session[:viewed_page] }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end
@@ -106,8 +107,8 @@ private
     authorize @investigation
   end
 
-  def set_action
-    session[:viewed_page] = request.original_url.split('/').last
+  def clear_session
+    session[:viewed_page] = nil
   end
 
   def update_params
