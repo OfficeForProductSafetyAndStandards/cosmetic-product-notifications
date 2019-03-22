@@ -1,0 +1,28 @@
+- content_for :page_title, "Update assignee"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    - heading = capture do
+      = render "minimal_investigation_heading", investigation: @investigation,
+              title: "Who do you want to assign the #{@investigation.case_type} to?"
+      - if @investigation.assignee.present?
+        p
+          ' Currently assigned to:
+          strong = @investigation.assignee.display_name
+      - else
+        p Nobody is assigned yet
+
+    - if policy(@investigation).assign?
+      = render "investigations/assign/assignee_form", investigation: @investigation do
+        = heading
+    - else
+      = heading
+      p
+        = "You do not have permission to assign this #{@investigation.case_type}."
+        br
+        ' Contact
+        strong = @investigation.assignee.display_name
+        | to change assignment.
+      = link_to "Return to case", @investigation, class: "govuk-button"

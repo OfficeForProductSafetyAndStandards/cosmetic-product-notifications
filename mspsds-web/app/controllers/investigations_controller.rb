@@ -3,9 +3,8 @@ class InvestigationsController < ApplicationController
   include LoadHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[assign status visibility]
+  before_action :set_investigation, only: %i[status visibility created]
   before_action :set_investigation_with_associations, only: %i[show]
-  before_action :set_suggested_previous_assignees, only: :assign
   before_action :build_breadcrumbs, only: %i[show]
 
   # GET /cases
@@ -74,23 +73,6 @@ class InvestigationsController < ApplicationController
     respond_to_update(:status)
   end
 
-  # GET /cases/1/assign
-  # PUT /cases/1/assign
-  def assign
-    return if request.get?
-
-    ps = assignee_update_params
-
-    potential_assignees = User.where(id: ps[:assignable_id]) + Team.where(id: ps[:assignable_id])
-    if potential_assignees.empty?
-      @investigation.errors.add(:assignable_id, :invalid, message: "Select assignee")
-      respond_to_invalid_data(:assign)
-      return
-    end
-    @investigation.assignee = potential_assignees.first
-    respond_to_update(:assign)
-  end
-
   # GET /cases/1/visibility
   # PUT /cases/1/visibility
   def visibility
@@ -107,6 +89,8 @@ class InvestigationsController < ApplicationController
     @investigation.visibility_rationale = ps[:visibility_rationale] if ps[:visibility_rationale]
     respond_to_update(:visibility)
   end
+
+  def created; end
 
 private
 
@@ -137,26 +121,14 @@ private
     params.require(:investigation).permit(:is_private, :visibility_rationale)
   end
 
-  def assignee_update_params
-    params[:investigation][:assignable_id] = case params[:investigation][:assignable_id]
-                                             when "someone_in_your_team"
-                                               params[:investigation][:select_team_member]
-                                             when "previously_assigned"
-                                               params[:investigation][:select_previously_assigned]
-                                             when "other_team"
-                                               params[:investigation][:select_other_team]
-                                             when "someone_else"
-                                               params[:investigation][:select_someone_else]
-                                             else
-                                               params[:investigation][:assignable_id]
-                                             end
-    params.require(:investigation).permit(:assignable_id)
-  end
-
   def respond_to_update(origin)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "#{@investigation.case_type.titleize} was successfully updated." }
+        format.html {
+          redirect_to @investigation, flash: {
+              success: "#{@investigation.case_type.titleize} was successfully updated."
+          }
+        }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes

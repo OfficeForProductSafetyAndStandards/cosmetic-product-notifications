@@ -184,26 +184,26 @@ class InvestigationTest < ActiveSupport::TestCase
   test "visible to creator organisation" do
     create_new_private_case
     creator = User.find_by(last_name: "User_one")
-    set_user_as_non_opss(creator)
+    mock_user_as_non_opss(creator)
     user = User.find_by(last_name: "User_two")
-    set_user_as_non_opss(user)
+    mock_user_as_non_opss(user)
     assert_equal(policy(@new_investigation).show?(user: user), true)
   end
 
   test "visible to assignee organisation" do
     create_new_private_case
     assignee = User.find_by(last_name: "User_two")
-    set_user_as_opss(assignee)
+    mock_user_as_opss(assignee)
     user = User.find_by(last_name: "User_three")
-    set_user_as_opss(user)
+    mock_user_as_opss(user)
     @new_investigation.assignee = assignee
     assert(policy(@new_investigation).show?(user: user))
   end
 
-  test "not visible to no-admin, no-source, no-assignee organisation" do
+  test "not visible to no-source, no-assignee organisation" do
     create_new_private_case
     sign_in_as User.find_by(last_name: "User_two")
-    set_user_as_non_opss(User.current)
+    mock_user_as_non_opss(User.current)
     assert_not(policy(@new_investigation).show?(user: User.current))
   end
 
@@ -233,14 +233,14 @@ class InvestigationTest < ActiveSupport::TestCase
 
   test "people out of currently assigned team should not be able to re-assign case" do
     investigation = Investigation::Allegation.create(description: "new_investigation_description")
-    investigation.assignee = all_teams[0]
+    investigation.assignee = Team.find_by(name: "Team 1")
     assert_not policy(investigation).assign?(user: User.find_by(last_name: "User_three"))
   end
 
   test "people in currently assigned team should be able to re-assign case" do
     investigation = Investigation::Allegation.create(description: "new_investigation_description")
-    investigation.assignee = all_teams[0]
-    assert policy(investigation).assign?(user: User.find_by(last_name: "Admin"))
+    investigation.assignee = Team.find_by(name: "Team 1")
+    assert policy(investigation).assign?(user: User.find_by(last_name: "User_four"))
   end
 
   test "pretty_id should contain YYMM" do

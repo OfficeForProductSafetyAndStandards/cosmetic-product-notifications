@@ -1,0 +1,18 @@
+$navbar-link-colour: #ffffff;
+
+.sign-out-link {
+  font-size: 16px;
+  font-weight: 700;
+
+  &:not(:focus) {
+    color: $navbar-link-colour;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @include remove-default-button-styling;
+  @include govuk-link-common;
+  padding: 0;
+}

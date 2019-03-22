@@ -15,10 +15,6 @@ class Complainant < ApplicationRecord
   end
 
   def can_be_displayed?
-    return true if investigation.source&.is_a? ReportSource
-    return true unless contains_personal_data?
-    return true if User.current.organisation == investigation&.source&.user&.organisation
-
-    false
+    investigation.can_display_child_object?(contains_personal_data?, investigation.source)
   end
 end

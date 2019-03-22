@@ -31,6 +31,14 @@ module NotificationPropertiesHelper
     EXPOSURE_CONDITION_NAME[exposure_condition&.to_sym]
   end
 
+  def get_physical_form_name(physical_form)
+    PHYSICAL_FORM[physical_form&.to_sym]
+  end
+
+  def get_special_applicator_name(special_applicator)
+    SPECIAL_APPLICATOR[special_applicator&.to_sym]
+  end
+
   NOTIFICATION_TYPE = {
       predefined: "Frame formulation",
       exact: "Exact concentration",
@@ -437,5 +445,23 @@ module NotificationPropertiesHelper
   EXPOSURE_CONDITION_NAME = {
       rinse_off: "Rinse off",
       leave_on: "Leave on"
+  }.freeze
+
+  PHYSICAL_FORM = {
+      solid_or_pressed_powder: "Solid/pressed powder",
+      loose_powder: "Loose powder",
+      cream_or_paste: "Cream/paste",
+      liquid: "Liquid",
+      foam: "Foam",
+      spray: "Spray",
+      other_physical_form: "Other"
+  }.freeze
+
+  SPECIAL_APPLICATOR = {
+      wipe_sponge_patch_pad: "Wipe/sponge/patch/pad",
+      encapsulated_products: "Encapsulated products",
+      pressurised_spray_container: "Pressurised spray container",
+      pressurised_container_non_spray_product: "Pressurised container - non spray product",
+      other_special_applicator: "Other"
   }.freeze
 end

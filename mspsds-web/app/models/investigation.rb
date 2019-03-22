@@ -6,6 +6,7 @@ class Investigation < ApplicationRecord
 
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
+  attr_accessor :assignee_rationale
 
   before_validation { trim_line_endings(:user_title, :description, :non_compliant_reason, :hazard_description) }
   validates :user_title, presence: true, on: :enquiry_details
@@ -200,6 +201,16 @@ class Investigation < ApplicationRecord
   def add_pretty_id
     cases_before = Investigation.where("created_at < ? AND created_at > ?", created_at, created_at.beginning_of_month).count
     self.pretty_id = "#{created_at.strftime('%y%m')}-%04d" % (cases_before + 1)
+  end
+
+  def can_display_child_object?(child_has_gdpr_sensitive_data, child_source)
+    return true if child_source&.is_a? ReportSource
+    return true unless child_has_gdpr_sensitive_data
+    return true if User.current.organisation == child_source&.user&.organisation
+    return true if User.current == self.assignee
+    return true if self.assignee && (self.assignee.teams & User.current.teams).any?
+
+    false
   end
 
 private

@@ -1,8 +1,4 @@
 class InvestigationPolicy < ApplicationPolicy
-  def destroy?
-    @user.has_role? :admin
-  end
-
   def show?(user: @user)
     visible_to(user: user)
   end
@@ -21,6 +17,10 @@ class InvestigationPolicy < ApplicationPolicy
 
   def visibility?(user: @user)
     visible_to(user: user, private: true)
+  end
+
+  def created?
+    show?
   end
 
   def visible_to(user:, private: @record.is_private)

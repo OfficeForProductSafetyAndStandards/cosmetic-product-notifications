@@ -33,7 +33,7 @@ class Investigations::AlertsController < ApplicationController
 
   def create
     @alert.save
-    redirect_to investigation_path(@investigation), notice: "Email alert sent to #{@user_count} users"
+    redirect_to investigation_path(@investigation), flash: { success: "Email alert sent to #{@user_count} users" }
   end
 
 private
