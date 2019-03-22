@@ -12,8 +12,6 @@ module CategoryHelper
 
   def get_sub_sub_categories
     parent_of_categories = Component.get_parent_of_categories
-    Component.categories.select do |key|
-      ! parent_of_categories.has_value?(key.to_sym)
-    end
+    Component.categories.reject { |key| parent_of_categories.has_value?(key.to_sym) }
   end
 end

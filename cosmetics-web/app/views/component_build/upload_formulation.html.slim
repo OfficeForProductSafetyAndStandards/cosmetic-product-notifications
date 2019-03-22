@@ -1,7 +1,8 @@
 - content_for :page_title, "Add formulation"
 - content_for :after_header do
   = link_to "Back",
-          responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_formulation_type),
+          responsible_person_notification_component_build_path(@component.notification.responsible_person,
+                  @component.notification, @component, :select_formulation_type),
           class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds

@@ -8,8 +8,10 @@
       - heading = capture do
         h1.govuk-heading-xl How do you want to give the formulation of the product?
       = render "form_components/govuk_radios", form: form, key: :notification_type,
-              errorMessage: @no_exposure_route_selected && {text: "Please select an option before continuing"},
+              errorMessage: @no_exposure_route_selected && { text: "Please select an option before continuing" },
               fieldset: { legend: { html: heading } },
-              items: formulations_types_label.each.map{|type_key, type_text| {text: type_text, value: type_key.to_sym}}
+              items: formulations_types_label.each.map { |type_key, type_text| \
+                { text: type_text, value: type_key.to_sym } \
+              }
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

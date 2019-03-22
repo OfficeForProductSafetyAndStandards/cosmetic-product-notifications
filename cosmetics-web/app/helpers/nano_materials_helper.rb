@@ -1,10 +1,10 @@
 module NanoMaterialsHelper
   def nano_elements
     {
-        titanium: {iupac_name: "Titanium dioxide"},
-        triazine: {iupac_name: "Tris-biphenyl triazine"},
-        carbon: {iupac_name: "Carbon black"},
-        other: {iupac_name: "Other"}
+        titanium: { iupac_name: "Titanium dioxide" },
+        triazine: { iupac_name: "Tris-biphenyl triazine" },
+        carbon: { iupac_name: "Carbon black" },
+        other: { iupac_name: "Other" }
     }
   end
 

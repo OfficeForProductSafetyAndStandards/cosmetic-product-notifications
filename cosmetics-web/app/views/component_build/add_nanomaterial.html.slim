@@ -13,7 +13,7 @@
         .govuk-checkboxes data-module="checkboxes"
           - nano_elements_label.each do |nano_element, label|
             .govuk-checkboxes__item
-              = form.check_box nano_element.to_sym, value: nano_element ,
+              = form.check_box nano_element.to_sym, value: nano_element,
                       class: "govuk-checkboxes__input"
               = form.label nano_element.to_sym, label,
                       class: "govuk-label govuk-checkboxes__label"
@@ -23,13 +23,18 @@
       = render "form_components/govuk_radios", form: form, key: :nano_material_exposure_route,
               errorMessage: @no_exposure_route_selected && { text: "Please select an option before continuing" },
               fieldset: { legend: { html: heading_expose_route } },
-              items: exposure_routes.each_with_index.map {|exposure_route, i| {text: exposure_route, value: i}}
+              items: exposure_routes.each_with_index.map { |exposure_route, i| \
+                { text: exposure_route, value: i, checked: @component.nano_material.exposure_route == exposure_route } \
+              }
 
       - heading_expose_condition = capture do
         h2.govuk-heading-l How is the user instructed to apply the cosmetic product?
       = render "form_components/govuk_radios", form: form, key: :nano_material_exposure_condition,
               errorMessage: @no_exposure_condition_selected && { text: "Please select an option before continuing" },
-              fieldset: {legend: {html: heading_expose_condition}},
-              items: exposure_conditions.each_with_index.map {|exposure_condition, i| {text: exposure_condition, value: i}}
+              fieldset: { legend: { html: heading_expose_condition } },
+              items: exposure_conditions.each_with_index.map { |exposure_condition, i| \
+                { text: exposure_condition, value: i,
+                  checked: @component.nano_material.exposure_condition == exposure_condition } \
+              }
 
       = form.submit "Continue", class: "govuk-button"

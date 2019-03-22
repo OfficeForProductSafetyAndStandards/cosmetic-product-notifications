@@ -7,10 +7,11 @@
         | List of components
       = form_for(@notification, url: wizard_path, method: :put) do |form|
         - valid_multicomponents = @notification.get_valid_multicomponents
-        - valid_multicomponents.each do | valid_component |
+        - valid_multicomponents.each do |valid_component|
           p #{valid_component.name}
           .govuk-form-group
-            button.govuk-button.secondary-button[type="submit" name="remove_component" value=valid_component.id] Remove component
+            button.govuk-button.secondary-button[type="submit"
+              name="remove_component" value=valid_component.id] Remove component
         .govuk-form-group
           button.govuk-button.secondary-button[type="submit" name="add_component" value='true'] Add another component
         - if valid_multicomponents.length > 1

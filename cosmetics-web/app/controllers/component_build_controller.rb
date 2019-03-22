@@ -66,6 +66,7 @@ class ComponentBuildController < ApplicationController
   end
 
 private
+
   NUMBER_OF_CMRS = 10
 
   def set_component
@@ -121,9 +122,10 @@ private
   def render_contains_nanomaterials
     case params[:contains_nanomaterials]
     when "yes"
+      @component.nano_material = NanoMaterial.create if @component.nano_material.nil?
       render_wizard @component
     when "no"
-      @component.nano_materials.destroy_all
+      @component.nano_material = nil
       redirect_to wizard_path(:select_category, component_id: @component.id)
     when ""
       @component.errors.add :nano_materials, "Please select an option"
@@ -149,14 +151,12 @@ private
     selected_exposure_route = exposure_routes[params[:nano_material_exposure_route].to_i]
     selected_exposure_condition = exposure_conditions[params[:nano_material_exposure_condition].to_i]
 
-    nano_material = @component.nano_materials.build(
-        exposure_condition: selected_exposure_condition,
-        exposure_route: selected_exposure_route
-    )
+    @component.nano_material.update(exposure_condition: selected_exposure_condition, exposure_route: selected_exposure_route)
 
+    @component.nano_material.nano_elements.destroy_all
     nano_elements.each do |key, nano_element|
       if params[key.to_sym] == "1"
-        nano_material.nano_elements.build(nano_element)
+        @component.nano_material.nano_elements.create(nano_element)
       end
     end
 
@@ -172,7 +172,7 @@ private
 
   def render_add_cmrs
     cmrs = params[:cmrs]
-    cmrs.each do |index , cmr|
+    cmrs.each do |index, cmr|
       cmr_name = cmr[:name]
       cmr_cas_number = cmr[:cas_number]
 

@@ -1,8 +1,9 @@
 - content_for :page_title, "Select the component category category"
 - content_for :after_header do
-  - previous_step = @component.nano_materials.empty? ? :contains_nanomaterials : :add_nanomaterial
+  - previous_step = @component.nano_material.nil? ? :contains_nanomaterials : :add_nanomaterial
   = link_to "Back",
-          responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step),
+          responsible_person_notification_component_build_path(@component.notification.responsible_person,
+                  @component.notification, @component, previous_step),
           class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -10,7 +11,9 @@
       | What category of cosmetic is the product?
       = form_for(@component, url: wizard_path, method: :put) do |form|
         = render "form_components/autocomplete_select", key: :sub_sub_category, form: form, show_all_values: true,
-                items: get_sub_sub_categories.map {|category_key, category_text| [get_full_category_name(category_key), category_key]}
+                items: get_sub_sub_categories.map { |category_key, _category_text| \
+                  [get_full_category_name(category_key), category_key] \
+                }
 
         .govuk-form-group
           = form.submit "Continue", class: "govuk-button"

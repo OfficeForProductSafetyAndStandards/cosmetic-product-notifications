@@ -2,7 +2,8 @@
 - content_for :after_header do
   - previous_step = @component.shades.nil? ? :number_of_shades : :add_shades
   = link_to "Back",
-          responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step),
+          responsible_person_notification_component_build_path(@component.notification.responsible_person,
+                  @component.notification, @component, previous_step),
           class: "govuk-back-link"
 
 - cmr_list_url = "https://example.example-list-cmr.com" # TODO COSBETA-194
@@ -10,17 +11,18 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
-      | Does the cosmetic product contain any substances that are known or presumed to be carcinogenic, mutagenic or toxic for reproduction?
+      | Does the cosmetic product contain any substances that are known or presumed to be
+      |  carcinogenic, mutagenic or toxic for reproduction?
     p
       | These substance are commonly referred to as CMR.
     p
       = link_to "View carcinogenic, mutagenic or toxic for reproduction substances (opens in a new tab).",
-              cmr_list_url, target: :_blank
+              cmr_list_url, target: :_blank, rel: 'noopener'
     p
       | Apart from in exceptional cases, these substances are banned for use in cosmetic products.
       | &nbsp
-      = link_to "Read about carcinogenic, mutagenic or toxic for reproduction substances that aren’t banned (opens in a new tab).",
-              cmr_read_url, target: :_blank
+      = link_to "Read about carcinogenic, mutagenic or toxic for reproduction substances that aren’t banned" + \
+                " (opens in a new tab).", cmr_read_url, target: :_blank, rel: 'noopener'
 
       = form_for(@component, url: wizard_path, method: :put) do |form|
         - @component.cmrs.each_with_index do |cmr, index|
@@ -37,6 +39,6 @@
                   name: "cmrs[#{index}][cas_number]",
                   id: "cmrs-cas_number",
                   value: cmr.cas_number,
-                  label: {text: "Substance #{cmr_number} Chemical Abstracts Service registry number"}
+                  label: { text: "Substance #{cmr_number} Chemical Abstracts Service registry number" }
         .govuk-form-group
             = form.submit "Continue", class: "govuk-button"

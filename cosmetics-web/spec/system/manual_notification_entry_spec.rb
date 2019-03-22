@@ -32,8 +32,21 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
     # nano_materials
     choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
     click_button "Continue"
 
     # add_product_image
@@ -72,8 +85,21 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
     # nano_materials
     choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
     click_button "Continue"
 
     # add_product_image
@@ -109,8 +135,21 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
     # nano_materials
     choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
     click_button "Continue"
 
     # add_product_image
@@ -159,8 +198,21 @@ RSpec.describe "Manually enter product details", type: :system do
     end
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
     # nano_materials
     choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
     click_button "Continue"
 
     # add_product_image

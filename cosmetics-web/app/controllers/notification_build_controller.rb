@@ -107,24 +107,18 @@ private
   def render_add_new_component_step
     if params.key?(:remove_component)
       remove_component_id = params[:remove_component].to_i
-      componet_to_remove = @notification.components.select { | component | component.id == remove_component_id }
+      componet_to_remove = @notification.components.select { |component| component.id == remove_component_id }
       @notification.components.delete(componet_to_remove)
-      if @notification.components.length < 2
-        @notification.components.create
-      end
+      @notification.components.create if @notification.components.length < 2
       render step
     elsif params.key?(:add_component) && params[:add_component]
       unvalid_multicomponents = @notification.get_unvalid_multicomponents
-      new_component = unvalid_multicomponents.empty? ?
-                          @notification.components.create
-                          : unvalid_multicomponents.first
+      new_component = unvalid_multicomponents.empty? ? @notification.components.create : unvalid_multicomponents.first
       redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, new_component)
+    elsif @notification.get_valid_multicomponents.length > 1
+      render_wizard @notification
     else
-      if @notification.get_valid_multicomponents.length > 1
-        render_wizard @notification
-      else
-        render step
-      end
+      render step
     end
   end
 
