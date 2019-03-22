@@ -4,6 +4,7 @@ class InvestigationsController < ApplicationController
 
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[status visibility edit_summary update created]
+  before_action :set_action, only: %i[status visibility edit_summary]
   before_action :set_investigation_with_associations, only: %i[show]
   before_action :build_breadcrumbs, only: %i[show]
 
@@ -62,11 +63,9 @@ class InvestigationsController < ApplicationController
     return if request.get?
 
     @investigation.update(update_params)
-    is_valid = @investigation.valid?(:edit)
-    saved = is_valid ? @investigation.save : false
-
     respond_to do |format|
-      if saved
+      if @investigation.save(context: :edit)
+        session[:viewed_page] = nil
         format.html {
           redirect_to @investigation, flash: {
             success: "#{@investigation.case_type.titleize} was successfully updated."
@@ -74,8 +73,7 @@ class InvestigationsController < ApplicationController
         }
         format.json { render :show, status: :ok, location: @investigation }
       else
-        viewed_page = request.referer.split('/').last
-        format.html { render viewed_page }
+        format.html { render session[:viewed_page] }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end
     end
@@ -106,6 +104,10 @@ private
   def set_investigation
     @investigation = Investigation.find_by!(pretty_id: params[:pretty_id])
     authorize @investigation
+  end
+
+  def set_action
+    session[:viewed_page] = request.original_url.split('/').last
   end
 
   def update_params
