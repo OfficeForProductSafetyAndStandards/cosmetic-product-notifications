@@ -64,7 +64,7 @@ class InvestigationsController < ApplicationController
 
     @investigation.update(update_params)
     respond_to do |format|
-      if @investigation.save(context: :edit)
+      if @investigation.save
         format.html {
           redirect_to @investigation, flash: {
             success: "#{@investigation.case_type.titleize} was successfully updated."
@@ -72,7 +72,6 @@ class InvestigationsController < ApplicationController
         }
         format.json { render :show, status: :ok, location: @investigation }
       else
-        @investigation.restore_attributes
         session[:viewed_page] ||= request.referer.split('/').last
         format.html { render session[:viewed_page] }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
