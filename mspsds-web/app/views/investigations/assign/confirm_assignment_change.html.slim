@@ -1,0 +1,21 @@
+- content_for :page_title, "Confirm assignment change"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+
+= form_with(model: @investigation, local: true,
+              url: investigation_assign_index_path(@investigation), method: :post) do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      = render "minimal_investigation_heading", investigation: @investigation, title: "Confirm assignment change"
+      p
+        | You are assigning this project to:
+        strong = " #{@potential_assignee.display_name || @potential_assignee.name}"
+      .govuk-form-group
+        = render "form_components/govuk_textarea", key: :assignee_rationale, form: form,
+                    classes: "govuk-!-width-two-thirds",
+                    rows: "3",
+                    label: { text: "Message to new assignee (optional)" },
+                    attributes: { maxlength: 5000 }
+  = form.submit "Confirm change", class: "govuk-button"
+  p = link_to "Cancel", @investigation, class: "govuk-link mspsds-block-link"

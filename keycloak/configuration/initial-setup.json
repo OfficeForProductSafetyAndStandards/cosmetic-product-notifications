@@ -1824,14 +1824,6 @@
         "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52",
         "attributes" : { }
       }, {
-        "id" : "fdfc9286-5f71-4e01-8ad5-241c92848fb1",
-        "name" : "admin",
-        "description" : "Administrator role allowing users to be assigned to cases, etc.",
-        "composite" : false,
-        "clientRole" : true,
-        "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52",
-        "attributes" : { }
-      }, {
         "id" : "9609944f-dca7-421f-9572-1f89d12aa732",
         "name" : "user",
         "description" : "Default role assigned to all users.",
@@ -1849,7 +1841,7 @@
     "attributes" : { },
     "realmRoles" : [ "admin", "user" ],
     "clientRoles" : {
-      "mspsds-app" : [ "mspsds_user", "admin", "user" ]
+      "mspsds-app" : [ "mspsds_user", "user" ]
     },
     "subGroups" : [ ]
   }, {
@@ -1944,37 +1936,6 @@
   "otpPolicyPeriod" : 30,
   "otpSupportedApplications" : [ "FreeOTP", "Google Authenticator" ],
   "users" : [ {
-    "id" : "4e7ad61f-9c39-4cad-b648-b4ae18000636",
-    "createdTimestamp" : 1536192615669,
-    "username" : "admin@example.com",
-    "enabled" : true,
-    "totp" : false,
-    "emailVerified" : true,
-    "firstName" : "Test",
-    "lastName" : "Admin",
-    "email" : "admin@example.com",
-    "credentials" : [ {
-      "type" : "password",
-      "hashedSaltedValue" : "BLwYtHV7uYDdwpzqG6nNIcIiTm2SGAj83JCzOyt2eaDLUKV9O9u191CboFWi2YLOFTsn4iKigHkJopUYMAs+RA==",
-      "salt" : "SNxYjHEp4xy7/YEIe3wokg==",
-      "hashIterations" : 27500,
-      "counter" : 0,
-      "algorithm" : "pbkdf2-sha256",
-      "digits" : 0,
-      "period" : 0,
-      "createdDate" : 1536192632925,
-      "config" : { }
-    } ],
-    "disableableCredentialTypes" : [ "password" ],
-    "requiredActions" : [ ],
-    "realmRoles" : [ "user" ],
-    "clientRoles" : {
-      "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "user" ]
-    },
-    "notBefore" : 0,
-    "groups" : [ "/Admin" ]
-  }, {
     "id" : "e43bc41b-8ba6-45b0-ad45-1e4d261ac6be",
     "createdTimestamp" : 1551956494192,
     "username" : "msa@example.com",

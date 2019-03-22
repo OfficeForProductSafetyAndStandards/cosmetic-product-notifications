@@ -7,7 +7,7 @@ class TeamTest < ActionDispatch::IntegrationTest
     @user_one = User.find_by(last_name: "User_one")
     @user_two = User.find_by(last_name: "User_two")
     @user_three = User.find_by(last_name: "User_three")
-    @admin = User.find_by(last_name: "Admin")
+    @user_four = User.find_by(last_name: "User_four")
 
     prepare_assigned_cases
   end
@@ -17,8 +17,8 @@ class TeamTest < ActionDispatch::IntegrationTest
   end
 
   test "team users can see each other by get team members" do
-    assert_same_elements User.get_team_members(user: @user_one).to_a, [@user_one, @admin, @user_two]
-    assert_same_elements User.get_team_members(user: @admin).to_a, [@admin, @user_one]
+    assert_same_elements User.get_team_members(user: @user_one).to_a, [@user_one, @user_four, @user_two]
+    assert_same_elements User.get_team_members(user: @user_four).to_a, [@user_four, @user_one]
     assert_same_elements User.get_team_members(user: @user_three).to_a, [@user_three]
   end
 
@@ -31,7 +31,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_team_1: nil
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
-    assert_includes(response.body, @investigation_admin.pretty_id)
+    assert_includes(response.body, @investigation_user_four.pretty_id)
     assert_includes(response.body, @investigation_user_three.pretty_id)
     assert_includes(response.body, @investigation_team_one.pretty_id)
     assert_includes(response.body, @investigation_team_three.pretty_id)
@@ -46,7 +46,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_team_1: nil
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
-    assert_includes(response.body, @investigation_admin.pretty_id)
+    assert_includes(response.body, @investigation_user_four.pretty_id)
     assert_includes(response.body, @investigation_user_three.pretty_id)
     assert_includes(response.body, @investigation_team_one.pretty_id)
     assert_includes(response.body, @investigation_team_three.pretty_id)
@@ -61,7 +61,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_team_1: nil
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
-    assert_not_includes(response.body, @investigation_admin.pretty_id)
+    assert_not_includes(response.body, @investigation_user_four.pretty_id)
     assert_not_includes(response.body, @investigation_user_three.pretty_id)
     assert_not_includes(response.body, @investigation_team_one.pretty_id)
     assert_not_includes(response.body, @investigation_team_three.pretty_id)
@@ -76,7 +76,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_team_1: nil
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
-    assert_includes(response.body, @investigation_admin.pretty_id)
+    assert_includes(response.body, @investigation_user_four.pretty_id)
     assert_not_includes(response.body, @investigation_user_three.pretty_id)
     assert_includes(response.body, @investigation_team_one.pretty_id)
     assert_not_includes(response.body, @investigation_team_three.pretty_id)
@@ -91,7 +91,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_team_1: nil
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
-    assert_includes(response.body, @investigation_admin.pretty_id)
+    assert_includes(response.body, @investigation_user_four.pretty_id)
     assert_includes(response.body, @investigation_user_three.pretty_id)
     assert_includes(response.body, @investigation_team_one.pretty_id)
     assert_includes(response.body, @investigation_team_three.pretty_id)
@@ -106,7 +106,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_team_1: nil
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
-    assert_includes(response.body, @investigation_admin.pretty_id)
+    assert_includes(response.body, @investigation_user_four.pretty_id)
     assert_includes(response.body, @investigation_user_three.pretty_id)
     assert_includes(response.body, @investigation_team_one.pretty_id)
     assert_not_includes(response.body, @investigation_team_three.pretty_id)
@@ -121,7 +121,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_team_1: nil
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
-    assert_includes(response.body, @investigation_admin.pretty_id)
+    assert_includes(response.body, @investigation_user_four.pretty_id)
     assert_not_includes(response.body, @investigation_user_three.pretty_id)
     assert_includes(response.body, @investigation_team_one.pretty_id)
     assert_not_includes(response.body, @investigation_team_three.pretty_id)
@@ -136,7 +136,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_team_1: nil
     }
     assert_not_includes(response.body, @investigation_user_one.pretty_id)
-    assert_not_includes(response.body, @investigation_admin.pretty_id)
+    assert_not_includes(response.body, @investigation_user_four.pretty_id)
     assert_includes(response.body, @investigation_user_three.pretty_id)
     assert_not_includes(response.body, @investigation_team_one.pretty_id)
     assert_includes(response.body, @investigation_team_three.pretty_id)
@@ -149,9 +149,9 @@ class TeamTest < ActionDispatch::IntegrationTest
     assert_equal @investigation_user_one.assignee, @user_one
 
     investigation = Investigation.find_by(description: "Investigation two description")
-    investigation.update(assignee: @admin)
-    @investigation_admin = Investigation.find_by(description: "Investigation two description")
-    assert_equal @investigation_admin.assignee, @admin
+    investigation.update(assignee: @user_four)
+    @investigation_user_four = Investigation.find_by(description: "Investigation two description")
+    assert_equal @investigation_user_four.assignee, @user_four
 
     investigation = Investigation.find_by(description: "Investigation for search by correspondence")
     investigation.update(assignee: @user_three)
