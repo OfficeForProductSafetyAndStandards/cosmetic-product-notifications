@@ -6,7 +6,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
     @assignee = User.find_by(last_name: "User_one")
     @non_opss_user = User.find_by(last_name: "User_two")
-    set_user_as_non_opss(@non_opss_user)
+    mock_user_as_non_opss(@non_opss_user)
 
     @investigation_one = investigations(:one)
     @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')

@@ -64,8 +64,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Inviting existing user from different org doesn't add and shows error" do
-    non_opss_user = Organisation.all.find { |o| o != User.current.organisation }.users
-    email_address = non_opss_user.first.email
+    email_address = Organisation.find_by(name: "Organisation 1").users.first.email
     assert_difference "@my_team.users.count" => 0, "User.count" => 0 do
       put invite_to_team_url(@my_team), params: { new_user: { email_address: email_address } }
       assert_response :bad_request
