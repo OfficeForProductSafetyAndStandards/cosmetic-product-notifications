@@ -2229,7 +2229,7 @@
   }, {
     "id" : "121ec424-71bc-4403-829a-44cf4fcb05c5",
     "clientId" : "cosmetics-app",
-    "name" : "Notify Cosmetics",
+    "name" : "Submit cosmetic product notifications",
     "rootUrl" : "http://localhost:3002",
     "adminUrl" : "http://localhost:3002",
     "surrogateAuthRequired" : false,
