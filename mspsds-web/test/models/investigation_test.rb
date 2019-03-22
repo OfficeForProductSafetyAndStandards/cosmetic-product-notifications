@@ -9,18 +9,18 @@ class InvestigationTest < ActiveSupport::TestCase
 
   setup do
     mock_out_keycloak_and_notify
-    @investigation = investigations(:one)
+    @investigation = load_case(:one)
 
-    @investigation_with_product = investigations(:search_related_products)
+    @investigation_with_product = load_case(:search_related_products)
     @product = products(:iphone)
 
-    @investigation_with_correspondence = investigations(:search_related_correspondence)
+    @investigation_with_correspondence = load_case(:search_related_correspondence)
     @correspondence = correspondences(:one)
 
-    @investigation_with_complainant = investigations(:search_related_complainant)
+    @investigation_with_complainant = load_case(:search_related_complainant)
     @complainant = complainants(:one)
 
-    @investigation_with_business = investigations(:search_related_businesses)
+    @investigation_with_business = load_case(:search_related_businesses)
     @business = businesses(:biscuit_base)
   end
 
@@ -30,12 +30,12 @@ class InvestigationTest < ActiveSupport::TestCase
 
   test "should create activity when investigation is created" do
     assert_difference "Activity.count" do
-      @investigation = Investigation::Allegation.create
+      @investigation = create_new_case
     end
   end
 
   test "should create an activity when business is added to investigation" do
-    @investigation = Investigation::Allegation.create
+    @investigation = create_new_case
     assert_difference"Activity.count" do
       @business = businesses :new_business
       @investigation.add_business @business, "manufacturer"
@@ -43,7 +43,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when business is removed from investigation" do
-    @investigation = Investigation::Allegation.create
+    @investigation = create_new_case
     @business = businesses :new_business
     @investigation.add_business @business, "retailer"
     assert_difference"Activity.count" do
@@ -52,7 +52,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when product is added to investigation" do
-    @investigation = Investigation::Allegation.create
+    @investigation = create_new_case
     assert_difference"Activity.count" do
       @product = Product.new(name: 'Test Product', product_type: "test product type", category: "test product category")
       @investigation.products << @product
@@ -60,7 +60,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when product is removed from investigation" do
-    @investigation = Investigation::Allegation.create
+    @investigation = create_new_case
     @product = Product.new(name: 'Test Product', product_type: "test product type", category: "test product category")
     @investigation.products << @product
     assert_difference"Activity.count" do
@@ -69,7 +69,7 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "should create an activity when status is updated on investigation" do
-    @investigation = Investigation::Allegation.create
+    @investigation = create_new_case
     assert_difference "Activity.count" do
       @investigation.is_closed = !@investigation.is_closed
       @investigation.save
@@ -77,22 +77,22 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "case title should match when no products are present on the case" do
-    investigation = investigations(:no_products_case_title)
+    investigation = load_case(:no_products_case_title)
     assert_equal "Alarms – Asphyxiation (no product specified)", investigation.title
   end
 
   test "case title should match when one product is added" do
-    investigation = investigations(:one_product)
+    investigation = load_case(:one_product)
     assert_equal "iPhone XS MAX, phone – Asphyxiation", investigation.title
   end
 
   test "case title should match when two products with two common fields are added to the case" do
-    investigation = investigations(:two_products_with_common_values)
+    investigation = load_case(:two_products_with_common_values)
     assert_equal "2 Products, phone – Asphyxiation", investigation.title
   end
 
   test "case title should match when two products with no common fields are added to the case" do
-    investigation = investigations(:two_products_with_no_common_values)
+    investigation = load_case(:two_products_with_no_common_values)
     assert_equal "2 Products – Asphyxiation", investigation.title
   end
 
@@ -220,45 +220,45 @@ class InvestigationTest < ActiveSupport::TestCase
   end
 
   test "people out of current assignee's team should not be able to re-assign case" do
-    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation = create_new_case
     investigation.assignee = User.find_by(last_name: "User_one")
     assert_not policy(investigation).assign?(user: User.find_by(last_name: "User_three"))
   end
 
   test "people in current assignee's team should be able to re-assign case" do
-    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation = create_new_case
     investigation.assignee = User.find_by(last_name: "User_one")
     assert policy(investigation).assign?(user: User.find_by(last_name: "User_two"))
   end
 
   test "people out of currently assigned team should not be able to re-assign case" do
-    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation = create_new_case
     investigation.assignee = Team.find_by(name: "Team 1")
     assert_not policy(investigation).assign?(user: User.find_by(last_name: "User_three"))
   end
 
   test "people in currently assigned team should be able to re-assign case" do
-    investigation = Investigation::Allegation.create(description: "new_investigation_description")
+    investigation = create_new_case
     investigation.assignee = Team.find_by(name: "Team 1")
     assert policy(investigation).assign?(user: User.find_by(last_name: "User_four"))
   end
 
   test "pretty_id should contain YYMM" do
-    investigation = Investigation.create
+    investigation = create_new_case
     assert_includes investigation.pretty_id, Time.zone.now.strftime('%y').to_s
     assert_includes investigation.pretty_id, Time.zone.now.strftime('%m').to_s
   end
 
   test "pretty_id should be unique" do
     10.times do
-      Investigation.create
+      create_new_case
     end
-    investigation = Investigation.create
+    investigation = create_new_case
     assert_equal Investigation.where(pretty_id: investigation.pretty_id).count, 1
   end
 
   test "assigns to current user by default" do
-    investigation = Investigation.create
+    investigation = create_new_case
     assert_equal User.current, investigation.assignee
   end
 

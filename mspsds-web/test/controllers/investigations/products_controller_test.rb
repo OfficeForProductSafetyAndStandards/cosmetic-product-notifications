@@ -3,7 +3,7 @@ require "test_helper"
 class Investigations::ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
     mock_out_keycloak_and_notify
-    @investigation = investigations(:one)
+    @investigation = load_case(:one)
     @investigation.source = sources(:investigation_one)
     @product = products(:iphone)
     @product.source = sources(:product_iphone)

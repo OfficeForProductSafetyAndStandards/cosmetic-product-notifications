@@ -8,22 +8,22 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     @non_opss_user = User.find_by(last_name: "User_two")
     mock_user_as_non_opss(@non_opss_user)
 
-    @investigation_one = investigations(:one)
+    @investigation_one = load_case(:one)
     @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
     @investigation_one.assignee = User.find_by(last_name: "User_four")
     @investigation_one.source = sources(:investigation_one)
     @investigation_one.save
 
-    @investigation_two = investigations(:two)
+    @investigation_two = load_case(:two)
     @investigation_two.created_at = Time.zone.parse('2015-07-11 21:00')
     @investigation_two.assignee = @assignee
     @investigation_two.save
 
-    @investigation_three = investigations(:three)
+    @investigation_three = load_case(:three)
     @investigation_three.assignee = @non_opss_user
     @investigation_three.save
 
-    @investigation_no_products = investigations(:no_products)
+    @investigation_no_products = load_case(:no_products)
     @investigation_no_products.assignee = @non_opss_user
     @investigation_no_products.save
 
@@ -56,7 +56,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should set status" do
-    investigation = Investigation.create(description: "new description")
+    investigation = create_new_case
     is_closed = true
     investigation_status = lambda { Investigation.find(investigation.id).is_closed }
     assert_changes investigation_status, from: false, to: is_closed do
@@ -153,9 +153,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_open: "unchecked",
         status_closed: "unchecked"
     }
-    assert_includes(response.body, investigations(:one).pretty_id)
-    assert_includes(response.body, investigations(:two).pretty_id)
-    assert_includes(response.body, investigations(:three).pretty_id)
+    assert_includes(response.body, load_case(:one).pretty_id)
+    assert_includes(response.body, load_case(:two).pretty_id)
+    assert_includes(response.body, load_case(:three).pretty_id)
   end
 
   test "should return all investigations if both assignee checkboxes are checked and name input is blank" do
@@ -166,9 +166,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_open: "unchecked",
         status_closed: "unchecked"
     }
-    assert_includes(response.body, investigations(:one).pretty_id)
-    assert_includes(response.body, investigations(:two).pretty_id)
-    assert_includes(response.body, investigations(:three).pretty_id)
+    assert_includes(response.body, load_case(:one).pretty_id)
+    assert_includes(response.body, load_case(:two).pretty_id)
+    assert_includes(response.body, load_case(:three).pretty_id)
   end
 
   test "should return investigations assigned to current user if only the 'Me' checkbox is checked" do
@@ -179,9 +179,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_open: "unchecked",
         status_closed: "unchecked"
     }
-    assert_includes(response.body, investigations(:one).pretty_id)
-    assert_not_includes(response.body, investigations(:two).pretty_id)
-    assert_not_includes(response.body, investigations(:three).pretty_id)
+    assert_includes(response.body, load_case(:one).pretty_id)
+    assert_not_includes(response.body, load_case(:two).pretty_id)
+    assert_not_includes(response.body, load_case(:three).pretty_id)
   end
 
   test "should return investigations assigned to current user or given user if both checkboxes are checked
@@ -193,9 +193,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_open: "unchecked",
         status_closed: "unchecked"
     }
-    assert_includes(response.body, investigations(:one).pretty_id)
-    assert_includes(response.body, investigations(:two).pretty_id)
-    assert_not_includes(response.body, investigations(:three).pretty_id)
+    assert_includes(response.body, load_case(:one).pretty_id)
+    assert_includes(response.body, load_case(:two).pretty_id)
+    assert_not_includes(response.body, load_case(:three).pretty_id)
   end
 
   test "should return investigations assigned to a given user if only 'someone else' checkbox is checked
@@ -207,9 +207,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_open: "unchecked",
         status_closed: "unchecked"
     }
-    assert_not_includes(response.body, investigations(:one).pretty_id)
-    assert_includes(response.body, investigations(:two).pretty_id)
-    assert_not_includes(response.body, investigations(:three).pretty_id)
+    assert_not_includes(response.body, load_case(:one).pretty_id)
+    assert_includes(response.body, load_case(:two).pretty_id)
+    assert_not_includes(response.body, load_case(:three).pretty_id)
   end
 
   test "should return investigations assigned to anyone except current user if only 'someone else' checkbox
@@ -221,9 +221,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         status_open: "unchecked",
         status_closed: "unchecked"
     }
-    assert_not_includes(response.body, investigations(:one).pretty_id)
-    assert_includes(response.body, investigations(:two).pretty_id)
-    assert_includes(response.body, investigations(:three).pretty_id)
+    assert_not_includes(response.body, load_case(:one).pretty_id)
+    assert_includes(response.body, load_case(:two).pretty_id)
+    assert_includes(response.body, load_case(:three).pretty_id)
   end
 
   test "sort by filter should be defaulted to Updated: recent" do

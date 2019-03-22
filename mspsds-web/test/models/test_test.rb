@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TestTest < ActiveSupport::TestCase
   setup do
-    @investigation = investigations(:one)
+    @investigation = load_case(:one)
     @product = products(:one)
     mock_out_keycloak_and_notify
   end

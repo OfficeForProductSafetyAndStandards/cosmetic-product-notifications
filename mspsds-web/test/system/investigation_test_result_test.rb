@@ -4,7 +4,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
 
-    @investigation = investigations(:one)
+    @investigation = load_case(:one)
     @test = tests(:one)
 
     visit new_result_investigation_tests_path(@investigation)

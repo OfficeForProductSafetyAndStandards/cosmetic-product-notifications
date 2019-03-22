@@ -5,7 +5,7 @@ class DocumentTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
 
-    visit new_document_flow_path(investigations(:no_products))
+    visit new_document_flow_path(load_case(:no_products))
   end
 
   teardown do
@@ -49,7 +49,7 @@ class DocumentTest < ApplicationSystemTestCase
 
   test "should not attach a file without actually saving it" do
     attach_file_and_upload
-    visit investigation_path(investigations(:one))
+    visit investigation_path(load_case(:one))
     click_on "Attachments"
     assert_no_text "View PDF document"
   end
