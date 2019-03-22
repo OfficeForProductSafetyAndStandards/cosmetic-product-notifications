@@ -10,13 +10,13 @@ class HomepageControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "displays introduction for non_opss users who have not viewed introduction before" do
-    set_user_as_non_opss(User.current)
+    mock_user_as_non_opss(User.current)
     get "/"
     assert_redirected_to introduction_overview_path
   end
 
   test "displays homepage for non_opss users who have viewed introduction before" do
-    set_user_as_non_opss(User.current)
+    mock_user_as_non_opss(User.current)
     allow(User.current).to receive(:has_viewed_introduction).and_return true
 
     get '/'

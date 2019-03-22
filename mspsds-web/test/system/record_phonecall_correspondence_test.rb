@@ -1,10 +1,15 @@
 require "application_system_test_case"
+require_relative "../test_helpers/investigation_test_helper"
+
 
 class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
+  include InvestigationTestHelper
+
   setup do
-    mock_out_keycloak_and_notify(user_name: "Admin")
+    mock_out_keycloak_and_notify
     @investigation = investigations(:one)
     @investigation.source = sources(:investigation_one)
+    set_investigation_source! @investigation, User.current
     @correspondence = correspondences(:phone_call)
     visit new_investigation_phone_call_url(@investigation)
   end
@@ -87,7 +92,9 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     assert_current_path(/cases\/\d+/)
   end
 
-  test "conceals information on phonecalls with customer info" do
+  test "conceals information from other organisations on phonecalls with customer info" do
+    other_org_user = User.find_by last_name: "Ts_user"
+    set_investigation_source! @investigation, other_org_user
     fill_in_context_form
     choose :correspondence_phone_call_has_consumer_info_true, visible: false
     click_button "Continue"
@@ -98,6 +105,54 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     within id: "activity" do
       assert_equal("Phone call added", first('h3').text)
       assert_equal("RESTRICTED ACCESS", first(".hmcts-badge").text)
+    end
+  end
+
+  test "does not conceal consumer information from assignee" do
+    other_org_user = User.find_by last_name: "Ts_user"
+    set_investigation_source! @investigation, other_org_user
+    set_investigation_assignee! @investigation, User.current
+    fill_in_context_form
+    choose :correspondence_phone_call_has_consumer_info_true, visible: false
+    click_button "Continue"
+    fill_in_content_form
+    click_button "Continue"
+    click_button "Continue"
+    click_on "Activity"
+    within id: "activity" do
+      assert_equal(@correspondence.overview, first('h3').text)
+    end
+  end
+
+  test "does not conceal consumer information from assignee's team" do
+    other_org_user = User.find_by last_name: "Ts_user"
+    same_team_user = User.find_by last_name: "User_one"
+    set_investigation_source! @investigation, other_org_user
+    set_investigation_assignee! @investigation, same_team_user
+    fill_in_context_form
+    choose :correspondence_phone_call_has_consumer_info_true, visible: false
+    click_button "Continue"
+    fill_in_content_form
+    click_button "Continue"
+    click_button "Continue"
+    click_on "Activity"
+    within id: "activity" do
+      assert_equal(@correspondence.overview, first('h3').text)
+    end
+  end
+
+  test "does not conceal from other organisations information on phonecalls with customer info" do
+    same_org_user = User.find_by last_name: "User_three"
+    set_investigation_source! @investigation, same_org_user
+    fill_in_context_form
+    choose :correspondence_phone_call_has_consumer_info_true, visible: false
+    click_button "Continue"
+    fill_in_content_form
+    click_button "Continue"
+    click_button "Continue"
+    click_on "Activity"
+    within id: "activity" do
+      assert_equal(@correspondence.overview, first('h3').text)
     end
   end
 

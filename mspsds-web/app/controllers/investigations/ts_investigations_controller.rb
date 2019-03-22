@@ -66,7 +66,7 @@ class Investigations::TsInvestigationsController < ApplicationController
 
   def create
     if records_saved?
-      redirect_to investigation_path(@investigation)
+      redirect_to created_investigation_path(@investigation)
     else
       render_wizard
     end

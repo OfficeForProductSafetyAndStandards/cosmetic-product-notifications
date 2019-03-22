@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   include LoadHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[status visibility]
+  before_action :set_investigation, only: %i[status visibility created]
   before_action :set_investigation_with_associations, only: %i[show]
   before_action :build_breadcrumbs, only: %i[show]
 
@@ -89,6 +89,8 @@ class InvestigationsController < ApplicationController
     @investigation.visibility_rationale = ps[:visibility_rationale] if ps[:visibility_rationale]
     respond_to_update(:visibility)
   end
+
+  def created; end
 
 private
 
