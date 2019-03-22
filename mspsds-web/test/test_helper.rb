@@ -50,21 +50,23 @@ class ActiveSupport::TestCase
               test_user(name: "User_one"),
               test_user(name: "User_two"),
               test_user(name: "User_three"),
-              test_user(name: "Ts_user", ts_user: true)].map(&:attributes)
-    @organisations = organisations.map(&:attributes)
-    @teams = all_teams.map(&:attributes)
+              test_user(name: "Ts_user", ts_user: true),
+              non_mspsds_user(name: "Non_mspsds_user")]
+    @organisations = organisations
+    @teams = all_teams
     @team_users = []
 
-    allow(@keycloak_client_instance).to receive(:all_organisations) { @organisations }
-    allow(@keycloak_client_instance).to receive(:all_teams) { @teams }
-    allow(@keycloak_client_instance).to receive(:all_team_users) { @team_users }
-    allow(@keycloak_client_instance).to receive(:all_users) { @users }
+    allow(@keycloak_client_instance).to receive(:all_organisations) { @organisations.deep_dup }
+    allow(@keycloak_client_instance).to receive(:all_teams) { @teams.deep_dup }
+    allow(@keycloak_client_instance).to receive(:all_team_users) { @team_users.deep_dup }
+    allow(@keycloak_client_instance).to receive(:all_users) { @users.deep_dup }
+
     stub_user_management
+    set_default_group_memberships
     Organisation.all
     Team.all
     TeamUser.all
     User.all
-    set_default_group_memberships
     sign_in_as User.find_by(last_name: last_name)
     stub_notify_mailer
   end
@@ -101,18 +103,16 @@ class ActiveSupport::TestCase
     allow(NotifyMailer).to receive(:user_added_to_team) { result }
   end
 
-  def set_user_as_opss(user)
-    user.organisation = Organisation.find(opss_organisation.id)
-    # Keycloak bases this role on the group membership
-    set_kc_user_group(user.id, opss_organisation.id)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :opss_user).and_return(true)
+  # This is a public method that updates both the passed in user object and the KC mocking
+  def mock_user_as_opss(user)
+    user.organisation = Organisation.find(opss_organisation[:id])
+    set_kc_user_as_opss user.id
   end
 
-  def set_user_as_non_opss(user)
-    user.organisation = Organisation.find(non_opss_organisation.id)
-    # Keycloak bases this role on the group membership
-    set_kc_user_group(user.id, non_opss_organisation.id)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :opss_user).and_return(false)
+  # This is a public method that updates both the passed in user object and the KC mocking
+  def mock_user_as_non_opss(user)
+    user.organisation = Organisation.find(non_opss_organisation[:id])
+    set_kc_user_as_non_opss user.id
   end
 
   def set_user_as_team_admin(user = User.current)
@@ -124,7 +124,7 @@ class ActiveSupport::TestCase
   end
 
   def add_user_to_opss_team(user_id:, team_id:)
-    set_user_as_opss User.find(user_id)
+    set_kc_user_as_opss user_id
     add_user_to_team user_id, team_id
   end
 
@@ -141,7 +141,15 @@ private
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :mspsds_user).and_return(true)
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true) unless ts_user
-    User.new(id: id, email: "#{name}@example.com", first_name: "Test", last_name: name)
+    { id: id, email: "#{name}@example.com", first_name: "Test", last_name: name }
+  end
+
+  def non_mspsds_user(name:)
+    id = SecureRandom.uuid
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :mspsds_user).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(false)
+    { id: id, email: "#{name}@example.com", first_name: "Test", last_name: name }
   end
 
   def organisations
@@ -149,11 +157,11 @@ private
   end
 
   def non_opss_organisation
-    Organisation.new(id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1")
+    { id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1", path: "/Organisations/Organisation 1" }
   end
 
   def opss_organisation
-    Organisation.new(id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2")
+    { id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", name: "Office of Product Safety and Standards", path: "/Organisations/Organisation 2" }
   end
 
   def set_default_group_memberships
@@ -163,12 +171,27 @@ private
     add_user_to_opss_team user_id: @users[2][:id], team_id: @teams[1][:id]
     add_user_to_opss_team user_id: @users[3][:id], team_id: @teams[2][:id]
     add_user_to_opss_team user_id: @users[3][:id], team_id: @teams[3][:id]
-    set_user_as_non_opss User.find(@users[4][:id])
+    set_kc_user_as_non_opss @users[4][:id]
+  end
+
+  # This is a private method which updates the KC mocking without modifying the User collection directly
+  def set_kc_user_as_opss(user_id)
+    # Keycloak bases this role on the group membership
+    set_kc_user_group(user_id, opss_organisation[:id])
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user_id, :opss_user).and_return(true)
+  end
+
+  # This is a private method which updates the KC mocking without modifying the User collection directly
+  def set_kc_user_as_non_opss(user_id)
+    # Keycloak bases this role on the group membership
+    set_kc_user_group(user_id, non_opss_organisation[:id])
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user_id, :opss_user).and_return(false)
   end
 
   def add_user_to_team(user_id, team_id)
-    tu = TeamUser.add user_id: user_id, team_id: team_id
-    @team_users.push tu.attributes
+    # Using Class constructor here to create a sensible id
+    # Not actually affecting the TeamUser collection
+    @team_users.push id: SecureRandom.uuid, user_id: user_id, team_id: team_id
     set_kc_user_group(user_id, team_id)
   end
 
@@ -180,10 +203,10 @@ private
 
   def all_teams
     [
-      Team.new(id: "aaaaeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 1", path: "/Organisations/Office of Product Safety and Standards/Team 1", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b"),
-      Team.new(id: "aaaxzcf8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 2", path: "/Organisations/Office of Product Safety and Standards/Team 2", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b"),
-      Team.new(id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 3", path: "/Organisations/Office of Product Safety and Standards/Team 3", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b"),
-      Team.new(id: "cccceef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 4", path: "/Organisations/Office of Product Safety and Standards/Team 4", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", team_recipient_email: "team@example.com")
+      { id: "aaaaeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 1", path: "/Organisations/Office of Product Safety and Standards/Team 1", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b" },
+      { id: "aaaxzcf8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 2", path: "/Organisations/Office of Product Safety and Standards/Team 2", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b" },
+      { id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 3", path: "/Organisations/Office of Product Safety and Standards/Team 3", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b" },
+      { id: "cccceef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 4", path: "/Organisations/Office of Product Safety and Standards/Team 4", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", team_recipient_email: "team@example.com" }
     ]
   end
 
@@ -194,7 +217,9 @@ private
   def stub_user_management
     allow(@keycloak_client_instance).to receive(:add_user_to_team), &method(:add_user_to_team)
     allow(@keycloak_client_instance).to receive(:create_user) do |email|
-      @users.push id: SecureRandom.uuid, email: email, username: email
+      user = { id: SecureRandom.uuid, email: email, username: email }
+      @users.push user
+      allow(@keycloak_client_instance).to receive(:get_user).and_return user
     end
     allow(@keycloak_client_instance).to receive(:send_required_actions_welcome_email).and_return(true)
   end
@@ -203,5 +228,6 @@ private
     allow(@keycloak_client_instance).to receive(:add_user_to_team).and_call_original
     allow(@keycloak_client_instance).to receive(:create_user).and_call_original
     allow(@keycloak_client_instance).to receive(:send_required_actions_welcome_email).and_call_original
+    allow(@keycloak_client_instance).to receive(:get_user).and_call_original
   end
 end
