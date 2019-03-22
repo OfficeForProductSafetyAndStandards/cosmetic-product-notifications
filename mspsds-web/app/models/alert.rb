@@ -29,7 +29,6 @@ class Alert < ApplicationRecord
 
   def summary_validation
     if summary.empty? || summary == default_summary
-      p "in here"
       errors.add(:summary, "Enter the alert subject")
     end
   end
