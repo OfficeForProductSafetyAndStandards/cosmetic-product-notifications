@@ -29,6 +29,16 @@ RSpec.describe ResponsiblePersons::AddNotificationWizardController, type: :contr
       put(:update, params: { responsible_person_id: responsible_person.id, id: "have_products_been_notified_in_eu", answer: "yes" })
       expect(assigns(:responsible_person)).to eq(responsible_person)
     end
+
+    it "renders the current page if no option selected" do
+      put(:update, params: { responsible_person_id: responsible_person.id, id: "have_products_been_notified_in_eu" })
+      expect(response).to render_template("have_products_been_notified_in_eu")
+    end
+
+    it "adds error message if no option selected" do
+      put(:update, params: { responsible_person_id: responsible_person.id, id: "have_products_been_notified_in_eu" })
+      expect(assigns(:error_text)).to eq("Please select an answer")
+    end
   end
 
   describe "GET #new" do

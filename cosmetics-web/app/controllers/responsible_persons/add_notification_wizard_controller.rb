@@ -20,31 +20,27 @@ class ResponsiblePersons::AddNotificationWizardController < ApplicationControlle
 
     case step
     when :have_products_been_notified_in_eu
-      case answer
-      when "yes"
+      if answer == "yes"
         redirect_to wizard_path(:do_you_have_files_from_eu_notification)
-      when "no"
+      else
         redirect_to wizard_path(:will_products_be_notified_in_eu)
       end
     when :will_products_be_notified_in_eu
-      case answer
-      when "yes"
+      if answer == "yes"
         redirect_to wizard_path(:register_on_eu_system)
-      when "no"
+      else
         redirect_to wizard_path(:was_product_on_sale_before_eu_exit)
       end
     when :do_you_have_files_from_eu_notification
-      case answer
-      when "yes"
+      if answer == "yes"
         redirect_to bulk_upload_path
-      when "no"
+      else
         redirect_to manual_journey_path(notified_before_eu_exit: false)
       end
     when :was_product_on_sale_before_eu_exit
-      case answer
-      when "yes"
+      if answer == "yes"
         redirect_to manual_journey_path(notified_before_eu_exit: true)
-      when "no"
+      else
         redirect_to manual_journey_path(notified_before_eu_exit: false)
       end
     end

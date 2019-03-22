@@ -4,11 +4,10 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with url: wizard_path, method: :put do |form|
-      h1.govuk-heading-xl
-        | Have the cosmetic products been notified in the EU?
-      = render "components/govuk_radios",
-        name: :answer,
+      = render "components/govuk_radios", name: :answer,
         errorMessage: @error_text.present? && { text: @error_text },
-        items: [{ text: "Yes", value: "yes", id: "answer_yes" },
-          { text: "No", value: "no", id: "answer_no" }]
+        fieldset: { legend: { text: "Have the cosmetic products been notified in the EU?", \
+          isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
+        items: [{ text: "Yes", value: "yes" },
+          { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

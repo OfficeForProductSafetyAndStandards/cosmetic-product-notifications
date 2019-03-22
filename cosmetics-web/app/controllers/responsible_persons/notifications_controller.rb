@@ -26,7 +26,7 @@ class ResponsiblePersons::NotificationsController < ApplicationController
   def show; end
 
   def new
-    was_notified_before_eu_exit = (params.has_key? "notified_before_eu_exit") && (params["notified_before_eu_exit"] == "true")
+    was_notified_before_eu_exit = params["notified_before_eu_exit"] == "true"
 
     @notification = Notification.create(
       responsible_person: @responsible_person,
