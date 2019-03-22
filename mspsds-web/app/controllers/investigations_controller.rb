@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   include LoadHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[status visibility]
+  before_action :set_investigation, only: %i[status visibility created]
   before_action :set_investigation_with_associations, only: %i[show]
   before_action :build_breadcrumbs, only: %i[show]
 
@@ -90,6 +90,8 @@ class InvestigationsController < ApplicationController
     respond_to_update(:visibility)
   end
 
+  def created; end
+
 private
 
   def set_investigation_with_associations
@@ -122,7 +124,11 @@ private
   def respond_to_update(origin)
     respond_to do |format|
       if @investigation.save
-        format.html { redirect_to @investigation, notice: "#{@investigation.case_type.titleize} was successfully updated." }
+        format.html {
+          redirect_to @investigation, flash: {
+              success: "#{@investigation.case_type.titleize} was successfully updated."
+          }
+        }
         format.json { render :show, status: :ok, location: @investigation }
       else
         @investigation.restore_attributes

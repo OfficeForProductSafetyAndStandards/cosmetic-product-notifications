@@ -19,7 +19,7 @@ class ContactsController < ApplicationController
       if @contact.save
         format.html do
           redirect_to business_url(@contact.business, anchor: "contacts"),
-                      notice: "Contact was successfully created."
+                      flash: { success: "Contact was successfully created." }
         end
         format.json { render :show, status: :created, location: @contact }
       else
@@ -37,7 +37,7 @@ class ContactsController < ApplicationController
       if @contact.update(contact_params)
         format.html do
           redirect_to business_url(@contact.business, anchor: "contacts"),
-                      notice: "Contact was successfully updated."
+                      flash: { success: "Contact was successfully updated." }
         end
         format.json { render :show, status: :ok, contact: @contact }
       else
@@ -56,7 +56,7 @@ class ContactsController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_to business_url(@contact.business, anchor: "contacts"),
-                    notice: "Contact was successfully deleted."
+                    flash: { success: "Contact was successfully deleted." }
       end
       format.json { head :no_content }
     end
