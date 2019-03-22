@@ -93,14 +93,17 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "conceals information from other organisations on phonecalls with customer info" do
-    other_org_user = User.find_by last_name: "Ts_user"
-    set_investigation_source! @investigation, other_org_user
     fill_in_context_form
     choose :correspondence_phone_call_has_consumer_info_true, visible: false
     click_button "Continue"
     fill_in_content_form
     click_button "Continue"
     click_button "Continue"
+
+    other_org_user = User.find_by last_name: "Ts_user"
+    sign_in_as other_org_user
+    visit investigation_path(@investigation)
+
     click_on "Activity"
     within id: "activity" do
       assert_equal("Phone call added", first('h3').text)
@@ -110,14 +113,17 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
 
   test "does not conceal consumer information from assignee" do
     other_org_user = User.find_by last_name: "Ts_user"
-    set_investigation_source! @investigation, other_org_user
-    set_investigation_assignee! @investigation, User.current
+    set_investigation_assignee! @investigation, other_org_user
     fill_in_context_form
     choose :correspondence_phone_call_has_consumer_info_true, visible: false
     click_button "Continue"
     fill_in_content_form
     click_button "Continue"
     click_button "Continue"
+
+    sign_in_as other_org_user
+    visit investigation_path(@investigation)
+
     click_on "Activity"
     within id: "activity" do
       assert_equal(@correspondence.overview, first('h3').text)
@@ -126,15 +132,21 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
 
   test "does not conceal consumer information from assignee's team" do
     other_org_user = User.find_by last_name: "Ts_user"
-    same_team_user = User.find_by last_name: "User_one"
-    set_investigation_source! @investigation, other_org_user
-    set_investigation_assignee! @investigation, same_team_user
+    sign_in_as other_org_user
+    assignee = User.find_by last_name: "User_one"
+    same_team_user = User.find_by last_name: "User_four"
+
+    set_investigation_assignee! @investigation, assignee
     fill_in_context_form
     choose :correspondence_phone_call_has_consumer_info_true, visible: false
     click_button "Continue"
     fill_in_content_form
     click_button "Continue"
     click_button "Continue"
+
+    sign_in_as same_team_user
+    visit investigation_path(@investigation)
+
     click_on "Activity"
     within id: "activity" do
       assert_equal(@correspondence.overview, first('h3').text)
@@ -142,14 +154,17 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "does not conceal from other organisations information on phonecalls with customer info" do
-    same_org_user = User.find_by last_name: "User_three"
-    set_investigation_source! @investigation, same_org_user
     fill_in_context_form
     choose :correspondence_phone_call_has_consumer_info_true, visible: false
     click_button "Continue"
     fill_in_content_form
     click_button "Continue"
     click_button "Continue"
+
+    same_org_user = User.find_by last_name: "User_three"
+    sign_in_as same_org_user
+    visit investigation_path(@investigation)
+
     click_on "Activity"
     within id: "activity" do
       assert_equal(@correspondence.overview, first('h3').text)
