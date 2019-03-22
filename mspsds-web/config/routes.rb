@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       get :status
       get :visibility
       get :edit_summary
+      get :created
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do
       collection do

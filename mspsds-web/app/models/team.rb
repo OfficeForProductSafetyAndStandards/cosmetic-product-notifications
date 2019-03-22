@@ -19,8 +19,8 @@ class Team < ActiveHash::Base
     team_users.map(&:user)
   end
 
-  def add_user(user)
-    Shared::Web::KeycloakClient.instance.add_user_to_team user.id, id
+  def add_user(user_id)
+    Shared::Web::KeycloakClient.instance.add_user_to_team user_id, id
     # Trigger reload of users and relations from KC
     User.all(force: true)
   end

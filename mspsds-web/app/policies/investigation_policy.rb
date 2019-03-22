@@ -27,6 +27,10 @@ class InvestigationPolicy < ApplicationPolicy
     visible_to(user: @user)
   end
 
+  def created?
+    visible_to(user: @user)
+  end
+
   def visible_to(user:, private: @record.is_private)
     return true if @record.source&.is_a? ReportSource
     return true unless private

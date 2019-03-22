@@ -192,6 +192,15 @@ class Investigation < ApplicationRecord
     self.pretty_id = "#{created_at.strftime('%y%m')}-%04d" % (cases_before + 1)
   end
 
+  def can_display_child_object?(child_has_gdpr_sensitive_data)
+    return true if self.source&.is_a? ReportSource
+    return true unless child_has_gdpr_sensitive_data
+    return true if User.current.organisation == self.source&.user&.organisation
+    return true if self.assignee && (self.assignee.teams & User.current.teams).any?
+
+    false
+  end
+
   def reason_created
     return "Product reported because it is unsafe and non-compliant." if hazard_description && non_compliant_reason
     return "Product reported because it is unsafe." if hazard_description
