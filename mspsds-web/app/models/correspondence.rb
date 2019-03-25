@@ -2,7 +2,7 @@ class Correspondence < ApplicationRecord
   include DateConcern
   include SanitizationHelper
   belongs_to :investigation, optional: true
-  has_one :activity
+  has_one :activity, dependent: :destroy
 
   before_validation :strip_whitespace
   before_validation { trim_line_endings(:details) }

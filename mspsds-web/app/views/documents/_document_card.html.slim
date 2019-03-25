@@ -1,9 +1,10 @@
 ruby:
-  source = document.attachments.find_by(record_type: %w[Activity Investigation])&.record&.source
+  source = document.attachments.find_by(record_type: "Activity")&.record&.source
   sensitive = parent.respond_to?(:can_display_child_object?) &&
           !parent.can_display_child_object?(document.metadata[:has_consumer_info], source)
   title = sensitive ? document_sensitive_title : document.metadata[:title]
   safe = document.metadata["safe"]
+
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-one-third
     = render "documents/document_preview", document: document, dimensions: "300x200",
