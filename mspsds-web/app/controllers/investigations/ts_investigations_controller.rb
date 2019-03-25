@@ -74,6 +74,8 @@ class Investigations::TsInvestigationsController < ApplicationController
 
   # PATCH/PUT /xxx
   def update
+    return redirect_to next_wizard_path if @skip
+
     if records_valid?
       case step
       when :business, :corrective_action, *other_information_types
@@ -128,6 +130,10 @@ private
   end
 
   def set_repeat_step
+    # Ideally we'd use the "value" of the button here, separate from the literally displayed text, but due to
+    # differences in how this is handled between ie8 and normal browsers, that's not practical
+    @skip = true if params[:commit] == "Skip this page"
+
     repeat_step_key = further_key step
     @repeat_step = if params.key?(repeat_step_key)
                      params.permit(repeat_step_key)[repeat_step_key]
@@ -313,7 +319,7 @@ private
 
   def store_repeat_step
     if params.key? further_key(step)
-      session[further_key(step)] = @repeat_step
+      session[further_key(step)] = !@skip && @repeat_step
     else
       further_page_type = to_item_text(step)
       @investigation.errors.add(further_key(step), "Select whether or not you have #{further_page_type} to record")
@@ -321,6 +327,8 @@ private
   end
 
   def store_corrective_action
+    return if @skip
+
     if @corrective_action.valid? && @file_blob
       update_blob_metadata @file_blob, corrective_action_file_metadata
       @file_blob.save if @file_blob
@@ -330,6 +338,8 @@ private
   end
 
   def store_test
+    return if @skip
+
     if @test.valid? && @file_blob
       update_blob_metadata @file_blob, test_file_metadata
       @file_blob.save if @file_blob
@@ -339,6 +349,8 @@ private
   end
 
   def store_file
+    return if @skip
+
     if file_valid?
       update_blob_metadata @file_blob, get_attachment_metadata_params(:file)
       @file_blob.save
