@@ -1,0 +1,34 @@
+h2.govuk-heading-m
+  | Formulation
+- @notification.components.each do |component|
+  table.govuk-table
+    - if component.name.present?
+      caption.govuk-table__caption.govuk-heading-s
+        = component.name
+    - if component.trigger_questions
+      - component.trigger_questions.each do |question|
+        tbody.govuk-table__body
+          - question.trigger_question_elements.each do | question_element |
+            - case question_element.element
+              - when "ethanol"
+                tr.govuk-table__row
+                  th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
+                    | Ethanol
+                  td.govuk-table__cell
+                    = question_element.answer
+              - when "propanol"
+                tr.govuk-table__row
+                  th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
+                    | Isopropanol
+                  td.govuk-table__cell
+                    = question_element.answer
+              - when "inciname"
+                tr.govuk-table__row
+                  - formulation_data = get_formulation_data(question, question_element)
+                  - if formulation_data.present?
+                    th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
+                      = formulation_data.first
+                    td.govuk-table__cell
+                      = formulation_data.last
+
+

@@ -8,19 +8,20 @@
     h2.govuk-heading-m
       = @notification.responsible_person.name
     h3.govuk-heading-s[class="govuk-!-font-weight-regular"]
-      -if @notification.components.first.sub_sub_category.present?
+      - if @notification.components.first.sub_sub_category.present?
         = @notification.components.first.display_root_category + ", " + \
             @notification.components.first.display_sub_category + ", " + \
             @notification.components.first.display_sub_sub_category
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = render "notifications/ingredient_details", notification: @notification
+    = render "poison_centres/notifications/poison_centre_trigger_rule_formulation", notification: @notification
   .govuk-grid-column-one-third
     - if @notification.image_uploads.present?
       = link_to image_tag(url_for(@notification.image_uploads.first.file.variant(resize: "300x300"))),
               url_for(@notification.image_uploads.first.file), target: "_blank", rel: 'noopener'
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    = render "notifications/ingredient_details", notification: @notification
     = render "notifications/frame_formulation_details", notification: @notification
     = render "notifications/substances_details", notification: @notification
     = render "/notifications/responsible_person_details", responsible_person: @notification.responsible_person
