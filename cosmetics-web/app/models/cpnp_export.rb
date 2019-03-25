@@ -65,7 +65,8 @@ class CpnpExport
                        nano_material: nano_material(component_node),
                        physical_form: physical_form(component_node),
                        special_applicator: special_applicator(component_node),
-                       acute_poisoning_info: acute_poisoning_info(component_node))
+                       acute_poisoning_info: acute_poisoning_info(component_node),
+                       state: "component_complete")
     end
   end
 

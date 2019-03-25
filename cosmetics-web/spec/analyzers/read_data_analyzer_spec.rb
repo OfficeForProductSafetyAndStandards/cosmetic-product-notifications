@@ -87,6 +87,15 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       }.to change(Component, :count).by(2)
     end
 
+    it "creates a notification with components in the component_complete state" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance.metadata
+
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.components.first.state).to eq("component_complete")
+    end
+
     it "creates a notification populated with relevant notification type" do
       analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
