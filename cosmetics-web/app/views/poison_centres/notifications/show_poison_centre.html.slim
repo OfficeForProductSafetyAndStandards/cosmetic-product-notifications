@@ -23,4 +23,5 @@
   .govuk-grid-column-two-thirds
     = render "notifications/frame_formulation_details", notification: @notification
     = render "notifications/substances_details", notification: @notification
-    = render "poison_centres/notifications/poison_centre_responsible_person_details", responsible_person: @notification.responsible_person
+    = render "/notifications/responsible_person_details", responsible_person: @notification.responsible_person
+    = render "/notifications/contact_person_details", contact_person: @notification.responsible_person
