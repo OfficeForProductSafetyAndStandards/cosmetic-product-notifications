@@ -26,7 +26,13 @@ class ResponsiblePersons::NotificationsController < ApplicationController
   def show; end
 
   def new
-    @notification = Notification.create(responsible_person: @responsible_person)
+    was_notified_before_eu_exit = params["notified_before_eu_exit"] == "true"
+
+    @notification = Notification.create(
+      responsible_person: @responsible_person,
+      was_notified_before_eu_exit: was_notified_before_eu_exit
+    )
+
     redirect_to new_responsible_person_notification_build_path(@responsible_person, @notification)
   end
 
