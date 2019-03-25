@@ -204,6 +204,8 @@ class Investigation < ApplicationRecord
   end
 
   def can_display_child_object?(current_user_can_see_child)
+    # This method is responsible for white-list access for assignee and their team, as described in
+    # https://regulatorydelivery.atlassian.net/wiki/spaces/MSPSDS/pages/598933517/Approach+to+case+sensitivity
     return true if current_user_can_see_child
     return true if User.current == self.assignee
     return true if self.assignee && (self.assignee.teams & User.current.teams).any?
