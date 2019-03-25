@@ -60,8 +60,6 @@ class InvestigationsController < ApplicationController
   # PATCH /cases/1
   # PATCH /cases/1.json
   def update
-    return if request.get?
-
     @investigation.update(update_params)
     respond_to do |format|
       if @investigation.save
@@ -72,7 +70,7 @@ class InvestigationsController < ApplicationController
         }
         format.json { render :show, status: :ok, location: @investigation }
       else
-        session[:viewed_page] ||= request.referer.split('/').last
+        session[:viewed_page] ||= request.referer&.match(/cases\/\d+-\d+\/(edit_summary|status|visibility)/)&.captures&.first
         format.html { render session[:viewed_page] }
         format.json { render json: @investigation.errors, status: :unprocessable_entity }
       end
