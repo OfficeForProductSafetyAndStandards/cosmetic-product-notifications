@@ -87,7 +87,7 @@ class Notification < ApplicationRecord
       transitions from: :draft_complete, to: :notification_complete,
                   after: Proc.new { __elasticsearch__.index_document } do
         guard do
-          cpnp_reference.present? || images_are_present_and_safe?
+          notified_pre_eu_exit? || images_are_present_and_safe?
         end
       end
     end
@@ -134,6 +134,14 @@ class Notification < ApplicationRecord
 
   def is_multicomponent?
     components.length > 1
+  end
+
+  def notified_post_eu_exit?
+    !was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date > Date.parse("29-03-2019")))
+  end
+
+  def notified_pre_eu_exit?
+    !notified_post_eu_exit?
   end
 
 private
