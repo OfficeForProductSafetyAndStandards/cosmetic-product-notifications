@@ -24,6 +24,9 @@ class Investigations::TsInvestigationsController < ApplicationController
   # There is no set_pending_businesses because the business is recovered from the session in set_business
   before_action :store_pending_businesses, only: %i[update], if: -> { step == :which_businesses }
   before_action :set_business, only: %i[show update], if: -> { step == :business }
+  before_action :set_skip_step, only: %i[update], if: -> do
+    %i[business has_corrective_action corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
+  end
   before_action :store_business, only: %i[update], if: -> { step == :business }
   before_action :set_repeat_step, only: %i[show update], if: -> do
     %i[has_corrective_action corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
@@ -51,7 +54,7 @@ class Investigations::TsInvestigationsController < ApplicationController
     when :business
       return redirect_to next_wizard_path if all_businesses_complete?
     when :corrective_action, *other_information_types
-      return redirect_to next_wizard_path if @repeat_step == "No"
+      return redirect_to next_wizard_path unless @repeat_step
     end
     # Preventing repeat step radio button from inheriting previous value
     clear_repeat_step
@@ -74,7 +77,9 @@ class Investigations::TsInvestigationsController < ApplicationController
 
   # PATCH/PUT /xxx
   def update
-    return redirect_to next_wizard_path if @skip
+    # If skipping, we've already modified session appropriately, now we need to re-render current step so usual logic
+    # can kick in.
+    return redirect_to wizard_path(step) if @skip_step
 
     if records_valid?
       case step
@@ -129,14 +134,16 @@ private
     @business_type = next_business ? next_business[:type] : nil
   end
 
-  def set_repeat_step
+  def set_skip_step
     # Ideally we'd use the "value" of the button here, separate from the literally displayed text, but due to
     # differences in how this is handled between ie8 and normal browsers, that's not practical
-    @skip = true if params[:commit] == "Skip this page"
+    @skip_step = true if params[:commit] == "Skip this page"
+  end
 
+  def set_repeat_step
     repeat_step_key = further_key step
     @repeat_step = if params.key?(repeat_step_key)
-                     params.permit(repeat_step_key)[repeat_step_key]
+                     params.permit(repeat_step_key)[repeat_step_key] == "Yes"
                    else
                      session[repeat_step_key]
                    end
@@ -295,9 +302,7 @@ private
 
   def store_business
     current_business_type = params.require(:business)[:business_type]
-    # Ideally we'd use the "value" of the button here, separate from the literally displayed text, but due to
-    # differences in how this is handled between ie8 and normal browsers, that's not practical
-    if params[:commit] == "Skip this page"
+    if @skip_step
       session[:businesses].delete_if { |entry| entry[:type] == current_business_type }
       return
     end
@@ -318,8 +323,12 @@ private
   end
 
   def store_repeat_step
+    if @skip_step
+      session[further_key(step)] = false
+      return
+    end
     if params.key? further_key(step)
-      session[further_key(step)] = !@skip && @repeat_step
+      session[further_key(step)] = @repeat_step
     else
       further_page_type = to_item_text(step)
       @investigation.errors.add(further_key(step), "Select whether or not you have #{further_page_type} to record")
@@ -327,7 +336,7 @@ private
   end
 
   def store_corrective_action
-    return if @skip
+    return if @skip_step
 
     if @corrective_action.valid? && @file_blob
       update_blob_metadata @file_blob, corrective_action_file_metadata
@@ -338,7 +347,7 @@ private
   end
 
   def store_test
-    return if @skip
+    return if @skip_step
 
     if @test.valid? && @file_blob
       update_blob_metadata @file_blob, test_file_metadata
@@ -349,7 +358,7 @@ private
   end
 
   def store_file
-    return if @skip
+    return if @skip_step
 
     if file_valid?
       update_blob_metadata @file_blob, get_attachment_metadata_params(:file)
@@ -379,7 +388,7 @@ private
 
   def store_other_information
     other_information_types.each do |key|
-      session[further_key(key)] = other_information_params[key] == "1" ? "Yes" : "No"
+      session[further_key(key)] = other_information_params[key] == "1"
     end
   end
 
