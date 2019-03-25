@@ -60,9 +60,8 @@ class InvestigationsController < ApplicationController
   # PATCH /cases/1
   # PATCH /cases/1.json
   def update
-    @investigation.update(update_params)
     respond_to do |format|
-      if @investigation.save
+      if @investigation.update(update_params)
         format.html {
           redirect_to @investigation, flash: {
             success: "#{@investigation.case_type.titleize} was successfully updated."
