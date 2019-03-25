@@ -7,33 +7,27 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl
-        p.govuk-caption-xl
+        span.govuk-caption-xl
           = @investigation.pretty_description
         | Compose new alert
-      fieldset.govuk-fieldset
-        .govuk-form-group class=[(@alert.errors[:summary].any? ? "govuk-form-group--error" : "")]
-          = form.label :summary, "Alert subject",
-                  class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-          span#alert-summary-hint.govuk-hint
-            | This will be used in the email subject line.
-          = form.text_field :summary, class: "govuk-input", aria_describedby: "alert-email_subject-hint",
-                  value: @alert.summary.presence || @default_summary
+      = render "form_components/govuk_input",
+              form: form,
+              key: :summary,
+              label: { text: "Alert subject", classes: "govuk-label--m" },
+              hint: { text: "This will be used in the email subject line." },
+              value: (@alert.summary.presence || @alert.default_summary)
 
-      - description_label = capture do
-        = form.label :description, "Alert content",
-                class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-      - hint_text = "Include a summary of the incident and what actions you’d like recipients to take." + \
+      - description_hint_text = "Include a summary of the incident and what actions you’d like recipients to take." + \
         "Recipients will need to view the case to see attachments and images."
-      fieldset.govuk-fieldset
-        = render "form_components/govuk_textarea",
-                form: form,
-                key: :description,
-                rows: 12,
-                maxlength: 1000,
-                value: (@alert.description.presence || @default_description),
-                label: { html: description_label },
-                hint: { text: hint_text }
-      = form.submit "Preview alert", class: "govuk-button"
+      = render "form_components/govuk_textarea",
+              form: form,
+              key: :description,
+              rows: 12,
+              maxlength: 1000,
+              value: (@alert.description.presence || @alert.default_description),
+              label: { text: "Alert content", classes: "govuk-label--m" },
+              hint: { text: description_hint_text }
 
+      = form.submit "Preview alert", class: "govuk-button"
   p
     = link_to "Cancel", investigation_path(@investigation), class: 'govuk-link govuk-link--no-visited-state'
