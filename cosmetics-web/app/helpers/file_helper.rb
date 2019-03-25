@@ -1,5 +1,4 @@
 module FileHelper
-
   def get_filetype_extension filetype
     filetype_extensions[filetype]
   end
