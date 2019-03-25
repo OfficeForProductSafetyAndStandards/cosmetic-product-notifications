@@ -15,7 +15,7 @@
         p For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.
         = form_with(url: responsible_person_notification_component_formulation_index_path( \
                 @responsible_person, @notification, @component), method: :post, multipart: true) do |form|
-            .govuk-form-group
+            .govuk-form-group class=("govuk-form-group--error" if @error_list.any?)
                 = form.label :formulation_file, "File type can be a ‘pdf', 'rtf' or ‘txt’.", class: "govuk-label"
                 = form.file_field :formulation_file,  class: "govuk-file-upload", \
                     accept: Component.allowed_types.map(&method(:get_filetype_extension)).join(",")
