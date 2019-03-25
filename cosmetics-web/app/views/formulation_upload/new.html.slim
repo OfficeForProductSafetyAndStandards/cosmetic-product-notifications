@@ -18,5 +18,5 @@
             .govuk-form-group
                 = form.label :formulation_file, "File type can be a ‘pdf', 'rtf' or ‘txt’.", class: "govuk-label"
                 = form.file_field :formulation_file,  class: "govuk-file-upload", \
-                    accept: ".pdf,.rtf,.txt"
+                    accept: Component.allowed_types.map(&method(:get_filetype_extension)).join(",")
             = form.submit "Continue", class: "govuk-button"
