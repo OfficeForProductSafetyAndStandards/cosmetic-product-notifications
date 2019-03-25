@@ -54,6 +54,7 @@ private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
+    authorize @responsible_person, :show?
   end
 
   def manual_journey_path(notified_before_eu_exit)
