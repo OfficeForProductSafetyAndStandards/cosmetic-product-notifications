@@ -1,0 +1,10 @@
+- notification.components.each do |component|
+  table.govuk-table
+    - if component.name.present?
+      caption.govuk-table__caption.govuk-heading-s
+        = component.name
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Frame formulation
+      td.govuk-table__cell
+        = get_frame_formulation_name(component.frame_formulation)

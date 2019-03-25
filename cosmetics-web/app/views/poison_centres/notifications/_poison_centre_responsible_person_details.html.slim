@@ -1,0 +1,27 @@
+- responsible_person = local_assigns[:responsible_person]
+table.govuk-table.check-your-answers-table#responsible-person-table
+  caption.govuk-table__caption.govuk-heading-m
+    | UK Responsible person
+  tbody.govuk-table__body
+    tr.govuk-table__row
+      th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
+        | Organisation
+      td.govuk-table__cell
+        = responsible_person.name
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Address
+      td.govuk-table__cell
+        - responsible_person.address_lines.each do |address_line|
+          = address_line
+          br
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Email address
+      td.govuk-table__cell
+        = responsible_person.email_address
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Phone number
+      td.govuk-table__cell
+        = responsible_person.phone_number

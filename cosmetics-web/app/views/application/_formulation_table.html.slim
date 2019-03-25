@@ -1,0 +1,7 @@
+- entities_list.each do |entity|
+  - if local_assigns[:key_name].present? && local_assigns[:value_name].present?
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        = entity[key_name]
+      td.govuk-table__cell
+        = entity[value_name]
