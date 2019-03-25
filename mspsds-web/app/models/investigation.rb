@@ -203,10 +203,8 @@ class Investigation < ApplicationRecord
     self.pretty_id = "#{created_at.strftime('%y%m')}-%04d" % (cases_before + 1)
   end
 
-  def can_display_child_object?(child_has_gdpr_sensitive_data, child_source)
-    return true if child_source&.is_a? ReportSource
-    return true unless child_has_gdpr_sensitive_data
-    return true if User.current.organisation == child_source&.user&.organisation
+  def can_display_child_object?(current_user_can_see_child)
+    return true if current_user_can_see_child
     return true if User.current == self.assignee
     return true if self.assignee && (self.assignee.teams & User.current.teams).any?
 

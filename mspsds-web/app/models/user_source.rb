@@ -4,4 +4,8 @@ class UserSource < Source
   def show
     user.present? ? user.display_name : "anonymous"
   end
+
+  def current_user_has_gdpr_access?
+    User.current.organisation == user&.organisation
+  end
 end

@@ -10,11 +10,15 @@ class Complainant < ApplicationRecord
   validates_length_of :name, maximum: 100
   validates_length_of :other_details, maximum: 10000
 
-  def contains_personal_data?
-    complainant_type == "Consumer"
+  def can_be_seen_by_current_user?
+    return true if investigation.source&.current_user_has_gdpr_access?
+
+    complainant_type != "Consumer"
   end
 
+private
+
   def can_be_displayed?
-    investigation.can_display_child_object?(contains_personal_data?, investigation.source)
+    investigation.can_display_child_object? can_be_seen_by_current_user?
   end
 end

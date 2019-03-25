@@ -1,7 +1,7 @@
 ruby:
-  source = document.attachments.find_by(record_type: "Activity")&.record&.source
-  sensitive = parent.respond_to?(:can_display_child_object?) &&
-          !parent.can_display_child_object?(document.metadata[:has_consumer_info], source)
+  visible = document.attachments.find_by(record_type: "Activity")&.record&.source&.current_user_has_gdpr_access?
+  visible = visible || !document.metadata[:has_consumer_info]
+  sensitive = parent.respond_to?(:can_display_child_object?) && !parent.can_display_child_object?(visible)
   title = sensitive ? document_sensitive_title : document.metadata[:title]
   safe = document.metadata["safe"]
 
