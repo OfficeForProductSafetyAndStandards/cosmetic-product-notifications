@@ -30,10 +30,12 @@ Rails.application.routes.draw do
   resources :investigations, path: "cases", only: %i[index show new], param: :pretty_id,
             concerns: %i[document_attachable] do
     member do
-      put :status
       get :status
-      put :visibility
+      patch :status
       get :visibility
+      patch :visibility
+      get :edit_summary
+      patch :edit_summary
       get :created
     end
     resources :activities, controller: "investigations/activities", only: %i[create new] do

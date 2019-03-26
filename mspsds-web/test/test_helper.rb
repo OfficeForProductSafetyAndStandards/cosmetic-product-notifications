@@ -134,6 +134,18 @@ class ActiveSupport::TestCase
     assert(condition, full_message)
   end
 
+  def create_new_case
+    description = "new_investigation_description"
+    Investigation::Allegation.create(description: description)
+  end
+
+  def load_case(key)
+    investigation = investigations(key)
+    investigation.assignee = User.current
+    investigation.save
+    investigation
+  end
+
 private
 
   def test_user(name: "User_one", ts_user: false)
