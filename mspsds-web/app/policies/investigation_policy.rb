@@ -27,7 +27,7 @@ class InvestigationPolicy < ApplicationPolicy
     return true unless private
     return true if user.is_opss?
     return true if @record.assignee.present? && (@record.assignee&.organisation == user.organisation)
-    return true if @record.source&.user_has_gdpr_access?(user_in_question: user)
+    return true if @record.source&.user_has_gdpr_access?(user: user)
 
     false
   end
