@@ -9,3 +9,5 @@
         = "#{@business_type.capitalize} details"
       = form.hidden_field :business_type, value: @business_type
       = render "businesses/form", form: form, business: @business, countries: @countries, submit_text: "Continue"
+      .govuk-body
+        = form.submit "Skip this page", class: "button-link", role: "link"
