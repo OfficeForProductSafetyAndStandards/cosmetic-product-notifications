@@ -17,7 +17,7 @@ Shared::Web::Engine.routes.draw do
     end
   end
 
-  unless Rails.env.production? && !ENV["SIDEKIQ_USERNAME"]
+  unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"
   end
 

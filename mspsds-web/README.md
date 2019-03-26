@@ -137,60 +137,80 @@ The current worker (sidekiq), which uses `mspsds-queue` only works with an unclu
 
 #### S3
 
-When setting up a new environment, you'll also need to create an AWS user called `mspsds-SPACE-NAME` and keep a note of the Access key ID and secret access key.
+When setting up a new environment, you'll also need to create an AWS user called `mspsds-<<SPACE>>` and keep a note of the Access key ID and secret access key.
 Give this user the AmazonS3FullAccess policy.
 
-Create an S3 bucket named `mspsds-SPACE-NAME`.
+Create an S3 bucket named `mspsds-<<SPACE>>`.
 
 
 #### MSPSDS Website
 
-Running the following commands from the root directory will then setup the website app:
+This assumes that you've run [the deployment from scratch steps for Keycloak](../keycloak/README.md#deployment-from-scratch)
 
-    NO_START=true SPACE=<<space>> ./mspsds-web/deploy.sh
+Start by setting up the following credentials:
 
-This provisions the app in Cloud Foundry.
+* To configure rails to use the production database amongst other things and set the server's encryption key (generate a new value by running `rake secret`):
 
-    cf set-env mspsds-web RAILS_ENV production
+    cf cups mspsds-rails-env -p '{
+        "RAILS_ENV": "production",
+        "SECRET_KEY_BASE": "XXX"
+    }'
 
-This configures rails to use the production database amongst other things.
+* To configure AWS (see the S3 section [above](#s3) to get these values):
 
-    cf set-env mspsds-worker MSPSDS_HOST XXX
+    cf cups mspsds-aws-env -p '{
+        "AWS_ACCESS_KEY_ID": "XXX",
+        "AWS_SECRET_ACCESS_KEY": "XXX",
+        "AWS_REGION": "XXX",
+        "AWS_S3_BUCKET": "XXX"
+    }'
 
-This is the URL for the website and is used for generating redirect links.
+* To configure Notify for email sending and previewing (see the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value):
 
-    cf set-env mspsds-web SECRET_KEY_BASE XXX
+    cf cups mspsds-notify-env -p '{
+        "NOTIFY_API_KEY": "XXX"
+    }'
 
-This sets the server's encryption key. Generate a new value by running `rake secret` 
+* To set pgHero http auth username and password for (see confluence for values):
 
-    cf set-env mspsds-web AWS_ACCESS_KEY_ID XXX
-    cf set-env mspsds-web AWS_SECRET_ACCESS_KEY XXX
-    cf set-env mspsds-web AWS_REGION XXX
-    cf set-env mspsds-web AWS_S3_BUCKET XXX
+    cf cups mspsds-pghero-env -p '{
+        "PGHERO_USERNAME": "XXX",
+        "PGHERO_PASSWORD": "XXX"
+    }'
 
-See the S3 section [above](#s3) to get these values.
+* To configure Sentry (see the Sentry account section in [the root README](../README.md#sentry) to get these values):
 
-    cf set-env mspsds-web PGHERO_USERNAME XXX
-    cf set-env mspsds-web PGHERO_PASSWORD XXX
+    cf cups mspsds-sentry-env -p '{
+        "SENTRY_DSN": "XXX",
+        "SENTRY_CURRENT_ENV": "<<SPACE>>"
+    }'
 
-This sets the http auth username and password for access to the pgHero dashboard. See confluence for values. 
+* To enable and add basic auth to the entire application (useful for deployment or non-production environments):
 
-    cf set-env mspsds-web SENTRY_DSN XXX
-    cf set-env mspsds-web SENTRY_CURRENT_ENV [int|staging|prod]
+    cf cups mspsds-auth-env -p '{
+        "BASIC_AUTH_USERNAME": "XXX",
+        "BASIC_AUTH_PASSWORD": "XXX"
+    }'
 
-See the Sentry account section in [the root README](../README.md#sentry) to get this value.
+* To enable and add basic auth to the health check endpoint at `/health/all`:
 
-    cf set-env mspsds-web HEALTH_CHECK_USERNAME XXX
-    cf set-env mspsds-web HEALTH_CHECK_PASSWORD XXX
+    cf cups mspsds-health-env -p '{
+        "HEALTH_CHECK_USERNAME": "XXX",
+        "HEALTH_CHECK_PASSWORD": "XXX"
+    }'
 
-This enables and adds basic auth to the health check endpoint at `/health/all` which can be polled to check the site status.
+* To enable and add basic auth to the sidekiq monitoring UI at `/sidekiq`:
 
-    cf set-env mspsds-web SIDEKIQ_USERNAME XXX
-    cf set-env mspsds-web SIDEKIQ_PASSWORD XXX
+    cf cups mspsds-sidekiq-env -p '{
+        "SIDEKIQ_USERNAME": "XXX",
+        "SIDEKIQ_PASSWORD": "XXX"
+    }'
 
-This enables and adds basic auth to the sidekiq monitoring UI at `/sidekiq` which can be used to check the worker performance.
+* `mspsds-keycloak-env` should already be setup from [the keycloak steps](../keycloak/README.md#setup-clients).
 
-The app can then be started using `cf start mspsds-web`.
+Once all the credentials are created, the app can be deployed using:
+
+    SPACE=<<space>> ./mspsds-web/deploy.sh
 
 
 #### MSPSDS Worker

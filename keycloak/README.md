@@ -47,33 +47,18 @@ To create a Keycloak database for the current space:
 
 #### Keycloak
 
-Running the following commands from the root directory will then package and set up the Keycloak app:
+Start by setting up the following credentials:
 
-    NO_START=true SPACE=<<SPACE>> ./keycloak/deploy.sh
+* To configure Notify for email and SMS sending (see the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value):
 
-Once the app has been created, add the following environment variables to specify the database connection properties:
-
-    cf set-env keycloak KEYCLOAK_DATABASE          << see: VCAP_SERVICES.postgres.credentials.name >>
-    cf set-env keycloak KEYCLOAK_DATABASE_HOSTNAME << see: VCAP_SERVICES.postgres.credentials.host >>
-    cf set-env keycloak KEYCLOAK_DATABASE_USERNAME << see: VCAP_SERVICES.postgres.credentials.username >>
-    cf set-env keycloak KEYCLOAK_DATABASE_PASSWORD << see: VCAP_SERVICES.postgres.credentials.password >>
-
-The relevant values are specified as properties on the `VCAP_SERVICES` environment variable, which can be listed by
-running `cf env keycloak`. 
-
-    cf set-env keycloak NOTIFY_API_KEY             XXX
+    cf cups keycloak-notify-env -p '{
+        "NOTIFY_API_KEY": "XXX",
+        "NOTIFY_SMS_TEMPLATE_ID": "XXX"
+    }'
     
-See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get the API key.
+Once all the credentials are created, the app can be deployed using:
 
-    cf set-env keycloak NOTIFY_SMS_TEMPLATE_ID     XXX
-
-with the value coming from [gov.uk Notify](https://www.notifications.service.gov.uk/services/)
-(see Notify accounts section in the [root README](../README.md#GOV.UK Notify))
-
-Finally, start the app and check that it is running correctly:
-
-    cf start keycloak
-    cf logs keycloak --recent
+    SPACE=<<space>> ./keycloak/deploy.sh
 
 ### Initial configuration
 
@@ -99,12 +84,13 @@ Set a strong password for the master admin account:
 Generate a new client secret for the MSPSDS app:
 * Select realm > OPSS > Clients > mspsds-app > Credentials > Regenerate Secret
 
-Set the client credentials for the MSPSDS app:
+Create the client credentials for the MSPSDS app:
 
-    cf set-env mspsds-web KEYCLOAK_AUTH_URL https://keycloak-<<SPACE>>.london.cloudapps.digital/auth
-    cf set-env mspsds-web KEYCLOAK_CLIENT_ID mspsds-app
-    cf set-env mspsds-web KEYCLOAK_CLIENT_SECRET <<SECRET>>
-    cf restage mspsds-web
+    cf cups mspsds-keycloak-env -p '{
+        "KEYCLOAK_AUTH_URL": "https://<<keycloak domain>>/auth",
+        "KEYCLOAK_CLIENT_ID": "mspsds-app",
+        "KEYCLOAK_CLIENT_SECRET": "XXX"
+    }'
 
 (The client secret is listed on the Keycloak admin console: Clients > mspsds-app > Credentials)
 
