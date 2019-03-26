@@ -27,6 +27,8 @@ All notable changes to this project will be documented in this file.
 - [ ] Create the new environment variable services.
 - [ ] Create the `opss-cdn-route` service with the live and deployment URLs.
 - [ ] Rename the `mspsds-app` client to `psd-app`
+- [ ] Rename the `mspsds_user` role to `psd_user`
+- [ ] Update the `psd-app` client to use the newly renamed `govuk-psd` theme
 - [ ] Rename all `mspsds-*` CF services to `psd-*`
 
 
