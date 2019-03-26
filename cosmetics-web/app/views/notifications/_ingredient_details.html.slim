@@ -1,10 +1,10 @@
-h2.govuk-heading-m
+h2.govuk-heading-l.poison_centre_table_heading
   | Ingredients
 
 - notification.components.each do |component|
   table.govuk-table
     - if component.name.present?
-      caption.govuk-table__caption.govuk-heading-s
+      caption.govuk-table__caption.govuk-heading-m
         = component.name
     - if component.exact? && component.exact_formulas.present?
       = render "formulation_table", entities_list: component.exact_formulas,
@@ -17,5 +17,5 @@ h2.govuk-heading-m
         = link_to component.formulation_file.filename, url_for(component.formulation_file)
     - else
       tr.govuk-table__row
-        th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
+        th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
           | No ingredients data

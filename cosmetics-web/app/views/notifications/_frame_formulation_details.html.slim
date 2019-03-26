@@ -4,7 +4,7 @@ h2.govuk-heading-m
 table.govuk-table
   - notification.components.each do |component|
       tr.govuk-table__row
-        th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
+        th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
           = component.name
         td.govuk-table__cell
           = get_frame_formulation_name(component.frame_formulation)
