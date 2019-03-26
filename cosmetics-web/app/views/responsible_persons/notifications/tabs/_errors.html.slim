@@ -8,7 +8,7 @@
         li[class="govuk-!-padding-bottom-2"]
           = form_with url: destroy_all_responsible_person_notification_files_path(@responsible_person),
                   method: :delete do |form|
-            = form.submit "Dismiss all failed files", class: "govuk-link--no-visited-state dismiss-link", role: "link"
+            = form.submit "Dismiss all failed files", class: "govuk-link--no-visited-state button-link", role: "link"
   .govuk-grid-row
     .govuk-grid-column-full
       table.govuk-table
@@ -29,5 +29,5 @@
               td.govuk-table__cell
                 = form_with url: responsible_person_notification_file_path(@responsible_person, notification_file),
                         method: :delete do |form|
-                  = form.submit "Dismiss", class: "govuk-link--no-visited-state dismiss-link", role: "link"
+                  = form.submit "Dismiss", class: "govuk-link--no-visited-state button-link", role: "link"
       = will_paginate(@erroneous_notification_files, param_name: "errors", params: { anchor: "errors" })
