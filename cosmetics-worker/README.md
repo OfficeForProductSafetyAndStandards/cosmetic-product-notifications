@@ -19,7 +19,7 @@ described in [the root README](../README.md#deployment).
 
 ### Deployment from scratch
 
-This assumes that you've run [the deployment from scratch steps for the MSPSDS website](../mspsds-web/README.md#deployment-from-scratch) and [the deployment from scratch steps for the antivirus API](../antivirus/README.md#deployment-from-scratch).
+This assumes that you've run [the deployment from scratch steps for the PSD website](../psd-web/README.md#deployment-from-scratch) and [the deployment from scratch steps for the antivirus API](../antivirus/README.md#deployment-from-scratch).
 
 Start by setting up the following credentials:
 

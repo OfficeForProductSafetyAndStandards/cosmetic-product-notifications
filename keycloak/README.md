@@ -63,8 +63,8 @@ Once all the credentials are created, the app can be deployed using:
 ### Initial configuration
 
 When deploying Keycloak from scratch, an initial configuration file is imported on first launch, which creates a
-default admin user for the master realm, creates and configures the MSPSDS realm and associated client, and creates
-a default test user account for logging into the MSPSDS website.
+default admin user for the master realm, creates and configures the PSD realm and associated client, and creates
+a default test user account for logging into the PSD website.
 
 The relevant login credentials can be found in the accounts section of [the root README](../README.md#keycloak).
 
@@ -79,25 +79,25 @@ Set a strong password for the master admin account:
 * Enter and confirm the new password, disable the 'Temporary' option, and click 'Reset Password'
 
 #### Setup clients
-*The instructions in this sections are given for the mspsds client, but should be repeated for all clients required.*
+*The instructions in this sections are given for the psd client, but should be repeated for all clients required.*
 
-Generate a new client secret for the MSPSDS app:
-* Select realm > OPSS > Clients > mspsds-app > Credentials > Regenerate Secret
+Generate a new client secret for the PSD app:
+* Select realm > OPSS > Clients > psd-app > Credentials > Regenerate Secret
 
-Create the client credentials for the MSPSDS app:
+Create the client credentials for the PSD app:
 
-    cf cups mspsds-keycloak-env -p '{
+    cf cups psd-keycloak-env -p '{
         "KEYCLOAK_AUTH_URL": "https://<<keycloak domain>>/auth",
-        "KEYCLOAK_CLIENT_ID": "mspsds-app",
+        "KEYCLOAK_CLIENT_ID": "psd-app",
         "KEYCLOAK_CLIENT_SECRET": "XXX"
     }'
 
-(The client secret is listed on the Keycloak admin console: Clients > mspsds-app > Credentials)
+(The client secret is listed on the Keycloak admin console: Clients > psd-app > Credentials)
 
 Allow keycloak to redirect back to the app after login
-* Select realm > OPSS > Clients > mspsds-app
-* Add `https://mspsds-<<SPACE>>.london.cloudapps.digital/*` to the Valid Redirect URIs section and click save
-* Replace all `localhost` values with `https://mspsds-<<SPACE>>.london.cloudapps.digital/`
+* Select realm > OPSS > Clients > psd-app
+* Add `https://<<PSD domain>>/*` to the Valid Redirect URIs section and click save
+* Replace all `localhost` values with `https://<<PSD domain>>/`
 
 Follow the steps in [the SMS autheticator README's Configuration section](
 https://github.com/UKGovernmentBEIS/keycloak-sms-authenticator-sns/blob/develop/README.md#Configuration) 
