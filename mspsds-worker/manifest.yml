@@ -20,4 +20,3 @@ applications:
     - mspsds-notify-env
     - mspsds-rails-env
     - mspsds-sentry-env
-
