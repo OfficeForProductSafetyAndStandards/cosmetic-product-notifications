@@ -90,55 +90,59 @@ The current worker (sidekiq), which uses `cosmetics-queue` only works with an un
 
 #### S3
 
-When setting up a new environment, you'll also need to create an AWS user called `cosmetics-SPACE-NAME` and keep a note of the Access key ID and secret access key.
+When setting up a new environment, you'll also need to create an AWS user called `cosmetics-<<SPACE>>` and keep a note of the Access key ID and secret access key.
 Create a policy for this user similar to the [Policy for Programmatic Access from the AWS docs](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/) but specifically for the new bucket.
 
-Create an S3 bucket named `cosmetics-SPACE-NAME`.
+Create an S3 bucket named `cosmetics-<<SPACE>>`.
 
 #### Cosmetics Website
 
-Running the following commands from the root directory will then setup the website app:
+This assumes that you've run [the deployment from scratch steps for Keycloak](../keycloak/README.md#deployment-from-scratch)
 
-    NO_START=true SPACE=<<space>> ./cosmetics-web/deploy.sh
+Start by setting up the following credentials:
 
-This provisions the app in Cloud Foundry.
+* To configure rails to use the production database amongst other things and set the server's encryption key (generate a new value by running `rake secret`):
 
-    cf set-env cosmetics-web RAILS_ENV production
+    cf cups cosmetics-rails-env -p '{
+        "RAILS_ENV": "production",
+        "SECRET_KEY_BASE": "XXX"
+    }'
 
-This configures rails to use the production database amongst other things.
+* To configure AWS (see the S3 section [above](#s3) to get these values):
 
-    cf set-env cosmetics-web COSMETICS_HOST XXX
+    cf cups cosmetics-aws-env -p '{
+        "AWS_ACCESS_KEY_ID": "XXX",
+        "AWS_SECRET_ACCESS_KEY": "XXX",
+        "AWS_REGION": "XXX",
+        "AWS_S3_BUCKET": "XXX"
+    }'
 
-This is the URL for the website and is used for generating redirect links.
+* To configure Sentry (see the Sentry account section in [the root README](../README.md#sentry) to get these values):
 
-    cf set-env cosmetics-web SECRET_KEY_BASE XXX
+    cf cups cosmetics-sentry-env -p '{
+        "SENTRY_DSN": "XXX",
+        "SENTRY_CURRENT_ENV": "<<SPACE>>"
+    }'
 
-This sets the server's encryption key. Generate a new value by running `rake secret` 
+* To enable and add basic auth to the entire application (useful for deployment or non-production environments):
 
-    cf set-env cosmetics-web BASIC_AUTH_ENABLED true
-    cf set-env cosmetics-web BASIC_AUTH_USERNAME XXX
-    cf set-env cosmetics-web BASIC_AUTH_PASSWORD XXX
+    cf cups cosmetics-auth-env -p '{
+        "BASIC_AUTH_USERNAME": "XXX",
+        "BASIC_AUTH_PASSWORD": "XXX"
+    }'
 
-This enables and sets the username and password for HTTP Basic Authentication.
+* To enable and add basic auth to the sidekiq monitoring UI at `/sidekiq`:
 
-    cf set-env cosmetics-web AWS_ACCESS_KEY_ID XXX
-    cf set-env cosmetics-web AWS_SECRET_ACCESS_KEY XXX
-    cf set-env cosmetics-web AWS_REGION XXX
-    cf set-env cosmetics-web AWS_S3_BUCKET XXX
+    cf cups cosmetics-sidekiq-env -p '{
+        "SIDEKIQ_USERNAME": "XXX",
+        "SIDEKIQ_PASSWORD": "XXX"
+    }'
 
-See the S3 section [above](#s3) to get these values.
+* `cosmetics-keycloak-env` should already be setup from [the keycloak steps](../keycloak/README.md#setup-clients).
 
-    cf set-env cosmetics-web SENTRY_DSN XXX
-    cf set-env cosmetics-web SENTRY_CURRENT_ENV [int|staging|prod]
+Once all the credentials are created, the app can be deployed using:
 
-See the Sentry account section in [the root README](../README.md#sentry) to get this value.
-
-    cf set-env mspsds-web SIDEKIQ_USERNAME XXX
-    cf set-env mspsds-web SIDEKIQ_PASSWORD XXX
-
-This enables and adds basic auth to the sidekiq monitoring UI at `/sidekiq` which can be used to check the worker performance.
-
-The app can then be started using `cf start cosmetics-web`.
+    SPACE=<<space>> ./cosmetics-web/deploy.sh
 
 
 #### Cosmetics Worker
