@@ -31,13 +31,13 @@ class Correspondence < ApplicationRecord
   end
 
   def can_be_displayed?
-    investigation.can_display_child_object? can_be_seen_by_current_user?
+    can_be_seen_by_current_user? || investigation.child_should_be_displayed?
   end
 
 private
 
   def can_be_seen_by_current_user?
-    return true if activity&.source&.current_user_has_gdpr_access?
+    return true if activity&.source&.user_has_gdpr_access?
 
     !has_consumer_info
   end

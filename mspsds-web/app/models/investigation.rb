@@ -203,11 +203,9 @@ class Investigation < ApplicationRecord
     self.pretty_id = "#{created_at.strftime('%y%m')}-%04d" % (cases_before + 1)
   end
 
-  def can_display_child_object?(current_user_can_see_child)
+  def child_should_be_displayed?
     # This method is responsible for white-list access for assignee and their team, as described in
     # https://regulatorydelivery.atlassian.net/wiki/spaces/MSPSDS/pages/598933517/Approach+to+case+sensitivity
-    return true if current_user_can_see_child
-    return true if User.current == self.assignee
     return true if self.assignee && (self.assignee.teams & User.current.teams).any?
 
     false

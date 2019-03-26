@@ -71,9 +71,10 @@ module DocumentsHelper
   end
 
   def document_is_sensitive(document, parent)
-    visible = document.attachments.find_by(record_type: "Activity")&.record&.source&.current_user_has_gdpr_access?
-    visible = visible || !document.metadata[:has_consumer_info]
-    parent.respond_to?(:can_display_child_object?) && !parent.can_display_child_object?(visible)
+    child_is_visible = document.attachments.find_by(record_type: "Activity")&.record&.source&.user_has_gdpr_access?
+    child_is_visible = child_is_visible || !document.metadata[:has_consumer_info]
+    parent_forces_to_be_visible = parent.respond_to?(:child_should_be_displayed?) && parent.child_should_be_displayed?
+    !(child_is_visible || parent_forces_to_be_visible)
   end
 
   def document_sensitive_title
