@@ -46,37 +46,37 @@ jobs:
 
     - stage: Deploy to int
       name: Deploy MSPSDS web
-      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=mspsds-web travis_wait ./infrastructure/ci/deploy-if-changed.sh
+      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=mspsds-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy MSPSDS worker
       script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=mspsds-worker ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy Keycloak
       script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy Cosmetics web
-      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=cosmetics-web travis_wait ./infrastructure/ci/deploy-if-changed.sh
+      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=cosmetics-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy Cosmetics worker
       script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=int COMPONENT=cosmetics-worker ./infrastructure/ci/deploy-if-changed.sh
 
     - stage: Deploy to staging
       name: Deploy MSPSDS web
-      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=mspsds-web travis_wait ./infrastructure/ci/deploy-if-changed.sh
+      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=mspsds-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy MSPSDS worker
       script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=mspsds-worker ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy Keycloak
       script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy Cosmetics web
-      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-web travis_wait ./infrastructure/ci/deploy-if-changed.sh
+      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy Cosmetics worker
       script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=staging COMPONENT=cosmetics-worker ./infrastructure/ci/deploy-if-changed.sh
 
     - stage: Deploy to production
       name: Deploy MSPSDS web
-      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=mspsds-web travis_wait ./infrastructure/ci/deploy-if-changed.sh
+      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=mspsds-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy MSPSDS worker
       script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=mspsds-worker ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy Keycloak
       script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy Cosmetics web
-      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=cosmetics-web travis_wait ./infrastructure/ci/deploy-if-changed.sh
+      script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=cosmetics-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
     - name: Deploy Cosmetics worker
       script: BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} SPACE=prod COMPONENT=cosmetics-worker ./infrastructure/ci/deploy-if-changed.sh
 
