@@ -3,9 +3,9 @@ require "application_system_test_case"
 class BreadcrumbTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
-    @investigation_products = investigations(:search_related_products)
+    @investigation_products = load_case(:search_related_products)
     @product = @investigation_products.products.first
-    @investigation_businesses = investigations(:search_related_businesses)
+    @investigation_businesses = load_case(:search_related_businesses)
     @business = @investigation_businesses.businesses.first
   end
 

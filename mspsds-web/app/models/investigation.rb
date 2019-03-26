@@ -9,13 +9,9 @@ class Investigation < ApplicationRecord
   attr_accessor :assignee_rationale
 
   before_validation { trim_line_endings(:user_title, :description, :non_compliant_reason, :hazard_description) }
-  validates :user_title, presence: true, on: :enquiry_details
-  validates :description, presence: true, on: %i[allegation_details enquiry_details]
-  validates :hazard_type, presence: true, on: :allegation_details
-  validates :product_category, presence: true, on: :allegation_details
-  validates :hazard_description, presence: true, on: :unsafe
-  validates :hazard_type, presence: true, on: :unsafe
-  validates :non_compliant_reason, presence: true, on: :non_compliant
+
+  validates :description, presence: true, on: :update
+  validates :assignable_id, presence: { message: "Select assignee" }, on: :update
 
   validates_length_of :user_title, maximum: 100
   validates_length_of :description, maximum: 10000
@@ -23,7 +19,7 @@ class Investigation < ApplicationRecord
   validates_length_of :hazard_description, maximum: 10000
 
   after_update :create_audit_activity_for_assignee, :create_audit_activity_for_status,
-               :create_audit_activity_for_visibility
+               :create_audit_activity_for_visibility, :create_audit_activity_for_summary
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")
@@ -106,7 +102,7 @@ class Investigation < ApplicationRecord
   end
 
   def assignee=(entity)
-    self.assignable_id = entity.id
+    self.assignable_id = entity&.id
     self.assignable_type = "User" if entity.is_a?(User)
     self.assignable_type = "Team" if entity.is_a?(Team)
   end
@@ -173,13 +169,6 @@ class Investigation < ApplicationRecord
 
   def case_type; end
 
-  def reason_created
-    return "Product reported because it is unsafe and non-compliant." if hazard_type.present? && non_compliant_reason.present?
-    return "Product reported because it is unsafe." if hazard_type.present?
-
-    "Product reported because it is non-compliant." if non_compliant_reason.present?
-  end
-
   def has_non_compliant_reason
     if non_compliant_reason.empty?
       errors.add(:non_compliant_reason, "cannot be blank")
@@ -211,6 +200,13 @@ class Investigation < ApplicationRecord
     false
   end
 
+  def reason_created
+    return "Product reported because it is unsafe and non-compliant." if hazard_description && non_compliant_reason
+    return "Product reported because it is unsafe." if hazard_description
+
+    "Product reported because it is non-compliant."
+  end
+
 private
 
   def create_audit_activity_for_case
@@ -230,8 +226,18 @@ private
   end
 
   def create_audit_activity_for_assignee
-    if (saved_changes.key? :assignable_id) || (saved_changes.key? :assignable_type)
+    # TODO: User.current check is here to avoid triggering activity and emails from migrations
+    # Can be safely removed once the migration PopulateAssigneeAndDescription has run
+    if ((saved_changes.key? :assignable_id) || (saved_changes.key? :assignable_type)) && User.current
       AuditActivity::Investigation::UpdateAssignee.from(self)
+    end
+  end
+
+  def create_audit_activity_for_summary
+    # TODO: User.current check is here to avoid triggering activity and emails from migrations
+    # Can be safely removed once the migration PopulateAssigneeAndDescription has run
+    if saved_changes.key?(:description) && User.current
+      AuditActivity::Investigation::UpdateSummary.from(self)
     end
   end
 

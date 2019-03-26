@@ -1,5 +1,22 @@
 # Other infrastructure
 
+## Environment variables
+
+We're using [user-provided services](https://docs.cloudfoundry.org/devguide/services/user-provided.html#deliver-service-credentials-to-an-app) to load environment variables into our applications.
+Running [get-env-from-vcap.sh](./env/get-env-from-vcap.sh) as part of the application startup will add credentials from any service named `*-env` to the current environment.
+
+
+## Domains
+
+We've setup our domains based on [the instructions provided by PaaS](https://docs.cloud.service.gov.uk/deploying_services/use_a_custom_domain).
+This also enables a CDN for the URL so it's important that the `Cache-Control` header is being set correctly.
+For each domain, we define a `<<SPACE>>` and `<<SPACE>>-temp` subdomain for hosting and blue-green deployments.
+It's important that we also allow the `Authorization` header through the CDN for the basic auth on non-production environments.
+The following command can be used to create the `cdn-route` service:
+
+    cf create-service cdn-route cdn-route opss-cdn-route -c '{"domain": "<<domain1>>,<<domain2>>", "headers": ["Authorization"]}'
+
+
 ## Logging
 
 ### Fluentd
@@ -15,6 +32,7 @@ Deploy the fluentd app by running `cf push --no-start --hostname <fluentd hostna
 
 Once the app has been created, add the following environment variables for the Logit and S3 credentials.
 The values can be found on the respective websites.
+
     cf set-env fluentd AWS_ACCESS_KEY_ID XXX
     cf set-env fluentd AWS_SECRET_ACCESS_KEY XXX
     cf set-env fluentd AWS_REGION XXX

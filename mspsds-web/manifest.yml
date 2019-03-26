@@ -6,7 +6,7 @@ applications:
   buildpacks:
     - ruby_buildpack
   path: .
-  command: MIGRATION_STATEMENT_TIMEOUT=60000 bin/rake cf:on_first_instance db:migrate && bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
+  command: export $(./env/get-env-from-vcap.sh) && MIGRATION_STATEMENT_TIMEOUT=60000 bin/rake cf:on_first_instance db:migrate && bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
   stack: cflinuxfs3
   services:
     - mspsds-database
@@ -14,3 +14,12 @@ applications:
     - mspsds-queue
     - mspsds-session
     - opss-log-drain
+    - mspsds-aws-env
+    - mspsds-auth-env
+    - mspsds-health-env
+    - mspsds-keycloak-env
+    - mspsds-notify-env
+    - mspsds-pghero-env
+    - mspsds-rails-env
+    - mspsds-sentry-env
+    - mspsds-sidekiq-env

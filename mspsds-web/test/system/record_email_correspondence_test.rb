@@ -6,7 +6,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
 
   setup do
     mock_out_keycloak_and_notify
-    @investigation = investigations(:one)
+    @investigation = load_case(:one)
     @investigation.source = sources(:investigation_one)
     set_investigation_source! @investigation, User.current
     @correspondence = correspondences(:email)
@@ -107,7 +107,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "confirmation continue should go to case page" do
-    visit new_investigation_email_url(investigations(:no_products))
+    visit new_investigation_email_url(load_case(:no_products))
     fill_in_context_form
     click_button "Continue"
     fill_in_content_form
@@ -130,6 +130,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "conceals information from other organisations on emails with customer info" do
+    set_investigation_assignee! @investigation, other_org_user
     fill_in_context_form
     choose :correspondence_email_has_consumer_info_true, visible: false
     click_button "Continue"

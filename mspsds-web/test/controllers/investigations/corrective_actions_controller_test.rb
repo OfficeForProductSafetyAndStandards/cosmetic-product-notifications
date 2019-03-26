@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CorrectiveActionsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @investigation = investigations(:one)
+    @investigation = load_case(:one)
     @business = businesses(:one)
     @product = products(:one)
     mock_out_keycloak_and_notify

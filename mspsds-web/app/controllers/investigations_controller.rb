@@ -3,7 +3,7 @@ class InvestigationsController < ApplicationController
   include LoadHelper
 
   before_action :set_search_params, only: %i[index]
-  before_action :set_investigation, only: %i[status visibility created]
+  before_action :set_investigation, only: %i[status visibility edit_summary created]
   before_action :set_investigation_with_associations, only: %i[show]
   before_action :build_breadcrumbs, only: %i[show]
 
@@ -57,42 +57,44 @@ class InvestigationsController < ApplicationController
   end
 
   # GET /cases/1/status
-  # PUT /cases/1/status
+  # PATCH /cases/1/status
   def status
-    return if request.get?
-
-    ps = status_update_params
-    if ps[:is_closed].blank?
-      @investigation.errors.add(:status, :invalid, message: "Status should be closed or open")
-      respond_to_invalid_data(:status)
-      return
-    end
-
-    @investigation.is_closed = ps[:is_closed]
-    @investigation.status_rationale = ps[:status_rationale] if ps[:status_rationale]
-    respond_to_update(:status)
+    update
   end
 
   # GET /cases/1/visibility
-  # PUT /cases/1/visibility
+  # PATCH /cases/1/visibility
   def visibility
-    return if request.get?
+    update
+  end
 
-    ps = visibility_update_params
-    if ps[:is_private].blank?
-      @investigation.errors.add(:pretty_visibility, :invalid, message: "Visibility needs to be private or public")
-      respond_to_invalid_data(:visibility)
-      return
-    end
-
-    @investigation.is_private = ps[:is_private]
-    @investigation.visibility_rationale = ps[:visibility_rationale] if ps[:visibility_rationale]
-    respond_to_update(:visibility)
+  # GET /cases/1/edit_summary
+  # PATCH /cases/1/edit_summary
+  def edit_summary
+    update
   end
 
   def created; end
 
 private
+
+  def update
+    return if request.get?
+
+    respond_to do |format|
+      if @investigation.update(update_params)
+        format.html {
+          redirect_to @investigation, flash: {
+            success: "#{@investigation.case_type.titleize} was successfully updated."
+          }
+        }
+        format.json { render :show, status: :ok, location: @investigation }
+      else
+        format.html { render action_name }
+        format.json { render json: @investigation.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def set_investigation_with_associations
     @investigation = Investigation.eager_load(:source,
@@ -108,41 +110,14 @@ private
     authorize @investigation
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def investigation_create_params
-    params.require(:investigation).permit(:description)
+  def update_params
+    return {} if params[:investigation].blank?
+
+    params.require(:investigation).permit(editable_keys)
   end
 
-  def status_update_params
-    params.require(:investigation).permit(:is_closed, :status_rationale)
-  end
-
-  def visibility_update_params
-    params.require(:investigation).permit(:is_private, :visibility_rationale)
-  end
-
-  def respond_to_update(origin)
-    respond_to do |format|
-      if @investigation.save
-        format.html {
-          redirect_to @investigation, flash: {
-              success: "#{@investigation.case_type.titleize} was successfully updated."
-          }
-        }
-        format.json { render :show, status: :ok, location: @investigation }
-      else
-        @investigation.restore_attributes
-        format.html { render origin }
-        format.json { render json: @investigation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def respond_to_invalid_data(origin)
-    respond_to do |format|
-      format.html { render origin }
-      format.json { render json: @investigation.errors, status: :unprocessable_entity }
-    end
+  def editable_keys
+    %i[description is_closed status_rationale is_private visibility_rationale]
   end
 
   def preload_activities
