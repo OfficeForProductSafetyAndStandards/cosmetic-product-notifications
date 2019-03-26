@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   include Shared::Web::Concerns::AuthenticationConcern
+  include Shared::Web::Concerns::CacheConcern
+  include Shared::Web::Concerns::HttpAuthConcern
   include Shared::Web::Concerns::RavenConfigurationConcern
 
   helper Shared::Web::Engine.helpers
@@ -10,6 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :set_raven_context
   before_action :authorize_user
   before_action :has_accepted_declaration
+  before_action :set_cache_headers
 
   def authorize_user
     raise Pundit::NotAuthorizedError unless User.current&.is_mspsds_user?

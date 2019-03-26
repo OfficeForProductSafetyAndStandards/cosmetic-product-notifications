@@ -32,7 +32,7 @@ class DocumentsController < ApplicationController
   def destroy
     @file.destroy
     AuditActivity::Document::Destroy.from(@file.blob, @parent) if @parent.is_a? Investigation
-    redirect_to @parent, notice: "File was successfully removed"
+    redirect_to @parent, flash: { success: "File was successfully removed" }
   end
 
 private

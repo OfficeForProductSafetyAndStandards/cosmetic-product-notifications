@@ -7,7 +7,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
 
   setup do
     mock_out_keycloak_and_notify
-    set_user_as_non_opss(User.current)
+    mock_user_as_non_opss(User.current)
 
     @product = products(:one)
     @investigation = investigations(:one)
@@ -41,10 +41,13 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     fill_in_why_reporting
 
     assert_selector "h1", text: "Supply chain information"
-    choose_two_businesses
+    choose_three_businesses
 
     assert_selector "h1", text: "Retailer details"
     fill_in_business_form @business_one
+
+    assert_selector "h1", text: "Importer details"
+    click_button "Skip this page"
 
     assert_selector "h1", text: "Advertiser details"
     fill_in_business_form @business_two
@@ -67,8 +70,12 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
       filename: corrective_filename_two,
       description: corrective_description_two
     )
-    choose "further_corrective_action_no", visible: false
+    choose "further_corrective_action_yes", visible: false
     click_button "Continue"
+
+    assert_selector "h1", text: "Record corrective action"
+    choose "further_corrective_action_yes", visible: false
+    click_button "Skip this page"
 
     assert_selector "h1", text: "Other information and files"
     choose_test_results_and_risk_assessments
@@ -90,11 +97,18 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     fill_in "Title", with: risk_assessment_title
     fill_in "Description", with: risk_assessment_description
     add_attachment risk_assessment_title
-    choose "further_risk_assessments_no", visible: false
+    choose "further_risk_assessments_yes", visible: false
     click_button "Continue"
+
+    assert_selector "h1", text: "Risk assessment details"
+    choose "further_risk_assessments_yes", visible: false
+    click_button "Skip this page"
 
     assert_selector "h1", text: "Find this in your system"
     fill_in_complainant_reference
+
+    assert_selector "h1", text: "Case created"
+    click_on "View case"
 
     # assert that corrective actions saved
     click_link "tab_activity"
@@ -151,8 +165,9 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     click_button "Continue"
   end
 
-  def choose_two_businesses
+  def choose_three_businesses
     page.check "businesses_retailer", visible: false
+    page.check "businesses_importer", visible: false
     page.check "businesses_other", visible: false
     fill_in "Other type", with: "advertiser"
     click_button "Continue"
@@ -190,7 +205,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
 
   def fill_in_complainant_reference
     fill_in "investigation_complainant_reference", with: @investigation.complainant_reference
-    click_button "Save"
+    click_button "Create case"
   end
 
   def add_attachment filename

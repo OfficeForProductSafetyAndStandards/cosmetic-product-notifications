@@ -6,12 +6,9 @@ The codebase is shared with the website.
 
 ## Overview
 
-We're using [Sidekiq](https://github.com/mperham/sidekiq) as our background processor to do things like send emails and
-handle attachments.
+We're using [Sidekiq](https://github.com/mperham/sidekiq) as our background processor to do things like send emails and handle attachments.
 
-We're processing attachments using [ClamAV](http://www.clamav.net/) for antivirus checking and [Imagemagick](http://imagemagick.org) for thumbnailing.
-Due to how Cloud Foundry installs apt packages, there is some configuration to get ClamAV to run on GOV.UK PaaS.
-This configuration is visible in [clamav](./clamav/), [deploy.sh](./deploy.sh) and [manifest.yml](./manifest.yml).
+We're processing attachments using our [antivirus API](../antivirus) for antivirus checking and [Imagemagick](http://imagemagick.org) for thumbnailing.
 
 
 ## Deployment
@@ -22,35 +19,27 @@ described in [the root README](../README.md#deployment).
 
 ### Deployment from scratch
 
-This assumes that you've run [the deployment from scratch steps for the Cosmetics website](../cosmetics-web/README.md#deployment-from-scratch).
-Running the following commands from the root directory will then setup the worker app.
+This assumes that you've run [the deployment from scratch steps for the MSPSDS website](../mspsds-web/README.md#deployment-from-scratch) and [the deployment from scratch steps for the antivirus API](../antivirus/README.md#deployment-from-scratch).
 
-    NO_START=true ./cosmetics-worker/deploy.sh
+Start by setting up the following credentials:
 
-This provisions the app in Cloud Foundry.
+* To configure Notify for email sending and previewing (see the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value):
 
-    cf set-env cosmetics-worker RAILS_ENV production
+    cf cups cosmetics-notify-env -p '{
+        "NOTIFY_API_KEY": "XXX"
+    }'
 
-This configures rails to use the production database amongst other things.
+* `cosmetics-aws-env`, `cosmetics-rails-env` and `cosmetics-sentry-env` should already be setup from the web steps.
+* `antivirus-auth-env` should already be setup from the antivirus steps.
+
+Once all the credentials are created, the app can be deployed using:
+
+    ./cosmetics-worker/deploy.sh
+
+There's one final environment variable which is the URL for the website and is used for sending emails:
 
     cf set-env cosmetics-worker COSMETICS_HOST XXX
 
-This is the URL for the website and is used for sending emails.
-
-    cf set-env cosmetics-worker AWS_ACCESS_KEY_ID XXX
-    cf set-env cosmetics-worker AWS_SECRET_ACCESS_KEY XXX
-    cf set-env cosmetics-worker AWS_REGION XXX
-    cf set-env cosmetics-worker AWS_S3_BUCKET XXX
-
-See the S3 section in [the Cosmetics website README](../cosmetics-web/README.md#s3) to get these values.
-
-    cf set-env cosmetics-worker NOTIFY_API_KEY XXX
-
-See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value.
-
-    cf set-env cosmetics-worker SENTRY_DSN XXX
-    cf set-env cosmetics-worker SENTRY_CURRENT_ENV [int|staging|prod]
-
-See the Sentry account section in [the root README](../README.md#sentry) to get this value.
+This is set manually using an environment variable as it's dependent on how [the web deploy script](../cosmetics-web/deploy.sh) works.
 
 The app can then be started using `cf start cosmetics-worker`.

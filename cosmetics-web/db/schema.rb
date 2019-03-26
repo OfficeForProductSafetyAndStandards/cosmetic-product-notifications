@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_18_114749) do
+ActiveRecord::Schema.define(version: 2019_03_20_164234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,9 @@ ActiveRecord::Schema.define(version: 2019_03_18_114749) do
     t.string "frame_formulation"
     t.string "sub_sub_category"
     t.string "name"
+    t.string "physical_form"
+    t.string "special_applicator"
+    t.string "acute_poisoning_info"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
@@ -133,6 +136,9 @@ ActiveRecord::Schema.define(version: 2019_03_18_114749) do
     t.string "shades"
     t.string "industry_reference"
     t.datetime "cpnp_notification_date"
+    t.boolean "was_notified_before_eu_exit", default: false
+    t.boolean "under_three_years"
+    t.boolean "still_on_the_market"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"

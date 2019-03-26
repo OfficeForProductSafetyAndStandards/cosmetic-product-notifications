@@ -1,5 +1,6 @@
 ruby:
-  sensitive = document.metadata[:has_consumer_info]
+  sensitive = parent.respond_to?(:can_display_child_object?) &&
+          !parent.can_display_child_object?(document.metadata[:has_consumer_info])
   title = sensitive ? document_sensitive_title : document.metadata[:title]
   safe = document.metadata["safe"]
 
@@ -11,7 +12,7 @@ ruby:
     h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = title
     span.govuk-hint[class=" govuk-!-font-size-16"] = formatted_file_updated_date(document)
     - if sensitive
-      p = render "components/govuk_badge", text: "Restricted access", classes: "govuk-badge--grey"
+      p = render "components/hmcts_badge", text: "Restricted access", classes: "hmcts-badge--grey"
       p = document_sensitive_body
     - else
       p = document.metadata[:description]

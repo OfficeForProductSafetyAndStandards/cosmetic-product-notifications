@@ -60,7 +60,8 @@ html.govuk-template.app-html-class[lang="en"]
               - if !login_page?
                 li.govuk-header__navigation-item
                   - if User.current
-                    = link_to "Sign out", shared_engine.logout_session_path, method: :delete, class: "govuk-header__link"
+                    = form_with url: shared_engine.logout_session_path, method: :delete do |form|
+                      = form.submit "Sign out", class: "sign-out-link"
                   - else
                     = link_to "Sign in", keycloak_login_url, class: "govuk-header__link"
 
@@ -79,10 +80,9 @@ html.govuk-template.app-html-class[lang="en"]
           h2#error-summary-title.govuk-error-summary__title
             = alert
 
-      - if notice
-        .govuk-inset-text[class="govuk-!-margin-0" tabindex="-1"]
-          strong[class="govuk-!-font-weight-bold"]
-            = notice
+      - %i[success information warning].each do |key|
+        - if flash[key]
+          = render "components/hmcts_banner", text: flash[key], type: key
 
       main#main-content.govuk-main-wrapper.app-main-class[role="main"]
         = yield

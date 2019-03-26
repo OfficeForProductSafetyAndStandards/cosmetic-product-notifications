@@ -10,7 +10,7 @@ li
     = activity.subtitle
 
   - if sensitive
-    p = render "components/govuk_badge", text: "Restricted access", classes: "govuk-badge--grey"
+    p = render "components/hmcts_badge", text: "Restricted access", classes: "hmcts-badge--grey"
     p = "Consumer contact details hidden to comply with GDPR legislation. " + \
         "Contact #{creator}, who created this activity, to obtain these details if required."
     - if activity.has_attachment?
