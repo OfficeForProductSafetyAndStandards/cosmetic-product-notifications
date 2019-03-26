@@ -9,7 +9,7 @@ class Source < ApplicationRecord
     "Created by #{show}, #{created_at.strftime('%d/%m/%Y')}"
   end
 
-  def current_user_has_gdpr_access?
+  def user_has_gdpr_access?(user_in_question: User.current)
     true
   end
 end

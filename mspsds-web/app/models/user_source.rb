@@ -5,7 +5,7 @@ class UserSource < Source
     user.present? ? user.display_name : "anonymous"
   end
 
-  def current_user_has_gdpr_access?
-    User.current.organisation == user&.organisation
+  def user_has_gdpr_access?(user_in_question: User.current)
+    user_in_question.organisation == user&.organisation
   end
 end
