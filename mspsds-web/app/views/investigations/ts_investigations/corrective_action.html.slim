@@ -29,3 +29,5 @@
                       { text: "No", value: "No", checked: @repeat_step == "No", id: "further_corrective_action_no" }]
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
+      .govuk-body
+        = form.submit "Skip this page", class: "button-link", role: "link"
