@@ -3,6 +3,7 @@ require "test_helper"
 class Investigations::AlertsControllerTest < ActionDispatch::IntegrationTest
   setup do
     mock_out_keycloak_and_notify
+    accept_declaration
     @investigation = investigations(:private)
     @investigation.source = sources(:investigation_private)
   end

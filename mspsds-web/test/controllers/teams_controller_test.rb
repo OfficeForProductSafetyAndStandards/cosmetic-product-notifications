@@ -3,6 +3,7 @@ require "test_helper"
 class TeamsControllerTest < ActionDispatch::IntegrationTest
   setup do
     mock_out_keycloak_and_notify
+    accept_declaration
     set_user_as_team_admin(User.current)
     @my_team = User.current.teams.first
     @another_team = Team.all.find { |t| !User.current.teams.include?(t) }

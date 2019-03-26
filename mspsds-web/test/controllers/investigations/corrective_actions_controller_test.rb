@@ -6,6 +6,7 @@ class CorrectiveActionsControllerTest < ActionDispatch::IntegrationTest
     @business = businesses(:one)
     @product = products(:one)
     mock_out_keycloak_and_notify
+    accept_declaration
   end
 
   teardown do
