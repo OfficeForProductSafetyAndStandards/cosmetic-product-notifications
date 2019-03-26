@@ -9,6 +9,7 @@ Keycloak.realm = "opss"
 # Realm url (only used if the installation file is not present)
 Keycloak.auth_server_url = ""
 
+# rubocop:disable Lint/HandleExceptions
 begin
   Shared::Web::KeycloakClient.instance.all_organisations
 rescue RestClient::BadRequest
@@ -16,6 +17,7 @@ rescue RestClient::BadRequest
   # The gem we are using is importing client_id and secret too late in default_call method, causing first request
   # to fail, and all following ones to work.
 end
+# rubocop:enable Lint/HandleExceptions
 
 Rails.application.config.after_initialize do
   # Load organisations and users on app startup
