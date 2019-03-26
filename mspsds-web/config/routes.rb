@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   end
 
 
+  get "declaration" => "declaration#declaration"
+  post "declaration" => "declaration#declaration"
   namespace :introduction do
     get :overview
     get :report_products
