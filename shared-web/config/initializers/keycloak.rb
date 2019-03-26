@@ -12,8 +12,9 @@ Keycloak.auth_server_url = ""
 begin
   Shared::Web::KeycloakClient.instance.all_organisations
 rescue RestClient::BadRequest
-  # It seems first request to keycloak is rejected with error=invalid_client_credentials
-  # If keycloak is actually down, we will see it in logs of following requests
+  # Can be deleted after the following is merged: https://github.com/imagov/keycloak/pull/11
+  # The gem we are using is importing client_id and secret too late in default_call method, causing first request
+  # to fail, and all following ones to work.
 end
 
 Rails.application.config.after_initialize do
