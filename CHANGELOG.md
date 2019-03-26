@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 ### MSPSDS
+- Go to declaration page when user logs in until they accept.
 - Provide "send email alert about this case" functionality.
 - Allow users to view their team members.
 - When emails and phone calls are marked as GDPR senstive, prevent other users from viewing them or their attachments.
