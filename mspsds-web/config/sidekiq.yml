@@ -1,5 +1,0 @@
----
-:concurrency: 10
-:queues:
-  - mspsds
-  - mspsds-mailers

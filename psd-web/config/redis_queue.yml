@@ -1,0 +1,12 @@
+default: &default
+  host: 'redis'
+  db: 0
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("psd-queue")["uri"] %>

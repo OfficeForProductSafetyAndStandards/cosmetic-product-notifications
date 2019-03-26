@@ -1,4 +1,4 @@
-# Market Surveillance & Product Safety Digital Service
+# Office for Product Safety & Standards Services
 
 [![Build Status](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds.svg?branch=master)](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
 [![Coverage Status](https://coveralls.io/repos/github/UKGovernmentBEIS/beis-mspsds/badge.svg?branch=master)](https://coveralls.io/github/UKGovernmentBEIS/beis-mspsds?branch=master)
@@ -28,9 +28,9 @@ Build and start-up the full project:
 
     docker-compose up
 
-Alternatively, you can run the specific component you're interested in using e.g. `docker-compose up mspsds-web` or `docker-compose up cosmetics-web`.
+Alternatively, you can run the specific component you're interested in using e.g. `docker-compose up psd-web` or `docker-compose up cosmetics-web`.
 
-You'll then most likely want to run the [Cosmetics setup steps](cosmetics-web/README.md#getting-setup) or [MSPSDS setup steps](mspsds-web/README.md#getting-setup).
+You'll then most likely want to run the [Cosmetics setup steps](cosmetics-web/README.md#getting-setup) or [PSD setup steps](psd-web/README.md#getting-setup).
 
 When pulling new changes from master, it is sometimes necessary to run the following
 if there are changes to the Docker config:
@@ -73,7 +73,7 @@ You may also want to setup docker-sync using [these instructions](https://github
 #### Keycloak
 
 The local developer instance of Keycloak is configured with the following default user accounts:
-* MSPSDS website: `user@example.com` / `password`
+* PSD website: `user@example.com` / `password`
 * Admin Console: `admin` / `admin`
 
 Log in to the [Keycloak admin console](http://keycloak:8080/auth/admin) to add or edit users.
@@ -144,16 +144,13 @@ See [maintenance/README.md](maintenance/README.md#deployment).
 
 See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
 
-
 #### Cosmetics
 
 See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
 
+#### Product safety database
 
-#### MSPSDS
-
-See [mspsds-web/README.md](mspsds-web/README.md#deployment-from-scratch).
-
+See [psd-web/README.md](psd-web/README.md#deployment-from-scratch).
 
 #### Other infrastructure
 

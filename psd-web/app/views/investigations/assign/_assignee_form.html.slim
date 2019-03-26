@@ -1,0 +1,54 @@
+= form_with(model: investigation, method: :put, url: wizard_path) do |form|
+  = render "form_components/govuk_error_summary", form: form
+  = yield
+
+  ruby:
+    items = investigation.important_assignable_people.map do |user|
+      { text: user.display_name, value: user.id, checked: investigation.assignee == user }
+    end
+
+    if User.current.teams.any?
+      someone_in_your_team = capture do
+        render "investigations/assign/assignee_selection", form: form, key: :select_team_member,
+                 items: User.get_team_members(user: User.current), label: "Select team member", show_all_values: true
+      end
+      items.push text: "Someone in your team",
+               value: "someone_in_your_team",
+               conditional: { html: someone_in_your_team }
+    end
+
+    if @suggested_previous_assignees.present?
+      previously_assigned = capture do
+        render "investigations/assign/assignee_selection", form: form, key: :select_previously_assigned,
+              items: @suggested_previous_assignees, ignore_restrictions: true,
+              label: "Select previously assigned person or team", show_all_values: true
+      end
+      items.push text: "Previously assigned", value: "previously_assigned", conditional: { html: previously_assigned }
+    end
+
+    items.push divider: "Teams"
+
+    teams = investigation.important_assignable_teams.map do |team|
+      { text: team.display_name, value: team.id, checked: investigation.assignee == team }
+    end
+    items.concat teams
+
+    other_teams = capture do
+      render "investigations/assign/assignee_selection", form: form, key: :select_other_team,
+             items: Team.all, label: "Select other team name", ignore_restrictions: true,
+             show_all_values: true
+    end
+    items.push text: "Other team", value: "other_team", conditional: { html: other_teams }
+
+    items.push divider: "or"
+
+    someone_else = capture do
+      render "investigations/assign/assignee_selection", form: form, key: :select_someone_else,
+             items: User.all, label: "Select other user"
+    end
+    items.push text: "Someone else", value: "someone_else", conditional: { html: someone_else }
+
+  = render "form_components/govuk_radios", form: form, key: :assignable_id, items: items
+  .govuk-form-group
+    = form.submit "Continue", class: "govuk-button"
+    p = link_to "Cancel", investigation, class: "psd-block-link"
