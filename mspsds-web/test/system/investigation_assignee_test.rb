@@ -5,7 +5,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     mock_out_keycloak_and_notify
     @user = User.current
     @team = @user.teams.first
-    visit new_investigation_assign_path(investigations(:one))
+    visit new_investigation_assign_path(load_case(:one))
   end
 
   teardown do

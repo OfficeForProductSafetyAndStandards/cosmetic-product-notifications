@@ -15,9 +15,9 @@ class Investigations::TsInvestigationsController < ApplicationController
   before_action :set_countries, only: %i[show create update]
   before_action :set_product, only: %i[show create update]
   before_action :store_product, only: %i[update], if: -> { step == :product }
+  before_action :set_why_reporting, only: %i[show update], if: -> { step == :why_reporting }
   before_action :set_investigation, only: %i[show create update]
   before_action :store_investigation, only: %i[update], if: -> { %i[why_reporting reference_number].include? step }
-  before_action :set_why_reporting, only: %i[show update], if: -> { step == :why_reporting }
   before_action :store_why_reporting, only: %i[update], if: -> { step == :why_reporting }
   before_action :set_selected_businesses, only: %i[show update], if: -> { step == :which_businesses }
   before_action :store_selected_businesses, only: %i[update], if: -> { step == :which_businesses }
@@ -102,6 +102,7 @@ private
 
   def set_investigation
     @investigation = Investigation.new(investigation_step_params.except(:unsafe, :non_compliant))
+    @investigation.description = @investigation.reason_created if step == :why_reporting
   end
 
   def set_why_reporting

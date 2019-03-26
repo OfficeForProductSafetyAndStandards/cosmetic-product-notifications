@@ -10,7 +10,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     mock_user_as_non_opss(User.current)
 
     @product = products(:one)
-    @investigation = investigations(:one)
+    @investigation = load_case(:one)
     @business_one = businesses :one
     @business_two = businesses :two
     @corrective_action_one = corrective_actions :one

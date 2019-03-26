@@ -15,8 +15,8 @@ applications:
     - cosmetics-elasticsearch
     - cosmetics-queue
     - opss-log-drain
+    - antivirus-auth-env
     - cosmetics-aws-env
     - cosmetics-notify-env
     - cosmetics-rails-env
     - cosmetics-sentry-env
-

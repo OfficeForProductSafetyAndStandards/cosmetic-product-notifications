@@ -6,7 +6,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
 
-    @investigation = investigations(:one)
+    @investigation = load_case(:one)
     @corrective_action = corrective_actions(:one)
 
     visit new_investigation_corrective_action_path(@investigation)

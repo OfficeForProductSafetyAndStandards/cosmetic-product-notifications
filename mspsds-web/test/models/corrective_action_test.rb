@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CorrectiveActionTest < ActiveSupport::TestCase
   setup do
-    @investigation = investigations(:one)
+    @investigation = load_case(:one)
     @business = businesses(:one)
     @product = products(:one)
     mock_out_keycloak_and_notify
