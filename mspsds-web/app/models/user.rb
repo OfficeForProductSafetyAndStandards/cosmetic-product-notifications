@@ -38,10 +38,7 @@ class User < Shared::Web::User
   def self.all(options = {})
     begin
       all_users = Shared::Web::KeycloakClient.instance.all_users(force: options[:force])
-      # Teams and organisations need to be loaded before populating organisation on users
-      # If they are already loaded, the results are probably cached so it's not too expensive
       Team.all
-      Organisation.all
       self.data = all_users.map { |user| populate_organisation(user) }
                       .reject { |user| user[:organisation_id].blank? }
       TeamUser.all(force: options[:force])
