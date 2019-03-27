@@ -25,7 +25,7 @@ class KeycloakTest < ApplicationSystemTestCase
   test "redirects to previous page after login" do
     visit products_path
     sign_in email: "user@example.com", password: "password"
-    assert_current_path products_path
+    assert_current_path declaration_index_path(redirect_path: products_path)
   end
 
   def sign_in(email:, password:)

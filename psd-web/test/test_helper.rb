@@ -75,6 +75,7 @@ class ActiveSupport::TestCase
     allow(@keycloak_client_instance).to receive(:user_signed_in?).and_return(true)
     allow(@keycloak_client_instance).to receive(:user_info).and_return(user.attributes)
     User.current = user
+    User.current.has_accepted_declaration!
   end
 
   def reset_keycloak_and_notify_mocks
