@@ -4,6 +4,7 @@ class ComplainantTest < ActiveSupport::TestCase
   setup do
     @complainant = Complainant.new(complainant_type: "Business")
     mock_out_keycloak_and_notify
+    accept_declaration
   end
 
   teardown do

@@ -5,16 +5,16 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       h1.govuk-heading-xl Declaration
-        p
-          | By continuing you agree:
-        ul.govuk-list.govuk-list--bullet
-          li to the terms and conditions and privacy policy
-          li that any information you provide is correct to your best of your knowledge
-          li that you have the right to share information you enter
-          li not to share any information from the product safety database outside your organisation
-        .govuk-form-group
-          .govuk-checkboxes data-module="checkboxes"
-            .govuk-checkboxes__item
-              = form.check_box :agree_to_declaration, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
-              = form.label :agree_to_declaration, "I agree", class: "govuk-checkboxes__label"
+      p
+        | By continuing you agree:
+      ul.govuk-list.govuk-list--bullet
+        li To the #{ link_to("terms and conditions", help_terms_and_conditions_path, target: :_blank) } and #{ link_to("privacy policy", help_privacy_policy_path, target: :_blank) }
+        li That any information you provide is correct to your best of your knowledge
+        li That you have the right to share information you enter
+        li Not to share any information from the product safety database outside your organisation
+      .govuk-form-group
+        .govuk-checkboxes data-module="checkboxes"
+          .govuk-checkboxes__item
+            = form.check_box :agree_to_declaration, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
+            = form.label :agree_to_declaration, "I agree", class: "govuk-checkboxes__label"
   = form.submit "Continue", class: "govuk-button"

@@ -16,6 +16,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     )
 
     mock_out_keycloak_and_notify
+    accept_declaration
     visit new_allegation_path
   end
 

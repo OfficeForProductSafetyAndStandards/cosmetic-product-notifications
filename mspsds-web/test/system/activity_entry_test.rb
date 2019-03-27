@@ -3,6 +3,7 @@ require "application_system_test_case"
 class ActivityEntryTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
+    accept_declaration
     @investigation = investigations(:one)
     visit investigation_path(@investigation)
     click_on "Add activity"

@@ -5,7 +5,7 @@ class CorrectiveActionsTest < ApplicationSystemTestCase
   include CorrectiveActionTestHelper
   setup do
     mock_out_keycloak_and_notify
-
+    accept_declaration
     @investigation = investigations(:one)
     @corrective_action = corrective_actions(:one)
 

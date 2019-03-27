@@ -3,6 +3,7 @@ require "application_system_test_case"
 class InvestigationBusinessTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
+    accept_declaration
     @investigation = investigations(:one)
     @business = businesses(:three)
     @business.source = sources(:business_three)

@@ -9,6 +9,7 @@ class InvestigationTest < ActiveSupport::TestCase
 
   setup do
     mock_out_keycloak_and_notify
+    accept_declaration
     @investigation = investigations(:one)
 
     @investigation_with_product = investigations(:search_related_products)

@@ -4,6 +4,7 @@ class UpdateProductTest < ApplicationSystemTestCase
   setup do
     @product = products(:one)
     mock_out_keycloak_and_notify
+    accept_declaration
   end
 
   teardown do

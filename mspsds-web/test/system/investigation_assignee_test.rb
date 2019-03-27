@@ -3,6 +3,7 @@ require "application_system_test_case"
 class InvestigationAssigneeTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
+    accept_declaration
     @user = User.current
     @team = @user.teams.first
     visit new_investigation_assign_path(investigations(:one))

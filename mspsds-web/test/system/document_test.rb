@@ -4,7 +4,7 @@ class DocumentTest < ApplicationSystemTestCase
   include UrlHelper
   setup do
     mock_out_keycloak_and_notify
-
+    accept_declaration
     visit new_document_flow_path(investigations(:no_products))
   end
 
