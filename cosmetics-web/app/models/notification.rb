@@ -4,6 +4,8 @@ class Notification < ApplicationRecord
   include AASM
   include Shared::Web::CountriesHelper
 
+  EU_EXIT_DATETIME = DateTime.parse("29-03-2019T23:00:00").in_time_zone
+
   belongs_to :responsible_person
   has_many :components, dependent: :destroy
   has_many :image_uploads, dependent: :destroy
@@ -137,11 +139,11 @@ class Notification < ApplicationRecord
   end
 
   def notified_post_eu_exit?
-    !was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date > Date.parse("29-03-2019")))
+    !notified_pre_eu_exit?
   end
 
   def notified_pre_eu_exit?
-    !notified_post_eu_exit?
+    was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date < EU_EXIT_DATETIME))
   end
 
 private
