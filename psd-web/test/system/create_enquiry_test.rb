@@ -15,7 +15,6 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     )
 
     mock_out_keycloak_and_notify
-    accept_declaration
     visit new_enquiry_path
   end
 

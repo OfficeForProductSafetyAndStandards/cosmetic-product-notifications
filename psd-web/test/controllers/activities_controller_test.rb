@@ -3,7 +3,6 @@ require "test_helper"
 class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     @investigation = load_case(:one)
     @activity = activities(:one)
     @activity.source = sources(:activity_one)

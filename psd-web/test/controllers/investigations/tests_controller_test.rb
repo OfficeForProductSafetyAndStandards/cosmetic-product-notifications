@@ -5,7 +5,6 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
     @investigation = load_case(:one)
     @product = products(:one)
     mock_out_keycloak_and_notify
-    accept_declaration
   end
 
   teardown do

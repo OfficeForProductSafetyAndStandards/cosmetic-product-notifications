@@ -3,7 +3,6 @@ require "test_helper"
 class NotificationTest < ActiveSupport::TestCase
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     @investigation = Investigation.create(description: "new investigation for notification test")
     @user_one = User.find_by(last_name: "User_one")
     @user_two = User.find_by(last_name: "User_two")

@@ -3,7 +3,6 @@ require "application_system_test_case"
 class InvestigationHighlightTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     visit root_path
   end
 

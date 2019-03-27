@@ -3,11 +3,11 @@ require "test_helper"
 class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     mock_out_keycloak_and_notify(last_name: "User_four")
-    accept_declaration
+
     @assignee = User.find_by(last_name: "User_one")
     @non_opss_user = User.find_by(last_name: "User_two")
     mock_user_as_non_opss(@non_opss_user)
-    accept_declaration
+
     @investigation_one = load_case(:one)
     @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
     @investigation_one.assignee = User.find_by(last_name: "User_four")

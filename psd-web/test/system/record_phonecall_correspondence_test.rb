@@ -7,7 +7,6 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
 
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     @investigation = load_case(:one)
     @investigation.source = sources(:investigation_one)
     set_investigation_source! @investigation, User.current

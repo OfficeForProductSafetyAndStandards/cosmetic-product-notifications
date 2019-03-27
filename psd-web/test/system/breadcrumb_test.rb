@@ -3,7 +3,6 @@ require "application_system_test_case"
 class BreadcrumbTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     @investigation_products = load_case(:search_related_products)
     @product = @investigation_products.products.first
     @investigation_businesses = load_case(:search_related_businesses)

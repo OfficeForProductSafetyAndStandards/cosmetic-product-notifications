@@ -75,7 +75,7 @@ class ActiveSupport::TestCase
     allow(@keycloak_client_instance).to receive(:user_signed_in?).and_return(true)
     allow(@keycloak_client_instance).to receive(:user_info).and_return(user.attributes)
     User.current = user
-    accept_declaration
+    User.current.has_accepted_declaration!
   end
 
   def reset_keycloak_and_notify_mocks
@@ -102,10 +102,6 @@ class ActiveSupport::TestCase
     allow(NotifyMailer).to receive(:investigation_updated) { result }
     allow(NotifyMailer).to receive(:investigation_created) { result }
     allow(NotifyMailer).to receive(:user_added_to_team) { result }
-  end
-
-  def accept_declaration
-    User.current.has_accepted_declaration!
   end
 
   # This is a public method that updates both the passed in user object and the KC mocking

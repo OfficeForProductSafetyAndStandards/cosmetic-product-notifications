@@ -3,7 +3,6 @@ require "application_system_test_case"
 class AlertTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     @investigation = load_case(:one)
     @alert = alerts :one
     go_to_new_activity_for_investigation @investigation

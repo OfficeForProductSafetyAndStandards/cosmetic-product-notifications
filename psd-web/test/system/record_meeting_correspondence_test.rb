@@ -3,7 +3,6 @@ require "application_system_test_case"
 class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     @investigation = load_case(:one)
     @investigation.source = sources(:investigation_one)
     @correspondence = correspondences(:meeting)

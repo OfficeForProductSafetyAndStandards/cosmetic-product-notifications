@@ -3,7 +3,7 @@ require "test_helper"
 class TeamTest < ActionDispatch::IntegrationTest
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
+
     @user_one = User.find_by(last_name: "User_one")
     @user_two = User.find_by(last_name: "User_two")
     @user_three = User.find_by(last_name: "User_three")

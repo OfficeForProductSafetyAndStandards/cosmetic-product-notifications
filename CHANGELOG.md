@@ -2,7 +2,6 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-=======
 ### Product safety database
 - Provide "send email alert about this case" functionality.
 - Allow users to view their team members.

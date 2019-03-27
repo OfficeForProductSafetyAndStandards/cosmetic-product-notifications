@@ -3,7 +3,7 @@ require "application_system_test_case"
 class InvestigationTestResultTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
+
     @investigation = load_case(:one)
     @test = tests(:one)
 

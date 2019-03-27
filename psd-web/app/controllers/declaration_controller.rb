@@ -1,23 +1,17 @@
 class DeclarationController < ApplicationController
   skip_before_action :has_accepted_declaration
 
-  def declaration
-    @error_list = []
-    if request.get?
-      store_original_path
-      return
-    end
-    if params[:agree_to_declaration] != "checked"
-      @error_list << { text: "You must agree to the declaration to use this service" }
-      return
-    end
-    User.current.has_accepted_declaration!
-    redirect_to session[:original_path] || root_path
+  def index
+    session[:redirect_path] = params[:redirect_path]
   end
 
-private
-
-  def store_original_path
-    session[:original_path] = params[:format]
+  def accept
+    @error_list = []
+    if params[:agree_to_declaration] != "checked"
+      @error_list << { text: "You must agree to the declaration to use this service" }
+      return render :index
+    end
+    User.current.has_accepted_declaration!
+    redirect_to session[:redirect_path] || root_path
   end
 end

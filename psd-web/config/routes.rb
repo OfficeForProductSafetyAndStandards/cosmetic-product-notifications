@@ -13,9 +13,11 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :declaration do
+    get :index, path: ''
+    post :accept
+  end
 
-  get "declaration" => "declaration#declaration"
-  post "declaration" => "declaration#declaration"
   namespace :introduction do
     get :overview
     get :report_products

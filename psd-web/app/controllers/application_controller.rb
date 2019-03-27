@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
   def has_accepted_declaration
-    redirect_to declaration_path(request.original_fullpath) unless User.current.has_accepted_declaration
+    redirect_to declaration_index_path(redirect_path: request.original_fullpath) unless User.current.has_accepted_declaration
   end
 end

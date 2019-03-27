@@ -3,7 +3,6 @@ require "test_helper"
 class UserTest < ActiveSupport::TestCase
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     @user = User.find_by(last_name: "User_one")
     @user_four = User.find_by(last_name: "User_four")
     mock_user_as_non_opss(@user)

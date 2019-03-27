@@ -1,6 +1,7 @@
-- content_for :page_title, "About"
-= form_with(model: @user_attributes, url: declaration_path, local: true) do |form|
-  - if @error_list.any?
+- content_for :page_title, "Declaration"
+
+= form_with(url: declaration_accept_path, local: true) do |form|
+  - if @error_list&.any?
     = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @error_list
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
@@ -8,7 +9,21 @@
       p
         | By continuing you agree:
       ul.govuk-list.govuk-list--bullet
-        li To the #{ link_to("terms and conditions", help_terms_and_conditions_path, target: :_blank) } and #{ link_to("privacy policy", help_privacy_policy_path, target: :_blank) }
+        li
+          ' To the
+          - # rubocop:disable Rails/LinkToBlank
+          - html = capture do
+            | terms and conditions
+            span.govuk-visually-hidden
+              |  (opens new window)
+          = link_to html, help_terms_and_conditions_path, target: "_blank"
+          '  and
+          - html = capture do
+            | privacy policy
+            span.govuk-visually-hidden
+              |  (opens new window)
+          = link_to html, help_privacy_policy_path, target: "_blank"
+          - # rubocop:enable Rails/LinkToBlank
         li That any information you provide is correct to your best of your knowledge
         li That you have the right to share information you enter
         li Not to share any information from the product safety database outside your organisation

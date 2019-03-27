@@ -3,7 +3,6 @@ require "application_system_test_case"
 class CreateNewRecordTest < ApplicationSystemTestCase
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     visit new_investigation_path
   end
 

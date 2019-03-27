@@ -3,7 +3,6 @@ require "test_helper"
 class LocationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     mock_out_keycloak_and_notify
-    accept_declaration
     @location = locations(:one)
     @location.source = sources(:location_one)
   end
