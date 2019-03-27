@@ -3,5 +3,5 @@
     tr.govuk-table__row
       th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
         = entity[key_name]
-      td.govuk-table__cell
-        = entity[value_name]
+      td.govuk-table__cell.govuk-table__cell--numeric
+        = "#{entity[value_name]} %w/w"

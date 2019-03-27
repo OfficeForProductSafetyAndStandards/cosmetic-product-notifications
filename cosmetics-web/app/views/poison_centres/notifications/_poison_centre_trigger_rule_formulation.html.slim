@@ -15,13 +15,13 @@ h2.govuk-heading-l.poison_centre_table_heading
                   th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
                     | Ethanol
                   td.govuk-table__cell.govuk-table__cell--numeric
-                    = question_element.answer
+                    = "#{question_element.answer} %w/w"
               - when "propanol"
                 tr.govuk-table__row
                   th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
                     | Isopropanol
                   td.govuk-table__cell.govuk-table__cell--numeric
-                    = question_element.answer
+                    = "#{question_element.answer} %w/w"
               - when "inciname"
                 tr.govuk-table__row
                   - formulation_data = get_formulation_data(question, question_element)
@@ -29,6 +29,6 @@ h2.govuk-heading-l.poison_centre_table_heading
                     th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
                       = formulation_data.first.humanize
                     td.govuk-table__cell.govuk-table__cell--numeric
-                      = formulation_data.last.humanize
+                      = "#{formulation_data.last.humanize} %w/w"
 
 
