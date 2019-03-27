@@ -19,4 +19,8 @@ class AuditActivity::Document::Base < AuditActivity::Base
   def attached_image?
     self.attachment.image?
   end
+
+  def sensitive_title
+    'Document added'
+  end
 end
