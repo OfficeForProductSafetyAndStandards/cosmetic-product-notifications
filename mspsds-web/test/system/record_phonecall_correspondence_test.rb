@@ -93,7 +93,6 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "conceals information from other organisations on phonecalls with customer info" do
-    set_investigation_assignee! @investigation, other_org_user
     fill_in_context_form
     choose :correspondence_phone_call_has_consumer_info_true, visible: false
     click_button "Continue"
