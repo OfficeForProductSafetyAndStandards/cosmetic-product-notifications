@@ -47,6 +47,18 @@ class CpnpExport
     current_version_info_node.xpath(".//stillOnTheMarket").first&.text&.casecmp?("Y")
   end
 
+  def is_mixed
+    current_version_info_node.xpath(".//isMixed").first&.text&.casecmp?("Y")
+  end
+
+  def ph_min_value
+    current_version_info_node.xpath(".//phMinValue").first&.text
+  end
+
+  def ph_max_value
+    current_version_info_node.xpath(".//phMaxValue").first&.text
+  end
+
   def shades
     current_version_info_node.xpath(".//shade").first&.text
   end

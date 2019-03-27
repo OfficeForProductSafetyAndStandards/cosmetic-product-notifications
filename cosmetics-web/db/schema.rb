@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_20_164234) do
+ActiveRecord::Schema.define(version: 2019_03_27_170534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,9 @@ ActiveRecord::Schema.define(version: 2019_03_20_164234) do
     t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
+    t.boolean "is_mixed"
+    t.decimal "ph_min_value"
+    t.decimal "ph_max_value"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
