@@ -27,4 +27,8 @@ class AuditActivity::CorrectiveAction::Base < AuditActivity::Base
     body += "<br>#{self.sanitize_text corrective_action.details}" if corrective_action.details.present?
     body
   end
+
+  def activity_type
+    "corrective action"
+  end
 end
