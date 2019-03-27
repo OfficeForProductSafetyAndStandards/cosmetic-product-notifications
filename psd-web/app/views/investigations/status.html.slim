@@ -1,0 +1,22 @@
+- content_for :page_title, "Update status"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+= form_with(model: @investigation, url: status_investigation_path(@investigation)) do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      = render "minimal_investigation_heading", investigation: @investigation, title: "Status information"
+      h2.govuk-heading-l
+        = "#{@investigation.case_type.titleize} status"
+      = render "form_components/govuk_radios", form: form, key: :is_closed,
+              fieldset: { legend: { text: "Status" } },
+              items: [{ text: "Open", value: "false" }, { text: "Closed", value: "true" }]
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Comment / rationale
+        = render "form_components/govuk_textarea", key: :status_rationale, form: form,
+                attributes: { maxlength: 10000 },
+                hint: { text: "Why are you setting it to this status?" },
+                label: { text: "Status change rationale", classes: "govuk-visually-hidden" }
+      .govuk-form-group
+        = form.submit "Save", class: "govuk-button"

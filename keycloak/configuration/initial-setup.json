@@ -1792,10 +1792,10 @@
         "containerId" : "68531a90-8123-44ae-9bc7-21df38edbe52",
         "attributes" : { }
       } ],
-      "mspsds-app" : [ {
+      "psd-app" : [ {
         "id" : "e6aed038-289d-4aca-8a07-21537f618a81",
         "name" : "team_admin",
-        "description" : "Users with team-admin roles are allowed to change team memberships in mspsds",
+        "description" : "Users with team-admin roles are allowed to change team memberships in psd",
         "composite" : false,
         "clientRole" : true,
         "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52",
@@ -1810,8 +1810,8 @@
         "attributes" : { }
       }, {
         "id" : "cea5ad59-1722-4467-9fbb-857a4153ef03",
-        "name" : "mspsds_user",
-        "description" : "Role granting access to the Market Surveillance & Product Safety service.",
+        "name" : "psd_user",
+        "description" : "Role granting access to the Product safety database.",
         "composite" : false,
         "clientRole" : true,
         "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52",
@@ -1819,14 +1819,6 @@
       }, {
         "id" : "d4f54543-60fb-4630-ad73-7e8bf7f3f576",
         "name" : "uma_protection",
-        "composite" : false,
-        "clientRole" : true,
-        "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52",
-        "attributes" : { }
-      }, {
-        "id" : "fdfc9286-5f71-4e01-8ad5-241c92848fb1",
-        "name" : "admin",
-        "description" : "Administrator role allowing users to be assigned to cases, etc.",
         "composite" : false,
         "clientRole" : true,
         "containerId" : "629299db-762e-49a8-aeff-b6e5f64b9e52",
@@ -1849,7 +1841,7 @@
     "attributes" : { },
     "realmRoles" : [ "admin", "user" ],
     "clientRoles" : {
-      "mspsds-app" : [ "mspsds_user", "admin", "user" ]
+      "psd-app" : [ "psd_user", "user" ]
     },
     "subGroups" : [ ]
   }, {
@@ -1859,7 +1851,7 @@
     "attributes" : { },
     "realmRoles" : [ "user" ],
     "clientRoles" : {
-      "mspsds-app" : [ "mspsds_user", "user" ]
+      "psd-app" : [ "psd_user", "user" ]
     },
     "subGroups" : [ {
       "id" : "1a612aea-1d3d-47ee-8c3a-76b4448bb97b",
@@ -1868,7 +1860,7 @@
       "attributes" : { },
       "realmRoles" : [ ],
       "clientRoles" : {
-        "mspsds-app" : [ "opss_user" ]
+        "psd-app" : [ "opss_user" ]
       },
       "subGroups" : [ {
         "id" : "a26a4dac-4f47-464d-b84f-048c4b8e9602",
@@ -1944,37 +1936,6 @@
   "otpPolicyPeriod" : 30,
   "otpSupportedApplications" : [ "FreeOTP", "Google Authenticator" ],
   "users" : [ {
-    "id" : "4e7ad61f-9c39-4cad-b648-b4ae18000636",
-    "createdTimestamp" : 1536192615669,
-    "username" : "admin@example.com",
-    "enabled" : true,
-    "totp" : false,
-    "emailVerified" : true,
-    "firstName" : "Test",
-    "lastName" : "Admin",
-    "email" : "admin@example.com",
-    "credentials" : [ {
-      "type" : "password",
-      "hashedSaltedValue" : "BLwYtHV7uYDdwpzqG6nNIcIiTm2SGAj83JCzOyt2eaDLUKV9O9u191CboFWi2YLOFTsn4iKigHkJopUYMAs+RA==",
-      "salt" : "SNxYjHEp4xy7/YEIe3wokg==",
-      "hashIterations" : 27500,
-      "counter" : 0,
-      "algorithm" : "pbkdf2-sha256",
-      "digits" : 0,
-      "period" : 0,
-      "createdDate" : 1536192632925,
-      "config" : { }
-    } ],
-    "disableableCredentialTypes" : [ "password" ],
-    "requiredActions" : [ ],
-    "realmRoles" : [ "user" ],
-    "clientRoles" : {
-      "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "user" ]
-    },
-    "notBefore" : 0,
-    "groups" : [ "/Admin" ]
-  }, {
     "id" : "e43bc41b-8ba6-45b0-ad45-1e4d261ac6be",
     "createdTimestamp" : 1551956494192,
     "username" : "msa@example.com",
@@ -2002,20 +1963,20 @@
     "clientRoles" : {
       "cosmetics-app" : [ "msa_user", "user" ],
       "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "user" ]
+      "psd-app" : [ "user" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
   }, {
     "id" : "300abf9d-fb01-4a09-859b-25a62573eaa3",
     "createdTimestamp" : 1547734972391,
-    "username" : "non-mspsds@example.com",
+    "username" : "non-psd@example.com",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : true,
-    "firstName" : "Non-MSPSDS",
+    "firstName" : "Non-PSD",
     "lastName" : "User",
-    "email" : "non-mspsds@example.com",
+    "email" : "non-psd@example.com",
     "credentials" : [ {
       "type" : "password",
       "hashedSaltedValue" : "YTj0rlOf3IFGTu27UhuBguj+UVl0M/O5yLRw/qs72HsYDonDRGrZcHVfVRj5rIGx10ZzFzJ4hQ7JkwSKhrepeA==",
@@ -2033,7 +1994,7 @@
     "realmRoles" : [ "user" ],
     "clientRoles" : {
       "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "user" ]
+      "psd-app" : [ "user" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -2064,7 +2025,7 @@
     "clientRoles" : {
       "account" : [ "manage-account", "view-profile" ],
       "cosmetics-app" : [ "user" ],
-      "mspsds-app" : [ "user" ]
+      "psd-app" : [ "user" ]
     },
     "notBefore" : 0,
     "groups" : [ "/Poison Centres" ]
@@ -2084,19 +2045,19 @@
     "clientRoles" : {
       "account" : [ "manage-account", "view-profile" ],
       "cosmetics-app" : [ "user" ],
-      "mspsds-app" : [ "user" ]
+      "psd-app" : [ "user" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
   }, {
     "id" : "72391471-2633-40cd-8be2-3b8879ed04f8",
     "createdTimestamp" : 1536192267336,
-    "username" : "service-account-mspsds-app",
+    "username" : "service-account-psd-app",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : false,
-    "email" : "service-account-mspsds-app@placeholder.org",
-    "serviceAccountClientId" : "mspsds-app",
+    "email" : "service-account-psd-app@placeholder.org",
+    "serviceAccountClientId" : "psd-app",
     "credentials" : [ ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
@@ -2104,7 +2065,7 @@
     "clientRoles" : {
       "realm-management" : [ "view-users", "manage-users", "view-clients" ],
       "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "user" ]
+      "psd-app" : [ "user" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -2135,7 +2096,7 @@
     "realmRoles" : [ "user" ],
     "clientRoles" : {
       "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "user", "team_admin" ]
+      "psd-app" : [ "user", "team_admin" ]
     },
     "notBefore" : 0,
     "groups" : [ "/Organisations/Office for Product Safety and Standards/OPSS Enforcement" ]
@@ -2166,7 +2127,7 @@
     "realmRoles" : [ "user" ],
     "clientRoles" : {
       "account" : [ "manage-account", "view-profile" ],
-      "mspsds-app" : [ "user" ]
+      "psd-app" : [ "user" ]
     },
     "notBefore" : 0,
     "groups" : [ "/Organisations/Office for Product Safety and Standards/OPSS Enforcement" ]
@@ -2177,10 +2138,10 @@
   } ],
   "clientScopeMappings" : {
     "realm-management" : [ {
-      "client" : "mspsds-app",
+      "client" : "psd-app",
       "roles" : [ "view-users", "manage-users", "view-clients" ]
     } ],
-    "mspsds-app" : [ {
+    "psd-app" : [ {
       "clientScope" : "roles",
       "roles" : [ "user" ]
     } ]
@@ -2268,7 +2229,7 @@
   }, {
     "id" : "121ec424-71bc-4403-829a-44cf4fcb05c5",
     "clientId" : "cosmetics-app",
-    "name" : "Notify Cosmetics",
+    "name" : "Submit cosmetic product notifications",
     "rootUrl" : "http://localhost:3002",
     "adminUrl" : "http://localhost:3002",
     "surrogateAuthRequired" : false,
@@ -2390,8 +2351,8 @@
     }
   }, {
     "id" : "629299db-762e-49a8-aeff-b6e5f64b9e52",
-    "clientId" : "mspsds-app",
-    "name" : "Market Surveillance & Product Safety",
+    "clientId" : "psd-app",
+    "name" : "Product safety database",
     "rootUrl" : "http://localhost:3000",
     "adminUrl" : "http://localhost:3000",
     "surrogateAuthRequired" : false,
@@ -2417,7 +2378,7 @@
       "saml.force.post.binding" : "false",
       "saml.multivalued.roles" : "false",
       "saml.encrypt" : "false",
-      "login_theme" : "govuk-mspsds",
+      "login_theme" : "govuk-psd",
       "saml.server.signature" : "false",
       "saml.server.signature.keyinfo.ext" : "false",
       "exclude.session.state.from.auth.response" : "false",
@@ -2494,7 +2455,7 @@
       "policyEnforcementMode" : "ENFORCING",
       "resources" : [ {
         "name" : "Default Resource",
-        "type" : "urn:mspsds-app:resources:default",
+        "type" : "urn:psd-app:resources:default",
         "ownerManagedAccess" : false,
         "attributes" : { },
         "_id" : "034e932e-7e0d-48a7-83f6-4840d2cc3dc1",
@@ -2518,7 +2479,7 @@
         "logic" : "POSITIVE",
         "decisionStrategy" : "UNANIMOUS",
         "config" : {
-          "defaultResourceType" : "urn:mspsds-app:resources:default",
+          "defaultResourceType" : "urn:psd-app:resources:default",
           "applyPolicies" : "[\"Default Policy\"]"
         }
       } ],
