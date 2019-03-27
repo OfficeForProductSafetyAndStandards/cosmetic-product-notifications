@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: postgres
+  password:
+  pool: 5
+
+development:
+  <<: *default
+  database: psd_development
+
+test:
+  <<: *default
+  database: psd_test
+
+production:
+  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("psd-database")["uri"] %>
+  connect_timeout: 2
+  variables:
+    statement_timeout: 500

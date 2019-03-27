@@ -131,6 +131,13 @@ Start by setting up the following credentials:
         "BASIC_AUTH_PASSWORD": "XXX"
     }'
 
+* To enable and add basic auth to the health check endpoint at `/health/all`:
+
+    cf cups cosmetics-health-env -p '{
+        "HEALTH_CHECK_USERNAME": "XXX",
+        "HEALTH_CHECK_PASSWORD": "XXX"
+    }'
+
 * To enable and add basic auth to the sidekiq monitoring UI at `/sidekiq`:
 
     cf cups cosmetics-sidekiq-env -p '{

@@ -1,0 +1,49 @@
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-two-thirds
+    p = @investigation.description
+    p = link_to "Edit summary", edit_summary_investigation_path(@investigation), class: "govuk-link--no-visited-state"
+
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  hr.govuk-section-break.govuk-section-break--s
+    = render "investigations/current_status", investigation: @investigation
+  hr.govuk-section-break.govuk-section-break--s
+h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
+  | Report details
+h3.govuk-heading-m
+  = @investigation.case_type.titleize
+table.govuk-table
+  tbody.govuk-table__body
+    tr.govuk-table__row
+      th.govuk-table__header [scope="row" class="govuk-!-width-one-quarter"]  Date recorded
+      td.govuk-table__cell = @investigation.created_at.strftime("%d/%m/%Y")
+      - if @investigation.is_a?(Investigation::Allegation)
+        tr.govuk-table__row
+          th.govuk-table__header Product category
+          td.govuk-table__cell = @investigation.product_category
+        tr.govuk-table__row
+          th.govuk-table__header  Hazard type
+          td.govuk-table__cell = @investigation.hazard_type
+- if @investigation.complainant
+  hr.govuk-section-break.govuk-section-break--m
+  h3.govuk-heading-m
+    | Complainant
+  - if @investigation.complainant.can_be_displayed?
+    table.govuk-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header [scope="row" class="govuk-!-width-one-quarter"] Name
+          td.govuk-table__cell = @investigation.complainant.name
+        tr.govuk-table__row
+          th.govuk-table__header Type
+          td.govuk-table__cell = @investigation.complainant.complainant_type
+        tr.govuk-table__row
+          th.govuk-table__header Phone
+          td.govuk-table__cell = @investigation.complainant.phone_number
+        tr.govuk-table__row
+          th.govuk-table__header Email
+          td.govuk-table__cell = @investigation.complainant.email_address
+        tr.govuk-table__row
+          th.govuk-table__header Other details
+          td.govuk-table__cell = @investigation.complainant.other_details
+  - else
+    p GDPR protected details hidden

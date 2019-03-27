@@ -187,7 +187,7 @@ module Shared
 
       def send_required_actions_welcome_email(user_id, redirect_uri)
         required_actions = %w(sms_auth_check_mobile UPDATE_PASSWORD UPDATE_PROFILE VERIFY_EMAIL)
-        @internal.execute_actions_email user_id, required_actions, "mspsds-app", redirect_uri
+        @internal.execute_actions_email user_id, required_actions, "psd-app", redirect_uri
       end
 
     private

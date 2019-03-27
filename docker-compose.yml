@@ -84,32 +84,32 @@ services:
     env_file:
       - .env.antivirus
 
-  mspsds-web:
+  psd-web:
     build:
       context: .
-      dockerfile: ./mspsds-web/Dockerfile
+      dockerfile: ./psd-web/Dockerfile
     volumes:
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}/mspsds-web:/mspsds-web
-      - ${PWD-.}/shared-web:/mspsds-web/vendor/shared-web
+      - ${PWD-.}/psd-web:/psd-web
+      - ${PWD-.}/shared-web:/psd-web/vendor/shared-web
       - bundle-cache:/usr/local/bundle
     depends_on:
       - db
       - elasticsearch
       - keycloak
       - redis
-      - mspsds-worker
+      - psd-worker
     env_file:
-      - .env.keycloak.mspsds
-  mspsds-worker:
+      - .env.keycloak.psd
+  psd-worker:
     build:
       context: .
-      dockerfile: ./mspsds-worker/Dockerfile
+      dockerfile: ./psd-worker/Dockerfile
     command: bin/sidekiq -C config/sidekiq.yml
     volumes:
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}/mspsds-web:/mspsds-web
-      - ${PWD-.}/shared-web:/mspsds-web/vendor/shared-web
+      - ${PWD-.}/psd-web:/psd-web
+      - ${PWD-.}/shared-web:/psd-web/vendor/shared-web
       - bundle-cache:/usr/local/bundle
     depends_on:
       - antivirus

@@ -1,0 +1,46 @@
+- content_for :page_title, "Confirm email details"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
+
+h1.govuk-heading-xl
+  span.govuk-caption-xl
+    = @investigation.pretty_description
+  | Confirm email details
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with(model: @correspondence, local: true,
+            url: investigation_emails_path(@investigation), method: :post) do |form|
+      table.govuk-table
+        tbody.govuk-table__body
+          tr.govuk-table__row
+            th.govuk-table__header scope="row"
+              = Correspondence::Email.email_directions[@correspondence.email_direction]
+            td.govuk-table__cell = @correspondence.email_address
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Contains consumer info
+            td.govuk-table__cell = @correspondence.has_consumer_info ? "Yes" : "No"
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Summary
+            td.govuk-table__cell = @correspondence.overview
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Date sent
+            td.govuk-table__cell = @correspondence.correspondence_date&.strftime("%d/%m/%Y")
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Email
+            td.govuk-table__cell = @email_file_blob&.filename
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Subject
+            td.govuk-table__cell = @correspondence.email_subject
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Content
+            td.govuk-table__cell = @correspondence.details
+          tr.govuk-table__row
+            th.govuk-table__header scope="row" Attachments
+            td.govuk-table__cell = @email_attachment_blob&.filename
+          - if @email_attachment_blob
+            tr.govuk-table__row
+              th.govuk-table__header scope="row" Attachment description
+              td.govuk-table__cell = @email_attachment_blob.metadata[:description]
+      = form.submit "Continue", class: "govuk-button"
+        | Continue
+      = link_to("Edit details", wizard_path(:context), class: "govuk-link psd-block-link")
