@@ -195,7 +195,8 @@ class Investigation < ApplicationRecord
   def child_should_be_displayed?
     # This method is responsible for white-list access for assignee and their team, as described in
     # https://regulatorydelivery.atlassian.net/wiki/spaces/MSPSDS/pages/598933517/Approach+to+case+sensitivity
-    return true if self.assignee && (self.assignee.teams & User.current.teams).any?
+    return true if (self.assignee.is_a? Team) && self.assignee.users.include?(User.current)
+    return true if (self.assignee.is_a? User) && (self.assignee.teams & User.current.teams).any?
 
     false
   end
