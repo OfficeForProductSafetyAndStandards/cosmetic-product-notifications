@@ -1,0 +1,16 @@
+= link_to "Add business", new_investigation_business_url(@investigation)
+
+hr.govuk-section-break.govuk-section-break--l
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - @investigation.investigation_businesses.each do |ib|
+      h3.govuk-heading-m
+        = ib.relationship.titleize
+      = render "business_summary", business: ib.business do
+        p
+          = link_to "View business", ib.business, class: "govuk-link psd-block-link"
+          = link_to "Remove business", remove_investigation_business_path(@investigation, ib.business)
+    - if @investigation.investigation_businesses.length.zero?
+      p
+        | No businesses.

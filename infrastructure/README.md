@@ -43,7 +43,7 @@ The values can be found on the respective websites.
 Once the environment variables are set, start the app using `cf start fluentd`.
 
 To start sending logs from an application, create a log drain on the specific space using `cf cups opss-log-drain -l https://<fluentd domain from above>`
-Then bind the service to each application using e.g. `cf bind-service mspsds-web opss-log-drain`.
+Then bind the service to each application using e.g. `cf bind-service psd-web opss-log-drain`.
 
 
 ### Logit
