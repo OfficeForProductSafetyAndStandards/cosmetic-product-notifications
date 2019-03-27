@@ -10,14 +10,11 @@ RSpec.describe "Poison Centre user", type: :system do
   let!(:draft_notification) { create(:draft_notification, responsible_person: responsible_person_1) }
   let!(:imported_notification) { create(:imported_notification, responsible_person: responsible_person_1) }
 
-  let!(:component) { create(:poison_centre_component, notification: rp_1_notifications.first) }
-
   before do
     rp_1_notifications
     rp_2_notifications
     draft_notification
     imported_notification
-    component
 
     sign_in_as_poison_centre_user
     Notification.elasticsearch.import force: true

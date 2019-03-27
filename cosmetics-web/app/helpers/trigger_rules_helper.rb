@@ -15,7 +15,7 @@ module TriggerRulesHelper
     inciname_incivalue_pair = []
     question.trigger_question_elements.where(
       trigger_question_id: question_id, answer_order: answer_order
-).each do |question_element|
+    ).each do |question_element|
       inciname_incivalue_pair << question_element.answer
     end
     p inciname_incivalue_pair
