@@ -1,0 +1,21 @@
+= link_to "Add contact", new_business_contact_path(@business)
+
+hr.govuk-section-break.govuk-section-break--l
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    - if @business.contacts.any?
+      - @business.contacts.each do |contact|
+        table.govuk-table[style="margin-bottom: 0"]
+          tr.govuk-table__row
+            th.govuk-table__header[scope="row" class="govuk-!-width-one-third"] = contact.name
+            td.govuk-table__cell[class="govuk-!-width-one-third"] = contact.job_title
+            td.govuk-table__cell = contact.phone_number
+            td.govuk-table__cell = contact.email
+        = link_to "Edit contact", edit_business_contact_path(@business, contact),
+        class: "govuk-link psd-block-link"
+        = link_to "Remove contact", remove_business_contact_path(@business, contact),
+        class: "govuk-link psd-block-link"
+        p
+    - else
+      p No contacts.

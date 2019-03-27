@@ -5,13 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Docker: Attach to MSPSDS",
+            "name": "Docker: Attach to PSD",
             "type": "Ruby",
             "request": "attach",
-            "cwd": "${workspaceRoot}/mspsds-web",
+            "cwd": "${workspaceRoot}/psd-web",
             "remoteHost": "localhost",
             "remotePort": "1234",
-            "remoteWorkspaceRoot": "/mspsds-web",
+            "remoteWorkspaceRoot": "/psd-web",
             "showDebuggerOutput": true,
         },
         {

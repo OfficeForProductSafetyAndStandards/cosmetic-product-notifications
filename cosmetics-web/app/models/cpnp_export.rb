@@ -39,6 +39,14 @@ class CpnpExport
     get_gov_uk_country_code(current_version_info_node.xpath(".//importedCty").first&.text)
   end
 
+  def under_three_years
+    current_version_info_node.xpath(".//under3year").first&.text&.casecmp?("Y")
+  end
+
+  def still_on_the_market
+    current_version_info_node.xpath(".//stillOnTheMarket").first&.text&.casecmp?("Y")
+  end
+
   def shades
     current_version_info_node.xpath(".//shade").first&.text
   end
@@ -54,7 +62,11 @@ class CpnpExport
                        range_formulas: range_formulas(component_node),
                        trigger_questions: trigger_questions(component_node),
                        cmrs: cmrs(component_node),
-                       nano_material: nano_material(component_node))
+                       nano_material: nano_material(component_node),
+                       physical_form: physical_form(component_node),
+                       special_applicator: special_applicator(component_node),
+                       acute_poisoning_info: acute_poisoning_info(component_node),
+                       state: "component_complete")
     end
   end
 
@@ -154,6 +166,20 @@ private
 
   def sub_sub_category(component_node)
     get_category(normalize_id(component_node.xpath(".//categorie3").first&.text))
+  end
+
+  def physical_form(component_node)
+    get_physical_form(component_node.xpath(".//physicalForm").first&.text.to_i)
+  end
+
+  def special_applicator(component_node)
+    return if component_node.xpath(".//specialApplicator") == "N"
+
+    get_special_applicator(component_node.xpath(".//specialApplicator").first&.text.to_i)
+  end
+
+  def acute_poisoning_info(component_node)
+    component_node.xpath(".//acutePoisoningInfo").first&.text
   end
 
   def normalize_id(id_string)

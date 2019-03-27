@@ -1,0 +1,14 @@
+- content_for :page_title, "View product"
+- content_for :after_header do
+  = render "breadcrumbs_navigation", breadcrumbs: @breadcrumbs
+
+= render "product_heading", product: @product
+= render "product_summary", product: @product
+
+hr.govuk-section-break.govuk-section-break--m
+= render "components/tabs", tabs: [\
+  Tab.new("full-detail", "Full detail", "Full detail", lambda { render "products/tabs/details" }),
+  Tab.new("attachments", "Attachments (#{@product.documents.count})", "Attachments",
+  lambda { render "products/tabs/attachments" }),
+  Tab.new("cases", "Cases", "Cases", lambda { render "products/tabs/cases" })\
+]

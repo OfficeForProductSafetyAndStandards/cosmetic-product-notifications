@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :add_notification, controller: "responsible_persons/add_notification_wizard", only: %i[show new update]
+
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do
       collection do
         get :join

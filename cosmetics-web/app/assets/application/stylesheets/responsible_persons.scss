@@ -16,19 +16,6 @@
   }
 }
 
-.dismiss-link {
-  background: none;
-  border: none;
-  padding: 0;
-
-  // optional
-  font-family: arial, sans-serif; //input has OS specific font-family
-  font: inherit;
-  text-decoration: underline;
-  color: $govuk-link-colour;
-  cursor: pointer;
-}
-
 @keyframes fadeInOpacity {
   0% {
     opacity: 0.2;
