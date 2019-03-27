@@ -327,8 +327,6 @@ private
     end
     session[:corrective_actions] << { corrective_action: @corrective_action.attributes, file_blob_id: @file_blob&.id }
     session.delete :file
-    puts "#######"
-    puts @repeat_step
     session[further_key(step)] = @repeat_step
   end
 

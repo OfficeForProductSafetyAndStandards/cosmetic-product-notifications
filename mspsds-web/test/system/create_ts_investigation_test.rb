@@ -59,7 +59,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     )
     click_button "Continue"
 
-    choose_corrective_action
+    choose_further_corrective_action
 
     assert_selector "h1", text: "Record corrective action"
     fill_in_corrective_action_details @corrective_action_two, with_business: false, with_product: false
@@ -67,7 +67,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
       filename: corrective_filename_two,
       description: corrective_description_two
     )
-    choose "further_corrective_action_no", visible: false
+    choose "corrective_action_further_corrective_action_no", visible: false
     click_button "Continue"
 
     assert_selector "h1", text: "Other information and files"
@@ -83,14 +83,14 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     fill_in "Title", with: risk_assessment_title
     fill_in "Description", with: risk_assessment_description
     add_attachment risk_assessment_title
-    choose "further_risk_assessments_yes", visible: false
+    choose "file_further_risk_assessments_yes", visible: false
     click_button "Continue"
 
     assert_selector "h1", text: "Risk assessment details"
     fill_in "Title", with: risk_assessment_title
     fill_in "Description", with: risk_assessment_description
     add_attachment risk_assessment_title
-    choose "further_risk_assessments_no", visible: false
+    choose "file_further_risk_assessments_no", visible: false
     click_button "Continue"
 
     assert_selector "h1", text: "Find this in your system"
@@ -177,11 +177,16 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     fill_in "Year", with: test_record.date.year
     choose :test_result_passed, visible: false
     fill_in "test_details", with: test_record.details
-    choose "further_test_results_no", visible: false
+    choose "test_further_test_results_no", visible: false
   end
 
   def choose_corrective_action
-    choose "further_corrective_action_yes", visible: false
+    choose "investigation_further_corrective_action_yes", visible: false
+    click_button "Continue"
+  end
+
+  def choose_further_corrective_action
+    choose "corrective_action_further_corrective_action_yes", visible: false
     click_button "Continue"
   end
 
