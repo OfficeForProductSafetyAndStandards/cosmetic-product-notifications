@@ -10,15 +10,14 @@ Keycloak.realm = "opss"
 Keycloak.auth_server_url = ""
 
 Rails.application.config.after_initialize do
-  # rubocop:disable Lint/HandleExceptions
   begin
     Shared::Web::KeycloakClient.instance.all_organisations unless Rails.env.test? || Sidekiq.server?
-  rescue RestClient::BadRequest
+  rescue StandardError => error
     # Can be deleted after the following is merged: https://github.com/imagov/keycloak/pull/11
     # The gem we are using is importing client_id and secret too late in default_call method, causing first request
     # to fail, and all following ones to work.
+    Rails.logger.error "Failed request to Keycloak: #{error.message}"
   end
-  # rubocop:enable Lint/HandleExceptions
 
   # Load organisations and users on app startup
   Organisation.all unless Rails.env.test? || Sidekiq.server?
