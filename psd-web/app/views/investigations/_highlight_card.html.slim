@@ -1,0 +1,13 @@
+- displayable_highlights = get_displayable_highlights(highlights, investigation)
+
+.govuk-grid-row.psd-case-card class=[("psd-case-card--closed" if investigation.is_closed?)]
+  .govuk-grid-column-one-half
+    span.govuk-caption-m[class="govuk-!-font-size-16"]
+      = investigation.pretty_description
+    span = link_to investigation.title, investigation, class: "govuk-!-font-weight-bold"
+  .govuk-grid-column-one-half
+    - displayable_highlights.each do |highlight|
+      span.govuk-caption-m[class="govuk-!-font-size-16"] = highlight[:label]
+      span = highlight[:content]
+      - if highlight != displayable_highlights.last
+        p

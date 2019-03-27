@@ -30,9 +30,9 @@ services:
     volumes:
     - ~/bundle-cache:/usr/local/bundle
   
-  mspsds-web:
+  psd-web:
     command: tail -f /dev/null
-    image: ${DOCKER_USERNAME}/mspsds-web:${TRAVIS_BUILD_NUMBER}
+    image: ${DOCKER_USERNAME}/psd-web:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
     environment:
@@ -43,9 +43,9 @@ services:
       - TRAVIS_PULL_REQUEST
       - COVERALLS_PARALLEL
       - NOTIFY_API_KEY='fake-key'
-  mspsds-worker:
+  psd-worker:
     command: tail -f /dev/null
-    image: ${DOCKER_USERNAME}/mspsds-worker:${TRAVIS_BUILD_NUMBER}
+    image: ${DOCKER_USERNAME}/psd-worker:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
   

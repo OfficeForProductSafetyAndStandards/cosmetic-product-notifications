@@ -1,0 +1,108 @@
+%psd-card {
+
+  color: govuk-colour("black");
+  @include govuk-font(19, $weight: bold);
+
+  position: relative;
+
+  @include govuk-responsive-margin(1, "bottom");
+  @include govuk-responsive-padding(2);
+
+  margin-left: 0;
+  margin-right: 0;
+
+  & a {
+    &::before {
+      content: " ";
+      position: absolute;
+      top:    0;
+      bottom: 0;
+      left:   0;
+      right:  0;
+
+      border:  1px solid govuk-colour("grey-3");
+    }
+
+    &:hover::before,
+    &:focus::before {
+      border:  1px solid currentColor;
+    }
+  }
+
+  & em {
+    font-style: normal;
+    border-bottom: 3px solid govuk-colour("yellow");
+    margin-right: 1px;
+    background-color: lighten( govuk-colour("yellow"), 25% );
+    padding: 2px 0 0;
+  }
+
+  &--closed {
+    color: govuk-colour("grey-1");
+
+    & * {
+      @include govuk-typography-weight-regular();
+      color:     govuk-colour("grey-1");
+    }
+  }
+
+  &--restricted {
+
+    & span {
+      &::before {
+        content: " ";
+        position: absolute;
+        top:    0;
+        bottom: 0;
+        left:   0;
+        right:  0;
+
+        border:  1px solid govuk-colour("grey-3");
+      }
+
+      &:hover::before,
+      &:focus::before {
+        border:  1px solid currentColor;
+      }
+    }
+
+    color: govuk-colour("grey-1");
+
+    & * {
+      @include govuk-typography-weight-regular();
+      color:     govuk-colour("grey-1");
+    }
+  }
+
+  &__status {
+    display: block;
+    position: absolute;
+    transform-origin: top left;
+    transform: rotate(-90deg);
+
+    padding-top: 1px;
+    padding-bottom: 10px;
+
+    top: 100%;
+    left: 0;
+    bottom: 0;
+
+    background-color:   govuk-colour("grey-1");
+    color:              govuk-colour("white");
+
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+}
+
+
+.psd-case-card {
+  @extend %psd-card;
+}
+
+.psd-product-card {
+  @extend %psd-card;
+
+  margin-left: 0;
+  margin-right: 0;
+}

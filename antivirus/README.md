@@ -33,12 +33,10 @@ This will configure sinatra to run in production mode.
 
 This will set HTTP basic auth for the API.
 
+Finally, create the following credentials for other applications to consume:
 
-### Configuring clients
-
-Set the following environment variables on clients (e.g. the workers):
-
-    cf set-env mspsds-worker ANTIVIRUS_URL XXX
-    cf set-env mspsds-worker ANTIVIRUS_USERNAME XXX
-    cf set-env mspsds-worker ANTIVIRUS_PASSWORD XXX
-
+    cf cups antivirus-auth-env -p '{
+        "ANTIVIRUS_URL": "XXX",
+        "ANTIVIRUS_USERNAME": "XXX",
+        "ANTIVIRUS_PASSWORD": "XXX"
+    }'
