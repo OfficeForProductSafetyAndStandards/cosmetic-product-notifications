@@ -1,26 +1,17 @@
 - content_for :page_title, "Responsible person type"
 - content_for :after_header do
-  = link_to "Back", create_or_join_existing_account_index_path, class: "govuk-back-link"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_with model: @responsible_person, url: wizard_path, method: :put do |form|
-      .govuk-form-group class=("govuk-form-group--error" if @responsible_person.errors[:account_type].any?)
-        fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--xl
-            | Is the UK responsible person a business or an individual?
+  = link_to "Back", wizard_path(:create_or_join_existing), class: "govuk-back-link"
 
-          - if @responsible_person.errors[:account_type].any?
-            span.govuk-error-message#account_type-error
-              | Select an option before continuing
-
-          .govuk-radios
-            .govuk-radios__item
-              = form.radio_button :account_type, :business, class: "govuk-radios__input"
-              = form.label :account_type, "Business or legal entity", value: :business,
-                      class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :account_type, :individual, class: "govuk-radios__input"
-              = form.label :account_type, "Individual or sole trader", value: :individual,
-                      class: "govuk-label govuk-radios__label"
-
-      = form.submit "Continue", class: "govuk-button"
+= form_with model: @responsible_person, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      - heading = capture do
+        h1.govuk-heading-xl
+          | Is the UK responsible person a business or an individual?
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_radios", form: form, key: :account_type,
+              fieldset: { legend: { html: heading } },
+              items: [{ text: "Business or legal entity", value: :business },
+                      { text: "Individual or sole trader", value: :individual }]
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

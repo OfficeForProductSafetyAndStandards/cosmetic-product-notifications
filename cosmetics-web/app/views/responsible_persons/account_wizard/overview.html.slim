@@ -1,0 +1,15 @@
+- content_for :page_title, "UK responsible person"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      | UK responsible person
+    p
+      | A responsible person can be an organisation or an individual,
+        provided they are based in the UK and are either the:
+    ul.govuk-list.govuk-list--bullet
+      li manufacturer of the cosmetic products
+      li organisation for which the cosmetic products are manufactured, or
+      li importer of the cosmetic products, if they are manufactured outside the UK
+      li a third-party given permission by either the manufacturer or importer
+
+    = link_to "Continue", next_wizard_path, class: "govuk-button", role: "button"
