@@ -10,11 +10,14 @@ RSpec.describe "Poison Centre user", type: :system do
   let!(:draft_notification) { create(:draft_notification, responsible_person: responsible_person_1) }
   let!(:imported_notification) { create(:imported_notification, responsible_person: responsible_person_1) }
 
+  let!(:component) { create(:poison_centre_component, notification: rp_1_notifications.first) }
+
   before do
     rp_1_notifications
     rp_2_notifications
     draft_notification
     imported_notification
+    component
 
     sign_in_as_poison_centre_user
     Notification.elasticsearch.import force: true
@@ -43,10 +46,7 @@ RSpec.describe "Poison Centre user", type: :system do
     notification = rp_1_notifications.first
     click_on notification.product_name
 
-    assert_value_in_table(get_product_table, "Name", notification.product_name)
-    assert_value_in_table(get_product_table, "Imported", "No")
-    assert_value_in_table(get_product_table, "Number of components", notification.components.count)
-    assert_value_in_table(get_product_table, "Shades", "None")
+    assert_text notification.product_name
   end
 
   it "is able to see the Responsible Person details for a registered notification" do

@@ -14,10 +14,10 @@
             @notification.components.first.display_sub_sub_category
 
 .govuk-grid-row
-  .govuk-grid-column-one-third
+  .govuk-grid-column-one-third.product-images
     - if @notification.image_uploads.present?
-      = link_to image_tag(url_for(@notification.image_uploads.first.file.variant(resize: "300x300"))),
-              url_for(@notification.image_uploads.first.file), target: "_blank", rel: 'noopener'
+      = link_to image_tag(url_for(@notification.image_uploads.first.file.variant(resize: "450x450"))),
+              url_for(@notification.image_uploads.first.file)
   .govuk-grid-column-two-thirds
     = render "poison_centres/notifications/poison_centre_trigger_rule_formulation", notification: @notification
     = render "notifications/ingredient_details", notification: @notification
