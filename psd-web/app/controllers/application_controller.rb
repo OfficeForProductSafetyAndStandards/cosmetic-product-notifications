@@ -11,9 +11,14 @@ class ApplicationController < ActionController::Base
   before_action :set_current_user
   before_action :set_raven_context
   before_action :authorize_user
+  before_action :has_accepted_declaration
   before_action :set_cache_headers
 
   def authorize_user
     raise Pundit::NotAuthorizedError unless User.current&.is_psd_user?
+  end
+
+  def has_accepted_declaration
+    redirect_to declaration_index_path(redirect_path: request.original_fullpath) unless User.current.has_accepted_declaration
   end
 end
