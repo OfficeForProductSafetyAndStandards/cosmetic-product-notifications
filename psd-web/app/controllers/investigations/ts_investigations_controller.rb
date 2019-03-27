@@ -142,7 +142,14 @@ private
 
   def set_repeat_step(model = :investigation)
     repeat_step_key = further_key step
-    @repeat_step = params.dig(model, repeat_step_key) == "Yes" || session[repeat_step_key]
+    @repeat_step = case params.dig(model, repeat_step_key)
+                   when "Yes"
+                     true
+                   when "No"
+                     false
+                   when nil
+                     session[repeat_step_key]
+                   end
   end
 
   def set_corrective_action
@@ -335,7 +342,7 @@ private
   end
 
   def repeat_step_valid?(model)
-    if @repeat_step == nil
+    if @repeat_step.nil?
       further_page_type = to_item_text(step)
       model.errors.add(further_key(step), "Select whether or not you have #{further_page_type} to record")
     end

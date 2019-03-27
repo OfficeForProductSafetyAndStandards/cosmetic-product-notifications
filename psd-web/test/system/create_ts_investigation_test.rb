@@ -74,7 +74,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     click_button "Continue"
 
     assert_selector "h1", text: "Record corrective action"
-    choose "correcitve_action_further_corrective_action_yes", visible: false
+    choose "corrective_action_further_corrective_action_yes", visible: false
     click_button "Skip this page"
 
     assert_selector "h1", text: "Other information and files"
@@ -84,6 +84,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     fill_in_test_results @test
     add_attachment test_result_filename
     fill_in "Attachment description", with: test_result_description
+    choose "test_further_test_results_no", visible: false
     click_button "Continue"
 
     assert_selector "h1", text: "Risk assessment details"
