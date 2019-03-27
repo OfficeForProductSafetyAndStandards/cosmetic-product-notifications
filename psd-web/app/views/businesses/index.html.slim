@@ -1,0 +1,24 @@
+- content_for :page_title, "Businesses"
+- content_for :after_header do
+  = render "layouts/navbar"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      - if params[:q].present?
+        span.govuk-caption-xl Business search results
+        = params[:q]
+        span.govuk-caption-m = "#{@businesses.count} #{'result'.pluralize(@businesses.count)}"
+      - else
+        | Businesses
+
+.govuk-grid-row
+  .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
+    div class="govuk-!-margin-bottom-0"
+      = form_with(model: @search, scope: "", url: businesses_path, method: :get) do |form|
+        .search-box
+          = render "form_components/govuk_input", key: :q, form: form,
+                  label: { text: "Keywords", classes: "govuk-label--s" }
+          = form.submit "Search", name: nil, class: "search-box--submit"
+  .govuk-grid-column-three-quarters
+    = render "table", businesses: @businesses
+    = will_paginate @businesses

@@ -74,11 +74,11 @@ the Admin dropdown menu on the top-right of the page, then click on the Provider
 
 Alternatively you can deploy the provider as a module by running:
 
-    KEYCLOAK_HOME/bin/jboss-cli.sh --command="module add --name=uk.gov.beis.mspsds.keycloak.providers.notify-email --resources=target/notify-email-provider.jar --dependencies=org.keycloak.keycloak-core,org.keycloak.keycloak-server-spi,org.keycloak.keycloak-server-spi-private"
+    KEYCLOAK_HOME/bin/jboss-cli.sh --command="module add --name=uk.gov.beis.opss.keycloak.providers.notify-email --resources=target/notify-email-provider.jar --dependencies=org.keycloak.keycloak-core,org.keycloak.keycloak-server-spi,org.keycloak.keycloak-server-spi-private"
 
 Then register the provider by editing `standalone/configuration/standalone.xml` and adding the module to the providers element:
 
     <providers>
         ...
-        <provider>module:uk.gov.beis.mspsds.keycloak.providers.notify-email</provider>
+        <provider>module:uk.gov.beis.opss.keycloak.providers.notify-email</provider>
     </providers>
