@@ -38,9 +38,9 @@ class User < Shared::Web::User
   def self.all(options = {})
     begin
       all_users = Shared::Web::KeycloakClient.instance.all_users(force: options[:force])
+      Team.all
       self.data = all_users.map { |user| populate_organisation(user) }
                       .reject { |user| user[:organisation_id].blank? }
-      Team.all
       TeamUser.all(force: options[:force])
     rescue StandardError => error
       Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
