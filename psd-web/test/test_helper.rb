@@ -185,6 +185,7 @@ private
     add_user_to_opss_team user_id: @users[3][:id], team_id: @teams[2][:id]
     add_user_to_opss_team user_id: @users[3][:id], team_id: @teams[3][:id]
     set_kc_user_as_non_opss @users[4][:id]
+    add_user_to_team @users[4][:id], @teams[4][:id]
   end
 
   # This is a private method which updates the KC mocking without modifying the User collection directly
@@ -219,7 +220,8 @@ private
       { id: "aaaaeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 1", path: "/Organisations/Office of Product Safety and Standards/Team 1", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b" },
       { id: "aaaxzcf8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 2", path: "/Organisations/Office of Product Safety and Standards/Team 2", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b" },
       { id: "bbbbeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 3", path: "/Organisations/Office of Product Safety and Standards/Team 3", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b" },
-      { id: "cccceef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 4", path: "/Organisations/Office of Product Safety and Standards/Team 4", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", team_recipient_email: "team@example.com" }
+      { id: "cccceef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Team 4", path: "/Organisations/Office of Product Safety and Standards/Team 4", organisation_id: "1a612aea-1d3d-47ee-8c3a-76b4448bb97b", team_recipient_email: "team@example.com" },
+      { id: "ddddeef8-1a33-4322-8b8c-fc7fa95a2e3b", name: "Organisation 1 team", path: "/Organisations/Organisation 1/Organisation 1 team", organisation_id: "def4eef8-1a33-4322-8b8c-fc7fa95a2e3b" }
     ]
   end
 
