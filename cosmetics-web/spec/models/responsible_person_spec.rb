@@ -8,7 +8,7 @@ RSpec.describe ResponsiblePerson, type: :model do
       expect(responsible_person.save).to be true
     end
 
-    it "fails if an account_type is not specified" do
+    it "fails if an account type is not specified" do
       responsible_person.account_type = nil
 
       expect(responsible_person.save).to be false
@@ -20,19 +20,6 @@ RSpec.describe ResponsiblePerson, type: :model do
 
       expect(responsible_person.save).to be false
       expect(responsible_person.errors[:name]).to include("Name can't be blank")
-    end
-
-    it "fails if an email address is not specified" do
-      responsible_person.email_address = nil
-      expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:email_address]).to include("Email address can't be blank")
-    end
-
-    it "fails if a phone number is not specified" do
-      responsible_person.phone_number = nil
-
-      expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:phone_number]).to include("Phone number can't be blank")
     end
 
     it "fails if a street address is not specified" do
@@ -56,12 +43,25 @@ RSpec.describe ResponsiblePerson, type: :model do
       expect(responsible_person.errors[:postal_code]).to include("Postcode can't be blank")
     end
 
+    it "fails if a phone number is not specified" do
+      responsible_person.phone_number = nil
+
+      expect(responsible_person.save).to be false
+      expect(responsible_person.errors[:phone_number]).to include("Phone number can't be blank")
+    end
+
+    it "fails if an email address is not specified" do
+      responsible_person.email_address = nil
+      expect(responsible_person.save).to be false
+      expect(responsible_person.errors[:email_address]).to include("Email address can't be blank")
+    end
+
     it "fails if the email address is not unique" do
       create(:responsible_person, email_address: "duplicate@example.com")
       responsible_person.email_address = "duplicate@example.com"
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:email_address]).to include("has already been taken")
+      expect(responsible_person.errors[:email_address]).to include("Email address has already been taken")
     end
 
     it "fails if the email address format is invalid" do

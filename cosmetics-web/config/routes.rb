@@ -10,12 +10,7 @@ Rails.application.routes.draw do
 
   resources :responsible_persons, only: %i[show] do
     collection do
-      resources :account, controller: "responsible_persons/account_wizard", only: %i[show update] do
-        collection do
-          get :create_or_join_existing
-          get :join_existing
-        end
-      end
+      resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
     end
 
     resources :add_notification, controller: "responsible_persons/add_notification_wizard", only: %i[show new update]
