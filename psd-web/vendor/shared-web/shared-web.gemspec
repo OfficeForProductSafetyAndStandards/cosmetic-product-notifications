@@ -1,0 +1,1 @@
+../../../shared-web/shared-web.gemspec
