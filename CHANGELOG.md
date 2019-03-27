@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Show introduction slides the first time a non_opss user logs in.
 - Cases are assigned to their creator by default
 - Allow team_admin users to add new team members.
+- Go to declaration page when user logs in until they accept.
 
 <!-- ### Cosmetics -->
 
