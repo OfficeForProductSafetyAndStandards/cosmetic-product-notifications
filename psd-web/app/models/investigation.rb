@@ -192,10 +192,9 @@ class Investigation < ApplicationRecord
     self.pretty_id = "#{created_at.strftime('%y%m')}-%04d" % (cases_before + 1)
   end
 
-  def can_display_child_object?(child_has_gdpr_sensitive_data)
-    return true if self.source&.is_a? ReportSource
-    return true unless child_has_gdpr_sensitive_data
-    return true if User.current.organisation == self.source&.user&.organisation
+  def child_should_be_displayed?
+    # This method is responsible for white-list access for assignee and their team, as described in
+    # https://regulatorydelivery.atlassian.net/wiki/spaces/MSPSDS/pages/598933517/Approach+to+case+sensitivity
     return true if self.assignee && (self.assignee.teams & User.current.teams).any?
 
     false
