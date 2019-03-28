@@ -26,4 +26,8 @@ class AuditActivity::Investigation::Add < AuditActivity::Investigation::Base
 
     !investigation.complainant&.can_be_displayed?
   end
+
+  def sensitive_title
+    title
+  end
 end
