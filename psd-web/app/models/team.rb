@@ -26,7 +26,12 @@ class Team < ActiveHash::Base
   end
 
   def self.all(options = {})
-    self.data = Shared::Web::KeycloakClient.instance.all_teams
+    begin
+      self.data = Shared::Web::KeycloakClient.instance.all_teams
+    rescue StandardError => error
+      Rails.logger.error "Failed to fetch teams from Keycloak: #{error.message}"
+      self.data = nil
+    end
 
     self.ensure_names_up_to_date
 
