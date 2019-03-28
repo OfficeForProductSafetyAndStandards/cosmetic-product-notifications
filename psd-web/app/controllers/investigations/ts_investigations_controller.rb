@@ -275,6 +275,10 @@ private
     params.permit(*other_information_types)
   end
 
+  def reference_number_params
+    params.require(:investigation).permit(:has_complainant_reference, :complainant_reference)
+  end
+
   def other_information_types
     %i[test_results risk_assessments product_images evidence_images other_files]
   end
@@ -416,7 +420,7 @@ private
     when :product
       @product.validate
     when :why_reporting
-      @investigation.errors.add(:base, "Please indicate whether the product is unsafe or non-compliant") if !product_unsafe && !product_non_compliant
+      @investigation.errors.add(:base, "Please indicate whether the product is unsafe   or non-compliant") if !product_unsafe && !product_non_compliant
       @investigation.validate :unsafe if product_unsafe
       @investigation.validate :non_compliant if product_non_compliant
     when :which_businesses
@@ -431,6 +435,14 @@ private
       return false if @corrective_action.errors.any?
     when :test_results
       return false if @test.errors.any?
+    when :reference_number
+      if reference_number_params[:has_complainant_reference].blank?
+        @investigation.errors.add(:has_complainant_reference, "Choose whether you want to add your own reference number")
+      end
+      if reference_number_params[:has_complainant_reference] == "Yes" && @investigation.complainant_reference.blank?
+        @investigation.errors.add(:complainant_reference, "Please provide a reference number")
+        @has_reference_number = reference_number_params[:has_complainant_reference]
+      end
     end
     @investigation.errors.empty? && @product.errors.empty?
   end
