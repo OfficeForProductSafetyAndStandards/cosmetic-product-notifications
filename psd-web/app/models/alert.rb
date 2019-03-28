@@ -8,9 +8,6 @@ class Alert < ApplicationRecord
 
   has_one :source, as: :sourceable, dependent: :destroy
 
-  validates_presence_of :summary, message: "Enter the alert subject"
-  validates_presence_of :description, message: "Enter the alert description"
-
   validate :summary_validation
   validate :description_validation
 
@@ -29,13 +26,13 @@ class Alert < ApplicationRecord
 
   def summary_validation
     if summary.empty? || summary == default_summary
-      errors.add(:summary, "Enter the alert subject")
+      errors.add(:summary, :required)
     end
   end
 
   def description_validation
     if description.empty? || description == default_description
-      errors.add(:description, "Enter alert content")
+      errors.add(:description, :required)
     end
   end
 

@@ -25,7 +25,7 @@
               rows: 12,
               maxlength: 1000,
               value: (@alert.description.presence || @alert.default_description),
-              label: { text: "Alert content", classes: "govuk-label--m" },
+              label: { text: "Alert summary", classes: "govuk-label--m" },
               hint: { text: description_hint_text }
 
       = form.submit "Preview alert", class: "govuk-button"
