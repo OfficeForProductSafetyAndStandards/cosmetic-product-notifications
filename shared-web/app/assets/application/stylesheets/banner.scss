@@ -46,12 +46,12 @@
 //   ==========================================================================
 
 .hmcts-banner--success {
-  border-color: inherit;
+  border-color: govuk-colour("green");
   color: govuk-colour("green");
 }
 
 
 .hmcts-banner--warning {
-  border-color: inherit;
+  border-color: govuk-colour("red");
   color: govuk-colour("red");
 }
