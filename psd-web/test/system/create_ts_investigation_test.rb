@@ -104,7 +104,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     choose "further_risk_assessments_yes", visible: false
     click_button "Skip this page"
 
-    assert_selector "h1", text: "Find this in your system"
+    assert_selector "h1", text: "Add your own reference number"
     fill_in_complainant_reference
 
     assert_selector "h1", text: "Case created"
@@ -204,6 +204,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   end
 
   def fill_in_complainant_reference
+    choose "investigation_has_complainant_reference_yes", visible: false
     fill_in "investigation_complainant_reference", with: @investigation.complainant_reference
     click_button "Create case"
   end
