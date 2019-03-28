@@ -21,12 +21,11 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: email)
   end
 
-  def alert(name, email, email_text, subject_text)
+  def alert(email, email_text, subject_text)
     set_template(TEMPLATES[:alert])
     set_reference('Alert')
 
     set_personalisation(
-      name: name,
       email_text: email_text,
       subject_text: subject_text
     )
