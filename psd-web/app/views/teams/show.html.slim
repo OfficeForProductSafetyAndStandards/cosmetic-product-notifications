@@ -9,7 +9,7 @@
       a.govuk-button role="button" href=invite_to_team_url Invite a team member
     h2.govuk-heading-m Team Members
     ul.govuk-list
-      - @team.users.each do |user|
+      - @team.users.sort_by(&:full_name).each do |user|
         li.teams--user class="govuk-!-padding-top-3 govuk-!-padding-bottom-3 govuk-!-margin-0"
           h3.teams--user-contact
             span.govuk-heading-s.teams--user-name = user.full_name

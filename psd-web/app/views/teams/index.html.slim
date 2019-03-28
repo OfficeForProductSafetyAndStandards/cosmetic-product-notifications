@@ -6,5 +6,5 @@
   .govuk-grid-column-two-thirds-from-desktop
     h1.govuk-heading-xl Your teams
     ul.govuk-list
-      - @teams.each do |team|
+      - @teams.sort_by(&:display_name).each do |team|
         li: a.govuk-link.govuk-heading-m href=team_path(team) = team.display_name
