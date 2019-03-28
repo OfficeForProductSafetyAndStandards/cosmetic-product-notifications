@@ -9,15 +9,15 @@
       = @notification.responsible_person.name
     h3.govuk-heading-s[class="govuk-!-font-weight-regular"]
       - if @notification.components&.first&.sub_sub_category&.present?
-        = @notification.components.first.display_root_category + ", " + \
-            @notification.components.first.display_sub_category + ", " + \
-            @notification.components.first.display_sub_sub_category
+        = full_category_display_name(@notification.components.first)
 
 .govuk-grid-row
   .govuk-grid-column-one-third.product-images
     - if @notification.image_uploads.present?
-      = link_to image_tag(url_for(@notification.image_uploads.first.file.variant(resize: "450x450"))),
-              url_for(@notification.image_uploads.first.file)
+      - @notification.image_uploads.each do |image|
+        - if image.marked_as_safe?
+          = link_to image_tag(url_for(image.file.variant(resize: "450x450"))),
+                  url_for(image.file)
   .govuk-grid-column-two-thirds
     = render "poison_centres/notifications/poison_centre_trigger_rule_formulation", notification: @notification
     = render "notifications/ingredient_details", notification: @notification
@@ -25,4 +25,3 @@
     = render "notifications/substances_details", notification: @notification
     = render "/notifications/responsible_person_details", responsible_person: @notification.responsible_person
     = render "/notifications/contact_person_details", contact_person: @notification.responsible_person
-

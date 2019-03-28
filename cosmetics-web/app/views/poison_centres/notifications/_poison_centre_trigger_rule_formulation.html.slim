@@ -8,7 +8,7 @@ h2.govuk-heading-l.poison_centre_table_heading
     - if component.trigger_questions
       - component.trigger_questions.each do |question|
         tbody.govuk-table__body
-          - question.trigger_question_elements.each do | question_element |
+          - question.trigger_question_elements.each do |question_element|
             - case question_element.element
               - when "ethanol"
                 tr.govuk-table__row
@@ -30,5 +30,3 @@ h2.govuk-heading-l.poison_centre_table_heading
                       = formulation_data.first.humanize
                     td.govuk-table__cell.govuk-table__cell--numeric
                       = "#{formulation_data.last.humanize} %w/w"
-
-
