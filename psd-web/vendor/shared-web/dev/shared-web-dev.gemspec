@@ -1,1 +1,1 @@
-../../../shared-web/dev/shared-web-dev.gemspec
+../../../../shared-web/dev/shared-web-dev.gemspec
