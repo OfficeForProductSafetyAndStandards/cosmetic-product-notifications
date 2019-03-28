@@ -38,6 +38,10 @@ All notable changes to this project will be documented in this file.
     1. Go to the `Roles` section and click on the `admin` role
         1. Under `Composite Roles` select `realm-management` from the dropdown
         1. Select `manage-users`, `view-clients` and `view-realm`, press `Add selected`
+- [ ] Update cosmetics-app's name in keycloak
+     1. Log into keycloak admin app, click on `Clients` and select `cosmetics-app`
+         1. In the `Settings` tab, change the `Name` field to `Submit cosmetic product notifications`
+         2. Press the `Save` button, to apply the changes
 
 
 ## 2019-03-07
