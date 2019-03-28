@@ -47,7 +47,7 @@ class CpnpExport
     current_version_info_node.xpath(".//stillOnTheMarket").first&.text&.casecmp?("Y")
   end
 
-  def is_mixed
+  def components_are_mixed
     current_version_info_node.xpath(".//isMixed").first&.text&.casecmp?("Y")
   end
 

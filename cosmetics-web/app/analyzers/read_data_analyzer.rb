@@ -43,7 +43,7 @@ private
                                             responsible_person: @notification_file.responsible_person,
                                             under_three_years: cpnp_export_info.under_three_years,
                                             still_on_the_market: cpnp_export_info.still_on_the_market,
-                                            is_mixed: cpnp_export_info.is_mixed,
+                                            components_are_mixed: cpnp_export_info.components_are_mixed,
                                             ph_min_value: cpnp_export_info.ph_min_value,
                                             ph_max_value: cpnp_export_info.ph_max_value)
           notification.notification_file_parsed
