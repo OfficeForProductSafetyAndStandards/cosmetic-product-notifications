@@ -19,10 +19,10 @@ module Keycloak
       default_call(proc)
     end
 
-    def self.get_user_groups
+    def self.get_user_groups(query_parameters = nil)
       proc = lambda { |token|
         request_uri = Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/admin/user-groups"
-        Keycloak.generic_request(token["access_token"], request_uri, nil, nil, "GET")
+        Keycloak.generic_request(token["access_token"], request_uri, query_parameters, nil, "GET")
       }
 
       default_call(proc)
@@ -196,7 +196,7 @@ module Shared
       def all_user_groups(force: false)
         Rails.cache.delete(:keycloak_user_groups) if force
         response = Rails.cache.fetch(:keycloak_user_groups, expires_in: 5.minutes) do
-          Keycloak::Internal.get_user_groups
+          Keycloak::Internal.get_user_groups(max: 1000000)
         end
 
         JSON.parse(response).collect { |user| [user["id"], user["groups"]] }.to_h

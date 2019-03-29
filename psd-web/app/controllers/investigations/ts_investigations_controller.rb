@@ -218,8 +218,11 @@ private
 
     case step
     when :why_reporting
+      params[:investigation][:hazard_description] = nil unless params[:investigation][:unsafe] == "1"
+      params[:investigation][:hazard_type] = nil unless params[:investigation][:unsafe] == "1"
+      params[:investigation][:non_compliant_reason] = nil unless params[:investigation][:non_compliant] == "1"
       params.require(:investigation).permit(
-        :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
+        :unsafe, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
       )
     when :reference_number
       params.require(:investigation).permit(:complainant_reference)
