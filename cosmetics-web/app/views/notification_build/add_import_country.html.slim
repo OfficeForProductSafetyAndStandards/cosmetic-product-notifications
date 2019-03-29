@@ -1,6 +1,8 @@
 - content_for :page_title, "Where is the cosmetic imported from"
 - content_for :after_header do
-    = link_to "Back", notification_build_path(@notification, :is_imported), class: "govuk-back-link"
+    = link_to "Back",
+            responsible_person_notification_build_path(@notification.responsible_person, @notification, :is_imported),
+            class: "govuk-back-link"
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl

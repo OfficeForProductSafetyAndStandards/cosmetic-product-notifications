@@ -30,7 +30,7 @@ update_configs:
     update_schedule: "live"
 
   - package_manager: "javascript"
-    directory: "/mspsds-web"
+    directory: "/psd-web"
     update_schedule: "live"
 
   - package_manager: "javascript"
@@ -46,7 +46,11 @@ update_configs:
     update_schedule: "live"
 
   - package_manager: "ruby:bundler"
-    directory: "/mspsds-web"
+    directory: "/infrastructure/fluentd"
+    update_schedule: "live"
+
+  - package_manager: "ruby:bundler"
+    directory: "/psd-web"
     update_schedule: "live"
 
   - package_manager: "ruby:bundler"

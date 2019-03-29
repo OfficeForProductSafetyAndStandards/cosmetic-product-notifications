@@ -1,0 +1,52 @@
+- label_class = "govuk-label--m govuk-!-margin-bottom-2"
+fieldset.govuk-fieldset
+  = render "form_components/govuk_input", key: :trading_name, form: form,
+          label: { text: "Trading name", classes: label_class },
+          hint: { text: "The name the business is known by" }
+
+fieldset.govuk-fieldset
+  = render "form_components/govuk_input", key: :legal_name, form: form,
+          label: { text: "Legal name", classes: label_class },
+          hint: { text: "The registered name of the company (if you have it)" }
+
+fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
+  = render "form_components/govuk_input", key: :company_number, form: form,
+          label: { text: "Company number", classes: label_class },
+          hint: { text: "If you have this information" }
+
+= form.fields_for :locations, business.primary_location do |ff|
+  fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
+    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+      | Address
+
+    = render "form_components/govuk_input", key: :address_line_1, form: ff,
+            label: { text: "Building and street" }
+    = render "form_components/govuk_input", key: :address_line_2, form: ff,
+            label: { text: "Address line two", classes: "govuk-visually-hidden" }
+
+    = render "form_components/govuk_input", key: :city, form: ff,
+            label: { text: "Town or city" }
+
+    = render "form_components/govuk_input", key: :county, form: ff,
+            label: { text: "County" }
+
+    = render "form_components/govuk_input", key: :postal_code, form: ff, classes: "govuk-!-width-one-half",
+            label: { text: "Postcode" }
+
+    .govuk-form-group
+      = ff.label :country, "Country",
+              class: "govuk-label"
+      = ff.select :country, countries, { include_blank: "" },
+            class: "govuk-select", id: "location-autocomplete"
+
+= form.fields_for :contacts, business.primary_contact do |ff|
+  fieldset.govuk-fieldset class=["govuk-!-margin-bottom-5"]
+    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+      | Contact
+    = render "form_components/govuk_input", key: :name, form: ff, label: { text: "Name" }
+    = render "form_components/govuk_input", key: :email, form: ff, label: { text: "Email" }
+    = render "form_components/govuk_input", key: :phone_number, form: ff, label: { text: "Phone number" }
+    = render "form_components/govuk_input", key: :job_title, form: ff,
+            label: { text: "Job title / description" }
+
+= form.submit local_assigns[:submit_text] || "Save business", class: "govuk-button"

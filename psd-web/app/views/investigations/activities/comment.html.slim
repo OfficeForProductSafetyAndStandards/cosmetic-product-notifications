@@ -1,0 +1,16 @@
+- content_for :page_title, "Add activity"
+- content_for :after_header do
+  .govuk-grid-row
+    .govuk-grid-column-one-third
+      = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      p.govuk-caption-xl
+        = @investigation.pretty_description
+      | Add comment
+    = form_with(model: CommentActivity.new, url: investigation_activities_path(@investigation)) do |form|
+      = render "form_components/govuk_textarea", key: :body, form: form, attributes: { maxlength: 10000 },
+              classes: "govuk-!-width-full", label: { text: "Comment text", classes: "govuk-visually-hidden" }
+      = form.submit "Continue", class: "govuk-button"

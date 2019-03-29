@@ -8,12 +8,22 @@ set -ex
 # The caller should have the following environment variables set:
 #
 # SPACE: the space to which you want to deploy
-# If NO_START is set the app won't be started
+
+APP=cosmetics-worker
+APP_PREEXISTS=$(cf app $APP && echo 0 || echo 1)
+
+if [[ ! $APP_PREEXISTS ]]; then
+    echo "No existing app found. Performing first-time setup."
+fi
+
+# Copy the environment helper script
+cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
 # Circumvent the cloudfoundry asset compilation step - https://github.com/cloudfoundry/ruby-buildpack/blob/master/src/ruby/finalize/finalize.go#L213
-cp -a ./shared-worker/public/. ./cosmetics-web/public/
+mkdir -p ./cosmetics-web/public/assets
+touch ./cosmetics-web/public/assets/.sprockets-manifest-qq.json
 
 rm -rf ./cosmetics-web/vendor/shared-web/
 cp -a ./shared-web ./cosmetics-web/vendor/shared-web
 
-cf push -f ./cosmetics-worker/manifest.yml $( [[ ${NO_START} ]] && printf %s '--no-start' )
+cf push -f ./cosmetics-worker/manifest.yml $( [[ ! ${APP_PREEXISTS} ]] && printf %s '--no-start' )

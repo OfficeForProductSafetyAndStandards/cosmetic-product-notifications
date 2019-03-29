@@ -17,3 +17,18 @@ Install Node and Yarn and run the site using `yarn start`.
 ## Deployment
 
 Login using the CloudFoundry CLI and then run `cf push` from this directory.
+
+
+## Usage
+
+We're doing blue-green deployments so using the maintenance page is a manual process.
+
+To direct users to the maintenance page rather than an application, run:
+
+    cf map-route maintenance <domain> --hostname <hostname>
+    cf unmap-route <app> <domain> --hostname <hostname>
+
+Once maintenance has finished:
+
+    cf map-route <app> <domain> --hostname <hostname>
+    cf unmap-route maintenance <domain> --hostname <hostname>

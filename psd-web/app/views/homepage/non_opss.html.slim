@@ -1,0 +1,32 @@
+- content_for :page_title, "Home Page"
+- content_for :after_header do
+  = render "layouts/navbar"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    h1.govuk-heading-xl
+      |  Product safety database
+    p.govuk-body-l
+      |  Report, track and share product safety information.
+    = link_to new_ts_investigation_path,
+            class: "govuk-button govuk-button--start", role: "button", draggable: "false"
+      | Open a new case
+
+hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class=["govuk-!-margin-top-0"]
+
+.govuk-grid-row
+  .govuk-grid-column-one-third
+    h2.govuk-heading-m
+      = link_to "Your cases", investigations_path(assigned_to_me: "checked"),
+              class: "govuk-link govuk-link--no-visited-state"
+    p Cases you’ve opened or you’re assigned to.
+
+  .govuk-grid-column-one-third
+    h2.govuk-heading-m
+      = link_to "All cases", investigations_path, class: "govuk-link govuk-link--no-visited-state"
+    p All cases in the product safety database
+
+  .govuk-grid-column-one-third
+    h2.govuk-heading-m
+      = link_to "About this service", help_about_path, class: "govuk-link govuk-link--no-visited-state"
+    p How and when to use this service.

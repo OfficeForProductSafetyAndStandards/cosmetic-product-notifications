@@ -1,0 +1,43 @@
+- content_for :page_title, "Alert trading standards"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with model: @alert, local: true, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        p.govuk-caption-xl
+          = @investigation.pretty_description
+        | Preview your alert
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .email-message
+        table.email-message-meta.govuk-table
+          tbody.govuk-table__body
+            tr.govuk-table__row
+              th.govuk-table__header From
+              td.govuk-table__cell
+                | The Office of Product Safety and Standards
+            tr.govuk-table__row
+              th.govuk-table__header To
+              td.govuk-table__cell
+                span.placeholder-no-brackets = "All users (#{@user_count} people)"
+            tr.email-message-meta.govuk-table__row
+              th.govuk-table__header Subject
+              td.govuk-table__cell
+                = @alert.summary
+        .email-message-body
+          == @preview.html
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      p
+        ' If you’re not happy you can
+        = link_to "edit your message", previous_wizard_path, class: "govuk-link"
+        | .
+      p
+        | Alerts may take up to 5 minutes to send.
+
+  = form.submit "Send to #{@user_count} people", class: "govuk-button"
+
+p
+  = link_to "Cancel", investigation_path(@investigation), class: 'govuk-link govuk-link--no-visited-state'

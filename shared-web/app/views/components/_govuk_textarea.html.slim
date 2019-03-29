@@ -3,8 +3,6 @@
 / blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/textarea/template.njk
 ruby:
   described_by = ""
-  has_hint = local_assigns[:hint].present?
-  has_hint = local_assigns[:hint][:text].present? || local_assigns[:hint][:html].present? if has_hint
   has_error = local_assigns[:errorMessage].present?
   rows = local_assigns[:rows] || 5
 
@@ -13,10 +11,10 @@ ruby:
   area_classes = ["govuk-textarea", local_assigns[:classes]]
   area_classes.push("govuk-textarea--error") if local_assigns[:errorMessage].present?
 
-.govuk-form-group class=form_group_classes id=local_assigns[:group_id]
+.govuk-form-group class=form_group_classes
   = render "components/govuk_label", for: id, **label
 
-  - if has_hint
+  - if local_assigns[:hint]
     - hint_id = local_assigns[:id] + '-hint'
     - described_by = described_by.present? ? described_by + ' ' + hint_id : hint_id
     = render "components/govuk_hint", id: hint_id, **local_assigns[:hint]
@@ -31,7 +29,9 @@ ruby:
                 id=id
                 rows=rows
                 name=name
-                maxlength=local_assigns[:max_length]
-                aria-describedby=described_by
+                aria-describedby=described_by.presence
                 autocomplete=local_assigns[:autocomplete]]
+        / If the first new line of the textarea is empty, HTML swallows it, so here we add it back in. TODO check this
+        / non-apply operating systems.
+        = "\r\n"
         = local_assigns[:value]

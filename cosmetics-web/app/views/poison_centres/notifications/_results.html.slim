@@ -1,0 +1,6 @@
+- if results.present?
+  ul.product-list[class="govuk-!-margin-bottom-0"]
+    - results.each do |notification|
+      = render "registered_product", notification: notification
+- else
+  p[class="govuk-!-font-weight-bold"] No results found.

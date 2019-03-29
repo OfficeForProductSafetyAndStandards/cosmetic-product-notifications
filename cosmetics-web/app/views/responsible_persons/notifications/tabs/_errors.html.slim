@@ -1,32 +1,33 @@
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    ul.govuk-list
-      li[class="govuk-!-padding-bottom-2"]
-        = link_to "Try uploading files again", new_responsible_person_notification_file_path(@responsible_person),
-                class: "govuk-link--no-visited-state"
-      li[class="govuk-!-padding-bottom-2"]
-        = form_with url: destroy_all_responsible_person_notification_files_path(@responsible_person),
-                method: :delete do |form|
-          = form.submit "Dismiss all failed files", class: "govuk-link--no-visited-state dismiss-link", role: "link"
-.govuk-grid-row
-  .govuk-grid-column-full
-    table.govuk-table
-      thead.govuk-table__head
-        tr.govuk-table__row
-          th.govuk-table__header[scope="col"]
-            | Product name
-          th.govuk-table__header[scope="col"]
-            | Reason for failure
-          th.govuk-table__header[scope="col"]
-      tbody.govuk-table__body
-        - @erroneous_notification_files.each do |notification_file|
+- if @erroneous_notification_files.present?
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      ul.govuk-list
+        li[class="govuk-!-padding-bottom-2"]
+          = link_to "Try uploading files again", new_responsible_person_notification_file_path(@responsible_person),
+                  class: "govuk-link--no-visited-state"
+        li[class="govuk-!-padding-bottom-2"]
+          = form_with url: destroy_all_responsible_person_notification_files_path(@responsible_person),
+                  method: :delete do |form|
+            = form.submit "Dismiss all failed files", class: "govuk-link--no-visited-state button-link", role: "link"
+  .govuk-grid-row
+    .govuk-grid-column-full
+      table.govuk-table
+        thead.govuk-table__head
           tr.govuk-table__row
-            td.govuk-table__cell
-              = notification_file.name
-            td.govuk-table__cell
-              = notification_file.upload_error_message
-            td.govuk-table__cell
-              = form_with url: responsible_person_notification_file_path(@responsible_person, notification_file),
-                      method: :delete do |form|
-                = form.submit "Dismiss", class: "govuk-link--no-visited-state dismiss-link", role: "link"
-    = will_paginate(@erroneous_notification_files, param_name: "errors", params: { anchor: "errors" })
+            th.govuk-table__header[scope="col"]
+              | File name
+            th.govuk-table__header[scope="col"]
+              | Reason for failure
+            th.govuk-table__header[scope="col"]
+        tbody.govuk-table__body
+          - @erroneous_notification_files.each do |notification_file|
+            tr.govuk-table__row
+              td.govuk-table__cell
+                = notification_file.name
+              td.govuk-table__cell
+                = notification_file.upload_error_message
+              td.govuk-table__cell
+                = form_with url: responsible_person_notification_file_path(@responsible_person, notification_file),
+                        method: :delete do |form|
+                  = form.submit "Dismiss", class: "govuk-link--no-visited-state button-link", role: "link"
+      = will_paginate(@erroneous_notification_files, param_name: "errors", params: { anchor: "errors" })

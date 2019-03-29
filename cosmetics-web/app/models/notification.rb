@@ -1,12 +1,19 @@
 class Notification < ApplicationRecord
+  include Searchable
+
   include AASM
   include Shared::Web::CountriesHelper
+
+  EU_EXIT_DATETIME = DateTime.parse("29-03-2019T23:00:00").in_time_zone
 
   belongs_to :responsible_person
   has_many :components, dependent: :destroy
   has_many :image_uploads, dependent: :destroy
 
   accepts_nested_attributes_for :image_uploads
+
+  index_name [Rails.env, "notifications"].join("_")
+  scope :elasticsearch, -> { where(state: "notification_complete") }
 
   before_create do
     new_reference_number = nil
@@ -27,6 +34,21 @@ class Notification < ApplicationRecord
   validate :all_required_attributes_must_be_set
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
             allow_nil: true
+  validates :cpnp_reference, presence: true, on: :file_upload
+
+  def as_indexed_json(*)
+    as_json(
+      only: %i[product_name],
+      include: {
+          responsible_person: {
+              only: %i[name]
+          },
+          components: {
+              methods: %i[display_sub_category display_sub_sub_category display_root_category]
+          }
+      }
+    )
+  end
 
   # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
@@ -35,8 +57,8 @@ class Notification < ApplicationRecord
     state :import_country_added
     state :components_complete
     state :draft_complete
-    state :notification_complete
     state :notification_file_imported
+    state :notification_complete
 
     event :add_product_name do
       transitions from: :empty, to: :product_name_added
@@ -54,19 +76,33 @@ class Notification < ApplicationRecord
       transitions from: :components_complete, to: :draft_complete
     end
 
+    event :notification_file_parsed do
+      transitions from: :empty, to: :notification_file_imported, guard: :formulation_required?
+      transitions from: :empty, to: :draft_complete
+    end
+
+    event :formulation_file_uploaded do
+      transitions from: :notification_file_imported, to: :draft_complete, guard: :formulation_present?
+    end
+
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete do
+      transitions from: :draft_complete, to: :notification_complete,
+                  after: Proc.new { __elasticsearch__.index_document } do
         guard do
-          images_are_present_and_safe?
+          notified_pre_eu_exit? || images_are_present_and_safe?
         end
       end
     end
-
-    event :notification_file_parsed do
-      transitions from: :empty, to: :notification_file_imported
-    end
   end
   # rubocop:enable Metrics/BlockLength
+
+  def imported?
+    notification.state == :notification_file_imported ? cpnp_is_imported : import_country.present?
+  end
+
+  def imported_country
+    notification.state == :notification_file_imported ? cpnp_imported_country : import_country
+  end
 
   def reference_number_for_display
     "UKCP-%08d" % reference_number
@@ -88,6 +124,26 @@ class Notification < ApplicationRecord
 
   def to_param
     reference_number.to_s
+  end
+
+  def formulation_required?
+    components.any?(&:formulation_required?)
+  end
+
+  def formulation_present?
+    components.none?(&:formulation_required?)
+  end
+
+  def is_multicomponent?
+    components.length > 1
+  end
+
+  def notified_post_eu_exit?
+    !notified_pre_eu_exit?
+  end
+
+  def notified_pre_eu_exit?
+    was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date < EU_EXIT_DATETIME))
   end
 
 private
@@ -121,3 +177,5 @@ private
     end
   end
 end
+
+Notification.elasticsearch.import force: true if Rails.env.development? # for auto sync model with elastic search

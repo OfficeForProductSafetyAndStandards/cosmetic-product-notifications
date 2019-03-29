@@ -2,11 +2,23 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-<!-- ### MSPSDS -->
+<!-- ### Product safety database -->
 
 <!-- ### Cosmetics -->
 
 <!-- ### Next release checklist -->
+
+
+## 2019-03-29
+### Product safety database
+- Rename the service to Product safety database.
+- Add case alert functionality (to send RAPEX-style alerts).
+- Add introduction slides, about page, terms and conditions and privacy policy.
+- Add terms and conditions declaration prompt.
+- Assign cases to their creator by default.
+- Allow users to view their team members.
+- Allow users to add new team members.
+- Various bug fixes.
 
 
 ## 2019-03-07

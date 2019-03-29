@@ -1,0 +1,34 @@
+- content_for :page_title, "Record email"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
+
+= form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-xl
+        span.govuk-caption-xl
+          = @investigation.pretty_description
+        | Record email
+      = render "components/govuk_fieldset", legend: { text: "Email details", classes: "govuk-fieldset__legend--l" } do
+        = render "form_components/govuk_radios", form: form, key: :email_direction,
+                classes: "govuk-radios--inline",
+                items: Correspondence::Email.email_directions.map { |value, label| { text: label, value: value } }
+        = render "form_components/govuk_input", key: :correspondent_name, form: form,
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Name" }
+        = render "form_components/govuk_input", key: :email_address, form: form,
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Email address" }
+
+      = render "form_components/govuk_radios", form: form, key: :has_consumer_info,
+              classes: "govuk-radios--inline",
+              fieldset: { legend: { text: "Are these consumer contact details?",
+                      classes: "govuk-fieldset__legend--l" } },
+              hint: { text: "Consumer contact details are protected by GDPR legislation" },
+              items: [{ text: "No", value: "false" }, { text: "Yes", value: "true" }]
+      = render "components/govuk_fieldset", legend: { text: "Date sent", classes: "govuk-fieldset__legend--l" },
+              attributes: { "aria-describedby": "correspondence-date-hint" } do
+        = render "date_input", form: form
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

@@ -1,0 +1,23 @@
+- content_for :page_title, "Record meeting"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
+= form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-xl
+        span.govuk-caption-xl
+          = @investigation.pretty_description
+        | Record meeting
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          | Who was the meeting with?
+        = render "form_components/govuk_input", key: :correspondent_name, form: form,
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Name" }
+      .govuk-form-group
+        fieldset.govuk-fieldset aria-describedby="correspondence-date-hint" role="group"
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+            | Date of meeting
+        = render "date_input", form: form
+      = form.submit "Continue", class: "govuk-button"

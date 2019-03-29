@@ -1,0 +1,60 @@
+- label_class = "govuk-label--m govuk-!-margin-bottom-2"
+fieldset.govuk-fieldset
+  / Ideally the width class should affect he input only, not the whole form group, but we're limited by MSPSDS-1045
+  .govuk-form-group class=["govuk-!-width-two-thirds", ("govuk-form-group--error" if product.errors[:category].any?)]
+    = render "form_components/autocomplete_select", items: product_categories, key: :category, form: form,
+            show_all_values: true, aria_describedby: "report-product-category-hint",
+            label: { text: "Product category", classes: label_class },
+            hint: { text: "The high-level category (for reporting purposes)" }
+
+fieldset.govuk-fieldset
+  - hint_html = capture do
+    | In plain English, what is it?
+    br
+    | For example, ‘dishwasher, soft toy, chainsaw...’
+  = render "form_components/govuk_input", key: :product_type, form: form,
+          classes: "govuk-!-width-two-thirds",
+          label: { text: "Product type", classes: label_class },
+          hint: { html: hint_html }
+
+fieldset.govuk-fieldset
+  - hint_html = capture do
+    | Brand, model name, model number, etc.
+    br
+    | For example, ‘Bosch Series 2 SMS25EI00G’
+  = render "form_components/govuk_input", key: :name, form: form,
+          classes: "govuk-!-width-two-thirds",
+          label: { text: "Product name", classes: label_class },
+          hint: { html: hint_html }
+
+fieldset.govuk-fieldset
+  = render "form_components/govuk_input", key: :product_code, form: form, classes: "govuk-!-width-two-thirds",
+          label: { text: "Barcode (or serial number)", classes: label_class },
+          hint: { text: "If you have this data, it makes it easier to correctly identify the product" }
+
+fieldset.govuk-fieldset
+  = render "form_components/govuk_input", key: :batch_number, form: form, classes: "govuk-!-width-two-thirds",
+          label: { text: "Batch number", classes: label_class },
+          hint: { text: "Particularly important if only a specific batch of a product is being reported" }
+
+fieldset.govuk-fieldset
+  = render "form_components/govuk_input", key: :webpage, form: form, classes: "govuk-!-width-two-thirds",
+          label: { text: "Webpage", classes: label_class },
+          hint: { text: "A link to the manufacturer's page for this product, or a webpage where it can be bought" }
+
+fieldset.govuk-fieldset
+  .govuk-form-group class=("govuk-form-group--error" if product.errors[:country_of_origin].any?)
+    = form.label :country_of_origin, "Country of origin",
+            class: label_class
+    / Ideally the width class should affect he input only, without a wrapper, but we're limited by MSPSDS-1045
+    div class="govuk-!-width-two-thirds"
+      = form.select :country_of_origin, countries, { include_blank: "" },
+              class: "govuk-select", id: "location-autocomplete"
+
+fieldset.govuk-fieldset
+  = render "form_components/govuk_textarea", key: :description, form: form, attributes: { maxlength: 10000 },
+          label: { text: "Description of product", classes: label_class },
+          hint: { text: "For example, 'Orange, 4 socket extension lead'" }
+
+.govuk-form-group
+  = form.submit local_assigns[:submit_text] || "Save product", class: "govuk-button"

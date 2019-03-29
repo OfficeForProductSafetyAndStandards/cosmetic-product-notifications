@@ -1,0 +1,10 @@
+.govuk-fieldset
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_input", key: :name, form: form, label: { text: "Name" }
+      = render "form_components/govuk_input", key: :email, form: form, label: { text: "Email" }
+      = render "form_components/govuk_input", key: :phone_number, form: form, label: { text: "Phone number" }
+      = render "form_components/govuk_input", key: :job_title, form: form,
+              label: { text: "Job title / description" }
+      .govuk-form-group
+        = form.submit "Save", class: "govuk-button"

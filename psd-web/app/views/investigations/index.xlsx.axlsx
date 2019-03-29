@@ -1,0 +1,202 @@
+book = xlsx_package.workbook
+
+book.add_worksheet name: "Cases" do |sheet_investigations|
+  sheet_investigations.add_row %w[ID Status Title Description Product_Category Hazard_Type Assignee Source
+                            Complainant_Name Complainant_Email Complainant_Phone Complainant_Type
+                            Products Businesses Activities Correspondences Corrective_Actions Tests]
+
+  @investigations.each do |investigation|
+    if policy(investigation).show?
+    complainant = investigation.complainant
+      sheet_investigations.add_row [
+        investigation.pretty_id,
+        investigation.is_closed? ? "Closed" : "Open",
+        investigation.title,
+        investigation.description,
+        investigation.product_category,
+        investigation.hazard_type,
+        investigation.assignee ? investigation.assignee.display_name : "Unassigned",
+        investigation.source&.show,
+        complainant.present? ? (complainant.can_be_displayed? ? complainant&.name : "Restricted") : "",
+        complainant.present? ? (complainant.can_be_displayed? ? complainant&.email_address : "Restricted") : "",
+        complainant.present? ? (complainant.can_be_displayed? ? complainant&.phone_number : "Restricted") : "",
+        complainant&.complainant_type,
+        investigation.products.length,
+        investigation.businesses.length,
+        investigation.activities.length,
+        investigation.correspondences.length,
+        investigation.corrective_actions.length,
+        investigation.tests.length
+      ], :types => :text
+    else
+      sheet_investigations.add_row [
+        investigation.pretty_id,
+        "Restricted"
+      ], :types => :text
+    end
+  end
+end
+
+book.add_worksheet name: "Products" do |sheet_products|
+  sheet_products.add_row %w[ID Product_Code Name Type Category Webpage Description Country_of_origin Date_placed_on_market
+                            Batch_Number Source Case_ID]
+
+  @investigations.each do |investigation|
+    if policy(investigation).show?
+      investigation.products.each do |product|
+        sheet_products.add_row [
+          product.id,
+          product.product_code,
+          product.name,
+          product.product_type,
+          product.category,
+          product.webpage,
+          product.description,
+          product.country_of_origin,
+          product.date_placed_on_market&.to_s(:long_ordinal),
+          product.batch_number,
+          product.source&.show,
+          investigation.pretty_id
+        ], :types => :text
+      end
+    end
+  end
+end
+
+book.add_worksheet name: "Businesses" do |sheet_businesses|
+  sheet_businesses.add_row %w[ID Company_Number Legal_Name Trading_Name Source
+                                Address_Line_1 Address_line_2 Phone_Number County Country Postal_Code Locations
+                                Case_ID]
+
+  @investigations.each do |investigation|
+    if policy(investigation).show?
+      investigation.businesses.each do |business|
+        sheet_businesses.add_row [
+          business.id,
+          business.company_number,
+          business.legal_name,
+          business.trading_name,
+          business.source&.show,
+          business.primary_location ? business.primary_location.address_line_1 : nil,
+          business.primary_location ? business.primary_location.address_line_2 : nil,
+          business.primary_location ? business.primary_location.phone_number : nil,
+          business.primary_location ? business.primary_location.county : nil,
+          business.primary_location ? business.primary_location.country : nil,
+          business.primary_location ? business.primary_location.postal_code : nil,
+          business.locations.length,
+          investigation.pretty_id
+        ], :types => :text
+      end
+    end
+  end
+end
+
+book.add_worksheet name: "Business locations" do |sheet_businesses_locations|
+  sheet_businesses_locations.add_row %w[ID Name Address_Line_1 Address_Line_2 Phone_Number County Country Postal_Code Business_ID Case_ID]
+
+  @investigations.each do |investigation|
+    if policy(investigation).show?
+      investigation.businesses.each do |business|
+        business.locations.each do |location|
+          sheet_businesses_locations.add_row [
+            location.id,
+            location.name,
+            location.address_line_1,
+            location.address_line_2,
+            location.phone_number,
+            location.county,
+            location.country,
+            location.postal_code,
+            business.id,
+            investigation.pretty_id
+          ], :types => :text
+        end
+      end
+    end
+  end
+end
+
+book.add_worksheet name: "Actions" do |sheet_actions|
+  sheet_actions.add_row %w[ID Type Description Source Case_ID]
+
+  @investigations.each do |investigation|
+    if policy(investigation).show?
+      investigation.activities.each do |activity|
+        sheet_actions.add_row [
+          activity.id,
+          activity.type.titleize,
+          activity.sensitive? ? "Restricted" : activity.body,
+          activity.source&.show,
+          investigation.pretty_id
+        ], :types => :text
+      end
+    end
+  end
+end
+
+book.add_worksheet name: "Correspondences" do |sheet_correspondences|
+  sheet_correspondences.add_row %w[ID Contact_method Date Correspondent_Name Correspondent_Type Email_Address
+                            Email_Direction Email_Subject Phone_Number Overview Case_ID]
+
+  @investigations.each do |investigation|
+    if policy(investigation).show?
+      investigation.correspondences.each do |correspondence|
+        sheet_correspondences.add_row [
+          correspondence.id,
+          correspondence.contact_method,
+          correspondence.correspondence_date,
+          correspondence.can_be_displayed? ? correspondence.correspondent_name : "Restricted",
+          correspondence.correspondent_type,
+          correspondence.can_be_displayed? ? correspondence.email_address : "Restricted",
+          correspondence.email_direction,
+          correspondence.can_be_displayed? ? correspondence.email_subject : "Restricted",
+          correspondence.can_be_displayed? ? correspondence.phone_number : "Restricted",
+          correspondence.can_be_displayed? ? correspondence.overview : "Restricted",
+          investigation.pretty_id
+        ], :types => :text
+      end
+    end
+  end
+end
+
+book.add_worksheet name: "Corrective actions" do |sheet_corrective_actions|
+  sheet_corrective_actions.add_row %w[ID Summary Details Date_Decided Legislation Business_ID Product_ID Case_ID]
+
+  @investigations.each do |investigation|
+    if policy(investigation).show?
+      investigation.corrective_actions.each do |corrective_action|
+        sheet_corrective_actions.add_row [
+          corrective_action.id,
+          corrective_action.summary,
+          corrective_action.details,
+          corrective_action.date_decided,
+          corrective_action.legislation,
+          corrective_action.business_id,
+          corrective_action.product_id,
+          investigation.pretty_id
+        ], :types => :text
+      end
+    end
+  end
+end
+
+book.add_worksheet name: "Tests" do |sheet_tests|
+  sheet_tests.add_row %w[ID, Type Date Details Legislation Result Product_ID Case_ID]
+
+  @investigations.each do |investigation|
+    if policy(investigation).show?
+      investigation.tests.each do |test|
+        sheet_tests.add_row [
+          test.id,
+          test.pretty_name,
+          test.date,
+          test.details,
+          test.legislation,
+          test.result,
+          test.product_id,
+          investigation.pretty_id
+        ], :types => :text
+      end
+    end
+  end
+end

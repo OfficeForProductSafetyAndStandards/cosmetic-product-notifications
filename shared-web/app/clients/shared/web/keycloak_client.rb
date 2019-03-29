@@ -19,12 +19,37 @@ module Keycloak
       default_call(proc)
     end
 
-    def self.get_user_groups
+    def self.get_user_groups(query_parameters = nil)
       proc = lambda { |token|
         request_uri = Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/admin/user-groups"
-        Keycloak.generic_request(token["access_token"], request_uri, nil, nil, "GET")
+        Keycloak.generic_request(token["access_token"], request_uri, query_parameters, nil, "GET")
       }
 
+      default_call(proc)
+    end
+
+    def self.add_user_group(user_id, group_id)
+      proc = lambda { |token|
+        request_uri = Keycloak::Admin.full_url("users/#{user_id}/groups/#{group_id}")
+        Keycloak.generic_request(token["access_token"], request_uri, nil, nil, "PUT")
+      }
+      default_call(proc)
+    end
+
+    def self.create_user(user_rep)
+      proc = lambda { |token|
+        request_uri = Keycloak::Admin.full_url("users/")
+        Keycloak.generic_request(token["access_token"], request_uri, nil, user_rep, "POST")
+      }
+      default_call(proc)
+    end
+
+    def self.execute_actions_email(user_id, actions, client_id, redirect_uri)
+      proc = lambda { |token|
+        request_uri = Keycloak::Admin.full_url("users/#{user_id}/execute-actions-email")
+        query_params = { client_id: client_id, redirect_uri: redirect_uri }
+        Keycloak.generic_request(token["access_token"], request_uri, query_params, actions, "PUT")
+      }
       default_call(proc)
     end
   end
@@ -36,15 +61,20 @@ module Shared
       include Singleton
 
       def initialize
+        # The gem we're using has its api split across these three classes
         @client = Keycloak::Client
+        @admin = Keycloak::Admin
+        @internal = Keycloak::Internal
         super
       end
 
-      def all_users
+      def all_users(force: false)
+        Rails.cache.delete(:keycloak_users) if force
         response = Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
-          Keycloak::Internal.get_users
+          # KC defaults to max:100, while we need all users. 1000000 seems safe, at least for the time being
+          @internal.get_users(max: 1000000)
         end
-        user_groups = all_user_groups
+        user_groups = all_user_groups(force: force)
 
         JSON.parse(response).map do |user|
           { id: user["id"], email: user["email"], groups: user_groups[user["id"]], first_name: user["firstName"], last_name: user["lastName"] }
@@ -74,9 +104,9 @@ module Shared
         teams
       end
 
-      def all_team_users
-        users = all_users
-        user_groups = all_user_groups
+      def all_team_users(force: false)
+        users = all_users(force: force)
+        user_groups = all_user_groups(force: force)
         teams = all_teams.map { |t| t[:id] }.to_set
 
         # We set ids manually because if we don't ActiveHash will use 'next_id' method when computing @records,
@@ -100,16 +130,9 @@ module Shared
         JSON.parse(response)["attributes"] || {}
       end
 
-      def all_groups
-        response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
-          Keycloak::Internal.get_groups
-        end
-
-        JSON.parse(response)
-      end
-
-      def registration_url
-        Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/protocol/openid-connect/registrations?client_id=#{Keycloak::Client.client_id}&response_type=code"
+      def registration_url(redirect_uri)
+        params = URI.encode_www_form(client_id: Keycloak::Client.client_id, response_type: "code", redirect_uri: redirect_uri)
+        Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/protocol/openid-connect/registrations?#{params}"
       end
 
       def login_url(redirect_uri)
@@ -142,18 +165,51 @@ module Shared
         { id: user["sub"], email: user["email"], groups: user["groups"], first_name: user["given_name"], last_name: user["family_name"] }
       end
 
-      def has_role?(role)
-        @client.has_role? role
+      def has_role?(user_id, role)
+        if User.current && (User.current.id == user_id)
+          # This is faster, as it uses the already fetched claims
+          @client.has_role? role
+        else
+          @internal.has_role? user_id, role
+        end
+      end
+
+      def add_user_to_team(user_id, group_id)
+        @internal.add_user_group user_id, group_id
+      end
+
+      def create_user(email)
+        @internal.create_user email: email, username: email, enabled: true
+      end
+
+      def get_user(email)
+        @internal.get_user_info(email).first.symbolize_keys
+      end
+
+      def send_required_actions_welcome_email(user_id, redirect_uri)
+        required_actions = %w(sms_auth_check_mobile UPDATE_PASSWORD UPDATE_PROFILE VERIFY_EMAIL)
+        @internal.execute_actions_email user_id, required_actions, "psd-app", redirect_uri
       end
 
     private
 
-      def all_user_groups
+      def all_user_groups(force: false)
+        Rails.cache.delete(:keycloak_user_groups) if force
         response = Rails.cache.fetch(:keycloak_user_groups, expires_in: 5.minutes) do
-          Keycloak::Internal.get_user_groups
+          Keycloak::Internal.get_user_groups(max: 1000000)
         end
 
         JSON.parse(response).collect { |user| [user["id"], user["groups"]] }.to_h
+      end
+
+      def all_groups
+        response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
+          # KC has a default max for users of 100. The docs don't mention a default for groups, but for prudence
+          # and ease of mind, we're ensuring a high-enough cap here, too
+          Keycloak::Internal.get_groups(max: 1000000)
+        end
+
+        JSON.parse(response)
       end
     end
   end

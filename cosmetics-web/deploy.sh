@@ -8,27 +8,69 @@ set -ex
 # The caller should have the following environment variables set:
 #
 # SPACE: the space to which you want to deploy
-# If NO_START is set the app won't be started
 
-DOMAIN=london.cloudapps.digital
-HOSTNAME=cosmetics-$SPACE
-COMPONENT=cosmetics-web
+DOMAIN=submit-cosmetic-product-notifications.service.gov.uk
+if [[ $SPACE == "prod" ]]; then
+    HOSTNAME=www
+else
+    HOSTNAME=$SPACE
+fi
+APP=cosmetics-web
+APP_PREEXISTS=$(cf app $APP && echo 0 || echo 1)
 
-cf app $COMPONENT || APP_DOES_NOT_EXIST="true"
-
-rm -rf ./$COMPONENT/vendor/shared-web/
-cp -a ./shared-web/. ./$COMPONENT/vendor/shared-web/
-
-if [[ ! $APP_DOES_NOT_EXIST ]]; then
-    # Route to the maintenance page
-    cf map-route maintenance $DOMAIN --hostname $HOSTNAME
-    cf unmap-route $COMPONENT $DOMAIN --hostname $HOSTNAME
+if [[ $APP_PREEXISTS ]]; then
+    # We should deploy to a temporary location such that we can do a blue-green deployment
+    NEW_HOSTNAME=$HOSTNAME-temp
+    NEW_APP=$APP-temp
+else
+    # We don't need to deploy to a temporary location
+    echo "No existing app found. Performing first-time setup."
+    NEW_HOSTNAME=$HOSTNAME
+    NEW_APP=$APP
 fi
 
-cf push -f ./$COMPONENT/manifest.yml $( [[ $APP_DOES_NOT_EXIST ]] && printf %s "--hostname $HOSTNAME" || printf %s "--no-route" ) $( [[ $NO_START ]] && printf %s "--no-start" )
+# Copy the environment helper script
+cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
-if [[ ! $APP_DOES_NOT_EXIST ]]; then
-    # Route to newly deployed app
-    cf map-route $COMPONENT $DOMAIN --hostname $HOSTNAME
-    cf unmap-route maintenance $DOMAIN --hostname $HOSTNAME
+# Copy in the shared dependencies
+rm -rf ./cosmetics-web/vendor/shared-web/
+cp -a ./shared-web/. ./cosmetics-web/vendor/shared-web/
+
+# Deploy the new app and set the hostname
+cf push $NEW_APP -f ./cosmetics-web/manifest.yml -d $DOMAIN --hostname $NEW_HOSTNAME --no-start
+cf set-env $NEW_APP COSMETICS_HOST "https://$NEW_HOSTNAME.$DOMAIN"
+
+# Increase the assigned memory for staging
+cf scale $NEW_APP -f -m 2G
+cf start $NEW_APP
+
+# Decrease the assigned memory
+cf scale $NEW_APP -f -m 512M
+
+
+if [[ ! $APP_PREEXISTS ]]; then
+    # We don't need to go any further
+    exit 0
 fi
+
+# TODO smoke test or manual confirmation?
+
+# Unmap the temporary hostname from the new app
+cf unmap-route $NEW_APP $DOMAIN --hostname $NEW_HOSTNAME
+
+# Remove basic auth if we're deploying to production
+if [[ $SPACE == "prod" ]]; then
+    cf unbind-service $NEW_APP cosmetics-auth-env
+fi
+
+# Map the live hostname to the new app
+cf set-env $NEW_APP COSMETICS_HOST "https://$HOSTNAME.$DOMAIN"
+cf restart $NEW_APP
+cf map-route $NEW_APP $DOMAIN --hostname $HOSTNAME
+
+# Unmap the live hostanme from the old app
+cf unmap-route $APP $DOMAIN --hostname $HOSTNAME
+
+# Remove the old app and rename the new one
+cf delete -f $APP
+cf rename $NEW_APP $APP

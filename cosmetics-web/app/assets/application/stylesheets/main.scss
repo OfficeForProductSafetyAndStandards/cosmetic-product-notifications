@@ -1,12 +1,19 @@
 @import "../../../../vendor/shared-web/app/assets/application/stylesheets/main";
 
+@import "component_build";
+@import "confirmation-banner";
 @import "landing-page";
-@import "responsible_persons";
-@import "rp_navbar";
+@import "navbar";
 @import "pagination";
-
-@import 'component_build';
+@import "products";
+@import "responsible_persons";
+@import "file_upload";
+@import "check_your_answers_page";
 
 * {
   box-sizing: border-box;
+}
+
+.no-wrap {
+  white-space: nowrap;
 }

@@ -1,0 +1,22 @@
+- content_for :page_title, "Add business to case"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+= form_with(model: @business, local: true, url: wizard_path, method: :put) do |form|
+  .govuk-row
+    .govuk-column-two-thirds-from-business
+      = render "form_components/govuk_error_summary", form: form
+      = render "investigation_heading", investigation: @investigation
+      h2.govuk-heading-l
+        | Add business
+      h3.govuk-heading-m [class="govuk-!-margin-bottom-2"] Select business type
+      - other = capture do
+        = render "form_components/govuk_input", key: :type_other, form: form,
+                classes: "govuk-!-width-one-third",
+                label: { text: "Other type", classes: "govuk-visually-hidden" }
+      = render "form_components/govuk_radios", form: form, key: :type,
+        items: [{ text: "Retailer", value: "retailer" },
+                { text: "Manufacturer", value: "manufacturer" },
+                { text: "Importer", value: "importer" },
+                { text: "Distributor", value: "distributor" },
+                { text: "Other", value: "other", conditional: { html: other } }]
+      = form.submit "Continue", class: "govuk-button"

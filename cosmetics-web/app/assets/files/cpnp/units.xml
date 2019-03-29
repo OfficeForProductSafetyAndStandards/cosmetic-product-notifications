@@ -1,0 +1,45 @@
+
+			<unitList>
+				
+				<unit>
+					<id>1</id>					
+					<name>≤ 0.1%</name>
+				</unit>
+				
+				<unit>
+					<id>2</id>					
+					<name>> 0.1 - ≤ 1%</name>
+				</unit>
+				
+				<unit>
+					<id>3</id>					
+					<name>> 1 - ≤ 5%</name>
+				</unit>
+				
+				<unit>
+					<id>4</id>					
+					<name>> 5 - ≤ 10%</name>
+				</unit>
+				
+				<unit>
+					<id>5</id>					
+					<name>> 10 - ≤ 25%</name>
+				</unit>
+				
+				<unit>
+					<id>6</id>					
+					<name>> 25 - ≤ 50%</name>
+				</unit>
+				
+				<unit>
+					<id>7</id>					
+					<name>> 50 - ≤ 75%</name>
+				</unit>
+				
+				<unit>
+					<id>8</id>					
+					<name>> 75 - ≤ 100%</name>
+				</unit>
+				
+			</unitList>
+			

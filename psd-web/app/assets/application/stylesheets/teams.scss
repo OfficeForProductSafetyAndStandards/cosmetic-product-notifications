@@ -1,0 +1,83 @@
+.teams--user {
+  border-top: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid $govuk-border-colour;
+
+  & + & {
+    border-top: 0;
+  }
+}
+
+.teams--user-name {
+  display: inline;
+  margin-right: 15px;
+}
+
+.teams--user-email {
+  display: inline;
+}
+
+.teams--user-contact {
+  margin: 0;
+  padding-right: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $govuk-secondary-text-colour;
+  font-weight: normal;
+}
+
+.permissions {
+  margin: 0;
+
+  .teams--user-contact + & {
+    margin-top: 10px;
+  }
+
+  & > li {
+    margin: 0;
+  }
+}
+
+
+// The tick-cross styling has been adapted from
+// https://github.com/alphagov/notifications-admin/blob/master/app/assets/stylesheets/components/tick-cross.scss
+$semi-transparent-white: rgba(govuk-colour("white"), 0.6);
+
+%tick-cross {
+
+  display: inline-block;
+  background-size: 19px 19px;
+  background-repeat: no-repeat;
+  background-position: 0 6px;
+  padding: 6px 0 5px 25px;
+
+  @if $govuk-is-ie8 {
+    background-position: 0 3px;
+  }
+
+}
+
+.tick-cross-tick {
+
+  @extend %tick-cross;
+  background-image: url('../images/tick.png');
+
+  @if $govuk-is-ie8 {
+    background-image: url('../images/tick-16px.png');
+  }
+
+}
+
+.tick-cross-cross {
+
+  @extend %tick-cross;
+  color: $govuk-secondary-text-colour;
+  background-image: url('../images/cross-grey.png');
+
+  box-shadow: inset 20px 0 0 0 $semi-transparent-white;
+
+  @if $govuk-is-ie8 {
+    background-image: url('../images/cross-grey-16px.png');
+  }
+
+}

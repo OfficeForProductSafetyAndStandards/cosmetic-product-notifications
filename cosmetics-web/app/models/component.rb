@@ -1,15 +1,22 @@
 class Component < ApplicationRecord
   include AASM
+  include NotificationProperties
+  include NotificationPropertiesHelper
+  include FileUploadConcern
+  set_attachment_name :formulation_file
+  set_allowed_types %w[application/pdf application/rtf text/plain].freeze
+  set_max_file_size 30.megabytes
 
   belongs_to :notification
 
-  before_save :add_shades, if: :will_save_change_to_shades?
+  has_many :exact_formulas, dependent: :destroy
+  has_many :range_formulas, dependent: :destroy
+  has_many :trigger_questions, dependent: :destroy
+  has_many :cmrs, dependent: :destroy
+  has_one :nano_material, dependent: :destroy
+  has_one_attached :formulation_file
 
-  validates :shades, length: {
-    minimum: 2,
-    allow_nil: true,
-    message: "Shades must have at least two entries"
-  }
+  before_save :add_shades, if: :will_save_change_to_shades?
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
@@ -26,9 +33,46 @@ class Component < ApplicationRecord
     self[:shades] = self[:shades].select(&:present?)
   end
 
+  def sub_category
+    get_parent_category(sub_sub_category)
+  end
+
+  def root_category
+    get_parent_category(sub_category)
+  end
+
+  # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
+  def display_sub_category
+    get_category_name(sub_category)
+  end
+
+  # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
+  def display_sub_sub_category
+    get_category_name(sub_sub_category)
+  end
+
+  # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
+  def display_root_category
+    get_category_name(root_category)
+  end
+
+  def formulation_required?
+    if range?
+      !formulation_file.attached? && range_formulas&.empty?
+    elsif exact?
+      !formulation_file.attached? && exact_formulas&.empty?
+    else
+      false
+    end
+  end
+
 private
 
   def update_notification_state
-    notification.set_single_or_multi_component!
+    notification&.set_single_or_multi_component!
+  end
+
+  def get_parent_category(category)
+    PARENT_OF_CATEGORY[category&.to_sym]
   end
 end

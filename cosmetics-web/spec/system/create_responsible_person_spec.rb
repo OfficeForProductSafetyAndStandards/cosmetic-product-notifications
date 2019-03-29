@@ -38,7 +38,6 @@ RSpec.describe "Create a responsible person", type: :system do
 
     assert_text "UK responsible person details"
 
-    fill_in "Companies House registration number", with: responsible_person.companies_house_number
     fill_in "Registered business name", with: responsible_person.name
     fill_in "Email address", with: responsible_person.email_address
     fill_in "Phone number", with: responsible_person.phone_number
@@ -49,27 +48,6 @@ RSpec.describe "Create a responsible person", type: :system do
     click_on "Continue"
 
     assert_current_path(/responsible_persons\/\d+\/verify/)
-  end
-
-  it "requires a Companies House registration number for a business account" do
-    responsible_person = build(:business_responsible_person)
-
-    create_new_responsible_person
-    select_business_account_type
-
-    assert_text "UK responsible person details"
-
-    fill_in "Registered business name", with: responsible_person.name
-    fill_in "Email address", with: responsible_person.email_address
-    fill_in "Phone number", with: responsible_person.phone_number
-    fill_in "Building and street", with: responsible_person.address_line_1
-    fill_in "Town or city", with: responsible_person.city
-    fill_in "County", with: responsible_person.county
-    fill_in "Postcode", with: responsible_person.postal_code
-    click_on "Continue"
-
-    assert_current_path account_path(:enter_details)
-    assert_text "Companies House registration number can't be blank"
   end
 
   it "requires an account type to be selected" do

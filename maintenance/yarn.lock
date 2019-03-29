@@ -801,10 +801,10 @@ globule@^1.0.0:
     lodash "~4.17.10"
     minimatch "~3.0.2"
 
-govuk-frontend@2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.7.0.tgz#6a12baf514426653220dd3cdef55b1e1d97f52a6"
-  integrity sha512-IZvho72ExUAOmMOZHbE7s//HdtpSoO1aLn3fcXTnuIUi20UTsz6j+5i1Ztyqr4KUEb8OB/jNMYt4kuYyJnEMRQ==
+govuk-frontend@2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.9.0.tgz#bc3ee6ee124d19e2d1ff4802c9eb7ea15039a205"
+  integrity sha512-aE8Jg82H76qpMPKtnnvZbkmDQAzAtuc5uMEffkWo0fv6sWEwTISrqUF5jXWZ8tmtdWF8JGeAp71oSCL2x+RkFg==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.2:
   version "4.1.15"
@@ -1550,10 +1550,10 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
-nunjucks@3.1.7:
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/nunjucks/-/nunjucks-3.1.7.tgz#0bd25f29ef9d11826350e762836286c518c98706"
-  integrity sha512-MrjI68cobXQnyMK/LeY7BgYZ+7o4xn1UNGOe1y8ACVo4cn/1FXc1S4ySqHbmzFqxq/qtMWrehysTuXdbTvf7JA==
+nunjucks@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/nunjucks/-/nunjucks-3.2.0.tgz#53e95f43c9555e822e8950008a201b1002d49933"
+  integrity sha512-YS/qEQ6N7qCnUdm6EoYRBfJUdWNT0PpKbbRnogV2XyXbBm2STIP1O6yrdZHgwMVK7fIYUx7i8+yatEixnXSB1w==
   dependencies:
     a-sync-waterfall "^1.0.0"
     asap "^2.0.3"

@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "express": "4.16.4",
-    "govuk-frontend": "2.7.0",
+    "govuk-frontend": "2.9.0",
     "html5shiv": "3.7.3",
     "node-sass-middleware": "0.11.0",
-    "nunjucks": "3.1.7"
+    "nunjucks": "3.2.0"
   }
 }
