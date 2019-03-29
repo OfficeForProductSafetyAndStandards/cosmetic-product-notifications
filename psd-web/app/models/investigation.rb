@@ -87,6 +87,9 @@ class Investigation < ApplicationRecord
         },
         tests: {
           only: %i[details result legislation]
+        },
+        corrective_actions: {
+          only: %i[details summary legislation]
         }
       }
     )
@@ -156,7 +159,7 @@ class Investigation < ApplicationRecord
   end
 
   def self.fuzzy_fields
-    %w[documents.* correspondences.* activities.* businesses.* products.* complainant.*
+    %w[documents.* correspondences.* activities.* businesses.* products.* complainant.* corrective_actions.*
        tests.* user_title description hazard_type product_category]
   end
 
