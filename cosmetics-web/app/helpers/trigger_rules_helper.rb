@@ -18,6 +18,5 @@ module TriggerRulesHelper
     ).each do |question_element|
       inciname_incivalue_pair << question_element.answer
     end
-    p inciname_incivalue_pair
   end
 end

@@ -13,15 +13,15 @@
 
 .govuk-grid-row
   .govuk-grid-column-one-third.product-images
-    - if @notification.image_uploads.present?
-      - @notification.image_uploads.each do |image|
-        - if image.marked_as_safe?
-          = link_to image_tag(url_for(image.file.variant(resize: "450x450"))),
-                  url_for(image.file)
+    - @notification.image_uploads.each do |image|
+      - if image.marked_as_safe?
+        = link_to image_tag(url_for(image.file.variant(resize: "450x450"))),
+                url_for(image.file)
   .govuk-grid-column-two-thirds
     = render "poison_centres/notifications/poison_centre_trigger_rule_formulation", notification: @notification
     = render "notifications/ingredient_details", notification: @notification
     = render "notifications/frame_formulation_details", notification: @notification
-    = render "notifications/substances_details", notification: @notification
+    -if @notification.notified_post_eu_exit?
+      = render "notifications/substances_details", notification: @notification
     = render "/notifications/responsible_person_details", responsible_person: @notification.responsible_person
     = render "/notifications/contact_person_details", contact_person: @notification.responsible_person
