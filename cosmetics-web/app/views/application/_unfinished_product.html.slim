@@ -19,10 +19,19 @@ li.product
             = notification.cpnp_reference
 
     p.add-documents
-      - if notification.formulation_required?
-        = link_to "Add formulation document and product image to finish registration",
-                upload_formulation_responsible_person_notification_path(notification.responsible_person, notification),
-                class: "govuk-link--no-visited-state"
+      - if notification.formulation_required? || notification.images_required?
+        ruby:
+          link_text = if notification.formulation_required? && notification.images_required?
+                        "Add formulation document and product image to finish registration"
+                      elsif notification.formulation_required?
+                        "Add formulation document to finish registration"
+                      else
+                        "Add product image to finish registration"
+                      end
+        = link_to link_text,
+          new_responsible_person_notification_additional_information_path(notification.responsible_person, \
+            notification),
+          class: "govuk-link--no-visited-state"
       - else
         = link_to "Confirm and register this product",
           edit_responsible_person_notification_path(notification.responsible_person, notification),

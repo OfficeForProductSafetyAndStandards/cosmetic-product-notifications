@@ -40,6 +40,9 @@ Rails.application.routes.draw do
 
     resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
       resources :build, controller: :notification_build, only: %i[show update new]
+      resources :additional_information, controller: :additional_information, only: %i[new]
+      resources :product_image_upload, controller: :product_image_upload, only: %i[new create]
+
       resources :components do
         resources :build, controller: :component_build, only: %i[show update new]
         resources :formulation, controller: "formulation_upload", only: %w[new create]
@@ -47,7 +50,6 @@ Rails.application.routes.draw do
 
       member do
         post :confirm
-        get :upload_formulation
       end
     end
   end
