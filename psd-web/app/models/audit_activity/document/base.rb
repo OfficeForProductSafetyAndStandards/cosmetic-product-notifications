@@ -20,7 +20,12 @@ class AuditActivity::Document::Base < AuditActivity::Base
     self.attachment.image?
   end
 
-  def sensitive_title
-    "Document added"
+  def sensitive_title; end
+
+  def sensitive?
+    attachment_creator = User.find_by(id: attachment.metadata[:created_by])
+    return false if UserSource.new(user: attachment_creator).user_has_gdpr_access?
+
+    attachment.metadata[:has_consumer_info]
   end
 end
