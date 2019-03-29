@@ -63,7 +63,7 @@ module Investigations::DisplayTextHelper
     # If a result in its entirety appears in case correspondence that the user can see,
     # we probably don't care what was its source.
     investigation.correspondences.each do |c|
-      return false if (c.send(key).include? sanitized_content) && c.can_be_displayed?
+      return false if (c.send(key)&.include? sanitized_content) && c.can_be_displayed?
     end
     true
   end
