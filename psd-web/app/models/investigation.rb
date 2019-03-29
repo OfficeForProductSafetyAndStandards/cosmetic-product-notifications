@@ -63,7 +63,8 @@ class Investigation < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at pretty_id],
+      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at pretty_id
+        hazard_description non_compliant_reason],
       include: {
         documents: {
           only: [],
@@ -158,12 +159,12 @@ class Investigation < ApplicationRecord
   end
 
   def self.highlighted_fields
-    %w[*.* pretty_id user_title description hazard_type product_category]
+    %w[*.* pretty_id user_title description hazard_type product_category hazard_description non_compliant_reason]
   end
 
   def self.fuzzy_fields
     %w[documents.* correspondences.* activities.* businesses.* products.* complainant.* corrective_actions.*
-       tests.* alerts.* user_title description hazard_type product_category]
+       tests.* alerts.* user_title description hazard_type product_category hazard_description non_compliant_reason]
   end
 
   def self.exact_fields
