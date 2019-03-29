@@ -71,7 +71,8 @@ module Shared
       def all_users(force: false)
         Rails.cache.delete(:keycloak_users) if force
         response = Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
-          Keycloak::Internal.get_users
+          # KC defaults to max:100, while we need all users. 1000000 seems safe, at least for the time being
+          @internal.get_users(max: 1000000)
         end
         user_groups = all_user_groups(force: force)
 
@@ -203,7 +204,9 @@ module Shared
 
       def all_groups
         response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
-          Keycloak::Internal.get_groups
+          # KC has a default max for users of 100. The docs don't mention a default for groups, but for prudence
+          # and ease of mind, we're ensuring a high-enough cap here, too
+          Keycloak::Internal.get_groups(max: 1000000)
         end
 
         JSON.parse(response)
