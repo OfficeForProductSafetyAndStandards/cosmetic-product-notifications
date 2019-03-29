@@ -98,22 +98,22 @@ html.govuk-template.app-html-class[lang="en"]
               li.govuk-footer__inline-list-item
                 - html = capture do
                   | About this service
-                  .govuk-visually-hidden
-                    | (opens new window)
+                  span.govuk-visually-hidden
+                    |  (opens new window)
                 = link_to html, help_about_path,
                         class: "govuk-footer__link govuk-!-margin-right-2", target: "_blank"
               li.govuk-footer__inline-list-item
                 - html = capture do
                   | Privacy policy
-                  .govuk-visually-hidden
-                    | (opens new window)
+                  span.govuk-visually-hidden
+                    |  (opens new window)
                 = link_to html, help_privacy_policy_path,
                         class: "govuk-footer__link govuk-!-margin-right-2", target: "_blank"
               li.govuk-footer__inline-list-item
                 - html = capture do
                   | Terms and conditions
-                  .govuk-visually-hidden
-                    | (opens new window)
+                  span.govuk-visually-hidden
+                    |  (opens new window)
                 = link_to html, help_terms_and_conditions_path,
                         class: "govuk-footer__link govuk-!-margin-right-2", target: "_blank"
               - # rubocop:enable Rails/LinkToBlank

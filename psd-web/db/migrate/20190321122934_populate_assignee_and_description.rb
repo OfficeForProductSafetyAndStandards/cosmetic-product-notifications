@@ -3,7 +3,7 @@ class PopulateAssigneeAndDescription < ActiveRecord::Migration[5.2]
     Investigation.all.each do |i|
       i.description = i.description || i.reason_created
       i.assignee = i.assignee || i.source.user
-      i.save
+      i.save(touch: false)
     end
   end
 end

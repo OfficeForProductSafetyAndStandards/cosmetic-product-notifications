@@ -13,6 +13,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :declaration do
+    get :index, path: ''
+    post :accept
+  end
 
   namespace :introduction do
     get :overview
