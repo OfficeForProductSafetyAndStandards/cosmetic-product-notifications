@@ -1,10 +1,10 @@
 class SendAlertJob < ApplicationJob
-  def perform(email_addresses, email_subject, email_body)
+  def perform(email_addresses, subject_text:, body_text:)
     email_addresses.each do |email_address|
       NotifyMailer.alert(
         email_address,
-        email_body,
-        email_subject
+        subject_text: subject_text,
+        body_text: body_text
       ).deliver_later
     end
   end

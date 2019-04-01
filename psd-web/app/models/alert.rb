@@ -17,7 +17,7 @@ class Alert < ApplicationRecord
 
   def send_alert_email
     emails = User.all.map(&:email)
-    SendAlertJob.perform_later(emails, summary, description)
+    SendAlertJob.perform_later(emails, subject_text: summary, body_text: description)
   end
 
   def create_audit_activity
