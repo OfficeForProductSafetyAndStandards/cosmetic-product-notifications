@@ -5,7 +5,7 @@ hr.govuk-section-break.govuk-section-break--l
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     - @investigation.investigation_businesses.each do |ib|
-      h3.govuk-heading-m
+      h3.govuk-heading-s
         = ib.relationship.titleize
       = render "business_summary", business: ib.business do
         p

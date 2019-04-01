@@ -5,12 +5,9 @@
 = form_with model: @alert, local: true, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl
-        p.govuk-caption-xl
-          = @investigation.pretty_description
+      h1.govuk-heading-l
+        span.govuk-caption-l = @investigation.pretty_description
         | Preview your alert
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
       .email-message
         table.email-message-meta.govuk-table
           tbody.govuk-table__body

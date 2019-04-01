@@ -4,7 +4,7 @@
 
 = render "documents/metadata_form", document: @file_blob, edit: false, target_url: wizard_path do
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl
-        span.govuk-caption-xl = @parent.pretty_description
+    .govuk-grid-column-two-thirds-from-desktop
+      h1.govuk-heading-l
+        span.govuk-caption-l = @parent.pretty_description
         | Add attachment
