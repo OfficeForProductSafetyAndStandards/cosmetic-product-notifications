@@ -19,10 +19,10 @@ module Keycloak
       default_call(proc)
     end
 
-    def self.get_user_groups
+    def self.get_user_groups(query_parameters = nil)
       proc = lambda { |token|
         request_uri = Keycloak::Client.auth_server_url + "/realms/#{Keycloak::Client.realm}/admin/user-groups"
-        Keycloak.generic_request(token["access_token"], request_uri, nil, nil, "GET")
+        Keycloak.generic_request(token["access_token"], request_uri, query_parameters, nil, "GET")
       }
 
       default_call(proc)
@@ -71,7 +71,8 @@ module Shared
       def all_users(force: false)
         Rails.cache.delete(:keycloak_users) if force
         response = Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
-          Keycloak::Internal.get_users
+          # KC defaults to max:100, while we need all users. 1000000 seems safe, at least for the time being
+          @internal.get_users(max: 1000000)
         end
         user_groups = all_user_groups(force: force)
 
@@ -195,7 +196,7 @@ module Shared
       def all_user_groups(force: false)
         Rails.cache.delete(:keycloak_user_groups) if force
         response = Rails.cache.fetch(:keycloak_user_groups, expires_in: 5.minutes) do
-          Keycloak::Internal.get_user_groups
+          Keycloak::Internal.get_user_groups(max: 1000000)
         end
 
         JSON.parse(response).collect { |user| [user["id"], user["groups"]] }.to_h
@@ -203,7 +204,9 @@ module Shared
 
       def all_groups
         response = Rails.cache.fetch(:keycloak_groups, expires_in: 5.minutes) do
-          Keycloak::Internal.get_groups
+          # KC has a default max for users of 100. The docs don't mention a default for groups, but for prudence
+          # and ease of mind, we're ensuring a high-enough cap here, too
+          Keycloak::Internal.get_groups(max: 1000000)
         end
 
         JSON.parse(response)

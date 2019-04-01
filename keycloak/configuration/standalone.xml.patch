@@ -1,6 +1,8 @@
---- standalone-original.xml	2018-08-15 20:00:06.000000000 +0100
-+++ standalone.xml	2018-09-18 09:40:18.000000000 +0100
-@@ -129,15 +129,21 @@
+diff --git a/keycloak/configuration/standalone.xml b/keycloak/configuration/standalone.xml
+index ca66fe40..f37f1b55 100644
+--- a/keycloak/configuration/standalone.xml
++++ b/keycloak/configuration/standalone.xml
+@@ -131,15 +131,21 @@
                          <password>sa</password>
                      </security>
                  </datasource>
@@ -27,8 +29,8 @@
                      <driver name="h2" module="com.h2database.h2">
                          <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
                      </driver>
-@@ -465,8 +471,8 @@
-         <subsystem xmlns="urn:jboss:domain:undertow:4.0">
+@@ -464,10 +470,9 @@
+         <subsystem xmlns="urn:jboss:domain:undertow:7.0" default-server="default-server" default-virtual-host="default-host" default-servlet-container="default" default-security-domain="other">
              <buffer-cache name="default"/>
              <server name="default-server">
 -                <http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/>
@@ -36,9 +38,21 @@
 +                <http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true" proxy-address-forwarding="true"/>
 +                <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true" proxy-address-forwarding="true"/>
                  <host name="default-host" alias="localhost">
-                     <location name="/" handler="welcome-content"/>
+-                    <location name="/" handler="welcome-content"/>
                      <http-invoker security-realm="ApplicationRealm"/>
-@@ -558,6 +564,26 @@
+                 </host>
+             </server>
+@@ -475,9 +480,6 @@
+                 <jsp-config/>
+                 <websockets/>
+             </servlet-container>
+-            <handlers>
+-                <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
+-            </handlers>
+         </subsystem>
+         <subsystem xmlns="urn:jboss:domain:keycloak-server:1.1">
+             <web-context>auth</web-context>
+@@ -557,6 +559,27 @@
                      </properties>
                  </provider>
              </spi>
@@ -56,7 +70,8 @@
 +                <provider name="default" enabled="false"/>
 +                <provider name="notify-email" enabled="true">
 +                    <properties>
-+                        <property name="verifyEmailTemplateId" value="edab6550-eb34-4cb1-910f-41606e583076"/>
++                        <property name="verifyEmailTemplateId" value="0be2ef83-bc2d-4b71-8fc2-93dc1eea0ae8"/>
++                        <property name="welcomeEmailTemplateId" value="edab6550-eb34-4cb1-910f-41606e583076"/>
 +                        <property name="passwordResetTemplateId" value="e85c3c6c-272d-4c43-b8fb-e7d266bc2bd9"/>
 +                        <property name="systemTestTemplateId" value="c6a27d3c-9fea-4f81-899f-17d49e5a0d58"/>
 +                    </properties>
