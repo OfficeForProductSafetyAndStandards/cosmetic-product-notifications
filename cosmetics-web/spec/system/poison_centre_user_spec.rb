@@ -43,10 +43,7 @@ RSpec.describe "Poison Centre user", type: :system do
     notification = rp_1_notifications.first
     click_on notification.product_name
 
-    assert_value_in_table(get_product_table, "Name", notification.product_name)
-    assert_value_in_table(get_product_table, "Imported", "No")
-    assert_value_in_table(get_product_table, "Number of components", notification.components.count)
-    assert_value_in_table(get_product_table, "Shades", "None")
+    assert_text notification.product_name
   end
 
   it "is able to see the Responsible Person details for a registered notification" do

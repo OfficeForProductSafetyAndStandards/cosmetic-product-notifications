@@ -36,10 +36,16 @@ cp -a ./infrastructure/env/. ./cosmetics-web/env/
 rm -rf ./cosmetics-web/vendor/shared-web/
 cp -a ./shared-web/. ./cosmetics-web/vendor/shared-web/
 
-# Deploy the new app, set the hostname and start the app
+# Deploy the new app and set the hostname
 cf push $NEW_APP -f ./cosmetics-web/manifest.yml -d $DOMAIN --hostname $NEW_HOSTNAME --no-start
 cf set-env $NEW_APP COSMETICS_HOST "https://$NEW_HOSTNAME.$DOMAIN"
+
+# Increase the assigned memory for staging
+cf scale $NEW_APP -f -m 2G
 cf start $NEW_APP
+
+# Decrease the assigned memory
+cf scale $NEW_APP -f -m 512M
 
 
 if [[ ! $APP_PREEXISTS ]]; then

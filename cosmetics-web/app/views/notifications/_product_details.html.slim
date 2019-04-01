@@ -49,7 +49,7 @@ table.govuk-table.check-your-answers-table#product-table
         th.govuk-table__header
           | EU notification date
         td.govuk-table__cell
-          = notification.cpnp_notification_date.strftime("%d/%m/%Y")
+          = display_full_month_date notification.cpnp_notification_date
     tr.govuk-table__row
       th.govuk-table__header
         | Still on the market
@@ -60,6 +60,23 @@ table.govuk-table.check-your-answers-table#product-table
         | Intended for age 3 or under?
       td.govuk-table__cell
         = notification.under_three_years ? "Yes" : "No"
+    tr.govuk-table__row
+      th.govuk-table__header
+        | Are the components mixed?
+      td.govuk-table__cell
+        = notification.components_are_mixed ? "Yes" : "No"
+    - if notification.ph_min_value.present?
+      tr.govuk-table__row
+        th.govuk-table__header
+          | Minimum pH value
+        td.govuk-table__cell
+          = notification.ph_min_value
+    - if notification.ph_max_value.present?
+      tr.govuk-table__row
+        th.govuk-table__header
+          | Maximum pH value
+        td.govuk-table__cell
+          = notification.ph_max_value
     - if notification.components.count == 1
       = render "notifications/component_details", component: notification.components.first
     - else
