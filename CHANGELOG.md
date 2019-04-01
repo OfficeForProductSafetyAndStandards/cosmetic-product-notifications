@@ -6,8 +6,11 @@ All notable changes to this project will be documented in this file.
 
 <!-- ### Cosmetics -->
 
-<!-- ### Next release checklist -->
-
+### Next release checklist
+- [ ] Update cosmetics-app's name in keycloak
+     1. Log into keycloak admin app, click on `Clients` and select `cosmetics-app`
+         1. In the `Settings` tab, change the `Name` field to `Submit cosmetic product notifications`
+         2. Press the `Save` button, to apply the changes
 
 ## 2019-03-29
 ### Product safety database
@@ -19,7 +22,6 @@ All notable changes to this project will be documented in this file.
 - Allow users to view their team members.
 - Allow users to add new team members.
 - Various bug fixes.
-
 
 ## 2019-03-07
 ### MSPSDS
