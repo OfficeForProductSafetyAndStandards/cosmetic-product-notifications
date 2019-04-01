@@ -1,5 +1,6 @@
 class AuditActivity::Document::Base < AuditActivity::Base
   include ActivityAttachable
+  include GdprHelper
   with_attachments attachment: "document"
 
   private_class_method def self.from(document, investigation, title)
@@ -23,9 +24,6 @@ class AuditActivity::Document::Base < AuditActivity::Base
   def sensitive_title; end
 
   def sensitive?
-    attachment_creator = User.find_by(id: attachment.metadata[:created_by])
-    return false if UserSource.new(user: attachment_creator).user_has_gdpr_access?
-
-    attachment.metadata[:has_consumer_info]
+    document_is_sensitive(self.attachment, self.investigation)
   end
 end
