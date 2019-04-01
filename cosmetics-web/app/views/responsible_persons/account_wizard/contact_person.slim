@@ -10,12 +10,14 @@
       h1.govuk-heading-xl
         | Contact person
       p
-        | A contact person must be able to give information about the cosmetic products when contacted by
-        | health care professionals, the National Poison Information Service or market surveillance authorities.
+        | A contact person must be able to give information about the cosmetic products to the
+          national poison information service or market surveillance authorities.
 
-      = render "form_input", form: form, field: :email_address, type: :email_field, label: "Email address",
-              hint: "A confirmation email will be sent to this address"
-      = render "form_input", form: form, field: :phone_number, type: :telephone_field, label: "Phone number",
-              class: "govuk-input--width-20"
+      / TODO COSBETA-158: name should be related to the contact person's name
+      = render "form_components/govuk_input", form: form, key: :name, label: { text: "Full name" }
+      = render "form_components/govuk_input", form: form, key: :email_address, type: :email_field,
+              label: { text: "Email address" }, hint: { text: "A confirmation email will be sent to this address" }
+      = render "form_components/govuk_input", form: form, key: :phone_number, type: :telephone_field,
+              classes: "govuk-input--width-20", label: { text: "Phone number" }
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

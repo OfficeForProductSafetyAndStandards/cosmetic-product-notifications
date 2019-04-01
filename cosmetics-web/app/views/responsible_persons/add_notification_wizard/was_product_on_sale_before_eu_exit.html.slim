@@ -1,14 +1,15 @@
-- content_for :page_title, "Was this product on sale before the UK left the European Union?"
+- content_for :page_title, "Was this cosmetic product notified in the EU before Brexit?"
 - content_for :after_header do
-    = link_to "Back", wizard_path(:will_products_be_notified_in_eu), class: "govuk-back-link"
+    = link_to "Back", wizard_path(:do_you_have_files_from_eu_notification), class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_with url: wizard_path, method: :put do |form|
+      - brexit_date = display_full_month_date BREXIT_DATE
       = render "components/govuk_radios",
           name: :answer,
           errorMessage: @error_text.present? && { text: @error_text },
-          fieldset: { legend: { text: "Was this product on sale before the UK left the European Union?", \
+          fieldset: { legend: { text: "Was this cosmetic product notified in the EU before Brexit?", \
             isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
-          items: [{ text: "Yes", value: "yes" },
-            { text: "No", value: "no" }]
+          items: [{ text: "Yes, the cosmetic product was notified before #{brexit_date}", value: "yes" },
+            { text: "No, the cosmetic product was notified after #{brexit_date}", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

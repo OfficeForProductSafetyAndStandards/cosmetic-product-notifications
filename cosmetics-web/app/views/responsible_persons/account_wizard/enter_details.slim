@@ -13,19 +13,17 @@
       h1.govuk-heading-xl
         | UK responsible person details
 
-      = render "form_input", form: form, field: :name, label: name_label
+      = render "form_components/govuk_input", form: form, key: :name, label: { text: name_label }
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--m
           = address_label
-        p
-          | This is the address where the product information files are accessible.
-        = render "form_input", form: form, field: :address_line_1, label: "Building and street"
-        = render "form_input", form: form, field: :address_line_2, label: nil
-        = render "form_input", form: form, field: :city, label: "Town or city"
-        = render "form_input", form: form, field: :county, label: "County"
-        = render "form_input", form: form, field: :postal_code, label: "Postcode",
-                class: "govuk-input--width-10"
+      = render "form_components/govuk_input", form: form, key: :address_line_1, label: { text: "Building and street" }
+      = render "form_components/govuk_input", form: form, key: :address_line_2, label: { text: nil }
+      = render "form_components/govuk_input", form: form, key: :city, label: { text: "Town or city" }
+      = render "form_components/govuk_input", form: form, key: :county, label: { text: "County" }
+      = render "form_components/govuk_input", form: form, key: :postal_code, label: { text: "Postcode" },
+              classes: "govuk-input--width-10"
 
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
