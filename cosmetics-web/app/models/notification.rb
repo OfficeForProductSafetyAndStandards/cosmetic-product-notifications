@@ -4,6 +4,8 @@ class Notification < ApplicationRecord
   include AASM
   include Shared::Web::CountriesHelper
 
+  EU_EXIT_DATETIME = DateTime.parse("29-03-2019T23:00:00").in_time_zone
+
   belongs_to :responsible_person
   has_many :components, dependent: :destroy
   has_many :image_uploads, dependent: :destroy
@@ -87,7 +89,7 @@ class Notification < ApplicationRecord
       transitions from: :draft_complete, to: :notification_complete,
                   after: Proc.new { __elasticsearch__.index_document } do
         guard do
-          cpnp_reference.present? || images_are_present_and_safe?
+          notified_pre_eu_exit? || images_are_present_and_safe?
         end
       end
     end
@@ -134,6 +136,14 @@ class Notification < ApplicationRecord
 
   def is_multicomponent?
     components.length > 1
+  end
+
+  def notified_post_eu_exit?
+    !notified_pre_eu_exit?
+  end
+
+  def notified_pre_eu_exit?
+    was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date < EU_EXIT_DATETIME))
   end
 
 private

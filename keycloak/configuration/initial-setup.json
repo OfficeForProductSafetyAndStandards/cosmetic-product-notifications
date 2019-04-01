@@ -1536,7 +1536,17 @@
     }, {
       "id" : "a3dfe69c-8344-4323-8d28-3df3b282a993",
       "name" : "admin",
-      "composite" : false,
+      "description" : "Allows user management through keycloak admin console",
+      "composite" : true,
+      "composites" : {
+        "client" : {
+          "realm-management" : [
+            "manage-users",
+            "view-realm",
+            "view-clients"
+          ]
+        }
+      },
       "clientRole" : false,
       "containerId" : "opss",
       "attributes" : { }
@@ -1901,7 +1911,9 @@
         "name" : "OPSS Processing",
         "path" : "/Organisations/Office for Product Safety and Standards/OPSS Processing",
         "attributes" : { },
-        "realmRoles" : [ ],
+        "realmRoles" : [
+          "admin"
+        ],
         "clientRoles" : { },
         "subGroups" : [ ]
       }, {
@@ -2099,7 +2111,7 @@
       "psd-app" : [ "user", "team_admin" ]
     },
     "notBefore" : 0,
-    "groups" : [ "/Organisations/Office for Product Safety and Standards/OPSS Enforcement" ]
+    "groups" : [ "/Organisations/Office for Product Safety and Standards/OPSS Processing" ]
   }, {
     "id" : "dbbc495b-475e-419a-a151-2e61c6f9fdce",
     "createdTimestamp" : 1536192541350,

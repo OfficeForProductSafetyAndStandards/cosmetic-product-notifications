@@ -70,6 +70,13 @@ module DocumentsHelper
     end
   end
 
+  def document_is_sensitive(document, parent)
+    document_activity = document.attachments.find_by(record_type: "Activity")&.record
+    child_is_visible = document_activity&.source&.user_has_gdpr_access? || !document.metadata[:has_consumer_info]
+    parent_forces_to_be_visible = parent.respond_to?(:child_should_be_displayed?) && parent.child_should_be_displayed?
+    !(child_is_visible || parent_forces_to_be_visible)
+  end
+
   def document_sensitive_title
     "Attachment restricted"
   end
