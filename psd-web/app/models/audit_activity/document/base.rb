@@ -24,6 +24,6 @@ class AuditActivity::Document::Base < AuditActivity::Base
   def sensitive_title; end
 
   def sensitive?
-    document_is_sensitive(self.attachment, self.investigation)
+    !can_be_displayed?(self.attachment, self.investigation)
   end
 end

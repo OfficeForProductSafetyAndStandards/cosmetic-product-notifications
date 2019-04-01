@@ -1,5 +1,5 @@
 ruby:
-  sensitive = document_is_sensitive(document, parent)
+  sensitive = !can_be_displayed?(document, parent)
   title = sensitive ? document_sensitive_title : document.metadata[:title]
   safe = document.metadata["safe"]
 
