@@ -6,12 +6,13 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form, errors: @errors
-      h1.govuk-heading-xl
-        span.govuk-caption-xl = @parent.pretty_description
+      h1.govuk-heading-l
+        span.govuk-caption-l = @parent.pretty_description
         | Add attachment
       = form.fields_for :file do |subform|
         .govuk-form-group
-          = subform.label :file, "Browse for file", class: "govuk-heading-l"
+          = subform.label :file, "Browse for file", class: "govuk-label--m"
+          br
           = subform.file_field :file, class: "govuk-file-upload"
       .govuk-form-group
         = form.submit "Upload", class: "govuk-button"

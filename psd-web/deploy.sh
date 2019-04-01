@@ -38,7 +38,7 @@ cp -a ./shared-web/. ./psd-web/vendor/shared-web/
 
 # Deploy the new app and set the hostname
 cf push $NEW_APP -f ./psd-web/manifest.yml -d $DOMAIN --hostname $NEW_HOSTNAME --no-start
-cf set-env $NEW_APP PSD_HOST "https://$NEW_HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP PSD_HOST "$NEW_HOSTNAME.$DOMAIN"
 
 # Increase the assigned memory for staging
 cf scale $NEW_APP -f -m 2G
@@ -64,7 +64,7 @@ if [[ $SPACE == "prod" ]]; then
 fi
 
 # Map the live hostname to the new app
-cf set-env $NEW_APP PSD_HOST "https://$HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP PSD_HOST "$HOSTNAME.$DOMAIN"
 cf restart $NEW_APP
 cf map-route $NEW_APP $DOMAIN --hostname $HOSTNAME
 

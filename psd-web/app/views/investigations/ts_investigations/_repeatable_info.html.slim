@@ -5,10 +5,10 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl Report an unsafe or non-compliant product
+      h1.govuk-heading-l
+        span.govuk-caption-l Report an unsafe or non-compliant product
         = title
-  = yield(form)
+      = yield(form)
   .govuk-grid-row
     .govuk-grid-column-full
       hr.govuk-section-break class=("govuk-section-break--visible" unless hide_break)
@@ -16,7 +16,7 @@
     .govuk-grid-column-two-thirds-from-desktop class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
       = render "form_components/govuk_radios",
               form: form, key: further_key,
-              fieldset: { legend: { text: other_text, classes: "govuk-fieldset__legend--l" } },
+              fieldset: { legend: { text: other_text, classes: "govuk-fieldset__legend--m" } },
               items: [{ text: "Yes", value: "Yes", checked: @repeat_step == "Yes" },
                       { text: "No", value: "No", checked: @repeat_step == "No" }]
   .govuk-grid-row

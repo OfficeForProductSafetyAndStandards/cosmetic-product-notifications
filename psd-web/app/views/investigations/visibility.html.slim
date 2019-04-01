@@ -6,23 +6,16 @@
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
       = render "minimal_investigation_heading", investigation: @investigation, title: "Legal privilege"
-      - heading_content = capture do
-        h2.govuk-heading-l
-          | Visibility
       = render "form_components/govuk_radios", form: form, key: :is_private,
-              fieldset: { legend: { html: heading_content } },
-              hint: { text: "Restricted cases are visible only to the organisation that created them and the" + \
-                          " organisation to which they are currently assigned." },
+              fieldset: { legend: { text: "Visibility", classes: "govuk-label--m" } },
+              hint: { text: "Restricted cases are visible only to the organisation that created them and the \
+              organisation to which they are currently assigned." },
               items: [{ text: visibility_options[:public], value: "false" },
                       { text: visibility_options[:private], value: "true" }]
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Comment / rationale
-        - hint_text = "Visibility should only be restricted where there are legal privilege concerns that mean "
-        - hint_text += "businesses under investigation should not be exposed."
-        = render "form_components/govuk_textarea", key: :visibility_rationale, form: form,
-                attributes: { maxlength: 10000 },
-                classes: "govuk-!-width-two-thirds", hint: { text: hint_text },
-                label: { text: "Visibility rationale", classes: "govuk-visually-hidden" }
-      .govuk-form-group
-        = form.submit "Save", class: "govuk-button"
+      = render "form_components/govuk_textarea", key: :visibility_rationale, form: form,
+              attributes: { maxlength: 10000 },
+              classes: "govuk-!-width-two-thirds",
+              hint: { text: "Visibility should only be restricted where there are legal privilege \
+              concerns that mean businesses under investigation should not be exposed." },
+              label: { text: "Comment / rationale", classes: "govuk-label--m" }
+      = form.submit "Save", class: "govuk-button"
