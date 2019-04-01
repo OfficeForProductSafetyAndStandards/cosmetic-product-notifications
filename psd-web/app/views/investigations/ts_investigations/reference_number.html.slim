@@ -4,8 +4,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl Reporting an unsafe product
+      h1.govuk-heading-l
+        span.govuk-caption-l Reporting an unsafe product
         | Add your own reference number
       p
         | The Product safety database assigns each case an ID.
@@ -19,10 +19,7 @@
       = render "form_components/govuk_radios", form: form, key: :has_complainant_reference,
               fieldset: { legend: { text: "Do you want to add your own reference number?",
                       classes: "govuk-fieldset__legend--m" } },
-              items: [\
-                      { text: "Yes", value: "Yes", checked: @has_reference_number == "Yes",
-                          conditional: { html: existing_reference_field_html }\
-                      },
-                      { text: "No", value: "No" }\
-              ]
+              items: [{ text: "Yes", value: "Yes", checked: @has_reference_number == "Yes",
+                          conditional: { html: existing_reference_field_html }},
+                      { text: "No", value: "No" }]
       = form.submit "Create case", class: "govuk-button"

@@ -57,6 +57,8 @@ private
           else
             raise NotificationValidationError, "NotificationValidationError - #{notification.errors.messages}"
           end
+        else
+          Sidekiq.logger.info "Successful File Upload"
         end
       end
     rescue UnexpectedPdfFileError => e

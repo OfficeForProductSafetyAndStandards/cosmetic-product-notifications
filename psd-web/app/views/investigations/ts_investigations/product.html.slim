@@ -4,8 +4,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl Report an unsafe or non-compliant product
+      h1.govuk-heading-l
+        span.govuk-caption-l Report an unsafe or non-compliant product
         | What product are you reporting?
-      = render "products/form", form: form, product: @product, countries: @countries, submit_text: "Continue",
-              search: true
+      = render "products/form", form: form, product: @product, countries: @countries, submit_text: "Continue"

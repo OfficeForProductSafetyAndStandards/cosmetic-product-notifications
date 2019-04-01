@@ -5,20 +5,10 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        = "New Project"
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Please provide a title
-        = render "form_components/govuk_input", key: :user_title, form: form, attributes: { maxlength: 100 },
-                label: { text: "Title", classes: "govuk-visually-hidden" },
-                hint: { text: "This will help other users identify this project" }
-
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Project summary
-        = render "form_components/govuk_textarea", key: :description, form: form, attributes: { maxlength: 10000 },
-                label: { text: "Project description", classes: "govuk-visually-hidden" }
-
-      .govuk-form-group
-        = form.submit "Create project", class: "govuk-button"
+      h1.govuk-heading-l New Project
+      = render "form_components/govuk_input", key: :user_title, form: form, attributes: { maxlength: 100 },
+              label: { text: "Please provide a title", classes: "govuk-label--m" },
+              hint: { text: "This will help other users identify this project" }
+      = render "form_components/govuk_textarea", key: :description, form: form, attributes: { maxlength: 10000 },
+              label: { text: "Project summary", classes: "govuk-label--m" }
+      = form.submit "Create project", class: "govuk-button"

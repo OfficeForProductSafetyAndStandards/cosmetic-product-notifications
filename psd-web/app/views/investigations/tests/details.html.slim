@@ -6,10 +6,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl
-          = @investigation.pretty_description
+      h1.govuk-heading-l
+        span.govuk-caption-l = @investigation.pretty_description
         = page_title
       = render "form", form: form, test: @test, investigation: @investigation, allow_product_linking: true
-      .govuk-form-group
-        = form.submit "Continue", class: "govuk-button"
+      = form.submit "Continue", class: "govuk-button"
