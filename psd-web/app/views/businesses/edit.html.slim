@@ -9,6 +9,4 @@
   = render "business_heading", business: @business
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
-      h2.govuk-heading-l
-        | Business details
       = render "businesses/form", form: form, business: @business, countries: @countries

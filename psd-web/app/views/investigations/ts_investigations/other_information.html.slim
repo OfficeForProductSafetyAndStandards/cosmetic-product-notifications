@@ -1,14 +1,12 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      span.govuk-caption-xl Reporting an unsafe product
-      | Other information and files
 = form_with model: @investigation, scope: :information, url: wizard_path, method: :put, local: true do |form|
-  .govuk-grid-row class="govuk-!-margin-bottom-3"
-    .govuk-form-group
-      .govuk-grid-column-one-half class="govuk-!-margin-bottom-9"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-l
+        span.govuk-caption-l Reporting an unsafe product
+        | Other information and files
+      .govuk-form-group
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend.govuk-fieldset__legend--m class="govuk-!-margin-bottom-1"
             | What information do you have?
@@ -49,7 +47,4 @@
                 = form.label :other_files, "Other files", class: "govuk-label govuk-checkboxes__label"
                 span#other-files-hint.govuk-hint.govuk-checkboxes__hint
                   | Any other relevant files, such as purchase receipts or case-file downloads
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      button.govuk-button type="submit"
-        | Continue
+  = form.submit "Continue", class: "govuk-button"

@@ -4,13 +4,12 @@
   .govuk-grid-row#which-businesses-page
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl Report an unsafe or non-compliant product
+      h1.govuk-heading-l
+        span.govuk-caption-l Report an unsafe or non-compliant product
         | Supply chain information
-      fieldset.govuk-fieldset
+      = render "components/govuk_fieldset", legend: { text: "Which parts of the chain do you know about?",
+              classes: "govuk-fieldset__legend--m" } do
         .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:businesses].any?)]
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--m class="govuk-!-margin-bottom-1"
-            | Which parts of the chain do you know about?
           .govuk-form-group
             .govuk-checkboxes data-module="checkboxes"
               .govuk-checkboxes__item
