@@ -424,7 +424,7 @@ private
     when :product
       @product.validate
     when :why_reporting
-      @investigation.errors.add(:base, "Please indicate whether the product is unsafe   or non-compliant") if !product_unsafe && !product_non_compliant
+      @investigation.errors.add(:base, "Please indicate whether the product is unsafe or non-compliant") if !product_unsafe && !product_non_compliant
       @investigation.validate :unsafe if product_unsafe
       @investigation.validate :non_compliant if product_non_compliant
     when :which_businesses
@@ -444,7 +444,7 @@ private
         @investigation.errors.add(:has_complainant_reference, "Choose whether you want to add your own reference number")
       end
       if reference_number_params[:has_complainant_reference] == "Yes" && @investigation.complainant_reference.blank?
-        @investigation.errors.add(:complainant_reference, "Please provide a reference number")
+        @investigation.errors.add(:complainant_reference, "Enter existing reference number")
         @has_reference_number = reference_number_params[:has_complainant_reference]
       end
     end
