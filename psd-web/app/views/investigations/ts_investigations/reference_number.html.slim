@@ -16,14 +16,13 @@
       - existing_reference_field_html = capture do
         = render "form_components/govuk_input", key: :complainant_reference, form: form,
                 label: { text: "Existing reference number" }
-      .govuk-form-group
-        = render "form_components/govuk_radios", form: form, key: :has_complainant_reference,
-                fieldset: { legend: { text: "Do you want to add your own reference number?",
-                        classes: "govuk-fieldset__legend--m" } },
-                items: [\
-                        { text: "Yes", value: "Yes", checked: @has_reference_number == "Yes",
-                            conditional: { html: existing_reference_field_html }\
-                        },
-                        { text: "No", value: "No" }\
-                ]
+      = render "form_components/govuk_radios", form: form, key: :has_complainant_reference,
+              fieldset: { legend: { text: "Do you want to add your own reference number?",
+                      classes: "govuk-fieldset__legend--m" } },
+              items: [\
+                      { text: "Yes", value: "Yes", checked: @has_reference_number == "Yes",
+                          conditional: { html: existing_reference_field_html }\
+                      },
+                      { text: "No", value: "No" }\
+              ]
       = form.submit "Create case", class: "govuk-button"

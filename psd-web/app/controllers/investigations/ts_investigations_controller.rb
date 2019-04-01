@@ -424,12 +424,12 @@ private
     when :product
       @product.validate
     when :why_reporting
-      @investigation.errors.add(:base, "Please indicate whether the product is unsafe or non-compliant") if !product_unsafe && !product_non_compliant
+      @investigation.errors.add(:base, "Indicate whether the product is unsafe or non-compliant") if !product_unsafe && !product_non_compliant
       @investigation.validate :unsafe if product_unsafe
       @investigation.validate :non_compliant if product_non_compliant
     when :which_businesses
       validate_none_as_only_selection
-      @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
+      @investigation.errors.add(:base, "Indicate which if any business is known") if no_business_selected
       @investigation.errors.add(:other_business_type, "Enter other business type") if no_other_business_type
     when :business
       if @business.errors.any? || @business.contacts_have_errors? || @business.locations_have_errors?
