@@ -12,7 +12,7 @@ class AuditActivity::Document::Add < AuditActivity::Document::Base
     "Document was attached to the #{investigation.case_type.titleize} by #{source&.show&.titleize}."
   end
 
-  def sensitive_title
+  def restricted_title
     "Document added"
   end
 end

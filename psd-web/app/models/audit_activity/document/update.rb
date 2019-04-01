@@ -30,7 +30,7 @@ class AuditActivity::Document::Update < AuditActivity::Document::Base
     "Document attached to the #{investigation.case_type.titleize} was updated by #{source&.show&.titleize}."
   end
 
-  def sensitive_title
+  def restricted_title
     "Document updated"
   end
 end
