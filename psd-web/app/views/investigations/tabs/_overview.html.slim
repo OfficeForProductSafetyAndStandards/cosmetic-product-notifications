@@ -7,9 +7,9 @@
   hr.govuk-section-break.govuk-section-break--s
     = render "investigations/current_status", investigation: @investigation
   hr.govuk-section-break.govuk-section-break--s
-h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
+h2.govuk-heading-m[class="govuk-!-margin-bottom-6"]
   | Report details
-h3.govuk-heading-m
+h3.govuk-heading-s
   = @investigation.case_type.titleize
 table.govuk-table
   tbody.govuk-table__body
@@ -25,7 +25,7 @@ table.govuk-table
           td.govuk-table__cell = @investigation.hazard_type
 - if @investigation.complainant
   hr.govuk-section-break.govuk-section-break--m
-  h3.govuk-heading-m
+  h3.govuk-heading-s
     | Complainant
   - if @investigation.complainant.can_be_displayed?
     table.govuk-table

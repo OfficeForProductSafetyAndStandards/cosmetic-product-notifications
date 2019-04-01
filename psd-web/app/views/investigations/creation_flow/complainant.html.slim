@@ -6,10 +6,9 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        = @page_title
+      h1.govuk-heading-l = @page_title
       = render "form_components/govuk_radios", form: form, key: :complainant_type,
-              fieldset: { legend: { text: @page_subtitle, classes: "govuk-fieldset__legend--l" } },
+              fieldset: { legend: { text: @page_subtitle, classes: "govuk-fieldset__legend--m" } },
               items: complainant_types.map { |option, label| { text: label, value: option } }
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
