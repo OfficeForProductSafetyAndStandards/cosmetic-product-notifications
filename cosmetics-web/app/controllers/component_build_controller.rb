@@ -186,6 +186,10 @@ private
   end
 
   def render_select_formulation_type
+    if params[:component].nil?
+      @no_notification_type_selected = true
+      return render step
+    end
     @component.update(component_params)
     if @component.predefined?
       @component.formulation_file.delete if @component.formulation_file.attached?

@@ -75,8 +75,7 @@ RSpec.describe NotificationBuildController, type: :controller do
       expect(Notification.find(notification.id).components).to have(1).item
     end
 
-    # TODO COSBETA-10 Update this test
-    it "throws an exception if single_or_multi_component set to multiple" do
+    it "creates two components if single_or_multi_component set to multiple" do
       post(:update, params: params.merge(id: :single_or_multi_component, single_or_multi_component: "multiple"))
       expect(Notification.find(notification.id).components).to have(2).item
     end

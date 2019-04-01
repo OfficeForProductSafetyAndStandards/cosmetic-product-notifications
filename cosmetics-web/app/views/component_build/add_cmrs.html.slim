@@ -24,21 +24,21 @@
       = link_to "Read about carcinogenic, mutagenic or toxic for reproduction substances that aren’t banned" + \
                 " (opens in a new tab).", cmr_read_url, target: :_blank, rel: 'noopener'
 
-      = form_for(@component, url: wizard_path, method: :put) do |form|
-        - @component.cmrs.each_with_index do |cmr, index|
-          - cmr_number = index + 1
+    = form_for(@component, url: wizard_path, method: :put) do |form|
+      - @component.cmrs.each_with_index do |cmr, index|
+        - cmr_number = index + 1
 
-          h2.govuk-heading-l
-            | Substance #{cmr_number}
-          = render "components/govuk_input",
-                  name: "cmrs[#{index}][name]",
-                  id: "cmrs-name",
-                  value: cmr.name,
-                  label: { text: "Substance #{cmr_number} name" }
-          = render "components/govuk_input",
-                  name: "cmrs[#{index}][cas_number]",
-                  id: "cmrs-cas_number",
-                  value: cmr.cas_number,
-                  label: { text: "Substance #{cmr_number} Chemical Abstracts Service registry number" }
-        .govuk-form-group
-            = form.submit "Continue", class: "govuk-button"
+        h2.govuk-heading-l
+          | Substance #{cmr_number}
+        = render "components/govuk_input",
+                name: "cmrs[#{index}][name]",
+                id: "cmrs-name",
+                value: cmr.name,
+                label: { text: "Substance #{cmr_number} name" }
+        = render "components/govuk_input",
+                name: "cmrs[#{index}][cas_number]",
+                id: "cmrs-cas_number",
+                value: cmr.cas_number,
+                label: { text: "Substance #{cmr_number} Chemical Abstracts Service registry number" }
+      .govuk-form-group
+          = form.submit "Continue", class: "govuk-button"

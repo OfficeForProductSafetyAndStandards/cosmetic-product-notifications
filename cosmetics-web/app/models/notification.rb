@@ -154,7 +154,7 @@ class Notification < ApplicationRecord
     components.select(&:is_valid_multicomponent?)
   end
 
-  def get_unvalid_multicomponents
+  def get_invalid_multicomponents
     components - get_valid_multicomponents
   end
 

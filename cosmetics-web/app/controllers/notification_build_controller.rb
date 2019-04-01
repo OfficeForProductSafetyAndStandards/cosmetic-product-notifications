@@ -112,8 +112,8 @@ private
       @notification.components.create if @notification.components.length < 2
       render step
     elsif params.key?(:add_component) && params[:add_component]
-      unvalid_multicomponents = @notification.get_unvalid_multicomponents
-      new_component = unvalid_multicomponents.empty? ? @notification.components.create : unvalid_multicomponents.first
+      invalid_multicomponents = @notification.get_invalid_multicomponents
+      new_component = invalid_multicomponents.empty? ? @notification.components.create : invalid_multicomponents.first
       redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, new_component)
     elsif @notification.get_valid_multicomponents.length > 1
       render_wizard @notification

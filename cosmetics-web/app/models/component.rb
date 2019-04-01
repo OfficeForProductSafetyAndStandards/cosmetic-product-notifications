@@ -75,7 +75,7 @@ class Component < ApplicationRecord
   end
 
   def is_valid_multicomponent?
-    !(name.nil? || name == "")
+    name.present?
   end
 
 private
