@@ -1,8 +1,8 @@
 class Investigation < ApplicationRecord
-  include Searchable
   include Documentable
   include AttachmentConcern
   include SanitizationHelper
+  include InvestigationElasticsearch
 
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
@@ -50,67 +50,6 @@ class Investigation < ApplicationRecord
   before_create :set_source_to_current_user, :assign_to_current_user, :add_pretty_id
 
   after_create :create_audit_activity_for_case, :send_confirmation_email
-
-  # Elasticsearch index name must be declared in children and parent
-  index_name [Rails.env, "investigations"].join("_")
-
-  settings do
-    mappings do
-      indexes :status, type: :keyword
-      indexes :assignable_id, type: :keyword
-    end
-  end
-
-  def as_indexed_json(*)
-    as_json(
-      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at pretty_id
-               hazard_description non_compliant_reason],
-      include: {
-        documents: {
-          only: [],
-          methods: %i[title description filename]
-        },
-        correspondences: {
-          only: %i[correspondent_name details email_address email_subject overview phone_number email_subject]
-        },
-        activities: {
-          methods: :search_index,
-          only: []
-        },
-        businesses: {
-          only: %i[legal_name trading_name company_number]
-        },
-        products: {
-          only: %i[category description name product_code product_type]
-        },
-        complainant: {
-          only: %i[name phone_number email_address other_details]
-        },
-        tests: {
-          only: %i[details result legislation]
-        },
-        corrective_actions: {
-          only: %i[details summary legislation]
-        },
-        alerts: {
-          only: %i[description summary]
-        }
-      }
-    )
-  end
-
-  def self.highlighted_fields
-    %w[*.* pretty_id user_title description hazard_type product_category hazard_description non_compliant_reason]
-  end
-
-  def self.fuzzy_fields
-    %w[documents.* correspondences.* activities.* businesses.* products.* complainant.* corrective_actions.*
-       tests.* alerts.* user_title description hazard_type product_category hazard_description non_compliant_reason]
-  end
-
-  def self.exact_fields
-    %w[pretty_id]
-  end
 
   def assignee
     begin
