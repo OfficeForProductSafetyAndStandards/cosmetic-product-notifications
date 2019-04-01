@@ -5,8 +5,7 @@ ruby:
 
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-one-third
-    = render "documents/document_preview", document: document, dimensions: "300x200",
-            sensitive: sensitive
+    = render "documents/document_preview", document: document, dimensions: "300x200", sensitive: sensitive
   .govuk-grid-column-two-thirds
     h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = title
     span.govuk-hint[class=" govuk-!-font-size-16"] = formatted_file_updated_date(document)

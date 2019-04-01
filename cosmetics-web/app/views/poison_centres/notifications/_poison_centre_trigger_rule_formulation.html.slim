@@ -1,0 +1,32 @@
+h2.govuk-heading-l.poison-centre__table-heading
+  | Formulation
+- @notification.components.each do |component|
+  table.govuk-table
+    - if component.name.present?
+      caption.govuk-table__caption.govuk-heading-m
+        = component.name
+    - if component.trigger_questions
+      - component.trigger_questions.each do |question|
+        tbody.govuk-table__body
+          - question.trigger_question_elements.each do |question_element|
+            - case question_element.element
+              - when "ethanol"
+                tr.govuk-table__row
+                  th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
+                    | Ethanol
+                  td.govuk-table__cell.govuk-table__cell--numeric
+                    = "#{question_element.answer} %w/w"
+              - when "propanol"
+                tr.govuk-table__row
+                  th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
+                    | Isopropanol
+                  td.govuk-table__cell.govuk-table__cell--numeric
+                    = "#{question_element.answer} %w/w"
+              - when "inciname"
+                tr.govuk-table__row
+                  - formulation_data = get_formulation_data(question, question_element)
+                  - if formulation_data.present?
+                    th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
+                      = formulation_data.first.humanize
+                    td.govuk-table__cell.govuk-table__cell--numeric
+                      = "#{formulation_data.last.humanize} %w/w"

@@ -3,9 +3,9 @@
   = render "layouts/navbar"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
+    h1.govuk-heading-l
       - if params[:q].present?
-        span.govuk-caption-xl Business search results
+        span.govuk-caption-l Business search results
         = params[:q]
         span.govuk-caption-m = "#{@businesses.count} #{'result'.pluralize(@businesses.count)}"
       - else

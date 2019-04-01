@@ -9,7 +9,7 @@
       = render "form_components/govuk_error_summary", form: form
       = render "minimal_investigation_heading", investigation: @investigation, title: "Confirm assignment change"
       p
-        | You are assigning this project to:
+        = "You are assigning this #{@investigation.case_type} to:"
         strong = " #{@potential_assignee.display_name || @potential_assignee.name}"
       .govuk-form-group
         = render "form_components/govuk_textarea", key: :assignee_rationale, form: form,

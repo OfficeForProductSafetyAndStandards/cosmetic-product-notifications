@@ -4,8 +4,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl Report an unsafe or non-compliant product
+      h1.govuk-heading-l
+        span.govuk-caption-l Report an unsafe or non-compliant product
         | Record corrective action
       = render "investigations/corrective_actions/form", form: form,
               corrective_action: @corrective_action,
@@ -23,11 +23,10 @@
               name: :further_corrective_action,
               errorMessage: error_text && { text: error_text },
               fieldset: { legend: { text: "Are there other actions to report?",
-                      classes: "govuk-fieldset__legend--l" } },
+                      classes: "govuk-fieldset__legend--m" } },
               items: [{ text: "Yes", value: "Yes", checked: @repeat_step == "Yes",
                       id: "further_corrective_action_yes" },
                       { text: "No", value: "No", checked: @repeat_step == "No", id: "further_corrective_action_no" }]
-      .govuk-form-group
-        = form.submit "Continue", class: "govuk-button"
+      = form.submit "Continue", class: "govuk-button"
       .govuk-body
         = form.submit "Skip this page", class: "button-link", role: "link"

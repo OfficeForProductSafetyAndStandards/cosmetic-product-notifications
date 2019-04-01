@@ -2,9 +2,26 @@
 - content_for :after_header do
   = link_to "Back", poison_centre_notifications_path, class: "govuk-back-link"
 .govuk-grid-row
-  .govuk-grid-column-full
+  .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       = @notification.product_name
-    = render "notifications/formulation_details", notification: @notification
-    = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
-    = render "notifications/product_details", notification: @notification
+    h2.govuk-heading-m
+      = @notification.responsible_person.name
+    h3.govuk-heading-s[class="govuk-!-font-weight-regular"]
+      - if @notification.components&.first&.sub_sub_category&.present?
+        = full_category_display_name(@notification.components.first)
+
+.govuk-grid-row
+  .govuk-grid-column-one-third.product-images
+    - @notification.image_uploads.each do |image|
+      - if image.marked_as_safe?
+        = link_to image_tag(url_for(image.file.variant(resize: "450x450"))),
+                url_for(image.file)
+  .govuk-grid-column-two-thirds
+    = render "poison_centres/notifications/poison_centre_trigger_rule_formulation", notification: @notification
+    = render "notifications/ingredient_details", notification: @notification
+    = render "notifications/frame_formulation_details", notification: @notification
+    -if @notification.notified_post_eu_exit?
+      = render "notifications/substances_details", notification: @notification
+    = render "/notifications/responsible_person_details", responsible_person: @notification.responsible_person
+    = render "/notifications/contact_person_details", contact_person: @notification.responsible_person

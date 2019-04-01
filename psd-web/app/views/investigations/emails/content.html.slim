@@ -6,19 +6,13 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl
-          = @investigation.pretty_description
+      h1.govuk-heading-l
+        span.govuk-caption-l = @investigation.pretty_description
         | Record email
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Summary
-        = render "form_components/govuk_input", key: :overview, form: form, classes: "govuk-!-width-two-thirds",
-                label: { text: "Summary", classes: "govuk-visually-hidden" },
-                hint: { text: "Give an overview of the email" }
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Email content
+      = render "form_components/govuk_input", key: :overview, form: form, classes: "govuk-!-width-two-thirds",
+              label: { text: "Summary", classes: "govuk-label--m" },
+              hint: { text: "Give an overview of the email" }
+      = render "components/govuk_fieldset", legend: { text: "Email content", classes: "govuk-fieldset__legend--m" } do
         = form.fields_for :email_file do |subform|
           .govuk-form-group
             - if @email_file_blob

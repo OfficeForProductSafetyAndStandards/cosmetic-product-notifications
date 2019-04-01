@@ -1,34 +1,5 @@
-- label_class = "govuk-label--m govuk-!-margin-bottom-2"
-fieldset.govuk-fieldset
-  = render "form_components/govuk_input", key: :name, form: form,
-          label: { text: "Company number", classes: label_class },
-          hint: { text: "Name" }
-
-fieldset.govuk-fieldset
-  = render "form_components/govuk_input", key: :address_line_1, form: form,
-          label: { text: "Building and street", classes: label_class }
-  = render "form_components/govuk_input", key: :address_line_2, form: form,
-          label: { text: "Address line two", classes: "govuk-visually-hidden" }
-
-fieldset.govuk-fieldset
-  = render "form_components/govuk_input", key: :city, form: form,
-          label: { text: "Town or city", classes: label_class }
-
-fieldset.govuk-fieldset
-  = render "form_components/govuk_input", key: :county, form: form,
-          label: { text: "County", classes: label_class }
-
-fieldset.govuk-fieldset
-  = render "form_components/govuk_input", key: :postal_code, form: form, classes: "govuk-!-width-one-half",
-          label: { text: "Postcode", classes: label_class }
-
-fieldset.govuk-fieldset
-  .govuk-form-group
-    = form.label :country, "Country",
-            class: "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-    = form.select :country_of_origin, @countries, { include_blank: "" },
-            class: "govuk-select", id: "location-autocomplete"
-
-fieldset.govuk-fieldset
-  .govuk-form-group
-    = form.submit "Save", class: "govuk-button"
+= render "form_components/govuk_input", key: :name, form: form,
+        hint: { text: "For example, ‘Head office’, ‘Registered office’ or ‘Northern office’" },
+        label: { text: "Location name", classes: "govuk-label--m" }
+= render "address_form", form: form, countries: @countries
+= form.submit "Save", class: "govuk-button"
