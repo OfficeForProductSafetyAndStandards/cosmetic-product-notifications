@@ -222,6 +222,7 @@ private
         :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
       )
     when :reference_number
+      params[:investigation][:complainant_reference] = nil unless params[:investigation][:has_complainant_reference] == "Yes"
       params.require(:investigation).permit(:complainant_reference)
     end
   end
