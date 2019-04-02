@@ -427,13 +427,13 @@ module NotificationPropertiesHelper
 
   UNIT_NAME = {
       less_than_01_percent: "≤ 0.1",
-      greater_than_01_less_than_1_percent: "> 0.1 - ≤ 1",
-      greater_than_1_less_than_5_percent: "> 1 - ≤ 5",
-      greater_than_5_less_than_10_percent: "> 5 - ≤ 10",
-      greater_than_10_less_than_25_percent: "> 10 - ≤ 25",
-      greater_than_25_less_than_50_percent: "> 25 - ≤ 50",
-      greater_than_50_less_than_75_percent: "> 50 - ≤ 75",
-      greater_than_75_less_than_100_percent: "> 75 - ≤ 100"
+      greater_than_01_less_than_1_percent: "> 0.1 and ≤ 1",
+      greater_than_1_less_than_5_percent: "> 1 and ≤ 5",
+      greater_than_5_less_than_10_percent: "> 5 and ≤ 10",
+      greater_than_10_less_than_25_percent: "> 10 and ≤ 25",
+      greater_than_25_less_than_50_percent: "> 25 and ≤ 50",
+      greater_than_50_less_than_75_percent: "> 50 and ≤ 75",
+      greater_than_75_less_than_100_percent: "> 75 and ≤ 100"
   }.freeze
 
   EXPOSURE_ROUTE_NAME = {
