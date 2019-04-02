@@ -27,16 +27,15 @@ private
 
   def request_params
     return {} if params[correspondence_params_key].blank?
+    date_params = {}
+    date_params = params.require(correspondence_params_key).require(:correspondence_date).permit(:day, :month, :year) if params[correspondence_params_key][:correspondence_date].present?
 
     params.require(correspondence_params_key).permit(
       :correspondent_name,
-      :day,
-      :month,
-      :year,
       :overview,
       :details,
       :has_consumer_info
-    )
+    ).merge(date_params)
   end
 
   def set_attachments

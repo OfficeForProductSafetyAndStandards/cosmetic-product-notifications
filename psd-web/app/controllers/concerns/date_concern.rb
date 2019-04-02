@@ -49,6 +49,18 @@ module DateConcern
     :date
   end
 
+  def get_day(key)
+    day
+  end
+
+  def get_month(key)
+    month
+  end
+
+  def get_year(key)
+    year
+  end
+
 private
 
   def update_from_components
@@ -58,6 +70,8 @@ private
         # This sets it if it makes sense. Validation then can compare the presence of
         # date and its components to know if the date parsed correctly
         self[@date_key] = Date.civil(*date_component_values)
+      else
+        self[@date_key] = nil
       end
     end
   end
@@ -66,7 +80,10 @@ private
     missing_date_components = {
         day: day, month: month, year: year
     }.select { |_, value| value.blank? }
+
     case missing_date_components.length
+    when 3
+      errors.add(@date_key, :invalid)
     when (1..2) # Date has some components entered, but not all
       missing_date_components.each do |missing_component, _|
         errors.add(@date_key, :date_missing_component)
@@ -85,4 +102,5 @@ private
   def date_components
     [year, month, day]
   end
+
 end

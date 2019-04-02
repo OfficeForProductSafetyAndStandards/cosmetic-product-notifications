@@ -28,17 +28,18 @@ ruby:
   .govuk-date-input[*(local_assigns[:attributes] || {})
                 class=local_assigns[:classes]
                 id=local_assigns[:id]]
-    - date_input_items.each do
-      = render "components/govuk_input",
-              label: { text: (item.label || item.name).capitalize, classes: "govuk-date-input__label" },
-              id: item.id || (id + "-" + item.name),
-              classes: "govuk-date-input__input #{item.classes}",
-              name: local_assigns[:namePrefix] ?  "#{local_assigns[:namePrefix]}-#{item.name}" : item.name,
-              value: item.value,
-              type: "number",
-              autocomplete: item.autocomplete,
-              pattern: item.pattern ? item.pattern : "[0-9]*",
-              attributes : item.attributes
+    - date_input_items.each do |item|
+      .govuk-date-input__item
+        = render "components/govuk_input",
+                label: { text: (item[:label] || item[:name]).capitalize, classes: "govuk-date-input__label" },
+                id: item[:id] || (id + "-" + item[:name]),
+                classes: "govuk-date-input__input #{item[:classes]}",
+                name: local_assigns[:namePrefix] ? "#{local_assigns[:namePrefix]}-#{item[:name]}" : item[:name],
+                value: item[:value],
+                type: "number",
+                autocomplete: item[:autocomplete],
+                pattern: item[:pattern] ? item[:pattern] : "[0-9]*",
+                attributes: item[:attributes]
 
 .govuk-form-group class=form_group_classes
   - if local_assigns[:fieldset].present?

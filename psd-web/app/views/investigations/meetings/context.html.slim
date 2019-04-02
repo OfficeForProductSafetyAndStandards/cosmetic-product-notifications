@@ -19,5 +19,5 @@
         fieldset.govuk-fieldset aria-describedby="correspondence-date-hint" role="group"
           legend.govuk-fieldset__legend.govuk-fieldset__legend--l
             | Date of meeting
-        = render "date_input", form: form
+        = render "form_components/govuk_date_input", form: form, key: :correspondence_date
       = form.submit "Continue", class: "govuk-button"
