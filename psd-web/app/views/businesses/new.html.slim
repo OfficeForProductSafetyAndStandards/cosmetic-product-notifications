@@ -6,8 +6,6 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
+      h1.govuk-heading-l
         | New business
-      h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
-        | Business details
       = render "businesses/form", form: form, business: @business, countries: @countries

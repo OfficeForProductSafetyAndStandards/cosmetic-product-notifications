@@ -4,8 +4,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl Report an unsafe or non-compliant product
+      h1.govuk-heading-l
+        span.govuk-caption-l Report an unsafe or non-compliant product
         = "#{@business_type.capitalize} details"
       = form.hidden_field :business_type, value: @business_type
       = render "businesses/form", form: form, business: @business, countries: @countries, submit_text: "Continue"

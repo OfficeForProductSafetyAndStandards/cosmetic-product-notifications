@@ -10,7 +10,9 @@ ruby:
   selected_value = local_assigns[:selected]
   selected_value ||= form.object.send(key) if form.object.respond_to?(key)
 
-.govuk-form-group class=form_group_classes
+/ The min-height is a work-around for height not accounting for floats inside (and currently the clear-button
+/ positioning is implemented with floats
+.govuk-form-group class=form_group_classes style="min-height:100px"
   - if local_assigns[:label]
     = form.label key, local_assigns[:label][:html] || local_assigns[:label][:text],
             class: local_assigns[:label][:classes] || "govuk-label", for: local_assigns[:label][:for] || id

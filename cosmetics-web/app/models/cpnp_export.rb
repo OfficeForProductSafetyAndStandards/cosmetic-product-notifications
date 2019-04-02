@@ -47,6 +47,18 @@ class CpnpExport
     current_version_info_node.xpath(".//stillOnTheMarket").first&.text&.casecmp?("Y")
   end
 
+  def components_are_mixed
+    current_version_info_node.xpath(".//isMixed").first&.text&.casecmp?("Y")
+  end
+
+  def ph_min_value
+    current_version_info_node.xpath(".//phMinValue").first&.text
+  end
+
+  def ph_max_value
+    current_version_info_node.xpath(".//phMaxValue").first&.text
+  end
+
   def shades
     current_version_info_node.xpath(".//shade").first&.text
   end
@@ -175,7 +187,7 @@ private
   def special_applicator(component_node)
     return if component_node.xpath(".//specialApplicator") == "N"
 
-    get_special_applicator(component_node.xpath(".//specialApplicator").first&.text.to_i)
+    get_special_applicator(component_node.xpath(".//applicator").first&.text.to_i)
   end
 
   def acute_poisoning_info(component_node)

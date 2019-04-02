@@ -1,0 +1,20 @@
+= render "components/govuk_fieldset",
+        legend: { text: "Address", classes: "govuk-fieldset__legend--m" } do
+  = render "components/govuk_fieldset", legend: { text: "Building and street" } do
+    = render "form_components/govuk_input", key: :address_line_1, form: form,
+            label: { text: "Address line one", classes: "govuk-visually-hidden" }
+    = render "form_components/govuk_input", key: :address_line_2, form: form,
+            label: { text: "Address line two", classes: "govuk-visually-hidden" }
+
+  = render "form_components/govuk_input", key: :city, form: form,
+          label: { text: "Town or city" }
+
+  = render "form_components/govuk_input", key: :county, form: form,
+          label: { text: "County" }
+
+  = render "form_components/govuk_input", key: :postal_code, form: form, classes: "govuk-!-width-one-half",
+          label: { text: "Postcode" }
+
+  .govuk-form-group
+    = form.label :country, "Country", class: "govuk-label"
+    = form.select :country, countries, { include_blank: "" }, class: "govuk-select", id: "location-autocomplete"
