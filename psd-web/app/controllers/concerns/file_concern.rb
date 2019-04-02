@@ -66,7 +66,10 @@ module FileConcern
   end
 
   def get_attachment_metadata_params_from_attachment_params(attachment_params)
-    attachment_params.except(:file).to_h
+    attachment_params
+        .except(:file)
+        .to_h
+        .merge(created_by: User.current.id)
   end
 
   def check_correct_usage

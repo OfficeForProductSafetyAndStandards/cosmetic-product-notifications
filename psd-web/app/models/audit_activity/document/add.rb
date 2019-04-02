@@ -11,4 +11,8 @@ class AuditActivity::Document::Add < AuditActivity::Document::Base
   def email_update_text
     "Document was attached to the #{investigation.case_type.titleize} by #{source&.show&.titleize}."
   end
+
+  def restricted_title
+    "Document added"
+  end
 end

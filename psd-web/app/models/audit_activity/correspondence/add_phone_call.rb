@@ -43,7 +43,7 @@ class AuditActivity::Correspondence::AddPhoneCall < AuditActivity::Correspondenc
     "Phone call"
   end
 
-  def sensitive_title
+  def restricted_title
     "Phone call added"
   end
 

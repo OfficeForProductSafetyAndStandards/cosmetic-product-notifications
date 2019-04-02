@@ -29,11 +29,11 @@ class Activity < ApplicationRecord
     return text.to_s.strip.gsub(/[*_~]/) { |match| "\\#{match}" } if text
   end
 
-  def sensitive?
-    false
+  def can_display_all_data?
+    true
   end
 
-  def sensitive_title
+  def restricted_title
     # where necessary should be implemented by subclasses
   end
 
