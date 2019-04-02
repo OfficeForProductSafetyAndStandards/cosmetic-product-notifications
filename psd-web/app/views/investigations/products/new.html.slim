@@ -6,6 +6,6 @@
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
       = render "investigation_heading", investigation: @investigation
-      h2.govuk-heading-l
+      h2.govuk-heading-m
         | Add product
       = render "products/form", form: form, product: @product, countries: @countries, search: true
