@@ -65,7 +65,7 @@ RSpec.describe "Create a responsible person", type: :system do
     click_on "Continue"
 
     assert_current_path account_path(:select_type)
-    assert_text "Account type can't be blank"
+    assert_text "Account type can not be blank"
   end
 
   it "redirects to responsible person page on email validation" do
@@ -85,7 +85,7 @@ private
     assert_text "UK responsible person"
     click_on "Continue"
 
-    assert_text "Do you or your organisation have an account to register cosmetic products in the UK?"
+    assert_text "Do you or your organisation have an account to submit cosmetic product notifications in the UK?"
     choose "option_create_new", visible: false
     click_on "Continue"
   end
