@@ -75,7 +75,7 @@ RSpec.describe FormulationUploadController, type: :controller do
 
     it "redirects to the notification controller formualtion upload endpoint when the uploaded file is valid" do
       post(:create, params: params.merge(formulation_file: text_file))
-      expect(response).to redirect_to(new_responsible_person_notification_additional_information_path(responsible_person, notification))
+      expect(response).to redirect_to(responsible_person_notification_additional_information_index_path(responsible_person, notification))
     end
 
     it "does not let the user submit the form for a component for a responsible person they do not belong to" do

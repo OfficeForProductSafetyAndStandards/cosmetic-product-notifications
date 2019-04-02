@@ -1,7 +1,7 @@
 class AdditionalInformationController < ApplicationController
-  before_action :set_notification, only: %i[new]
+  before_action :set_notification, only: %i[index]
 
-  def new
+  def index
     if @notification.formulation_required?
       component = @notification.components.find(&:formulation_required?)
       return redirect_to new_responsible_person_notification_component_formulation_path(@notification.responsible_person, @notification, component)

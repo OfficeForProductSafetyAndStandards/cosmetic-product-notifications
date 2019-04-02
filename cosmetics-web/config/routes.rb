@@ -40,7 +40,7 @@ Rails.application.routes.draw do
 
     resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
       resources :build, controller: :notification_build, only: %i[show update new]
-      resources :additional_information, controller: :additional_information, only: %i[new]
+      resources :additional_information, controller: :additional_information, only: %i[index]
       resources :product_image_upload, controller: :product_image_upload, only: %i[new create]
 
       resources :components do

@@ -12,7 +12,7 @@ class ProductImageUploadController < ApplicationController
       end
 
       if @notification.save
-        redirect_to new_responsible_person_notification_additional_information_path(@notification.responsible_person, @notification)
+        redirect_to responsible_person_notification_additional_information_index_path(@notification.responsible_person, @notification)
       else
         @notification.errors.messages[:image_upload].map(&method(:add_error))
         render :new
@@ -26,7 +26,7 @@ class ProductImageUploadController < ApplicationController
 private
 
   def add_error error_message
-    @error_list.push(text: error_message, href: "#formulation_file")
+    @error_list.push(text: error_message, href: "#image_upload")
   end
 
   def set_models
