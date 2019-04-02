@@ -5,13 +5,11 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl
-          = @investigation.pretty_description
+      h1.govuk-heading-l
+        span.govuk-caption-l = @investigation.pretty_description
         | Record phone call
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Who was the call with?
+      = render "components/govuk_fieldset",
+              legend: { text: "Who was the call with?", classes: "govuk-fieldset__legend--m" } do
         .govuk-grid-row
           .govuk-grid-column-two-thirds
             = render "form_components/govuk_input", key: :correspondent_name, form: form,
@@ -21,10 +19,10 @@
       = render "form_components/govuk_radios", form: form, key: :has_consumer_info,
               classes: "govuk-radios--inline",
               fieldset: { legend: { text: "Are these consumer contact details?",
-                      classes: "govuk-fieldset__legend--l" } },
+                      classes: "govuk-fieldset__legend--m" } },
               hint: { text: "Consumer contact details are protected by GDPR legislation" },
               items: [{ text: "No", value: "false" }, { text: "Yes", value: "true" }]
-      = render "components/govuk_fieldset", legend: { text: "Date of call", classes: "govuk-fieldset__legend--l" },
+      = render "components/govuk_fieldset", legend: { text: "Date of call", classes: "govuk-fieldset__legend--m" },
               attributes: { "aria-describedby": "correspondence-date-hint" } do
         = render "date_input", form: form
       .govuk-form-group

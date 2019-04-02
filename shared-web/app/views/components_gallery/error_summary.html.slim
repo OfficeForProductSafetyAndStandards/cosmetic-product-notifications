@@ -1,8 +1,8 @@
 / Examples in this file are based on  https://github.com/alphagov/govuk-frontend/
 /           blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/error-summary/error-summary.yaml
 / with extra additions
-h1.govuk-heading-xl Error Summary
-h2.govuk-heading-l Error Summary
+h1.govuk-heading-l Error Summary
+h2.govuk-heading-m Error Summary
 = render "components/govuk_error_summary",
         titleText: "Message to alert the user to a problem goes here",
         descriptionText: "Optional description of the errors and how to correct them",
@@ -12,7 +12,7 @@ h2.govuk-heading-l Error Summary
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l Error Summary with html items
+h2.govuk-heading-m Error Summary with html items
 - item_html = capture do
   ul
     | Many errors counting as one
@@ -27,7 +27,7 @@ h2.govuk-heading-l Error Summary with html items
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l Error Summary with attributes on item
+h2.govuk-heading-m Error Summary with attributes on item
 = render "components/govuk_error_summary",
         titleText: "Message to alert the user to a problem goes here",
         descriptionText: "Optional description of the errors and how to correct them",

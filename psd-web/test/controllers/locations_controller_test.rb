@@ -35,11 +35,6 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to business_url(@location.business, anchor: "locations")
   end
 
-  test "should show location" do
-    get business_location_url(@location.business, @location)
-    assert_response :success
-  end
-
   test "should get edit" do
     get edit_business_location_url(@location.business, @location)
     assert_response :success

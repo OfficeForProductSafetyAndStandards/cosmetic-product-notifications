@@ -2,12 +2,11 @@
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
 
-- if @investigation.is_private
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl
-        p.govuk-caption-xl
-          = @investigation.pretty_description
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - if @investigation.is_private
+      h1.govuk-heading-l
+        span.govuk-caption-l = @investigation.pretty_description
         | You cannot send an alert about a restricted case
       p
         | Email alerts can only be sent for cases that are not restricted.
@@ -15,12 +14,9 @@
 
       = link_to "Change case visibility", visibility_investigation_path(@investigation),
               class: "govuk-button", role: "button", draggable: false
--else
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl
-        p.govuk-caption-xl
-          = @investigation.pretty_description
+    - else
+      h1.govuk-heading-l
+        span.govuk-caption-l = @investigation.pretty_description
         | About alerts
       p When you send an alert:
       ul.govuk-list.govuk-list--bullet

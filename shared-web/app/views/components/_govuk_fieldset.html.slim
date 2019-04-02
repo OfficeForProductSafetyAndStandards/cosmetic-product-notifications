@@ -5,8 +5,7 @@
 fieldset.govuk-fieldset *attributes class=local_assigns[:classes] aria-describedby=local_assigns[:describedBy]
   - if local_assigns[:legend] && (legend[:html] || legend[:text])
     legend.govuk-fieldset__legend class=legend[:classes]
-      - legend_content = capture do
-        = legend[:html].presence || legend[:text]
+      - legend_content = legend[:html].presence || legend[:text]
       - if legend[:isPageHeading]
         h1.govuk-fieldset__heading
           = legend_content

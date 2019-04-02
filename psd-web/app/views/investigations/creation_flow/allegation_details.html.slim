@@ -5,40 +5,30 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-l = @page_title
 
-      h1.govuk-heading-xl
-        = @page_title
+      = render "form_components/govuk_textarea", key: :description, form: form,
+              attributes: { maxlength: 10000 },
+              hint: { text: "Please give as much detail as possible" },
+              label: { text: "What is being alleged?", classes: "govuk-label--m" }
+      = render "form_components/autocomplete_select", items: product_categories, key: :product_category, form: form,
+              show_all_values: true,
+              label: { text: "Product Category", classes: "govuk-label--m" }
+      = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
+              show_all_values: true,
+              label: { text: "Hazard Type", classes: "govuk-label--m" }
 
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | What is being alleged?
-        = render "form_components/govuk_textarea", key: :description, form: form,
-                attributes: { maxlength: 10000 },
-                hint: { text: "Please give as much detail as possible" },
-                label: { text: "Allegation description", classes: "govuk-visually-hidden" }
-
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Product Category
-        = render "form_components/autocomplete_select", items: product_categories, key: :product_category, form: form,
-                show_all_values: true
-
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Hazard Type
-        = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
-                show_all_values: true
-
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Are there any files or images related to the allegation?
-        .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation.errors))
-          - if @file_blob.present?
-            p#current-attachment-details
-              ' Currently selected file:
-              = link_to @file_blob.filename, @file_blob, target: "_blank", rel: 'noopener'
-          = form.fields_for :attachment do |subform|
-            = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
+      .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation.errors))
+        = render "components/govuk_label",
+                text: "Are there any files or images related to the allegation?",
+                classes: "govuk-label--m",
+                for: "attachment-file-input"
+        - if @file_blob.present?
+          p#current-attachment-details
+            ' Currently selected file:
+            = link_to @file_blob.filename, @file_blob, target: "_blank", rel: 'noopener'
+        = form.fields_for :attachment do |subform|
+          = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
 
       .govuk-form-group
         = form.submit "Create allegation", class: "govuk-button"
