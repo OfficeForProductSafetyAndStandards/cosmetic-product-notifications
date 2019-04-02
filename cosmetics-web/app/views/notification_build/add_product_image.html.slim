@@ -8,7 +8,7 @@
         = render 'error_summary', errors: @notification.errors
         p This can be an artwork file or a photo of the label.
         p If you upload a photo text in the image must be legible.
-        p The file must be a ‘jpg’, ‘pdf’ ‘png’, or ‘svg’ and no larger than 30MB.
+        p The file must be a ‘jpg’, ‘pdf’, or ‘png’ and no larger than 30MB.
         - if @notification.errors.messages[:image_uploads].any?
             span.govuk-error-message Please upload at least one image
         = form_with(url: wizard_path, method: :put, multipart: true) do |form|
