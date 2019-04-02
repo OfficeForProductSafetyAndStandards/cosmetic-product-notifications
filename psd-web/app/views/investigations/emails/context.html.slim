@@ -6,12 +6,12 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl
-          = @investigation.pretty_description
+      h1.govuk-heading-l
+        span.govuk-caption-l = @investigation.pretty_description
         | Record email
-      = render "components/govuk_fieldset", legend: { text: "Email details", classes: "govuk-fieldset__legend--l" } do
+      = render "components/govuk_fieldset", legend: { text: "Email details", classes: "govuk-fieldset__legend--m" } do
         = render "form_components/govuk_radios", form: form, key: :email_direction,
+                fieldset: { label: { text: "Email direction", classes: "govuk-visually-hidden" } },
                 classes: "govuk-radios--inline",
                 items: Correspondence::Email.email_directions.map { |value, label| { text: label, value: value } }
         = render "form_components/govuk_input", key: :correspondent_name, form: form,
@@ -24,11 +24,10 @@
       = render "form_components/govuk_radios", form: form, key: :has_consumer_info,
               classes: "govuk-radios--inline",
               fieldset: { legend: { text: "Are these consumer contact details?",
-                      classes: "govuk-fieldset__legend--l" } },
+                      classes: "govuk-fieldset__legend--m" } },
               hint: { text: "Consumer contact details are protected by GDPR legislation" },
               items: [{ text: "No", value: "false" }, { text: "Yes", value: "true" }]
-      = render "components/govuk_fieldset", legend: { text: "Date sent", classes: "govuk-fieldset__legend--l" },
+      = render "components/govuk_fieldset", legend: { text: "Date sent", classes: "govuk-fieldset__legend--m" },
               attributes: { "aria-describedby": "correspondence-date-hint" } do
         = render "date_input", form: form
-      .govuk-form-group
-        = form.submit "Continue", class: "govuk-button"
+      = form.submit "Continue", class: "govuk-button"

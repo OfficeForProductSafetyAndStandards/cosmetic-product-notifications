@@ -1,25 +1,21 @@
-fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | Summary
-  = render "form_components/govuk_input", key: :summary, form: form,
-          classes: "govuk-!-width-two-thirds",
-          label: { text: "Summary", classes: "govuk-visually-hidden" }
+= render "form_components/govuk_input", key: :summary, form: form,
+        classes: "govuk-!-width-two-thirds",
+        label: { text: "Summary", classes: "govuk-label--m" }
 
-legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-  | When was this action decided?
-= render "date_input", form: form
+= render "components/govuk_fieldset",
+        legend: { text: "When was this action decided?", classes: "govuk-fieldset__legend--m" } do
+  = render "date_input", form: form
 
 - if allow_product_linking
-  fieldset.govuk-fieldset
-    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-      | Which product is subject to action?
-    .govuk-form-group.full-width class=("govuk-form-group--error" if corrective_action.errors[:product].any?)
+  = render "components/govuk_fieldset",
+          legend: { text: "Which product is subject to action?", classes: "govuk-fieldset__legend--m" } do
+    .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:product].any?)
       - if investigation.products.empty?
         span.govuk-hint
           | There are no products on this case.
-          span.govuk-hint
-            = link_to "Add a product", new_investigation_product_path(investigation)
-            |  to record a corrective action.
+          br
+          = link_to "Add a product", new_investigation_product_path(investigation)
+          |  to record a corrective action.
       - elsif investigation.products.size == 1
         = render "form_components/govuk_input", key: :product_name, form: form, attributes: { disabled: true },
                 classes: "govuk-!-width-two-thirds", value: investigation.products.first.name,
@@ -30,18 +26,15 @@ legend.govuk-fieldset__legend.govuk-fieldset__legend--l
                 items: investigation.products.map { |product| [product.name, product.id] },
                 hint: { text: "Only products already added to the case are listed." }
 
-fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | Under which legislation?
-  = render "form_components/autocomplete_select", items: relevant_legislation, key: :legislation, form: form,
-          show_all_values: true,
-          hint: { text: "Select the relevant legislation from the list, or enter a different one." }
+= render "form_components/autocomplete_select", items: relevant_legislation, key: :legislation, form: form,
+        label: { text: "Under which legislation?", classes: "govuk-label--m" },
+        show_all_values: true,
+        hint: { text: "Select the relevant legislation from the list, or enter a different one." }
 
 - if allow_business_linking
-  fieldset.govuk-fieldset
-    legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-      | Which business is responsible?
-    .govuk-form-group.full-width class=("govuk-form-group--error" if corrective_action.errors[:business].any?)
+  = render "components/govuk_fieldset",
+          legend: { text: "Which business is responsible?", classes: "govuk-fieldset__legend--m" } do
+    .govuk-form-group class=("govuk-form-group--error" if corrective_action.errors[:business].any?)
       - if investigation.businesses.empty?
         span.govuk-hint
           | There are no businesses associated with this case.
@@ -51,15 +44,12 @@ fieldset.govuk-fieldset
                 selected: (investigation.businesses.size == 1 && investigation.businesses.first.id),
                 hint: { text: "Only businesses already added to the case are listed." }
 
-fieldset.govuk-fieldset
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-    | Further details
-  = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
-          label: { text: "Action details", classes: "govuk-visually-hidden" }
-  - file_field = capture do
-    = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
-  = render "form_components/govuk_radios", form: form, key: :related_file,
-          fieldset: { legend: { text: "Are there any files related to the action?",
-                  classes: "govuk-fieldset__legend--l" } },
-          items: [{ text: "Yes", value: "Yes", conditional: { html: file_field } },
-                  { text: "No", value: "No" }]
+= render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
+        label: { text: "Further details", classes: "govuk-label--m" }
+- file_field = capture do
+  = render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file
+= render "form_components/govuk_radios", form: form, key: :related_file,
+        fieldset: { legend: { text: "Are there any files related to the action?",
+                classes: "govuk-fieldset__legend--m" } },
+        items: [{ text: "Yes", value: "Yes", conditional: { html: file_field } },
+                { text: "No", value: "No" }]

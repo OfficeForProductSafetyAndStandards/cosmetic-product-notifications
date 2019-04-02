@@ -1,10 +1,15 @@
-.govuk-fieldset
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = render "form_components/govuk_input", key: :name, form: form, label: { text: "Name" }
-      = render "form_components/govuk_input", key: :email, form: form, label: { text: "Email" }
-      = render "form_components/govuk_input", key: :phone_number, form: form, label: { text: "Phone number" }
-      = render "form_components/govuk_input", key: :job_title, form: form,
-              label: { text: "Job title / description" }
-      .govuk-form-group
-        = form.submit "Save", class: "govuk-button"
+- label_classes = local_assigns[:label_classes].presence
+
+= render "components/govuk_fieldset", legend: legend do
+  = render "form_components/govuk_input", key: :name, form: form,
+          classes: "govuk-!-width-two-thirds",
+          label: { text: "Name", classes: label_classes }
+  = render "form_components/govuk_input", key: :email, form: form,
+          classes: "govuk-!-width-two-thirds",
+          label: { text: "Email", classes: label_classes }
+  = render "form_components/govuk_input", key: :phone_number, form: form,
+          classes: "govuk-!-width-two-thirds",
+          label: { text: "Phone number", classes: label_classes }
+  = render "form_components/govuk_input", key: :job_title, form: form,
+          classes: "govuk-!-width-two-thirds",
+          label: { text: "Job title / description", classes: label_classes }
