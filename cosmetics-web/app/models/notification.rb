@@ -144,6 +144,10 @@ class Notification < ApplicationRecord
     was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date < EU_EXIT_DATE))
   end
 
+  def images_required?
+    notified_post_eu_exit? && image_uploads.empty?
+  end
+
 private
 
   def all_required_attributes_must_be_set

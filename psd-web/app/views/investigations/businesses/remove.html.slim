@@ -1,12 +1,11 @@
 - content_for :page_title, "Remove business from case"
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
-h2.govuk-heading-l
+h2.govuk-heading-m
   | Remove business
 .govuk-grid-row
   .govuk-grid-column-one-half
     = form_with(url: unlink_investigation_business_path(@investigation), method: :delete) do |form|
-      h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
-        | Business details
+      h3.govuk-heading-s[class="govuk-!-margin-bottom-2"] Business details
       = render "business_summary", business: @business
       = form.submit "Remove business", class: "govuk-button remove-button"

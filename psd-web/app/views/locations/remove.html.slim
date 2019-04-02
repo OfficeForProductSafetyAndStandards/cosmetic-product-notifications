@@ -1,14 +1,12 @@
 - content_for :page_title, "View location"
 - content_for :after_header do
   = link_to "Back to business", @business, class: "govuk-back-link"
-.govuk-grid-row
+.govuk-grid-row class="govuk-!-padding-bottom-6"
   .govuk-grid-column-two-thirds
-    .govuk-heading-xl
-      span.govuk-caption-xl
+    h1.govuk-heading-l
+      span.govuk-caption-l
         = "Business: #{@business.trading_name}"
       | Remove location
-.govuk-grid-row[class="govuk-!-padding-bottom-6"]
-  .govuk-grid-column-two-thirds
     table.govuk-table
       tbody.govuk-table__body
         tr.govuk-table__row

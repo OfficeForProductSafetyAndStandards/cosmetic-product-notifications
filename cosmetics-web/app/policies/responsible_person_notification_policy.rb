@@ -5,6 +5,8 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
     end
   end
 
+
+
   def show?
     user_member_of_associated_responsible_person?
   end
@@ -22,6 +24,10 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
   end
 
   def upload_formulation?
+    update?
+  end
+
+  def index?
     update?
   end
 

@@ -9,7 +9,7 @@ class FormulationUploadController < ApplicationController
       @component.formulation_file.attach(file_upload)
 
       if @component.save
-        redirect_to upload_formulation_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+        redirect_to responsible_person_notification_additional_information_index_path(@component.notification.responsible_person, @component.notification)
       else
         @component.formulation_file.purge
         @component.errors.messages[:formulation_file].map(&method(:add_error))
