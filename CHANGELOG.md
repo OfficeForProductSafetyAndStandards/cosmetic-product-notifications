@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ## 2019-04-03
 ### Product safety database
-- Update about page, terms and conditions and privacy notice.
+- Update introduction, about page, terms and conditions and privacy notice.
 
 
 ## 2019-03-29
