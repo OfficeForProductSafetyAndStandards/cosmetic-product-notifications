@@ -42,8 +42,9 @@ ruby:
 
 .govuk-form-group class=form_group_classes
   - if local_assigns[:fieldset].present?
-    = render "components/govuk_fieldset", describedBy: described_by.presence, classes: local_assigns[:fieldset].classes,
-            attributes: { role: "group" }, legend: local_assigns[:fieldset].legend
+    = render "components/govuk_fieldset", describedBy: described_by.presence,
+            classes: local_assigns[:fieldset][:classes], attributes: { role: "group" },
+            legend: local_assigns[:fieldset][:legend]
       = inner_html
   - else
     = inner_html

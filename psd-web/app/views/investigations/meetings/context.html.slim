@@ -15,9 +15,6 @@
         = render "form_components/govuk_input", key: :correspondent_name, form: form,
                 classes: "govuk-!-width-two-thirds",
                 label: { text: "Name" }
-      .govuk-form-group
-        fieldset.govuk-fieldset aria-describedby="correspondence-date-hint" role="group"
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            | Date of meeting
-        = render "form_components/govuk_date_input", form: form, key: :correspondence_date
+      = render "form_components/govuk_date_input", form: form, key: :correspondence_date,
+              fieldset: { legend: { classes: "govuk-fieldset__legend--l", text: "Date of meeting" } }
       = form.submit "Continue", class: "govuk-button"
