@@ -1,0 +1,14 @@
+- content_for :page_title, "Add component name"
+- content_for :after_header do
+  = link_to "Back",
+          responsible_person_notification_build_path(@component.notification.responsible_person,
+                  @component.notification, :add_new_component),
+          class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for(@component, url: wizard_path, method: :put) do |form|
+      - heading = capture do
+        h1.govuk-heading-xl Name of this component
+      = render "form_components/govuk_input", key: :name, form: form, label: { html: heading }
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"
