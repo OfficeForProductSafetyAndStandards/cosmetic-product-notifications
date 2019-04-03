@@ -4,9 +4,9 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
+    h1.govuk-heading-l
       - if params[:q].present?
-        span.govuk-caption-xl Case search results
+        span.govuk-caption-l Case search results
         = params[:q]
         span.govuk-caption-m = "#{@results.count} #{'result'.pluralize(@results.count)}"
       - else
@@ -25,9 +25,7 @@
           = form.submit "Search", name: nil, class: "search-box--submit"
         hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
         .govuk-form-group
-          fieldset.govuk-fieldset
-            legend.govuk-fieldset__legend--s
-              | Assigned to
+          = render "components/govuk_fieldset", legend: { text: "Assigned to", classes: "govuk-fieldset__legend--s" } do
             .govuk-checkboxes data-module="checkboxes"
               .govuk-checkboxes__item
                 = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
@@ -46,9 +44,7 @@
                         label: { text: "Name" }
 
         .govuk-form-group
-          fieldset.govuk-fieldset
-            .govuk-fieldset__legend--s
-              | Status
+          = render "components/govuk_fieldset", legend: { text: "Status", classes: "govuk-fieldset__legend--s" } do
             .govuk-checkboxes
               .govuk-checkboxes__item
                 = form.check_box :status_open, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
@@ -69,4 +65,4 @@
       br
       = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: export_params)
     - else
-      .govuk-heading-xl[style="text-align:center"] No results
+      .govuk-heading-l[style="text-align:center"] No results

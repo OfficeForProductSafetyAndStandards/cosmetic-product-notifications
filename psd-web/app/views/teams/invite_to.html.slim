@@ -22,7 +22,7 @@
                   errorList: [{ html: error_html, href: "##{prefix}-error" }]
       - else
         = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl Invite a team member
+      h1.govuk-heading-l Invite a team member
       = render "form_components/govuk_input", form: form, key: :email_address,
               errorMessage: (error_html ? { html: error_html } : nil),
               label: { text: "Email address", classes: "govuk-label--m" },

@@ -124,7 +124,7 @@ book.add_worksheet name: "Actions" do |sheet_actions|
         sheet_actions.add_row [
           activity.id,
           activity.type.titleize,
-          activity.sensitive? ? "Restricted" : activity.body,
+          activity.can_display_all_data? ? activity.body: "Restricted",
           activity.source&.show,
           investigation.pretty_id
         ], :types => :text

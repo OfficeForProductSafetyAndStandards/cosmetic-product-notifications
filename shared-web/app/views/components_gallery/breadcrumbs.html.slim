@@ -1,8 +1,8 @@
 / Examples in this file are based on https://github.com/alphagov/govuk-frontend/
 / blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/breadcrumbs/breadcrumbs.yaml
 
-h1.govuk-heading-xl Breadcrumbs component
-h2.govuk-heading-l Default
+h1.govuk-heading-l Breadcrumbs component
+h2.govuk-heading-m Default
 = render "components/govuk_breadcrumbs",
         items: [\
           { text: "Section", href: '/section' },\
@@ -11,13 +11,13 @@ h2.govuk-heading-l Default
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With one level
+h2.govuk-heading-m With one level
 = render "components/govuk_breadcrumbs",
         items: [{ text: "Section", href: '/section' }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With multiple levels
+h2.govuk-heading-m With multiple levels
 = render "components/govuk_breadcrumbs",
         items: [\
           { text: "Home", href: '/' },\
@@ -28,7 +28,7 @@ h2.govuk-heading-l With multiple levels
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l Without the home section
+h2.govuk-heading-m Without the home section
 = render "components/govuk_breadcrumbs",
         items: [\
           { text: "Service Manual", href: '/service-manual' }, \
@@ -37,7 +37,7 @@ h2.govuk-heading-l Without the home section
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With the last breadcrumb as the current page
+h2.govuk-heading-m With the last breadcrumb as the current page
 = render "components/govuk_breadcrumbs",
         items: [\
           { text: "Home", href: '/' }, \

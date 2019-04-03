@@ -38,6 +38,7 @@ en:
       inclusion: "%{attribute} is not included in the list"
       exclusion: "%{attribute} is reserved"
       invalid: "%{attribute} is invalid"
+      taken: "%{attribute} has already been taken"
       confirmation: "%{attribute} doesn't match %{attribute}"
       accepted: "%{attribute} must be accepted"
       empty: "%{attribute} can't be empty"
@@ -104,3 +105,10 @@ en:
               date_required: "Enter the date the corrective action was decided"
               invalid: "Enter a real date when the corrective action was decided"
               date_missing_component: "Enter the date the corrective action was decided and include a day, month and year"
+        alert:
+          attributes:
+            summary:
+              required: "Enter an alert subject"
+            description:
+              required: "Enter a summary"
+

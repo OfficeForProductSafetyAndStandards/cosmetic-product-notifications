@@ -3,8 +3,8 @@
 h1.govuk-heading-xl Date input component
 h2.govuk-heading-l Default
 = render "components/govuk_date_input",
-        id: "dob",
-        namePrefix: "dob",
+        id: "dob1",
+        namePrefix: "dob1",
         fieldset: { legend: { text: "What is your date of birth?" } },
         hint: { text: "For example, 31 3 1980" },
         items: [{ name: "day", classes: "govuk-input--width-2" },
@@ -61,16 +61,16 @@ hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With default items
 = render "components/govuk_date_input",
-        id: "dob",
-        namePrefix: "dob",
+        id: "dob2",
+        namePrefix: "dob2",
         fieldset: { legend: { text: "What is your date of birth?" } },
         hint: { text: "For example, 31 3 1980" }
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-l With optional form-group classes
 = render "components/govuk_date_input",
-        id: "dob",
-        namePrefix: "dob",
+        id: "dob3",
+        namePrefix: "dob3",
         fieldset: { legend: { text: "What is your date of birth?" } },
         hint: { text: "For example, 31 3 1980" },
         formGroup: { classes: "extra-class" }
