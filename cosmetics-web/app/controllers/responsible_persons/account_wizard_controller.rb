@@ -1,27 +1,11 @@
 class ResponsiblePersons::AccountWizardController < ApplicationController
   include Wicked::Wizard
 
-  steps :select_type, :enter_details
+  steps :overview, :create_or_join_existing, :join_existing, :select_type, :enter_details, :contact_person
 
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person, only: %i[show update]
   before_action :store_responsible_person, only: %i[update]
-
-  # GET /responsible_persons/account/create_or_join_existing
-  def create_or_join_existing
-    clear_session
-    case params[:option]
-    when "create_new"
-      redirect_to wizard_path(:select_type)
-    when "join_existing"
-      redirect_to join_existing_account_index_path
-    else
-      @nothing_selected = true if params[:commit].present?
-    end
-  end
-
-  # GET /responsible_persons/account/join_existing
-  def join_existing; end
 
   # GET /responsible_persons/account/:step
   def show
@@ -31,12 +15,11 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
   # PATCH/PUT /responsible_persons/account/:step
   def update
     case step
-    when :enter_details
+    when :create_or_join_existing
+      create_or_join_existing_account
+    when :contact_person
       if responsible_person_saved?
-        NotifyMailer.send_responsible_person_verification_email(
-          @responsible_person.id, @responsible_person.email_address, User.current.full_name
-).deliver_later
-
+        send_verification_email
         redirect_to responsible_person_email_verification_keys_path(@responsible_person)
       else
         render step
@@ -73,6 +56,27 @@ private
 
     @responsible_person.add_user(User.current)
     @responsible_person.save
+  end
+
+  def create_or_join_existing_account
+    clear_session
+    case params[:option]
+    when "create_new"
+      redirect_to wizard_path(:select_type)
+    when "join_existing"
+      redirect_to wizard_path(:join_existing)
+    else
+      @nothing_selected = true if params[:commit].present?
+      render step
+    end
+  end
+
+  def send_verification_email
+    NotifyMailer.send_responsible_person_verification_email(
+      @responsible_person.id,
+      @responsible_person.email_address,
+      User.current.full_name
+    ).deliver_later
   end
 
   def responsible_person_params

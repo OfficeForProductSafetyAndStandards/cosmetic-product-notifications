@@ -8,7 +8,7 @@
         li[class="govuk-!-padding-bottom-2"]
           = form_with url: destroy_all_responsible_person_notification_files_path(@responsible_person),
                   method: :delete do |form|
-            = form.submit "Dismiss all failed files", class: "govuk-link--no-visited-state button-link", role: "link"
+            = form.submit "Dismiss all error messages", class: "govuk-link--no-visited-state button-link", role: "link"
   .govuk-grid-row
     .govuk-grid-column-full
       table.govuk-table
