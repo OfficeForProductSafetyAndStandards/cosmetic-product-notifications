@@ -28,8 +28,7 @@ class UpdateProductTest < ApplicationSystemTestCase
       product_type: "White Goods type",
       category: "White Goods",
       description: "Updated description",
-      country_of_origin: "United States",
-      date_placed_on_market: Date.new(2018, 10, 15)
+      country_of_origin: "United States"
     )
 
     visit edit_product_path(@product)

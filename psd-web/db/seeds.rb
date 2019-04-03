@@ -32,7 +32,6 @@ investigation.save!
 product = Product.create!(
   batch_number: "",
   country_of_origin: "country:CN",
-  date_placed_on_market: nil,
   description: "Plastic doll (5 different models) with long blonde hair.",
   product_code: "NO.DY807",
   name: "Pretty",
@@ -81,7 +80,6 @@ AuditActivity::Document::Add.from(blob, investigation)
 product = Product.create!(
   batch_number: "Unknown",
   country_of_origin: "country:CN",
-  date_placed_on_market: nil,
   description: "Purple magnetic putty with small plastic accessories (eyes and a nose).",
   product_code: "Unknown",
   name: "Crazy Geezer's Putty World",
@@ -118,7 +116,6 @@ investigation.save!
 product = Product.create!(
   batch_number: "Unknown",
   country_of_origin: "territory:TW",
-  date_placed_on_market: nil,
   description: "",
   product_code: "Unknown",
   name: "RXF 36 and RXF 34 Air Mountain Bike Front Forks",
@@ -159,7 +156,6 @@ investigation.save!
 product = Product.create!(
   batch_number: "Batch 105R sold between February and May 2018",
   country_of_origin: "territory:TW",
-  date_placed_on_market: nil,
   description: "",
   product_code: "749266006615",
   name: "Fogbuster Lens Cleaner",
@@ -200,7 +196,6 @@ investigation.save!
 product = Product.create!(
   batch_number: "",
   country_of_origin: "",
-  date_placed_on_market: nil,
   description: "White Christmas tree shaped candle, 4 inches high, unstable base.",
   product_code: "8719202753615",
   name: "H&S Collection: Let it snow",
@@ -239,7 +234,6 @@ investigation.save!
 product = Product.create!(
   batch_number: "",
   country_of_origin: "country:CN",
-  date_placed_on_market: nil,
   description: "",
   product_code: "",
   name: "Funny Musical Instrument Set",
@@ -305,7 +299,6 @@ investigation.save!
 product = Product.create!(
   batch_number: "8710447348123 (LynxThe Golden Year); 8710522349168 (Lynx Black)",
   country_of_origin: "country:CN",
-  date_placed_on_market: nil,
   description: "",
   product_code: "Models: Black and The Golden Year; 15800 E11115/ 1804",
   name: "Lynx Shower speaker with USB charger",
@@ -347,7 +340,6 @@ investigation.save!
 product = Product.create!(
   batch_number: "X00076P3WF",
   country_of_origin: "country:CN",
-  date_placed_on_market: nil,
   description: "",
   product_code: "PN 2124531316474, TJ-65-195334",
   name: "Batterytec Battery charger",
@@ -397,7 +389,6 @@ investigation.save!
 product = Product.create!(
   batch_number: "3105 & 1109",
   country_of_origin: "country:ES",
-  date_placed_on_market: nil,
   description: "",
   product_code: "",
   name: "Creaciones Gavidia Babies' clothing set",

@@ -2,13 +2,8 @@ class Product < ApplicationRecord
   include Shared::Web::CountriesHelper
   include Documentable
   include Searchable
-  include DateConcern
   include AttachmentConcern
   include SanitizationHelper
-
-  def date_keys
-    []
-  end
 
   index_name [Rails.env, "products"].join("_")
 
