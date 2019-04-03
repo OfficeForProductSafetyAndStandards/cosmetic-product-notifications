@@ -10,8 +10,8 @@ class CorrectiveAction < ApplicationRecord
 
   has_many_attached :documents
 
-  def get_date_key
-    :date_decided
+  def date_keys
+    [:date_decided]
   end
 
   before_validation { trim_line_endings(:summary, :details) }

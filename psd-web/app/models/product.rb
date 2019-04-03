@@ -6,8 +6,8 @@ class Product < ApplicationRecord
   include AttachmentConcern
   include SanitizationHelper
 
-  def get_date_key
-    :date_placed_on_market
+  def date_keys
+    [:date_placed_on_market]
   end
 
   index_name [Rails.env, "products"].join("_")

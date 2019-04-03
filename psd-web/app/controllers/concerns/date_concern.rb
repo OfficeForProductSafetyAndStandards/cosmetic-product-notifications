@@ -1,10 +1,6 @@
 module DateConcern
   extend ActiveSupport::Concern
-
   included do # rubocop:disable Metrics/BlockLength
-    attribute :day, :integer
-    attribute :month, :integer
-    attribute :year, :integer
 
     validate :date_from_components
 
@@ -23,84 +19,125 @@ module DateConcern
     end
 
     after_initialize do
-      @date_key = get_date_key
+      keys = date_keys
+      keys.each do |key|
+        self.class_eval do
+          attr_accessor "#{key.to_s}_day".to_sym, :integer
+          attr_accessor "#{key.to_s}_month".to_sym, :integer
+          attr_accessor ("#{key.to_s}_year".to_sym), :integer
+        end
 
-      date = self[@date_key]
-      if date.present? && date_components.all?(&:blank?)
-        self.day = date.day
-        self.month = date.month
-        self.year = date.year
-      else
-        update_from_components
+        date = self[key]
+        if date.present? && get_date_components(key).all?(&:blank?)
+          self.send("#{key.to_s}_day=", date.day)
+          self.send("#{key.to_s}_month=", date.month)
+          self.send("#{key.to_s}_year=", date.year)
+        else
+          update_from_components(key)
+        end
       end
     end
 
     before_validation do
-      if date_components.any?(&:present?)
-        self[@date_key] = nil
+      date_keys.each do |key|
+        if get_date_components(key).any?(&:present?)
+          self[key] = nil
+        end
+        update_from_components(key)
       end
-
-      update_from_components
     end
   end
 
-  def get_date_key
+  def date_keys
     # Can be overwritten in any class using the helper
-    :date
+    [:date]
+  end
+
+  def set_day(key, value)
+    self.send("#{key.to_s}_day=", value)
+  end
+
+  def set_month(key, value)
+    self.send("#{key.to_s}_month=", value)
+  end
+
+  def set_year(key, value)
+    self.send("#{key.to_s}_year=", value)
   end
 
   def get_day(key)
-    day
+    self.send("#{key.to_s}_day".to_sym)
   end
 
   def get_month(key)
-    month
+    self.send("#{key.to_s}_month".to_sym)
   end
 
   def get_year(key)
-    year
+    self.send("#{key.to_s}_year".to_sym)
   end
 
+  def get_date_components(key)
+    [get_year(key), get_month(key), get_day(key)]
+  end
+
+  def get_date(key)
+    date_components = get_date_components(key).map(&:to_i)
+    Date.valid_civil?(*date_components) ? Date.civil(*date_components): nil
+  end
+
+  def update_dates_from_params(params)
+    # expects to receive the part of params relevant to the object it's on
+    return if params.blank?
+
+    date_keys.each do |key|
+      next if params[key].blank?
+      data_from_params = params.require(key).permit(:day, :month, :year)
+      set_day(key, data_from_params[:day])
+      set_month(key, data_from_params[:month])
+      set_year(key, data_from_params[:year])
+    end
+  end
 private
 
-  def update_from_components
-    unless date_components.any?(&:blank?)
-      date_component_values = date_components.map(&:to_i)
+  def update_from_components(key)
+    unless get_date_components(key).any?(&:blank?)
+      date_component_values = get_date_components(key).map(&:to_i)
       if Date.valid_civil?(*date_component_values)
         # This sets it if it makes sense. Validation then can compare the presence of
         # date and its components to know if the date parsed correctly
-        self[@date_key] = Date.civil(*date_component_values)
+        self[key] = Date.civil(*date_component_values)
       else
-        self[@date_key] = nil
+        self[key] = nil
       end
     end
   end
 
   def date_from_components
-    missing_date_components = {
-        day: day, month: month, year: year
-    }.select { |_, value| value.blank? }
+    date_keys.each do |key|
+      missing_date_components = {}
+      missing_date_components["#{key.to_s}_day".to_sym] = get_day(key)
+      missing_date_components["#{key.to_s}_month".to_sym] = get_month(key)
+      missing_date_components["#{key.to_s}_year".to_sym] = get_year(key)
+      missing_date_components = missing_date_components.select { |_, value| value.blank? }
 
-    case missing_date_components.length
-    when 3
-      errors.add(@date_key, :invalid)
-    when (1..2) # Date has some components entered, but not all
-      missing_date_components.each do |missing_component, _|
-        errors.add(@date_key, :date_missing_component)
-        errors.add(missing_component, "")
-      end
-    when 0
-      if self[@date_key].blank?
-        errors.add(@date_key, :invalid)
-        errors.add(:day, "")
-        errors.add(:month, "")
-        errors.add(:year, "")
+      case missing_date_components.length
+      when 3
+        errors.add(key, :invalid)
+      when (1..2) # Date has some components entered, but not all
+        missing_date_components.each do |missing_component, _|
+          errors.add(key, :date_missing_component)
+          errors.add(missing_component, "")
+        end
+      when 0
+        if self[key].blank?
+          errors.add(key, :invalid)
+          errors.add("#{key.to_s}_day".to_sym, "")
+          errors.add("#{key.to_s}_month".to_sym, "")
+          errors.add("#{key.to_s}_year".to_sym, "")
+        end
       end
     end
-  end
-
-  def date_components
-    [year, month, day]
   end
 
 end
