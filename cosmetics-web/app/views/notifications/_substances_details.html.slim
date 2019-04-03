@@ -6,7 +6,7 @@ h2.govuk-heading-l.poison-centre__table-heading
     - if component.name.present?
       caption.govuk-table__caption.govuk-heading-m
         = component.name
-    -if @notification.notified_post_eu_exit?
+    -if notification.notified_post_eu_exit?
       tr.govuk-table__row
         th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
           | CMR
