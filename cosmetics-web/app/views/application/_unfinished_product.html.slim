@@ -1,22 +1,24 @@
 li.product
-  h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
-    = link_to notification.product_name,
-            edit_responsible_person_notification_path(notification.responsible_person, notification),
-            class: "product-title govuk-link--no-visited-state"
-  .product-data.govuk-body-s
-    dl
-      .govuk-clearfix
-        dt
-          | UK cosmetic product number:
-        dd
-          = notification.reference_number_for_display
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
+        = link_to notification.product_name,
+                edit_responsible_person_notification_path(notification.responsible_person, notification),
+                class: "product-title govuk-link--no-visited-state"
+      .product-data.govuk-body-s
+        dl
+          .govuk-clearfix
+            dt
+              | UK cosmetic product number:
+            dd
+              = notification.reference_number_for_display
 
-      - if notification.cpnp_reference.present?
-        .govuk-clearfix
-          dt
-            | EU reference number:
-          dd
-            = notification.cpnp_reference
+          - if notification.cpnp_reference.present?
+            .govuk-clearfix
+              dt
+                | EU reference number:
+              dd
+                = notification.cpnp_reference
 
     p.add-documents
       - if notification.formulation_required? || notification.images_required?
@@ -25,6 +27,6 @@ li.product
             notification),
           class: "govuk-link--no-visited-state"
       - else
-        = link_to "Confirm and register this product",
+        = link_to "Confirm and notify",
           edit_responsible_person_notification_path(notification.responsible_person, notification),
           class: "govuk-link--no-visited-state"

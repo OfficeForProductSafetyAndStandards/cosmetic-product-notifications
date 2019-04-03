@@ -1,8 +1,8 @@
 class Investigation < ApplicationRecord
-  include Searchable
   include Documentable
   include AttachmentConcern
   include SanitizationHelper
+  include InvestigationElasticsearch
 
   attr_accessor :status_rationale
   attr_accessor :visibility_rationale
@@ -20,16 +20,6 @@ class Investigation < ApplicationRecord
 
   after_update :create_audit_activity_for_assignee, :create_audit_activity_for_status,
                :create_audit_activity_for_visibility, :create_audit_activity_for_summary
-
-  # Elasticsearch index name must be declared in children and parent
-  index_name [Rails.env, "investigations"].join("_")
-
-  settings do
-    mappings do
-      indexes :status, type: :keyword
-      indexes :assignable_id, type: :keyword
-    end
-  end
 
   default_scope { order(updated_at: :desc) }
 
@@ -60,37 +50,6 @@ class Investigation < ApplicationRecord
   before_create :set_source_to_current_user, :assign_to_current_user, :add_pretty_id
 
   after_create :create_audit_activity_for_case, :send_confirmation_email
-
-  def as_indexed_json(*)
-    as_json(
-      only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at pretty_id],
-      include: {
-        documents: {
-          only: [],
-          methods: %i[title description filename]
-        },
-        correspondences: {
-          only: %i[correspondent_name details email_address email_subject overview phone_number email_subject]
-        },
-        activities: {
-          methods: :search_index,
-          only: []
-        },
-        businesses: {
-          only: %i[legal_name trading_name company_number]
-        },
-        products: {
-          only: %i[category description name product_code product_type]
-        },
-        complainant: {
-          only: %i[name phone_number email_address other_details]
-        },
-        tests: {
-          only: %i[details result legislation]
-        }
-      }
-    )
-  end
 
   def assignee
     begin
@@ -151,29 +110,10 @@ class Investigation < ApplicationRecord
     past_assignees.reject { |user| user.id == assignee.id }
   end
 
-  def self.highlighted_fields
-    %w[*.* pretty_id user_title description hazard_type product_category]
-  end
-
-  def self.fuzzy_fields
-    %w[documents.* correspondences.* activities.* businesses.* products.* complainant.*
-       tests.* user_title description hazard_type product_category]
-  end
-
-  def self.exact_fields
-    %w[pretty_id]
-  end
-
   # To be implemented by children
   def title; end
 
   def case_type; end
-
-  def has_non_compliant_reason
-    if non_compliant_reason.empty?
-      errors.add(:non_compliant_reason, "cannot be blank")
-    end
-  end
 
   def add_business(business, relationship)
     # Could not find a way to add a business to an investigation which allowed us to set the relationship value and

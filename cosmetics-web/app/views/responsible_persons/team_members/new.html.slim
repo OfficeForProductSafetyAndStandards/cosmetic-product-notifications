@@ -6,14 +6,14 @@
       | Invite a team member
     - if params[:user_already_exists]
       span.govuk-error-message
-        | User is already a member of this team
+        | The user is already a member of this team
     - if params[:blank_input]
       span.govuk-error-message
-        | Please enter an email address
+        | Enter an email address
     p Inviting a team member will allow them to:
     ul.govuk-list.govuk-list--bullet
         li see all cosmetic products
-        li register cosmetic products
+        li submit cosmetic product notifications
     = form_with scope: :team_member, url: responsible_person_team_members_path(@responsible_person),
       method: :post do |form|
       .govuk-form-group
