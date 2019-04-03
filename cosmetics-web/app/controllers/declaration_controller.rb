@@ -5,15 +5,26 @@ class DeclarationController < ApplicationController
 
   def show
     session[:redirect_path] = params[:redirect_path]
+    show_declaration
   end
 
   def accept
     if params[:agree_to_declaration] != "checked"
       @errors = [{ text: "You must agree to the declaration to use this service", href: "#agree_to_declaration" }]
-      render :index
+      show_declaration
     else
       User.current.has_accepted_declaration!
       redirect_to session[:redirect_path] || root_path
+    end
+  end
+
+private
+
+  def show_declaration
+    if User.current&.poison_centre_user?
+      render "poison_centre_declaration"
+    else
+      render "business_declaration"
     end
   end
 end

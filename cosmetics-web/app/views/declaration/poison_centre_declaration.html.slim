@@ -1,0 +1,25 @@
+- content_for :page_title, "Declaration"
+= form_with url: accept_declaration_path, local: true do |form|
+  - if @errors.present?
+    = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        | Declaration
+      p
+        | I declare that:
+      ul.govuk-list.govuk-list--bullet
+        li I have permission to access information on behalf of the national poison centres
+        li I have read and understood the terms and conditions and privacy policy and accept them
+        li I will not share any information from the product safety database outside my organisation
+
+      .govuk-form-group class=("govuk-form-group--error" if @errors.present?)
+        - if @errors.present?
+          span.govuk-error-message#agree_to_declaration-error
+            = @errors.first[:text]
+        .govuk-checkboxes
+          .govuk-checkboxes__item
+            = form.check_box :agree_to_declaration, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
+            = form.label :agree_to_declaration, "I agree", class: "govuk-checkboxes__label"
+      .govuk-form-group
+        = form.submit "Confirm", class: "govuk-button"
