@@ -4,6 +4,5 @@
       | beta
     span.govuk-phase-banner__text
       ' This is a new service – your
-      a.govuk-link--no-visited-state[href="#"]
-        | feedback
+      = link_to "feedback", "https://www.surveymonkey.co.uk/r/PQXTHPW", class: "govuk-link govuk-link--no-visited-state"
       |  will help us to improve it.
