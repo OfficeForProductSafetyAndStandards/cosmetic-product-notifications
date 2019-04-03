@@ -20,6 +20,6 @@
               fieldset: { legend: { text: "Do you want to add your own reference number?",
                       classes: "govuk-fieldset__legend--m" } },
               items: [{ text: "Yes", value: "Yes", checked: @has_reference_number == "Yes",
-                          conditional: { html: existing_reference_field_html }},
+                          conditional: { html: existing_reference_field_html } },
                       { text: "No", value: "No" }]
       = form.submit "Create case", class: "govuk-button"
