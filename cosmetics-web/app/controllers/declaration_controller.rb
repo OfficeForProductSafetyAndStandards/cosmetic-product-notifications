@@ -9,8 +9,8 @@ class DeclarationController < ApplicationController
   end
 
   def accept
-    if params[:agree_to_declaration] != "checked"
-      @errors = [{ text: "You must agree to the declaration to use this service", href: "#agree_to_declaration" }]
+    if params[:accept_declaration] != "checked"
+      @errors = [{ text: "You must confirm the declaration to use this service", href: "#accept_declaration" }]
       show_declaration
     else
       User.current.has_accepted_declaration!

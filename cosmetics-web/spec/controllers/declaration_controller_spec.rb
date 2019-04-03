@@ -21,13 +21,18 @@ RSpec.describe DeclarationController, type: :controller do
 
     describe "POST #accept" do
       it "records the declaration as accepted" do
-        post :accept, params: { agree_to_declaration: "checked" }
+        post :accept, params: { accept_declaration: "checked" }
         expect(first_time_user.has_accepted_declaration?).to be true
       end
 
       it "redirects to the root path" do
-        post :accept, params: { agree_to_declaration: "checked" }
+        post :accept, params: { accept_declaration: "checked" }
         expect(response).to redirect_to(root_path)
+      end
+
+      it "returns an error if the declaration is not accepted" do
+        post :accept, params: { accept_declaration: "unchecked" }
+        expect(assigns(:errors).first[:text]).to include("You must confirm the declaration")
       end
     end
   end
