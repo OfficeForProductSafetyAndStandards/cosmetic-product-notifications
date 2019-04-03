@@ -7,7 +7,7 @@ fieldset.govuk-fieldset
 
 legend.govuk-fieldset__legend.govuk-fieldset__legend--l
   | When was this action decided?
-= render "date_input", form: form
+= render "form_components/govuk_date_input", form: form, key: :date_decided
 
 - if allow_product_linking
   fieldset.govuk-fieldset

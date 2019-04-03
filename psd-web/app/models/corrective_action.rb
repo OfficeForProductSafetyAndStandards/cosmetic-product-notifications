@@ -16,7 +16,6 @@ class CorrectiveAction < ApplicationRecord
 
   before_validation { trim_line_endings(:summary, :details) }
   validates :summary, presence: { message: "Enter a summary of the corrective action" }
-  validates :date_decided, presence: { message: "Enter the date the corrective action was decided" }
   validate :date_decided_cannot_be_in_the_future
   validates :legislation, presence: { message: "Select the legislation relevant to the corrective action" }
   validates :related_file, presence: { message: "Select whether you want to upload a related file" }

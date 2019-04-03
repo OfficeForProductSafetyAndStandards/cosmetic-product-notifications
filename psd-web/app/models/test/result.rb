@@ -1,7 +1,6 @@
 class Test::Result < Test
   after_create :create_audit_activity
 
-  validates :date, presence: { message: "Enter date of the test" }
   validates :result, presence: { message: "Select result of the test" }
   validate :result_file_attached
 

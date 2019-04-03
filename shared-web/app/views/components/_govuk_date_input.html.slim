@@ -10,7 +10,6 @@ ruby:
                   { name: "year", classes: "govuk-input--width-4" }
           ]
 
-
   form_group_classes = [local_assigns.dig(:formGroup, :classes)]
   form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
 
@@ -38,7 +37,7 @@ ruby:
                 value: item[:value],
                 type: "number",
                 autocomplete: item[:autocomplete],
-                pattern: item[:pattern] ? item[:pattern] : "[0-9]*",
+                pattern: item[:pattern] || "[0-9]*",
                 attributes: item[:attributes]
 
 .govuk-form-group class=form_group_classes
@@ -48,4 +47,3 @@ ruby:
       = inner_html
   - else
     = inner_html
-

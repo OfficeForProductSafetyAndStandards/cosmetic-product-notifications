@@ -35,7 +35,7 @@ fieldset.govuk-fieldset
       | When did you request testing?
     - else
       | When was the test conducted?
-  = render "date_input", form: form
+  = render "form_components/govuk_date_input", form: form, key: :date
 
 - if !test.requested?
   = render "form_components/govuk_radios", form: form, key: :result,
