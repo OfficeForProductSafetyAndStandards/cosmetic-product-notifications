@@ -4,9 +4,13 @@ class AddCreatedByToFileBlob < ActiveRecord::Migration[5.2]
       dir.up do
         ActiveStorage::Blob.all.each do |blob|
           metadata = blob.metadata
-          first_activity = blob.attachments.where(record_type: "Activity").order(:created_at).first.record
-          blob.metadata.update(metadata.merge(created_by: first_activity&.source&.user_id))
-          blob.save
+          activity = blob.attachments.where(record_type: "Activity").order(:created_at).first
+          investigation = blob.attachments.where(record_type: "Investigation").order(:created_at).first
+          original_source = (activity || investigation)&.record&.source
+          if original_source.present? && (original_source.is_a? UserSource)
+            blob.metadata.update(metadata.merge(created_by: original_source.user_id))
+            blob.save
+          end
         end
       end
 
