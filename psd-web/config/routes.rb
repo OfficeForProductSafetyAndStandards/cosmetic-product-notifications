@@ -101,7 +101,7 @@ Rails.application.routes.draw do
 
   namespace :help do
     get :terms_and_conditions, path: "terms-and-conditions"
-    get :privacy_policy, path: "privacy-policy"
+    get :privacy_notice, path: "privacy-notice"
     get :about
   end
 
