@@ -1,44 +1,24 @@
-- content_for :page_title, "UK responsible person"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | UK responsible person
+- content_for :page_title, "Create or join existing account"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-    p
-      | The UK responsible person will be the:
-    ul.govuk-list.govuk-list--bullet
-      li manufacturer of the cosmetic
-      li organisation for which the cosmetic is manufactured, or
-      li importer of the cosmetic, if it is manufactured outside the UK
-
-    p
-      | A responsible person can be an organisation or an individual, they must:
-    ul.govuk-list.govuk-list--bullet
-      li ensure the cosmetic complies with relevant regulation
-      li be based in the UK
-
-    p[class="govuk-!-margin-bottom-7"]
-      = link_to "Read about being the UK responsible person for cosmetic products (opens in a new tab).", "#",
-              class: "govuk-link", target: "_blank", rel: 'noopener'
-
-    = form_with url: create_or_join_existing_account_index_path, method: :get do |form|
-      .govuk-form-group class=("govuk-form-group--error" if @nothing_selected)
-        fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--m
-            | Are you or your organisation registered as a UK responsible person?
-
-          - if @nothing_selected
-            span.govuk-error-message#option-error
-              | Please select an option before continuing
-
-          .govuk-radios
-            .govuk-radios__item
-              = form.radio_button :option, :join_existing, class: "govuk-radios__input"
-              = form.label :option, "Yes", value: :join_existing,
-                      class: "govuk-label govuk-radios__label"
-            .govuk-radios__item
-              = form.radio_button :option, :create_new, class: "govuk-radios__input"
-              = form.label :option, "No, create a new UK responsible person account", value: :create_new,
-                      class: "govuk-label govuk-radios__label"
-
-      = form.submit "Continue", class: "govuk-button"
+= form_with url: wizard_path, method: :put do |form|
+  - error_message = @nothing_selected && { text: "Select an option before continuing", href: "#option-error" }
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      - heading = capture do
+        h1.govuk-heading-xl
+          | Do you or your organisation have an account to submit cosmetic product notifications in the UK?
+        p[class="govuk-!-margin-bottom-2"]
+          | This is a different service to the EU Cosmetic product notification portal (CPNP).
+            You will need a new account if you or your organisation have not created an account since Brexit.
+      - if error_message
+        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: [error_message]
+      = render "form_components/govuk_radios", form: form, key: :option,
+              errorMessage: error_message,
+              fieldset: { legend: { html: heading } },
+              items: [{ text: "Yes, I or my organisation have an account", value: :join_existing },
+                      { text: "No, create a new account to submit cosmetic product notifications in the UK",
+                              value: :create_new }]
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

@@ -2,9 +2,17 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
-      ' You need to confirm access to
+      ' We have sent a confirmation email to
+      = @responsible_person.name
+    / TODO COSBETA-158: add the contact person name, instead of the responsible person name
+    p
+      ' We have sent an email to
       = @responsible_person.email_address
+    p
+      ' The contact person will need to click on the link in the email to confirm that they are
+      = @responsible_person.name
+      | .
     p
       = link_to "Resend validation link",
           resend_email_responsible_person_email_verification_keys_path(@responsible_person),
-        class: "govuk-button", role: "button"
+        class: "button-link", role: "button"
