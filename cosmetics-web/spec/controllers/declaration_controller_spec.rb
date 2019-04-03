@@ -18,6 +18,18 @@ RSpec.describe DeclarationController, type: :controller do
         expect(response).to render_template("declaration/business_declaration")
       end
     end
+
+    describe "POST #accept" do
+      it "records the declaration as accepted" do
+        post :accept, params: { agree_to_declaration: "checked" }
+        expect(first_time_user.has_accepted_declaration?).to be true
+      end
+
+      it "redirects to the root path" do
+        post :accept, params: { agree_to_declaration: "checked" }
+        expect(response).to redirect_to(root_path)
+      end
+    end
   end
 
   describe "When signed in as a Poison Centre user" do
