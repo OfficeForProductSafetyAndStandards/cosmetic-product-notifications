@@ -1,0 +1,55 @@
+/https://github.com/alphagov/govuk-frontend/blob/master/src/components/checkboxes/template.njk
+ruby:
+  id_prefix = (local_assigns[:idPrefix].presence || name).to_s
+  described_by = ""
+  is_conditional = items.any? { |item| item[:conditional] }
+  has_fieldset = true if local_assigns[:fieldset] else false
+- checkboxes_html = capture do
+  - if local_assigns[:hint].present?
+    - hint_id = id_prefix + '-hint'
+    - described_by = described_by.present? ? described_by + ' ' + hint_id : hint_id
+    = render "components/govuk_hint", id: hint_id, **hint
+  - if local_assigns[:errorMessage].present?
+    - error_id = id_prefix + '-error'
+    - described_by = described_by.present? ? described_by + ' ' + error_id : error_id
+    = render "components/govuk_error_message", id: error_id, **errorMessage
+  - checkboxes_classes = [local_assigns[:classes]]
+  - checkboxes_classes.push "govuk-checkboxes--conditional" if is_conditional
+  .govuk-checkboxes *(local_assigns[:attributes] || {}) class=checkboxes_classes data-module=("checkboxes" if is_conditional)
+    - items.each_with_index do |item, i|
+      - if item[:divider]
+        .govuk-radios__divider = item[:divider]
+      - id = item[:id] || "#{id_prefix}-#{i}"
+      - conditional_id = 'conditional-' + id
+      - has_hint = item[:hint] && (item[:hint][:text] || item[:hint][:html])
+      - item_hint_id = id + '-item-hint'
+      .govuk-checkboxes__item
+        input.govuk-checkboxes__input [*(local_assigns[:attributes] || {})
+          id=id
+          type='checkbox'
+          value=item[:value]
+          name=item[:name]
+          checked=item[:checked]
+          disabled=item[:disabled]
+          data-aria-controls=(conditional_id if item[:conditional])
+          aria-describeby=(item_hint_id if has_hint)]
+        = render "components/govuk_label",
+                html: item[:html],
+                text: item[:text],
+                classes: ['govuk-checkboxes__label', (item[:label][:classes] if item[:label])],
+                attributes: item[:label] && item[:label][:attributes],
+                for: id
+        - if has_hint
+          = render "components/govuk_hint", id: item_hint_id, classes: 'govuk-checkboxes__hint', **item[:hint]
+      - if item[:conditional]
+        .govuk-checkboxes__conditional class=("govuk-checkboxes__conditional--hidden" unless item[:checked]) id=conditional_id
+          = item[:conditional][:html]
+
+- form_group_classes = [local_assigns.dig(:formGroup, :classes)]
+- form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
+.govuk-form-group class=form_group_classes
+  - if local_assigns[:fieldset].present?
+    = render "components/govuk_fieldset", describedBy: described_by.presence, **fieldset
+      = checkboxes_html
+  - else
+    = checkboxes_html

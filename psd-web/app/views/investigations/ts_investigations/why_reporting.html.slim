@@ -6,36 +6,59 @@
       = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl
         span.govuk-caption-xl Report an unsafe or non-compliant product
-        | Why are you reporting this product?
-      span.govuk-hint
-        | Select all that apply
-      .govuk-form-group
-        .govuk-checkboxes data-module="checkboxes"
-          .govuk-checkboxes__item
-            = form.check_box :unsafe, class: "govuk-checkboxes__input", checked: @unsafe,
-                    "aria-controls": "conditional-report-report-type-1", "aria-expanded": "false", value: "unsafe"
-            = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label"
-          #conditional-report-report-type-1.govuk-checkboxes__conditional[
-            class=("govuk-checkboxes__conditional--hidden" unless @unsafe) ]
-            .psd-autocomplete#hazard-type-auto-complete-container
-              = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
+      /   | Why are you reporting this product?
+      / span.govuk-hint
+      /   | Select all that apply
+      / .govuk-form-group
+      /   .govuk-checkboxes data-module="checkboxes"
+      /     .govuk-checkboxes__item
+      /       = form.check_box :unsafe, class: "govuk-checkboxes__input", checked: @unsafe,
+      /               "aria-controls": "conditional-report-report-type-1", "aria-expanded": "false", value: "unsafe"
+      /       = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label"
+      /     #conditional-report-report-type-1.govuk-checkboxes__conditional[
+      /       class=("govuk-checkboxes__conditional--hidden" unless @unsafe) ]
+      /       .psd-autocomplete#hazard-type-auto-complete-container
+      /         = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
+      /                 show_all_values: true, hint: { text: "The primary danger the product presents" },
+      /                 aria_describedby: "hazard-type-category-hint", label: { text: "Hazard type" }
+
+      /       .govuk-form-group
+      /         = render "form_components/govuk_textarea", key: :hazard_description, form: form,
+      /                 attributes: { maxlength: 10000 },
+      /                 label: { text: "Hazard details" },
+      /                 hint: { text: "Including any incidents or events that brought it to your attention" }
+
+      /     .govuk-checkboxes__item
+      /       = form.check_box :non_compliant, class: "govuk-checkboxes__input", checked: @non_compliant,
+      /               "aria-controls": "conditional-report-report-type-2", "aria-expanded": "false",
+      /               value: "non-compliant"
+      /       = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label"
+      /     #conditional-report-report-type-2.govuk-checkboxes__conditional[
+      /       class=("govuk-checkboxes__conditional--hidden" unless @non_compliant) ]
+      /       = render "form_components/govuk_textarea", key: :non_compliant_reason, form: form,
+      /               attributes: { maxlength: 10000 },
+      /               label: { text: "Details of non-compliance" }
+      - unsafe_details = capture do
+        psd-autocomplete#hazard-type-auto-complete-container
+          = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
                       show_all_values: true, hint: { text: "The primary danger the product presents" },
                       aria_describedby: "hazard-type-category-hint", label: { text: "Hazard type" }
 
-            .govuk-form-group
-              = render "form_components/govuk_textarea", key: :hazard_description, form: form,
+        .govuk-form-group
+          = render "form_components/govuk_textarea", key: :hazard_description, form: form,
                       attributes: { maxlength: 10000 },
                       label: { text: "Hazard details" },
                       hint: { text: "Including any incidents or events that brought it to your attention" }
-
-          .govuk-checkboxes__item
-            = form.check_box :non_compliant, class: "govuk-checkboxes__input", checked: @non_compliant,
-                    "aria-controls": "conditional-report-report-type-2", "aria-expanded": "false",
-                    value: "non-compliant"
-            = form.label :non_compliant, "It's non-compliant", class: "govuk-label govuk-checkboxes__label"
-          #conditional-report-report-type-2.govuk-checkboxes__conditional[
-            class=("govuk-checkboxes__conditional--hidden" unless @non_compliant) ]
-            = render "form_components/govuk_textarea", key: :non_compliant_reason, form: form,
+      - non_compliant_details = capture do
+        = render "form_components/govuk_textarea", key: :non_compliant_reason, form: form,
                     attributes: { maxlength: 10000 },
                     label: { text: "Details of non-compliance" }
+      ruby:
+        why_reporting = [
+        { value: "unsafe", text: "It's unsafe", checked: @unsafe, conditional: { html: unsafe_details } },
+        { value: "non_compliant", text: "It's non-compliant", checked: @non_compliant, conditional: { html: non_compliant_details } }]
+      = render "form_components/govuk_checkboxes", form: form, key: :why_reporting,
+                    fieldset: { legend: { text: "Why are you reporting this product?", classes: "govuk-fieldset__legend--xl" } },
+                    hint: { text:"Select all that apply" },
+                    items: why_reporting
       = form.submit "Continue", class: "govuk-button"

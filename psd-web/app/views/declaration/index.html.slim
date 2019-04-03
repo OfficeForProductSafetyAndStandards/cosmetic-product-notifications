@@ -27,9 +27,6 @@
         li That any information you provide is correct to your best of your knowledge
         li That you have the right to share information you enter
         li Not to share any information from the product safety database outside your organisation
-      .govuk-form-group
-        .govuk-checkboxes data-module="checkboxes"
-          .govuk-checkboxes__item
-            = form.check_box :agree_to_declaration, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
-            = form.label :agree_to_declaration, "I agree", class: "govuk-checkboxes__label"
+      = render "form_components/govuk_checkboxes", form: form, key: "declaration",
+                    items: [{ value: "agree", text: "I agree" }]
   = form.submit "Continue", class: "govuk-button"

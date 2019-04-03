@@ -30,7 +30,7 @@
               | Assigned to
             .govuk-checkboxes data-module="checkboxes"
               .govuk-checkboxes__item
-                = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
+                = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }
                 = form.label :assigned_to_me, "Me", class: "govuk-checkboxes__label"
               - teams_with_keys.each do |key, team, name|
                 .govuk-checkboxes__item
@@ -40,11 +40,20 @@
                 = form.check_box :assigned_to_someone_else, { class: "govuk-checkboxes__input",
                         "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
                 = form.label :assigned_to_someone_else, "Other person or team", class: "govuk-checkboxes__label"
-              #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
-                = render "form_components/autocomplete_select", key: :assigned_to_someone_else_id, form: form,
-                        items: (User.get_assignees(except: User.current) + Team.all).map { |e| [e.display_name, e.id] },
-                        label: { text: "Name" }
-
+              #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden      
+        / - other_assignee = capture do
+        /   = render "form_components/autocomplete_select", key: :assigned_to_someone_else_id, form: form,
+        /                 items: (User.get_assignees(except: User.current) + Team.all).map { |e| [e.display_name, e.id] },
+        /                 label: { text: "Name" }
+        / ruby:
+        /   assigned_to = [{ value: "me", text: "Me" },
+        /     teams_with_keys.each do |key, team, name|
+        /       { value: key, text: name}
+        /       end
+        /     { value: "other", text: "Other person or team", conditional: { html: other_assignee } } ]
+        / = render "form_components/govuk_checkboxes", form: form, key: :assigned_to,
+        /   fieldset: { legend: { text: "Assigned to", classes: "govuk-fieldset__legend--s" } },
+        /   items: assigned_to
         .govuk-form-group
           fieldset.govuk-fieldset
             .govuk-fieldset__legend--s
@@ -56,6 +65,9 @@
               .govuk-checkboxes__item
                 = form.check_box :status_closed, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
                 = form.label :status_closed, "Closed", class: "govuk-checkboxes__label"
+        = render "form_components/govuk_checkboxes", form: form, key: :status,
+                fieldset: { legend: { text: "Status", classes: "govuk-fieldset__legend--s" } },
+                items: [ { value: "open", text: "Open"}, { value: "closed", text: "Closed"}]
         = render "form_components/govuk_radios", form: form, key: :sort_by,
                 fieldset: { legend: { text: "Sort by", classes: "govuk-fieldset__legend--s" } },
                 items: [{ text: "Updated: recent", value: "recent" },
