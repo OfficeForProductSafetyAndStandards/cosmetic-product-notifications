@@ -187,7 +187,7 @@ private
   def special_applicator(component_node)
     return if component_node.xpath(".//specialApplicator") == "N"
 
-    get_special_applicator(component_node.xpath(".//specialApplicator").first&.text.to_i)
+    get_special_applicator(component_node.xpath(".//applicator").first&.text.to_i)
   end
 
   def acute_poisoning_info(component_node)
