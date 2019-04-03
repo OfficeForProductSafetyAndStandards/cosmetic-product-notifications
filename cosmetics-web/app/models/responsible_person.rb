@@ -5,6 +5,7 @@ class ResponsiblePerson < ApplicationRecord
   has_many :pending_responsible_person_users, dependent: :destroy
   has_many :users, through: :responsible_person_users
   has_many :email_verification_keys, dependent: :destroy
+  has_many :contact_persons
 
   enum account_type: { business: "business", individual: "individual" }
 
