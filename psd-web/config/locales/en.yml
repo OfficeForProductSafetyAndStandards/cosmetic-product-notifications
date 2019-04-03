@@ -101,6 +101,6 @@ en:
             product:
               required: "Select the product the corrective action relates to"
             date_decided:
-              date_required: "Enter a date of the corrective action"
+              date_required: "Enter the date the corrective action was decided"
               invalid: "Enter a real date when the corrective action was decided"
               date_missing_component: "Enter the date the corrective action was decided and include a day, month and year"
