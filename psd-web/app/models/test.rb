@@ -1,5 +1,5 @@
 class Test < ApplicationRecord
-  include DateConcern
+  include Shared::Web::Concerns::DateConcern
   include SanitizationHelper
 
   belongs_to :investigation
