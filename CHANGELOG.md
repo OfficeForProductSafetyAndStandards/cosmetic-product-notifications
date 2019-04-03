@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 <!-- ### Next release checklist -->
 
 
+## 2019-04-03
+### Product safety database
+- Update introduction, about page, terms and conditions and privacy notice.
+
+
 ## 2019-03-29
 ### Product safety database
 - Rename the service to Product safety database.

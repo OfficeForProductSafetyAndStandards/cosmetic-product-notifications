@@ -4,82 +4,104 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds-from-desktop
-    h1.govuk-heading-xl Product safety database about page and guidance
-    h2.govuk-heading-l Purpose of the Product safety database
+    h1.govuk-heading-l Product safety database about page and guidance
     p
-      | The Product safety database is designed to improve information sharing amongst
-        UK market surveillance authorities.
-        It replaces two EU systems for managing product safety issues; ICSMS and RAPEX.
-    p
-      | The ambition for the service is to build a shared system for managing product safety cases across the UK.
-        This means that when an organisation is investigating a product in the future they will have
-        a better set of information to draw on. For example, finding test results for similar products or seeing if
-        the manufacturer has been looked into before.
-        This will reduce duplication and improve the quality of product safety and
-        market surveillance activity in the UK.
+      | The Product safety database is used by Trading Standards and other market surveillance authorities (MSAs) to
+        report, track and share product safety information. It replaces the European Union’s RAPEX and ICSMS systems.
 
-    h2.govuk-heading-l What you can do
+    h2.govuk-heading-m When to use the service
     p
-      | There are three main functions of the service:
-      ul.govuk-list.govuk-list--bullet
-        li Report serious product safety risks so that other MSAs are alerted
-        li Manage routine product safety cases and projects
-        li Refer a case to a different organisation
-        li Find information on businesses and products
+      | In line with the the General Product Safety Regulations, registered users from Trading Standards and MSAs can
+        use the service to:
+    ul.govuk-list.govuk-list--bullet
+      li report ‘serious’ product safety risks
+      li
+        | manage routine product safety issues including passing them on to another organisation, and tracking their
+          progress
+      li share and find information on products and businesses
+      li receive alerts from OPSS about serious product safety issues
 
-    h2.govuk-heading-l Case confidentiality
+    h2.govuk-heading-m Reporting a ‘serious’ product safety risk
     p
-      | Most information on the Product safety database is open to all users by default.
-        Some information is restricted when needed.
+      | MSAs must use the service to report ‘serious’ safety product issues in the UK. The OPSS will share the
+        information with all other MSAs through the Product safety database.
+    p
+      ' When reporting a serious issue you must include a risk assessment. To assess the level of risk, refer to an
+        established methodology, for example the
+      = link_to "EU RAPEX risk assessment guidelines",
+          "https://ec.europa.eu/consumers/consumer-safety/rag/#/screen/home"
+      |.
+    p
+      | You should add both serious and routine issues to the Product safety database. If you are unsure if a case is
+        serious then add the information about the case and assign it to OPSS. OPSS will then work with you to help
+        determine the severity and what to do next.
 
-    h3.govuk-heading-m Cases proceeding to court
+    h2.govuk-heading-m Brexit implications
+    h3.govuk-heading-s Deal: MSAs’ responsibilities
     p
-      | When a potential enforcement action has reached the point that a market surveillance authority
-        has decided to take legal action then the case should be restricted.
-        When a case is restricted only people who belong to that specific organisation will be able to see
-        the details of the case. For everyone else it will say ‘case restricted’.
+      | When an MSA reports a serious issue through the Product safety database, OPSS will add it to RAPEX. If the UK
+        leaves Europe with a deal, the UK must continue to report unsafe products to the EU using RAPEX during the
+        transition period.
 
-    h3.govuk-heading-m GDPR
+    h3.govuk-heading-s No deal: MSAs’ responsibilities
+    p If the UK leaves the EU without a deal, the UK will:
+    ul.govuk-list.govuk-list--bullet
+      li no longer need to report product safety information to RAPEX
+      li lose access RAPEX data which is not publicly available
+    p The Product safety database will send alerts about unsafe products on the UK market to local authorities.
     p
-      | Personal information about members of the public who have reported something to a MSA should not be
-        widely shared.
-        When you add details or correspondence from a member of the public you should mark it as personal.
-        This will stop people outside your organisation from accessing their details.
+      ' You can find more in depth information on MSA reporting responsibilities in the
+      = link_to "OPSS incident management plan", "https://assets.publishing.service.gov.uk/government/uploads/" + \
+          "system/uploads/attachment_data/file/733151/safety-and-standards-incident-management-plan.pdf"
+      |.
 
-    h2.govuk-heading-l Who should access the service
+    h2.govuk-heading-m Accessing the service
     p
-      | The Product safety database is only available to people who work for Market Surveillance Authorities.
-        This includes local authority trading standards, the Office for Product Safety and Standards and
-        UK government bodies which have market surveillance powers.
+      | To access the Product safety database you must be a registered user from a market surveillance authority. This
+        includes local authority Trading Standards, the Office for Product Safety and Standards and UK government
+        bodies which have market surveillance powers.
+    p
+      ' Every MSA has an administrator who can invite colleagues to use the service. You can find out who does this for
+        your organisation by emailing
+      = mail_to "opss.enquiries@beis.gov.uk"
 
-    h3.govuk-heading-m Invite someone to your organisation
+    h2.govuk-heading-m Setting up a colleague as a registered user
     p
-      | Every organisation has an organisation administrator. This administrator is able to invite new people to
-        the Product safety database. They can do this by clicking on the team name and then ‘invite a team member’
+      ' If you are the administrator for your organisation, you can invite colleagues from
+      = link_to "the team page", your_teams_path
+      |.
     p
-      | The administrator should only invite people who are in their organisation and who would normally have access to
-        product safety cases and information in their organisation.
+      | Administrators should only invite people from their organisation whose responsibilities include reporting,
+        tracking or sharing information on product safety.
 
-    h3.govuk-heading-m Find your organisation’s administrator
-    p
-      | To find out who your organisation’s administrator is go to your team and look for the person who has
-        a tick next to their name where it says ‘Can invite team members.’
+    h2.govuk-heading-m Case confidentiality
+    p Most information is visible and searchable to all registered users. This includes information about:
+    ul.govuk-list.govuk-list--bullet
+      li products
+      li businesses
+      li open and closed cases including their progress or outcome
+    p Information is restricted when needed, for example, if legal action is being taken.
 
-    h2.govuk-heading-l What is a serious risk
+    h2.govuk-heading-m Staying in line with GDPR
     p
-      | There is no single definition of a serious risk. When assessing risk people should refer to
-        an accepted risk assessment methodology, for example the EU RAPEX guidelines:
-      br
-      a href=["https://ec.europa.eu/consumers/consumer-safety/rag/#/screen/home"]
-        | https://ec.europa.eu/consumers/consumer-safety/rag/#/screen/home
+      | When you create a case you should not add any personal information about members of the public. If you add
+        correspondence from a member of the public that includes their personal information you must mark the uploaded
+        files as ‘consumer contact details’. The service will prompt you to do this. This restricts visibility so that
+        people from outside your organisation cannot see them.
 
-    h2.govuk-heading-l Where you should go for further support
+    h2.govuk-heading-m More support
     p
-      ' If you need further support with how to use the service please contact OPPS by emailing
-      a [href="mailto:OPSS.enquiries@beis.gov.uk"] OPSS.enquiries@beis.gov.uk
+      ' If you need support, email OPSS on
+      = mail_to "OPSS.enquiries@beis.gov.uk"
 
-    h2.govuk-heading-l Feedback and suggestions
+    h2.govuk-heading-m Feedback and suggestions
     p
-      | Use the feedback link at the top of each page to provide feedback to the development team.
-        The service is being continually developed so all feedback is greatly appreciated.
+      | The service is being continually improved and all feedback is appreciated. Use the feedback link at the top of
+        each page.
+
+    p
+      = link_to "Terms and conditions", help_terms_and_conditions_path
+    p
+      = link_to "Privacy notice", help_privacy_notice_path
+
 = render "close_page_button"
