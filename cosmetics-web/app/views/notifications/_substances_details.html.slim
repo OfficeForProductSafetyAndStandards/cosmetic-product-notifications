@@ -6,11 +6,12 @@ h2.govuk-heading-l.poison-centre__table-heading
     - if component.name.present?
       caption.govuk-table__caption.govuk-heading-m
         = component.name
-    tr.govuk-table__row
-      th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
-        | CMR
-      td.govuk-table__cell
-        = render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)
+    -if @notification.notified_post_eu_exit?
+      tr.govuk-table__row
+        th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
+          | CMR
+        td.govuk-table__cell
+          = render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)
     tr.govuk-table__row
       th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
         | Nanomaterials
