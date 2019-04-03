@@ -8,6 +8,6 @@
         errorMessage: @error_text.present? && { text: @error_text },
         fieldset: { legend: { text: "Have the cosmetic products been notified in the EU?", \
           isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
-        items: [{ text: "Yes", value: "yes" },
-          { text: "No", value: "no" }]
+        items: [{ text: "Yes, they are already notified in the EU", value: "yes" },
+          { text: "No, they have not been notified in the EU", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

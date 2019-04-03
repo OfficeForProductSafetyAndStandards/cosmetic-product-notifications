@@ -2,38 +2,28 @@
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-- name_label = @responsible_person.business? ? "Registered business name" : "Full name"
-- address_label = @responsible_person.business? ? "Registered business address" : "Address"
+- name_label = @responsible_person.business? ? "Business name" : "Name"
+- address_label = @responsible_person.business? ? "UK business address" : "Address"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = render "error_summary", errors: @responsible_person.errors
+= form_with model: @responsible_person, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
 
-    h1.govuk-heading-xl
-      | UK responsible person details
+      h1.govuk-heading-xl
+        | UK responsible person details
 
-    - if @responsible_person.business?
-      p[class="govuk-!-margin-bottom-9"]
-        | Find your company information on
-        br
-        = link_to "Companies House (opens in a new tab)", "https://beta.companieshouse.gov.uk",
-                class: "govuk-link", target: "_blank", rel: "noopener"
-        | .
-
-    = form_with model: @responsible_person, url: wizard_path, method: :put do |form|
-      = render "form_input", form: form, field: :name, label: name_label
-      = render "form_input", form: form, field: :email_address, type: :email_field, label: "Email address"
-      = render "form_input", form: form, field: :phone_number, type: :telephone_field, label: "Phone number",
-              class: "govuk-input--width-20"
+      = render "form_components/govuk_input", form: form, key: :name, label: { text: name_label }
 
       fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--m
           = address_label
-        = render "form_input", form: form, field: :address_line_1, label: "Building and street"
-        = render "form_input", form: form, field: :address_line_2, label: nil
-        = render "form_input", form: form, field: :city, label: "Town or city"
-        = render "form_input", form: form, field: :county, label: "County"
-        = render "form_input", form: form, field: :postal_code, label: "Postcode",
-                class: "govuk-input--width-10"
+      = render "form_components/govuk_input", form: form, key: :address_line_1, label: { text: "Building and street" }
+      = render "form_components/govuk_input", form: form, key: :address_line_2, label: { text: nil }
+      = render "form_components/govuk_input", form: form, key: :city, label: { text: "Town or city" }
+      = render "form_components/govuk_input", form: form, key: :county, label: { text: "County" }
+      = render "form_components/govuk_input", form: form, key: :postal_code, label: { text: "Postcode" },
+              classes: "govuk-input--width-10"
 
-      = form.submit "Continue", class: "govuk-button"
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

@@ -1,4 +1,4 @@
-- content_for :page_title, "Upload cosmetic notification file"
+- content_for :page_title, "Upload your EU notification files"
 - content_for :after_header do
   = link_to "Back", responsible_person_add_notification_path(@responsible_person, :have_products_been_notified_in_eu), \
     class: "govuk-back-link"
@@ -20,13 +20,14 @@
         | Upload your EU notification files
 
       .govuk-body-m
-        = link_to "Find out how to export cosmetic product zip files from CPNP.",
-            "https://docs.google.com/document/d/1QTM-LYmlAk8nnuwYOvtn8-gB5-F6T5u4lgs_2BhzPJ8/edit",
-            target: :_blank, rel: 'noopener'
+        p
+          | You can upload up to
+          =<> NotificationFile.get_max_number_of_files
+          | files at a time.
+        p
+          | To choose multiple files, hold the ‘Shift’ key when selecting them.
       .govuk-form-group#file-upload-form-group[class= ("govuk-form-group--error" if @errors.present?)]
-        = form.label :uploaded_files, "Upload EU notification files", class: "govuk-label"
-        span.govuk-hint
-          | To select multiple files, hold the ‘Shift’ key when selecting them.
+        = form.label :uploaded_files, "Upload EU notification files", class: "govuk-label govuk-!-font-weight-bold"
         span#file-upload-error-message.govuk-error-message
           = @errors.last[:text] if @errors.present?
         = form.file_field :uploaded_files, multiple: true,

@@ -1,7 +1,7 @@
 - content_for :page_title, "Join existing responsible person"
 - content_for :after_header do
-  = link_to "Back", create_or_join_existing_account_index_path, class: "govuk-back-link"
+  = link_to "Back", wizard_path(:create_or_join_existing), class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l
-      | To join an existing account, you need to be invited by a member of that organisation
+      | To join an existing UK responsible person account, you need to be invited by a team member of that organisation
