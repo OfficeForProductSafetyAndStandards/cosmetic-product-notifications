@@ -10,7 +10,7 @@
       | Upload an image of the product label
     p This can be an artwork file or a photo of the label.
     p If you upload a photo text in the image must be legible.
-    p The file must be a ‘jpg’, ‘pdf’ ‘png’, or ‘svg’ and no larger than 30MB.
+    p The file must be a ‘jpg’, ‘pdf’, or ‘png’ and no larger than 30MB.
     = form_with(url: responsible_person_notification_product_image_upload_index_path, method: :post, \
       multipart: true) do |form|
       div class=(@error_list.any? ? ['govuk-form-group', 'govuk-form-group--error'] : 'govuk-form-group')
