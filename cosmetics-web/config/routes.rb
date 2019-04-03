@@ -10,12 +10,7 @@ Rails.application.routes.draw do
 
   resources :responsible_persons, only: %i[show] do
     collection do
-      resources :account, controller: "responsible_persons/account_wizard", only: %i[show update] do
-        collection do
-          get :create_or_join_existing
-          get :join_existing
-        end
-      end
+      resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
     end
 
     resources :add_notification, controller: "responsible_persons/add_notification_wizard", only: %i[show new update]
@@ -40,6 +35,9 @@ Rails.application.routes.draw do
 
     resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
       resources :build, controller: :notification_build, only: %i[show update new]
+      resources :additional_information, controller: :additional_information, only: %i[index]
+      resources :product_image_upload, controller: :product_image_upload, only: %i[new create]
+
       resources :components do
         resources :build, controller: :component_build, only: %i[show update new]
         resources :formulation, controller: "formulation_upload", only: %w[new create]
@@ -47,7 +45,6 @@ Rails.application.routes.draw do
 
       member do
         post :confirm
-        get :upload_formulation
       end
     end
   end

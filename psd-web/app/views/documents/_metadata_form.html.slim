@@ -7,7 +7,7 @@
     .govuk-grid-column-two-thirds-from-desktop
       = render "documents/document_preview", document: document, dimensions: "480x320"
       hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible"]
-      .govuk-fieldset__legend--l = "#{image_document_text(document).titleize} details"
+      h3.govuk-heading-m = "#{image_document_text(document).titleize} details"
       = form.fields_for :file do |subform|
         = render "form_components/govuk_input", key: :title, form: subform, classes: "govuk-!-width-two-thirds",
                 value: document.metadata["title"],

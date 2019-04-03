@@ -165,26 +165,6 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
     end
   end
 
-  describe "GET #formulation_upload" do
-    it "redirects to the notifications overview if all components have complete formulations" do
-      notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component])
-      get :upload_formulation, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
-      expect(response).to redirect_to(responsible_person_notifications_path(responsible_person))
-    end
-
-    it "updates the notification state to draft_complete if all components have complete formulations" do
-      notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component], state: "notification_file_imported")
-      get :upload_formulation, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
-      expect(notification.reload.state).to eq("draft_complete")
-    end
-
-    it "redirects to the formulation upload page if not all components have complete formulations" do
-      notification = Notification.create(responsible_person_id: responsible_person.id, components: [ranges_component])
-      get :upload_formulation, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
-      expect(response).to redirect_to(new_responsible_person_notification_component_formulation_path(responsible_person, notification, ranges_component))
-    end
-  end
-
 private
 
   def attach_image_to_draft_with_metadata(metadata)

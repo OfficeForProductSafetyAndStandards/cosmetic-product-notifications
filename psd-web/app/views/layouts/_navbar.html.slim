@@ -17,4 +17,4 @@
             = link_to "Your teams", your_teams_path, "data-topnav": "teams", class: "govuk-link--no-visited-state"
           - else
             - team = User.current.teams.first
-            = link_to team.display_name, team_path(team), "data-topnav": "teams", class: "govuk-link--no-visited-state"
+            = link_to "Your team", team_path(team), "data-topnav": "teams", class: "govuk-link--no-visited-state"

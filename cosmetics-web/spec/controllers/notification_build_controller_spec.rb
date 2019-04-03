@@ -75,10 +75,9 @@ RSpec.describe NotificationBuildController, type: :controller do
       expect(Notification.find(notification.id).components).to have(1).item
     end
 
-    # TODO COSBETA-10 Update this test
-    it "throws an exception if single_or_multi_component set to multiple" do
+    it "creates two components if single_or_multi_component set to multiple" do
       post(:update, params: params.merge(id: :single_or_multi_component, single_or_multi_component: "multiple"))
-      expect(Notification.find(notification.id).components).to have(1).item
+      expect(Notification.find(notification.id).components).to have(2).item
     end
 
     it "adds errors if single_or_multi_component is empty" do
@@ -124,7 +123,7 @@ RSpec.describe NotificationBuildController, type: :controller do
     it "adds errors if the user uploads an incorrect file type as a label image" do
       post(:update, params: params.merge(id: :add_product_image, image_upload: [text_file]))
       expect(assigns[:notification].image_uploads.first.errors[:file])
-        .to include("must be one of image/jpeg, application/pdf, image/png, image/svg+xml")
+        .to include("must be one of image/jpeg, application/pdf, image/png")
     end
 
     it "does not allow the user to update a notification for a Responsible Person they not belong to" do

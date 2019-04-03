@@ -1,6 +1,6 @@
 ruby:
-  sensitive = activity.sensitive?
-  title = sensitive ? activity.sensitive_title : activity.title
+  restricted = !activity.can_display_all_data?
+  title = restricted ? activity.restricted_title : activity.title
   creator = activity.source&.user&.organisation&.name || activity.source&.show
 
 li
@@ -9,7 +9,7 @@ li
   p.govuk-body-s.timeline-details
     = activity.subtitle
 
-  - if sensitive
+  - if restricted
     p = render "components/hmcts_badge", text: "Restricted access", classes: "hmcts-badge--grey"
     p = "Consumer contact details hidden to comply with GDPR legislation. " + \
         "Contact #{creator}, who created this activity, to obtain these details if required."
