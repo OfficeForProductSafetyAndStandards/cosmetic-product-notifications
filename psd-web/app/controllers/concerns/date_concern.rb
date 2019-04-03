@@ -3,28 +3,6 @@ module DateConcern
   included do # rubocop:disable Metrics/BlockLength
     validate :date_from_components
 
-    # The current implementation is focused on reflecting changes based on the component values changing in the form
-    # This has a side effect of overriding values provided with the setter (using say `record.date = foo`)
-    # The `clear_date` and `set_date` are sensible workarounds, but could be changed into a dynamic setter down the line
-    def clear_date(key: date_keys.first)
-      set_day(key, nil)
-      set_month(key, nil)
-      set_year(key, nil)
-      self[key] = nil
-    end
-
-    def set_date(new_date, key: date_keys.first)
-      set_day(key, new_date.day)
-      set_month(key, new_date.month)
-      set_year(key, new_date.year)
-      self[key] = new_date
-    end
-
-    def get_date(key: date_keys.first)
-      date_components = get_date_components(key).map(&:to_i)
-      Date.valid_civil?(*date_components) ? Date.civil(*date_components) : nil
-    end
-
     after_initialize do
       keys = date_keys
       keys.each do |key|
@@ -60,10 +38,6 @@ module DateConcern
     [:date]
   end
 
-  def get_date_components(key)
-    [get_year(key), get_month(key), get_day(key)]
-  end
-
   def update_dates_from_params(params)
     # expects to receive the part of params relevant to the object it's on
     return if params.blank?
@@ -79,7 +53,28 @@ module DateConcern
     end
   end
 
+  # The current implementation is focused on reflecting changes based on the component values changing in the form
+  # This has a side effect of overriding values provided with the setter (using say `record.date = foo`)
+  # The `clear_date` and `set_date` are sensible workarounds, but could be changed into a dynamic setter down the line
+  def clear_date(key: date_keys.first)
+    set_day(key, nil)
+    set_month(key, nil)
+    set_year(key, nil)
+    self[key] = nil
+  end
+
+  def set_date(new_date, key: date_keys.first)
+    set_day(key, new_date.day)
+    set_month(key, new_date.month)
+    set_year(key, new_date.year)
+    self[key] = new_date
+  end
+
 private
+
+  def get_date_components(key)
+    [get_year(key), get_month(key), get_day(key)]
+  end
 
   def set_day(key, value)
     self.send("#{key}_day=", value)
@@ -106,13 +101,13 @@ private
   end
 
   def update_from_components(key)
-    unless get_date_components(key).any?(&:blank?)
-      date_component_values = get_date_components(key).map(&:to_i)
-      self[key] = if Date.valid_civil?(*date_component_values)
-        # This sets it if it makes sense. Validation then can compare the presence of
-        # date and its components to know if the date parsed correctly
-                    Date.civil(*date_component_values)
-                  end
+    return if get_date_components(key).any?(&:blank?)
+
+    date_component_values = get_date_components(key).map(&:to_i)
+    if Date.valid_civil?(*date_component_values)
+      # This sets it if it makes sense. Validation then can compare the presence of
+      # date and its components to know if the date parsed correctly
+      self[key] = Date.civil(*date_component_values)
     end
   end
 
