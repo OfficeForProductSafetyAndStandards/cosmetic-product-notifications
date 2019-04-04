@@ -1,29 +1,28 @@
 ruby:
-  id = local_assigns[:id] || "picker-#{key}"
-  show_all_values = local_assigns[:show_all_values]
-  if form.object&.errors
-     error_text = form.object.errors.full_messages_for(key).first.presence
-     local_assigns[:errorMessage] ||= { text: error_text } if error_text
+  local_assigns[:name] ||= get_attribute_name(form, key)
+  local_assigns[:id] ||= "picker-#{key}"
+  local_assigns[:items] = items.map do |item|
+    {
+      value: item.is_a?(Array) ? item[1] : item,
+      text: item.is_a?(Array) ? item[0] : item
+    }
   end
-  form_group_classes = [local_assigns.dig(:formGroup, :classes)]
-  form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
+  local_assigns[:items].unshift(value: nil, text: "")
+
   selected_value = local_assigns[:selected]
   selected_value ||= form.object.send(key) if form.object.respond_to?(key)
+  if selected_value
+    item_matching_selected = local_assigns[:items].find { |item| item[:value].to_s == selected_value }
+    item_matching_selected[:selected] = true if item_matching_selected
+  elsif form.object&.respond_to?(key)
+    # Make item selected based on attribute value
+    item_matching_state = local_assigns[:items].find { |item| item[:value].to_s == form.object.send(key).to_s }
+    item_matching_state[:selected] = true if item_matching_state
+  end
 
-/ The min-height is a work-around for height not accounting for floats inside (and currently the clear-button
-/ positioning is implemented with floats
-.govuk-form-group class=form_group_classes style="min-height:100px"
-  div class=("autocomplete-select-with-clear" if show_all_values)
-    = render "form_components/govuk_select", selected: selected_value,
-            include_blank: true, id: id, **local_assigns
+  if form.object&.errors
+    error_text = form.object.errors.full_messages_for(key).first.presence
+    local_assigns[:errorMessage] ||= { text: error_text } if error_text
+  end
 
-  / The clear button is only needed when the select box is showing all values (and a dropdown arrow)
-  / See https://github.com/alphagov/accessible-autocomplete/issues/240#issuecomment-455859918 for more info
-  - if show_all_values
-    button id="clear-#{id}" class="autocomplete__clear-button" type="button"
-      span#delete-hint.govuk-hint.govuk-visually-hidden
-        | Clear autocomplete
-      svg viewbox="0 0 40 40" class="autocomplete__clear-viewbox"
-        path class="autocomplete__clear-icon" d="M 10,10 L 30,30 M 30,10 L 10,30"
-  javascript:
-    window.callAutocompleteWhenReady("#{id}", { showAllValues: "#{show_all_values}" });
+= render "components/autocomplete_select", **local_assigns

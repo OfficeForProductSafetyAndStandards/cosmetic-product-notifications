@@ -5,10 +5,12 @@ ruby:
   # Infer name and id_prefix from attribute key
   local_assigns[:name] ||= get_attribute_name(form, key)
   local_assigns[:id] ||= get_attribute_id_prefix(form, key)
-  local_assigns[:items] = items.map { |item| {
-          value: item.kind_of?(Array) ? item[1] : item,
-          text: item.kind_of?(Array) ? item[0] : item
-  } }
+  local_assigns[:items] = items.map do |item|
+    {
+      value: item.is_a?(Array) ? item[1] : item,
+      text: item.is_a?(Array) ? item[0] : item
+    }
+  end
   local_assigns[:items].unshift(value: nil, text: "") if local_assigns[:include_blank]
 
   if local_assigns[:selected]
