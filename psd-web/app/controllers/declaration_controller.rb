@@ -8,7 +8,7 @@ class DeclarationController < ApplicationController
   def accept
     @error_list = []
     p params
-    if !(params[:agree].present?)
+    if params[:agree] != "checked"
       @error_list << { text: "You must agree to the declaration to use this service" }
       return render :index
     end

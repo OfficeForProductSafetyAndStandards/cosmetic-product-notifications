@@ -18,28 +18,37 @@ ruby:
       / This is not part of the source implementation - to be removed when convenient
       - if item[:divider]
         .govuk-radios__divider = item[:divider]
-      - id = item[:id] || "#{id_prefix}-#{i}"
-      - conditional_id = 'conditional-' + id
-      - has_hint = item[:hint].present?
-      - item_hint_id = id + '-item-hint'
-      .govuk-checkboxes__item
-        input.govuk-checkboxes__input [*(local_assigns[:attributes] || {})
-          id=id
-          type='checkbox'
-          value=item[:value].to_s
-          name=item[:name] || name
-          checked=item[:checked]
-          disabled=item[:disabled]
-          data-aria-controls=(conditional_id if item[:conditional])
-          aria-describeby=[(describeBy if !has_fieldset && described_by.present?)], (item_hint_id if has_hint)]
-        = render "components/govuk_label",
-                html: item[:html],
-                text: item[:text],
-                classes: ['govuk-checkboxes__label', item.dig(:label, :classes).presence],
-                attributes: item.dig(:label, :attributes),
-                for: id
-        - if has_hint
-          = render "components/govuk_hint", id: item_hint_id, classes: 'govuk-checkboxes__hint', **item[:hint]
+      - elsif item[:type] == "hidden"
+        input.govuk-checkboxes__input [
+            type='hidden'
+            value=item[:value].to_s
+            name=(item[:name] || name)
+            disabled=item[:disabled]]
+      - else
+        - id = item[:id] || "#{id_prefix}-#{i}"
+        - conditional_id = 'conditional-' + id
+        - has_hint = item[:hint].present?
+        - item_hint_id = id + '-item-hint'
+        .govuk-checkboxes__item
+          input.govuk-checkboxes__input [
+            id=id
+            type=(item[:type] || 'checkbox')
+            value=item[:value].to_s
+            name=(item[:name] || name)
+            checked=item[:checked]
+            disabled=item[:disabled]
+            data-aria-controls=(conditional_id if item[:conditional])
+            aria-describedby=("#{described_by if !has_fieldset && described_by.present?} #{item_hint_id if has_hint}".presence)
+            *(item[:attributes] || {})]
+          - if item[:type] != "hidden"
+            = render "components/govuk_label",
+                    html: item[:html],
+                    text: item[:text],
+                    classes: ['govuk-checkboxes__label', item.dig(:label, :classes).presence],
+                    attributes: item.dig(:label, :attributes),
+                    for: id
+            - if has_hint
+              = render "components/govuk_hint", id: item_hint_id, classes: 'govuk-checkboxes__hint', **item[:hint]
       - if item[:conditional]
         .govuk-checkboxes__conditional class=("govuk-checkboxes__conditional--hidden" unless item[:checked]) id=conditional_id
           = item[:conditional][:html]
