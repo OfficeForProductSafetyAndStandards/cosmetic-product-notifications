@@ -21,12 +21,12 @@ li.product
               dd
                 = notification.cpnp_reference
 
-    p.add-documents
-      - if notification.formulation_required? || notification.images_required?
-        = link_to "Add remaining information",
-                responsible_person_notification_additional_information_index_path(responsible_person, notification),
-                class: "govuk-link--no-visited-state"
-      - else
-        = link_to "Confirm and notify",
-                edit_responsible_person_notification_path(responsible_person, notification),
-                class: "govuk-link--no-visited-state"
+      .add-documents
+        - if notification.formulation_required? || notification.images_required?
+          = link_to "Add missing information",
+                  responsible_person_notification_additional_information_index_path(responsible_person, notification),
+                  class: "govuk-link--no-visited-state"
+        - else
+          = link_to "Confirm and notify",
+                  edit_responsible_person_notification_path(responsible_person, notification),
+                  class: "govuk-link--no-visited-state"
