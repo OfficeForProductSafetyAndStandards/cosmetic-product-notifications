@@ -92,5 +92,4 @@ tr.govuk-table__row
 
 - if component.trigger_questions
   - component.trigger_questions.each do |question|
-    - if question.applicable?
-      = render "notifications/trigger_question_details", trigger_question: question
+    = render "notifications/trigger_question_details", trigger_question: question
