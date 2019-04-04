@@ -41,4 +41,4 @@ ruby:
       svg viewbox="0 0 40 40" class="autocomplete__clear-viewbox"
         path class="autocomplete__clear-icon" d="M 10,10 L 30,30 M 30,10 L 10,30"
   javascript:
-      window.callAutocompleteWhenReady("#{id}", { showAllValues: "#{show_all_values}" });
+    window.callAutocompleteWhenReady("#{id}", { showAllValues: "#{local_assigns[:show_all_values]}" });

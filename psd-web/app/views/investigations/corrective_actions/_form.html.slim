@@ -24,7 +24,8 @@
       - else
         = render "form_components/autocomplete_select", key: :product_id, form: form, show_all_values: true,
                 items: investigation.products.map { |product| [product.name, product.id] },
-                hint: { text: "Only products already added to the case are listed." }
+                hint: { text: "Only products already added to the case are listed." },
+                label: { text: "Product", classes: "govuk-visually-hidden" }
 
 = render "form_components/autocomplete_select", items: relevant_legislation, key: :legislation, form: form,
         label: { text: "Under which legislation?", classes: "govuk-label--m" },
@@ -42,7 +43,8 @@
         = render "form_components/autocomplete_select", key: :business_id, form: form, show_all_values: true,
                 items: investigation.businesses.map { |business| [business.trading_name, business.id] },
                 selected: (investigation.businesses.size == 1 && investigation.businesses.first.id),
-                hint: { text: "Only businesses already added to the case are listed." }
+                hint: { text: "Only businesses already added to the case are listed." },
+                label: { text: "Business", classes: "govuk-visually-hidden" }
 
 = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
         label: { text: "Further details", classes: "govuk-label--m" }

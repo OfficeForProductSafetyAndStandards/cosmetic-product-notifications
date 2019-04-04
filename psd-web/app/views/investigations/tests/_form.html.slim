@@ -19,7 +19,8 @@
         = link_to "Add a product", new_investigation_product_path(investigation)
       = render "form_components/autocomplete_select", key: :product_id, form: form, show_all_values: true,
               items: investigation.products.map { |product| [product.name, product.id] },
-              span: { html: span_html }
+              hint: { html: span_html },
+              label: { text: "Product", classes: "govuk-visually-hidden" }
 
 = render "form_components/autocomplete_select", key: :legislation, form: form,
         items: relevant_legislation,
