@@ -4,22 +4,22 @@ ruby:
 
 div[*(local_assigns[:attributes] || {})
                 class=tabs_classes
-                id=id
+                id=local_assigns[:id]
                 data-module="tabs"]
   h2.govuk-tabs__title
     = local_assigns[:title] || "Contents"
   - if local_assigns[:items]
     ul.govuk-tabs__list
       - local_assigns[:items].each_with_index do |item, index|
-        - id = item[:id] || idPrefix + '-' index
+        - id = item[:id] || idPrefix + '-' + index
         li.govuk-tabs__list-item
-          a.govuk-tabs__tab[*(local_assigns[:attributes] || {})
+          a.govuk-tabs__tab[*(item[:attributes] || {})
               class=("govuk-tabs__tab--selected" if index==0)
               href="##{id}"]
             = item[:label]
   - local_assigns[:items].each_with_index do |item, index|
-    - id = item[:id] || idPrefix + '-' index
-    section.govuk-tabs__panel[*(local_assigns[:attributes] || {})
+    - id = item[:id] || idPrefix + '-' + index
+    section.govuk-tabs__panel[*(item[:panel][:attributes] || {})
               class=("govuk-tabs__panel--hidden" if index>0)
-              href="##{id}"]
+              href="#{id}"]
       = item[:panel][:html] || item[:panel][:text]
