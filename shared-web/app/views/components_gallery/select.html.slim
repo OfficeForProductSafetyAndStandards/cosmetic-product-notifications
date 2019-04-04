@@ -1,0 +1,62 @@
+/ Examples in this file are based on  https://github.com/alphagov/govuk-frontend/
+/ blob/b863be549f502a6829a5d261976c3bcb8ebdf4d2/src/components/select/input.yaml#L59
+h1.govuk-heading-l Input Component
+h2.govuk-heading-m Default
+= render "components/govuk_select",
+        id: "select-1",
+        name: "select-1",
+        label: { text: "Label text goes here" },
+        items: [{ value: 1, text: "GOV.UK frontend option 1" },
+                { value: 2, text: "GOV.UK frontend option 2", selected: true },
+                { value: 3, text: "GOV.UK frontend option 3", disabled: true }]
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-m With hint text and error message
+= render "components/govuk_select",
+        id: "select-2",
+        name: "select-2",
+        label: { text: "Label text goes here" },
+        hint: { text: "Hint text goes here" },
+        errorMessage: { text: "Error message text goes here" },
+        items: [{ value: 1, text: "GOV.UK frontend option 1" },
+                { value: 2, text: "GOV.UK frontend option 2" },
+                { value: 3, text: "GOV.UK frontend option 3" }]
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-m With label as page heading
+= render "components/govuk_select",
+        id: "select-3",
+        name: "select-3",
+        label: { text: "Label text goes here", isPageHeading: true },
+        items: [{ value: 1, text: "GOV.UK frontend option 1" },
+                { value: 2, text: "GOV.UK frontend option 2", selected: true },
+                { value: 3, text: "GOV.UK frontend option 3", disabled: true }]
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-m With full width override
+= render "components/govuk_select",
+        id: "select-4",
+        name: "select-4",
+        classes: "govuk-!-width-full",
+        label: { text: "Label text goes here" },
+        items: [{ value: 1, text: "GOV.UK frontend option 1" },
+                { value: 2, text: "GOV.UK frontend option 2", selected: true },
+                { value: 3, text: "GOV.UK frontend option 3", disabled: true }]
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-m With optional form-group classes
+= render "components/govuk_select",
+        id: "select-5",
+        name: "select-5",
+        classes: "govuk-!-width-full",
+        label: { text: "Label text goes here" },
+        formGroup: { classes: "extra-class" },
+        items: [{ value: 1, text: "GOV.UK frontend option 1" },
+                { value: 2, text: "GOV.UK frontend option 2", selected: true },
+                { value: 3, text: "GOV.UK frontend option 3", disabled: true }]
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
