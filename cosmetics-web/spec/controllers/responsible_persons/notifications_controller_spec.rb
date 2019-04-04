@@ -59,7 +59,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       expect(assigns(:unfinished_notifications).count).to eq(2)
     end
 
-    it "gets the correct number of registered notifications" do
+    it "gets the correct number of submitted notifications" do
       create(:registered_notification, responsible_person: responsible_person)
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:registered_notifications).count).to eq(1)

@@ -1,5 +1,6 @@
 class AuditActivity::Document::Base < AuditActivity::Base
   include ActivityAttachable
+  include GdprHelper
   with_attachments attachment: "document"
 
   private_class_method def self.from(document, investigation, title)
@@ -20,7 +21,9 @@ class AuditActivity::Document::Base < AuditActivity::Base
     self.attachment.image?
   end
 
-  def sensitive_title
-    "Document added"
+  def restricted_title; end
+
+  def can_display_all_data?
+    can_be_displayed?(self.attachment, self.investigation)
   end
 end
