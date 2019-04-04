@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
          1. In the `Settings` tab, change the `Name` field to `Submit cosmetic product notifications`
          2. Press the `Save` button, to apply the changes
 
+## 2019-04-03
+### Product safety database
+- Update introduction, about page, terms and conditions and privacy notice.
+
+
 ## 2019-03-29
 ### Product safety database
 - Rename the service to Product safety database.

@@ -33,7 +33,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         get :index
       end
 
-      it "gets all registered notifications" do
+      it "gets all submitted notifications" do
         expect(assigns(:notifications).records.to_a.sort).to eq((rp_1_notifications + rp_2_notifications).sort)
       end
 
@@ -41,7 +41,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         expect(assigns(:notifications).records.to_a).not_to include(draft_notification)
       end
 
-      it "excludes unfinished imported notifications" do
+      it "excludes incomplete imported notifications" do
         expect(assigns(:notifications).records.to_a).not_to include(imported_notification)
       end
 

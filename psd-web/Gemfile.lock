@@ -40,7 +40,7 @@ PATH
       lograge (= 0.10.0)
       mini_magick (= 4.9.3)
       okcomputer (= 1.17.4)
-      rails (~> 5.2)
+      rails (= 5.2.3)
       request_store (= 1.4.1)
       rest-client (= 2.0.2)
       sentry-raven (= 2.9.0)
@@ -48,7 +48,7 @@ PATH
       sidekiq-cron (= 1.1.0)
       slowpoke (= 0.2.1)
       webpacker (= 4.0.2)
-      will_paginate (~> 3.1.0)
+      will_paginate (= 3.1.7)
 
 GEM
   remote: https://rubygems.org/
@@ -435,14 +435,12 @@ PLATFORMS
 DEPENDENCIES
   axlsx!
   axlsx_rails
-  bootsnap (>= 1.1.0)
   cf-app-utils
   jbuilder (~> 2.8)
   pg (~> 1.1)
   pghero
   puma (~> 3.12)
   pundit
-  rails (~> 5.2)
   redcarpet
   redis-rails
   roo (~> 2.8.2)
