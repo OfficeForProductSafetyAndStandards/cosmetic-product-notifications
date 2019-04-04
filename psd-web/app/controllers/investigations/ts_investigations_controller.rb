@@ -353,7 +353,7 @@ private
     if @repeat_step.nil?
       further_page_type = to_item_text(step)
       model.errors.add(further_key(step), "Select whether or not you have #{further_page_type} to record")
-      false
+      return false
     end
     true
   end
