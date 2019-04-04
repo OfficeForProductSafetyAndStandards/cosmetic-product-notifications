@@ -18,17 +18,17 @@ ruby:
       / This is not part of the source implementation - to be removed when convenient
       - if item[:divider]
         .govuk-radios__divider = item[:divider]
-      - elsif item[:type] == "hidden"
-        input.govuk-checkboxes__input [
-            type='hidden'
-            value=item[:value].to_s
-            name=(item[:name] || name)
-            disabled=item[:disabled]]
       - else
         - id = item[:id] || "#{id_prefix}-#{i}"
         - conditional_id = 'conditional-' + id
         - has_hint = item[:hint].present?
         - item_hint_id = id + '-item-hint'
+        / THSI IS DIFF, WERE FOLLOWING RAILS
+        input [
+            type='hidden'
+            value=(item[:unchecked_value] || "0").to_s
+            name=(item[:name] || name)
+            disabled=item[:disabled]]
         .govuk-checkboxes__item
           input.govuk-checkboxes__input [
             id=id
