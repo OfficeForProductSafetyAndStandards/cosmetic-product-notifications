@@ -13,16 +13,9 @@ ruby:
 / The min-height is a work-around for height not accounting for floats inside (and currently the clear-button
 / positioning is implemented with floats
 .govuk-form-group class=form_group_classes style="min-height:100px"
-  - if local_assigns[:label]
-    = form.label key, local_assigns[:label][:html] || local_assigns[:label][:text],
-            class: local_assigns[:label][:classes] || "govuk-label", for: local_assigns[:label][:for] || id
-  - if local_assigns[:hint]
-    span.govuk-hint class=local_assigns[:hint][:classes]
-      = local_assigns[:hint][:html] || local_assigns[:hint][:text]
-  - if local_assigns[:errorMessage].present?
-    = render "components/govuk_error_message", **local_assigns[:errorMessage]
   div class=("autocomplete-select-with-clear" if show_all_values)
-    = form.select key, items, { include_blank: true, selected: selected_value }, class: "govuk-select", id: id
+    = render "form_components/govuk_select", selected: selected_value,
+            include_blank: true, id: id, **local_assigns
 
   / The clear button is only needed when the select box is showing all values (and a dropdown arrow)
   / See https://github.com/alphagov/accessible-autocomplete/issues/240#issuecomment-455859918 for more info
