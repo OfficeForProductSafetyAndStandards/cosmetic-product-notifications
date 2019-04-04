@@ -3,27 +3,27 @@
     dl
       .govuk-clearfix
         dt
-          | UK cosmetic product number
+          | UK cosmetic product number:
         dd
           = notification.reference_number_for_display
 
       - if notification.industry_reference.present?
         .govuk-clearfix
           dt
-            | Reference number
+            | Reference number:
           dd
             = notification.industry_reference
 
       - if notification.cpnp_reference
         .govuk-clearfix
           dt
-            | EU reference number
+            | EU reference number:
           dd
             = notification.cpnp_reference
 
       - if notification.cpnp_notification_date.present?
         .govuk-clearfix
           dt
-            | First notified in the EU
+            | First notified in the EU:
           dd
             = display_full_month_date notification.cpnp_notification_date
