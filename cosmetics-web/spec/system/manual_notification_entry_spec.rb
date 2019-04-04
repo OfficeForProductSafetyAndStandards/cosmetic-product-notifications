@@ -49,6 +49,10 @@ RSpec.describe "Manually enter product details", type: :system do
     # select_frame_formulation
     click_button "Continue"
 
+    # contains_anti_dandruff_agents
+    choose("No")
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
@@ -102,6 +106,10 @@ RSpec.describe "Manually enter product details", type: :system do
     # select_frame_formulation
     click_button "Continue"
 
+    # contains_anti_dandruff_agents
+    choose("No")
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
@@ -147,6 +155,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # select_formulation_type
     choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # contains_anti_dandruff_agents
+    choose("No")
     click_button "Continue"
 
     # select_frame_formulation
@@ -213,6 +225,10 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_frame_formulation
+    click_button "Continue"
+
+    # contains_anti_dandruff_agents
+    choose("No")
     click_button "Continue"
 
     # add_product_image

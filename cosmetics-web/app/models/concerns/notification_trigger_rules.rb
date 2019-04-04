@@ -3,7 +3,7 @@ module NotificationTriggerRules
   extend ActiveSupport::Concern
 
   included do
-    enum TRIGGER_RULES_QUESTION: {
+    TRIGGER_RULES_QUESTION = {
         please_specify_the_percentage_weight_of_ethanol: "please_specify_the_percentage_weight_of_ethanol",
         please_specify_the_percentage_weight_of_isopropanol: "please_specify_the_percentage_weight_of_isopropanol",
         please_specify_the_inci_name_and_concentration_of_the_antidandruff_agents_if_antidandruff_agents_are_not_present_in_the_cosmetic_product_then_not_applicable_must_be_checked: "please_specify_the_inci_name_and_concentration_of_the_antidandruff_agents_if_antidandruff_agents_are_not_present_in_the_cosmetic_product_then_not_applicable_must_be_checked",
@@ -31,9 +31,9 @@ module NotificationTriggerRules
         please_indicate_the_ph_of_the_mixed_product_: "please_indicate_the_ph_of_the_mixed_product_",
         do_the_components_of_the_product_need_to_be_mixed: "do_the_components_of_the_product_need_to_be_mixed",
         please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators: "please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators"
-    }
+    }.freeze
 
-    enum TRIGGER_RULES_QUESTION_ELEMENT: {
+    TRIGGER_RULES_QUESTION_ELEMENT = {
         ethanol: "ethanol",
         propanol: "propanol",
         inciname: "inciname",
@@ -43,7 +43,7 @@ module NotificationTriggerRules
         concentration: "concentration",
         minrangevalue: "minrangevalue",
         maxrangevalue: "maxrangevalue"
-    }
+    }.freeze
   end
 end
 # rubocop:enable Metrics/BlockLength

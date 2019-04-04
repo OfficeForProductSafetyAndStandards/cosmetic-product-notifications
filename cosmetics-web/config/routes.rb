@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
       resources :components do
         resources :build, controller: :component_build, only: %i[show update new]
+        resources :trigger_question, controller: :trigger_questions, only: %i[show update new]
         resources :formulation, controller: "formulation_upload", only: %w[new create]
       end
 

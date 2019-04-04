@@ -45,9 +45,9 @@ RSpec.describe ComponentBuildController, type: :controller do
       expect(response).to render_template(:number_of_shades)
     end
 
-    it "redirects to the check your answers page on finish" do
+    it "redirects to the trigger rules page on finish" do
       get(:show, params: params.merge(id: :wicked_finish))
-      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :add_product_image))
+      expect(response).to redirect_to(new_responsible_person_notification_component_trigger_question_path(responsible_person, notification, component))
     end
 
     it "initialises shades array with two empty strings in add_shades step" do
