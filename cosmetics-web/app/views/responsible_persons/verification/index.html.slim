@@ -7,7 +7,7 @@
     / TODO COSBETA-158: add the contact person name, instead of the responsible person name
     p
       ' We have sent an email to
-      = @responsible_person.email_address
+      = @responsible_person.contact_persons.first.email_address
     p
       ' The contact person will need to click on the link in the email to confirm that they are
       = @responsible_person.name
