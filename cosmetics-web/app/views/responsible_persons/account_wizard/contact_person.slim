@@ -13,6 +13,8 @@
         | A contact person must be able to give information about the cosmetic products to the
           national poison information service or market surveillance authorities.
 
+      = render "form_components/govuk_input", form: form, key: :name,
+              label: { text: "Full name" }
       = render "form_components/govuk_input", form: form, key: :email_address, type: :email_field,
               label: { text: "Email address" }, hint: { text: "A confirmation email will be sent to this address" }
       = render "form_components/govuk_input", form: form, key: :phone_number, type: :telephone_field,

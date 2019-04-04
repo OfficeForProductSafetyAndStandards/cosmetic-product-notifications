@@ -79,6 +79,8 @@ private
     NotifyMailer.send_responsible_person_verification_email(
       @responsible_person.id,
       @responsible_person.contact_persons.first.email_address,
+      @responsible_person.contact_persons.first.name,
+      @responsible_person.name,
       User.current.full_name
     ).deliver_later
   end
@@ -114,7 +116,8 @@ private
   def contact_person_request_params
     params.fetch(:contact_person, {}).permit(
       :email_address,
-      :phone_number
+      :phone_number,
+      :name
     )
   end
 end
