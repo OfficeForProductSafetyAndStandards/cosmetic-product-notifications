@@ -60,7 +60,7 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetic product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -164,7 +164,7 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetic product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -227,7 +227,7 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Shades", "RedBlueYellow")
     expect_check_your_answers_value("Label image", "testImage.png")
 
-    click_button "Accept and register the cosmetic product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")

@@ -6,4 +6,4 @@
           = render "registered_product", notification: notification, responsible_person: @responsible_person
   .govuk-grid-row
     .govuk-grid-column-full.pagination-links
-      = will_paginate(@registered_notifications, param_name: "registered", params: { anchor: "registered" })
+      = will_paginate(@registered_notifications, param_name: "notified", params: { anchor: "notified" })
