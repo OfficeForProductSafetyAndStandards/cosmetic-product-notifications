@@ -67,7 +67,7 @@
                 = form.label :status_closed, "Closed", class: "govuk-checkboxes__label"
         = render "form_components/govuk_checkboxes", form: form, key: :status,
                 fieldset: { legend: { text: "Status", classes: "govuk-fieldset__legend--s" } },
-                items: [ { value: "open", text: "Open"}, { value: "closed", text: "Closed"}]
+                items: [ { key: "status_open", text: "Open"}, { key: "status_closed", value: "closed", text: "Closed"}]
         = render "form_components/govuk_radios", form: form, key: :sort_by,
                 fieldset: { legend: { text: "Sort by", classes: "govuk-fieldset__legend--s" } },
                 items: [{ text: "Updated: recent", value: "recent" },

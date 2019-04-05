@@ -23,7 +23,7 @@ ruby:
         - conditional_id = 'conditional-' + id
         - has_hint = item[:hint].present?
         - item_hint_id = id + '-item-hint'
-        / THSI IS DIFF, WERE FOLLOWING RAILS
+        / This adds a hidden checkbox to copy how rails generates checkboxes
         input [
             type='hidden'
             value=(item[:unchecked_value] || "0").to_s
