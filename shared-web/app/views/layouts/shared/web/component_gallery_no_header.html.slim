@@ -1,0 +1,34 @@
+doctype html
+html.govuk-template.app-html-class[lang="en"]
+  head
+    meta[charset="utf-8"]
+    title
+      = yield :page_title
+      |  Component Gallery
+    meta[name="viewport" content="width=device-width, initial-scale=1"]
+    meta[name="theme-color" content="blue"]
+    = favicon_link_tag 'govuk-frontend/assets/images/favicon.ico'
+    = favicon_link_tag 'govuk-frontend/assets/images/govuk-mask-icon.svg', rel: 'mask-icon', type: 'image/svg+xml', color: '#0b0c0c'
+    = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon-180x180.png', rel: 'apple-touch-icon', type: 'image/png', sizes: '180x180'
+    = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon-167x167.png', rel: 'apple-touch-icon', type: 'image/png', sizes: '167x167'
+    = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon-152x152.png', rel: 'apple-touch-icon', type: 'image/png', sizes: '152x152'
+    = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png'
+    /![if !IE 8]
+    = stylesheet_pack_tag "application", media: "all"
+    /![endif]
+    /[if IE 8]
+      = stylesheet_link_tag "application-ie8", media: "all"
+      = javascript_include_tag "html5shiv/dist/html5shiv"
+    = javascript_pack_tag "application"
+    = csrf_meta_tags
+    meta[property="og:image" content=asset_path("govuk-frontend/assets/images/govuk-opengraph-image.png")]
+  body.govuk-template__body.app-body-class
+    script
+      | document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
+    a.govuk-skip-link[href="#main-content"]
+      | Skip to main content
+
+    = yield
+
+    javascript:
+        window.GOVUKFrontend.initAll()
