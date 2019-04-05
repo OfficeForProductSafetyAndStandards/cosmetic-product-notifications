@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_30_192439) do
+ActiveRecord::Schema.define(version: 2019_04_03_134006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,16 @@ ActiveRecord::Schema.define(version: 2019_03_30_192439) do
     t.string "special_applicator"
     t.string "acute_poisoning_info"
     t.index ["notification_id"], name: "index_components_on_notification_id"
+  end
+
+  create_table "contact_persons", force: :cascade do |t|
+    t.string "name"
+    t.string "email_address"
+    t.string "phone_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "responsible_person_id"
+    t.index ["responsible_person_id"], name: "index_contact_persons_on_responsible_person_id"
   end
 
   create_table "email_verification_keys", force: :cascade do |t|
@@ -217,6 +227,7 @@ ActiveRecord::Schema.define(version: 2019_03_30_192439) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cmrs", "components"
   add_foreign_key "components", "notifications"
+  add_foreign_key "contact_persons", "responsible_persons"
   add_foreign_key "email_verification_keys", "responsible_persons"
   add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"

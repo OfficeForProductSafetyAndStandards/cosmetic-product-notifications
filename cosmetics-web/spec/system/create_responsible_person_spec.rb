@@ -27,8 +27,8 @@ RSpec.describe "Create a responsible person", type: :system do
 
     assert_text "Contact person"
 
-    fill_in "Email address", with: responsible_person.email_address
-    fill_in "Phone number", with: responsible_person.phone_number
+    fill_in "Email address", with: responsible_person.contact_persons.first.email_address
+    fill_in "Phone number", with: responsible_person.contact_persons.first.phone_number
     click_on "Continue"
 
     assert_current_path(/responsible_persons\/\d+\/verify/)
@@ -51,8 +51,8 @@ RSpec.describe "Create a responsible person", type: :system do
 
     assert_text "Contact person"
 
-    fill_in "Email address", with: responsible_person.email_address
-    fill_in "Phone number", with: responsible_person.phone_number
+    fill_in "Email address", with: responsible_person.contact_persons.first.email_address
+    fill_in "Phone number", with: responsible_person.contact_persons.first.phone_number
     click_on "Continue"
 
     assert_current_path(/responsible_persons\/\d+\/verify/)
