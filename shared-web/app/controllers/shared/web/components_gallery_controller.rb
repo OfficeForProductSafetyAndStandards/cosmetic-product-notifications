@@ -3,7 +3,7 @@ class Shared::Web::ComponentsGalleryController < Shared::Web::ApplicationControl
     component = params[:component]
     layout = case component
              when "header"
-               "shared/web/component_gallery_no_header"
+               "shared/web/_head"
              else
                "shared/web/component_gallery"
              end
