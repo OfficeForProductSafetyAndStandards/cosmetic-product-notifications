@@ -3,10 +3,10 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       ' We have sent a confirmation email to
-      = @responsible_person.contact_persons.first.name
+      = @contact_person.name
     p
       ' We have sent an email to
-      = @responsible_person.contact_persons.first.email_address
+      = @contact_person.name
     p
       ' The contact person will need to click on the link in the email to confirm that they are
       = @responsible_person.name

@@ -6,6 +6,8 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person, only: %i[show update]
   before_action :store_responsible_person, only: %i[update]
+  before_action :set_contact_person, only: %i[show update], if: -> { step == :contact_person }
+  before_action :store_contact_person, only: %i[update], if: -> { step == :contact_person }
 
   # GET /responsible_persons/account/:step
   def show
@@ -41,13 +43,17 @@ private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.new(responsible_person_params)
-    if contact_person_params.present? || step == :contact_person
-      @contact_person = @responsible_person.contact_persons.build(contact_person_params)
-    end
   end
 
   def store_responsible_person
     session[:responsible_person] = @responsible_person.attributes if responsible_person_valid?
+  end
+
+  def set_contact_person
+    @contact_person = @responsible_person.contact_persons.build(contact_person_params)
+  end
+
+  def store_contact_person
     session[:contact_person] = @contact_person.attributes if @contact_person.present? && @contact_person.valid?
   end
 
@@ -78,8 +84,8 @@ private
   def send_verification_email
     NotifyMailer.send_responsible_person_verification_email(
       @responsible_person.id,
-      @responsible_person.contact_persons.first.email_address,
-      @responsible_person.contact_persons.first.name,
+      @contact_person.email_address,
+      @contact_person.name,
       @responsible_person.name,
       User.current.full_name
     ).deliver_later

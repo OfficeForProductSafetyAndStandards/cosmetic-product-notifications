@@ -13,8 +13,7 @@
 
   .govuk-grid-column-full
     = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
-    = render "notifications/contact_person_details", \
-      contact_person: @notification.responsible_person.contact_persons.first
+    = render "notifications/contact_person_details", contact_person: @responsible_person.contact_persons.first
     = render "notifications/product_details", notification: @notification
 
   - if @notification.may_submit_notification?

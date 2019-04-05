@@ -1,5 +1,6 @@
 class ResponsiblePersons::VerificationController < ApplicationController
   before_action :set_responsible_person, only: %i[index show resend_email]
+  before_action :set_contact_person, only: %i[index show resend_email]
   skip_before_action :create_or_join_responsible_person
 
   def show
@@ -20,8 +21,8 @@ class ResponsiblePersons::VerificationController < ApplicationController
     EmailVerificationKey.where(responsible_person: @responsible_person).delete_all
     NotifyMailer.send_responsible_person_verification_email(
       @responsible_person.id,
-      @responsible_person.contact_persons.first.email_address,
-      @responsible_person.contact_persons.first.name,
+      @contact_person.email_address,
+      @contact_person.name,
       @responsible_person.name,
       User.current.full_name
 ).deliver_later
@@ -33,5 +34,9 @@ private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
+  end
+
+  def set_contact_person
+    @contact_person = @responsible_person.contact_persons.first
   end
 end
