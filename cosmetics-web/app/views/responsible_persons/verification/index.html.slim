@@ -6,12 +6,12 @@
       = @contact_person.name
     p
       ' We have sent an email to
-      = @contact_person.name
+      strong = @contact_person.email_address
     p
       ' The contact person will need to click on the link in the email to confirm that they are
-      = @responsible_person.name
+      = @contact_person.name
       | .
     p
       = link_to "Resend validation link",
-          resend_email_responsible_person_email_verification_keys_path(@responsible_person),
-        class: "button-link", role: "button"
+              resend_email_responsible_person_email_verification_keys_path(@responsible_person),
+              class: "button-link", role: "button"
