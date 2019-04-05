@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FormulationUploadController, type: :controller do
+RSpec.describe ProductImageUploadController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
   let(:component) { create(:component, notification: notification) }
@@ -35,9 +35,9 @@ RSpec.describe FormulationUploadController, type: :controller do
   end
 
   describe "GET #new" do
-    it "assigns the correct component model" do
+    it "assigns the correct notification model" do
       get(:new, params: params)
-      expect(assigns(:component)).to eq(component)
+      expect(assigns(:notification)).to eq(notification)
     end
 
     it "does not let the user view the page for a component for a responsible person they do not belong to" do
@@ -48,9 +48,9 @@ RSpec.describe FormulationUploadController, type: :controller do
   end
 
   describe "POST #create" do
-    it "assigns the correct component model" do
+    it "assigns the correct notification model" do
       post(:create, params: params)
-      expect(assigns(:component)).to eq(component)
+      expect(assigns(:notification)).to eq(notification)
     end
 
     it "adds an error if no file uploaded" do
@@ -64,30 +64,30 @@ RSpec.describe FormulationUploadController, type: :controller do
     end
 
     it "adds errors from the component model to the errors list" do
-      post(:create, params: params.merge(formulation_file: image_file))
+      post(:create, params: params.merge(image_upload: [text_file]))
       expect(assigns(:error_list).length).to eq(1)
     end
 
-    it "adds the formulation file to the component when the uploaded file is valid" do
-      post(:create, params: params.merge(formulation_file: text_file))
-      expect(component.reload.formulation_file.attached?).to be true
+    it "adds the product image to the notification when the uploaded file is valid" do
+      post(:create, params: params.merge(image_upload: [image_file]))
+      expect(notification.image_uploads.length).to eq(1)
     end
 
     it "redirects to the additional information controller when the uploaded file is valid" do
-      post(:create, params: params.merge(formulation_file: text_file))
+      post(:create, params: params.merge(image_upload: [image_file]))
       expect(response).to redirect_to(responsible_person_notification_additional_information_index_path(responsible_person, notification))
     end
 
     it "does not let the user submit the form for a component for a responsible person they do not belong to" do
       expect {
-        post(:create, params: other_responsible_person_params.merge(formulation_file: text_file))
+        post(:create, params: other_responsible_person_params.merge(image_upload: [image_file]))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
     it "does not let the user submit the form for a component for a completed notification" do
       notification.update state: "notification_complete"
       expect {
-        post(:create, params: params.merge(formulation_file: text_file))
+        post(:create, params: params.merge(image_upload: [image_file]))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
