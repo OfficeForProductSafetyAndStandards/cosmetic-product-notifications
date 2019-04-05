@@ -43,8 +43,8 @@ class User < Shared::Web::User
       self.data = all_users.map { |user| populate_organisation(user) }
                       .reject { |user| user[:organisation_id].blank? }
       TeamUser.all(force: options[:force])
-    rescue StandardError => error
-      Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
+    rescue StandardError => e
+      Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
       self.data = nil
     end
 
