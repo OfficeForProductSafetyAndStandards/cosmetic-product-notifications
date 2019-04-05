@@ -71,7 +71,7 @@ private
 
   def set_component
     @component = Component.find(params[:component_id])
-    authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
+    authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 
   def component_params

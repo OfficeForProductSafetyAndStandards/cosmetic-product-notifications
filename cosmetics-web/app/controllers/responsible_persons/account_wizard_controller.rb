@@ -6,6 +6,8 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person, only: %i[show update]
   before_action :store_responsible_person, only: %i[update]
+  before_action :set_contact_person, only: %i[show update], if: -> { step == :contact_person }
+  before_action :store_contact_person, only: %i[update], if: -> { step == :contact_person }
 
   # GET /responsible_persons/account/:step
   def show
@@ -47,6 +49,14 @@ private
     session[:responsible_person] = @responsible_person.attributes if responsible_person_valid?
   end
 
+  def set_contact_person
+    @contact_person = @responsible_person.contact_persons.build(contact_person_params)
+  end
+
+  def store_contact_person
+    session[:contact_person] = @contact_person.attributes if @contact_person.present? && @contact_person.valid?
+  end
+
   def responsible_person_valid?
     @responsible_person.valid?(step)
   end
@@ -74,30 +84,46 @@ private
   def send_verification_email
     NotifyMailer.send_responsible_person_verification_email(
       @responsible_person.id,
-      @responsible_person.email_address,
+      @contact_person.email_address,
+      @contact_person.name,
+      @responsible_person.name,
       User.current.full_name
     ).deliver_later
   end
 
   def responsible_person_params
-    session_params.merge(request_params)
+    responsible_person_session_params.merge(responsible_person_request_params)
   end
 
-  def session_params
+  def contact_person_params
+    contact_person_session_params.merge(contact_person_request_params)
+  end
+
+  def responsible_person_session_params
     session.fetch(:responsible_person, {})
   end
 
-  def request_params
+  def responsible_person_request_params
     params.fetch(:responsible_person, {}).permit(
       :account_type,
       :name,
-      :email_address,
-      :phone_number,
       :address_line_1,
       :address_line_2,
       :city,
       :county,
       :postal_code
+    )
+  end
+
+  def contact_person_session_params
+    session.fetch(:contact_person, {})
+  end
+
+  def contact_person_request_params
+    params.fetch(:contact_person, {}).permit(
+      :email_address,
+      :phone_number,
+      :name
     )
   end
 end
