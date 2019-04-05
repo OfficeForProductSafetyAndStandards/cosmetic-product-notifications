@@ -217,6 +217,13 @@ ActiveRecord::Schema.define(version: 2019_04_03_134006) do
     t.index ["component_id"], name: "index_trigger_questions_on_component_id"
   end
 
+  create_table "user_attributes", primary_key: "user_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.datetime "declaration_accepted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_attributes_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cmrs", "components"
   add_foreign_key "components", "notifications"

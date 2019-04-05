@@ -16,8 +16,8 @@ module Shared
       def self.all(options = {})
         begin
           self.data = Shared::Web::KeycloakClient.instance.all_users
-        rescue StandardError => error
-          Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
+        rescue StandardError => e
+          Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
           self.data = nil
         end
 
