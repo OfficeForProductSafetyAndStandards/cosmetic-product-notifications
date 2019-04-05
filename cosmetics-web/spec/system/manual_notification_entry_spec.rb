@@ -157,11 +157,11 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Predefined frame formulation")
     click_button "Continue"
 
-    # contains_anti_dandruff_agents
-    choose("No")
+    # select_frame_formulation
     click_button "Continue"
 
-    # select_frame_formulation
+    # contains_anti_dandruff_agents
+    choose("No")
     click_button "Continue"
 
     # add_product_image
