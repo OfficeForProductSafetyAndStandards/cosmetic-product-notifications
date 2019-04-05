@@ -4,24 +4,24 @@ html.govuk-template.app-html-class[lang="en"]
     meta[charset="utf-8"]
     title
       = yield :page_title
-      |  Component Gallery
+      = yield :page_title_suffix
     meta[name="viewport" content="width=device-width, initial-scale=1"]
     meta[name="theme-color" content="blue"]
-    = favicon_link_tag 'govuk-frontend/assets/images/favicon.ico'
-    = favicon_link_tag 'govuk-frontend/assets/images/govuk-mask-icon.svg', rel: 'mask-icon', type: 'image/svg+xml', color: '#0b0c0c'
-    = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon-180x180.png', rel: 'apple-touch-icon', type: 'image/png', sizes: '180x180'
-    = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon-167x167.png', rel: 'apple-touch-icon', type: 'image/png', sizes: '167x167'
-    = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon-152x152.png', rel: 'apple-touch-icon', type: 'image/png', sizes: '152x152'
-    = favicon_link_tag 'govuk-frontend/assets/images/govuk-apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png'
-    /![if !IE 8]
-    = stylesheet_pack_tag "application", media: "all"
-    /![endif]
-    /[if IE 8]
-      = stylesheet_link_tag "application-ie8", media: "all"
-      = javascript_include_tag "html5shiv/dist/html5shiv"
+    link[rel="shortcut icon" type="image/x-icon" href=asset_pack_path("media/images/favicon.ico")]
+    link[rel="mask-icon" color="#0b0c0c" href=asset_pack_path("media/images/govuk-mask-icon.svg")]
+    link[rel="apple-touch-icon" sizes="180x180" href=asset_pack_path("media/images/govuk-apple-touch-icon-180x180.png")]
+    link[rel="apple-touch-icon" sizes="167x167" href=asset_pack_path("media/images/govuk-apple-touch-icon-167x167.png")]
+    link[rel="apple-touch-icon" sizes="152x152" href=asset_pack_path("media/images/govuk-apple-touch-icon-152x152.png")]
+    link[rel="apple-touch-icon" href=asset_pack_path("media/images/govuk-apple-touch-icon.png")]
+    /![if gt IE 8]><!
     = javascript_pack_tag "application"
+    = stylesheet_pack_tag "application"
+    /!<![endif]
+    /[if lte IE 8]
+      = javascript_pack_tag "application-ie8"
+      = stylesheet_pack_tag "application-ie8"
     = csrf_meta_tags
-    meta[property="og:image" content=asset_path("govuk-frontend/assets/images/govuk-opengraph-image.png")]
+    meta[property="og:image" content=asset_pack_path("media/images/govuk-opengraph-image.png")]
   body.govuk-template__body.app-body-class
     script
       | document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
@@ -31,4 +31,5 @@ html.govuk-template.app-html-class[lang="en"]
     = yield
 
     javascript:
-        window.GOVUKFrontend.initAll()
+      if (typeof window.GOVUKFrontend === 'undefined') document.body.className = document.body.className.replace('js-enabled', '')
+      window.GOVUKFrontend.initAll()

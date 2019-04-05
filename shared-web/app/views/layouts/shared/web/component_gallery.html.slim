@@ -1,3 +1,5 @@
+= content_for :page_title_suffix do
+  |  - OPSS Components
 = render "layouts/shared/web/head" do
   = render "components/govuk_header", productName: "OPSS Components"
   = yield :after_header
