@@ -26,6 +26,6 @@ module LoginHelpers
   end
 
   def format_user_for_get_userinfo(user, groups: [])
-    { sub: user[:id], email: user[:email], groups: groups, given_name: user[:first_name], family_name: user[:last_name] }.to_json
+    { sub: user[:id], email: user[:email], groups: groups, given_name: user[:name] }.to_json
   end
 end

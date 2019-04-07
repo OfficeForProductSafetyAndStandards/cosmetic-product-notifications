@@ -17,7 +17,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     choose @user.display_name, visible: false
     click_on "Continue"
     click_on "Confirm change"
-    assert_text "Assigned to\n#{@user.full_name}\n#{@user.organisation.name}"
+    assert_text "Assigned to\n#{@user.name}\n#{@user.organisation.name}"
     click_on "Activity"
     assert_text "Assigned to #{@user.display_name}"
   end
