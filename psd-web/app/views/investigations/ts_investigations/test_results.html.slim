@@ -1,14 +1,12 @@
-.govuk-grid-row
-  .govuk-grid-column-two-thirds-from-desktop
-    = render "repeatable_info",
-            title: "Test result details",
-            model: @test,
-            scope: :test,
-            other_text: "Are there other test results to report?",
-            hide_break: false,
-            further_key: :further_test_results do |form|
-      = render "investigations/tests/form", form: form,
-              test: @test,
-              investigation: @investigation,
-              file_blob: @file_blob,
-              allow_product_linking: false
+= render "repeatable_info",
+        title: "Test result details",
+        model: @test,
+        scope: :test,
+        other_text: "Are there other test results to report?",
+        hide_break: false,
+        further_key: :further_test_results do |form|
+  = render "investigations/tests/form", form: form,
+          test: @test,
+          investigation: @investigation,
+          file_blob: @file_blob,
+          allow_product_linking: false
