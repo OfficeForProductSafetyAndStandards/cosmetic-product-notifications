@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[show index] do
+    resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[index] do
       collection do
         get :resend_email
       end
@@ -51,6 +51,13 @@ Rails.application.routes.draw do
 
   resource :declaration, controller: :declaration, only: %i[show] do
     post :accept
+  end
+
+  resources :confirmation, controller: :confirmation, param: :key, only: %i[] do
+    member do
+      get :contact_person, path: "/contact-person-confirmation"
+      get :link_expired, path: "/contact-person-expired"
+    end
   end
 
   match "/404", to: "errors#not_found", via: :all
