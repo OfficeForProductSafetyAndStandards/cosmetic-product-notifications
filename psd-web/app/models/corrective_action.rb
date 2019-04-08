@@ -10,9 +10,7 @@ class CorrectiveAction < ApplicationRecord
 
   has_many_attached :documents
 
-  def date_keys
-    [:date_decided]
-  end
+  date_attribute :date_decided
 
   before_validation { trim_line_endings(:summary, :details) }
   validates :summary, presence: { message: "Enter a summary of the corrective action" }

@@ -7,6 +7,8 @@ class Test < ApplicationRecord
 
   has_many_attached :documents
 
+  date_attribute :date
+
   before_validation { trim_line_endings(:details) }
   validates :legislation, presence: { message: "Select the legislation that relates to this test" }
   validates_length_of :details, maximum: 50000
