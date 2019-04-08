@@ -30,7 +30,7 @@
         - @responsible_person.responsible_person_users.each do |user|
           tr.govuk-table__row
             td.govuk-table__cell
-              = user.full_name
+              = user.name
             td.govuk-table__cell
               = user.email_address
             td.govuk-table__cell
