@@ -65,7 +65,6 @@ en:
       even: "%{attribute} must be even"
 
       # Our own
-      date_required: "%{attribute} can't be empty"
       date_missing_component: "%{attribute} must specify a day, month and year"
     attributes:
       email_address:
@@ -88,13 +87,13 @@ en:
         test/result:
           attributes:
             date:
-              date_required: "Enter a date of the test"
+              blank: "Enter a date of the test"
               invalid: "Enter a real date of the test"
               date_missing_component: "Enter a date of the test and include a day, month and year"
         test/request:
           attributes:
             date:
-              date_required: "Enter a date of the test request"
+              blank: "Enter a date of the test request"
               invalid: "Enter a real date of the test request"
               date_missing_component: "Enter a date of the test request and include a day, month and year"
         corrective_action:
@@ -102,7 +101,7 @@ en:
             product:
               required: "Select the product the corrective action relates to"
             date_decided:
-              date_required: "Enter the date the corrective action was decided"
+              blank: "Enter the date the corrective action was decided"
               invalid: "Enter a real date when the corrective action was decided"
               date_missing_component: "Enter the date the corrective action was decided and include a day, month and year"
         alert:

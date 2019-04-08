@@ -130,7 +130,7 @@ module Shared
 
             case missing_date_components.length
             when 3
-              errors.add(key, :date_required) if required
+              errors.add(key, :blank) if required
             when (1..2) # Date has some components entered, but not all
               missing_date_components.each do |missing_component, _|
                 errors.add(key, :date_missing_component)
