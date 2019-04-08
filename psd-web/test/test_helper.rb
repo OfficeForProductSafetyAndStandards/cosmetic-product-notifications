@@ -226,7 +226,7 @@ private
   end
 
   def format_user_for_get_users(users)
-    users.map { |user| { id: user[:id], email: user[:email], firstName: user[:name] } }.to_json
+    users.map { |user| { id: user[:id], email: user[:email], firstName: user[:name], lastName: "n/a" } }.to_json
   end
 
   def stub_user_management
