@@ -6,4 +6,4 @@
     h1.govuk-heading-xl
       = @notification.product_name
     = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
-    = render "notifications/product_details", notification: @notification
+    = render "notifications/product_details", notification: @notification, allow_edits: false
