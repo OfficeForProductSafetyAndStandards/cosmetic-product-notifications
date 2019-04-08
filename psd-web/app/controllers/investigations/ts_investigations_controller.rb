@@ -154,7 +154,7 @@ private
 
   def set_corrective_action
     @corrective_action = @investigation.corrective_actions.build(corrective_action_params)
-    @corrective_action.update_dates_from_params(params[:corrective_action])
+    @corrective_action.set_dates_from_params(params[:corrective_action])
     @corrective_action.product = @product
     @file_blob, * = load_file_attachments :corrective_action
     if @file_blob && @corrective_action.related_file == "Yes"
@@ -165,7 +165,7 @@ private
 
   def set_test
     @test = @investigation.tests.build(test_params)
-    @test.update_dates_from_params(params[:test])
+    @test.set_dates_from_params(params[:test])
     @test.product = @product
     @file_blob, * = load_file_attachments :test
     @test.documents.attach(@file_blob) if @file_blob

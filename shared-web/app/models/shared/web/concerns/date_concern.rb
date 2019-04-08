@@ -42,7 +42,7 @@ module Shared
           [:date]
         end
 
-        def update_dates_from_params(params)
+        def set_dates_from_params(params)
           # expects to receive the part of params relevant to the object it's on
           return if params.blank?
 
@@ -93,15 +93,27 @@ module Shared
         end
 
         def get_day(key)
-          self.send("#{key}_day".to_sym)
+          self.send(day_symbol(key))
         end
 
         def get_month(key)
-          self.send("#{key}_month".to_sym)
+          self.send(month_symbol(key))
         end
 
         def get_year(key)
-          self.send("#{key}_year".to_sym)
+          self.send(year_symbol(key))
+        end
+
+        def day_symbol(key)
+          "#{key}_day".to_sym
+        end
+
+        def month_symbol(key)
+          "#{key}_month".to_sym
+        end
+
+        def year_symbol(key)
+          "#{key}_year".to_sym
         end
 
         def update_from_components(key)
@@ -117,11 +129,11 @@ module Shared
 
         def date_from_components
           date_keys.each do |key|
-            missing_date_components = {}
-            missing_date_components["#{key}_day".to_sym] = get_day(key)
-            missing_date_components["#{key}_month".to_sym] = get_month(key)
-            missing_date_components["#{key}_year".to_sym] = get_year(key)
-            missing_date_components = missing_date_components.select { |_, value| value.blank? }
+            date_components = {}
+            date_components[day_symbol(key)] = get_day(key)
+            date_components[month_symbol(key)] = get_month(key)
+            date_components[year_symbol(key)] = get_year(key)
+            missing_date_components = date_components.select { |_, value| value.blank? }
 
             case missing_date_components.length
             when 3
@@ -134,9 +146,9 @@ module Shared
             when 0
               if self[key].blank?
                 errors.add(key, :invalid)
-                errors.add("#{key}_day".to_sym, "")
-                errors.add("#{key}_month".to_sym, "")
-                errors.add("#{key}_year".to_sym, "")
+                errors.add(day_symbol(key), "")
+                errors.add(month_symbol(key), "")
+                errors.add(year_symbol(key), "")
               end
             end
           end

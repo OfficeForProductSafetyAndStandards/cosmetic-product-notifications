@@ -8,7 +8,7 @@ module CorrectiveActionsConcern
 
   def set_corrective_action
     @corrective_action = @investigation.corrective_actions.build(corrective_action_params)
-    @corrective_action.update_dates_from_params(params[:corrective_action])
+    @corrective_action.set_dates_from_params(params[:corrective_action])
   end
 
   def corrective_action_params
