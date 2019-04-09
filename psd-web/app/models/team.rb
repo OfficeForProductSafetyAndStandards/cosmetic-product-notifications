@@ -26,6 +26,7 @@ class Team < ActiveHash::Base
   end
 
   def self.all(options = {})
+    Organisation.all
     begin
       self.data = Shared::Web::KeycloakClient.instance.all_teams
     rescue StandardError => e
