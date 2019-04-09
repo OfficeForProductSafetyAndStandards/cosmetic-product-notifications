@@ -56,6 +56,13 @@ RSpec.describe NotificationBuildController, type: :controller do
         get(:show, params: other_responsible_person_params.merge(id: :add_product_name))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
+
+    it "does not allow the user to update a notification that has already been submitted" do
+      notification.update state: "notification_complete"
+      expect {
+        get(:show, params: params.merge(id: :add_product_name))
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
   end
 
   describe "POST #update" do
@@ -129,6 +136,13 @@ RSpec.describe NotificationBuildController, type: :controller do
     it "does not allow the user to update a notification for a Responsible Person they not belong to" do
       expect {
         post(:update, params: other_responsible_person_params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" }))
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
+
+    it "does not allow the user to update a notification that has already been submitted" do
+      notification.update state: "notification_complete"
+      expect {
+        post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" }))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end

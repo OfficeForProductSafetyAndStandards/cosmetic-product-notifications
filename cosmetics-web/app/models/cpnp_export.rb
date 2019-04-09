@@ -118,11 +118,11 @@ private
   end
 
   def exposure_condition(nano_list_node)
-    get_exposure_condition(nano_list_node&.xpath(".//exposureCondition")&.first&.text)
+    get_exposure_condition(nano_list_node&.xpath(".//exposureCondition")&.first&.text.to_i)
   end
 
   def exposure_route(nano_list_node)
-    get_exposure_route(nano_list_node&.xpath(".//exposureRoute/exposureID")&.first&.text)
+    get_exposure_route(nano_list_node&.xpath(".//exposureRoute/exposureID")&.first&.text.to_i)
   end
 
   def trigger_questions(component_node)

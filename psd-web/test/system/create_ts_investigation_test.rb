@@ -149,7 +149,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     assert_text risk_assessment_description
 
 
-    #TODO assert about contact when MSPSDS-869 is finished
+    #TODO assert about contact when PSD-869 is finished
   end
 
   def fill_in_product_page
