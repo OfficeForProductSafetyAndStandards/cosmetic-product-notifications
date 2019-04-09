@@ -15,5 +15,5 @@
   = render "form_components/govuk_input", key: :postal_code, form: form, classes: "govuk-!-width-one-half",
           label: { text: "Postcode" }
 
-  = render "form_components/govuk_select", form: form, key: :country_of_origin, items: countries,
+  = render "form_components/govuk_select", form: form, key: :country, items: countries,
           include_blank: true, id: "location-autocomplete", label: { text: "Country" }
