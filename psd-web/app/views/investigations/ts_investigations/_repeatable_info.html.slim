@@ -14,11 +14,12 @@
       hr.govuk-section-break class=("govuk-section-break--visible" unless hide_break)
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop class=("govuk-!-margin-bottom-3 govuk-!-margin-top-3")
+      - # noinspection RubySimplifyBooleanInspection
       = render "form_components/govuk_radios",
               form: form, key: further_key,
               fieldset: { legend: { text: other_text, classes: "govuk-fieldset__legend--m" } },
               items: [{ text: "Yes", value: "Yes", checked: @repeat_step },
-                      { text: "No", value: "No", checked: (!@repeat_step.nil? && !@repeat_step) }]
+                      { text: "No", value: "No", checked: (@repeat_step == false) }]
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = form.submit "Continue", class: "govuk-button"
