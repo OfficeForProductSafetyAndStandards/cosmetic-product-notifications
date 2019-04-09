@@ -121,13 +121,21 @@ html.govuk-template.app-html-class[lang="en"]
                     |  (opens new window)
                 = link_to html, help_terms_and_conditions_path,
                         class: "govuk-footer__link govuk-!-margin-right-2", target: "_blank"
-              hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
             .opss-footer__body
               ' Built by the
-              = link_to "Office for Product Safety and Standards", "https://www.gov.uk/government/organisations/office-for-product-safety-and-standards", target: :_blank
+              - html = capture do
+                | Office for Product Safety and Standards
+                span.govuk-visually-hidden
+                  | (opens new window)
+              = link_to html, "https://www.gov.uk/government/organisations/office-for-product-safety-and-standards", target: :_blank
             br
               ' This is a new service – your
-              = link_to "feedback", "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank
+              - html = capture do
+                | feedback
+                span.govuk-visually-hidden
+                  | (opens new window)
+              = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank
               |  will help us to improve it.
               - # rubocop:enable Rails/LinkToBlank
           .govuk-footer__meta-item
