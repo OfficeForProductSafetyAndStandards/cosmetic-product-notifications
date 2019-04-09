@@ -1,8 +1,8 @@
 # Office for Product Safety & Standards Services
 
-[![Build Status](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds.svg?branch=master)](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
-[![Coverage Status](https://coveralls.io/repos/github/UKGovernmentBEIS/beis-mspsds/badge.svg?branch=master)](https://coveralls.io/github/UKGovernmentBEIS/beis-mspsds?branch=master)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=UKGovernmentBEIS/beis-mspsds)](https://dependabot.com)
+[![Build Status](https://travis-ci.org/UKGovernmentBEIS/beis-opss.svg?branch=master)](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
+[![Coverage Status](https://coveralls.io/repos/github/UKGovernmentBEIS/beis-opss/badge.svg?branch=master)](https://coveralls.io/github/UKGovernmentBEIS/beis-opss?branch=master)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=UKGovernmentBEIS/beis-opss)](https://dependabot.com)
 
 
 ## Getting Setup
@@ -103,7 +103,7 @@ If you get an error saying you don't have permission to set something, make sure
 ## Deployment
 
 Anything which is merged to `master` (via a Pull Request or push) will trigger the
-[Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-mspsds)
+[Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
 and cause deployments of the various components to the int space on GOV.UK PaaS.
 
 Deployment to research environment does not currently happen automatically, for details see section "Research" in 
