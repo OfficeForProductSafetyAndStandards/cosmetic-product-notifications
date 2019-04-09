@@ -34,9 +34,9 @@ en:
           unzipped_files_are_pdf: "The unzipped files are PDF files"
           product_file_not_found: "The ZIP file does not contain a product XML file"
           notification_duplicated: "A notification for this product already exists for this responsible person"
-          notification_validation_error: "Try again or manually register the product"
+          notification_validation_error: "Try again or manually enter the production notification data"
           draft_notification_error: "The uploaded file is for a draft notification"
-          unknown_error: "Try again or manually register the product"
+          unknown_error: "Try again or manually enter the production notification data"
   errors:
     format: "%{message}"
     messages:

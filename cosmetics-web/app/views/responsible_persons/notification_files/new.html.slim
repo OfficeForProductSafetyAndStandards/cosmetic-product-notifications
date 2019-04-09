@@ -1,7 +1,7 @@
 - content_for :page_title, "Upload your EU notification files"
 - content_for :after_header do
-  = link_to "Back", responsible_person_add_notification_path(@responsible_person, :have_products_been_notified_in_eu), \
-    class: "govuk-back-link"
+  = link_to "Back", responsible_person_add_notification_path(@responsible_person, :have_products_been_notified_in_eu),
+          class: "govuk-back-link"
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -14,7 +14,7 @@
               " files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
               href: "#uploaded_files" }]
       span#error-summary
-        - if @errors
+        - if @errors.present?
           = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
       h1.govuk-heading-xl
         | Upload your EU notification files
@@ -26,10 +26,11 @@
           | files at a time.
         p
           | To choose multiple files, hold the ‘Shift’ key when selecting them.
-      .govuk-form-group#file-upload-form-group[class= ("govuk-form-group--error" if @errors.present?)]
+
+      .govuk-form-group#file-upload-form-group class=("govuk-form-group--error" if @errors.present?)
         = form.label :uploaded_files, "Upload EU notification files", class: "govuk-label govuk-!-font-weight-bold"
-        span#file-upload-error-message.govuk-error-message
+        span.govuk-error-message#file-upload-error-message
           = @errors.last[:text] if @errors.present?
-        = form.file_field :uploaded_files, multiple: true,
-                class: "govuk-file-upload", accept: "application/zip"
-      = form.submit "Continue", data: { disable_with: false }, class: "govuk-button", id: "submit-button"
+        = form.file_field :uploaded_files, multiple: true, accept: "application/zip", class: "govuk-file-upload"
+      .govuk-form-group
+        = form.submit "Continue", data: { disable_with: false }, class: "govuk-button", id: "submit-button"
