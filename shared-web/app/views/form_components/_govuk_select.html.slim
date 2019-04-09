@@ -1,17 +1,19 @@
 / This partial acts as glue between rails form helpers and the component govuk_select
 / With access to the form object, we can infer a lot of information from it
-
 ruby:
   # Infer name and id_prefix from attribute key
   local_assigns[:name] ||= get_attribute_name(form, key)
-  local_assigns[:id] ||= get_attribute_id_prefix(form, key)
+  local_assigns[:id] ||= local_assigns[:is_autocomplete] ? "picker-#{key}" : get_attribute_id_prefix(form, key)
   local_assigns[:items] = items.map do |item|
     {
       value: item.is_a?(Array) ? item[1] : item,
       text: item.is_a?(Array) ? item[0] : item
     }
   end
-  local_assigns[:items].unshift(value: nil, text: "") if local_assigns[:include_blank]
+
+  if local_assigns[:include_blank] || local_assigns[:is_autocomplete]
+    local_assigns[:items].unshift(value: nil, text: "")
+  end
 
   if local_assigns[:selected]
     item_matching_selected = local_assigns[:items].find { |item| item[:value].to_s == local_assigns[:selected] }
@@ -26,4 +28,5 @@ ruby:
     error_text = form.object.errors.full_messages_for(key).first.presence
     local_assigns[:errorMessage] ||= { text: error_text } if error_text
   end
+
 = render "components/govuk_select", **local_assigns

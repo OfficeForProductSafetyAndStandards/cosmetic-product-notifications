@@ -53,6 +53,7 @@ function simpleAccessibleAutocomplete(id, autocompleteOptions) {
       removeButton.addEventListener('click', () => {
         removeValue();
       });
+      removeButton.style.display = 'inline-block';
     }
   }
 }

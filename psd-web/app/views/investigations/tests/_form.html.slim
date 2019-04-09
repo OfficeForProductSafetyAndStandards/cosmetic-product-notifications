@@ -17,14 +17,13 @@
       - span_html = capture do
         ' Only products already added to the case are listed.
         = link_to "Add a product", new_investigation_product_path(investigation)
-      = render "form_components/autocomplete_select", key: :product_id, form: form, show_all_values: true,
-              items: investigation.products.map { |product| [product.name, product.id] },
+      = render "form_components/govuk_select", key: :product_id, form: form, show_all_values: true,
+              items: investigation.products.map { |product| [product.name, product.id] }, is_autocomplete: true,
               hint: { html: span_html },
               label: { text: "Product", classes: "govuk-visually-hidden" }
 
-= render "form_components/autocomplete_select", key: :legislation, form: form,
-        items: relevant_legislation,
-        show_all_values: true,
+= render "form_components/govuk_select", key: :legislation, form: form,
+        items: relevant_legislation, show_all_values: true, is_autocomplete: true,
         hint: { text: "Select the relevant legislation from the list." },
         label: { text: "Against which legislation?", classes: "govuk-label--m" }
 
