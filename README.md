@@ -123,13 +123,13 @@ Once you have a GOV.UK PaaS account as mentioned above, you should install the C
 https://github.com/cloudfoundry/cli#downloads and then run the following commands:
 
     cf login -a api.london.cloud.service.gov.uk -u XXX -p XXX
-    cf target -o beis-mspsds
+    cf target -o beis-opss
 
 This will log you in and set the correct target organisation.
 The login command without -u -p options will not work in some terminals, in particular git-bash. Passing username and
 password in one line will. 
 
-If you need to create a new environment, you can run `cf create-space SPACE-NAME`, otherwise, select the correct space using `cf target -o beis-mspsds -s SPACE-NAME`.
+If you need to create a new environment, you can run `cf create-space SPACE-NAME`, otherwise, select the correct space using `cf target -o beis-opss -s SPACE-NAME`.
 
 
 #### Antivirus API
