@@ -11,9 +11,9 @@ module Shared
           def self.date_attribute(key, required: true)
             @@all_date_keys = @@all_date_keys.push([key, required, self.name]) unless @@all_date_keys.include?([key, required, self.name])
             self.class_eval do
-              attr_accessor "#{key}_day".to_sym, :integer
-              attr_accessor "#{key}_month".to_sym, :integer
-              attr_accessor "#{key}_year".to_sym, :integer
+              attribute "#{key}_day".to_sym, :integer
+              attribute "#{key}_month".to_sym, :integer
+              attribute "#{key}_year".to_sym, :integer
             end
 
             after_initialize do
