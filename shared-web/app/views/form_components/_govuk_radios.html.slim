@@ -19,7 +19,7 @@ ruby:
   end
   if form.object.present?
     error_text = form.object.errors.full_messages_for(key).first.presence
-    local_assigns[:errorMessage] ||= {text: error_text} if error_text
+    local_assigns[:errorMessage] ||= { text: error_text } if error_text
   end
 
 = render "components/govuk_radios", **local_assigns
