@@ -107,7 +107,7 @@ Anything which is merged to `master` (via a Pull Request or push) will trigger t
 and cause deployments of the various components to the int space on GOV.UK PaaS.
 
 Deployment to research environment does not currently happen automatically, for details see section "Research" in 
-[prototypes](https://regulatorydelivery.atlassian.net/wiki/spaces/MSPSDS/pages/452689949/Prototypes)
+[prototypes](https://regulatorydelivery.atlassian.net/wiki/spaces/PSD/pages/452689949/Prototypes)
 
 Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
 space.

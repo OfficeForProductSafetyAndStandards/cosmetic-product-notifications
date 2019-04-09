@@ -18,7 +18,7 @@ cache:
 stages:
   - Build
   - name: Test
-    if: type = pull_request # This is designed to cut out unnecessary runs of the test suite. See MSPSDS-821 for details.
+    if: type = pull_request # This is designed to cut out unnecessary runs of the test suite. See PSD-821 for details.
   - name: Deploy to int
     if: branch = master AND type != pull_request
   - name: Deploy to staging
