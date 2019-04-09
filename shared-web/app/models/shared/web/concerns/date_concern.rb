@@ -132,8 +132,8 @@ module Shared
             when 3
               errors.add(key, :blank) if required
             when (1..2) # Date has some components entered, but not all
+              errors.add(key, :date_missing_component, missing_components: missing_components_text(key))
               missing_date_components.each do |missing_component, _|
-                errors.add(key, :date_missing_component)
                 errors.add(missing_component, "")
               end
             when 0
@@ -160,6 +160,14 @@ module Shared
           date_components[month_symbol(key)] = get_month(key)
           date_components[year_symbol(key)] = get_year(key)
           date_components.select { |_, value| value.blank? }
+        end
+
+        def missing_components_text(key)
+          missing_elements = []
+          missing_elements << "day" unless get_day(key).present?
+          missing_elements << "month" unless get_month(key).present?
+          missing_elements << "year" unless get_year(key).present?
+          missing_elements.join(" and ")
         end
       end
     end
