@@ -42,33 +42,5 @@ RSpec.describe ResponsiblePerson, type: :model do
       expect(responsible_person.save).to be false
       expect(responsible_person.errors[:postal_code]).to include("Postcode can not be blank")
     end
-
-    it "fails if a phone number is not specified" do
-      responsible_person.phone_number = nil
-
-      expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:phone_number]).to include("Phone number can not be blank")
-    end
-
-    it "fails if an email address is not specified" do
-      responsible_person.email_address = nil
-      expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:email_address]).to include("Email address can not be blank")
-    end
-
-    it "fails if the email address is not unique" do
-      create(:responsible_person, email_address: "duplicate@example.com")
-      responsible_person.email_address = "duplicate@example.com"
-
-      expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:email_address]).to include("Email address has already been taken")
-    end
-
-    it "fails if the email address format is invalid" do
-      responsible_person.email_address = "invalid_format"
-
-      expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:email_address]).to include("Email address is invalid")
-    end
   end
 end

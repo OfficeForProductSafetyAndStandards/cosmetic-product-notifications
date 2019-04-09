@@ -30,7 +30,7 @@ RSpec.describe "Responsible person dashboard", type: :system do
     assert_text "Incomplete (1)"
   end
 
-  it "only shows user the registered notifications belonging to their Responsible Person" do
+  it "only shows user the submitted notifications belonging to their Responsible Person" do
     create(:registered_notification, responsible_person: responsible_person_1)
     create(:registered_notification, responsible_person: responsible_person_2)
     visit responsible_person_notifications_path(responsible_person_1)
@@ -68,13 +68,13 @@ RSpec.describe "Responsible person dashboard", type: :system do
     assert_text "Previous 1 2 Next"
   end
 
-  it "uses pagination to display unfinished notifications" do
+  it "uses pagination to display incomplete notifications" do
     create_list(:draft_notification, 11, responsible_person: responsible_person_1)
     visit responsible_person_notifications_path(responsible_person_1)
     assert_text "Previous 1 2 Next"
   end
 
-  it "uses pagination to display registered notifications" do
+  it "uses pagination to display submitted notifications" do
     create_list(:registered_notification, 11, responsible_person: responsible_person_1)
     visit responsible_person_notifications_path(responsible_person_1)
     assert_text "Previous 1 2 Next"

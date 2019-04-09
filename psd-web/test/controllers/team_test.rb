@@ -4,10 +4,10 @@ class TeamTest < ActionDispatch::IntegrationTest
   setup do
     mock_out_keycloak_and_notify
 
-    @user_one = User.find_by(last_name: "User_one")
-    @user_two = User.find_by(last_name: "User_two")
-    @user_three = User.find_by(last_name: "User_three")
-    @user_four = User.find_by(last_name: "User_four")
+    @user_one = User.find_by(name: "Test User_one")
+    @user_two = User.find_by(name: "Test User_two")
+    @user_three = User.find_by(name: "Test User_three")
+    @user_four = User.find_by(name: "Test User_four")
 
     prepare_assigned_cases
   end

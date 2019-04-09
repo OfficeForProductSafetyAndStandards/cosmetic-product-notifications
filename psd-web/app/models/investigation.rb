@@ -209,7 +209,7 @@ private
   def send_confirmation_email
     if User.current
       NotifyMailer.investigation_created(pretty_id,
-                                       User.current.full_name,
+                                       User.current.name,
                                        User.current.email,
                                        title,
                                        case_type).deliver_later

@@ -54,7 +54,7 @@ RSpec.describe "File upload errors", type: :system do
 
   it "shows an error when the uploaded file can not be validated" do
     upload_file "testExportWithMissingData.zip"
-    expect(page).to have_text("Try again or manually register the product")
+    expect(page).to have_text("Try again or manually enter the production notification data")
   end
 
   it "shows an error when the uploaded file contains a draft notification" do

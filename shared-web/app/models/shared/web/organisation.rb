@@ -12,8 +12,8 @@ module Shared
       def self.all(options = {})
         begin
           self.data = Shared::Web::KeycloakClient.instance.all_organisations
-        rescue StandardError => error
-          Rails.logger.error "Failed to fetch organisations from Keycloak: #{error.message}"
+        rescue StandardError => e
+          Rails.logger.error "Failed to fetch organisations from Keycloak: #{e.message}"
           self.data = nil
         end
 
