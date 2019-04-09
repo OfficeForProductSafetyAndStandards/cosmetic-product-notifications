@@ -22,11 +22,11 @@ class Team < ActiveHash::Base
   def add_user(user_id)
     Shared::Web::KeycloakClient.instance.add_user_to_team user_id, id
     # Trigger reload of users and relations from KC
-    User.all(force: true)
+    User.load(force: true)
   end
 
-  def self.all(options = {})
-    Organisation.all
+  def self.load(force: false)
+    Organisation.load(force: force)
     begin
       self.data = Shared::Web::KeycloakClient.instance.all_teams
     rescue StandardError => e
@@ -35,6 +35,10 @@ class Team < ActiveHash::Base
     end
 
     self.ensure_names_up_to_date
+  end
+
+  def self.all(options = {})
+    self.load
 
     if options.has_key?(:conditions)
       where(options[:conditions])
@@ -77,4 +81,4 @@ class Team < ActiveHash::Base
     Team.where(name: team_names[0])
   end
 end
-Team.all if Rails.env.development?
+Team.load if Rails.env.development?

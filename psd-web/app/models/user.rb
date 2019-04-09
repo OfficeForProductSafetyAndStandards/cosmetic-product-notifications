@@ -21,7 +21,7 @@ class User < Shared::Web::User
 
   def self.create_and_send_invite(email_address, team, redirect_url)
     Shared::Web::KeycloakClient.instance.create_user email_address
-    # We can't use User.all here to load the new user
+    # We can't use User.load here to load the new user
     # - they're not part of any organisation yet, so aren't considered a psd user
     user_id = Shared::Web::KeycloakClient.instance.get_user(email_address)[:id]
     # Adding team membership will trigger user reload, too
@@ -36,22 +36,16 @@ class User < Shared::Web::User
     user
   end
 
-  def self.all(options = {})
+  def self.load(force: false)
     begin
-      all_users = Shared::Web::KeycloakClient.instance.all_users(force: options[:force])
-      Team.all
+      all_users = Shared::Web::KeycloakClient.instance.all_users(force: force)
+      Team.load(force: force)
       self.data = all_users.map { |user| populate_organisation(user) }
                       .reject { |user| user[:organisation_id].blank? }
-      TeamUser.all(force: options[:force])
+      TeamUser.load(force: force)
     rescue StandardError => e
       Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
       self.data = nil
-    end
-
-    if options.has_key?(:conditions)
-      where(options[:conditions])
-    else
-      @records ||= []
     end
   end
 
@@ -115,4 +109,4 @@ class User < Shared::Web::User
   end
 end
 
-User.all if Rails.env.development?
+User.load if Rails.env.development?
