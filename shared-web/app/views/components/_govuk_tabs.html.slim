@@ -1,9 +1,8 @@
 ruby:
-  idPrefix = local_assigns[:idPrefix]
-  tabs_classes = ["govuk-tabs", local_assigns[:classes]]
+  id_prefix = local_assigns[:idPrefix]
 
-div[*(local_assigns[:attributes] || {})
-                class=tabs_classes
+.govuk-tabs[*(local_assigns[:attributes] || {})
+                class=local_assigns[:classes]
                 id=local_assigns[:id]
                 data-module="tabs"]
   h2.govuk-tabs__title
@@ -11,15 +10,15 @@ div[*(local_assigns[:attributes] || {})
   - if local_assigns[:items]
     ul.govuk-tabs__list
       - local_assigns[:items].each_with_index do |item, index|
-        - id = item[:id] || idPrefix + '-' + index
+        - id = item[:id] || id_prefix + '-' + index
         li.govuk-tabs__list-item
           a.govuk-tabs__tab[*(item[:attributes] || {})
-              class=("govuk-tabs__tab--selected" if index==0)
+              class=("govuk-tabs__tab--selected" if index.zero?)
               href="##{id}"]
             = item[:label]
   - local_assigns[:items].each_with_index do |item, index|
-    - id = item[:id] || idPrefix + '-' + index
+    - id = item[:id] || id_prefix + '-' + index
     section.govuk-tabs__panel[*(item[:panel][:attributes] || {})
-              class=("govuk-tabs__panel--hidden" if index>0)
-              href="#{id}"]
+              class=("govuk-tabs__panel--hidden" if index.positive?)
+              id=id]
       = item[:panel][:html] || item[:panel][:text]

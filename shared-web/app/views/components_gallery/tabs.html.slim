@@ -7,14 +7,14 @@ h2.govuk-heading-m Default
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
 h2.govuk-heading-m Default
-- html_1 = capture do
+- html_one = capture do
   h2.govuk-heading-l = "Tab 1"
   p Testing that when you click the anchor it moves to the anchor point successfully
   a.govuk-link href="#anchor" = "Anchor"
   a id="anchor" tabIndex="0" = "Anchor Point"
-- html_2 = capture do
+- html_two = capture do
   h2.govuk-heading-l = "Tab 2"
-= render "components/govuk_tabs", items: [{ label: "Tab 1", id: "tab-1", panel: { html: html_1 } },
-        { label: "Tab 2", id: "tab-2", panel: { html: html_2 } }]
+= render "components/govuk_tabs", items: [{ label: "Tab 1", id: "tab-1", panel: { html: html_one } },
+        { label: "Tab 2", id: "tab-2", panel: { html: html_two } }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
