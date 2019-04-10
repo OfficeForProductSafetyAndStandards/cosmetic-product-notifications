@@ -1,8 +1,8 @@
 .govuk-grid-column-one-half
+  h2.govuk-heading-m[class="govuk-!-margin-bottom-6"]
+    | Current status
   table.govuk-table.summary-table
     tbody.govuk-table__body
-      h2.govuk-heading-l[class="govuk-!-margin-bottom-6"]
-        | Current status
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
           span.govuk-caption-m[class="govuk-!-font-size-16"]
@@ -15,7 +15,7 @@
         th.govuk-table__header[scope="row"]
           span.govuk-caption-m[class="govuk-!-font-size-16"]
             | Assigned to
-          = investigation.assignee ? investigation.assignee.full_name.to_s : "Unassigned"
+          = investigation.assignee ? investigation.assignee.name.to_s : "Unassigned"
           - if investigation.assignee&.organisation.present?
             div[class="govuk-!-font-size-16"]
               = investigation.assignee.organisation.name

@@ -6,7 +6,7 @@
       { text: "You must agree to the declaration to use this service", href: "#agree" }]
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
-      h1.govuk-heading-xl Declaration
+      h1.govuk-heading-l Declaration
       p
         | By continuing you agree:
       ul.govuk-list.govuk-list--bullet
@@ -23,7 +23,7 @@
             | privacy policy
             span.govuk-visually-hidden
               |  (opens new window)
-          = link_to html, help_privacy_policy_path, target: "_blank"
+          = link_to html, help_privacy_notice_path, target: "_blank"
           - # rubocop:enable Rails/LinkToBlank
         li That any information you provide is correct to your best of your knowledge
         li That you have the right to share information you enter

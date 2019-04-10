@@ -12,41 +12,40 @@ class Investigations::TsInvestigationsController < ApplicationController
   steps :product, :why_reporting, :which_businesses, :business, :has_corrective_action, :corrective_action,
         :other_information, :test_results, :risk_assessments, :product_images, :evidence_images, :other_files,
         :reference_number
+
   before_action :set_countries, only: %i[show create update]
   before_action :set_product, only: %i[show create update]
-  before_action :store_product, only: %i[update], if: -> { step == :product }
   before_action :set_why_reporting, only: %i[show update], if: -> { step == :why_reporting }
   before_action :set_investigation, only: %i[show create update]
-  before_action :store_investigation, only: %i[update], if: -> { %i[why_reporting reference_number].include? step }
-  before_action :store_why_reporting, only: %i[update], if: -> { step == :why_reporting }
   before_action :set_selected_businesses, only: %i[show update], if: -> { step == :which_businesses }
-  before_action :store_selected_businesses, only: %i[update], if: -> { step == :which_businesses }
   # There is no set_pending_businesses because the business is recovered from the session in set_business
-  before_action :store_pending_businesses, only: %i[update], if: -> { step == :which_businesses }
   before_action :set_business, only: %i[show update], if: -> { step == :business }
   before_action :set_skip_step, only: %i[update], if: -> do
     %i[business has_corrective_action corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
   end
-  before_action :store_business, only: %i[update], if: -> { step == :business }
-  before_action :set_repeat_step, only: %i[show update], if: -> do
-    %i[has_corrective_action corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
-  end
-  before_action :store_repeat_step, only: %i[update], if: -> do
-    %i[has_corrective_action corrective_action test_results risk_assessments product_images evidence_images other_files].include? step
-  end
   before_action :set_corrective_action, only: %i[show update], if: -> { step == :corrective_action }
-  before_action :store_corrective_action, only: %i[update], if: -> { step == :corrective_action }
   # There is no set_other_information because there is no validation on the page so there is no need to set the model
-  before_action :store_other_information, only: %i[update], if: -> { step == :other_information }
   before_action :set_test, only: %i[show update], if: -> { step == :test_results }
-  before_action :store_test, only: %i[update], if: -> { step == :test_results }
   before_action :set_file, only: %i[show update], if: -> do
     %i[risk_assessments product_images evidence_images other_files].include? step
   end
+  before_action :set_repeat_step, only: %i[show update], if: -> { step == :has_corrective_action }
+  # This needs to be first to prevent other models from saving
+  before_action :store_repeat_step, only: %i[update], if: -> do
+    %i[has_corrective_action risk_assessments product_images evidence_images other_files].include? step
+  end
+  before_action :store_product, only: %i[update], if: -> { step == :product }
+  before_action :store_investigation, only: %i[update], if: -> { %i[why_reporting reference_number].include? step }
+  before_action :store_why_reporting, only: %i[update], if: -> { step == :why_reporting }
+  before_action :store_selected_businesses, only: %i[update], if: -> { step == :which_businesses }
+  before_action :store_pending_businesses, only: %i[update], if: -> { step == :which_businesses }
+  before_action :store_business, only: %i[update], if: -> { step == :business }
+  before_action :store_corrective_action, only: %i[update], if: -> { step == :corrective_action }
+  before_action :store_other_information, only: %i[update], if: -> { step == :other_information }
+  before_action :store_test, only: %i[update], if: -> { step == :test_results }
   before_action :store_file, only: %i[update], if: -> do
     %i[risk_assessments product_images evidence_images other_files].include? step
   end
-
 
   #GET /xxx/step
   def show
@@ -141,11 +140,14 @@ private
     @skip_step = true if params[:commit] == "Skip this page"
   end
 
-  def set_repeat_step
+  def set_repeat_step(model = :investigation)
     repeat_step_key = further_key step
-    @repeat_step = if params.key?(repeat_step_key)
-                     params.permit(repeat_step_key)[repeat_step_key] == "Yes"
-                   else
+    @repeat_step = case params.dig(model, repeat_step_key)
+                   when "Yes"
+                     true
+                   when "No"
+                     false
+                   when nil
                      session[repeat_step_key]
                    end
   end
@@ -157,6 +159,7 @@ private
     if @file_blob && @corrective_action.related_file == "Yes"
       @corrective_action.documents.attach(@file_blob)
     end
+    set_repeat_step(:corrective_action)
   end
 
   def set_test
@@ -164,6 +167,7 @@ private
     @test.product = @product
     @file_blob, * = load_file_attachments :test
     @test.documents.attach(@file_blob) if @file_blob
+    set_repeat_step(:test)
   end
 
   def all_businesses_complete?
@@ -174,6 +178,7 @@ private
     @file_blob, * = load_file_attachments
     @file_title = get_attachment_metadata_params(:file)[:title]
     @file_description = get_attachment_metadata_params(:file)[:description]
+    set_repeat_step :file
   end
 
   def clear_session
@@ -218,11 +223,17 @@ private
 
     case step
     when :why_reporting
+      params[:investigation][:hazard_description] = nil unless params[:investigation][:unsafe] == "1"
+      params[:investigation][:hazard_type] = nil unless params[:investigation][:unsafe] == "1"
+      params[:investigation][:non_compliant_reason] = nil unless params[:investigation][:non_compliant] == "1"
       params.require(:investigation).permit(
-        :unsafe, :hazard, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
+        :unsafe, :hazard_type, :hazard_description, :non_compliant, :non_compliant_reason
       )
     when :reference_number
+      params[:investigation][:complainant_reference] = nil unless params[:investigation][:has_complainant_reference] == "Yes"
       params.require(:investigation).permit(:complainant_reference)
+    else
+      {}
     end
   end
 
@@ -251,17 +262,17 @@ private
   end
 
   def business_session_params
-    # TODO MSPSDS-980 use this to retrieve a business for editing eg for browser back button
+    # TODO PSD-980 use this to retrieve a business for editing eg for browser back button
     {}
   end
 
   def corrective_action_session_params
-    # TODO MSPSDS-980 use this to retrieve a corrective action for editing eg for browser back button
+    # TODO PSD-980 use this to retrieve a corrective action for editing eg for browser back button
     {}
   end
 
   def test_session_params
-    # TODO MSPSDS-980 use this to retrieve a test for editing eg for browser back button
+    # TODO PSD-980 use this to retrieve a test for editing eg for browser back button
     { type: Test::Result.name }
   end
 
@@ -273,6 +284,10 @@ private
 
   def other_information_params
     params.permit(*other_information_types)
+  end
+
+  def reference_number_params
+    params.require(:investigation).permit(:has_complainant_reference, :complainant_reference)
   end
 
   def other_information_types
@@ -328,16 +343,24 @@ private
       session[further_key(step)] = false
       return
     end
-    if params.key? further_key(step)
+
+    if repeat_step_valid?(@investigation)
       session[further_key(step)] = @repeat_step
-    else
-      further_page_type = to_item_text(step)
-      @investigation.errors.add(further_key(step), "Select whether or not you have #{further_page_type} to record")
     end
+  end
+
+  def repeat_step_valid?(model)
+    if @repeat_step.nil?
+      further_page_type = to_item_text(step)
+      model.errors.add(further_key(step), "Select whether or not you have #{further_page_type} to record")
+      return false
+    end
+    true
   end
 
   def store_corrective_action
     return if @skip_step
+    return unless corrective_action_valid?
 
     if @corrective_action.valid? && @file_blob
       update_blob_metadata @file_blob, corrective_action_file_metadata
@@ -345,17 +368,31 @@ private
     end
     session[:corrective_actions] << { corrective_action: @corrective_action.attributes, file_blob_id: @file_blob&.id }
     session.delete :file
+    session[further_key(step)] = @repeat_step
+  end
+
+  def corrective_action_valid?
+    @corrective_action.valid?
+    repeat_step_valid?(@corrective_action)
+    @corrective_action.errors.empty?
   end
 
   def store_test
     return if @skip_step
 
-    if @test.valid? && @file_blob
+    if test_valid? && @file_blob
       update_blob_metadata @file_blob, test_file_metadata
       @file_blob.save if @file_blob
       session[:test_results] << { test: @test.attributes, file_blob_id: @file_blob&.id }
       session.delete :file
+      session[further_key(step)] = @repeat_step
     end
+  end
+
+  def test_valid?
+    @test.valid?
+    repeat_step_valid?(@test)
+    @test.errors.empty?
   end
 
   def store_file
@@ -416,12 +453,12 @@ private
     when :product
       @product.validate
     when :why_reporting
-      @investigation.errors.add(:why_reporting, "Please indicate whether the product is unsafe or non-compliant") if !product_unsafe && !product_non_compliant
+      @investigation.errors.add(:why_reporting, "Indicate whether the product is unsafe or non-compliant") if !product_unsafe && !product_non_compliant
       @investigation.validate :unsafe if product_unsafe
       @investigation.validate :non_compliant if product_non_compliant
     when :which_businesses
       validate_none_as_only_selection
-      @investigation.errors.add(:which_business, "Please indicate which if any business is known") if no_business_selected
+      @investigation.errors.add(:which_business, "Indicate which if any business is known") if no_business_selected
       @investigation.errors.add(:other_business_type, "Enter other business type") if no_other_business_type
     when :business
       if @business.errors.any? || @business.contacts_have_errors? || @business.locations_have_errors?
@@ -431,6 +468,14 @@ private
       return false if @corrective_action.errors.any?
     when :test_results
       return false if @test.errors.any?
+    when :reference_number
+      if reference_number_params[:has_complainant_reference].blank?
+        @investigation.errors.add(:has_complainant_reference, "Choose whether you want to add your own reference number")
+      end
+      if reference_number_params[:has_complainant_reference] == "Yes" && @investigation.complainant_reference.blank?
+        @investigation.errors.add(:complainant_reference, "Enter existing reference number")
+        @has_reference_number = reference_number_params[:has_complainant_reference]
+      end
     end
     @investigation.errors.empty? && @product.errors.empty?
   end
@@ -483,6 +528,7 @@ private
   def save_test_results
     session[:test_results].each do |session_test_result|
       test_record = Test::Result.new(session_test_result[:test])
+      test_record.product = @product
       file_blob = ActiveStorage::Blob.find_by(id: session_test_result[:file_blob_id])
       if file_blob
         attach_blobs_to_list(file_blob, test_record.documents)

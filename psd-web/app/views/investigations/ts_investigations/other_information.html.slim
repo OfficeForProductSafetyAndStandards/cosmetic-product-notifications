@@ -1,10 +1,5 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      span.govuk-caption-xl Reporting an unsafe product
-      | Other information and files
 = form_with model: @investigation, scope: :information, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row class="govuk-!-margin-bottom-3"
     .govuk-form-group

@@ -25,4 +25,8 @@ class AuditActivity::Test::Base < AuditActivity::Base
   end
 
   def self.date_label; end
+
+  def activity_type
+    "test"
+  end
 end

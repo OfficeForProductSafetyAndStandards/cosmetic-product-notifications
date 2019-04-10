@@ -3,9 +3,11 @@ class ResponsiblePersons::AddNotificationWizardController < ApplicationControlle
 
   before_action :set_responsible_person, only: %i[update show]
 
-  steps :have_products_been_notified_in_eu, :will_products_be_notified_in_eu,
-      :do_you_have_files_from_eu_notification, :was_product_on_sale_before_eu_exit,
-      :register_on_eu_system
+  steps :have_products_been_notified_in_eu,
+        :will_products_be_notified_in_eu,
+        :do_you_have_files_from_eu_notification,
+        :was_product_on_sale_before_eu_exit,
+        :register_on_eu_system
 
   def show
     render_wizard
@@ -29,13 +31,13 @@ class ResponsiblePersons::AddNotificationWizardController < ApplicationControlle
       if answer == "yes"
         redirect_to wizard_path(:register_on_eu_system)
       else
-        redirect_to wizard_path(:was_product_on_sale_before_eu_exit)
+        redirect_to manual_journey_path(notified_before_eu_exit: false)
       end
     when :do_you_have_files_from_eu_notification
       if answer == "yes"
         redirect_to bulk_upload_path
       else
-        redirect_to manual_journey_path(notified_before_eu_exit: false)
+        redirect_to wizard_path(:was_product_on_sale_before_eu_exit)
       end
     when :was_product_on_sale_before_eu_exit
       if answer == "yes"

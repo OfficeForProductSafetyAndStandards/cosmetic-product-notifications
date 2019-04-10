@@ -1,4 +1,4 @@
-- content_for :page_title, "Team Members"
+- content_for :page_title, "Team members"
 - content_for :after_header do
   = render "layouts/navbar"
 .govuk-grid-row
@@ -30,7 +30,7 @@
         - @responsible_person.responsible_person_users.each do |user|
           tr.govuk-table__row
             td.govuk-table__cell
-              = user.full_name
+              = user.name
             td.govuk-table__cell
               = user.email_address
             td.govuk-table__cell

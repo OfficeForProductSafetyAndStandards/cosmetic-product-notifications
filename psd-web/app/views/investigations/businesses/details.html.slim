@@ -7,8 +7,5 @@
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
       = render "investigation_heading", investigation: @investigation
-      h2.govuk-heading-l
-        | Add business
-      h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
-        | Business details
+      h2.govuk-heading-m Add business
       = render "businesses/form", form: form, business: @business, countries: @countries

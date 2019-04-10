@@ -21,9 +21,13 @@ class AuditActivity::Investigation::Add < AuditActivity::Investigation::Base
     "<br><br>Assigned to #{investigation.assignee&.display_name}."
   end
 
-  def sensitive?
-    return false if investigation.complainant.blank?
+  def can_display_all_data?
+    return true if investigation.complainant.blank?
 
-    !investigation.complainant&.can_be_displayed?
+    investigation.complainant&.can_be_displayed?
+  end
+
+  def restricted_title
+    title
   end
 end

@@ -32,6 +32,23 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
@@ -43,7 +60,7 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetic product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -66,6 +83,23 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # number_of_shades
     choose("No")
+    click_button "Continue"
+
+    # add_cmrs
+    click_button "Continue"
+
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
     click_button "Continue"
 
     # add_product_image
@@ -101,6 +135,23 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
@@ -113,7 +164,7 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetic product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -147,6 +198,23 @@ RSpec.describe "Manually enter product details", type: :system do
     end
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
@@ -159,7 +227,7 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Shades", "RedBlueYellow")
     expect_check_your_answers_value("Label image", "testImage.png")
 
-    click_button "Accept and register the cosmetic product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")

@@ -5,10 +5,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      .govuk-heading-xl
-        span.govuk-caption-xl
+      h1.govuk-heading-l
+        span.govuk-caption-l
           = "Business: #{@business.trading_name}"
         | Add location
-      h2.govuk-heading-l
-        | Location details
       = render "form", form: form

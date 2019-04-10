@@ -1,24 +1,31 @@
 - content_for :page_title, "Upload formulation document"
 - content_for :after_header do
-    = link_to "Back", responsible_person_notifications_path(@responsible_person), class: "govuk-back-link"
-.govuk-grid-row
+  = link_to "Back", responsible_person_notifications_path(@responsible_person, anchor: "incomplete"),
+          class: "govuk-back-link"
+
+= form_with url: responsible_person_notification_component_formulation_index_path(@responsible_person, @notification,
+        @component), method: :post do |form|
+  .govuk-grid-row
     .govuk-grid-column-two-thirds
-        - if @error_list.any?
-            = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @error_list
-        h1.govuk-heading-xl
-            - if @notification.is_multicomponent?
-                ' Upload formulation document for component
-                = @component.name
-            - else
-                | Upload formulation document
-        p This can be either as ranges or the exact concentration.
-        p For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.
-        = form_with(url: responsible_person_notification_component_formulation_index_path( \
-                @responsible_person, @notification, @component), method: :post, multipart: true) do |form|
-            .govuk-form-group class=("govuk-form-group--error" if @error_list.any?)
-                = form.label :formulation_file, "File type can be a ‘pdf', 'rtf' or ‘txt’.", class: "govuk-label"
-                span#file-upload-error-message.govuk-error-message
-                    = @error_list.last[:text] if @error_list.any?
-                = form.file_field :formulation_file, class: "govuk-file-upload", \
-                    accept: Component.allowed_types.map(&method(:get_filetype_extension)).join(",")
-            = form.submit "Continue", class: "govuk-button"
+      - if @error_list.present?
+        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @error_list
+      h1.govuk-heading-xl
+        - if @notification.is_multicomponent?
+          | Upload formulation document for component
+          =< @component.name
+        - else
+          | Upload formulation document
+      p
+        | This can be either as ranges or the exact concentration.
+      p
+        | For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.
+
+      .govuk-form-group class=("govuk-form-group--error" if @error_list.present?)
+        = form.label :formulation_file, "File type can be a ‘pdf’, ‘rtf’ or ‘txt’.", class: "govuk-label"
+        - if @error_list.present?
+          span.govuk-error-message
+            = @error_list.first[:text]
+        = form.file_field :formulation_file, class: "govuk-file-upload",
+                accept: Component.allowed_types.map(&method(:get_filetype_extension)).join(",")
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

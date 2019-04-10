@@ -1,5 +1,5 @@
 class NotifyMailer < GovukNotifyRails::Mailer
-  def send_responsible_person_verification_email(responsible_person_id, email_address, user_name)
+  def send_responsible_person_verification_email(responsible_person_id, email_address, contact_person_name, responsible_person_name, user_name)
     key = EmailVerificationKey.create(
       responsible_person_id: responsible_person_id
 )
@@ -9,7 +9,9 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       user_name: user_name,
-      verification_link: responsible_person_email_verification_key_url(responsible_person_id, key.key)
+      verification_link: responsible_person_email_verification_key_url(responsible_person_id, key.key),
+      contact_name: contact_person_name,
+      responsible_person: responsible_person_name
     )
 
     mail(to: email_address)

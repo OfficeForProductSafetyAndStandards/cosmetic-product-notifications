@@ -12,8 +12,8 @@ module Shared
         redirect_path = main_app.root_path
         redirect_path = params[:request_path] if is_relative(params[:request_path])
         redirect_to redirect_path
-      rescue RestClient::ExceptionWithResponse => error
-        redirect_to keycloak_login_url(params[:request_path]), alert: signin_error_message(error)
+      rescue RestClient::ExceptionWithResponse => e
+        redirect_to keycloak_login_url(params[:request_path]), alert: signin_error_message(e)
       end
 
       def logout

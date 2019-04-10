@@ -4,11 +4,22 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl Reporting an unsafe product
-        | Find this in your system
-      = render "form_components/govuk_input", key: :complainant_reference, form: form,
-              label: { text: "Reference number", classes: "govuk-visually-hidden" },
-              hint: { text: "Use an existing case number or reference from your system to help you find your report" + \
-              "in the future." }
+      h1.govuk-heading-l
+        span.govuk-caption-l Reporting an unsafe product
+        | Add your own reference number
+      p
+        | The Product safety database assigns each case an ID.
+      p.govuk-body
+        | However, if you've recorded information about this case in your own system, you may have given it an internal
+          reference number. You can also add that here and it will show up if you search for it.
+
+      - existing_reference_field_html = capture do
+        = render "form_components/govuk_input", key: :complainant_reference, form: form,
+                label: { text: "Existing reference number" }
+      = render "form_components/govuk_radios", form: form, key: :has_complainant_reference,
+              fieldset: { legend: { text: "Do you want to add your own reference number?",
+                      classes: "govuk-fieldset__legend--m" } },
+              items: [{ text: "Yes", value: "Yes", checked: @has_reference_number == "Yes",
+                          conditional: { html: existing_reference_field_html } },
+                      { text: "No", value: "No" }]
       = form.submit "Create case", class: "govuk-button"

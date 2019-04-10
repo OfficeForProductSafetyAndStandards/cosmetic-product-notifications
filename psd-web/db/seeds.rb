@@ -1,3 +1,6 @@
+# This solves the issue described by https://github.com/rails/rails/issues/35812
+ActiveJob::Base.queue_adapter = Rails.application.config.active_job.queue_adapter
+
 def create_blob(filename, title: nil, description: nil)
   ActiveStorage::Blob.create_after_upload!(io: File.open("./db/seed_files/#{filename}"), filename: filename, content_type: "image/jpeg", metadata: {
     title: title || filename,

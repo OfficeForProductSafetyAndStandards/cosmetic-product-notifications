@@ -5,6 +5,8 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
     end
   end
 
+
+
   def show?
     user_member_of_associated_responsible_person?
   end
@@ -14,7 +16,7 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
   end
 
   def update?
-    user_member_of_associated_responsible_person?
+    user_member_of_associated_responsible_person? && notification_is_not_submitted?
   end
 
   def confirm?
@@ -25,9 +27,17 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
     update?
   end
 
+  def index?
+    update?
+  end
+
 private
 
   def user_member_of_associated_responsible_person?
     user.responsible_persons.include?(record&.responsible_person)
+  end
+
+  def notification_is_not_submitted?
+    !record&.notification_complete?
   end
 end

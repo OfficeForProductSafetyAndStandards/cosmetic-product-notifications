@@ -14,7 +14,7 @@ class AuditActivity::Investigation::AddProject < AuditActivity::Investigation::A
     body
   end
 
-  def sensitive?
-    false
+  def can_display_all_data?
+    true
   end
 end

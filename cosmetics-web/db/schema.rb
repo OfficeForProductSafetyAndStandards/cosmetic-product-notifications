@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_20_164234) do
+ActiveRecord::Schema.define(version: 2019_04_03_134006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,16 @@ ActiveRecord::Schema.define(version: 2019_03_20_164234) do
     t.string "special_applicator"
     t.string "acute_poisoning_info"
     t.index ["notification_id"], name: "index_components_on_notification_id"
+  end
+
+  create_table "contact_persons", force: :cascade do |t|
+    t.string "name"
+    t.string "email_address"
+    t.string "phone_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "responsible_person_id"
+    t.index ["responsible_person_id"], name: "index_contact_persons_on_responsible_person_id"
   end
 
   create_table "email_verification_keys", force: :cascade do |t|
@@ -139,6 +149,9 @@ ActiveRecord::Schema.define(version: 2019_03_20_164234) do
     t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
+    t.boolean "components_are_mixed"
+    t.decimal "ph_min_value"
+    t.decimal "ph_max_value"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
@@ -204,9 +217,17 @@ ActiveRecord::Schema.define(version: 2019_03_20_164234) do
     t.index ["component_id"], name: "index_trigger_questions_on_component_id"
   end
 
+  create_table "user_attributes", primary_key: "user_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.datetime "declaration_accepted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_attributes_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cmrs", "components"
   add_foreign_key "components", "notifications"
+  add_foreign_key "contact_persons", "responsible_persons"
   add_foreign_key "email_verification_keys", "responsible_persons"
   add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"

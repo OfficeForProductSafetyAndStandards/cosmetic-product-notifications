@@ -2,7 +2,7 @@ require 'will_paginate/array'
 
 class ResponsiblePersons::NotificationsController < ApplicationController
   before_action :set_responsible_person
-  before_action :set_notification, only: %i[show edit confirm upload_formulation]
+  before_action :set_notification, only: %i[show edit confirm]
 
   def index
     @pending_notification_files_count = 0
@@ -45,19 +45,9 @@ class ResponsiblePersons::NotificationsController < ApplicationController
 
   def confirm
     if @notification.submit_notification!
-      redirect_to responsible_person_notifications_path(@responsible_person), confirmation: "#{@notification.product_name} registered"
+      redirect_to responsible_person_notifications_path(@responsible_person), confirmation: "#{@notification.product_name} notification submitted"
     else
       redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
-    end
-  end
-
-  def upload_formulation
-    if @notification.formulation_required?
-      component = @notification.components.find(&:formulation_required?)
-      redirect_to new_responsible_person_notification_component_formulation_path(@responsible_person, @notification, component)
-    else
-      @notification.formulation_file_uploaded!
-      redirect_to responsible_person_notifications_path(@responsible_person)
     end
   end
 
@@ -76,13 +66,13 @@ private
   def get_unfinished_notifications(page_size)
     @responsible_person.notifications
       .where(state: %i[notification_file_imported draft_complete])
-      .paginate(page: params[:unfinished], per_page: page_size)
+      .paginate(page: params[:incomplete], per_page: page_size)
   end
 
   def get_registered_notifications(page_size)
     @responsible_person.notifications
       .where(state: :notification_complete)
-      .paginate(page: params[:registered], per_page: page_size)
+      .paginate(page: params[:notified], per_page: page_size)
   end
 
   def add_image_upload_errors
