@@ -103,7 +103,7 @@ en:
             date_decided:
               blank: "Enter date the corrective action was decided"
               invalid: "Enter a real date when the corrective action was decided"
-              date_missing_component: "Enter the date the corrective action was decided and include a day, month and year"
+              date_missing_component: "Enter date the corrective action was decided and include a day, month and year"
         alert:
           attributes:
             summary:

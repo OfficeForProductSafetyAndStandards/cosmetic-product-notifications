@@ -5,7 +5,7 @@ ruby:
   errors = local_assigns[:errors] || form.object.errors
   error_list = errors.details.keys.flat_map do |attribute|
     prefix = get_attribute_id_prefix(form, attribute)
-    errors.full_messages_for(attribute).map { |message| { text: message.downcase.capitalize, href: "##{prefix}-error" } }
+    errors.full_messages_for(attribute).map { |m| { text: m.downcase.capitalize, href: "##{prefix}-error" } }
   end
 - if errors.any?
   = render "components/govuk_error_summary", **local_assigns, titleText: "There is a problem", errorList: error_list

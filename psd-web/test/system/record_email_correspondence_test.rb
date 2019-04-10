@@ -29,7 +29,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   test "validates date format" do
     fill_in "correspondence_email[correspondence_date][day]", with: "333"
     click_on "Continue"
-    assert_text "must specify a month and year"
+    assert_text "must include a month and year"
   end
 
   test "second step should be content" do
