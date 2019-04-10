@@ -1,5 +1,5 @@
 h2.govuk-heading-l.poison-centre__table-heading
-  | Formulation
+  | Product details
 - @notification.components.each do |component|
   table.govuk-table
     - if component.name.present?
@@ -8,25 +8,4 @@ h2.govuk-heading-l.poison-centre__table-heading
     - if component.trigger_questions
       - component.trigger_questions.each do |question|
         tbody.govuk-table__body
-          - question.trigger_question_elements.each do |question_element|
-            - case question_element.element
-              - when "ethanol"
-                tr.govuk-table__row
-                  th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
-                    | Ethanol
-                  td.govuk-table__cell.govuk-table__cell--numeric
-                    = display_concentration(question_element.answer)
-              - when "propanol"
-                tr.govuk-table__row
-                  th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
-                    | Isopropanol
-                  td.govuk-table__cell.govuk-table__cell--numeric
-                    = display_concentration(question_element.answer)
-              - when "inciname"
-                tr.govuk-table__row
-                  - formulation_data = get_formulation_data(question, question_element)
-                  - if formulation_data.present?
-                    th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
-                      = formulation_data.first.answer.humanize
-                    td.govuk-table__cell.govuk-table__cell--numeric
-                      = display_concentration(formulation_data.last.answer.humanize)
+          = render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: false
