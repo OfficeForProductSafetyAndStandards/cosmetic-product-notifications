@@ -1,6 +1,6 @@
 - elements = trigger_question.trigger_question_elements
 tr.govuk-table__row
-  - unless User.current.poison_centre_user? && trigger_question.not_applicable?
+  - unless display_not_applicable && !trigger_question.applicable?
     th.govuk-table__header[scope="row"]
       = get_trigger_rules_short_question_name(trigger_question.question)
     - if elements.count == 1
@@ -13,7 +13,6 @@ tr.govuk-table__row
     -else
       td.govuk-table__cell
         = render "none_or_bullet_list",
-                entities_list: format_trigger_question_elements(trigger_question,
-                        elements),
+                entities_list: format_trigger_question_elements(elements),
                 key_name: :inci_name,
                 value_name: :quantity
