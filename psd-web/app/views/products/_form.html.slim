@@ -37,7 +37,7 @@
         hint: { text: "A link to the manufacturer's page for this product, or a webpage where it can be bought" }
 
 div class="govuk-!-width-two-thirds"
-  / Ideally the width class should affect he input only, without a wrapper, but we're limited by MSPSDS-1045
+  / Ideally the width class should affect he input only, without a wrapper, but we're limited by PSD-1045
   = render "form_components/govuk_select", form: form, key: :country_of_origin, choices: countries,
           include_blank: true, id: "location-autocomplete",
           label: { text: "Country of origin", classes: label_class }
