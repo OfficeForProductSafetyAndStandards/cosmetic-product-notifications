@@ -93,29 +93,24 @@ module Shared
         end
       end
 
-      def all_teams(force: false)
+      # @param org_ids specifies teams for which organisations should be returned. This allows us to avoid creating
+      # orphaned team entities
+      def all_teams(org_ids, force: false)
         Rails.cache.delete(:keycloak_teams) if force
         Rails.cache.fetch(:keycloak_teams, expires_in: 5.minutes) do
-          groups = all_groups
-          organisations = groups.find { |group| group["name"] == "Organisations" }
-
-          teams = []
-          organisations["subGroups"].reject(&:blank?).each do |organisation|
-            organisation["subGroups"].reject(&:blank?).map do |team|
-              team_recipient_email = group_attributes(team["id"])["teamRecipientEmail"]&.first
-              teams << { id: team["id"], name: team["name"], path: team["path"], organisation_id: organisation["id"], team_recipient_email: team_recipient_email }
-            end
-          end
-          teams
+          all_groups.find { |group| group["name"] == "Organisations" }["subGroups"]
+              .reject(&:blank?)
+              .select { |organisation| org_ids.include? organisation["id"] }
+              .flat_map(&method(:extract_teams_from_organisation))
         end
       end
 
-      def all_team_users(force: false)
+      # @param team_ids specifies teams we know about. This allows us to avoid linking to ghost team entities
+      def all_team_users(team_ids, force: false)
         Rails.cache.delete(:keycloak_team_users) if force
         Rails.cache.fetch(:keycloak_team_users, expires_in: 5.minutes) do
           users = all_users(force: force)
           user_groups = all_user_groups
-          teams = all_teams.map { |t| t[:id] }.to_set
 
           # We set ids manually because if we don't ActiveHash will use 'next_id' method when computing @records,
           # which calls TeamUser.all, and gets into an infinite loop
@@ -123,7 +118,7 @@ module Shared
           id = 1
           users.reject(&:blank?).each do |user|
             user_groups[user[:id]].reject(&:blank?).each do |group|
-              team_users << { team_id: group, user_id: user[:id], id: id } if teams.include? group
+              team_users << { team_id: group, user_id: user[:id], id: id } if team_ids.include? group
               id += 1
             end
           end
@@ -213,6 +208,18 @@ module Shared
         response = Keycloak::Internal.get_groups(max: 1000000)
         JSON.parse(response)
       end
+
+      def extract_teams_from_organisation(organisation)
+        organisation["subGroups"].reject(&:blank?).map do |team|
+          team_recipient_email = group_attributes(team["id"])["teamRecipientEmail"]&.first
+          { id: team["id"],
+            name: team["name"],
+            path: team["path"],
+            organisation_id: organisation["id"],
+            team_recipient_email: team_recipient_email }
+        end
+      end
+
     end
   end
 end

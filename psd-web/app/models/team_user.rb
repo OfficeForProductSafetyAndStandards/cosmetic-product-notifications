@@ -6,7 +6,7 @@ class TeamUser < ActiveHash::Base
 
   def self.load(force: false)
     begin
-      self.data = Shared::Web::KeycloakClient.instance.all_team_users(force: :force)
+      self.data = Shared::Web::KeycloakClient.instance.all_team_users(Team.all.map(&:id), force: :force)
     rescue StandardError => e
       Rails.logger.error "Failed to fetch team memberships from Keycloak: #{e.message}"
       self.data = nil
