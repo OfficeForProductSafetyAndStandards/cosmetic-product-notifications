@@ -43,8 +43,8 @@ class User < Shared::Web::User
       self.data = all_users.map { |user| populate_organisation(user) }
                       .reject { |user| user[:organisation_id].blank? }
       TeamUser.all(force: options[:force])
-    rescue StandardError => error
-      Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
+    rescue StandardError => e
+      Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
       self.data = nil
     end
 
@@ -63,7 +63,7 @@ class User < Shared::Web::User
   end
 
   def display_name(ignore_visibility_restrictions: false)
-    display_name = full_name
+    display_name = name
     can_display_teams = ignore_visibility_restrictions || (organisation.present? && organisation.id == User.current.organisation&.id)
     can_display_teams = can_display_teams && teams.any?
     membership_display = can_display_teams ? team_names : organisation&.name
@@ -79,7 +79,7 @@ class User < Shared::Web::User
     if organisation.present? && organisation.id != User.current.organisation&.id
       organisation.name
     else
-      full_name
+      name
     end
   end
 

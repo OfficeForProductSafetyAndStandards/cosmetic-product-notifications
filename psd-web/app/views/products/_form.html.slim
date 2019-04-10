@@ -39,7 +39,7 @@
 .govuk-form-group class=("govuk-form-group--error" if product.errors[:country_of_origin].any?)
   = form.label :country_of_origin, "Country of origin",
           class: label_class
-  / Ideally the width class should affect he input only, without a wrapper, but we're limited by MSPSDS-1045
+  / Ideally the width class should affect he input only, without a wrapper, but we're limited by PSD-1045
   div class="govuk-!-width-two-thirds"
     = form.select :country_of_origin, countries, { include_blank: "" },
             class: "govuk-select", id: "location-autocomplete"

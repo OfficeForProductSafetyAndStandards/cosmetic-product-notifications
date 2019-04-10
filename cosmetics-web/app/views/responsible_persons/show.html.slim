@@ -10,7 +10,7 @@
     table.govuk-table
       tbody.govuk-table__body
         tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
+          th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
             | Responsible person
           td.govuk-table__cell
             = @responsible_person.name
@@ -21,13 +21,4 @@
             - @responsible_person.address_lines.each do |address_line|
               = address_line
               br
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Email address
-          td.govuk-table__cell
-            = @responsible_person.email_address
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Phone number
-          td.govuk-table__cell
-            = @responsible_person.phone_number
+    = render "notifications/contact_person_details", contact_person: @responsible_person.contact_persons.first
