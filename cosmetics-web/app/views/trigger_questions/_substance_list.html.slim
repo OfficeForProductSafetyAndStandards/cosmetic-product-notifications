@@ -1,0 +1,25 @@
+= form_with model: @question, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      - if @errors.present?
+        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+      h1.govuk-heading-xl
+        = local_assigns[:question].present? ? question : "List the #{substance.pluralize} and their concentration"
+      = form.fields_for :trigger_question_elements do |answer_form|
+        - if answer_form.object.element == "inciname"
+          .govuk-grid-column-two-thirds
+            = render "form_components/govuk_input", form: answer_form, key: :answer,
+                    label: { text: substance.upcase_first }
+        - else
+          .govuk-grid-column-one-third
+            .govuk-form-group class=("govuk-form-group--error" if @errors.present?)
+              = answer_form.label :answer, "Concentration", class: "govuk-label"
+              - if @errors.present?
+                span.govuk-error-message id="#answer-error"
+                  = answer_form.object.errors.full_messages_for(:answer).first
+              .input-wrapper
+                = answer_form.text_field :answer, class: "govuk-input govuk-c-input"
+                span.govuk-input.govuk-c-input__suffix
+                  | % w/w
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

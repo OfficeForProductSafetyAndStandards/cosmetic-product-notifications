@@ -12,4 +12,5 @@
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'person', 'persons'
+  inflect.irregular 'compound releasing hydrogen peroxide', 'compounds releasing hydrogen peroxide'
 end

@@ -1,0 +1,32 @@
+ruby:
+  component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
+  default_question = "Does #{component_name} contain #{substance.pluralize}?"
+  default_yes_option = "Yes, the product contains #{substance}"
+  default_label_text = "Total amount of #{substance} in the product"
+
+= form_with model: @question, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      - if @errors.present?
+        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+      h1.govuk-heading-xl
+        = local_assigns[:question].present? ? question : default_question
+      - input_field = capture do
+        = form.fields_for :trigger_question_elements do |answer_form|
+          .govuk-form-group class=("govuk-form-group--error" if @errors.present?)
+            = answer_form.label :answer, local_assigns[:label_text].present? ? label_text : default_label_text,
+                    class: "govuk-label"
+            - if @errors.present?
+              span.govuk-error-message id="#answer-error"
+                = answer_form.object.errors.full_messages_for(:answer).first
+            .input-wrapper.govuk-input--width-10
+              - if local_assigns[:prefix_text]
+                span.govuk-input.govuk-c-input__prefix = prefix_text
+              = answer_form.text_field :answer, class: "govuk-input govuk-c-input"
+              - if local_assigns[:suffix_text]
+                span.govuk-input.govuk-c-input__suffix = suffix_text
+      = render "form_components/govuk_radios", form: form, key: :applicable,
+              items: [{ text: local_assigns[:yes_option].present? ? yes_option : default_yes_option, \
+                        value: "true", conditional: { html: input_field } },
+                      { text: "No", value: "false" }]
+      = form.submit "Continue", class: "govuk-button"

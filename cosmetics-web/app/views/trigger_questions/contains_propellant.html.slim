@@ -1,0 +1,5 @@
+- content_for :page_title, "Contains propellants"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= render "trigger_questions/substance_check", substance: "propellant"
