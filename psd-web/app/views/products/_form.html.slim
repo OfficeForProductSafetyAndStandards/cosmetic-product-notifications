@@ -39,7 +39,7 @@
 div class="govuk-!-width-two-thirds"
   / Ideally the width class should affect he input only, without a wrapper, but we're limited by PSD-1045
   = render "form_components/govuk_select", form: form, key: :country_of_origin,
-          items: countries.map {|country| { text: country[0], value: country[1] } },
+          items: countries.map { |country| { text: country[0], value: country[1] } },
           include_blank: true, id: "location-autocomplete",
           label: { text: "Country of origin", classes: label_class }
 

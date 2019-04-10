@@ -7,7 +7,7 @@ ruby:
 
   # Choices accepts a list of strings
   # Items needs to be a list of hashes { value: xxx, text: yyy }
-  local_assigns[:items] ||= local_assigns[:choices].map {|choice| { value: choice, text: choice } }
+  local_assigns[:items] ||= local_assigns[:choices].map { |choice| { value: choice, text: choice } }
 
   if local_assigns[:include_blank] || local_assigns[:is_autocomplete]
     local_assigns[:items].unshift(value: nil, text: "")
