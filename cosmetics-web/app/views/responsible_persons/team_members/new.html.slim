@@ -10,6 +10,9 @@
     - if params[:blank_input]
       span.govuk-error-message
         | Enter an email address
+    - if params[:invalid_email]
+      span.govuk-error-message
+        | Enter a valid email address
     p Inviting a team member will allow them to:
     ul.govuk-list.govuk-list--bullet
         li see all cosmetic products
