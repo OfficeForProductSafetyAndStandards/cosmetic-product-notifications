@@ -30,7 +30,7 @@ class InvestigationBusinessTest < ApplicationSystemTestCase
     fill_in "business[trading_name]", with: ''
     fill_in "business[company_number]", with: @business.company_number
     click_on "Save business"
-    assert_text "Enter trading name"
+    assert_text "Trading name can't be blank"
   end
 
   test "cannot allow business type to be empty" do
@@ -41,7 +41,7 @@ class InvestigationBusinessTest < ApplicationSystemTestCase
   test "cannot allow business type other to be empty" do
     choose "business_type_other", visible: false
     click_on "Continue"
-    assert_text 'Please enter a business type "other"'
+    assert_text 'Please enter a business type "Other"'
   end
 
   test "should unlink business" do

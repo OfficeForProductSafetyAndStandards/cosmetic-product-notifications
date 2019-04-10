@@ -23,7 +23,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
 
   test "validates presence of date" do
     click_button "Continue"
-    assert_text "Enter correspondence date"
+    assert_text "Correspondence date can't be blank"
   end
 
   test "validates date format" do

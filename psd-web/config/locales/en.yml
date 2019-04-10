@@ -42,7 +42,7 @@ en:
       confirmation: "%{attribute} doesn't match %{attribute}"
       accepted: "%{attribute} must be accepted"
       empty: "%{attribute} can't be empty"
-      blank: "Enter %{attribute}"
+      blank: "%{attribute} can't be blank"
       present: "%{attribute} must be blank"
       too_long:
         one: "%{attribute} is too long (maximum is 1 character)"

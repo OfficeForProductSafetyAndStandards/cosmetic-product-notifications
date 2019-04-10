@@ -30,12 +30,12 @@ class CreateProjectTest < ApplicationSystemTestCase
 
   test "first step should require a description" do
     click_on "Create project"
-    assert_text "Enter description"
+    assert_text "Description can't be blank"
   end
 
   test "third step should require title" do
     click_on "Create project"
-    assert_text "Enter user title"
+    assert_text "User title can't be blank"
   end
 
   test "case page should be shown when complete" do

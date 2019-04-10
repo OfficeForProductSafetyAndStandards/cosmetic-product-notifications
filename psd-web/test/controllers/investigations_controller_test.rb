@@ -91,7 +91,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         description: ""
       }
     }, headers: { "HTTP_REFERER": '/cases/1111-1111/edit_summary' }
-    assert_includes(CGI.unescapeHTML(response.body), "Enter description")
+    assert_includes(CGI.unescapeHTML(response.body), "Description can't be blank")
   end
 
   test "status filter should be defaulted to open" do
