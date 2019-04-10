@@ -1,7 +1,7 @@
 - label_class = "govuk-label--m govuk-!-margin-bottom-2"
 / Ideally the width class should affect the input only, not the whole form group, but we're limited by MSPSDS-1045
 .govuk-form-group class=["govuk-!-width-two-thirds", ("govuk-form-group--error" if product.errors[:category].any?)]
-  = render "form_components/govuk_select", items: product_categories, key: :category, form: form,
+  = render "form_components/govuk_select", choices: product_categories, key: :category, form: form,
           show_all_values: true, aria_describedby: "report-product-category-hint", is_autocomplete: true,
           label: { text: "Product category", classes: label_class },
           hint: { text: "The high-level category (for reporting purposes)" }
@@ -38,7 +38,7 @@
 
 div class="govuk-!-width-two-thirds"
   / Ideally the width class should affect he input only, without a wrapper, but we're limited by MSPSDS-1045
-  = render "form_components/govuk_select", form: form, key: :country_of_origin, items: countries,
+  = render "form_components/govuk_select", form: form, key: :country_of_origin, choices: countries,
           include_blank: true, id: "location-autocomplete",
           label: { text: "Country of origin", classes: label_class }
 

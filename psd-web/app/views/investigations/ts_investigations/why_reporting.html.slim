@@ -18,7 +18,7 @@
           #conditional-report-report-type-1.govuk-checkboxes__conditional[
             class=("govuk-checkboxes__conditional--hidden" unless @unsafe) ]
             #hazard-type-auto-complete-container
-              = render "form_components/govuk_select", items: hazard_types, key: :hazard_type, form: form,
+              = render "form_components/govuk_select", choices: hazard_types, key: :hazard_type, form: form,
                       show_all_values: true, hint: { text: "The primary danger the product presents" },
                       aria_describedby: "hazard-type-category-hint", label: { text: "Hazard type" },
                       is_autocomplete: true

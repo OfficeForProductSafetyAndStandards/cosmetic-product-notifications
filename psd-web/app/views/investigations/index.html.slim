@@ -40,7 +40,7 @@
                 = form.label :assigned_to_someone_else, "Other person or team", class: "govuk-checkboxes__label"
               #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
                 = render "form_components/govuk_select", key: :assigned_to_someone_else_id, form: form,
-                        items: (User.get_assignees(except: User.current) + Team.all).map { |e| [e.display_name, e.id] },
+                        choices: (User.get_assignees(except: User.current) + Team.all).map { |e| [e.display_name, e.id] },
                         label: { text: "Name" }, is_autocomplete: true
 
         .govuk-form-group
