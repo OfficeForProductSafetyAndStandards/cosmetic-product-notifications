@@ -56,6 +56,13 @@ RSpec.describe NotificationBuildController, type: :controller do
         get(:show, params: other_responsible_person_params.merge(id: :add_product_name))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
+
+    it "does not allow the user to update a notification that has already been submitted" do
+      notification.update state: "notification_complete"
+      expect {
+        get(:show, params: params.merge(id: :add_product_name))
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
   end
 
   describe "POST #update" do
@@ -126,9 +133,32 @@ RSpec.describe NotificationBuildController, type: :controller do
         .to include("must be one of image/jpeg, application/pdf, image/png")
     end
 
+    it "adds error if user doesn't select radio option on add_internal_reference page" do
+      post(:update, params: params.merge(id: :add_internal_reference, notification: {}))
+      expect(assigns[:notification].errors[:add_internal_reference]).to include("Please select an option")
+    end
+
+    it "adds error if user selects add internal reference but doesn't add one on add_internal_reference page" do
+      post(:update, params: params.merge(id: :add_internal_reference, notification: { add_internal_reference: "true" }))
+      expect(assigns[:notification].errors[:industry_reference]).to include("Please enter an internal reference")
+    end
+
+    it "stores internal reference if user adds internal reference" do
+      post(:update, params: params.merge(id: :add_internal_reference,
+      notification: { add_internal_reference: "true", industry_reference: "12345678" }))
+      expect(assigns[:notification].industry_reference).to eq("12345678")
+    end
+
     it "does not allow the user to update a notification for a Responsible Person they not belong to" do
       expect {
         post(:update, params: other_responsible_person_params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" }))
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
+
+    it "does not allow the user to update a notification that has already been submitted" do
+      notification.update state: "notification_complete"
+      expect {
+        post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" }))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end

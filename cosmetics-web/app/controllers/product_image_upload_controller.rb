@@ -14,7 +14,9 @@ class ProductImageUploadController < ApplicationController
       if @notification.save
         redirect_to responsible_person_notification_additional_information_index_path(@notification.responsible_person, @notification)
       else
-        @notification.errors.messages[:image_upload].map(&method(:add_error))
+        @notification.image_uploads.each do |image_upload|
+          image_upload.errors.messages[:file].map(&method(:add_error))
+        end
         render :new
       end
     else
@@ -33,6 +35,6 @@ private
     @error_list = []
     @notification = Notification.find_by reference_number: params[:notification_reference_number]
     @responsible_person = @notification.responsible_person
-    authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
+    authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 end

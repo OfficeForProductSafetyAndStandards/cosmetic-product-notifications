@@ -1,6 +1,8 @@
 inherit_gem:
   govuk-lint: configs/rubocop/all.yml
 
+require: rubocop-performance
+
 AllCops:
   Exclude:
     - './../../app/**/*.axlsx'

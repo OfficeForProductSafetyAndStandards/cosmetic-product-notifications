@@ -34,7 +34,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "adding a comment should trigger one round of notifications" do
-    user_two = User.find_by(last_name: "User_two")
+    user_two = User.find_by(name: "Test User_two")
     @investigation.update(assignee: user_two)
     mock_investigation_updated(who_will_be_notified: [user_two])
     post investigation_activities_path(@investigation), params: {
@@ -133,7 +133,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     allow(result).to receive(:deliver_later)
     allow(NotifyMailer).to receive(:investigation_updated) do |_id, user_name, _user_email, _text|
       @number_of_notifications += 1
-      assert_includes who_will_be_notified.map(&:full_name), user_name
+      assert_includes who_will_be_notified.map(&:name), user_name
       result
     end
   end

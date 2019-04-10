@@ -3,6 +3,11 @@
     strong.govuk-tag.govuk-phase-banner__content__tag
       | beta
     span.govuk-phase-banner__text
-      ' This is a new service – your
-      = link_to "feedback", "https://www.surveymonkey.co.uk/r/PQXTHPW", class: "govuk-link govuk-link--no-visited-state"
-      |  will help us to improve it.
+      | This is a new service – your
+      - html = capture do
+        | feedback
+        span.govuk-visually-hidden
+          | (opens new window)
+      =<> link_to html, "https://www.surveymonkey.co.uk/r/PQXTHPW", class: "govuk-link govuk-link--no-visited-state",
+              target: "_blank", rel: "noopener"
+      | will help us to improve it.
