@@ -3,7 +3,7 @@
 ruby:
   # Infer name and id_prefix from attribute key
   local_assigns[:name] ||= get_attribute_name(form, key)
-  local_assigns[:id] ||= local_assigns[:is_autocomplete] ? "picker-#{key}" : get_attribute_id_prefix(form, key)
+  local_assigns[:id] ||= get_attribute_id_prefix(form, key)
   local_assigns[:items] ||= local_assigns[:choices].map do |item|
     {
       value: item.is_a?(Array) ? item[1] : item,
