@@ -60,11 +60,16 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
       filename: corrective_filename_one,
       description: corrective_description_one
     )
+    choose_further_corrective_action
     click_button "Continue"
 
-    choose_further_corrective_action
-
     assert_selector "h1", text: "Record corrective action"
+    # Check that repeatable action controls stick through errors
+    choose_further_corrective_action
+    click_button "Continue"
+    assert_text "There is a problem"
+    assert find_field("corrective_action_further_corrective_action_yes", visible: false, checked: true)
+    # carry on with filling in the page
     fill_in_corrective_action_details @corrective_action_two, with_business: false, with_product: false
     add_corrective_action_attachment(
       filename: corrective_filename_two,
@@ -73,6 +78,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     choose "corrective_action_further_corrective_action_yes", visible: false
     click_button "Continue"
 
+    # Check that skip page works
     assert_selector "h1", text: "Record corrective action"
     choose "corrective_action_further_corrective_action_yes", visible: false
     click_button "Skip this page"
