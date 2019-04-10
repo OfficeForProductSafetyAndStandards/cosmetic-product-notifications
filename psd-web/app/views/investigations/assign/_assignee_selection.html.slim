@@ -1,9 +1,12 @@
 ruby:
   ignore_restrictions = local_assigns[:ignore_restrictions]
-  actual_items = items.map { |item| [item.display_name(ignore_visibility_restrictions: ignore_restrictions), item.id] }
+  actual_items = items.map { |item| {
+          text: item.display_name(ignore_visibility_restrictions: ignore_restrictions),
+          value: item.id
+  } }
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = render "form_components/govuk_select", key: key, show_all_values: local_assigns[:show_all_values],
-            choices: actual_items, form: form, label: { text: label, classes: "govuk-visually-hidden" },
+            items: actual_items, form: form, label: { text: label, classes: "govuk-visually-hidden" },
             is_autocomplete: true

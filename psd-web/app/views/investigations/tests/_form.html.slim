@@ -18,8 +18,8 @@
         ' Only products already added to the case are listed.
         = link_to "Add a product", new_investigation_product_path(investigation)
       = render "form_components/govuk_select", key: :product_id, form: form, show_all_values: true,
-              choices: investigation.products.map { |product| [product.name, product.id] }, is_autocomplete: true,
-              hint: { html: span_html },
+              items: investigation.products.map { |product| { text: product.name, value: product.id } },
+              is_autocomplete: true, hint: { html: span_html },
               label: { text: "Product", classes: "govuk-visually-hidden" }
 
 = render "form_components/govuk_select", key: :legislation, form: form,

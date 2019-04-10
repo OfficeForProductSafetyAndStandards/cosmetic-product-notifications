@@ -23,13 +23,13 @@
         = form.hidden_field :product_id, value: investigation.products.first.id
       - else
         = render "form_components/govuk_select", key: :product_id, form: form, show_all_values: true,
-                choices: investigation.products.map { |product| [product.name, product.id] }, is_autocomplete: true,
-                hint: { text: "Only products already added to the case are listed." },
+                items: investigation.products.map { |product| { text: product.name, value: product.id } },
+                is_autocomplete: true, hint: { text: "Only products already added to the case are listed." },
                 label: { text: "Product", classes: "govuk-visually-hidden" }
 
 = render "form_components/govuk_select", choices: relevant_legislation, key: :legislation, form: form,
-        label: { text: "Under which legislation?", classes: "govuk-label--m" }, is_autocomplete: true,
-        show_all_values: true,
+        is_autocomplete: true, show_all_values: true,
+        label: { text: "Under which legislation?", classes: "govuk-label--m" },
         hint: { text: "Select the relevant legislation from the list, or enter a different one." }
 
 - if allow_business_linking
@@ -41,7 +41,7 @@
           | There are no businesses associated with this case.
       - else
         = render "form_components/govuk_select", key: :business_id, form: form, show_all_values: true,
-                choices: investigation.businesses.map { |business| [business.trading_name, business.id] },
+                items: investigation.businesses.map { |business| { text: business.trading_name, value: business.id } },
                 selected: (investigation.businesses.size == 1 && investigation.businesses.first.id),
                 hint: { text: "Only businesses already added to the case are listed." }, is_autocomplete: true,
                 label: { text: "Business", classes: "govuk-visually-hidden" }

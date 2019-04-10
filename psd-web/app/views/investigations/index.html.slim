@@ -39,8 +39,9 @@
                         "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
                 = form.label :assigned_to_someone_else, "Other person or team", class: "govuk-checkboxes__label"
               #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
+                - entities = User.get_assignees(except: User.current) + Team.all
                 = render "form_components/govuk_select", key: :assigned_to_someone_else_id, form: form,
-                        choices: (User.get_assignees(except: User.current) + Team.all).map { |e| [e.display_name, e.id] },
+                        items: entities.map { |e| { text: e.display_name, value: e.id } },
                         label: { text: "Name" }, is_autocomplete: true
 
         .govuk-form-group
