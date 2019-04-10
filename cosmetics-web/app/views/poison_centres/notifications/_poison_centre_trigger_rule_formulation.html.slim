@@ -27,6 +27,6 @@ h2.govuk-heading-l.poison-centre__table-heading
                   - formulation_data = get_formulation_data(question, question_element)
                   - if formulation_data.present?
                     th.govuk-table__header[class="govuk-!-width-one-half" scope="row"]
-                      = formulation_data.first.humanize
+                      = formulation_data.first.answer.humanize
                     td.govuk-table__cell.govuk-table__cell--numeric
-                      = display_concentration(formulation_data.last.humanize)
+                      = display_concentration(formulation_data.last.answer.humanize)
