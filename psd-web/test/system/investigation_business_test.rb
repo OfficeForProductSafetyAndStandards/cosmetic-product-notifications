@@ -30,7 +30,7 @@ class InvestigationBusinessTest < ApplicationSystemTestCase
     fill_in "business[trading_name]", with: ''
     fill_in "business[company_number]", with: @business.company_number
     click_on "Save business"
-    assert_text "Trading name can't be blank"
+    assert_text "Enter trading name"
   end
 
   test "cannot allow business type to be empty" do

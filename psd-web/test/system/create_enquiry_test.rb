@@ -90,8 +90,8 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     fill_complainant_details_and_continue
     click_on "Create enquiry"
 
-    assert_text "User title can't be blank"
-    assert_text "Description can't be blank"
+    assert_text "Enter user title"
+    assert_text "Enter description"
   end
 
   test "enquiry page should be shown when complete" do

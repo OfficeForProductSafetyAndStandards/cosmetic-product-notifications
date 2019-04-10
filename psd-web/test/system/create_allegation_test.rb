@@ -91,7 +91,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_complainant_details_and_continue
     click_on "Create allegation"
 
-    assert_text "Description can't be blank"
+    assert_text "Enter description"
   end
 
   test "third step should require a product type and hazard type to be selected" do
@@ -99,8 +99,8 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_complainant_details_and_continue
     click_on "Create allegation"
 
-    assert_text "Product category can't be blank"
-    assert_text "Hazard type can't be blank"
+    assert_text "Enter product category"
+    assert_text "Enter hazard type"
   end
 
   test "case page should be shown when complete" do

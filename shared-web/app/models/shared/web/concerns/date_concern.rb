@@ -1,15 +1,21 @@
-# rubocop:disable Style/ClassVars
 module Shared
   module Web
     module Concerns
       module DateConcern
         extend ActiveSupport::Concern
-        @@all_date_keys = []
         included do
           validate :date_from_components
 
+          def self.add_date_key(key, required)
+            @date_keys ||= []
+            @date_keys << [key, required] unless @date_keys.include? [key, required]
+          end
+
+          def self.get_date_keys
+            @date_keys
+          end
+
           def self.date_attribute(key, required: true)
-            @@all_date_keys = @@all_date_keys.push([key, required, self.name]) unless @@all_date_keys.include?([key, required, self.name])
             self.class_eval do
               attribute "#{key}_day".to_sym, :integer
               attribute "#{key}_month".to_sym, :integer
@@ -17,14 +23,7 @@ module Shared
             end
 
             after_initialize do
-              date = self[key]
-              if date.present? && get_date_components(key).all?(&:blank?)
-                set_day(key, date.day)
-                set_month(key, date.month)
-                set_year(key, date.year)
-              else
-                update_from_components(key, required)
-              end
+              initialize_date(key, required)
             end
           end
         end
@@ -33,7 +32,7 @@ module Shared
           # expects to receive the part of params relevant to the object it's on
           return if params.blank?
 
-          model_date_keys.each do |key, required|
+          self.class.get_date_keys.each do |key, required|
             next if params[key].blank?
 
             data_from_params = params.require(key).permit(:day, :month, :year)
@@ -63,12 +62,8 @@ module Shared
 
       private
 
-        def model_date_keys
-          @@all_date_keys.select { |_, _, klass| self.class.name.include? klass }.map { |key, required, _| [key, required] }
-        end
-
         def default_key
-          model_date_keys.first[0]
+          self.class.get_date_keys.first[0]
         end
 
         def get_date_components(key)
@@ -111,6 +106,18 @@ module Shared
           "#{key}_year".to_sym
         end
 
+        def initialize_date(key, required)
+          self.class.add_date_key(key, required)
+          date = self[key]
+          if date.present? && get_date_components(key).all?(&:blank?)
+            set_day(key, date.day)
+            set_month(key, date.month)
+            set_year(key, date.year)
+          else
+            update_from_components(key, required)
+          end
+        end
+
         def update_from_components(key, required)
           self[key] = nil if get_date_components(key).all?(&:blank?) && !required
           return if get_date_components(key).any?(&:blank?)
@@ -124,7 +131,7 @@ module Shared
         end
 
         def date_from_components
-          model_date_keys.each do |key, required|
+          self.class.get_date_keys.each do |key, required|
             prepare_for_validation(key, required)
             missing_date_components = get_missing_date_components(key)
 
@@ -164,13 +171,12 @@ module Shared
 
         def missing_components_text(key)
           missing_elements = []
-          missing_elements << "day" unless get_day(key).present?
-          missing_elements << "month" unless get_month(key).present?
-          missing_elements << "year" unless get_year(key).present?
+          missing_elements << "day" if get_day(key).blank?
+          missing_elements << "month" if get_month(key).blank?
+          missing_elements << "year" if get_year(key).blank?
           missing_elements.join(" and ")
         end
       end
     end
   end
 end
-# rubocop:enable Style/ClassVars

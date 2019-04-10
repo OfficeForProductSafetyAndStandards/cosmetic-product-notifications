@@ -25,7 +25,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   test "first step validates date" do
     fill_in("correspondence_phone_call[correspondence_date][day]", with: "333")
     click_on "Continue"
-    assert_text("Correspondence date must specify a day, month and year")
+    assert_text("Correspondence date must include a month and year")
   end
 
   test "second step should be content" do

@@ -19,7 +19,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     click_button "Continue"
 
     assert_text "There is a problem"
-    assert_text "Enter a date of the test request"
+    assert_text "Enter date of the test request"
   end
 
   test "can add filled in test request to investigation" do
@@ -85,7 +85,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Enter a date of the test request and include a day, month and year")
+    assert_text("Enter date of the test request and include a day, month and year")
   end
 
   test "can add an attachment to the test request" do
