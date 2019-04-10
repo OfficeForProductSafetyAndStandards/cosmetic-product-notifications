@@ -37,24 +37,36 @@ class User < Shared::Web::User
   end
 
   def self.load(force: false)
+    Team.load(force: force)
+    TeamUser.load(force: force)
     begin
       all_users = Shared::Web::KeycloakClient.instance.all_users(force: force)
-      Team.load(force: force)
-      self.data = all_users.map { |user| populate_organisation(user) }
+      # We're not interested in users not belonging to an organisation, as that means they are not PSD users
+      # - however, checking this based on permissions would require a request per user
+      # Some user object are missing their name when they have not finished their registration yet.
+      # But we need to be able to show them on the teams page for example, so we ensure that the attribute is not nil
+      self.data = all_users.map(&method(:populate_organisation))
+                      .map(&method(:populate_name))
                       .reject { |user| user[:organisation_id].blank? }
-      TeamUser.load(force: force)
     rescue StandardError => e
       Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
       self.data = nil
     end
   end
 
-  private_class_method def self.populate_organisation(attributes)
+  def self.populate_organisation(attributes)
     groups = attributes.delete(:groups)
     teams = Team.where(id: groups)
     organisation = Organisation.find_by(id: groups) || Organisation.find_by(id: teams.first&.organisation_id)
     attributes.merge(organisation_id: organisation&.id)
   end
+
+  def self.populate_name(attributes)
+    attributes[:name] ||= ""
+    attributes
+  end
+
+  private_class_method :populate_organisation, :populate_name
 
   def display_name(ignore_visibility_restrictions: false)
     display_name = name
