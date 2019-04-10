@@ -89,13 +89,13 @@ en:
             date:
               blank: "Enter date of the test"
               invalid: "Enter a real date of the test"
-              date_missing_component: "Enter date of the test and include a day, month and year"
+              date_missing_component: "Enter date of the test and include a %{missing_components}"
         test/request:
           attributes:
             date:
               blank: "Enter date of the test request"
               invalid: "Enter a real date of the test request"
-              date_missing_component: "Enter date of the test request and include a day, month and year"
+              date_missing_component: "Enter date of the test request and include a %{missing_components}"
         corrective_action:
           attributes:
             product:
@@ -103,7 +103,7 @@ en:
             date_decided:
               blank: "Enter date the corrective action was decided"
               invalid: "Enter a real date when the corrective action was decided"
-              date_missing_component: "Enter date the corrective action was decided and include a day, month and year"
+              date_missing_component: "Enter date the corrective action was decided and include a %{missing_components}"
         alert:
           attributes:
             summary:

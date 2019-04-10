@@ -6,4 +6,4 @@ span.govuk-error-message *(local_assigns[:attributes] || {}) id=local_assigns[:i
   - visually_hidden_text = local_assigns[:visuallyHiddenText].nil? ? "Error" : local_assigns[:visuallyHiddenText]
   - if visually_hidden_text.present?
     span.govuk-visually-hidden = "#{visually_hidden_text}: "
-  = local_assigns[:html] || local_assigns[:text].downcase.capitalize
+  = local_assigns[:html] || local_assigns[:text]
