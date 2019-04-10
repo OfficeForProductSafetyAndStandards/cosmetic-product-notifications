@@ -106,19 +106,18 @@ module Shared
       end
 
       # @param team_ids specifies teams we know about. This allows us to avoid linking to ghost team entities
-      def all_team_users(team_ids, force: false)
+      def all_team_users(user_ids, team_ids, force: false)
         Rails.cache.delete(:keycloak_team_users) if force
         Rails.cache.fetch(:keycloak_team_users, expires_in: 5.minutes) do
-          users = all_users(force: force)
           user_groups = all_user_groups
 
           # We set ids manually because if we don't ActiveHash will use 'next_id' method when computing @records,
           # which calls TeamUser.all, and gets into an infinite loop
           team_users = []
           id = 1
-          users.reject(&:blank?).each do |user|
-            user_groups[user[:id]].reject(&:blank?).each do |group|
-              team_users << { team_id: group, user_id: user[:id], id: id } if team_ids.include? group
+          user_ids.reject(&:blank?).each do |user_id|
+            user_groups[user_id].reject(&:blank?).each do |group|
+              team_users << { team_id: group, user_id: user_id, id: id } if team_ids.include? group
               id += 1
             end
           end
@@ -219,7 +218,6 @@ module Shared
             team_recipient_email: team_recipient_email }
         end
       end
-
     end
   end
 end

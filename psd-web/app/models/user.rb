@@ -24,8 +24,9 @@ class User < Shared::Web::User
     # We can't use User.load here to load the new user
     # - they're not part of any organisation yet, so aren't considered a psd user
     user_id = Shared::Web::KeycloakClient.instance.get_user(email_address)[:id]
-    # Adding team membership will trigger user reload, too
     team.add_user user_id
+    # Now that user exists in a team, we can trigger a reload of users entities
+    User.load(force: true)
     Shared::Web::KeycloakClient.instance.send_required_actions_welcome_email user_id, redirect_url
   end
 
@@ -37,8 +38,6 @@ class User < Shared::Web::User
   end
 
   def self.load(force: false)
-    Team.load(force: force)
-    TeamUser.load(force: force)
     begin
       all_users = Shared::Web::KeycloakClient.instance.all_users(force: force)
       # We're not interested in users not belonging to an organisation, as that means they are not PSD users

@@ -14,7 +14,7 @@ module Shared
 
       def self.load(force: false)
         begin
-          self.data = Shared::Web::KeycloakClient.instance.all_users
+          self.data = Shared::Web::KeycloakClient.instance.all_users(force: force)
         rescue StandardError => e
           Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
           self.data = nil

@@ -21,8 +21,8 @@ class Team < ActiveHash::Base
 
   def add_user(user_id)
     Shared::Web::KeycloakClient.instance.add_user_to_team user_id, id
-    # Trigger reload of users and relations from KC
-    User.load(force: true)
+    # Trigger reload of team-users relations from KC
+    TeamUser.load(force: true)
   end
 
   def self.load(force: false)
