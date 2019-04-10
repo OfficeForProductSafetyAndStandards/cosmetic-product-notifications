@@ -3,6 +3,7 @@ class NotificationBuildController < ApplicationController
   include Shared::Web::CountriesHelper
 
   steps :add_product_name,
+        :add_internal_reference,
         :is_imported,
         :add_import_country,
         :single_or_multi_component,
@@ -26,6 +27,8 @@ class NotificationBuildController < ApplicationController
       render_add_new_component_step
     when :add_product_image
       render_add_product_image_step
+    when :add_internal_reference
+      render_add_internal_reference
     else
       @notification.update(notification_params)
 
@@ -52,6 +55,7 @@ private
     params.require(:notification)
       .permit(
         :product_name,
+        :industry_reference,
         :is_imported,
         :import_country,
         image_uploads_attributes: [file: []]
@@ -135,5 +139,19 @@ private
       @notification.errors.add :image_uploads, "You must upload at least one product image"
       render step
     end
+  end
+
+  def render_add_internal_reference
+    if params[:notification].present? && params[:notification][:add_internal_reference] == 'true'
+      if params[:notification][:industry_reference].blank?
+        @notification.errors.add :industry_reference, "Please enter an internal reference"
+        return render step
+      end
+      @notification.update industry_reference: params[:notification][:industry_reference]
+    elsif params[:notification].blank? || params[:notification][:add_internal_reference].blank?
+      @notification.errors.add :add_internal_reference, "Please select an option"
+      return render step
+    end
+    render_wizard @notification
   end
 end

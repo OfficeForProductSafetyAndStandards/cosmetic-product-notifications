@@ -69,11 +69,13 @@ tr.govuk-table__row
           = link_to "Refresh",
                   edit_responsible_person_notification_path(@responsible_person, @notification),
                   class: "govuk-link--no-visited-state"
-      - else
+      - elsif allow_edits
         = link_to "Add formulation document",
                 new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
                         @notification, component),
                 class: "govuk-link--no-visited-state"
+      - else
+        | N/A
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Physical form
