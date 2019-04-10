@@ -283,7 +283,7 @@ private
   end
 
   def other_information_params
-    params.permit(*other_information_types)
+    params.require(:information).permit(*other_information_types)
   end
 
   def reference_number_params
