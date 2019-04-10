@@ -1,0 +1,16 @@
+ruby:
+  component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
+  default_question = "Does #{component_name} contain #{substance.pluralize}?"
+  default_yes_option = "Yes, it has #{substance.pluralize}"
+
+= form_with model: @question, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      - if @errors.present?
+        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+      h1.govuk-heading-xl
+        = local_assigns[:question].present? ? question : default_question
+      = render "form_components/govuk_radios", form: form, key: :applicable,
+              items: [{ text: local_assigns[:yes_option].present? ? yes_option : default_yes_option, value: "true" },
+                      { text: "No", value: "false" }]
+      = form.submit "Continue", class: "govuk-button"

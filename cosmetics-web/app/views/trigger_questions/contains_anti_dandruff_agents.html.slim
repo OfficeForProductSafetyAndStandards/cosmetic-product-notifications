@@ -1,19 +1,8 @@
-- content_for :page_title, "Anti-dandruff agents"
+- content_for :page_title, "Contains anti-dandruff agents"
 - content_for :after_header do
   = link_to "Back",
           responsible_person_notification_component_build_path(@component.notification.responsible_person,
                   @component.notification, @component, :select_frame_formulation),
           class: "govuk-back-link"
 
-= form_with model: @question, url: wizard_path, method: :put do |form|
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      - if @errors.present?
-        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
-      - heading = capture do
-        h1.govuk-heading-xl
-          | Does the cosmetic product contain anti-dandruff agents?
-      = render "form_components/govuk_radios", form: form, key: :applicable,
-              fieldset: { legend: { html: heading } },
-              items: [{ text: "Yes", value: "true" }, { text: "No", value: "false" }]
-      = form.submit "Continue", class: "govuk-button"
+= render "trigger_questions/substance_check", substance: "anti-dandruff agent"

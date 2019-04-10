@@ -1,0 +1,9 @@
+- content_for :page_title, "mixed hair dye pH"
+- content_for :after_header do
+  = link_to "Back",
+          responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person,
+                  @component.notification, @component, :select_ph_range),
+          class: "govuk-back-link"
+
+- component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
+= render "trigger_questions/substance_text_input", question: "What is the pH of #{component_name}?"

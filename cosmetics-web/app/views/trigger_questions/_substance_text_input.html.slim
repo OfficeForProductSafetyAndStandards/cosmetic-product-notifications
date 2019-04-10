@@ -1,0 +1,12 @@
+- heading = capture do
+  h1.govuk-heading-xl
+    = question
+
+= form_with model: @question, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      - if @errors.present?
+        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+      = form.fields_for :trigger_question_elements do |answer_form|
+        = render "form_components/govuk_input", form: answer_form, key: :answer, label: { html: heading }
+      = form.submit "Continue", class: "govuk-button"

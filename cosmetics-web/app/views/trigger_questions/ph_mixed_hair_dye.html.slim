@@ -1,0 +1,11 @@
+- content_for :page_title, "mixed hair dye pH"
+- content_for :after_header do
+  = link_to "Back",
+          responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person,
+                  @component.notification, @component, :select_ph_range),
+          class: "govuk-back-link"
+
+= render "trigger_questions/substance_check_with_condition", substance: "pH of mixed hair dye", prefix_text: "pH",
+        question: "Is the cosmetic product a hair dye that needs to be mixed?",
+        yes_option: "Yes, the product is a hair dye that needs to be mixed",
+        label_text: "pH of the hair dye after mixing?"
