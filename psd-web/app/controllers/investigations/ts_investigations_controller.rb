@@ -264,17 +264,17 @@ private
   end
 
   def business_session_params
-    # TODO MSPSDS-980 use this to retrieve a business for editing eg for browser back button
+    # TODO PSD-980 use this to retrieve a business for editing eg for browser back button
     {}
   end
 
   def corrective_action_session_params
-    # TODO MSPSDS-980 use this to retrieve a corrective action for editing eg for browser back button
+    # TODO PSD-980 use this to retrieve a corrective action for editing eg for browser back button
     {}
   end
 
   def test_session_params
-    # TODO MSPSDS-980 use this to retrieve a test for editing eg for browser back button
+    # TODO PSD-980 use this to retrieve a test for editing eg for browser back button
     { type: Test::Result.name }
   end
 
@@ -355,7 +355,7 @@ private
     if @repeat_step.nil?
       further_page_type = to_item_text(step)
       model.errors.add(further_key(step), "Select whether or not you have #{further_page_type} to record")
-      false
+      return false
     end
     true
   end

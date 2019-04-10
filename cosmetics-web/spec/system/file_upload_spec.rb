@@ -26,7 +26,7 @@ RSpec.describe "File upload", type: :system do
   it "sets basic info of notification based on the uploaded file" do
     upload_file "testExportFile.zip"
     wait_until_processing_complete
-    click_link "tab_unfinished"
+    click_link "tab_incomplete"
 
     expect(page).to have_text("CTPA moisture conditioner")
     expect(page).to have_text("1000094")

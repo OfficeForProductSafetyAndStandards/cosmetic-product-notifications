@@ -4,9 +4,9 @@ class NotificationTest < ActiveSupport::TestCase
   setup do
     mock_out_keycloak_and_notify
     @investigation = Investigation.create(description: "new investigation for notification test")
-    @user_one = User.find_by(last_name: "User_one")
-    @user_two = User.find_by(last_name: "User_two")
-    @user_three = User.find_by(last_name: "User_three")
+    @user_one = User.find_by(name: "Test User_one")
+    @user_two = User.find_by(name: "Test User_two")
+    @user_three = User.find_by(name: "Test User_three")
   end
 
   teardown do
@@ -43,7 +43,7 @@ class NotificationTest < ActiveSupport::TestCase
 
   test "should notify creator and assignee when case is closed or reopened by someone else" do
     @investigation.update(assignee: @user_three)
-    sign_in_as User.find_by(last_name: "User_four")
+    sign_in_as User.find_by(name: "Test User_four")
     mock_investigation_updated(who_will_be_notified: [@user_one, @user_three].map(&:email))
     @investigation.update(is_closed: !@investigation.is_closed)
     assert_equal 2, @number_of_notifications
@@ -143,7 +143,7 @@ class NotificationTest < ActiveSupport::TestCase
     allow(notify_mailer_return_value).to receive(:deliver_later)
     allow(NotifyMailer).to receive(:investigation_created) do |_id, user_name, _user_email, _investigation_title, _investigation_type|
       @number_of_notifications += 1
-      assert_includes who_will_be_notified.map(&:full_name), user_name
+      assert_includes who_will_be_notified.map(&:name), user_name
       notify_mailer_return_value
     end
   end

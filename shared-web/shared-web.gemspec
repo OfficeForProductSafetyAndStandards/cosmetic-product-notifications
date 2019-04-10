@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.add_dependency "lograge", "0.10.0"
   s.add_dependency "mini_magick", "4.9.3"
   s.add_dependency "okcomputer", "1.17.4"
-  s.add_dependency "rails", "~> 5.2"
+  s.add_dependency "rails", "5.2.3"
   s.add_dependency "request_store", "1.4.1"
   s.add_dependency "rest-client", "2.0.2"
   s.add_dependency "sentry-raven", "2.9.0"
@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_dependency "sidekiq-cron", "1.1.0"
   s.add_dependency "slowpoke", "0.2.1"
   s.add_dependency "webpacker", "4.0.2"
-  s.add_dependency "will_paginate", "~> 3.1.0"
+  s.add_dependency "will_paginate", "3.1.7"
 end

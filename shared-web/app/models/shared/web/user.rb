@@ -5,8 +5,7 @@ module Shared
 
       belongs_to :organisation
 
-      field :first_name
-      field :last_name
+      field :name
       field :email
 
       def self.find_or_create(user)
@@ -16,8 +15,8 @@ module Shared
       def self.all(options = {})
         begin
           self.data = Shared::Web::KeycloakClient.instance.all_users
-        rescue StandardError => error
-          Rails.logger.error "Failed to fetch users from Keycloak: #{error.message}"
+        rescue StandardError => e
+          Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
           self.data = nil
         end
 
@@ -34,10 +33,6 @@ module Shared
 
       def self.current=(user)
         RequestStore.store[:current_user] = user
-      end
-
-      def full_name
-        "#{first_name} #{last_name}"
       end
 
       def has_role?(role)

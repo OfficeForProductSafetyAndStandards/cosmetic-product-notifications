@@ -2,8 +2,8 @@ class ResponsiblePersonUser < ApplicationRecord
   belongs_to :responsible_person
   belongs_to :user
 
-  def full_name
-    user&.full_name
+  def name
+    user&.name
   end
 
   def email_address
