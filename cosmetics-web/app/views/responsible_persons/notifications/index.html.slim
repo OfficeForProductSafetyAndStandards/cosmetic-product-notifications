@@ -42,11 +42,17 @@
     = link_to "Add cosmetic products", new_responsible_person_add_notification_path(@responsible_person),
             class: "govuk-button", role: "button"
 
-= render "components/tabs", tabs: [\
-  Tab.new("errors", "Errors (#{@erroneous_notification_files.total_entries})", "Upload errors",
-        lambda { render "responsible_persons/notifications/tabs/errors" }),
-  Tab.new("incomplete", "Incomplete (#{@unfinished_notifications.total_entries})", "Incomplete notifications",
-        lambda { render "responsible_persons/notifications/tabs/incomplete" }),
-  Tab.new("notified", "Notified (#{@registered_notifications.total_entries})", "Notified cosmetic products",
-        lambda { render "responsible_persons/notifications/tabs/notified" })\
-]
+- errors_html = capture do
+  = render "responsible_persons/notifications/tabs/errors"
+- incomplete_html = capture do
+  = render "responsible_persons/notifications/tabs/incomplete"
+- notified_html = capture do
+  = render "responsible_persons/notifications/tabs/notified"
+
+= render "components/govuk_tabs",
+        items: [{ id: "errors", label: "Errors (#{@erroneous_notification_files.total_entries})",
+                        panel: { html: errors_html } },
+                { id: "incomplete", label: "Incomplete (#{@unfinished_notifications.total_entries})",
+                        panel: { html: incomplete_html } },
+                { id: "notified", label: "Notified (#{@registered_notifications.total_entries})",
+                        panel: { html: notified_html } }]
