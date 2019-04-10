@@ -73,7 +73,7 @@ RSpec.describe FormulationUploadController, type: :controller do
       expect(component.reload.formulation_file.attached?).to be true
     end
 
-    it "redirects to the notification controller formualtion upload endpoint when the uploaded file is valid" do
+    it "redirects to the additional information controller when the uploaded file is valid" do
       post(:create, params: params.merge(formulation_file: text_file))
       expect(response).to redirect_to(responsible_person_notification_additional_information_index_path(responsible_person, notification))
     end
@@ -81,6 +81,13 @@ RSpec.describe FormulationUploadController, type: :controller do
     it "does not let the user submit the form for a component for a responsible person they do not belong to" do
       expect {
         post(:create, params: other_responsible_person_params.merge(formulation_file: text_file))
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
+
+    it "does not let the user submit the form for a component for a completed notification" do
+      notification.update state: "notification_complete"
+      expect {
+        post(:create, params: params.merge(formulation_file: text_file))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end

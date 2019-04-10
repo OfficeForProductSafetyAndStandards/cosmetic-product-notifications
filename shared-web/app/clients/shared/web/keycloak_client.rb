@@ -77,7 +77,7 @@ module Shared
         user_groups = all_user_groups(force: force)
 
         JSON.parse(response).map do |user|
-          { id: user["id"], email: user["email"], groups: user_groups[user["id"]], first_name: user["firstName"], last_name: user["lastName"] }
+          { id: user["id"], email: user["email"], groups: user_groups[user["id"]], name: user["firstName"] }
         end
       end
 
@@ -162,7 +162,7 @@ module Shared
       def user_info
         response = @client.get_userinfo
         user = JSON.parse(response)
-        { id: user["sub"], email: user["email"], groups: user["groups"], first_name: user["given_name"], last_name: user["family_name"] }
+        { id: user["sub"], email: user["email"], groups: user["groups"], name: user["given_name"] }
       end
 
       def has_role?(user_id, role)

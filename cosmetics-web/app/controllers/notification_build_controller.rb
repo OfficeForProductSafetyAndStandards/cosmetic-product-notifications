@@ -60,7 +60,7 @@ private
 
   def set_notification
     @notification = Notification.find_by reference_number: params[:notification_reference_number]
-    authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
+    authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 
   def set_countries

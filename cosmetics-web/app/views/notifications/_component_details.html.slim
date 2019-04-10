@@ -15,12 +15,12 @@ tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Application instruction
     td.govuk-table__cell
-      = component.nano_material.exposure_route
+      = get_exposure_route_name(component.nano_material.exposure_route)
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Exposure condition
     td.govuk-table__cell
-      = component.nano_material.exposure_condition
+      = get_exposure_condition_name(component.nano_material.exposure_condition)
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]

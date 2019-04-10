@@ -44,8 +44,8 @@ module Shared
         def try_refresh_token
           begin
             cookies.permanent[cookie_name] = { value: Shared::Web::KeycloakClient.instance.refresh_token, httponly: true }
-          rescue StandardError => error
-            if error.is_a? Keycloak::KeycloakException
+          rescue StandardError => e
+            if e.is_a? Keycloak::KeycloakException
               raise
             else
               false
