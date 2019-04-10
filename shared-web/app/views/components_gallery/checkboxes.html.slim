@@ -1,5 +1,5 @@
 / Exmpales in this file are based on  https://github.com/alphagov/govuk-frontend/
-/           blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/radios.yaml
+/           blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/checkboxes/checkboxes.yaml
 h1.govuk-heading-xl Checkboxes Component
 h2.govuk-heading-l Default
 = render "components/govuk_checkboxes",
@@ -26,15 +26,13 @@ hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 h2.govuk-heading-l with hints on items
 = render "components/govuk_checkboxes",
         idPrefix: "example'",
-        classes: "govuk-radios--inline",
-        name: "example-inline",
         fieldset: { legend: { text: "What is your nationality" } },
         hint: { text: "If you have dual nationality, select all options that are relevant to you." },
         items: [{ name: "gateway",
                   id: "government_gateway",
                   value: "gov_gateway",
                   text: "Sign in with Government Gateway",
-                  hint:{ text: "You’ll have a user ID if you’ve registered for\
+                  hint: { text: "You’ll have a user ID if you’ve registered for\
                    Self Assessment or filed a tax return online before." } },
                 { name: "verify",
                   id: "govuk_verify",
@@ -108,18 +106,27 @@ h2.govuk-heading-l With very long option text
         errorMessage: { "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
         fieldset: { legend: { text: "Maecenas faucibus mollis interdum?" } },
         items: [{ value: "nullam",
-                  text: "Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam. Pellentesque ornare sem\
-                          lacinia quam venenatis vestibulum. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at\
+                  text: "Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam.\
+                          Pellentesque ornare sem\
+                          lacinia quam venenatis vestibulum. Maecenas faucibus mollis interdum.\
+                          Donec id elit non mi porta gravida at\
                           eget metus." },
                 { value: "aenean",
-                  text: "Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec sed odio dui.\
-                          Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.\
-                          Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu leo quam.\
-                          Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum." },
+                  text: "Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.\
+                         Donec sed odio dui.\
+                          Duis mollis, est non commodo luctus, nisi erat porttitor ligula,\
+                          eget lacinia odio sem nec elit.\
+                          Cum sociis natoque penatibus et magnis dis parturient montes,\
+                          nascetur ridiculus mus. Aenean eu leo quam.\
+                          Pellentesque ornare sem lacinia quam venenatis vestibulum.\
+                          Cras mattis consectetur purus sit amet fermentum." },
                 { value: "fusce",
-                  text: "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit\
-                          amet risus. Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl\
-                          consectetur et. Etiam porta sem malesuada magna mollis euismod. Etiam porta sem malesuada magna mollis euismod.\
+                  text: "Fusce dapibus, tellus ac cursus commodo,\
+                          tortor mauris condimentum nibh, ut fermentum massa justo sit\
+                          amet risus. Etiam porta sem malesuada magna mollis euismod.\
+                          Praesent commodo cursus magna, vel scelerisque nisl\
+                          consectetur et. Etiam porta sem malesuada magna mollis euismod.\
+                          Etiam porta sem malesuada magna mollis euismod.\
                           Donec sed odio dui. Sed posuere consectetur est at lobortis." }]
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
@@ -149,7 +156,7 @@ h2.govuk-heading-l With conditional items
 = render "components/govuk_checkboxes",
         idPrefix: "how-contacted",
         name: "how-contacted",
-        fieldset: { legend: { text: "How do you want to be contacted?"} },
+        fieldset: { legend: { text: "How do you want to be contacted?" } },
         items: contact_items
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible

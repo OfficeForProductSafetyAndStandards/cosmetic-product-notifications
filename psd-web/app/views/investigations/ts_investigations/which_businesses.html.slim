@@ -30,8 +30,8 @@
           text: "Other",
           conditional: { "html": html_other },
           checked: @selected_businesses.include?("other") },
-        # Previously there was a divider between these two checkboxes.
-        # There should not be dividers in checkboxes on the design system so they have been removed.
+        # There should not be dividers in checkboxes but design is being discussed.
+        { key: "which_business", divider: "or" },
         { key: "none",
           text: "None of the above",
           checked:  @selected_businesses.include?("none") }]

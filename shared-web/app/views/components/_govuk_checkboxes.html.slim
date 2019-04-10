@@ -13,14 +13,16 @@ ruby:
     - error_id = id_prefix + '-error'
     - described_by = described_by.present? ? described_by + ' ' + error_id : error_id
     = render "components/govuk_error_message", id: error_id, **errorMessage
-  .govuk-checkboxes *(local_assigns[:attributes] || {}) class=local_assigns[:classes] data-module=("checkboxes" if is_conditional)
+  .govuk-checkboxes [*(local_assigns[:attributes] || {})
+                     class=local_assigns[:classes] data-module=("checkboxes" if is_conditional)]
     - items.each_with_index do |item, i|
-      / This is not part of the source implementation - to be removed when convenient
+      - id = item[:id] || "#{id_prefix}-#{i}"
+      - conditional_id = 'conditional-' + id
+      / This is not part of the source implementation - being discussed on design system github
+      / https://github.com/alphagov/govuk-design-system-backlog/issues/37
       - if item[:divider]
         .govuk-radios__divider = item[:divider]
       - else
-        - id = item[:id] || "#{id_prefix}-#{i}"
-        - conditional_id = 'conditional-' + id
         - has_hint = item[:hint].present?
         - item_hint_id = id + '-item-hint'
         / This adds a hidden checkbox to copy how rails generates checkboxes
@@ -38,7 +40,8 @@ ruby:
             checked=item[:checked]
             disabled=item[:disabled]
             data-aria-controls=(conditional_id if item[:conditional])
-            aria-describedby=("#{described_by if !has_fieldset && described_by.present?} #{item_hint_id if has_hint}".presence)
+            aria-describedby="#{described_by if !has_fieldset && described_by.present?}\
+            #{item_hint_id if has_hint}".presence
             *(item[:attributes] || {})]
           - if item[:type] != "hidden"
             = render "components/govuk_label",
@@ -49,9 +52,10 @@ ruby:
                     for: id
             - if has_hint
               = render "components/govuk_hint", id: item_hint_id, classes: 'govuk-checkboxes__hint', **item[:hint]
-      - if item[:conditional]
-        .govuk-checkboxes__conditional class=("govuk-checkboxes__conditional--hidden" unless item[:checked]) id=conditional_id
-          = item[:conditional][:html]
+        - if item[:conditional]
+          .govuk-checkboxes__conditional [class=("govuk-checkboxes__conditional--hidden" unless item[:checked])
+                                          id=conditional_id]
+            = item[:conditional][:html]
 
 - form_group_classes = [local_assigns.dig(:formGroup, :classes)]
 - form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
