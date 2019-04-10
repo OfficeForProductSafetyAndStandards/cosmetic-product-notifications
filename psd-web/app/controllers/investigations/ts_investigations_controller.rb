@@ -421,7 +421,7 @@ private
       @investigation.validate :non_compliant if product_non_compliant
     when :which_businesses
       validate_none_as_only_selection
-      @investigation.errors.add(:base, "Please indicate which if any business is known") if no_business_selected
+      @investigation.errors.add(:which_business, "Please indicate which if any business is known") if no_business_selected
       @investigation.errors.add(:other_business_type, "Enter other business type") if no_other_business_type
     when :business
       if @business.errors.any? || @business.contacts_have_errors? || @business.locations_have_errors?

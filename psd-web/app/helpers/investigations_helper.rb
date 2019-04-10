@@ -42,7 +42,7 @@ module InvestigationsHelper
   end
 
   def no_boxes_checked
-    no_people_boxes_checked = params[:assigned_to_me] == "unchecked" && params[:assigned_to_someone_else] == "unchecked"
+    no_people_boxes_checked = params[:assigned_to_me] == "0" && params[:assigned_to_someone_else] == "0"
     no_team_boxes_checked = teams_with_keys.all? { |key, _t, _n| query_params[key].blank? }
     no_people_boxes_checked && no_team_boxes_checked
   end
@@ -54,7 +54,7 @@ module InvestigationsHelper
   def compute_excluded_terms
     # After consultation with designers we chose to ignore teams who are not selected in blacklisting
     excluded_assignees = []
-    excluded_assignees << User.current.id if params[:assigned_to_me] == "unchecked"
+    excluded_assignees << User.current.id if params[:assigned_to_me] == "0"
     format_assignee_terms(excluded_assignees)
   end
 
@@ -69,7 +69,7 @@ module InvestigationsHelper
   def checked_team_assignees
     assignees = []
     teams_with_keys.each do |key, team, _n|
-      assignees.concat(assignee_ids_from_team(team)) if query_params[key].present?
+      assignees.concat(assignee_ids_from_team(team)) if query_params[key] != "0"
     end
     assignees
   end
@@ -109,8 +109,8 @@ module InvestigationsHelper
   end
 
   def set_default_assignee_filter
-    params[:assigned_to_me] = "unchecked" if params[:assigned_to_me].blank?
-    params[:assigned_to_someone_else] = "unchecked" if params[:assigned_to_someone_else].blank?
+    params[:assigned_to_me] = "0" if params[:assigned_to_me].blank?
+    params[:assigned_to_someone_else] = "0" if params[:assigned_to_someone_else].blank?
   end
 
   def build_breadcrumb_structure
