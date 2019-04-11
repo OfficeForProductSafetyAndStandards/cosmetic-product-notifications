@@ -29,10 +29,6 @@ module Shared
           User.current.access_token = access_token
         end
 
-        def cookie_name
-          :"keycloak_token_#{ENV['KEYCLOAK_CLIENT_ID']}"
-        end
-
         def pundit_user
           User.current
         end
@@ -51,12 +47,17 @@ module Shared
           JSON cookies.permanent[cookie_name]
         end
 
+        def keycloak_token=(token)
+          cookies.permanent[cookie_name] = { value: token, httponly: true }
+        end
+
+        def cookie_name
+          :"keycloak_token_#{ENV['KEYCLOAK_CLIENT_ID']}"
+        end
+
         def try_refresh_token
           begin
-            cookies.permanent[cookie_name] = {
-              value: Shared::Web::KeycloakClient.instance.exchange_refresh_token_for_token(refresh_token),
-              httponly: true
-            }
+            self.keycloak_token = Shared::Web::KeycloakClient.instance.exchange_refresh_token_for_token(refresh_token)
           rescue StandardError => e
             if e.is_a? Keycloak::KeycloakException
               raise
