@@ -4,27 +4,27 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl Report an unsafe or non-compliant product
+      - heading_html = capture do
+        h1.govuk-heading-l
+          span.govuk-caption-l Report an unsafe or non-compliant product
+          | Why are you reporting this product?
       - unsafe_details = capture do
-        psd-autocomplete#hazard-type-auto-complete-container
-          = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
-                      show_all_values: true, hint: { text: "The primary danger the product presents" },
-                      aria_describedby: "hazard-type-category-hint", label: { text: "Hazard type" }
-
-        .govuk-form-group
+          #hazard-type-auto-complete-container
+            = render "form_components/govuk_select", choices: hazard_types, key: :hazard_type, form: form,
+                    show_all_values: true, hint: { text: "The primary danger the product presents" },
+                    aria_describedby: "hazard-type-category-hint", label: { text: "Hazard type" },
+                    is_autocomplete: true
           = render "form_components/govuk_textarea", key: :hazard_description, form: form,
-                      attributes: { maxlength: 10000 },
-                      label: { text: "Hazard details" },
-                      hint: { text: "Including any incidents or events that brought it to your attention" }
+                  attributes: { maxlength: 10000 },
+                  label: { text: "Hazard details" },
+                  hint: { text: "Including any incidents or events that brought it to your attention" }
       - non_compliant_details = capture do
         = render "form_components/govuk_textarea", key: :non_compliant_reason, form: form,
                     attributes: { maxlength: 10000 },
                     label: { text: "Details of non-compliance" }
 
       = render "form_components/govuk_checkboxes", form: form, key: :why_reporting,
-                    fieldset: { legend: { text: "Why are you reporting this product?",
-                                          classes: "govuk-fieldset__legend--xl" } },
+                    fieldset: { legend: { html: heading_html} },
                     hint: { text: "Select all that apply" },
                     items: [{ key: "unsafe",
                              text: "It's unsafe",
