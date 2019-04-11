@@ -5,7 +5,9 @@ doctype html
     | feedback
     span.govuk-visually-hidden
       | (opens new window)
-  = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank
+  / We shouldn't normally link to target: '_blank' without rel:'noopener', because it introduces
+  / security vulnerability. However, in this case we control the target url, so we should be safe
+  = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank # rubocop:disable Rails/LinkToBlank
   |  will help us to improve it.
 html.govuk-template.app-html-class[lang="en"]
   head
