@@ -69,6 +69,12 @@ jobs:
     - name: Deploy Cosmetics worker
       script: COMPONENT=cosmetics-worker ./infrastructure/ci/deploy-if-changed.sh
       env: *deploy_int_env
+    - name: Deploy Antivirus API
+      script: COMPONENT=antivirus ./infrastructure/ci/deploy-if-changed.sh
+      env: *deploy_int_env
+    - name: Deploy Maintenance page
+      script: COMPONENT=maintenance ./infrastructure/ci/deploy-if-changed.sh
+      env: *deploy_int_env
 
     - stage: Deploy to staging
       name: Deploy PSD web
@@ -92,6 +98,12 @@ jobs:
     - name: Deploy Cosmetics worker
       script: COMPONENT=cosmetics-worker ./infrastructure/ci/deploy-if-changed.sh
       env: *deploy_staging_env
+    - name: Deploy Antivirus API
+      script: COMPONENT=antivirus ./infrastructure/ci/deploy-if-changed.sh
+      env: *deploy_staging_env
+    - name: Deploy Maintenance page
+      script: COMPONENT=maintenance ./infrastructure/ci/deploy-if-changed.sh
+      env: *deploy_staging_env
 
     - stage: Deploy to production
       name: Deploy PSD web
@@ -114,6 +126,12 @@ jobs:
       env: *deploy_prod_env
     - name: Deploy Cosmetics worker
       script: COMPONENT=cosmetics-worker ./infrastructure/ci/deploy-if-changed.sh
+      env: *deploy_prod_env
+    - name: Deploy Antivirus API
+      script: COMPONENT=antivirus ./infrastructure/ci/deploy-if-changed.sh
+      env: *deploy_prod_env
+    - name: Deploy Maintenance page
+      script: COMPONENT=maintenance ./infrastructure/ci/deploy-if-changed.sh
       env: *deploy_prod_env
 
 notifications:
