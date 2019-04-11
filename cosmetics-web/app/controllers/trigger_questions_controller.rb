@@ -43,6 +43,7 @@ private
 
   def set_component
     @component = Component.find(params[:component_id])
+    authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
   end
 
   def set_question
