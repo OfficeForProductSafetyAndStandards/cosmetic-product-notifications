@@ -15,9 +15,9 @@ The antivirus server should be running if you've followed the steps in [the root
 
 ## Deployment
 
-* Run `docker build -t $DOCKER_USERNAME/antivirus .` from this directory.
-* Login using the docker CLI and run `docker push $DOCKER_USERNAME/antivirus`.
-* Login using the CloudFoundry CLI and then run `cf push --docker-image $DOCKER_USERNAME/antivirus --hostname antivirus-$SPACE` from this directory.
+* Run `docker build -t beisopss/antivirus .` from this directory.
+* Login using the docker CLI and run `docker push beisopss/antivirus`.
+* Login using the CloudFoundry CLI and then run `cf push --docker-image beisopss/antivirus --hostname antivirus-$SPACE` from this directory.
 
 
 ### Deployment from scratch
