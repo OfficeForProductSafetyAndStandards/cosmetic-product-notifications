@@ -3,7 +3,7 @@ PATH
   specs:
     shared-web-dev (1.0.0)
       brakeman (= 4.5.0)
-      capybara (= 3.16.1)
+      capybara (= 3.16.2)
       coveralls (= 0.8.22)
       debase (= 0.2.2)
       govuk-lint (= 3.11.0)
@@ -15,7 +15,7 @@ PATH
       simplecov (= 0.16.1)
       simplecov-console (= 0.4.2)
       slim_lint (= 0.16.1)
-      solargraph (= 0.32.0)
+      solargraph (= 0.32.1)
 
 PATH
   remote: vendor/shared-web
@@ -112,7 +112,7 @@ GEM
     backport (1.0.0)
     brakeman (4.5.0)
     builder (3.2.3)
-    capybara (3.16.1)
+    capybara (3.16.2)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -371,7 +371,7 @@ GEM
       actionpack
       rack-timeout (>= 0.3.0, < 0.5.0)
       railties
-    solargraph (0.32.0)
+    solargraph (0.32.1)
       backport (~> 1.0)
       bundler (>= 1.17.2)
       htmlentities (~> 4.3, >= 4.3.4)

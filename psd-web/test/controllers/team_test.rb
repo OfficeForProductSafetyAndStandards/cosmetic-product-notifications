@@ -4,10 +4,10 @@ class TeamTest < ActionDispatch::IntegrationTest
   setup do
     mock_out_keycloak_and_notify
 
-    @user_one = User.find_by(last_name: "User_one")
-    @user_two = User.find_by(last_name: "User_two")
-    @user_three = User.find_by(last_name: "User_three")
-    @user_four = User.find_by(last_name: "User_four")
+    @user_one = User.find_by(name: "Test User_one")
+    @user_two = User.find_by(name: "Test User_two")
+    @user_three = User.find_by(name: "Test User_three")
+    @user_four = User.find_by(name: "Test User_four")
 
     prepare_assigned_cases
   end
@@ -27,8 +27,8 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_me: "unchecked",
       assigned_to_someone_else: "unchecked",
       assigned_to_someone_else_id: nil,
-      assigned_to_team_0: nil,
-      assigned_to_team_1: nil
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -42,8 +42,8 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_me: "checked",
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: nil,
-      assigned_to_team_0: nil,
-      assigned_to_team_1: nil
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -56,9 +56,9 @@ class TeamTest < ActionDispatch::IntegrationTest
     get investigations_path, params: {
       assigned_to_me: "checked",
       assigned_to_someone_else: "unchecked",
-      assigned_to_someone_else_id: nil,
-      assigned_to_team_0: nil,
-      assigned_to_team_1: nil
+      assigned_to_someone_else_id: "unchecked",
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_not_includes(response.body, @investigation_user_four.pretty_id)
@@ -71,9 +71,9 @@ class TeamTest < ActionDispatch::IntegrationTest
     get investigations_path, params: {
       assigned_to_me: "unchecked",
       assigned_to_someone_else: "unchecked",
-      assigned_to_someone_else_id: nil,
+      assigned_to_someone_else_id: "unchecked",
       assigned_to_team_0: @user_one.teams[0].id,
-      assigned_to_team_1: nil
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -88,7 +88,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: Team.find_by(name: "Team 3").id,
       assigned_to_team_0: @user_one.teams[0].id,
-      assigned_to_team_1: nil
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -103,7 +103,7 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: @user_three.id,
       assigned_to_team_0: @user_one.teams[0].id,
-      assigned_to_team_1: nil
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -117,8 +117,8 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_me: "unchecked",
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: @user_one.teams[0].id,
-      assigned_to_team_0: nil,
-      assigned_to_team_1: nil
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -132,8 +132,8 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_me: "unchecked",
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: Team.find_by(name: "Team 3").id,
-      assigned_to_team_0: nil,
-      assigned_to_team_1: nil
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_not_includes(response.body, @investigation_user_one.pretty_id)
     assert_not_includes(response.body, @investigation_user_four.pretty_id)
