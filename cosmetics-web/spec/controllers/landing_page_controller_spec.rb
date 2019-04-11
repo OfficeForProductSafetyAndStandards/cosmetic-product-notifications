@@ -37,9 +37,9 @@ RSpec.describe LandingPageController, type: :controller do
     end
 
     describe "GET #index" do
-      it "returns success status" do
+      it "redirects to the cosmetic products page" do
         get :index
-        expect(response).to have_http_status(:success)
+        expect(response).to redirect_to(responsible_person_notifications_path(responsible_person_1))
       end
 
       it "assigns the first Responsible Person for the user" do
