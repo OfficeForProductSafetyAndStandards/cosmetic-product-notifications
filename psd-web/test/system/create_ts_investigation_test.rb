@@ -60,11 +60,16 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
       filename: corrective_filename_one,
       description: corrective_description_one
     )
+    choose_further_corrective_action
     click_button "Continue"
 
-    choose_further_corrective_action
-
     assert_selector "h1", text: "Record corrective action"
+    # Check that repeatable action controls stick through errors
+    choose_further_corrective_action
+    click_button "Continue"
+    assert_text "There is a problem"
+    assert find_field("corrective_action_further_corrective_action_yes", visible: false, checked: true)
+    # carry on with filling in the page
     fill_in_corrective_action_details @corrective_action_two, with_business: false, with_product: false
     add_corrective_action_attachment(
       filename: corrective_filename_two,
@@ -73,6 +78,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     choose "corrective_action_further_corrective_action_yes", visible: false
     click_button "Continue"
 
+    # Check that skip page works
     assert_selector "h1", text: "Record corrective action"
     choose "corrective_action_further_corrective_action_yes", visible: false
     click_button "Skip this page"
@@ -143,11 +149,11 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     assert_text risk_assessment_description
 
 
-    #TODO assert about contact when MSPSDS-869 is finished
+    #TODO assert about contact when PSD-869 is finished
   end
 
   def fill_in_product_page
-    fill_autocomplete "picker-category", with: @product.category
+    fill_autocomplete "product_category", with: @product.category
     fill_in "Product type", with: @product.product_type
     fill_in "Product name", with: @product.name
     fill_in "product_product_code", with: @product.product_code
@@ -159,7 +165,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
 
   def fill_in_why_reporting
     page.check :investigation_unsafe, visible: false
-    fill_autocomplete "picker-hazard_type", with: @investigation.hazard_type, visible: false
+    fill_autocomplete "investigation_hazard_type", with: @investigation.hazard_type, visible: false
     fill_in "investigation_hazard_description", with: @investigation.hazard_description, visible: false
     page.check :investigation_non_compliant, visible: false
     fill_in "investigation_non_compliant_reason", with: @investigation.non_compliant_reason, visible: false
@@ -184,7 +190,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   end
 
   def fill_in_test_results test_record
-    fill_in "picker-legislation", with: test_record.legislation
+    fill_in "test_legislation", with: test_record.legislation
     fill_in "Day", with: test_record.date.day
     fill_in "Month", with: test_record.date.month
     fill_in "Year", with: test_record.date.year
@@ -204,8 +210,8 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   end
 
   def choose_test_results_and_risk_assessments
-    page.check "test_results", visible: false
-    page.check "risk_assessments", visible: false
+    page.check "information_test_results", visible: false
+    page.check "information_risk_assessments", visible: false
     click_button "Continue"
   end
 

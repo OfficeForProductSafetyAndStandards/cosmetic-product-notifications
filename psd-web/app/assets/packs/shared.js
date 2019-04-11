@@ -3,10 +3,10 @@ import Rails from 'rails-ujs';
 import GOVUKFrontend from 'govuk-frontend';
 
 import 'shared-web/app/assets/application/javascripts/location_picker';
+import 'shared-web/app/assets/application/javascripts/autocomplete';
 
 import '../application/javascripts/investigations/attachment_description';
 import '../application/javascripts/investigations/ts_investigations/which_businesses';
-import '../application/javascripts/autocomplete';
 import '../application/javascripts/close_page_button';
 
 

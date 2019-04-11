@@ -15,12 +15,12 @@ tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Application instruction
     td.govuk-table__cell
-      = component.nano_material.exposure_route
+      = get_exposure_route_name(component.nano_material.exposure_route)
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Exposure condition
     td.govuk-table__cell
-      = component.nano_material.exposure_condition
+      = get_exposure_condition_name(component.nano_material.exposure_condition)
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
@@ -69,11 +69,13 @@ tr.govuk-table__row
           = link_to "Refresh",
                   edit_responsible_person_notification_path(@responsible_person, @notification),
                   class: "govuk-link--no-visited-state"
-      - else
+      - elsif allow_edits
         = link_to "Add formulation document",
                 new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
                         @notification, component),
                 class: "govuk-link--no-visited-state"
+      - else
+        | N/A
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Physical form
@@ -92,5 +94,4 @@ tr.govuk-table__row
 
 - if component.trigger_questions
   - component.trigger_questions.each do |question|
-    - if question.applicable?
-      = render "notifications/trigger_question_details", trigger_question: question
+    = render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: true

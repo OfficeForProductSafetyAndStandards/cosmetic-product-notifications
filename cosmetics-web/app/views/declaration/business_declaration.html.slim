@@ -1,0 +1,25 @@
+- content_for :page_title, "Declaration"
+= form_with url: accept_declaration_path, local: true do |form|
+  - if @errors.present?
+    = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        | Declaration
+      p
+        | I declare that:
+      ul.govuk-list.govuk-list--bullet
+        li I have permission to submit and share information on behalf of the responsible person
+        li
+          | I have read and understood the
+          =<> link_to "terms and conditions", terms_and_conditions_path
+          | and
+          =<> link_to "privacy policy", privacy_notice_path
+          | and accept them
+        li any information I provide is correct and complete to the best of my knowledge
+        li I accept that the responsible person must tell the Office for Product Safety and Standards (OPSS)
+           about any change to any of the information on this registration
+        li I will not share any information from the UK cosmetic product notification database outside my organisation
+        li I understand that non-compliance with the [TBD] may result in a civil penalty or criminal prosecution
+
+      = render "declaration/accept_declaration", form: form, errors: @errors

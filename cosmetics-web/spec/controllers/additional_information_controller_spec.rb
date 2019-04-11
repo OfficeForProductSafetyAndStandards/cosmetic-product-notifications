@@ -45,5 +45,12 @@ RSpec.describe AdditionalInformationController, type: :controller do
       get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
       expect(response).to redirect_to(new_responsible_person_notification_product_image_upload_path(responsible_person, notification))
     end
+
+    it "raised a NotAuthorizedError if the notification has already been submitted" do
+      notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component], state: "notification_complete")
+      expect {
+        get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
   end
 end

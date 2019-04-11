@@ -62,6 +62,16 @@ ActiveRecord::Schema.define(version: 2019_04_03_162940) do
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
+  create_table "contact_persons", force: :cascade do |t|
+    t.string "name"
+    t.string "email_address"
+    t.string "phone_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "responsible_person_id"
+    t.index ["responsible_person_id"], name: "index_contact_persons_on_responsible_person_id"
+  end
+
   create_table "email_verification_keys", force: :cascade do |t|
     t.string "key"
     t.datetime "expires_at"
@@ -208,9 +218,17 @@ ActiveRecord::Schema.define(version: 2019_04_03_162940) do
     t.index ["component_id"], name: "index_trigger_questions_on_component_id"
   end
 
+  create_table "user_attributes", primary_key: "user_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.datetime "declaration_accepted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_attributes_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cmrs", "components"
   add_foreign_key "components", "notifications"
+  add_foreign_key "contact_persons", "responsible_persons"
   add_foreign_key "email_verification_keys", "responsible_persons"
   add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"

@@ -25,7 +25,7 @@ We're using [fluentd](https://www.fluentd.org/) to aggregate the logs and send t
 
 #### Deployment
 
-Create or target a common space using `cf create-space common` or `cf target -o beis-mspsds -s common`.
+Create or target a common space using `cf create-space common` or `cf target -o beis-opss -s common`.
 
 Deploy the fluentd app by running `cf push --no-start --hostname <fluentd hostname>` from the `fluentd` folder.
 `<fluentd hostname>` can be anything but the full domain will be used again below.
@@ -70,7 +70,7 @@ Our metrics are sent to an ELK stack and S3 using [the paas-metric-exporter app]
 
 #### Deployment
 
-Create or target a common space using `cf create-space common` or `cf target -o beis-mspsds -s common`.
+Create or target a common space using `cf create-space common` or `cf target -o beis-opss -s common`.
 
 Deploy the app by running `cf push --no-start` from the `paas-metric-exporter` folder.
 Once the app has been created, define the following environment variables:
