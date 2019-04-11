@@ -7,8 +7,10 @@ doctype html
       | (opens new window)
   / We shouldn't normally link to target: '_blank' without rel:'noopener', because it introduces
   / security vulnerability. However, in this case we control the target url, so we should be safe
-  = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank # rubocop:disable Rails/LinkToBlank
+  - # rubocop:disable Rails/LinkToBlank
+  = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank 
   |  will help us to improve it.
+  - # rubocop:enable Rails/LinkToBlank
 html.govuk-template.app-html-class[lang="en"]
   head
     / Google Analytics
