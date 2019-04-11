@@ -26,6 +26,7 @@ module Shared
 
           user_info = Shared::Web::KeycloakClient.instance.user_info(access_token)
           User.current = ::User.find_or_create(user_info)
+          User.current.access_token = access_token
         end
 
         def cookie_name

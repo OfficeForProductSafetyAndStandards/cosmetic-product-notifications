@@ -163,12 +163,11 @@ module Shared
         { id: user["sub"], email: user["email"], groups: user["groups"], name: user["given_name"] }
       end
 
-      def has_role?(user_id, role)
-        if User.current && (User.current.id == user_id)
-          # This is faster, as it uses the already fetched claims
-          @client.has_role? role
+      def has_role?(user_id, role, access_token)
+        if access_token.present?
+          @client.has_role?(role, access_token)
         else
-          @internal.has_role? user_id, role
+          @internal.has_role?(user_id, role)
         end
       end
 
