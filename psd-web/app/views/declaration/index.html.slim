@@ -30,6 +30,6 @@
         li Not to share any information from the product safety database outside your organisation
       - show_error = @error_list.include?(:declaration_not_agreed_to)
       = render "components/govuk_checkboxes", name: "agree",
-        errorMessage: ({ text: "You must agree to the declaration to use this service" } if show_error,
+        errorMessage: ({ text: "You must agree to the declaration to use this service" } if show_error),
         items: [{ id: "agree", value: "checked", text: "I agree" }]
   = form.submit "Continue", class: "govuk-button"
