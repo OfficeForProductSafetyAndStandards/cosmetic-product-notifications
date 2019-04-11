@@ -53,6 +53,8 @@ function simpleAccessibleAutocomplete(id, autocompleteOptions) {
       removeButton.addEventListener('click', () => {
         removeValue();
       });
+
+      // Without js remove button won't work, so it is not displayed, this makes it visible
       removeButton.style.display = 'inline-block';
     }
   }
