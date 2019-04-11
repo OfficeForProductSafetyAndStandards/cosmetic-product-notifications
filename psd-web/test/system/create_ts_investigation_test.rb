@@ -210,8 +210,8 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   end
 
   def choose_test_results_and_risk_assessments
-    page.check "test_results", visible: false
-    page.check "risk_assessments", visible: false
+    page.check "information_test_results", visible: false
+    page.check "information_risk_assessments", visible: false
     click_button "Continue"
   end
 
