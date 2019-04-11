@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 2019_04_11_094416) do
     t.string "category"
     t.string "country_of_origin"
     t.datetime "created_at", null: false
+    t.date "date_placed_on_market"
     t.text "description"
     t.string "name"
     t.string "product_code"
