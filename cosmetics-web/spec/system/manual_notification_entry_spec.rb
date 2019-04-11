@@ -20,6 +20,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_in :notification_product_name, with: "Super Shampoo"
     click_button "Continue"
 
+    # add_internal_reference
+    choose("No")
+    click_button "Continue"
+
     # is_imported
     choose("No")
     click_button "Continue"
@@ -73,6 +77,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_in :notification_product_name, with: "Super Shampoo"
     click_button "Continue"
 
+    # add_internal_reference
+    choose("No")
+    click_button "Continue"
+
     # is_imported
     choose("No")
     click_button "Continue"
@@ -117,6 +125,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # add_product_name
     fill_in :notification_product_name, with: "Super Shampoo"
+    click_button "Continue"
+
+    # add_internal_reference
+    choose("No")
     click_button "Continue"
 
     # is_imported
@@ -175,6 +187,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # add_product_name
     fill_in :notification_product_name, with: "Super Shampoo"
+    click_button "Continue"
+
+    # add_internal_reference
+    choose("No")
     click_button "Continue"
 
     # is_imported
