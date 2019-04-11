@@ -26,6 +26,7 @@ ruby:
         - has_hint = item[:hint].present?
         - item_hint_id = id + '-item-hint'
         / This adds a hidden checkbox to copy how rails generates checkboxes
+        / https://github.com/UKGovernmentBEIS/beis-opss/blob/master/shared-web/README.md#component-implementations
         input [
             type='hidden'
             value=(item[:unchecked_value] || "0").to_s

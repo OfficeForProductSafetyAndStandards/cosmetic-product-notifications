@@ -95,11 +95,6 @@ html.govuk-template.app-html-class[lang="en"]
               / We shouldn't normally link to target: '_blank' without rel:'noopener', because it introduces
               / security vulnerability. However, in this case we control the target url, so we should be safe
               - # rubocop:disable Rails/LinkToBlank
-              footer.opss-footer__body
-                ' Email
-                = mail_to "opss.enquiries@beis.gov.uk"
-                |  for help using this service.
-              br
               li.govuk-footer__inline-list-item
                 - html = capture do
                   | About this service
@@ -121,15 +116,6 @@ html.govuk-template.app-html-class[lang="en"]
                     |  (opens new window)
                 = link_to html, help_terms_and_conditions_path,
                         class: "govuk-footer__link govuk-!-margin-right-2", target: "_blank"
-              hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
-                footer.opss-footer__body
-                  ' Built by the
-                  = link_to "Office for Product Safety and Standards", "https://www.gov.uk/government/organisations/office-for-product-safety-and-standards", target: "_blank"
-                br
-                footer.opss-footer__body
-                  ' This is a new service – your
-                  = link_to "feedback", "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank, rel: 'noopener'
-                  |  will help us to improve it.
               - # rubocop:enable Rails/LinkToBlank
           .govuk-footer__meta-item
             a.govuk-footer__link.govuk-footer__copyright-logo[href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"]

@@ -44,7 +44,8 @@ Notable differences from nunjucks:
     ```
     This renders most `text` and `html` attributes functionally identical, but we are choosing to keep both for consistency
     with nunjucks templates
-- hidden fields in checkboxes, to account for rails checkboxes "gotcha". The default value is 0 but can be set through the 'unchecked' attribute.
+- hidden fields in checkboxes, to account for rails checkboxes "gotcha". The default value is 0 but can be set through the 'unchecked_value' attribute.
+  https://apidock.com/rails/ActionView/Helpers/FormHelper/check_box
 
 ## Rails integration
 To simplify working with rails form helpers, we are also providing a bit of "glue" which infers the values that it

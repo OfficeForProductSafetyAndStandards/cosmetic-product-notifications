@@ -6,8 +6,9 @@
       h1.govuk-heading-l
         span.govuk-caption-l Reporting an unsafe product
         | Other information and files
-      ruby:
-        information_types = [{ key: "test_results",
+      = render "form_components/govuk_checkboxes", form: form, key: :information_types,
+        fieldset: { legend: { text: "What information do you have?", classes: "govuk-fieldset__legend--m" } },
+        items: [{ key: "test_results",
             text: "Test results",
             hint: { text: "Record test results and upload files" } },
           { key: "risk_assessments",
@@ -22,7 +23,4 @@
           { key: "other_files",
             text: "Other files",
             hint: { text: "Any other relevant files, such as purchase receipts or case-file downloads" } }]
-      = render "form_components/govuk_checkboxes", form: form, key: :information_types,
-        fieldset: { legend: { text: "What information do you have?", classes: "govuk-fieldset__legend--m" } },
-        items: information_types
-  = form.submit "Continue", class: "govuk-button"
+      = form.submit "Continue", class: "govuk-button"

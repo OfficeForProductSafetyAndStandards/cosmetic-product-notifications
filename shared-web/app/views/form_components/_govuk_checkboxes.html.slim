@@ -6,7 +6,7 @@ ruby:
   local_assigns[:idPrefix] ||= get_attribute_id_prefix(form, key) if local_assigns[:key]
   local_assigns[:items].each do |item|
     item[:id] ||= get_attribute_id_prefix(form, item[:key] || local_assigns[:name])
-    item[:value] ||= 1
+    item[:value] ||= "1"
     item[:name] ||= get_attribute_name(form, item[:key] || local_assigns[:name])
   end
   if form.object

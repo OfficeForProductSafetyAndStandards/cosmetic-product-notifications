@@ -7,7 +7,6 @@ class DeclarationController < ApplicationController
   end
 
   def accept
-    p params
     if params[:agree] != "checked"
       @error_list << :declaration_not_agreed_to
       return render :index

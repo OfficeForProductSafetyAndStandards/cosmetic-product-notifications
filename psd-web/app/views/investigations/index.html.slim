@@ -29,17 +29,17 @@
                         items: (User.get_assignees(except: User.current) + Team.all).map { |e| [e.display_name, e.id] },
                         label: { text: "Name" }
         ruby:
-          assigned_to = [{ key: "assigned_to_me", value: "checked", text: "Me" }]
+          assigned_to_items = [{ key: "assigned_to_me", value: "checked", text: "Me" }]
           teams_with_keys.each do |key, team, name|
-              assigned_to << { key: key, value: team.id, text: name }
+              assigned_to_items << { key: key, value: team.id, text: name }
           end
-          assigned_to << { key: "assigned_to_someone_else",
+          assigned_to_items << { key: "assigned_to_someone_else",
                            value: "checked",
                            text: "Other person or team",
                            conditional: { html: other_assignee } }
         = render "form_components/govuk_checkboxes", form: form, key: :assigned_to,
           fieldset: { legend: { text: "Assigned to", classes: "govuk-fieldset__legend--s" } },
-          items: assigned_to
+          items: assigned_to_items
         = render "form_components/govuk_checkboxes", form: form, key: :status,
                  fieldset: { legend: { text: "Status", classes: "govuk-fieldset__legend--s" } },
                  items: [{ key: "status_open", value: "checked", text: "Open" },
