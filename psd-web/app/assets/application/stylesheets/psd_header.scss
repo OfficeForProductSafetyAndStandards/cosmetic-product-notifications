@@ -1,0 +1,93 @@
+.psd-header {
+  .govuk-header__logo--full-width,
+  .govuk-header__content--full-width {
+    width: 100%;
+    padding: 0;
+  }
+
+  .govuk-header__links {
+    display: none;
+
+    @include mq ($from: desktop) {
+      display: block;
+    }
+
+    position: absolute;
+    top: govuk-spacing(2);
+    right: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .govuk-header__navigation-item--link {
+    @include mq ($from: desktop) {
+      display: none;
+    }
+  }
+
+  .govuk-header__container--no-blue {
+    border-bottom: 0;
+  }
+
+  // These styles have been taken and adapted from
+  // https://github.com/hmcts/frontend/blob/master/src/components/primary-navigation/_primary-navigation.scss
+  .govuk-header__navigation-item {
+    a {
+      @include mq ($from: desktop) {
+        @include govuk-font($size: 19, $weight: bold);
+      }
+
+      &:link,
+      &:visited {
+        color: govuk-colour("white");
+      }
+    }
+
+    padding-bottom: 13px;
+    padding-top: 12px;
+
+    &:focus {
+      color: govuk-colour("black"); // Focus colour on yellow should really be black.
+      position: relative; // Ensure focus sits above everything else.
+      z-index: 1;
+    }
+
+    &.govuk-header__navigation-item--active {
+      color: govuk-colour("white");
+      position: relative;
+      text-decoration: none;
+
+      @include mq ($from: desktop) {
+        &:before {
+          background-color: govuk-colour("white");
+          content: "";
+          display: block;
+          height: 5px;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+        }
+      }
+
+      @include mq ($until: desktop) {
+        text-decoration: underline;
+      }
+
+      &:focus {
+        color: govuk-colour("black"); // Focus colour on yellow should really be black.
+        position: relative; // Ensure focus sits above everything else.
+
+        &:before {
+          background-color: govuk-colour("black");
+        }
+      }
+    }
+
+    &.govuk-header__navigation-item--right {
+      @include mq ($from: desktop) {
+        float: right;
+      }
+    }
+  }
+}

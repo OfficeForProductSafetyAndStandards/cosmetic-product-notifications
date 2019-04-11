@@ -9,19 +9,34 @@
 = content_for :page_title_suffix do
   |  - Product safety database - GOV.UK
 = render "layouts/shared/web/head"
+  / Create the navigation items
   ruby:
-    nav_items = []
-    nav_items.push text: "Your account", href: user_account_url if User.current
+    secondary_nav = []
+    secondary_nav.push text: "Your account", href: user_account_url if User.current
     unless login_page?
       if User.current
-        nav_items.push text: "Sign out", href: shared_engine.logout_session_path
+        secondary_nav.push text: "Sign out", href: shared_engine.logout_session_path
       else
-        nav_items.push test: "Sign in", href: keycloak_login_url
+        secondary_nav.push test: "Sign in", href: keycloak_login_url
       end
     end
-  = render "components/govuk_header",
+    # On some pages we don't want to show the main navigation
+    unless local_assigns[:hide_nav]
+      nav_items = [
+              { text: "Cases", href: investigations_path, active: params[:controller] == "investigations" },
+              { text: "Businesses", href: businesses_path, active: params[:controller] == "businesses" },
+              { text: "Products", href: products_path, active: params[:controller] == "products" }]
+      # In principle all our users belong to a team, but this saves crashes in case of a misconfiguration
+      if User.current.teams.present?
+        text = User.current.teams.count > 1 ? "Your teams" : "Your team"
+        path = User.current.teams.count > 1 ? your_teams_path: team_path(User.current.teams.first)
+        nav_items.push text: text, href: path, active: params[:controller] == "teams", right: true
+      end
+    end
+  = render "components/psd_header",
           productName: "Product safety database",
           navigation: nav_items,
+          secondary_nav: secondary_nav,
           assetPath: "media/images"
 
   .govuk-width-container
