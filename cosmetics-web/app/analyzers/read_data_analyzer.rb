@@ -95,6 +95,7 @@ private
 
         file_found = false
         files.each do |file|
+          next if !file_is_valid?(file)
           if file_is_pdf?(file)
             raise UnexpectedPdfFileError, "UnexpectedPdfFileError - The unzipped files are PDF files"
           elsif file_is_product_xml?(file)
@@ -112,12 +113,16 @@ private
 
   def invalid_static_files(files)
     files.any? do |file|
-      static_file?(file) && file_contents_differs?(file)
+      file_is_valid?(file) && static_file?(file) && file_contents_differs?(file)
     end
   end
 
   def file_is_product_xml?(file)
     file.name&.match?(product_xml_file_name_regex)
+  end
+
+  def file_is_valid?(file)
+    file.file? && file.name !~ /__MACOSX/ && file.name !~ /\.DS_Store/
   end
 
   def file_is_pdf?(file)
