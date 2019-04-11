@@ -50,5 +50,5 @@ header.govuk-header *attributes class=local_assigns[:classes] role="banner" data
             - navigation.each do |item|
               - if item[:href] && item[:text]
                 li.govuk-header__navigation-item class=("govuk-header__navigation-item--active" if item[:active])
-                  - item_attributes = (item[:item] || [])
+                  - item_attributes = (item[:attributes] || [])
                   a.govuk-header__link *item_attributes href=item[:href] = item[:text]
