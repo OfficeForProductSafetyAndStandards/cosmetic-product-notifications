@@ -25,9 +25,10 @@
           = form.submit "Search", name: nil, class: "search-box--submit"
         hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
         - other_assignee = capture do
-          = render "form_components/autocomplete_select", key: :assigned_to_someone_else_id, form: form,
-                        items: (User.get_assignees(except: User.current) + Team.all).map { |e| [e.display_name, e.id] },
-                        label: { text: "Name" }
+          - entities = User.get_assignees(except: User.current) + Team.all
+          = render "form_components/govuk_select", key: :assigned_to_someone_else_id, form: form,
+                        items: entities.map { |e| { text: e.display_name, value: e.id } },
+                        label: { text: "Name" }, is_autocomplete: true
         ruby:
           assigned_to_items = [{ key: "assigned_to_me", value: "checked", unchecked_value: "unchecked", text: "Me" }]
           teams_with_keys.each do |key, team, name|
