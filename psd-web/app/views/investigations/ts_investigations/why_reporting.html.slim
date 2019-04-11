@@ -1,9 +1,28 @@
-- content_for :page_title, "Report an unsafe or non-compliant product"
+
 
 = form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-l
+        span.govuk-caption-l Report an unsafe or non-compliant product
+        | Why are you reporting this product?
+      span.govuk-hint
+        | Select all that apply
+      .govuk-form-group
+        .govuk-checkboxes data-module="checkboxes"
+          .govuk-checkboxes__item
+            = form.check_box :unsafe, class: "govuk-checkboxes__input", checked: @unsafe,
+                    "aria-controls": "conditional-report-report-type-1", "aria-expanded": "false", value: "unsafe"
+            = form.label :unsafe, "It's unsafe", class: "govuk-label govuk-checkboxes__label"
+          #conditional-report-report-type-1.govuk-checkboxes__conditional[
+            class=("govuk-checkboxes__conditional--hidden" unless @unsafe) ]
+            #hazard-type-auto-complete-container
+              = render "form_components/autocomplete_select", items: hazard_types, key: :hazard_type, form: form,
+                      show_all_values: true, hint: { text: "The primary danger the product presents" },
+                      aria_describedby: "hazard-type-category-hint", label: { text: "Hazard type" }
+
+            = render "form_components/govuk_textarea", key: :hazard_description, form: form,
       - heading_html = capture do
         h1.govuk-heading-l
           span.govuk-caption-l Report an unsafe or non-compliant product

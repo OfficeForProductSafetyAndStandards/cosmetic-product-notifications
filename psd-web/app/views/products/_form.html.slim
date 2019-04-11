@@ -1,8 +1,8 @@
 - label_class = "govuk-label--m govuk-!-margin-bottom-2"
 / Ideally the width class should affect the input only, not the whole form group, but we're limited by MSPSDS-1045
 .govuk-form-group class=["govuk-!-width-two-thirds", ("govuk-form-group--error" if product.errors[:category].any?)]
-  = render "form_components/autocomplete_select", items: product_categories, key: :category, form: form,
-          show_all_values: true, aria_describedby: "report-product-category-hint",
+  = render "form_components/govuk_select", choices: product_categories, key: :category, form: form,
+          show_all_values: true, aria_describedby: "report-product-category-hint", is_autocomplete: true,
           label: { text: "Product category", classes: label_class },
           hint: { text: "The high-level category (for reporting purposes)" }
 
@@ -36,13 +36,12 @@
         label: { text: "Webpage", classes: label_class },
         hint: { text: "A link to the manufacturer's page for this product, or a webpage where it can be bought" }
 
-.govuk-form-group class=("govuk-form-group--error" if product.errors[:country_of_origin].any?)
-  = form.label :country_of_origin, "Country of origin",
-          class: label_class
+div class="govuk-!-width-two-thirds"
   / Ideally the width class should affect he input only, without a wrapper, but we're limited by PSD-1045
-  div class="govuk-!-width-two-thirds"
-    = form.select :country_of_origin, countries, { include_blank: "" },
-            class: "govuk-select", id: "location-autocomplete"
+  = render "form_components/govuk_select", form: form, key: :country_of_origin,
+          items: countries.map { |country| { text: country[0], value: country[1] } },
+          include_blank: true, id: "location-autocomplete",
+          label: { text: "Country of origin", classes: label_class }
 
 = render "form_components/govuk_textarea", key: :description, form: form, attributes: { maxlength: 10000 },
         label: { text: "Description of product", classes: label_class },
