@@ -7,7 +7,7 @@
       h1.govuk-heading-l
         span.govuk-caption-l Report an unsafe or non-compliant product
         | Supply chain information
-      - html = render "form_components/govuk_input",
+      - other_business_html = render "form_components/govuk_input",
                key: :other_business_type, form: form,
                value: @other_business_type,
                label: { text: "Other type", classes: "govuk-visually-hidden" }
@@ -28,7 +28,7 @@
                   checked: @selected_businesses.include?("manufacturer") },
                 { key: "other",
                   text: "Other",
-                  conditional: { "html": html },
+                  conditional: { "html": other_business_html },
                   checked: @selected_businesses.include?("other") },
                 # There should not be dividers in checkboxes but design is being discussed. \
                 # https://github.com/alphagov/govuk-design-system-backlog/issues/37#issuecomment-456878012 \

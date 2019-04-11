@@ -21,19 +21,17 @@
         = render "form_components/govuk_textarea", key: :non_compliant_reason, form: form,
                     attributes: { maxlength: 10000 },
                     label: { text: "Details of non-compliance" }
-      ruby:
-        why_reporting = [
-        { key: "unsafe",
-          text: "It's unsafe",
-          checked: @unsafe,
-          conditional: { html: unsafe_details } },
-        { key: "non_compliant",
-          text: "It's non-compliant",
-          checked: @non_compliant,
-          conditional: { html: non_compliant_details } }]
+
       = render "form_components/govuk_checkboxes", form: form, key: :why_reporting,
                     fieldset: { legend: { text: "Why are you reporting this product?",
                                           classes: "govuk-fieldset__legend--xl" } },
                     hint: { text: "Select all that apply" },
-                    items: why_reporting
+                    items:[{ key: "unsafe",
+                             text: "It's unsafe",
+                             checked: @unsafe,
+                             conditional: { html: unsafe_details } },
+                           { key: "non_compliant",
+                             text: "It's non-compliant",
+                             checked: @non_compliant,
+                             conditional: { html: non_compliant_details } }]
       = form.submit "Continue", class: "govuk-button"

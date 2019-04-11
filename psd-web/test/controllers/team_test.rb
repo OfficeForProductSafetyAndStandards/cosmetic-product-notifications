@@ -24,11 +24,11 @@ class TeamTest < ActionDispatch::IntegrationTest
 
   test "assign filter returns all cases when no box is checked" do
     get investigations_path, params: {
-      assigned_to_me: "0",
-      assigned_to_someone_else: "0",
+      assigned_to_me: "unchecked",
+      assigned_to_someone_else: "unchecked",
       assigned_to_someone_else_id: nil,
-      assigned_to_team_0: "0",
-      assigned_to_team_1: "0"
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -42,8 +42,8 @@ class TeamTest < ActionDispatch::IntegrationTest
       assigned_to_me: "checked",
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: nil,
-      assigned_to_team_0: "0",
-      assigned_to_team_1: "0"
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -55,10 +55,10 @@ class TeamTest < ActionDispatch::IntegrationTest
   test "assign filter returns only cases assigned to current user when me is checked" do
     get investigations_path, params: {
       assigned_to_me: "checked",
-      assigned_to_someone_else: "0",
-      assigned_to_someone_else_id: "0",
-      assigned_to_team_0: "0",
-      assigned_to_team_1: "0"
+      assigned_to_someone_else: "unchecked",
+      assigned_to_someone_else_id: "unchecked",
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_not_includes(response.body, @investigation_user_four.pretty_id)
@@ -71,9 +71,9 @@ class TeamTest < ActionDispatch::IntegrationTest
     get investigations_path, params: {
       assigned_to_me: "unchecked",
       assigned_to_someone_else: "unchecked",
-      assigned_to_someone_else_id: "0",
+      assigned_to_someone_else_id: "unchecked",
       assigned_to_team_0: @user_one.teams[0].id,
-      assigned_to_team_1: "0"
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -84,11 +84,11 @@ class TeamTest < ActionDispatch::IntegrationTest
 
   test "assign team filter works with multiple teams" do
     get investigations_path, params: {
-      assigned_to_me: "0",
+      assigned_to_me: "unchecked",
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: Team.find_by(name: "Team 3").id,
       assigned_to_team_0: @user_one.teams[0].id,
-      assigned_to_team_1: "0"
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -99,11 +99,11 @@ class TeamTest < ActionDispatch::IntegrationTest
 
   test "assign team filter works with multiple entities" do
     get investigations_path, params: {
-      assigned_to_me: "0",
+      assigned_to_me: "unchecked",
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: @user_three.id,
       assigned_to_team_0: @user_one.teams[0].id,
-      assigned_to_team_1: "0"
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -114,11 +114,11 @@ class TeamTest < ActionDispatch::IntegrationTest
 
   test "select team should match check team" do
     get investigations_path, params: {
-      assigned_to_me: "0",
+      assigned_to_me: "unchecked",
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: @user_one.teams[0].id,
-      assigned_to_team_0: "0",
-      assigned_to_team_1: "0"
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_includes(response.body, @investigation_user_one.pretty_id)
     assert_includes(response.body, @investigation_user_four.pretty_id)
@@ -129,11 +129,11 @@ class TeamTest < ActionDispatch::IntegrationTest
 
   test "assign team filter returns only cases assigned to that team or its users when team is selected" do
     get investigations_path, params: {
-      assigned_to_me: "0",
+      assigned_to_me: "unchecked",
       assigned_to_someone_else: "checked",
       assigned_to_someone_else_id: Team.find_by(name: "Team 3").id,
-      assigned_to_team_0: "0",
-      assigned_to_team_1: "0"
+      assigned_to_team_0: "unchecked",
+      assigned_to_team_1: "unchecked"
     }
     assert_not_includes(response.body, @investigation_user_one.pretty_id)
     assert_not_includes(response.body, @investigation_user_four.pretty_id)

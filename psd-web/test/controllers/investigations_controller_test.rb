@@ -115,8 +115,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "status filter for both open and closed unchecked" do
     get investigations_path, params: {
-      status_open: "0",
-      status_closed: "0"
+      status_open: "unchecked",
+      status_closed: "unchecked"
     }
     assert_includes(response.body, @investigation_three.pretty_id)
     assert_includes(response.body, @investigation_one.pretty_id)
@@ -127,7 +127,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "status filter for only open checked" do
     get investigations_path, params: {
       status_open: "checked",
-      status_closed: "0"
+      status_closed: "unchecked"
     }
     assert_not_includes(response.body, @investigation_three.pretty_id)
     assert_includes(response.body, @investigation_one.pretty_id)
@@ -137,7 +137,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "status filter for only closed checked" do
     get investigations_path, params: {
-      status_open: "0",
+      status_open: "unchecked",
       status_closed: "checked"
     }
     assert_includes(response.body, @investigation_three.pretty_id)
@@ -148,10 +148,10 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should return all investigations if both assignee checkboxes are unchecked" do
     get investigations_path, params: {
-        assigned_to_me: "0",
-        assigned_to_someone_else: "0",
-        status_open: "0",
-        status_closed: "0"
+        assigned_to_me: "unchecked",
+        assigned_to_someone_else: "unchecked",
+        status_open: "unchecked",
+        status_closed: "unchecked"
     }
     assert_includes(response.body, load_case(:one).pretty_id)
     assert_includes(response.body, load_case(:two).pretty_id)
@@ -163,8 +163,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         assigned_to_me: "checked",
         assigned_to_someone_else: "checked",
         assigned_to_someone_else_id: nil,
-        status_open: "0",
-        status_closed: "0"
+        status_open: "unchecked",
+        status_closed: "unchecked"
     }
     assert_includes(response.body, load_case(:one).pretty_id)
     assert_includes(response.body, load_case(:two).pretty_id)
@@ -174,11 +174,11 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should return investigations assigned to current user if only the 'Me' checkbox is checked" do
     get investigations_path, params: {
         assigned_to_me: "checked",
-        assigned_to_someone_else: "0",
+        assigned_to_someone_else: "unchecked",
         assigned_to_someone_else_id: nil,
-        assigned_to_team_0: "0",
-        status_open: "0",
-        status_closed: "0"
+        assigned_to_team_0: "unchecked",
+        status_open: "unchecked",
+        status_closed: "unchecked"
     }
     assert_includes(response.body, load_case(:one).pretty_id)
     assert_not_includes(response.body, load_case(:two).pretty_id)
@@ -191,8 +191,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         assigned_to_me: "checked",
         assigned_to_someone_else: "checked",
         assigned_to_someone_else_id: @investigation_two.assignable_id,
-        status_open: "0",
-        status_closed: "0"
+        status_open: "unchecked",
+        status_closed: "unchecked"
     }
     assert_includes(response.body, load_case(:one).pretty_id)
     assert_includes(response.body, load_case(:two).pretty_id)
@@ -202,12 +202,12 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should return investigations assigned to a given user if only 'someone else' checkbox is checked
               and a user is given in the input" do
     get investigations_path, params: {
-        assigned_to_me: "0",
+        assigned_to_me: "unchecked",
         assigned_to_someone_else: "checked",
         assigned_to_someone_else_id: @investigation_two.assignable_id,
-        assigned_to_team_0: "0",
-        status_open: "0",
-        status_closed: "0"
+        assigned_to_team_0: "unchecked",
+        status_open: "unchecked",
+        status_closed: "unchecked"
     }
     assert_not_includes(response.body, load_case(:one).pretty_id)
     assert_includes(response.body, load_case(:two).pretty_id)
@@ -217,11 +217,11 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   test "should return investigations assigned to anyone except current user if only 'someone else' checkbox
               is checked and no user is given in the input" do
     get investigations_path, params: {
-        assigned_to_me: "0",
+        assigned_to_me: "unchecked",
         assigned_to_someone_else: "checked",
         assigned_to_someone_else_id: nil,
-        status_open: "0",
-        status_closed: "0"
+        status_open: "unchecked",
+        status_closed: "unchecked"
     }
     assert_not_includes(response.body, load_case(:one).pretty_id)
     assert_includes(response.body, load_case(:two).pretty_id)
@@ -235,8 +235,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should return the most recently updated investigation first if sort by 'Updated: recent' is selected" do
     get investigations_path, params: {
-        status_open: "0",
-        status_closed: "0",
+        status_open: "unchecked",
+        status_closed: "unchecked",
         sort_by: "recent"
     }
     assert response.body.index(@investigation_one.pretty_id.to_s) < response.body.index(@investigation_two.pretty_id.to_s)
@@ -244,8 +244,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should return the oldest updated investigation first if sort by 'Updated: oldest' is selected" do
     get investigations_path, params: {
-        status_open: "0",
-        status_closed: "0",
+        status_open: "unchecked",
+        status_closed: "unchecked",
         sort_by: "oldest"
     }
     assert response.body.index(@investigation_two.pretty_id.to_s) < response.body.index(@investigation_one.pretty_id.to_s)
@@ -253,8 +253,8 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should return the most recently created investigation first if sort by 'Created: newest' is selected" do
     get investigations_path, params: {
-        status_open: "0",
-        status_closed: "0",
+        status_open: "unchecked",
+        status_closed: "unchecked",
         sort_by: "newest"
     }
     assert response.body.index(@investigation_two.pretty_id.to_s) < response.body.index(@investigation_one.pretty_id.to_s)
