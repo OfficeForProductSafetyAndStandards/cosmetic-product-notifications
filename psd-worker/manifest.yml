@@ -1,7 +1,7 @@
 ---
 applications:
 - name: psd-worker
-  memory: 512M
+  memory: 1G
   buildpacks:
     - ruby_buildpack
   instances: 1
