@@ -18,7 +18,7 @@ class UpdateProductTest < ApplicationSystemTestCase
     assert_field "product[batch_number]", with: @product.batch_number
     assert_field "product[webpage]", with: @product.webpage
     assert_field "product[description]", with: @product.description
-    assert_field "picker-category", with: @product.category
+    assert_field "product_category", with: @product.category
     assert_field "product[product_type]", with: @product.product_type
   end
 
@@ -52,6 +52,6 @@ class UpdateProductTest < ApplicationSystemTestCase
     fill_in "product[description]", with: product.description
     fill_in "product[batch_number]", with: product.batch_number
     fill_autocomplete "location-autocomplete", with: product.country_of_origin
-    fill_autocomplete "picker-category", with: product.category
+    fill_autocomplete "product_category", with: product.category
   end
 end

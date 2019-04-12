@@ -153,7 +153,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   end
 
   def fill_in_product_page
-    fill_autocomplete "picker-category", with: @product.category
+    fill_autocomplete "product_category", with: @product.category
     fill_in "Product type", with: @product.product_type
     fill_in "Product name", with: @product.name
     fill_in "product_product_code", with: @product.product_code
@@ -165,7 +165,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
 
   def fill_in_why_reporting
     page.check :investigation_unsafe, visible: false
-    fill_autocomplete "picker-hazard_type", with: @investigation.hazard_type, visible: false
+    fill_autocomplete "investigation_hazard_type", with: @investigation.hazard_type, visible: false
     fill_in "investigation_hazard_description", with: @investigation.hazard_description, visible: false
     page.check :investigation_non_compliant, visible: false
     fill_in "investigation_non_compliant_reason", with: @investigation.non_compliant_reason, visible: false
@@ -190,7 +190,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   end
 
   def fill_in_test_results test_record
-    fill_in "picker-legislation", with: test_record.legislation
+    fill_in "test_legislation", with: test_record.legislation
     fill_in "Day", with: test_record.date.day
     fill_in "Month", with: test_record.date.month
     fill_in "Year", with: test_record.date.year
@@ -210,8 +210,8 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
   end
 
   def choose_test_results_and_risk_assessments
-    page.check "test_results", visible: false
-    page.check "risk_assessments", visible: false
+    page.check "information_test_results", visible: false
+    page.check "information_risk_assessments", visible: false
     click_button "Continue"
   end
 
