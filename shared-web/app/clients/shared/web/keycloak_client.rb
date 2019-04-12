@@ -96,17 +96,20 @@ module Shared
       # @param org_ids specifies teams for which organisations should be returned. This allows us to avoid creating
       # orphaned team entities
       def all_teams(org_ids, force: false)
+        org_ids_set = org_ids.to_set
         Rails.cache.delete(:keycloak_teams) if force
         Rails.cache.fetch(:keycloak_teams, expires_in: 5.minutes) do
           all_groups.find { |group| group["name"] == "Organisations" }["subGroups"]
               .reject(&:blank?)
-              .select { |organisation| org_ids.include? organisation["id"] }
+              .select { |organisation| org_ids_set.include? organisation["id"] }
               .flat_map(&method(:extract_teams_from_organisation))
         end
       end
 
       # @param team_ids specifies teams we know about. This allows us to avoid linking to ghost team entities
       def all_team_users(user_ids, team_ids, force: false)
+        user_ids_set = user_ids.to_set
+        team_ids_set = team_ids.to_set
         Rails.cache.delete(:keycloak_team_users) if force
         Rails.cache.fetch(:keycloak_team_users, expires_in: 5.minutes) do
           user_groups = all_user_groups
@@ -115,9 +118,9 @@ module Shared
           # which calls TeamUser.all, and gets into an infinite loop
           team_users = []
           id = 1
-          user_ids.reject(&:blank?).each do |user_id|
+          user_ids_set.reject(&:blank?).each do |user_id|
             user_groups[user_id].reject(&:blank?).each do |group|
-              team_users << { team_id: group, user_id: user_id, id: id } if team_ids.include? group
+              team_users << { team_id: group, user_id: user_id, id: id } if team_ids_set.include? group
               id += 1
             end
           end
