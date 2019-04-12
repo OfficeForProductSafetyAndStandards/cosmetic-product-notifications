@@ -3,6 +3,7 @@
 
 ruby:
   # Infer name and id_prefix from attribute key
+  form.multipart = true
   local_assigns[:name] ||= get_attribute_name(form, key)
   local_assigns[:id] ||= get_attribute_id_prefix(form, key)
   local_assigns[:value] ||= form.object.send(key) if form.object.respond_to?(key)

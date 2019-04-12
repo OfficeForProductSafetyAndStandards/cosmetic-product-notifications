@@ -1,7 +1,7 @@
 - content_for :page_title, "Record phone call"
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
-= form_with(model: @correspondence, local: true, url: wizard_path, method: :put, multipart: true) do |form|
+= form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form

@@ -1,7 +1,7 @@
 - content_for :page_title, "Report an unsafe or non-compliant product"
 
 - scope ||= nil
-= form_with model: model, scope: scope, url: wizard_path, method: :put, local: true, multipart: true do |form|
+= form_with model: model, scope: scope, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
