@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     # In principle all our users belong to a team, but this saves crashes in case of a misconfiguration
     if User.current.teams.present?
       text = User.current.teams.count > 1 ? "Your teams" : "Your team"
-      path = User.current.teams.count > 1 ? your_teams_path: team_path(User.current.teams.first)
+      path = User.current.teams.count > 1 ? your_teams_path : team_path(User.current.teams.first)
       items.push text: text, href: path, active: params[:controller] == "teams", right: true
     end
     items
