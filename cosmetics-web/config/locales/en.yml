@@ -46,6 +46,10 @@ en:
           attributes:
             components_are_mixed:
               inclusion: "Select an option"
+        trigger_question:
+          attributes:
+            applicable:
+              inclusion: "Select an option"
   errors:
     format: "%{message}"
     messages:

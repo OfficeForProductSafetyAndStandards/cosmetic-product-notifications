@@ -7,17 +7,20 @@ ruby:
 = form_with model: @question, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      - if @errors.present?
-        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+      = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl
         = local_assigns[:question].present? ? question : default_question
       - input_field = capture do
         = form.fields_for :trigger_question_elements do |answer_form|
-          .govuk-form-group class=("govuk-form-group--error" if @errors.present?)
+          = answer_form.hidden_field :answer_order, value: answer_form.object.answer_order
+          = answer_form.hidden_field :element_order, value: answer_form.object.element_order
+          = answer_form.hidden_field :element, value: answer_form.object.element
+          - errors = answer_form.object.errors
+          .govuk-form-group class=("govuk-form-group--error" if errors.present?)
             = answer_form.label :answer, local_assigns[:label_text].present? ? label_text : default_label_text,
                     class: "govuk-label"
-            - if @errors.present?
-              span.govuk-error-message id="#answer-error"
+            - if errors.present?
+              span.govuk-error-message id="trigger_question_trigger_question_elements.answer-error"
                 = answer_form.object.errors.full_messages_for(:answer).first
             .input-wrapper.govuk-input--width-10
               - if local_assigns[:prefix_text]

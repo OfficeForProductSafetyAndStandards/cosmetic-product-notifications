@@ -6,8 +6,7 @@ ruby:
 = form_with model: @question, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      - if @errors.present?
-        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
+      = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl
         = local_assigns[:question].present? ? question : default_question
       = render "form_components/govuk_radios", form: form, key: :applicable,

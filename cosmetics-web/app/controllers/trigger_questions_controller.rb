@@ -70,7 +70,8 @@ class TriggerQuestionsController < ApplicationController
         :add_fluoride_compounds,
         :add_essential_oils
       render_substance_list
-    when :ph_mixed_product, :ph_mixed_hair_dye,
+    when :ph_mixed_product,
+        :ph_mixed_hair_dye,
         :contains_ethanol,
         :contains_isopropanol
       render_substance_check_with_condition
@@ -96,11 +97,10 @@ class TriggerQuestionsController < ApplicationController
   end
 
   def previous_wizard_path
-    p "ahahahah_ overwriting it!"
-    p step
     if step == steps.first
-      return responsible_person_notification_component_build_path(@component.notification.responsible_person,@component.notification, @component, :select_frame_formulation)
+      return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_frame_formulation)
     end
+
     previous_step = get_previous_step
     if !previous_step.nil?
       responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
@@ -145,6 +145,8 @@ class TriggerQuestionsController < ApplicationController
       :contains_fluoride_compounds
     when :contains_ethanol
       :contains_essential_oils
+    else
+      nil
     end
   end
 
@@ -226,6 +228,8 @@ private
   def render_exact_ph
     @question.update(question_params)
 
+    return re_render_step if @question.invalid?
+
     if @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents), applicable: true).any?
       render_wizard @component
     else
@@ -235,6 +239,9 @@ private
 
   def render_substance_check
     @question.update(question_params)
+
+    return re_render_step if @question.invalid?
+
     if @question.applicable.nil?
       @errors = [{ text: "Select an option", href: "#trigger_question_applicable_true" }]
       return re_render_step
@@ -250,8 +257,10 @@ private
 
   def render_substance_list
     @question.update(question_params)
-    destroy_invalid_answers
 
+    return re_render_step if @question.invalid?
+
+    destroy_invalid_answers
     if @question.trigger_question_elements.empty?
       define_errors_for_answers "No substance added"
       return re_render_step
@@ -275,18 +284,9 @@ private
   def render_substance_check_with_condition
     @question.update(question_params)
 
-    return re_render_step unless @question.valid?
+    return re_render_step if @question.invalid?
 
-    if @question.applicable.nil?
-      @errors = [{ text: "Select an option", href: "#trigger_question_applicable_true" }]
-      return re_render_step
-    end
     @question.trigger_question_elements.destroy_all unless @question.applicable
-
-    if @question.applicable && @question.trigger_question_elements.first.answer.blank?
-      define_errors_for_answers "No value added"
-      return re_render_step
-    end
 
     render_wizard @component
   end
@@ -336,22 +336,18 @@ private
   end
 
   def populate_answers_for_list
-    answers_filled = @question.trigger_question_elements.count / 2
+    answers_filled = @question.trigger_question_elements.size / 2
     answers_needed = NUMBER_OF_ANSWERS - answers_filled
     answers_needed.times do |index|
       answer_order = index + answers_filled
-      @question.trigger_question_elements.create(answer_order: answer_order, element_order: 0, element: :inciname)
-      @question.trigger_question_elements.create(answer_order: answer_order, element_order: 1, element: :incivalue)
+      @question.trigger_question_elements.build(answer_order: answer_order, element_order: 0, element: :inciname)
+      @question.trigger_question_elements.build(answer_order: answer_order, element_order: 1, element: :incivalue)
     end
   end
 
   def populate_question_with_single_answer(element)
-    @question.trigger_question_elements.destroy_all if @question.trigger_question_elements.count > 1
-    trigger_question = TriggerQuestionElement.find_or_create_by(trigger_question: @question)
-    trigger_question.update_attribute(:answer_order, 0)
-    trigger_question.update_attribute(:element_order, 0)
-    trigger_question.update_attribute(:element, element)
-    @question.reload
+    @question.trigger_question_elements.destroy_all if @question.trigger_question_elements.size > 1
+    @question.trigger_question_elements.build(answer_order: 0, element_order: 0, element: element) unless @question.trigger_question_elements.any?
   end
 
   def destroy_invalid_answers
@@ -429,6 +425,6 @@ private
   def question_params
     return {} if params[:trigger_question].blank?
 
-    params.require(:trigger_question).permit(:applicable, trigger_question_elements_attributes: %i[id answer])
+    params.require(:trigger_question).permit(:applicable, trigger_question_elements_attributes: %i[id answer answer_order element_order element])
   end
 end

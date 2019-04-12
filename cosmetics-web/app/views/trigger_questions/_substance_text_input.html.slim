@@ -8,5 +8,8 @@
       - if @errors.present?
         = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
       = form.fields_for :trigger_question_elements do |answer_form|
+        = answer_form.hidden_field :answer_order, value: answer_form.object.answer_order
+        = answer_form.hidden_field :element_order, value: answer_form.object.element_order
+        = answer_form.hidden_field :element, value: answer_form.object.element
         = render "form_components/govuk_input", form: answer_form, key: :answer, label: { html: heading }
       = form.submit "Continue", class: "govuk-button"
