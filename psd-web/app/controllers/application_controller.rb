@@ -14,11 +14,17 @@ class ApplicationController < ActionController::Base
   before_action :has_accepted_declaration
   before_action :set_cache_headers
 
+  helper_method :hide_nav?
+
   def authorize_user
     raise Pundit::NotAuthorizedError unless User.current&.is_psd_user?
   end
 
   def has_accepted_declaration
     redirect_to declaration_index_path(redirect_path: request.original_fullpath) unless User.current.has_accepted_declaration
+  end
+
+  def hide_nav?
+    false
   end
 end

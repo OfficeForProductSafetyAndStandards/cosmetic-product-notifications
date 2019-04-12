@@ -21,7 +21,7 @@
       end
     end
     # On some pages we don't want to show the main navigation
-    unless local_assigns[:hide_nav]
+    unless hide_nav?
       nav_items = [
               { text: "Cases", href: investigations_path, active: params[:controller] == "investigations" },
               { text: "Businesses", href: businesses_path, active: params[:controller] == "businesses" },
