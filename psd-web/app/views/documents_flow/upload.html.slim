@@ -2,7 +2,7 @@
 - content_for :after_header do
   = link_to "Back to #{@parent.pretty_description}", @parent, class: "govuk-back-link"
 
-= form_with scope: :document, url: wizard_path, method: :put, local: true do |form|
+= form_with scope: :document, url: wizard_path, multipart: true, method: :put, local: true do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form, errors: @errors
@@ -10,11 +10,7 @@
         span.govuk-caption-l = @parent.pretty_description
         | Add attachment
       = form.fields_for :file do |subform|
-        .govuk-form-group
-          = subform.label :file, "Browse for file", class: "govuk-label--m"
-          br
-          = subform.file_field :file, class: "govuk-file-upload"
-      = render "form_components/govuk_file_upload", form: form, key: :file,
-              label: { text: "Browse for file", classes: "govuk-label--m" }
+        = render "form_components/govuk_file_upload", form: subform, key: :file,
+                label: { text: "Browse for file", classes: "govuk-label--m" }
       .govuk-form-group
         = form.submit "Upload", class: "govuk-button"

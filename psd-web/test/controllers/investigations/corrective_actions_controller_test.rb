@@ -31,7 +31,7 @@ class CorrectiveActionsControllerTest < ActionDispatch::IntegrationTest
           day: "18",
           related_file: "Yes",
           file: {
-              file: fixture_file_upload('files/testImage.png', 'application/png')
+            file: fixture_file_upload('files/testImage.png', 'application/png')
           }
         }
       }
@@ -53,7 +53,7 @@ class CorrectiveActionsControllerTest < ActionDispatch::IntegrationTest
         day: "18",
         related_file: "Yes",
         file: {
-            file: fixture_file_upload('files/testImage.png', 'application/png')
+          file: fixture_file_upload('files/testImage.png', 'application/png')
         }
       }
     }

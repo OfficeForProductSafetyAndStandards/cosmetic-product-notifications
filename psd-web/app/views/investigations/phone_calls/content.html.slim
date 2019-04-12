@@ -1,7 +1,7 @@
 - content_for :page_title, "Record phone call"
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
-= form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
+= form_with(model: @correspondence, local: true, url: wizard_path, method: :put, multipart: true) do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
@@ -12,17 +12,17 @@
               label: { text: "Summary", classes: "govuk-label--m" },
               hint: { text: "Give an overview of the phone call" }
       = render "components/govuk_fieldset", legend: { text: "Details", classes: "govuk-fieldset__legend--m" } do
+        - if @transcript_blob
+          p
+            ' Currently selected file:
+            = link_to @transcript_blob.filename, @transcript_blob, target: "_blank", rel: 'noopener'
+            br
+            | Selecting a different one will replace it.
         = form.fields_for :transcript do |subform|
-          .govuk-form-group
-            - if @transcript_blob
-              p
-                ' Currently selected file:
-                = link_to @transcript_blob.filename, @transcript_blob, target: "_blank", rel: 'noopener'
-                br
-                | Selecting a different one will replace it.
-            span.govuk-hint class="govuk-!-width-full"
-              | Upload the transcript if you have one, or enter notes below
-            = subform.file_field :file, class: "govuk-file-upload"
+          = render "form_components/govuk_file_upload", form: subform, key: :file,
+                  hint: { text: "Upload the transcript if you have one, or enter notes below" },
+                  label: { text: "File upload", classes: "govuk-visually-hidden" }
+
         = render "form_components/govuk_textarea", key: :details, form: form,
                   attributes: { maxlength: 50000 },
                   label: { text: "Notes", classes: "govuk-!-width-two-thirds" }

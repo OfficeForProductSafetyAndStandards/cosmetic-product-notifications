@@ -1,7 +1,7 @@
 - content_for :page_title, "Add product to case"
 - content_for :after_header do
   = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
-= form_with model: @product, url: investigation_products_path(@investigation), local: true do |form|
+= form_with model: @product, url: investigation_products_path(@investigation), local: true, multipart: true do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form

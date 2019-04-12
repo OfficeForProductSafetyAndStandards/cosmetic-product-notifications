@@ -2,15 +2,14 @@ fieldset.govuk-fieldset
   - if local_variables.include?(:title)
     legend.govuk-fieldset__legend.govuk-fieldset__legend--m
       = title
-  .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(form.object.errors))
-    - if file_blob.present?
-      p#current-attachment-details
-        ' Currently selected file:
-        = link_to file_blob.filename, file_blob, target: "_blank", rel: 'noopener'
+  - if file_blob.present?
+    p#current-attachment-details
+      ' Currently selected file:
+      = link_to file_blob.filename, file_blob, target: "_blank", rel: 'noopener'
+  - else
     = form.fields_for attachment_name do |subform|
-      - if file_blob.blank?
-        .govuk-form-group
-          = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
+      = render "form_components/govuk_file_upload", form: subform, key: :file, id: "attachment-file-input",
+              label: { text: "File upload", class: "govuk-visually-hidden" }
       #attachment-description
         = render "form_components/govuk_textarea", key: :description, value: file_blob&.metadata&.dig(:description),
-              form: subform, label: { text: "Attachment description" }, attributes: { maxlength: 10000 }
+                form: subform, label : { text: "Attachment description" }, attributes : { maxlength: 10000 }
