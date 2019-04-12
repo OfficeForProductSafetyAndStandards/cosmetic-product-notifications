@@ -6,7 +6,7 @@
   PSD has some specific navigation needs which were not implementable using the standard govuk header.
   The macro interface has been extended, but still respects all the options as per original.
 
-  The big change is the addition of `secondary_nav` items, which are displayed in a separate list when there's
+  The big change is the addition of `secondary_navigation` items, which are displayed in a separate list when there's
   enough real estate, but are always semantically presented as part of the nav
 
 - attributes = (local_assigns[:attributes] || {})
@@ -41,12 +41,13 @@ header.govuk-header.psd-header *attributes class=local_assigns[:classes] role="b
           - if local_assigns[:productName]
             '
             span.govuk-header__product-name = local_assigns[:productName]
-    - if local_assigns[:serviceName] || local_assigns[:navigation]
+    - has_nav = local_assigns[:navigation] || local_assigns[:secondary_navigation]
+    - if local_assigns[:serviceName] || has_nav
       .govuk-header__content.govuk-header__content--full-width
         - if local_assigns[:serviceName]
           a.govuk-header__link.govuk-header__link--service-name href=local_assigns[:serviceUrl]
             = local_assigns[:serviceName]
-        - if local_assigns[:navigation]
+        - if has_nav
           button.govuk-header__menu-button.js-header-toggle [
             aria-controls="navigation"
             aria-label="Show or hide Top Level Navigation"
@@ -54,23 +55,23 @@ header.govuk-header.psd-header *attributes class=local_assigns[:classes] role="b
             type="button"]
             | Menu
           nav
-            - if local_assigns[:secondary_nav]
+            - if local_assigns[:secondary_navigation]
               / These are only visible here in non-collapsed view
               ul.govuk-header__links
-                - secondary_nav.each do |item|
+                - secondary_navigation.each do |item|
                   - if item[:href] && item[:text]
                     li.govuk-header__navigation-item class=("govuk-header__navigation-item--active" if item[:active])
                       - item_attributes = (item[:attributes] || [])
                       a.govuk-header__link *item_attributes href=item[:href] = item[:text]
             ul#navigation.govuk-header__navigation class=local_assigns[:navigationClasses] aria-label="Top Level Navigation"
-              - if local_assigns[:secondary_nav]
+              - if local_assigns[:secondary_navigation]
                 / These are only visible here in collapsed view
-                - secondary_nav.each do |item|
+                - secondary_navigation.each do |item|
                   - if item[:href] && item[:text]
                     li.govuk-header__navigation-item.govuk-header__navigation-item--link [class=("govuk-header__navigation-item--active" if item[:active])]
                       - item_attributes = (item[:attributes] || [])
                       a.govuk-header__link *item_attributes href=item[:href] = item[:text]
-              - navigation.each do |item|
+              - local_assigns[:navigation]&.each do |item|
                 - if item[:href] && item[:text]
                   - item_classes = []
                   - item_classes.push "govuk-header__navigation-item--active" if item[:active]
