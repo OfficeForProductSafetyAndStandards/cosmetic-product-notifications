@@ -12,6 +12,7 @@ RSpec.describe "Create a responsible person", type: :system do
 
   it "succeeds with valid individual account details" do
     responsible_person = build(:responsible_person)
+    contact_person = build(:contact_person)
 
     create_new_responsible_person
     select_individual_account_type
@@ -27,8 +28,9 @@ RSpec.describe "Create a responsible person", type: :system do
 
     assert_text "Contact person"
 
-    fill_in "Email address", with: responsible_person.contact_persons.first.email_address
-    fill_in "Phone number", with: responsible_person.contact_persons.first.phone_number
+    fill_in "Full name", with: contact_person.name
+    fill_in "Email address", with: contact_person.email_address
+    fill_in "Phone number", with: contact_person.phone_number
     click_on "Continue"
 
     assert_current_path(/responsible_persons\/\d+\/verify/)
@@ -36,6 +38,7 @@ RSpec.describe "Create a responsible person", type: :system do
 
   it "succeeds with valid business account details" do
     responsible_person = build(:business_responsible_person)
+    contact_person = build(:contact_person)
 
     create_new_responsible_person
     select_business_account_type
@@ -51,8 +54,9 @@ RSpec.describe "Create a responsible person", type: :system do
 
     assert_text "Contact person"
 
-    fill_in "Email address", with: responsible_person.contact_persons.first.email_address
-    fill_in "Phone number", with: responsible_person.contact_persons.first.phone_number
+    fill_in "Full name", with: contact_person.name
+    fill_in "Email address", with: contact_person.email_address
+    fill_in "Phone number", with: contact_person.phone_number
     click_on "Continue"
 
     assert_current_path(/responsible_persons\/\d+\/verify/)
