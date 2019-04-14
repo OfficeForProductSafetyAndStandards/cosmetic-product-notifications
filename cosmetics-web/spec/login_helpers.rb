@@ -8,7 +8,9 @@ module LoginHelpers
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(as_user))
 
     allow(Keycloak::Client).to receive(:has_role?).and_return(false)
-    allow(Keycloak::Client).to receive(:has_role?).with(any_of(with_roles)).and_return(true)
+    allow(Keycloak::Client).to receive(:has_role?).with(any_of(with_roles), anything).and_return(true)
+
+    allow_any_instance_of(ApplicationController).to receive(:access_token).and_return("access_token")
   end
 
   def sign_in_as_poison_centre_user(user: build(:user))
@@ -23,6 +25,8 @@ module LoginHelpers
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
+
+    allow_any_instance_of(ApplicationController).to receive(:access_token).and_call_original
   end
 
   def format_user_for_get_userinfo(user, groups: [])
