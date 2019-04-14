@@ -15,7 +15,7 @@
         th.govuk-table__header[scope="row"]
           span.govuk-caption-m[class="govuk-!-font-size-16"]
             | Assigned to
-          = investigation.assignee ? investigation.assignee.full_name.to_s : "Unassigned"
+          = investigation.assignee ? investigation.assignee.name.to_s : "Unassigned"
           - if investigation.assignee&.organisation.present?
             div[class="govuk-!-font-size-16"]
               = investigation.assignee.organisation.name

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_03_134006) do
+ActiveRecord::Schema.define(version: 2019_04_03_162940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,9 +146,9 @@ ActiveRecord::Schema.define(version: 2019_04_03_134006) do
     t.string "shades"
     t.string "industry_reference"
     t.datetime "cpnp_notification_date"
-    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
@@ -214,6 +214,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_134006) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "component_id"
+    t.boolean "applicable"
     t.index ["component_id"], name: "index_trigger_questions_on_component_id"
   end
 
