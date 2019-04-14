@@ -17,7 +17,7 @@ module Shared
       end
 
       def logout
-        Shared::Web::KeycloakClient.instance.logout
+        Shared::Web::KeycloakClient.instance.logout(refresh_token)
         redirect_to main_app.root_path
       end
 

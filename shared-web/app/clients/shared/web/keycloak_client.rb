@@ -145,20 +145,20 @@ module Shared
         @client.get_token_by_code(code, redirect_uri)
       end
 
-      def refresh_token
-        @client.get_token_by_refresh_token
+      def exchange_refresh_token_for_token(refresh_token)
+        @client.get_token_by_refresh_token(refresh_token)
       end
 
-      def logout
-        @client.logout
+      def logout(refresh_token)
+        @client.logout("", refresh_token)
       end
 
-      def user_signed_in?
-        @client.user_signed_in?
+      def user_signed_in?(access_token)
+        @client.user_signed_in?(access_token)
       end
 
-      def user_info
-        response = @client.get_userinfo
+      def user_info(access_token)
+        response = @client.get_userinfo(access_token)
         user = JSON.parse(response)
         { id: user["sub"], email: user["email"], groups: user["groups"], name: user["given_name"] }
       end
