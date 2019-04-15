@@ -6,6 +6,7 @@ class TriggerQuestionElement < ApplicationRecord
   validate :no_empty_answers_with_the_same_answer_order, if: :is_inciname_or_incivalue?
 
 private
+
   def no_empty_answers_with_the_same_answer_order
     answers_with_same_answer_order = trigger_question.trigger_question_elements.find_all { |x| x.answer_order == answer_order }
 

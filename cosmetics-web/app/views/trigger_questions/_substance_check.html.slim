@@ -10,7 +10,7 @@ ruby:
       h1.govuk-heading-xl
         = local_assigns[:question].present? ? question : default_question
       = render "form_components/govuk_radios", form: form, key: :applicable,
-              hint:  { text: local_assigns[:hint].present? ? hint : nil},
+              hint:  { text: local_assigns[:hint].present? ? hint : nil },
               items: [{ text: local_assigns[:yes_option].present? ? yes_option : default_yes_option, value: "true" },
                       { text: "No", value: "false" }]
       = form.submit "Continue", class: "govuk-button"

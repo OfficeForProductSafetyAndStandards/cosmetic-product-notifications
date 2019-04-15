@@ -145,8 +145,6 @@ class TriggerQuestionsController < ApplicationController
       :contains_fluoride_compounds
     when :contains_ethanol
       :contains_essential_oils
-    else
-      nil
     end
   end
 
@@ -242,11 +240,6 @@ private
 
     return re_render_step if @question.invalid?
 
-    if @question.applicable.nil?
-      @errors = [{ text: "Select an option", href: "#trigger_question_applicable_true" }]
-      return re_render_step
-    end
-
     if @question.applicable
       render_wizard @component
     else
@@ -260,7 +253,7 @@ private
 
     return re_render_step if @question.invalid?
 
-    destroy_invalid_answers
+    destroy_empty_answers
     if @question.trigger_question_elements.empty?
       define_errors_for_answers "No substance added"
       return re_render_step
@@ -350,7 +343,7 @@ private
     @question.trigger_question_elements.build(answer_order: 0, element_order: 0, element: element) unless @question.trigger_question_elements.any?
   end
 
-  def destroy_invalid_answers
+  def destroy_empty_answers
     grouped_answers = @question.trigger_question_elements.group_by(&:answer_order)
     updated_answer_order = 0
     grouped_answers.values.each do |answers|

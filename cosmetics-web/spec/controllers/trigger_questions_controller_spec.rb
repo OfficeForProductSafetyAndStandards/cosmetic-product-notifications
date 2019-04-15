@@ -98,7 +98,8 @@ RSpec.describe TriggerQuestionsController, type: :controller do
     describe "at add_anti_dandruff_agents step" do
       let(:question) {
         create(:trigger_question, component: component,
-               question: "please_specify_the_inci_name_and_concentration_of_the_antidandruff_agents_if_antidandruff_agents_are_not_present_in_the_cosmetic_product_then_not_applicable_must_be_checked")
+               question: "please_specify_the_inci_name_and_concentration_of_the_antidandruff_agents_if_antidandruff_agents_are_not_present_in_the_cosmetic_product_then_not_applicable_must_be_checked",
+               applicable: false)
       }
       let(:answers) {
         [
@@ -111,30 +112,30 @@ RSpec.describe TriggerQuestionsController, type: :controller do
 
       let(:valid_answers) {
         [
-            { answer: "agent 1", id: answers.first.id },
-            { answer: "5", id: answers.second.id }
+            { answer: "agent 1", answer_order: 0, element_order: 0, element: :inciname, id: answers.first.id },
+            { answer: "5", answer_order: 0, element_order: 0, element: :incivalue, id: answers.second.id }
         ]
       }
 
       let(:valid_answers_with_empty_values) {
         [
-            { answer: "agent 1", id: answers.first.id },
-            { answer: "5", id: answers.second.id },
-            { answer: "", id: answers.third.id },
-            { answer: "", id: answers.fourth.id }
+            { answer: "agent 1", answer_order: 0, element_order: 0, element: "inciname", id: answers.first.id },
+            { answer: "5", answer_order: 0, element_order: 1, element: "incivalue", id: answers.second.id },
+            { answer: "", answer_order: 1, element_order: 0, element: "inciname", id: answers.third.id },
+            { answer: "", answer_order: 1, element_order: 1, element: "incivalue", id: answers.fourth.id }
         ]
       }
 
       let(:valid_answers_with_unpaired_values) {
         [
-            { answer: "agent 1", id: answers.first.id },
-            { answer: "5", id: answers.second.id },
-            { answer: "agent 2", id: answers.third.id },
-            { answer: "", id: answers.fourth.id }
+            { answer: "agent 1", answer_order: 0, element_order: 0, element: "inciname", id: answers.first.id },
+            { answer: "5", answer_order: 0, element_order: 0, element: "incivalue", id: answers.second.id },
+            { answer: "agent 2", answer_order: 1, element_order: 0, element: "inciname", id: answers.third.id },
+            { answer: "", answer_order: 1, element_order: 1, element: "incivalue", id: answers.fourth.id }
         ]
       }
 
-      let(:unvalid_answers) { [{ answer: "", id: answers.first.id }] }
+      let(:unvalid_answers) { [{ answer: "", answer_order: 0, element_order: 0, element: "inciname", id: answers.first.id }] }
 
       it "add filled answers to trigger_question_elements" do
         post(:update, params: params.merge(id: :add_anti_dandruff_agents, trigger_question: {
@@ -154,13 +155,11 @@ RSpec.describe TriggerQuestionsController, type: :controller do
         expect(assigns(:question).trigger_question_elements.second.answer).to eq("5")
       end
 
-      it "ignore unpaired answers on add_anti_dandruff_agents step" do
+      it "set errors when there is unpaired answers" do
         post(:update, params: params.merge(id: :add_anti_dandruff_agents, trigger_question: {
             trigger_question_elements_attributes: valid_answers_with_unpaired_values
         }))
-        expect(assigns(:question).trigger_question_elements).to have(2).items
-        expect(assigns(:question).trigger_question_elements.first.answer).to eq("agent 1")
-        expect(assigns(:question).trigger_question_elements.second.answer).to eq("5")
+        expect(assigns(:question).errors).not_to be_nil
       end
 
       it "sets question as applicable when succeed to add answers" do
