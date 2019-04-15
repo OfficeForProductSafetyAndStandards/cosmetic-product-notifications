@@ -1,6 +1,8 @@
 class Business < ApplicationRecord
   include BusinessesHelper
   include Searchable
+  include Documentable
+  include AttachmentConcern
 
   index_name [Rails.env, "businesses"].join("_")
 
@@ -13,6 +15,8 @@ class Business < ApplicationRecord
   end
 
   validates :trading_name, presence: true
+
+  has_many_attached :documents
 
   has_many :investigation_businesses, dependent: :destroy
   has_many :investigations, through: :investigation_businesses

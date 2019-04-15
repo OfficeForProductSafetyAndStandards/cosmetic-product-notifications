@@ -11,5 +11,7 @@
                         panel: { html: render("businesses/tabs/locations") } },
                 { id: "contacts", label: "Contacts (#{@business.contacts.count})",
                         panel: { html: render("businesses/tabs/contacts") } },
+                { id: "attachments", label: "Attachments (#{@business.documents.count})",
+                        panel: { html: render("businesses/tabs/attachments") } },
                 { id: "cases", label: "Cases",
                         panel: { html: render("businesses/tabs/cases") } }]

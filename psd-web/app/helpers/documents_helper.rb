@@ -4,6 +4,7 @@ module DocumentsHelper
   def set_parent
     @parent = Investigation.find_by!(pretty_id: params[:investigation_pretty_id]) if params[:investigation_pretty_id]
     @parent = Product.find(params[:product_id]) if params[:product_id]
+    @parent = Business.find(params[:business_id]) if params[:business_id]
     authorize @parent, :show? if @parent.is_a? Investigation
   end
 
