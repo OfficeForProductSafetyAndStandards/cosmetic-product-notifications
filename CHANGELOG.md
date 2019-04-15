@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 <!-- ### Product safety database -->
+- New service navigation
 
 <!-- ### Cosmetics -->
 
