@@ -55,22 +55,22 @@ private
   end
 
   def update_attachments
-    update_blob_metadata @email_file_blob, email_file_metadata
-    update_blob_metadata @email_attachment_blob, email_attachment_metadata
+    @correspondence.update_blob_metadata @email_file_blob, email_file_metadata
+    @correspondence.update_blob_metadata @email_attachment_blob, email_attachment_metadata
   end
 
   def correspondence_valid?
     @correspondence.validate(step || steps.last)
     @correspondence.validate_email_file_and_content(@email_file_blob) if step == :content
-    validate_blob_size(@email_file_blob, @correspondence.errors, "email file")
-    validate_blob_size(@email_attachment_blob, @correspondence.errors, "email attachment")
+    @correspondence.validate_blob_size(@email_file_blob, @correspondence.errors, "email file")
+    @correspondence.validate_blob_size(@email_attachment_blob, @correspondence.errors, "email attachment")
     @correspondence.errors.empty?
   end
 
   def attach_files
-    attach_blob_to_attachment_slot(@email_file_blob, @correspondence.email_file)
-    attach_blob_to_attachment_slot(@email_attachment_blob, @correspondence.email_attachment)
-    attach_blobs_to_list(@email_file_blob, @email_attachment_blob, @investigation.documents)
+    @correspondence.attach_blob_to_attachment_slot(@email_file_blob, @correspondence.email_file)
+    @correspondence.attach_blob_to_attachment_slot(@email_attachment_blob, @correspondence.email_attachment)
+    @investigation.attach_blobs_to_list(@email_file_blob, @email_attachment_blob, @investigation.documents)
   end
 
   def save_attachments

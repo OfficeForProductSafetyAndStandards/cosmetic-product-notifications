@@ -20,13 +20,13 @@ class DocumentsFlowController < ApplicationController
   end
 
   def update
-    update_blob_metadata(@file_blob, get_attachment_metadata_params(:file))
+    @parent.update_blob_metadata(@file_blob, get_attachment_metadata_params(:file))
     return render step unless file_valid?
 
     @file_blob.save
     return redirect_to next_wizard_path unless step == steps.last
 
-    attach_blobs_to_list(@file_blob, file_collection)
+    @parent.attach_blobs_to_list(@file_blob, @parent.documents)
     AuditActivity::Document::Add.from(@file_blob, @parent) if @parent.is_a? Investigation
     redirect_to @parent
   end
@@ -45,7 +45,7 @@ private
     if @file_blob && @file_blob.metadata[:title].blank? && step != :upload
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
-    validate_blob_size(@file_blob, @errors, "file") if step == :upload
+    @parent.validate_blob_size(@file_blob, @errors, "file") if step == :upload
     @errors.empty?
   end
 end

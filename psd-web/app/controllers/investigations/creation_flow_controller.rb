@@ -80,7 +80,7 @@ private
   end
 
   def update_attachment
-    update_blob_metadata @file_blob, attachment_metadata
+    @investigation.update_blob_metadata @file_blob, attachment_metadata
   end
 
   def store_complainant
@@ -94,14 +94,14 @@ private
   def investigation_valid?
     @complainant.validate(step)
     @investigation.validate(step)
-    validate_blob_size(@file_blob, @investigation.errors, "File")
+    @investigation.validate_blob_size(@file_blob, @investigation.errors, "File")
     @complainant.errors.empty? && @investigation.errors.empty?
   end
 
   def investigation_saved?
     return false unless investigation_valid?
 
-    attach_blobs_to_list(@file_blob, @investigation.documents)
+    @investigation.attach_blobs_to_list(@file_blob, @investigation.documents)
     @investigation.complainant = @complainant
     @investigation.save
   end

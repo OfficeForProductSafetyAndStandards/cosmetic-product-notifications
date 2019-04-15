@@ -1,6 +1,8 @@
 class Correspondence < ApplicationRecord
   include DateConcern
   include SanitizationHelper
+  include FileUploadConcern
+
   belongs_to :investigation, optional: true
   has_one :activity, dependent: :destroy
 

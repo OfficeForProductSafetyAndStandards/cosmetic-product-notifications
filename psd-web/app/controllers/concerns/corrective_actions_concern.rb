@@ -22,12 +22,12 @@ module CorrectiveActionsConcern
   end
 
   def update_attachment
-    update_blob_metadata @file_blob, corrective_action_file_metadata
+    @corrective_action.update_blob_metadata @file_blob, corrective_action_file_metadata
   end
 
   def corrective_action_valid?
     @corrective_action.validate(step)
-    validate_blob_size(@file_blob, @corrective_action.errors, "file")
+    @corrective_action.validate_blob_size(@file_blob, @corrective_action.errors, "file")
     @corrective_action.errors.empty?
   end
 

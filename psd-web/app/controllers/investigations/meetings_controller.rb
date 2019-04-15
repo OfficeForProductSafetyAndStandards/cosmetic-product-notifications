@@ -44,22 +44,22 @@ private
   end
 
   def update_attachments
-    update_blob_metadata @transcript_blob, transcript_metadata
-    update_blob_metadata @related_attachment_blob, related_attachment_metadata
+    @correspondence.update_blob_metadata @transcript_blob, transcript_metadata
+    @correspondence.update_blob_metadata @related_attachment_blob, related_attachment_metadata
   end
 
   def correspondence_valid?
     @correspondence.validate(step || steps.last)
     @correspondence.validate_transcript_and_content(@transcript_blob) if step == :content
-    validate_blob_size(@transcript_blob, @correspondence.errors, "transcript")
-    validate_blob_size(@related_attachment_blob, @correspondence.errors, "related attachment")
+    @correspondence.validate_blob_size(@transcript_blob, @correspondence.errors, "transcript")
+    @correspondence.validate_blob_size(@related_attachment_blob, @correspondence.errors, "related attachment")
     @correspondence.errors.empty?
   end
 
   def attach_files
-    attach_blob_to_attachment_slot(@transcript_blob, @correspondence.transcript)
-    attach_blob_to_attachment_slot(@related_attachment_blob, @correspondence.related_attachment)
-    attach_blobs_to_list(@transcript_blob, @related_attachment_blob, @investigation.documents)
+    @correspondence.attach_blob_to_attachment_slot(@transcript_blob, @correspondence.transcript)
+    @correspondence.attach_blob_to_attachment_slot(@related_attachment_blob, @correspondence.related_attachment)
+    @investigation.attach_blobs_to_list(@transcript_blob, @related_attachment_blob, @investigation.documents)
   end
 
   def save_attachments

@@ -1,6 +1,7 @@
 class Test < ApplicationRecord
   include DateConcern
   include SanitizationHelper
+  include FileUploadConcern
 
   belongs_to :investigation
   belongs_to :product

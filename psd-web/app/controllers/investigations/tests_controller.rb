@@ -67,7 +67,7 @@ private
     return false unless test_valid?
 
     # In addition to attaching to the test, we also attach to the investigation, so the file is surfaced in the ui
-    attach_blobs_to_list(@file_blob, @investigation.documents)
+    @investigation.attach_blobs_to_list(@file_blob, @investigation.documents)
     @test.save
   end
 

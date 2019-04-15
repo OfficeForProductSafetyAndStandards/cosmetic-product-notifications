@@ -1,6 +1,7 @@
 class CorrectiveAction < ApplicationRecord
   include DateConcern
   include SanitizationHelper
+  include FileUploadConcern
 
   attribute :related_file
 

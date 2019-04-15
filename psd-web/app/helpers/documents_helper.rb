@@ -8,10 +8,6 @@ module DocumentsHelper
     authorize @parent, :show? if @parent.is_a? Investigation
   end
 
-  def file_collection
-    @parent.documents
-  end
-
   def document_type_label(document_type)
     case document_type
     when :correspondence_originator

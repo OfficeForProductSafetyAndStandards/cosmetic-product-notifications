@@ -18,7 +18,7 @@ class DocumentsController < ApplicationController
       title: @file.metadata[:title],
       description: @file.metadata[:description]
     }
-    update_blob_metadata(@file.blob, get_attachment_metadata_params(:file))
+    @parent.update_blob_metadata(@file.blob, get_attachment_metadata_params(:file))
 
     return render :edit unless file_valid?
 
@@ -40,7 +40,7 @@ private
 
   def set_file
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
-    @file = file_collection.find(params[:id]) if params[:id].present?
+    @file = @parent.documents.find(params[:id]) if params[:id].present?
     raise Pundit::NotAuthorizedError unless can_be_displayed?(@file, @parent)
   end
 
@@ -51,7 +51,7 @@ private
     if @file.metadata[:title].blank?
       @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
     end
-    validate_blob_size(@file, @errors, "file")
+    @parent.validate_blob_size(@file, @errors, "file")
     @errors.empty?
   end
 end

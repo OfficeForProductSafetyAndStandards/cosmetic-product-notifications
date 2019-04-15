@@ -18,12 +18,12 @@ module TestsHelper
   end
 
   def update_attachment
-    update_blob_metadata @file_blob, test_file_metadata
+    @test.update_blob_metadata @file_blob, test_file_metadata
   end
 
   def test_valid?
     @test.validate
-    validate_blob_size(@file_blob, @test.errors, "file")
+    @test.validate_blob_size(@file_blob, @test.errors, "file")
     @test.errors.empty?
   end
 
