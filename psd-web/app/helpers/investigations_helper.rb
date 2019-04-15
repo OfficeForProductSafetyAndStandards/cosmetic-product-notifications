@@ -69,7 +69,7 @@ module InvestigationsHelper
   def checked_team_assignees
     assignees = []
     teams_with_keys.each do |key, team, _n|
-      assignees.concat(assignee_ids_from_team(team)) if query_params[key].present?
+      assignees.concat(assignee_ids_from_team(team)) if query_params[key] != "unchecked"
     end
     assignees
   end
