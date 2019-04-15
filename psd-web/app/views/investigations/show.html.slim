@@ -8,23 +8,14 @@
 
 hr.govuk-section-break.govuk-section-break--m
 
-- overview_html = capture do
-  = render "investigations/tabs/overview"
-- products_html = capture do
-  = render "investigations/tabs/products"
-- businesses_html = capture do
-  = render "investigations/tabs/businesses"
-- attachments_html = capture do
-  = render "investigations/tabs/attachments"
-- activities_html = capture do
-  = render "investigations/tabs/activity"
-
 = render "components/govuk_tabs", title: "Summary",
-        items: [{ id: "overview", label: "Overview", panel: { html: overview_html } },
+        items: [{ id: "overview", label: "Overview",
+                        panel: { html: render("investigations/tabs/overview") } },
                 { id: "products", label: "Products (#{@investigation.products.count})",
-                        panel: { html: products_html } },
+                        panel: { html: render("investigations/tabs/products") } },
                 { id: "businesses", label: "Businesses (#{@investigation.businesses.count})",
-                        panel: { html: businesses_html } },
+                        panel: { html: render("investigations/tabs/businesses") } },
                 { id: "attachments", label: "Attachments (#{@investigation.documents.count})",
-                        panel: { html: attachments_html } },
-                { id: "activity", label: "Activity", panel: { html: activities_html } }]
+                        panel: { html: render("investigations/tabs/attachments") } },
+                { id: "activity", label: "Activity",
+                        panel: { html: render("investigations/tabs/activity") } }]

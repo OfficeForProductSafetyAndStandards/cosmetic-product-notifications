@@ -42,17 +42,10 @@
     = link_to "Add cosmetic products", new_responsible_person_add_notification_path(@responsible_person),
             class: "govuk-button", role: "button"
 
-- errors_html = capture do
-  = render "responsible_persons/notifications/tabs/errors"
-- incomplete_html = capture do
-  = render "responsible_persons/notifications/tabs/incomplete"
-- notified_html = capture do
-  = render "responsible_persons/notifications/tabs/notified"
-
 = render "components/govuk_tabs",
         items: [{ id: "errors", label: "Errors (#{@erroneous_notification_files.total_entries})",
-                        panel: { html: errors_html } },
+                        panel: { html: render("responsible_persons/notifications/tabs/errors") } },
                 { id: "incomplete", label: "Incomplete (#{@unfinished_notifications.total_entries})",
-                        panel: { html: incomplete_html } },
+                        panel: { html: render("responsible_persons/notifications/tabs/incomplete") } },
                 { id: "notified", label: "Notified (#{@registered_notifications.total_entries})",
-                        panel: { html: notified_html } }]
+                        panel: { html: render("responsible_persons/notifications/tabs/notified") } }]

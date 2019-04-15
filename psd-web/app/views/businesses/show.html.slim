@@ -4,19 +4,12 @@
 
 = render "business_heading", business: @business
 
-- full_detail_html = capture do
-  = render "businesses/tabs/details"
-- locations_html = capture do
-  = render "businesses/tabs/locations"
-- contacts_html = capture do
-  = render "businesses/tabs/contacts"
-- cases_html = capture do
-  = render "businesses/tabs/cases"
-
 = render "components/govuk_tabs",
-        items: [{ id: "full-detail", label: "Full detail", panel: { html: full_detail_html } },
+        items: [{ id: "full-detail", label: "Full detail",
+                        panel: { html: render("businesses/tabs/details") } },
                 { id: "locations", label: "Locations (#{@business.locations.count})",
-                        panel: { html: locations_html } },
+                        panel: { html: render("businesses/tabs/locations") } },
                 { id: "contacts", label: "Contacts (#{@business.contacts.count})",
-                        panel: { html: contacts_html } },
-                { id: "cases", label: "Cases", panel: { html: cases_html } }]
+                        panel: { html: render("businesses/tabs/contacts") } },
+                { id: "cases", label: "Cases",
+                        panel: { html: render("businesses/tabs/cases") } }]

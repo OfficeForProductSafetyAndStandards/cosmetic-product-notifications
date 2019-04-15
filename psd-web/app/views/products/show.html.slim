@@ -7,15 +7,10 @@
 
 hr.govuk-section-break.govuk-section-break--m
 
-- full_detail_html = capture do
-  = render "products/tabs/details"
-- attachments_html = capture do
-  = render "products/tabs/attachments"
-- cases_html = capture do
-  = render "products/tabs/cases"
-
 = render "components/govuk_tabs",
-        items: [{ id: "full-detail", label: "Full detail", panel: { html: full_detail_html } },
+        items: [{ id: "full-detail", label: "Full detail",
+                        panel: { html: render("products/tabs/details") } },
                 { id: "attachments", label: "Attachments (#{@product.documents.count})",
-                        panel: { html: attachments_html } },
-                { id: "cases", label: "Cases", panel: { html: cases_html } }]
+                        panel: { html: render("products/tabs/attachments") } },
+                { id: "cases", label: "Cases",
+                        panel: { html: render("products/tabs/cases") } }]
