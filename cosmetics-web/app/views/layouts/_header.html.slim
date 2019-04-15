@@ -68,4 +68,4 @@ html.govuk-template.app-html-class[lang="en"]
                     = form_with url: shared_engine.logout_session_path, method: :delete do |form|
                       = form.submit "Sign out", class: "sign-out-link"
                   - else
-                    = link_to "Sign in", keycloak_login_url, class: "govuk-header__link"
+                    = link_to "Sign in", keycloak_login_url(dashboard_path), class: "govuk-header__link"
