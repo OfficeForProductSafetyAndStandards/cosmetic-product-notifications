@@ -4,13 +4,20 @@ class TeamUser < ActiveHash::Base
   belongs_to :team
   belongs_to :user
 
-  def self.all(options = {})
+  def self.load(force: false)
     begin
-      self.data = Shared::Web::KeycloakClient.instance.all_team_users(force: options[:force])
+      self.data = Shared::Web::KeycloakClient.instance.all_team_users(
+        User.all.map(&:id), Team.all.map(&:id), force: force
+      )
     rescue StandardError => e
       Rails.logger.error "Failed to fetch team memberships from Keycloak: #{e.message}"
       self.data = nil
     end
+  end
+
+  def self.all(options = {})
+    self.load
+
     if options.has_key?(:conditions)
       where(options[:conditions])
     else
@@ -18,4 +25,4 @@ class TeamUser < ActiveHash::Base
     end
   end
 end
-TeamUser.all if Rails.env.development?
+TeamUser.load if Rails.env.development?

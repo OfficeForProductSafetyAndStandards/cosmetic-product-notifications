@@ -63,10 +63,10 @@ class ActiveSupport::TestCase
 
     stub_user_management
     set_default_group_memberships
-    Organisation.all
-    Team.all
-    TeamUser.all
-    User.all
+    Organisation.load
+    Team.load
+    TeamUser.load
+    User.load
     sign_in_as User.find_by(name: "Test #{name}")
     stub_notify_mailer
   end
