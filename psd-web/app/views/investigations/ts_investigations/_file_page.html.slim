@@ -9,7 +9,7 @@ fieldset.govuk-fieldset
         = link_to @file_blob.filename, @file_blob, target: "_blank", rel: 'noopener'
     - else
       = form.fields_for :file do |subform|
-        = render "form_components/govuk_file_upload", form: subform, key: :file, id: "attachment-file-input",
+        = render "form_components/govuk_file_upload", form: subform, key: :file,
                 label: { text: "File upload", classes: "govuk-visually-hidden" }
         hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
         = render "form_components/govuk_input", key: :title, form: subform, value: @file_title,
