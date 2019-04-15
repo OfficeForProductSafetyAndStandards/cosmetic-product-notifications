@@ -88,7 +88,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
 
     assert_selector "h1", text: "Test result details"
     fill_in_test_results @test
-    add_attachment test_result_filename
+    attach_file "test[file][file]", file_fixture(test_result_filename)
     fill_in "Attachment description", with: test_result_description
     choose "test_further_test_results_no", visible: false
     click_button "Continue"
@@ -96,14 +96,14 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Risk assessment details"
     fill_in "Title", with: risk_assessment_title
     fill_in "Description", with: risk_assessment_description
-    add_attachment risk_assessment_title
+    attach_file "file[file][file]", file_fixture(test_result_filename)
     choose "file_further_risk_assessments_yes", visible: false
     click_button "Continue"
 
     assert_selector "h1", text: "Risk assessment details"
     fill_in "Title", with: risk_assessment_title
     fill_in "Description", with: risk_assessment_description
-    add_attachment risk_assessment_title
+    attach_file "file[file][file]", file_fixture(test_result_filename)
     choose "file_further_risk_assessments_yes", visible: false
     click_button "Continue"
 
@@ -219,9 +219,5 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     choose "investigation_has_complainant_reference_yes", visible: false
     fill_in "investigation_complainant_reference", with: @investigation.complainant_reference
     click_button "Create case"
-  end
-
-  def add_attachment filename
-    attach_file "attachment-file-input", file_fixture(filename)
   end
 end

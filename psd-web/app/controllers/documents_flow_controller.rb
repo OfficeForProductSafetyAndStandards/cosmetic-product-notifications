@@ -20,6 +20,9 @@ class DocumentsFlowController < ApplicationController
   end
 
   def update
+    @file_model.update get_attachment_metadata_params(:file)
+    @file_model.validate
+
     @parent.update_blob_metadata(@file_blob, get_attachment_metadata_params(:file))
     return render step unless file_valid?
 
@@ -36,6 +39,7 @@ private
   def set_file
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
     @file_blob, * = load_file_attachments
+    @file_model = Document.new(@file_blob)
   end
 
   def file_valid?

@@ -20,6 +20,9 @@ class DocumentsController < ApplicationController
     }
     @parent.update_blob_metadata(@file.blob, get_attachment_metadata_params(:file))
 
+    @file_model.update get_attachment_metadata_params(:file)
+    @file_model.validate
+
     return render :edit unless file_valid?
 
     @file.blob.save
@@ -42,6 +45,7 @@ private
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
     @file = @parent.documents.find(params[:id]) if params[:id].present?
     raise Pundit::NotAuthorizedError unless can_be_displayed?(@file, @parent)
+    @file_model = Document.new(@file)
   end
 
   def file_valid?

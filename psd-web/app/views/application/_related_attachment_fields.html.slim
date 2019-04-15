@@ -12,4 +12,4 @@ fieldset.govuk-fieldset
               label: { text: "File upload", class: "govuk-visually-hidden" }
       #attachment-description
         = render "form_components/govuk_textarea", key: :description, value: file_blob&.metadata&.dig(:description),
-                form: subform, label : { text: "Attachment description" }, attributes : { maxlength: 10000 }
+                form: subform, label: { text: "Attachment description" }, attributes: { maxlength: 10000 }
