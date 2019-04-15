@@ -9,13 +9,17 @@ module Shared
 
       has_many :users, dependent: :nullify
 
-      def self.all(options = {})
+      def self.load(force: false)
         begin
-          self.data = Shared::Web::KeycloakClient.instance.all_organisations
+          self.data = Shared::Web::KeycloakClient.instance.all_organisations(force: force)
         rescue StandardError => e
           Rails.logger.error "Failed to fetch organisations from Keycloak: #{e.message}"
           self.data = nil
         end
+      end
+
+      def self.all(options = {})
+        self.load
 
         if options.has_key?(:conditions)
           where(options[:conditions])

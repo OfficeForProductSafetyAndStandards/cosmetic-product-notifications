@@ -75,7 +75,7 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
   test "Inviting new user creates the account and adds them to the team" do
     kc = Shared::Web::KeycloakClient.instance
 
-    assert_difference "@my_team.users.count" => 1, "User.count" => 1 do
+    assert_difference "@my_team.users.count" => 1, "User.all(include_incomplete: true).size" => 1 do
       put invite_to_team_url(@my_team), params: { new_user: { email_address: "new_user@example.com" } }
       assert_response :see_other
       expect(kc).to have_received(:send_required_actions_welcome_email)

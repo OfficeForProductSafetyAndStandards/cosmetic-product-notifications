@@ -20,6 +20,6 @@ Rails.application.config.after_initialize do
   end
 
   # Load organisations and users on app startup
-  Organisation.all unless Rails.env.test? || Sidekiq.server?
-  User.all unless Rails.env.test? || Sidekiq.server?
+  Organisation.load unless Rails.env.test? || Sidekiq.server?
+  User.load unless Rails.env.test? || Sidekiq.server?
 end
