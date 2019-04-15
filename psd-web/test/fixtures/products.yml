@@ -9,7 +9,6 @@ one:
   webpage: https://www.product_one.webpage
   country_of_origin: China
   batch_number: product one batch
-  date_placed_on_market: 2017-06-05
 
 two:
   product_code: product two product_code

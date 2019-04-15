@@ -22,39 +22,33 @@
                   label: { text: "Keywords", classes: "govuk-label--s" }
           = form.submit "Search", name: nil, class: "search-box--submit"
         hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
-        .govuk-form-group
-          = render "components/govuk_fieldset", legend: { text: "Assigned to", classes: "govuk-fieldset__legend--s" } do
-            .govuk-checkboxes data-module="checkboxes"
-              .govuk-checkboxes__item
-                = form.check_box :assigned_to_me, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
-                = form.label :assigned_to_me, "Me", class: "govuk-checkboxes__label"
-              - teams_with_keys.each do |key, team, name|
-                .govuk-checkboxes__item
-                  = form.check_box key, { class: "govuk-checkboxes__input" }, team.id, ""
-                  = form.label key, name, class: "govuk-checkboxes__label"
-              .govuk-checkboxes__item
-                = form.check_box :assigned_to_someone_else, { class: "govuk-checkboxes__input",
-                        "data-aria-controls": "conditional-other-assignee" }, "checked", "unchecked"
-                = form.label :assigned_to_someone_else, "Other person or team", class: "govuk-checkboxes__label"
-              #conditional-other-assignee.govuk-checkboxes__conditional.govuk-checkboxes__conditional--hidden
-                = render "form_components/autocomplete_select", key: :assigned_to_someone_else_id, form: form,
-                        items: (User.get_assignees(except: User.current) + Team.all).map { |e| [e.display_name, e.id] },
-                        label: { text: "Name" }
-
-        .govuk-form-group
-          = render "components/govuk_fieldset", legend: { text: "Status", classes: "govuk-fieldset__legend--s" } do
-            .govuk-checkboxes
-              .govuk-checkboxes__item
-                = form.check_box :status_open, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
-                = form.label :status_open, "Open", class: "govuk-checkboxes__label"
-              .govuk-checkboxes__item
-                = form.check_box :status_closed, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
-                = form.label :status_closed, "Closed", class: "govuk-checkboxes__label"
+        - other_assignee = capture do
+          - entities = User.get_assignees(except: User.current) + Team.all
+          = render "form_components/govuk_select", key: :assigned_to_someone_else_id, form: form,
+                        items: entities.map { |e| { text: e.display_name, value: e.id } },
+                        label: { text: "Name" }, is_autocomplete: true
+        ruby:
+          assigned_to_items = [{ key: "assigned_to_me", value: "checked", unchecked_value: "unchecked", text: "Me" }]
+          teams_with_keys.each do |key, team, name|
+              assigned_to_items << { key: key, value: team.id, unchecked_value: "unchecked", text: name }
+          end
+          assigned_to_items << { key: "assigned_to_someone_else",
+                           value: "checked",
+                           unchecked_value: "unchecked",
+                           text: "Other person or team",
+                           conditional: { html: other_assignee } }
+        = render "form_components/govuk_checkboxes", form: form, key: :assigned_to,
+          fieldset: { legend: { text: "Assigned to", classes: "govuk-fieldset__legend--s" } },
+          items: assigned_to_items
+        = render "form_components/govuk_checkboxes", form: form, key: :status,
+                 fieldset: { legend: { text: "Status", classes: "govuk-fieldset__legend--s" } },
+                 items: [{ key: "status_open", value: "checked", unchecked_value: "unchecked", text: "Open" },
+                 { key: "status_closed", value: "checked", unchecked_value: "unchecked", text: "Closed" }]
         = render "form_components/govuk_radios", form: form, key: :sort_by,
                 fieldset: { legend: { text: "Sort by", classes: "govuk-fieldset__legend--s" } },
-                items: [{ text: "Updated: recent", value: "recent" },
-                        { text: "Updated: oldest", value: "oldest" },
-                        { text: "Created: newest", value: "newest" }]
+                items: [{ text: "Updated: recent", value: "recent", unchecked_value: "unchecked" },
+                        { text: "Updated: oldest", value: "oldest", unchecked_value: "unchecked" },
+                        { text: "Created: newest", value: "newest", unchecked_value: "unchecked" }]
         = form.submit "Apply filters", name: nil, class: "govuk-button"
   .govuk-grid-column-three-quarters
     - if @results.any?
