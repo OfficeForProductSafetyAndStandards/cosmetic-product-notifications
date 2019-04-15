@@ -7,47 +7,33 @@
       h1.govuk-heading-l
         span.govuk-caption-l Report an unsafe or non-compliant product
         | Supply chain information
-      = render "components/govuk_fieldset", legend: { text: "Which parts of the chain do you know about?",
-              classes: "govuk-fieldset__legend--m" } do
-        .govuk-form-group class=[("govuk-form-group--error" if @investigation.errors[:businesses].any?)]
-          .govuk-form-group
-            .govuk-checkboxes data-module="checkboxes"
-              .govuk-checkboxes__item
-                = form.check_box :retailer, class: "govuk-checkboxes__input", value: "retailer",
-                        checked: @selected_businesses.include?("retailer")
-                = form.label :retailer, "Retailer", class: "govuk-label govuk-checkboxes__label"
-              .govuk-checkboxes__item
-                = form.check_box :distributor, class: "govuk-checkboxes__input", value: "distributor",
-                        checked: @selected_businesses.include?("distributor")
-                = form.label :distributor, "Distributor", class: "govuk-label govuk-checkboxes__label"
-              .govuk-checkboxes__item
-                = form.check_box :importer, class: "govuk-checkboxes__input", value: "importer",
-                        checked: @selected_businesses.include?("importer")
-                = form.label :importer, "Importer", class: "govuk-label govuk-checkboxes__label"
-              .govuk-checkboxes__item
-                = form.check_box :manufacturer, class: "govuk-checkboxes__input", value: "manufacturer",
-                        checked: @selected_businesses.include?("manufacturer")
-                = form.label :manufacturer, "Manufacturer",
-                        class: "govuk-label govuk-checkboxes__label"
-              .govuk-checkboxes__item
-                = form.check_box :other, class: "govuk-checkboxes__input",
-                        checked: @selected_businesses.include?("other"),
-                        value: "Other",
-                        "aria-controls": "new-business-other-type",
-                        "aria-expanded": "false"
-                = form.label :other, "Other",
-                        class: "govuk-label govuk-checkboxes__label"
-              - other_classes = []
-              - other_classes.push "govuk-checkboxes__conditional--hidden" unless @selected_businesses.include?("other")
-              #new-business-other-type.govuk-checkboxes__conditional class=other_classes
-                = render "form_components/govuk_input", key: :other_business_type, form: form,
-                        value: @other_business_type,
-                        label: { text: "Other type", classes: "govuk-visually-hidden" }
-          .govuk-radios__divider or
-          .govuk-form-group
-            .govuk-checkboxes
-              .govuk-checkboxes__item
-                = form.check_box :none, class: "govuk-checkboxes__input", value: "None",
-                        checked: @selected_businesses.include?("none")
-                = form.label :none, "None of the above", class: "govuk-label govuk-checkboxes__label"
-      = form.submit "Continue", class: "govuk-button"
+      - other_business_html = render "form_components/govuk_input",
+               key: :other_business_type, form: form,
+               value: @other_business_type,
+               label: { text: "Other type", classes: "govuk-visually-hidden" }
+      = render "form_components/govuk_checkboxes", form: form, key: :which_business,
+                fieldset: { legend: { text: "Which parts of the chain do you know about?",
+                                      classes: "govuk-fieldset__legend--m" } },
+                items: [{ key: "retailer",
+                  text: "Retailer",
+                  checked: @selected_businesses.include?("retailer") },
+                { key: "distributor",
+                  text: "Distributor",
+                  checked: @selected_businesses.include?("distributor") },
+                { key: "importer",
+                  text: "Importer",
+                  checked: @selected_businesses.include?("importer") },
+                { key: "manufacturer",
+                  text: "Manufacturer",
+                  checked: @selected_businesses.include?("manufacturer") },
+                { key: "other",
+                  text: "Other",
+                  conditional: { "html": other_business_html },
+                  checked: @selected_businesses.include?("other") },
+                # There should not be dividers in checkboxes but design is being discussed. \
+                # https://github.com/alphagov/govuk-design-system-backlog/issues/37#issuecomment-456878012 \
+                { key: "which_business", divider: "or" },
+                { key: "none",
+                  text: "None of the above",
+                  checked:  @selected_businesses.include?("none") }]
+  = form.submit "Continue", class: "govuk-button"

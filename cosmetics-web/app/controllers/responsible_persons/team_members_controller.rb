@@ -27,6 +27,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
     if pending_responsible_person_user.any?
       @responsible_person.add_user(User.current)
+      Rails.logger.info "Team member added to Responsible Person"
       pending_responsible_person_user.delete_all
     end
 

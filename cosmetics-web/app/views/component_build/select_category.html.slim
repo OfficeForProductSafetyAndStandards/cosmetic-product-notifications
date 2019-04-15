@@ -7,13 +7,15 @@
           class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | What category of cosmetic is the product?
-      = form_for(@component, url: wizard_path, method: :put) do |form|
-        = render "form_components/autocomplete_select", key: :sub_sub_category, form: form, show_all_values: true,
-                items: get_sub_sub_categories.keys.map { |category_key| \
-                  [get_full_category_name(category_key), category_key] \
-                }
+    = form_for(@component, url: wizard_path, method: :put) do |form|
+      = render "form_components/govuk_select", key: :sub_sub_category, form: form, show_all_values: true,
+              is_autocomplete: true,
+              items: get_sub_sub_categories.keys.map { |category_key| \
+                { text: get_full_category_name(category_key), value: category_key } \
+              },
+              label: { text: "What category of cosmetic is the product?",
+                      classes: "govuk-label--xl",
+                      isPageHeading: true }
 
-        .govuk-form-group
-          = form.submit "Continue", class: "govuk-button"
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"
