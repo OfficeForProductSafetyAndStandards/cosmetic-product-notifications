@@ -21,19 +21,24 @@ class Team < ActiveHash::Base
 
   def add_user(user_id)
     Shared::Web::KeycloakClient.instance.add_user_to_team user_id, id
-    # Trigger reload of users and relations from KC
-    User.all(force: true)
+    # Trigger reload of team-users relations from KC
+    TeamUser.load(force: true)
   end
 
-  def self.all(options = {})
+  def self.load(force: false)
+    Organisation.load(force: force)
     begin
-      self.data = Shared::Web::KeycloakClient.instance.all_teams
+      self.data = Shared::Web::KeycloakClient.instance.all_teams(Organisation.all.map(&:id), force: force)
     rescue StandardError => e
       Rails.logger.error "Failed to fetch teams from Keycloak: #{e.message}"
       self.data = nil
     end
 
     self.ensure_names_up_to_date
+  end
+
+  def self.all(options = {})
+    self.load
 
     if options.has_key?(:conditions)
       where(options[:conditions])
@@ -76,4 +81,4 @@ class Team < ActiveHash::Base
     Team.where(name: team_names[0])
   end
 end
-Team.all if Rails.env.development?
+Team.load if Rails.env.development?
