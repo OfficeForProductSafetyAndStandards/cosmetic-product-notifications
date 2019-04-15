@@ -1,10 +1,8 @@
 = render "form_components/govuk_input", key: :summary, form: form,
         classes: "govuk-!-width-two-thirds",
         label: { text: "Summary", classes: "govuk-label--m" }
-
-= render "components/govuk_fieldset",
-        legend: { text: "When was this action decided?", classes: "govuk-fieldset__legend--m" } do
-  = render "date_input", form: form
+= render "form_components/govuk_date_input", form: form, key: :date_decided,
+        fieldset: { legend: { classes: "govuk-fieldset__legend--m", text: "When was this action decided?" } }
 
 - if allow_product_linking
   = render "components/govuk_fieldset",

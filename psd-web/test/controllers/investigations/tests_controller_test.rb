@@ -29,9 +29,11 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
           product_id: @product.id,
           legislation: "Test Legislation",
           details: "Test Details",
-          year: "2018",
-          month: "11",
-          day: "18"
+          date: {
+            year: "2018",
+            month: "11",
+            day: "18"
+          }
         }
     }
     end
@@ -49,9 +51,11 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
           product_id: @product.id,
           legislation: "Test Legislation",
           details: "Test Details",
-          year: "2018",
-          month: "11",
-          day: "18",
+          date: {
+            year: "2018",
+            month: "11",
+            day: "18"
+          },
           result: "Fail",
           file: {
               file: fixture_file_upload('files/testImage.png', 'application/png')
@@ -72,9 +76,11 @@ class TestsControllerTest < ActionDispatch::IntegrationTest
         product_id: @product.id,
         legislation: "Test Legislation",
         details: "Test Details",
-        year: "2018",
-        month: "11",
-        day: "18"
+        date: {
+          year: "2018",
+          month: "11",
+          day: "18"
+        }
       }
     }
 
