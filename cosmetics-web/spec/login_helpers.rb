@@ -3,6 +3,7 @@ module LoginHelpers
     match { |actual| items_to_match.include? actual }
   end
 
+  # rubocop:disable RSpec/AnyInstance
   def sign_in(as_user: build(:user), with_roles: [])
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(as_user))
@@ -12,6 +13,7 @@ module LoginHelpers
 
     allow_any_instance_of(ApplicationController).to receive(:access_token).and_return("access_token")
   end
+  # rubocop:enable RSpec/AnyInstance
 
   def sign_in_as_poison_centre_user(user: build(:user))
     sign_in(as_user: user, with_roles: [:poison_centre_user])
@@ -21,6 +23,7 @@ module LoginHelpers
     sign_in(as_user: user, with_roles: [:msa_user])
   end
 
+  # rubocop:disable RSpec/AnyInstance
   def sign_out
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
@@ -28,6 +31,7 @@ module LoginHelpers
 
     allow_any_instance_of(ApplicationController).to receive(:access_token).and_call_original
   end
+  # rubocop:enable RSpec/AnyInstance
 
   def format_user_for_get_userinfo(user, groups: [])
     { sub: user[:id], email: user[:email], groups: groups, given_name: user[:name], family_name: "n/a" }.to_json
