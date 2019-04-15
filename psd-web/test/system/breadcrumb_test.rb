@@ -16,8 +16,11 @@ class BreadcrumbTest < ApplicationSystemTestCase
   test "when accessing product page from case page navigation should let you go back to the case" do
     visit investigation_path(@investigation_products)
 
-    click_on "Products"
-    click_on "View product"
+    within "main" do
+      click_on "Products"
+      click_on "View product"
+    end
+
     assert_text "Back to #{@investigation_products.pretty_description}"
   end
 
@@ -29,8 +32,11 @@ class BreadcrumbTest < ApplicationSystemTestCase
   test "when accessing business page from case page navigation should let you go back to the case" do
     visit investigation_path(@investigation_businesses)
 
-    click_on "Businesses"
-    click_on "View business"
+    within "main" do
+      click_on "Businesses"
+      click_on "View business"
+    end
+
     assert_text "Back to #{@investigation_businesses.pretty_description}"
   end
 
