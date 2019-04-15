@@ -2,19 +2,19 @@ version: '3'
 
 services:
   db:
-    image: ${DOCKER_USERNAME}/db:${TRAVIS_BUILD_NUMBER}
+    image: beisopss/db:${TRAVIS_BUILD_NUMBER}
   
   keycloak:
     environment:
       - NOTIFY_API_KEY='fake-key'
-    image: ${DOCKER_USERNAME}/keycloak:${TRAVIS_BUILD_NUMBER}
+    image: beisopss/keycloak:${TRAVIS_BUILD_NUMBER}
   
   antivirus:
-    image: ${DOCKER_USERNAME}/antivirus:${TRAVIS_BUILD_NUMBER}
+    image: beisopss/antivirus:${TRAVIS_BUILD_NUMBER}
 
   cosmetics-web:
     command: tail -f /dev/null
-    image: ${DOCKER_USERNAME}/cosmetics-web:${TRAVIS_BUILD_NUMBER}
+    image: beisopss/cosmetics-web:${TRAVIS_BUILD_NUMBER}
     volumes:
     - ~/bundle-cache:/usr/local/bundle
     environment:
@@ -26,13 +26,13 @@ services:
     - COVERALLS_PARALLEL
   cosmetics-worker:
     command: tail -f /dev/null
-    image: ${DOCKER_USERNAME}/cosmetics-worker:${TRAVIS_BUILD_NUMBER}
+    image: beisopss/cosmetics-worker:${TRAVIS_BUILD_NUMBER}
     volumes:
     - ~/bundle-cache:/usr/local/bundle
   
   psd-web:
     command: tail -f /dev/null
-    image: ${DOCKER_USERNAME}/psd-web:${TRAVIS_BUILD_NUMBER}
+    image: beisopss/psd-web:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
     environment:
@@ -45,7 +45,7 @@ services:
       - NOTIFY_API_KEY='fake-key'
   psd-worker:
     command: tail -f /dev/null
-    image: ${DOCKER_USERNAME}/psd-worker:${TRAVIS_BUILD_NUMBER}
+    image: beisopss/psd-worker:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
   

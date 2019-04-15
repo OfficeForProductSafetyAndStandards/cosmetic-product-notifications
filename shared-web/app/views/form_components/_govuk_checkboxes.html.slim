@@ -1,0 +1,23 @@
+/ This partial acts as glue between rails form helpers and the component govuk_radio buttons
+/ With access to the form object, we can infer a lot of information from it
+
+ruby:
+  #Give items ids based on rails' convention
+  local_assigns[:idPrefix] ||= get_attribute_id_prefix(form, key) if local_assigns[:key]
+  local_assigns[:items].each do |item|
+    item[:id] ||= get_attribute_id_prefix(form, item[:key] || local_assigns[:name])
+    item[:value] ||= "1"
+    item[:name] ||= get_attribute_name(form, item[:key] || local_assigns[:name])
+  end
+  if form.object
+    local_assigns[:items].each do |item|
+      if form.object.respond_to?(item[:key])
+        item[:checked] = form.object.send(item[:key]) == item[:value]
+      end
+    end
+    if form.object.errors
+      error_text = form.object.errors.full_messages_for(key).first.presence
+      local_assigns[:errorMessage] ||= { text: error_text } if error_text
+    end
+  end
+= render "components/govuk_checkboxes", **local_assigns

@@ -30,9 +30,6 @@ private
 
     params.require(correspondence_params_key).permit(
       :correspondent_name,
-      :day,
-      :month,
-      :year,
       :overview,
       :details,
       :has_consumer_info
