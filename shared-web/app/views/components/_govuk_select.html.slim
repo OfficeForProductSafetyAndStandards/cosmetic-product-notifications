@@ -1,0 +1,50 @@
+/ Implementation based on
+/ https://github.com/alphagov/govuk-frontend/
+/ blob/b863be549f502a6829a5d261976c3bcb8ebdf4d2/src/components/select/template.njk
+ruby:
+  described_by = ""
+  form_group_classes = [local_assigns.dig(:formGroup, :classes)]
+  form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
+  select_classes = ["govuk-select", local_assigns[:classes]]
+  select_classes.push("govuk-select--error") if local_assigns[:errorMessage].present?
+
+.govuk-form-group class=form_group_classes
+  = render "components/govuk_label", for: id, **label
+
+  - if local_assigns[:hint].present?
+    - hint_id = local_assigns[:id] + '-hint'
+    - described_by = described_by.present? ? described_by + ' ' + hint_id : hint_id
+    = render "components/govuk_hint", id: hint_id, **local_assigns[:hint]
+
+  - if local_assigns[:errorMessage].present?
+    - error_id = local_assigns[:id] + '-error'
+    - described_by = described_by.present? ? described_by + ' ' + error_id : error_id
+    = render "components/govuk_error_message", id: error_id, **errorMessage
+
+  - select = capture do
+    select[*(local_assigns[:attributes] || {})
+                        class=select_classes
+                        id=id
+                        name=name
+                        aria-describedby=described_by.presence]
+            - items.each do |item|
+              option[*(item[:attributes] || {})
+                        value=item[:value]
+                        selected=item[:selected]
+                        disabled=item[:disabled]]
+                = item[:text]
+
+  / Everything below diverges from govuk macro. We do it to facilitate our changes to accessible autocomplete
+  - if local_assigns[:is_autocomplete]
+    div class=("autocomplete-select-with-clear" if local_assigns[:show_all_values])
+      = select
+    - if local_assigns[:show_all_values]
+      button id="clear-#{id}" class="autocomplete__clear-button" type="button" style="display: none;"
+        span#delete-hint.govuk-hint.govuk-visually-hidden
+          | Clear autocomplete
+        svg viewbox="0 0 40 40" class="autocomplete__clear-viewbox"
+          path class="autocomplete__clear-icon" d="M 10,10 L 30,30 M 30,10 L 10,30"
+    javascript:
+      window.callAutocompleteWhenReady("#{id}", {showAllValues: "#{local_assigns[:show_all_values]}"});
+  - else
+    = select

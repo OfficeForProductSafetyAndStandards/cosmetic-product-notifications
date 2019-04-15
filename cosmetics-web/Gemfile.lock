@@ -3,7 +3,7 @@ PATH
   specs:
     shared-web-dev (1.0.0)
       brakeman (= 4.5.0)
-      capybara (= 3.16.1)
+      capybara (= 3.16.2)
       coveralls (= 0.8.22)
       debase (= 0.2.2)
       govuk-lint (= 3.11.0)
@@ -15,7 +15,7 @@ PATH
       simplecov (= 0.16.1)
       simplecov-console (= 0.4.2)
       slim_lint (= 0.16.1)
-      solargraph (= 0.32.0)
+      solargraph (= 0.32.1)
 
 PATH
   remote: vendor/shared-web
@@ -34,7 +34,7 @@ PATH
       request_store (= 1.4.1)
       rest-client (= 2.0.2)
       sentry-raven (= 2.9.0)
-      sidekiq (= 5.2.5)
+      sidekiq (= 5.2.6)
       sidekiq-cron (= 1.1.0)
       slowpoke (= 0.2.1)
       webpacker (= 4.0.2)
@@ -112,7 +112,7 @@ GEM
     backport (1.0.0)
     brakeman (4.5.0)
     builder (3.2.3)
-    capybara (3.16.1)
+    capybara (3.16.2)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -157,8 +157,8 @@ GEM
       tzinfo
     factory_bot (5.0.2)
       activesupport (>= 4.2.0)
-    factory_bot_rails (5.0.1)
-      factory_bot (~> 5.0.0)
+    factory_bot_rails (5.0.2)
+      factory_bot (~> 5.0.2)
       railties (>= 4.2.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
@@ -238,7 +238,7 @@ GEM
     pundit (2.0.1)
       activesupport (>= 3.0.0)
     raabro (1.1.6)
-    rack (2.0.6)
+    rack (2.0.7)
     rack-protection (2.0.5)
       rack
     rack-proxy (0.6.5)
@@ -338,7 +338,7 @@ GEM
       rubyzip (~> 1.2, >= 1.2.2)
     sentry-raven (2.9.0)
       faraday (>= 0.7.6, < 1.0)
-    sidekiq (5.2.5)
+    sidekiq (5.2.6)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (>= 1.5.0)
       rack-protection (>= 1.5.0)
@@ -371,7 +371,7 @@ GEM
       actionpack
       rack-timeout (>= 0.3.0, < 0.5.0)
       railties
-    solargraph (0.32.0)
+    solargraph (0.32.1)
       backport (~> 1.0)
       bundler (>= 1.17.2)
       htmlentities (~> 4.3, >= 4.3.4)
@@ -443,7 +443,7 @@ DEPENDENCIES
   wicked
 
 RUBY VERSION
-   ruby 2.5.3p105
+   ruby 2.5.5p157
 
 BUNDLED WITH
-   1.17.2
+   1.17.3

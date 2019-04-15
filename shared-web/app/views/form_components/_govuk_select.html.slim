@@ -1,0 +1,30 @@
+/ This partial acts as glue between rails form helpers and the component govuk_select
+/ With access to the form object, we can infer a lot of information from it
+ruby:
+  # Infer name and id_prefix from attribute key
+  local_assigns[:name] ||= get_attribute_name(form, key)
+  local_assigns[:id] ||= get_attribute_id_prefix(form, key)
+
+  # Choices accepts a list of strings
+  # Items needs to be a list of hashes { value: xxx, text: yyy }
+  local_assigns[:items] ||= local_assigns[:choices].map { |choice| { value: choice, text: choice } }
+
+  if local_assigns[:include_blank] || local_assigns[:is_autocomplete]
+    local_assigns[:items].unshift(value: nil, text: "")
+  end
+
+  if local_assigns[:selected]
+    item_matching_selected = local_assigns[:items].find { |item| item[:value].to_s == local_assigns[:selected] }
+    item_matching_selected[:selected] = true if item_matching_selected
+  elsif form.object&.respond_to?(key)
+  # Make item selected based on attribute value
+    item_matching_state = local_assigns[:items].find { |item| item[:value].to_s == form.object.send(key).to_s }
+    item_matching_state[:selected] = true if item_matching_state
+  end
+
+  if form.object&.errors
+    error_text = form.object.errors.full_messages_for(key).first.presence
+    local_assigns[:errorMessage] ||= { text: error_text } if error_text
+  end
+
+= render "components/govuk_select", **local_assigns

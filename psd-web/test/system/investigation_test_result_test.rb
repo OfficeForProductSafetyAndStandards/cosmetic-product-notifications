@@ -88,7 +88,7 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
     fill_in "Year", with: "1984"
     click_on "Continue"
 
-    assert_text("Enter date of the test and include a day, month and year")
+    assert_text("Enter date of the test and include a month")
   end
 
   test "can add an attachment to the test result" do
@@ -122,8 +122,8 @@ class InvestigationTestResultTest < ApplicationSystemTestCase
   end
 
   def fill_in_basic_details
-    fill_autocomplete "picker-product_id", with: @test.product.name
-    fill_autocomplete "picker-legislation", with: @test.legislation
+    fill_autocomplete "test_product_id", with: @test.product.name
+    fill_autocomplete "test_legislation", with: @test.legislation
     fill_in "test_details", with: @test.details
     fill_in "Day", with: @test.date.day
     fill_in "Month", with: @test.date.month
