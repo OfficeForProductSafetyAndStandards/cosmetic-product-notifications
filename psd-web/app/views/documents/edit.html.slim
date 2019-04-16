@@ -2,5 +2,6 @@
 - content_for :after_header do
   = link_to "Back", polymorphic_path(@parent), class: "govuk-back-link"
 
-= render "metadata_form", document: @file, edit: true, target_url: associated_document_path(@parent, @file) do
+= render "metadata_form", document: @file_model.get_blob, edit: true,
+        target_url: associated_document_path(@parent, @file_model.attachment) do
   = render "page_heading", title: "Edit document details"

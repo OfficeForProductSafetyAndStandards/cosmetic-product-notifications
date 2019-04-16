@@ -39,5 +39,5 @@
 = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
         label: { text: "Further details", classes: "govuk-label--m" }
 
-= render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file,
+= render "related_attachment_fields", form: form, file_model: @file_model, attachment_name: :file,
         title: "Related attachments"

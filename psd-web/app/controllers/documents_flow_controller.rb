@@ -20,7 +20,7 @@ class DocumentsFlowController < ApplicationController
   end
 
   def update
-    if @file_model.update(get_attachment_metadata_params(:file), step)
+    if @file_model.update(get_attachment_metadata_params(:file))
       return redirect_to next_wizard_path unless step == steps.last
 
       @file_model.attach_blobs_to_list(@parent.documents)
@@ -34,8 +34,9 @@ class DocumentsFlowController < ApplicationController
 private
 
   def set_file
-    @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
     file_blob, * = load_file_attachments
-    @file_model = Document.new(file_blob)
+    required_fields = [[:file, "Enter file"]]
+    required_fields << [:title, "Enter title"] if step == :metadata
+    @file_model = Document.new(file_blob, required_fields)
   end
 end

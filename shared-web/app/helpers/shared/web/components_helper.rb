@@ -10,6 +10,11 @@ module Shared
         initial_name = form.object_name.present? ? "#{form.object_name}_#{attribute}" : attribute.to_s
         initial_name.gsub(/[\[\]_]+/, "_")
       end
+
+      def get_subform_attribute_id_prefix(form, subform_key, attribute)
+        initial_name = form.object_name.present? ? "#{form.object_name}_#{subform_key}_#{attribute}" : attribute.to_s
+        initial_name.gsub(/[\[\]_]+/, "_")
+      end
     end
   end
 end

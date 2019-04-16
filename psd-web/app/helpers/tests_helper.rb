@@ -13,18 +13,15 @@ module TestsHelper
   end
 
   def set_attachment
-    @file_blob, * = load_file_attachments
-    @test.documents.attach(@file_blob) if @file_blob
-  end
-
-  def update_attachment
-    @test.update_blob_metadata @file_blob, test_file_metadata
+    file_blob, * = load_file_attachments
+    @file_model = Document.new(file_blob, [[:file, "Provide the test file"]])
+    @file_model.attach_blobs_to_list(@test.documents) if file_blob
   end
 
   def test_valid?
     @test.validate
-    @test.validate_blob_size(@file_blob, @test.errors, "file")
-    @test.errors.empty?
+    @file_model.validate
+    @test.errors.empty? && @file_model.errors.empty?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
