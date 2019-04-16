@@ -6,10 +6,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
-      - heading = capture do
-        h1.govuk-heading-xl Does the kit need to be mixed?
       = render "form_components/govuk_radios", form: form, key: :components_are_mixed,
-              fieldset: { legend: { html: heading } },
+              fieldset: { legend: { text: "Does the kit need to be mixed?", classes: "govuk-fieldset__legend--xl" } },
               items: [{ text: "Yes, the items need to be mixed", value: "true" },
                       { text: "No, the items are used sequentially", value: "false" }]
       = form.submit "Continue", class: "govuk-button"
