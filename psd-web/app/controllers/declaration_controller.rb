@@ -12,10 +12,16 @@ class DeclarationController < ApplicationController
       return render :index
     end
     User.current.has_accepted_declaration!
+    welcome_email unless User.current.has_been_sent_welcome_email
     redirect_to session[:redirect_path] || root_path
   end
 
   def set_errors
     @error_list = []
+  end
+
+  def welcome_email
+    NotifyMailer.welcome(User.current.name, User.current.email).deliver_later
+    User.current.has_been_sent_welcome_email!
   end
 end
