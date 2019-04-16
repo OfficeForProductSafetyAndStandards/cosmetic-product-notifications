@@ -9,6 +9,8 @@ module Shared
         include Shared::Web::LoginHelper
 
         def initialize
+          # Ensure that the Keycloak gem never attempts to fetch a token from the cookie by returning nil from the lambda.
+          # This is still required, since the Keycloak gem calls the lambda if an empty token is passed in before login.
           Keycloak.proc_cookie_token = -> { nil }
           super
         end
