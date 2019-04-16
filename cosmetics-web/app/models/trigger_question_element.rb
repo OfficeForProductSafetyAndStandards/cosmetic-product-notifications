@@ -3,7 +3,7 @@ class TriggerQuestionElement < ApplicationRecord
 
   validates :answer, numericality: true, if: -> { applicable_question? && is_ph? }
   validates :answer, presence: true, if: -> { applicable_question? && is_ethanol_or_isopropanol? }
-  validate :no_empty_answers_with_the_same_answer_order, if: :is_inciname_or_incivalue?
+  validate :no_empty_answers_with_the_same_answer_order, if: -> { applicable_question? && :is_inciname_or_incivalue? }
 
 private
 
@@ -16,7 +16,7 @@ private
   end
 
   def applicable_question?
-    trigger_question.applicable
+    trigger_question.present? && trigger_question.applicable?
   end
 
   def is_ph?

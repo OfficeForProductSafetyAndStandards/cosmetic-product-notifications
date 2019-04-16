@@ -131,6 +131,7 @@ private
         trigger_rules_element(question_element_node)
       end
       TriggerQuestion.create(question: trigger_rules_question(question_node),
+                             applicable: question_elements.any?,
                              trigger_question_elements: question_elements)
     end
   end

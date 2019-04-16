@@ -7,8 +7,20 @@ class TriggerQuestion < ApplicationRecord
   validates :applicable, inclusion: { in: [true, false] }, on: :update
 
   def applicable?
-    applicable || !(trigger_question_elements.count == 1 &&
-            trigger_question_elements.first.element == "inciname" &&
-            trigger_question_elements.first.answer == "NA")
+    applicable && applicable_inciname && applicable_ph
+  end
+
+private
+
+  def applicable_inciname
+    !(trigger_question_elements.size == 1 &&
+        trigger_question_elements.first.element == "inciname" &&
+        trigger_question_elements.first.answer == "NA")
+  end
+
+  def applicable_ph
+    !(trigger_question_elements.size == 1 &&
+        trigger_question_elements.first.element == "ph" &&
+        trigger_question_elements.first.answer == "N")
   end
 end
