@@ -5,7 +5,6 @@ class Product < ApplicationRecord
   include DateConcern
   include AttachmentConcern
   include SanitizationHelper
-  include FileUploadConcern
 
   def get_date_key
     :date_placed_on_market
