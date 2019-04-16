@@ -22,11 +22,11 @@
                 label: { text: "Title", classes: "govuk-visually-hidden" },
                 hint: { text: "This will help other users identify this enquiry" }
 
-      - if @file_blob.present?
+      - if @file_model.get_blob.present?
         p#current-attachment-details
           ' Currently selected file:
-          = link_to @file_blob.filename, @file_blob, target: "_blank", rel: 'noopener'
-      = form.fields_for :attachment do |subform|
+          = link_to @file_model.filename, @file_model.get_blob, target: "_blank", rel: 'noopener'
+      = form.fields_for :attachment, @file_model do |subform|
         = render "form_components/govuk_file_upload", form: subform, key: :file,
                 label: { text: "Are there any files or images related to the enquiry?", classes: "govuk-label--m" }
 
