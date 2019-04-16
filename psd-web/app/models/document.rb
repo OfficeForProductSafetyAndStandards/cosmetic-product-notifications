@@ -9,7 +9,7 @@ class Document
   attr_accessor :filename, :string
   attr_accessor :parent
 
-  validates :title, presence: true, on: [:update, :metadata]
+  validates :title, presence: true, on: [:metadata]
   validate :validate_blob_size
 
   def initialize(attachment, required_fields=[:file_id])
@@ -21,7 +21,7 @@ class Document
   end
 
   def get_blob
-    ActiveStorage::Blob.find(@file_id)
+    ActiveStorage::Blob.find_by(id: @file_id)
   end
 
   def update(params, context=:update)

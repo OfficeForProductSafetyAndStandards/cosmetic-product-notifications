@@ -27,8 +27,8 @@ class Investigations::CorrectiveActionsController < ApplicationController
   # POST /corrective_actions.json
   def create
     respond_to do |format|
-      update_attachment
       if corrective_action_saved?
+        @file_model.update corrective_action_file_metadata
         format.html { redirect_to investigation_url(@investigation), flash: { success: "Corrective action was successfully recorded." } }
         format.json { render :show, status: :created, location: @corrective_action }
       else
@@ -42,9 +42,8 @@ class Investigations::CorrectiveActionsController < ApplicationController
   # PATCH/PUT /corrective_actions/1.json
   def update
     respond_to do |format|
-      update_attachment
       if corrective_action_valid?
-        save_attachment
+        @file_model.update corrective_action_file_metadata
         format.html { redirect_to next_wizard_path }
         format.json { render :show, status: :ok, location: @corrective_action }
       else
@@ -69,16 +68,8 @@ private
     return false unless corrective_action_valid?
 
     # In addition to attaching to the test, we also attach to the investigation, so the file is surfaced in the ui
-    @investigation.attach_blobs_to_list(@file_blob, @investigation.documents)
+    @file_model.attach_blobs_to_list(@investigation.documents)
     @corrective_action.save
-  end
-
-  def save_attachment
-    if params[:corrective_action][:related_file] == "Yes"
-      @file_blob.save if @file_blob
-    elsif @file_blob
-      @file_blob.purge
-    end
   end
 
   def corrective_action_session_params

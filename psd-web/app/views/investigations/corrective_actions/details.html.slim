@@ -13,7 +13,7 @@
       = render "investigations/corrective_actions/form", form: form,
             corrective_action: @corrective_action,
             investigation: @investigation,
-            file_blob: @file_blob,
+            file_model: @file_model,
             allow_product_linking: true,
             allow_business_linking: true
       = form.submit "Continue", class: "govuk-button"

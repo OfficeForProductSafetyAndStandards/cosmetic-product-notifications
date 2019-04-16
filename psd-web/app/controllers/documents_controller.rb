@@ -18,7 +18,7 @@ class DocumentsController < ApplicationController
       title: @file_model.title,
       description: @file_model.description
     }
-    if @file_model.update(get_attachment_metadata_params(:file))
+    if @file_model.update(get_attachment_metadata_params(:file), :metadata)
       AuditActivity::Document::Update.from(@file_model.get_blob, @parent, previous_data) if @parent.is_a? Investigation
       redirect_to @parent
     else

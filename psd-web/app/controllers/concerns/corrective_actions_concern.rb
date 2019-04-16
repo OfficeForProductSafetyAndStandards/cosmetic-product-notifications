@@ -15,20 +15,19 @@ module CorrectiveActionsConcern
   end
 
   def set_attachment
-    @file_blob, * = load_file_attachments
-    if @file_blob && @corrective_action.related_file == "Yes"
-      @corrective_action.documents.attach(@file_blob)
+    file_blob, * = load_file_attachments
+    @file_model = Document.new(file_blob)
+    if file_blob && @corrective_action.related_file == "Yes"
+      @file_model.attach_blobs_to_list(@corrective_action.documents)
+    elsif file_blob
+      file_blob.purge
     end
-  end
-
-  def update_attachment
-    @corrective_action.update_blob_metadata @file_blob, corrective_action_file_metadata
   end
 
   def corrective_action_valid?
     @corrective_action.validate(step)
-    @corrective_action.validate_blob_size(@file_blob, @corrective_action.errors, "file")
-    @corrective_action.errors.empty?
+    @file_model.validate
+    @corrective_action.errors.empty? && @file_model.errors.empty?
   end
 
   def corrective_action_request_params
