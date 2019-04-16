@@ -1,0 +1,37 @@
+doctype html
+html.govuk-template.app-html-class[lang="en"]
+  head
+    meta[charset="utf-8"]
+    title
+      = yield :page_title
+      = yield :page_title_suffix
+    meta[name="viewport" content="width=device-width, initial-scale=1"]
+    meta[name="theme-color" content="blue"]
+    link[rel="shortcut icon" type="image/x-icon" href=asset_pack_path("media/images/favicon.ico")]
+    link[rel="mask-icon" color="#0b0c0c" href=asset_pack_path("media/images/govuk-mask-icon.svg")]
+    link[rel="apple-touch-icon" sizes="180x180" href=asset_pack_path("media/images/govuk-apple-touch-icon-180x180.png")]
+    link[rel="apple-touch-icon" sizes="167x167" href=asset_pack_path("media/images/govuk-apple-touch-icon-167x167.png")]
+    link[rel="apple-touch-icon" sizes="152x152" href=asset_pack_path("media/images/govuk-apple-touch-icon-152x152.png")]
+    link[rel="apple-touch-icon" href=asset_pack_path("media/images/govuk-apple-touch-icon.png")]
+    /![if gt IE 8]><!
+    = javascript_pack_tag "application"
+    = stylesheet_pack_tag "application"
+    /!<![endif]
+    /[if lte IE 8]
+      = javascript_pack_tag "application-ie8"
+      = stylesheet_pack_tag "application-ie8"
+    = csrf_meta_tags
+    meta[property="og:image" content=asset_pack_path("media/images/govuk-opengraph-image.png")]
+  body.govuk-template__body.app-body-class
+    script
+      | document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
+    a.govuk-skip-link[href="#main-content"]
+      | Skip to main content
+
+    = yield
+
+    javascript:
+      if (typeof window.GOVUKFrontend === 'undefined') {
+          document.body.className = document.body.className.replace('js-enabled', '')
+      }
+      window.GOVUKFrontend.initAll()
