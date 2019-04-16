@@ -7,6 +7,7 @@ module Shared
 
       field :name
       field :email
+      field :access_token
 
       def self.find_or_create(user)
         User.find_by(id: user[:id]) || User.create(user.except(:groups))
@@ -40,7 +41,14 @@ module Shared
       end
 
       def has_role?(role)
-        KeycloakClient.instance.has_role? id, role
+        access_token = User.current.access_token if current_user?
+        KeycloakClient.instance.has_role?(id, role, access_token)
+      end
+
+    private
+
+      def current_user?
+        User.current&.id == id
       end
     end
   end
