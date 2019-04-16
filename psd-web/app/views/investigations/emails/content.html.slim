@@ -5,7 +5,9 @@
 = form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
-      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_error_summary", form: form,
+              subform_data: [{ key: :email_file, object: @email_file_model },
+                      { key: :email_attachment, object: @email_attachment_file_model }]
       h1.govuk-heading-l
         span.govuk-caption-l = @investigation.pretty_description
         | Record email

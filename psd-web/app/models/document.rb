@@ -37,6 +37,8 @@ class Document
     @description = params[:description]
 
     if valid?
+      return unless blob
+
       update_blob_metadata(blob, params)
       blob.save
       true

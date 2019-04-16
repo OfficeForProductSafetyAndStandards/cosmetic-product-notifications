@@ -459,7 +459,9 @@ private
         @has_reference_number = reference_number_params[:has_complainant_reference]
       end
     end
-    @investigation.errors.empty? && @product.errors.empty? && @file_model&.errors&.empty?
+    return false if @file_model&.errors&.any?
+
+    @investigation.errors.empty? && @product.errors.empty?
   end
 
   def validate_none_as_only_selection

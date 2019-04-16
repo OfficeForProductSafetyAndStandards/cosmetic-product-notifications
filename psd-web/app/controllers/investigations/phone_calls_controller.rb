@@ -48,7 +48,7 @@ private
     @correspondence.validate(step || steps.last)
     @transcript_file_model.validate
     @correspondence.validate_transcript_and_content(@transcript_file_model.get_blob) if step == :content
-    @correspondence.errors.empty?**@transcript_file_model.errors.empty?
+    @correspondence.errors.empty? && @transcript_file_model.errors.empty?
   end
 
   def attach_files
