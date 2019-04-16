@@ -15,19 +15,15 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1
   def update
     previous_data = {
-      title: @file.metadata[:title],
-      description: @file.metadata[:description]
+      title: @file_model.title,
+      description: @file_model.description
     }
-    @parent.update_blob_metadata(@file.blob, get_attachment_metadata_params(:file))
-
-    @file_model.update get_attachment_metadata_params(:file)
-    @file_model.validate
-
-    return render :edit unless file_valid?
-
-    @file.blob.save
-    AuditActivity::Document::Update.from(@file.blob, @parent, previous_data) if @parent.is_a? Investigation
-    redirect_to @parent
+    if @file_model.update(get_attachment_metadata_params(:file))
+      AuditActivity::Document::Update.from(@file_model.get_blob, @parent, previous_data) if @parent.is_a? Investigation
+      redirect_to @parent
+    else
+      render :edit
+    end
   end
 
   def remove; end
@@ -43,19 +39,8 @@ private
 
   def set_file
     @errors = ActiveModel::Errors.new(ActiveStorage::Blob.new)
-    @file = @parent.documents.find(params[:id]) if params[:id].present?
-    raise Pundit::NotAuthorizedError unless can_be_displayed?(@file, @parent)
-    @file_model = Document.new(@file)
-  end
-
-  def file_valid?
-    if @file.blank? || @file.blob.blank?
-      @errors.add(:base, :file_not_implemented, message: "File can't be blank")
-    end
-    if @file.metadata[:title].blank?
-      @errors.add(:base, :title_not_implemented, message: "Title can't be blank")
-    end
-    @parent.validate_blob_size(@file, @errors, "file")
-    @errors.empty?
+    file = @parent.documents.find(params[:id]) if params[:id].present?
+    raise Pundit::NotAuthorizedError unless can_be_displayed?(file, @parent)
+    @file_model = Document.new(file)
   end
 end

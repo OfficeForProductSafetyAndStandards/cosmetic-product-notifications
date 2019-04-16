@@ -2,7 +2,7 @@
 - content_for :after_header do
   = link_to "Back to #{@parent.pretty_description}", @parent, class: "govuk-back-link"
 
-= render "documents/metadata_form", document: @file_blob, edit: false, target_url: wizard_path do
+= render "documents/metadata_form", document: @file_model.get_blob, edit: false, target_url: wizard_path do
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       h1.govuk-heading-l

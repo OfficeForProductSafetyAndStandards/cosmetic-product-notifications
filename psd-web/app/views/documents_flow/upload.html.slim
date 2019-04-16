@@ -5,11 +5,11 @@
 = form_with scope: :document, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
-      = render "form_components/govuk_error_summary", form: form, errors: @errors
-      h1.govuk-heading-l
-        span.govuk-caption-l = @parent.pretty_description
-        | Add attachment
       = form.fields_for :file do |subform|
+        = render "form_components/govuk_error_summary", form: subform, errors: @file_model.errors
+        h1.govuk-heading-l
+          span.govuk-caption-l = @parent.pretty_description
+          | Add attachment
         = render "form_components/govuk_file_upload", form: subform, key: :file,
                 label: { text: "Browse for file", classes: "govuk-label--m" }
       .govuk-form-group
