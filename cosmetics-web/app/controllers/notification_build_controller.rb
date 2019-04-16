@@ -8,6 +8,7 @@ class NotificationBuildController < ApplicationController
         :add_import_country,
         :single_or_multi_component,
         :is_mixed,
+        :is_hair_dye,
         :add_new_component,
         :add_product_image
 
@@ -24,6 +25,8 @@ class NotificationBuildController < ApplicationController
       render_single_or_multi_component_step
     when :is_mixed
       render_is_mixed_step
+    when :is_hair_dye
+      render_is_hair_dye_step
     when :is_imported
       render_is_imported_step
     when :add_new_component
@@ -98,8 +101,24 @@ private
   def render_is_mixed_step
     # Apply this since render_wizard(@notification, context: :update_components_are_mixed) doesn't work as expected
     if @notification.update_with_context(notification_params, :update_components_are_mixed)
+      if @notification.components_are_mixed
+        render_wizard @notification
+      else
+        redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :add_new_component)
+      end
+    else
+      render step
+    end
+  end
+
+  def render_is_hair_dye_step
+    case params[:notification][:is_hair_dye]
+    when "true"
+      render_wizard @notification
+    when "false"
       render_wizard @notification
     else
+      @notification.errors.add :is_hair_dye, "Must select an option"
       render step
     end
   end

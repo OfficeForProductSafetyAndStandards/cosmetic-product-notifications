@@ -1,6 +1,9 @@
 - content_for :page_title, "Add new component"
+- previous_step = @notification.components_are_mixed ? :is_hair_dye : :is_mixed
 - content_for :after_header do
-  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+  = link_to "Back",
+          responsible_person_notification_build_path(@notification.responsible_person, @notification, previous_step),
+          class: "govuk-back-link"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl
