@@ -38,9 +38,6 @@ private
     params.require(correspondence_params_key).permit(
       :correspondent_name,
       :email_address,
-      :day,
-      :month,
-      :year,
       :email_direction,
       :overview,
       :details,

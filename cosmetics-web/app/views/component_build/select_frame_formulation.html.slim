@@ -3,12 +3,14 @@
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | Choose frame formulation
     = form_for(@component, url: wizard_path, method: :put) do |form|
-      = render "form_components/autocomplete_select", key: :frame_formulation, form: form, show_all_values: true,
+      = render "form_components/govuk_select", key: :frame_formulation, form: form, show_all_values: true,
+              is_autocomplete: true,
               items: Component.frame_formulations.keys.map { |formulation_key| \
-                [get_frame_formulation_name(formulation_key.to_sym), formulation_key] \
-              }
+                { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
+              },
+              label: { text: "Choose frame formulation",
+                      classes: "govuk-label--xl",
+                      isPageHeading: true }
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

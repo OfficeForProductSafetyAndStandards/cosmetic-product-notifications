@@ -1,5 +1,5 @@
 class Correspondence < ApplicationRecord
-  include DateConcern
+  include Shared::Web::Concerns::DateConcern
   include SanitizationHelper
 
   belongs_to :investigation, optional: true
@@ -9,12 +9,9 @@ class Correspondence < ApplicationRecord
   before_validation { trim_line_endings(:details) }
 
   validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :context
-  validates_presence_of :correspondence_date, on: :context
   validates_length_of :details, maximum: 50000
 
-  def get_date_key
-    :correspondence_date
-  end
+  date_attribute :correspondence_date
 
   has_many_attached :documents
 

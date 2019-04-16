@@ -6,6 +6,7 @@ module TestsHelper
 
   def set_test
     @test = @investigation.tests.build(test_params)
+    @test.set_dates_from_params(params[:test])
   end
 
   def test_params
@@ -33,10 +34,7 @@ module TestsHelper
         .permit(:product_id,
                 :legislation,
                 :result,
-                :details,
-                :day,
-                :month,
-                :year)
+                :details)
         .merge(type: model_type)
   end
 

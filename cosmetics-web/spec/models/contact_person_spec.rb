@@ -3,6 +3,13 @@ require 'rails_helper'
 RSpec.describe ContactPerson, type: :model do
   let(:contact_person) { build(:contact_person) }
 
+  it "fails if a name is not specified" do
+    contact_person.name = nil
+
+    expect(contact_person.save).to be false
+    expect(contact_person.errors[:name]).to include("Name can not be blank")
+  end
+
   it "fails if a phone number is not specified" do
     contact_person.phone_number = nil
 
