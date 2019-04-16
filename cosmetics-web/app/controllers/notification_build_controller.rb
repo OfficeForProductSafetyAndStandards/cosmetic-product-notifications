@@ -7,6 +7,7 @@ class NotificationBuildController < ApplicationController
         :is_imported,
         :add_import_country,
         :single_or_multi_component,
+        :is_mixed,
         :add_new_component,
         :add_product_image
 
@@ -21,6 +22,8 @@ class NotificationBuildController < ApplicationController
     case step
     when :single_or_multi_component
       render_single_or_multi_component_step
+    when :is_mixed
+      render_is_mixed_step
     when :is_imported
       render_is_imported_step
     when :add_new_component
@@ -71,6 +74,12 @@ private
     @countries = all_countries
   end
 
+  def component_params
+    return {} if params[:notification].blank?
+
+    params.require(:notification).permit(:components_are_mixed)
+  end
+
   def render_single_or_multi_component_step
     case params[:single_or_multi_component]
     when "single"
@@ -78,19 +87,28 @@ private
       single_component = @notification.components.empty? ? @notification.components.create : @notification.components.first
       redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, single_component)
     when "multiple"
-      if @notification.is_multicomponent?
-        render_wizard @notification
-      else
+      unless @notification.is_multicomponent?
         @notification.components.destroy_all
         @notification.components.build
         @notification.components.build
         @notification.save
-        redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
       end
+      render_wizard @notification
     else
       @notification.errors.add :components, "Must not be nil"
       render step
     end
+  end
+
+  def render_is_mixed_step
+    @notification.update(component_params)
+
+    if @notification.components_are_mixed.nil?
+      @notification.errors.add :components_are_mixed, "Must select an option"
+      return render step
+    end
+
+    render_wizard @notification
   end
 
   def render_is_imported_step
