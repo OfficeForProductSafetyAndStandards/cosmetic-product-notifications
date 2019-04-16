@@ -57,8 +57,8 @@ private
   end
 
   def update_attachments
-    @email_file_model.update email_file_metadata
-    @email_attachment_file_model.update email_attachment_metadata
+    @email_file_model.update_file email_file_metadata
+    @email_attachment_file_model.update_file email_attachment_metadata
   end
 
   def correspondence_valid?
@@ -71,8 +71,8 @@ private
 
   def attach_files
     @email_file_model.attach_blob_to_attachment_slot(@correspondence.email_file)
-    @email_file_model.attach_blobs_to_list(@investigation.documents)
+    @email_file_model.attach_blob_to_list(@investigation.documents)
     @email_attachment_file_model.attach_blob_to_attachment_slot(@correspondence.email_attachment)
-    @email_attachment_file_model.attach_blobs_to_list(@investigation.documents)
+    @email_attachment_file_model.attach_blob_to_list(@investigation.documents)
   end
 end

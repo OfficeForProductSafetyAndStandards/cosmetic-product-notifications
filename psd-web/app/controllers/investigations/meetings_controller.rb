@@ -46,8 +46,8 @@ private
   end
 
   def update_attachments
-    @transcript_file_model.update transcript_metadata
-    @related_attachment_file_model.update related_attachment_metadata
+    @transcript_file_model.update_file transcript_metadata
+    @related_attachment_file_model.update_file related_attachment_metadata
   end
 
   def correspondence_valid?
@@ -60,8 +60,8 @@ private
 
   def attach_files
     @transcript_file_model.attach_blob_to_attachment_slot(@correspondence.transcript)
-    @transcript_file_model.attach_blobs_to_list(@investigation.documents)
+    @transcript_file_model.attach_blob_to_list(@investigation.documents)
     @related_attachment_file_model.attach_blob_to_attachment_slot(@correspondence.related_attachment)
-    @related_attachment_file_model.attach_blobs_to_list(@investigation.documents)
+    @related_attachment_file_model.attach_blob_to_list(@investigation.documents)
   end
 end

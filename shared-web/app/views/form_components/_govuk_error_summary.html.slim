@@ -13,7 +13,7 @@ ruby:
       subform_errors = s[:object].errors
       subform_error_list = subform_errors.details.keys.flat_map do |attribute|
         prefix = get_subform_attribute_id_prefix(form, s[:key], attribute)
-        subform_errors.full_messages_for(attribute).map {|message| {text: message, href: "##{prefix}-error"}}
+        subform_errors.full_messages_for(attribute).map { |message| { text: message, href: "##{prefix}-error" } }
       end
       error_list.concat subform_error_list
     end

@@ -20,10 +20,10 @@ class DocumentsFlowController < ApplicationController
   end
 
   def update
-    if @file_model.update(get_attachment_metadata_params(:file))
+    if @file_model.update_file(get_attachment_metadata_params(:file))
       return redirect_to next_wizard_path unless step == steps.last
 
-      @file_model.attach_blobs_to_list(@parent.documents)
+      @file_model.attach_blob_to_list(@parent.documents)
       AuditActivity::Document::Add.from(@file_model.get_blob, @parent) if @parent.is_a? Investigation
       redirect_to @parent
     else

@@ -15,7 +15,8 @@
         - if @transcript_file_model.get_blob
           p
             ' Currently selected file:
-            = link_to @transcript_file_model.filename, @transcript_file_model.get_blob, target: "_blank", rel: 'noopener'
+            = link_to @transcript_file_model.filename, @transcript_file_model.get_blob, target: "_blank",
+                    rel: 'noopener'
             br
             | Selecting a different one will replace it.
         = form.fields_for :transcript, @transcript_file_model do |subform|

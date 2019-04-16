@@ -81,7 +81,7 @@ private
   end
 
   def update_attachment
-    @file_model.update attachment_metadata
+    @file_model.update_file attachment_metadata
   end
 
   def store_complainant
@@ -102,7 +102,7 @@ private
   def investigation_saved?
     return false unless investigation_valid?
 
-    @file_model.attach_blobs_to_list(@investigation.documents)
+    @file_model.attach_blob_to_list(@investigation.documents)
     @investigation.complainant = @complainant
     @investigation.save
   end

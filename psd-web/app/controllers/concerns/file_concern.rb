@@ -5,6 +5,7 @@ module FileConcern
     attr_reader :attachment_names, :file_params_key
 
   private
+
     def set_attachment_names(*names)
       @attachment_names = names
     end

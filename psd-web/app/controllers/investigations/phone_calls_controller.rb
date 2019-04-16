@@ -41,18 +41,18 @@ private
   end
 
   def update_attachments
-    @transcript_file_model.update file_metadata
+    @transcript_file_model.update_file file_metadata
   end
 
   def correspondence_valid?
     @correspondence.validate(step || steps.last)
     @transcript_file_model.validate
     @correspondence.validate_transcript_and_content(@transcript_file_model.get_blob) if step == :content
-    @correspondence.errors.empty? ** @transcript_file_model.errors.empty?
+    @correspondence.errors.empty?**@transcript_file_model.errors.empty?
   end
 
   def attach_files
     @transcript_file_model.attach_blob_to_attachment_slot(@correspondence.transcript)
-    @transcript_file_model.attach_blobs_to_list(@investigation.documents)
+    @transcript_file_model.attach_blob_to_list(@investigation.documents)
   end
 end

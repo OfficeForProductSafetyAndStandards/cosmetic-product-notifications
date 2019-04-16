@@ -15,7 +15,7 @@ module TestsHelper
   def set_attachment
     file_blob, * = load_file_attachments
     @file_model = Document.new(file_blob, [[:file, "Provide the test file"]])
-    @file_model.attach_blobs_to_list(@test.documents) if file_blob
+    @file_model.attach_blob_to_list(@test.documents) if file_blob
   end
 
   def test_valid?

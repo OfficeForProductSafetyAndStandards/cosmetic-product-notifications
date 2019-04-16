@@ -34,7 +34,7 @@ class Investigations::TestsController < ApplicationController
   # POST /tests
   def create
     if test_saved?
-      @file_model.update test_file_metadata
+      @file_model.update_file test_file_metadata
       redirect_to investigation_url(@investigation), flash: { success: "#{@test.pretty_name.capitalize} was successfully recorded." }
     else
       render step
@@ -44,7 +44,7 @@ class Investigations::TestsController < ApplicationController
   # PATCH/PUT /tests/1
   def update
     if test_valid?
-      @file_model.update test_file_metadata
+      @file_model.update_file test_file_metadata
       redirect_to next_wizard_path
     else
       render step
@@ -66,7 +66,7 @@ private
     return false unless test_valid?
 
     # In addition to attaching to the test, we also attach to the investigation, so the file is surfaced in the ui
-    @file_model.attach_blobs_to_list(@investigation.documents)
+    @file_model.attach_blob_to_list(@investigation.documents)
     @test.save
   end
 
