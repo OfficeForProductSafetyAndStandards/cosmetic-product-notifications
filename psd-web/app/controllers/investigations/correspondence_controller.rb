@@ -16,10 +16,9 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def create
-    update_attachments
     if correspondence_valid? && @investigation.save
+      update_attachments
       attach_files
-      save_attachments
       audit_class.from(@correspondence, @investigation)
       redirect_to investigation_path @investigation, flash: { success: 'Correspondence was successfully recorded' }
     else
@@ -32,9 +31,8 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def update
-    update_attachments
     if correspondence_valid?
-      save_attachments
+      update_attachments
       redirect_to next_wizard_path
     else
       render step

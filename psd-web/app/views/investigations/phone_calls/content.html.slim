@@ -12,13 +12,13 @@
               label: { text: "Summary", classes: "govuk-label--m" },
               hint: { text: "Give an overview of the phone call" }
       = render "components/govuk_fieldset", legend: { text: "Details", classes: "govuk-fieldset__legend--m" } do
-        - if @transcript_blob
+        - if @transcript_file_model.get_blob
           p
             ' Currently selected file:
-            = link_to @transcript_blob.filename, @transcript_blob, target: "_blank", rel: 'noopener'
+            = link_to @transcript_file_model.filename, @transcript_file_model.get_blob, target: "_blank", rel: 'noopener'
             br
             | Selecting a different one will replace it.
-        = form.fields_for :transcript do |subform|
+        = form.fields_for :transcript, @transcript_file_model do |subform|
           = render "form_components/govuk_file_upload", form: subform, key: :file,
                   hint: { text: "Upload the transcript if you have one, or enter notes below" },
                   label: { text: "File upload", classes: "govuk-visually-hidden" }

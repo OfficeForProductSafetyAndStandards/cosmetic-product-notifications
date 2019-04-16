@@ -51,30 +51,28 @@ private
   end
 
   def set_attachments
-    @email_file_blob, @email_attachment_blob = load_file_attachments
+    email_file_blob, email_attachment_blob = load_file_attachments
+    @email_file_model = Document.new(email_file_blob)
+    @email_attachment_file_model = Document.new(email_attachment_blob)
   end
 
   def update_attachments
-    @correspondence.update_blob_metadata @email_file_blob, email_file_metadata
-    @correspondence.update_blob_metadata @email_attachment_blob, email_attachment_metadata
+    @email_file_model.update email_file_metadata
+    @email_attachment_file_model.update email_attachment_metadata
   end
 
   def correspondence_valid?
     @correspondence.validate(step || steps.last)
-    @correspondence.validate_email_file_and_content(@email_file_blob) if step == :content
-    @correspondence.validate_blob_size(@email_file_blob, @correspondence.errors, "email file")
-    @correspondence.validate_blob_size(@email_attachment_blob, @correspondence.errors, "email attachment")
-    @correspondence.errors.empty?
+    @email_file_model.validate
+    @email_attachment_file_model.validate
+    @correspondence.validate_email_file_and_content(@email_file_model.get_blob) if step == :content
+    @correspondence.errors.empty? && @email_file_model.errors.empty? && @email_attachment_file_model.errors.empty?
   end
 
   def attach_files
-    @correspondence.attach_blob_to_attachment_slot(@email_file_blob, @correspondence.email_file)
-    @correspondence.attach_blob_to_attachment_slot(@email_attachment_blob, @correspondence.email_attachment)
-    @investigation.attach_blobs_to_list(@email_file_blob, @email_attachment_blob, @investigation.documents)
-  end
-
-  def save_attachments
-    @email_file_blob.save if @email_file_blob
-    @email_attachment_blob.save if @email_attachment_blob
+    @email_file_model.attach_blob_to_attachment_slot(@correspondence.email_file)
+    @email_file_model.attach_blobs_to_list(@investigation.documents)
+    @email_attachment_file_model.attach_blob_to_attachment_slot(@correspondence.email_attachment)
+    @email_attachment_file_model.attach_blobs_to_list(@investigation.documents)
   end
 end

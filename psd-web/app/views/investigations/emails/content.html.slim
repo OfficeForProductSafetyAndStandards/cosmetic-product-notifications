@@ -13,13 +13,13 @@
               label: { text: "Summary", classes: "govuk-label--m" },
               hint: { text: "Give an overview of the email" }
       = render "components/govuk_fieldset", legend: { text: "Email content", classes: "govuk-fieldset__legend--m" } do
-        - if @email_file_blob
+        - if @email_file_model.get_blob
           p
             ' Currently selected file:
-            = link_to @email_file_blob.filename, @email_file_blob, target: "_blank", rel: 'noopener'
+            = link_to @email_file_model.filename, @email_file_model.get_blob, target: "_blank", rel: 'noopener'
             br
             | Selecting a different one will replace it.
-        = form.fields_for :email_file do |subform|
+        = form.fields_for :email_file, @email_file_model do |subform|
           = render "form_components/govuk_file_upload", form: subform, key: :file,
                   hint: { text: "Upload the email as a file, or enter the subject and body below" },
                   label: { text: "File upload", classes: "govuk-visually-hidden" }
@@ -30,7 +30,7 @@
         = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
                 label: { text: "Body" }
 
-      = render "related_attachment_fields", form: form,
-              file_blob: @email_attachment_blob, attachment_name: :email_attachment, title: "Attachments"
+      = render "related_attachment_fields", form: form, file_model: @email_attachment_file_model,
+              attachment_name: :email_attachment, title: "Attachments"
 
       = form.submit "Continue", class: "govuk-button"

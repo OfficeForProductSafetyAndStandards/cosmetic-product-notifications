@@ -28,6 +28,6 @@ main.govuk-main-wrapper role="main"
               td.govuk-table__cell = @correspondence.details
             tr.govuk-table__row
               th.govuk-table__header scope="row" Attachments
-              td.govuk-table__cell = @transcript_blob&.filename
+              td.govuk-table__cell = @transcript_file_model.filename
         = form.submit "Continue", class: "govuk-button"
         = link_to("Edit details", wizard_path(:context), class: "govuk-link psd-block-link")
