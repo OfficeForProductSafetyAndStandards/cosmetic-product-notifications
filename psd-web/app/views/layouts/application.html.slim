@@ -11,16 +11,22 @@ doctype html
   = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank
   |  will help us to improve it.
   - # rubocop:enable Rails/LinkToBlank
-html.govuk-template.app-html-class[lang="en"]
-  head
-    / Google Analytics
-    - if Rails.env.production?
-      script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-1"
-      javascript:
+- content_for :start_of_head
+  - if Rails.env.production?
+    script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-1"
+    javascript:
         window.dataLayer = window.dataLayer || [];
-        function gtag() {dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'UA-126364208-1');
+= content_for :page_title_suffix do
+  |  - Product safety database - GOV.UK
+= render "layouts/shared/web/head"
+  = render "components/psd_header",
+          productName: "Product safety database",
+          navigation: nav_items,
+          secondary_navigation: secondary_nav_items,
+          assetPath: "media/images"
 
     meta[charset="utf-8"]
     title
@@ -90,12 +96,12 @@ html.govuk-template.app-html-class[lang="en"]
           h2#error-summary-title.govuk-error-summary__title
             = alert
 
-      - %i[success information warning].each do |key|
-        - if flash[key]
-          = render "components/hmcts_banner", text: flash[key], type: key
+    - %i[success information warning].each do |key|
+      - if flash[key]
+        = render "components/hmcts_banner", text: flash[key], type: key
 
-      main#main-content.govuk-main-wrapper.app-main-class[role="main"]
-        = yield
+    main#main-content.govuk-main-wrapper.app-main-class[role="main"]
+      = yield
 
     footer.govuk-footer[role="contentinfo"]
       .govuk-width-container
@@ -146,7 +152,48 @@ html.govuk-template.app-html-class[lang="en"]
           .govuk-footer__meta-item
             a.govuk-footer__link.govuk-footer__copyright-logo[href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"]
               | © Crown copyright
-
-    javascript:
-      if (typeof window.GOVUKFrontend === 'undefined') document.body.className = document.body.className.replace('js-enabled', '')
-      window.GOVUKFrontend.initAll()
+  footer.govuk-footer[role="contentinfo"]
+    .govuk-width-container
+      .govuk-footer__meta
+        .govuk-footer__meta-item.govuk-footer__meta-item--grow
+          ul.govuk-footer__inline-list
+            / We shouldn't normally link to target: '_blank' without rel:'noopener', because it introduces
+            / security vulnerability. However, in this case we control the target url, so we should be safe
+            - # rubocop:disable Rails/LinkToBlank
+            li.govuk-footer__inline-list-item
+              - html = capture do
+                | More information
+                span.govuk-visually-hidden
+                  |  (opens new window)
+              = link_to html, help_about_path,
+                      class: "govuk-footer__link govuk-!-margin-right-2", target: "_blank"
+            li.govuk-footer__inline-list-item
+              - html = capture do
+                | Privacy policy
+                span.govuk-visually-hidden
+                  |  (opens new window)
+              = link_to html, help_privacy_notice_path,
+                      class: "govuk-footer__link govuk-!-margin-right-2", target: "_blank"
+            li.govuk-footer__inline-list-item
+              - html = capture do
+                | Terms and conditions
+                span.govuk-visually-hidden
+                  |  (opens new window)
+              = link_to html, help_terms_and_conditions_path,
+                      class: "govuk-footer__link govuk-!-margin-right-2", target: "_blank"
+            - # rubocop:enable Rails/LinkToBlank
+          hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+           .opss-footer__body
+             ' Built by the
+             - html = capture do
+               | Office for Product Safety and Standards
+               span.govuk-visually-hidden
+                 | (opens new window)
+             = link_to html, "https://www.gov.uk/government/organisations/office-for-product-safety-and-standards", target: :_blank
+           .opss-footer__body
+             br
+             = feedback
+           - # rubocop:enable Rails/LinkToBlank
+        .govuk-footer__meta-item
+          a.govuk-footer__link.govuk-footer__copyright-logo[href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"]
+            | © Crown copyright

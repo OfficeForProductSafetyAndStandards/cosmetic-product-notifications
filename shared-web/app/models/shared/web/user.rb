@@ -12,13 +12,17 @@ module Shared
         User.find_by(id: user[:id]) || User.create(user.except(:groups))
       end
 
-      def self.all(options = {})
+      def self.load(force: false)
         begin
-          self.data = Shared::Web::KeycloakClient.instance.all_users
+          self.data = Shared::Web::KeycloakClient.instance.all_users(force: force)
         rescue StandardError => e
           Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
           self.data = nil
         end
+      end
+
+      def self.all(options = {})
+        self.load
 
         if options.has_key?(:conditions)
           where(options[:conditions])
