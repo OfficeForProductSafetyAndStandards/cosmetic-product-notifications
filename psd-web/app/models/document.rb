@@ -5,6 +5,8 @@ class Document
   attr_accessor :file_id, :integer
   attr_accessor :title, :string
   attr_accessor :description, :string
+  attr_accessor :document_type, :string
+  attr_accessor :filename, :string
   attr_accessor :parent
 
   validates :title, presence: true, on: [:update, :metadata]
@@ -14,6 +16,8 @@ class Document
     @file_id = attachment.is_a?(ActiveStorage::Attachment) ? attachment.blob_id : attachment.id if attachment
     @title = attachment.metadata["title"] if attachment&.metadata
     @description = attachment.metadata["description"] if attachment&.metadata
+    @document_type = attachment.metadata["document_type"] if attachment&.metadata
+    @filename = attachment.filename if attachment
   end
 
   def get_blob
@@ -39,6 +43,12 @@ class Document
     attachments = documents.attach(blob)
     attachment = attachments.last
     attachment.blob.save
+  end
+
+  def detach_blob_from_list(documents)
+    blob = get_blob
+    attachment = documents.find { |doc| doc.blob_id == blob.id }
+    attachment.destroy
   end
 
   def attach_blob_to_attachment_slot(attachment_slot)
