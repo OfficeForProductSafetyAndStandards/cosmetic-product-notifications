@@ -8,8 +8,9 @@ fieldset.govuk-fieldset
       = link_to file_model.filename, file_model.get_blob, target: "_blank", rel: 'noopener'
   - else
     = form.fields_for attachment_name, file_model do |subform|
-      = render "form_components/govuk_file_upload", form: subform, key: :file, id: "attachment-file-input",
-              label: { text: "File upload", class: "govuk-visually-hidden" }
+      #attachment-file-input
+        = render "form_components/govuk_file_upload", form: subform, key: :file,
+                label: { text: "File upload", class: "govuk-visually-hidden" }
       #attachment-description
         = render "form_components/govuk_textarea", key: :description, form: subform,
                 label: { text: "Attachment description" }, attributes: { maxlength: 10000 }
