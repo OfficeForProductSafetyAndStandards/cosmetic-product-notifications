@@ -63,10 +63,10 @@ class ActiveSupport::TestCase
 
     stub_user_management
     set_default_group_memberships
-    Organisation.all
-    Team.all
-    TeamUser.all
-    User.all
+    Organisation.load
+    Team.load
+    TeamUser.load
+    User.load
     sign_in_as User.find_by(name: "Test #{name}")
     stub_notify_mailer
   end
@@ -117,11 +117,11 @@ class ActiveSupport::TestCase
   end
 
   def set_user_as_team_admin(user = User.current)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :team_admin).and_return(true)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :team_admin, anything).and_return(true)
   end
 
   def set_user_as_not_team_admin(user = User.current)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :team_admin).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user.id, :team_admin, anything).and_return(false)
   end
 
   def add_user_to_opss_team(user_id:, team_id:)
@@ -151,17 +151,17 @@ private
 
   def test_user(name: "User_one", ts_user: false)
     id = SecureRandom.uuid
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :psd_user).and_return(true)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(true) unless ts_user
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin, anything).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :psd_user, anything).and_return(true)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user, anything).and_return(true) unless ts_user
     { id: id, email: "#{name}@example.com", name: "Test #{name}" }
   end
 
   def non_psd_user(name:)
     id = SecureRandom.uuid
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin).and_return(false)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :psd_user).and_return(false)
-    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin, anything).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :psd_user, anything).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user, anything).and_return(false)
     { id: id, email: "#{name}@example.com", name: "Test #{name}" }
   end
 
@@ -192,14 +192,14 @@ private
   def set_kc_user_as_opss(user_id)
     # Keycloak bases this role on the group membership
     set_kc_user_group(user_id, opss_organisation[:id])
-    allow(@keycloak_client_instance).to receive(:has_role?).with(user_id, :opss_user).and_return(true)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user_id, :opss_user, anything).and_return(true)
   end
 
   # This is a private method which updates the KC mocking without modifying the User collection directly
   def set_kc_user_as_non_opss(user_id)
     # Keycloak bases this role on the group membership
     set_kc_user_group(user_id, non_opss_organisation[:id])
-    allow(@keycloak_client_instance).to receive(:has_role?).with(user_id, :opss_user).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(user_id, :opss_user, anything).and_return(false)
   end
 
   def add_user_to_team(user_id, team_id)
