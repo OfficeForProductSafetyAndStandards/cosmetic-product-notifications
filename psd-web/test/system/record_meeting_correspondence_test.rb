@@ -18,9 +18,9 @@ class RecordMeetingCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "first step validates date" do
-    fill_in("correspondence_meeting[day]", with: "333")
+    fill_in("correspondence_meeting[correspondence_date][day]", with: "333")
     click_on "Continue"
-    assert_text("Correspondence date must specify a day, month and year")
+    assert_text("Correspondence date must include a month and year")
   end
 
   test "second step is content" do

@@ -1,11 +1,13 @@
 class Test < ApplicationRecord
-  include DateConcern
+  include Shared::Web::Concerns::DateConcern
   include SanitizationHelper
 
   belongs_to :investigation
   belongs_to :product
 
   has_many_attached :documents
+
+  date_attribute :date
 
   before_validation { trim_line_endings(:details) }
   validates :legislation, presence: { message: "Select the legislation that relates to this test" }
