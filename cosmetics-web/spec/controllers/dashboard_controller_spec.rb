@@ -2,12 +2,10 @@ require 'rails_helper'
 
 RSpec.describe DashboardController, type: :controller do
   describe "When signed in as a Responsible Person user" do
-    let(:user) { build(:user) }
-    let(:responsible_person_1) { create(:responsible_person, email_address: "one@example.com") }
+    let(:responsible_person) { create(:responsible_person) }
 
     before do
-      responsible_person_1.add_user(user)
-      sign_in_as_member_of_responsible_person(create(:responsible_person), user)
+      sign_in_as_member_of_responsible_person(responsible_person)
     end
 
     after do
@@ -17,7 +15,7 @@ RSpec.describe DashboardController, type: :controller do
     describe "GET #show" do
       it "redirects to cosmetic products page" do
         get :show
-        expect(response).to redirect_to(responsible_person_notifications_path(responsible_person_1))
+        expect(response).to redirect_to(responsible_person_notifications_path(responsible_person))
       end
     end
   end

@@ -54,8 +54,7 @@ Rails.application.routes.draw do
     post :accept
   end
 
-  resource :dashboard, controller: :dashboard, only: %i[show] do
-  end
+  resource :dashboard, controller: :dashboard, only: %i[show]
 
   namespace :help, as: "" do
     get :terms_and_conditions, path: "terms-and-conditions"
