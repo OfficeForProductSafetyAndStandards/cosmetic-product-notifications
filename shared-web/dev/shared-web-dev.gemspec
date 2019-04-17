@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.add_dependency "govuk-lint", "3.11.0"
   s.add_dependency "rubocop", "0.67.2"
   s.add_dependency "rubocop-performance", "1.1.0"
-  s.add_dependency "selenium-webdriver", "3.141.0"
+  s.add_dependency "selenium-webdriver", "3.141.59"
   s.add_dependency "simplecov", "0.16.1"
   s.add_dependency "simplecov-console", "0.4.2"
   s.add_dependency "slim_lint", "0.16.1"
