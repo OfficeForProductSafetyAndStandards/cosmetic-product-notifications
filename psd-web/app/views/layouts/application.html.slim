@@ -28,18 +28,18 @@ doctype html
           secondary_navigation: secondary_nav_items,
           assetPath: "media/images"
 
-    .govuk-width-container
-      .govuk-phase-banner
-        p.govuk-phase-banner__content
-          strong.govuk-tag.govuk-phase-banner__content__tag
-            | beta
-          span.govuk-phase-banner__text
-            = feedback
-      = yield :after_header
-      - if alert
-        .govuk-error-summary[aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary"]
-          h2#error-summary-title.govuk-error-summary__title
-            = alert
+  .govuk-width-container
+    .govuk-phase-banner
+      p.govuk-phase-banner__content
+        strong.govuk-tag.govuk-phase-banner__content__tag
+          | beta
+        span.govuk-phase-banner__text
+          = feedback
+    = yield :after_header
+    - if alert
+      .govuk-error-summary[aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary"]
+        h2#error-summary-title.govuk-error-summary__title
+          = alert
 
     - %i[success information warning].each do |key|
       - if flash[key]
