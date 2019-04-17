@@ -35,14 +35,14 @@ class ApplicationController < ActionController::Base
     unless User.current.is_opss?
       items.push text: "Home", href: root_path, active: params[:controller] == "homepage"
     end
-    items.push text: "Cases", href: investigations_path, active: params[:controller] == "investigations"
-    items.push text: "Businesses", href: businesses_path, active: params[:controller] == "businesses"
-    items.push text: "Products", href: products_path, active: params[:controller] == "products"
+    items.push text: "Cases", href: investigations_path, active: params[:controller].start_with?("investigations")
+    items.push text: "Businesses", href: businesses_path, active: params[:controller].start_with?("businesses")
+    items.push text: "Products", href: products_path, active: params[:controller].start_with?("products")
     # In principle all our users belong to a team, but this saves crashes in case of a misconfiguration
     if User.current.teams.present?
       text = User.current.teams.count > 1 ? "Your teams" : "Your team"
       path = User.current.teams.count > 1 ? your_teams_path : team_path(User.current.teams.first)
-      items.push text: text, href: path, active: params[:controller] == "teams", right: true
+      items.push text: text, href: path, active: params[:controller].start_with?("teams"), right: true
     end
     items
   end

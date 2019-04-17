@@ -60,10 +60,10 @@ header.psd-header *attributes class=local_assigns[:classes] role="banner" data-m
             image.psd-header__logotype-crown-fallback-image src=src
           '
           span.psd-header__logotype-text GOV.UK
-          - if local_assigns[:productName]
-            '
-            span.psd-header__product-name
-              = local_assigns[:productName]
+        - if local_assigns[:productName]
+          '
+          span.psd-header__product-name
+            = local_assigns[:productName]
     - has_nav = local_assigns[:navigation] || local_assigns[:secondary_navigation]
     - if local_assigns[:serviceName] || has_nav
       .psd-header__content
