@@ -4,11 +4,14 @@
 
 = render "business_heading", business: @business
 
-= render "components/tabs", tabs: [\
-  Tab.new("full-detail", "Full detail", "Full detail", lambda { render "businesses/tabs/details" }),
-  Tab.new("locations", "Locations (#{@business.locations.count})", "Locations",
-  lambda { render "businesses/tabs/locations" }),
-  Tab.new("contacts", "Contacts (#{@business.contacts.count})", "Contacts",
-  lambda { render "businesses/tabs/contacts" }),
-  Tab.new("cases", "Cases", "Cases", lambda { render "businesses/tabs/cases" })\
-]
+= render "components/govuk_tabs",
+        items: [{ id: "full-detail", label: "Full detail",
+                        panel: { html: render("businesses/tabs/details") } },
+                { id: "locations", label: "Locations (#{@business.locations.count})",
+                        panel: { html: render("businesses/tabs/locations") } },
+                { id: "contacts", label: "Contacts (#{@business.contacts.count})",
+                        panel: { html: render("businesses/tabs/contacts") } },
+                { id: "attachments", label: "Attachments (#{@business.documents.count})",
+                        panel: { html: render("businesses/tabs/attachments") } },
+                { id: "cases", label: "Cases",
+                        panel: { html: render("businesses/tabs/cases") } }]

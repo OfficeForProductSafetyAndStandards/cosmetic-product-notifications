@@ -1,0 +1,52 @@
+/ Implementation based on
+/ https://github.com/alphagov/govuk-frontend/
+/ blob/b863be549f502a6829a5d261976c3bcb8ebdf4d2/src/components/date-input/template.njk
+ruby:
+  described_by = ""
+  date_input_items = local_assigns[:items] ||
+          [
+                  { name: "day", classes: "govuk-input--width-2" },
+                  { name: "month", classes: "govuk-input--width-2" },
+                  { name: "year", classes: "govuk-input--width-4" }
+          ]
+
+- inner_html = capture do
+  - if local_assigns[:hint].present?
+    - hint_id = local_assigns[:id] + '-hint'
+    - described_by = described_by.present? ? described_by + ' ' + hint_id : hint_id
+    = render "components/govuk_hint", id: hint_id, **local_assigns[:hint]
+
+  - if local_assigns[:errorMessage].present?
+    - error_id = local_assigns[:id] + '-error'
+    - described_by = described_by.present? ? described_by + ' ' + error_id : error_id
+    = render "components/govuk_error_message", id: error_id, **errorMessage
+
+  .govuk-date-input[*(local_assigns[:attributes] || {})
+                class=local_assigns[:classes]
+                id=local_assigns[:id]]
+    - date_input_items.each do |item|
+      .govuk-date-input__item
+        = render "components/govuk_input",
+                label: { text: (item[:label] || item[:name]).capitalize, classes: "govuk-date-input__label" },
+                id: item[:id] || (id + "-" + item[:name]),
+                classes: "govuk-date-input__input #{item[:classes]}",
+                name: local_assigns[:namePrefix] ? "#{local_assigns[:namePrefix]}-#{item[:name]}" : item[:name],
+                value: item[:value],
+                type: "number",
+                autocomplete: item[:autocomplete],
+                pattern: item[:pattern] || "[0-9]*",
+                attributes: item[:attributes]
+
+- form_group_classes = [local_assigns.dig(:formGroup, :classes)]
+- form_group_classes.push "govuk-form-group--error" if local_assigns[:errorMessage]
+.govuk-form-group class=form_group_classes
+  - if local_assigns[:fieldset].present?
+    / We override the fieldset's role to 'group' because otherwise JAWS does not announce the description
+    / for a fieldset comprised of text inputs, but adding the role to the fieldset always makes the output
+    / overly verbose for radio buttons or checkboxes.
+    = render "components/govuk_fieldset", describedBy: described_by.presence,
+            classes: local_assigns[:fieldset][:classes], attributes: { role: "group" },
+            legend: local_assigns[:fieldset][:legend]
+      = inner_html
+  - else
+    = inner_html

@@ -50,6 +50,8 @@ Notable differences from nunjucks:
     [accessible autocomplete](https://github.com/alphagov/accessible-autocomplete)
     - show_all_values, when true and is_autocomplete true, makes the autocomplete show all values,
     as well as adds an 'x' to remove currently selected value.
+- hidden fields in checkboxes, to account for rails checkboxes "gotcha". The default value is 0 but can be set through the 'unchecked_value' attribute.
+  https://apidock.com/rails/ActionView/Helpers/FormHelper/check_box
 
 ## Rails integration
 To simplify working with rails form helpers, we are also providing a bit of "glue" which infers the values that it

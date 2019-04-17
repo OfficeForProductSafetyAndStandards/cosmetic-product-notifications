@@ -54,6 +54,7 @@ private
 
   def set_correspondence
     @correspondence = model_class.new correspondence_params
+    @correspondence.set_dates_from_params(params[correspondence_params_key])
     @investigation.association(:correspondences).add_to_target(@correspondence)
   end
 

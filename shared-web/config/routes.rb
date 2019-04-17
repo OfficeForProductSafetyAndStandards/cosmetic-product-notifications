@@ -13,7 +13,7 @@ Shared::Web::Engine.routes.draw do
     member do
       get :new
       get :signin
-      delete :logout
+      get :logout
     end
   end
 

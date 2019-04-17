@@ -28,8 +28,8 @@
         label: { text: "Against which legislation?", classes: "govuk-label--m" }
 
 - legend_text = test.requested? ? "When did you request testing?" : "When was the test conducted?"
-= render "components/govuk_fieldset", legend: { text: legend_text, classes: "govuk-fieldset__legend--m" } do
-  = render "date_input", form: form
+= render "form_components/govuk_date_input", form: form, key: :date,
+        fieldset: { legend: { classes: "govuk-fieldset__legend--m", text: legend_text } }
 
 - if !test.requested?
   = render "form_components/govuk_radios", form: form, key: :result,
