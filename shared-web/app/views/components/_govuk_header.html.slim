@@ -54,10 +54,10 @@ header.govuk-header *attributes class=local_assigns[:classes] role="banner" data
             image.govuk-header__logotype-crown-fallback-image src=src
           '
           span.govuk-header__logotype-text GOV.UK
-          - if local_assigns[:productName]
-            '
-            span.govuk-header__product-name
-              = local_assigns[:productName]
+        - if local_assigns[:productName]
+          '
+          span.govuk-header__product-name
+            = local_assigns[:productName]
     - if local_assigns[:serviceName] || local_assigns[:navigation]
       .govuk-header__content
         - if local_assigns[:serviceName]
