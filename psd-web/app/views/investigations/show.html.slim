@@ -8,13 +8,14 @@
 
 hr.govuk-section-break.govuk-section-break--m
 
-= render "components/tabs", tabs: [\
-  Tab.new("overview", "Overview", "Summary", lambda { render "investigations/tabs/overview" }),
-  Tab.new("products", "Products (#{@investigation.products.count})", "Products",
-  lambda { render "investigations/tabs/products" }),
-  Tab.new("businesses", "Businesses (#{@investigation.businesses.count})", "Businesses",
-  lambda { render "investigations/tabs/businesses" }),
-  Tab.new("attachments", "Attachments (#{@investigation.documents.count})", "Attachments",
-  lambda { render "investigations/tabs/attachments" }),
-  Tab.new("activity", "Activity", "Activity", lambda { render "investigations/tabs/activity" })\
-]
+= render "components/govuk_tabs", title: "Summary",
+        items: [{ id: "overview", label: "Overview",
+                        panel: { html: render("investigations/tabs/overview") } },
+                { id: "products", label: "Products (#{@investigation.products.count})",
+                        panel: { html: render("investigations/tabs/products") } },
+                { id: "businesses", label: "Businesses (#{@investigation.businesses.count})",
+                        panel: { html: render("investigations/tabs/businesses") } },
+                { id: "attachments", label: "Attachments (#{@investigation.documents.count})",
+                        panel: { html: render("investigations/tabs/attachments") } },
+                { id: "activity", label: "Activity",
+                        panel: { html: render("investigations/tabs/activity") } }]
