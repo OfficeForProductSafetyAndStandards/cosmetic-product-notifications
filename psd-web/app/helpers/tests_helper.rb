@@ -21,9 +21,7 @@ module TestsHelper
   end
 
   def test_valid?
-    @test.validate
-    @file_model.validate
-    @test.errors.empty? && @file_model.errors.empty?
+    @test.validate && @file_model.validate
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

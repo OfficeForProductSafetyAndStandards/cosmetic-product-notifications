@@ -93,10 +93,7 @@ private
   end
 
   def investigation_valid?
-    @complainant.validate(step)
-    @investigation.validate(step)
-    @file_model.validate
-    @complainant.errors.empty? && @investigation.errors.empty? && @file_model.errors.empty?
+    @complainant.validate(step) && @investigation.validate(step) && @file_model.validate
   end
 
   def investigation_saved?

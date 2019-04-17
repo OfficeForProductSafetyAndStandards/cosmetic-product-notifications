@@ -10,6 +10,8 @@ module Shared
       validate :validate_blob_size
       validate :has_required_fields
 
+      MAX_FILE_BYTE_SIZE = 100.megabytes
+
       def initialize(file_object, required_fields = [])
         check_arguments(file_object)
 
@@ -39,6 +41,12 @@ module Shared
           @file.save
           true
         end
+      end
+
+      def purge_file
+        return if @file.blank?
+
+        @file.purge
       end
 
       def attach_blob_to_list(documents)
@@ -78,13 +86,9 @@ module Shared
       end
 
       def validate_blob_size
-        return unless @file && (@file.byte_size > max_file_byte_size)
+        return unless @file && (@file.byte_size > MAX_FILE_BYTE_SIZE)
 
-        errors.add(:base, :file_too_large, message: "File is too big, allowed size is #{max_file_byte_size / 1.megabyte} MB")
-      end
-
-      def max_file_byte_size
-        100.megabytes
+        errors.add(:base, :file_too_large, message: "File is too big, allowed size is #{MAX_FILE_BYTE_SIZE / 1.megabyte} MB")
       end
 
       def has_required_fields

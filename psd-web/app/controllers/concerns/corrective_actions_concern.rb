@@ -20,15 +20,13 @@ module CorrectiveActionsConcern
     @file_model = Document.new(file_blob)
     if @corrective_action.related_file == "Yes"
       @file_model.attach_blob_to_list(@corrective_action.documents)
-    elsif file_blob
-      file_blob.purge
+    else
+      @file_model.purge_file
     end
   end
 
   def corrective_action_valid?
-    @corrective_action.validate(step)
-    @file_model.validate
-    @corrective_action.errors.empty? && @file_model.errors.empty?
+    @corrective_action.validate(step) && @file_model.validate
   end
 
   def corrective_action_request_params
