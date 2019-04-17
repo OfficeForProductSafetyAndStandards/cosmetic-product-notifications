@@ -1,25 +1,16 @@
 class ResponsiblePersons::TeamMembersController < ApplicationController
   before_action :set_responsible_person
+  before_action :set_team_member, only: %i[create]
   skip_before_action :create_or_join_responsible_person
 
   def create
-    # Check the user entered an email address
-    if team_member_params[:email_address].blank?
-      return redirect_to new_responsible_person_team_member_path(@responsible_person, blank_input: true)
+    if responsible_person_saved?
+      NotifyMailer.send_responsible_person_invite_email(@responsible_person.id, @responsible_person.name,
+                                                        @team_member.email_address, User.current.name).deliver_later
+      redirect_to responsible_person_team_members_path(@responsible_person)
+    else
+      render 'new'
     end
-
-    # Check the user entered a valid email address
-    if not team_member_params[:email_address] =~ URI::MailTo::EMAIL_REGEXP
-      return redirect_to new_responsible_person_team_member_path(@responsible_person, invalid_email: true)
-    end
-
-    # Check if the user is already a member of the team
-    if @responsible_person.responsible_person_users.any? { |user| user.email_address == team_member_params[:email_address] }
-      return redirect_to new_responsible_person_team_member_path(@responsible_person, user_already_exists: true)
-    end
-
-    NotifyMailer.send_responsible_person_invite_email(@responsible_person.id, @responsible_person.name, team_member_params[:email_address], User.current.name).deliver_later
-    redirect_to responsible_person_team_members_path(@responsible_person)
   end
 
   def join
@@ -47,9 +38,30 @@ private
   end
 
   def team_member_params
-    params.require(:team_member)
-      .permit(
-        :email_address
-      )
+    team_member_session_params.merge(team_member_request_params)
+  end
+
+  def team_member_session_params
+    session.fetch(:team_member, {})
+  end
+
+  def team_member_request_params
+    params.fetch(:team_member, {}).permit(
+      :email_address
+    )
+  end
+
+  def set_team_member
+    @team_member = @responsible_person.pending_responsible_person_users.build(team_member_params)
+  end
+
+  def responsible_person_saved?
+    return false unless responsible_person_valid?
+
+    @responsible_person.save
+  end
+
+  def responsible_person_valid?
+    @responsible_person.valid?
   end
 end
