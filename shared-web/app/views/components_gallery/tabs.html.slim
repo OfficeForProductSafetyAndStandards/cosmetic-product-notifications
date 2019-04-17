@@ -1,0 +1,113 @@
+/ Examples in this file are based on  https://github.com/alphagov/govuk-frontend/
+/ blob/b863be549f502a6829a5d261976c3bcb8ebdf4d2/src/components/textarea/input.yaml#L59
+h1.govuk-heading-l Input Component
+h2.govuk-heading-m Default
+
+- html_one = capture do
+  h2.govuk-heading-l Past day
+  table.govuk-table
+    thead.govuk-table__head
+      tr.govuk-table__row
+        th.govuk-table__header scope="col"  Case manager
+        th.govuk-table__header scope="col"  Cases opened
+        th.govuk-table__header scope="col"  Cases closed
+    tbody.govuk-table__body
+      tr.govuk-table__row
+        td.govuk-table__cell David Francis
+        td.govuk-table__cell 3
+        td.govuk-table__cell 0
+      tr.govuk-table__row
+        td.govuk-table__cell Paul Farmer
+        td.govuk-table__cell 1
+        td.govuk-table__cell 0
+      tr.govuk-table__row
+        td.govuk-table__cell Rita Patel
+        td.govuk-table__cell 2
+        td.govuk-table__cell 0
+
+- html_two = capture do
+  h2.govuk-heading-l Past week
+  table.govuk-table
+    thead.govuk-table__head
+      tr.govuk-table__row
+        th.govuk-table__header scope="col"  Case manager
+        th.govuk-table__header scope="col"  Cases opened
+        th.govuk-table__header scope="col"  Cases closed
+    tbody.govuk-table__body
+      tr.govuk-table__row
+        td.govuk-table__cell David Francis
+        td.govuk-table__cell 24
+        td.govuk-table__cell 18
+      tr.govuk-table__row
+        td.govuk-table__cell Paul Farmer
+        td.govuk-table__cell 16
+        td.govuk-table__cell 20
+      tr.govuk-table__row
+        td.govuk-table__cell Rita Patel
+        td.govuk-table__cell 24
+        td.govuk-table__cell 27
+
+- html_three = capture do
+  h2.govuk-heading-l Past month
+  table.govuk-table
+    thead.govuk-table__head
+      tr.govuk-table__row
+        th.govuk-table__header scope="col"  Case manager
+        th.govuk-table__header scope="col"  Cases opened
+        th.govuk-table__header scope="col"  Cases closed
+    tbody.govuk-table__body
+      tr.govuk-table__row
+        td.govuk-table__cell David Francis
+        td.govuk-table__cell 98
+        td.govuk-table__cell 95
+      tr.govuk-table__row
+        td.govuk-table__cell Paul Farmer
+        td.govuk-table__cell 122
+        td.govuk-table__cell 131
+      tr.govuk-table__row
+        td.govuk-table__cell Rita Patel
+        td.govuk-table__cell 126
+        td.govuk-table__cell 142
+
+- html_four = capture do
+  h2.govuk-heading-l Past year
+  table.govuk-table
+    thead.govuk-table__head
+      tr.govuk-table__row
+        th.govuk-table__header scope="col"  Case manager
+        th.govuk-table__header scope="col"  Cases opened
+        th.govuk-table__header scope="col"  Cases closed
+    tbody.govuk-table__body
+      tr.govuk-table__row
+        td.govuk-table__cell David Francis
+        td.govuk-table__cell 1380
+        td.govuk-table__cell 1472
+      tr.govuk-table__row
+        td.govuk-table__cell Paul Farmer
+        td.govuk-table__cell 1129
+        td.govuk-table__cell 1083
+      tr.govuk-table__row
+        td.govuk-table__cell Rita Patel
+        td.govuk-table__cell 1539
+        td.govuk-table__cell 1265
+
+= render "components/govuk_tabs", items: [{ label: "Past day", id: "past-day", panel: { html: html_one } },
+        { label: "Past week", id: "past-week", panel: { html: html_two } },
+        { label: "Past month", id: "past-month", panel: { html: html_three } },
+        { label: "Past year", id: "past-year", panel: { html: html_four } }]
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-m tabs-with-anchor-in-panel
+p Ensure that anchors that are in tab panels work correctly
+- html_five = capture do
+  h2.govuk-heading-l Tab 1
+  p Testing that when you click the anchor it moves to the anchor point successfully
+  a.govuk-link href="#anchor" = "Anchor"
+  a id="anchor" tabIndex="0" = "Anchor Point"
+- html_six = capture do
+  h2.govuk-heading-l Tab 2
+= render "components/govuk_tabs", items: [{ label: "Tab 1", id: "tab-1", panel: { html: html_five } },
+        { label: "Tab 2", id: "tab-2", panel: { html: html_six } }]
+
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
