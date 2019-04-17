@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
       resources :components do
         resources :build, controller: :component_build, only: %i[show update new]
+        resources :trigger_question, controller: :trigger_questions, only: %i[show update new]
         resources :formulation, controller: "formulation_upload", only: %w[new create]
       end
 
@@ -60,6 +61,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :help, as: "" do
+    get :terms_and_conditions, path: "terms-and-conditions"
+    get :privacy_notice, path: "privacy-notice"
+  end
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all
   match "/500", to: "errors#internal_server_error", via: :all

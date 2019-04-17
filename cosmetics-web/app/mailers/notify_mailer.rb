@@ -15,6 +15,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     )
 
     mail(to: email_address)
+    Sidekiq.logger.info "Contact person verification email sent"
   end
 
   def send_responsible_person_invite_email(responsible_person_id, responsible_person_name, invited_email_address, inviting_user_name)
@@ -38,5 +39,6 @@ class NotifyMailer < GovukNotifyRails::Mailer
     )
 
     mail(to: invited_email_address)
+    Sidekiq.logger.info "Responsible person invite email sent"
   end
 end

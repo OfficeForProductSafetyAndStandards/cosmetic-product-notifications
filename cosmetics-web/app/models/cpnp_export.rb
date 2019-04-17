@@ -172,8 +172,12 @@ private
     component_node.xpath(".//componentName[language='#{@language}']/name").first&.text
   end
 
+  # Because CPNP stores shades as just a plain text field, we are unable to
+  # extract the exported data into an array. As a workaround, we just return a
+  # single element array containing the shades data, which should display as we
+  # require.
   def component_shades(component_node)
-    component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text
+    [component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text]
   end
 
   def sub_sub_category(component_node)

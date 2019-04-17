@@ -21,11 +21,12 @@ class User < Shared::Web::User
 
   def self.create_and_send_invite(email_address, team, redirect_url)
     Shared::Web::KeycloakClient.instance.create_user email_address
-    # We can't use User.all here to load the new user
+    # We can't use User.load here to load the new user
     # - they're not part of any organisation yet, so aren't considered a psd user
     user_id = Shared::Web::KeycloakClient.instance.get_user(email_address)[:id]
-    # Adding team membership will trigger user reload, too
     team.add_user user_id
+    # Now that user exists in a team, we can trigger a reload of users entities
+    User.load(force: true)
     Shared::Web::KeycloakClient.instance.send_required_actions_welcome_email user_id, redirect_url
   end
 
@@ -36,34 +37,38 @@ class User < Shared::Web::User
     user
   end
 
-  def self.all(options = {})
+  def self.load(force: false)
     begin
-      all_users = Shared::Web::KeycloakClient.instance.all_users(force: options[:force])
-      Team.all
-      self.data = all_users.map { |user| populate_organisation(user) }
+      all_users = Shared::Web::KeycloakClient.instance.all_users(force: force)
+      # We're not interested in users not belonging to an organisation, as that means they are not PSD users
+      # - however, checking this based on permissions would require a request per user
+      # Some user object are missing their name when they have not finished their registration yet.
+      # But we need to be able to show them on the teams page for example, so we ensure that the attribute is not nil
+      self.data = all_users.map(&method(:populate_organisation))
+                      .map(&method(:populate_name))
                       .reject { |user| user[:organisation_id].blank? }
-      TeamUser.all(force: options[:force])
     rescue StandardError => e
       Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
       self.data = nil
     end
-
-    if options.has_key?(:conditions)
-      where(options[:conditions])
-    else
-      @records ||= []
-    end
   end
 
-  private_class_method def self.populate_organisation(attributes)
+  def self.populate_organisation(attributes)
     groups = attributes.delete(:groups)
     teams = Team.where(id: groups)
     organisation = Organisation.find_by(id: groups) || Organisation.find_by(id: teams.first&.organisation_id)
     attributes.merge(organisation_id: organisation&.id)
   end
 
+  def self.populate_name(attributes)
+    attributes[:name] ||= ""
+    attributes
+  end
+
+  private_class_method :populate_organisation, :populate_name
+
   def display_name(ignore_visibility_restrictions: false)
-    display_name = full_name
+    display_name = name
     can_display_teams = ignore_visibility_restrictions || (organisation.present? && organisation.id == User.current.organisation&.id)
     can_display_teams = can_display_teams && teams.any?
     membership_display = can_display_teams ? team_names : organisation&.name
@@ -79,7 +84,7 @@ class User < Shared::Web::User
     if organisation.present? && organisation.id != User.current.organisation&.id
       organisation.name
     else
-      full_name
+      name
     end
   end
 
@@ -115,4 +120,4 @@ class User < Shared::Web::User
   end
 end
 
-User.all if Rails.env.development?
+User.load if Rails.env.development?

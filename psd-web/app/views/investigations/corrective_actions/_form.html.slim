@@ -1,10 +1,8 @@
 = render "form_components/govuk_input", key: :summary, form: form,
         classes: "govuk-!-width-two-thirds",
         label: { text: "Summary", classes: "govuk-label--m" }
-
-= render "components/govuk_fieldset",
-        legend: { text: "When was this action decided?", classes: "govuk-fieldset__legend--m" } do
-  = render "date_input", form: form
+= render "form_components/govuk_date_input", form: form, key: :date_decided,
+        fieldset: { legend: { classes: "govuk-fieldset__legend--m", text: "When was this action decided?" } }
 
 - if allow_product_linking
   = render "components/govuk_fieldset",
@@ -22,13 +20,14 @@
                 label: { text: "Product name", classes: "govuk-visually-hidden" }
         = form.hidden_field :product_id, value: investigation.products.first.id
       - else
-        = render "form_components/autocomplete_select", key: :product_id, form: form, show_all_values: true,
-                items: investigation.products.map { |product| [product.name, product.id] },
-                hint: { text: "Only products already added to the case are listed." }
+        = render "form_components/govuk_select", key: :product_id, form: form, show_all_values: true,
+                items: investigation.products.map { |product| { text: product.name, value: product.id } },
+                is_autocomplete: true, hint: { text: "Only products already added to the case are listed." },
+                label: { text: "Product", classes: "govuk-visually-hidden" }
 
-= render "form_components/autocomplete_select", items: relevant_legislation, key: :legislation, form: form,
+= render "form_components/govuk_select", choices: relevant_legislation, key: :legislation, form: form,
+        is_autocomplete: true, show_all_values: true,
         label: { text: "Under which legislation?", classes: "govuk-label--m" },
-        show_all_values: true,
         hint: { text: "Select the relevant legislation from the list, or enter a different one." }
 
 - if allow_business_linking
@@ -39,10 +38,11 @@
         span.govuk-hint
           | There are no businesses associated with this case.
       - else
-        = render "form_components/autocomplete_select", key: :business_id, form: form, show_all_values: true,
-                items: investigation.businesses.map { |business| [business.trading_name, business.id] },
+        = render "form_components/govuk_select", key: :business_id, form: form, show_all_values: true,
+                items: investigation.businesses.map { |business| { text: business.trading_name, value: business.id } },
                 selected: (investigation.businesses.size == 1 && investigation.businesses.first.id),
-                hint: { text: "Only businesses already added to the case are listed." }
+                hint: { text: "Only businesses already added to the case are listed." }, is_autocomplete: true,
+                label: { text: "Business", classes: "govuk-visually-hidden" }
 
 = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
         label: { text: "Further details", classes: "govuk-label--m" }
