@@ -45,7 +45,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "don't load non-psd users" do
-    User.all
+    User.load
     assert_not User.find_by(name: "Test Non_psd_user")
   end
 end

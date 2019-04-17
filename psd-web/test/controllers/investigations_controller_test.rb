@@ -176,6 +176,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         assigned_to_me: "checked",
         assigned_to_someone_else: "unchecked",
         assigned_to_someone_else_id: nil,
+        assigned_to_team_0: "unchecked",
         status_open: "unchecked",
         status_closed: "unchecked"
     }
@@ -204,6 +205,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         assigned_to_me: "unchecked",
         assigned_to_someone_else: "checked",
         assigned_to_someone_else_id: @investigation_two.assignable_id,
+        assigned_to_team_0: "unchecked",
         status_open: "unchecked",
         status_closed: "unchecked"
     }

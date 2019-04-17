@@ -58,11 +58,7 @@ class ComponentBuildController < ApplicationController
   end
 
   def finish_wizard_path
-    if @component.notification.is_multicomponent?
-      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
-    else
-      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
-    end
+    new_responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component)
   end
 
 private
