@@ -125,7 +125,7 @@
   }
 
   .psd-header__logo {
-    @include govuk-responsive-margin(2, "bottom");
+    @include govuk-responsive-padding(2, "bottom");
     padding-right: govuk-spacing(8);
 
     @include mq ($from: desktop) {
@@ -275,7 +275,8 @@
 
     @include mq ($from: desktop) {
       display: inline-block;
-      padding: govuk-spacing(1) 0;
+      padding-top: 12px;
+      padding-bottom: 13px;
       border: 0;
       margin-right: govuk-spacing(3);
 
@@ -296,20 +297,25 @@
       &:visited {
         color: govuk-colour("white");
       }
-    }
 
-    &:focus {
-      color: govuk-colour("black"); // Focus colour on yellow should really be black.
-      position: relative; // Ensure focus sits above everything else.
-      z-index: 1;
+      &:focus {
+        color: govuk-colour("black"); // Focus colour on yellow should really be black.
+        position: relative; // Ensure focus sits above everything else.
+        z-index: 1;
+      }
     }
 
     &.psd-header__navigation-item--active {
       position: relative;
-      text-decoration: underline;
+
+      a {
+        text-decoration: underline;
+      }
 
       @include mq ($from: desktop) {
-        text-decoration: none;
+        a {
+          text-decoration: none;
+        }
 
         &:before {
           background-color: govuk-colour("white");

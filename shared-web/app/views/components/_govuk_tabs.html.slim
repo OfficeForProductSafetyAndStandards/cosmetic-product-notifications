@@ -1,0 +1,19 @@
+ruby:
+  id_prefix = local_assigns[:idPrefix]
+  attributes = local_assigns[:attributes] || {}
+
+.govuk-tabs *attributes class=local_assigns[:classes] id=local_assigns[:id] data-module="tabs"
+  h2.govuk-tabs__title
+    = local_assigns[:title] || "Contents"
+  ul.govuk-tabs__list
+    - items.each_with_index do |item, index|
+      - id = item[:id] || id_prefix + '-' + index
+      - item_attributes = item[:attributes] || {}
+      li.govuk-tabs__list-item
+        a.govuk-tabs__tab *item_attributes class=("govuk-tabs__tab--selected" if index.zero?) href="##{id}"
+          = item[:label]
+  - items.each_with_index do |item, index|
+    - id = item[:id] || id_prefix + '-' + index
+    - panel_attributes = (item[:panel][:attributes] || {})
+    section.govuk-tabs__panel *panel_attributes class=("govuk-tabs__panel--hidden" if index.positive?) id=id
+      = item[:panel][:html] || item[:panel][:text]
