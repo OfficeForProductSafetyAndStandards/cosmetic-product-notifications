@@ -4,8 +4,8 @@ module UrlHelper
     polymorphic_path([parent, :documents])
   end
 
-  def associated_document_path(parent, document)
-    associated_documents_path(parent) + "/" + document.id.to_s
+  def associated_document_path(parent, id)
+    associated_documents_path(parent) + "/" + id.to_s
   end
 
   def new_associated_document_path(parent)
@@ -17,11 +17,11 @@ module UrlHelper
   end
 
   def edit_associated_document_path(parent, document)
-    associated_document_path(parent, document) + "/edit"
+    associated_document_path(parent, document.id) + "/edit"
   end
 
   def remove_associated_document_path(parent, document)
-    associated_document_path(parent, document) + "/remove"
+    associated_document_path(parent, document.id) + "/remove"
   end
 
   def build_back_link_to_case

@@ -62,7 +62,7 @@ private
     @correspondence.validate(step || steps.last)
     @email_file_model.validate
     @email_attachment_file_model.validate
-    @correspondence.validate_email_file_and_content(@email_file_model.get_blob) if step == :content
+    @correspondence.validate_email_file_and_content(@email_file_model.file) if step == :content
     @correspondence.errors.empty? && @email_file_model.errors.empty? && @email_attachment_file_model.errors.empty?
   end
 

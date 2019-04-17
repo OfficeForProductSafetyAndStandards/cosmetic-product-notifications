@@ -29,5 +29,5 @@
             | URL
           td.govuk-table__cell
             = @file_model.filename
-= form_with url: associated_document_path(@parent, @file_model.attachment), method: :delete do |form|
+= form_with url: associated_document_path(@parent, params[:id]), method: :delete do |form|
   = form.submit "Delete attachment", class: "govuk-button remove-button"

@@ -15,10 +15,10 @@
               label: { text: "Summary", classes: "govuk-label--m" },
               hint: { text: "Give an overview of the email" }
       = render "components/govuk_fieldset", legend: { text: "Email content", classes: "govuk-fieldset__legend--m" } do
-        - if @email_file_model.get_blob
+        - if @email_file_model.file
           p
             ' Currently selected file:
-            = link_to @email_file_model.filename, @email_file_model.get_blob, target: "_blank", rel: 'noopener'
+            = link_to @email_file_model.filename, @email_file_model.file, target: "_blank", rel: 'noopener'
             br
             | Selecting a different one will replace it.
         = form.fields_for :email_file, @email_file_model do |subform|

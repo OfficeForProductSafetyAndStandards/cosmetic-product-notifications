@@ -26,7 +26,7 @@ main.govuk-main-wrapper role="main"
             tr.govuk-table__row
               th.govuk-table__header scope="row"  Attachments
               td.govuk-table__cell = @transcript_file_model.filename
-            - if @related_attachment_file_model.get_blob
+            - if @related_attachment_file_model.file
               tr.govuk-table__row
                 th.govuk-table__header scope="row"  Related attachments
                 td.govuk-table__cell = @related_attachment_file_model.filename

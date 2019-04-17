@@ -13,10 +13,10 @@
               label: { text: "Summary", classes: "govuk-label--m" },
               hint: { text: "Give an overview of the phone call" }
       = render "components/govuk_fieldset", legend: { text: "Details", classes: "govuk-fieldset__legend--m" } do
-        - if @transcript_file_model.get_blob
+        - if @transcript_file_model.file
           p
             ' Currently selected file:
-            = link_to @transcript_file_model.filename, @transcript_file_model.get_blob, target: "_blank",
+            = link_to @transcript_file_model.filename, @transcript_file_model.file, target: "_blank",
                     rel: 'noopener'
             br
             | Selecting a different one will replace it.

@@ -18,7 +18,7 @@ module CorrectiveActionsConcern
   def set_attachment
     file_blob, * = load_file_attachments
     @file_model = Document.new(file_blob)
-    if file_blob && @corrective_action.related_file == "Yes"
+    if @corrective_action.related_file == "Yes"
       @file_model.attach_blob_to_list(@corrective_action.documents)
     elsif file_blob
       file_blob.purge

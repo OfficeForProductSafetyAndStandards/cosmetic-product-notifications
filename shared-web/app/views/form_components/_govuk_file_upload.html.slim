@@ -2,8 +2,11 @@
 / With access to the form object, we can infer a lot of information from it
 
 ruby:
-  # Infer name and id_prefix from attribute key
+  # Set form encoding to multipart to allow file upload.
+  # Rails does it inside file_field helper method
   form.multipart = true
+
+  # Infer name and id_prefix from attribute key
   local_assigns[:name] ||= get_attribute_name(form, key)
   local_assigns[:id] ||= get_attribute_id_prefix(form, key)
   local_assigns[:value] ||= form.object.send(key) if form.object.respond_to?(key)

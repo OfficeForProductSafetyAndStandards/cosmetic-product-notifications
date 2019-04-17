@@ -27,8 +27,8 @@ class Investigations::CorrectiveActionsController < ApplicationController
   # POST /corrective_actions.json
   def create
     respond_to do |format|
+      @file_model.update_file corrective_action_file_metadata
       if corrective_action_saved?
-        @file_model.update_file corrective_action_file_metadata
         format.html { redirect_to investigation_url(@investigation), flash: { success: "Corrective action was successfully recorded." } }
         format.json { render :show, status: :created, location: @corrective_action }
       else
@@ -42,8 +42,8 @@ class Investigations::CorrectiveActionsController < ApplicationController
   # PATCH/PUT /corrective_actions/1.json
   def update
     respond_to do |format|
+      @file_model.update_file corrective_action_file_metadata
       if corrective_action_valid?
-        @file_model.update_file corrective_action_file_metadata
         format.html { redirect_to next_wizard_path }
         format.json { render :show, status: :ok, location: @corrective_action }
       else

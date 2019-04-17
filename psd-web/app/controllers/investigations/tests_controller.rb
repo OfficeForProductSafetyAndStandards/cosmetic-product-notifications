@@ -33,8 +33,8 @@ class Investigations::TestsController < ApplicationController
 
   # POST /tests
   def create
+    @file_model.update_file test_file_metadata
     if test_saved?
-      @file_model.update_file test_file_metadata
       redirect_to investigation_url(@investigation), flash: { success: "#{@test.pretty_name.capitalize} was successfully recorded." }
     else
       render step
@@ -43,8 +43,8 @@ class Investigations::TestsController < ApplicationController
 
   # PATCH/PUT /tests/1
   def update
+    @file_model.update_file test_file_metadata
     if test_valid?
-      @file_model.update_file test_file_metadata
       redirect_to next_wizard_path
     else
       render step

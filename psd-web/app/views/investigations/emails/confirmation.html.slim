@@ -36,7 +36,7 @@ h1.govuk-heading-l
           tr.govuk-table__row
             th.govuk-table__header scope="row" Attachments
             td.govuk-table__cell = @email_attachment_file_model.filename
-          - if @email_attachment_file_model.get_blob
+          - if @email_attachment_file_model.file
             tr.govuk-table__row
               th.govuk-table__header scope="row" Attachment description
               td.govuk-table__cell = @email_attachment_file_model.description

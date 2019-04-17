@@ -29,7 +29,7 @@ h1.govuk-heading-l
           tr.govuk-table__row
             th.govuk-table__header scope="row" Details
             td.govuk-table__cell = @corrective_action.details
-        - if @file_model.get_blob
+        - if @file_model.file
           tr.govuk-table__row
             th.govuk-table__header scope="row" Attachment
             td.govuk-table__cell = @file_model.filename

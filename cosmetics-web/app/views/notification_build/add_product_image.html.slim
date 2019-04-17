@@ -14,7 +14,7 @@
         p The file must be a ‘jpg’, ‘pdf’, or ‘png’ and no larger than 30MB.
         - if @notification.errors.messages[:image_uploads].any?
             span.govuk-error-message Please upload at least one image
-        = form_with(url: wizard_path, method: :put) do |form|
+        = form_with(url: wizard_path, method: :put, multipart: true) do |form|
             .govuk-form-group
                 = form.label :image_upload, "Choose file", class: "govuk-label"
                 = form.file_field :image_upload, multiple: true, class: "govuk-file-upload", \

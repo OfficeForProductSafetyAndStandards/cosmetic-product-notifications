@@ -363,10 +363,11 @@ private
 
   def store_corrective_action
     return if @skip_step
-    return unless corrective_action_valid?
 
     @file_model.update_file corrective_action_file_metadata
-    session[:corrective_actions] << { corrective_action: @corrective_action.attributes, file_blob_id: @file_model.file }
+    return unless corrective_action_valid?
+
+    session[:corrective_actions] << { corrective_action: @corrective_action.attributes, file_blob_id: @file_model.file&.id }
     session.delete :file
     session[further_key(step)] = @repeat_step
   end
@@ -380,10 +381,11 @@ private
 
   def store_test
     return if @skip_step
-    return unless test_valid?
 
     @file_model.update_file test_file_metadata
-    session[:test_results] << { test: @test.attributes, file_blob_id: @file_model.file }
+    return unless test_valid?
+
+    session[:test_results] << { test: @test.attributes, file_blob_id: @file_model.file&.id }
     session.delete :file
     session[further_key(step)] = @repeat_step
   end
@@ -400,9 +402,9 @@ private
 
     if @file_model.update_file(get_attachment_metadata_params(:file))
       if step == :product_images
-        session[:product_files] << @file_model.file
+        session[:product_files] << @file_model.file&.id
       else
-        session[:files] << @file_model.file
+        session[:files] << @file_model.file&.id
       end
       session.delete :file
     end

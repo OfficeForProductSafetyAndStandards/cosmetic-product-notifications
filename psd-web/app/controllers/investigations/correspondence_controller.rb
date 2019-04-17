@@ -31,8 +31,8 @@ class Investigations::CorrespondenceController < ApplicationController
   end
 
   def update
+    update_attachments
     if correspondence_valid?
-      update_attachments
       redirect_to next_wizard_path
     else
       render step
