@@ -1,7 +1,9 @@
 class ResponsiblePersons::TeamMembersController < ApplicationController
   before_action :set_responsible_person
-  before_action :set_team_member, only: %i[create]
+  before_action :set_team_member, only: %i[new create]
   skip_before_action :create_or_join_responsible_person
+
+  def new; end
 
   def create
     if responsible_person_saved?
@@ -9,7 +11,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
                                                         @team_member.email_address, User.current.name).deliver_later
       redirect_to responsible_person_team_members_path(@responsible_person)
     else
-      render 'new'
+      render :new
     end
   end
 
