@@ -49,27 +49,27 @@ private
 
   def set_attachments
     email_file_blob, email_attachment_blob = load_file_attachments
-    @email_file_model = Document.new(email_file_blob)
-    @email_attachment_file_model = Document.new(email_attachment_blob)
+    @email_document_model = Document.new(email_file_blob)
+    @email_attachment_document_model = Document.new(email_attachment_blob)
   end
 
   def update_attachments
-    @email_file_model.update_file email_file_metadata
-    @email_attachment_file_model.update_file email_attachment_metadata
+    @email_document_model.update_file email_file_metadata
+    @email_attachment_document_model.update_file email_attachment_metadata
   end
 
   def correspondence_valid?
     @correspondence.validate(step || steps.last)
-    @email_file_model.validate
-    @email_attachment_file_model.validate
-    @correspondence.validate_email_file_and_content(@email_file_model.file) if step == :content
-    @correspondence.errors.empty? && @email_file_model.errors.empty? && @email_attachment_file_model.errors.empty?
+    @email_document_model.validate
+    @email_attachment_document_model.validate
+    @correspondence.validate_email_file_and_content(@email_document_model.file) if step == :content
+    @correspondence.errors.empty? && @email_document_model.errors.empty? && @email_attachment_document_model.errors.empty?
   end
 
   def attach_files
-    @email_file_model.attach_blob_to_attachment_slot(@correspondence.email_file)
-    @email_file_model.attach_blob_to_list(@investigation.documents)
-    @email_attachment_file_model.attach_blob_to_attachment_slot(@correspondence.email_attachment)
-    @email_attachment_file_model.attach_blob_to_list(@investigation.documents)
+    @email_document_model.attach_blob_to_attachment_slot(@correspondence.email_file)
+    @email_document_model.attach_blob_to_list(@investigation.documents)
+    @email_attachment_document_model.attach_blob_to_attachment_slot(@correspondence.email_attachment)
+    @email_attachment_document_model.attach_blob_to_list(@investigation.documents)
   end
 end

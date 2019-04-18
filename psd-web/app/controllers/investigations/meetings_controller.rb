@@ -38,27 +38,27 @@ private
 
   def set_attachments
     transcript_blob, related_attachment_blob = load_file_attachments
-    @transcript_file_model = Document.new(transcript_blob)
-    @related_attachment_file_model = Document.new(related_attachment_blob)
+    @transcript_document_model = Document.new(transcript_blob)
+    @related_attachment_document_model = Document.new(related_attachment_blob)
   end
 
   def update_attachments
-    @transcript_file_model.update_file transcript_metadata
-    @related_attachment_file_model.update_file related_attachment_metadata
+    @transcript_document_model.update_file transcript_metadata
+    @related_attachment_document_model.update_file related_attachment_metadata
   end
 
   def correspondence_valid?
     @correspondence.validate(step || steps.last)
-    @transcript_file_model.validate
-    @related_attachment_file_model.validate
-    @correspondence.validate_transcript_and_content(@transcript_file_model.file) if step == :content
-    @correspondence.errors.empty? && @transcript_file_model.errors.empty? && @related_attachment_file_model.errors.empty?
+    @transcript_document_model.validate
+    @related_attachment_document_model.validate
+    @correspondence.validate_transcript_and_content(@transcript_document_model.file) if step == :content
+    @correspondence.errors.empty? && @transcript_document_model.errors.empty? && @related_attachment_document_model.errors.empty?
   end
 
   def attach_files
-    @transcript_file_model.attach_blob_to_attachment_slot(@correspondence.transcript)
-    @transcript_file_model.attach_blob_to_list(@investigation.documents)
-    @related_attachment_file_model.attach_blob_to_attachment_slot(@correspondence.related_attachment)
-    @related_attachment_file_model.attach_blob_to_list(@investigation.documents)
+    @transcript_document_model.attach_blob_to_attachment_slot(@correspondence.transcript)
+    @transcript_document_model.attach_blob_to_list(@investigation.documents)
+    @related_attachment_document_model.attach_blob_to_attachment_slot(@correspondence.related_attachment)
+    @related_attachment_document_model.attach_blob_to_list(@investigation.documents)
   end
 end

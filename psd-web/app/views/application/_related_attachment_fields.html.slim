@@ -2,12 +2,12 @@ fieldset.govuk-fieldset
   - if local_variables.include?(:title)
     legend.govuk-fieldset__legend.govuk-fieldset__legend--m
       = title
-  - if file_model.file.present?
+  - if document_model.file.present?
     p#current-attachment-details
       ' Currently selected file:
-      = link_to file_model.filename, file_model.file, target: "_blank", rel: 'noopener'
+      = link_to document_model.filename, document_model.file, target: "_blank", rel: 'noopener'
   - else
-    = form.fields_for attachment_name, file_model do |subform|
+    = form.fields_for attachment_name, document_model do |subform|
       #attachment-file-input
         = render "form_components/govuk_file_upload", form: subform, key: :file,
                 label: { text: "File upload", class: "govuk-visually-hidden" }

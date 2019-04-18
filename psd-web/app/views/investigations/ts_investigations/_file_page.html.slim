@@ -3,12 +3,12 @@ fieldset.govuk-fieldset
     legend.govuk-fieldset__legend.govuk-fieldset__legend--l
       | Browse for file
   .govuk-form-group
-    - if @file_model.file.present?
+    - if @document_model.file.present?
       p#current-attachment-details
         ' Currently selected file:
-        = link_to @file_model.filename, @file_model.file, target: "_blank", rel: 'noopener'
-    = form.fields_for :file, @file_model do |subform|
-      - if @file_model.file.blank?
+        = link_to @document_model.filename, @document_model.file, target: "_blank", rel: 'noopener'
+    = form.fields_for :file, @document_model do |subform|
+      - if @document_model.file.blank?
         = render "form_components/govuk_file_upload", form: subform, key: :file,
                 label: { text: "File upload", classes: "govuk-visually-hidden" }
       hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible

@@ -77,11 +77,11 @@ private
 
   def set_attachment
     file_blob, * = load_file_attachments
-    @file_model = Document.new(file_blob)
+    @document_model = Document.new(file_blob)
   end
 
   def update_attachment
-    @file_model.update_file attachment_metadata
+    @document_model.update_file attachment_metadata
   end
 
   def store_complainant
@@ -93,13 +93,13 @@ private
   end
 
   def investigation_valid?
-    @complainant.validate(step) && @investigation.validate(step) && @file_model.validate
+    @complainant.validate(step) && @investigation.validate(step) && @document_model.validate
   end
 
   def investigation_saved?
     return false unless investigation_valid?
 
-    @file_model.attach_blob_to_list(@investigation.documents)
+    @document_model.attach_blob_to_list(@investigation.documents)
     @investigation.complainant = @complainant
     @investigation.save
   end
@@ -136,7 +136,7 @@ private
 
   def attachment_metadata
     get_attachment_metadata_params(:file).merge(
-      title: @file_model.filename
+      title: @document_model.filename
     )
   end
 end

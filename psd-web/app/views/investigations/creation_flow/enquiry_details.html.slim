@@ -6,7 +6,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form,
-              subform_data: [{ key: :attachment, object: @file_model }]
+              subform_data: [{ key: :attachment, object: @document_model }]
       h1.govuk-heading-xl
         = @page_title
       fieldset.govuk-fieldset
@@ -23,11 +23,11 @@
                 label: { text: "Title", classes: "govuk-visually-hidden" },
                 hint: { text: "This will help other users identify this enquiry" }
 
-      - if @file_model.file.present?
+      - if @document_model.file.present?
         p#current-attachment-details
           ' Currently selected file:
-          = link_to @file_model.filename, @file_model.file, target: "_blank", rel: 'noopener'
-      = form.fields_for :attachment, @file_model do |subform|
+          = link_to @document_model.filename, @document_model.file, target: "_blank", rel: 'noopener'
+      = form.fields_for :attachment, @document_model do |subform|
         = render "form_components/govuk_file_upload", form: subform, key: :file,
                 label: { text: "Are there any files or images related to the enquiry?", classes: "govuk-label--m" }
 

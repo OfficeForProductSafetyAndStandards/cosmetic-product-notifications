@@ -12,22 +12,22 @@
           th.govuk-table__header[scope="row"]
             | Title
           td.govuk-table__cell
-            = @file_model.title
+            = @document_model.title
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Type
           td.govuk-table__cell
             / TODO PSD-762: Probably change this
-            = @file_model.document_type
+            = @document_model.document_type
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | Description
           td.govuk-table__cell
-            = @file_model.description
+            = @document_model.description
         tr.govuk-table__row
           th.govuk-table__header[scope="row"]
             | URL
           td.govuk-table__cell
-            = @file_model.filename
+            = @document_model.filename
 = form_with url: associated_document_path(@parent, params[:id]), method: :delete do |form|
   = form.submit "Delete attachment", class: "govuk-button remove-button"

@@ -15,11 +15,11 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1
   def update
     previous_data = {
-      title: @file_model.title,
-      description: @file_model.description
+      title: @document_model.title,
+      description: @document_model.description
     }
-    if @file_model.update_file(get_attachment_metadata_params(:file))
-      AuditActivity::Document::Update.from(@file_model.file, @parent, previous_data) if @parent.is_a? Investigation
+    if @document_model.update_file(get_attachment_metadata_params(:file))
+      AuditActivity::Document::Update.from(@document_model.file, @parent, previous_data) if @parent.is_a? Investigation
       redirect_to @parent
     else
       render :edit
@@ -30,8 +30,8 @@ class DocumentsController < ApplicationController
 
   # DELETE /documents/1
   def destroy
-    @file_model.detach_blob_from_list(@parent.documents)
-    AuditActivity::Document::Destroy.from(@file_model.file, @parent) if @parent.is_a? Investigation
+    @document_model.detach_blob_from_list(@parent.documents)
+    AuditActivity::Document::Destroy.from(@document_model.file, @parent) if @parent.is_a? Investigation
     redirect_to @parent, flash: { success: "File was successfully removed" }
   end
 
@@ -42,6 +42,6 @@ private
     file_blob = file_attachment.blob
     raise Pundit::NotAuthorizedError unless can_be_displayed?(file_blob, @parent)
 
-    @file_model = Document.new(file_blob, [[:title, "Enter title"]])
+    @document_model = Document.new(file_blob, [[:title, "Enter title"]])
   end
 end

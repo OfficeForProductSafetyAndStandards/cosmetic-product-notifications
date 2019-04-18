@@ -5,7 +5,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form,
-              subform_data: [{ key: :attachment, object: @file_model }]
+              subform_data: [{ key: :attachment, object: @document_model }]
       h1.govuk-heading-l = @page_title
 
       = render "form_components/govuk_textarea", key: :description, form: form,
@@ -19,11 +19,11 @@
               show_all_values: true, is_autocomplete: true,
               label: { text: "Hazard Type", classes: "govuk-label--m" }
 
-      - if @file_model.file.present?
+      - if @document_model.file.present?
         p#current-attachment-details
           ' Currently selected file:
-          = link_to @file_model.filename, @file_model.file, target: "_blank", rel: 'noopener'
-      = form.fields_for :attachment, @file_model do |subform|
+          = link_to @document_model.filename, @document_model.file, target: "_blank", rel: 'noopener'
+      = form.fields_for :attachment, @document_model do |subform|
         = render "form_components/govuk_file_upload", form: subform, key: :file,
                 label: { text: "Are there any files or images related to the allegation?", classes: "govuk-label--m" }
 

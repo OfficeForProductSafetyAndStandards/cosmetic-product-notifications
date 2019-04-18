@@ -5,7 +5,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form,
-              subform_data: [{ key: :file, object: @file_model }]
+              subform_data: [{ key: :file, object: @document_model }]
       h1.govuk-heading-l
         span.govuk-caption-l Report an unsafe or non-compliant product
         = title

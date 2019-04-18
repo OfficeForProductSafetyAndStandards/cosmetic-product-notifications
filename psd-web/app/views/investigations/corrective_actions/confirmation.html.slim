@@ -29,14 +29,14 @@ h1.govuk-heading-l
           tr.govuk-table__row
             th.govuk-table__header scope="row" Details
             td.govuk-table__cell = @corrective_action.details
-        - if @file_model.file
+        - if @document_model.file
           tr.govuk-table__row
             th.govuk-table__header scope="row" Attachment
-            td.govuk-table__cell = @file_model.filename
-          -if @file_model.description.present?
+            td.govuk-table__cell = @document_model.filename
+          -if @document_model.description.present?
             tr.govuk-table__row
               th.govuk-table__header scope="row" Attachment description
-              td.govuk-table__cell = @file_model.description
+              td.govuk-table__cell = @document_model.description
     = form_with model: @corrective_action, url: investigation_corrective_actions_path(@investigation),
             method: :post do |form|
       = form.submit "Continue", class: "govuk-button"

@@ -20,11 +20,11 @@ class DocumentsFlowController < ApplicationController
   end
 
   def update
-    if @file_model.update_file(get_attachment_metadata_params(:file))
+    if @document_model.update_file(get_attachment_metadata_params(:file))
       return redirect_to next_wizard_path unless step == steps.last
 
-      @file_model.attach_blob_to_list(@parent.documents)
-      AuditActivity::Document::Add.from(@file_model.file, @parent) if @parent.is_a? Investigation
+      @document_model.attach_blob_to_list(@parent.documents)
+      AuditActivity::Document::Add.from(@document_model.file, @parent) if @parent.is_a? Investigation
       redirect_to @parent
     else
       render step
@@ -37,6 +37,6 @@ private
     file_blob, * = load_file_attachments
     required_fields = [[:file, "Enter file"]]
     required_fields << [:title, "Enter title"] if step == :metadata
-    @file_model = Document.new(file_blob, required_fields)
+    @document_model = Document.new(file_blob, required_fields)
   end
 end

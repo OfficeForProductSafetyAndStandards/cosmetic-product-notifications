@@ -25,14 +25,14 @@ main.govuk-main-wrapper role="main"
               td.govuk-table__cell = @correspondence.details
             tr.govuk-table__row
               th.govuk-table__header scope="row"  Attachments
-              td.govuk-table__cell = @transcript_file_model.filename
-            - if @related_attachment_file_model.file
+              td.govuk-table__cell = @transcript_document_model.filename
+            - if @related_attachment_document_model.file
               tr.govuk-table__row
                 th.govuk-table__header scope="row"  Related attachments
-                td.govuk-table__cell = @related_attachment_file_model.filename
+                td.govuk-table__cell = @related_attachment_document_model.filename
               tr.govuk-table__row
                 th.govuk-table__header scope="row"  Attachment description
-                td.govuk-table__cell = @related_attachment_file_model.description
+                td.govuk-table__cell = @related_attachment_document_model.description
         = form.submit "Continue", class: "govuk-button"
 
         = link_to("Edit details", wizard_path(:context), class: "govuk-link psd-block-link")

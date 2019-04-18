@@ -5,8 +5,8 @@
 = form_with scope: :document, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
-      = form.fields_for :file, @file_model do |subform|
-        = render "form_components/govuk_error_summary", form: subform, errors: @file_model.errors
+      = form.fields_for :file, @document_model do |subform|
+        = render "form_components/govuk_error_summary", form: subform, errors: @document_model.errors
         h1.govuk-heading-l
           span.govuk-caption-l = @parent.pretty_description
           | Add attachment

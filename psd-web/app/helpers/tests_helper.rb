@@ -16,12 +16,12 @@ module TestsHelper
   def set_attachment
     file_blob, * = load_file_attachments
     required_fields = @test.is_a?(Test::Result) ? [[:file, "Provide the test file"]] : []
-    @file_model = Document.new(file_blob, required_fields)
-    @file_model.attach_blob_to_list(@test.documents) if file_blob
+    @document_model = Document.new(file_blob, required_fields)
+    @document_model.attach_blob_to_list(@test.documents) if file_blob
   end
 
   def test_valid?
-    @test.validate && @file_model.validate
+    @test.validate && @document_model.validate
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

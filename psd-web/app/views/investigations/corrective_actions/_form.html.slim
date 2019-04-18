@@ -47,7 +47,7 @@
 = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
         label: { text: "Further details", classes: "govuk-label--m" }
 - file_html = capture do
-  = render "related_attachment_fields", form: form, file_model: file_model, attachment_name: :file
+  = render "related_attachment_fields", form: form, document_model: document_model, attachment_name: :file
 = render "form_components/govuk_radios", form: form, key: :related_file,
         fieldset: { legend: { text: "Are there any files related to the action?",
                 classes: "govuk-fieldset__legend--m" } },

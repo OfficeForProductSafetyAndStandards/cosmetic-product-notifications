@@ -17,16 +17,16 @@ module CorrectiveActionsConcern
 
   def set_attachment
     file_blob, * = load_file_attachments
-    @file_model = Document.new(file_blob)
+    @document_model = Document.new(file_blob)
     if @corrective_action.related_file == "Yes"
-      @file_model.attach_blob_to_list(@corrective_action.documents)
+      @document_model.attach_blob_to_list(@corrective_action.documents)
     else
-      @file_model.purge_file
+      @document_model.purge_file
     end
   end
 
   def corrective_action_valid?
-    @corrective_action.validate(step) && @file_model.validate
+    @corrective_action.validate(step) && @document_model.validate
   end
 
   def corrective_action_request_params

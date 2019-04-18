@@ -6,8 +6,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form,
-              subform_data: [{ key: :email_file, object: @email_file_model },
-                      { key: :email_attachment, object: @email_attachment_file_model }]
+              subform_data: [{ key: :email_file, object: @email_document_model },
+                      { key: :email_attachment, object: @email_attachment_document_model }]
       h1.govuk-heading-l
         span.govuk-caption-l = @investigation.pretty_description
         | Record email
@@ -15,13 +15,13 @@
               label: { text: "Summary", classes: "govuk-label--m" },
               hint: { text: "Give an overview of the email" }
       = render "components/govuk_fieldset", legend: { text: "Email content", classes: "govuk-fieldset__legend--m" } do
-        - if @email_file_model.file
+        - if @email_document_model.file
           p
             ' Currently selected file:
-            = link_to @email_file_model.filename, @email_file_model.file, target: "_blank", rel: 'noopener'
+            = link_to @email_document_model.filename, @email_document_model.file, target: "_blank", rel: 'noopener'
             br
             | Selecting a different one will replace it.
-        = form.fields_for :email_file, @email_file_model do |subform|
+        = form.fields_for :email_file, @email_document_model do |subform|
           = render "form_components/govuk_file_upload", form: subform, key: :file,
                   hint: { text: "Upload the email as a file, or enter the subject and body below" },
                   label: { text: "File upload", classes: "govuk-visually-hidden" }
@@ -32,7 +32,7 @@
         = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
                 label: { text: "Body" }
 
-      = render "related_attachment_fields", form: form, file_model: @email_attachment_file_model,
+      = render "related_attachment_fields", form: form, document_model: @email_attachment_document_model,
               attachment_name: :email_attachment, title: "Attachments"
 
       = form.submit "Continue", class: "govuk-button"

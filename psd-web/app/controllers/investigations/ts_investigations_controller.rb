@@ -157,9 +157,9 @@ private
     @corrective_action.set_dates_from_params(params[:corrective_action])
     @corrective_action.product = @product
     file_blob, * = load_file_attachments :corrective_action
-    @file_model = Document.new(file_blob)
+    @document_model = Document.new(file_blob)
     if file_blob && @corrective_action.related_file == "Yes"
-      @file_model.attach_blob_to_list(@corrective_action.documents)
+      @document_model.attach_blob_to_list(@corrective_action.documents)
     end
     set_repeat_step(:corrective_action)
   end
@@ -169,8 +169,8 @@ private
     @test.set_dates_from_params(params[:test])
     @test.product = @product
     file_blob, * = load_file_attachments :test
-    @file_model = Document.new(file_blob, [[:file, "Provide test file"]])
-    @file_model.attach_blob_to_list(@test.documents) if file_blob
+    @document_model = Document.new(file_blob, [[:file, "Provide test file"]])
+    @document_model.attach_blob_to_list(@test.documents) if file_blob
     set_repeat_step(:test)
   end
 
@@ -180,7 +180,7 @@ private
 
   def set_file
     file_blob, * = load_file_attachments
-    @file_model = Document.new(file_blob, [[:file, "Upload file"], [:title, "Enter file title"], [:description, "Enter file description"]])
+    @document_model = Document.new(file_blob, [[:file, "Upload file"], [:title, "Enter file title"], [:description, "Enter file description"]])
     set_repeat_step :file
   end
 
@@ -364,47 +364,47 @@ private
   def store_corrective_action
     return if @skip_step
 
-    @file_model.update_file corrective_action_file_metadata
+    @document_model.update_file corrective_action_file_metadata
     return unless corrective_action_valid?
 
-    session[:corrective_actions] << { corrective_action: @corrective_action.attributes, file_blob_id: @file_model.file&.id }
+    session[:corrective_actions] << { corrective_action: @corrective_action.attributes, file_blob_id: @document_model.file&.id }
     session.delete :file
     session[further_key(step)] = @repeat_step
   end
 
   def corrective_action_valid?
     @corrective_action.validate
-    @file_model.validate
+    @document_model.validate
     repeat_step_valid?(@corrective_action)
-    @corrective_action.errors.empty? && @file_model.errors.empty?
+    @corrective_action.errors.empty? && @document_model.errors.empty?
   end
 
   def store_test
     return if @skip_step
 
-    @file_model.update_file test_file_metadata
+    @document_model.update_file test_file_metadata
     return unless test_valid?
 
-    session[:test_results] << { test: @test.attributes, file_blob_id: @file_model.file&.id }
+    session[:test_results] << { test: @test.attributes, file_blob_id: @document_model.file&.id }
     session.delete :file
     session[further_key(step)] = @repeat_step
   end
 
   def test_valid?
     @test.validate
-    @file_model.validate
+    @document_model.validate
     repeat_step_valid?(@test)
-    @test.errors.empty? && @file_model.errors.empty?
+    @test.errors.empty? && @document_model.errors.empty?
   end
 
   def store_file
     return if @skip_step
 
-    if @file_model.update_file(get_attachment_metadata_params(:file))
+    if @document_model.update_file(get_attachment_metadata_params(:file))
       if step == :product_images
-        session[:product_files] << @file_model.file&.id
+        session[:product_files] << @document_model.file&.id
       else
-        session[:files] << @file_model.file&.id
+        session[:files] << @document_model.file&.id
       end
       session.delete :file
     end
@@ -463,7 +463,7 @@ private
         @has_reference_number = reference_number_params[:has_complainant_reference]
       end
     end
-    return false if @file_model&.errors&.any?
+    return false if @document_model&.errors&.any?
 
     @investigation.errors.empty? && @product.errors.empty?
   end
@@ -506,9 +506,9 @@ private
       action_record.product = @product
       file_blob = ActiveStorage::Blob.find_by(id: session_corrective_action[:file_blob_id])
       if file_blob
-        file_model = Document.new(file_blob)
-        file_model.attach_blob_to_list(action_record.documents)
-        file_model.attach_blob_to_list(@investigation.documents)
+        document_model = Document.new(file_blob)
+        document_model.attach_blob_to_list(action_record.documents)
+        document_model.attach_blob_to_list(@investigation.documents)
       end
       @investigation.corrective_actions << action_record
     end
@@ -520,9 +520,9 @@ private
       test_record.product = @product
       file_blob = ActiveStorage::Blob.find_by(id: session_test_result[:file_blob_id])
       if file_blob
-        file_model = Document.new(file_blob)
-        file_model.attach_blob_to_list(test_record.documents)
-        file_model.attach_blob_to_list(@investigation.documents)
+        document_model = Document.new(file_blob)
+        document_model.attach_blob_to_list(test_record.documents)
+        document_model.attach_blob_to_list(@investigation.documents)
       end
       @investigation.tests << test_record
     end
@@ -531,8 +531,8 @@ private
   def save_files
     session[:files].each do |file_blob_id|
       file_blob = ActiveStorage::Blob.find_by(id: file_blob_id)
-      file_model = Document.new(file_blob)
-      file_model.attach_blob_to_list(@investigation.documents)
+      document_model = Document.new(file_blob)
+      document_model.attach_blob_to_list(@investigation.documents)
       AuditActivity::Document::Add.from(file_blob, @investigation)
     end
   end
@@ -540,8 +540,8 @@ private
   def save_product_files
     session[:product_files].each do |file_blob_id|
       file_blob = ActiveStorage::Blob.find_by(id: file_blob_id)
-      file_model = Document.new(file_blob)
-      file_model.attach_blob_to_list(@product.documents)
+      document_model = Document.new(file_blob)
+      document_model.attach_blob_to_list(@product.documents)
     end
   end
 

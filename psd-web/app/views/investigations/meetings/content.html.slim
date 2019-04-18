@@ -5,8 +5,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form,
-              subform_data: [{ key: :transcript, object: @transcript_file_model },
-                      { key: :related_attachment, object: @related_attachment_file_model }]
+              subform_data: [{ key: :transcript, object: @transcript_document_model },
+                      { key: :related_attachment, object: @related_attachment_document_model }]
       h1.govuk-heading-l
         span.govuk-caption-l = @investigation.pretty_description
         | Record meeting
@@ -15,14 +15,14 @@
               label: { text: "Summary", classes: "govuk-label--m" },
               hint: { text: "Give an overview of the meeting" }
       = render "components/govuk_fieldset", legend: { text: "Details", classes: "govuk-fieldset__legend--m" } do
-        - if @transcript_file_model.file
+        - if @transcript_document_model.file
           p
             ' Currently selected file:
-            = link_to @transcript_file_model.filename, @transcript_file_model.file, target: "_blank",
+            = link_to @transcript_document_model.filename, @transcript_document_model.file, target: "_blank",
                     rel: 'noopener'
             br
             | Selecting a different one will replace it.
-        = form.fields_for :transcript, @transcript_file_model do |subform|
+        = form.fields_for :transcript, @transcript_document_model do |subform|
           = render "form_components/govuk_file_upload", form: subform, key: :file,
                   hint: { text: "Upload the transcript if you have one, or enter notes below" },
                   label: { text: "File upload", classes: "govuk-visually-hidden" }
@@ -30,7 +30,7 @@
         = render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
                   label: { text: "Notes", classes: "govuk-!-width-two-thirds" }
 
-        = render "related_attachment_fields", form: form, file_model: @related_attachment_file_model,
+        = render "related_attachment_fields", form: form, document_model: @related_attachment_document_model,
                 attachment_name: :related_attachment, title: "Related attachments"
 
       = form.submit "Continue", class: "govuk-button"
