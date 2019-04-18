@@ -12,6 +12,10 @@ module Shared
 
       MAX_FILE_BYTE_SIZE = 100.megabytes
 
+      # file_object must be either an instance of ActiveStorage::Blob or nil
+      # Use cases for file_object being nil are
+      # 1. Validating presence of a file in this model, rather than in controller
+      # 2. Facilitating optional file inputs without added complexity in controller
       def initialize(file_object, required_fields = [])
         check_arguments(file_object)
 
@@ -88,7 +92,7 @@ module Shared
       def validate_blob_size
         return unless @file && (@file.byte_size > MAX_FILE_BYTE_SIZE)
 
-        errors.add(:base, :file_too_large, message: "File is too big, allowed size is #{MAX_FILE_BYTE_SIZE / 1.megabyte} MB")
+        errors.add(:file, :file_too_large, message: "File is too big, allowed size is #{MAX_FILE_BYTE_SIZE / 1.megabyte} MB")
       end
 
       def has_required_fields
