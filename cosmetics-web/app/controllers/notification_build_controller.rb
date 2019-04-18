@@ -55,12 +55,13 @@ class NotificationBuildController < ApplicationController
 private
 
   def notification_params
-    params.require(:notification)
+    params.fetch(:notification, {})
       .permit(
         :product_name,
         :industry_reference,
         :is_imported,
         :import_country,
+        :components_are_mixed,
         image_uploads_attributes: [file: []]
       )
   end
@@ -72,12 +73,6 @@ private
 
   def set_countries
     @countries = all_countries
-  end
-
-  def component_params
-    return {} if params[:notification].blank?
-
-    params.require(:notification).permit(:components_are_mixed)
   end
 
   def render_single_or_multi_component_step
@@ -101,14 +96,12 @@ private
   end
 
   def render_is_mixed_step
-    @notification.update(component_params)
-
-    if @notification.components_are_mixed.nil?
-      @notification.errors.add :components_are_mixed, "Must select an option"
-      return render step
+    # Apply this since render_wizard(@notification, context: :update_components_are_mixed) doesn't work as expected
+    if @notification.update_with_context(notification_params, :update_components_are_mixed)
+      render_wizard @notification
+    else
+      render step
     end
-
-    render_wizard @notification
   end
 
   def render_is_imported_step
