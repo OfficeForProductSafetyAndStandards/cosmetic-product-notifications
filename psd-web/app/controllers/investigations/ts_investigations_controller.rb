@@ -169,7 +169,7 @@ private
     @test.set_dates_from_params(params[:test])
     @test.product = @product
     file_blob, * = load_file_attachments :test
-    @document_model = Document.new(file_blob, [[:file, "Provide test file"]])
+    @document_model = Document.new(file_blob, [:file])
     @document_model.attach_blob_to_list(@test.documents) if file_blob
     set_repeat_step(:test)
   end
@@ -180,7 +180,7 @@ private
 
   def set_file
     file_blob, * = load_file_attachments
-    @document_model = Document.new(file_blob, [[:file, "Upload file"], [:title, "Enter file title"], [:description, "Enter file description"]])
+    @document_model = Document.new(file_blob, %i[file title description])
     set_repeat_step :file
   end
 

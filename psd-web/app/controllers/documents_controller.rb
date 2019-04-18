@@ -42,6 +42,6 @@ private
     file_blob = file_attachment.blob
     raise Pundit::NotAuthorizedError unless can_be_displayed?(file_blob, @parent)
 
-    @document_model = Document.new(file_blob, [[:title, "Enter title"]])
+    @document_model = Document.new(file_blob, [:title])
   end
 end

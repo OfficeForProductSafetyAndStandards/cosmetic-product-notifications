@@ -96,8 +96,8 @@ module Shared
       end
 
       def has_required_fields
-        @required_fields.each do |field_key, message|
-          errors.add(field_key, :required, message: message) if self.send(field_key).blank?
+        @required_fields.each do |field_key|
+          errors.add(field_key, :blank) if self.send(field_key).blank?
         end
       end
     end

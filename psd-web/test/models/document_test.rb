@@ -56,17 +56,17 @@ class DocumentTest < ActiveSupport::TestCase
     blob = create_file_blob(filename, metadata)
     document_model = Document.new(blob)
     document_model.validate
-    document_model.update_file({ title: "new title" })
+    document_model.update_file(title: "new title")
     assert_equal blob.metadata[:title], "new title"
     assert_equal document_model.title, "new title"
 
     investigation = Investigation::Allegation.create(description: "description")
     document_model.attach_blob_to_list(investigation.documents)
-    assert_includes investigation.documents.map { |attachment| attachment.blob }, blob
+    assert_includes investigation.documents.map(&:blob), blob
 
     document_model.detach_blob_from_list(investigation.documents)
     investigation = Investigation.find_by(description: "description")
-    assert_not_includes investigation.documents.map { |attachment| attachment.blob }, blob
+    assert_not_includes investigation.documents.map(&:blob), blob
 
     meeting = Correspondence::Meeting.new
     document_model.attach_blob_to_attachment_slot(meeting.transcript)

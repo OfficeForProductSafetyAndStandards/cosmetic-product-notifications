@@ -35,8 +35,8 @@ private
 
   def set_file
     file_blob, * = load_file_attachments
-    required_fields = [[:file, "Enter file"]]
-    required_fields << [:title, "Enter title"] if step == :metadata
+    required_fields = [:file]
+    required_fields << :title if step == :metadata
     @document_model = Document.new(file_blob, required_fields)
   end
 end

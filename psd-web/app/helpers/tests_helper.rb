@@ -15,7 +15,7 @@ module TestsHelper
 
   def set_attachment
     file_blob, * = load_file_attachments
-    required_fields = @test.is_a?(Test::Result) ? [[:file, "Provide the test file"]] : []
+    required_fields = @test.is_a?(Test::Result) ? [:file] : []
     @document_model = Document.new(file_blob, required_fields)
     @document_model.attach_blob_to_list(@test.documents) if file_blob
   end
