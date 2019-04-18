@@ -12,6 +12,7 @@ class User < Shared::Web::User
   # from the User object via delegation.
   delegate :has_viewed_introduction, :has_viewed_introduction!, to: :get_user_attributes
   delegate :has_accepted_declaration, :has_accepted_declaration!, to: :get_user_attributes
+  delegate :has_been_sent_welcome_email, :has_been_sent_welcome_email!, to: :get_user_attributes
 
   def teams
     # has_many through seems not to work with ActiveHash
