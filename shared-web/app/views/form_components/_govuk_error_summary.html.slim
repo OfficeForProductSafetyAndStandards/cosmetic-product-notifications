@@ -8,16 +8,5 @@ ruby:
     errors.full_messages_for(attribute).map { |m| { text: m, href: "##{prefix}-error" } }
   end
 
-  if local_assigns[:subform_data].present?
-    subform_data.each do |s|
-      subform_errors = s[:object].errors
-      subform_error_list = subform_errors.details.keys.flat_map do |attribute|
-        prefix = get_subform_attribute_id_prefix(form, s[:key], attribute)
-        subform_errors.full_messages_for(attribute).map { |message| { text: message, href: "##{prefix}-error" } }
-      end
-      error_list.concat subform_error_list
-    end
-  end
-
 - if error_list.any?
   = render "components/govuk_error_summary", **local_assigns, titleText: "There is a problem", errorList: error_list

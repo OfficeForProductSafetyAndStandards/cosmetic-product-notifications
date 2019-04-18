@@ -78,6 +78,7 @@ private
   def set_attachment
     file_blob, * = load_file_attachments
     @document_model = Document.new(file_blob)
+    @investigation.attachment = @document_model
   end
 
   def update_attachment
@@ -93,7 +94,7 @@ private
   end
 
   def investigation_valid?
-    @complainant.validate(step) && @investigation.validate(step) && @document_model.validate
+    @complainant.validate(step) && @investigation.validate(step) && @document_model.validate(step)
   end
 
   def investigation_saved?

@@ -1,5 +1,8 @@
 class Investigation::Enquiry < Investigation
+  include Shared::Web::Concerns::DocumentUploadConcern
   validates :user_title, :description, presence: true, on: :enquiry_details
+
+  validate_upload_document :attachment, [:file], :enquiry_details
 
   # Elasticsearch index name must be declared in children and parent
   index_name [Rails.env, "investigations"].join("_")

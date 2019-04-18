@@ -5,7 +5,7 @@ module Shared
       include ActiveModel::Validations
 
       attr_accessor :file
-      attr_accessor :title, :description, :document_type, :filename
+      attr_accessor :title, :description, :document_type, :filename, :required_fields
 
       validate :validate_blob_size
       validate :has_required_fields
@@ -16,10 +16,10 @@ module Shared
       # Use cases for file_object being nil are
       # 1. Validating presence of a file in this model, rather than in controller
       # 2. Facilitating optional file inputs without added complexity in controller
-      def initialize(file_object, required_fields = [])
+      def initialize(file_object)
         check_arguments(file_object)
 
-        @required_fields = required_fields
+        @required_fields = []
         return unless file_object
 
         @file = file_object
