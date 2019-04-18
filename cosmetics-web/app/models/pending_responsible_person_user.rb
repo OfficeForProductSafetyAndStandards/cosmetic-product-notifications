@@ -11,11 +11,20 @@ class PendingResponsiblePersonUser < ApplicationRecord
     1.day
   end
 
+  def self.pending_requests_to_join_responsible_person(user, responsible_person)
+    PendingResponsiblePersonUser.where(
+      "email_address = ? AND responsible_person_id = ? AND expires_at > ?",
+        user.email,
+        responsible_person.id,
+        DateTime.current
+    )
+  end
+
 private
 
   def email_address_is_not_in_team?
     if responsible_person.responsible_person_users.any? { |user| user.email_address == email_address }
-      errors.add email_address, 'The email address is already a member of this team'
+      errors.add :email_address, 'The email address is already a member of this team'
     end
   end
 

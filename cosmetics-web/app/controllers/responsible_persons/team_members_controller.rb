@@ -16,17 +16,15 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   end
 
   def join
-    pending_responsible_person_user = PendingResponsiblePersonUser.where(
-      "email_address = ? AND responsible_person_id = ? AND expires_at > ?",
-      User.current.email,
-      params[:responsible_person_id],
-      DateTime.current
-)
+    pending_requests = PendingResponsiblePersonUser.pending_requests_to_join_responsible_person(
+      User.current,
+        @responsible_person
+    )
 
-    if pending_responsible_person_user.any?
+    if pending_requests.any?
       @responsible_person.add_user(User.current)
       Rails.logger.info "Team member added to Responsible Person"
-      pending_responsible_person_user.delete_all
+      pending_requests.delete_all
     end
 
     redirect_to responsible_person_path(@responsible_person)
