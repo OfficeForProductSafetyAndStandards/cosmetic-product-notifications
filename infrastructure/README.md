@@ -54,7 +54,7 @@ You should sign up using GitHub OAuth to ensure MFA.
 
 [logstash-filters.conf](./logstash-filters.conf) provides a set of rules which logstash can use to parse Cloud Foundry logs.
 
-We're using ElastAlerts within Logit to track the logs and send alerts in certain scenarios (eg. a spike in unsuccessful file uploads). 
+We're using [ElastAlerts](https://github.com/Yelp/elastalert) within Logit to track the logs and send alerts in certain scenarios (eg. a spike in unsuccessful file uploads). 
 The config files for these alerts can be found in the `elastalert` folder. 
 Please note the email address and the Slack webhook URL are placeholder values and will need updating. These values can be obtained from the existing alerts on Logit.
 
