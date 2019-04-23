@@ -12,7 +12,8 @@ All notable changes to this project will be documented in this file.
 ## 2019-04-23
 ### Product safety database
 - Fixed a bug where the wrong user was attributed to entries in the activity log.
-- Fixed a bug where adding new teams caused the cases page to return an error.
+- Improvements to the display of error messages across the service.
+- Various bug fixes.
 
 
 ## 2019-04-03
