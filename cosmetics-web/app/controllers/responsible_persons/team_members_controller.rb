@@ -13,7 +13,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
       return redirect_to new_responsible_person_team_member_path(@responsible_person, user_already_exists: true)
     end
 
-    NotifyMailer.send_responsible_person_invite_email(@responsible_person.id, @responsible_person.name, team_member_params[:email_address], User.current.full_name).deliver_later
+    NotifyMailer.send_responsible_person_invite_email(@responsible_person.id, @responsible_person.name, team_member_params[:email_address], User.current.name).deliver_later
     redirect_to responsible_person_team_members_path(@responsible_person)
   end
 
@@ -27,6 +27,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
     if pending_responsible_person_user.any?
       @responsible_person.add_user(User.current)
+      Rails.logger.info "Team member added to Responsible Person"
       pending_responsible_person_user.delete_all
     end
 

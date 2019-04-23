@@ -1,7 +1,7 @@
 class ImageUpload < ApplicationRecord
   include FileUploadConcern
   set_attachment_name :file
-  set_allowed_types %w[image/jpeg application/pdf image/png image/svg+xml].freeze
+  set_allowed_types %w[image/jpeg application/pdf image/png].freeze
   set_max_file_size 30.megabytes
 
   belongs_to :notification

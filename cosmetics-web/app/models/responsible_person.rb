@@ -5,15 +5,13 @@ class ResponsiblePerson < ApplicationRecord
   has_many :pending_responsible_person_users, dependent: :destroy
   has_many :users, through: :responsible_person_users
   has_many :email_verification_keys, dependent: :destroy
+  has_many :contact_persons, dependent: :destroy
 
   enum account_type: { business: "business", individual: "individual" }
 
   validates :account_type, presence: true
-  validates :email_address, uniqueness: true
 
   validates :name, presence: true, on: %i[enter_details create]
-  validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: %i[enter_details create]
-  validates :phone_number, presence: true, on: %i[enter_details create]
   validates :address_line_1, presence: true, on: %i[enter_details create]
   validates :city, presence: true, on: %i[enter_details create]
   validates :postal_code, presence: true, on: %i[enter_details create]

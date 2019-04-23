@@ -1,0 +1,9 @@
+- if @unfinished_notifications.present?
+  .govuk-grid-row
+    .govuk-grid-column-full
+      ul.product-list[class="govuk-!-margin-bottom-0"]
+        - @unfinished_notifications.each do |notification|
+          = render "unfinished_product", notification: notification
+  .govuk-grid-row
+    .govuk-grid-column-full.pagination-links
+      = will_paginate(@unfinished_notifications, param_name: "incomplete", params: { anchor: "incomplete" })

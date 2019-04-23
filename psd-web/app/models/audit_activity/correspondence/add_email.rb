@@ -52,7 +52,7 @@ class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::B
     "Email recorded"
   end
 
-  def sensitive_title
+  def restricted_title
     "Email added"
   end
 

@@ -1,0 +1,11 @@
+h2.govuk-heading-l.poison-centre__table-heading
+  | Product details
+- @notification.components.each do |component|
+  table.govuk-table
+    - if component.name.present?
+      caption.govuk-table__caption.govuk-heading-m
+        = component.name
+    - if component.trigger_questions
+      - component.trigger_questions.each do |question|
+        tbody.govuk-table__body
+          = render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: false

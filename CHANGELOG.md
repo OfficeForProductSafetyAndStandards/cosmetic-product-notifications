@@ -9,6 +9,13 @@ All notable changes to this project will be documented in this file.
 <!-- ### Next release checklist -->
 
 
+## 2019-04-23
+### Product safety database
+- Fixed a bug where the wrong user was attributed to entries in the activity log.
+- Improvements to the display of error messages across the service.
+- Various bug fixes.
+
+
 ## 2019-04-03
 ### Product safety database
 - Update introduction, about page, terms and conditions and privacy notice.

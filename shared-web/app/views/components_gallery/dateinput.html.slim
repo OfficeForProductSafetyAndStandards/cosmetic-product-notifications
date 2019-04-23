@@ -1,0 +1,99 @@
+/ Examples in this file are based on  https://github.com/alphagov/govuk-frontend/
+/ blob/b863be549f502a6829a5d261976c3bcb8ebdf4d2/src/components/textarea/input.yaml#L59
+h1.govuk-heading-xl Date input component
+h2.govuk-heading-l Default
+= render "components/govuk_date_input",
+        id: "dob1",
+        namePrefix: "dob1",
+        fieldset: { legend: { text: "What is your date of birth?" } },
+        hint: { text: "For example, 31 3 1980" },
+        items: [{ name: "day", classes: "govuk-input--width-2" },
+                { name: "month", classes: "govuk-input--width-2" },
+                { name: "year", classes: "govuk-input--width-4" }]
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l With errors
+= render "components/govuk_date_input",
+        id: "dob-errors",
+        fieldset: { legend: { text: "What is your date of birth?" } },
+        hint: { text: "For example, 31 3 1980" },
+        errorMessage: { text: "Error message goes here" },
+        items: [{ name: "day", classes: "govuk-input--width-2 govuk-input--error" },
+                { name: "month", classes: "govuk-input--width-2 govuk-input--error" },
+                { name: "year", classes: "govuk-input--width-4 govuk-input--error" }]
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l With errors on day input
+= render "components/govuk_date_input",
+        id: "dob-day-error",
+        namePrefix: "dob-day-error",
+        fieldset: { legend: { text: "What is your date of birth?" } },
+        hint: { text: "For example, 31 3 1980" },
+        errorMessage: { text: "Error message goes here" },
+        items: [{ name: "day", classes: "govuk-input--width-2 govuk-input--error" },
+                { name: "month", classes: "govuk-input--width-2" },
+                { name: "year", classes: "govuk-input--width-4" }]
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l With errors on month input
+= render "components/govuk_date_input",
+        id: "dob-month-error",
+        namePrefix: "dob-month-error",
+        fieldset: { legend: { text: "What is your date of birth?" } },
+        hint: { text: "For example, 31 3 1980" },
+        errorMessage: { text: "Error message goes here" },
+        items: [{ name: "day", classes: "govuk-input--width-2" },
+                { name: "month", classes: "govuk-input--width-2 govuk-input--error" },
+                { name: "year", classes: "govuk-input--width-4" }]
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l With errors on day input
+= render "components/govuk_date_input",
+        id: "dob-year-error",
+        namePrefix: "dob-year-error",
+        fieldset: { legend: { text: "What is your date of birth?" } },
+        hint: { text: "For example, 31 3 1980" },
+        errorMessage: { text: "Error message goes here" },
+        items: [{ name: "day", classes: "govuk-input--width-2" },
+                { name: "month", classes: "govuk-input--width-2" },
+                { name: "year", classes: "govuk-input--width-4 govuk-input--error" }]
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l With default items
+= render "components/govuk_date_input",
+        id: "dob2",
+        namePrefix: "dob2",
+        fieldset: { legend: { text: "What is your date of birth?" } },
+        hint: { text: "For example, 31 3 1980" }
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l With optional form-group classes
+= render "components/govuk_date_input",
+        id: "dob3",
+        namePrefix: "dob3",
+        fieldset: { legend: { text: "What is your date of birth?" } },
+        hint: { text: "For example, 31 3 1980" },
+        formGroup: { classes: "extra-class" }
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l With autocomplete values
+= render "components/govuk_date_input",
+        id: "dob-with-autocomplete-attribute",
+        namePrefix: "dob-with-autocomplete",
+        fieldset: { legend: { text: "What is your date of birth?" } },
+        hint: { text: "For example, 31 3 1980" },
+        items: [{ name: "day", classes: "govuk-input--width-2", autocomplete: "bday-day" },
+                { name: "month", classes: "govuk-input--width-2", autocomplete: "bday-month" },
+                { name: "year", classes: "govuk-input--width-4", autocomplete: "bday-year" }]
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+
+h2.govuk-heading-l With input attributes
+= render "components/govuk_date_input",
+        id: "dob-with-input-attributes",
+        namePrefix: "dob-with-input-attributes",
+        fieldset: { legend: { text: "What is your date of birth?" } },
+        hint: { text: "For example, 31 3 1980" },
+        items: [{ name: "day", classes: "govuk-input--width-2", attributes: { "data-example-day": "day" } },
+                { name: "month", classes: "govuk-input--width-2", attributes: { "data-example-month": "month" } },
+                { name: "year", classes: "govuk-input--width-4", attributes: { "data-example-year": "year" } }]
+hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible

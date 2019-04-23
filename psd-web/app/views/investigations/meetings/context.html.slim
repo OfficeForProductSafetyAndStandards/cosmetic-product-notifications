@@ -5,19 +5,13 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        span.govuk-caption-xl
-          = @investigation.pretty_description
+      h1.govuk-heading-l
+        span.govuk-caption-l = @investigation.pretty_description
         | Record meeting
-      fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-          | Who was the meeting with?
-        = render "form_components/govuk_input", key: :correspondent_name, form: form,
-                classes: "govuk-!-width-two-thirds",
-                label: { text: "Name" }
-      .govuk-form-group
-        fieldset.govuk-fieldset aria-describedby="correspondence-date-hint" role="group"
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-            | Date of meeting
-        = render "date_input", form: form
+      = render "form_components/govuk_input", key: :correspondent_name, form: form,
+              classes: "govuk-!-width-two-thirds",
+              hint: { text: "Name" },
+              label: { text: "Who was the meeting with?", classes: "govuk-label--m" }
+      = render "form_components/govuk_date_input", form: form, key: :correspondence_date,
+              fieldset: { legend: { classes: "govuk-fieldset__legend--m", text: "Date of meeting" } }
       = form.submit "Continue", class: "govuk-button"

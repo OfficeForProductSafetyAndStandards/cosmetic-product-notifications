@@ -44,6 +44,14 @@ Notable differences from nunjucks:
     ```
     This renders most `text` and `html` attributes functionally identical, but we are choosing to keep both for consistency
     with nunjucks templates
+- We extended govuk_select component to streamline using it as accessible autocomplete component.
+    Our version accepts extra options:
+    - is_autocomplete, when true, makes the select an
+    [accessible autocomplete](https://github.com/alphagov/accessible-autocomplete)
+    - show_all_values, when true and is_autocomplete true, makes the autocomplete show all values,
+    as well as adds an 'x' to remove currently selected value.
+- hidden fields in checkboxes, to account for rails checkboxes "gotcha". The default value is 0 but can be set through the 'unchecked_value' attribute.
+  https://apidock.com/rails/ActionView/Helpers/FormHelper/check_box
 
 ## Rails integration
 To simplify working with rails form helpers, we are also providing a bit of "glue" which infers the values that it

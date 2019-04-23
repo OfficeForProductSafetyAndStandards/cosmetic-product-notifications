@@ -29,7 +29,7 @@ RSpec.describe "Poison Centre user", type: :system do
     assert_current_path(/notifications/)
   end
 
-  it "can view a list of all registered notifications" do
+  it "can view a list of all submitted notifications" do
     (rp_1_notifications + rp_2_notifications).each do |notification|
       assert_text notification.product_name
     end
@@ -39,17 +39,14 @@ RSpec.describe "Poison Centre user", type: :system do
     assert_no_text draft_notification.product_name
   end
 
-  it "is able to see the product details for a registered notification" do
+  it "is able to see the product details for a submitted notification" do
     notification = rp_1_notifications.first
     click_on notification.product_name
 
-    assert_value_in_table(get_product_table, "Name", notification.product_name)
-    assert_value_in_table(get_product_table, "Imported", "No")
-    assert_value_in_table(get_product_table, "Number of components", notification.components.count)
-    assert_value_in_table(get_product_table, "Shades", "None")
+    assert_text notification.product_name
   end
 
-  it "is able to see the Responsible Person details for a registered notification" do
+  it "is able to see the Responsible Person details for a submitted notification" do
     notification = rp_1_notifications.first
     click_on notification.product_name
 

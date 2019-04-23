@@ -10,7 +10,7 @@ table.govuk-table.check-your-answers-table#product-table
     - if notification.industry_reference.present?
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
-          | Reference number
+          | Internal reference number
         td.govuk-table__cell
           = notification.industry_reference
     tr.govuk-table__row
@@ -34,22 +34,27 @@ table.govuk-table.check-your-answers-table#product-table
         | Shades
       td.govuk-table__cell
         = display_shades(notification)
-    - if notification.image_uploads.present?
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
           | Label image
         td.govuk-table__cell
-          - notification.image_uploads.each do |image|
+          - if notification.image_uploads.present?
             ul.govuk-list
-              - if image.file_exists? && image.marked_as_safe?
-                li = link_to image.filename, url_for(image.file)
-              br
+              - notification.image_uploads.each do |image|
+                - if image.file_exists? && image.marked_as_safe?
+                  li = link_to image.filename, url_for(image.file)
+          - elsif allow_edits
+            = link_to "Add product images", \
+              new_responsible_person_notification_product_image_upload_path( \
+                notification.responsible_person, notification)
+          - else
+            | N/A
     - if notification.cpnp_notification_date.present?
       tr.govuk-table__row
         th.govuk-table__header
           | EU notification date
         td.govuk-table__cell
-          = notification.cpnp_notification_date.strftime("%d/%m/%Y")
+          = display_full_month_date notification.cpnp_notification_date
     tr.govuk-table__row
       th.govuk-table__header
         | Still on the market
@@ -60,8 +65,25 @@ table.govuk-table.check-your-answers-table#product-table
         | Intended for age 3 or under?
       td.govuk-table__cell
         = notification.under_three_years ? "Yes" : "No"
+    tr.govuk-table__row
+      th.govuk-table__header
+        | Are the components mixed?
+      td.govuk-table__cell
+        = notification.components_are_mixed ? "Yes" : "No"
+    - if notification.ph_min_value.present?
+      tr.govuk-table__row
+        th.govuk-table__header
+          | Minimum pH value
+        td.govuk-table__cell
+          = notification.ph_min_value
+    - if notification.ph_max_value.present?
+      tr.govuk-table__row
+        th.govuk-table__header
+          | Maximum pH value
+        td.govuk-table__cell
+          = notification.ph_max_value
     - if notification.components.count == 1
-      = render "notifications/component_details", component: notification.components.first
+      = render "notifications/component_details", component: notification.components.first, allow_edits: allow_edits
     - else
       - notification.components.each_with_index do |component, i|
         table.govuk-table.check-your-answers-table
@@ -73,4 +95,4 @@ table.govuk-table.check-your-answers-table#product-table
                 | Shades
               td.govuk-table__cell
                 = render "none_or_bullet_list", entities_list: component.shades
-          = render "notifications/component_details", component: component
+          = render "notifications/component_details", component: component, allow_edits: allow_edits

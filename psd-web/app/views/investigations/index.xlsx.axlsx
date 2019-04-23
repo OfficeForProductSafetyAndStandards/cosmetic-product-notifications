@@ -38,7 +38,7 @@ book.add_worksheet name: "Cases" do |sheet_investigations|
 end
 
 book.add_worksheet name: "Products" do |sheet_products|
-  sheet_products.add_row %w[ID Product_Code Name Type Category Webpage Description Country_of_origin Date_placed_on_market
+  sheet_products.add_row %w[ID Product_Code Name Type Category Webpage Description Country_of_origin
                             Batch_Number Source Case_ID]
 
   @investigations.each do |investigation|
@@ -53,7 +53,6 @@ book.add_worksheet name: "Products" do |sheet_products|
           product.webpage,
           product.description,
           product.country_of_origin,
-          product.date_placed_on_market&.to_s(:long_ordinal),
           product.batch_number,
           product.source&.show,
           investigation.pretty_id
@@ -125,7 +124,7 @@ book.add_worksheet name: "Actions" do |sheet_actions|
         sheet_actions.add_row [
           activity.id,
           activity.type.titleize,
-          activity.sensitive? ? "Restricted" : activity.body,
+          activity.can_display_all_data? ? activity.body: "Restricted",
           activity.source&.show,
           investigation.pretty_id
         ], :types => :text

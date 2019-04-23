@@ -11,14 +11,14 @@ li.product
     dl
       .govuk-clearfix
         dt
-          | First registered in the UK:
-        dd
-          = notification.created_at.strftime("%d/%m/%Y")
+          | First notified in the UK:
+        dd.tabular-data
+          = display_date notification.created_at
       .govuk-clearfix
         dt
-          | Last modified:
-        dd
-          = notification.updated_at.strftime("%d/%m/%Y")
+          | Last updated:
+        dd.tabular-data
+          = display_date notification.updated_at
       .govuk-clearfix
         dt
           | UK cosmetic product number:

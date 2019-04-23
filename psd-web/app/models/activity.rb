@@ -29,11 +29,11 @@ class Activity < ApplicationRecord
     return text.to_s.strip.gsub(/[*_~]/) { |match| "\\#{match}" } if text
   end
 
-  def sensitive?
-    false
+  def can_display_all_data?
+    true
   end
 
-  def sensitive_title
+  def restricted_title
     # where necessary should be implemented by subclasses
   end
 
@@ -44,13 +44,13 @@ class Activity < ApplicationRecord
   end
 
   def entities_to_notify
-    entities = users_to_notify.map { |user| { name: user.full_name, email: user.email } }
+    entities = users_to_notify.map { |user| { name: user.name, email: user.email } }
 
     teams_to_notify.each do |team|
       if team.team_recipient_email.present?
         entities << { name: team.name, email: team.team_recipient_email }
       else
-        users_from_team = team.users.map { |user| { name: user.full_name, email: user.email } }
+        users_from_team = team.users.map { |user| { name: user.name, email: user.email } }
         entities.concat(users_from_team)
       end
     end

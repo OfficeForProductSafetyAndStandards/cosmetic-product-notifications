@@ -23,13 +23,13 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
 
   test "validates presence of date" do
     click_button "Continue"
-    assert_text "date can't be blank"
+    assert_text "Correspondence date can't be blank"
   end
 
   test "validates date format" do
-    fill_in "correspondence_email[day]", with: "333"
+    fill_in "correspondence_email[correspondence_date][day]", with: "333"
     click_on "Continue"
-    assert_text "must specify a day, month and year"
+    assert_text "must include a month and year"
   end
 
   test "second step should be content" do
@@ -137,7 +137,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
     click_button "Continue"
 
-    other_org_user = User.find_by last_name: "Ts_user"
+    other_org_user = User.find_by name: "Test Ts_user"
     sign_in_as other_org_user
     visit investigation_path(@investigation)
 
@@ -149,7 +149,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "does not conceal consumer information from assignee" do
-    other_org_user = User.find_by last_name: "Ts_user"
+    other_org_user = User.find_by name: "Test Ts_user"
     set_investigation_assignee! @investigation, other_org_user
     fill_in_context_form
     choose :correspondence_email_has_consumer_info_true, visible: false
@@ -168,10 +168,10 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "does not conceal consumer information from assignee's team" do
-    other_org_user = User.find_by last_name: "Ts_user"
+    other_org_user = User.find_by name: "Test Ts_user"
     sign_in_as other_org_user
-    assignee = User.find_by last_name: "User_one"
-    same_team_user = User.find_by last_name: "User_four"
+    assignee = User.find_by name: "Test User_one"
+    same_team_user = User.find_by name: "Test User_four"
 
     set_investigation_assignee! @investigation, assignee
     fill_in_context_form
@@ -198,7 +198,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
     click_button "Continue"
 
-    same_org_user = User.find_by last_name: "User_three"
+    same_org_user = User.find_by name: "Test User_three"
     sign_in_as same_org_user
     visit investigation_path(@investigation)
 

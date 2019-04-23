@@ -9,8 +9,6 @@ class Test::Request < Test
     "testing request"
   end
 
-  validates :date, presence: { message: "Enter date of the test request" }
-
   def requested?
     true
   end

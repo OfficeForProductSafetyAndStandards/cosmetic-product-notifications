@@ -1,5 +1,5 @@
 - if investigations.any?
-    - investigations.each do |investigation|
-      = render "investigations/case_card", investigation: investigation, sorted_by: "recent"
+  - investigations.each do |investigation|
+    = render "investigations/case_card", investigation: investigation, sorted_by: "recent"
 - else
-    p[class="govuk-!-margin-top-6"] No cases.
+  p[class="govuk-!-margin-top-6"] No cases.

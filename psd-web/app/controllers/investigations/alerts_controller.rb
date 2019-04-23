@@ -85,7 +85,6 @@ private
     @preview = NotificationsClient.instance.generate_template_preview(
       NotifyMailer::TEMPLATES[:alert],
         personalisation: {
-          name: "<Name>",
           email_text: @alert.description,
           subject_text: @alert.summary
         }

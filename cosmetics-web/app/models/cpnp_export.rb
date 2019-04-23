@@ -47,6 +47,18 @@ class CpnpExport
     current_version_info_node.xpath(".//stillOnTheMarket").first&.text&.casecmp?("Y")
   end
 
+  def components_are_mixed
+    current_version_info_node.xpath(".//isMixed").first&.text&.casecmp?("Y")
+  end
+
+  def ph_min_value
+    current_version_info_node.xpath(".//phMinValue").first&.text
+  end
+
+  def ph_max_value
+    current_version_info_node.xpath(".//phMaxValue").first&.text
+  end
+
   def shades
     current_version_info_node.xpath(".//shade").first&.text
   end
@@ -106,11 +118,11 @@ private
   end
 
   def exposure_condition(nano_list_node)
-    get_exposure_condition(nano_list_node&.xpath(".//exposureCondition")&.first&.text)
+    get_exposure_condition(nano_list_node&.xpath(".//exposureCondition")&.first&.text.to_i)
   end
 
   def exposure_route(nano_list_node)
-    get_exposure_route(nano_list_node&.xpath(".//exposureRoute/exposureID")&.first&.text)
+    get_exposure_route(nano_list_node&.xpath(".//exposureRoute/exposureID")&.first&.text.to_i)
   end
 
   def trigger_questions(component_node)
@@ -160,8 +172,12 @@ private
     component_node.xpath(".//componentName[language='#{@language}']/name").first&.text
   end
 
+  # Because CPNP stores shades as just a plain text field, we are unable to
+  # extract the exported data into an array. As a workaround, we just return a
+  # single element array containing the shades data, which should display as we
+  # require.
   def component_shades(component_node)
-    component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text
+    [component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text]
   end
 
   def sub_sub_category(component_node)
@@ -175,7 +191,7 @@ private
   def special_applicator(component_node)
     return if component_node.xpath(".//specialApplicator") == "N"
 
-    get_special_applicator(component_node.xpath(".//specialApplicator").first&.text.to_i)
+    get_special_applicator(component_node.xpath(".//applicator").first&.text.to_i)
   end
 
   def acute_poisoning_info(component_node)

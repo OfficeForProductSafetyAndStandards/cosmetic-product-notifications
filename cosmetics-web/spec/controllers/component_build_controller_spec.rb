@@ -45,9 +45,9 @@ RSpec.describe ComponentBuildController, type: :controller do
       expect(response).to render_template(:number_of_shades)
     end
 
-    it "redirects to the check your answers page on finish" do
+    it "redirects to the trigger rules page on finish" do
       get(:show, params: params.merge(id: :wicked_finish))
-      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :add_product_image))
+      expect(response).to redirect_to(new_responsible_person_notification_component_trigger_question_path(responsible_person, notification, component))
     end
 
     it "initialises shades array with two empty strings in add_shades step" do
@@ -58,6 +58,13 @@ RSpec.describe ComponentBuildController, type: :controller do
     it "does not allow the user to view a notification component for a Responsible Person they not belong to" do
       expect {
         get(:show, params: other_responsible_person_params.merge(id: :number_of_shades))
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
+
+    it "does not allow the user to update a notification component that has already been submitted" do
+      notification.update state: "notification_complete"
+      expect {
+        get(:show, params: params.merge(id: :number_of_shades))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
@@ -80,7 +87,7 @@ RSpec.describe ComponentBuildController, type: :controller do
 
     it "skips add_shades step if user doesn't want to add shades" do
       post(:update, params: params.merge(id: :number_of_shades, number_of_shades: "single"))
-      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :add_product_image))
+      expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :add_cmrs))
     end
 
     it "adds errors if number_of_shades is empty" do
@@ -106,6 +113,13 @@ RSpec.describe ComponentBuildController, type: :controller do
     it "does not allow the user to update a notification component for a Responsible Person they not belong to" do
       expect {
         post(:update, params: other_responsible_person_params.merge(id: :add_shades, component: { shades: %w[red blue] }))
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
+
+    it "does not allow the user to update a notification that has already been submitted" do
+      notification.update state: "notification_complete"
+      expect {
+        post(:update, params: params.merge(id: :add_shades, component: { shades: %w[red blue] }))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end

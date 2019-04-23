@@ -9,7 +9,7 @@
         p
           ' To use your EU notification files, you must
           strong export
-          '  your data as ZIP files for all cosmetic products.
+          |  your data as ZIP files for the cosmetic products you want to notify.
       end
       = render "components/govuk_radios", name: :answer,
         errorMessage: @error_text.present? && { text: @error_text },
@@ -17,5 +17,5 @@
           isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
         hint: { html: hint_html },
         items: [{ text: "Yes, I have ZIP files containing XML to upload", value: "yes" },
-          { text: "No, enter the information manually", value: "no" }]
+          { text: "No, I will enter the information manually", value: "no" }]
       = form.submit "Continue", class: "govuk-button"
