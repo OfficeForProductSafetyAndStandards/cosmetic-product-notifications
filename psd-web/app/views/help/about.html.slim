@@ -1,0 +1,105 @@
+- content_for :page_title, "About"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    h1.govuk-heading-l Product safety database about page and guidance
+    p
+      | The Product safety database is used by Trading Standards and other market surveillance authorities (MSAs) to
+        report, track and share product safety information. It replaces the European Union’s RAPEX and ICSMS systems.
+
+    h2.govuk-heading-m When to use the service
+    p
+      | In line with the the General Product Safety Regulations, registered users from Trading Standards and MSAs can
+        use the service to:
+    ul.govuk-list.govuk-list--bullet
+      li report ‘serious’ product safety risks
+      li
+        | manage routine product safety issues including passing them on to another organisation, and tracking their
+          progress
+      li share and find information on products and businesses
+      li receive alerts from OPSS about serious product safety issues
+
+    h2.govuk-heading-m Reporting a ‘serious’ product safety risk
+    p
+      | MSAs must use the service to report ‘serious’ safety product issues in the UK. The OPSS will share the
+        information with all other MSAs through the Product safety database.
+    p
+      ' When reporting a serious issue you must include a risk assessment. To assess the level of risk, refer to an
+        established methodology, for example the
+      = link_to "EU RAPEX risk assessment guidelines",
+          "https://ec.europa.eu/consumers/consumer-safety/rag/#/screen/home"
+      |.
+    p
+      | You should add both serious and routine issues to the Product safety database. If you are unsure if a case is
+        serious then add the information about the case and assign it to OPSS. OPSS will then work with you to help
+        determine the severity and what to do next.
+
+    h2.govuk-heading-m Brexit implications
+    h3.govuk-heading-s Deal: MSAs’ responsibilities
+    p
+      | When an MSA reports a serious issue through the Product safety database, OPSS will add it to RAPEX. If the UK
+        leaves Europe with a deal, the UK must continue to report unsafe products to the EU using RAPEX during the
+        transition period.
+
+    h3.govuk-heading-s No deal: MSAs’ responsibilities
+    p If the UK leaves the EU without a deal, the UK will:
+    ul.govuk-list.govuk-list--bullet
+      li no longer need to report product safety information to RAPEX
+      li lose access RAPEX data which is not publicly available
+    p The Product safety database will send alerts about unsafe products on the UK market to local authorities.
+    p
+      ' You can find more in depth information on MSA reporting responsibilities in the
+      = link_to "OPSS incident management plan", "https://assets.publishing.service.gov.uk/government/uploads/" + \
+          "system/uploads/attachment_data/file/733151/safety-and-standards-incident-management-plan.pdf"
+      |.
+
+    h2.govuk-heading-m Accessing the service
+    p
+      | To access the Product safety database you must be a registered user from a market surveillance authority. This
+        includes local authority Trading Standards, the Office for Product Safety and Standards and UK government
+        bodies which have market surveillance powers.
+    p
+      ' Every MSA has an administrator who can invite colleagues to use the service. You can find out who does this for
+        your organisation by emailing
+      = mail_to "opss.enquiries@beis.gov.uk"
+
+    h2.govuk-heading-m Setting up a colleague as a registered user
+    p
+      ' If you are the administrator for your organisation, you can invite colleagues from
+      = link_to "the team page", your_teams_path
+      |.
+    p
+      | Administrators should only invite people from their organisation whose responsibilities include reporting,
+        tracking or sharing information on product safety.
+
+    h2.govuk-heading-m Case confidentiality
+    p Most information is visible and searchable to all registered users. This includes information about:
+    ul.govuk-list.govuk-list--bullet
+      li products
+      li businesses
+      li open and closed cases including their progress or outcome
+    p Information is restricted when needed, for example, if legal action is being taken.
+
+    h2.govuk-heading-m Staying in line with GDPR
+    p
+      | When you create a case you should not add any personal information about members of the public. If you add
+        correspondence from a member of the public that includes their personal information you must mark the uploaded
+        files as ‘consumer contact details’. The service will prompt you to do this. This restricts visibility so that
+        people from outside your organisation cannot see them.
+
+    h2.govuk-heading-m More support
+    p
+      ' If you need support, email OPSS on
+      = mail_to "OPSS.enquiries@beis.gov.uk"
+
+    h2.govuk-heading-m Feedback and suggestions
+    p
+      | The service is being continually improved and all feedback is appreciated. Use the feedback link at the top of
+        each page.
+
+    p
+      = link_to "Terms and conditions", help_terms_and_conditions_path
+    p
+      = link_to "Privacy notice", help_privacy_notice_path
+
+= render "close_page_button"

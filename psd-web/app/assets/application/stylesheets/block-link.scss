@@ -1,0 +1,10 @@
+.psd-block-link {
+  display: inline-block;
+  @include govuk-responsive-margin(2, "top");
+  @include govuk-responsive-margin(2, "bottom");
+  @include govuk-responsive-margin(4, "right");
+
+  .govuk-button ~ & {
+    @include govuk-responsive-padding(2);
+  }
+}

@@ -23,7 +23,6 @@ en:
   activerecord:
     attributes:
       responsible_person:
-        companies_house_number: "Companies House registration number"
         address_line_1: "Building and street"
         city: "Town or city"
         postal_code: "Postcode"
@@ -35,9 +34,9 @@ en:
           unzipped_files_are_pdf: "The unzipped files are PDF files"
           product_file_not_found: "The ZIP file does not contain a product XML file"
           notification_duplicated: "A notification for this product already exists for this responsible person"
-          notification_validation_error: "Try again or manually register the product"
+          notification_validation_error: "Try again or manually enter the production notification data"
           draft_notification_error: "The uploaded file is for a draft notification"
-          unknown_error: "Try again or manually register the product"
+          unknown_error: "Try again or manually enter the production notification data"
   errors:
     format: "%{message}"
     messages:
@@ -46,10 +45,11 @@ en:
       inclusion: "%{attribute} is not included in the list"
       exclusion: "%{attribute} is reserved"
       invalid: "%{attribute} is invalid"
-      confirmation: "%{attribute} doesn't match %{attribute}"
+      taken: "%{attribute} has already been taken"
+      confirmation: "%{attribute} does not match %{attribute}"
       accepted: "%{attribute} must be accepted"
-      empty: "%{attribute} can't be empty"
-      blank: "%{attribute} can't be blank"
+      empty: "%{attribute} can not be empty"
+      blank: "%{attribute} can not be blank"
       present: "%{attribute} must be blank"
       too_long:
         one: "%{attribute} is too long (maximum is 1 character)"

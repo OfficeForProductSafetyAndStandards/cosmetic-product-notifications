@@ -2,19 +2,37 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-### MSPSDS
-- Allow users to view their team members.
+<!-- ### Product safety database -->
+- New service navigation
+- Welcome email
 
 <!-- ### Cosmetics -->
 
 ### Next release checklist
-- [ ] Add `team_admin` role to mspsds client on keycloak
-- [ ] Allow mspsds to view clients info on keycloak
-    # Log into keycloak admin app, click on `Clients` and select `mspsds-app`
-    # In the `Service Account Roles` tab, select `realm-management` from the dropdown and assign the `view-clients` role
-    # In the `Scope` tab, select `realm-management` from the dropdown and assign the `view-clients` role
-- [ ] Add `view_clients` role to mspsds service account roles on `realm-management`
+- [ ] Update `cosmetics-app` name in keycloak
+     1. Log into keycloak admin app, click on `Clients` and select `cosmetics-app`
+         1. In the `Settings` tab, change the `Name` field to `Submit cosmetic product notifications`
+         2. Press the `Save` button, to apply the changes
+- [ ] Update all user accounts to use the `First Name` field for full name
+     1. Log into the Keycloak admin app, click on the `Users` tab and select `View all users`
+     2. Edit each user and ensure the `First Name` field contains their full name
+     3. Set the `Last Name` field to `n/a` to indicate it is not used
 
+## 2019-04-03
+### Product safety database
+- Update introduction, about page, terms and conditions and privacy notice.
+
+
+## 2019-03-29
+### Product safety database
+- Rename the service to Product safety database.
+- Add case alert functionality (to send RAPEX-style alerts).
+- Add introduction slides, about page, terms and conditions and privacy policy.
+- Add terms and conditions declaration prompt.
+- Assign cases to their creator by default.
+- Allow users to view their team members.
+- Allow users to add new team members.
+- Various bug fixes.
 
 ## 2019-03-07
 ### MSPSDS

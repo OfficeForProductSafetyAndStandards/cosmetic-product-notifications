@@ -38,12 +38,12 @@ class Notification < ApplicationRecord
     as_json(
       only: %i[product_name],
       include: {
-        responsible_person: {
-          only: %i[name]
-        },
-        components: {
-          methods: %i[display_sub_category display_sub_sub_category display_root_category]
-        }
+          responsible_person: {
+              only: %i[name]
+          },
+          components: {
+              methods: %i[display_sub_category display_sub_sub_category display_root_category]
+          }
       }
     )
   end
@@ -79,11 +79,28 @@ class Notification < ApplicationRecord
       transitions from: :empty, to: :draft_complete
     end
 
+    event :formulation_file_uploaded do
+      transitions from: :notification_file_imported, to: :draft_complete, guard: :formulation_present?
+    end
+
     event :submit_notification do
-      transitions from: :draft_complete, to: :notification_complete, guard: :images_are_present_and_safe?
+      transitions from: :draft_complete, to: :notification_complete,
+                  after: Proc.new { __elasticsearch__.index_document } do
+        guard do
+          notified_pre_eu_exit? || images_are_present_and_safe?
+        end
+      end
     end
   end
   # rubocop:enable Metrics/BlockLength
+
+  def imported?
+    notification.state == :notification_file_imported ? cpnp_is_imported : import_country.present?
+  end
+
+  def imported_country
+    notification.state == :notification_file_imported ? cpnp_imported_country : import_country
+  end
 
   def reference_number_for_display
     "UKCP-%08d" % reference_number
@@ -111,8 +128,32 @@ class Notification < ApplicationRecord
     components.any?(&:formulation_required?)
   end
 
+  def formulation_present?
+    components.none?(&:formulation_required?)
+  end
+
   def is_multicomponent?
     components.length > 1
+  end
+
+  def notified_post_eu_exit?
+    !notified_pre_eu_exit?
+  end
+
+  def notified_pre_eu_exit?
+    was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date < EU_EXIT_DATE))
+  end
+
+  def images_required?
+    notified_post_eu_exit? && image_uploads.empty?
+  end
+
+  def get_valid_multicomponents
+    components.select(&:is_valid_multicomponent?)
+  end
+
+  def get_invalid_multicomponents
+    components - get_valid_multicomponents
   end
 
 private

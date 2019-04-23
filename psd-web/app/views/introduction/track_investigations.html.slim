@@ -1,0 +1,12 @@
+- content_for :page_title, "Track investigations"
+- content_for :after_header do
+  = render "skip_introduction"
+
+.flash-card
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      h1.govuk-heading-l Track and manage investigations
+      p.govuk-body-l
+        | Trading Standards and other market surveillance authorities (MSAs) must report all routine safety issues
+          as soon as possible. You can also manage investigations and track the progress of cases.
+      = link_to "Continue", introduction_share_data_path, class: "govuk-button", role: "button", draggable: false

@@ -2,6 +2,11 @@ $govuk-global-styles: true;
 $govuk-assets-path: '~govuk-frontend/assets/';
 @import "~govuk-frontend/all";
 
-@import "navbar";
+@import "remove-default-button-styling";
 @import "autocomplete";
+@import "badge";
+@import "banner";
+@import "button";
 @import "search-box";
+@import "header";
+@import "text";

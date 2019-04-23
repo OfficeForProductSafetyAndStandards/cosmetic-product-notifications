@@ -180,8 +180,3 @@ build-iPhoneSimulator/
 
 
 # End of https://www.gitignore.io/api/ruby,node,rails
-
-# These files are copied as part of the worker deploy script
-apt.yml
-clamav/
-public/assets/.sprockets-manifest-qq.json

@@ -1,0 +1,33 @@
+- content_for :page_title, "View contact"
+- content_for :after_header do
+  = link_to "Back to business", @business, class: "govuk-back-link"
+.govuk-grid-row class="govuk-!-padding-bottom-6"
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l
+      span.govuk-caption-l
+        = "Business: #{@business.trading_name}"
+      | Remove contact
+    table.govuk-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Name
+          td.govuk-table__cell
+            = @contact.name
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | contact
+          td.govuk-table__cell
+            = @contact.email
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Phone
+          td.govuk-table__cell
+            = @contact.phone_number
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Title / Description
+          td.govuk-table__cell
+            = @contact.job_title
+= form_with url: business_contact_path(@business, @contact), method: :delete do |form|
+    = form.submit "Remove contact", class: "govuk-button remove-button"

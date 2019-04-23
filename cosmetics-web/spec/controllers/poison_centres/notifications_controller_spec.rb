@@ -33,7 +33,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         get :index
       end
 
-      it "gets all registered notifications" do
+      it "gets all submitted notifications" do
         expect(assigns(:notifications).records.to_a.sort).to eq((rp_1_notifications + rp_2_notifications).sort)
       end
 
@@ -41,7 +41,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         expect(assigns(:notifications).records.to_a).not_to include(draft_notification)
       end
 
-      it "excludes unfinished imported notifications" do
+      it "excludes incomplete imported notifications" do
         expect(assigns(:notifications).records.to_a).not_to include(imported_notification)
       end
 
@@ -79,7 +79,29 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
       it "renders the show template" do
         get :show, params: { reference_number: notification.reference_number }
-        expect(response).to render_template("notifications/show")
+        expect(response).to render_template("notifications/show_poison_centre")
+      end
+    end
+  end
+
+  describe "When signed in as an MSA user" do
+    before do
+      sign_in_as_msa_user
+    end
+
+    describe "GET #index" do
+      it "renders the index template" do
+        get :index
+        expect(response).to render_template("notifications/index")
+      end
+    end
+
+    describe "GET #show" do
+      let(:notification) { rp_1_notifications.first }
+
+      it "renders the show template" do
+        get :show, params: { reference_number: notification.reference_number }
+        expect(response).to render_template("notifications/show_msa")
       end
     end
   end

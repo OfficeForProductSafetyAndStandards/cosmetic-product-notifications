@@ -3,6 +3,11 @@ class User < Shared::Web::User
   has_many :responsible_person_users, dependent: :destroy
   has_many :responsible_persons, through: :responsible_person_users
 
+  has_one :user_attributes, dependent: :destroy
+
+  # Getters and setters for each UserAttributes column should be added here so they can be accessed directly via delegation.
+  delegate :has_accepted_declaration?, :has_accepted_declaration!, to: :get_user_attributes
+
   def self.find_or_create(user)
     User.find_by(id: user[:id]) || User.create(user.except(:groups))
   end
@@ -15,5 +20,15 @@ class User < Shared::Web::User
 
   def poison_centre_user?
     has_role? :poison_centre_user
+  end
+
+  def msa_user?
+    has_role? :msa_user
+  end
+
+private
+
+  def get_user_attributes
+    UserAttributes.find_or_create_by(user_id: id)
   end
 end

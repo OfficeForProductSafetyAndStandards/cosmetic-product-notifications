@@ -1,0 +1,31 @@
+.govuk-grid-column-one-half
+  h2.govuk-heading-m[class="govuk-!-margin-bottom-6"]
+    | Current status
+  table.govuk-table.summary-table
+    tbody.govuk-table__body
+      tr.govuk-table__row
+        th.govuk-table__header[scope="row"]
+          span.govuk-caption-m[class="govuk-!-font-size-16"]
+            | Status
+          = investigation.status
+        td.govuk-table__cell [class="govuk-!-font-size-16"]
+          = link_to "Change", status_investigation_path(investigation)
+
+      tr.govuk-table__row
+        th.govuk-table__header[scope="row"]
+          span.govuk-caption-m[class="govuk-!-font-size-16"]
+            | Assigned to
+          = investigation.assignee ? investigation.assignee.name.to_s : "Unassigned"
+          - if investigation.assignee&.organisation.present?
+            div[class="govuk-!-font-size-16"]
+              = investigation.assignee.organisation.name
+        td.govuk-table__cell [class="govuk-!-font-size-16"]
+          - if policy(investigation).assign?
+            = link_to "Change", new_investigation_assign_path(investigation)
+      tr.govuk-table__row
+        th.govuk-table__header[scope="row"]
+          span.govuk-caption-m[class="govuk-!-font-size-16"]
+            | Last updated
+          span = "#{time_ago_in_words(investigation.updated_at)} ago"
+        td.govuk-table__cell [class="govuk-!-font-size-16"]
+          = link_to "Add activity", new_investigation_activity_path(investigation)

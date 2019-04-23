@@ -1,6 +1,16 @@
 module NotificationHelper
   def product_imported?(notification)
-    notification.import_country.present? || notification.cpnp_reference.present?
+    if notification.import_country == "country:GB" || notification.cpnp_imported_country == "country:GB"
+      return "No"
+    end
+    if notification.import_country.present? || notification.cpnp_imported_country.present?
+      return "Yes"
+    end
+    if notification.cpnp_reference.present? && notification.notified_pre_eu_exit?
+      return "Manufactured in EU before Brexit"
+    end
+
+    "No"
   end
 
   def product_import_country(notification)
@@ -13,9 +23,5 @@ module NotificationHelper
     else
       "EU (before Brexit)"
     end
-  end
-
-  def product_shades(notification)
-    notification.components.first&.shades&.join(", ") || notification.shades || "N/A"
   end
 end

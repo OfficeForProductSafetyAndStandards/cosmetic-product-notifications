@@ -1,0 +1,29 @@
+- content_for :page_title, "Record phone call"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", investigation_path(@investigation), class: "govuk-back-link"
+= form_with(model: @correspondence, local: true, url: wizard_path, method: :put) do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-l
+        span.govuk-caption-l = @investigation.pretty_description
+        | Record phone call
+      = render "components/govuk_fieldset",
+              legend: { text: "Who was the call with?", classes: "govuk-fieldset__legend--m" } do
+        .govuk-grid-row
+          .govuk-grid-column-two-thirds
+            = render "form_components/govuk_input", key: :correspondent_name, form: form,
+                    label: { text: "Name" }
+            = render "form_components/govuk_input", key: :phone_number, form: form,
+                    label: { text: "Phone number" }, hint: { text: "Please include any dialing codes etc" }
+      = render "form_components/govuk_radios", form: form, key: :has_consumer_info,
+              classes: "govuk-radios--inline",
+              fieldset: { legend: { text: "Are these consumer contact details?",
+                      classes: "govuk-fieldset__legend--m" } },
+              hint: { text: "Consumer contact details are protected by GDPR legislation" },
+              items: [{ text: "No", value: "false" }, { text: "Yes", value: "true" }]
+
+      = render "form_components/govuk_date_input", form: form, key: :correspondence_date,
+              fieldset: { legend: { classes: "govuk-fieldset__legend--m", text: "Date of call" } }
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

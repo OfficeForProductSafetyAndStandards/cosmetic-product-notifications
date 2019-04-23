@@ -1,0 +1,26 @@
+- content_for :page_title, "Case created"
+
+- banner_content = capture do
+  h1.govuk-heading-l Case created
+  p = "Case ID: #{@investigation&.pretty_id}"
+  p
+    ' A confirmation email has been sent to
+    strong = User.current.email
+    | .
+= render "components/hmcts_banner", html: banner_content
+.govuk-row
+  .govuk-column-two-thirds-from-desktop
+    p
+      strong = @investigation.title
+      '  has now been assigned to
+      strong you
+      | .
+    p If you need to, you can add more information later.
+
+.govuk-row
+  .govuk-column-two-thirds-from-desktop
+    = link_to "View case", investigation_path(@investigation),
+            class: "govuk-button", role: "button"
+.govuk-row
+  .govuk-column-two-thirds-from-desktop
+    = link_to "Home", root_path, class: "govuk-link govuk-body"

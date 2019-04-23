@@ -17,6 +17,16 @@ class CpnpExport
     @xml_doc.xpath("//cpnpReference").first&.text
   end
 
+  def cpnp_notification_date
+    dates = @xml_doc.xpath("//modificationDate").map { |element| Time.zone.parse(element.text) }
+    dates.min
+  end
+
+  def industry_reference
+    industry_reference = @xml_doc.xpath("//industryReference").first&.text
+    industry_reference if industry_reference != "N/A"
+  end
+
   def notification_status
     @xml_doc.xpath('//status').first&.text
   end
@@ -27,6 +37,26 @@ class CpnpExport
 
   def imported_country
     get_gov_uk_country_code(current_version_info_node.xpath(".//importedCty").first&.text)
+  end
+
+  def under_three_years
+    current_version_info_node.xpath(".//under3year").first&.text&.casecmp?("Y")
+  end
+
+  def still_on_the_market
+    current_version_info_node.xpath(".//stillOnTheMarket").first&.text&.casecmp?("Y")
+  end
+
+  def components_are_mixed
+    current_version_info_node.xpath(".//isMixed").first&.text&.casecmp?("Y")
+  end
+
+  def ph_min_value
+    current_version_info_node.xpath(".//phMinValue").first&.text
+  end
+
+  def ph_max_value
+    current_version_info_node.xpath(".//phMaxValue").first&.text
   end
 
   def shades
@@ -44,13 +74,19 @@ class CpnpExport
                        range_formulas: range_formulas(component_node),
                        trigger_questions: trigger_questions(component_node),
                        cmrs: cmrs(component_node),
-                       nano_materials: nano_materials(component_node))
+                       nano_material: nano_material(component_node),
+                       physical_form: physical_form(component_node),
+                       special_applicator: special_applicator(component_node),
+                       acute_poisoning_info: acute_poisoning_info(component_node),
+                       state: "component_complete")
     end
   end
 
 private
 
   def cmrs(component_node)
+    return if component_node.xpath(".//hasCmr") == "N"
+
     component_node.xpath(".//cmrList/cmr").collect do |cmr_node|
       Cmr.create(name: cmr_node.xpath(".//name").first&.text,
                  cas_number: cmr_node.xpath(".//casNumber").first&.text,
@@ -58,15 +94,16 @@ private
     end
   end
 
-  def nano_materials(component_node)
-    component_node.xpath(".//nanoList").collect do |nano_list_node|
-      nano_elements = nano_list_node.xpath(".//nano").collect do |nano_element_node|
-        nano_element(nano_element_node)
-      end
-      NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
-                          exposure_route: exposure_route(nano_list_node),
-                          nano_elements: nano_elements)
+  def nano_material(component_node)
+    return if component_node.xpath(".//hasNano") == "N"
+
+    nano_list_node = component_node.xpath(".//nanoList").first
+    nano_elements = nano_list_node&.xpath(".//nano")&.collect do |nano_element_node|
+      nano_element(nano_element_node)
     end
+    NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
+                        exposure_route: exposure_route(nano_list_node),
+                        nano_elements: nano_elements)
   end
 
   def nano_element(nano_element_node)
@@ -81,11 +118,11 @@ private
   end
 
   def exposure_condition(nano_list_node)
-    get_exposure_condition(nano_list_node.xpath(".//exposureCondition").first&.text.to_i)
+    get_exposure_condition(nano_list_node&.xpath(".//exposureCondition")&.first&.text.to_i)
   end
 
   def exposure_route(nano_list_node)
-    get_exposure_route(nano_list_node.xpath(".//exposureRoute/exposureID").first&.text.to_i)
+    get_exposure_route(nano_list_node&.xpath(".//exposureRoute/exposureID")&.first&.text.to_i)
   end
 
   def trigger_questions(component_node)
@@ -102,11 +139,11 @@ private
     TriggerQuestionElement.create(answer_order: question_element_node.xpath(".//answerOrder").first&.text.to_i,
                                   answer: question_element_node.xpath(".//answer").first&.text,
                                   element_order: question_element_node.xpath(".//elementOrder").first&.text.to_i,
-                                  element: get_trigger_rules_question_element(question_element_node.xpath(".//elementID").first&.text.to_i))
+                                  element: get_trigger_rules_question_element(normalize_id(question_element_node.xpath(".//elementID").first&.text)))
   end
 
   def trigger_rules_question(question_node)
-    get_trigger_rules_question(question_node.xpath(".//questionID").first&.text.to_i)
+    get_trigger_rules_question(normalize_id(question_node.xpath(".//questionID").first&.text))
   end
 
   def exact_formulas(component_node)
@@ -124,7 +161,7 @@ private
   end
 
   def frame_formulation(component_node)
-    get_frame_formulation(component_node.xpath(".//frameFormulation").first&.text.to_i)
+    get_frame_formulation(normalize_id(component_node.xpath(".//frameFormulation").first&.text))
   end
 
   def notification_type(component_node)
@@ -135,12 +172,34 @@ private
     component_node.xpath(".//componentName[language='#{@language}']/name").first&.text
   end
 
+  # Because CPNP stores shades as just a plain text field, we are unable to
+  # extract the exported data into an array. As a workaround, we just return a
+  # single element array containing the shades data, which should display as we
+  # require.
   def component_shades(component_node)
-    component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text
+    [component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text]
   end
 
   def sub_sub_category(component_node)
-    get_category(component_node.xpath(".//categorie3").first&.text.to_i)
+    get_category(normalize_id(component_node.xpath(".//categorie3").first&.text))
+  end
+
+  def physical_form(component_node)
+    get_physical_form(component_node.xpath(".//physicalForm").first&.text.to_i)
+  end
+
+  def special_applicator(component_node)
+    return if component_node.xpath(".//specialApplicator") == "N"
+
+    get_special_applicator(component_node.xpath(".//applicator").first&.text.to_i)
+  end
+
+  def acute_poisoning_info(component_node)
+    component_node.xpath(".//acutePoisoningInfo").first&.text
+  end
+
+  def normalize_id(id_string)
+    id_string.to_i < 100000 ? id_string.to_i + 100000 : id_string.to_i
   end
 
   def current_version_component_lists_node

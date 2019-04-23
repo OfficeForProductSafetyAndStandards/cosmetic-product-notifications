@@ -1,0 +1,24 @@
+= form_with model: document, scope: :document, url: target_url, method: :put, local: true do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form, errors: @errors
+  = yield
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "documents/document_preview", document: document, dimensions: "480x320"
+      hr [class = "govuk-section-break govuk-section-break--m govuk-section-break--visible"]
+      h3.govuk-heading-m = "#{image_document_text(document).titleize} details"
+      = form.fields_for :file do |subform|
+        = render "form_components/govuk_input", key: :title, form: subform, classes: "govuk-!-width-two-thirds",
+                value: document.metadata["title"],
+                label: { text: "Document title" }
+        = render "form_components/govuk_textarea", key: :description, form: subform,
+                value: document.metadata["description"], attributes: { maxlength: 10000 },
+                label: { text: "Description" }
+        .govuk-form-group
+          .govuk-grid-row
+            .govuk-grid-column-one-third
+              = form.submit "#{edit ? 'Update' : 'Save'} attachment", class: "govuk-button"
+            - if edit
+              .govuk-grid-column-one-quarter
+                p = link_to "Cancel", @parent, class: "psd-block-link"

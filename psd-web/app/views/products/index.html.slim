@@ -1,0 +1,8 @@
+- content_for :page_title, "Products"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l Products
+  .govuk-grid-column-full
+    = render "table", products: @products
+    = will_paginate @products

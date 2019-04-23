@@ -30,11 +30,11 @@ RSpec.describe "Responsible person dashboard", type: :system do
     assert_text "Incomplete (1)"
   end
 
-  it "only shows user the registered notifications belonging to their Responsible Person" do
+  it "only shows user the submitted notifications belonging to their Responsible Person" do
     create(:registered_notification, responsible_person: responsible_person_1)
     create(:registered_notification, responsible_person: responsible_person_2)
     visit responsible_person_notifications_path(responsible_person_1)
-    assert_text "Registered (1)"
+    assert_text "Notified (1)"
   end
 
   it "doesn't count number of loading files from other users in Responsible Person" do
@@ -68,13 +68,13 @@ RSpec.describe "Responsible person dashboard", type: :system do
     assert_text "Previous 1 2 Next"
   end
 
-  it "uses pagination to display unfinished notifications" do
+  it "uses pagination to display incomplete notifications" do
     create_list(:draft_notification, 11, responsible_person: responsible_person_1)
     visit responsible_person_notifications_path(responsible_person_1)
     assert_text "Previous 1 2 Next"
   end
 
-  it "uses pagination to display registered notifications" do
+  it "uses pagination to display submitted notifications" do
     create_list(:registered_notification, 11, responsible_person: responsible_person_1)
     visit responsible_person_notifications_path(responsible_person_1)
     assert_text "Previous 1 2 Next"
@@ -87,7 +87,7 @@ RSpec.describe "Responsible person dashboard", type: :system do
     create_list(:notification_file, 11, responsible_person: responsible_person_1, user: user_2,
                 upload_error: "uploaded_file_not_a_zip")
     visit responsible_person_notifications_path(responsible_person_1)
-    click_button "Dismiss all failed files"
+    click_button "Dismiss all error messages"
     sign_out
     sign_in as_user: user_2
     visit responsible_person_notifications_path(responsible_person_1)

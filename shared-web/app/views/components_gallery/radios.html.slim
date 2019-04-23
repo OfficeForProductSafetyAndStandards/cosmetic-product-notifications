@@ -1,7 +1,7 @@
 / Exmpales in this file are based on  https://github.com/alphagov/govuk-frontend/
 /           blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/radios.yaml
-h1.govuk-heading-xl Radios Component
-h2.govuk-heading-l Default
+h1.govuk-heading-l Radios Component
+h2.govuk-heading-m Default
 = render "components/govuk_radios",
         idPrefix: "example",
         name: "example",
@@ -13,7 +13,7 @@ h2.govuk-heading-l Default
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l Inline
+h2.govuk-heading-m Inline
 = render "components/govuk_radios",
         idPrefix: "example'",
         classes: "govuk-radios--inline",
@@ -26,7 +26,7 @@ h2.govuk-heading-l Inline
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l Disabled
+h2.govuk-heading-m Disabled
 = render "components/govuk_radios",
         idPrefix: "example-disabled",
         name: "example-disabled",
@@ -38,7 +38,7 @@ h2.govuk-heading-l Disabled
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With Legend as heading
+h2.govuk-heading-m With Legend as heading
 - html2 = capture do
   span.govuk-heading-s class="govuk-!-margin-bottom-1"
     | Part 2 of the Housing Act 2004
@@ -58,7 +58,7 @@ h2.govuk-heading-l With Legend as heading
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With a medium legend
+h2.govuk-heading-m With a medium legend
 = render "components/govuk_radios",
         "idPrefix": "housing-act", \
   "name": "housing-act-medium-legend", \
@@ -75,7 +75,7 @@ h2.govuk-heading-l With a medium legend
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With a divider
+h2.govuk-heading-m With a divider
 = render "components/govuk_radios",
         "idPrefix": "example-divider", \
   "name": "example-with-divider", \
@@ -104,7 +104,7 @@ h2.govuk-heading-l With a divider
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With hints on items
+h2.govuk-heading-m With hints on items
 = render "components/govuk_radios",
         "idPrefix": "gov", \
   "name": "gov-with-hints", \
@@ -134,7 +134,7 @@ h2.govuk-heading-l With hints on items
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l Without fieldset
+h2.govuk-heading-m Without fieldset
 = render "components/govuk_radios",
         "name": "colours", \
   "items": [\
@@ -154,7 +154,7 @@ h2.govuk-heading-l Without fieldset
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With all fieldset attributes
+h2.govuk-heading-m With all fieldset attributes
 = render "components/govuk_radios",
         "idPrefix": "example-with-attributes", \
   "name": "example-with-attributes", \
@@ -188,7 +188,7 @@ h2.govuk-heading-l With all fieldset attributes
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With very long option text
+h2.govuk-heading-m With very long option text
 = render "components/govuk_radios",
         "name": "waste", \
   "hint": { \
@@ -227,7 +227,7 @@ h2.govuk-heading-l With very long option text
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l With conditional items
+h2.govuk-heading-m With conditional items
 - html_email = capture do
   label.govuk-label for="contact-email"
     | Email address
@@ -269,7 +269,7 @@ h2.govuk-heading-l With conditional items
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 
-h2.govuk-heading-l Inline with conditional items
+h2.govuk-heading-m Inline with conditional items
 = render "components/govuk_radios",
         "classes": "govuk-radios--inline", \
   "idPrefix": "how-contacted-inline", \
@@ -282,8 +282,25 @@ h2.govuk-heading-l Inline with conditional items
   "items": contact_items
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
-
-h2.govuk-heading-l With conditional item checked
+- contact_items = [\
+    { \
+      "value": "email", \
+      "text": "Email", \
+      "conditional": { "html": html_email }\
+    }, \
+    { \
+      "value": "phone", \
+      "checked": true,
+      "text": "Phone", \
+          "conditional": { "html": html_phone }\
+    }, \
+    { \
+      "value": "text", \
+      "text": "Text message", \
+      "conditional": { "html": html_text }\
+    }\
+  ]
+h2.govuk-heading-m With conditional item checked
 = render "components/govuk_radios",
         "idPrefix": "how-contacted-checked", \
   "name": "how-contacted-checked", \
@@ -295,8 +312,30 @@ h2.govuk-heading-l With conditional item checked
   "items": contact_items
 
 hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
-
-h2.govuk-heading-l With optional form-group classes showing group error
+- html_phone = capture do
+  label.govuk-label for="contact-phone" Phone number
+  span#contact-phone-error.govuk-error-message Problem with input
+  input.govuk-input.govuk-input--error [
+    class="govuk-!-width-one-third" name="contact-phone" type="text" id="contact-phone"]
+- contact_items = [\
+    { \
+      "value": "email", \
+      "text": "Email", \
+      "conditional": { "html": html_email }\
+    }, \
+    { \
+      "value": "phone", \
+      "checked": true,
+        "text": "Phone", \
+          "conditional": { "html": html_phone }\
+    }, \
+    { \
+      "value": "text", \
+      "text": "Text message", \
+      "conditional": { "html": html_text }\
+    }\
+  ]
+h2.govuk-heading-m With optional form-group classes showing group error
 = render "components/govuk_radios",
         "idPrefix": "how-contacted-error", \
   "name": "how-contacted-error", \

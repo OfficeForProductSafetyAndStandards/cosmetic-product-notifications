@@ -6,105 +6,117 @@
     .govuk-grid-row
       .govuk-grid-column-two-thirds
         h1.govuk-heading-xl[class="govuk-!-margin-top-4 govuk-!-margin-bottom-6"]
-          | Register cosmetic products
+          | Submit cosmetic product notifications
         h2.govuk-body-l
-          | Notification of cosmetic products to be sold or given away in the UK.
+          | Submit notifications for cosmetic products to be sold or given away in the UK.
         p.masthead-account-links[class="govuk-!-padding-top-2 govuk-!-margin-bottom-5"]
           - if @responsible_person.present?
-            => link_to "Show my cosmetic products", responsible_person_notifications_path(@responsible_person),
+            => link_to "Your cosmetic products", responsible_person_notifications_path(@responsible_person),
                     class: "govuk-button govuk-!-font-weight-bold", role: "button", draggable: "false"
           - else
-            => link_to "Create an account", keycloak_registration_url, class: "govuk-button govuk-!-font-weight-bold",
-                    role: "button", draggable: "false"
+            => link_to "Create an account", keycloak_registration_url(dashboard_path),
+                    class: "govuk-button govuk-!-font-weight-bold", role: "button", draggable: "false"
             ' or
-            => link_to "sign in", keycloak_login_url, class: "govuk-link govuk-link--no-visited-state"
-            | if you’ve used it before
+            => link_to "sign in", keycloak_login_url(dashboard_path), class: "govuk-link govuk-link--no-visited-state"
+            | if you have used this service before
 
 .govuk-width-container
   main#main-content.govuk-main-wrapper.app-main-class[role="main"]
     .govuk-grid-row
       .govuk-grid-column-two-thirds
         h3.govuk-heading-m
-          | Registering cosmetic products in the UK
+          | New cosmetic product notifications in the UK
         p
-          ' For safety purposes all
-          => link_to "cosmetic products", "/", class: "govuk-link"
-          |  intended for sale or given away in the UK must be registered in the UK.
+          | For safety purposes you must submit notifications for all cosmetic products intended
+            for sale or given away in the UK.
         p
-          | To register a product you need to give details of:
+          | To submit a new cosmetic product notification you need to give details of:
         ul.govuk-list.govuk-list--bullet
           li
             | the organisation or individual responsible for ensuring regulations are followed,
               known as the ‘responsible person’
           li
-            | the cosmetic name
+            | a contact person to give information about the cosmetic products to the national poison information
+              service or market surveillance authorities
           li
-            | the formulation
+            | the name of the cosmetic product
           li
-            | an image of the packaging and label
+            | if applicable, the shades in which the cosmetic product is available
+          li
+            | whether or not the cosmetic product contains carcinogenic, mutagenic or toxic for
+              reproduction (CMR) substances
+          li
+            | whether or not the cosmetic product contains nanomaterials
+          li
+            | the product’s formulation as either a predefined formulation, or the ingredients and
+              their concentration ranges, or the exact concentrations of ingredients
+          li
+            | an image of the label
         h3.govuk-heading-m
-          | Cosmetic products notified in the EU before 29 March 2019
+          | Cosmetic products notified in the European Union (EU) before
+          span.no-wrap< = display_full_month_date EU_EXIT_DATE
         p
-          | To continue to sell or give away cosmetic products that were notified to the European Union (EU)
-            before Brexit, you must register your products in the UK by 11:59pm on 27 June 2019.
+          | To continue to sell or give away cosmetic products that were notified in the EU before Brexit,
+            you must submit your product notifications in the UK within 90 days of the UK leaving the EU – that is by
+          span.no-wrap<
+            => display_time SUBMISSION_WINDOW_END_DATE
+            | on
+            =< display_full_month_date SUBMISSION_WINDOW_END_DATE
+            | .
+        p
+          | You do not have to submit notifications for cosmetic products discontinued before
+          span.no-wrap<
+            = display_full_month_date EU_EXIT_DATE
+            | .
         p
           | You will need to provide:
         ul.govuk-list.govuk-list--bullet
           li
             | the UK-based responsible person
           li
-            | the cosmetic name
+            | a contact person to give information about the cosmetic products to the national poison information
+              service or market surveillance authorities
           li
-            | the formulation
+            | the name of the cosmetic product
           li
-            | an image of the packaging and label
+            | the product’s formulation as either a predefined formulation, or the ingredients and
+              their concentration ranges, or the exact concentrations of ingredients
+        p
+          | You do not have to submit notifications for cosmetic products discontinued before
+          span.no-wrap<
+            = display_full_month_date EU_EXIT_DATE
+            | .
         h3.govuk-heading-m
-          | How to register cosmetic products in the UK
+          | How to submit cosmetic product notifications in the UK
         h4.govuk-heading-s
-          | Cosmetic products available in the EU and the UK
+          | Cosmetic products available in the EU
         p
-          | If your cosmetic products are on sale in both the EU and UK and you have complete a EU notification,
-            you can use the same data to make registration in the UK simpler.
+          | The EU Cosmetic Product Notification Portal (CPNP) allows you to export ZIP files containing XML files
+            for each notification.
         p
-          | If you use the same data, you will need to:
+          | You can upload notification files only as ZIP files containing XML files on the
+            UK cosmetic product notification service.
+        p
+          | To use the data from your EU notifications for UK notifications you need to:
         ul.govuk-list.govuk-list--bullet
           li
             b export
             |  your data as ZIP files for all cosmetic products
           li
-            | prepare an image file for each product, this can be the same as you used for the EU notification
+            | upload your ZIP file containing XML files to the UK notification service
           li
-            | if the original EU notification had attached a document with formulation information,
-              you will also need provide this
+            | if the original EU notification file has the formulation as an attached document,
+              you will also need add this
         h4.govuk-heading-s
-          | Cosmetic products not available in the EU
+          | Cosmetic products that have not been notified in the EU
         p
-          | You can register a cosmetic product by entering information about the product.
-        p
-          | You will need:
-        ul.govuk-list.govuk-list--bullet
-          li
-            | the name
-          li
-            | the shades, if available in more than 1 shade
-          li
-            | the size, if available in more than 1 size
-          li
-            | the ingredients as either a frame formulation, ingredients range, or exact concentrations
-          li
-            | an image of the packaging and label
-        p
-          | If cosmetic the product was not notified in the EU before 29 March 2019, you will be asked to
-            provide information about:
-        ul.govuk-list.govuk-list--bullet
-          li
-            | carcinogenic, mutagenic or toxic for reproduction substances (CMR)
-          li
-            | nanomaterials
+          | You can submit a cosmetic product notification by manually entering information about the product.
         h4.govuk-heading-s
           | Cosmetic products containing nanomaterials
         p
-          | If a cosmetic product contains nanomaterials not already approved for use in cosmetics,
-            the responsible person must notify us of their proposed use 6 months before the cosmetic
-            product containing them goes on sale.
-        p = link_to "Read about using nanomaterials in cosmetics.", '/', class: "govuk-link"
+          | If a cosmetic product contains nanomaterials not already approved for use in cosmetic products,
+            the responsible person must notify their proposed use
+          span.no-wrap<> 6 months
+            before the cosmetic product containing them goes on sale or is given away.
+        p = link_to "Read about using nanomaterials in cosmetics.", '/notify-nanomaterials', class: "govuk-link"
+        / TODO COSBETA-219: add a new page for th url /notify-nanomaterial

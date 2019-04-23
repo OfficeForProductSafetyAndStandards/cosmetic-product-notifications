@@ -1,0 +1,27 @@
+// CSS adapted from https://github.com/hmcts/frontend/blob/master/src/components/badge/_badge.scss
+
+.hmcts-badge {
+  @include govuk-font($size: 14);
+  border: 2px solid govuk-colour("blue");
+  color: govuk-colour("blue");
+  font-weight: bold;
+  padding: 0 govuk-spacing(1);
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.hmcts-govuk-badge--red {
+  border-color: govuk-colour("red");
+  color: govuk-colour("red");
+}
+
+.hmcts-govuk-badge--green {
+  border-color: govuk-colour("green");
+  color: govuk-colour("green");
+}
+
+.hmcts-govuk-badge--grey {
+  border-color: $govuk-secondary-text-colour;
+  color: $govuk-secondary-text-colour;
+}
+

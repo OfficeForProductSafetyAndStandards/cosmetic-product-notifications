@@ -1,0 +1,60 @@
+- content_for :page_title, "Cases"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l
+      - if params[:q].present?
+        span.govuk-caption-l Case search results
+        = params[:q]
+        span.govuk-caption-m = "#{@results.count} #{'result'.pluralize(@results.count)}"
+      - else
+        | Cases
+  .govuk-grid-column-one-third[style="text-align:right"]
+    = link_to "Create new", User.current.is_opss? ? new_investigation_path : new_ts_investigation_path,
+            class: "govuk-button govuk-!-margin-bottom-3", role: "button"
+
+.govuk-grid-row
+  .govuk-grid-column-one-quarter class="govuk-!-margin-bottom-2"
+    div class="govuk-!-margin-bottom-0"
+      = form_with(model: @search, scope: "", url: investigations_path, method: :get) do |form|
+        .search-box
+          = render "form_components/govuk_input", key: :q, form: form,
+                  label: { text: "Keywords", classes: "govuk-label--s" }
+          = form.submit "Search", name: nil, class: "search-box--submit"
+        hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
+        - other_assignee = capture do
+          - entities = User.get_assignees(except: User.current) + Team.all
+          = render "form_components/govuk_select", key: :assigned_to_someone_else_id, form: form,
+                        items: entities.map { |e| { text: e.display_name, value: e.id } },
+                        label: { text: "Name" }, is_autocomplete: true
+        ruby:
+          assigned_to_items = [{ key: "assigned_to_me", value: "checked", unchecked_value: "unchecked", text: "Me" }]
+          teams_with_keys.each do |key, team, name|
+              assigned_to_items << { key: key, value: team.id, unchecked_value: "unchecked", text: name }
+          end
+          assigned_to_items << { key: "assigned_to_someone_else",
+                           value: "checked",
+                           unchecked_value: "unchecked",
+                           text: "Other person or team",
+                           conditional: { html: other_assignee } }
+        = render "form_components/govuk_checkboxes", form: form, key: :assigned_to,
+          fieldset: { legend: { text: "Assigned to", classes: "govuk-fieldset__legend--s" } },
+          items: assigned_to_items
+        = render "form_components/govuk_checkboxes", form: form, key: :status,
+                 fieldset: { legend: { text: "Status", classes: "govuk-fieldset__legend--s" } },
+                 items: [{ key: "status_open", value: "checked", unchecked_value: "unchecked", text: "Open" },
+                 { key: "status_closed", value: "checked", unchecked_value: "unchecked", text: "Closed" }]
+        = render "form_components/govuk_radios", form: form, key: :sort_by,
+                fieldset: { legend: { text: "Sort by", classes: "govuk-fieldset__legend--s" } },
+                items: [{ text: "Updated: recent", value: "recent", unchecked_value: "unchecked" },
+                        { text: "Updated: oldest", value: "oldest", unchecked_value: "unchecked" },
+                        { text: "Created: newest", value: "newest", unchecked_value: "unchecked" }]
+        = form.submit "Apply filters", name: nil, class: "govuk-button"
+  .govuk-grid-column-three-quarters
+    - if @results.any?
+      = render "table", search_results: @results, sorted_by: query_params[:sort_by]
+      = will_paginate @investigations
+      br
+      = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: export_params)
+    - else
+      .govuk-heading-l[style="text-align:center"] No results

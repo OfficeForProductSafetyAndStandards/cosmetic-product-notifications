@@ -1,0 +1,13 @@
+- content_for :page_title, "Have the cosmetic products been notified in the EU?"
+- content_for :after_header do
+  = link_to "Back", responsible_person_notifications_path(@responsible_person), class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with url: wizard_path, method: :put do |form|
+      = render "components/govuk_radios", name: :answer,
+        errorMessage: @error_text.present? && { text: @error_text },
+        fieldset: { legend: { text: "Have the cosmetic products been notified in the EU?", \
+          isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
+        items: [{ text: "Yes, they are already notified in the EU", value: "yes" },
+          { text: "No, they have not been notified in the EU", value: "no" }]
+      = form.submit "Continue", class: "govuk-button"

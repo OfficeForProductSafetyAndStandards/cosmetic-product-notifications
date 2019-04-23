@@ -1,0 +1,25 @@
+---
+applications:
+- name: psd-web
+  memory: 512M # Also see deploy.sh
+  instances: 1
+  buildpacks:
+    - ruby_buildpack
+  path: .
+  command: export $(./env/get-env-from-vcap.sh) && MIGRATION_STATEMENT_TIMEOUT=60000 bin/rake cf:on_first_instance db:migrate && bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
+  stack: cflinuxfs3
+  services:
+    - psd-database
+    - psd-elasticsearch
+    - psd-queue
+    - psd-session
+    - opss-log-drain
+    - psd-aws-env
+    - psd-auth-env
+    - psd-health-env
+    - psd-keycloak-env
+    - psd-notify-env
+    - psd-pghero-env
+    - psd-rails-env
+    - psd-sentry-env
+    - psd-sidekiq-env

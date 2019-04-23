@@ -1,0 +1,34 @@
+- content_for :page_title, @page_title
+- content_for :after_header do
+  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
+= form_with model: @investigation, scope: :allegation, local: true, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-l = @page_title
+
+      = render "form_components/govuk_textarea", key: :description, form: form,
+              attributes: { maxlength: 10000 },
+              hint: { text: "Please give as much detail as possible" },
+              label: { text: "What is being alleged?", classes: "govuk-label--m" }
+      = render "form_components/govuk_select", choices: product_categories, key: :product_category, form: form,
+              show_all_values: true, is_autocomplete: true,
+              label: { text: "Product Category", classes: "govuk-label--m" }
+      = render "form_components/govuk_select", choices: hazard_types, key: :hazard_type, form: form,
+              show_all_values: true, is_autocomplete: true,
+              label: { text: "Hazard Type", classes: "govuk-label--m" }
+
+      .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation.errors))
+        = render "components/govuk_label",
+                text: "Are there any files or images related to the allegation?",
+                classes: "govuk-label--m",
+                for: "attachment-file-input"
+        - if @file_blob.present?
+          p#current-attachment-details
+            ' Currently selected file:
+            = link_to @file_blob.filename, @file_blob, target: "_blank", rel: 'noopener'
+        = form.fields_for :attachment do |subform|
+          = subform.file_field :file, class: "govuk-file-upload", id: "attachment-file-input"
+
+      .govuk-form-group
+        = form.submit "Create allegation", class: "govuk-button"

@@ -1,0 +1,33 @@
+- content_for :page_title, "View location"
+- content_for :after_header do
+  = link_to "Back to business", @business, class: "govuk-back-link"
+.govuk-grid-row class="govuk-!-padding-bottom-6"
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l
+      span.govuk-caption-l
+        = "Business: #{@business.trading_name}"
+      | Remove location
+    table.govuk-table
+      tbody.govuk-table__body
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Name
+          td.govuk-table__cell
+            = @location.name
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Location
+          td.govuk-table__cell
+            = @location.summary
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Postcode
+          td.govuk-table__cell
+            = @location.postal_code
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Phone
+          td.govuk-table__cell
+            = @location.phone_number
+    = form_with url: business_location_path(@business, @location), method: :delete do |form|
+      = form.submit "Remove location", class: "govuk-button remove-button"

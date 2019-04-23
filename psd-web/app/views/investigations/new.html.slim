@@ -1,0 +1,17 @@
+- content_for :page_title, "Create new"
+- content_for :after_header do
+  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
+- if @nothing_selected
+  = render "components/govuk_error_summary",
+          titleText: "There is a problem",
+          errorList: [{ text: "Please select an option before continuing", href: "#type_allegation" }]
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l Create new
+    = form_with local: true, url: new_investigation_path, method: :get do |form|
+      = render "form_components/govuk_radios", form: form, key: :type,
+              errorMessage: @nothing_selected && { text: "Please select an option before continuing" },
+              fieldset: { legend: { text: "What are you creating?", classes: "govuk-fieldset__legend--m" } },
+              items: new_item_options.map { |option, label| { text: label, value: option } }
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

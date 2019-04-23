@@ -1,0 +1,26 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+
+= form_with model: @investigation, scope: :information, url: wizard_path, method: :put, local: true do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-l
+        span.govuk-caption-l Reporting an unsafe product
+        | Other information and files
+      = render "form_components/govuk_checkboxes", form: form, key: :information_types,
+        fieldset: { legend: { text: "What information do you have?", classes: "govuk-fieldset__legend--m" } },
+        items: [{ key: "test_results",
+            text: "Test results",
+            hint: { text: "Record test results and upload files" } },
+          { key: "risk_assessments",
+            text: "Risk assessments",
+            hint: { text: "Upload any risk assessments" } },
+          { key: "product_images",
+            text: "Product images",
+            hint: { text: "Images of the product – used for identification" } },
+          { key: "evidence_images",
+            text: "Evidence images",
+            hint: { text: "Images which show damage, injury or other types of evidence" } },
+          { key: "other_files",
+            text: "Other files",
+            hint: { text: "Any other relevant files, such as purchase receipts or case-file downloads" } }]
+      = form.submit "Continue", class: "govuk-button"

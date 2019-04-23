@@ -1,0 +1,67 @@
+// Timeline take from home office digital patterns:
+// https://home-office-digital-patterns.herokuapp.com/components/timeline
+$timeline-item-margin-bottom: 20px;
+
+.timeline {
+  padding: 10px;
+  margin: 0 auto $timeline-item-margin-bottom;
+
+  > ul {
+    list-style-type: none;
+    position: relative;
+    margin: 0 0 20px 0;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: -$timeline-item-margin-bottom;
+      border-left: 4px solid govuk-colour("grey-1");
+      height: calc(100% + #{$timeline-item-margin-bottom});
+    }
+
+    > li {
+      margin: 4px 0 $timeline-item-margin-bottom 25px;
+      position: relative;
+      display: block;
+      border-bottom: 1px solid govuk-colour("grey-3");
+
+      &:not(:last-child) {
+        @include govuk-responsive-padding(4, "bottom");
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+        border: none;
+
+        &:before {
+          background-color: govuk-colour("grey-2");
+        }
+      }
+
+      &:before {
+        content: "";
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: govuk-colour("white");
+        border: 4px solid govuk-colour("grey-1");
+        position: absolute;
+        z-index: 2;
+        left: -32px;
+        top: 0;
+      }
+
+      > h3 {
+        margin-top: 0.5em;
+        margin-bottom: 0;
+      }
+
+      .timeline-details {
+        color: $govuk-secondary-text-colour;
+      }
+    }
+  }
+}

@@ -47,39 +47,24 @@ To create a Keycloak database for the current space:
 
 #### Keycloak
 
-Running the following commands from the root directory will then package and set up the Keycloak app:
+Start by setting up the following credentials:
 
-    NO_START=true SPACE=<<SPACE>> ./keycloak/deploy.sh
+* To configure Notify for email and SMS sending (see the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get this value):
 
-Once the app has been created, add the following environment variables to specify the database connection properties:
-
-    cf set-env keycloak KEYCLOAK_DATABASE          << see: VCAP_SERVICES.postgres.credentials.name >>
-    cf set-env keycloak KEYCLOAK_DATABASE_HOSTNAME << see: VCAP_SERVICES.postgres.credentials.host >>
-    cf set-env keycloak KEYCLOAK_DATABASE_USERNAME << see: VCAP_SERVICES.postgres.credentials.username >>
-    cf set-env keycloak KEYCLOAK_DATABASE_PASSWORD << see: VCAP_SERVICES.postgres.credentials.password >>
-
-The relevant values are specified as properties on the `VCAP_SERVICES` environment variable, which can be listed by
-running `cf env keycloak`. 
-
-    cf set-env keycloak NOTIFY_API_KEY             XXX
+    cf cups keycloak-notify-env -p '{
+        "NOTIFY_API_KEY": "XXX",
+        "NOTIFY_SMS_TEMPLATE_ID": "XXX"
+    }'
     
-See the GOV.UK Notify account section in [the root README](../README.md#gov.uk-notify) to get the API key.
+Once all the credentials are created, the app can be deployed using:
 
-    cf set-env keycloak NOTIFY_SMS_TEMPLATE_ID     XXX
-
-with the value coming from [gov.uk Notify](https://www.notifications.service.gov.uk/services/)
-(see Notify accounts section in the [root README](../README.md#GOV.UK Notify))
-
-Finally, start the app and check that it is running correctly:
-
-    cf start keycloak
-    cf logs keycloak --recent
+    SPACE=<<space>> ./keycloak/deploy.sh
 
 ### Initial configuration
 
 When deploying Keycloak from scratch, an initial configuration file is imported on first launch, which creates a
-default admin user for the master realm, creates and configures the MSPSDS realm and associated client, and creates
-a default test user account for logging into the MSPSDS website.
+default admin user for the master realm, creates and configures the PSD realm and associated client, and creates
+a default test user account for logging into the PSD website.
 
 The relevant login credentials can be found in the accounts section of [the root README](../README.md#keycloak).
 
@@ -94,24 +79,25 @@ Set a strong password for the master admin account:
 * Enter and confirm the new password, disable the 'Temporary' option, and click 'Reset Password'
 
 #### Setup clients
-*The instructions in this sections are given for the mspsds client, but should be repeated for all clients required.*
+*The instructions in this sections are given for the psd client, but should be repeated for all clients required.*
 
-Generate a new client secret for the MSPSDS app:
-* Select realm > OPSS > Clients > mspsds-app > Credentials > Regenerate Secret
+Generate a new client secret for the PSD app:
+* Select realm > OPSS > Clients > psd-app > Credentials > Regenerate Secret
 
-Set the client credentials for the MSPSDS app:
+Create the client credentials for the PSD app:
 
-    cf set-env mspsds-web KEYCLOAK_AUTH_URL https://keycloak-<<SPACE>>.london.cloudapps.digital/auth
-    cf set-env mspsds-web KEYCLOAK_CLIENT_ID mspsds-app
-    cf set-env mspsds-web KEYCLOAK_CLIENT_SECRET <<SECRET>>
-    cf restage mspsds-web
+    cf cups psd-keycloak-env -p '{
+        "KEYCLOAK_AUTH_URL": "https://<<keycloak domain>>/auth",
+        "KEYCLOAK_CLIENT_ID": "psd-app",
+        "KEYCLOAK_CLIENT_SECRET": "XXX"
+    }'
 
-(The client secret is listed on the Keycloak admin console: Clients > mspsds-app > Credentials)
+(The client secret is listed on the Keycloak admin console: Clients > psd-app > Credentials)
 
 Allow keycloak to redirect back to the app after login
-* Select realm > OPSS > Clients > mspsds-app
-* Add `https://mspsds-<<SPACE>>.london.cloudapps.digital/*` to the Valid Redirect URIs section and click save
-* Replace all `localhost` values with `https://mspsds-<<SPACE>>.london.cloudapps.digital/`
+* Select realm > OPSS > Clients > psd-app
+* Add `https://<<PSD domain>>/*` to the Valid Redirect URIs section and click save
+* Replace all `localhost` values with `https://<<PSD domain>>/`
 
 Follow the steps in [the SMS autheticator README's Configuration section](
 https://github.com/UKGovernmentBEIS/keycloak-sms-authenticator-sns/blob/develop/README.md#Configuration) 

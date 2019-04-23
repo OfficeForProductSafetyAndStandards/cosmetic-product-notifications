@@ -1,0 +1,24 @@
+- content_for :page_title, @page_title
+- content_for :after_header do
+  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
+
+= form_with model: @complainant, local: true, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds-from-desktop
+      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-heading-l = @page_title
+      = render "components/govuk_fieldset",
+              legend: { text: "What are their contact details?", classes: "govuk-fieldset__legend--m" } do
+        = render "form_components/govuk_input", key: :name, form: form, attributes: { maxlength: 1000 },
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Name" }
+        = render "form_components/govuk_input", key: :phone_number, form: form, attributes: { maxlength: 1000 },
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Phone number" }
+        = render "form_components/govuk_input", key: :email_address, form: form, attributes: { maxlength: 1000 },
+                classes: "govuk-!-width-two-thirds",
+                label: { text: "Email address" }
+        = render "form_components/govuk_textarea", key: :other_details, form: form,
+                attributes: { maxlength: 10000 },
+                label: { text: "Other details" }
+      = form.submit "Continue", class: "govuk-button"

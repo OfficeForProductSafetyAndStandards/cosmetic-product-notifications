@@ -5,12 +5,8 @@ module Shared
         Shared::Web::KeycloakClient.instance.login_url(get_session_url_with_redirect(request_path))
       end
 
-      def keycloak_registration_url
-        Shared::Web::KeycloakClient.instance.registration_url
-      end
-
-      def login_page?
-        Keycloak.keycloak_controller == controller_name
+      def keycloak_registration_url(request_path = nil)
+        Shared::Web::KeycloakClient.instance.registration_url(get_session_url_with_redirect(request_path))
       end
 
       def get_session_url_with_redirect(request_path)

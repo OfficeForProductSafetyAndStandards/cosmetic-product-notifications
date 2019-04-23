@@ -1,0 +1,24 @@
+ruby:
+  restricted = !can_be_displayed?(document, parent)
+  title = restricted ? document_restricted_title : document.metadata[:title]
+  safe = document.metadata["safe"]
+
+.govuk-grid-row[class="govuk-!-padding-bottom-6"]
+  .govuk-grid-column-one-third
+    = render "documents/document_preview", document: document, dimensions: "300x200", restricted: restricted
+  .govuk-grid-column-two-thirds
+    h2.govuk-heading-m[class="govuk-!-margin-bottom-1"] = title
+    span.govuk-hint[class=" govuk-!-font-size-16"] = formatted_file_updated_date(document)
+    - if restricted
+      p = render "components/hmcts_badge", text: "Restricted access", classes: "hmcts-badge--grey"
+      p = document_restricted_body
+    - else
+      p = document.metadata[:description]
+      p
+        - if safe
+          = link_to "View #{pretty_type_description(document)}",
+                  document, class: "govuk-link psd-block-link", target: '_blank', rel: 'noopener'
+        = link_to "Edit #{image_document_text(document)}",
+                edit_associated_document_path(parent, document), class: "govuk-link psd-block-link"
+        = link_to "Remove #{image_document_text(document)}",
+                remove_associated_document_path(parent, document), class: "govuk-link psd-block-link"

@@ -1,0 +1,57 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_code: product one product_code
+  name: product one name
+  category: Toys
+  product_type: product one product_type
+  description: product one description
+  webpage: https://www.product_one.webpage
+  country_of_origin: China
+  batch_number: product one batch
+
+two:
+  product_code: product two product_code
+  name: product two name
+  category: product two category
+  product_type: product two type
+  description: product two description
+  country_of_origin: product two country
+  batch_number: product two batch
+
+chromecast:
+  product_code: 123
+  name: chromecast
+  product_type: tv dongle
+  category: chromecast category
+
+iphone:
+  product_code: 234
+  name: iPhone XS MAX
+  webpage: https://www.iphone.webpage
+  product_type: phone
+  category: phone category
+  description: iphone description
+  country_of_origin: United States
+  batch_number: 1234
+
+iphone_3g:
+  product_code: 345
+  name: iPhone
+  product_type: phone
+  category: phone
+
+pixel:
+  product_code: 456
+  name: Pixel
+  product_type: phone
+  category: phone
+
+alexa:
+  product_code: 735
+  name: alexa
+  category: electronics
+
+phone_charger:
+  name: phone charger
+  category: electronics

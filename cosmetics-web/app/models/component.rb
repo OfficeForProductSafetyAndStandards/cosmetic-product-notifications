@@ -1,7 +1,7 @@
 class Component < ApplicationRecord
   include AASM
   include NotificationProperties
-  include CpnpHelper
+  include NotificationPropertiesHelper
   include FileUploadConcern
   set_attachment_name :formulation_file
   set_allowed_types %w[application/pdf application/rtf text/plain].freeze
@@ -13,7 +13,7 @@ class Component < ApplicationRecord
   has_many :range_formulas, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, dependent: :destroy
-  has_many :nano_materials, dependent: :destroy
+  has_one :nano_material, dependent: :destroy
   has_one_attached :formulation_file
 
   before_save :add_shades, if: :will_save_change_to_shades?
@@ -34,11 +34,11 @@ class Component < ApplicationRecord
   end
 
   def sub_category
-    get_parent_category(sub_sub_category)
+    Component.get_parent_category(sub_sub_category)
   end
 
   def root_category
-    get_parent_category(sub_category)
+    Component.get_parent_category(sub_category)
   end
 
   # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
@@ -66,13 +66,21 @@ class Component < ApplicationRecord
     end
   end
 
+  def self.get_parent_category(category)
+    PARENT_OF_CATEGORY[category&.to_sym]
+  end
+
+  def self.get_parent_of_categories
+    PARENT_OF_CATEGORY
+  end
+
+  def is_valid_multicomponent?
+    name.present?
+  end
+
 private
 
   def update_notification_state
     notification&.set_single_or_multi_component!
-  end
-
-  def get_parent_category(category)
-    PARENT_OF_CATEGORY[category]
   end
 end

@@ -1,0 +1,43 @@
+= form.hidden_field :is_result, value: !test.requested?
+- if allow_product_linking
+  .govuk-form-group class=("govuk-form-group--error" if test.errors[:product].any?)
+    - label_text = test.requested? ? "Which product should be tested?" : " Which product was tested?"
+    = render "components/govuk_label", text: label_text, classes: "govuk-label--m"
+    - if investigation.products.empty?
+      span.govuk-hint
+        ' There are no products on this case.
+        = link_to "Add a product", new_investigation_product_path(investigation)
+        |  to send it for testing.
+    - elsif @investigation.products.size == 1
+      = render "form_components/govuk_input", key: :product_name, form: form, attributes: { disabled: true },
+              classes: "govuk-!-width-two-thirds", value: @investigation.products.first.name,
+              label: { text: "Product name", classes: "govuk-visually-hidden" }
+      = form.hidden_field :product_id, value: @investigation.products.first.id
+    - else
+      - span_html = capture do
+        ' Only products already added to the case are listed.
+        = link_to "Add a product", new_investigation_product_path(investigation)
+      = render "form_components/govuk_select", key: :product_id, form: form, show_all_values: true,
+              items: investigation.products.map { |product| { text: product.name, value: product.id } },
+              is_autocomplete: true, hint: { html: span_html },
+              label: { text: "Product", classes: "govuk-visually-hidden" }
+
+= render "form_components/govuk_select", key: :legislation, form: form,
+        choices: relevant_legislation, show_all_values: true, is_autocomplete: true,
+        hint: { text: "Select the relevant legislation from the list." },
+        label: { text: "Against which legislation?", classes: "govuk-label--m" }
+
+- legend_text = test.requested? ? "When did you request testing?" : "When was the test conducted?"
+= render "form_components/govuk_date_input", form: form, key: :date,
+        fieldset: { legend: { classes: "govuk-fieldset__legend--m", text: legend_text } }
+
+- if !test.requested?
+  = render "form_components/govuk_radios", form: form, key: :result,
+          fieldset: { legend: { text: "What was the test result?", classes: "govuk-fieldset__legend--m" } },
+          items: Test::Result.results.map { |result, label| { text: label, value: result } }
+
+= render "form_components/govuk_textarea", key: :details, form: form, attributes: { maxlength: 50000 },
+        label: { text: "Further details", classes: "govuk-label--m" }
+
+= render "related_attachment_fields", form: form, file_blob: @file_blob, attachment_name: :file,
+        title: "Related attachments"

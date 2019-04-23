@@ -26,6 +26,7 @@ private
 
   def create_notification_from_file
     begin
+      # rubocop:disable Metrics/BlockLength
       get_product_xml_file do |product_xml_file|
         cpnp_export_info = CpnpExport.new(product_xml_file)
         if cpnp_export_info.notification_status == "DR"
@@ -35,9 +36,16 @@ private
                                             shades: cpnp_export_info.shades,
                                             components: cpnp_export_info.components,
                                             cpnp_reference: cpnp_export_info.cpnp_reference,
+                                            industry_reference: cpnp_export_info.industry_reference,
                                             cpnp_is_imported: cpnp_export_info.is_imported,
                                             cpnp_imported_country: cpnp_export_info.imported_country,
-                                            responsible_person: @notification_file.responsible_person)
+                                            cpnp_notification_date: cpnp_export_info.cpnp_notification_date,
+                                            responsible_person: @notification_file.responsible_person,
+                                            under_three_years: cpnp_export_info.under_three_years,
+                                            still_on_the_market: cpnp_export_info.still_on_the_market,
+                                            components_are_mixed: cpnp_export_info.components_are_mixed,
+                                            ph_min_value: cpnp_export_info.ph_min_value,
+                                            ph_max_value: cpnp_export_info.ph_max_value)
           notification.notification_file_parsed
           notification.save(context: :file_upload)
         end
@@ -49,6 +57,8 @@ private
           else
             raise NotificationValidationError, "NotificationValidationError - #{notification.errors.messages}"
           end
+        else
+          Sidekiq.logger.info "Successful File Upload"
         end
       end
     rescue UnexpectedPdfFileError => e
@@ -73,17 +83,19 @@ private
       Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
       @notification_file.update(upload_error: :unknown_error)
     end
+    # rubocop:enable Metrics/BlockLength
   end
 
   def get_product_xml_file
     download_blob_to_tempfile do |zip_file|
       Zip::File.open(zip_file.path) do |files|
-        if invalid_static_files(files)
+        valid_files = files.select { |file| file_is_valid?(file) }
+        if invalid_static_files(valid_files)
           raise UnexpectedStaticFilesError, "UnexpectedStaticFilesError - a different static file was detected!"
         end
 
         file_found = false
-        files.each do |file|
+        valid_files.each do |file|
           if file_is_pdf?(file)
             raise UnexpectedPdfFileError, "UnexpectedPdfFileError - The unzipped files are PDF files"
           elsif file_is_product_xml?(file)
@@ -107,6 +119,10 @@ private
 
   def file_is_product_xml?(file)
     file.name&.match?(product_xml_file_name_regex)
+  end
+
+  def file_is_valid?(file)
+    file.file? && file.name !~ /__MACOSX/ && file.name !~ /\.DS_Store/
   end
 
   def file_is_pdf?(file)

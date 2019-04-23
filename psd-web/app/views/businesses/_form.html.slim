@@ -1,0 +1,17 @@
+= render "components/govuk_fieldset", legend: { text: "Business details", classes: "govuk-fieldset__legend--m" } do
+  = render "form_components/govuk_input", key: :trading_name, form: form,
+          label: { text: "Trading name" },
+          hint: { text: "The name the business is known by" }
+  = render "form_components/govuk_input", key: :legal_name, form: form,
+          label: { text: "Legal name" },
+          hint: { text: "The registered name of the company (if you have it)" }
+  = render "form_components/govuk_input", key: :company_number, form: form,
+          label: { text: "Company number" },
+          hint: { text: "If you have this information" }
+= form.fields_for :locations, business.primary_location do |ff|
+  = render "locations/address_form", form: ff, countries: countries
+
+= form.fields_for :contacts, business.primary_contact do |ff|
+  = render "contacts/form", form: ff, legend: { text: "Contact", classes: "govuk-fieldset__legend--m" }
+
+= form.submit local_assigns[:submit_text] || "Save business", class: "govuk-button"

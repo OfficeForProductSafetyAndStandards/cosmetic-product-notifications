@@ -13,11 +13,11 @@ Shared::Web::Engine.routes.draw do
     member do
       get :new
       get :signin
-      delete :logout
+      get :logout
     end
   end
 
-  unless Rails.env.production? && !ENV["SIDEKIQ_USERNAME"]
+  unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"
   end
 

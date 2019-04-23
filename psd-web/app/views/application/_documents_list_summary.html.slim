@@ -1,0 +1,3 @@
+- if parent.documents.attached?
+  - parent.documents.each do |document|
+    = render "documents/document_card", document: document, parent: parent

@@ -3,7 +3,7 @@ html.govuk-template.app-html-class[lang="en"]
   head
     / Google Analytics
     - if Rails.env.production?
-      script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-1"
+      script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-2"
       javascript:
         window.dataLayer = window.dataLayer || [];
 
@@ -12,12 +12,12 @@ html.govuk-template.app-html-class[lang="en"]
         }
 
         gtag('js', new Date());
-        gtag('config', 'UA-126364208-1');
+        gtag('config', 'UA-126364208-2');
 
     meta[charset="utf-8"]
     title
       = yield :page_title
-      |  - Cosmetics Portal
+      |  - Submit cosmetic product notifications
     meta[name="viewport" content="width=device-width, initial-scale=1"]
     meta[name="theme-color" content="blue"]
     link[rel="shortcut icon" type="image/x-icon" href=asset_pack_path("media/images/favicon.ico")]
@@ -26,11 +26,11 @@ html.govuk-template.app-html-class[lang="en"]
     link[rel="apple-touch-icon" sizes="167x167" href=asset_pack_path("media/images/govuk-apple-touch-icon-167x167.png")]
     link[rel="apple-touch-icon" sizes="152x152" href=asset_pack_path("media/images/govuk-apple-touch-icon-152x152.png")]
     link[rel="apple-touch-icon" href=asset_pack_path("media/images/govuk-apple-touch-icon.png")]
-    /![if !IE 8]
+    /![if gt IE 8]><!
     = javascript_pack_tag "application"
     = stylesheet_pack_tag "application"
-    /![endif]
-    /[if IE 8]
+    /!<![endif]
+    /[if lte IE 8]
       = javascript_pack_tag "application-ie8"
       = stylesheet_pack_tag "application-ie8"
     = csrf_meta_tags
@@ -54,7 +54,7 @@ html.govuk-template.app-html-class[lang="en"]
                 |  GOV.UK
         .govuk-header__content
           a.govuk-header__link.govuk-header__link--service-name[href="/"]
-            | Cosmetics
+            | Submit cosmetic product notifications
           button.govuk-header__menu-button.js-header-toggle[role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation"]
             | Menu
           nav
@@ -62,9 +62,8 @@ html.govuk-template.app-html-class[lang="en"]
               - if User.current
                 li.govuk-header__navigation-item
                   = link_to "Your account", user_account_url, class: "govuk-header__link"
-              - if !login_page?
                 li.govuk-header__navigation-item
-                  - if User.current
-                    = link_to "Sign out", shared_engine.logout_session_path, method: :delete, class: "govuk-header__link"
-                  - else
-                    = link_to "Sign in", keycloak_login_url, class: "govuk-header__link"
+                  = link_to "Sign out", shared_engine.logout_session_path, class: "govuk-header__link"
+              - else
+                li.govuk-header__navigation-item
+                  = link_to "Sign in", keycloak_login_url(dashboard_path), class: "govuk-header__link"

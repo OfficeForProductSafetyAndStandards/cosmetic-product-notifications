@@ -1,0 +1,34 @@
+/ This partial acts as glue between rails form helpers and the component date_input
+/ With access to the form object, we can infer a lot of information from it
+
+ruby:
+  # Infer name and id_prefix from attribute key
+  local_assigns[:id] ||= get_attribute_id_prefix(form, key)
+  errors = form.object.errors
+  day_errors = errors.full_messages_for("#{key}_day".to_sym)
+  month_errors = errors.full_messages_for("#{key}_month".to_sym)
+  year_errors = errors.full_messages_for("#{key}_year".to_sym)
+  local_assigns[:items] = [
+          {
+                  label: "day",
+                  classes: "govuk-input--width-2 #{'govuk-input--error' if day_errors.any?}",
+                  value: form.object.send(:get_day, key),
+                  name: "#{get_attribute_name(form, key)}[day]"
+          },
+          {
+                  label: "month",
+                  classes: "govuk-input--width-2 #{'govuk-input--error' if month_errors.any?}",
+                  value: form.object.send(:get_month, key),
+                  name: "#{get_attribute_name(form, key)}[month]"
+          },
+          {
+                  label: "year",
+                  classes: "govuk-input--width-4 #{'govuk-input--error' if year_errors.any?}",
+                  value: form.object.send(:get_year, key),
+                  name: "#{get_attribute_name(form, key)}[year]"
+          }
+  ]
+  error_text = errors.full_messages_for(key).first.presence
+  local_assigns[:errorMessage] ||= { text: error_text } if error_text
+
+= render "components/govuk_date_input", **local_assigns

@@ -29,7 +29,7 @@ RSpec.describe "Poison Centre user", type: :system do
     assert_current_path(/notifications/)
   end
 
-  it "can view a list of all registered notifications" do
+  it "can view a list of all submitted notifications" do
     (rp_1_notifications + rp_2_notifications).each do |notification|
       assert_text notification.product_name
     end
@@ -39,31 +39,33 @@ RSpec.describe "Poison Centre user", type: :system do
     assert_no_text draft_notification.product_name
   end
 
-  it "is able to see the product details for a registered notification" do
+  it "is able to see the product details for a submitted notification" do
     notification = rp_1_notifications.first
     click_on notification.product_name
 
-    assert_value for_attribute: "Product name", to_be: notification.product_name
-    assert_value for_attribute: "Reference number", to_be: notification.reference_number
-    assert_value for_attribute: "Number of components", to_be: notification.components.count
-    assert_value for_attribute: "Imported", to_be: "No"
-    assert_value for_attribute: "Shades", to_be: "N/A"
+    assert_text notification.product_name
   end
 
-  it "is able to see the Responsible Person details for a registered notification" do
+  it "is able to see the Responsible Person details for a submitted notification" do
     notification = rp_1_notifications.first
     click_on notification.product_name
 
-    assert_value for_attribute: "Name", to_be: notification.responsible_person.name
-    assert_value for_attribute: "Email address", to_be: notification.responsible_person.email_address
-    assert_value for_attribute: "Phone number", to_be: notification.responsible_person.phone_number
-    assert_value for_attribute: "Address", to_be: notification.responsible_person.address_lines.join
+    assert_value_in_table(get_responsible_person_table, "Name", notification.responsible_person.name)
+    assert_value_in_table(get_responsible_person_table, "Address", notification.responsible_person.address_lines.join)
   end
 
 private
 
-  def assert_value(for_attribute:, to_be:)
-    row = first('tr', text: for_attribute)
-    expect(row).to have_text(to_be)
+  def assert_value_in_table(table, attribute_name, value)
+    row = table.find('tr', text: attribute_name)
+    expect(row).to have_text(value)
+  end
+
+  def get_product_table
+    find("#product-table")
+  end
+
+  def get_responsible_person_table
+    find("#responsible-person-table")
   end
 end

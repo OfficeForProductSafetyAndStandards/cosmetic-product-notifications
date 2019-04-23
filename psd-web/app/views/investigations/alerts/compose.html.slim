@@ -1,0 +1,33 @@
+- content_for :page_title, "Alert trading standards"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with model: @alert, local: true, url: wizard_path, method: :put do |form|
+  = render "form_components/govuk_error_summary", form: form
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-l
+        span.govuk-caption-l
+          = @investigation.pretty_description
+        | Compose new alert
+      = render "form_components/govuk_input",
+              form: form,
+              key: :summary,
+              label: { text: "Alert subject", classes: "govuk-label--m" },
+              hint: { text: "This will be used in the email subject line." },
+              value: (@alert.summary.presence || @alert.default_summary)
+
+      - description_hint_text = "Include a summary of the incident and what actions you’d like recipients to take." + \
+        "Recipients will need to view the case to see attachments and images."
+      = render "form_components/govuk_textarea",
+              form: form,
+              key: :description,
+              rows: 12,
+              maxlength: 1000,
+              value: (@alert.description.presence || @alert.default_description),
+              label: { text: "Alert summary", classes: "govuk-label--m" },
+              hint: { text: description_hint_text }
+
+      = form.submit "Preview alert", class: "govuk-button"
+  p
+    = link_to "Cancel", investigation_path(@investigation), class: 'govuk-link govuk-link--no-visited-state'

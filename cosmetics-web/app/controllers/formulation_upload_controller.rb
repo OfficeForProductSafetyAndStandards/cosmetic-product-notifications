@@ -9,25 +9,29 @@ class FormulationUploadController < ApplicationController
       @component.formulation_file.attach(file_upload)
 
       if @component.save
-        redirect_to upload_formulation_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+        redirect_to responsible_person_notification_additional_information_index_path(@component.notification.responsible_person, @component.notification)
       else
         @component.formulation_file.purge
-        @error_list = @component.errors.messages[:formulation_file].map { |message| { text: message } }
+        @component.errors.messages[:formulation_file].map(&method(:add_error))
         render :new
       end
     else
-      @error_list.push(text: "No file selected")
+      add_error "No file selected"
       render :new
     end
   end
 
 private
 
+  def add_error error_message
+    @error_list.push(text: error_message, href: "#formulation_file")
+  end
+
   def set_models
     @error_list = []
     @component = Component.find(params[:component_id])
     @notification = @component.notification
     @responsible_person = @notification.responsible_person
-    authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
+    authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 end

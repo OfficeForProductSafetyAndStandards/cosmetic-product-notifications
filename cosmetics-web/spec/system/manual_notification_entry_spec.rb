@@ -20,6 +20,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_in :notification_product_name, with: "Super Shampoo"
     click_button "Continue"
 
+    # add_internal_reference
+    choose("No")
+    click_button "Continue"
+
     # is_imported
     choose("No")
     click_button "Continue"
@@ -32,18 +36,39 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
+    click_button "Continue"
+
+    # contains_anti_dandruff_agents
+    choose("No")
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
 
     # Check your answers page
     notification = get_notification_from_edit_page_url
-    expect_check_your_answers_value("Product name", "Super Shampoo")
+    expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
-    expect_check_your_answers_value("Shades", "N/A")
+    expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetics product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -56,6 +81,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_in :notification_product_name, with: "Super Shampoo"
     click_button "Continue"
 
+    # add_internal_reference
+    choose("No")
+    click_button "Continue"
+
     # is_imported
     choose("No")
     click_button "Continue"
@@ -65,6 +94,27 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # number_of_shades
+    choose("No")
+    click_button "Continue"
+
+    # add_cmrs
+    click_button "Continue"
+
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
+    click_button "Continue"
+
+    # contains_anti_dandruff_agents
     choose("No")
     click_button "Continue"
 
@@ -85,6 +135,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_in :notification_product_name, with: "Super Shampoo"
     click_button "Continue"
 
+    # add_internal_reference
+    choose("No")
+    click_button "Continue"
+
     # is_imported
     choose("Yes")
     click_button "Continue"
@@ -101,29 +155,54 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
+    click_button "Continue"
+
+    # contains_anti_dandruff_agents
+    choose("No")
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
 
     # Check your answers page
     notification = get_notification_from_edit_page_url
-    expect_check_your_answers_value("Product name", "Super Shampoo")
+    expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "Yes")
     expect_check_your_answers_value("Imported from", "New Zealand")
     expect_check_your_answers_value("Number of components", "1")
-    expect_check_your_answers_value("Shades", "N/A")
+    expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetics product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
   end
 
-  it "allows user to complete notification for cosmetics with multiple shades" do
+  it "allows user to complete notification for cosmetic with multiple shades" do
     visit new_responsible_person_notification_path(responsible_person)
 
     # add_product_name
     fill_in :notification_product_name, with: "Super Shampoo"
+    click_button "Continue"
+
+    # add_internal_reference
+    choose("No")
     click_button "Continue"
 
     # is_imported
@@ -147,19 +226,40 @@ RSpec.describe "Manually enter product details", type: :system do
     end
     click_button "Continue"
 
+    # add_cmrs
+    click_button "Continue"
+
+    # nano_materials
+    choose("No")
+    click_button "Continue"
+
+    # select_category
+    click_button "Continue"
+
+    # select_formulation_type
+    choose("Predefined frame formulation")
+    click_button "Continue"
+
+    # select_frame_formulation
+    click_button "Continue"
+
+    # contains_anti_dandruff_agents
+    choose("No")
+    click_button "Continue"
+
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
     click_button "Continue"
 
     # Check your answers page
     notification = get_notification_from_edit_page_url
-    expect_check_your_answers_value("Product name", "Super Shampoo")
+    expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
-    expect_check_your_answers_value("Shades", "Red, Blue, Yellow")
+    expect_check_your_answers_value("Shades", "RedBlueYellow")
     expect_check_your_answers_value("Label image", "testImage.png")
 
-    click_button "Accept and register the cosmetics product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -168,8 +268,17 @@ RSpec.describe "Manually enter product details", type: :system do
 private
 
   def expect_check_your_answers_value(attribute_name, value)
-    row = first('tr', text: attribute_name)
+    row = find('tr', text: attribute_name, match: :first)
     expect(row).to have_text(value)
+  end
+
+  def expect_check_your_answer(table, attribute_name, value)
+    row = table.find('tr', text: attribute_name)
+    expect(row).to have_text(value)
+  end
+
+  def get_product_table
+    find("#product-table")
   end
 
   def get_notification_from_edit_page_url

@@ -1,0 +1,351 @@
+- content_for :page_title, "Terms and conditions"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    h1.govuk-heading-l Product safety database Terms of Use
+    p
+      | These Terms and conditions (
+      b Terms
+      ' ) govern your use of the Product safety database, the web pages the Service is made available on and the
+        database of information forming part of the Service (together, the
+      b Service
+      |).
+    p
+      ' Your use of the Service is also governed by GOV.UK's
+      = link_to "Terms of use", "https://www.gov.uk/help/terms-conditions"
+      | .
+    p
+      ' Please read the terms of our
+      = link_to "privacy policy", help_privacy_notice_path
+      |  that applies to the Service.
+    h2.govuk-heading-m
+      | Who we are
+    p
+      | The Service is managed by the Office for Product Safety and Standards (OPSS), which is part of the Department
+        for Business, Energy and Industrial Strategy (
+      b BEIS
+      |) on behalf of the Crown. BEIS is referred to as '
+      b we
+      |' in these Terms.
+    p
+      ' If you have any questions relating to these Terms or the Service you can contact us at:
+      = mail_to "OPSS.enquiries@beis.gov.uk"
+    h2.govuk-heading-m
+      | What's in these Terms?
+    p
+      | These Terms tell you the rules for using the Service.
+    p
+      | Click on the links below to go straight to more information on each area:
+    ul.govuk-list.govuk-list--bullet
+      li = link_to "About the Service",
+              help_terms_and_conditions_path(anchor: "about-the-service")
+      li = link_to "By using the Service you accept these Terms",
+              help_terms_and_conditions_path(anchor: "by-using-you-accept-terms")
+      li = link_to "We will tell registered users if and when we make changes to these Terms",
+              help_terms_and_conditions_path(anchor: "may-make-changes-terms")
+      li = link_to "We may make changes to the Service",
+              help_terms_and_conditions_path(anchor: "may-make-changes-service")
+      li = link_to "We may suspend or withdraw the Service",
+              help_terms_and_conditions_path(anchor: "may-withdraw-service")
+      li = link_to "The Service is only for users in the UK",
+              help_terms_and_conditions_path(anchor: "only-for-uk")
+      li = link_to "You must keep your account details safe",
+              help_terms_and_conditions_path(anchor: "keep-your-account-safe")
+      li = link_to "Our material on the Service",
+              help_terms_and_conditions_path(anchor: "our-material")
+      li = link_to "Your information on the Service",
+              help_terms_and_conditions_path(anchor: "your-information")
+      li = link_to "Other information on the Service",
+              help_terms_and_conditions_path(anchor: "other-information")
+      li = link_to "Do not rely on information made available through the Service",
+              help_terms_and_conditions_path(anchor: "do-not-rely")
+      li = link_to "Linking to the Service",
+              help_terms_and_conditions_path(anchor: "linking-to")
+      li = link_to "Linking from the Service",
+              help_terms_and_conditions_path(anchor: "linking-from")
+      li = link_to "Prohibited uses of the Service",
+              help_terms_and_conditions_path(anchor: "prohibited-use")
+      li = link_to "Requests to remove content",
+              help_terms_and_conditions_path(anchor: "request-to-remove-content")
+      li = link_to "We are not responsible for viruses and you must not introduce them",
+              help_terms_and_conditions_path(anchor: "no-viruses")
+      li = link_to "Our responsibility for loss or damage suffered by you",
+              help_terms_and_conditions_path(anchor: "our-responsibility")
+      li = link_to "General terms",
+              help_terms_and_conditions_path(anchor: "general-terms")
+      li = link_to "Countries whose laws apply to these Terms",
+              help_terms_and_conditions_path(anchor: "country-laws")
+
+    h2.govuk-heading-m id="about-the-service" About the Service
+    p
+      | The Service is used by Trading Standards and other market surveillance authorities (MSAs) to report, track
+        and share product safety information. It has been developed alongside people from these organisations by the
+        digital team at the OPSS.
+    p
+      ' The Service has been designed for use by Trading Standards officers and people from other market surveillance
+        authorities (MSAs). You need to belong to one of those organisations and be a registered user to
+      = link_to "log in", keycloak_login_url
+      |  and access the Service.
+
+    h2.govuk-heading-m id="by-using-you-accept-terms" By using the Service you accept these Terms
+    p
+      | By using the Service you confirm that you accept these Terms and that you agree to comply with them.
+        If you do not agree to these Terms you must not use the Service.
+
+    h2.govuk-heading-m id="may-make-changes-terms"
+      | We will tell registered users if and when we make changes to these Terms
+    p
+      | We amend these Terms from time to time. When we make a change to these Terms we will notify you, please check
+        these Terms to ensure you understand the Terms that apply at that time.
+
+    h2.govuk-heading-m id="may-make-changes-service" We may make changes to the Service
+    p
+      | We may update and change the Service in the future to improve and update it or to reflect changes in policy
+        that may affect the Service. We will give you reasonable notice of any major changes.
+
+    h2.govuk-heading-m id="may-withdraw-service" We may suspend or withdraw the Service
+    p
+      | The Service is made available free of charge.
+    p
+      | We do not guarantee that the Service, or any content on it, will always be available or be uninterrupted.
+        We may suspend or withdraw or restrict the availability of all or any part of the Service for business
+        and operational reasons. We will try to give you reasonable notice of any suspension or withdrawal.
+    p
+      | You are also responsible for ensuring that all persons who access the Service through your
+        internet connection are aware of these Terms and other applicable terms and conditions
+        and that they comply with them.
+
+    h2.govuk-heading-m id="only-for-uk" The Service is only for users in the UK
+    p
+      | The Service has been designed for users in the United Kingdom. The content available on or through the Service
+        may not be appropriate for use or be available in other locations.
+
+    h2.govuk-heading-m id="keep-your-account-safe" You must keep your account details safe
+    p
+      | If you choose, or you are provided with, a user identification code, password or any other piece
+        of information as part of our security procedures, you must treat such information as confidential.
+        You must not disclose it to any third party. It is your responsibility to keep your account user details up to
+        date.
+    p
+      | We have the right to disable any user identification code or password, whether chosen by you
+        or allocated by us, at any time, if in our reasonable opinion you have failed to comply with any
+        of the provisions of these Terms.
+    p
+      ' If you know or suspect that anyone other than you knows your user identification code or password,
+        you must promptly notify us at
+      = mail_to "OPSS.enquiries@beis.gov.uk"
+
+    h2.govuk-heading-m id="our-material" Our material on the Service
+    p
+      ' Most of our material on the Service is subject to
+      = link_to "Crown copyright protection", "http://www.nationalarchives.gov.uk/information-management/" + \
+          "re-using-public-sector-information/copyright-and-re-use/crown-copyright/"
+      '  and is published under the
+      = link_to "Open Government Licence", "http://www.nationalarchives.gov.uk/doc/open-government-licence" + \
+          "/version/1/open-government-licence.htm"
+      |  (
+      b OGL
+      | ).
+    p
+      ' Some of our material is exempt from the OGL – please check the
+      = link_to "list of exemptions", "http://www.nationalarchives.gov.uk/doc/open-government-licence" + \
+          "/version/1/open-government-licence.htm"
+      | .
+    p
+      ' You can reproduce material published on the Service under the OGL as long as you follow the licence’s
+        conditions.
+      = link_to "Contact us", "https://www.gov.uk/contact/govuk"
+
+    h2.govuk-heading-m id="your-information" Your information on the Service
+    p
+      | Whenever you make use of a feature that allows you to upload information to the Service or make contact with
+        other users of the Service you must comply with the 'Prohibited uses of the Service' clause below.
+    p
+      | You warrant that any information you contribute to the Service complies with that clause and you will be liable
+        to us and indemnify us for any breach of that warranty. This means you will be responsible for any loss or
+        damage we suffer as a result of your breach of warranty.
+    p
+      ' Unless you are a civil servant, in which case your information is subject to the rules on
+      = link_to "Crown copyright protection", "http://www.nationalarchives.gov.uk/" + \
+          "information-management/re-using-public-sector-information/copyright-and-re-use/crown-copyright/"
+      | , you retain all of your ownership rights of your information but you are required to grant and
+        you hereby grant us and other users of the Service a limited licence to use, store and copy that information
+        and to distribute and make it available to third parties.
+    p We may:
+    ul.govuk-list.govuk-list--bullet
+      li make relevant information publicly available
+      li
+        | exchange product and other relevant information with third parties as part of co-operation on market
+          surveillance
+
+    p
+      | We have the right to disclose your identity to any third party who is claiming that any content posted or
+        uploaded by you to the Service constitutes a violation of their intellectual property rights, or of their
+        right to privacy.
+    p
+      | You are solely responsible for securing and backing up your information.
+
+    h2.govuk-heading-m id="other-information" Other information on the Service
+    p
+      | The Service may include information and materials uploaded by other users of the Service. They may not have
+        been verified or approved by us. The views expressed by other users on the Service do not represent our views
+        or values.
+    p
+      ' If you wish to complain about information and materials uploaded by other users please contact us at:
+      = mail_to "OPSS.enquiries@beis.gov.uk"
+
+    h2.govuk-heading-m id="do-not-rely" Do not rely on information made available through the Service
+    p
+      | We do not give any guarantees, conditions or warranties about the accuracy or completeness of any information
+        available on or through the Service. We are not liable for any loss or damage that may come from your use of
+        such information.
+    p
+      | While we make every effort to keep the Service up to date and secure, we do not provide any guarantees,
+        conditions or warranties that the information will be:
+    ul.govuk-list.govuk-list--bullet
+      li current;
+      li secure;
+      li accurate;
+      li complete; and/or
+      li free from bugs or viruses.
+    p
+      | We do not publish advice on the Service. You should get professional or specialist advice before doing
+        anything on the basis of the content of the Service.
+
+    h2.govuk-heading-m id="linking-to" Linking to the Service
+    p
+      | We welcome and encourage other websites to link to the homepage of the Service, provided you do so in a way
+        that is fair and legal and does not damage our reputation or take advantage of it.
+    p
+      ' You must contact us at
+      = mail_to "OPSS.enquiries@beis.gov.uk"
+      |  for permission if you want to:
+    ul.govuk-list.govuk-list--bullet
+      li charge your website’s users to click on a link to any page on the Service
+      li
+        | say your website or organisation is associated with or endorsed by the Service, OPSS, BEIS or another
+          government department or agency.
+    p
+      | We reserve the right to withdraw linking permission without notice.
+
+    h2.govuk-heading-m id="linking-from" Linking from the Service
+    p
+      | The Service links to websites that are managed by others, including government departments, agencies,
+        service providers or commercial organisations. We do not have any control over the content on these websites.
+    p
+      | We are not responsible for:
+    ul.govuk-list.govuk-list--bullet
+      li the protection of any information you give to these websites
+      li any loss or damage that may come from your use of these websites, or any other websites they link to.
+    p
+      | You agree to release us from any claims or disputes that may come from using these websites.
+    p
+      | You should read all terms and conditions, privacy policies and end user licences that relate to these websites
+        before you use them.
+
+    h2.govuk-heading-m id="prohibited-use" Prohibited uses of the Service
+    p
+      | You may use the Service only for lawful purposes. You may not use the Service:
+    ul.govuk-list.govuk-list--bullet
+      li
+        | in any way that infringes the rights of, or restrict or inhibit the use and enjoyment of, the Service by
+          anyone else
+      li in any way that breaches any applicable local, national or international law or regulation
+      li in any way that is unlawful or fraudulent, or has any unlawful or fraudulent purpose or effect
+      li to make inaccurate or misleading statements where you provide information
+      li
+        | to transmit, or procure the sending of, any unsolicited or unauthorised advertising or promotional material
+          or any other form of similar solicitation (spam)
+      li
+        | to knowingly transmit any data, send or upload any material that contains viruses, Trojan horses, worms,
+          time-bombs, keystroke loggers, spyware, adware or any other harmful programs or similar computer code
+          designed to adversely affect the operation of any computer software or hardware
+      li
+        | to interfere with, damage or disrupt any part of the Service; any equipment or network on which the Service
+          is stored; any software used in the provision of the Service; and/or any equipment or network or software
+          owned or used by any third party
+
+    h2.govuk-heading-m id="request-to-remove-content" Requests to remove content
+    p
+      | You can ask for content to be removed from the Service. We will remove content:
+    ul.govuk-list.govuk-list--bullet
+      li in order to comply with data protection legislation covering the rights and freedoms of individuals
+      li
+        | if it breaches copyright laws, contains sensitive personal data or material that may
+          be considered obscene or defamatory.
+    p
+      ' Please contact us at
+      = mail_to "OPSS.enquiries@beis.gov.uk"
+      |  to ask for content to be removed.
+        You will need to send us the web address (URL) of the content and explain why you think it should be removed.
+        We will reply to let you know whether we’ll remove it.
+    p
+      ' We remove content at our discretion in discussion with the department or agency responsible for it.
+        You can still request information under the
+      = link_to "Freedom of Information Act", "https://www.gov.uk/make-a-freedom-of-information-request"
+      '  and the
+      = link_to "Data Protection Act", "https://www.gov.uk/data-protection"
+      | .
+
+    h2.govuk-heading-m id="no-viruses" We are not responsible for viruses and you must not introduce them
+    p
+      | We make every effort to check and test the Service for viruses at every stage of production.
+        You must make sure that the way you use the Service does not expose you to the risk of viruses, malicious
+        computer code or other forms of interference which can damage your computer system.
+    p
+      | We are not responsible for any loss, disruption or damage to your data or computer system that might happen
+        when you use the Service.
+    p
+      | When using the Service, you must not introduce viruses, trojans, worms, logic bombs or any other material
+        that’s malicious or technologically harmful.
+    p
+      | You must not try to gain unauthorised access to the Service, the server on which it’s stored or any server,
+        computer or database connected to it.
+    p
+      | You must not attack the Service in any way. This includes denial-of-service attacks.
+    p
+      | We will report any attacks or attempts to gain unauthorised access to the Service to the relevant law
+        enforcement authorities and share information about you with them.
+
+    h2.govuk-heading-m id="our-responsibility" Our responsibility for loss or damage suffered by you
+    p
+      | We are not liable for any loss or damage that may come from using the Service. This includes:
+    ul.govuk-list.govuk-list--bullet
+      li any direct, indirect or consequential losses
+      li any loss or damage caused by civil wrongs (‘tort’, including negligence), breach of contract or otherwise
+      li the use of the Service and any websites that are linked to or from it
+      li the inability to use the Service and any websites that are linked to or from it
+    p
+      | This applies if the loss or damage was foreseeable, arose in the normal course of things
+        or you advised us that it might happen.
+    p
+      | This includes (but is not limited to) the loss of your income or revenue; salary, benefits or other payments;
+        business; profits or contracts; opportunity; anticipated savings; data; goodwill or reputation; tangible
+        property; intangible property, including loss, corruption or damage to data or any computer system; and/or
+        wasted management or office time.
+    p
+      | We may still be liable for:
+    ul.govuk-list.govuk-list--bullet
+      li death or personal injury arising from our negligence
+      li fraudulent misrepresentation
+      li any other liability which cannot be excluded or limited under applicable law
+
+    h2.govuk-heading-m id="general-terms" General terms
+    p
+      | We are not liable if we fail to comply with these Terms because of circumstances beyond our reasonable control.
+    p
+      | We might decide not to exercise or enforce any right available to us under these Terms. We can always decide to
+        exercise or enforce that right at a later date.  Doing this once will not mean we automatically waive the right
+        on any other occasion.
+    p
+      | If any terms of these Terms are held to be invalid, unenforceable or illegal for any reason, the remaining
+        terms will still apply.
+
+    h2.govuk-heading-m id="country-laws" Countries whose laws apply to these Terms
+    p
+      | These Terms, their subject matter and their formation (and any non-contractual disputes or claims) are governed
+        by English law. You and we both agree to the exclusive jurisdiction of the courts of England and Wales.
+    p
+      | You and we both agree that the courts of England and Wales will have exclusive jurisdiction.
+
+= render "close_page_button"

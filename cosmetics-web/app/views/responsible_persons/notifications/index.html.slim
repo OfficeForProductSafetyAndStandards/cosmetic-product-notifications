@@ -18,27 +18,34 @@
 
     - if @registered_notifications.total_entries.zero?
       p
-        b => @responsible_person.name
-        | has no cosmetic products registered in the UK.
+        strong => @responsible_person.name
+        | has not submitted any cosmetic product notifications in the UK.
       p
-        | All cosmetic products intended for sale or given away in the UK must be registered in the UK.
+        | All cosmetic products sold or given away in the UK must be notified in the UK.
       p
         | To continue to sell or give away cosmetic products that were notified to the European Union (EU) before
-        span.no-wrap<> 29 March 2019,
-        | you must register your products in the UK within 90 days of the UK leaving the EU – that is
-        span.no-wrap<> 11:00pm on 27 June 2019.
+        span.no-wrap<>
+          = display_full_month_date EU_EXIT_DATE
+          | ,
+        | you must submit your product notifications in the UK within 90 days of the UK leaving the EU – that is by
+        span.no-wrap<
+          => display_time SUBMISSION_WINDOW_END_DATE
+          | on
+          =< display_full_month_date SUBMISSION_WINDOW_END_DATE
+          | .
       p
-        | You do not have to register cosmetic products discontinued before
-        span.no-wrap<> 29 March 2019.
+        | You do not have to submit notifications for cosmetic products discontinued before
+        span.no-wrap<
+          = display_full_month_date EU_EXIT_DATE
+          | .
 
-    = link_to "Add cosmetic products", new_responsible_person_notification_file_path(@responsible_person),
-            class: "govuk-button govuk-button", role: "button"
+    = link_to "Add cosmetic products", new_responsible_person_add_notification_path(@responsible_person),
+            class: "govuk-button", role: "button"
 
-= render "tabs", tabs: [\
-  Tab.new("errors", "Errors (#{@erroneous_notification_files.total_entries})", "Files that failed to upload",
-        lambda { render "responsible_persons/notifications/tabs/errors" }),
-  Tab.new("unfinished", "Incomplete (#{@unfinished_notifications.total_entries})", "Incomplete registrations",
-        lambda { render "responsible_persons/notifications/tabs/unfinished" }),
-  Tab.new("registered", "Registered (#{@registered_notifications.total_entries})", "Registered cosmetic products",
-        lambda { render "responsible_persons/notifications/tabs/registered" })\
-]
+= render "components/govuk_tabs",
+        items: [{ id: "errors", label: "Errors (#{@erroneous_notification_files.total_entries})",
+                        panel: { html: render("responsible_persons/notifications/tabs/errors") } },
+                { id: "incomplete", label: "Incomplete (#{@unfinished_notifications.total_entries})",
+                        panel: { html: render("responsible_persons/notifications/tabs/incomplete") } },
+                { id: "notified", label: "Notified (#{@registered_notifications.total_entries})",
+                        panel: { html: render("responsible_persons/notifications/tabs/notified") } }]

@@ -1,0 +1,12 @@
+- content_for :page_title, "Remove product from case"
+- content_for :after_header do
+  = link_to "Back to #{@investigation.pretty_description}", @investigation, class: "govuk-back-link"
+h2.govuk-heading-m
+  | Remove product
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    = form_with(url: unlink_investigation_product_path(@investigation), method: :delete) do |form|
+      h3.govuk-heading-s[class="govuk-!-margin-bottom-2"]
+        | Product details
+      = render "product_summary", product: @product
+      = form.submit "Remove product", class: "govuk-button remove-button"

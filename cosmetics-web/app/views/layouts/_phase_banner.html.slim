@@ -1,9 +1,13 @@
 .govuk-phase-banner
   p.govuk-phase-banner__content
     strong.govuk-tag.govuk-phase-banner__content__tag
-      | alpha
+      | beta
     span.govuk-phase-banner__text
-      ' This is a new service – your
-      a.govuk-link--no-visited-state[href="#"]
+      | This is a new service – your
+      - html = capture do
         | feedback
-      |  will help us to improve it.
+        span.govuk-visually-hidden
+          | (opens new window)
+      =<> link_to html, "https://www.surveymonkey.co.uk/r/PQXTHPW", class: "govuk-link govuk-link--no-visited-state",
+              target: "_blank", rel: "noopener"
+      | will help us to improve it.
