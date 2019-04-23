@@ -6,15 +6,14 @@ All notable changes to this project will be documented in this file.
 
 <!-- ### Cosmetics -->
 
-### Next release checklist
-- [ ] Update `cosmetics-app` name in keycloak
-     1. Log into keycloak admin app, click on `Clients` and select `cosmetics-app`
-         1. In the `Settings` tab, change the `Name` field to `Submit cosmetic product notifications`
-         2. Press the `Save` button, to apply the changes
-- [ ] Update all user accounts to use the `First Name` field for full name
-     1. Log into the Keycloak admin app, click on the `Users` tab and select `View all users`
-     2. Edit each user and ensure the `First Name` field contains their full name
-     3. Set the `Last Name` field to `n/a` to indicate it is not used
+<!-- ### Next release checklist -->
+
+
+## 2019-04-23
+### Product safety database
+- Fixed a bug where the wrong user was attributed to entries in the activity log.
+- Fixed a bug where adding new teams caused the cases page to return an error.
+
 
 ## 2019-04-03
 ### Product safety database
@@ -31,6 +30,7 @@ All notable changes to this project will be documented in this file.
 - Allow users to view their team members.
 - Allow users to add new team members.
 - Various bug fixes.
+
 
 ## 2019-03-07
 ### MSPSDS
