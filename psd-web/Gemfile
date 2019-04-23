@@ -23,7 +23,6 @@ gem "shared-web", path: "./vendor/shared-web"
 group :development, :test do
   gem "roo", "~> 2.8.2"
   gem "rspec-mocks"
-  gem "selenium-webdriver"
 
   gem "shared-web-dev", path: "./vendor/shared-web/dev"
 end
