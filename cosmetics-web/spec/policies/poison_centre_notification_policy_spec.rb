@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
   subject { PoisonCentreNotificationPolicy.new(user, notification) }
 
-  let(:user) { build(:user) }
+  let(:user) { create(:user) }
   let(:notification) { create(:notification) }
 
   before do

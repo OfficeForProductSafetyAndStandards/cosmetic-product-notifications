@@ -11,6 +11,9 @@ module LoginHelpers
     allow(Keycloak::Client).to receive(:has_role?).and_return(false)
     allow(Keycloak::Client).to receive(:has_role?).with(any_of(with_roles), anything).and_return(true)
 
+    allow(Keycloak::Internal).to receive(:has_role?).and_return(false)
+    allow(Keycloak::Internal).to receive(:has_role?).with(anything, any_of(with_roles)).and_return(true)
+
     allow_any_instance_of(ApplicationController).to receive(:access_token).and_return("access_token")
   end
   # rubocop:enable RSpec/AnyInstance
@@ -28,6 +31,8 @@ module LoginHelpers
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
+
+    allow(Keycloak::Internal).to receive(:has_role?).and_call_original
 
     allow_any_instance_of(ApplicationController).to receive(:access_token).and_call_original
   end
