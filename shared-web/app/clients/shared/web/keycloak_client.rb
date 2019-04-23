@@ -70,7 +70,7 @@ module Shared
 
       def all_users(force: false)
         Rails.cache.delete(:keycloak_users) if force
-        Rails.cache.fetch(:keycloak_users, expires_in: 5.minutes) do
+        Rails.cache.fetch(:keycloak_users, expires_in: cache_period) do
           # KC defaults to max:100, while we need all users. 1000000 seems safe, at least for the time being
           users = @internal.get_users(max: 1000000)
 
@@ -83,7 +83,7 @@ module Shared
 
       def all_organisations(force: false)
         Rails.cache.delete(:keycloak_organisations) if force
-        Rails.cache.fetch(:keycloak_organisations, expires_in: 5.minutes) do
+        Rails.cache.fetch(:keycloak_organisations, expires_in: cache_period) do
           groups = all_groups
           organisations = groups.find { |group| group["name"] == "Organisations" }
 
@@ -98,7 +98,7 @@ module Shared
       def all_teams(org_ids, force: false)
         org_ids_set = org_ids.to_set
         Rails.cache.delete(:keycloak_teams) if force
-        Rails.cache.fetch(:keycloak_teams, expires_in: 5.minutes) do
+        Rails.cache.fetch(:keycloak_teams, expires_in: cache_period) do
           all_groups.find { |group| group["name"] == "Organisations" }["subGroups"]
               .reject(&:blank?)
               .select { |organisation| org_ids_set.include? organisation["id"] }
@@ -111,7 +111,7 @@ module Shared
         user_ids_set = user_ids.to_set
         team_ids_set = team_ids.to_set
         Rails.cache.delete(:keycloak_team_users) if force
-        Rails.cache.fetch(:keycloak_team_users, expires_in: 5.minutes) do
+        Rails.cache.fetch(:keycloak_team_users, expires_in: cache_period) do
           user_groups = all_user_groups
 
           # We set ids manually because if we don't ActiveHash will use 'next_id' method when computing @records,
@@ -192,7 +192,7 @@ module Shared
 
       def group_attributes(group_id)
         cache_key = "keycloak_group_#{group_id}".to_sym
-        response = Rails.cache.fetch(cache_key, expires_in: 5.minutes) do
+        response = Rails.cache.fetch(cache_key, expires_in: cache_period) do
           Keycloak::Internal.get_group(group_id)
         end
         JSON.parse(response)["attributes"] || {}
@@ -219,6 +219,10 @@ module Shared
             organisation_id: organisation["id"],
             team_recipient_email: team_recipient_email }
         end
+      end
+
+      def cache_period
+        5.minutes
       end
     end
   end
