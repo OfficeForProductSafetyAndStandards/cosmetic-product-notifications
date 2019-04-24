@@ -7,6 +7,7 @@ class NotificationBuildController < ApplicationController
         :is_imported,
         :add_import_country,
         :single_or_multi_component,
+        :is_mixed,
         :add_new_component,
         :add_product_image
 
@@ -21,6 +22,8 @@ class NotificationBuildController < ApplicationController
     case step
     when :single_or_multi_component
       render_single_or_multi_component_step
+    when :is_mixed
+      render_is_mixed_step
     when :is_imported
       render_is_imported_step
     when :add_new_component
@@ -52,12 +55,13 @@ class NotificationBuildController < ApplicationController
 private
 
   def notification_params
-    params.require(:notification)
+    params.fetch(:notification, {})
       .permit(
         :product_name,
         :industry_reference,
         :is_imported,
         :import_country,
+        :components_are_mixed,
         image_uploads_attributes: [file: []]
       )
   end
@@ -78,17 +82,24 @@ private
       single_component = @notification.components.empty? ? @notification.components.create : @notification.components.first
       redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, single_component)
     when "multiple"
-      if @notification.is_multicomponent?
-        render_wizard @notification
-      else
+      unless @notification.is_multicomponent?
         @notification.components.destroy_all
         @notification.components.build
         @notification.components.build
         @notification.save
-        redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
       end
+      render_wizard @notification
     else
       @notification.errors.add :components, "Must not be nil"
+      render step
+    end
+  end
+
+  def render_is_mixed_step
+    # Apply this since render_wizard(@notification, context: :update_components_are_mixed) doesn't work as expected
+    if @notification.update_with_context(notification_params, :update_components_are_mixed)
+      render_wizard @notification
+    else
       render step
     end
   end
