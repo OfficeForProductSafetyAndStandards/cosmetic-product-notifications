@@ -33,6 +33,7 @@ class Notification < ApplicationRecord
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
             allow_nil: true
   validates :cpnp_reference, presence: true, on: :file_upload
+  validates :components_are_mixed, inclusion: { in: [true, false] }, on: :update_components_are_mixed
 
   def as_indexed_json(*)
     as_json(
