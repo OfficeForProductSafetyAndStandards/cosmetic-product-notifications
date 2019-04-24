@@ -210,17 +210,6 @@ module Shared
         JSON.parse(response)
       end
 
-      def extract_teams_from_organisation(organisation)
-        organisation["subGroups"].reject(&:blank?).map do |team|
-          team_recipient_email = group_attributes(team["id"])["teamRecipientEmail"]&.first
-          { id: team["id"],
-            name: team["name"],
-            path: team["path"],
-            organisation_id: organisation["id"],
-            team_recipient_email: team_recipient_email }
-        end
-      end
-
       def cache_period
         5.minutes
       end
