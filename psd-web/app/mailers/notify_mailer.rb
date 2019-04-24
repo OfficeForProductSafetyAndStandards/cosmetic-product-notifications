@@ -4,8 +4,18 @@ class NotifyMailer < GovukNotifyRails::Mailer
         investigation_updated: '10a5c3a6-9cc7-4edb-9536-37605e2c15ba',
         investigation_created: '6da8e1d5-eb4d-4f9a-9c3c-948ef57d6136',
         alert: '47fb7df9-2370-4307-9f86-69455597cdc1',
-        user_added_to_team: 'e3b2bbf5-3002-49fb-adb5-ad18e483c7e4'
+        user_added_to_team: 'e3b2bbf5-3002-49fb-adb5-ad18e483c7e4',
+        welcome: '035876e3-5b97-4b4c-9bd5-c504b5158a85'
     }.freeze
+
+  def welcome(name, email)
+    set_template(TEMPLATES[:welcome])
+    set_reference('Welcome')
+
+    set_personalisation(name: name)
+
+    mail(to: email)
+  end
 
   def investigation_updated(investigation_pretty_id, name, email, update_text, subject_text)
     set_template(TEMPLATES[:investigation_updated])
