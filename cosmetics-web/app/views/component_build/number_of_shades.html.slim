@@ -10,20 +10,22 @@
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
-            | Is the cosmetic sold in more than 1 shade?
+            | Is the cosmetic product available in more than 1 shade?
         p
-            | Only decorative cosmetics are sold in ‘shades’.
-            |  Each shade varies only in colour and is otherwise
-            |  identical.
+            | You can submit a single notification for all the shades this product is available in, if 
+              all other aspects of the notification are the same.
         = render "radio_select_error" if @component.errors.messages[:shades].any?
         = form_with url: wizard_path, method: :put do |form|
             = form.hidden_field :number_of_shades, value: nil
             .govuk-form-group
                 .govuk-radios
                     .govuk-radios__item
-                        = form.radio_button :number_of_shades, "multiple", class: "govuk-radios__input"
-                        = form.label :number_of_shades_multiple, "Yes", class: "govuk-label govuk-radios__label"
+                        = form.radio_button :number_of_shades, "multiple-shades-same-notification", class: "govuk-radios__input"
+                        = form.label :number_of_shades_multiple, "Yes, the cosmetic product is available in more than 1 shade and all other aspects of the notifcation are the same", class: "govuk-label govuk-radios__label"
                     .govuk-radios__item
-                        = form.radio_button :number_of_shades, "single", class: "govuk-radios__input"
-                        = form.label :number_of_shades_single, "No", class: "govuk-label govuk-radios__label"
+                        = form.radio_button :number_of_shades, "multiple-shades-different-notification", class: "govuk-radios__input"
+                        = form.label :number_of_shades_multiple, "Yes, the cosmetic product is available in more than 1 shade but needs separate notifcations", class: "govuk-label govuk-radios__label"    
+                    .govuk-radios__item
+                        = form.radio_button :number_of_shades, "single-or-no-shades", class: "govuk-radios__input"
+                        = form.label :number_of_shades_single, "No, the cosmetic product is not available in more than 1 shade", class: "govuk-label govuk-radios__label"
             = form.submit "Continue", class: "govuk-button"
