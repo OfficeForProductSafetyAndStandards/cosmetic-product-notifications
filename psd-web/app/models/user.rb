@@ -15,6 +15,8 @@ class User < Shared::Web::User
   delegate :has_been_sent_welcome_email, :has_been_sent_welcome_email!, to: :get_user_attributes
 
   def teams
+    # Ensure we're serving up-to-date relations (modulo caching)
+    TeamUser.load
     # has_many through seems not to work with ActiveHash
     # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
     team_users.map(&:team)
@@ -45,7 +47,8 @@ class User < Shared::Web::User
       # - however, checking this based on permissions would require a request per user
       # Some user object are missing their name when they have not finished their registration yet.
       # But we need to be able to show them on the teams page for example, so we ensure that the attribute is not nil
-      self.data = all_users.map(&method(:populate_organisation))
+      self.data = all_users.deep_dup # We want a copy of the data to modify freely, not mutating the cached version
+                      .map(&method(:populate_organisation))
                       .map(&method(:populate_name))
                       .reject { |user| user[:organisation_id].blank? }
     rescue StandardError => e
