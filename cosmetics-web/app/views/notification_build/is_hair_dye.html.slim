@@ -7,7 +7,8 @@
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :is_hair_dye,
-              fieldset: { legend: { text: "Is the cosmetic product a hair dye?", classes: "govuk-fieldset__legend--xl" } },
+              fieldset: { legend: { text: "Is the cosmetic product a hair dye?",
+                      classes: "govuk-fieldset__legend--xl" } },
               items: [{ text: "Yes, it is a hair dye", value: "true" },
                       { text: "No, it is not a hair dye", value: "false" }]
-      = form.submit "Continue", class: "govuk-button"
+  = form.submit "Continue", class: "govuk-button"
