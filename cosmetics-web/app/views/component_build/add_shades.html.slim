@@ -4,7 +4,9 @@
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
-            | List the shades
+            | List the shades the cosmetic product
+        p 
+            | For each shade, all other aspects of the notification must be the same.
         - if @component.errors.messages[:shades].any?
             span.govuk-error-message Please add at least two shades
         = form_for(@component, url: wizard_path, method: :put) do |form|
