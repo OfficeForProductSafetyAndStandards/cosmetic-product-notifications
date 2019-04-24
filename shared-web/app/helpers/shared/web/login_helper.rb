@@ -9,10 +9,6 @@ module Shared
         Shared::Web::KeycloakClient.instance.registration_url(get_session_url_with_redirect(request_path))
       end
 
-      def login_page?
-        Keycloak.keycloak_controller == controller_name
-      end
-
       def get_session_url_with_redirect(request_path)
         uri = URI.parse(shared_engine.signin_session_url)
         uri.query = [uri.query, "request_path=#{request_path}"].compact.join('&')
