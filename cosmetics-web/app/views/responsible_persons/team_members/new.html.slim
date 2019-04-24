@@ -1,14 +1,14 @@
 - content_for :page_title, "Invite a team member"
 - content_for :after_header do
   = render "layouts/navbar"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | Invite a team member
 
-    = form_with model: @team_member, scope: :team_member,
-            url: responsible_person_team_members_path(@responsible_person), method: :post do |form|
-      = render "form_components/govuk_error_summary", form: form
+= form_with model: @team_member, scope: :team_member,
+        url: responsible_person_team_members_path(@responsible_person), method: :post do |form|
+  .govuk-grid-row
+    = render "form_components/govuk_error_summary", form: form
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        | Invite a team member
 
       p Inviting a team member will allow them to:
       ul.govuk-list.govuk-list--bullet

@@ -6,9 +6,9 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   def new; end
 
   def create
-    if responsible_person_saved?
-      NotifyMailer.send_responsible_person_invite_email(@responsible_person.id, @responsible_person.name,
-                                                        @team_member.email_address, User.current.name).deliver_later
+    @responsible_person.save
+    if @responsible_person.errors.empty?
+      send_invite_email
       redirect_to responsible_person_team_members_path(@responsible_person)
     else
       render :new
@@ -18,7 +18,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   def join
     pending_requests = PendingResponsiblePersonUser.pending_requests_to_join_responsible_person(
       User.current,
-        @responsible_person
+      @responsible_person
     )
 
     if pending_requests.any?
@@ -38,14 +38,6 @@ private
   end
 
   def team_member_params
-    team_member_session_params.merge(team_member_request_params)
-  end
-
-  def team_member_session_params
-    session.fetch(:team_member, {})
-  end
-
-  def team_member_request_params
     params.fetch(:team_member, {}).permit(
       :email_address
     )
@@ -55,13 +47,8 @@ private
     @team_member = @responsible_person.pending_responsible_person_users.build(team_member_params)
   end
 
-  def responsible_person_saved?
-    return false unless responsible_person_valid?
-
-    @responsible_person.save
-  end
-
-  def responsible_person_valid?
-    @responsible_person.valid?
+  def send_invite_email
+    NotifyMailer.send_responsible_person_invite_email(@responsible_person.id, @responsible_person.name,
+                                                      @team_member.email_address, User.current.name).deliver_later
   end
 end
