@@ -1,7 +1,6 @@
 import $ from 'jquery';
 
 function cookieBanner() {
-  document.getElementById('hideWhenNoJS').style.display='block';
   const myButton = document.getElementById('hideLink');
   function setCookie() {
     const d = new Date();
