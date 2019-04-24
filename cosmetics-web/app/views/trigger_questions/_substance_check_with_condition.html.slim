@@ -1,15 +1,13 @@
 ruby:
   component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
-  default_question = "Does #{component_name} contain #{substance.pluralize}?"
-  default_yes_option = "Yes, the product contains #{substance}"
-  default_label_text = "Total amount of #{substance} in the product"
+  question = local_assigns[:question] || "Does #{component_name} contain #{substance.pluralize}?"
+  yes_option = local_assigns[:yes_option] || "Yes, the product contains #{substance}"
+  label_text = local_assigns[:label_text] || "Total amount of #{substance} in the product"
 
 = form_with model: @question, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
-        = local_assigns[:question].present? ? question : default_question
       - input_field = capture do
         = form.fields_for :trigger_question_elements do |answer_form|
           = answer_form.hidden_field :answer_order, value: answer_form.object.answer_order
@@ -17,8 +15,7 @@ ruby:
           = answer_form.hidden_field :element, value: answer_form.object.element
           - errors = answer_form.object.errors
           .govuk-form-group class=("govuk-form-group--error" if errors.present?)
-            = answer_form.label :answer, local_assigns[:label_text].present? ? label_text : default_label_text,
-                    class: "govuk-label"
+            = answer_form.label :answer, label_text, class: "govuk-label"
             - if errors.present?
               span.govuk-error-message id="trigger_question_trigger_question_elements.answer-error"
                 = answer_form.object.errors.full_messages_for(:answer).first
@@ -29,7 +26,7 @@ ruby:
               - if local_assigns[:suffix_text]
                 span.govuk-input.govuk-c-input__suffix = suffix_text
       = render "form_components/govuk_radios", form: form, key: :applicable,
-              items: [{ text: local_assigns[:yes_option].present? ? yes_option : default_yes_option, \
-                        value: "true", conditional: { html: input_field } },
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              items: [{ text: yes_option, value: "true", conditional: { html: input_field } },
                       { text: "No", value: "false" }]
       = form.submit "Continue", class: "govuk-button"

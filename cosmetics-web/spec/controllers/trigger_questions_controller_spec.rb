@@ -5,7 +5,6 @@ RSpec.describe TriggerQuestionsController, type: :controller do
   let(:notification) { create(:notification, components: [create(:component)], responsible_person: responsible_person) }
   let(:multi_component_notification) { create(:notification, components: [create(:component), create(:component)], responsible_person: responsible_person) }
   let(:component) { notification.components.first }
-  let(:multi_component) { multi_component_notification.components.first }
 
   let(:params) {
     {
@@ -19,7 +18,7 @@ RSpec.describe TriggerQuestionsController, type: :controller do
     {
         responsible_person_id: responsible_person.id,
         notification_reference_number: notification.reference_number,
-        component_id: multi_component.id
+        component_id: multi_component_notification.components.first.id
     }
   }
 
@@ -135,7 +134,7 @@ RSpec.describe TriggerQuestionsController, type: :controller do
         ]
       }
 
-      let(:unvalid_answers) { [{ answer: "", answer_order: 0, element_order: 0, element: "inciname", id: answers.first.id }] }
+      let(:invalid_answers) { [{ answer: "", answer_order: 0, element_order: 0, element: "inciname", id: answers.first.id }] }
 
       it "add filled answers to trigger_question_elements" do
         post(:update, params: params.merge(id: :add_anti_dandruff_agents, trigger_question: {
@@ -178,14 +177,14 @@ RSpec.describe TriggerQuestionsController, type: :controller do
 
       it "set errors when fails to update" do
         post(:update, params: params.merge(id: :add_anti_dandruff_agents, trigger_question: {
-            trigger_question_elements_attributes: unvalid_answers
+            trigger_question_elements_attributes: invalid_answers
         }))
         expect(assigns(:errors)).not_to be_nil
       end
 
       it "re initialize 20 empty answers when it fails to update" do
         post(:update, params: params.merge(id: :add_anti_dandruff_agents, trigger_question: {
-            trigger_question_elements_attributes: unvalid_answers
+            trigger_question_elements_attributes: invalid_answers
         }))
         expect(assigns(:question).trigger_question_elements).to have(20).items
         expect(assigns(:question).trigger_question_elements).to all(have_attributes(answer: be_nil))

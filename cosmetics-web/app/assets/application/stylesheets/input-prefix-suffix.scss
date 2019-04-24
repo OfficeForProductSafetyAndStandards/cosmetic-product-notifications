@@ -2,11 +2,9 @@
   display: flex;
 }
 
-$govuk-light-grey: #f3f2f1; // New light grey colour
-
 .govuk-c-input__prefix,
 .govuk-c-input__suffix {
-  background-color: $govuk-light-grey;
+  background-color: govuk-colour("grey-3");
   white-space: nowrap;
   cursor: default; // emphasise non-editable status of prefixes and suffixes
   flex: 0;

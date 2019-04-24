@@ -1,30 +1,35 @@
+ruby:
+  question = local_assigns[:question] || "List the #{substance.pluralize} and their concentration"
+
 = form_with model: @question, url: wizard_path, method: :put do |form|
+  - substance_list_errors = form.object.errors.full_messages_for(:substance_list)
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
-      - if @errors.present?
-        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
-      h1.govuk-heading-xl
-        = local_assigns[:question].present? ? question : "List the #{substance.pluralize} and their concentration"
-      = form.fields_for :trigger_question_elements do |answer_form|
-        = answer_form.hidden_field :answer_order, value: answer_form.object.answer_order
-        = answer_form.hidden_field :element_order, value: answer_form.object.element_order
-        = answer_form.hidden_field :element, value: answer_form.object.element
-        - if answer_form.object.element == "inciname"
-          .govuk-grid-column-two-thirds
-            = render "form_components/govuk_input", form: answer_form, key: :answer,
-                    label: { text: substance.upcase_first }
-        - else
-          .govuk-grid-column-one-third
-            - errors = answer_form.object.errors
-            .govuk-form-group class=("govuk-form-group--error" if errors.present?)
-              = answer_form.label :answer, "Concentration", class: "govuk-label"
-              - if errors.present?
-                span.govuk-error-message id="trigger_question_trigger_question_elements.answer-error"
-                  = errors.full_messages_for(:answer).first
-              .input-wrapper
-                = answer_form.text_field :answer, class: "govuk-input govuk-c-input"
-                span.govuk-input.govuk-c-input__suffix
-                  | % w/w
-  .govuk-form-group
-    = form.submit "Continue", class: "govuk-button"
+      = render "components/govuk_fieldset", legend: { text: question,
+              classes: "govuk-fieldset__legend--xl", isPageHeading: true } do
+        - if substance_list_errors.present?
+          = render "components/govuk_error_message", id: "trigger_question_substance_list-error",
+                  text: substance_list_errors.first
+        .govuk-grid-row
+          = form.fields_for :trigger_question_elements do |answer_form|
+            = answer_form.hidden_field :answer_order, value: answer_form.object.answer_order
+            = answer_form.hidden_field :element_order, value: answer_form.object.element_order
+            = answer_form.hidden_field :element, value: answer_form.object.element
+            - if answer_form.object.element == "inciname"
+              .govuk-grid-column-two-thirds
+                = render "form_components/govuk_input", form: answer_form, key: :answer,
+                        label: { text: substance.upcase_first }
+            - else
+              .govuk-grid-column-one-third
+                - errors = answer_form.object.errors
+                .govuk-form-group class=("govuk-form-group--error" if errors.present?)
+                  = render "components/govuk_label", text: "Concentration"
+                  - if errors.present?
+                    = render "components/govuk_error_message", text: errors.full_messages_for(:answer).first,
+                            id: "trigger_question_trigger_question_elements.answer-error"
+                  .input-wrapper
+                    = answer_form.text_field :answer, class: "govuk-input govuk-c-input"
+                    span.govuk-input.govuk-c-input__suffix
+                      | % w/w
+        = form.submit "Continue", class: "govuk-button"

@@ -1,7 +1,3 @@
-- heading = capture do
-  h1.govuk-heading-xl
-    = question
-
 = form_with model: @question, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
@@ -10,6 +6,7 @@
         = answer_form.hidden_field :answer_order, value: answer_form.object.answer_order
         = answer_form.hidden_field :element_order, value: answer_form.object.element_order
         = answer_form.hidden_field :element, value: answer_form.object.element
-        = render "form_components/govuk_input", form: answer_form, key: :answer, label: { html: heading },
+        = render "form_components/govuk_input", form: answer_form, key: :answer,
+                label: { text: question, classes: "govuk-label--xl", isPageHeading: true },
                 classes: local_assigns[:classes].present? ? classes : ""
       = form.submit "Continue", class: "govuk-button"

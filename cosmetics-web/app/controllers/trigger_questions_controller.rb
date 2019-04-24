@@ -197,7 +197,7 @@ private
   end
 
   def render_select_ph_range
-    selected_value = params[:range]
+    selected_value = params[:trigger_question] && params[:trigger_question][:range]
     exact_ph_question = @component.trigger_questions.where(question: get_question_for_step(:exact_ph)).first
     alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
 
@@ -218,7 +218,7 @@ private
       alkaline_list_question.update(applicable: true)
       render_wizard @component
     else
-      @errors = [{ text: "Select an option", href: "#trigger_question_applicable_true" }]
+      @question.errors.add :range, "Please select an option"
       re_render_step
     end
   end
@@ -255,22 +255,11 @@ private
 
     destroy_empty_answers
     if @question.trigger_question_elements.empty?
-      define_errors_for_answers "No substance added"
+      @question.errors.add :substance_list, "No substance added"
       return re_render_step
     end
 
     @question.update(applicable: true) # ensuring that question is applicable if elements are added to it
-    render_wizard @component
-  end
-
-  def render_substance_text_input
-    @question.update(question_params)
-
-    if @question.trigger_question_elements.first.answer.blank?
-      define_errors_for_answers "No value added"
-      return re_render_step
-    end
-
     render_wizard @component
   end
 
@@ -360,10 +349,6 @@ private
   def re_render_step
     initialize_step
     render step
-  end
-
-  def define_errors_for_answers(text)
-    @errors = [{ text: text, href: "#trigger_question_trigger_question_elements_attributes_0_answer" }]
   end
 
   def get_question_for_step(step)

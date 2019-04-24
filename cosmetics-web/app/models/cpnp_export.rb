@@ -131,9 +131,21 @@ private
         trigger_rules_element(question_element_node)
       end
       TriggerQuestion.create(question: trigger_rules_question(question_node),
-                             applicable: question_elements.any?,
+                             applicable: is_trigger_question_applicable(question_elements),
                              trigger_question_elements: question_elements)
     end
+  end
+
+  def is_trigger_question_applicable(question_elements)
+    question_elements.any? && applicable_inciname(question_elements) && applicable_ph(question_elements)
+  end
+
+  def applicable_inciname(question_elements)
+    !(question_elements.size == 1 && question_elements.first.inciname? && question_elements.first.answer == "NA")
+  end
+
+  def applicable_ph(question_elements)
+    !(question_elements.size == 1 && question_elements.first.ph? && question_elements.first.answer == "N")
   end
 
   def trigger_rules_element(question_element_node)
