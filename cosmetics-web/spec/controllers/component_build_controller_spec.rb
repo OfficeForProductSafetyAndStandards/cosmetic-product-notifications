@@ -127,7 +127,7 @@ RSpec.describe ComponentBuildController, type: :controller do
 private
 
   def other_responsible_person_params
-    other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
+    other_responsible_person = create(:responsible_person)
     other_notification = create(:notification, components: [create(:component)], responsible_person: other_responsible_person)
     other_component = other_notification.components.first
 

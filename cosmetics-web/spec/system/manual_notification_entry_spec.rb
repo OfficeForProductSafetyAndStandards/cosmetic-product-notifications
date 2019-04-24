@@ -124,8 +124,6 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # Check your answers page
     expect_check_your_answers_value("Name", responsible_person.name)
-    expect_check_your_answers_value("Email address", responsible_person.email_address)
-    expect_check_your_answers_value("Phone number", responsible_person.phone_number)
   end
 
   it "allows user to complete notification for imported cosmetics" do
