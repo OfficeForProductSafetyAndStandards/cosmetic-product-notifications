@@ -9,6 +9,7 @@ class Correspondence < ApplicationRecord
 
   validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :context
   validates_length_of :details, maximum: 50000
+  validate :date_cannot_be_in_the_future
 
   date_attribute :correspondence_date
 
@@ -29,6 +30,12 @@ class Correspondence < ApplicationRecord
 
   def can_be_displayed?
     can_be_seen_by_current_user? || investigation.child_should_be_displayed?
+  end
+
+  def date_cannot_be_in_the_future
+    if correspondence_date.present? && correspondence_date > Time.zone.today
+      errors.add(:correspondence_date, 'Date must be today or in the past')
+    end
   end
 
 private
