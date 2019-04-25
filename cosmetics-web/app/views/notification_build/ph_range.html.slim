@@ -9,7 +9,7 @@
       = render "form_components/govuk_error_summary", form: form
       .govuk-form-group class=("govuk-form-group--error" if ph_range_error.present?)
         = render "components/govuk_fieldset", legend: { text: "What is the pH range of the cosmetic product?",
-                classes: "govuk-fieldset__legend--xl " } do
+                classes: "govuk-fieldset__legend--xl", isPageHeading: true } do
           - if ph_range_error.present?
             = render "components/govuk_error_message", id: "notification_ph_range-error", text: ph_range_error.first
           .govuk-grid-column-one-third[class="govuk-!-padding-left-0"]
@@ -20,4 +20,4 @@
             = render "form_components/govuk_input", key: :ph_max_value, form: form,
                     classes: "govuk-input--width-4",
                     label: { text: "Maximum pH" }
-  = form.submit "Continue", class: "govuk-button"
+      = form.submit "Continue", class: "govuk-button"

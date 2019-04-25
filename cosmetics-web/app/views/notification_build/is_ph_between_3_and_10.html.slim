@@ -6,9 +6,9 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
-      = render "form_components/govuk_radios", form: form, key: :is_between_3_and_10,
+      = render "form_components/govuk_radios", form: form, key: :is_ph_between_3_and_10,
               fieldset: { legend: { text: "Is the pH lower than 3 or higher than 10?",
-                      classes: "govuk-fieldset__legend--xl" } },
+                      classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
               items: [{ text: "Yes, it is lower than 3 or higher than 10", value: "false" },
                       { text: "No, it is between 3 and 10", value: "true" }]
-  = form.submit "Continue", class: "govuk-button"
+      = form.submit "Continue", class: "govuk-button"
