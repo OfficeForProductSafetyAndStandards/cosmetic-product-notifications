@@ -1,0 +1,47 @@
+# Alert when the rate of events exceeds a threshold
+
+# (Required)
+# Rule name, must be unique
+name: Keycloak 5xx Frequency (>100/hr)
+
+# (Required)
+# Type of alert.
+# the frequency rule type alerts when num_events events occur with timeframe time
+type: frequency
+
+# (Required)
+# Index to search, wildcard supported
+index: logstash-*
+
+# (Required, frequency specific)
+# Alert when this many documents matching the query occur within a timeframe
+num_events: 100
+
+# (Required, frequency specific)
+# num_events must occur within this amount of time to trigger an alert
+timeframe:
+  hours: 1
+
+# (Required)
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+filter:
+- query:
+    query_string:
+      query: "cf.app: keycloak AND cf.space: PROD AND metric.status_range: 5xx"
+
+# (Required)
+# The alert is use when a match is found
+alert:
+- "email"
+- "slack"
+
+# (required, email specific)
+# a list of email addresses to send alerts to
+email:
+- "user@example.com"
+
+slack:
+# The <"https://xxxxx.slack.com/services/new/incoming-webhook"> webhook URL that includes your auth data and the ID of the channel (room) you want to post to.
+slack_webhook_url: "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX"
