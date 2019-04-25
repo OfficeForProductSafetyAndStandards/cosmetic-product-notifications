@@ -145,7 +145,7 @@ module Shared
               end
             when 0
               if self[key].blank?
-                errors.add(key, "Enter a real date")
+                errors.add(key, :invalid_date)
                 errors.add(day_symbol(key), "")
                 errors.add(month_symbol(key), "")
                 errors.add(year_symbol(key), "")

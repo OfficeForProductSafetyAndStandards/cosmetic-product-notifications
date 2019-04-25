@@ -34,7 +34,7 @@ class Correspondence < ApplicationRecord
 
   def date_cannot_be_in_the_future
     if correspondence_date.present? && correspondence_date > Time.zone.today
-      errors.add(:correspondence_date, 'Date must be today or in the past')
+      errors.add(:correspondence_date, 'Correspondence date must be today or in the past')
     end
   end
 
