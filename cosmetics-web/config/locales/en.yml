@@ -37,6 +37,15 @@ en:
           notification_validation_error: "Try again or manually enter the production notification data"
           draft_notification_error: "The uploaded file is for a draft notification"
           unknown_error: "Try again or manually enter the production notification data"
+      notification:
+        ph_min_value: "pH"
+        ph_max_value: "pH"
+    errors:
+      models:
+        notification:
+          attributes:
+            components_are_mixed:
+              inclusion: "Select an option"
   errors:
     format: "%{message}"
     messages:

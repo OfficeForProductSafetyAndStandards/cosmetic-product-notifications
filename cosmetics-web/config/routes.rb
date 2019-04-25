@@ -54,6 +54,8 @@ Rails.application.routes.draw do
     post :accept
   end
 
+  resource :dashboard, controller: :dashboard, only: %i[show]
+
   resources :confirmation, controller: :confirmation, param: :key, only: %i[] do
     member do
       get :contact_person, path: "/contact-person-confirmation"
@@ -65,6 +67,7 @@ Rails.application.routes.draw do
     get :terms_and_conditions, path: "terms-and-conditions"
     get :privacy_notice, path: "privacy-notice"
   end
+
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
