@@ -19,7 +19,7 @@ RSpec.describe ResponsiblePersons::VerificationController, type: :controller do
 
       get :show, params: { responsible_person_id: responsible_person.id, key: email_verification_key.key }
 
-      expect(responsible_person.contact_persons.first.reload.is_email_verified).to be true
+      expect(responsible_person.contact_persons.first.reload.email_verified).to be true
     end
 
     it "Redirect to responsible person page if email key exists" do

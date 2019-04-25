@@ -36,7 +36,7 @@ private
 
     if User.current.responsible_persons.empty?
       redirect_to account_path(:overview)
-    elsif User.current.responsible_persons.first.contact_persons.none?(&:is_email_verified)
+    elsif User.current.responsible_persons.first.contact_persons.none?(&:email_verified?)
       responsible_person = User.current.responsible_persons.first
       redirect_to responsible_person_email_verification_keys_path(responsible_person)
     end

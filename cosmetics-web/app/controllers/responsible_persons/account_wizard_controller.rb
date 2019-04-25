@@ -21,7 +21,7 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
       create_or_join_existing_account
     when :contact_person
       if responsible_person_saved?
-        if @responsible_person.contact_persons.first.is_email_verified
+        if @responsible_person.contact_persons.any?(&:email_verified?)
           redirect_to responsible_person_path(@responsible_person)
         else
           send_verification_email

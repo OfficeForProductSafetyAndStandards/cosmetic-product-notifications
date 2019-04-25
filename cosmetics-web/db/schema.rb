@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_24_132227) do
+ActiveRecord::Schema.define(version: 2019_04_25_104509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2019_04_24_132227) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
-    t.boolean "is_email_verified"
+    t.boolean "email_verified", default: false
     t.index ["responsible_person_id"], name: "index_contact_persons_on_responsible_person_id"
   end
 
@@ -78,8 +78,8 @@ ActiveRecord::Schema.define(version: 2019_04_24_132227) do
     t.datetime "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "responsible_person_id"
-    t.index ["responsible_person_id"], name: "index_email_verification_keys_on_responsible_person_id"
+    t.bigint "contact_person_id"
+    t.index ["contact_person_id"], name: "index_email_verification_keys_on_contact_person_id"
   end
 
   create_table "exact_formulas", force: :cascade do |t|
@@ -227,7 +227,7 @@ ActiveRecord::Schema.define(version: 2019_04_24_132227) do
   add_foreign_key "cmrs", "components"
   add_foreign_key "components", "notifications"
   add_foreign_key "contact_persons", "responsible_persons"
-  add_foreign_key "email_verification_keys", "responsible_persons"
+  add_foreign_key "email_verification_keys", "contact_persons"
   add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"
   add_foreign_key "nano_elements", "nano_materials"

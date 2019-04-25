@@ -1,5 +1,5 @@
 class EmailVerificationKey < ApplicationRecord
-  belongs_to :responsible_person
+  belongs_to :contact_person
 
   before_create :set_key
   before_create :set_expires_at
@@ -12,10 +12,10 @@ class EmailVerificationKey < ApplicationRecord
     expires_at < DateTime.current
   end
 
-  def self.verify_key_for_responsible_person(responsible_person, key)
+  def self.verify_key_for_contact_person(contact_person, key)
     EmailVerificationKey.find_by!(
-      "responsible_person_id = ? AND key = ?",
-      responsible_person.id, key
+      "contact_person_id = ? AND key = ?",
+      contact_person.id, key
     )
   end
 
