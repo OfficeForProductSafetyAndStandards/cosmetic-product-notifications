@@ -66,7 +66,6 @@ en:
 
       # Our own
       date_missing_component: "%{attribute} must include a %{missing_components}"
-      invalid_date: "Enter a real date"
     attributes:
       email_address:
         invalid: "Enter a real email address"
@@ -111,4 +110,8 @@ en:
               required: "Enter an alert subject"
             description:
               required: "Enter a summary"
+        correspondence:
+          attributes:
+            correspondence_date:
+              invalid: "Enter a real correspondence date"
 
