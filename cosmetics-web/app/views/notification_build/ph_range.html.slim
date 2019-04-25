@@ -1,0 +1,23 @@
+- content_for :page_title, "What is the pH range of the cosmetic product?"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with model: @notification, url: wizard_path, method: :put do |form|
+  - ph_range_error = form.object.errors.full_messages_for(:ph_range)
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      .govuk-form-group class=("govuk-form-group--error" if ph_range_error.present?)
+        = render "components/govuk_fieldset", legend: { text: "What is the pH range of the cosmetic product?",
+                classes: "govuk-fieldset__legend--xl", isPageHeading: true } do
+          - if ph_range_error.present?
+            = render "components/govuk_error_message", id: "notification_ph_range-error", text: ph_range_error.first
+          .govuk-grid-column-one-third[class="govuk-!-padding-left-0"]
+            = render "form_components/govuk_input", key: :ph_min_value, form: form,
+                    classes: "govuk-input--width-4",
+                    label: { text: "Minimum pH" }
+          .govuk-grid-column-one-third[class="govuk-!-padding-left-0"]
+            = render "form_components/govuk_input", key: :ph_max_value, form: form,
+                    classes: "govuk-input--width-4",
+                    label: { text: "Maximum pH" }
+      = form.submit "Continue", class: "govuk-button"
