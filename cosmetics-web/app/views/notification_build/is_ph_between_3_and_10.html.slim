@@ -1,4 +1,4 @@
-- content_for :page_title, "Does the kit need to be mixed?"
+- content_for :page_title, "Is the pH lower than 3 or higher than 10?"
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
@@ -6,9 +6,9 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
-      = render "form_components/govuk_radios", form: form, key: :components_are_mixed,
-              fieldset: { legend: { text: "Does the kit need to be mixed?",
+      = render "form_components/govuk_radios", form: form, key: :is_ph_between_3_and_10,
+              fieldset: { legend: { text: "Is the pH lower than 3 or higher than 10?",
                       classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
-              items: [{ text: "Yes, the items need to be mixed", value: "true" },
-                      { text: "No, the items are used sequentially", value: "false" }]
+              items: [{ text: "Yes, it is lower than 3 or higher than 10", value: "false" },
+                      { text: "No, it is between 3 and 10", value: "true" }]
       = form.submit "Continue", class: "govuk-button"
