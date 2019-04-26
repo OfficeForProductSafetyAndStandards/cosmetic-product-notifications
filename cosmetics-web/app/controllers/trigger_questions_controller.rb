@@ -189,7 +189,7 @@ private
     when :contains_ethanol
       populate_question_with_single_answer :ethanol
     when :contains_isopropanol
-      populate_question_with_single_answer :isopropanol
+      populate_question_with_single_answer :propanol
     when :select_ph_range
       TriggerQuestion.find_or_create_by(component: @component, question: :please_indicate_the_ph)
       TriggerQuestion.find_or_create_by(component: @component, question: :please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators)

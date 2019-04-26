@@ -172,14 +172,14 @@ RSpec.describe TriggerQuestionsController, type: :controller do
         post(:update, params: params.merge(id: :add_anti_dandruff_agents, trigger_question: {
             trigger_question_elements_attributes: valid_answers
         }))
-        expect(assigns(:errors)).to be_nil
+        expect(assigns(:question).errors.messages).to be_empty
       end
 
       it "set errors when fails to update" do
         post(:update, params: params.merge(id: :add_anti_dandruff_agents, trigger_question: {
             trigger_question_elements_attributes: invalid_answers
         }))
-        expect(assigns(:errors)).not_to be_nil
+        expect(assigns(:question).errors.messages).not_to be_empty
       end
 
       it "re initialize 20 empty answers when it fails to update" do
