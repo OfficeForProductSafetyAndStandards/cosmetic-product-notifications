@@ -11,7 +11,7 @@ The site is written in [Node](https://nodejs.org/) using [Express](https://expre
 
 ## Getting Setup
 
-Install Node and Yarn and run the site using `yarn start`.
+Running `docker-compose up maintenance` in the root directory will run the maintenance page on `http://localhost:3005`.
 
 
 ## Deployment

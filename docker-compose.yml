@@ -41,13 +41,24 @@ services:
     env_file:
       - .env.antivirus
     environment:
-      - PORT=3005
+      - PORT=3006
     ports:
-      - "3005:3005"
+      - "3006:3006"
     volumes:
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/antivirus:/antivirus
       - bundle-cache:/usr/local/bundle
+
+  maintenance:
+    command: yarn start
+    ports:
+      - "3005:3005"
+    build:
+      context: .
+      dockerfile: ./maintenance/Dockerfile
+    volumes:
+      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+      - ${PWD-.}/maintenance:/maintenance
 
   cosmetics-web:
     build:

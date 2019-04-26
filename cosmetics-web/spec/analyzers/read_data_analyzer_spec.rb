@@ -16,6 +16,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
   after do
     sign_out
     remove_uploaded_files
+    close_file
   end
 
   describe "#accept" do

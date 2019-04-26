@@ -7,6 +7,7 @@ class ConfirmationController < ApplicationController
     email_verification_key = EmailVerificationKey.find_by(key: params[:key])
     return redirect_to "/404" if email_verification_key.blank?
     return redirect_to link_expired_confirmation_path if email_verification_key.is_expired?
+
     email_verification_key.responsible_person.update(is_email_verified: true)
   end
 
