@@ -10,4 +10,4 @@ set -ex
 # SPACE: the space to which you want to deploy
 # BUILD_ID: the docker tag that you want to deploy
 
-cf push --docker-image beisopss/antivirus:$BUILD_ID --hostname antivirus-$SPACE
+cf push -f ./antivirus/manifest.yml --docker-image beisopss/antivirus:$BUILD_ID --hostname antivirus-$SPACE
