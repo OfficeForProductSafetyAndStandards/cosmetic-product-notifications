@@ -8,6 +8,9 @@ class NotificationBuildController < ApplicationController
         :add_import_country,
         :single_or_multi_component,
         :is_mixed,
+        :is_hair_dye,
+        :is_ph_between_3_and_10,
+        :ph_range,
         :add_new_component,
         :add_product_image
 
@@ -24,6 +27,12 @@ class NotificationBuildController < ApplicationController
       render_single_or_multi_component_step
     when :is_mixed
       render_is_mixed_step
+    when :is_hair_dye
+      render_is_hair_dye_step
+    when :is_ph_between_3_and_10
+      render_is_ph_between_3_and_10_step
+    when :ph_range
+      render_ph_range_step
     when :is_imported
       render_is_imported_step
     when :add_new_component
@@ -52,6 +61,17 @@ class NotificationBuildController < ApplicationController
     edit_responsible_person_notification_path(@notification.responsible_person, @notification)
   end
 
+  def previous_wizard_path
+    previous_step = get_previous_step
+    if step == :add_product_name
+      responsible_person_add_notification_path(@notification.responsible_person, :have_products_been_notified_in_eu)
+    elsif previous_step.present?
+      responsible_person_notification_build_path(@notification.responsible_person, @notification, previous_step)
+    else
+      super
+    end
+  end
+
 private
 
   def notification_params
@@ -62,6 +82,8 @@ private
         :is_imported,
         :import_country,
         :components_are_mixed,
+        :ph_min_value,
+        :ph_max_value,
         image_uploads_attributes: [file: []]
       )
   end
@@ -96,8 +118,46 @@ private
   end
 
   def render_is_mixed_step
-    # Apply this since render_wizard(@notification, context: :update_components_are_mixed) doesn't work as expected
     if @notification.update_with_context(notification_params, :update_components_are_mixed)
+      if @notification.components_are_mixed
+        render_wizard @notification
+      else
+        clear_ph_range
+        redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :add_new_component)
+      end
+    else
+      render step
+    end
+  end
+
+  def render_is_hair_dye_step
+    case params[:notification] && params[:notification][:is_hair_dye]
+    when "true"
+      redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :ph_range)
+    when "false"
+      render_wizard @notification
+    else
+      @notification.errors.add :is_hair_dye, "Must select an option"
+      render step
+    end
+  end
+
+  def render_is_ph_between_3_and_10_step
+    case params[:notification] && params[:notification][:is_ph_between_3_and_10]
+    when "true"
+      clear_ph_range
+      redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :add_new_component)
+    when "false"
+      render_wizard @notification
+    else
+      @notification.errors.add :is_ph_between_3_and_10, "Must select an option"
+      render step
+    end
+  end
+
+  def render_ph_range_step
+    # Apply this since render_wizard(@notification, context: :update_components_are_mixed) doesn't work as expected
+    if @notification.update_with_context(notification_params, :update_ph_range_value)
       render_wizard @notification
     else
       render step
@@ -164,5 +224,32 @@ private
       return render step
     end
     render_wizard @notification
+  end
+
+  def clear_ph_range
+    @notification.update(ph_min_value: nil, ph_max_value: nil)
+  end
+
+  def get_previous_step
+    case step
+    when :add_import_country
+      :is_imported
+    when :ph_range
+      :is_hair_dye
+    when :single_or_multi_component
+      @notification.import_country.present? ? :add_import_country : :is_imported
+    when :add_new_component
+      if @notification.components_are_mixed
+        if @notification.ph_min_value.present? && @notification.ph_max_value.present?
+          :ph_range
+        else
+          :is_hair_dye
+        end
+      else
+        :is_mixed
+      end
+    when :add_product_image
+      @notification.is_multicomponent? ? :add_new_component : :single_or_multi_component
+    end
   end
 end
