@@ -5,4 +5,4 @@ set -ex
 #
 # The working directory should be the git root
 
-cf push
+cf push -f ./maintenance/manifest.yml
