@@ -6,6 +6,7 @@ class ComponentBuildController < ApplicationController
   steps :add_component_name,
         :number_of_shades,
         :add_shades,
+        :add_physical_form,
         :add_cmrs,
         :contains_nanomaterials,
         :add_nanomaterial,
@@ -44,8 +45,12 @@ class ComponentBuildController < ApplicationController
     when :upload_formulation
       render_upload_formulation
     else
-      @component.update(component_params)
-      render_wizard @component
+      # Apply this since render_wizard(@component, context: :context) doesn't work as expected
+      if @component.update_with_context(component_params, step)
+        render_wizard @component
+      else
+        render step
+      end
     end
   end
 
@@ -71,7 +76,15 @@ private
   end
 
   def component_params
-    params.require(:component).permit(:name, :sub_sub_category, :notification_type, :frame_formulation, shades: [])
+    params.fetch(:component, {})
+      .permit(
+        :name,
+        :physical_form,
+        :sub_sub_category,
+        :notification_type,
+        :frame_formulation,
+        shades: []
+      )
   end
 
   def render_number_of_shades
@@ -80,7 +93,7 @@ private
       @component.shades = nil
       @component.add_shades
       @component.save
-      redirect_to wizard_path(:add_cmrs, component_id: @component.id)
+      redirect_to wizard_path(:add_physical_form, component_id: @component.id)
     when "multiple"
       render_wizard @component
     when ""
