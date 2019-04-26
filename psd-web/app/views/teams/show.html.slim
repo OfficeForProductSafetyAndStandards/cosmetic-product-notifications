@@ -1,18 +1,16 @@
 - content_for :page_title, @team.display_name
-- content_for :after_header do
-  = render "layouts/navbar"
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds-from-desktop
     h1.govuk-heading-l = @team.display_name
     - if User.current.is_team_admin?
       a.govuk-button role="button" href=invite_to_team_url Invite a team member
-    h2.govuk-heading-m Team Members
+    h2.govuk-heading-m Team members
     ul.govuk-list
-      - @team.users.sort_by(&:full_name).each do |user|
+      - @team.users.sort_by(&:name).each do |user|
         li.teams--user class="govuk-!-padding-top-3 govuk-!-padding-bottom-3 govuk-!-margin-0"
           h3.teams--user-contact
-            span.govuk-heading-s.teams--user-name = user.full_name
+            - if user.name.present?
+              span.govuk-heading-s.teams--user-name = user.name
             '
             span.govuk-caption-m.teams--user-email = user.email
           - if user.is_team_admin?

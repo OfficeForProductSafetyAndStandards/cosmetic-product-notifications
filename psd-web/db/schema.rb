@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_29_153321) do
+ActiveRecord::Schema.define(version: 2019_04_16_121614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,7 +187,6 @@ ActiveRecord::Schema.define(version: 2019_03_29_153321) do
     t.string "category"
     t.string "country_of_origin"
     t.datetime "created_at", null: false
-    t.date "date_placed_on_market"
     t.text "description"
     t.string "name"
     t.string "product_code"
@@ -228,8 +227,10 @@ ActiveRecord::Schema.define(version: 2019_03_29_153321) do
   end
 
   create_table "user_attributes", primary_key: "user_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.boolean "boolean", default: false, null: false
     t.datetime "created_at", null: false
     t.boolean "has_accepted_declaration"
+    t.boolean "has_been_sent_welcome_email"
     t.boolean "has_viewed_introduction", default: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_user_attributes_on_user_id"

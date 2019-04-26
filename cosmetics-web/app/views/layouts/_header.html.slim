@@ -62,10 +62,8 @@ html.govuk-template.app-html-class[lang="en"]
               - if User.current
                 li.govuk-header__navigation-item
                   = link_to "Your account", user_account_url, class: "govuk-header__link"
-              - if !login_page?
                 li.govuk-header__navigation-item
-                  - if User.current
-                    = form_with url: shared_engine.logout_session_path, method: :delete do |form|
-                      = form.submit "Sign out", class: "sign-out-link"
-                  - else
-                    = link_to "Sign in", keycloak_login_url, class: "govuk-header__link"
+                  = link_to "Sign out", shared_engine.logout_session_path, class: "govuk-header__link"
+              - else
+                li.govuk-header__navigation-item
+                  = link_to "Sign in", keycloak_login_url(dashboard_path), class: "govuk-header__link"

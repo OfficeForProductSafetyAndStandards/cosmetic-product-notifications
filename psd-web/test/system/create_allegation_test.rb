@@ -197,8 +197,8 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
   def fill_allegation_details_and_continue
     fill_in "allegation[description]", with: @allegation.description
-    fill_autocomplete "picker-hazard_type", with: @allegation.hazard_type
-    fill_autocomplete "picker-product_category", with: @allegation.product_category
+    fill_autocomplete "allegation_hazard_type", with: @allegation.hazard_type
+    fill_autocomplete "allegation_product_category", with: @allegation.product_category
     click_on "Create allegation"
   end
 end

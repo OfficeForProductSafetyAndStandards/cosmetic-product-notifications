@@ -58,10 +58,10 @@ private
   def invite_user(user)
     @team.add_user user.id
     email = NotifyMailer.user_added_to_team user.email,
-                                            name: user.full_name,
+                                            name: user.name,
                                             team_page_url: team_url(@team),
                                             team_name: @team.name,
-                                            inviting_team_member_name: User.current.full_name
+                                            inviting_team_member_name: User.current.name
     email.deliver_later
   end
 end

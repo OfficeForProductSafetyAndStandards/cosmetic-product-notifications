@@ -14,6 +14,8 @@ class Team < ActiveHash::Base
   has_many :investigations, dependent: :nullify, as: :assignable
 
   def users
+    # Ensure we're serving up-to-date relations (modulo caching)
+    TeamUser.load
     # has_many through seems not to work with ActiveHash
     # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
     team_users.map(&:user)
@@ -21,19 +23,23 @@ class Team < ActiveHash::Base
 
   def add_user(user_id)
     Shared::Web::KeycloakClient.instance.add_user_to_team user_id, id
-    # Trigger reload of users and relations from KC
-    User.all(force: true)
+    # Trigger reload of team-users relations from KC
+    TeamUser.load(force: true)
   end
 
-  def self.all(options = {})
+  def self.load(force: false)
+    Organisation.load(force: force)
     begin
-      self.data = Shared::Web::KeycloakClient.instance.all_teams
+      self.data = Shared::Web::KeycloakClient.instance.all_teams(Organisation.all.map(&:id), force: force)
+      self.ensure_names_up_to_date
     rescue StandardError => e
       Rails.logger.error "Failed to fetch teams from Keycloak: #{e.message}"
       self.data = nil
     end
+  end
 
-    self.ensure_names_up_to_date
+  def self.all(options = {})
+    self.load
 
     if options.has_key?(:conditions)
       where(options[:conditions])
@@ -76,4 +82,4 @@ class Team < ActiveHash::Base
     Team.where(name: team_names[0])
   end
 end
-Team.all if Rails.env.development?
+Team.load if Rails.env.development?

@@ -5,7 +5,7 @@ FactoryBot.define do
     end
 
     id { SecureRandom.uuid }
-    first_name { "Test User" }
+    name { "Test User" }
     email { "test.user@example.com" }
 
     after :build do |user, options|

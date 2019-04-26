@@ -131,8 +131,21 @@ private
         trigger_rules_element(question_element_node)
       end
       TriggerQuestion.create(question: trigger_rules_question(question_node),
+                             applicable: is_trigger_question_applicable(question_elements),
                              trigger_question_elements: question_elements)
     end
+  end
+
+  def is_trigger_question_applicable(question_elements)
+    question_elements.any? && applicable_inciname(question_elements) && applicable_ph(question_elements)
+  end
+
+  def applicable_inciname(question_elements)
+    !(question_elements.size == 1 && question_elements.first.inciname? && question_elements.first.answer == "NA")
+  end
+
+  def applicable_ph(question_elements)
+    !(question_elements.size == 1 && question_elements.first.ph? && question_elements.first.answer == "N")
   end
 
   def trigger_rules_element(question_element_node)
@@ -172,8 +185,12 @@ private
     component_node.xpath(".//componentName[language='#{@language}']/name").first&.text
   end
 
+  # Because CPNP stores shades as just a plain text field, we are unable to
+  # extract the exported data into an array. As a workaround, we just return a
+  # single element array containing the shades data, which should display as we
+  # require.
   def component_shades(component_node)
-    component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text
+    [component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text]
   end
 
   def sub_sub_category(component_node)

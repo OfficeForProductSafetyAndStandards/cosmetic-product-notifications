@@ -11,6 +11,7 @@ class ResponsiblePersons::VerificationController < ApplicationController
 
     unless email_verification_key.is_expired?
       email_verification_key.responsible_person.update(is_email_verified: true)
+      Rails.logger.info "Responsible person email verified"
       return redirect_to responsible_person_path(email_verification_key.responsible_person)
     end
   end
@@ -24,7 +25,7 @@ class ResponsiblePersons::VerificationController < ApplicationController
       @contact_person.email_address,
       @contact_person.name,
       @responsible_person.name,
-      User.current.full_name
+      User.current.name
 ).deliver_later
 
     redirect_to responsible_person_email_verification_keys_path(@responsible_person)

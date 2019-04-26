@@ -89,12 +89,13 @@ private
   def get_product_xml_file
     download_blob_to_tempfile do |zip_file|
       Zip::File.open(zip_file.path) do |files|
-        if invalid_static_files(files)
+        valid_files = files.select { |file| file_is_valid?(file) }
+        if invalid_static_files(valid_files)
           raise UnexpectedStaticFilesError, "UnexpectedStaticFilesError - a different static file was detected!"
         end
 
         file_found = false
-        files.each do |file|
+        valid_files.each do |file|
           if file_is_pdf?(file)
             raise UnexpectedPdfFileError, "UnexpectedPdfFileError - The unzipped files are PDF files"
           elsif file_is_product_xml?(file)
@@ -118,6 +119,10 @@ private
 
   def file_is_product_xml?(file)
     file.name&.match?(product_xml_file_name_regex)
+  end
+
+  def file_is_valid?(file)
+    file.file? && file.name !~ /__MACOSX/ && file.name !~ /\.DS_Store/
   end
 
   def file_is_pdf?(file)

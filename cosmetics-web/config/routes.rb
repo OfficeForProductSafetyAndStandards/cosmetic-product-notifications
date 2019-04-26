@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
       resources :components do
         resources :build, controller: :component_build, only: %i[show update new]
+        resources :trigger_question, controller: :trigger_questions, only: %i[show update new]
         resources :formulation, controller: "formulation_upload", only: %w[new create]
       end
 
@@ -51,6 +52,13 @@ Rails.application.routes.draw do
 
   resource :declaration, controller: :declaration, only: %i[show] do
     post :accept
+  end
+
+  resource :dashboard, controller: :dashboard, only: %i[show]
+
+  namespace :help, as: "" do
+    get :terms_and_conditions, path: "terms-and-conditions"
+    get :privacy_notice, path: "privacy-notice"
   end
 
   match "/404", to: "errors#not_found", via: :all
