@@ -1,4 +1,5 @@
 - content_for :page_title, "Products"
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l
@@ -19,4 +20,4 @@
           = form.submit "Search", name: nil, class: "search-box--submit"
   .govuk-grid-column-three-quarters
     = render "table", products: @products
-    = will_paginate @products 
+    = will_paginate @products
