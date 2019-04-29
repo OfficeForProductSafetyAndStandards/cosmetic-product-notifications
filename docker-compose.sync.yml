@@ -19,6 +19,10 @@ services:
       - antivirus-sync:/antivirus:nocopy
       - bundle-cache:/usr/local/bundle
 
+  maintenance:
+    volumes:
+      - maintenance-sync:/maintenance:nocopy
+
   cosmetics-web:
     command: bin/rails s -p 3002 -b 0.0.0.0
     ports:
@@ -59,9 +63,10 @@ services:
       - shared-web-sync:/psd-web/vendor/shared-web:nocopy
       - bundle-cache:/usr/local/bundle
 
-
 volumes:
   antivirus-sync:
+    external: true
+  maintenance-sync:
     external: true
   cosmetics-web-sync:
     external: true
