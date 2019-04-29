@@ -10,7 +10,7 @@ set -ex
 if [[ $(./infrastructure/ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| )) ]]; then
     ./infrastructure/ci/install-cf.sh
     cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-opss' -s $SPACE
-    ./$COMPONENT/deploy.sh $SPACE
+    ./$COMPONENT/deploy.sh
     cf logout
 
     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
