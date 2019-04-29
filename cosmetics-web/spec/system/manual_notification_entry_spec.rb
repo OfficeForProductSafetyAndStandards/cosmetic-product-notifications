@@ -53,9 +53,8 @@ RSpec.describe "Manually enter product details", type: :system do
     # select_frame_formulation
     click_button "Continue"
 
-    # contains_anti_dandruff_agents
-    choose("No")
-    click_button "Continue"
+    # trigger_questions
+    skip_trigger_questions
 
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
@@ -114,9 +113,8 @@ RSpec.describe "Manually enter product details", type: :system do
     # select_frame_formulation
     click_button "Continue"
 
-    # contains_anti_dandruff_agents
-    choose("No")
-    click_button "Continue"
+    # trigger_questions
+    skip_trigger_questions
 
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
@@ -172,9 +170,8 @@ RSpec.describe "Manually enter product details", type: :system do
     # select_frame_formulation
     click_button "Continue"
 
-    # contains_anti_dandruff_agents
-    choose("No")
-    click_button "Continue"
+    # trigger_questions
+    skip_trigger_questions
 
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
@@ -243,9 +240,8 @@ RSpec.describe "Manually enter product details", type: :system do
     # select_frame_formulation
     click_button "Continue"
 
-    # contains_anti_dandruff_agents
-    choose("No")
-    click_button "Continue"
+    # trigger_questions
+    skip_trigger_questions
 
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
@@ -287,5 +283,108 @@ private
     end
 
     Notification.find_by reference_number: reference_number
+  end
+
+  def skip_trigger_questions
+    # contains_anti_dandruff_agents
+    choose("No")
+    click_button "Continue"
+
+    # select_ph_range
+    choose("Between 3 and 10")
+    click_button "Continue"
+
+    # ph_mixed_product
+    choose("No")
+    click_button "Continue"
+
+    # contains_anti_hair_loss_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_anti_pigmenting_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_chemical_exfoliating_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_vitamin_a
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_xanthine_derivatives
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_cationic_surfactants
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_propellant
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_hydrogen_peroxide
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_compounds_releasing_hydrogen_peroxide
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_reducing_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_persulfates
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_straightening_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_inorganic_sodium_salts
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_fluoride_compounds
+    choose("No")
+    click_button "Continue"
+
+
+    # ph_mixed_hair_dye
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_essential_oils
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_ethanol
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_isopropanol
+    choose("No")
+    click_button "Continue"
   end
 end
