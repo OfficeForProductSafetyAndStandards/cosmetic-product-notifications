@@ -56,10 +56,13 @@ Rails.application.routes.draw do
 
   resource :dashboard, controller: :dashboard, only: %i[show]
 
-  resources :confirmation, controller: :confirmation, param: :key, only: %i[] do
-    member do
-      get :contact_person, path: "/contact-person-confirmation"
-      get :link_expired, path: "/contact-person-expired"
+  resources :contact_persons, only: %i[] do
+    collection do
+      resources :confirmation, path: "confirm", param: :key, only: %i[show] do
+        collection do
+          get :link_expired, path: "link-expired"
+        end
+      end
     end
   end
 

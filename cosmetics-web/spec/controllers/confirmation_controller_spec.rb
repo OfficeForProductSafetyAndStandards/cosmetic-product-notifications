@@ -20,7 +20,7 @@ RSpec.describe ConfirmationController, type: :controller do
     it "redirects to link expired page if key has expired" do
       expired_email_verification_key.update responsible_person: responsible_person
       get :contact_person, params: { key: expired_email_verification_key.key }
-      expect(response).to redirect_to link_expired_confirmation_path
+      expect(response).to redirect_to link_expired_confirmation_index_path
     end
   end
 end
