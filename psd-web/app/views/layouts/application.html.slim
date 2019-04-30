@@ -11,6 +11,7 @@ doctype html
   = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank
   |  will help us to improve it.
   - # rubocop:enable Rails/LinkToBlank
+= render "components/govuk_cookie_banner", path: help_privacy_notice_path(anchor: "cookies-policy")
 - content_for :start_of_head
   - if Rails.env.production?
     script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-1"
