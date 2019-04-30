@@ -198,6 +198,7 @@ private
   # This is a private method which updates the KC mocking without modifying the User collection directly
   def set_kc_user_as_non_opss(user_id)
     # Keycloak bases this role on the group membership
+    clear_kc_user_groups(user_id)
     set_kc_user_group(user_id, non_opss_organisation[:id])
     allow(@keycloak_client_instance).to receive(:has_role?).with(user_id, :opss_user, anything).and_return(false)
   end
@@ -213,6 +214,11 @@ private
     mock_user = @users.find { |u| u[:id] == user_id }
     mock_user[:groups] ||= []
     mock_user[:groups].push group_id
+  end
+
+  def clear_kc_user_groups(user_id)
+    mock_user = @users.find { |u| u[:id] == user_id }
+    mock_user[:groups] = []
   end
 
   def all_teams

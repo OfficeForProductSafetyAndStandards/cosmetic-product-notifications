@@ -11,16 +11,16 @@ if [[ "$TOP_LEVEL_CHANGES" =~ db ]]; then
     COMPONENTS="$COMPONENTS db"
 fi
 
-if [[ "$TOP_LEVEL_CHANGES" =~ elasticseach ]]; then
-    COMPONENTS="$COMPONENTS elasticseach"
+if [[ "$TOP_LEVEL_CHANGES" =~ antivirus ]]; then
+    COMPONENTS="$COMPONENTS antivirus"
+fi
+
+if [[ "$TOP_LEVEL_CHANGES" =~ maintenance ]]; then
+    COMPONENTS="$COMPONENTS maintenance"
 fi
 
 if [[ "$TOP_LEVEL_CHANGES" =~ keycloak ]]; then
     COMPONENTS="$COMPONENTS keycloak"
-fi
-
-if [[ "$TOP_LEVEL_CHANGES" =~ antivirus ]]; then
-    COMPONENTS="$COMPONENTS antivirus"
 fi
 
 if [[ "$TOP_LEVEL_CHANGES" =~ keycloak ]] || [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]] || [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-web ]]; then

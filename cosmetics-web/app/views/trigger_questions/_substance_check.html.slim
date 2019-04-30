@@ -1,0 +1,15 @@
+ruby:
+  component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
+  question = local_assigns[:question] || "Does #{component_name} contain #{substance.pluralize}?"
+  yes_option = local_assigns[:yes_option] || "Yes, it has #{substance.pluralize}"
+
+= form_with model: @question, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_radios", form: form, key: :applicable,
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              hint: { text: local_assigns[:hint] },
+              items: [{ text: yes_option, value: "true" },
+                      { text: "No", value: "false" }]
+      = form.submit "Continue", class: "govuk-button"

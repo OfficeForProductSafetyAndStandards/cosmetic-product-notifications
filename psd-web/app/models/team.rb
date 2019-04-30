@@ -14,6 +14,8 @@ class Team < ActiveHash::Base
   has_many :investigations, dependent: :nullify, as: :assignable
 
   def users
+    # Ensure we're serving up-to-date relations (modulo caching)
+    TeamUser.load
     # has_many through seems not to work with ActiveHash
     # It's not well documented but the same fix has been suggested here: https://github.com/zilkey/active_hash/issues/25
     team_users.map(&:user)
