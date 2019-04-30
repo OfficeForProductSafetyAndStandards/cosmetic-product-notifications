@@ -12,6 +12,9 @@ services:
   antivirus:
     image: beisopss/antivirus:${TRAVIS_BUILD_NUMBER}
 
+  maintenance:
+    image: beisopss/maintenance:${TRAVIS_BUILD_NUMBER}
+
   cosmetics-web:
     command: tail -f /dev/null
     image: beisopss/cosmetics-web:${TRAVIS_BUILD_NUMBER}

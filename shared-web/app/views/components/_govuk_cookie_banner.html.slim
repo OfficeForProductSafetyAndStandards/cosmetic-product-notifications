@@ -1,0 +1,10 @@
+- if !cookies[:seen_cookie_message]
+  - id ||= 'global-cookie-message'
+  - path ||= 'https://www.gov.uk/help/cookies'
+  - message ||= capture do
+    ' GOV.UK uses cookies to make the site simpler.
+    a.govuk-link href=path Find out more about cookies
+    '  or
+    a.govuk-link id = "hideLink" href = "#"  hide this message
+  .cookie-banner id = id
+    p.cookie-banner__message.govuk-width-container = message

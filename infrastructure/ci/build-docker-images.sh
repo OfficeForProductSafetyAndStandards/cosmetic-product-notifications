@@ -5,6 +5,7 @@ set -ex
 
 COMPONENTS=(
     'antivirus'
+    'maintenance'
     'db'
     'keycloak'
     'cosmetics-web'
