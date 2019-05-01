@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :pending_responsible_person_user do
-    email_address { "user@example.com" }
-    responsible_person { nil }
+    sequence(:email_address) { |n| "pending#{n}@example.com" }
+    association :responsible_person, factory: :responsible_person
     after(:create) do |pending_responsible_person_user|
       pending_responsible_person_user.expires_at = 2.days.from_now
     end

@@ -110,4 +110,8 @@ en:
               required: "Enter an alert subject"
             description:
               required: "Enter a summary"
+        correspondence:
+          attributes:
+            correspondence_date:
+              invalid: "Enter a real correspondence date"
 

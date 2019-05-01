@@ -1,0 +1,9 @@
+- content_for :page_title, "Contains anti-dandruff agents"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= render "trigger_questions/substance_check", substance: "cationic surfactant",
+        question: "Does the cosmetic product contain cationic surfactants with three or four chains" + \
+          " or groups with a length shorter than C12 (including straight, branched, cyclic or aromatic groups)?",
+        yes_option: "Yes, it contains cationic surfactants with three or four chains" + \
+          " or groups with a length shorter than C12"
