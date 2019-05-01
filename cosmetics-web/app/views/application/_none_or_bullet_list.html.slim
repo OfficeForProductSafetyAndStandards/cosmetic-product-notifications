@@ -3,10 +3,11 @@
 - elsif entities_list.count == 1
   - if local_assigns[:key_name].present? && local_assigns[:value_name].present?
     .entity-list
-      dt
-        = entities_list.first[key_name]
-      dd
-        = entities_list.first[value_name]
+      dl
+        dt
+          = entities_list.first[key_name]
+        dd
+          = entities_list.first[value_name]
   - else
     = entities_list.first
 - else

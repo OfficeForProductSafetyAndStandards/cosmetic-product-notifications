@@ -9,7 +9,6 @@
     display: inline-block;
     vertical-align: top;
     width: 100%;
-    padding: 0;
     margin: 0;
   }
 
@@ -17,15 +16,14 @@
     word-break: break-word;
     clear: left;
     float: left;
-    width: 70%;
+    width: calc(100% - 10em);
     padding: 0 10px 0 0;
     margin: 0;
   }
 
   dd {
     float: left;
-    width: 30%;
-    padding: 0;
+    width: 10em;
     margin: 0;
   }
 }
