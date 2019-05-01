@@ -3,6 +3,7 @@ require 'spec_helper'
 require 'login_helpers'
 require 'responsible_person_helpers'
 require 'file_helpers'
+require 'policy_helpers'
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)

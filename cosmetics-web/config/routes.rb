@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[show index] do
+    resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[index] do
       collection do
         get :resend_email
       end
@@ -55,6 +55,16 @@ Rails.application.routes.draw do
   end
 
   resource :dashboard, controller: :dashboard, only: %i[show]
+
+  resources :contact_persons, only: %i[] do
+    collection do
+      resources :confirmation, path: "confirm", param: :key, only: %i[show] do
+        collection do
+          get :link_expired, path: "link-expired"
+        end
+      end
+    end
+  end
 
   namespace :help, as: "" do
     get :terms_and_conditions, path: "terms-and-conditions"

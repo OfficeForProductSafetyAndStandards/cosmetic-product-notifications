@@ -5,10 +5,12 @@ All notable changes to this project will be documented in this file.
 <!-- ### Product safety database -->
 - New service navigation
 - Welcome email
+- Cookie banner
 
 <!-- ### Cosmetics -->
 
-<!-- ### Next release checklist -->
+### Next release checklist
+- [ ] Add `HEALTH_USERNAME` and `HEALTH_PASSWORD` environment variables to the antivirus server
 
 
 ## 2019-04-23

@@ -1,20 +1,5 @@
-- content_for :page_title, "Anti-dandruff agents"
+- content_for :page_title, "Add anti-dandruff agents"
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-= form_with model: @question, url: wizard_path, method: :put do |form|
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      - substance = "anti-dandruff agent"
-      - if @errors.present?
-        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors
-      h1.govuk-heading-xl
-        | List the
-        =<> substance.pluralize
-        | and their concentration
-      = form.fields_for :trigger_question_elements do |answer_form|
-        - text = answer_form.object.element == "inciname" ? substance.capitalize : "Concentration"
-        .govuk-grid-column-one-half
-          = render "form_components/govuk_input", form: answer_form, key: :answer, label: { text: text }
-      .govuk-form-group
-        = form.submit "Continue", class: "govuk-button"
+= render "trigger_questions/substance_list", substance: "anti-dandruff agent"
