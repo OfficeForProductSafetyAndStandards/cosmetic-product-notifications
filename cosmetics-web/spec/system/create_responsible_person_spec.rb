@@ -74,7 +74,7 @@ RSpec.describe "Create a responsible person", type: :system do
 
   it "redirects to confirmation page on email validation" do
     responsible_person = create(:business_responsible_person)
-    email_verification_key = responsible_person.email_verification_keys.create
+    email_verification_key = responsible_person.contact_persons.first.create_email_verification_key
 
     visit confirmation_path(email_verification_key.key)
 

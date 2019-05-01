@@ -86,10 +86,8 @@ private
   end
 
   def send_verification_email
-    NotifyMailer.send_responsible_person_verification_email(
-      @responsible_person.id,
-      @contact_person.email_address,
-      @contact_person.name,
+    NotifyMailer.send_contact_person_verification_email(
+      @contact_person,
       @responsible_person.name,
       User.current.name
     ).deliver_later

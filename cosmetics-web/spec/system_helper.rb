@@ -44,6 +44,6 @@ end
 def stub_notify_mailer
   result = double
   allow(result).to receive(:deliver_later)
-  allow(NotifyMailer).to receive(:send_responsible_person_verification_email) { result }
+  allow(NotifyMailer).to receive(:send_contact_person_verification_email) { result }
   allow(NotifyMailer).to receive(:send_responsible_person_invite_email) { result }
 end

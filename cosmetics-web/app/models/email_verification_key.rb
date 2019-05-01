@@ -12,13 +12,6 @@ class EmailVerificationKey < ApplicationRecord
     expires_at < DateTime.current
   end
 
-  def self.verify_key_for_contact_person(contact_person, key)
-    EmailVerificationKey.find_by!(
-      "contact_person_id = ? AND key = ?",
-      contact_person.id, key
-    )
-  end
-
 private
 
   def set_key

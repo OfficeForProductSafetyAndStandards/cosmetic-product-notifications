@@ -1,7 +1,7 @@
 class ContactPerson < ApplicationRecord
   belongs_to :responsible_person
 
-  has_one :email_verification_keys, dependent: :destroy
+  has_one :email_verification_key, dependent: :destroy
 
   validates :name, presence: true
   validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
