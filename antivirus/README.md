@@ -33,6 +33,11 @@ This will configure sinatra to run in production mode.
 
 This will set HTTP basic auth for the API.
 
+    cf set-env antivirus HEALTH_USERNAME XXX
+    cf set-env antivirus HEALTH_PASSWORD XXX
+
+This will set HTTP basic auth for the health check.
+
 Finally, create the following credentials for other applications to consume:
 
     cf cups antivirus-auth-env -p '{

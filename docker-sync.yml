@@ -6,6 +6,9 @@ options:
 syncs:
   antivirus-sync:
     src: './antivirus'
+  maintenance-sync:
+    src: './maintenance'
+    sync_excludes: ['node_modules']
   cosmetics-web-sync:
     src: './cosmetics-web'
     sync_excludes: ['node_modules', 'tmp', 'vendor/shared-web']
