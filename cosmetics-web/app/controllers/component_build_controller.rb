@@ -228,8 +228,11 @@ private
   end
 
   def render_select_frame_formulation
-    @component.update(component_params)
-    redirect_to finish_wizard_path
+    if @component.update_with_context(component_params, step)
+      redirect_to finish_wizard_path
+    else
+      render step
+    end
   end
 
   def render_upload_formulation

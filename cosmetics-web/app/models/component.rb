@@ -17,6 +17,7 @@ class Component < ApplicationRecord
   has_one_attached :formulation_file
 
   validates :physical_form, presence: true, on: :add_physical_form
+  validates :frame_formulation, presence: true, on: :select_frame_formulation
 
   before_save :add_shades, if: :will_save_change_to_shades?
 
