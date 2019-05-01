@@ -72,14 +72,13 @@ RSpec.describe "Create a responsible person", type: :system do
     assert_text "Account type can not be blank"
   end
 
-  it "redirects to responsible person page on email validation" do
+  it "redirects to confirmation page on email validation" do
     responsible_person = create(:business_responsible_person)
     email_verification_key = responsible_person.email_verification_keys.create
 
-    sign_in_as_member_of_responsible_person(responsible_person)
-    visit responsible_person_email_verification_key_path(responsible_person, email_verification_key.key)
+    visit confirmation_path(email_verification_key.key)
 
-    assert_current_path(/responsible_persons\/\d+/)
+    assert_current_path(/contact_persons\/confirm\/[a-zA-Z0-9_\-]+/)
   end
 
 private
