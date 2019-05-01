@@ -62,6 +62,19 @@ class ComponentBuildController < ApplicationController
     end
   end
 
+  def previous_wizard_path
+    previous_step = get_previous_step
+    if step == :add_component_name
+      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
+    elsif step == :number_of_shades && !@component.notification.is_multicomponent?
+      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :single_or_multi_component)
+    elsif previous_step.present?
+      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
+    else
+      super
+    end
+  end
+
   def finish_wizard_path
     new_responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component)
   end
@@ -222,6 +235,17 @@ private
     else
       @component.errors.add :formulation_file, "Please upload a file"
       render step
+    end
+  end
+
+  def get_previous_step
+    case step
+    when :add_physical_form
+      @component.shades.nil? ? :number_of_shades : :add_shades
+    when :select_category
+      @component.nano_material.nil? ? :contains_nanomaterials : :add_nanomaterial
+    when :upload_formulation
+      :select_formulation_type
     end
   end
 end

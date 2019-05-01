@@ -1,10 +1,6 @@
 - content_for :page_title, "Single or multi component"
 - content_for :after_header do
-  - previous_step = @component.shades.nil? ? :number_of_shades : :add_shades
-  = link_to "Back",
-          responsible_person_notification_component_build_path(@component.notification.responsible_person,
-                  @component.notification, @component, previous_step),
-          class: "govuk-back-link"
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
 = form_with model: @component, url: wizard_path, method: :put do |form|
   .govuk-grid-row
