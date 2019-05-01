@@ -36,6 +36,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # physical-form
+    choose("Foam")
+    click_button "Continue"
+
     # add_cmrs
     click_button "Continue"
 
@@ -96,6 +100,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # physical-form
+    choose("Foam")
+    click_button "Continue"
+
     # add_cmrs
     click_button "Continue"
 
@@ -151,6 +159,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # number_of_shades
     choose("No")
+    click_button "Continue"
+
+    # physical-form
+    choose("Foam")
     click_button "Continue"
 
     # add_cmrs
@@ -221,6 +233,10 @@ RSpec.describe "Manually enter product details", type: :system do
     inputs.each_with_index do |input, i|
       input.set shades[i]
     end
+    click_button "Continue"
+
+    # physical-form
+    choose("Foam")
     click_button "Continue"
 
     # add_cmrs
