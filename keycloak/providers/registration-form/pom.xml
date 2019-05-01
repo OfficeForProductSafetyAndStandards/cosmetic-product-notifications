@@ -18,7 +18,7 @@
         <keycloak.version>4.8.3.Final</keycloak.version>
         <resteasy.version>3.6.3.Final</resteasy.version>
         <jboss-jaxrs-api_2.0_spec>1.0.1.Final</jboss-jaxrs-api_2.0_spec>
-        <libphonenumber.version>8.10.10</libphonenumber.version>
+        <libphonenumber.version>8.10.11</libphonenumber.version>
     </properties>
 
     <dependencies>
