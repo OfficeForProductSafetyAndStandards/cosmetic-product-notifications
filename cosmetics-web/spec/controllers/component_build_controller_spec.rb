@@ -81,12 +81,17 @@ RSpec.describe ComponentBuildController, type: :controller do
     end
 
     it "proceeds to add_shades step if user wants to add shades" do
-      post(:update, params: params.merge(id: :number_of_shades, number_of_shades: "multiple"))
+      post(:update, params: params.merge(id: :number_of_shades, number_of_shades: "multiple-shades-same-notification"))
       expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :add_shades))
     end
 
-    it "skips add_shades step if user doesn't want to add shades" do
-      post(:update, params: params.merge(id: :number_of_shades, number_of_shades: "single"))
+    it "skips add_shades step if user chooses to submit separate notifications for each shade" do
+      post(:update, params: params.merge(id: :number_of_shades, number_of_shades: "multiple-shades-different-notification"))
+      expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :add_cmrs))
+    end
+
+    it "skips add_shades step if product has single or no shades" do
+      post(:update, params: params.merge(id: :number_of_shades, number_of_shades: "single-or-no-shades"))
       expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :add_cmrs))
     end
 

@@ -29,7 +29,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # single_or_multi_component
-    choose("Yes")
+    choose("The cosmetic product is a single item")
     click_button "Continue"
 
     # number_of_shades
@@ -47,7 +47,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_formulation_type
-    choose("Predefined frame formulation")
+    choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
@@ -89,7 +89,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # single_or_multi_component
-    choose("Yes")
+    choose("The cosmetic product is a single item")
     click_button "Continue"
 
     # number_of_shades
@@ -107,7 +107,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_formulation_type
-    choose("Predefined frame formulation")
+    choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
@@ -146,7 +146,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # single_or_multi_component
-    choose("Yes")
+    choose("The cosmetic product is a single item")
     click_button "Continue"
 
     # number_of_shades
@@ -164,7 +164,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_formulation_type
-    choose("Predefined frame formulation")
+    choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
@@ -207,11 +207,11 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # single_or_multi_component
-    choose("Yes")
+    choose("The cosmetic product is a single item")
     click_button "Continue"
 
     # number_of_shades
-    choose("Yes")
+    choose("Yes, the cosmetic product is available in more than 1 shade and all other aspects of the notification are the same")
     click_button "Continue"
 
     # add_shades
@@ -234,7 +234,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_formulation_type
-    choose("Predefined frame formulation")
+    choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
