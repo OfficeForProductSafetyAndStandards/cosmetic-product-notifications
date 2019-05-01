@@ -6,6 +6,7 @@ class ComponentBuildController < ApplicationController
   steps :add_component_name,
         :number_of_shades,
         :add_shades,
+        :add_physical_form,
         :add_cmrs,
         :contains_nanomaterials,
         :add_nanomaterial,
@@ -44,8 +45,12 @@ class ComponentBuildController < ApplicationController
     when :upload_formulation
       render_upload_formulation
     else
-      @component.update(component_params)
-      render_wizard @component
+      # Apply this since render_wizard(@component, context: :context) doesn't work as expected
+      if @component.update_with_context(component_params, step)
+        render_wizard @component
+      else
+        render step
+      end
     end
   end
 
@@ -54,6 +59,19 @@ class ComponentBuildController < ApplicationController
       redirect_to wizard_path(steps.first, component_id: @component.id)
     else
       redirect_to wizard_path(:number_of_shades, component_id: @component.id)
+    end
+  end
+
+  def previous_wizard_path
+    previous_step = get_previous_step
+    if step == :add_component_name
+      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
+    elsif step == :number_of_shades && !@component.notification.is_multicomponent?
+      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :single_or_multi_component)
+    elsif previous_step.present?
+      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
+    else
+      super
     end
   end
 
@@ -71,7 +89,15 @@ private
   end
 
   def component_params
-    params.require(:component).permit(:name, :sub_sub_category, :notification_type, :frame_formulation, shades: [])
+    params.fetch(:component, {})
+      .permit(
+        :name,
+        :physical_form,
+        :sub_sub_category,
+        :notification_type,
+        :frame_formulation,
+        shades: []
+      )
   end
 
   def render_number_of_shades
@@ -80,7 +106,7 @@ private
       @component.shades = nil
       @component.add_shades
       @component.save
-      redirect_to wizard_path(:add_cmrs, component_id: @component.id)
+      redirect_to wizard_path(:add_physical_form, component_id: @component.id)
     when "multiple"
       render_wizard @component
     when ""
@@ -209,6 +235,17 @@ private
     else
       @component.errors.add :formulation_file, "Please upload a file"
       render step
+    end
+  end
+
+  def get_previous_step
+    case step
+    when :add_physical_form
+      @component.shades.nil? ? :number_of_shades : :add_shades
+    when :select_category
+      @component.nano_material.nil? ? :contains_nanomaterials : :add_nanomaterial
+    when :upload_formulation
+      :select_formulation_type
     end
   end
 end

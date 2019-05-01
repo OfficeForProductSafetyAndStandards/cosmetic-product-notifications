@@ -1,23 +1,21 @@
 - content_for :page_title, "Invite a team member"
-= render "layouts/navbar"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | Invite a team member
-    - if params[:user_already_exists]
-      span.govuk-error-message
-        | The user is already a member of this team
-    - if params[:blank_input]
-      span.govuk-error-message
-        | Enter an email address
-    p Inviting a team member will allow them to:
-    ul.govuk-list.govuk-list--bullet
+- content_for :after_header do
+  = render "layouts/navbar"
+
+= form_with model: @team_member, scope: :team_member,
+        url: responsible_person_team_members_path(@responsible_person), method: :post do |form|
+  .govuk-grid-row
+    = render "form_components/govuk_error_summary", form: form
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl
+        | Invite a team member
+
+      p Inviting a team member will allow them to:
+      ul.govuk-list.govuk-list--bullet
         li see all cosmetic products
         li submit cosmetic product notifications
-    = form_with scope: :team_member, url: responsible_person_team_members_path(@responsible_person),
-      method: :post do |form|
-      .govuk-form-group
-        = form.label :email_address, "Email address", class: "govuk-label"
-        = form.text_field :email_address, class: "govuk-input"
+
+      = render "form_components/govuk_input", form: form, key: :email_address, type: :email_field,
+              label: { text: "Email address" }
       .govuk-form-group
         = form.submit "Send invitation", class: "govuk-button"
