@@ -87,7 +87,7 @@ private
       @component.save
       redirect_to wizard_path(:add_cmrs, component_id: @component.id)
     when "multiple-shades-same-notification"
-      render_wizard @component  
+      render_wizard @component
     when ""
       @component.errors.add :shades, "Please select an option"
       render step

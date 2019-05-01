@@ -9,9 +9,9 @@
       | A ‘nanomaterial’:
 
     ul.govuk-list.govuk-list--bullet
-        li has one or more external dimensions, or an internal structure, with a size ranging from 1nm to 100 nm
-        li is insoluble or biopersistent
-        li is intentionally manufactured
+      li has one or more external dimensions, or an internal structure, with a size ranging from 1nm to 100 nm
+      li is insoluble or biopersistent
+      li is intentionally manufactured
     = render "radio_select_error" if @component.errors.messages[:nano_materials].any?
     = form_with url: wizard_path, method: :put do |form|
       = form.hidden_field :contains_nanomaterials, value: nil
@@ -19,8 +19,10 @@
         .govuk-radios
           .govuk-radios__item
             = form.radio_button :contains_nanomaterials, "yes", class: "govuk-radios__input"
-            = form.label :contains_nanomaterials_yes, "Yes, the cosmetic product contains nanomaterials", class: "govuk-label govuk-radios__label"
+            = form.label :contains_nanomaterials_yes, "Yes, the cosmetic product contains nanomaterials",
+                    class: "govuk-label govuk-radios__label"
           .govuk-radios__item
             = form.radio_button :contains_nanomaterials, "no", class: "govuk-radios__input"
-            = form.label :contains_nanomaterials_no, "No, there are no nanomaterials", class: "govuk-label govuk-radios__label"
+            = form.label :contains_nanomaterials_no, "No, there are no nanomaterials",
+                    class: "govuk-label govuk-radios__label"
       = form.submit "Continue", class: "govuk-button"

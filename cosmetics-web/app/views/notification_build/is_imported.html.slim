@@ -12,8 +12,10 @@
                 .govuk-radios
                     .govuk-radios__item
                         = form.radio_button :is_imported, "true", class: "govuk-radios__input"
-                        = form.label :is_imported, "Yes, it is imported", value: "true", class: "govuk-label govuk-radios__label"
+                        = form.label :is_imported, "Yes, it is imported", value: "true",
+                                class: "govuk-label govuk-radios__label"
                     .govuk-radios__item
                         = form.radio_button :is_imported, "false", class: "govuk-radios__input"
-                        = form.label :is_imported, "No, it is manufactured in the UK", value: "false", class: "govuk-label govuk-radios__label"
+                        = form.label :is_imported, "No, it is manufactured in the UK", value: "false",
+                                class: "govuk-label govuk-radios__label"
             = form.submit "Continue", class: "govuk-button"

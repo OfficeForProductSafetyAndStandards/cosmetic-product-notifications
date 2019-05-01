@@ -6,7 +6,7 @@
         h1.govuk-heading-xl
             | Is the cosmetic product available as single item or as a kit?
         p
-            | Kits are composed of components that are not marketed separately. 
+            | Kits are composed of components that are not marketed separately.
             | They are sold as a kit and intended to be used as a mix or sequentially.
         p
             | Examples of multi-component cosmetics include:
@@ -22,11 +22,10 @@
                 .govuk-radios
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "single", class: "govuk-radios__input"
-                        = form.label :single_or_multi_component, "The cosmetic product is a single item", 
-                            value: "single",
-                            class: "govuk-label govuk-radios__label"
+                        = form.label :single_or_multi_component, "The cosmetic product is a single item",
+                                value: "single", class: "govuk-label govuk-radios__label"
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "multiple", class: "govuk-radios__input"
                         = form.label :single_or_multi_component, "The cosmetic product is a multi-item kit",
-                            value: "multiple", class: "govuk-label govuk-radios__label"
+                                value: "multiple", class: "govuk-label govuk-radios__label"
             = form.submit "Continue", class: "govuk-button"
