@@ -78,7 +78,7 @@ RSpec.describe "Create a responsible person", type: :system do
 
     visit confirmation_path(email_verification_key.key)
 
-    assert_current_path(/confirmation\/[a-zA-Z0-9_\-]+\/contact-person-confirmation/)
+    assert_current_path(/contact_persons\/confirm\/[a-zA-Z0-9_\-]+/)
   end
 
 private
