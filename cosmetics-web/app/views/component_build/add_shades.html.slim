@@ -4,7 +4,8 @@
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
-            | List the shades of the cosmetic product
+            | List the shades of
+            =< @component_name
         p
             | For each shade, all other aspects of the notification must be the same.
         - if @component.errors.messages[:shades].any?

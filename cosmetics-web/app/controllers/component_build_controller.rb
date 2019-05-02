@@ -86,6 +86,7 @@ private
   def set_component
     @component = Component.find(params[:component_id])
     authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
+    @component_name = @component.name.presence || "the cosmetic product"
   end
 
   def component_params

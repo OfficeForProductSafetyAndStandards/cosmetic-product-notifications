@@ -6,7 +6,9 @@
 
     = form_with url: wizard_path, method: :put do |form|
       h1.govuk-heading-xl
-        | Which nanomaterials does the cosmetic product contain?
+        | Which nanomaterials does
+        =<> @component_name
+        | contain?
         - if @no_nano_element_selected
           span.govuk-error-message Please select at least an option before continuing
       .govuk-form-group
