@@ -5,9 +5,10 @@
 = form_with(model: @component, url: wizard_path, method: :put) do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_select", form: form, key: :frame_formulation,
               show_all_values: true, is_autocomplete: true,
-              label: {text: "Choose frame formulation", classes: "govuk-label--xl", isPageHeading: true},
+              label: { text: "Choose frame formulation", classes: "govuk-label--xl", isPageHeading: true },
               items: Component.frame_formulations.keys.map { |formulation_key| \
                 { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
               }

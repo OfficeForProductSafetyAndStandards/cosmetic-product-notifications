@@ -16,6 +16,7 @@ class ComponentBuildController < ApplicationController
         :upload_formulation
 
   before_action :set_component
+  before_action :set_category, if: -> { step == :select_category }
 
   def show
     @component.shades = ['', ''] if step == :add_shades && @component.shades.nil?
@@ -32,12 +33,14 @@ class ComponentBuildController < ApplicationController
       render_number_of_shades
     when :add_shades
       render_add_shades
+    when :add_cmrs
+      render_add_cmrs
     when :contains_nanomaterials
       render_contains_nanomaterials
     when :add_nanomaterial
       render_add_nanomaterial
-    when :add_cmrs
-      render_add_cmrs
+    when :select_category
+      render_select_category_step
     when :select_formulation_type
       render_select_formulation_type
     when :select_frame_formulation
@@ -68,6 +71,8 @@ class ComponentBuildController < ApplicationController
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
     elsif step == :number_of_shades && !@component.notification.is_multicomponent?
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :single_or_multi_component)
+    elsif step == :select_category && @category.present?
+      wizard_path(:select_category, category: Component.get_parent_category(@category))
     elsif previous_step.present?
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
     else
@@ -98,6 +103,18 @@ private
         :frame_formulation,
         shades: []
       )
+  end
+
+  def set_category
+    @category = params[:category]
+    if @category.present? && !has_sub_categories(@category)
+      @component.errors.add :sub_category, "Select a valid option"
+      @category = nil
+    end
+    @sub_categories = @category.present? ? get_sub_categories(@category) : get_main_categories
+    @sub_categories.keys.each do |key|
+      @selected_sub_category = key if sub_category_belongs_to_category(@component.sub_sub_category, key)
+    end
   end
 
   def render_number_of_shades
@@ -210,6 +227,22 @@ private
       end
     end
     render_wizard @component
+  end
+
+  def render_select_category_step
+    # @component.update(sub_sub_category: nil)
+    sub_category = params[:component] && params[:component][:sub_category]
+    if sub_category
+      if has_sub_categories(sub_category)
+        redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, category: sub_category)
+      else
+        @component.update(sub_sub_category: sub_category)
+        render_wizard @component
+      end
+    else
+      @component.errors.add :sub_category, "Please select an option"
+      render step
+    end
   end
 
   def render_select_formulation_type
