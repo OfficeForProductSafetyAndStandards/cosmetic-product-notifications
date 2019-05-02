@@ -102,12 +102,17 @@ private
 
   def render_number_of_shades
     case params[:number_of_shades]
-    when "single"
+    when "single-or-no-shades"
       @component.shades = nil
       @component.add_shades
       @component.save
       redirect_to wizard_path(:add_physical_form, component_id: @component.id)
-    when "multiple"
+    when "multiple-shades-different-notification"
+      @component.shades = nil
+      @component.add_shades
+      @component.save
+      redirect_to wizard_path(:add_physical_form, component_id: @component.id)
+    when "multiple-shades-same-notification"
       render_wizard @component
     when ""
       @component.errors.add :shades, "Please select an option"

@@ -2,14 +2,16 @@ require "rails_helper"
 
 RSpec.describe NotifyMailer, type: :mailer do
   let(:responsible_person) { create(:responsible_person) }
+  let(:contact_person) { responsible_person.contact_persons.first }
+
   let(:user_name) { "Test User" }
   let(:email_address) { "user@example.com" }
 
   describe "send_contact_person_verification_email" do
     it "sends new email verification key to contact person" do
-      mail = NotifyMailer.send_contact_person_verification_email(responsible_person.contact_persons.first, responsible_person.name, user_name)
+      mail = NotifyMailer.send_contact_person_verification_email(contact_person, responsible_person.name, user_name)
       expect(mail.to).to eq([responsible_person.contact_persons.first.email_address])
-      expect(responsible_person.contact_persons.first.reload.email_verification_key).not_to be_nil
+      expect(contact_person.reload.email_verification_key).not_to be_nil
     end
   end
 
