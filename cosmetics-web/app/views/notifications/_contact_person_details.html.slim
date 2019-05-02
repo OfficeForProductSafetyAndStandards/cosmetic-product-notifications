@@ -1,19 +1,31 @@
 table.govuk-table.check-your-answers-table
-  caption.govuk-table__caption.govuk-heading-m
-    | Contact person
   tbody.govuk-table__body
     tr.govuk-table__row
+      th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
+        | Status
+      td.govuk-table__cell
+        = contact_person.email_verified ? 'Verified' : 'Pending'
+      td.govuk-table__cell
+    tr.govuk-table__celltr.govuk-table__row
       th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
         | Name
       td.govuk-table__cell
         = contact_person.name
+      td.govuk-table__cell
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
         | Email address
       td.govuk-table__cell
         = contact_person.email_address
+      td.govuk-table__cell
+        -if contact_person.email_verified? || User.current&.poison_centre_user? || User.current&.msa_user?
+        -else
+          = link_to "Resend validation link",
+                  resend_email_responsible_person_email_verification_keys_path(contact_person.responsible_person),
+                  class: "button-link", role: "button"
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
         | Phone number
       td.govuk-table__cell
         = contact_person.phone_number
+      td.govuk-table__cell
