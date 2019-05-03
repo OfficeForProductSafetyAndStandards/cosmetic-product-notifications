@@ -9,7 +9,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       user_name: user_name,
-      verification_link: responsible_person_email_verification_key_url(responsible_person_id, key.key),
+      verification_link: confirmation_url(key.key),
       contact_name: contact_person_name,
       responsible_person: responsible_person_name
     )

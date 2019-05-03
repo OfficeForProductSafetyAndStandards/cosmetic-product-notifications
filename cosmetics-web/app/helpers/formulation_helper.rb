@@ -1,9 +1,9 @@
 module FormulationHelper
   def formulations_types_label
     {
-        predefined: "Predefined frame formulation",
-        exact: "Exact concentrations",
-        range: "Concentration ranges"
+        predefined: "Choose a predefined frame formulation",
+        exact: "List ingredients and their exact concentration",
+        range: "List ingredients and their concentration range"
     }
   end
 end

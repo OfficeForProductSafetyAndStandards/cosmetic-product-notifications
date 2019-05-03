@@ -16,6 +16,8 @@ class Component < ApplicationRecord
   has_one :nano_material, dependent: :destroy
   has_one_attached :formulation_file
 
+  validates :physical_form, presence: true, on: :add_physical_form
+
   before_save :add_shades, if: :will_save_change_to_shades?
 
   aasm whiny_transitions: false, column: :state do
