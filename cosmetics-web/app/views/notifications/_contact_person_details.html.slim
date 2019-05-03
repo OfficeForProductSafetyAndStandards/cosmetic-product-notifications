@@ -1,31 +1,29 @@
-table.govuk-table.check-your-answers-table
-  tbody.govuk-table__body
-    tr.govuk-table__row
-      th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
-        | Status
-      td.govuk-table__cell
-        = contact_person.email_verified ? 'Verified' : 'Pending'
-      td.govuk-table__cell
-    tr.govuk-table__celltr.govuk-table__row
-      th.govuk-table__header[class="govuk-!-width-one-third" scope="row"]
-        | Name
-      td.govuk-table__cell
-        = contact_person.name
-      td.govuk-table__cell
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Email address
-      td.govuk-table__cell
-        = contact_person.email_address
-      td.govuk-table__cell
-        -if contact_person.email_verified? || User.current&.poison_centre_user? || User.current&.msa_user?
-        -else
-          = link_to "Resend validation link",
-                  resend_email_responsible_person_email_verification_keys_path(contact_person.responsible_person),
-                  class: "button-link", role: "button"
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Phone number
-      td.govuk-table__cell
-        = contact_person.phone_number
-      td.govuk-table__cell
+dl class="govuk-summary-list govuk-!-margin-bottom-9"
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key
+      | Status
+    dd.govuk-summary-list__value
+      = contact_person.email_verified ? 'Confirmed' : 'Invitation sent'
+    dd.govuk-summary-list__actions
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key
+      | Name
+    dd.govuk-summary-list__value
+      = contact_person.name
+    dd.govuk-summary-list__actions
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key
+      | Email address
+    dd.govuk-summary-list__value
+      = contact_person.email_address
+    dd.govuk-summary-list__actions
+      -if !contact_person.email_verified?
+        = link_to "Resend validation link",
+                resend_email_responsible_person_email_verification_keys_path(contact_person.responsible_person),
+                class: "button-link", role: "button"
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key
+      | Phone number
+    dd.govuk-summary-list__value
+      = contact_person.phone_number
+    dd.govuk-summary-list__actions

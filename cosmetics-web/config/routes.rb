@@ -50,8 +50,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :email_verification_keys, path: "verify", controller: "verification", param: :key, only: %i[show index]
-
   resource :declaration, controller: :declaration, only: %i[show] do
     post :accept
   end
