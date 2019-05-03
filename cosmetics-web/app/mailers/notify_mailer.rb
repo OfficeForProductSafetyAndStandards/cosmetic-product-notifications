@@ -1,7 +1,7 @@
 class NotifyMailer < GovukNotifyRails::Mailer
-  def send_contact_person_verification_email(contact_person, responsible_person_name, user_name)
+  def send_contact_person_verification_email(contact_person_id, contact_person_name, contact_person_email, responsible_person_name, user_name)
     key = EmailVerificationKey.create(
-      contact_person: contact_person
+      contact_person_id: contact_person_id
     )
 
     set_template('50072d05-d058-4a02-a239-0d73ef7291b2')
@@ -10,11 +10,11 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_personalisation(
       user_name: user_name,
       verification_link: confirmation_url(key.key),
-      contact_name: contact_person.name,
+      contact_name: contact_person_name,
       responsible_person: responsible_person_name
     )
 
-    mail(to: contact_person.email_address)
+    mail(to: contact_person_email)
     Sidekiq.logger.info "Contact person verification email sent"
   end
 
