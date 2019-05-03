@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.add_dependency "capybara", "3.18.0"
   s.add_dependency "coveralls", "0.8.23"
   s.add_dependency "govuk-lint", "3.11.1"
-  s.add_dependency "rubocop", "0.68.0"
+  s.add_dependency "rubocop", "0.68.1"
   s.add_dependency "rubocop-performance", "1.1.0"
   s.add_dependency "selenium-webdriver", "3.142.0"
   s.add_dependency "simplecov", "0.16.1"
