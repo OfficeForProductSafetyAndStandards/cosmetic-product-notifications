@@ -9,11 +9,8 @@ RSpec.describe NotifyMailer, type: :mailer do
 
   describe "send_contact_person_verification_email" do
     it "sends new email verification key to contact person" do
-      mail = NotifyMailer.send_contact_person_verification_email(contact_person.id,
-                                                                 contact_person.name,
-                                                                 contact_person.email_address,
-                                                                 responsible_person.name,
-                                                                 user_name)
+      mail = NotifyMailer.send_contact_person_verification_email(contact_person.id, contact_person.name, contact_person.email_address,
+                                                                 responsible_person.name, user_name)
       expect(mail.to).to eq([contact_person.email_address])
       expect(contact_person.reload.email_verification_key).not_to be_nil
     end
