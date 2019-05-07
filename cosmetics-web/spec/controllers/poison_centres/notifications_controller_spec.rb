@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PoisonCentres::NotificationsController, type: :controller do
-  let(:responsible_person_1) { create(:responsible_person, email_address: "one@example.com") }
-  let(:responsible_person_2) { create(:responsible_person, email_address: "two@example.com") }
+  let(:responsible_person_1) { create(:responsible_person) }
+  let(:responsible_person_2) { create(:responsible_person) }
 
   let(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
   let(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }

@@ -5,7 +5,6 @@ FactoryBot.define do
     address_line_1 { "Street address" }
     city { "City" }
     postal_code { "AB12 3CD" }
-    is_email_verified { true }
     contact_persons { [create(:contact_person)] }
 
     factory :business_responsible_person do
