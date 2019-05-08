@@ -4,7 +4,7 @@
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
-            | Is the cosmetic imported into the UK?
+            | Is the cosmetic product imported into the UK?
         = render "radio_select_error" if @notification.errors.messages[:import_country].any?
         = form_with local: true, url: wizard_path, method: :put do |form|
             = form.hidden_field :is_imported, value: nil
@@ -12,8 +12,10 @@
                 .govuk-radios
                     .govuk-radios__item
                         = form.radio_button :is_imported, "true", class: "govuk-radios__input"
-                        = form.label :is_imported, "Yes", value: "true", class: "govuk-label govuk-radios__label"
+                        = form.label :is_imported, "Yes, it is imported", value: "true",
+                                class: "govuk-label govuk-radios__label"
                     .govuk-radios__item
                         = form.radio_button :is_imported, "false", class: "govuk-radios__input"
-                        = form.label :is_imported, "No", value: "false", class: "govuk-label govuk-radios__label"
+                        = form.label :is_imported, "No, it is manufactured in the UK", value: "false",
+                                class: "govuk-label govuk-radios__label"
             = form.submit "Continue", class: "govuk-button"

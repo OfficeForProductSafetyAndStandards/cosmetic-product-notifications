@@ -53,7 +53,7 @@ RSpec.describe ResponsiblePersons::AddNotificationWizardController, type: :contr
   describe "as a signed in user who isn't a member of the responsible person" do
     describe "GET #show" do
       it "returns a unauthorised error" do
-        other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
+        other_responsible_person = create(:responsible_person)
         expect { get :show, params: { responsible_person_id: other_responsible_person.id, id: "have_products_been_notified_in_eu" } }
           .to raise_error(Pundit::NotAuthorizedError)
       end

@@ -2,24 +2,17 @@
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-- cmr_list_url = "https://example.example-list-cmr.com" # TODO COSBETA-194
-- cmr_read_url = "https://example.example-read-cmr.com" # TODO COSBETA-194
+- cmr_list_url = "https://ec.europa.eu/docsroom/documents/11382/attachments/1/translations"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
-      | Does the cosmetic product contain any substances that are known or presumed to be
+      | Does the cosmetic product contain substances that are known or presumed to be
       |  carcinogenic, mutagenic or toxic for reproduction?
     p
       | These substance are commonly referred to as CMR.
     p
       = link_to "View carcinogenic, mutagenic or toxic for reproduction substances (opens in a new tab).",
               cmr_list_url, target: :_blank, rel: 'noopener'
-    p
-      | Apart from in exceptional cases, these substances are banned for use in cosmetic products.
-      | &nbsp
-      = link_to "Read about carcinogenic, mutagenic or toxic for reproduction substances that aren’t banned" + \
-                " (opens in a new tab).", cmr_read_url, target: :_blank, rel: 'noopener'
-
     = form_for(@component, url: wizard_path, method: :put) do |form|
       - @component.cmrs.each_with_index do |cmr, index|
         - cmr_number = index + 1
