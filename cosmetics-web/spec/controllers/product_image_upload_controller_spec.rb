@@ -4,7 +4,7 @@ RSpec.describe ProductImageUploadController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
   let(:component) { create(:component, notification: notification) }
-  let(:other_responsible_person) { create(:responsible_person, email_address: "another.person@example.com") }
+  let(:other_responsible_person) { create(:responsible_person) }
   let(:other_notification) { create(:notification, responsible_person: other_responsible_person) }
   let(:other_component) { create(:component, notification: other_notification) }
   let(:text_file) { fixture_file_upload('/testText.txt', 'text/plain') }
