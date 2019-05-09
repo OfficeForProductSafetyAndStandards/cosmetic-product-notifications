@@ -69,13 +69,13 @@ doctype html
              = link_to html, "https://www.gov.uk/government/organisations/office-for-product-safety-and-standards", target: :_blank, rel: 'noopener'
            .opss-footer__body
              br
-              ' This is a new service – your
-              - html = capture do
+             ' This is a new service – your
+             - html = capture do
                 | feedback
                 span.govuk-visually-hidden
                   | (opens new window)
-              = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank, rel: 'noopener'
-              |  will help us to improve it.
+             = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank, rel: 'noopener'
+             |  will help us to improve it.
            - # rubocop:enable Rails/LinkToBlank
         .govuk-footer__meta-item
           a.govuk-footer__link.govuk-footer__copyright-logo[href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"]
