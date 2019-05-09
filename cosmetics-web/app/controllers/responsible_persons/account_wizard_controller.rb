@@ -21,8 +21,12 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
       create_or_join_existing_account
     when :contact_person
       if responsible_person_saved?
-        send_verification_email
-        redirect_to responsible_person_email_verification_keys_path(@responsible_person)
+        if @responsible_person.contact_persons.any?(&:email_verified?)
+          redirect_to responsible_person_path(@responsible_person)
+        else
+          send_verification_email
+          redirect_to responsible_person_email_verification_keys_path(@responsible_person)
+        end
       else
         render step
       end
@@ -82,10 +86,10 @@ private
   end
 
   def send_verification_email
-    NotifyMailer.send_responsible_person_verification_email(
-      @responsible_person.id,
-      @contact_person.email_address,
+    NotifyMailer.send_contact_person_verification_email(
+      @contact_person.id,
       @contact_person.name,
+      @contact_person.email_address,
       @responsible_person.name,
       User.current.name
     ).deliver_later

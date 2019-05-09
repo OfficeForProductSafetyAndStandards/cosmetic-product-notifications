@@ -5,7 +5,7 @@
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
-            | Where is the cosmetic imported from?
+            | Which country is the cosmetic product imported from?
         = render "mandatory_field_error", field_name: "Import country" \
             if @notification.errors.messages[:import_country].any?
         = form_for(@notification, url: wizard_path, method: :put) do |form|

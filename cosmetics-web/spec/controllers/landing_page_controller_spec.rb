@@ -22,8 +22,8 @@ RSpec.describe LandingPageController, type: :controller do
 
   describe "When signed in as a Responsible Person user" do
     let(:user) { build(:user) }
-    let(:responsible_person_1) { create(:responsible_person, email_address: "one@example.com") }
-    let(:responsible_person_2) { create(:responsible_person, email_address: "two@example.com") }
+    let(:responsible_person_1) { create(:responsible_person) }
+    let(:responsible_person_2) { create(:responsible_person) }
 
     before do
       responsible_person_1.add_user(user)
