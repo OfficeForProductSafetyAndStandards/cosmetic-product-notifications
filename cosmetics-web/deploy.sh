@@ -13,6 +13,10 @@ DOMAIN=cosmetic-product-notifications.service.gov.uk
 if [[ $SPACE == "prod" ]]; then
     SUBMIT_HOSTNAME=submit
     SEARCH_HOSTNAME=search
+elif [[ $SPACE == "research" ]]; then
+    DOMAIN=london.cloudapps.digital
+    SUBMIT_HOSTNAME=cosmetics-research
+    SEARCH_HOSTNAME=cosmetics-research
 else
     SUBMIT_HOSTNAME=$SPACE-submit
     SEARCH_HOSTNAME=$SPACE-search

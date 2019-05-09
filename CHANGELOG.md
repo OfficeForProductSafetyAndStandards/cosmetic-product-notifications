@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 <!-- ### Product safety database -->
 - New service navigation
 - Welcome email
+- Product search
+- Cookie banner
 
 <!-- ### Cosmetics -->
 

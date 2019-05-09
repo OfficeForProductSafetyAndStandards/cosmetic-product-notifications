@@ -22,5 +22,6 @@
     = render "notifications/ingredient_details", notification: @notification
     = render "notifications/frame_formulation_details", notification: @notification
     = render "notifications/substances_details", notification: @notification
-    = render "/notifications/responsible_person_details", responsible_person: @notification.responsible_person
-    = render "/notifications/contact_person_details", contact_person: @notification.responsible_person
+    = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
+    = render "notifications/contact_person_overview",
+            contact_person: @notification.responsible_person.contact_persons.first

@@ -34,6 +34,11 @@ doctype html
     .govuk-width-container
       .govuk-footer__meta
         .govuk-footer__meta-item.govuk-footer__meta-item--grow
+          .opss-footer__body
+            ' Email
+            = mail_to "opss.enquiries@beis.gov.uk", "opss.enquiries@beis.gov.uk", subject: "Help requested on the Product safety database"
+            |  for help using this service.
+          br
           ul.govuk-footer__inline-list
             / We shouldn't normally link to target: '_blank' without rel:'noopener', because it introduces
             / security vulnerability. However, in this case we control the target url, so we should be safe
