@@ -112,9 +112,7 @@ private
       @category = nil
     end
     @sub_categories = @category.present? ? get_sub_categories(@category) : get_main_categories
-    @sub_categories.keys.each do |key|
-      @selected_sub_category = key if sub_category_belongs_to_category(@component.sub_sub_category, key)
-    end
+    @selected_sub_category = @sub_categories.find { |category| @component.belongs_to_category?(category) }
   end
 
   def render_number_of_shades
@@ -230,7 +228,6 @@ private
   end
 
   def render_select_category_step
-    # @component.update(sub_sub_category: nil)
     sub_category = params[:component] && params[:component][:sub_category]
     if sub_category
       if has_sub_categories(sub_category)

@@ -44,6 +44,10 @@ class Component < ApplicationRecord
     Component.get_parent_category(sub_category)
   end
 
+  def belongs_to_category?(category)
+    [root_category, sub_category, sub_sub_category&.to_sym].include?(category)
+  end
+
   # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
   def display_sub_category
     get_category_name(sub_category)

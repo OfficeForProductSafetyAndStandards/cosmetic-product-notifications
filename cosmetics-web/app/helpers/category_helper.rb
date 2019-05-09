@@ -12,18 +12,11 @@ module CategoryHelper
 
   def get_main_categories
     parent_of_categories = Component.get_parent_of_categories
-    Component.categories.reject { |category| parent_of_categories[category.to_sym].present? }
+    Component.categories.reject { |category| parent_of_categories[category.to_sym].present? }.keys.map(&:to_sym)
   end
 
   def get_sub_categories category
-    Component.get_parent_of_categories.select { |_key, value| value == category.to_sym }
-  end
-
-  def sub_category_belongs_to_category(sub_category, category)
-    return false if sub_category.nil?
-
-    parent_category = Component.get_parent_category(sub_category)
-    sub_category.to_sym == category.to_sym || sub_category_belongs_to_category(parent_category, category)
+    Component.get_parent_of_categories.select { |_key, value| value == category.to_sym }.keys
   end
 
   def has_sub_categories(category)
