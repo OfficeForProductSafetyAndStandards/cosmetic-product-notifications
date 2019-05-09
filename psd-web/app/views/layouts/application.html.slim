@@ -66,7 +66,7 @@ doctype html
                | Office for Product Safety and Standards
                span.govuk-visually-hidden
                  | (opens new window)
-             = link_to html, "https://www.gov.uk/government/organisations/office-for-product-safety-and-standards", target: :_blank
+             = link_to html, "https://www.gov.uk/government/organisations/office-for-product-safety-and-standards", target: :_blank, rel: 'noopener'
            .opss-footer__body
              br
               ' This is a new service – your
@@ -74,7 +74,7 @@ doctype html
                 | feedback
                 span.govuk-visually-hidden
                   | (opens new window)
-              = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank
+              = link_to html, "https://www.surveymonkey.co.uk/r/TWLYX9W", target: :_blank, rel: 'noopener'
               |  will help us to improve it.
            - # rubocop:enable Rails/LinkToBlank
         .govuk-footer__meta-item
