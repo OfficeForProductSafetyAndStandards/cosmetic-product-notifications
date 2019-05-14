@@ -155,6 +155,7 @@ private
   def set_component
     @component = Component.find(params[:component_id])
     authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
+    @component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
   end
 
   def set_question
