@@ -17,13 +17,13 @@ RSpec.describe "Create a responsible person", type: :system do
   it "succeeds with valid individual account details" do
     create_individual_responsible_person
 
-    assert_current_path(/responsible_persons\/\d+\/verify/)
+    assert_current_path(/responsible_persons\/\d+\/contact_persons\/\d+/)
   end
 
   it "succeeds with valid business account details" do
     create_business_responsible_person
 
-    assert_current_path(/responsible_persons\/\d+\/verify/)
+    assert_current_path(/responsible_persons\/\d+\/contact_persons\/\d+/)
   end
 
   it "requires an account type to be selected" do
@@ -68,7 +68,7 @@ private
     fill_in "Postcode", with: responsible_person.postal_code
     click_on "Continue"
 
-    assert_text "Contact person"
+    assert_text "contact person"
 
     fill_in "Full name", with: responsible_person.contact_persons.first.name
     fill_in "Email address", with: responsible_person.contact_persons.first.email_address
@@ -89,7 +89,7 @@ private
     fill_in "Postcode", with: business_responsible_person.postal_code
     click_on "Continue"
 
-    assert_text "Contact person"
+    assert_text "contact person"
 
     fill_in "Full name", with: business_responsible_person.contact_persons.first.name
     fill_in "Email address", with: business_responsible_person.contact_persons.first.email_address
