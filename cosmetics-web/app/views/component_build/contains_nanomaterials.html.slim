@@ -4,7 +4,9 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
-      | Does the cosmetic product contain nanomaterials?
+      | Does
+      =<> @component_name
+      | contain nanomaterials?
     p
       | A ‘nanomaterial’:
 
@@ -19,7 +21,7 @@
         .govuk-radios
           .govuk-radios__item
             = form.radio_button :contains_nanomaterials, "yes", class: "govuk-radios__input"
-            = form.label :contains_nanomaterials_yes, "Yes, the cosmetic product contains nanomaterials",
+            = form.label :contains_nanomaterials_yes, "Yes, #{@component_name} contains nanomaterials",
                     class: "govuk-label govuk-radios__label"
           .govuk-radios__item
             = form.radio_button :contains_nanomaterials, "no", class: "govuk-radios__input"

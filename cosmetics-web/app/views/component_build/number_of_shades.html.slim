@@ -1,10 +1,12 @@
-- content_for :page_title, "Single or multi component"
+- content_for :page_title, "Number of shades"
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
-      | Is the cosmetic product available in more than 1 shade?
+      | Is
+      =<> @component_name
+      | available in more than 1 shade?
     p
       | You can submit a single notification for all the shades this product is available in,
         if all other aspects of the notification are the same.
@@ -16,18 +18,18 @@
           .govuk-radios__item
             = form.radio_button :number_of_shades, "multiple-shades-same-notification", class: "govuk-radios__input"
             = form.label :number_of_shades,
-                    "Yes, the cosmetic product is available in more than 1 shade and all other aspects " \
+                    "Yes, #{@component_name} is available in more than 1 shade and all other aspects " \
                     + "of the notification are the same", value: "multiple-shades-same-notification",
                     class: "govuk-label govuk-radios__label"
           .govuk-radios__item
             = form.radio_button :number_of_shades, "multiple-shades-different-notification",
                     class: "govuk-radios__input"
             = form.label :number_of_shades,
-                    "Yes, the cosmetic product is available in more than 1 shade but needs separate notifications",
+                    "Yes, #{@component_name} is available in more than 1 shade but needs separate notifications",
                     value: "multiple-shades-different-notification", class: "govuk-label govuk-radios__label"
           .govuk-radios__item
             = form.radio_button :number_of_shades, "single-or-no-shades", class: "govuk-radios__input"
             = form.label :number_of_shades,
-                    "No, the cosmetic product is not available in more than 1 shade",
+                    "No, #{@component_name} is not available in more than 1 shade",
                     value: "single-or-no-shades", class: "govuk-label govuk-radios__label"
       = form.submit "Continue", class: "govuk-button"

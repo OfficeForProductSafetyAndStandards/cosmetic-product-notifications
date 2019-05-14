@@ -1,18 +1,23 @@
-- content_for :page_title, "Select the component category category"
+ruby:
+  question =
+    if @category.present?
+      "What category of #{get_category_name(@category).downcase} is #{@component_name}?"
+    else
+      "What category of cosmetic product is it?"
+    end
+
+- content_for :page_title, @category.present? ? "Select sub category" : "Select category"
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for(@component, url: wizard_path, method: :put) do |form|
-      = render "form_components/govuk_select", key: :sub_sub_category, form: form, show_all_values: true,
-              is_autocomplete: true,
-              items: get_sub_sub_categories.keys.map { |category_key| \
-                { text: get_full_category_name(category_key), value: category_key } \
-              },
-              label: { text: "What category of cosmetic is the product?",
-                      classes: "govuk-label--xl",
-                      isPageHeading: true }
-
+= form_with(model: @component, url: wizard_path(:select_category, category: @category), method: :put) do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_radios", form: form, key: :sub_category,
+              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              items: @sub_categories.map { |category| \
+                { text: get_category_name(category), value: category, checked: category == @selected_sub_category } \
+              }
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"

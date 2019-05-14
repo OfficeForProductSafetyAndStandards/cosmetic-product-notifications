@@ -64,6 +64,9 @@ header.psd-header *attributes class=local_assigns[:classes] role="banner" data-m
           '
           span.psd-header__product-name
             = local_assigns[:productName]
+        - if local_assigns[:phaseBanner]
+          span.govuk-tag.govuk-phase-banner__content__tag
+            = local_assigns[:phaseBanner]
     - has_nav = local_assigns[:navigation] || local_assigns[:secondary_navigation]
     - if local_assigns[:serviceName] || has_nav
       .psd-header__content
