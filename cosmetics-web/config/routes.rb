@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
     end
 
+    resources :contact_persons, controller: "responsible_persons/contact_persons", only: %i[show new create edit update]
+
     resources :add_notification, controller: "responsible_persons/add_notification_wizard", only: %i[show new update]
 
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do

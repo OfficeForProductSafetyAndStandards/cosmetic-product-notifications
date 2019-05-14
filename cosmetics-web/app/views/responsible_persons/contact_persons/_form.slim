@@ -1,0 +1,22 @@
+= form_with model: @contact_person, url: url, method: method do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+
+      h1.govuk-heading-xl
+        | Who is the contact person?
+      p
+        | A contact person must be able to give information about the cosmetic products when contacted by
+          the National Poison Information Service (NPIS) or market surveillance authorities (for example,
+          Trading Standards officers).
+      p
+        | We will send an email to this person asking them to confirm that they are a contact person.
+
+      = render "form_components/govuk_input", form: form, key: :name,
+              label: { text: "Full name" }
+      = render "form_components/govuk_input", form: form, key: :email_address, type: :email_field,
+              label: { text: "Email address" }
+      = render "form_components/govuk_input", form: form, key: :phone_number, type: :telephone_field,
+              label: { text: "Phone number" }, classes: "govuk-input--width-20"
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"
