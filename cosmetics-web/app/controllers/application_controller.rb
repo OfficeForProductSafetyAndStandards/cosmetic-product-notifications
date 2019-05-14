@@ -34,11 +34,15 @@ private
   def create_or_join_responsible_person
     return unless user_signed_in? && !poison_centre_or_msa_user?
 
+    responsible_person = User.current.responsible_persons.first
+    contact_person = User.current.responsible_persons.first&.contact_persons&.first
+
     if User.current.responsible_persons.empty?
       redirect_to account_path(:overview)
-    elsif User.current.responsible_persons.first.contact_persons.none?(&:email_verified?)
-      responsible_person = User.current.responsible_persons.first
+    elsif responsible_person.contact_persons.empty?
       redirect_to new_responsible_person_contact_person_path(responsible_person)
+    elsif responsible_person.contact_persons.none?(&:email_verified?)
+      redirect_to responsible_person_contact_person_path(responsible_person, contact_person)
     end
   end
 
