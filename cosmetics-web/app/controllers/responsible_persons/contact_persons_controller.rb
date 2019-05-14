@@ -2,7 +2,7 @@ class ResponsiblePersons::ContactPersonsController < ApplicationController
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person
   before_action :set_contact_person, only: %i[new create]
-  before_action :find_contact_person, only: %i[edit update show]
+  before_action :find_contact_person, only: %i[edit update show resend_email]
 
   def show; end
   #write redirect logic here in show
@@ -31,7 +31,20 @@ class ResponsiblePersons::ContactPersonsController < ApplicationController
     end
   end
 
-private
+  def resend_email
+    EmailVerificationKey.where(contact_person: @contact_person).delete_all
+    NotifyMailer.send_contact_person_verification_email(
+        @contact_person.id,
+        @contact_person.name,
+        @contact_person.email_address,
+        @responsible_person.name,
+        User.current.name
+    ).deliver_later
+
+    redirect_to responsible_person_contact_person_path(@responsible_person, @contact_person)
+  end
+
+  private
 
   def find_contact_person
     @contact_person = ContactPerson.find(params[:id])
