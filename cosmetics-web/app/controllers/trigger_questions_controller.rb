@@ -27,6 +27,7 @@ class TriggerQuestionsController < ApplicationController
 
   before_action :set_component
   before_action :set_question
+  before_action :set_selected_ph_range, if: -> { %i[select_ph_range exact_ph].include? step }
 
   def show
     initialize_step
@@ -163,6 +164,24 @@ private
     @question = TriggerQuestion.find_or_create_by(component: @component, question: question)
   end
 
+  def set_selected_ph_range
+    exact_ph_question = @component.trigger_questions.where(question: get_question_for_step(:exact_ph)).first
+    alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
+
+    return nil if exact_ph_question&.applicable.nil? || alkaline_list_question&.applicable.nil?
+
+    @selected_ph_range =
+      if exact_ph_question.applicable?
+        if alkaline_list_question.applicable?
+          :above
+        else
+          :below
+        end
+      else
+        :between
+      end
+  end
+
   def initialize_step
     case step
     when :add_anti_dandruff_agents,
@@ -205,6 +224,7 @@ private
     case selected_value
     when "below"
       exact_ph_question.update(applicable: true)
+      exact_ph_question.trigger_question_elements.destroy_all unless @selected_ph_range == :below
       alkaline_list_question.update(applicable: false)
       alkaline_list_question.trigger_question_elements.destroy_all
       render_wizard @component
@@ -216,6 +236,7 @@ private
       skip_question
     when "above"
       exact_ph_question.update(applicable: true)
+      exact_ph_question.trigger_question_elements.destroy_all unless @selected_ph_range == :above
       alkaline_list_question.update(applicable: true)
       render_wizard @component
     else
@@ -225,14 +246,14 @@ private
   end
 
   def render_exact_ph
-    @question.update(question_params)
-
-    return re_render_step if @question.invalid?
-
-    if @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents), applicable: true).any?
-      render_wizard @component
+    if @question.update_with_context(question_params, @selected_ph_range)
+      if @selected_ph_range == :above
+        render_wizard @component
+      else
+        skip_question
+      end
     else
-      skip_question
+      re_render_step
     end
   end
 

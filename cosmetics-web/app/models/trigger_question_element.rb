@@ -4,6 +4,8 @@ class TriggerQuestionElement < ApplicationRecord
   validates :answer, numericality: true, if: -> { question_is_applicable? && self.ph? }
   validates :answer, presence: true, if: -> { question_is_applicable? && answer_is_single_value? }
   validate :no_empty_answers_within_grouped_answers?, if: -> { question_is_applicable? && answer_is_grouped_value? }
+  validates :answer, numericality: { greater_than_or_equal_to: 0, less_than: 3 }, on: :below
+  validates :answer, numericality: { greater_than: 10, less_than_or_equal_to: 14 }, on: :above
 
   enum element: {
       ethanol: "ethanol",
