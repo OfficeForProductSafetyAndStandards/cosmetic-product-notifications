@@ -29,4 +29,14 @@ RSpec.describe ContactPerson, type: :model do
     expect(contact_person.save).to be false
     expect(contact_person.errors[:email_address]).to include("Email address is invalid")
   end
+
+  it "email is verified if the email address is same as current user email" do
+    User.current = build(:user)
+
+    contact_person.email_verified = false
+    contact_person.email_address = User.current.email
+
+    expect(contact_person.save).to be true
+    expect(contact_person.email_verified).to be true
+  end
 end

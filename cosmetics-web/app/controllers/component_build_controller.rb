@@ -16,6 +16,7 @@ class ComponentBuildController < ApplicationController
         :upload_formulation
 
   before_action :set_component
+  before_action :set_category, if: -> { step == :select_category }
 
   def show
     @component.shades = ['', ''] if step == :add_shades && @component.shades.nil?
@@ -32,12 +33,14 @@ class ComponentBuildController < ApplicationController
       render_number_of_shades
     when :add_shades
       render_add_shades
+    when :add_cmrs
+      render_add_cmrs
     when :contains_nanomaterials
       render_contains_nanomaterials
     when :add_nanomaterial
       render_add_nanomaterial
-    when :add_cmrs
-      render_add_cmrs
+    when :select_category
+      render_select_category_step
     when :select_formulation_type
       render_select_formulation_type
     when :select_frame_formulation
@@ -68,6 +71,8 @@ class ComponentBuildController < ApplicationController
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
     elsif step == :number_of_shades && !@component.notification.is_multicomponent?
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :single_or_multi_component)
+    elsif step == :select_category && @category.present?
+      wizard_path(:select_category, category: Component.get_parent_category(@category))
     elsif previous_step.present?
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
     else
@@ -86,6 +91,7 @@ private
   def set_component
     @component = Component.find(params[:component_id])
     authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
+    @component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
   end
 
   def component_params
@@ -100,14 +106,29 @@ private
       )
   end
 
+  def set_category
+    @category = params[:category]
+    if @category.present? && !has_sub_categories(@category)
+      @component.errors.add :sub_category, "Select a valid option"
+      @category = nil
+    end
+    @sub_categories = @category.present? ? get_sub_categories(@category) : get_main_categories
+    @selected_sub_category = @sub_categories.find { |category| @component.belongs_to_category?(category) }
+  end
+
   def render_number_of_shades
     case params[:number_of_shades]
-    when "single"
+    when "single-or-no-shades"
       @component.shades = nil
       @component.add_shades
       @component.save
       redirect_to wizard_path(:add_physical_form, component_id: @component.id)
-    when "multiple"
+    when "multiple-shades-different-notification"
+      @component.shades = nil
+      @component.add_shades
+      @component.save
+      redirect_to wizard_path(:add_physical_form, component_id: @component.id)
+    when "multiple-shades-same-notification"
       render_wizard @component
     when ""
       @component.errors.add :shades, "Please select an option"
@@ -207,6 +228,21 @@ private
     render_wizard @component
   end
 
+  def render_select_category_step
+    sub_category = params[:component] && params[:component][:sub_category]
+    if sub_category
+      if has_sub_categories(sub_category)
+        redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, category: sub_category)
+      else
+        @component.update(sub_sub_category: sub_category)
+        render_wizard @component
+      end
+    else
+      @component.errors.add :sub_category, "Please select an option"
+      render step
+    end
+  end
+
   def render_select_formulation_type
     if params[:component].nil?
       @no_notification_type_selected = true
@@ -223,8 +259,11 @@ private
   end
 
   def render_select_frame_formulation
-    @component.update(component_params)
-    redirect_to finish_wizard_path
+    if @component.update_with_context(component_params, step)
+      redirect_to finish_wizard_path
+    else
+      render step
+    end
   end
 
   def render_upload_formulation

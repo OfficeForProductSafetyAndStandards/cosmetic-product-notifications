@@ -4,18 +4,17 @@
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
-            | Will the cosmetic be sold as a single component?
+            | Is the cosmetic product available as single item or as a kit?
         p
-            | Multi-component cosmetics are composed of several components
-            |  that are not marketed separately. They are sold as a set and
-            |  intended to be used as a mix or sequentially.
+            | Kits are composed of components that are not marketed separately.
+              They are sold as a kit and intended to be used as a mix or sequentially.
         p
             | Examples of multi-component cosmetics include:
         ul.govuk-list.govuk-list--bullet
             li hair dye sets
             li skin peeling kits
             li permanent styling products
-            li anti-age/revitalising kits
+            li anti-age or revitalising kits
         = render "radio_select_error" if @notification.errors.messages[:components].any?
         = form_with url: wizard_path, method: :put do |form|
             = form.hidden_field :single_or_multi_component, value: nil
@@ -23,10 +22,10 @@
                 .govuk-radios
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "single", class: "govuk-radios__input"
-                        = form.label :single_or_multi_component, "Yes", value: "single",
-                            class: "govuk-label govuk-radios__label"
+                        = form.label :single_or_multi_component, "The cosmetic product is a single item",
+                                value: "single", class: "govuk-label govuk-radios__label"
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "multiple", class: "govuk-radios__input"
-                        = form.label :single_or_multi_component, "No, it will be sold as multi-component cosmetics",
-                            value: "multiple", class: "govuk-label govuk-radios__label"
+                        = form.label :single_or_multi_component, "The cosmetic product is a multi-item kit",
+                                value: "multiple", class: "govuk-label govuk-radios__label"
             = form.submit "Continue", class: "govuk-button"

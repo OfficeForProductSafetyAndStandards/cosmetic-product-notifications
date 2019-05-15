@@ -1,6 +1,5 @@
 ruby:
-  component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
-  question = local_assigns[:question] || "Does #{component_name} contain #{substance.pluralize}?"
+  question = local_assigns[:question] || "Does #{@component_name} contain #{substance.pluralize}?"
   yes_option = local_assigns[:yes_option] || "Yes, the product contains #{substance}"
   label_text = local_assigns[:label_text] || "Total amount of #{substance} in the product"
 

@@ -6,11 +6,11 @@ class ResponsiblePersons::VerificationController < ApplicationController
   def index; end
 
   def resend_email
-    EmailVerificationKey.where(responsible_person: @responsible_person).delete_all
-    NotifyMailer.send_responsible_person_verification_email(
-      @responsible_person.id,
-      @contact_person.email_address,
+    EmailVerificationKey.where(contact_person: @contact_person).delete_all
+    NotifyMailer.send_contact_person_verification_email(
+      @contact_person.id,
       @contact_person.name,
+      @contact_person.email_address,
       @responsible_person.name,
       User.current.name
 ).deliver_later

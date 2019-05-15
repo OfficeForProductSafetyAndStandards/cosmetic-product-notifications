@@ -1,6 +1,5 @@
 ruby:
-  component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
-  question = local_assigns[:question] || "Does #{component_name} contain #{substance.pluralize}?"
+  question = local_assigns[:question] || "Does #{@component_name} contain #{substance.pluralize}?"
   yes_option = local_assigns[:yes_option] || "Yes, it has #{substance.pluralize}"
 
 = form_with model: @question, url: wizard_path, method: :put do |form|
