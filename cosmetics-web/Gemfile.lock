@@ -6,7 +6,7 @@ PATH
       capybara (= 3.20.0)
       coveralls (= 0.8.23)
       debase (= 0.2.2)
-      govuk-lint (= 3.11.1)
+      govuk-lint (= 3.11.2)
       listen (= 3.1.5)
       rubocop (= 0.69.0)
       rubocop-performance (= 1.3.0)
@@ -170,7 +170,7 @@ GEM
       raabro (~> 1.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    govuk-lint (3.11.1)
+    govuk-lint (3.11.2)
       rubocop (~> 0.64)
       rubocop-rspec (~> 1.28)
       scss_lint
