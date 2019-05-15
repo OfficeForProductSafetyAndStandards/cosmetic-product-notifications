@@ -171,12 +171,10 @@ private
     return nil if exact_ph_question&.applicable.nil? || alkaline_list_question&.applicable.nil?
 
     @selected_ph_range =
-      if exact_ph_question.applicable?
-        if alkaline_list_question.applicable?
-          :above
-        else
-          :below
-        end
+      if alkaline_list_question.applicable?
+        :above
+      elsif exact_ph_question.applicable?
+        :below
       else
         :between
       end
