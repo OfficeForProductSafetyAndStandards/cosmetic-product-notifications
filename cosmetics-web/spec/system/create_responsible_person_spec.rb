@@ -73,7 +73,7 @@ private
     fill_in "Full name", with: responsible_person.contact_persons.first.name
     fill_in "Email address", with: responsible_person.contact_persons.first.email_address
     fill_in "Phone number", with: responsible_person.contact_persons.first.phone_number
-    click_on "Continue"
+    click_on "Send email"
   end
 
   def create_business_responsible_person
@@ -94,7 +94,7 @@ private
     fill_in "Full name", with: business_responsible_person.contact_persons.first.name
     fill_in "Email address", with: business_responsible_person.contact_persons.first.email_address
     fill_in "Phone number", with: business_responsible_person.contact_persons.first.phone_number
-    click_on "Continue"
+    click_on "Send email"
   end
 
   def create_new_responsible_person

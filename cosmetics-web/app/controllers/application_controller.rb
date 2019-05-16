@@ -35,13 +35,13 @@ private
     return unless user_signed_in? && !poison_centre_or_msa_user?
 
     responsible_person = User.current.responsible_persons.first
-    contact_person = User.current.responsible_persons.first&.contact_persons&.first
 
-    if User.current.responsible_persons.empty?
+    if responsible_person.blank?
       redirect_to account_path(:overview)
     elsif responsible_person.contact_persons.empty?
       redirect_to new_responsible_person_contact_person_path(responsible_person)
     elsif responsible_person.contact_persons.none?(&:email_verified?)
+      contact_person = responsible_person.contact_persons.first
       redirect_to responsible_person_contact_person_path(responsible_person, contact_person)
     end
   end
