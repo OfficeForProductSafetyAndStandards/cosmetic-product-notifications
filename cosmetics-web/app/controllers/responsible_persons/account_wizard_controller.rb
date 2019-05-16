@@ -4,6 +4,7 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
   steps :overview, :create_or_join_existing, :join_existing, :select_type, :enter_details, :contact_person
 
   skip_before_action :create_or_join_responsible_person
+  before_action :clear_session , if: -> { step == :overview }
   before_action :set_responsible_person, only: %i[show update]
   before_action :store_responsible_person, only: %i[update]
   before_action :set_contact_person, only: %i[show update], if: -> { step == :contact_person }
