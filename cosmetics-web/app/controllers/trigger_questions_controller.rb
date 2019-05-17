@@ -27,7 +27,6 @@ class TriggerQuestionsController < ApplicationController
 
   before_action :set_component
   before_action :set_question
-  before_action :set_selected_ph_range, if: -> { %i[select_ph_range exact_ph].include? step }
 
   def show
     initialize_step
@@ -37,6 +36,7 @@ class TriggerQuestionsController < ApplicationController
   def update
     case step
     when :contains_anti_dandruff_agents,
+        :select_ph_range,
         :contains_anti_hair_loss_agents,
         :contains_anti_pigmenting_agents,
         :contains_chemical_exfoliating_agents,
@@ -76,8 +76,6 @@ class TriggerQuestionsController < ApplicationController
         :contains_ethanol,
         :contains_isopropanol
       render_substance_check_with_condition
-    when :select_ph_range
-      render_select_ph_range
     when :exact_ph
       render_exact_ph
     else
@@ -164,22 +162,6 @@ private
     @question = TriggerQuestion.find_or_create_by(component: @component, question: question)
   end
 
-  def set_selected_ph_range
-    exact_ph_question = @component.trigger_questions.where(question: get_question_for_step(:exact_ph)).first
-    alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
-
-    return nil if exact_ph_question&.applicable.nil? || alkaline_list_question&.applicable.nil?
-
-    @selected_ph_range =
-      if alkaline_list_question.applicable?
-        :above
-      elsif exact_ph_question.applicable?
-        :below
-      else
-        :between
-      end
-  end
-
   def initialize_step
     case step
     when :add_anti_dandruff_agents,
@@ -214,46 +196,27 @@ private
     end
   end
 
-  def render_select_ph_range
-    selected_value = params[:trigger_question] && params[:trigger_question][:range]
-    exact_ph_question = @component.trigger_questions.where(question: get_question_for_step(:exact_ph)).first
+  def render_exact_ph
+    if @question.update_with_context(question_params, @step)
+      render_valid_exact_ph(@question.trigger_question_elements.first.answer.to_f)
+    else
+      re_render_step
+    end
+  end
+
+  # rubocop:disable Naming/UncommunicativeMethodParamName
+  def render_valid_exact_ph(ph)
     alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
 
-    case selected_value
-    when "below"
-      exact_ph_question.update(applicable: true)
-      exact_ph_question.trigger_question_elements.destroy_all unless @selected_ph_range == :below
-      alkaline_list_question.update(applicable: false)
-      alkaline_list_question.trigger_question_elements.destroy_all
+    alkaline_list_question.update(applicable: ph > 10)
+    if alkaline_list_question.applicable
       render_wizard @component
-    when "between"
-      exact_ph_question.update(applicable: false)
-      exact_ph_question.trigger_question_elements.destroy_all
-      alkaline_list_question.update(applicable: false)
+    else
       alkaline_list_question.trigger_question_elements.destroy_all
       skip_question
-    when "above"
-      exact_ph_question.update(applicable: true)
-      exact_ph_question.trigger_question_elements.destroy_all unless @selected_ph_range == :above
-      alkaline_list_question.update(applicable: true)
-      render_wizard @component
-    else
-      @question.errors.add :range, "Please select an option"
-      re_render_step
     end
   end
-
-  def render_exact_ph
-    if @question.update_with_context(question_params, @selected_ph_range)
-      if @selected_ph_range == :above
-        render_wizard @component
-      else
-        skip_question
-      end
-    else
-      re_render_step
-    end
-  end
+  # rubocop:enable Naming/UncommunicativeMethodParamName
 
   def render_substance_check
     @question.update(question_params)
@@ -375,7 +338,7 @@ private
     case step
     when :contains_anti_dandruff_agents, :add_anti_dandruff_agents
       :please_specify_the_inci_name_and_concentration_of_the_antidandruff_agents_if_antidandruff_agents_are_not_present_in_the_cosmetic_product_then_not_applicable_must_be_checked
-    when :exact_ph
+    when :select_ph_range, :exact_ph
       :please_indicate_the_ph
     when :add_alkaline_agents
       :please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators
