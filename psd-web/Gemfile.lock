@@ -33,7 +33,7 @@ PATH
   specs:
     shared-web (1.0.0)
       active_hash (= 2.2.1)
-      aws-sdk-s3 (= 1.38.0)
+      aws-sdk-s3 (= 1.39.0)
       elasticsearch-model (= 6.0.0)
       elasticsearch-rails (= 6.0.0)
       govuk_notify_rails (= 2.1.0)
@@ -112,7 +112,7 @@ GEM
     aws-sdk-kms (1.20.0)
       aws-sdk-core (~> 3, >= 3.52.1)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.38.0)
+    aws-sdk-s3 (1.39.0)
       aws-sdk-core (~> 3, >= 3.52.1)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
