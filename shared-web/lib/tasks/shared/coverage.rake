@@ -1,4 +1,5 @@
 require 'coveralls'
+require 'simplecov'
 
 # Custom formatter to allow Coveralls to handle both Cosmetics and PSD in the same repo.
 # Returns file paths that include the leading app name to avoid confusion between files
@@ -16,5 +17,6 @@ end
 
 task :submit_coverage do
   ENV["COVERALLS_PARALLEL"] = "true"
+  SimpleCov.merge_timeout(24 * 60 * 60) # Set time allowed between runs to 24 hours
   Coveralls.push!
 end
