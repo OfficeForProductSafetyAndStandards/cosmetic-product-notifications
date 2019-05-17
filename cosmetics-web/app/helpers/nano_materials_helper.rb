@@ -1,27 +1,22 @@
 module NanoMaterialsHelper
-  def nano_elements
+  def nano_elements_purposes
     {
-        titanium: { iupac_name: "Titanium dioxide" },
-        triazine: { iupac_name: "Tris-biphenyl triazine" },
-        carbon: { iupac_name: "Carbon black" },
-        other: { iupac_name: "Other" }
+        colorant: "Colorant",
+        preservative: "Preservative",
+        uv_filter: "UV filter",
+        other: "Another purpose"
     }
   end
 
-  def nano_elements_label
+  def ec_regulation_annex_number
     {
-        titanium: "This product contains Titanium dioxide as a UV filter",
-        triazine: "This product contains Tris-biphenyl triazine as a UV filter",
-        carbon: "This product contains Carbon black as a colorant",
-        other: "Other"
+        colorant: 4,
+        preservative: 5,
+        uv_filter: 6
     }
   end
 
-  def exposure_routes
-    %w(Dermal Oral Inhalation)
-  end
-
-  def exposure_conditions
-    ["Rinse off", "Leave on"]
+  def exposure_routes_symbols
+    %i(dermal oral inhalation)
   end
 end

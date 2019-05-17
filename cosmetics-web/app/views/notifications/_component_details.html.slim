@@ -15,7 +15,7 @@ tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Application instruction
     td.govuk-table__cell
-      = get_exposure_route_name(component.nano_material.exposure_route)
+      = get_exposure_route_name(component.nano_material.exposure_routes&.first)
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Exposure condition

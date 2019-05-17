@@ -102,7 +102,7 @@ private
       nano_element(nano_element_node)
     end
     NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
-                        exposure_route: exposure_route(nano_list_node),
+                        exposure_routes: Array(exposure_routes(nano_list_node)),
                         nano_elements: nano_elements)
   end
 
@@ -121,7 +121,7 @@ private
     get_exposure_condition(nano_list_node&.xpath(".//exposureCondition")&.first&.text.to_i)
   end
 
-  def exposure_route(nano_list_node)
+  def exposure_routes(nano_list_node)
     get_exposure_route(nano_list_node&.xpath(".//exposureRoute/exposureID")&.first&.text.to_i)
   end
 

@@ -1,0 +1,18 @@
+ruby:
+  exposure_routes = @nano_material.exposure_routes
+
+- content_for :page_title, "Exposure routes"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with(model: @nano_material, url: wizard_path, method: :put) do |form|
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
+        = render "form_components/govuk_error_summary", form: form
+        = render "form_components/govuk_checkboxes", form: form, key: :exposure_route,
+                fieldset: { legend: { text: "How is the user likely to be exposed to the nanomaterials?",
+                        classes: "govuk-label--xl", isPageHeading: true } },
+                items: exposure_routes_symbols.each.map { |route| \
+                  { key: route, text: get_exposure_route_name(route), checked: exposure_routes&.include?(route.to_s) } \
+                }
+        = form.submit "Continue", class: "govuk-button"
