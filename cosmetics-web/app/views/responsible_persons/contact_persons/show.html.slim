@@ -10,7 +10,7 @@
     p
       ' Wrong email address?
       = link_to "Change the contact person details",
-              edit_responsible_person_contact_person_path(@responsible_person),
+              edit_responsible_person_contact_person_path(@responsible_person, @contact_person),
               class: "button-link", role: "button"
       ' .
     p
