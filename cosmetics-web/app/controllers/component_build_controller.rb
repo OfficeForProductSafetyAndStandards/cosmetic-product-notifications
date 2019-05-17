@@ -7,6 +7,7 @@ class ComponentBuildController < ApplicationController
         :number_of_shades,
         :add_shades,
         :add_physical_form,
+        :contains_cmrs,
         :add_cmrs,
         :contains_nanomaterials,
         :add_nanomaterial,
@@ -33,6 +34,8 @@ class ComponentBuildController < ApplicationController
       render_number_of_shades
     when :add_shades
       render_add_shades
+    when :contains_cmrs
+      render_contains_cmrs
     when :add_cmrs
       render_add_cmrs
     when :contains_nanomaterials
@@ -162,6 +165,33 @@ private
     end
   end
 
+  def render_contains_cmrs
+    case params[:contains_cmrs]
+    when "yes"
+      render_wizard @component
+    when "no"
+      redirect_to wizard_path(:contains_nanomaterials, component_id: @component.id)
+    when ""
+      @component.errors.add :cmrs, "Please select an option"
+      render step
+    end
+  end
+
+  def render_add_cmrs
+    cmrs = params[:cmrs]
+    cmrs.each do |index, cmr|
+      cmr_name = cmr[:name]
+      cmr_cas_number = cmr[:cas_number]
+
+      if !cmr_name.nil? && cmr_name != '' && !cmr_cas_number.nil? && cmr_cas_number != ''
+        @component.cmrs[index.to_i].update name: cmr_name, cas_number: cmr_cas_number
+      else
+        @component.cmrs[index.to_i].destroy
+      end
+    end
+    render_wizard @component
+  end
+
   def render_contains_nanomaterials
     case params[:contains_nanomaterials]
     when "yes"
@@ -211,21 +241,6 @@ private
       return false if params[key.to_sym] == "1"
     end
     true
-  end
-
-  def render_add_cmrs
-    cmrs = params[:cmrs]
-    cmrs.each do |index, cmr|
-      cmr_name = cmr[:name]
-      cmr_cas_number = cmr[:cas_number]
-
-      if !cmr_name.nil? && cmr_name != '' && !cmr_cas_number.nil? && cmr_cas_number != ''
-        @component.cmrs[index.to_i].update name: cmr_name, cas_number: cmr_cas_number
-      else
-        @component.cmrs[index.to_i].destroy
-      end
-    end
-    render_wizard @component
   end
 
   def render_select_category_step

@@ -1,0 +1,36 @@
+- content_for :page_title, "Contains CMRs"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+- cmr_list_url = "https://eur-lex.europa.eu/legal-content/en/TXT/PDF/?uri=CELEX:02008R1272-20180301&from=EN"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      | Does the
+      =<> @component_name || "cosmetic product"
+      | contain substances listed as Category 1A or 1B mutagens, carcinogens or reproductive toxicants?
+    p
+      | Category 1A are substances that are ‘known’ mutagens, carcinogens or reproductive toxicants.
+    p
+      | Category 1B are substances that are ‘presumed’ mutagens, carcinogens or reproductive toxicants.
+    p
+      | View
+      = link_to "the classification, labelling and packaging regulation (opens in a new tab)",
+              cmr_list_url, target: :_blank, rel: 'noopener'
+      |  to find definitions of category 1A and 1B mutagens (table 3.5.1),
+      |  carcinogens (table 3.6.1) and reproductive toxicants (table 3.7.1).
+
+    = render "radio_select_error" if @component.errors.messages[:cmrs].any?
+    = form_with url: wizard_path, method: :put do |form|
+      = form.hidden_field :contains_cmrs, value: nil
+      .govuk-form-group
+        .govuk-radios
+          .govuk-radios__item
+            = form.radio_button :contains_cmrs, "yes", class: "govuk-radios__input"
+            = form.label :contains_cmrs_yes,
+                    "Yes, it has substances listed as Category 1A or 1B mutagens, carcinogens or reproductive toxicants",
+                    class: "govuk-label govuk-radios__label"
+          .govuk-radios__item
+            = form.radio_button :contains_cmrs, "no", class: "govuk-radios__input"
+            = form.label :contains_cmrs_no, "No", class: "govuk-label govuk-radios__label"
+      = form.submit "Continue", class: "govuk-button"
