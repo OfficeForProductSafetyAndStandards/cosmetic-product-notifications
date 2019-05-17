@@ -3,4 +3,4 @@
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
 = render "trigger_questions/substance_check", substance: "ph_range",
-        question: "Is the pH between 3 and 10?", yes_option: "Yes"
+        question: "Is the pH between 3 and 10?", yes_option: "Yes", option_values: ["false", "true"]

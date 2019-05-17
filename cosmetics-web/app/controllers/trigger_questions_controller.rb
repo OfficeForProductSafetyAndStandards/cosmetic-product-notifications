@@ -257,6 +257,11 @@ private
   end
 
   def skip_question
+    if step == :select_ph_range
+      alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
+      alkaline_list_question&.destroy
+    end
+
     next_step = get_skip_question_next_step
     redirect_to wizard_path(next_step, component_id: @component.id)
   end
