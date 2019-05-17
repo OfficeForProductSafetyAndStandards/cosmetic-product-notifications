@@ -17,6 +17,7 @@ class Component < ApplicationRecord
   has_one_attached :formulation_file
 
   validates :physical_form, presence: true, on: :add_physical_form
+  validates :frame_formulation, presence: true, on: :select_frame_formulation
 
   before_save :add_shades, if: :will_save_change_to_shades?
 
@@ -41,6 +42,10 @@ class Component < ApplicationRecord
 
   def root_category
     Component.get_parent_category(sub_category)
+  end
+
+  def belongs_to_category?(category)
+    [root_category, sub_category, sub_sub_category&.to_sym].include?(category)
   end
 
   # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
