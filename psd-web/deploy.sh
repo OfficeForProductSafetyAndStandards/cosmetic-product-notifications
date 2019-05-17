@@ -57,14 +57,16 @@ if [[ ! $APP_PREEXISTS ]]; then
 fi
 
 # Run smoke tests before switching over to the new app
-echo "Running smoke tests."
-docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-docker pull beisopss/opss-functional-tests
-docker run beisopss/opss-functional-tests mvn --quiet --file ./psd/pom.xml test -Dcucumber.options="--tags @smoke" \
-  -Dhostname=$NEW_HOSTNAME.$DOMAIN \
-  -Dauth.username=${PSD_BASIC_AUTH_USERNAME} -Dauth.password=${PSD_BASIC_AUTH_PASSWORD} \
-  -Daccount.ts.username=${TS_ACCOUNT_USERNAME} -Daccount.ts.password=${TS_ACCOUNT_PASSWORD} \
-  -Daccount.opss.username=${OPSS_ACCOUNT_USERNAME} -Daccount.opss.password=${OPSS_ACCOUNT_PASSWORD}
+if [[ $SPACE != "prod" ]]; then
+    echo "Running smoke tests."
+    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    docker pull beisopss/opss-functional-tests
+    docker run beisopss/opss-functional-tests mvn --quiet --file ./psd/pom.xml test -Dcucumber.options="--tags @smoke" \
+      -Dhostname=$NEW_HOSTNAME.$DOMAIN \
+      -Dauth.username=${PSD_BASIC_AUTH_USERNAME} -Dauth.password=${PSD_BASIC_AUTH_PASSWORD} \
+      -Daccount.ts.username=${TS_ACCOUNT_USERNAME} -Daccount.ts.password=${TS_ACCOUNT_PASSWORD} \
+      -Daccount.opss.username=${OPSS_ACCOUNT_USERNAME} -Daccount.opss.password=${OPSS_ACCOUNT_PASSWORD}
+fi
 SMOKE_TEST_RESULT=$?
 
 if [[ $SMOKE_TEST_RESULT -ne 0 ]]; then
