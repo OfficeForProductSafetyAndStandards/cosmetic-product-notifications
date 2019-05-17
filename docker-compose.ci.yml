@@ -19,32 +19,32 @@ services:
     command: tail -f /dev/null
     image: beisopss/cosmetics-web:${TRAVIS_BUILD_NUMBER}
     volumes:
-    - ~/bundle-cache:/usr/local/bundle
-    environment:
-    - CI
-    - TRAVIS
-    - TRAVIS_BRANCH
-    - TRAVIS_JOB_ID
-    - TRAVIS_PULL_REQUEST
-    - COVERALLS_PARALLEL
-  cosmetics-worker:
-    command: tail -f /dev/null
-    image: beisopss/cosmetics-worker:${TRAVIS_BUILD_NUMBER}
-    volumes:
-    - ~/bundle-cache:/usr/local/bundle
-  
-  psd-web:
-    command: tail -f /dev/null
-    image: beisopss/psd-web:${TRAVIS_BUILD_NUMBER}
-    volumes:
       - ~/bundle-cache:/usr/local/bundle
+      - ~/coverage-cache/cosmetics:/cosmetics-web/coverage
     environment:
       - CI
       - TRAVIS
       - TRAVIS_BRANCH
       - TRAVIS_JOB_ID
       - TRAVIS_PULL_REQUEST
-      - COVERALLS_PARALLEL
+  cosmetics-worker:
+    command: tail -f /dev/null
+    image: beisopss/cosmetics-worker:${TRAVIS_BUILD_NUMBER}
+    volumes:
+      - ~/bundle-cache:/usr/local/bundle
+  
+  psd-web:
+    command: tail -f /dev/null
+    image: beisopss/psd-web:${TRAVIS_BUILD_NUMBER}
+    volumes:
+      - ~/bundle-cache:/usr/local/bundle
+      - ~/coverage-cache/psd:/psd-web/coverage
+    environment:
+      - CI
+      - TRAVIS
+      - TRAVIS_BRANCH
+      - TRAVIS_JOB_ID
+      - TRAVIS_PULL_REQUEST
       - NOTIFY_API_KEY='fake-key'
   psd-worker:
     command: tail -f /dev/null

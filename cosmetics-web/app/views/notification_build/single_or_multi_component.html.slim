@@ -1,10 +1,10 @@
-- content_for :page_title, "Single or multi component"
+- content_for :page_title, "Single item or kit"
 - content_for :after_header do
     = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 .govuk-grid-row
     .govuk-grid-column-two-thirds
         h1.govuk-heading-xl
-            | Is the cosmetic product available as single item or as a kit?
+            | Is the cosmetic product available as a single item or as a kit?
         p
             | Kits are composed of components that are not marketed separately.
               They are sold as a kit and intended to be used as a mix or sequentially.
@@ -15,6 +15,9 @@
             li skin peeling kits
             li permanent styling products
             li anti-age or revitalising kits
+        p
+            | If the cosmetic product is sold as a gift set where the components are not mixed
+              or used sequentially, submit a notification for each product separately.
         = render "radio_select_error" if @notification.errors.messages[:components].any?
         = form_with url: wizard_path, method: :put do |form|
             = form.hidden_field :single_or_multi_component, value: nil
@@ -23,9 +26,9 @@
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "single", class: "govuk-radios__input"
                         = form.label :single_or_multi_component, "The cosmetic product is a single item",
-                                value: "single", class: "govuk-label govuk-radios__label"
+                            value: "single", class: "govuk-label govuk-radios__label"
                     .govuk-radios__item
                         = form.radio_button :single_or_multi_component, "multiple", class: "govuk-radios__input"
                         = form.label :single_or_multi_component, "The cosmetic product is a multi-item kit",
-                                value: "multiple", class: "govuk-label govuk-radios__label"
+                            value: "multiple", class: "govuk-label govuk-radios__label"
             = form.submit "Continue", class: "govuk-button"
