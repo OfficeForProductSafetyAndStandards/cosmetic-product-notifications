@@ -1,7 +1,7 @@
 ruby:
   question = local_assigns[:question] || "Does #{@component_name} contain #{substance.pluralize}?"
   yes_option = local_assigns[:yes_option] || "Yes, it has #{substance.pluralize}"
-  option_values = local_assigns[:option_values] || ["true", "false"]
+  option_values = local_assigns[:option_values] || %w(true false)
 
 = form_with model: @question, url: wizard_path, method: :put do |form|
   .govuk-grid-row
