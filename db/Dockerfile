@@ -6,4 +6,3 @@ COPY setup-keycloak.sh .
 
 # Adds configuration to the postgres server to allow pgHero to see query stats
 COPY setup-pgHero.sh .
-RUN ./setup-pgHero.sh

@@ -4,11 +4,9 @@ require File.expand_path("../config/environment", __dir__)
 # It's important that simplecov is "require"d early in the file
 require 'simplecov'
 require 'simplecov-console'
-require 'shared/web/coveralls_formatter'
 SimpleCov.formatters = [
   SimpleCov::Formatter::HTMLFormatter,
-  SimpleCov::Formatter::Console,
-  Shared::Web::CoverallsFormatter
+  SimpleCov::Formatter::Console
 ]
 SimpleCov.start
 
