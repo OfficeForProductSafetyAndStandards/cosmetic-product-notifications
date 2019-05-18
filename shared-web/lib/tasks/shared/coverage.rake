@@ -1,3 +1,5 @@
+return if Rails.env.production?
+
 require 'coveralls'
 require 'simplecov'
 
