@@ -19,6 +19,7 @@ class ResponsiblePersons::ContactPersonsController < ApplicationController
 
   def update
     if @contact_person.update(contact_person_params)
+      remove_contact_person_email_verification_key
       redirect_contact_person
     else
       render :edit
@@ -26,7 +27,7 @@ class ResponsiblePersons::ContactPersonsController < ApplicationController
   end
 
   def resend_email
-    EmailVerificationKey.where(contact_person: @contact_person).delete_all
+    remove_contact_person_email_verification_key
     send_verification_email
 
     redirect_to responsible_person_contact_person_path(@responsible_person, @contact_person)
@@ -72,5 +73,9 @@ private
       send_verification_email
       redirect_to responsible_person_contact_person_path(@responsible_person, @contact_person)
     end
+  end
+
+  def remove_contact_person_email_verification_key
+    EmailVerificationKey.where(contact_person: @contact_person).delete_all
   end
 end
