@@ -26,7 +26,7 @@ class TriggerQuestionsController < ApplicationController
         :contains_isopropanol
 
   before_action :set_component
-  before_action :set_question
+  before_action :set_question, only: %i[show update]
 
   def show
     initialize_step
@@ -159,7 +159,7 @@ private
 
   def set_question
     question = get_question_for_step step
-    @question = TriggerQuestion.find_or_create_by(component: @component, question: question)
+    @question = TriggerQuestion.find_or_create_by(component: @component, question: question) if question.present?
   end
 
   def initialize_step

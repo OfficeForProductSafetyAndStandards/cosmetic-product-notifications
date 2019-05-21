@@ -40,7 +40,11 @@ private
   end
 
   def set_contact_person
-    @contact_person = params[:id] ? ContactPerson.find(params[:id]) : @responsible_person.contact_persons.build(contact_person_params)
+    @contact_person = if params[:id]
+                        @responsible_person.contact_persons.find(params[:id])
+                      else
+                        @responsible_person.contact_persons.build(contact_person_params)
+                      end
   end
 
   def contact_person_params
