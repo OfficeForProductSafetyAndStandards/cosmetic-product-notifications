@@ -26,7 +26,6 @@ class ResponsiblePersons::ContactPersonsController < ApplicationController
   end
 
   def resend_email
-    EmailVerificationKey.where(contact_person: @contact_person).delete_all
     send_verification_email
 
     redirect_to responsible_person_contact_person_path(@responsible_person, @contact_person)
