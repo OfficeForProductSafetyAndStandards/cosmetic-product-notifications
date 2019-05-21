@@ -11,9 +11,9 @@
 
       = render "form_components/govuk_input", form: form, key: :name,
               label: { text: "Full name" }
-      = render "form_components/govuk_input", form: form, key: :email_address, type: :email_field,
+      = render "form_components/govuk_input", form: form, key: :email_address, type: :email,
               label: { text: "Email address" }
-      = render "form_components/govuk_input", form: form, key: :phone_number, type: :telephone_field,
+      = render "form_components/govuk_input", form: form, key: :phone_number, type: :tel,
               label: { text: "Phone number" }, classes: "govuk-input--width-20"
       p
         | We will send an email asking them to confirm that they are a contact person.
