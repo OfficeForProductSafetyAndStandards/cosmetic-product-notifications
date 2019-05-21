@@ -13,7 +13,8 @@ branches:
 
 cache:
   directories:
-    - "~/bundle-cache"
+    - ~/bundle-cache
+    - ~/coverage-cache
 
 stages:
   - Build
@@ -31,6 +32,8 @@ jobs:
     - stage: Build
       before_install:
         - mkdir -p ~/bundle-cache
+        - mkdir -p ~/coverage-cache/cosmetics
+        - mkdir -p ~/coverage-cache/psd
       install:
         - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./infrastructure/ci/build-docker-images.sh
 
