@@ -131,7 +131,7 @@ COPY ./configuration/standalone.xml ./standalone/configuration/standalone.xml
 COPY ./configuration/standalone-ha.xml ./standalone/configuration/standalone-ha.xml
 
 # Copy across the initial setup configuration file to be imported on first launch
-COPY ./configuration/initial-setup.json ./initial-setup.json
+COPY ./configuration/initial-setup.json ./configuration/initial-setup.json
 
 
 FROM jboss/base-jdk:8
@@ -159,6 +159,6 @@ EXPOSE 8080
 CMD ["/opt/jboss/keycloak/bin/standalone.sh", \
     "-Dkeycloak.migration.action=import", \
     "-Dkeycloak.migration.provider=singleFile", \
-    "-Dkeycloak.migration.strategy=IGNORE_EXISTING", \
-    "-Dkeycloak.migration.file=/opt/jboss/keycloak/initial-setup.json", \
+    "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING", \
+    "-Dkeycloak.migration.file=/opt/jboss/keycloak/configuration/initial-setup.json", \
     "-b", "0.0.0.0"]
