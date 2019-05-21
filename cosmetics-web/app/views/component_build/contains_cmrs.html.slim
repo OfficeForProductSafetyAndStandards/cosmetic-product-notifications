@@ -15,10 +15,10 @@
       | Category 1B are substances that are ‘presumed’ mutagens, carcinogens or reproductive toxicants.
     p
       | View
-      = link_to "the classification, labelling and packaging regulation (opens in a new tab)",
+      =<> link_to "the classification, labelling and packaging regulation (opens in a new tab)",
               cmr_list_url, target: :_blank, rel: 'noopener'
-      |  to find definitions of category 1A and 1B mutagens (table 3.5.1),
-      |  carcinogens (table 3.6.1) and reproductive toxicants (table 3.7.1).
+      | to find definitions of category 1A and 1B mutagens (table 3.5.1),
+        carcinogens (table 3.6.1) and reproductive toxicants (table 3.7.1).
 
     = render "radio_select_error" if @component.errors.messages[:cmrs].any?
     = form_with url: wizard_path, method: :put do |form|

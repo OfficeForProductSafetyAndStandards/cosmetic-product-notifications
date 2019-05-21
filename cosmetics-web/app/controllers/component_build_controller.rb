@@ -21,10 +21,7 @@ class ComponentBuildController < ApplicationController
 
   def show
     @component.shades = ['', ''] if step == :add_shades && @component.shades.nil?
-    if step == :add_cmrs && @component.cmrs.size < NUMBER_OF_CMRS
-      cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
-      cmrs_needed.times { @component.cmrs.create(name: '', cas_number: '') }
-    end
+    create_required_cmrs if step == :add_cmrs
     render_wizard
   end
 
@@ -89,7 +86,7 @@ class ComponentBuildController < ApplicationController
 
 private
 
-  NUMBER_OF_CMRS = 10
+  NUMBER_OF_CMRS = 5
 
   def set_component
     @component = Component.find(params[:component_id])
@@ -168,8 +165,10 @@ private
   def render_contains_cmrs
     case params[:contains_cmrs]
     when "yes"
+      create_required_cmrs
       render_wizard @component
     when "no"
+      destroy_all_cmrs
       redirect_to wizard_path(:contains_nanomaterials, component_id: @component.id)
     when ""
       @component.errors.add :cmrs, "Please select an option"
@@ -180,11 +179,12 @@ private
   def render_add_cmrs
     cmrs = params[:cmrs]
     cmrs.each do |index, cmr|
-      cmr_name = cmr[:name]
-      cmr_cas_number = cmr[:cas_number]
+      name = cmr[:name]
+      cas_number = cmr[:cas_number].delete('^0-9')
+      ec_number = cmr[:ec_number].delete('^0-9')
 
-      if !cmr_name.nil? && cmr_name != '' && !cmr_cas_number.nil? && cmr_cas_number != ''
-        @component.cmrs[index.to_i].update name: cmr_name, cas_number: cmr_cas_number
+      if !name.nil? && name != '' && !cas_number.nil? && cas_number != ''
+        @component.cmrs[index.to_i].update name: name, cas_number: cas_number, ec_number: ec_number
       else
         @component.cmrs[index.to_i].destroy
       end
@@ -296,10 +296,23 @@ private
     case step
     when :add_physical_form
       @component.shades.nil? ? :number_of_shades : :add_shades
+    when :contains_nanomaterials
+      @component.cmrs.empty? ? :contains_cmrs : :add_cmrs
     when :select_category
       @component.nano_material.nil? ? :contains_nanomaterials : :add_nanomaterial
     when :upload_formulation
       :select_formulation_type
     end
+  end
+
+  def create_required_cmrs
+    if @component.cmrs.size < NUMBER_OF_CMRS
+      cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
+      cmrs_needed.times { @component.cmrs.create(name: '', cas_number: '', ec_number: '') }
+    end
+  end
+
+  def destroy_all_cmrs
+    @component.cmrs.destroy_all
   end
 end
