@@ -147,9 +147,9 @@ ActiveRecord::Schema.define(version: 2019_05_15_112037) do
     t.string "shades"
     t.string "industry_reference"
     t.datetime "cpnp_notification_date"
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
-    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"

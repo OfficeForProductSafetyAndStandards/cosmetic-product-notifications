@@ -9,9 +9,9 @@
         = render "form_components/govuk_error_summary", form: nano_material_form
         = nano_material_form.hidden_field :exposure_condition, value: nil
         = render "form_components/govuk_radios", form: nano_material_form, key: :exposure_condition,
-                fieldset: { legend: { text: "Is the cosmetic product intended to be rinsed off or left on?",
+                fieldset: { legend: { text: "Is #{@component_name} intended to be rinsed off or left on?",
                         classes: "govuk-label--xl", isPageHeading: true } },
-                items: NanoMaterial.exposure_conditions.each.map { |key, value| \
+                items: NanoMaterial.exposure_conditions.map { |key, value| \
                   { text: get_exposure_condition_name(key), value: value } \
                 }
         = form.submit "Continue", class: "govuk-button"

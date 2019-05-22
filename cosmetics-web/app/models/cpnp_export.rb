@@ -101,6 +101,7 @@ private
     nano_elements = nano_list_node&.xpath(".//nano")&.collect do |nano_element_node|
       nano_element(nano_element_node)
     end
+    # TODO: COSBETA-401: save multiple exposure_routes
     NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
                         exposure_routes: Array(exposure_routes(nano_list_node)),
                         nano_elements: nano_elements)

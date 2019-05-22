@@ -1,4 +1,4 @@
-- content_for :page_title, "Select nano-material purpose"
+- content_for :page_title, "Confirm usage"
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
@@ -6,10 +6,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
-      = render "form_components/govuk_radios", form: form, key: :purpose,
-              fieldset: { legend: { text: "What is the purpose of #{@nano_element.inci_name}?",
+      = render "form_components/govuk_radios", form: form, key: :confirm_usage,
+              fieldset: { legend: { text: "Is it used in accordance with the restrictions for that material?",
                       classes: "govuk-label--xl", isPageHeading: true } },
-              items: nano_elements_purposes.each.map { |key, value| \
-                { text: value, value: key } \
-              }
+              items: [{ text: "Yes", value: "true" }, { text: "No", value: "false" }]
       = form.submit "Continue", class: "govuk-button"

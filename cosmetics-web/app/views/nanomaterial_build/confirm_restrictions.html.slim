@@ -1,0 +1,24 @@
+ruby:
+  annex_number = get_ec_regulation_annex_number_for_nano_material_purpose(@purpose)
+  question = "Is #{@nano_element.inci_name} listed in EC regulation 1223/2009, Annex #{annex_number}?"
+  regulation_link = get_ec_regulation_link_for_annex_number(annex_number)
+
+- content_for :page_title, "Confirm use in accordance with the restrictions"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with(model: @nano_element, url: wizard_path(:confirm_restrictions, purpose: @purpose), method: :put) do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      - label_html = capture do
+        p
+          | View the
+          =< link_to "Annex #{annex_number} list at the EUR-Lex website (opens in a new window)", regulation_link
+
+      = render "form_components/govuk_error_summary", form: form
+
+      = render "components/govuk_fieldset", legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } do
+        = render "form_components/govuk_radios", form: form, key: :confirm_restrictions,
+                fieldset: { legend: { html: label_html } },
+                items: [{ text: "Yes", value: "true" }, { text: "No", value: "false" }]
+        = form.submit "Continue", class: "govuk-button"

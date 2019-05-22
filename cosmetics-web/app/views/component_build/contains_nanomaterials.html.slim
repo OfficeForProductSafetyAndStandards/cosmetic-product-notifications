@@ -5,14 +5,16 @@
 = form_with(model: @component, url: wizard_path, method: :put) do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      - hint_html = capture do
-        | A ‘nanomaterial’:
+      - nanomaterial_definition = capture do
         ul.govuk-list--bullet
           li has one or more external dimensions, or an internal structure, with a size ranging from 1 nm to 100 nm
           li is insoluble or biopersistent
           li is intentionally manufactured
+      - hint_html = capture do
+        = render "govuk_details", summary: "What is a nanomaterial?",
+                text: nanomaterial_definition
       = render "form_components/govuk_error_summary", form: form
-      = render "form_components/govuk_radios", form: form, key: :has_nanomaterials,
+      = render "form_components/govuk_radios", form: form, key: :contains_nanomaterials,
               fieldset: { legend: { text: "Does #{@component_name} contain nanomaterials?",
                       classes: "govuk-label--xl", isPageHeading: true } },
               hint: { html: hint_html },

@@ -12,7 +12,7 @@ ruby:
         = render "form_components/govuk_checkboxes", form: form, key: :exposure_route,
                 fieldset: { legend: { text: "How is the user likely to be exposed to the nanomaterials?",
                         classes: "govuk-label--xl", isPageHeading: true } },
-                items: exposure_routes_symbols.each.map { |route| \
+                items: NanoMaterial.exposure_routes_options.map { |route| \
                   { key: route, text: get_exposure_route_name(route), checked: exposure_routes&.include?(route.to_s) } \
                 }
         = form.submit "Continue", class: "govuk-button"

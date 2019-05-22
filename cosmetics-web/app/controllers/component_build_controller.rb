@@ -1,6 +1,6 @@
 class ComponentBuildController < ApplicationController
   include Wicked::Wizard
-  include NanoMaterialsHelper
+  include NanomaterialHelper
   include CategoryHelper
 
   steps :add_component_name,
@@ -182,7 +182,7 @@ private
   end
 
   def render_contains_nanomaterials
-    case params.dig(:component, :has_nanomaterials)
+    case params.dig(:component, :contains_nanomaterials)
     when "yes"
       @component.nano_material = NanoMaterial.create if @nano_material.nil?
       render_wizard @component
@@ -190,7 +190,7 @@ private
       @nano_material.destroy if @nano_material.present?
       redirect_to wizard_path(:select_category, component_id: @component.id)
     else
-      @component.errors.add :has_nanomaterials, "Please select an option"
+      @component.errors.add :contains_nanomaterials, "Please select an option"
       render step
     end
   end
@@ -223,7 +223,7 @@ private
 
   def start_to_nano_elements_journey
     nano_element = @nano_material.nano_elements.first
-    redirect_to new_responsible_person_notification_component_nano_element_build_path(@component.notification.responsible_person, @component.notification, @component, nano_element)
+    redirect_to new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, @component, nano_element)
   end
 
   def render_add_cmrs

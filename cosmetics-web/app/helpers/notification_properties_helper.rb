@@ -27,6 +27,10 @@ module NotificationPropertiesHelper
     UNIT_NAME[unit&.to_sym]
   end
 
+  def get_exposure_routes_names(exposure_routes)
+    exposure_routes&.map(&method(:get_exposure_route_name)).join(', ')
+  end
+
   def get_exposure_route_name(exposure_route)
     EXPOSURE_ROUTE_NAME[exposure_route&.to_sym]
   end

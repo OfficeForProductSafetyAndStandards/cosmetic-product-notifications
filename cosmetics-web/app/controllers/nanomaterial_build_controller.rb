@@ -1,14 +1,17 @@
-class NanoElementBuildController < ApplicationController
+class NanomaterialBuildController < ApplicationController
   include Wicked::Wizard
-  include NanoMaterialsHelper
+  include NanomaterialHelper
 
-  steps :select_purpose, :confirm_restrictions, :unhappy_path
+  steps :select_purpose, :confirm_restrictions, :confirm_usage, :unhappy_path
 
   before_action :set_component
   before_action :set_nano_element
-  before_action :set_restrictions_question, if: -> { step == :confirm_restrictions }
+  before_action :set_purpose, if: -> { step == :confirm_restrictions }
 
   def show
+    if step == :confirm_restrictions && ["colorant", "preservative", "uv_filter"].exclude?(@purpose)
+      return redirect_to wizard_path(:unhappy_path)
+    end
     render_wizard
   end
 
@@ -18,6 +21,8 @@ class NanoElementBuildController < ApplicationController
       render_select_purpose_step
     when :confirm_restrictions
       render_confirm_restrictions_step
+    when :confirm_usage
+      render_confirm_usage_step
     end
   end
 
@@ -29,7 +34,7 @@ class NanoElementBuildController < ApplicationController
     case step
     when :select_purpose
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :list_nanomaterials)
-    when :unhappy_path
+    when :confirm_usage, :unhappy_path
       wizard_path(:select_purpose)
     else
       super
@@ -39,7 +44,7 @@ class NanoElementBuildController < ApplicationController
   def finish_wizard_path
     next_nano_element = get_next_nano_element
     if next_nano_element.present?
-      new_responsible_person_notification_component_nano_element_build_path(@component.notification.responsible_person, @component.notification, @component, next_nano_element)
+      new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, @component, next_nano_element)
     else
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_category)
     end
@@ -53,19 +58,11 @@ private
   end
 
   def set_nano_element
-    @nano_element = NanoElement.find(params[:nano_element_id])
+    @nano_element = NanoElement.find(params[:nanomaterial_nano_element_id])
   end
 
-  def set_restrictions_question
+  def set_purpose
     @purpose = params[:purpose]
-    annex_number = ec_regulation_annex_number[@purpose&.to_sym]
-    if annex_number.nil?
-      redirect_to wizard_path(:unhappy_path)
-    else
-      name = @nano_element.inci_name
-      @restrictions_question = "Is #{name} listed in Annex #{annex_number} of EC regulation No 1223/2009" +
-        " on cosmetic products and used in accordance with the restrictions for that material?"
-    end
   end
 
   def render_select_purpose_step
@@ -81,11 +78,24 @@ private
   def render_confirm_restrictions_step
     confirm_restrictions = params.dig(:nano_element, :confirm_restrictions)
     if confirm_restrictions == "true"
-      redirect_to finish_wizard_path
+      render_wizard @nano_element
     elsif confirm_restrictions == "false"
       redirect_to wizard_path(:unhappy_path)
     else
+      set_restrictions_question
       @nano_element.errors.add :confirm_restrictions, "Select an option"
+      render step
+    end
+  end
+
+  def render_confirm_usage_step
+    confirm_usage = params.dig(:nano_element, :confirm_usage)
+    if confirm_usage == "true"
+      redirect_to finish_wizard_path
+    elsif confirm_usage == "false"
+      redirect_to wizard_path(:unhappy_path)
+    else
+      @nano_element.errors.add :confirm_usage, "Select an option"
       render step
     end
   end
