@@ -102,6 +102,7 @@ private
         :sub_sub_category,
         :notification_type,
         :frame_formulation,
+        cmrs_attributes: %i[id name cas_number ec_number],
         shades: []
       )
   end
@@ -165,7 +166,6 @@ private
   def render_contains_cmrs
     case params[:contains_cmrs]
     when "yes"
-      create_required_cmrs
       render_wizard @component
     when "no"
       destroy_all_cmrs
@@ -177,18 +177,15 @@ private
   end
 
   def render_add_cmrs
-    cmrs = params[:cmrs]
-    cmrs.each do |index, cmr|
-      name = cmr[:name]
-      cas_number = cmr[:cas_number].delete('^0-9')
-      ec_number = cmr[:ec_number].delete('^0-9')
+    @component.update(component_params_without_empty_cmrs)
 
-      if !name.nil? && name != '' && !cas_number.nil? && cas_number != ''
-        @component.cmrs[index.to_i].update name: name, cas_number: cas_number, ec_number: ec_number
-      else
-        @component.cmrs[index.to_i].destroy
-      end
+    return re_render_step if @component.invalid?
+
+    if @component.cmrs.empty?
+      @component.errors.add :substance_list, "No substance added."
+      return re_render_step
     end
+
     render_wizard @component
   end
 
@@ -308,11 +305,26 @@ private
   def create_required_cmrs
     if @component.cmrs.size < NUMBER_OF_CMRS
       cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
-      cmrs_needed.times { @component.cmrs.create(name: '', cas_number: '', ec_number: '') }
+      cmrs_needed.times { @component.cmrs.build }
     end
+  end
+
+  def component_params_without_empty_cmrs
+    filtered_params = component_params
+    index = 0
+    component_params[:cmrs_attributes].each do |cmr_action_params|
+      filtered_params[:cmrs_attributes].delete(index.to_s) if cmr_action_params[1][:name].empty?
+      index += 1
+    end
+    filtered_params
   end
 
   def destroy_all_cmrs
     @component.cmrs.destroy_all
+  end
+
+  def re_render_step
+    create_required_cmrs
+    render step
   end
 end

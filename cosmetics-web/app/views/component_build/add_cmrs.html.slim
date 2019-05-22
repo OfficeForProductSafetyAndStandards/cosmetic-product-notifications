@@ -4,38 +4,32 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    - if @component.errors[:cmrs].any?
+      = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @component.errors[:cmrs]
     h1.govuk-heading-xl
       | List the substances listed as Category 1A or 1B mutagens, carcinogens or reproductive toxicants the
       =<> @component_name || "cosmetic product"
       | contains.
-= form_for(@component, url: wizard_path, method: :put) do |form|
-  - @component.cmrs.each_with_index do |cmr, index|
-    - cmr_number = index + 1
-    .govuk-grid-row
-      .govuk-grid-column-two-thirds
-        h2.govuk-heading-l
-          | Substance #{cmr_number}
-        = render "components/govuk_input",
-                name: "cmrs[#{index}][name]",
-                key: :cmrs_name,
-                id: "cmrs-name",
-                value: cmr.name,
+= form_with model: @component, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = form.fields_for :cmrs do |cmr_fields|
+        = cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-l"
+        = render "form_components/govuk_input",
+                form: cmr_fields,
+                key: :name,
                 label: { text: "International Nomenclature of Cosmetic Ingredients (INCI) name" }
-
         .govuk-grid-row.multi-field-row
-          = render "components/govuk_input",
-                  name: "cmrs[#{index}][cas_number]",
-                  key: :cmrs_cas_number,
-                  id: "cmrs-cas-number",
-                  value: cmr.cas_number,
-                  label: { text: "Chemical Abstracts Service registry (CAS) number", classes: "multi-field-item-label" },
+          = render "form_components/govuk_input",
+                  form: cmr_fields,
+                  key: :cas_number,
+                  label: { text: "Chemical Abstracts Service (CAS) number", classes: "multi-field-item-label" },
                   hint: { text: "For example, 1111-11-1" },
                   formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }
-          = render "components/govuk_input",
-                  name: "cmrs[#{index}][ec_number]",
-                  key: :cmrs_ec_number,
-                  id: "cmrs-ec-number",
-                  value: cmr.ec_number,
+          = render "form_components/govuk_input",
+                  form: cmr_fields,
+                  key: :ec_number,
                   label: { text: "European Community (EC) number", classes: "multi-field-item-label" },
                   hint: { text: "For example, 111-111-1" },
                   formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }
