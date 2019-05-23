@@ -3,33 +3,27 @@
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
 - cmr_list_url = "https://eur-lex.europa.eu/legal-content/en/TXT/PDF/?uri=CELEX:02008R1272-20180301&from=EN"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | Does
-      =<> @component_name
-      | contain substances listed as Category 1A or 1B mutagens, carcinogens or reproductive toxicants (CMRs)?
-    p.govuk-hint
-      | Category 1A substances are ‘known’ CMRs.
-    p.govuk-hint
-      | Category 1B substances are ‘presumed’ CMRs.
-    p.govuk-hint
-      =<> link_to "The classification, labelling and packaging Regulation (opens in a new tab)",
-              cmr_list_url, target: :_blank, rel: 'noopener'
-      | contains definitions of category 1A and 1B mutagens (table 3.5.1),
-        carcinogens (table 3.6.1) and reproductive toxicants (table 3.7.1).
+- title_text = "Does #{@component_name} contain substances listed as Category 1A or 1B mutagens,
+ carcinogens or reproductive toxicants (CMRs)?"
+- hint_html = capture do
+  p
+    | Category 1A substances are ‘known’ CMRs.
+  p
+    | Category 1B substances are ‘presumed’ CMRs.
+  p
+    =<> link_to "The classification, labelling and packaging Regulation (opens in a new tab)",
+            cmr_list_url, target: :_blank, rel: 'noopener'
+    | contains definitions of category 1A and 1B mutagens (table 3.5.1),
+            carcinogens (table 3.6.1) and reproductive toxicants (table 3.7.1).
 
-    = render "radio_select_error" if @component.errors.messages[:cmrs].any?
-    = form_with url: wizard_path, method: :put do |form|
-      = form.hidden_field :contains_cmrs, value: nil
-      .govuk-form-group
-        .govuk-radios
-          .govuk-radios__item
-            = form.radio_button :contains_cmrs, "yes", class: "govuk-radios__input"
-            = form.label :contains_cmrs_yes,
-                  "Yes",
-                  class: "govuk-label govuk-radios__label"
-          .govuk-radios__item
-            = form.radio_button :contains_cmrs, "no", class: "govuk-radios__input"
-            = form.label :contains_cmrs_no, "No", class: "govuk-label govuk-radios__label"
-      = form.submit "Continue", class: "govuk-button"
+= form_with model: @component, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = render "components/govuk_fieldset",
+              legend: { text: title_text, classes: "govuk-label--xl", isPageHeading: true } do
+        = render "govuk_details", summary: "CMRs definition", text: hint_html
+        = render "form_components/govuk_radios", form: form, key: :contains_cmrs,
+                items: [{ text: "Yes", value: :yes },
+                        { text: "No", value: :no }]
+        = form.submit "Continue", class: "govuk-button"

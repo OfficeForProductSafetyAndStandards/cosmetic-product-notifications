@@ -102,6 +102,7 @@ private
         :sub_sub_category,
         :notification_type,
         :frame_formulation,
+        :contains_cmrs,
         cmrs_attributes: %i[id name cas_number ec_number],
         shades: []
       )
@@ -164,14 +165,14 @@ private
   end
 
   def render_contains_cmrs
-    case params[:contains_cmrs]
+    case component_params[:contains_cmrs]
     when "yes"
       render_wizard @component
     when "no"
       destroy_all_cmrs
       redirect_to wizard_path(:contains_nanomaterials, component_id: @component.id)
-    when ""
-      @component.errors.add :cmrs, "Please select an option"
+    else
+      @component.errors.add :contains_cmrs, "Please select an option"
       render step
     end
   end
@@ -313,7 +314,8 @@ private
     filtered_params = component_params
     index = 0
     component_params[:cmrs_attributes].each do |cmr_action_params|
-      filtered_params[:cmrs_attributes].delete(index.to_s) if cmr_action_params[1][:name].empty?
+      cmr_params = cmr_action_params[1]
+      filtered_params[:cmrs_attributes].delete(index.to_s) if cmr_params.values.all?(&:empty?)
       index += 1
     end
     filtered_params

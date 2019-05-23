@@ -8,6 +8,7 @@ class Cmr < ApplicationRecord
   validates :ec_number, format: { with: CMR_NUMBER_REGEX }, allow_blank: true
 
   before_save :remove_hyphens
+
   def display_name
     [name, ec_number, cas_number].reject(&:blank?).join(', ')
   end
