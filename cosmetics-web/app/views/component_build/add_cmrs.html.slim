@@ -7,9 +7,7 @@
     - if @component.errors[:cmrs].any?
       = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @component.errors[:cmrs]
     h1.govuk-heading-xl
-      | List the substances listed as Category 1A or 1B mutagens, carcinogens or reproductive toxicants the
-      =<> @component_name || "cosmetic product"
-      | contains.
+      | List all Category 1A or 1B CMRs.
 = form_with model: @component, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
