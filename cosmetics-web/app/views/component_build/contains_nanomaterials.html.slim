@@ -6,6 +6,8 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       - nanomaterial_definition = capture do
+        p
+          | A nanomaterial:
         ul.govuk-list--bullet
           li has one or more external dimensions, or an internal structure, with a size ranging from 1 nm to 100 nm
           li is insoluble or biopersistent
@@ -18,6 +20,5 @@
               fieldset: { legend: { text: "Does #{@component_name} contain nanomaterials?",
                       classes: "govuk-label--xl", isPageHeading: true } },
               hint: { html: hint_html },
-              items: [{ text: "Yes, it contains nanomaterials", value: "yes" },
-                      { text: "No, does not contain nanomaterials", value: "no" }]
+              items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

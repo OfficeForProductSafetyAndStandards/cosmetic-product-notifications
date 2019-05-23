@@ -17,7 +17,8 @@ ruby:
 
       = render "form_components/govuk_error_summary", form: form
 
-      = render "components/govuk_fieldset", legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } do
+      = render "components/govuk_fieldset", legend: { text: question, classes: "govuk-label--xl",
+              isPageHeading: true } do
         = render "form_components/govuk_radios", form: form, key: :confirm_restrictions,
                 fieldset: { legend: { html: label_html } },
                 items: [{ text: "Yes", value: "true" }, { text: "No", value: "false" }]

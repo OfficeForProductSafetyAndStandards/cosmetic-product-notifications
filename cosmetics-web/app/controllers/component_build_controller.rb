@@ -1,6 +1,5 @@
 class ComponentBuildController < ApplicationController
   include Wicked::Wizard
-  include NanomaterialHelper
   include CategoryHelper
 
   steps :add_component_name,

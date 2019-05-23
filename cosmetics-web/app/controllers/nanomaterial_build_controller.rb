@@ -1,6 +1,5 @@
 class NanomaterialBuildController < ApplicationController
   include Wicked::Wizard
-  include NanomaterialHelper
 
   steps :select_purpose, :confirm_restrictions, :confirm_usage, :unhappy_path
 
@@ -9,9 +8,10 @@ class NanomaterialBuildController < ApplicationController
   before_action :set_purpose, if: -> { step == :confirm_restrictions }
 
   def show
-    if step == :confirm_restrictions && ["colorant", "preservative", "uv_filter"].exclude?(@purpose)
+    if step == :confirm_restrictions && non_standard_purpose?(@purpose)
       return redirect_to wizard_path(:unhappy_path)
     end
+
     render_wizard
   end
 
@@ -82,7 +82,6 @@ private
     elsif confirm_restrictions == "false"
       redirect_to wizard_path(:unhappy_path)
     else
-      set_restrictions_question
       @nano_element.errors.add :confirm_restrictions, "Select an option"
       render step
     end
@@ -104,5 +103,9 @@ private
     @nano_element.nano_material.nano_elements.each_cons(2) do |element, next_element|
       return next_element if element == @nano_element
     end
+  end
+
+  def non_standard_purpose?(purpose)
+    %w(colorant preservative uv_filter).exclude?(purpose)
   end
 end
