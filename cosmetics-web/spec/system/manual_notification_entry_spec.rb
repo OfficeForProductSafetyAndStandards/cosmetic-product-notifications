@@ -327,7 +327,7 @@ private
     click_button "Continue"
 
     # select_ph_range
-    choose("Between 3 and 10")
+    choose("Yes")
     click_button "Continue"
 
     # ph_mixed_product

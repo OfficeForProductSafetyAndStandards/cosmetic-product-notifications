@@ -6,12 +6,12 @@ Gem::Specification.new do |s|
 
   # Test & static analysis dependencies
   s.add_dependency "brakeman", "4.5.1"
-  s.add_dependency "capybara", "3.20.0"
+  s.add_dependency "capybara", "3.20.2"
   s.add_dependency "coveralls", "0.8.23"
   s.add_dependency "govuk-lint", "3.11.2"
-  s.add_dependency "rubocop", "0.69.0"
+  s.add_dependency "rubocop", "0.70.0"
   s.add_dependency "rubocop-performance", "1.3.0"
-  s.add_dependency "selenium-webdriver", "3.142.2"
+  s.add_dependency "selenium-webdriver", "3.142.3"
   s.add_dependency "simplecov", "0.16.1"
   s.add_dependency "simplecov-console", "0.4.2"
   s.add_dependency "slim_lint", "0.17.0"
