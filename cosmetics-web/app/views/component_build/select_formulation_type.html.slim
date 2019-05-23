@@ -9,7 +9,7 @@
               errorMessage: @no_notification_type_selected && { text: "Please select an option before continuing" },
               fieldset: { legend: { text: "How do you want to give the formulation of #{@component_name}?",
                       classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
-              items: formulations_types_label.each.map { |type_key, type_text| \
+              items: formulations_types_label.map { |type_key, type_text| \
                 { text: type_text, value: type_key.to_sym } \
               }
       .govuk-form-group
