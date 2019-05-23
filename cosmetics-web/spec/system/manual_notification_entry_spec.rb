@@ -40,7 +40,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -105,7 +106,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -165,7 +167,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -240,7 +243,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
