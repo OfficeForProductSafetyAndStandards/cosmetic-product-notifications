@@ -12,7 +12,7 @@ class Component < ApplicationRecord
   has_many :exact_formulas, dependent: :destroy
   has_many :range_formulas, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
-  has_many :cmrs, dependent: :destroy
+  has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_one :nano_material, dependent: :destroy
   has_one_attached :formulation_file
 

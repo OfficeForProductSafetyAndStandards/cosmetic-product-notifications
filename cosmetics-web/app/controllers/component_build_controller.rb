@@ -331,11 +331,8 @@ private
 
   def component_params_without_empty_cmrs
     filtered_params = component_params
-    index = 0
-    component_params[:cmrs_attributes].each do |cmr_action_params|
-      cmr_params = cmr_action_params[1]
+    component_params[:cmrs_attributes].each do |index, cmr_params|
       filtered_params[:cmrs_attributes].delete(index.to_s) if cmr_params.values.all?(&:empty?)
-      index += 1
     end
     filtered_params
   end
