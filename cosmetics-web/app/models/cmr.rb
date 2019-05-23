@@ -16,7 +16,7 @@ class Cmr < ApplicationRecord
 private
 
   def remove_hyphens
-    cas_number.delete!("-")
-    ec_number.delete!("-")
+    cas_number&.delete!("-")
+    ec_number&.delete!("-")
   end
 end
