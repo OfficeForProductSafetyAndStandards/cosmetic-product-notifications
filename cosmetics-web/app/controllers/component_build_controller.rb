@@ -1,6 +1,5 @@
 class ComponentBuildController < ApplicationController
   include Wicked::Wizard
-  include NanoMaterialsHelper
   include CategoryHelper
 
   steps :add_component_name,
@@ -9,20 +8,26 @@ class ComponentBuildController < ApplicationController
         :add_physical_form,
         :add_cmrs,
         :contains_nanomaterials,
-        :add_nanomaterial,
+        :add_exposure_condition,
+        :add_exposure_routes,
+        :list_nanomaterials,
         :select_category,
         :select_formulation_type,
         :select_frame_formulation,
         :upload_formulation
 
   before_action :set_component
+  before_action :set_nano_material
   before_action :set_category, if: -> { step == :select_category }
 
   def show
-    @component.shades = ['', ''] if step == :add_shades && @component.shades.nil?
-    if step == :add_cmrs && @component.cmrs.size < NUMBER_OF_CMRS
+    if step == :add_shades && @component.shades.nil?
+      @component.shades = ['', '']
+    elsif step == :add_cmrs && @component.cmrs.size < NUMBER_OF_CMRS
       cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
       cmrs_needed.times { @component.cmrs.create(name: '', cas_number: '') }
+    elsif step == :list_nanomaterials
+      setup_nano_elements
     end
     render_wizard
   end
@@ -37,8 +42,10 @@ class ComponentBuildController < ApplicationController
       render_add_cmrs
     when :contains_nanomaterials
       render_contains_nanomaterials
-    when :add_nanomaterial
-      render_add_nanomaterial
+    when :add_exposure_routes
+      render_add_exposure_routes
+    when :list_nanomaterials
+      render_list_nanomaterials
     when :select_category
       render_select_category_step
     when :select_formulation_type
@@ -87,6 +94,7 @@ class ComponentBuildController < ApplicationController
 private
 
   NUMBER_OF_CMRS = 10
+  NUMBER_OF_NANO_MATERIALS = 10
 
   def set_component
     @component = Component.find(params[:component_id])
@@ -94,16 +102,8 @@ private
     @component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
   end
 
-  def component_params
-    params.fetch(:component, {})
-      .permit(
-        :name,
-        :physical_form,
-        :sub_sub_category,
-        :notification_type,
-        :frame_formulation,
-        shades: []
-      )
+  def set_nano_material
+    @nano_material = @component.nano_material
   end
 
   def set_category
@@ -114,6 +114,24 @@ private
     end
     @sub_categories = @category.present? ? get_sub_categories(@category) : get_main_categories
     @selected_sub_category = @sub_categories.find { |category| @component.belongs_to_category?(category) }
+  end
+
+  def component_params
+    params.fetch(:component, {})
+      .permit(
+        :name,
+        :physical_form,
+        :sub_sub_category,
+        :notification_type,
+        :frame_formulation,
+        nano_material_attributes: %i[id exposure_condition],
+        shades: []
+      )
+  end
+
+  def nano_material_params
+    params.fetch(:nano_material, {})
+      .permit(nano_elements_attributes: %i[id inci_name])
   end
 
   def render_number_of_shades
@@ -163,54 +181,48 @@ private
   end
 
   def render_contains_nanomaterials
-    case params[:contains_nanomaterials]
+    case params.dig(:component, :contains_nanomaterials)
     when "yes"
-      @component.nano_material = NanoMaterial.create if @component.nano_material.nil?
+      @component.nano_material = NanoMaterial.create if @nano_material.nil?
       render_wizard @component
     when "no"
-      @component.nano_material = nil
+      @nano_material.destroy if @nano_material.present?
       redirect_to wizard_path(:select_category, component_id: @component.id)
-    when ""
-      @component.errors.add :nano_materials, "Please select an option"
+    else
+      @component.errors.add :contains_nanomaterials, "Please select an option"
       render step
     end
   end
 
-  def render_add_nanomaterial
-    if nano_elements_not_selected
-      @no_nano_element_selected = true
+  def render_add_exposure_routes
+    exposure_routes = params[:nano_material].select { |_key, value| value == "1" }.keys
+    if @nano_material.update_with_context({ exposure_routes: exposure_routes }, step)
+      render_wizard @component
+    else
+      render step
     end
-    if params[:nano_material_exposure_route].nil?
-      @no_exposure_route_selected = true
-    end
-    if params[:nano_material_exposure_condition].nil?
-      @no_exposure_condition_selected = true
-    end
-
-    if @no_nano_element_selected || @no_exposure_route_selected || @no_exposure_condition_selected
-      return render step
-    end
-
-    selected_exposure_route = exposure_routes[params[:nano_material_exposure_route].to_i]
-    selected_exposure_condition = exposure_conditions[params[:nano_material_exposure_condition].to_i]
-
-    @component.nano_material.update(exposure_condition: selected_exposure_condition, exposure_route: selected_exposure_route)
-
-    @component.nano_material.nano_elements.destroy_all
-    nano_elements.each do |key, nano_element|
-      if params[key.to_sym] == "1"
-        @component.nano_material.nano_elements.create(nano_element)
-      end
-    end
-
-    render_wizard @component
   end
 
-  def nano_elements_not_selected
-    nano_elements.each do |key, _nano_element|
-      return false if params[key.to_sym] == "1"
+  def render_list_nanomaterials
+    @nano_material.update(nano_material_params)
+
+    @nano_material.nano_elements.each do |nano_element|
+      NanoElement.delete(nano_element) if nano_element.inci_name.blank?
     end
-    true
+    @nano_material.reload
+
+    if @nano_material.nano_elements.any?
+      start_to_nano_elements_journey
+    else
+      @nano_material.errors.add :nano_elements, "No nano-material added"
+      setup_nano_elements
+      render step
+    end
+  end
+
+  def start_to_nano_elements_journey
+    nano_element = @nano_material.nano_elements.first
+    redirect_to new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, @component, nano_element)
   end
 
   def render_add_cmrs
@@ -229,7 +241,7 @@ private
   end
 
   def render_select_category_step
-    sub_category = params[:component] && params[:component][:sub_category]
+    sub_category = params.dig(:component, :sub_category)
     if sub_category
       if has_sub_categories(sub_category)
         redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, category: sub_category)
@@ -277,12 +289,17 @@ private
     end
   end
 
+  def setup_nano_elements
+    nano_materials_needed = NUMBER_OF_NANO_MATERIALS - @nano_material.nano_elements.size
+    nano_materials_needed.times { @nano_material.nano_elements.build(inci_name: '') }
+  end
+
   def get_previous_step
     case step
     when :add_physical_form
       @component.shades.nil? ? :number_of_shades : :add_shades
     when :select_category
-      @component.nano_material.nil? ? :contains_nanomaterials : :add_nanomaterial
+      @nano_material.nil? ? :contains_nanomaterials : :list_nanomaterials
     when :upload_formulation
       :select_formulation_type
     end
