@@ -187,7 +187,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       expect(notification.product_name).to eq("Multiple product test")
     end
 
-    it "creates a notification with the first language's name if there is no english name" do
+    it "creates a notification with the first language's shades if there is no english shades" do
       analyzer_instance = ReadDataAnalyzer.new(notification_file_different_language.uploaded_file)
       analyzer_instance.metadata
       notification = Notification.order(created_at: :asc).last
