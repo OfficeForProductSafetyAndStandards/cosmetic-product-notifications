@@ -16,6 +16,8 @@ class Component < ApplicationRecord
   has_one :nano_material, dependent: :destroy
   has_one_attached :formulation_file
 
+  accepts_nested_attributes_for :nano_material
+
   validates :physical_form, presence: true, on: :add_physical_form
   validates :frame_formulation, presence: true, on: :select_frame_formulation
 

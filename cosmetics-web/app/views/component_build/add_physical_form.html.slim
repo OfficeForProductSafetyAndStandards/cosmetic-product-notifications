@@ -9,7 +9,7 @@
       = render "form_components/govuk_radios", form: form, key: :physical_form,
               fieldset: { legend: { text: "What is the physical form of #{@component_name}?",
                       classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
-              items: Component.physical_forms.each.map { |key, value| \
+              items: Component.physical_forms.map { |key, value| \
                         { text: get_physical_form_name(key), value: value, checked: @component.physical_form == key } \
                     }
       = form.submit "Continue", class: "govuk-button"
