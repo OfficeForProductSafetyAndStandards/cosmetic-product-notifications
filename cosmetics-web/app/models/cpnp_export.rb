@@ -8,9 +8,7 @@ class CpnpExport
   end
 
   def product_name
-    name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName[language='#{@language}']/name").first&.text
-    name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName/name").first&.text if name.blank?
-    name
+    get_attribute_with_language(@xml_doc, "//currentVersion/generalInfo/productNameList/productName", "name")
   end
 
   def cpnp_reference
@@ -183,7 +181,7 @@ private
   end
 
   def component_name(component_node)
-    component_node.xpath(".//componentName[language='#{@language}']/name").first&.text
+    get_attribute_with_language(component_node, ".//componentName", "name")
   end
 
   # Because CPNP stores shades as just a plain text field, we are unable to
@@ -191,7 +189,8 @@ private
   # single element array containing the shades data, which should display as we
   # require.
   def component_shades(component_node)
-    [component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text]
+    shades = get_attribute_with_language(component_node, ".//componentName", "shade")
+    [shades]
   end
 
   def sub_sub_category(component_node)
@@ -229,5 +228,11 @@ private
 
     country = all_countries.find { |c| c[1].include? cpnp_country_code }
     (country && country[1]) || cpnp_country_code
+  end
+
+  def get_attribute_with_language(node, path, attribute)
+    selected_attribute = node.xpath("#{path}[language='#{@language}']/#{attribute}").first&.text
+    selected_attribute = node.xpath("#{path}/#{attribute}").first&.text if selected_attribute.blank?
+    selected_attribute
   end
 end
