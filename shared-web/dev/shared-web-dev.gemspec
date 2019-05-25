@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rubocop-performance", "1.3.0"
   s.add_dependency "selenium-webdriver", "3.142.3"
   s.add_dependency "simplecov", "0.16.1"
-  s.add_dependency "simplecov-console", "0.4.2"
+  s.add_dependency "simplecov-console", "0.5.0"
   s.add_dependency "slim_lint", "0.17.0"
 
   # Dev improvements & debugging
