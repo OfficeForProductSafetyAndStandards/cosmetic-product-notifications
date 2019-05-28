@@ -11,10 +11,10 @@
   p
     | Category 1B substances are ‘presumed’ CMRs.
   p
-    =<> link_to "The classification, labelling and packaging Regulation (opens in a new tab)",
+    => link_to "The classification, labelling and packaging regulation (opens in a new tab)",
             cmr_list_url, target: :_blank, rel: 'noopener'
     | contains definitions of category 1A and 1B mutagens (table 3.5.1),
-            carcinogens (table 3.6.1) and reproductive toxicants (table 3.7.1).
+      carcinogens (table 3.6.1) and reproductive toxicants (table 3.7.1).
 
 = form_with model: @component, url: wizard_path, method: :put do |form|
   .govuk-grid-row

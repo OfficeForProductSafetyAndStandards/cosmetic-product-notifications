@@ -5,29 +5,29 @@
 - cmr_errors = cmr_errors(@component)
 
 = form_with model: @component, url: wizard_path, method: :put do |form|
-    .govuk-grid-row
-      .govuk-grid-column-two-thirds
-        - if cmr_errors.any?
-          = render "components/govuk_error_summary", titleText: "There is a problem", errorList: cmr_errors
-        h1.govuk-heading-xl
-          | List all Category 1A or 1B CMRs.
-        = form.fields_for :cmrs do |cmr_fields|
-          = cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-l"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      - if cmr_errors.any?
+        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: cmr_errors
+      h1.govuk-heading-xl
+        | List all Category 1A or 1B CMRs.
+      = form.fields_for :cmrs do |cmr_fields|
+        = cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-l"
+        = render "form_components/govuk_input",
+                form: cmr_fields,
+                key: :name,
+                label: { text: "International Nomenclature of Cosmetic Ingredients (INCI) name" }
+        .govuk-grid-row.multi-field-row
           = render "form_components/govuk_input",
                   form: cmr_fields,
-                  key: :name,
-                  label: { text: "International Nomenclature of Cosmetic Ingredients (INCI) name" }
-          .govuk-grid-row.multi-field-row
-            = render "form_components/govuk_input",
-                    form: cmr_fields,
-                    key: :cas_number,
-                    label: { text: "Chemical Abstracts Service (CAS) number", classes: "multi-field-item-label" },
-                    hint: { text: "For example, 1111-11-1" },
-                    formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }
-            = render "form_components/govuk_input",
-                    form: cmr_fields,
-                    key: :ec_number,
-                    label: { text: "European Community (EC) number", classes: "multi-field-item-label" },
-                    hint: { text: "For example, 111-111-1" },
-                    formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }
-    = form.submit "Continue", class: "govuk-button"
+                  key: :cas_number,
+                  label: { text: "Chemical Abstracts Service (CAS) number", classes: "multi-field-item-label" },
+                  hint: { text: "For example, 1111-11-1" },
+                  formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }
+          = render "form_components/govuk_input",
+                  form: cmr_fields,
+                  key: :ec_number,
+                  label: { text: "European Community (EC) number", classes: "multi-field-item-label" },
+                  hint: { text: "For example, 111-111-1" },
+                  formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }
+  = form.submit "Continue", class: "govuk-button"

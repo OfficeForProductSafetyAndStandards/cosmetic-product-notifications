@@ -126,7 +126,6 @@ private
         :sub_sub_category,
         :notification_type,
         :frame_formulation,
-        :contains_cmrs,
         nano_material_attributes: %i[id exposure_condition],
         cmrs_attributes: %i[id name cas_number ec_number],
         shades: []
@@ -185,7 +184,7 @@ private
   end
 
   def render_contains_cmrs
-    case component_params[:contains_cmrs]
+    case params.dig(:component, :contains_cmrs)
     when "yes"
       render_wizard @component
     when "no"
@@ -198,16 +197,12 @@ private
   end
 
   def render_add_cmrs
-    @component.update(component_params_without_empty_cmrs)
-
-    return re_render_step if @component.invalid?
-
-    if @component.cmrs.empty?
-      @component.errors.add :substance_list, "No substance added."
-      return re_render_step
+    if @component.update_with_context(component_params, step)
+      render_wizard @component
+    else
+      create_required_cmrs
+      render step
     end
-
-    render_wizard @component
   end
 
   def render_contains_nanomaterials
@@ -329,20 +324,7 @@ private
     end
   end
 
-  def component_params_without_empty_cmrs
-    filtered_params = component_params
-    component_params[:cmrs_attributes].each do |index, cmr_params|
-      filtered_params[:cmrs_attributes].delete(index.to_s) if cmr_params.values.all?(&:empty?)
-    end
-    filtered_params
-  end
-
   def destroy_all_cmrs
     @component.cmrs.destroy_all
-  end
-
-  def re_render_step
-    create_required_cmrs
-    render step
   end
 end
