@@ -1,11 +1,5 @@
 module ComponentBuildHelper
   def cmr_errors(component)
-    result = []
-    component.cmrs.each_with_index do |cmr, index|
-      cmr.errors.each do |attr, msg|
-        result.push(text: msg, href: "#component_cmrs_attributes_#{index}_#{attr}")if cmr.errors.any?
-      end
-    end
-    result
+    component.cmrs.each_with_index.flat_map { |cmr, index| cmr.errors.map { |attr, msg| { text: msg, href: "#component_cmrs_attributes_#{index}_#{attr}" } } }
   end
 end
