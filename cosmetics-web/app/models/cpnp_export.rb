@@ -8,7 +8,7 @@ class CpnpExport
   end
 
   def product_name
-    get_attribute_with_language(@xml_doc, "//currentVersion/generalInfo/productNameList/productName", "name")
+    get_attribute_with_language(current_version_product_names_node, ".//productName", "name")
   end
 
   def cpnp_reference
@@ -58,7 +58,7 @@ class CpnpExport
   end
 
   def shades
-    current_version_info_node.xpath(".//shade").first&.text
+    get_attribute_with_language(current_version_product_names_node, ".//productName", "shade")
   end
 
   def components
@@ -216,11 +216,15 @@ private
   end
 
   def current_version_component_lists_node
-    current_version_info_node.xpath("//currentVersion/componentList")
+    @xml_doc.xpath("//currentVersion/componentList")
   end
 
   def current_version_info_node
     @xml_doc.xpath("//currentVersion/generalInfo")
+  end
+
+  def current_version_product_names_node
+    current_version_info_node.xpath(".//productNameList")
   end
 
   def get_gov_uk_country_code(cpnp_country_code)
