@@ -1,5 +1,4 @@
-- content_for :page_title, \
-  "Notifying cosmetic products in the EU and UK"
+- content_for :page_title, "Notifying cosmetic products in the EU and UK"
 - content_for :after_header do
     = link_to "Back", wizard_path(:will_products_be_notified_in_eu), class: "govuk-back-link"
 .govuk-grid-row
@@ -11,11 +10,12 @@
         containing XML files for each notification.
     p
       | You can
-      =<> link_to "upload notification files", new_responsible_person_notification_file_path(@responsible_person), \
+      =<> link_to "upload notification files", new_responsible_person_notification_file_path(@responsible_person),
               class: "govuk-link"
       | only as ZIP files containing XML files on the UK cosmetic product notification service.
     p
       | If you do not have access to an EU notification file for this cosmetic product
-      =< link_to "enter the details of the cosmetic product manually", \
-              new_responsible_person_notification_path(@responsible_person), class: "govuk-link"
+      =< link_to "enter the details of the cosmetic product manually",
+              new_responsible_person_notification_path(@responsible_person, notified_before_eu_exit: false),
+              class: "govuk-link"
       | .
