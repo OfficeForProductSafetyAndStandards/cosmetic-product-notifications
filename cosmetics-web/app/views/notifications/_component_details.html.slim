@@ -1,9 +1,15 @@
 - if component.notification.notified_post_eu_exit?
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
-      | CMR
+      | Contains CMR substances
     td.govuk-table__cell
-      = render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)
+      - component.cmrs.any? ? "Yes" : "No"
+    - if component.cmrs.any?
+      tr.govuk-table__row
+        th.govuk-table__header[scope="row"]
+          | CMR substances
+        td.govuk-table__cell
+          = render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
