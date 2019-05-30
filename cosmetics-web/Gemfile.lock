@@ -15,7 +15,7 @@ PATH
       simplecov (= 0.16.1)
       simplecov-console (= 0.5.0)
       slim_lint (= 0.17.0)
-      solargraph (= 0.32.3)
+      solargraph (= 0.32.4)
 
 PATH
   remote: vendor/shared-web
@@ -109,7 +109,7 @@ GEM
       aws-sigv4 (~> 1.0)
     aws-sigv4 (1.1.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
-    backport (1.0.0)
+    backport (1.1.1)
     brakeman (4.5.1)
     builder (3.2.3)
     capybara (3.21.0)
@@ -230,7 +230,7 @@ GEM
     parser (2.6.3.0)
       ast (~> 2.4.0)
     pg (1.1.4)
-    public_suffix (3.0.3)
+    public_suffix (3.1.0)
     puma (3.12.1)
     pundit (2.0.1)
       activesupport (>= 3.0.0)
@@ -367,8 +367,8 @@ GEM
       actionpack
       rack-timeout (>= 0.3.0, < 0.5.0)
       railties
-    solargraph (0.32.3)
-      backport (~> 1.0)
+    solargraph (0.32.4)
+      backport (~> 1.1)
       bundler (>= 1.17.2)
       htmlentities (~> 4.3, >= 4.3.4)
       jaro_winkler (~> 1.5)
