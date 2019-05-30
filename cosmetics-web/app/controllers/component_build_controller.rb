@@ -1,6 +1,7 @@
 class ComponentBuildController < ApplicationController
   include Wicked::Wizard
   include CategoryHelper
+  include ManualNotificationConcern
 
   steps :add_component_name,
         :number_of_shades,
@@ -22,11 +23,12 @@ class ComponentBuildController < ApplicationController
   before_action :set_category, if: -> { step == :select_category }
 
   def show
-    if step == :add_shades && @component.shades.nil?
-      @component.shades = ['', '']
-    elsif step == :add_cmrs
+    case step
+    when :add_shades
+      @component.shades = ['', ''] if @component.shades.nil?
+    when :add_cmrs
       create_required_cmrs
-    elsif step == :list_nanomaterials
+    when :list_nanomaterials
       setup_nano_elements
     end
     render_wizard
@@ -76,6 +78,8 @@ class ComponentBuildController < ApplicationController
 
   def previous_wizard_path
     previous_step = get_previous_step
+    previous_step = previous_step(previous_step) if pre_eu_exit?(previous_step)
+
     if step == :add_component_name
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
     elsif step == :number_of_shades && !@component.notification.is_multicomponent?
@@ -326,5 +330,9 @@ private
 
   def destroy_all_cmrs
     @component.cmrs.destroy_all
+  end
+
+  def post_eu_exit_steps
+    %i[add_cmrs contains_cmrs]
   end
 end
