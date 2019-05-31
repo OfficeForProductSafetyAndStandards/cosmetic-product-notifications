@@ -97,9 +97,9 @@ RSpec.describe NotificationBuildController, type: :controller do
       expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :add_import_country))
     end
 
-    it "skips add_import_country step if is_imported set to false" do
-      post(:update, params: params.merge(id: :is_imported, is_imported: false))
-      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :single_or_multi_component))
+    it "redirects to for_children_under_three step if is_imported set to false and post-eu-exit (default)" do
+      post(:update, params: params.merge(id: :is_imported, is_imported: false, was_notified_before_eu_exit: "false"))
+      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :for_children_under_three))
     end
 
     it "adds an error if user doesn't pick a radio option for is_imported" do
@@ -112,8 +112,13 @@ RSpec.describe NotificationBuildController, type: :controller do
       expect(assigns(:notification).errors[:import_country]).to include("Must not be blank")
     end
 
-    it "continues to next step if user submits import_country with a valid value" do
+    it "continues to next step if user submits import_country with a valid value and post-eu-exit (default)" do
       post(:update, params: params.merge(id: :add_import_country, notification: { import_country: "France" }))
+      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :for_children_under_three))
+    end
+
+    it "continues to next step if user submits under_three_years with a valid value" do
+      post(:update, params: params.merge(id: :for_children_under_three, notification: { under_three_years: "true" }))
       expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :single_or_multi_component))
     end
 

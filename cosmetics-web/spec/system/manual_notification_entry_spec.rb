@@ -28,6 +28,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # for_children_under_three
+    choose("No")
+    click_button "Continue"
+
     # single_or_multi_component
     choose("The cosmetic product is a single item")
     click_button "Continue"
@@ -70,6 +74,7 @@ RSpec.describe "Manually enter product details", type: :system do
     notification = get_notification_from_edit_page_url
     expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
+    expect_check_your_answers_value("Is the product specifically intended for children under 3 years of age?", "No")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
@@ -91,6 +96,10 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # is_imported
+    choose("No")
+    click_button "Continue"
+
+    # for_children_under_three
     choose("No")
     click_button "Continue"
 
@@ -153,6 +162,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # add_import_country
     fill_autocomplete "location-autocomplete", with: "New Zealand"
+    click_button "Continue"
+
+    # for_children_under_three
+    choose("No")
     click_button "Continue"
 
     # single_or_multi_component
@@ -219,6 +232,10 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # is_imported
+    choose("No")
+    click_button "Continue"
+
+    # for_children_under_three
     choose("No")
     click_button "Continue"
 
