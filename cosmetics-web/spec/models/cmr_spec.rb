@@ -28,14 +28,14 @@ RSpec.describe Cmr, type: :model do
     cmr.ec_number = "abcdef"
 
     expect(cmr.save).to be false
-    expect(cmr.errors[:ec_number]).to include("Ec number is invalid")
+    expect(cmr.errors[:ec_number]).to include("EC number is invalid")
   end
 
   it "fails if cas number is specified in a wrong format" do
     cmr.cas_number = "abcdef"
 
     expect(cmr.save).to be false
-    expect(cmr.errors[:cas_number]).to include("Cas number is invalid")
+    expect(cmr.errors[:cas_number]).to include("CAS number is invalid")
   end
 
   it "succeeds if ec number is blank" do
