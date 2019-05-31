@@ -11,7 +11,7 @@ set -ex
 echo "Running ${SERVICE} regression tests."
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 docker pull beisopss/opss-functional-tests
-docker run beisopss/opss-functional-tests mvn --quiet --file ./${SERVICE}/pom.xml test -Dcucumber.options="--tags @smoke" \
+docker run beisopss/opss-functional-tests mvn --quiet --file ./${SERVICE}/pom.xml test -Dcucumber.options="--tags @regression" \
   -Dhostname=${SERVICE_HOSTNAME} -Dauth.username=${BASIC_AUTH_USERNAME} -Dauth.password=${BASIC_AUTH_PASSWORD} \
   -Daccount.opss.username=${OPSS_ACCOUNT_USERNAME} -Daccount.opss.password=${OPSS_ACCOUNT_PASSWORD} \
   -Daccount.npis.username=${NPIS_ACCOUNT_USERNAME} -Daccount.npis.password=${NPIS_ACCOUNT_PASSWORD} \
