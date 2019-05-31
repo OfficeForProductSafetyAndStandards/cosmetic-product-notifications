@@ -401,11 +401,6 @@ private
     click_button "Continue"
 
 
-    # ph_mixed_hair_dye
-    choose("No")
-    click_button "Continue"
-
-
     # contains_essential_oils
     choose("No")
     click_button "Continue"
