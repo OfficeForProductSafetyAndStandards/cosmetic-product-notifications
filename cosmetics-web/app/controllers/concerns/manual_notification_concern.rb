@@ -11,20 +11,20 @@ module ManualNotificationConcern
     end
   end
 
-  def pre_eu_exit?(step = @step)
+  def skip_step?(step = @step)
     post_eu_exit_steps.include?(step) && notification.notified_pre_eu_exit?
   end
 
   def previous_step(current_step = nil)
     step = super(current_step)
-    return previous_step(step) if pre_eu_exit?(step)
+    return previous_step(step) if skip_step?(step)
 
     step
   end
 
   def next_step(current_step = nil)
     step = super(current_step)
-    return next_step(step) if pre_eu_exit?(step)
+    return next_step(step) if skip_step?(step)
 
     step
   end

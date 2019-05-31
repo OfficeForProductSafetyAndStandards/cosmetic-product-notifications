@@ -78,7 +78,7 @@ class ComponentBuildController < ApplicationController
 
   def previous_wizard_path
     previous_step = get_previous_step
-    previous_step = previous_step(previous_step) if pre_eu_exit?(previous_step)
+    previous_step = previous_step(previous_step) if skip_step?(previous_step)
 
     if step == :add_component_name
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
