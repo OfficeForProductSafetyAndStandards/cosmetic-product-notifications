@@ -13,7 +13,8 @@ ruby:
       - label_html = capture do
         p
           | View the
-          =< link_to "Annex #{annex_number} list at the EUR-Lex website (opens in a new window)", regulation_link
+          =< link_to "Annex #{annex_number} list at the EUR-Lex website (opens in a new window)", regulation_link,
+                  target: :_blank, rel: 'noopener'
 
       = render "form_components/govuk_error_summary", form: form
 
