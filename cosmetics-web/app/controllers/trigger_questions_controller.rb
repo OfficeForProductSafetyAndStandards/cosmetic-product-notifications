@@ -5,7 +5,6 @@ class TriggerQuestionsController < ApplicationController
 
   steps :contains_anti_dandruff_agents, :add_anti_dandruff_agents,
         :select_ph_range, :exact_ph, :add_alkaline_agents,
-        :ph_mixed_product,
         :contains_anti_hair_loss_agents, :add_anti_hair_loss_agents,
         :contains_anti_pigmenting_agents, :add_anti_pigmenting_agents,
         :contains_chemical_exfoliating_agents, :add_chemical_exfoliating_agents,
@@ -71,8 +70,7 @@ class TriggerQuestionsController < ApplicationController
         :add_fluoride_compounds,
         :add_essential_oils
       render_substance_list
-    when :ph_mixed_product,
-        :ph_mixed_hair_dye,
+    when :ph_mixed_hair_dye,
         :contains_ethanol,
         :contains_isopropanol
       render_substance_check_with_condition
@@ -112,7 +110,7 @@ class TriggerQuestionsController < ApplicationController
     case step
     when :select_ph_range
       :contains_anti_dandruff_agents
-    when :ph_mixed_product
+    when :contains_anti_hair_loss_agents
       :select_ph_range
     when :contains_anti_pigmenting_agents
       :contains_anti_hair_loss_agents
@@ -183,7 +181,6 @@ private
         :add_essential_oils
       populate_answers_for_list
     when :exact_ph,
-        :ph_mixed_product,
         :ph_mixed_hair_dye
       populate_question_with_single_answer :ph
     when :contains_ethanol
@@ -271,7 +268,7 @@ private
     when :contains_anti_dandruff_agents
       :select_ph_range
     when :select_ph_range, :exact_ph
-      :ph_mixed_product
+      :contains_anti_hair_loss_agents
     when :contains_anti_hair_loss_agents
       :contains_anti_pigmenting_agents
     when :contains_anti_pigmenting_agents
@@ -347,8 +344,6 @@ private
       :please_indicate_the_ph
     when :add_alkaline_agents
       :please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators
-    when :ph_mixed_product
-      :please_indicate_the_ph_of_the_mixed_product_
     when :contains_anti_hair_loss_agents, :add_anti_hair_loss_agents
       :please_specify_the_inci_name_and_concentration_of_the_antihair_loss_agents_if_antihair_loss_agents_are_not_present_in_the_cosmetic_product_then_not_applicable_must_be_checked
     when :contains_anti_pigmenting_agents, :add_anti_pigmenting_agents
