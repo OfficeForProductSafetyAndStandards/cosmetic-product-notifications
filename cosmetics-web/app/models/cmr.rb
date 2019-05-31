@@ -10,6 +10,6 @@ class Cmr < ApplicationRecord
   end
 
   def display_ec_number
-    ec_number.dup.insert(3, "-").insert(7, "-") if ec_number.present?
+    ec_number.dup.insert(-2, "-").insert(-6, "-") if ec_number.present?
   end
 end
