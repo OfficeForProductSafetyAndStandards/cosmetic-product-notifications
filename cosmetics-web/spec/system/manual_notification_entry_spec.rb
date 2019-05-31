@@ -330,9 +330,6 @@ private
     choose("Yes")
     click_button "Continue"
 
-    # ph_mixed_product
-    choose("No")
-    click_button "Continue"
 
     # contains_anti_hair_loss_agents
     choose("No")
