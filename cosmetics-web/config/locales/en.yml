@@ -40,6 +40,9 @@ en:
       notification:
         ph_min_value: "pH"
         ph_max_value: "pH"
+      cmr:
+        cas_number: "CAS number"
+        ec_number: "EC number"
     errors:
       models:
         notification:

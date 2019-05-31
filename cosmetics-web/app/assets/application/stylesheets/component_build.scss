@@ -17,4 +17,17 @@
     background-color: $govuk-text-colour;
   }
 }
-  
+
+.multi-field-row {
+  display: flex;
+  flex-direction: row;
+
+  .multi-field-item {
+    display: flex;
+    flex-direction: column;
+
+    .multi-field-item-label {
+      flex: 1 0 auto;
+    }
+  }
+}

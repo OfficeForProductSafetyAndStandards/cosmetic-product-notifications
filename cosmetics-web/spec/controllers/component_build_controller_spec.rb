@@ -67,6 +67,12 @@ RSpec.describe ComponentBuildController, type: :controller do
         get(:show, params: params.merge(id: :number_of_shades))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
+
+    it "initialises 5 empty cmrs in add_cmrs step" do
+      get(:show, params: params.merge(id: :add_cmrs))
+      expect(assigns(:component).cmrs).to have(5).items
+      expect(assigns(:component).cmrs).to all(have_attributes(name: be_nil))
+    end
   end
 
   describe "POST #update" do
@@ -126,6 +132,15 @@ RSpec.describe ComponentBuildController, type: :controller do
       expect {
         post(:update, params: params.merge(id: :add_shades, component: { shades: %w[red blue] }))
       }.to raise_error(Pundit::NotAuthorizedError)
+    end
+
+    it "adds non empty cmrs to the component when add_cmrs" do
+      cmr_name = "ABC"
+      cmrs_params = params.merge(id: :add_cmrs, component: { cmrs_attributes: { "0": { name: cmr_name }, "1": { name: "" } } })
+
+      post(:update, params: cmrs_params)
+      expect(assigns(:component).cmrs.count).to eq(1)
+      expect(assigns(:component).cmrs.first.name).to eq(cmr_name)
     end
   end
 

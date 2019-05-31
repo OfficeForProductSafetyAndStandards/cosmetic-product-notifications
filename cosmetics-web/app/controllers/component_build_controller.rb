@@ -1,11 +1,13 @@
 class ComponentBuildController < ApplicationController
   include Wicked::Wizard
   include CategoryHelper
+  include ManualNotificationConcern
 
   steps :add_component_name,
         :number_of_shades,
         :add_shades,
         :add_physical_form,
+        :contains_cmrs,
         :add_cmrs,
         :contains_nanomaterials,
         :add_exposure_condition,
@@ -21,12 +23,12 @@ class ComponentBuildController < ApplicationController
   before_action :set_category, if: -> { step == :select_category }
 
   def show
-    if step == :add_shades && @component.shades.nil?
-      @component.shades = ['', '']
-    elsif step == :add_cmrs && @component.cmrs.size < NUMBER_OF_CMRS
-      cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
-      cmrs_needed.times { @component.cmrs.create(name: '', cas_number: '') }
-    elsif step == :list_nanomaterials
+    case step
+    when :add_shades
+      @component.shades = ['', ''] if @component.shades.nil?
+    when :add_cmrs
+      create_required_cmrs
+    when :list_nanomaterials
       setup_nano_elements
     end
     render_wizard
@@ -38,6 +40,8 @@ class ComponentBuildController < ApplicationController
       render_number_of_shades
     when :add_shades
       render_add_shades
+    when :contains_cmrs
+      render_contains_cmrs
     when :add_cmrs
       render_add_cmrs
     when :contains_nanomaterials
@@ -74,6 +78,8 @@ class ComponentBuildController < ApplicationController
 
   def previous_wizard_path
     previous_step = get_previous_step
+    previous_step = previous_step(previous_step) if skip_step?(previous_step)
+
     if step == :add_component_name
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
     elsif step == :number_of_shades && !@component.notification.is_multicomponent?
@@ -93,7 +99,7 @@ class ComponentBuildController < ApplicationController
 
 private
 
-  NUMBER_OF_CMRS = 10
+  NUMBER_OF_CMRS = 5
   NUMBER_OF_NANO_MATERIALS = 10
 
   def set_component
@@ -125,6 +131,7 @@ private
         :notification_type,
         :frame_formulation,
         nano_material_attributes: %i[id exposure_condition],
+        cmrs_attributes: %i[id name cas_number ec_number],
         shades: []
       )
   end
@@ -180,6 +187,28 @@ private
     end
   end
 
+  def render_contains_cmrs
+    case params.dig(:component, :contains_cmrs)
+    when "yes"
+      render_wizard @component
+    when "no"
+      destroy_all_cmrs
+      redirect_to wizard_path(:contains_nanomaterials, component_id: @component.id)
+    else
+      @component.errors.add :contains_cmrs, "Please select an option"
+      render step
+    end
+  end
+
+  def render_add_cmrs
+    if @component.update_with_context(component_params, step)
+      render_wizard @component
+    else
+      create_required_cmrs
+      render step
+    end
+  end
+
   def render_contains_nanomaterials
     case params.dig(:component, :contains_nanomaterials)
     when "yes"
@@ -223,21 +252,6 @@ private
   def start_to_nano_elements_journey
     nano_element = @nano_material.nano_elements.first
     redirect_to new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, @component, nano_element)
-  end
-
-  def render_add_cmrs
-    cmrs = params[:cmrs]
-    cmrs.each do |index, cmr|
-      cmr_name = cmr[:name]
-      cmr_cas_number = cmr[:cas_number]
-
-      if !cmr_name.nil? && cmr_name != '' && !cmr_cas_number.nil? && cmr_cas_number != ''
-        @component.cmrs[index.to_i].update name: cmr_name, cas_number: cmr_cas_number
-      else
-        @component.cmrs[index.to_i].destroy
-      end
-    end
-    render_wizard @component
   end
 
   def render_select_category_step
@@ -298,10 +312,27 @@ private
     case step
     when :add_physical_form
       @component.shades.nil? ? :number_of_shades : :add_shades
+    when :contains_nanomaterials
+      @component.cmrs.empty? ? :contains_cmrs : :add_cmrs
     when :select_category
       @nano_material.nil? ? :contains_nanomaterials : :list_nanomaterials
     when :upload_formulation
       :select_formulation_type
     end
+  end
+
+  def create_required_cmrs
+    if @component.cmrs.size < NUMBER_OF_CMRS
+      cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
+      cmrs_needed.times { @component.cmrs.build }
+    end
+  end
+
+  def destroy_all_cmrs
+    @component.cmrs.destroy_all
+  end
+
+  def post_eu_exit_steps
+    %i[add_cmrs contains_cmrs]
   end
 end
