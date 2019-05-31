@@ -1,11 +1,13 @@
 class NotificationBuildController < ApplicationController
   include Wicked::Wizard
   include Shared::Web::CountriesHelper
+  include ManualNotificationConcern
 
   steps :add_product_name,
         :add_internal_reference,
         :is_imported,
         :add_import_country,
+        :for_children_under_three,
         :single_or_multi_component,
         :is_mixed,
         :is_hair_dye,
@@ -35,6 +37,8 @@ class NotificationBuildController < ApplicationController
       render_ph_range_step
     when :is_imported
       render_is_imported_step
+    when :for_children_under_three
+      render_for_children_under_three_step
     when :add_new_component
       render_add_new_component_step
     when :add_product_image
@@ -63,6 +67,8 @@ class NotificationBuildController < ApplicationController
 
   def previous_wizard_path
     previous_step = get_previous_step
+    previous_step = previous_step(previous_step) if skip_step?(previous_step)
+
     if step == :add_product_name
       responsible_person_add_notification_path(@notification.responsible_person, :have_products_been_notified_in_eu)
     elsif previous_step.present?
@@ -81,6 +87,7 @@ private
         :industry_reference,
         :is_imported,
         :import_country,
+        :under_three_years,
         :components_are_mixed,
         :ph_min_value,
         :ph_max_value,
@@ -95,6 +102,17 @@ private
 
   def set_countries
     @countries = all_countries
+  end
+
+  def render_for_children_under_three_step
+    case notification_params[:under_three_years]
+    when "true", "false"
+      @notification.update(notification_params)
+      render_wizard @notification
+    else
+      @notification.errors.add :under_three_years, "Please select an option"
+      render step
+    end
   end
 
   def render_single_or_multi_component_step
@@ -171,7 +189,7 @@ private
     when "false"
       @notification.import_country = nil
       @notification.add_import_country
-      jump_to :single_or_multi_component
+      jump_to(next_step(:add_import_country))
       render_wizard @notification
     when ""
       @notification.errors.add :import_country, "Must not be nil"
@@ -232,12 +250,10 @@ private
 
   def get_previous_step
     case step
-    when :add_import_country
-      :is_imported
+    when :for_children_under_three
+      @notification.import_country.present? ? :add_import_country : :is_imported
     when :ph_range
       :is_hair_dye
-    when :single_or_multi_component
-      @notification.import_country.present? ? :add_import_country : :is_imported
     when :add_new_component
       if @notification.components_are_mixed
         if @notification.ph_min_value.present? && @notification.ph_max_value.present?
@@ -251,5 +267,9 @@ private
     when :add_product_image
       @notification.is_multicomponent? ? :add_new_component : :single_or_multi_component
     end
+  end
+
+  def post_eu_exit_steps
+    %i[for_children_under_three]
   end
 end
