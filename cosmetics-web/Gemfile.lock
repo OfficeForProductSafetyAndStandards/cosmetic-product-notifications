@@ -37,7 +37,7 @@ PATH
       sentry-raven (= 2.9.0)
       sidekiq (= 5.2.7)
       sidekiq-cron (= 1.1.0)
-      slowpoke (= 0.2.1)
+      slowpoke (= 0.3.0)
       webpacker (= 4.0.7)
       will_paginate (= 3.1.7)
 
@@ -243,7 +243,7 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rack-timeout (0.4.2)
+    rack-timeout (0.5.1)
     rails (5.2.3)
       actioncable (= 5.2.3)
       actionmailer (= 5.2.3)
@@ -364,10 +364,10 @@ GEM
       rubocop (>= 0.50.0)
       slim (>= 3.0, < 5.0)
       sysexits (~> 1.1)
-    slowpoke (0.2.1)
+    slowpoke (0.3.0)
       actionpack
-      rack-timeout (>= 0.3.0, < 0.5.0)
-      railties
+      rack-timeout (>= 0.4.0)
+      railties (>= 5)
     solargraph (0.32.5)
       backport (~> 1.1)
       bundler (>= 1.17.2)
