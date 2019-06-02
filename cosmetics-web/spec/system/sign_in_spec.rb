@@ -18,7 +18,7 @@ RSpec.describe "After signing in", type: :system do
     end
 
     it "is redirected to create or join an account if attempting to access another page" do
-      visit responsible_person_path(responsible_person)
+      visit responsible_person_url(responsible_person)
 
       assert_current_path account_path(:overview)
       assert_text "UK responsible person"
@@ -36,7 +36,7 @@ RSpec.describe "After signing in", type: :system do
     end
 
     it "does not see options to create an account or sign in on the landing page" do
-      visit root_path
+      visit root_url
 
       assert_no_text "Create an account"
       assert_no_text "sign in"
@@ -54,7 +54,7 @@ RSpec.describe "After signing in", type: :system do
     end
 
     it "cannot access Responsible Person pages" do
-      visit responsible_person_path(responsible_person)
+      visit responsible_person_url(responsible_person)
 
       assert_current_path responsible_person_path(responsible_person)
       assert_text "Access denied"
