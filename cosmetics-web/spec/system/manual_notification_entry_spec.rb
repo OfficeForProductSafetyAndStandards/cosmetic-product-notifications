@@ -74,7 +74,7 @@ RSpec.describe "Manually enter product details", type: :system do
     notification = get_notification_from_edit_page_url
     expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
-    expect_check_your_answers_value("Is the product specifically intended for children under 3 years of age?", "No")
+    expect_check_your_answers_value("Is the product intended for children under 3?", "No")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")

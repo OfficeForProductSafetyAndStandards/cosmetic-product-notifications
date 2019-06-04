@@ -27,7 +27,7 @@ table.govuk-table.check-your-answers-table#product-table
     - if notification.notified_post_eu_exit?
       tr.govuk-table__row
         th.govuk-table__header
-          | Is the product specifically intended for children under 3 years of age?
+          | For children under 3
         td.govuk-table__cell
           = notification.under_three_years ? "Yes" : "No"
     tr.govuk-table__row

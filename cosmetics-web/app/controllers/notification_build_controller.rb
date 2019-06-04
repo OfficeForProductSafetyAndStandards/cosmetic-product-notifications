@@ -105,12 +105,9 @@ private
   end
 
   def render_for_children_under_three_step
-    case notification_params[:under_three_years]
-    when "true", "false"
-      @notification.update(notification_params)
+    if @notification.update_with_context(notification_params, :for_children_under_three)
       render_wizard @notification
     else
-      @notification.errors.add :under_three_years, "Please select an option"
       render step
     end
   end

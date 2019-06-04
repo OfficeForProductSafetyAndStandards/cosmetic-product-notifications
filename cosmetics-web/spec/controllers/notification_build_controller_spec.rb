@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe NotificationBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
+  let(:pre_eu_exit_notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
 
   let(:image_file) { fixture_file_upload("testImage.png", "image/png") }
   let(:text_file) { fixture_file_upload("testText.txt", "application/text") }
@@ -98,7 +99,7 @@ RSpec.describe NotificationBuildController, type: :controller do
     end
 
     it "redirects to for_children_under_three step if is_imported set to false and post-eu-exit (default)" do
-      post(:update, params: params.merge(id: :is_imported, is_imported: false, was_notified_before_eu_exit: "false"))
+      post(:update, params: params.merge(id: :is_imported, is_imported: false))
       expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :for_children_under_three))
     end
 
@@ -165,6 +166,22 @@ RSpec.describe NotificationBuildController, type: :controller do
       expect {
         post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" }))
       }.to raise_error(Pundit::NotAuthorizedError)
+    end
+
+    context "when notified pre EU-exit" do
+      before do
+        params.merge!(notification_reference_number: pre_eu_exit_notification.reference_number)
+      end
+
+      it "skips for_children_under_three step and redirects to single_or_multi_component if is_imported set to false and pre-eu-exit" do
+        post(:update, params: params.merge(id: :is_imported, is_imported: false))
+        expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, pre_eu_exit_notification, :single_or_multi_component))
+      end
+
+      it "skips for_children_under_three step and redirects to single_or_multi_component if user submits import_country with a valid value and pre-eu-exit" do
+        post(:update, params: params.merge(id: :add_import_country, notification: { import_country: "France" }))
+        expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, pre_eu_exit_notification, :single_or_multi_component))
+      end
     end
   end
 

@@ -143,13 +143,7 @@ private
 
   def render_number_of_shades
     case params[:number_of_shades]
-    when "single-or-no-shades"
-      @component.shades = nil
-      @component.add_shades
-      @component.save
-      jump_to(next_step(:add_shades))
-      render_wizard @component
-    when "multiple-shades-different-notification"
+    when "single-or-no-shades", "multiple-shades-different-notification"
       @component.shades = nil
       @component.add_shades
       @component.save
