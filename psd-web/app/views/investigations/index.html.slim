@@ -44,6 +44,11 @@
                  fieldset: { legend: { text: "Status", classes: "govuk-fieldset__legend--s" } },
                  items: [{ key: "status_open", value: "checked", unchecked_value: "unchecked", text: "Open" },
                  { key: "status_closed", value: "checked", unchecked_value: "unchecked", text: "Closed" }]
+        = render "form_components/govuk_checkboxes", form: form, key: :type,
+                 fieldset: { legend: { text: "Type", classes: "govuk-fieldset__legend--s" } },
+                 items: [{ key: "allegation", value: "checked", unchecked_value: "unchecked", text: "Allegation" },
+                 { key: "enquiry", value: "checked", unchecked_value: "unchecked", text: "Enquiry" },
+                 { key: "project", value: "checked", unchecked_value: "unchecked", text: "Project" }]
         = render "form_components/govuk_radios", form: form, key: :sort_by,
                 fieldset: { legend: { text: "Sort by", classes: "govuk-fieldset__legend--s" } },
                 items: [{ text: "Updated: recent", value: "recent", unchecked_value: "unchecked" },

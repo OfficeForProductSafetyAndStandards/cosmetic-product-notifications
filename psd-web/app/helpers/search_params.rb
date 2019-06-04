@@ -2,7 +2,7 @@
 class SearchParams
   include ActiveModel::Model
 
-  attr_accessor :q, :sort, :direction, :status_open, :status_closed,
+  attr_accessor :q, :sort, :direction, :status_open, :status_closed, :allegation, :enquiry, :project,
                 :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by
 
   def initialize(attributes = {})

@@ -21,6 +21,7 @@ module InvestigationsHelper
     filters = {}
     filters.merge!(get_status_filter)
     filters.merge!(get_assignee_filter)
+    filters.merge!(get_type_filter)
   end
 
   def get_status_filter
@@ -32,6 +33,17 @@ module InvestigationsHelper
                { is_closed: true }
              end
     { must: { term: status } }
+  end
+
+  def get_type_filter
+    return {} if params[:allegation] == "unchecked" && params[:enquiry] == "unchecked" && params[:project] == "unchecked"
+
+    array_of_types = []
+    array_of_types << "Investigation::Allegation" if params[:allegation] == "checked"
+    array_of_types << "Investigation::Enquiry" if params[:enquiry] == "checked"
+    array_of_types << "Investigation::Project" if params[:project] == "checked"
+    type = { type: array_of_types }
+    { should: { terms: type } }
   end
 
   def get_assignee_filter
@@ -89,9 +101,10 @@ module InvestigationsHelper
 
   def query_params
     set_default_status_filter
+    set_default_type_filter
     set_default_sort_by_filter
     set_default_assignee_filter
-    params.permit(:q, :status_open, :status_closed, :page,
+    params.permit(:q, :status_open, :status_closed, :page, :allegation, :enquiry, :project,
                   :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by,
                   teams_with_keys.map { |key, _t, _n| key })
   end
@@ -111,6 +124,12 @@ module InvestigationsHelper
   def set_default_assignee_filter
     params[:assigned_to_me] = "unchecked" if params[:assigned_to_me].blank?
     params[:assigned_to_someone_else] = "unchecked" if params[:assigned_to_someone_else].blank?
+  end
+
+  def set_default_type_filter
+    params[:allegation] = "unchecked" if params[:allegation].blank?
+    params[:enquiry] = "unchecked" if params[:enquiry].blank?
+    params[:project] = "unchecked" if params[:project].blank?
   end
 
   def build_breadcrumb_structure
