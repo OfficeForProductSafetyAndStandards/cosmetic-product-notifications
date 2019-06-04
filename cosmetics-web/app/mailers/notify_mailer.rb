@@ -1,5 +1,7 @@
 class NotifyMailer < GovukNotifyRails::Mailer
   def send_contact_person_verification_email(contact_person_id, contact_person_name, contact_person_email, responsible_person_name, user_name)
+    EmailVerificationKey.where(contact_person_id: contact_person_id).delete_all
+
     key = EmailVerificationKey.create(
       contact_person_id: contact_person_id
     )

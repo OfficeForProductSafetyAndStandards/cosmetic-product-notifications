@@ -13,17 +13,17 @@ Rails.application.routes.draw do
       resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
     end
 
+    resources :contact_persons, controller: "responsible_persons/contact_persons", only: %i[show new create edit update] do
+      member do
+        get :resend_email
+      end
+    end
+
     resources :add_notification, controller: "responsible_persons/add_notification_wizard", only: %i[show new update]
 
     resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do
       collection do
         get :join
-      end
-    end
-
-    resources :email_verification_keys, path: "verify", controller: "responsible_persons/verification", param: :key, only: %i[index] do
-      collection do
-        get :resend_email
       end
     end
 
@@ -40,6 +40,9 @@ Rails.application.routes.draw do
 
       resources :components do
         resources :build, controller: :component_build, only: %i[show update new]
+        resources :nanomaterials, param: :nano_element_id do
+          resources :build, controller: :nanomaterial_build, only: %i[show update new]
+        end
         resources :trigger_question, controller: :trigger_questions, only: %i[show update new]
         resources :formulation, controller: "formulation_upload", only: %w[new create]
       end

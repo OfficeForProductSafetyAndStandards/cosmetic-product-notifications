@@ -2,9 +2,10 @@
 import Rails from 'rails-ujs';
 import GOVUKFrontend from 'govuk-frontend';
 
-import '../application/javascripts/bulk_file_upload_error_handling';
-
 import 'shared-web/app/assets/application/javascripts/location_picker';
+import 'shared-web/app/assets/application/javascripts/autocomplete';
+
+import '../application/javascripts/bulk_file_upload_error_handling';
 
 // Styles
 import 'govuk-country-and-territory-autocomplete/dist/location-autocomplete.min.css';

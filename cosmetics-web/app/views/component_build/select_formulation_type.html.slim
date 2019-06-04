@@ -5,12 +5,11 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for(@component, url: wizard_path, method: :put) do |form|
-      - heading = capture do
-        h1.govuk-heading-xl How do you want to give the formulation of the cosmetic product?
       = render "form_components/govuk_radios", form: form, key: :notification_type,
               errorMessage: @no_notification_type_selected && { text: "Please select an option before continuing" },
-              fieldset: { legend: { html: heading } },
-              items: formulations_types_label.each.map { |type_key, type_text| \
+              fieldset: { legend: { text: "How do you want to give the formulation of #{@component_name}?",
+                      classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              items: formulations_types_label.map { |type_key, type_text| \
                 { text: type_text, value: type_key.to_sym } \
               }
       .govuk-form-group

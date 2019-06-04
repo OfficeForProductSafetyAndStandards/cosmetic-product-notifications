@@ -40,7 +40,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -48,13 +49,14 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_category
-    click_button "Continue"
+    select_default_category
 
     # select_formulation_type
     choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
+    fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
 
     # trigger_questions
@@ -104,7 +106,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -112,13 +115,14 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_category
-    click_button "Continue"
+    select_default_category
 
     # select_formulation_type
     choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
+    fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
 
     # trigger_questions
@@ -163,7 +167,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -171,13 +176,14 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_category
-    click_button "Continue"
+    select_default_category
 
     # select_formulation_type
     choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
+    fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
 
     # trigger_questions
@@ -237,7 +243,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -245,13 +252,14 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_category
-    click_button "Continue"
+    select_default_category
 
     # select_formulation_type
     choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
+    fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
 
     # trigger_questions
@@ -299,18 +307,29 @@ private
     Notification.find_by reference_number: reference_number
   end
 
+  def select_default_category
+    # category
+    choose("Skin products")
+    click_button "Continue"
+
+    # sub-category
+    choose("Skin care products")
+    click_button "Continue"
+
+    # sub-sub-category
+    choose("Face mask")
+    click_button "Continue"
+  end
+
   def skip_trigger_questions
     # contains_anti_dandruff_agents
     choose("No")
     click_button "Continue"
 
     # select_ph_range
-    choose("Between 3 and 10")
+    choose("Yes")
     click_button "Continue"
 
-    # ph_mixed_product
-    choose("No")
-    click_button "Continue"
 
     # contains_anti_hair_loss_agents
     choose("No")
@@ -378,11 +397,6 @@ private
 
 
     # contains_fluoride_compounds
-    choose("No")
-    click_button "Continue"
-
-
-    # ph_mixed_hair_dye
     choose("No")
     click_button "Continue"
 

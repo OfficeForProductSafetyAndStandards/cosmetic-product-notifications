@@ -5,7 +5,7 @@ ruby File.read(".ruby-version").strip
 
 gem "aasm"
 gem "cf-app-utils"
-gem "jbuilder", "~> 2.8"
+gem "jbuilder", "~> 2.9"
 gem "pg", "~> 1.1"
 gem "puma", "~> 3.12"
 gem "pundit"

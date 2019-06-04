@@ -5,7 +5,6 @@ class TriggerQuestionsController < ApplicationController
 
   steps :contains_anti_dandruff_agents, :add_anti_dandruff_agents,
         :select_ph_range, :exact_ph, :add_alkaline_agents,
-        :ph_mixed_product,
         :contains_anti_hair_loss_agents, :add_anti_hair_loss_agents,
         :contains_anti_pigmenting_agents, :add_anti_pigmenting_agents,
         :contains_chemical_exfoliating_agents, :add_chemical_exfoliating_agents,
@@ -20,13 +19,12 @@ class TriggerQuestionsController < ApplicationController
         :contains_straightening_agents, :add_straightening_agents,
         :contains_inorganic_sodium_salts, :add_inorganic_sodium_salts,
         :contains_fluoride_compounds, :add_fluoride_compounds,
-        :ph_mixed_hair_dye,
         :contains_essential_oils, :add_essential_oils,
         :contains_ethanol,
         :contains_isopropanol
 
   before_action :set_component
-  before_action :set_question
+  before_action :set_question, only: %i[show update]
 
   def show
     initialize_step
@@ -36,6 +34,7 @@ class TriggerQuestionsController < ApplicationController
   def update
     case step
     when :contains_anti_dandruff_agents,
+        :select_ph_range,
         :contains_anti_hair_loss_agents,
         :contains_anti_pigmenting_agents,
         :contains_chemical_exfoliating_agents,
@@ -70,13 +69,9 @@ class TriggerQuestionsController < ApplicationController
         :add_fluoride_compounds,
         :add_essential_oils
       render_substance_list
-    when :ph_mixed_product,
-        :ph_mixed_hair_dye,
-        :contains_ethanol,
+    when :contains_ethanol,
         :contains_isopropanol
       render_substance_check_with_condition
-    when :select_ph_range
-      render_select_ph_range
     when :exact_ph
       render_exact_ph
     else
@@ -113,7 +108,7 @@ class TriggerQuestionsController < ApplicationController
     case step
     when :select_ph_range
       :contains_anti_dandruff_agents
-    when :ph_mixed_product
+    when :contains_anti_hair_loss_agents
       :select_ph_range
     when :contains_anti_pigmenting_agents
       :contains_anti_hair_loss_agents
@@ -141,7 +136,7 @@ class TriggerQuestionsController < ApplicationController
       :contains_straightening_agents
     when :contains_fluoride_compounds
       :contains_inorganic_sodium_salts
-    when :ph_mixed_hair_dye
+    when :contains_essential_oils
       :contains_fluoride_compounds
     when :contains_ethanol
       :contains_essential_oils
@@ -155,11 +150,12 @@ private
   def set_component
     @component = Component.find(params[:component_id])
     authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
+    @component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
   end
 
   def set_question
     question = get_question_for_step step
-    @question = TriggerQuestion.find_or_create_by(component: @component, question: question)
+    @question = TriggerQuestion.find_or_create_by(component: @component, question: question) if question.present?
   end
 
   def initialize_step
@@ -182,9 +178,7 @@ private
         :add_fluoride_compounds,
         :add_essential_oils
       populate_answers_for_list
-    when :exact_ph,
-        :ph_mixed_product,
-        :ph_mixed_hair_dye
+    when :exact_ph
       populate_question_with_single_answer :ph
     when :contains_ethanol
       populate_question_with_single_answer :ethanol
@@ -196,44 +190,27 @@ private
     end
   end
 
-  def render_select_ph_range
-    selected_value = params[:trigger_question] && params[:trigger_question][:range]
-    exact_ph_question = @component.trigger_questions.where(question: get_question_for_step(:exact_ph)).first
-    alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
-
-    case selected_value
-    when "below"
-      exact_ph_question.update(applicable: true)
-      alkaline_list_question.update(applicable: false)
-      alkaline_list_question.trigger_question_elements.destroy_all
-      render_wizard @component
-    when "between"
-      exact_ph_question.update(applicable: false)
-      exact_ph_question.trigger_question_elements.destroy_all
-      alkaline_list_question.update(applicable: false)
-      alkaline_list_question.trigger_question_elements.destroy_all
-      skip_question
-    when "above"
-      exact_ph_question.update(applicable: true)
-      alkaline_list_question.update(applicable: true)
-      render_wizard @component
+  def render_exact_ph
+    if @question.update_with_context(question_params, @step)
+      render_valid_exact_ph(@question.trigger_question_elements.first.answer.to_f)
     else
-      @question.errors.add :range, "Please select an option"
       re_render_step
     end
   end
 
-  def render_exact_ph
-    @question.update(question_params)
+  # rubocop:disable Naming/UncommunicativeMethodParamName
+  def render_valid_exact_ph(ph)
+    alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
 
-    return re_render_step if @question.invalid?
-
-    if @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents), applicable: true).any?
+    alkaline_list_question.update(applicable: ph > 10)
+    if alkaline_list_question.applicable
       render_wizard @component
     else
+      alkaline_list_question.trigger_question_elements.destroy_all
       skip_question
     end
   end
+  # rubocop:enable Naming/UncommunicativeMethodParamName
 
   def render_substance_check
     @question.update(question_params)
@@ -274,6 +251,11 @@ private
   end
 
   def skip_question
+    if step == :select_ph_range
+      alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
+      alkaline_list_question&.destroy
+    end
+
     next_step = get_skip_question_next_step
     redirect_to wizard_path(next_step, component_id: @component.id)
   end
@@ -283,7 +265,7 @@ private
     when :contains_anti_dandruff_agents
       :select_ph_range
     when :select_ph_range, :exact_ph
-      :ph_mixed_product
+      :contains_anti_hair_loss_agents
     when :contains_anti_hair_loss_agents
       :contains_anti_pigmenting_agents
     when :contains_anti_pigmenting_agents
@@ -311,7 +293,7 @@ private
     when :contains_inorganic_sodium_salts
       :contains_fluoride_compounds
     when :contains_fluoride_compounds
-      :ph_mixed_hair_dye
+      :contains_essential_oils
     when :contains_essential_oils
       :contains_ethanol
     end
@@ -355,12 +337,10 @@ private
     case step
     when :contains_anti_dandruff_agents, :add_anti_dandruff_agents
       :please_specify_the_inci_name_and_concentration_of_the_antidandruff_agents_if_antidandruff_agents_are_not_present_in_the_cosmetic_product_then_not_applicable_must_be_checked
-    when :exact_ph
+    when :select_ph_range, :exact_ph
       :please_indicate_the_ph
     when :add_alkaline_agents
       :please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators
-    when :ph_mixed_product
-      :please_indicate_the_ph_of_the_mixed_product_
     when :contains_anti_hair_loss_agents, :add_anti_hair_loss_agents
       :please_specify_the_inci_name_and_concentration_of_the_antihair_loss_agents_if_antihair_loss_agents_are_not_present_in_the_cosmetic_product_then_not_applicable_must_be_checked
     when :contains_anti_pigmenting_agents, :add_anti_pigmenting_agents
@@ -389,8 +369,6 @@ private
       :please_indicate_the_total_concentration_of_inorganic_sodium_salts_if_inorganic_sodium_salts_are_not_present_in_the_product_then_not_applicable_must_be_checked
     when :contains_fluoride_compounds, :add_fluoride_compounds
       :please_indicate_the_concentration_of_fluoride_compounds_calculated_as_fluorine_if_fluoride_compounds_are_not_present_in_the_product_then_not_applicable_must_be_checked
-    when :ph_mixed_hair_dye
-      :please_indicate_the_ph_of_the_mixed_hair_dye_product
     when :contains_essential_oils, :add_essential_oils
       :please_indicate_the_name_and_the_quantity_of_each_essential_oil_camphor_menthol_or_eucalyptol_if_no_individual_essential_oil_camphor_menthol_or_eucalyptol_are_present_with_a_level_higher_than_05_015_in_case_of_camphor_then_not_applicable_must_be_checked
     when :contains_ethanol
