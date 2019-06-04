@@ -1,8 +1,0 @@
-- content_for :page_title, "mixed hair dye pH"
-- content_for :after_header do
-  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
-
-= render "trigger_questions/substance_check_with_condition", substance: "components mixed pH", prefix_text: "pH",
-        question: "Do the components of #{@component_name} need to be mixed?",
-        yes_option: "Yes, the components need to be mixed",
-        label_text: "pH of the product after mixing?"

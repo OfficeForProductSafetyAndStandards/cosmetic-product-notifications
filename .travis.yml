@@ -28,6 +28,8 @@ stages:
     if: branch = prod AND type = push
   - name: Run regression tests
     if: branch = master AND type = cron
+  - name: Update test coverage
+    if: branch = master AND type = cron
 
 jobs:
   include:
@@ -160,6 +162,16 @@ jobs:
         - SERVICE_HOSTNAME=int-submit.cosmetic-product-notifications.service.gov.uk
         - secure: YlWZqs3cOPGcxNNM3HRM5H6YLjkbtcspeTJ1M6pEOblVXs3HoFxnjkGlrju3n/jxsf5Gry7sTpq6MGoVjIeIsDm8H67BL1kBc+KaIDY6CBUCWUzTnwpIodBQP0r3UFT6RhNth+zLZAgbiyGF8AxIyH0m5QUhbYxCiUZng9+VuhXzGH4Deq3jat+vpgHgW9qAVnO94RENI61KIRqUQFLi4LdoMTfRfaRzrVw6sZ9bpUbNJYmHnZ1S2uJzDiRLUyV9UVp+kcGW2fXwt0myMKS+rnn4f+aF0B8zbZe5hUeENZin0N84tkJGzOWAgOtPJo11955Ds8HD/iYNNYwKKLWhMGHYU36JEbQYNbYe8m2xBHCXMbrKHDN2X6Jzqx7zMbcXGvrymwz2gAcxUb20CjMEkWosBgSkOsFmA3zgQJA7yhcJjAiURkbiHjZiVisNK7VmgsaqR/JZYtG1Bq+UVUgw4ZmPGFdklbkFHd61gTEzManX5YDaQ9FfAPAvzwJiGj1NtbubatzHOkUIy1y/Pq9nd70zMpQ+qIUn6tYDRyX7M6zlXGhFk1DxAIUVqhm2oR8TNmUGYw6DzR/j+XtxYcBHSR0ZaenqMsutwvdM1/44+pCHQIDgy19dkToz/H9db3ISPGqwjE9qizMCguSvWzGSs0cuPDm1vsPMJXrbF2gt9N8= # BASIC_AUTH_USERNAME
         - secure: ddNnxBjM4tktg/Y5nFtZFjHBO8c/9amrlRIuzrvkxNDTW7OfQCHklLWikkApB3QfZHU+lX/SqI7+aAVt/Bazr97gfo4pmdlR2LEqylBPR9MEbb/UDou9n/ziSmQI2mD46YU7ozMLIqynW7dJWb19DfPfBHdeAHPXdXtTmkMuWJ6fvG00YfgOUxeCU1myOxbpz2Lp+YSDcQpKiNk77z+7CFKR/3L0woiblDoO8vXDdqR7Krh66wg1qqoqhbYNljwebTj9u6Q+mfJjkKVOAf806GiAZL69jQ8aySOtL3H+9kCRtEXv2DO3NKumi7NS/ZhrOxQzQ4w3l7fOF7ooyafHg8vSegUURZH/NJXJyiTQ8YqCXOQ5mxizV4OCxcXtoea9JaJEmjnwoESPrqfr0PpNaFywUVNxkp5+jh/+LPfQMd0DHnUIxBGzAI7NHpWrjBphuYSq7ZomiiCygXcU8ua6lVOqX1dFcnGLxMTibiUvQioXeldPXH3wbo9roBqvE/fkV+OUaC1n7Xs80npavMHYSsDq5eYllahoTw14kbqFC4j7ADWGQ8Edgg1DiGKSXDOALRwGmtQUJyltJFrRcvDFyBE6Ws0ZuUZqKHqaWFChv2XyoXQoG8m2tkDqDgtINsb2oL5ce3pXHlY+2fw5pmV0OHupjuwEnTRAJTz4SA2oxKs= # BASIC_AUTH_PASSWORD
+
+    - stage: Update test coverage
+      name: PSD
+      script: COMPONENT=psd-web ./infrastructure/ci/test-if-changed.sh
+      env: &test_env
+        - COVERALLS_PARALLEL=true
+    - name: Cosmetics
+      script: COMPONENT=cosmetics-web ./infrastructure/ci/test-if-changed.sh
+      env: *test_env
+
 
 notifications:
   webhooks: https://coveralls.io/webhook

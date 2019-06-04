@@ -26,7 +26,7 @@ PATH
       simplecov (= 0.16.1)
       simplecov-console (= 0.5.0)
       slim_lint (= 0.17.0)
-      solargraph (= 0.32.4)
+      solargraph (= 0.32.5)
 
 PATH
   remote: vendor/shared-web
@@ -48,7 +48,7 @@ PATH
       sidekiq (= 5.2.7)
       sidekiq-cron (= 1.1.0)
       slowpoke (= 0.2.1)
-      webpacker (= 4.0.2)
+      webpacker (= 4.0.6)
       will_paginate (= 3.1.7)
 
 GEM
@@ -377,7 +377,7 @@ GEM
       actionpack
       rack-timeout (>= 0.3.0, < 0.5.0)
       railties
-    solargraph (0.32.4)
+    solargraph (0.32.5)
       backport (~> 1.1)
       bundler (>= 1.17.2)
       htmlentities (~> 4.3, >= 4.3.4)
@@ -407,14 +407,14 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.9)
-    tins (1.20.2)
+    tins (1.20.3)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
     unicode-display_width (1.6.0)
-    webpacker (4.0.2)
+    webpacker (4.0.6)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
