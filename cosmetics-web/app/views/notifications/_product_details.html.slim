@@ -24,6 +24,12 @@ table.govuk-table.check-your-answers-table#product-table
           | Imported from
         td.govuk-table__cell
           = product_import_country(notification)
+    - if notification.notified_post_eu_exit?
+      tr.govuk-table__row
+        th.govuk-table__header
+          | For children under 3
+        td.govuk-table__cell
+          = notification.under_three_years ? "Yes" : "No"
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
         | Number of components
