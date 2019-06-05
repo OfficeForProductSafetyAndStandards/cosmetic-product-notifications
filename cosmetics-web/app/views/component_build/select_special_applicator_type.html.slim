@@ -1,0 +1,26 @@
+- content_for :page_title, "Contains an applicator"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+- title_text = "What form does #{@component_name} take?"
+- other_text = "How is #{@component_name} packaged?"
+
+= form_with model: @component, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      - other_text_field = capture do
+        = form.label :other_special_applicator_package, other_text, class: "govuk-label"
+        .input-wrapper.govuk-input--width-10
+          = form.text_field :other_special_applicator_package, class: "govuk-input govuk-c-input"
+      ruby:
+        items = NotificationPropertiesHelper::SPECIAL_APPLICATOR.keys.map { |applicator|
+          { text: get_special_applicator_name(applicator),
+            value: applicator,
+            conditional: ({ html: other_text_field } if applicator == :other_special_applicator) }
+        }.compact
+
+      = render "form_components/govuk_radios", form: form, key: :special_applicator,
+            fieldset: { legend: { text: title_text, classes: "govuk-label--xl", isPageHeading: true } },
+            items: items
+      = form.submit "Continue", class: "govuk-button"

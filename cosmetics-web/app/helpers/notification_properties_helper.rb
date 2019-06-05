@@ -496,10 +496,10 @@ module NotificationPropertiesHelper
   }.freeze
 
   SPECIAL_APPLICATOR = {
-      wipe_sponge_patch_pad: "Wipe/sponge/patch/pad",
-      encapsulated_products: "Encapsulated products",
-      pressurised_spray_container: "Pressurised spray container",
-      pressurised_container_non_spray_product: "Pressurised container - non spray product",
+      wipe_sponge_patch_pad: "Wipe, sponge, patch or pad",
+      encapsulated_products: "Encapsulated",
+      pressurised_spray_container: "Pressurised spray",
+      pressurised_container_non_spray_product: "Pressurised non-spray",
       other_special_applicator: "Other"
   }.freeze
 end

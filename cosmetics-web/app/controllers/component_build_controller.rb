@@ -8,6 +8,7 @@ class ComponentBuildController < ApplicationController
         :add_shades,
         :add_physical_form,
         :contains_special_applicator,
+        :select_special_applicator_type,
         :contains_cmrs,
         :add_cmrs,
         :contains_nanomaterials,
@@ -131,6 +132,7 @@ private
         :name,
         :physical_form,
         :special_applicator,
+        :other_special_applicator_package,
         :sub_sub_category,
         :notification_type,
         :frame_formulation,
@@ -193,7 +195,7 @@ private
       render_wizard @component
     when "no"
       @component.special_applicator = nil
-      jump_to(next_step(:add_special_applicator))
+      jump_to(next_step(:select_special_applicator_type))
       render_wizard @component
     else
       @component.errors.add :contains_special_applicator, "Please select an option"
@@ -330,6 +332,8 @@ private
       @component.shades.nil? ? :number_of_shades : :add_shades
     when :contains_nanomaterials
       @component.cmrs.empty? ? :contains_cmrs : :add_cmrs
+    when :contains_cmrs
+      @component.special_applicator.blank? ? :contains_special_applicator : :select_special_applicator_type
     when :select_category
       @nano_material.nil? ? :contains_nanomaterials : :list_nanomaterials
     when :upload_formulation
@@ -349,6 +353,6 @@ private
   end
 
   def post_eu_exit_steps
-    %i[add_cmrs contains_cmrs contains_special_applicator]
+    %i[add_cmrs contains_cmrs contains_special_applicator select_special_applicator_type]
   end
 end
