@@ -4,7 +4,6 @@ module Shared
       module DocumentUploadConcern
         extend ActiveSupport::Concern
         included do
-
           def self.add_document_validation(key, required, context)
             @document_validation_keys ||= []
             @document_validation_keys << [key, required, context] unless @document_validation_keys.include? [key, required, context]
@@ -14,7 +13,7 @@ module Shared
             @document_validation_keys
           end
 
-          def self.validate_upload_document(key, required, context=nil)
+          def self.validate_upload_document(key, required, context = nil)
             attribute key unless self.respond_to? key
             add_document_validation(key, required, context)
             validate on: context do

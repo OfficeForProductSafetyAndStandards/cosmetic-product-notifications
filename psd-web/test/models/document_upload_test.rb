@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DocumentTest < ActiveSupport::TestCase
+class DocumentUploadTest < ActiveSupport::TestCase
   test "Document can be initialised only with nil or a bob" do
     blob = create_file_blob
     attachment = ActiveStorage::Attachment.new
