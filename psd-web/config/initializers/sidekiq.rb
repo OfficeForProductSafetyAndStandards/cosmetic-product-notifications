@@ -13,7 +13,7 @@ end
 def create_log_db_metrics_job
   log_db_metrics_job = Sidekiq::Cron::Job.new(
     name: 'log db metrics, every hour',
-    cron: '0 * * * *',
+    cron: '* * * * *',
     class: 'LogDbMetricsJob',
     queue: 'psd'
   )
