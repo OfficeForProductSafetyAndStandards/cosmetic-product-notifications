@@ -7,6 +7,7 @@ class ComponentBuildController < ApplicationController
         :number_of_shades,
         :add_shades,
         :add_physical_form,
+        :contains_special_applicator,
         :contains_cmrs,
         :add_cmrs,
         :contains_nanomaterials,
@@ -40,6 +41,8 @@ class ComponentBuildController < ApplicationController
       render_number_of_shades
     when :add_shades
       render_add_shades
+    when :contains_special_applicator
+      render_contains_special_applicator
     when :contains_cmrs
       render_contains_cmrs
     when :add_cmrs
@@ -127,6 +130,7 @@ private
       .permit(
         :name,
         :physical_form,
+        :special_applicator,
         :sub_sub_category,
         :notification_type,
         :frame_formulation,
@@ -180,6 +184,20 @@ private
         end
         render step
       end
+    end
+  end
+
+  def render_contains_special_applicator
+    case params.dig(:component, :contains_special_applicator)
+    when "yes"
+      render_wizard @component
+    when "no"
+      @component.special_applicator = nil
+      jump_to(next_step(:add_special_applicator))
+      render_wizard @component
+    else
+      @component.errors.add :contains_special_applicator, "Please select an option"
+      render step
     end
   end
 
@@ -331,6 +349,6 @@ private
   end
 
   def post_eu_exit_steps
-    %i[add_cmrs contains_cmrs]
+    %i[add_cmrs contains_cmrs contains_special_applicator]
   end
 end
