@@ -51,6 +51,10 @@ en:
               inclusion: "Select an option"
             under_three_years:
               inclusion: "Choose an option"
+        component:
+          attributes:
+            special_applicator:
+              blank: "Choose an option"
         trigger_question:
           attributes:
             applicable:
