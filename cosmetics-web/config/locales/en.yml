@@ -49,6 +49,8 @@ en:
           attributes:
             components_are_mixed:
               inclusion: "Select an option"
+            under_three_years:
+              inclusion: "Choose an option"
         trigger_question:
           attributes:
             applicable:
