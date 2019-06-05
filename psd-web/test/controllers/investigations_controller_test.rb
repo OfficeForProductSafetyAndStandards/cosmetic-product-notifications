@@ -146,6 +146,39 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes(response.body, @investigation_no_products.pretty_id)
   end
 
+  test "should return all investigations if all unchecked" do
+    get investigations_path, params: {
+        allegation: "unchecked",
+        enquiry: "unchecked",
+        project: "unchecked",
+    }
+    assert_includes(response.body, load_case(:allegation).pretty_id)
+    assert_includes(response.body, load_case(:enquiry).pretty_id)
+    assert_includes(response.body, load_case(:project).pretty_id)
+  end
+
+  test "should return all investigations if all checked" do
+    get investigations_path, params: {
+        allegation: "checked",
+        enquiry: "checked",
+        project: "checked",
+    }
+    assert_includes(response.body, load_case(:allegation).pretty_id)
+    assert_includes(response.body, load_case(:enquiry).pretty_id)
+    assert_includes(response.body, load_case(:project).pretty_id)
+  end
+
+  test "should return allegation investigations if allegation unchecked" do
+    get investigations_path, params: {
+        allegation: "checked",
+        enquiry: "unchecked",
+        project: "unchecked",
+    }
+    assert_includes(response.body, load_case(:allegation).pretty_id)
+    assert_not_includes(response.body, load_case(:enquiry).pretty_id)
+    assert_not_includes(response.body, load_case(:project).pretty_id)
+  end
+
   test "should return all investigations if both assignee checkboxes are unchecked" do
     get investigations_path, params: {
         assigned_to_me: "unchecked",
