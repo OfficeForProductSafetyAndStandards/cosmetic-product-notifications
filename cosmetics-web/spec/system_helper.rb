@@ -8,6 +8,7 @@ Capybara.server_host = ENV["HTTP_HOST"]
 Capybara.server_port = ENV["HTTP_PORT"]
 Capybara.app_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"
 Capybara.default_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"
+Rails.application.routes.default_url_options = { host: ENV["HTTP_HOST"], port: ENV["HTTP_PORT"] }
 
 Capybara.server = :puma, { Silent: true }
 

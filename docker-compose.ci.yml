@@ -6,7 +6,7 @@ services:
   
   keycloak:
     environment:
-      - NOTIFY_API_KEY='fake-key'
+      - NOTIFY_API_KEY
     image: beisopss/keycloak:${TRAVIS_BUILD_NUMBER}
   
   antivirus:
@@ -45,7 +45,7 @@ services:
       - TRAVIS_BRANCH
       - TRAVIS_JOB_ID
       - TRAVIS_PULL_REQUEST
-      - NOTIFY_API_KEY='fake-key'
+      - NOTIFY_API_KEY
   psd-worker:
     command: tail -f /dev/null
     image: beisopss/psd-worker:${TRAVIS_BUILD_NUMBER}
