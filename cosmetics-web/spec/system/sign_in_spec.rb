@@ -41,6 +41,13 @@ RSpec.describe "After signing in", type: :system do
       assert_no_text "Create an account"
       assert_no_text "sign in"
     end
+
+    it "cannot access the Poison Centre notifications page" do
+      visit poison_centre_notifications_url
+
+      assert_current_path poison_centre_notifications_path
+      assert_text "Access denied"
+    end
   end
 
   describe "a Poison Centre user" do

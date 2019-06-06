@@ -29,6 +29,7 @@ RSpec.describe "Account registration", type: :system do
     click_on "Continue"
 
     assert_text "Check your email"
+    assert_current_path(/auth\/realms\/opss\/login-actions\/required-action\?execution=VERIFY_EMAIL/)
   end
 
 private
