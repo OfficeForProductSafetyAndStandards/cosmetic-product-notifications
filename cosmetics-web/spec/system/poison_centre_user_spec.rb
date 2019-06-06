@@ -54,22 +54,6 @@ RSpec.describe "Poison Centre user", type: :system do
     assert_value_in_table(get_responsible_person_table, "Address", notification.responsible_person.address_lines.join)
   end
 
-  it "cannot access Responsible Person pages" do
-    visit responsible_person_path(responsible_person_1)
-    assert_text "Access denied"
-
-    visit responsible_person_notifications_path(responsible_person_1)
-    assert_text "Access denied"
-  end
-
-  it "cannot register a product" do
-    visit new_responsible_person_notification_path(responsible_person_1)
-    assert_text "Access denied"
-
-    visit new_responsible_person_notification_file_path(responsible_person_1)
-    assert_text "Access denied"
-  end
-
 private
 
   def assert_value_in_table(table, attribute_name, value)
