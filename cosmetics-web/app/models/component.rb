@@ -21,7 +21,7 @@ class Component < ApplicationRecord
 
   validates :physical_form, presence: true, on: :add_physical_form
   validates :special_applicator, presence: true, on: :select_special_applicator_type
-  validates :other_special_applicator_package, presence: true, on: :select_special_applicator_type, if: :is_other_special_applicator?
+  validates :other_special_applicator_package, presence: true, on: :select_special_applicator_type, if: :has_other_special_applicator?
   validates :frame_formulation, presence: true, on: :select_frame_formulation
   validates :cmrs, presence: true, on: :add_cmrs
 
@@ -98,11 +98,11 @@ private
     notification&.set_single_or_multi_component!
   end
 
-  def is_other_special_applicator?
+  def has_other_special_applicator?
     special_applicator == :other_special_applicator.to_s
   end
 
   def remove_other_special_applicator_package
-    self.other_special_applicator_package = nil unless is_other_special_applicator?
+    self.other_special_applicator_package = nil unless has_other_special_applicator?
   end
 end
