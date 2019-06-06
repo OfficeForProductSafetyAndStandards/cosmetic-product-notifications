@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe ComponentBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
-  let(:notification) { create(:notification, components: [create(:component)], responsible_person: responsible_person) }
-  let(:component) { notification.components.first }
+  let(:component) { create(:component) }
+  let(:notification) { create(:notification, components: [component], responsible_person: responsible_person) }
+  let(:pre_eu_exit_notification) { create(:pre_eu_exit_notification, components: [component], responsible_person: responsible_person) }
 
   let(:params) {
     {
@@ -134,6 +135,31 @@ RSpec.describe ComponentBuildController, type: :controller do
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
+    it "proceeds to add_physical_form step after adding shades" do
+      post(:update, params: params.merge(id: :add_shades, component: { shades: %w[red blue] }))
+      expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :add_physical_form))
+    end
+
+    it "proceeds to contains_special_applicator step after physical form" do
+      post(:update, params: params.merge(id: :add_physical_form, component: { physical_form: "loose powder" }))
+      expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_special_applicator))
+    end
+
+    it "proceeds to select_special_applicator_type step if the product come in an applicator" do
+      post(:update, params: params.merge(id: :contains_special_applicator, component: { contains_special_applicator: "yes" }))
+      expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :select_special_applicator_type))
+    end
+
+    it "skips select_special_applicator_type step if the product doesn't come in an applicator" do
+      post(:update, params: params.merge(id: :contains_special_applicator, component: { contains_special_applicator: "no" }))
+      expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_cmrs))
+    end
+
+    it "proceeds to contains_cmrs step after selecting the special applicator type" do
+      post(:update, params: params.merge(id: :select_special_applicator_type, component: { special_applicator: "wipe_sponge_patch_pad" }))
+      expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_cmrs))
+    end
+
     it "adds non empty cmrs to the component when add_cmrs" do
       cmr_name = "ABC"
       cmrs_params = params.merge(id: :add_cmrs, component: { cmrs_attributes: { "0": { name: cmr_name }, "1": { name: "" } } })
@@ -141,6 +167,17 @@ RSpec.describe ComponentBuildController, type: :controller do
       post(:update, params: cmrs_params)
       expect(assigns(:component).cmrs.count).to eq(1)
       expect(assigns(:component).cmrs.first.name).to eq(cmr_name)
+    end
+
+    context "when notified pre EU-exit" do
+      before do
+        params.merge!(notification_reference_number: pre_eu_exit_notification.reference_number)
+      end
+
+      it "skips special applicator and CMRs questions and redirects to contains_nanomaterials if pre-eu-exit" do
+        post(:update, params: params.merge(id: :add_physical_form, component: { physical_form: "loose powder" }))
+        expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, pre_eu_exit_notification, component, :contains_nanomaterials))
+      end
     end
   end
 
