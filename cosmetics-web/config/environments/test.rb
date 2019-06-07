@@ -17,11 +17,11 @@ Rails.application.configure do
   config.static_cache_control = 'public, max-age=3600'
 
   # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  config.action_dispatch.show_exceptions = true
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
@@ -50,4 +50,8 @@ Rails.application.configure do
 
   # Url for mailer
   config.action_mailer.default_url_options = { host: "localhost", port: 3002 }
+
+  # Disable all logging during tests
+  config.logger = Logger.new(nil)
+  Sidekiq::Logging.logger = nil
 end

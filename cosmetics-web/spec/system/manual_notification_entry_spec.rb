@@ -28,6 +28,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # for_children_under_three
+    choose("No")
+    click_button "Continue"
+
     # single_or_multi_component
     choose("The cosmetic product is a single item")
     click_button "Continue"
@@ -40,7 +44,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -69,6 +74,7 @@ RSpec.describe "Manually enter product details", type: :system do
     notification = get_notification_from_edit_page_url
     expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
+    expect_check_your_answers_value("For children under 3", "No")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
     expect_check_your_answers_value("Label image", "testImage.png")
@@ -93,6 +99,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # for_children_under_three
+    choose("No")
+    click_button "Continue"
+
     # single_or_multi_component
     choose("The cosmetic product is a single item")
     click_button "Continue"
@@ -105,7 +115,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -153,6 +164,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_autocomplete "location-autocomplete", with: "New Zealand"
     click_button "Continue"
 
+    # for_children_under_three
+    choose("No")
+    click_button "Continue"
+
     # single_or_multi_component
     choose("The cosmetic product is a single item")
     click_button "Continue"
@@ -165,7 +180,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -219,6 +235,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
+    # for_children_under_three
+    choose("No")
+    click_button "Continue"
+
     # single_or_multi_component
     choose("The cosmetic product is a single item")
     click_button "Continue"
@@ -240,7 +260,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
-    # add_cmrs
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -326,9 +347,6 @@ private
     choose("Yes")
     click_button "Continue"
 
-    # ph_mixed_product
-    choose("No")
-    click_button "Continue"
 
     # contains_anti_hair_loss_agents
     choose("No")
@@ -396,11 +414,6 @@ private
 
 
     # contains_fluoride_compounds
-    choose("No")
-    click_button "Continue"
-
-
-    # ph_mixed_hair_dye
     choose("No")
     click_button "Continue"
 

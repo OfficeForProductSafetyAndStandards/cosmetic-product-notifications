@@ -40,12 +40,17 @@ en:
       notification:
         ph_min_value: "pH"
         ph_max_value: "pH"
+      cmr:
+        cas_number: "CAS number"
+        ec_number: "EC number"
     errors:
       models:
         notification:
           attributes:
             components_are_mixed:
               inclusion: "Select an option"
+            under_three_years:
+              inclusion: "Choose an option"
         trigger_question:
           attributes:
             applicable:
