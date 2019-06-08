@@ -20,16 +20,16 @@ stages:
   - Build
   - name: Test
     if: type = pull_request # This is designed to cut out unnecessary runs of the test suite. See PSD-821 for details.
+  - name: Update code coverage
+    if: branch = master AND type = cron
+  - name: Run regression tests
+    if: branch = master AND type = cron
   - name: Deploy to int
     if: branch = master AND type = push
   - name: Deploy to staging
     if: branch = staging AND type = push
   - name: Deploy to production
     if: branch = prod AND type = push
-  - name: Run regression tests
-    if: branch = master AND type = cron
-  - name: Update test coverage
-    if: branch = master AND type = cron
 
 jobs:
   include:
