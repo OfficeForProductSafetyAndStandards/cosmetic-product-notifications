@@ -150,7 +150,11 @@ jobs:
       env: *deploy_prod_env
 
     - stage: Update code coverage
-      script: ./infrastructure/ci/update-code-coverage.sh
+      name: PSD coverage
+      script: COMPONENT=psd-web ./infrastructure/ci/update-code-coverage.sh
+      env: COVERALLS_PARALLEL=true
+    - name: Cosmetics coverage
+      script: COMPONENT=cosmetics-web ./infrastructure/ci/update-code-coverage.sh
       env: COVERALLS_PARALLEL=true
 
     - stage: Run regression tests
