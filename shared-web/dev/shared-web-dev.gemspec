@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   # Dev improvements & debugging
   s.add_dependency "debase", "0.2.2"
   s.add_dependency "listen", "3.1.5"
-  s.add_dependency "ruby-debug-ide", "0.6.1"
+  s.add_dependency "ruby-debug-ide", "0.7.0"
   s.add_dependency "solargraph", "0.32.5"
 end
