@@ -54,7 +54,7 @@ RSpec.describe Component, type: :model do
       predefined_component.other_special_applicator_package = nil
       predefined_component.save(context: :select_special_applicator_type)
 
-      expect(predefined_component.errors[:other_special_applicator_package]).to include("Other special applicator package can not be blank")
+      expect(predefined_component.errors[:other_special_applicator_package]).to include("Enter the type of applicator")
     end
 
     it "removes other_special_applicator_package if the applicator type is not other" do

@@ -78,39 +78,39 @@ RSpec.describe NotificationBuildController, type: :controller do
     end
 
     it "creates a component if single_or_multi_component set to single" do
-      post(:update, params: params.merge(id: :single_or_multi_component, single_or_multi_component: "single"))
+      post(:update, params: params.merge(id: :single_or_multi_component, notification: { single_or_multi_component: "single" }))
       Notification.find(notification.id).components
       expect(Notification.find(notification.id).components).to have(1).item
     end
 
     it "creates two components if single_or_multi_component set to multiple" do
-      post(:update, params: params.merge(id: :single_or_multi_component, single_or_multi_component: "multiple"))
+      post(:update, params: params.merge(id: :single_or_multi_component, notification: { single_or_multi_component: "multiple" }))
       expect(Notification.find(notification.id).components).to have(2).item
     end
 
     it "adds errors if single_or_multi_component is empty" do
-      post(:update, params: params.merge(id: :single_or_multi_component, single_or_multi_component: nil))
-      expect(assigns(:notification).errors[:components]).to include("Must not be nil")
+      post(:update, params: params.merge(id: :single_or_multi_component, notification: { single_or_multi_component: nil }))
+      expect(assigns(:notification).errors[:single_or_multi_component]).to include("Must not be nil")
     end
 
     it "redirects to add_import_country step if is_imported set to true" do
-      post(:update, params: params.merge(id: :is_imported, is_imported: true))
+      post(:update, params: params.merge(id: :is_imported, notification: { is_imported: "yes" }))
       expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :add_import_country))
     end
 
     it "redirects to for_children_under_three step if is_imported set to false and post-eu-exit (default)" do
-      post(:update, params: params.merge(id: :is_imported, is_imported: false))
+      post(:update, params: params.merge(id: :is_imported, notification: { is_imported: "no" }))
       expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :for_children_under_three))
     end
 
     it "adds an error if user doesn't pick a radio option for is_imported" do
-      post(:update, params: params.merge(id: :is_imported, is_imported: nil))
-      expect(assigns(:notification).errors[:import_country]).to include("Must not be nil")
+      post(:update, params: params.merge(id: :is_imported, notification: { is_imported: nil }))
+      expect(assigns(:notification).errors[:is_imported]).to include("Must not be nil")
     end
 
     it "adds an error if user submits import_country with a blank value" do
       post(:update, params: params.merge(id: :add_import_country, notification: { import_country: "" }))
-      expect(assigns(:notification).errors[:import_country]).to include("Must not be blank")
+      expect(assigns(:notification).errors[:import_country]).to include("Import country can not be blank")
     end
 
     it "continues to next step if user submits import_country with a valid value and post-eu-exit (default)" do
@@ -145,13 +145,13 @@ RSpec.describe NotificationBuildController, type: :controller do
     end
 
     it "adds error if user selects add internal reference but doesn't add one on add_internal_reference page" do
-      post(:update, params: params.merge(id: :add_internal_reference, notification: { add_internal_reference: "true" }))
+      post(:update, params: params.merge(id: :add_internal_reference, notification: { add_internal_reference: "yes" }))
       expect(assigns[:notification].errors[:industry_reference]).to include("Please enter an internal reference")
     end
 
     it "stores internal reference if user adds internal reference" do
       post(:update, params: params.merge(id: :add_internal_reference,
-      notification: { add_internal_reference: "true", industry_reference: "12345678" }))
+      notification: { add_internal_reference: "yes", industry_reference: "12345678" }))
       expect(assigns[:notification].industry_reference).to eq("12345678")
     end
 
@@ -174,7 +174,7 @@ RSpec.describe NotificationBuildController, type: :controller do
       end
 
       it "skips for_children_under_three step and redirects to single_or_multi_component if is_imported set to false and pre-eu-exit" do
-        post(:update, params: params.merge(id: :is_imported, is_imported: false))
+        post(:update, params: params.merge(id: :is_imported, notification: { is_imported: "no" }))
         expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, pre_eu_exit_notification, :single_or_multi_component))
       end
 
