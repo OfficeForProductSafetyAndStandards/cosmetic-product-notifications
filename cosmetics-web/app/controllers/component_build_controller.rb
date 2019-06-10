@@ -148,17 +148,16 @@ private
   end
 
   def render_number_of_shades
-    case params[:number_of_shades]
+    case params.dig(:component, :number_of_shades)
     when "single-or-no-shades", "multiple-shades-different-notification"
       @component.shades = nil
       @component.add_shades
-      @component.save
       jump_to(next_step(:add_shades))
       render_wizard @component
     when "multiple-shades-same-notification"
       render_wizard @component
-    when ""
-      @component.errors.add :shades, "Please select an option"
+    else
+      @component.errors.add :number_of_shades, "Please select an option"
       render step
     end
   end
@@ -288,11 +287,10 @@ private
   end
 
   def render_select_formulation_type
-    if params[:component].nil?
-      @no_notification_type_selected = true
+    unless @component.update_with_context(component_params, step)
       return render step
     end
-    @component.update(component_params)
+
     if @component.predefined?
       @component.formulation_file.delete if @component.formulation_file.attached?
     else

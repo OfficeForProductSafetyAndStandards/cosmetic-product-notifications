@@ -17,7 +17,7 @@
               hint: { text: "This will be used in the email subject line." },
               value: (@alert.summary.presence || @alert.default_summary)
 
-      - description_hint_text = "Include a summary of the incident and what actions you’d like recipients to take." + \
+      - description_hint = "Include a summary of the incident and what actions you’d like recipients to take." + \
         "Recipients will need to view the case to see attachments and images."
       = render "form_components/govuk_textarea",
               form: form,
@@ -26,7 +26,7 @@
               maxlength: 1000,
               value: (@alert.description.presence || @alert.default_description),
               label: { text: "Alert summary", classes: "govuk-label--m" },
-              hint: { text: description_hint_text }
+              hint: { text: description_hint }
 
       = form.submit "Preview alert", class: "govuk-button"
   p

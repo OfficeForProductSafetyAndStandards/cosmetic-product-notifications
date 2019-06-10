@@ -24,6 +24,7 @@ class Component < ApplicationRecord
   validates :other_special_applicator_package, presence: true, on: :select_special_applicator_type, if: :has_other_special_applicator?
   validates :frame_formulation, presence: true, on: :select_frame_formulation
   validates :cmrs, presence: true, on: :add_cmrs
+  validates :notification_type, presence: true, on: :select_formulation_type
 
   before_save :add_shades, if: :will_save_change_to_shades?
   before_save :remove_other_special_applicator_package

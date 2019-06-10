@@ -2,7 +2,7 @@
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-- title_text = "What form does #{@component_name} take?"
+- title = "What form does #{@component_name} take?"
 - other_text = "How is #{@component_name} packaged?"
 
 = form_with model: @component, url: wizard_path, method: :put do |form|
@@ -20,6 +20,6 @@
         }.compact
 
       = render "form_components/govuk_radios", form: form, key: :special_applicator,
-            fieldset: { legend: { text: title_text, classes: "govuk-label--xl", isPageHeading: true } },
+            fieldset: { legend: { text: title, classes: "govuk-label--xl", isPageHeading: true } },
             items: items
       = form.submit "Continue", class: "govuk-button"
