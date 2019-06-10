@@ -113,6 +113,10 @@ class Investigation < ApplicationRecord
   # To be implemented by children
   def title; end
 
+  def creator_id
+    @investigation.source.user_id
+  end
+
   def case_type; end
 
   def add_business(business, relationship)
@@ -200,6 +204,10 @@ private
 
   def set_source_to_current_user
     self.source = UserSource.new(user: User.current) if source.blank? && User.current
+  end
+
+  def creator_id
+    self.source&.user_id
   end
 
   def assign_to_current_user
