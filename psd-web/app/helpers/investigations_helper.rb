@@ -20,8 +20,11 @@ module InvestigationsHelper
   def filter_params
     filters = {}
     filters.merge!(get_status_filter)
-    filters.merge!(get_assignee_filter)
-    filters.merge!(get_creator_filter)
+    filters.merge!(merge_user_filters)
+  end
+
+  def merge_user_filters
+    return get_creator_filter.merge!(get_assignee_filter){|key, assignee, creator| assignee + creator}
   end
 
   def get_status_filter
@@ -36,15 +39,15 @@ module InvestigationsHelper
   end
 
   def get_assignee_filter
-    return { should: [], must_not: [] } if no_boxes_checked
+    return { should: [], must_not: [] } if no_assignee_boxes_checked
     return { should: [], must_not: compute_excluded_terms } if assignee_filter_exclusive
 
     { should: compute_included_terms, must_not: [] }
   end
 
-  def no_boxes_checked
+  def no_assignee_boxes_checked
     no_people_boxes_checked = params[:assigned_to_me] == "unchecked" && params[:assigned_to_someone_else] == "unchecked"
-    no_team_boxes_checked = teams_with_keys.all? { |key, _t, _n| query_params[key].blank? }
+    no_team_boxes_checked = assignee_teams_with_keys.all? { |key, _t, _n| query_params[key].blank? }
     no_people_boxes_checked && no_team_boxes_checked
   end
 
@@ -69,8 +72,8 @@ module InvestigationsHelper
 
   def checked_team_assignees
     assignees = []
-    teams_with_keys.each do |key, team, _n|
-      assignees.concat(assignee_ids_from_team(team)) if query_params[key] != "unchecked"
+    assignee_teams_with_keys.each do |key, team, _n|
+      assignees.concat(user_ids_from_team(team)) if query_params[key] != "unchecked"
     end
     assignees
   end
@@ -79,7 +82,7 @@ module InvestigationsHelper
     return [] unless params[:assigned_to_someone_else] == "checked"
 
     team = Team.find_by(id: params[:assigned_to_someone_else_id])
-    team.present? ? assignee_ids_from_team(team) : [params[:assigned_to_someone_else_id]]
+    team.present? ? user_ids_from_team(team) : [params[:assigned_to_someone_else_id]]
   end
 
   def format_assignee_terms(assignee_array)
@@ -98,7 +101,7 @@ module InvestigationsHelper
 
   def no_created_by_boxes_checked
     no_created_by_people_boxes_checked = params[:created_by_me] == "unchecked" && params[:created_by_someone_else] == "unchecked"
-    no_created_by_team_boxes_checked = created_by_teams_with_keys.all? { |key, _t, _n| query_params[key].blank? }
+    no_created_by_team_boxes_checked = creator_teams_with_keys.all? { |key, _t, _n| query_params[key].blank? }
     no_created_by_people_boxes_checked && no_created_by_team_boxes_checked
   end
 
@@ -123,8 +126,8 @@ module InvestigationsHelper
 
   def checked_team_creators
     creators = []
-    created_by_teams_with_keys.each do |key, team, _n|
-      creators.concat(creators_ids_from_team(team)) if query_params[key] != "unchecked"
+    creator_teams_with_keys.each do |key, team, _n|
+      creators.concat(user_ids_from_team(team)) if query_params[key] != "unchecked"
     end
     creators
   end
@@ -133,8 +136,7 @@ module InvestigationsHelper
     return [] unless params[:created_by_someone_else] == "checked"
 
     team = Team.find_by(id: params[:created_by_someone_else_id])
-    team.present? ? assignee_ids_from_team(team) : [params[:created_by_someone_else_id]]
-    # using assignee_ids_from_team isn't dependant on being creator or assignee
+    team.present? ? user_ids_from_team(team) : [params[:created_by_someone_else_id]]
   end
 
   def format_creator_terms(creator_array)
@@ -143,7 +145,7 @@ module InvestigationsHelper
     end
   end
 
-  def created_by_teams_with_keys
+  def creator_teams_with_keys
     User.current.teams.map.with_index do |team, index|
       # key, team, name
       [
@@ -154,10 +156,6 @@ module InvestigationsHelper
     end
   end
 
-  def creators_ids_from_team(team)
-    [team.id] + team.users.map(&:id)
-  end
-
   def query_params
     set_default_status_filter
     set_default_sort_by_filter
@@ -165,7 +163,7 @@ module InvestigationsHelper
     set_default_creator_filter
     params.permit(:q, :status_open, :status_closed, :page,
                   :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by, :created_by_me, :created_by_me, :created_by_someone_else, :created_by_someone_else_id,
-                  teams_with_keys.map { |key, _t, _n| key }, created_by_teams_with_keys.map { |key, _t, _n| key })
+                  assignee_teams_with_keys.map { |key, _t, _n| key }, creator_teams_with_keys.map { |key, _t, _n| key })
   end
 
   def export_params
@@ -204,7 +202,7 @@ module InvestigationsHelper
     }
   end
 
-  def teams_with_keys
+  def assignee_teams_with_keys
     User.current.teams.map.with_index do |team, index|
       # key, team, name
       [
@@ -215,7 +213,7 @@ module InvestigationsHelper
     end
   end
 
-  def assignee_ids_from_team(team)
+  def user_ids_from_team(team)
     [team.id] + team.users.map(&:id)
   end
 

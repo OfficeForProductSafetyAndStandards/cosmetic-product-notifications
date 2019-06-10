@@ -34,7 +34,7 @@
                         label: { text: "Name" }, is_autocomplete: true
         ruby:
           assigned_to_items = [{ key: "assigned_to_me", value: "checked", unchecked_value: "unchecked", text: "Me" }]
-          teams_with_keys.each do |key, team, name|
+          assignee_teams_with_keys.each do |key, team, name|
               assigned_to_items << { key: key, value: team.id, unchecked_value: "unchecked", text: name }
           end
           assigned_to_items << { key: "assigned_to_someone_else",
@@ -43,7 +43,7 @@
                            text: "Other person or team",
                            conditional: { html: other_assignee } }
           created_by_items = [{ key: "created_by_me", value: "checked", unchecked_value: "unchecked", text: "Me" }]
-          created_by_teams_with_keys.each do |key, team, name|
+          creator_teams_with_keys.each do |key, team, name|
               created_by_items << { key: key, value: team.id, unchecked_value: "unchecked", text: name }
           end
           created_by_items << { key: "created_by_someone_else",

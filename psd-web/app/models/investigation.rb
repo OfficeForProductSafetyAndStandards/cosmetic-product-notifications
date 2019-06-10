@@ -113,10 +113,6 @@ class Investigation < ApplicationRecord
   # To be implemented by children
   def title; end
 
-  def creator_id
-    @investigation.source.user_id
-  end
-
   def case_type; end
 
   def add_business(business, relationship)
