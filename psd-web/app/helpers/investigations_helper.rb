@@ -20,11 +20,11 @@ module InvestigationsHelper
   def filter_params
     filters = {}
     filters.merge!(get_status_filter)
-    filters.merge!(merge_user_filters)
+    filters.merge!(get_merged_user_filters)
   end
 
-  def merge_user_filters
-    return get_creator_filter.merge!(get_assignee_filter){|key, assignee, creator| assignee + creator}
+  def get_merged_user_filters
+    get_creator_filter.merge!(get_assignee_filter) { |_key, assignee, creator| assignee + creator }
   end
 
   def get_status_filter
