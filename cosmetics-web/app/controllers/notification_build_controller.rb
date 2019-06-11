@@ -129,45 +129,19 @@ private
   end
 
   def render_is_hair_dye_step
-    case params.dig(:notification, :is_hair_dye)
-    when "yes"
-      jump_to(next_step(:is_ph_between_3_and_10))
-      render_wizard @notification
-    when "no"
-      render_wizard @notification
-    else
-      @notification.errors.add :is_hair_dye, "Must select an option"
-      render step
-    end
+    yes_no_question(:is_hair_dye, true)
   end
 
   def render_is_ph_between_3_and_10_step
-    case params.dig(:notification, :is_ph_between_3_and_10)
-    when "yes"
-      render_wizard @notification
-    when "no"
-      clear_ph_range
-      jump_to(next_step(:ph_range))
-      render_wizard @notification
-    else
-      @notification.errors.add :is_ph_between_3_and_10, "Must select an option"
-      render step
-    end
+    yes_no_question(:is_ph_between_3_and_10, false, method(:clear_ph_range))
   end
 
   def render_is_imported_step
-    case params.dig(:notification, :is_imported)
-    when "yes"
-      render_wizard @notification
-    when "no"
+    remove_import_country = Proc.new do
       @notification.import_country = nil
       @notification.add_import_country
-      jump_to(next_step(:add_import_country))
-      render_wizard @notification
-    else
-      @notification.errors.add :is_imported, "Must not be nil"
-      render step
     end
+    yes_no_question(:is_imported, false, remove_import_country)
   end
 
   def render_add_new_component_step

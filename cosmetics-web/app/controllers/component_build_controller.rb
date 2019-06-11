@@ -184,31 +184,11 @@ private
   end
 
   def render_contains_special_applicator
-    case params.dig(:component, :contains_special_applicator)
-    when "yes"
-      render_wizard @component
-    when "no"
-      @component.special_applicator = nil
-      jump_to(next_step(:select_special_applicator_type))
-      render_wizard @component
-    else
-      @component.errors.add :contains_special_applicator, "Please select an option"
-      render step
-    end
+    yes_no_question(:contains_special_applicator, false, Proc.new { @component.special_applicator = nil })
   end
 
   def render_contains_cmrs
-    case params.dig(:component, :contains_cmrs)
-    when "yes"
-      render_wizard @component
-    when "no"
-      destroy_all_cmrs
-      jump_to(next_step(:add_cmrs))
-      render_wizard @component
-    else
-      @component.errors.add :contains_cmrs, "Please select an option"
-      render step
-    end
+    yes_no_question(:contains_cmrs, false, method(:destroy_all_cmrs))
   end
 
   def render_add_cmrs
@@ -221,18 +201,9 @@ private
   end
 
   def render_contains_nanomaterials
-    case params.dig(:component, :contains_nanomaterials)
-    when "yes"
-      @component.nano_material = NanoMaterial.create if @nano_material.nil?
-      render_wizard @component
-    when "no"
-      @nano_material.destroy if @nano_material.present?
-      jump_to(next_step(:list_nanomaterials))
-      render_wizard @component
-    else
-      @component.errors.add :contains_nanomaterials, "Please select an option"
-      render step
-    end
+    yes_no_question(:contains_nanomaterials, false,
+                    Proc.new { @nano_material.destroy if @nano_material.present? },
+                    Proc.new { @component.nano_material = NanoMaterial.create if @nano_material.nil? })
   end
 
   def render_add_exposure_routes
