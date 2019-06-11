@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Welcome email
 - Product search
 - Cookie banner
+- Filter by creator
 
 <!-- ### Cosmetics -->
 
