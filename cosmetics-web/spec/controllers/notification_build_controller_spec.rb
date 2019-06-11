@@ -146,7 +146,7 @@ RSpec.describe NotificationBuildController, type: :controller do
 
     it "adds error if user selects add internal reference but doesn't add one on add_internal_reference page" do
       post(:update, params: params.merge(id: :add_internal_reference, notification: { add_internal_reference: "yes" }))
-      expect(assigns[:notification].errors[:industry_reference]).to include("Please enter an internal reference")
+      expect(assigns[:notification].errors[:industry_reference]).to include("Industry reference can not be blank")
     end
 
     it "stores internal reference if user adds internal reference" do
