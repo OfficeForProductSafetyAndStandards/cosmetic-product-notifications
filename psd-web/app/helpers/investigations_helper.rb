@@ -50,7 +50,7 @@ module InvestigationsHelper
     return { should: [], must_not: [] } if no_boxes_checked
     return { should: [], must_not: compute_excluded_terms } if assignee_filter_exclusive
 
-    { must: compute_included_terms, must_not: [] }
+    { should: compute_included_terms, must_not: [] }
   end
 
   def no_boxes_checked
