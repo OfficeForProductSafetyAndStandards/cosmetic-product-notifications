@@ -24,7 +24,6 @@ module InvestigationsHelper
     filters.merge!(get_type_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
   end
 
-# This stops merge overwriting the "should" filters in the elasticsearch hash.
   def get_status_filter
     return {} if params[:status_open] == params[:status_closed]
 
