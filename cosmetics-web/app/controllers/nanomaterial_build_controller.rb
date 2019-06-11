@@ -77,9 +77,10 @@ private
 
   def render_confirm_restrictions_step
     confirm_restrictions = params.dig(:nano_element, :confirm_restrictions)
-    if confirm_restrictions == "true"
+    case confirm_restrictions
+    when "yes"
       render_wizard @nano_element
-    elsif confirm_restrictions == "false"
+    when "no"
       redirect_to wizard_path(:unhappy_path)
     else
       @nano_element.errors.add :confirm_restrictions, "Select an option"
@@ -89,9 +90,10 @@ private
 
   def render_confirm_usage_step
     confirm_usage = params.dig(:nano_element, :confirm_usage)
-    if confirm_usage == "true"
+    case confirm_usage
+    when "yes"
       redirect_to finish_wizard_path
-    elsif confirm_usage == "false"
+    when "no"
       redirect_to wizard_path(:unhappy_path)
     else
       @nano_element.errors.add :confirm_usage, "Select an option"

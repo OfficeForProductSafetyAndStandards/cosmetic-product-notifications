@@ -170,19 +170,14 @@ private
       render :add_shades
     elsif params.key?(:remove_shade_with_id)
       @component.shades.delete_at(params[:remove_shade_with_id].to_i)
-      if @component.shades.length < 2
-        @component.shades.push ''
-      end
+      create_required_shades
       render :add_shades
     else
       @component.prune_blank_shades
       if @component.valid?
         render_wizard @component
       else
-        if @component.shades.length < 2
-          required_shades = 2 - @component.shades.length
-          @component.shades.concat(Array.new(required_shades, ''))
-        end
+        create_required_shades
         render step
       end
     end
@@ -336,6 +331,13 @@ private
       @nano_material.nil? ? :contains_nanomaterials : :list_nanomaterials
     when :upload_formulation
       :select_formulation_type
+    end
+  end
+
+  def create_required_shades
+    if @component.shades.length < 2
+      required_shades = 2 - @component.shades.length
+      @component.shades.concat(Array.new(required_shades, ''))
     end
   end
 

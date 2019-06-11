@@ -117,23 +117,23 @@ private
   end
 
   def render_is_mixed_step
-    if @notification.update_with_context(notification_params, :update_components_are_mixed)
-      if @notification.components_are_mixed
-        render_wizard @notification
-      else
+    if @notification.update_with_context(notification_params, step)
+      unless @notification.components_are_mixed
         clear_ph_range
-        redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :add_new_component)
+        jump_to(next_step(:ph_range))
       end
+      render_wizard @notification
     else
       render step
     end
   end
 
   def render_is_hair_dye_step
-    case params[:notification] && params[:notification][:is_hair_dye]
-    when "true"
-      redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :ph_range)
-    when "false"
+    case params.dig(:notification, :is_hair_dye)
+    when "yes"
+      jump_to(next_step(:is_ph_between_3_and_10))
+      render_wizard @notification
+    when "no"
       render_wizard @notification
     else
       @notification.errors.add :is_hair_dye, "Must select an option"
@@ -142,11 +142,12 @@ private
   end
 
   def render_is_ph_between_3_and_10_step
-    case params[:notification] && params[:notification][:is_ph_between_3_and_10]
-    when "true"
+    case params.dig(:notification, :is_ph_between_3_and_10)
+    when "yes"
+      render_wizard @notification
+    when "no"
       clear_ph_range
-      redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :add_new_component)
-    when "false"
+      jump_to(next_step(:ph_range))
       render_wizard @notification
     else
       @notification.errors.add :is_ph_between_3_and_10, "Must select an option"
@@ -203,17 +204,20 @@ private
   end
 
   def render_add_internal_reference
-    if params[:notification].present? && params[:notification][:add_internal_reference] == "yes"
-      if params[:notification][:industry_reference].blank?
-        @notification.errors.add :industry_reference, "Please enter an internal reference"
-        return render step
+    case params.dig(:notification, :add_internal_reference)
+    when "yes"
+      if @notification.update_with_context(notification_params, step)
+        render_wizard @notification
+      else
+        render step
       end
-      @notification.update industry_reference: params[:notification][:industry_reference]
-    elsif params[:notification].blank? || params[:notification][:add_internal_reference].blank?
+    when "no"
+      @notification.industry_reference = nil
+      render_wizard @notification
+    else
       @notification.errors.add :add_internal_reference, "Please select an option"
-      return render step
+      render step
     end
-    render_wizard @notification
   end
 
   def clear_ph_range

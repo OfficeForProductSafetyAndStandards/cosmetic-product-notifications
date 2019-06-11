@@ -20,5 +20,5 @@ ruby:
       = render "form_components/govuk_radios", form: form, key: :confirm_restrictions,
               fieldset: { legend: { html: question, classes: "govuk-label--xl", isPageHeading: true } },
               hint: { html: hint },
-              items: [{ text: "Yes", value: "true" }, { text: "No", value: "false" }]
+              items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

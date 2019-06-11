@@ -34,8 +34,9 @@ class Notification < ApplicationRecord
             allow_nil: true
   validates :cpnp_reference, presence: true, on: :file_upload
   validates :import_country, presence: true, on: :add_import_country
+  validates :industry_reference, presence: true, on: :add_internal_reference
   validates :under_three_years, inclusion: { in: [true, false] }, on: :for_children_under_three
-  validates :components_are_mixed, inclusion: { in: [true, false] }, on: :update_components_are_mixed
+  validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
   validates :ph_min_value, :ph_max_value, presence: true, on: :ph_range
   validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 },
             allow_nil: true
