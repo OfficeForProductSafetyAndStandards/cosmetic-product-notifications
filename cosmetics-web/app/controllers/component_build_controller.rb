@@ -143,16 +143,12 @@ private
 
   def render_number_of_shades
     case params[:number_of_shades]
-    when "single-or-no-shades"
+    when "single-or-no-shades", "multiple-shades-different-notification"
       @component.shades = nil
       @component.add_shades
       @component.save
-      redirect_to wizard_path(:add_physical_form, component_id: @component.id)
-    when "multiple-shades-different-notification"
-      @component.shades = nil
-      @component.add_shades
-      @component.save
-      redirect_to wizard_path(:add_physical_form, component_id: @component.id)
+      jump_to(next_step(:add_shades))
+      render_wizard @component
     when "multiple-shades-same-notification"
       render_wizard @component
     when ""
@@ -193,7 +189,8 @@ private
       render_wizard @component
     when "no"
       destroy_all_cmrs
-      redirect_to wizard_path(:contains_nanomaterials, component_id: @component.id)
+      jump_to(next_step(:add_cmrs))
+      render_wizard @component
     else
       @component.errors.add :contains_cmrs, "Please select an option"
       render step
@@ -216,7 +213,8 @@ private
       render_wizard @component
     when "no"
       @nano_material.destroy if @nano_material.present?
-      redirect_to wizard_path(:select_category, component_id: @component.id)
+      jump_to(next_step(:list_nanomaterials))
+      render_wizard @component
     else
       @component.errors.add :contains_nanomaterials, "Please select an option"
       render step
@@ -264,7 +262,7 @@ private
         render_wizard @component
       end
     else
-      @component.errors.add :sub_category, "Please select an option"
+      @component.errors.add :sub_category, "Choose an option"
       render step
     end
   end
@@ -277,11 +275,11 @@ private
     @component.update(component_params)
     if @component.predefined?
       @component.formulation_file.delete if @component.formulation_file.attached?
-      render_wizard @component
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
-      redirect_to wizard_path(:upload_formulation, component_id: @component.id)
+      jump_to(next_step(:select_frame_formulation))
     end
+    render_wizard @component
   end
 
   def render_select_frame_formulation

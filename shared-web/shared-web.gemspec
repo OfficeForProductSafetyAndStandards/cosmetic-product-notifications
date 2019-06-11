@@ -7,7 +7,8 @@ Gem::Specification.new do |s|
   s.summary     = "Shared functionality for OPSS applications."
 
   s.add_dependency "active_hash", "2.2.1"
-  s.add_dependency "aws-sdk-s3", "1.41.0"
+  s.add_dependency "aws-sdk-s3", "1.42.0"
+  s.add_dependency "elasticsearch", "6.3.1"
   s.add_dependency "elasticsearch-model", "6.0.0"
   s.add_dependency "elasticsearch-rails", "6.0.0"
   s.add_dependency "govuk_notify_rails", "2.1.0"
@@ -21,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sentry-raven", "2.9.0"
   s.add_dependency "sidekiq", "5.2.7"
   s.add_dependency "sidekiq-cron", "1.1.0"
-  s.add_dependency "slowpoke", "0.2.1"
-  s.add_dependency "webpacker", "4.0.6"
+  s.add_dependency "slowpoke", "0.3.0"
+  s.add_dependency "webpacker", "4.0.7"
   s.add_dependency "will_paginate", "3.1.7"
 end
