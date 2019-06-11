@@ -20,10 +20,11 @@ module InvestigationsHelper
   def filter_params
     filters = {}
     filters.merge!(get_status_filter)
-    filters.merge!(get_assignee_filter)
-    filters.merge!(get_type_filter)
+    filters.merge!(get_assignee_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
+    filters.merge!(get_type_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
   end
 
+# This stops merge overwriting the "should" filters in the elasticsearch hash.
   def get_status_filter
     return {} if params[:status_open] == params[:status_closed]
 
@@ -32,25 +33,25 @@ module InvestigationsHelper
              else
                { is_closed: true }
              end
-    { must: { term: status } }
+    { must: [{ term: status }]}
   end
 
   def get_type_filter
     return {} if params[:allegation] == "unchecked" && params[:enquiry] == "unchecked" && params[:project] == "unchecked"
 
-    array_of_types = []
-    array_of_types << "Investigation::Allegation" if params[:allegation] == "checked"
-    array_of_types << "Investigation::Enquiry" if params[:enquiry] == "checked"
-    array_of_types << "Investigation::Project" if params[:project] == "checked"
-    type = { type: array_of_types }
-    { should: { terms: type } }
+    types = []
+    types << "Investigation::Allegation" if params[:allegation] == "checked"
+    types << "Investigation::Enquiry" if params[:enquiry] == "checked"
+    types << "Investigation::Project" if params[:project] == "checked"
+    type = { type: types }
+    { must: [{ terms: type }] }
   end
 
   def get_assignee_filter
     return { should: [], must_not: [] } if no_boxes_checked
     return { should: [], must_not: compute_excluded_terms } if assignee_filter_exclusive
 
-    { should: compute_included_terms, must_not: [] }
+    { must: compute_included_terms, must_not: [] }
   end
 
   def no_boxes_checked
