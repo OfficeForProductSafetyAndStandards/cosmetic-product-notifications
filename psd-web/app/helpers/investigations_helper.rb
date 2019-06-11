@@ -20,8 +20,8 @@ module InvestigationsHelper
   def filter_params
     filters = {}
     filters.merge!(get_status_filter)
-    filters.merge!(get_assignee_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
-    filters.merge!(get_type_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
+    filters.merge!(get_assignee_filter) { |_key, current_filters, new_filters| current_filters + new_filters }
+    filters.merge!(get_type_filter) { |_key, current_filters, new_filters| current_filters + new_filters }
   end
 
   def get_status_filter
@@ -32,7 +32,7 @@ module InvestigationsHelper
              else
                { is_closed: true }
              end
-    { must: [{ term: status }]}
+    { must: [{ term: status }] }
   end
 
   def get_type_filter
