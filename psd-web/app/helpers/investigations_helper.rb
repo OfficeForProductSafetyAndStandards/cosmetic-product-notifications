@@ -20,11 +20,8 @@ module InvestigationsHelper
   def filter_params
     filters = {}
     filters.merge!(get_status_filter)
-    filters.merge!(get_merged_user_filters)
-  end
-
-  def get_merged_user_filters
-    get_creator_filter.merge!(get_assignee_filter) { |_key, assignee, creator| assignee + creator }
+    filters.merge!(get_assignee_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
+    filters.merge!(get_creator_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
   end
 
   def get_status_filter
@@ -35,14 +32,14 @@ module InvestigationsHelper
              else
                { is_closed: true }
              end
-    { must: { term: status } }
+    { must: [{ term: status }] }
   end
 
   def get_assignee_filter
     return { should: [], must_not: [] } if no_assignee_boxes_checked
     return { should: [], must_not: compute_excluded_terms } if assignee_filter_exclusive
 
-    { should: compute_included_terms, must_not: [] }
+    { must: compute_included_terms, must_not: [] }
   end
 
   def no_assignee_boxes_checked
