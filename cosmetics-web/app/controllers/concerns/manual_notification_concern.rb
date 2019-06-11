@@ -3,7 +3,9 @@ module ManualNotificationConcern
   include Wicked::Wizard
 
   def notification
-    if params[:notification_id]
+    if params[:notification_reference_number]
+      Notification.find_by reference_number: params[:notification_reference_number]
+    elsif params[:notification_id]
       Notification.find(params[:notification_id])
     elsif params[:component_id]
       component = Component.find(params[:component_id])

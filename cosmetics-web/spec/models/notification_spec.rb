@@ -27,4 +27,15 @@ RSpec.describe Notification, type: :model do
       expect(notification.errors[:product_name]).to include('must not be blank')
     end
   end
+
+  describe "updating under three years" do
+    it "adds errors if under_three_years updated to be blank" do
+      notification = create(:notification)
+
+      notification.under_three_years = nil
+      notification.save(context: :for_children_under_three)
+
+      expect(notification.errors[:under_three_years]).to include('Choose an option')
+    end
+  end
 end
