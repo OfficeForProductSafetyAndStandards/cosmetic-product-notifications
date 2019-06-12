@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "Account registration", type: :system do
+  before do
+    configure_requests_for_submit_domain
+  end
+
+  after do
+    reset_domain_request_mocking
+  end
+
   it "can be accessed from the landing page" do
     visit root_path
     click_on "Create an account"

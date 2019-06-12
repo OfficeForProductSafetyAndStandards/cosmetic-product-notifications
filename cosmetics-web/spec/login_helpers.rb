@@ -19,10 +19,12 @@ module LoginHelpers
 
   def sign_in_as_poison_centre_user(user: build(:user))
     sign_in(as_user: user, with_roles: [:poison_centre_user])
+    configure_requests_for_search_domain
   end
 
   def sign_in_as_msa_user(user: build(:user))
     sign_in(as_user: user, with_roles: [:msa_user])
+    configure_requests_for_search_domain
   end
 
   # rubocop:disable RSpec/AnyInstance
@@ -33,8 +35,12 @@ module LoginHelpers
     allow(Keycloak::Client).to receive(:has_role?).and_call_original
 
     allow_any_instance_of(ApplicationController).to receive(:access_token).and_call_original
+
+    reset_domain_request_mocking
   end
   # rubocop:enable RSpec/AnyInstance
+
+private
 
   def format_user_for_get_userinfo(user, groups: [])
     { sub: user[:id], email: user[:email], groups: groups, given_name: user[:name], family_name: "n/a" }.to_json

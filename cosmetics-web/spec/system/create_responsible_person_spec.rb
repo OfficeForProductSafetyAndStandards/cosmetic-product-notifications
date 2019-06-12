@@ -6,6 +6,7 @@ RSpec.describe "Create a responsible person", type: :system do
   let(:business_responsible_person) { create(:business_responsible_person) }
 
   before do
+    configure_requests_for_submit_domain
     sign_in(as_user: user)
     stub_notify_mailer
   end

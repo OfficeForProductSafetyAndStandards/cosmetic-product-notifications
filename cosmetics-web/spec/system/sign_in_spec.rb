@@ -71,17 +71,20 @@ RSpec.describe "After signing in", type: :system do
 private
 
   def sign_in_as_business_user
+    configure_requests_for_submit_domain
     user = create(:keycloak_test_user)
     sign_in as_user: user
   end
 
   def sign_in_as_member_of_responsible_person
+    configure_requests_for_submit_domain
     user = create(:keycloak_test_user)
     responsible_person.add_user user
     sign_in as_user: user
   end
 
   def sign_in_as_poison_centre_user
+    configure_requests_for_search_domain
     user = create(:keycloak_poison_centre_user)
     sign_in as_user: user
   end
@@ -99,5 +102,6 @@ private
 
   def sign_out
     click_on "Sign out"
+    reset_domain_request_mocking
   end
 end
