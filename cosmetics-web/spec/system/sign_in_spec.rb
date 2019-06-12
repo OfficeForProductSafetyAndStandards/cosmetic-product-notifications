@@ -90,7 +90,7 @@ private
   end
 
   def sign_in(as_user:)
-    visit root_path
+    visit root_url
     click_on "Sign in", match: :first
 
     assert_text "Sign in to submit cosmetic product notifications"

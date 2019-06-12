@@ -10,7 +10,7 @@ RSpec.describe "Account registration", type: :system do
   end
 
   it "can be accessed from the landing page" do
-    visit root_path
+    visit root_url
     click_on "Create an account"
 
     assert_text "Your details"
@@ -18,7 +18,7 @@ RSpec.describe "Account registration", type: :system do
   end
 
   it "can be accessed from the sign in page" do
-    visit root_path
+    visit root_url
     click_on "Sign in"
     click_on "create an account"
 
@@ -30,7 +30,7 @@ RSpec.describe "Account registration", type: :system do
     create_new_account
 
     fill_in "Full name", with: "New User"
-    fill_in "Work email address", with: "test@example.com"
+    fill_in "Work email address", with: "test#{rand(100)}@example.com"
     fill_in "Mobile phone number", with: "07797 900982"
     fill_in "Password", with: "complex_password"
     fill_in "Confirm password", with: "complex_password"
@@ -43,7 +43,7 @@ RSpec.describe "Account registration", type: :system do
 private
 
   def create_new_account
-    visit root_path
+    visit root_url
     click_on "Create an account"
   end
 end
