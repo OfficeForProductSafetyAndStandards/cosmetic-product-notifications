@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include Shared::Web::Concerns::CacheConcern
   include Shared::Web::Concerns::HttpAuthConcern
   include Shared::Web::Concerns::RavenConfigurationConcern
+  include DomainConcern
 
   helper Shared::Web::Engine.helpers
 
@@ -11,6 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :set_current_user
   before_action :set_raven_context
   before_action :set_cache_headers
+  before_action :set_service_name
 
   before_action :authorize_user!
   before_action :has_accepted_declaration

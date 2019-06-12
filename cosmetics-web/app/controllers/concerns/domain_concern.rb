@@ -19,6 +19,10 @@ module DomainConcern
 
 private
 
+  def set_service_name
+    @service_name = search_domain? ? "Search cosmetic product notifications" : "Submit cosmetic product notifications"
+  end
+
   def submit_domains
     ENV["SUBMIT_HOST"].split(',')
   end
