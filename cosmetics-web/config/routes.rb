@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   mount Shared::Web::Engine => '/', as: 'shared_engine'
 
   constraints DomainConstraint.new(ENV["SEARCH_HOST"]) do
+    root "landing_page#index"
+
     scope module: "poison_centres", as: "poison_centre" do
       resources :notifications, param: :reference_number, only: %i[index show]
     end

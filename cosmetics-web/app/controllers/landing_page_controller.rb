@@ -5,7 +5,13 @@ class LandingPageController < ApplicationController
   before_action :redirect_poison_centre_users
   before_action :set_responsible_person
 
-  def index; end
+  def index
+    if search_domain?
+      render "search_landing_page"
+    else
+      render "submit_landing_page"
+    end
+  end
 
 private
 
