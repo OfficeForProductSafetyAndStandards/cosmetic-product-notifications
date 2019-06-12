@@ -16,12 +16,17 @@ class ApplicationController < ActionController::Base
   before_action :has_accepted_declaration
   before_action :create_or_join_responsible_person
 
+  helper_method :search_domain_url, :submit_domain_url
+
   add_flash_types :confirmation
 
 private
 
   def authorize_user!
-    raise Pundit::NotAuthorizedError if poison_centre_or_msa_user?
+    return unless user_signed_in?
+
+    incorrect_domain = (submit_domain? && poison_centre_or_msa_user?) || (search_domain? && !poison_centre_or_msa_user?)
+    redirect_to(invalid_account_path) if incorrect_domain
   end
 
   def has_accepted_declaration

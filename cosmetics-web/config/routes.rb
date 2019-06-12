@@ -82,6 +82,8 @@ Rails.application.routes.draw do
     get :privacy_notice, path: "privacy-notice"
   end
 
+  get "invalid-account", to: "errors#invalid_account", as: :invalid_account
+
   match "/404", to: "errors#not_found", via: :all
   match "/403", to: "errors#forbidden", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
