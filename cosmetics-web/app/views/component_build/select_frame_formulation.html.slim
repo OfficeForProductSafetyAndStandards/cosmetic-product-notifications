@@ -1,16 +1,18 @@
-- content_for :page_title, "Choose frame formulation"
+- title = "Choose frame formulation"
+- question = "Choose frame formulation"
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-= form_with(model: @component, url: wizard_path, method: :put) do |form|
+= form_with model: @component, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_select", form: form, key: :frame_formulation,
               show_all_values: true, is_autocomplete: true,
-              label: { text: "Choose frame formulation", classes: "govuk-label--xl", isPageHeading: true },
+              label: { text: question, classes: "govuk-label--xl", isPageHeading: true },
               items: Component.frame_formulations.keys.map { |formulation_key| \
                 { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
               }
-      .govuk-form-group
-        = form.submit "Continue", class: "govuk-button"
+      = form.submit "Continue", class: "govuk-button"

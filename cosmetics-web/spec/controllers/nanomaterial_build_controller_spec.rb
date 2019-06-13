@@ -106,13 +106,13 @@ RSpec.describe NanomaterialBuildController, type: :controller do
     describe "at confirm_restrictions" do
       let(:confirm_restrictions_params) { params.merge(id: :confirm_restrictions) }
 
-      it "redirects to the next page when the confirm_restrictions is true" do
-        post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "true" }))
+      it "redirects to the next page when the confirm_restrictions is yes" do
+        post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "yes" }))
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :confirm_usage))
       end
 
-      it "redirects to the next unhappy path when the confirm_restrictions is false" do
-        post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "false" }))
+      it "redirects to the next unhappy path when the confirm_restrictions is no" do
+        post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "no" }))
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :unhappy_path))
       end
 
@@ -125,13 +125,13 @@ RSpec.describe NanomaterialBuildController, type: :controller do
     describe "at confirm_usage" do
       let(:confirm_usage_params) { params.merge(id: :confirm_usage) }
 
-      it "redirects to the next page when the confirm_usage is true" do
-        post(:update, params: confirm_usage_params.merge(nano_element: { confirm_usage: "true" }))
+      it "redirects to the next page when the confirm_usage is yes" do
+        post(:update, params: confirm_usage_params.merge(nano_element: { confirm_usage: "yes" }))
         expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element2))
       end
 
-      it "redirects to the next unhappy path when the confirm_usage is false" do
-        post(:update, params: confirm_usage_params.merge(nano_element: { confirm_usage: "false" }))
+      it "redirects to the next unhappy path when the confirm_usage is no" do
+        post(:update, params: confirm_usage_params.merge(nano_element: { confirm_usage: "no" }))
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :unhappy_path))
       end
 

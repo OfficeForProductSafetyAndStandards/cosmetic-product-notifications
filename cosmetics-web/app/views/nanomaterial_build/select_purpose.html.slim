@@ -1,4 +1,8 @@
-- content_for :page_title, "Select nano-material purpose"
+- title = "Select nano-material purpose"
+- question = "What is the purpose of #{@nano_element.inci_name}?"
+- items = nano_elements_purposes.map { |key, value| { text: value, value: key } }
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
@@ -7,9 +11,6 @@
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :purpose,
-              fieldset: { legend: { text: "What is the purpose of #{@nano_element.inci_name}?",
-                      classes: "govuk-label--xl", isPageHeading: true } },
-              items: nano_elements_purposes.map { |key, value| \
-                { text: value, value: key } \
-              }
+              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              items: items
       = form.submit "Continue", class: "govuk-button"

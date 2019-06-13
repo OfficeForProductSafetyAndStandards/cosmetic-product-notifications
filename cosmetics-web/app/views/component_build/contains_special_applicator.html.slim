@@ -1,0 +1,17 @@
+- question = "Does #{@component_name} come in an applicator?"
+- hint = "For example, a spray, a patch or encapsulated"
+
+- content_for :page_title, question
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with model: @component, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_radios", form: form, key: :contains_special_applicator,
+            fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+            hint: { text: hint },
+            items: [{ text: "Yes", value: :yes },
+                    { text: "No", value: :no }]
+      = form.submit "Continue", class: "govuk-button"
