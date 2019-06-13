@@ -6,7 +6,7 @@ applications:
   buildpacks:
     - https://github.com/kirmerzlikin/keycloak-buildpack
   path: package
-  command: export $(./env/get-keycloak-env-from-vcap.sh) && JAVA_HOME=$PWD/.java-buildpack/open_jdk_jre JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/bin/jvmkill-1.16.0_RELEASE=printHeapHistogram=1 -Djava.io.tmpdir=$TMPDIR $CALCULATED_MEMORY -Djboss.http.port=$PORT -Djava.net.preferIPv4Stack=true -Dio.undertow.disable-file-system-watcher=true -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.strategy=IGNORE_EXISTING -Dkeycloak.migration.file=$PWD/initial-setup.json" exec $PWD/bin/standalone.sh --server-config standalone-ha.xml -b 0.0.0.0
+  command: export $(./env/get-keycloak-env-from-vcap.sh) && JAVA_HOME=$PWD/.java-buildpack/open_jdk_jre JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/bin/jvmkill-1.16.0_RELEASE=printHeapHistogram=1 -Djava.io.tmpdir=$TMPDIR $CALCULATED_MEMORY -Djboss.http.port=$PORT -Djava.net.preferIPv4Stack=true -Dio.undertow.disable-file-system-watcher=true -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.strategy=IGNORE_EXISTING -Dkeycloak.migration.file=$PWD/configuration/initial-setup.json" exec $PWD/bin/standalone.sh --server-config standalone-ha.xml -b 0.0.0.0
   stack: cflinuxfs3
   services:
     - keycloak-database

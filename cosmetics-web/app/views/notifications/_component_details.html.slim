@@ -3,7 +3,7 @@
     th.govuk-table__header[scope="row"]
       | Contains CMR substances
     td.govuk-table__cell
-      - component.cmrs.any? ? "Yes" : "No"
+      = component.cmrs.any? ? "Yes" : "No"
     - if component.cmrs.any?
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
