@@ -41,25 +41,25 @@ module ManualNotificationConcern
     params.dig(:notification, param)
   end
 
-  def skip_next_steps(number_of_steps = 1)
+  def skip_next_steps(steps_to_skip)
     step = @step
-    number_of_steps.times do
+    steps_to_skip.times do
       step = next_step(step)
     end
     jump_to(next_step(step))
-    render_wizard object
+    render_wizard model
   end
 
-  def yes_no_question(param, yes_is_to_skip, before_skip_callback = nil, before_render_callback = nil, number_of_steps = 1)
+  def yes_no_question(param, no_is_to_skip: true, before_skip: nil, before_render: nil, steps_to_skip: 1)
     case yes_no_param(param)
-    when yes_is_to_skip ? "yes" : "no"
-      before_skip_callback&.call
-      skip_next_steps(number_of_steps)
-    when yes_is_to_skip ? "no" : "yes"
-      before_render_callback&.call
-      render_wizard object
+    when no_is_to_skip ? "no" : "yes"
+      before_skip&.call
+      skip_next_steps(steps_to_skip)
+    when no_is_to_skip ? "yes" : "no"
+      before_render&.call
+      render_wizard model
     else
-      object.errors.add param, "Choose an option"
+      model.errors.add param, "Choose an option"
       render step
     end
   end

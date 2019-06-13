@@ -129,11 +129,11 @@ private
   end
 
   def render_is_hair_dye_step
-    yes_no_question(:is_hair_dye, true)
+    yes_no_question(:is_hair_dye, no_is_to_skip: false)
   end
 
   def render_is_ph_between_3_and_10_step
-    yes_no_question(:is_ph_between_3_and_10, false, method(:clear_ph_range))
+    yes_no_question(:is_ph_between_3_and_10, before_skip: method(:clear_ph_range))
   end
 
   def render_is_imported_step
@@ -141,7 +141,7 @@ private
       @notification.import_country = nil
       @notification.add_import_country
     end
-    yes_no_question(:is_imported, false, remove_import_country)
+    yes_no_question(:is_imported, before_skip: remove_import_country)
   end
 
   def render_add_new_component_step
