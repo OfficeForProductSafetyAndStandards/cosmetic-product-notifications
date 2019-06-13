@@ -284,13 +284,13 @@ private
   def get_previous_step
     case step
     when :add_physical_form
-      @component.shades.nil? ? :number_of_shades : :add_shades
+      @component.shades.present? ? :add_shades : :number_of_shades
     when :contains_nanomaterials
-      @component.cmrs.empty? ? :contains_cmrs : :add_cmrs
+      @component.cmrs.present? ? :add_cmrs : :contains_cmrs
     when :contains_cmrs
-      @component.special_applicator.blank? ? :contains_special_applicator : :select_special_applicator_type
+      @component.special_applicator.present? ? :select_special_applicator_type : :contains_special_applicator
     when :select_category
-      @nano_material.nil? ? :contains_nanomaterials : :list_nanomaterials
+      @component.nano_material.present? ? :list_nanomaterials : :contains_nanomaterials
     when :select_frame_formulation
       :select_formulation_type
     end
