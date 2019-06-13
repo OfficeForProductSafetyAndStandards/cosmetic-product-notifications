@@ -32,8 +32,7 @@ module ManualNotificationConcern
   end
 
   def yes_no_param(param)
-    model_name = model.class.name.downcase.to_sym
-    params.dig(model_name, param)
+    params.dig(model.model_name.param_key, param)
   end
 
   def skip_next_steps(steps_to_skip)
