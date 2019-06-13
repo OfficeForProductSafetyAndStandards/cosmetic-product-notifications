@@ -305,7 +305,7 @@ product = Product.create!(
   description: "",
   product_code: "Models: Black and The Golden Year; 15800 E11115/ 1804",
   name: "Lynx Shower speaker with USB charger",
-  category: "Low Voltage Equipment (inc. plugs & sockets)",
+  category: "Low voltage equipment (inc. plugs & sockets)",
   product_type: "Shower speaker with USB charger",
   webpage: ""
 )
@@ -323,7 +323,7 @@ investigation = Investigation::Allegation.new(
   is_closed: false,
   user_title: nil,
   hazard_type: "Fire/burn",
-  product_category: "Small Electronics",
+  product_category: "Small electronics",
   is_private: false,
   hazard_description: nil,
   non_compliant_reason: nil,
@@ -346,7 +346,7 @@ product = Product.create!(
   description: "",
   product_code: "PN 2124531316474, TJ-65-195334",
   name: "Batterytec Battery charger",
-  category: "Small Electronics",
+  category: "Small electronics",
   product_type: "Replacement AC/DC adaptor",
   webpage: ""
 )
@@ -372,7 +372,7 @@ investigation = Investigation::Allegation.new(
   is_closed: false,
   user_title: nil,
   hazard_type: "Asphyxiation",
-  product_category: "Baby/Children's Products",
+  product_category: "Baby/children's products",
   is_private: false,
   hazard_description: nil,
   non_compliant_reason: nil,

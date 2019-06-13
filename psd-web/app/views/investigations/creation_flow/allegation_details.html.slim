@@ -13,10 +13,10 @@
               label: { text: "What is being alleged?", classes: "govuk-label--m" }
       = render "form_components/govuk_select", choices: product_categories, key: :product_category, form: form,
               show_all_values: true, is_autocomplete: true,
-              label: { text: "Product Category", classes: "govuk-label--m" }
+              label: { text: "Product category", classes: "govuk-label--m" }
       = render "form_components/govuk_select", choices: hazard_types, key: :hazard_type, form: form,
               show_all_values: true, is_autocomplete: true,
-              label: { text: "Hazard Type", classes: "govuk-label--m" }
+              label: { text: "Hazard type", classes: "govuk-label--m" }
 
       .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation.errors))
         = render "components/govuk_label",
