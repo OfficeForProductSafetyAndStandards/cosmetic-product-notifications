@@ -17,8 +17,8 @@ class ComponentBuildController < ApplicationController
         :list_nanomaterials,
         :select_category,
         :select_formulation_type,
-        :select_frame_formulation,
-        :upload_formulation
+        :upload_formulation,
+        :select_frame_formulation
 
   before_action :set_component
   before_action :set_nano_material
@@ -58,8 +58,6 @@ class ComponentBuildController < ApplicationController
       render_select_category_step
     when :select_formulation_type
       render_select_formulation_type
-    when :select_frame_formulation
-      render_select_frame_formulation
     when :upload_formulation
       render_upload_formulation
     else
@@ -260,19 +258,11 @@ private
 
     if @component.predefined?
       @component.formulation_file.delete if @component.formulation_file.attached?
+      jump_to(next_step(:upload_formulation))
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
-      jump_to(next_step(:select_frame_formulation))
     end
     render_wizard @component
-  end
-
-  def render_select_frame_formulation
-    if @component.update_with_context(component_params, step)
-      redirect_to finish_wizard_path
-    else
-      render step
-    end
   end
 
   def render_upload_formulation
@@ -301,7 +291,7 @@ private
       @component.special_applicator.blank? ? :contains_special_applicator : :select_special_applicator_type
     when :select_category
       @nano_material.nil? ? :contains_nanomaterials : :list_nanomaterials
-    when :upload_formulation
+    when :select_frame_formulation
       :select_formulation_type
     end
   end
