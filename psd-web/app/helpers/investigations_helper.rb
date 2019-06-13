@@ -20,8 +20,18 @@ module InvestigationsHelper
   def filter_params
     filters = {}
     filters.merge!(get_status_filter)
-    filters.merge!(get_assignee_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
-    filters.merge!(get_creator_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
+    p merged_user_filters
+    # filters.merge!(merged_user_filters){ |_key, assignee, creator| assignee + creator }
+  end
+
+  def merged_user_filters
+    # { must: [{nested: {query: {[{ bool: {[should: get_assignee_filter, get_creator_filter]}}]}}}]}
+    # { must: [{nested:{ path: ""} {query: {bool: get_user_filters}}}]}
+    { must: [get_user_filters] }
+  end
+
+  def get_user_filters
+    get_assignee_filter.merge!(get_creator_filter){ |_key, assignee, creator| assignee + creator }
   end
 
   def get_status_filter
@@ -39,7 +49,7 @@ module InvestigationsHelper
     return { should: [], must_not: [] } if no_assignee_boxes_checked
     return { should: [], must_not: compute_excluded_terms } if assignee_filter_exclusive
 
-    { must: compute_included_terms, must_not: [] }
+    { should: compute_included_terms, must_not: [] }
   end
 
   def no_assignee_boxes_checked
