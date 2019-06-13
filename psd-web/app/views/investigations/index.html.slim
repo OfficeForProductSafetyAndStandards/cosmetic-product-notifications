@@ -57,6 +57,11 @@
         = render "form_components/govuk_checkboxes", form: form, key: :created_by,
           fieldset: { legend: { text: "Created by", classes: "govuk-fieldset__legend--s" } },
           items: created_by_items
+        = render "form_components/govuk_checkboxes", form: form, key: :type,
+                 fieldset: { legend: { text: "Type", classes: "govuk-fieldset__legend--s" } },
+                 items: [{ key: "allegation", value: "checked", unchecked_value: "unchecked", text: "Allegation" },
+                 { key: "enquiry", value: "checked", unchecked_value: "unchecked", text: "Enquiry" },
+                 { key: "project", value: "checked", unchecked_value: "unchecked", text: "Project" }]
         = render "form_components/govuk_checkboxes", form: form, key: :status,
                  fieldset: { legend: { text: "Status", classes: "govuk-fieldset__legend--s" } },
                  items: [{ key: "status_open", value: "checked", unchecked_value: "unchecked", text: "Open" },

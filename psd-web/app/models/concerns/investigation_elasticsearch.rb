@@ -9,6 +9,7 @@ module InvestigationElasticsearch
     settings do
       mappings do
         indexes :status, type: :keyword
+        indexes :type, type: :keyword
         indexes :assignable_id, type: :keyword
         indexes :creator_id, type: :keyword
       end
@@ -16,7 +17,7 @@ module InvestigationElasticsearch
 
     def as_indexed_json(*)
       as_json(
-        only: %i[description hazard_type product_category is_closed assignable_id updated_at created_at pretty_id
+        only: %i[description hazard_type product_category is_closed assignable_id type updated_at created_at pretty_id
                  hazard_description non_compliant_reason],
         methods: %i[title creator_id],
         include: {

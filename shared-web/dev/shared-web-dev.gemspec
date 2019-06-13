@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   # Test & static analysis dependencies
   s.add_dependency "brakeman", "4.5.1"
-  s.add_dependency "capybara", "3.22.0"
+  s.add_dependency "capybara", "3.23.0"
   s.add_dependency "coveralls", "0.8.23"
   s.add_dependency "govuk-lint", "3.11.2"
   s.add_dependency "rubocop", "0.71.0"
@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   # Dev improvements & debugging
   s.add_dependency "debase", "0.2.2"
   s.add_dependency "listen", "3.1.5"
-  s.add_dependency "ruby-debug-ide", "0.6.1"
+  s.add_dependency "ruby-debug-ide", "0.7.0"
   s.add_dependency "solargraph", "0.32.5"
 end

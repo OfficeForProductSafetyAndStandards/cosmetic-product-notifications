@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 <!-- ### Product safety database -->
-- New service navigation
+- Filter by case type
+- - New service navigation
 - Welcome email
 - Product search
 - Cookie banner

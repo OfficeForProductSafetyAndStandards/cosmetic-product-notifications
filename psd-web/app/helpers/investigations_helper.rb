@@ -20,8 +20,10 @@ module InvestigationsHelper
   def filter_params
     filters = {}
     filters.merge!(get_status_filter)
-    p merged_user_filters
-    # filters.merge!(merged_user_filters){ |_key, assignee, creator| assignee + creator }
+    filters.merge!(get_user_filters)
+    p "Filters below"
+    filters.merge!(get_type_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
+    p filters
   end
 
   def merged_user_filters
@@ -43,6 +45,17 @@ module InvestigationsHelper
                { is_closed: true }
              end
     { must: [{ term: status }] }
+  end
+
+  def get_type_filter
+    return {} if params[:allegation] == "unchecked" && params[:enquiry] == "unchecked" && params[:project] == "unchecked"
+
+    types = []
+    types << "Investigation::Allegation" if params[:allegation] == "checked"
+    types << "Investigation::Enquiry" if params[:enquiry] == "checked"
+    types << "Investigation::Project" if params[:project] == "checked"
+    type = { type: types }
+    { must: [{ terms: type }] }
   end
 
   def get_assignee_filter
@@ -165,10 +178,11 @@ module InvestigationsHelper
 
   def query_params
     set_default_status_filter
+    set_default_type_filter
     set_default_sort_by_filter
     set_default_assignee_filter
     set_default_creator_filter
-    params.permit(:q, :status_open, :status_closed, :page,
+    params.permit(:q, :status_open, :status_closed, :page, :allegation, :enquiry, :project,
                   :assigned_to_me, :assigned_to_someone_else, :assigned_to_someone_else_id, :sort_by, :created_by_me, :created_by_me, :created_by_someone_else, :created_by_someone_else_id,
                   assignee_teams_with_keys.map { |key, _t, _n| key }, creator_teams_with_keys.map { |key, _t, _n| key })
   end
@@ -193,6 +207,12 @@ module InvestigationsHelper
   def set_default_creator_filter
     params[:created_by_me] = "unchecked" if params[:created_by_me].blank?
     params[:created_by_someone_else] = "unchecked" if params[:created_by_someone_else].blank?
+  end
+
+  def set_default_type_filter
+    params[:allegation] = "unchecked" if params[:allegation].blank?
+    params[:enquiry] = "unchecked" if params[:enquiry].blank?
+    params[:project] = "unchecked" if params[:project].blank?
   end
 
   def build_breadcrumb_structure
