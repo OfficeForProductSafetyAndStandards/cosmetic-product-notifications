@@ -203,7 +203,8 @@ private
   def render_contains_nanomaterials
     yes_no_question(:contains_nanomaterials, false,
                     Proc.new { @nano_material.destroy if @nano_material.present? },
-                    Proc.new { @component.nano_material = NanoMaterial.create if @nano_material.nil? })
+                    Proc.new { @component.nano_material = NanoMaterial.create if @nano_material.nil? },
+                    3)
   end
 
   def render_add_exposure_routes

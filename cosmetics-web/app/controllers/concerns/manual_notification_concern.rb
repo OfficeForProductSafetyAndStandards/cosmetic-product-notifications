@@ -44,7 +44,7 @@ module ManualNotificationConcern
   def skip_next_steps(number_of_steps = 1)
     step = @step
     number_of_steps.times do
-      step = next_step(@step)
+      step = next_step(step)
     end
     jump_to(next_step(step))
     render_wizard object
