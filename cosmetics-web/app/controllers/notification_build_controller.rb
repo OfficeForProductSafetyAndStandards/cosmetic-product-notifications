@@ -222,4 +222,8 @@ private
   def post_eu_exit_steps
     %i[for_children_under_three]
   end
+
+  def model
+    @notification
+  end
 end

@@ -317,4 +317,8 @@ private
   def post_eu_exit_steps
     %i[add_cmrs contains_cmrs contains_special_applicator select_special_applicator_type]
   end
+
+  def model
+    @component
+  end
 end

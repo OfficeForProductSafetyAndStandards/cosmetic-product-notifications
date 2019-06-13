@@ -31,14 +31,9 @@ module ManualNotificationConcern
     step
   end
 
-  def object
-    @notification || @component
-  end
-
   def yes_no_param(param)
-    return params.dig(:component, param) if @component
-
-    params.dig(:notification, param)
+    model_name = model.class.name.downcase.to_sym
+    params.dig(model_name, param)
   end
 
   def skip_next_steps(steps_to_skip)
@@ -62,5 +57,15 @@ module ManualNotificationConcern
       model.errors.add param, "Choose an option"
       render step
     end
+  end
+
+  def post_eu_exit_steps
+    # If you want your controller to allow different post_eu steps, override this
+    []
+  end
+
+  def model
+    # If you want your controller to allow different post_eu steps, override this
+    raise "model method should be overridden"
   end
 end
