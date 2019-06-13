@@ -49,20 +49,20 @@ RSpec.describe Component, type: :model do
       expect(predefined_component.errors[:special_applicator]).to include("Choose an option")
     end
 
-    it "adds errors if other_special_applicator_package updated to be blank and it contains other applicator" do
+    it "adds errors if other_special_applicator updated to be blank and it contains other applicator" do
       predefined_component.special_applicator = "other"
-      predefined_component.other_special_applicator_package = nil
+      predefined_component.other_special_applicator = nil
       predefined_component.save(context: :select_special_applicator_type)
 
-      expect(predefined_component.errors[:other_special_applicator_package]).to include("Enter the type of applicator")
+      expect(predefined_component.errors[:other_special_applicator]).to include("Enter the type of applicator")
     end
 
-    it "removes other_special_applicator_package if the applicator type is not other" do
+    it "removes other_special_applicator if the applicator type is not other" do
       predefined_component.special_applicator = "encapsulated products"
-      predefined_component.other_special_applicator_package = "a package"
+      predefined_component.other_special_applicator = "a package"
       predefined_component.save
 
-      expect(predefined_component.other_special_applicator_package).to be_nil
+      expect(predefined_component.other_special_applicator).to be_nil
     end
   end
 end

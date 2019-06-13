@@ -55,7 +55,7 @@ en:
           attributes:
             special_applicator:
               blank: "Choose an option"
-            other_special_applicator_package:
+            other_special_applicator:
               blank: "Enter the type of applicator"
         trigger_question:
           attributes:

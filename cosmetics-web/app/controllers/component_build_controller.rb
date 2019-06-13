@@ -132,7 +132,7 @@ private
         :name,
         :physical_form,
         :special_applicator,
-        :other_special_applicator_package,
+        :other_special_applicator,
         :sub_sub_category,
         :notification_type,
         :frame_formulation,
