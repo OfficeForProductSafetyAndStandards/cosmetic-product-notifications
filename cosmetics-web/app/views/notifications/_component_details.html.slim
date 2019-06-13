@@ -97,7 +97,7 @@ tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Applicator type
     td.govuk-table__cell
-      = component.other_special_applicator.presence || get_special_applicator_name(component.special_applicator)
+      = component_special_applicator_name(component)
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Acute poisoning information
