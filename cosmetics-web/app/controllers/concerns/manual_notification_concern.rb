@@ -30,4 +30,41 @@ module ManualNotificationConcern
 
     step
   end
+
+  def yes_no_param(param)
+    params.dig(model.model_name.param_key, param)
+  end
+
+  def skip_next_steps(steps_to_skip)
+    step = @step
+    steps_to_skip.times do
+      step = next_step(step)
+    end
+    jump_to(next_step(step))
+    render_wizard model
+  end
+
+  def yes_no_question(param, no_is_to_skip: true, before_skip: nil, before_render: nil, steps_to_skip: 1)
+    case yes_no_param(param)
+    when no_is_to_skip ? "no" : "yes"
+      before_skip&.call
+      skip_next_steps(steps_to_skip)
+    when no_is_to_skip ? "yes" : "no"
+      before_render&.call
+      render_wizard model
+    else
+      model.errors.add param, "Choose an option"
+      render step
+    end
+  end
+
+  def post_eu_exit_steps
+    # If you want your controller to allow different post_eu steps, override this
+    []
+  end
+
+  def model
+    # If you want your controller to allow different post_eu steps, override this
+    raise "model method should be overridden"
+  end
 end

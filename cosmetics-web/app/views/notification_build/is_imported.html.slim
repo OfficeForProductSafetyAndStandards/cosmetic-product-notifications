@@ -1,21 +1,15 @@
-- content_for :page_title, "Is the cosmetic imported into the UK"
+- question = "Is the cosmetic product imported into the UK?"
+
+- content_for :page_title, question
 - content_for :after_header do
-    = link_to "Back", previous_wizard_path, class: "govuk-back-link"
-.govuk-grid-row
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with model: @notification, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
     .govuk-grid-column-two-thirds
-        h1.govuk-heading-xl
-            | Is the cosmetic product imported into the UK?
-        = render "radio_select_error" if @notification.errors.messages[:import_country].any?
-        = form_with local: true, url: wizard_path, method: :put do |form|
-            = form.hidden_field :is_imported, value: nil
-            .govuk-form-group
-                .govuk-radios
-                    .govuk-radios__item
-                        = form.radio_button :is_imported, "true", class: "govuk-radios__input"
-                        = form.label :is_imported, "Yes, it is imported", value: "true",
-                                class: "govuk-label govuk-radios__label"
-                    .govuk-radios__item
-                        = form.radio_button :is_imported, "false", class: "govuk-radios__input"
-                        = form.label :is_imported, "No, it is manufactured in the UK", value: "false",
-                                class: "govuk-label govuk-radios__label"
-            = form.submit "Continue", class: "govuk-button"
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_radios", form: form, key: :is_imported,
+              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              items: [{ text: "Yes, it is imported", value: "yes" },
+                      { text: "No, it is manufactured in the UK", value: "no" }]
+      = form.submit "Continue", class: "govuk-button"

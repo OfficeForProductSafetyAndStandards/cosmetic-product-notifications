@@ -1,16 +1,18 @@
-- content_for :page_title, "Add CMRs"
+- title = "Add CMRs"
+- question = "List all Category 1A or 1B CMRs."
+- cmr_errors = cmr_errors(@component)
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
-
-- cmr_errors = cmr_errors(@component)
 
 = form_with model: @component, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       - if cmr_errors.any?
         = render "components/govuk_error_summary", titleText: "There is a problem", errorList: cmr_errors
-      h1.govuk-heading-xl
-        | List all Category 1A or 1B CMRs.
+      = render "components/govuk_fieldset",
+              legend: { text: question, classes: "govuk-label--xl", isPageHeading: true }
       = form.fields_for :cmrs do |cmr_fields|
         = cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-l"
         = render "form_components/govuk_input",

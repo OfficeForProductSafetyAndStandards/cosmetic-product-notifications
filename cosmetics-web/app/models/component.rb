@@ -20,10 +20,14 @@ class Component < ApplicationRecord
   accepts_nested_attributes_for :nano_material
 
   validates :physical_form, presence: true, on: :add_physical_form
+  validates :special_applicator, presence: true, on: :select_special_applicator_type
+  validates :other_special_applicator, presence: true, on: :select_special_applicator_type, if: :other_special_applicator?
   validates :frame_formulation, presence: true, on: :select_frame_formulation
   validates :cmrs, presence: true, on: :add_cmrs
+  validates :notification_type, presence: true, on: :select_formulation_type
 
   before_save :add_shades, if: :will_save_change_to_shades?
+  before_save :remove_other_special_applicator, unless: :other_special_applicator?
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
@@ -93,5 +97,13 @@ private
 
   def update_notification_state
     notification&.set_single_or_multi_component!
+  end
+
+  def other_special_applicator?
+    special_applicator == "other_special_applicator"
+  end
+
+  def remove_other_special_applicator
+    self.other_special_applicator = nil
   end
 end

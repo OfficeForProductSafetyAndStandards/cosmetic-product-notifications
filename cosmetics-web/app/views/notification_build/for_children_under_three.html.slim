@@ -1,15 +1,16 @@
-- content_for :page_title, "For children under 3"
+- title = "For children under 3"
+- question = "Is the product intended for children under 3?"
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
-
-- title_text = "Is the product intended for children under 3?"
 
 = form_with model: @notification, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :under_three_years,
-              fieldset: { legend: { text: title_text, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
               items: [{ text: "Yes", value: "true" },
                       { text: "No", value: "false" }]
       = form.submit "Continue", class: "govuk-button"
