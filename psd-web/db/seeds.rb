@@ -305,7 +305,7 @@ product = Product.create!(
   description: "",
   product_code: "Models: Black and The Golden Year; 15800 E11115/ 1804",
   name: "Lynx Shower speaker with USB charger",
-  category: "Low voltage equipment (inc. plugs & sockets)",
+  category: "Low voltage equipment (including plugs and sockets)",
   product_type: "Shower speaker with USB charger",
   webpage: ""
 )
@@ -395,7 +395,7 @@ product = Product.create!(
   description: "",
   product_code: "",
   name: "Creaciones Gavidia Babies' clothing set",
-  category: "Clothing (inc. baby)",
+  category: "Clothing (including baby)",
   product_type: "Babies' clothing set",
   webpage: ""
 )
