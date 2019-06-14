@@ -51,6 +51,8 @@ Rails.application.routes.draw do
         post :confirm
       end
     end
+
+    resources :non_standard_nanomaterials, controller: "responsible_persons/non_standard_nanomaterials", only: %i[index]
   end
 
   resource :declaration, controller: :declaration, only: %i[show] do
