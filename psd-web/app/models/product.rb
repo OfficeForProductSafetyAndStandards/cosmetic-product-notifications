@@ -28,7 +28,7 @@ class Product < ApplicationRecord
   end
 
   def pretty_description
-    "Product #{id}"
+    "Product: #{name}"
   end
 end
 
