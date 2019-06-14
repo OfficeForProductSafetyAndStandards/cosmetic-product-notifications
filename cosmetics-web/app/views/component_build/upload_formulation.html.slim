@@ -1,19 +1,22 @@
-- content_for :page_title, "Upload formulation document"
+- title = "Upload formulation document"
+- question = "Upload formulation document for #{@component_name}"
+- hint = capture do
+  - if @component.exact?
+    p This should be the exact concentration.
+  - if @component.range?
+    p This should be as ranges concentration.
+  p For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = render 'error_summary', errors: @component.errors
-    h1.govuk-heading-xl
-      | Upload formulation document for
-      =< @component_name
-    - if @component.exact?
-      p This should be the exact concentration.
-    - if @component.range?
-      p This should be as ranges concentration.
-    p For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.
-    = form_with(url: wizard_path, method: :put) do |form|
+= form_with model: @component, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = render "components/govuk_fieldset", legend: { text: question, classes: "govuk-label--xl", isPageHeading: true }
+      = render "components/govuk_fieldset", legend: { text: hint, classes: "govuk-label" }
       .govuk-form-group
         = form.label :formulation_file, "File type can be a ‘pdf', 'rtf' or ‘txt’.", class: "govuk-label"
         = form.file_field :formulation_file, class: "govuk-file-upload", \

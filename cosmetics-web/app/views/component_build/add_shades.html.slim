@@ -1,22 +1,24 @@
-- content_for :page_title, "List the shades"
+- title = "List the shades"
+- question = "List the shades of #{@component_name}"
+- hint = capture do
+  p For each shade, all other aspects of the notification must be the same.
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
-.govuk-grid-row
+
+= form_with model: @component, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
     .govuk-grid-column-two-thirds
-        h1.govuk-heading-xl
-            | List the shades of
-            =< @component_name
-        p
-            | For each shade, all other aspects of the notification must be the same.
-        - if @component.errors.messages[:shades].any?
-            span.govuk-error-message Please add at least two shades
-        = form_for(@component, url: wizard_path, method: :put) do |form|
-            - @component.shades.each_with_index do |shade, _index|
-                .govuk-form-group
-                    = form.text_field :shades, multiple: true, value: shade,
-                        class: "govuk-input govuk-input--width-20 shade-input"
-                    button.govuk-button.secondary-button[type="submit" name="remove_shade_with_id" value=_index] Remove
-            .govuk-form-group
-                button.govuk-button.secondary-button[type="submit" name="add_shade" value='true'] Add another
-            .govuk-form-group
-                = form.submit "Continue", class: "govuk-button"
+      = render "form_components/govuk_error_summary", form: form
+      = render "components/govuk_fieldset", legend: { text: question, classes: "govuk-label--xl", isPageHeading: true }
+      = render "components/govuk_fieldset", legend: { text: hint, classes: "govuk-label" }
+      - @component.shades.each_with_index do |shade, _index|
+        .govuk-form-group
+          = form.text_field :shades, multiple: true, value: shade,
+                  class: "govuk-input govuk-input--width-20 shade-input"
+          button.govuk-button.secondary-button[type="submit" name="remove_shade_with_id" value=_index] Remove
+      .govuk-form-group
+        button.govuk-button.secondary-button[type="submit" name="add_shade" value='true'] Add another
+      .govuk-form-group
+        = form.submit "Continue", class: "govuk-button"

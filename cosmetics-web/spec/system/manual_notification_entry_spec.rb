@@ -44,6 +44,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
+    # special-applicator
+    choose("No")
+    click_button "Continue"
+
     # contains_cmrs
     choose("No")
     click_button "Continue"
@@ -77,6 +81,7 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("For children under 3", "No")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
+    expect_check_your_answers_value("Special applicator", "No")
     expect_check_your_answers_value("Label image", "testImage.png")
     click_button "Accept and submit the cosmetic product notification"
 
@@ -113,6 +118,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # physical-form
     choose("Foam")
+    click_button "Continue"
+
+    # special-applicator
+    choose("No")
     click_button "Continue"
 
     # contains_cmrs
@@ -180,6 +189,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
+    # special-applicator
+    choose("No")
+    click_button "Continue"
+
     # contains_cmrs
     choose("No")
     click_button "Continue"
@@ -213,6 +226,7 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Imported from", "New Zealand")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
+    expect_check_your_answers_value("Special applicator", "No")
     expect_check_your_answers_value("Label image", "testImage.png")
     click_button "Accept and submit the cosmetic product notification"
 
@@ -260,6 +274,10 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("Foam")
     click_button "Continue"
 
+    # special-applicator
+    choose("No")
+    click_button "Continue"
+
     # contains_cmrs
     choose("No")
     click_button "Continue"
@@ -292,6 +310,7 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "RedBlueYellow")
+    expect_check_your_answers_value("Special applicator", "No")
     expect_check_your_answers_value("Label image", "testImage.png")
 
     click_button "Accept and submit the cosmetic product notification"
