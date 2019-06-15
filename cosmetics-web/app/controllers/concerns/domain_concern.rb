@@ -9,14 +9,6 @@ module DomainConcern
     submit_domains.include?(request.host)
   end
 
-  def search_domain_url
-    root_url(host: search_domains.first)
-  end
-
-  def submit_domain_url
-    root_url(host: submit_domains.first)
-  end
-
 private
 
   def set_service_name

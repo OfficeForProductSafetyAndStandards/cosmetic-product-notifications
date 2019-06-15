@@ -18,8 +18,6 @@ class ApplicationController < ActionController::Base
   before_action :has_accepted_declaration
   before_action :create_or_join_responsible_person
 
-  helper_method :search_domain_url, :submit_domain_url
-
   add_flash_types :confirmation
 
 private
