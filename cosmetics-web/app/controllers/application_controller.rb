@@ -25,8 +25,7 @@ private
   def authorize_user!
     return unless user_signed_in?
 
-    incorrect_domain = (submit_domain? && poison_centre_or_msa_user?) || (search_domain? && !poison_centre_or_msa_user?)
-    redirect_to(invalid_account_path) if incorrect_domain
+    redirect_to invalid_account_path if invalid_account_for_domain?
   end
 
   def has_accepted_declaration
@@ -53,5 +52,9 @@ private
 
   def poison_centre_or_msa_user?
     User.current&.poison_centre_user? || User.current&.msa_user?
+  end
+
+  def invalid_account_for_domain?
+    (submit_domain? && poison_centre_or_msa_user?) || (search_domain? && !poison_centre_or_msa_user?)
   end
 end
