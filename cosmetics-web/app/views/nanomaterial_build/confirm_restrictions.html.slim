@@ -10,8 +10,9 @@ ruby:
   p
     - @nano_element.purposes.each do |purpose|
       ruby:
+        purpose_name = get_display_name_for_nanomaterial_purpose(purpose)
         annex_number = get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose)
-        link_text = "Annex #{annex_number} list at the EUR-Lex website (opens in a new window)"
+        link_text = "Annex #{annex_number} list of #{purpose_name.pluralize} (opens in a new window)"
         link_url = get_ec_regulation_link_for_annex_number(annex_number)
       | View the
       =< link_to link_text, link_url, target: "_blank", rel: "noopener"
