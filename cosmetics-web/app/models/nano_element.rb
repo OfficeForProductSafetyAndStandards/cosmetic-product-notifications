@@ -1,6 +1,9 @@
 class NanoElement < ApplicationRecord
   belongs_to :nano_material
 
+  validates :purposes, presence: true, on: :select_purpose
+  validates :purposes, array: { presence: true, inclusion: { in: %w(colorant preservative uv_filter other) } }
+
   def display_name
     [iupac_name, inci_name, inn_name, xan_name, cas_number, ec_number, einecs_number, elincs_number]
       .reject(&:blank?).join(', ')
