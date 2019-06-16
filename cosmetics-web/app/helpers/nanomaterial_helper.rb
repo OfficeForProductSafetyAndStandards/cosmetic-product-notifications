@@ -1,4 +1,16 @@
 module NanomaterialHelper
+  def get_nanomaterial_purpose_options
+    NanoElement.purposes.map { |purpose| [purpose, get_label_for_nanomaterial_purpose(purpose)] }.to_h
+  end
+
+  def get_label_for_nanomaterial_purpose(purpose)
+    get_display_name_for_nanomaterial_purpose(purpose).upcase_first
+  end
+
+  def get_display_name_for_nanomaterial_purpose(purpose)
+    DISPLAY_NAME_FOR_PURPOSE[purpose.to_sym]
+  end
+
   def get_ec_regulation_annex_numbers_for_nanomaterial_purposes(purposes)
     purposes.map { |purpose| get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose) }
   end
@@ -20,11 +32,18 @@ module NanomaterialHelper
     end
   end
 
+  DISPLAY_NAME_FOR_PURPOSE = {
+    colorant: "colourant",
+    preservative: "preservative",
+    uv_filter: "UV filter",
+    other: "another purpose"
+  }.freeze
+
   ANNEX_NUMBER_FOR_PURPOSE = {
     colorant: 4,
     preservative: 5,
     uv_filter: 6
   }.freeze
 
-  private_constant :ANNEX_NUMBER_FOR_PURPOSE
+  private_constant :ANNEX_NUMBER_FOR_PURPOSE, :DISPLAY_NAME_FOR_PURPOSE
 end

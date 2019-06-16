@@ -1,8 +1,9 @@
-- title = "Select nanomaterial purpose"
-- question = "What is the purpose of #{@nano_element.inci_name}?"
-- items = NanoElement.purpose_options.map { |key, text| \
-  { key: key, text: text, checked: @nano_element.purposes&.include?(key.to_s) } \
-}
+ruby:
+  title = "Select nanomaterial purpose"
+  question = "What is the purpose of #{@nano_element.inci_name}?"
+  items = get_nanomaterial_purpose_options.map { |purpose, label|
+    { key: purpose, text: label, checked: @nano_element.purposes&.include?(purpose) }
+  }
 
 - content_for :page_title, title
 - content_for :after_header do
