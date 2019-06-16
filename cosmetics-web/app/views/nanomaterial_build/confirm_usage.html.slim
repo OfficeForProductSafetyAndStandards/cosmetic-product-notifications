@@ -1,6 +1,6 @@
 ruby:
   title = "Confirm usage"
-  purposes = @nano_element.purposes.map { |purpose| NanoElement.purpose_options[purpose.to_sym] }
+  purposes = @nano_element.purposes.map { |purpose| get_display_name_for_nanomaterial_purpose(purpose) }
   question = "Is #{@nano_element.inci_name} used in accordance with all the restrictions for that material " \
            + "as a #{to_sentence(purposes)}?"
 
