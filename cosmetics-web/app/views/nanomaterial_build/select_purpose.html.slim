@@ -1,6 +1,6 @@
-- title = "Select nano-material purpose"
+- title = "Select nanomaterial purpose"
 - question = "What is the purpose of #{@nano_element.inci_name}?"
-- items = nano_elements_purposes.map { |key, value| { text: value, value: key } }
+- items = NanoElement.purpose_options.map { |key, value| { text: value, value: key } }
 
 - content_for :page_title, title
 - content_for :after_header do

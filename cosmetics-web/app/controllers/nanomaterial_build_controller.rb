@@ -62,15 +62,17 @@ private
   end
 
   def set_purpose
-    @purpose = params[:purpose]
+    @purpose = @nano_element.purposes.first
+  end
+
+  def nano_element_params
+    params.fetch(:nano_element, {}).permit(:inci_name, :purposes)
   end
 
   def render_select_purpose_step
-    selected_purpose = params.dig(:nano_element, :purpose)
-    if selected_purpose.present?
-      redirect_to wizard_path(:confirm_restrictions, purpose: selected_purpose)
+    if @nano_element.update_with_context({purposes: [nano_element_params[:purposes]]}, step)
+      render_wizard @nano_element
     else
-      @nano_element.errors.add :purpose, "Select an option"
       render step
     end
   end

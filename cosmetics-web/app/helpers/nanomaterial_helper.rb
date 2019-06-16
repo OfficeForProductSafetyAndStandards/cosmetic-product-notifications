@@ -1,13 +1,4 @@
 module NanomaterialHelper
-  def nano_elements_purposes
-    {
-        colorant: "Colorant",
-        preservative: "Preservative",
-        uv_filter: "UV filter",
-        other: "Another purpose"
-    }
-  end
-
   def get_ec_regulation_annex_number_for_nano_material_purpose(purpose)
     ec_regulation_annex_number_for_nano_material_purpose[purpose&.to_sym]
   end
