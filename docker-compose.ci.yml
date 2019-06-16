@@ -27,6 +27,8 @@ services:
       - TRAVIS_BRANCH
       - TRAVIS_JOB_ID
       - TRAVIS_PULL_REQUEST
+      - SEARCH_HOST=localhost
+      - SUBMIT_HOST=localhost
   cosmetics-worker:
     command: tail -f /dev/null
     image: beisopss/cosmetics-worker:${TRAVIS_BUILD_NUMBER}
