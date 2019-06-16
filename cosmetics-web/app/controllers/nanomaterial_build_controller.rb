@@ -5,10 +5,9 @@ class NanomaterialBuildController < ApplicationController
 
   before_action :set_component
   before_action :set_nano_element
-  before_action :set_purpose, if: -> { step == :confirm_restrictions }
 
   def show
-    if step == :confirm_restrictions && non_standard_purpose?(@purpose)
+    if step == :confirm_restrictions && non_standard_purpose?(@nano_element.purposes)
       return redirect_to wizard_path(:unhappy_path)
     end
 
@@ -61,16 +60,19 @@ private
     @nano_element = NanoElement.find(params[:nanomaterial_nano_element_id])
   end
 
-  def set_purpose
-    @purpose = @nano_element.purposes.first
+  def nano_element_params
+    params.fetch(:nano_element, {}).permit(:inci_name).merge(purpose_params)
   end
 
-  def nano_element_params
-    params.fetch(:nano_element, {}).permit(:inci_name, :purposes)
+  def purpose_params
+    selected_purposes = params
+        .permit(nano_element: NanoElement.purpose_options.keys).fetch(:nano_element, {})
+        .select { |_, value| value == "1" }.keys
+    { purposes: selected_purposes }
   end
 
   def render_select_purpose_step
-    if @nano_element.update_with_context({purposes: [nano_element_params[:purposes]]}, step)
+    if @nano_element.update_with_context(nano_element_params, step)
       render_wizard @nano_element
     else
       render step
@@ -110,6 +112,6 @@ private
   end
 
   def non_standard_purpose?(purpose)
-    %w(colorant preservative uv_filter).exclude?(purpose)
+    purpose.include?("other")
   end
 end

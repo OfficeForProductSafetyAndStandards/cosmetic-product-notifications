@@ -1,6 +1,8 @@
 - title = "Select nanomaterial purpose"
 - question = "What is the purpose of #{@nano_element.inci_name}?"
-- items = NanoElement.purpose_options.map { |key, value| { text: value, value: key } }
+- items = NanoElement.purpose_options.map { |key, text| \
+  { key: key, text: text, checked: @nano_element.purposes&.include?(key.to_s) } \
+}
 
 - content_for :page_title, title
 - content_for :after_header do
@@ -10,7 +12,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
-      = render "form_components/govuk_radios", form: form, key: :purpose,
+      = render "form_components/govuk_checkboxes", form: form, key: :purposes,
               fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
               items: items
       = form.submit "Continue", class: "govuk-button"
