@@ -1,5 +1,8 @@
-- title = "Confirm usage"
-- question = "Is it used in accordance with the restrictions for that material?"
+ruby:
+  title = "Confirm usage"
+  purposes = @nano_element.purposes.map { |purpose| NanoElement.purpose_options[purpose.to_sym] }
+  question = "Is #{@nano_element.inci_name} used in accordance with all the restrictions for that material " \
+           + "as a #{to_sentence(purposes)}?"
 
 - content_for :page_title, title
 - content_for :after_header do
