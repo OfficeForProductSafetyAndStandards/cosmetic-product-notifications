@@ -1,6 +1,10 @@
 module NanomaterialHelper
-  def get_ec_regulation_annex_number_for_nano_material_purpose(purpose)
-    ec_regulation_annex_number_for_nano_material_purpose[purpose&.to_sym]
+  def get_ec_regulation_annex_numbers_for_nanomaterial_purposes(purposes)
+    purposes.map { |purpose| get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose) }
+  end
+
+  def get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose)
+    ANNEX_NUMBER_FOR_PURPOSE[purpose.to_sym]
   end
 
   def get_ec_regulation_link_for_annex_number(annex_number)
@@ -16,13 +20,11 @@ module NanomaterialHelper
     end
   end
 
-private
+  ANNEX_NUMBER_FOR_PURPOSE = {
+    colorant: 4,
+    preservative: 5,
+    uv_filter: 6
+  }.freeze
 
-  def ec_regulation_annex_number_for_nano_material_purpose
-    {
-        colorant: 4,
-        preservative: 5,
-        uv_filter: 6
-    }
-  end
+  private_constant :ANNEX_NUMBER_FOR_PURPOSE
 end
