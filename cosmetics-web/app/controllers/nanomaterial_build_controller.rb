@@ -7,7 +7,7 @@ class NanomaterialBuildController < ApplicationController
   before_action :set_nano_element
 
   def show
-    if step == :confirm_restrictions && non_standard_purpose?(@nano_element.purposes)
+    if step == :confirm_restrictions && @nano_element.non_standard?
       return redirect_to wizard_path(:unhappy_path)
     end
 
@@ -109,9 +109,5 @@ private
     @nano_element.nano_material.nano_elements.each_cons(2) do |element, next_element|
       return next_element if element == @nano_element
     end
-  end
-
-  def non_standard_purpose?(purpose)
-    purpose.include?("other")
   end
 end

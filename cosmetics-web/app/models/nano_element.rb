@@ -6,6 +6,10 @@ class NanoElement < ApplicationRecord
       .reject(&:blank?).join(', ')
   end
 
+  def non_standard?
+    purposes.present? && purposes.include?("other")
+  end
+
   def self.purpose_options
     {
       colorant: "Colourant",
