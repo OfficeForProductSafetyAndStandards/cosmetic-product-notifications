@@ -19,32 +19,23 @@ module InvestigationsHelper
 
   def filter_params
     filters = {}
-    filters.merge!(get_status_filter)
-    filters.merge!(get_user_filters)
-    p "Filters below"
-    filters.merge!(get_type_filter){ |_key, current_filters, new_filters| current_filters + new_filters }
-    p filters
+    filters.merge!(get_type_filter)
+    filters.merge!(merged_must_filters) { |_key, current_filters, new_filters| current_filters + new_filters }
   end
 
-  def merged_user_filters
-    # { must: [{nested: {query: {[{ bool: {[should: get_assignee_filter, get_creator_filter]}}]}}}]}
-    # { must: [{nested:{ path: ""} {query: {bool: get_user_filters}}}]}
-    { must: [get_user_filters] }
-  end
-
-  def get_user_filters
-    get_assignee_filter.merge!(get_creator_filter){ |_key, assignee, creator| assignee + creator }
+  def merged_must_filters
+    { must: [get_status_filter, { bool: get_creator_filter }, { bool: get_assignee_filter }] }
   end
 
   def get_status_filter
-    return {} if params[:status_open] == params[:status_closed]
+    return nil if params[:status_open] == params[:status_closed]
 
     status = if params[:status_open] == "checked"
                { is_closed: false }
              else
                { is_closed: true }
              end
-    { must: [{ term: status }] }
+    { term: status }
   end
 
   def get_type_filter
