@@ -20,7 +20,7 @@ class NonStandardNanomaterialBuildController < ApplicationController
   end
 
   def finish_wizard_path
-    # edit_responsible_person_notification_path(@non_standard_nanomaterial.responsible_person, @notification)
+    edit_responsible_person_non_standard_nanomaterial_path(@responsible_person, @non_standard_nanomaterial)
   end
 
 private

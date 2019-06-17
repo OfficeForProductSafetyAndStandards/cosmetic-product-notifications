@@ -52,7 +52,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :non_standard_nanomaterials, controller: "responsible_persons/non_standard_nanomaterials", only: %i[index new] do
+    resources :non_standard_nanomaterials, controller: "responsible_persons/non_standard_nanomaterials", only: %i[index new edit] do
       resources :build, controller: :non_standard_nanomaterial_build, only: %i[show update]
     end
   end

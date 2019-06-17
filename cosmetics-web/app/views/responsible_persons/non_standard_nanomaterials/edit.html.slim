@@ -1,0 +1,16 @@
+- content_for :page_title, "Check your answers"
+- content_for :after_header do
+  = link_to "Back", responsible_person_non_standard_nanomaterials_path(@responsible_person),
+          class: "govuk-back-link"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      | Nanomaterial
+
+  .govuk-grid-column-full
+    = render "non_standard_nanomaterials/non_standard_nanomaterial_details",
+            non_standard_nanomaterial: @non_standard_nanomaterial
+
+  = render "non_standard_nanomaterials/submit_non_standard_nanomaterial",
+          non_standard_nanomaterial: @non_standard_nanomaterial,
+          responsible_person: @responsible_person

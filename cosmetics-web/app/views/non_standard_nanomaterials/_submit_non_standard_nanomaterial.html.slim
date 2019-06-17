@@ -1,0 +1,12 @@
+.govuk-grid-column-two-thirds
+  h3.govuk-heading-m
+    | Now submit your nanomaterial
+  p
+    | By submitting this nanomaterial, you confirm that the details you provide are correct to
+      the best of your knowledge.
+
+  = form_with url: confirm_responsible_person_non_standard_nanomaterial_path(@responsible_person,
+                                                                              @non_standard_nanomaterial),
+          method: :post do |form|
+    .govuk-form-group
+      = form.submit "Accept and submit the nanomaterial", class: "govuk-button"
