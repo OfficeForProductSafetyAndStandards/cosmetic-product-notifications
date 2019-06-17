@@ -1,7 +1,6 @@
 ruby:
   title = "Confirm use in accordance with the restrictions"
-  annex_numbers = get_ec_regulation_annex_numbers_for_nanomaterial_purposes(@nano_element.purposes)
-  annex_details = "#{'Annex'.pluralize(annex_numbers.count)} #{to_sentence(annex_numbers)}"
+  annex_details = get_ec_regulation_annex_details_for_nanomaterial_purposes(@nano_element.purposes)
   question = "Is #{@nano_element.inci_name} listed in EC regulation 1223/2009, #{annex_details}?"
 
 - legend_html = capture do

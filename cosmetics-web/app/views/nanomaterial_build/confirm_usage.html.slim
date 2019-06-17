@@ -1,8 +1,7 @@
 ruby:
   title = "Confirm usage"
-  purposes = @nano_element.purposes.map { |purpose| get_display_name_for_nanomaterial_purpose(purpose) }
-  question = "Is #{@nano_element.inci_name} used in accordance with all the restrictions for that material " \
-           + "as a #{to_sentence(purposes)}?"
+  annex_details = get_ec_regulation_annex_details_for_nanomaterial_purposes(@nano_element.purposes)
+  question = "Does the #{@nano_element.inci_name} conform to the restrictions set out in #{annex_details}?"
 
 - content_for :page_title, title
 - content_for :after_header do

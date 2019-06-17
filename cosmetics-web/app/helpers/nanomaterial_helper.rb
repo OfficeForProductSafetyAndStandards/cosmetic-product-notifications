@@ -11,8 +11,9 @@ module NanomaterialHelper
     DISPLAY_NAME_FOR_PURPOSE[purpose.to_sym]
   end
 
-  def get_ec_regulation_annex_numbers_for_nanomaterial_purposes(purposes)
-    purposes.map { |purpose| get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose) }
+  def get_ec_regulation_annex_details_for_nanomaterial_purposes(purposes)
+    annex_numbers = purposes.map { |purpose| get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose) }
+    "#{'Annex'.pluralize(annex_numbers.count)} #{to_sentence(annex_numbers, last_word_connector: ' and ')}"
   end
 
   def get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose)
