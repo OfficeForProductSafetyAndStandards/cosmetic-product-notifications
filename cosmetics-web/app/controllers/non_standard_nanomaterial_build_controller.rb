@@ -4,7 +4,7 @@ class NonStandardNanomaterialBuildController < ApplicationController
   steps :add_iupac_name
 
   before_action :set_responsible_person
-  before_action :set_non_standard_nanomaterial, only: %i[show update]
+  before_action :set_non_standard_nanomaterial
 
   def show
     render_wizard
@@ -17,6 +17,10 @@ class NonStandardNanomaterialBuildController < ApplicationController
     else
       render step
     end
+  end
+
+  def new
+    redirect_to wizard_path(steps.first)
   end
 
   def finish_wizard_path
