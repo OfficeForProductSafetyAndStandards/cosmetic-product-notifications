@@ -27,12 +27,12 @@ private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
-    # authorize @responsible_person, :show?
+    authorize @responsible_person, :show?
   end
 
   def set_non_standard_nanomaterial
     @non_standard_nanomaterial = NonStandardNanomaterial.find(params[:non_standard_nanomaterial_id])
-    # authorize @non_standard_nanomaterial.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
+    authorize @non_standard_nanomaterial, :update?, policy_class: ResponsiblePersonNonStandardNanomaterialPolicy
   end
 
   def non_standard_nanomaterial_params

@@ -14,7 +14,6 @@ class ResponsiblePersons::NonStandardNanomaterialsController < ApplicationContro
 
 private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
     authorize @responsible_person, :show?
@@ -22,6 +21,6 @@ private
 
   def set_non_standard_nanomaterial
     @non_standard_nanomaterial = NonStandardNanomaterial.find(params[:id])
-    # authorize @non_standard_nanomaterial.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
+    authorize @non_standard_nanomaterial, policy_class: ResponsiblePersonNonStandardNanomaterialPolicy
   end
 end
