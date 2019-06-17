@@ -7,6 +7,21 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       = title
-
+    p
+      | You must submit a notification about any nanomaterials used in #{@responsible_person.name}’s cosmetics products
+        that are not listed in annex 3, 4, or 5 of Regulation (ec) no 1223/2009 of the European parliament and of the
+        council or not used in accordance with the restrictions for that substance.
+    p
+      | You don’t need separate nanomaterial notification where:
+    ul.govuk-list.govuk-list--bullet
+      li
+        | there is the same exposure conditions for all products its in
+      li
+        | the nanomaterial is used for the same purposes in all products that its in
+      li
+        | the nanomaterial is used for different purposes and/or has different exposure conditions where safety data
+          covers all purposes and exposure conditions
+    / TODO: add a new url
+    p = link_to "Read about what is needed for a nanomaterial notification", '#', class: "govuk-link"
     = link_to "Add nanomaterials", new_responsible_person_non_standard_nanomaterial_path(@responsible_person),
             class: "govuk-button", role: "button"
