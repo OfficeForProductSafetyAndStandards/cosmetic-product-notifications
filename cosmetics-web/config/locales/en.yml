@@ -43,6 +43,8 @@ en:
       cmr:
         cas_number: "CAS number"
         ec_number: "EC number"
+      non_standard_nanomaterial:
+        iupac_name: "IUPAC name"
     errors:
       models:
         notification:
