@@ -91,7 +91,13 @@ tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Special applicator
   td.govuk-table__cell
-    = get_special_applicator_name(component.special_applicator)
+    = component.special_applicator.present? ? "Yes" : "No"
+- if component.special_applicator.present?
+  tr.govuk-table__row
+    th.govuk-table__header[scope="row"]
+      | Applicator type
+    td.govuk-table__cell
+      = component_special_applicator_name(component)
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Acute poisoning information

@@ -25,8 +25,8 @@ class UpdateProductTest < ApplicationSystemTestCase
   test "should update product attributes" do
     updated_product = Product.new(
       name: "Updated product name",
-      product_type: "White Goods type",
-      category: "White Goods",
+      product_type: "White goods type",
+      category: "White goods",
       description: "Updated description",
       country_of_origin: "United States"
     )

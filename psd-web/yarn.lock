@@ -3820,10 +3820,10 @@ govuk-country-and-territory-autocomplete@0.5.2:
     openregister-picker-engine "^1.2.1"
     webpack-sources "^1.3.0"
 
-govuk-frontend@2.12.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.12.0.tgz#6e90372fe6088d4053a6f14fd031a1cead6e81e5"
-  integrity sha512-RiEKwbM24xCK/Be/NcWQUUkGXlqxk6r15aRIMCzSttDLcZcXgs9As0qfXUCEfIei5X/GuL23lpBGGYmoVNwuJw==
+govuk-frontend@2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.13.0.tgz#0273f7c92070abd6450c73a006ebb3ddc793463a"
+  integrity sha512-6XDtTt5plSrPQvPgLFN4LCtb9ULuqoXCgkHy5c7XE/70/sVm47RPbLR11tYGPcmV8cOApBhW0wL8y8ryspHfpw==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.15"
@@ -7666,15 +7666,15 @@ shared-web@./vendor/shared-web:
     eslint-config-airbnb-base "13.1.0"
     eslint-plugin-import "2.17.3"
     govuk-country-and-territory-autocomplete "0.5.2"
-    govuk-frontend "2.12.0"
+    govuk-frontend "2.13.0"
     html5shiv "3.7.3"
     jquery "3.4.1"
     oldie "1.3.0"
     rails-ujs "5.2.3"
     resolve-url-loader "3.1.0"
     sass-lint "1.13.1"
-    webpack "4.33.0"
-    webpack-cli "3.3.3"
+    webpack "4.34.0"
+    webpack-cli "3.3.4"
     webpack-dev-server "3.7.1"
 
 shebang-command@^1.2.0:
@@ -8632,10 +8632,10 @@ webpack-assets-manifest@^3.1.1:
     tapable "^1.0.0"
     webpack-sources "^1.0.0"
 
-webpack-cli@3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.3.3.tgz#8b7587dee369a838eb4722f6cfa711c779011e5f"
-  integrity sha512-/qBxTvsxZ7bIFQtSa08QRY5BZuiJb27cbJM/nzmgXg9NEaudP20D7BruKKIuWfABqWoMEJQcNYYq/OxxSbPHlg==
+webpack-cli@3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.3.4.tgz#de27e281c48a897b8c219cb093e261d5f6afe44a"
+  integrity sha512-ubJGQEKMtBSpT+LiL5hXvn2GIOWiRWItR1DGUqJRhwRBeGhpRXjvF5f0erqdRJLErkfqS5/Ldkkedh4AL5Q1ZQ==
   dependencies:
     chalk "^2.4.1"
     cross-spawn "^6.0.5"
@@ -8730,10 +8730,10 @@ webpack-sources@^1.0.0, webpack-sources@^1.0.1, webpack-sources@^1.1.0, webpack-
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@4.33.0:
-  version "4.33.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.33.0.tgz#c30fc4307db432e5c5e3333aaa7c16a15a3b277e"
-  integrity sha512-ggWMb0B2QUuYso6FPZKUohOgfm+Z0sVFs8WwWuSH1IAvkWs428VDNmOlAxvHGTB9Dm/qOB/qtE5cRx5y01clxw==
+webpack@4.34.0:
+  version "4.34.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.34.0.tgz#a4c30129482f7b4ece4c0842002dedf2b56fab58"
+  integrity sha512-ry2IQy1wJjOefLe1uJLzn5tG/DdIKzQqNlIAd2L84kcaADqNvQDTBlo8UcCNyDaT5FiaB+16jhAkb63YeG3H8Q==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
