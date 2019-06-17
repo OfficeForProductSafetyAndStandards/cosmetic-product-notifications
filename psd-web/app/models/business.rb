@@ -39,7 +39,7 @@ class Business < ApplicationRecord
   end
 
   def pretty_description
-    "Business #{id}"
+    "Business: #{trading_name}"
   end
 
   def contacts_have_errors?

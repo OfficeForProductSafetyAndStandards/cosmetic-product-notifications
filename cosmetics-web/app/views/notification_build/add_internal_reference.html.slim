@@ -1,27 +1,23 @@
-- content_for :page_title, "Is the cosmetic imported into the UK"
+- title = "Internal reference"
+- question = "Do you want to add an internal reference?"
+- hint = "Use this to identify your cosmetic products. " \
+              "It will not be seen by NPIS or market surveillance authorities."
+
+- content_for :page_title, title
 - content_for :after_header do
-    = link_to "Back", previous_wizard_path, class: "govuk-back-link"
-.govuk-grid-row
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with model: @notification, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
     .govuk-grid-column-two-thirds
-        - heading_html = capture do
-            h1.govuk-heading-xl
-                | Do you want to add an internal reference?
-        = form_for(@notification, url: wizard_path, method: :put) do |form|
-            - reference_input_html = capture do
-                = render "form_components/govuk_input", form: form, key: :industry_reference, \
-                label: { text: "Reference" }, classes: "govuk-!-width-one-half"
-            = render "form_components/govuk_radios", form: form, key: :add_internal_reference, \
-                fieldset: { legend: { html: heading_html, isPageHeading: true } }, \
-                hint: { text: "Use this to identify your cosmetic products. It will not be seen by NPIS or " + \
-                    "market surveillance authorities." }, \
-                items: [\
-                    { text: "Yes, add an internal reference", value: "true", \
-                      conditional: { html: reference_input_html }, \
-                      checked: params[:notification].present? && \
-                        params[:notification][:add_internal_reference] == "true" \
-                    }, \
-                    { text: "No", value: "false", checked: params[:notification].present? && \
-                        params[:notification][:add_internal_reference] == "false" }, \
-                ]
-            .govuk-form-group
-                = form.submit "Continue", class: "govuk-button"
+      = render "form_components/govuk_error_summary", form: form
+      - reference_input_html = capture do
+        = render "form_components/govuk_input", form: form, key: :industry_reference,
+            label: { text: "Reference" }, classes: "govuk-!-width-one-half"
+      = render "form_components/govuk_radios", form: form, key: :add_internal_reference,
+          fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+          hint: { text: hint },
+          items: [{ text: "Yes, add an internal reference", value: "yes", conditional: { html: reference_input_html },
+                  checked: params[:notification].present? && params[:notification][:add_internal_reference] == "yes" },
+                  { text: "No", value: "no" }]
+      = form.submit "Continue", class: "govuk-button"

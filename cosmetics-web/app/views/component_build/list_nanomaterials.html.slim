@@ -1,17 +1,16 @@
-- content_for :page_title, "List nanomaterials"
+- title = "List nanomaterials"
+- question = "List the nanomaterials in #{@component_name}"
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
 = form_with(model: @nano_material, url: wizard_path, method: :put) do |form|
-  - nano_elements_errors = form.object.errors.full_messages_for(:nano_elements)
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
-      = render "components/govuk_fieldset", legend: { text: "List the nanomaterials in #{@component_name}",
-              classes: "govuk-fieldset__legend--xl", isPageHeading: true } do
-        - if nano_elements_errors.present?
-          = render "components/govuk_error_message", id: "nano_material_nano_elements-error",
-                  text: nano_elements_errors.first
-        = form.fields_for :nano_elements do |nano_element_form|
-          = render "form_components/govuk_input", form: nano_element_form, key: :inci_name, label: { text: "INCI name" }
-        = form.submit "Continue", class: "govuk-button"
+      = render "components/govuk_fieldset",
+              legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true }
+      = form.fields_for :nano_elements do |nano_element_form|
+        = render "form_components/govuk_input", form: nano_element_form, key: :inci_name, label: { text: "INCI name" }
+      = form.submit "Continue", class: "govuk-button"

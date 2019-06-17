@@ -1,12 +1,16 @@
-- content_for :page_title, "Add component name"
+- title = "Add component name"
+- question = "Name of this component"
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for(@component, url: wizard_path, method: :put) do |form|
-      - heading = capture do
-        h1.govuk-heading-xl Name of this component
-      = render "form_components/govuk_input", key: :name, form: form, label: { html: heading }
-      .govuk-form-group
-        = form.submit "Continue", class: "govuk-button"
+= form_with model: @component, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_input",
+              form: form,
+              key: :name,
+              label: { text: question, classes: "govuk-label--xl", isPageHeading: true }
+      = form.submit "Continue", class: "govuk-button"

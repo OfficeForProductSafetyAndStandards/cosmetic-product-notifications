@@ -23,7 +23,7 @@ private
   end
 
   def set_page_title
-    @page_title = "New Allegation"
+    @page_title = "New allegation"
     @page_subtitle = "Who's making the allegation?"
   end
 end
