@@ -3,6 +3,7 @@ class NonStandardNanomaterialBuildController < ApplicationController
 
   steps :add_iupac_name
 
+  before_action :set_responsible_person
   before_action :set_non_standard_nanomaterial, only: %i[show update]
 
   def show
@@ -23,6 +24,11 @@ class NonStandardNanomaterialBuildController < ApplicationController
   end
 
 private
+
+  def set_responsible_person
+    @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
+    # authorize @responsible_person, :show?
+  end
 
   def set_non_standard_nanomaterial
     @non_standard_nanomaterial = NonStandardNanomaterial.find(params[:non_standard_nanomaterial_id])
