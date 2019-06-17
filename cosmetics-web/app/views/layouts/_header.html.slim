@@ -17,7 +17,7 @@ html.govuk-template.app-html-class[lang="en"]
     meta[charset="utf-8"]
     title
       = yield :page_title
-      |  - Submit cosmetic product notifications
+      = " - #{@service_name}"
     meta[name="viewport" content="width=device-width, initial-scale=1"]
     meta[name="theme-color" content="blue"]
     link[rel="shortcut icon" type="image/x-icon" href=asset_pack_path("media/images/favicon.ico")]
@@ -54,7 +54,7 @@ html.govuk-template.app-html-class[lang="en"]
                 |  GOV.UK
         .govuk-header__content
           a.govuk-header__link.govuk-header__link--service-name[href="/"]
-            | Submit cosmetic product notifications
+            = @service_name
           button.govuk-header__menu-button.js-header-toggle[role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation"]
             | Menu
           nav

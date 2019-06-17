@@ -4,6 +4,7 @@ RSpec.describe "Declaration page", type: :system do
   let(:first_time_user) { build(:user, first_login: true) }
 
   before do
+    configure_requests_for_submit_domain
     sign_in(as_user: first_time_user)
   end
 
