@@ -54,6 +54,10 @@ Rails.application.routes.draw do
 
     resources :non_standard_nanomaterials, controller: "responsible_persons/non_standard_nanomaterials", only: %i[index new edit] do
       resources :build, controller: :non_standard_nanomaterial_build, only: %i[show update]
+
+      member do
+        post :confirm
+      end
     end
   end
 
