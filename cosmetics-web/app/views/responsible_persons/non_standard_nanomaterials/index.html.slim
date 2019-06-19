@@ -8,7 +8,9 @@
     h1.govuk-heading-xl
       = title
     p
-      | You must submit a notification about any nanomaterials used in #{@responsible_person.name}’s cosmetics products
+      | You must submit a notification about any nanomaterials used in
+      strong =< @responsible_person.name
+      | ’s cosmetics products
         that are not listed in annex 3, 4, or 5 of Regulation (ec) no 1223/2009 of the European parliament and of the
         council or not used in accordance with the restrictions for that substance.
     p
@@ -21,7 +23,9 @@
       li
         | the nanomaterial is used for different purposes and/or has different exposure conditions where safety data
           covers all purposes and exposure conditions
-    / TODO: add a new url
-    p = link_to "Read about what is needed for a nanomaterial notification", '#', class: "govuk-link"
+    / TODO COSBETA-219: add a new page for th url /notify-nanomaterial
+    p
+      = link_to "Read about what is needed for a nanomaterial notification", "/notify-nanomaterials",
+              class: "govuk-link"
     = link_to "Add nanomaterials", new_responsible_person_non_standard_nanomaterial_path(@responsible_person),
             class: "govuk-button", role: "button"

@@ -5,7 +5,6 @@ class ResponsiblePersonNonStandardNanomaterialPolicy < ApplicationPolicy
     end
   end
 
-
   def show?
     user_member_of_associated_responsible_person?
   end

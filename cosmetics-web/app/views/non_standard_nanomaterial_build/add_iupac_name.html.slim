@@ -5,12 +5,12 @@
 - content_for :after_header do
   = link_to "Back", responsible_person_non_standard_nanomaterials_path(@responsible_person), class: "govuk-back-link"
 
-= form_with model: @non_standard_nanomaterial, url: wizard_path, method: :put do |form|
+= form_with model: @nanomaterial, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-xl
         = title
       = render "form_components/govuk_input", key: :iupac_name, form: form,
-              label: { text: question, classes: "govuk-label--m", isPageHeading: false }
+              label: { text: question, classes: "govuk-label--m" }
       = form.submit "Continue", class: "govuk-button"

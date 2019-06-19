@@ -25,7 +25,7 @@ RSpec.describe NonStandardNanomaterialBuildController, type: :controller do
       expect(response).to redirect_to(responsible_person_non_standard_nanomaterial_build_path(responsible_person, non_standard_nanomaterial, :add_iupac_name))
     end
 
-    it "does not allow the user to create a non standard nanomaterial for a Responsible Person they not belong to" do
+    it "does not allow the user to create a nanomaterial for a Responsible Person they do not belong to" do
       expect {
         get(:new, params: other_responsible_person_params)
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -33,9 +33,9 @@ RSpec.describe NonStandardNanomaterialBuildController, type: :controller do
   end
 
   describe "GET #show" do
-    it "assigns the correct non standard nanomaterial" do
+    it "assigns the correct nanomaterial" do
       get(:show, params: params.merge(id: :add_iupac_name))
-      expect(assigns(:non_standard_nanomaterial)).to eq(non_standard_nanomaterial)
+      expect(assigns(:nanomaterial)).to eq(non_standard_nanomaterial)
     end
 
     it "renders the step template" do
@@ -43,7 +43,7 @@ RSpec.describe NonStandardNanomaterialBuildController, type: :controller do
       expect(response).to render_template(:add_iupac_name)
     end
 
-    it "does not allow the user to view a non standard nanomaterial for a Responsible Person they not belong to" do
+    it "does not allow the user to view a nanomaterial for a Responsible Person they do not belong to" do
       expect {
         get(:show, params: other_responsible_person_params.merge(id: :add_iupac_name))
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -56,20 +56,20 @@ RSpec.describe NonStandardNanomaterialBuildController, type: :controller do
   end
 
   describe "POST #update" do
-    it "assigns the correct non standard nanomaterial" do
-      post(:update, params: params.merge(id: :add_iupac_name, non_standard_nanomaterial: { iupac_name: "4-ethyl" }))
-      expect(assigns(:non_standard_nanomaterial)).to eq(non_standard_nanomaterial)
+    it "assigns the correct nanomaterial" do
+      post(:update, params: params.merge(id: :add_iupac_name, non_standard_nanomaterial: { iupac_name: "Zinc oxide" }))
+      expect(assigns(:nanomaterial)).to eq(non_standard_nanomaterial)
     end
 
-    it "does not allow the user to update a non standard nanomaterial that has already been submitted" do
+    it "does not allow the user to update a nanomaterial for a Responsible Person they do not belong to" do
       expect {
         get(:update, params: other_responsible_person_params.merge(id: :add_iupac_name))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    it "updates non standard nanomaterial parameters if present" do
-      post(:update, params: params.merge(id: :add_iupac_name, non_standard_nanomaterial: { iupac_name: "10-ethyl" }))
-      expect(non_standard_nanomaterial.reload.iupac_name).to eq("10-ethyl")
+    it "updates nanomaterial parameters if present" do
+      post(:update, params: params.merge(id: :add_iupac_name, non_standard_nanomaterial: { iupac_name: "Butane" }))
+      expect(non_standard_nanomaterial.reload.iupac_name).to eq("Butane")
     end
   end
 

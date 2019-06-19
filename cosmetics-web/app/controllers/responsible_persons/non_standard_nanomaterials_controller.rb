@@ -1,13 +1,13 @@
 class ResponsiblePersons::NonStandardNanomaterialsController < ApplicationController
   before_action :set_responsible_person
-  before_action :set_non_standard_nanomaterial, only: %i[edit]
+  before_action :set_nanomaterial, only: %i[edit confirm]
 
   def index; end
 
   def new
-    @non_standard_nanomaterial = NonStandardNanomaterial.create(responsible_person: @responsible_person)
+    @nanomaterial = NonStandardNanomaterial.create(responsible_person: @responsible_person)
 
-    redirect_to new_responsible_person_non_standard_nanomaterial_build_path(@responsible_person, @non_standard_nanomaterial)
+    redirect_to new_responsible_person_non_standard_nanomaterial_build_path(@responsible_person, @nanomaterial)
   end
 
   def edit; end
@@ -21,8 +21,8 @@ private
     authorize @responsible_person, :show?
   end
 
-  def set_non_standard_nanomaterial
-    @non_standard_nanomaterial = NonStandardNanomaterial.find(params[:id])
-    authorize @non_standard_nanomaterial, policy_class: ResponsiblePersonNonStandardNanomaterialPolicy
+  def set_nanomaterial
+    @nanomaterial = NonStandardNanomaterial.find(params[:id])
+    authorize @nanomaterial, policy_class: ResponsiblePersonNonStandardNanomaterialPolicy
   end
 end

@@ -13,12 +13,10 @@ RSpec.describe "Enter a nan standard nanomaterial", type: :system do
     unmock_antivirus_api
   end
 
-  it "allows user to complete non standard nanomaterial" do
+  it "allows the user to submit a notification for a non-standard nanomaterial" do
     visit new_responsible_person_non_standard_nanomaterial_path(responsible_person)
 
-    # add_iupac_name
-    fill_in :non_standard_nanomaterial_iupac_name, with: "A nanomaterial"
-    click_button "Continue"
+    specify_name("A nanomaterial")
 
     # Check your answers page
     expect_check_your_answer(get_non_standard_nanomaterial_table, "Name", "A nanomaterial")
@@ -37,5 +35,10 @@ private
   def expect_check_your_answer(table, attribute_name, value)
     row = table.find('tr', text: attribute_name)
     expect(row).to have_text(value)
+  end
+
+  def specify_name(name)
+    fill_in :non_standard_nanomaterial_iupac_name, with: name
+    click_button "Continue"
   end
 end

@@ -8,9 +8,9 @@
       | Nanomaterial
 
   .govuk-grid-column-full
-    = render "non_standard_nanomaterials/non_standard_nanomaterial_details",
-            non_standard_nanomaterial: @non_standard_nanomaterial
+    = render "non_standard_nanomaterials/details",
+            non_standard_nanomaterial: @nanomaterial
 
-  = render "non_standard_nanomaterials/submit_non_standard_nanomaterial",
-          non_standard_nanomaterial: @non_standard_nanomaterial,
+  = render "non_standard_nanomaterials/submit_notification",
+          non_standard_nanomaterial: @nanomaterial,
           responsible_person: @responsible_person
