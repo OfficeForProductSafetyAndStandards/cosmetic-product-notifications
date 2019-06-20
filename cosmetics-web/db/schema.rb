@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 2019_06_14_185308) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "nano_material_id"
+    t.string "purposes", array: true
     t.index ["nano_material_id"], name: "index_nano_elements_on_nano_material_id"
   end
 

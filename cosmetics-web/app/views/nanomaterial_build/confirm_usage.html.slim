@@ -1,5 +1,7 @@
-- title = "Confirm usage"
-- question = "Is it used in accordance with the restrictions for that material?"
+ruby:
+  title = "Confirm usage"
+  annex_details = get_ec_regulation_annex_details_for_nanomaterial_purposes(@nano_element.purposes)
+  question = "Does the #{@nano_element.inci_name} conform to the restrictions set out in #{annex_details}?"
 
 - content_for :page_title, title
 - content_for :after_header do

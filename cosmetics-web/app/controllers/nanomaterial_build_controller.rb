@@ -1,14 +1,13 @@
 class NanomaterialBuildController < ApplicationController
   include Wicked::Wizard
 
-  steps :select_purpose, :confirm_restrictions, :confirm_usage, :unhappy_path
+  steps :select_purposes, :confirm_restrictions, :confirm_usage, :unhappy_path
 
   before_action :set_component
   before_action :set_nano_element
-  before_action :set_purpose, if: -> { step == :confirm_restrictions }
 
   def show
-    if step == :confirm_restrictions && non_standard_purpose?(@purpose)
+    if step == :confirm_restrictions && @nano_element.non_standard?
       return redirect_to wizard_path(:unhappy_path)
     end
 
@@ -17,8 +16,8 @@ class NanomaterialBuildController < ApplicationController
 
   def update
     case step
-    when :select_purpose
-      render_select_purpose_step
+    when :select_purposes
+      render_select_purposes_step
     when :confirm_restrictions
       render_confirm_restrictions_step
     when :confirm_usage
@@ -32,10 +31,10 @@ class NanomaterialBuildController < ApplicationController
 
   def previous_wizard_path
     case step
-    when :select_purpose
+    when :select_purposes
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :list_nanomaterials)
     when :confirm_usage, :unhappy_path
-      wizard_path(:select_purpose)
+      wizard_path(:select_purposes)
     else
       super
     end
@@ -61,16 +60,21 @@ private
     @nano_element = NanoElement.find(params[:nanomaterial_nano_element_id])
   end
 
-  def set_purpose
-    @purpose = params[:purpose]
+  def nano_element_params
+    params.fetch(:nano_element, {}).permit(:inci_name).merge(purpose_params)
   end
 
-  def render_select_purpose_step
-    selected_purpose = params.dig(:nano_element, :purpose)
-    if selected_purpose.present?
-      redirect_to wizard_path(:confirm_restrictions, purpose: selected_purpose)
+  def purpose_params
+    selected_purposes = params
+        .permit(nano_element: NanoElement.purposes).fetch(:nano_element, {})
+        .select { |_, value| value == "1" }.keys
+    { purposes: selected_purposes }
+  end
+
+  def render_select_purposes_step
+    if @nano_element.update_with_context(nano_element_params, step)
+      render_wizard @nano_element
     else
-      @nano_element.errors.add :purpose, "Select an option"
       render step
     end
   end
@@ -105,9 +109,5 @@ private
     @nano_element.nano_material.nano_elements.each_cons(2) do |element, next_element|
       return next_element if element == @nano_element
     end
-  end
-
-  def non_standard_purpose?(purpose)
-    %w(colorant preservative uv_filter).exclude?(purpose)
   end
 end
