@@ -5,7 +5,7 @@ class NanoElement < ApplicationRecord
     %w(colorant preservative uv_filter other).freeze
   end
 
-  validates :purposes, presence: true, on: :select_purpose
+  validates :purposes, presence: true, on: :select_purposes
   validates :purposes, array: { presence: true, inclusion: { in: NanoElement.purposes } }
 
   def display_name

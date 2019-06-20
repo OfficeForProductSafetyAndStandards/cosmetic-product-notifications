@@ -1,7 +1,7 @@
 class NanomaterialBuildController < ApplicationController
   include Wicked::Wizard
 
-  steps :select_purpose, :confirm_restrictions, :confirm_usage, :unhappy_path
+  steps :select_purposes, :confirm_restrictions, :confirm_usage, :unhappy_path
 
   before_action :set_component
   before_action :set_nano_element
@@ -16,8 +16,8 @@ class NanomaterialBuildController < ApplicationController
 
   def update
     case step
-    when :select_purpose
-      render_select_purpose_step
+    when :select_purposes
+      render_select_purposes_step
     when :confirm_restrictions
       render_confirm_restrictions_step
     when :confirm_usage
@@ -31,10 +31,10 @@ class NanomaterialBuildController < ApplicationController
 
   def previous_wizard_path
     case step
-    when :select_purpose
+    when :select_purposes
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :list_nanomaterials)
     when :confirm_usage, :unhappy_path
-      wizard_path(:select_purpose)
+      wizard_path(:select_purposes)
     else
       super
     end
@@ -71,7 +71,7 @@ private
     { purposes: selected_purposes }
   end
 
-  def render_select_purpose_step
+  def render_select_purposes_step
     if @nano_element.update_with_context(nano_element_params, step)
       render_wizard @nano_element
     else

@@ -36,24 +36,24 @@ RSpec.describe NanomaterialBuildController, type: :controller do
   describe "GET #new" do
     it "redirects to the first step of the wizard" do
       get(:new, params: params)
-      expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :select_purpose))
+      expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :select_purposes))
     end
   end
 
   describe "GET #show" do
     it "assigns the correct component" do
-      get(:show, params: params.merge(id: :select_purpose))
+      get(:show, params: params.merge(id: :select_purposes))
       expect(assigns(:component)).to eq(component)
     end
 
     it "assigns the correct nano-element" do
-      get(:show, params: params.merge(id: :select_purpose))
+      get(:show, params: params.merge(id: :select_purposes))
       expect(assigns(:nano_element)).to eq(nano_element1)
     end
 
     it "renders the step template" do
-      get(:show, params: params.merge(id: :select_purpose))
-      expect(response).to render_template(:select_purpose)
+      get(:show, params: params.merge(id: :select_purposes))
+      expect(response).to render_template(:select_purposes)
     end
 
     describe "at wicked_finish" do
@@ -78,26 +78,26 @@ RSpec.describe NanomaterialBuildController, type: :controller do
   end
 
   describe "POST #update" do
-    describe "at select_purpose"  do
-      let(:select_purpose_params) { params.merge(id: :select_purpose) }
+    describe "at select_purposes"  do
+      let(:select_purposes_params) { params.merge(id: :select_purposes) }
 
       it "updates the nano-element with the selected purposes" do
-        post(:update, params: select_purpose_params.merge(nano_element: { "colorant": "0", "preservative": "1", "uv_filter": "1", "other": "0" }))
+        post(:update, params: select_purposes_params.merge(nano_element: { "colorant": "0", "preservative": "1", "uv_filter": "1", "other": "0" }))
         expect(nano_element1.reload.purposes).to eq(%w(preservative uv_filter))
       end
 
       it "ignores invalid purpose values" do
-        post(:update, params: select_purpose_params.merge(nano_element: { "colorant": "1", "invalid_purpose": "1", "other": "0" }))
+        post(:update, params: select_purposes_params.merge(nano_element: { "colorant": "1", "invalid_purpose": "1", "other": "0" }))
         expect(nano_element1.reload.purposes).to eq(%w(colorant))
       end
 
       it "redirects to the next page when purposes are selected" do
-        post(:update, params: select_purpose_params.merge(nano_element: { "preservative": "1" }))
+        post(:update, params: select_purposes_params.merge(nano_element: { "preservative": "1" }))
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :confirm_restrictions))
       end
 
       it "sets error when no purpose is selected" do
-        post(:update, params: select_purpose_params)
+        post(:update, params: select_purposes_params)
         expect(assigns(:nano_element).errors[:purposes]).to include("Choose an option")
       end
     end

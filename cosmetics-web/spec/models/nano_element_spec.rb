@@ -8,7 +8,7 @@ RSpec.describe NanoElement, type: :model do
       purposes = %w(preservative uv_filter)
       nano_element.purposes = purposes
 
-      expect(nano_element.save(context: :select_purpose)).to be true
+      expect(nano_element.save(context: :select_purposes)).to be true
       expect(nano_element.purposes).to eq(purposes)
     end
 
@@ -16,14 +16,14 @@ RSpec.describe NanoElement, type: :model do
       invalid_purpose = "invalid_purpose"
       nano_element.purposes = [invalid_purpose]
 
-      expect(nano_element.save(context: :select_purpose)).to be false
+      expect(nano_element.save(context: :select_purposes)).to be false
       expect(nano_element.errors[:purposes]).to include("#{invalid_purpose} is not a valid purpose")
     end
 
     it "adds error if no purpose is specified" do
       nano_element.purposes = []
 
-      expect(nano_element.save(context: :select_purpose)).to be false
+      expect(nano_element.save(context: :select_purposes)).to be false
       expect(nano_element.errors[:purposes]).to include("Choose an option")
     end
   end
