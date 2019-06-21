@@ -26,7 +26,7 @@ PATH
       simplecov (= 0.16.1)
       simplecov-console (= 0.5.0)
       slim_lint (= 0.17.0)
-      solargraph (= 0.32.5)
+      solargraph (= 0.33.2)
 
 PATH
   remote: vendor/shared-web
@@ -378,7 +378,7 @@ GEM
       actionpack
       rack-timeout (>= 0.4.0)
       railties (>= 5)
-    solargraph (0.32.5)
+    solargraph (0.33.2)
       backport (~> 1.1)
       bundler (>= 1.17.2)
       htmlentities (~> 4.3, >= 4.3.4)
