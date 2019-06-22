@@ -4,6 +4,7 @@ RSpec.describe NanomaterialBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:notification) { create(:notification, components: [create(:component)], responsible_person: responsible_person) }
   let(:component) { notification.components.first }
+
   let(:nanomaterial) {
     create(:nano_material,
            component: component,
@@ -35,24 +36,24 @@ RSpec.describe NanomaterialBuildController, type: :controller do
   describe "GET #new" do
     it "redirects to the first step of the wizard" do
       get(:new, params: params)
-      expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :select_purpose))
+      expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :select_purposes))
     end
   end
 
   describe "GET #show" do
     it "assigns the correct component" do
-      get(:show, params: params.merge(id: :select_purpose))
+      get(:show, params: params.merge(id: :select_purposes))
       expect(assigns(:component)).to eq(component)
     end
 
     it "assigns the correct nano-element" do
-      get(:show, params: params.merge(id: :select_purpose))
+      get(:show, params: params.merge(id: :select_purposes))
       expect(assigns(:nano_element)).to eq(nano_element1)
     end
 
     it "renders the step template" do
-      get(:show, params: params.merge(id: :select_purpose))
-      expect(response).to render_template(:select_purpose)
+      get(:show, params: params.merge(id: :select_purposes))
+      expect(response).to render_template(:select_purposes)
     end
 
     describe "at wicked_finish" do
@@ -68,76 +69,74 @@ RSpec.describe NanomaterialBuildController, type: :controller do
     end
 
     describe "at confirm_restrictions" do
-      let(:confirm_restrictions_params) { params.merge(id: :confirm_restrictions) }
-
-      it "assigns the correct purpose on confirm_restrictions" do
-        get(:show, params: confirm_restrictions_params.merge(purpose: 'uv_filter'))
-        expect(assigns(:purpose)).to eq('uv_filter')
-      end
-
-      it "redirect the unhappy path when purpose is unexpected" do
-        get(:show, params: confirm_restrictions_params.merge(purpose: 'other'))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :unhappy_path))
-      end
-
-      it "redirect the unhappy path when purpose is not defined" do
-        get(:show, params: confirm_restrictions_params)
+      it "redirects to the unhappy path when nano-element purposes include 'other'" do
+        nano_element1.update(purposes: %w(other))
+        get(:show, params: params.merge(id: :confirm_restrictions))
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :unhappy_path))
       end
     end
   end
 
   describe "POST #update" do
-    describe "at select_purpose"  do
-      let(:select_purpose_params) { params.merge(id: :select_purpose) }
+    describe "at select_purposes"  do
+      let(:select_purposes_params) { params.merge(id: :select_purposes) }
 
-      it "redirects to the next page with the selected purpose" do
-        selected_purpose = "selected_purpose"
-        post(:update, params: select_purpose_params.merge(nano_element: { purpose: selected_purpose }))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :confirm_restrictions, purpose: selected_purpose))
+      it "updates the nano-element with the selected purposes" do
+        post(:update, params: select_purposes_params.merge(nano_element: { "colorant": "0", "preservative": "1", "uv_filter": "1", "other": "0" }))
+        expect(nano_element1.reload.purposes).to eq(%w(preservative uv_filter))
       end
 
-      it "set errors when no option is selected" do
-        post(:update, params: select_purpose_params)
-        expect(assigns(:nano_element).errors).to have(1).items
+      it "ignores invalid purpose values" do
+        post(:update, params: select_purposes_params.merge(nano_element: { "colorant": "1", "invalid_purpose": "1", "other": "0" }))
+        expect(nano_element1.reload.purposes).to eq(%w(colorant))
+      end
+
+      it "redirects to the next page when purposes are selected" do
+        post(:update, params: select_purposes_params.merge(nano_element: { "preservative": "1" }))
+        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :confirm_restrictions))
+      end
+
+      it "sets error when no purpose is selected" do
+        post(:update, params: select_purposes_params)
+        expect(assigns(:nano_element).errors[:purposes]).to include("Choose an option")
       end
     end
 
     describe "at confirm_restrictions" do
       let(:confirm_restrictions_params) { params.merge(id: :confirm_restrictions) }
 
-      it "redirects to the next page when the confirm_restrictions is true" do
-        post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "true" }))
+      it "redirects to the next page when confirm_restrictions is 'yes'" do
+        post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "yes" }))
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :confirm_usage))
       end
 
-      it "redirects to the next unhappy path when the confirm_restrictions is false" do
-        post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "false" }))
+      it "redirects to the unhappy path when confirm_restrictions is 'no'" do
+        post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "no" }))
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :unhappy_path))
       end
 
-      it "set errors when no option is selected" do
+      it "sets error when no option is selected" do
         post(:update, params: confirm_restrictions_params)
-        expect(assigns(:nano_element).errors).to have(1).items
+        expect(assigns(:nano_element).errors[:confirm_restrictions]).to include("Select an option")
       end
     end
 
     describe "at confirm_usage" do
       let(:confirm_usage_params) { params.merge(id: :confirm_usage) }
 
-      it "redirects to the next page when the confirm_usage is true" do
-        post(:update, params: confirm_usage_params.merge(nano_element: { confirm_usage: "true" }))
+      it "redirects to the next page when confirm_usage is 'yes'" do
+        post(:update, params: confirm_usage_params.merge(nano_element: { confirm_usage: "yes" }))
         expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element2))
       end
 
-      it "redirects to the next unhappy path when the confirm_usage is false" do
-        post(:update, params: confirm_usage_params.merge(nano_element: { confirm_usage: "false" }))
+      it "redirects to the unhappy path when confirm_usage is 'no'" do
+        post(:update, params: confirm_usage_params.merge(nano_element: { confirm_usage: "no" }))
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :unhappy_path))
       end
 
-      it "set errors when no option is selected" do
+      it "sets error when no option is selected" do
         post(:update, params: confirm_usage_params)
-        expect(assigns(:nano_element).errors).to have(1).items
+        expect(assigns(:nano_element).errors[:confirm_usage]).to include("Select an option")
       end
     end
   end

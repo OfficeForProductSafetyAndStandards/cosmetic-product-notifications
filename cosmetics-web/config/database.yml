@@ -18,4 +18,4 @@ production:
   url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-database")["uri"] %>
   connect_timeout: 2
   variables:
-    statement_timeout: 500
+    statement_timeout: <%= ENV["STATEMENT_TIMEOUT"] || "500ms" %>

@@ -7,6 +7,6 @@ Rails.application.load_tasks
 
 namespace :test do
   task :all do
-    sh 'bin/rspec'
+    sh 'bin/rspec --profile'
   end
 end

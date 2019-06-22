@@ -5,6 +5,7 @@ RSpec.describe "Invite a user to join a responsible person", type: :system do
   let(:user) { create(:user) }
 
   before do
+    configure_requests_for_submit_domain
     stub_notify_mailer
   end
 

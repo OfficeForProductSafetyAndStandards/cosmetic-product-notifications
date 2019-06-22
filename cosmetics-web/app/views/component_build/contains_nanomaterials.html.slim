@@ -1,24 +1,25 @@
-- content_for :page_title, "Contains nanomaterials"
+- title = "Contains nanomaterials"
+- question = "Does #{@component_name} contain nanomaterials?"
+- nanomaterial_definition = capture do
+  p
+    | A nanomaterial:
+  ul.govuk-list--bullet
+    li has one or more external dimensions, or an internal structure, with a size ranging from 1 nm to 100 nm
+    li is insoluble or biopersistent
+    li is intentionally manufactured
+- hint = capture do
+  = render "govuk_details", summary: "What is a nanomaterial?", text: nanomaterial_definition
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-= form_with(model: @component, url: wizard_path, method: :put) do |form|
+= form_with model: @component, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      - nanomaterial_definition = capture do
-        p
-          | A nanomaterial:
-        ul.govuk-list--bullet
-          li has one or more external dimensions, or an internal structure, with a size ranging from 1 nm to 100 nm
-          li is insoluble or biopersistent
-          li is intentionally manufactured
-      - hint_html = capture do
-        = render "govuk_details", summary: "What is a nanomaterial?",
-                text: nanomaterial_definition
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :contains_nanomaterials,
-              fieldset: { legend: { text: "Does #{@component_name} contain nanomaterials?",
-                      classes: "govuk-label--xl", isPageHeading: true } },
-              hint: { html: hint_html },
+              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              hint: { html: hint },
               items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

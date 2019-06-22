@@ -23,7 +23,7 @@ private
   end
 
   def set_page_title
-    @page_title = "New Enquiry"
+    @page_title = "New enquiry"
     @page_subtitle = "Who did the enquiry come from?"
   end
 end

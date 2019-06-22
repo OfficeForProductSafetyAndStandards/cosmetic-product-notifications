@@ -5,7 +5,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-l New Project
+      h1.govuk-heading-l New project
       = render "form_components/govuk_input", key: :user_title, form: form, attributes: { maxlength: 100 },
               label: { text: "Please provide a title", classes: "govuk-label--m" },
               hint: { text: "This will help other users identify this project" }

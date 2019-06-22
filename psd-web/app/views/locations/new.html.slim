@@ -7,6 +7,6 @@
       = render "form_components/govuk_error_summary", form: form
       h1.govuk-heading-l
         span.govuk-caption-l
-          = "Business: #{@business.trading_name}"
+          = @business.pretty_description
         | Add location
       = render "form", form: form
