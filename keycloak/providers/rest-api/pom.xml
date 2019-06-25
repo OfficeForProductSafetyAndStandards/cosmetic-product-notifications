@@ -17,7 +17,7 @@
 
         <keycloak.version>4.8.3.Final</keycloak.version>
         <resteasy.version>3.6.3.Final</resteasy.version>
-        <jaxrs-api.version>1.0.2.Final</jaxrs-api.version>
+        <jaxrs-api.version>1.0.3.Final</jaxrs-api.version>
     </properties>
 
     <dependencies>
