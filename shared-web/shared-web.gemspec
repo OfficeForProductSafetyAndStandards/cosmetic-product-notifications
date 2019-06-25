@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.add_dependency "elasticsearch-model", "6.0.0"
   s.add_dependency "elasticsearch-rails", "6.0.0"
   s.add_dependency "govuk_notify_rails", "2.1.0"
-  s.add_dependency "keycloak", "2.4.1"
+  s.add_dependency "keycloak", "2.5.1"
   s.add_dependency "lograge", "0.11.2"
   s.add_dependency "mini_magick", "4.9.3"
   s.add_dependency "okcomputer", "1.17.4"
