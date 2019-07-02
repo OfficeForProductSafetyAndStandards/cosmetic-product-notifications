@@ -107,9 +107,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       status_open: "checked",
       status_closed: "checked"
     }
-    assert_includes(response.body, @investigation_three.pretty_id)
     assert_includes(response.body, @investigation_one.pretty_id)
     assert_includes(response.body, @investigation_two.pretty_id)
+    assert_includes(response.body, @investigation_three.pretty_id)
     assert_includes(response.body, @investigation_no_products.pretty_id)
   end
 
@@ -118,9 +118,9 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
       status_open: "unchecked",
       status_closed: "unchecked"
     }
-    assert_includes(response.body, @investigation_three.pretty_id)
     assert_includes(response.body, @investigation_one.pretty_id)
     assert_includes(response.body, @investigation_two.pretty_id)
+    assert_includes(response.body, @investigation_three.pretty_id)
     assert_includes(response.body, @investigation_no_products.pretty_id)
   end
 
