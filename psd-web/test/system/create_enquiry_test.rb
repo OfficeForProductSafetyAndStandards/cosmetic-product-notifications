@@ -30,11 +30,11 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     choose "type_enquiry", visible: false
     click_on "Continue"
 
-    assert_text "New Enquiry"
+    assert_text "New enquiry"
   end
 
   test "first step should be complainant type" do
-    assert_text "New Enquiry"
+    assert_text "New enquiry"
     assert_text "Who did the enquiry come from?"
   end
 
@@ -51,7 +51,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
   test "second step should be complainant details" do
     select_complainant_type_and_continue
 
-    assert_text "New Enquiry"
+    assert_text "New enquiry"
     assert_text "What are their contact details?"
   end
 
@@ -60,7 +60,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     fill_in "complainant[email_address]", with: "invalid_email_address"
     click_on "Continue"
 
-    assert_text "Enter a real email address"
+    assert_text "Enter an email address in the correct format, like name@example.com"
   end
 
   test "second step should allow an empty email address" do
@@ -81,7 +81,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
 
-    assert_text "New Enquiry"
+    assert_text "New enquiry"
     assert_text "What is the enquiry?"
   end
 

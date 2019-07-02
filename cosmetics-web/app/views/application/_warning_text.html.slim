@@ -1,0 +1,6 @@
+.govuk-warning-text
+  span.govuk-warning-text__icon[aria-hidden="true" style="box-sizing: content-box"] !
+  strong.govuk-warning-text__text
+    span.govuk-warning-text__assistive
+      | Warning
+    = local_assigns[:html] || local_assigns[:text]

@@ -7,6 +7,7 @@ RSpec.describe "Responsible person dashboard", type: :system do
   let(:user_2) { create(:user) }
 
   before do
+    configure_requests_for_submit_domain
     sign_in as_user: user_1
   end
 
@@ -90,6 +91,7 @@ RSpec.describe "Responsible person dashboard", type: :system do
     click_button "Dismiss all error messages"
     sign_out
     sign_in as_user: user_2
+    configure_requests_for_submit_domain
     visit responsible_person_notifications_path(responsible_person_1)
     assert_text "Errors (11)"
   end

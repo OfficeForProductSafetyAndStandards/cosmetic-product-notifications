@@ -7,6 +7,8 @@ class ComponentBuildController < ApplicationController
         :number_of_shades,
         :add_shades,
         :add_physical_form,
+        :contains_special_applicator,
+        :select_special_applicator_type,
         :contains_cmrs,
         :add_cmrs,
         :contains_nanomaterials,
@@ -15,8 +17,8 @@ class ComponentBuildController < ApplicationController
         :list_nanomaterials,
         :select_category,
         :select_formulation_type,
-        :select_frame_formulation,
-        :upload_formulation
+        :upload_formulation,
+        :select_frame_formulation
 
   before_action :set_component
   before_action :set_nano_material
@@ -40,6 +42,8 @@ class ComponentBuildController < ApplicationController
       render_number_of_shades
     when :add_shades
       render_add_shades
+    when :contains_special_applicator
+      render_contains_special_applicator
     when :contains_cmrs
       render_contains_cmrs
     when :add_cmrs
@@ -54,8 +58,6 @@ class ComponentBuildController < ApplicationController
       render_select_category_step
     when :select_formulation_type
       render_select_formulation_type
-    when :select_frame_formulation
-      render_select_frame_formulation
     when :upload_formulation
       render_upload_formulation
     else
@@ -127,6 +129,8 @@ private
       .permit(
         :name,
         :physical_form,
+        :special_applicator,
+        :other_special_applicator,
         :sub_sub_category,
         :notification_type,
         :frame_formulation,
@@ -142,17 +146,16 @@ private
   end
 
   def render_number_of_shades
-    case params[:number_of_shades]
+    case params.dig(:component, :number_of_shades)
     when "single-or-no-shades", "multiple-shades-different-notification"
       @component.shades = nil
       @component.add_shades
-      @component.save
       jump_to(next_step(:add_shades))
       render_wizard @component
     when "multiple-shades-same-notification"
       render_wizard @component
-    when ""
-      @component.errors.add :shades, "Please select an option"
+    else
+      @component.errors.add :number_of_shades, "Please select an option"
       render step
     end
   end
@@ -165,36 +168,25 @@ private
       render :add_shades
     elsif params.key?(:remove_shade_with_id)
       @component.shades.delete_at(params[:remove_shade_with_id].to_i)
-      if @component.shades.length < 2
-        @component.shades.push ''
-      end
+      create_required_shades
       render :add_shades
     else
       @component.prune_blank_shades
       if @component.valid?
         render_wizard @component
       else
-        if @component.shades.length < 2
-          required_shades = 2 - @component.shades.length
-          @component.shades.concat(Array.new(required_shades, ''))
-        end
+        create_required_shades
         render step
       end
     end
   end
 
+  def render_contains_special_applicator
+    yes_no_question(:contains_special_applicator, before_skip: Proc.new { @component.special_applicator = nil })
+  end
+
   def render_contains_cmrs
-    case params.dig(:component, :contains_cmrs)
-    when "yes"
-      render_wizard @component
-    when "no"
-      destroy_all_cmrs
-      jump_to(next_step(:add_cmrs))
-      render_wizard @component
-    else
-      @component.errors.add :contains_cmrs, "Please select an option"
-      render step
-    end
+    yes_no_question(:contains_cmrs, before_skip: method(:destroy_all_cmrs))
   end
 
   def render_add_cmrs
@@ -207,18 +199,10 @@ private
   end
 
   def render_contains_nanomaterials
-    case params.dig(:component, :contains_nanomaterials)
-    when "yes"
-      @component.nano_material = NanoMaterial.create if @nano_material.nil?
-      render_wizard @component
-    when "no"
-      @nano_material.destroy if @nano_material.present?
-      jump_to(next_step(:list_nanomaterials))
-      render_wizard @component
-    else
-      @component.errors.add :contains_nanomaterials, "Please select an option"
-      render step
-    end
+    yes_no_question(:contains_nanomaterials,
+                    before_skip: Proc.new { @nano_material.destroy if @nano_material.present? },
+                    before_render: Proc.new { @component.nano_material = NanoMaterial.create if @nano_material.nil? },
+                    steps_to_skip: 3)
   end
 
   def render_add_exposure_routes
@@ -268,32 +252,23 @@ private
   end
 
   def render_select_formulation_type
-    if params[:component].nil?
-      @no_notification_type_selected = true
+    unless @component.update_with_context(component_params, step)
       return render step
     end
-    @component.update(component_params)
+
     if @component.predefined?
       @component.formulation_file.delete if @component.formulation_file.attached?
+      jump_to(next_step(:upload_formulation))
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
-      jump_to(next_step(:select_frame_formulation))
     end
     render_wizard @component
   end
 
-  def render_select_frame_formulation
-    if @component.update_with_context(component_params, step)
-      redirect_to finish_wizard_path
-    else
-      render step
-    end
-  end
-
   def render_upload_formulation
-    if params[:formulation_file].present?
-      file_upload = params[:formulation_file]
-      @component.formulation_file.attach(file_upload)
+    formulation_file = params.dig(:component, :formulation_file)
+    if formulation_file.present?
+      @component.formulation_file.attach(formulation_file)
       redirect_to finish_wizard_path
     else
       @component.errors.add :formulation_file, "Please upload a file"
@@ -309,13 +284,22 @@ private
   def get_previous_step
     case step
     when :add_physical_form
-      @component.shades.nil? ? :number_of_shades : :add_shades
+      @component.shades.present? ? :add_shades : :number_of_shades
     when :contains_nanomaterials
-      @component.cmrs.empty? ? :contains_cmrs : :add_cmrs
+      @component.cmrs.present? ? :add_cmrs : :contains_cmrs
+    when :contains_cmrs
+      @component.special_applicator.present? ? :select_special_applicator_type : :contains_special_applicator
     when :select_category
-      @nano_material.nil? ? :contains_nanomaterials : :list_nanomaterials
-    when :upload_formulation
+      @component.nano_material.present? ? :list_nanomaterials : :contains_nanomaterials
+    when :select_frame_formulation
       :select_formulation_type
+    end
+  end
+
+  def create_required_shades
+    if @component.shades.length < 2
+      required_shades = 2 - @component.shades.length
+      @component.shades.concat(Array.new(required_shades, ''))
     end
   end
 
@@ -331,6 +315,10 @@ private
   end
 
   def post_eu_exit_steps
-    %i[add_cmrs contains_cmrs]
+    %i[add_cmrs contains_cmrs contains_special_applicator select_special_applicator_type]
+  end
+
+  def model
+    @component
   end
 end

@@ -33,12 +33,8 @@ class NotificationBuildController < ApplicationController
       render_is_hair_dye_step
     when :is_ph_between_3_and_10
       render_is_ph_between_3_and_10_step
-    when :ph_range
-      render_ph_range_step
     when :is_imported
       render_is_imported_step
-    when :for_children_under_three
-      render_for_children_under_three_step
     when :add_new_component
       render_add_new_component_step
     when :add_product_image
@@ -46,13 +42,10 @@ class NotificationBuildController < ApplicationController
     when :add_internal_reference
       render_add_internal_reference
     else
-      @notification.update(notification_params)
-
-      if step == :add_import_country && @notification.import_country.blank?
-        @notification.errors.add :import_country, "Must not be blank"
-        render step
-      else
+      if @notification.update_with_context(notification_params, step)
         render_wizard @notification
+      else
+        render step
       end
     end
   end
@@ -85,7 +78,6 @@ private
       .permit(
         :product_name,
         :industry_reference,
-        :is_imported,
         :import_country,
         :under_three_years,
         :components_are_mixed,
@@ -104,16 +96,8 @@ private
     @countries = all_countries
   end
 
-  def render_for_children_under_three_step
-    if @notification.update_with_context(notification_params, :for_children_under_three)
-      render_wizard @notification
-    else
-      render step
-    end
-  end
-
   def render_single_or_multi_component_step
-    case params[:single_or_multi_component]
+    case params.dig(:notification, :single_or_multi_component)
     when "single"
       @notification.components.destroy_all if @notification.is_multicomponent?
       single_component = @notification.components.empty? ? @notification.components.create : @notification.components.first
@@ -127,71 +111,37 @@ private
       end
       render_wizard @notification
     else
-      @notification.errors.add :components, "Must not be nil"
+      @notification.errors.add :single_or_multi_component, "Must not be nil"
       render step
     end
   end
 
   def render_is_mixed_step
-    if @notification.update_with_context(notification_params, :update_components_are_mixed)
-      if @notification.components_are_mixed
-        render_wizard @notification
-      else
+    if @notification.update_with_context(notification_params, step)
+      unless @notification.components_are_mixed
         clear_ph_range
-        redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :add_new_component)
+        jump_to(next_step(:ph_range))
       end
+      render_wizard @notification
     else
       render step
     end
   end
 
   def render_is_hair_dye_step
-    case params[:notification] && params[:notification][:is_hair_dye]
-    when "true"
-      redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :ph_range)
-    when "false"
-      render_wizard @notification
-    else
-      @notification.errors.add :is_hair_dye, "Must select an option"
-      render step
-    end
+    yes_no_question(:is_hair_dye, no_is_to_skip: false)
   end
 
   def render_is_ph_between_3_and_10_step
-    case params[:notification] && params[:notification][:is_ph_between_3_and_10]
-    when "true"
-      clear_ph_range
-      redirect_to responsible_person_notification_build_path(@notification.responsible_person, @notification, :add_new_component)
-    when "false"
-      render_wizard @notification
-    else
-      @notification.errors.add :is_ph_between_3_and_10, "Must select an option"
-      render step
-    end
-  end
-
-  def render_ph_range_step
-    # Apply this since render_wizard(@notification, context: :update_components_are_mixed) doesn't work as expected
-    if @notification.update_with_context(notification_params, :update_ph_range_value)
-      render_wizard @notification
-    else
-      render step
-    end
+    yes_no_question(:is_ph_between_3_and_10, before_skip: method(:clear_ph_range))
   end
 
   def render_is_imported_step
-    case params[:is_imported]
-    when "true"
-      render_wizard @notification
-    when "false"
+    remove_import_country = Proc.new do
       @notification.import_country = nil
       @notification.add_import_country
-      jump_to(next_step(:add_import_country))
-      render_wizard @notification
-    when ""
-      @notification.errors.add :import_country, "Must not be nil"
-      render step
     end
+    yes_no_question(:is_imported, before_skip: remove_import_country)
   end
 
   def render_add_new_component_step
@@ -228,17 +178,20 @@ private
   end
 
   def render_add_internal_reference
-    if params[:notification].present? && params[:notification][:add_internal_reference] == 'true'
-      if params[:notification][:industry_reference].blank?
-        @notification.errors.add :industry_reference, "Please enter an internal reference"
-        return render step
+    case params.dig(:notification, :add_internal_reference)
+    when "yes"
+      if @notification.update_with_context(notification_params, step)
+        render_wizard @notification
+      else
+        render step
       end
-      @notification.update industry_reference: params[:notification][:industry_reference]
-    elsif params[:notification].blank? || params[:notification][:add_internal_reference].blank?
+    when "no"
+      @notification.industry_reference = nil
+      render_wizard @notification
+    else
       @notification.errors.add :add_internal_reference, "Please select an option"
-      return render step
+      render step
     end
-    render_wizard @notification
   end
 
   def clear_ph_range
@@ -268,5 +221,9 @@ private
 
   def post_eu_exit_steps
     %i[for_children_under_three]
+  end
+
+  def model
+    @notification
   end
 end

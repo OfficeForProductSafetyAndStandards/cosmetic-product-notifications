@@ -1,13 +1,17 @@
-- content_for :page_title, "Confirm usage"
+ruby:
+  title = "Confirm usage"
+  annex_details = get_ec_regulation_annex_details_for_nanomaterial_purposes(@nano_element.purposes)
+  question = "Does the #{@nano_element.inci_name} conform to the restrictions set out in #{annex_details}?"
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-= form_with(model: @nano_element, url: wizard_path, method: :put) do |form|
+= form_with model: @nano_element, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :confirm_usage,
-              fieldset: { legend: { text: "Is it used in accordance with the restrictions for that material?",
-                      classes: "govuk-label--xl", isPageHeading: true } },
-              items: [{ text: "Yes", value: "true" }, { text: "No", value: "false" }]
+              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"
