@@ -19,7 +19,7 @@ PATH
       debase (= 0.2.2)
       govuk-lint (= 3.11.2)
       listen (= 3.1.5)
-      rubocop (= 0.71.0)
+      rubocop (= 0.72.0)
       rubocop-performance (= 1.4.0)
       ruby-debug-ide (= 0.7.0)
       selenium-webdriver (= 3.142.3)
@@ -189,7 +189,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
-    jaro_winkler (1.5.2)
+    jaro_winkler (1.5.3)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
     jmespath (1.4.0)
@@ -240,7 +240,7 @@ GEM
     pg (1.1.4)
     pghero (2.2.1)
       activerecord
-    public_suffix (3.1.0)
+    public_suffix (3.1.1)
     puma (3.12.1)
     pundit (2.0.1)
       activesupport (>= 3.0.0)
@@ -316,7 +316,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.2)
-    rubocop (0.71.0)
+    rubocop (0.72.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.6)
@@ -427,7 +427,7 @@ GEM
     will_paginate (3.1.7)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yard (0.9.19)
+    yard (0.9.20)
 
 PLATFORMS
   ruby
