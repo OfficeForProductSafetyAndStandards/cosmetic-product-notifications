@@ -266,9 +266,9 @@ private
   end
 
   def render_upload_formulation
-    if params[:formulation_file].present?
-      file_upload = params[:formulation_file]
-      @component.formulation_file.attach(file_upload)
+    formulation_file = params.dig(:component, :formulation_file)
+    if formulation_file.present?
+      @component.formulation_file.attach(formulation_file)
       redirect_to finish_wizard_path
     else
       @component.errors.add :formulation_file, "Please upload a file"
