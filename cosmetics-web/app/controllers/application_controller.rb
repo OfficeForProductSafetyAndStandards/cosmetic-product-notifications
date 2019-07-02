@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include Shared::Web::Concerns::CacheConcern
   include Shared::Web::Concerns::HttpAuthConcern
   include Shared::Web::Concerns::RavenConfigurationConcern
+  include DomainConcern
 
   helper Shared::Web::Engine.helpers
 
@@ -11,6 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :set_current_user
   before_action :set_raven_context
   before_action :set_cache_headers
+  before_action :set_service_name
 
   before_action :authorize_user!
   before_action :has_accepted_declaration
@@ -21,7 +23,9 @@ class ApplicationController < ActionController::Base
 private
 
   def authorize_user!
-    raise Pundit::NotAuthorizedError if poison_centre_or_msa_user?
+    return unless user_signed_in?
+
+    redirect_to invalid_account_path if invalid_account_for_domain?
   end
 
   def has_accepted_declaration
@@ -48,5 +52,9 @@ private
 
   def poison_centre_or_msa_user?
     User.current&.poison_centre_user? || User.current&.msa_user?
+  end
+
+  def invalid_account_for_domain?
+    (submit_domain? && poison_centre_or_msa_user?) || (search_domain? && !poison_centre_or_msa_user?)
   end
 end

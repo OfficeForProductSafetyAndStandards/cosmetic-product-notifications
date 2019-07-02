@@ -11,5 +11,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara.server_port = ENV["HTTP_PORT"]
   Capybara.app_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"
   Capybara.default_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"
+  Rails.application.routes.default_url_options = { host: ENV["HTTP_HOST"], port: ENV["HTTP_PORT"] }
+
   driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: { args: ["headless", "disable-gpu", "no-sandbox", "disable-dev-shm-usage"] }
 end

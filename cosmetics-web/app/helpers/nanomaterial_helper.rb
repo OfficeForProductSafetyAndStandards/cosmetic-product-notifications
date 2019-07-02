@@ -1,15 +1,23 @@
 module NanomaterialHelper
-  def nano_elements_purposes
-    {
-        colorant: "Colorant",
-        preservative: "Preservative",
-        uv_filter: "UV filter",
-        other: "Another purpose"
-    }
+  def get_nanomaterial_purpose_options
+    NanoElement.purposes.map { |purpose| [purpose, get_label_for_nanomaterial_purpose(purpose)] }.to_h
   end
 
-  def get_ec_regulation_annex_number_for_nano_material_purpose(purpose)
-    ec_regulation_annex_number_for_nano_material_purpose[purpose&.to_sym]
+  def get_label_for_nanomaterial_purpose(purpose)
+    get_display_name_for_nanomaterial_purpose(purpose).upcase_first
+  end
+
+  def get_display_name_for_nanomaterial_purpose(purpose)
+    DISPLAY_NAME_FOR_PURPOSE[purpose.to_sym]
+  end
+
+  def get_ec_regulation_annex_details_for_nanomaterial_purposes(purposes)
+    annex_numbers = purposes.map { |purpose| get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose) }
+    "#{'Annex'.pluralize(annex_numbers.count)} #{to_sentence(annex_numbers, last_word_connector: ' and ')}"
+  end
+
+  def get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose)
+    ANNEX_NUMBER_FOR_PURPOSE[purpose.to_sym]
   end
 
   def get_ec_regulation_link_for_annex_number(annex_number)
@@ -25,13 +33,18 @@ module NanomaterialHelper
     end
   end
 
-private
+  DISPLAY_NAME_FOR_PURPOSE = {
+    colorant: "colourant",
+    preservative: "preservative",
+    uv_filter: "UV filter",
+    other: "another purpose"
+  }.freeze
 
-  def ec_regulation_annex_number_for_nano_material_purpose
-    {
-        colorant: 4,
-        preservative: 5,
-        uv_filter: 6
-    }
-  end
+  ANNEX_NUMBER_FOR_PURPOSE = {
+    colorant: 4,
+    preservative: 5,
+    uv_filter: 6
+  }.freeze
+
+  private_constant :ANNEX_NUMBER_FOR_PURPOSE, :DISPLAY_NAME_FOR_PURPOSE
 end

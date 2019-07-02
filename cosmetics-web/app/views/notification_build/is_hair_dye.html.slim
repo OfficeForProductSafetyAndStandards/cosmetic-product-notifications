@@ -1,4 +1,6 @@
-- content_for :page_title, "Is the cosmetic product a hair dye?"
+- question = "Is the cosmetic product a hair dye?"
+
+- content_for :page_title, question
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
@@ -7,8 +9,7 @@
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :is_hair_dye,
-              fieldset: { legend: { text: "Is the cosmetic product a hair dye?",
-                      classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
-              items: [{ text: "Yes, it is a hair dye", value: "true" },
-                      { text: "No, it is not a hair dye", value: "false" }]
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              items: [{ text: "Yes, it is a hair dye", value: "yes" },
+                      { text: "No, it is not a hair dye", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

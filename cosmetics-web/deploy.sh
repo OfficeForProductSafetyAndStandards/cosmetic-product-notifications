@@ -47,6 +47,8 @@ cp -a ./shared-web/. ./cosmetics-web/vendor/shared-web/
 # Deploy the new app, set the hostnames and start the app
 cf push $NEW_APP -f ./cosmetics-web/manifest.yml -d $DOMAIN --hostname $NEW_SUBMIT_HOSTNAME --no-start
 cf set-env $NEW_APP COSMETICS_HOST "$NEW_SUBMIT_HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP SUBMIT_HOST "$NEW_SUBMIT_HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP SEARCH_HOST "$NEW_SEARCH_HOSTNAME.$DOMAIN"
 cf map-route $NEW_APP $DOMAIN --hostname $NEW_SEARCH_HOSTNAME
 
 # Increase the assigned memory for staging
@@ -94,7 +96,10 @@ cf unmap-route $NEW_APP $DOMAIN --hostname $NEW_SEARCH_HOSTNAME
 
 # Map the live hostnames to the new app
 cf set-env $NEW_APP COSMETICS_HOST "$SUBMIT_HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP SUBMIT_HOST "$SUBMIT_HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP SEARCH_HOST "$SEARCH_HOSTNAME.$DOMAIN"
 cf restart $NEW_APP
+
 cf map-route $NEW_APP $DOMAIN --hostname $SUBMIT_HOSTNAME
 cf map-route $NEW_APP $DOMAIN --hostname $SEARCH_HOSTNAME
 

@@ -31,6 +31,16 @@ if there are new migrations:
 
     docker-compose exec cosmetics-web bin/rake db:migrate
 
+If you need to access the 'submit' and 'search' variants of the service separately, add the following entries to your
+hosts file ([instructions](https://support.rackspace.com/how-to/modify-your-hosts-file/)):
+
+    127.0.0.1   submit_cosmetics
+    127.0.0.1   search_cosmetics
+
+and update the `SUBMIT_HOST` and `SEARCH_HOST` values in your local `.env` file to match. After restarting the website,
+you should then be able to access the two versions of the site on [submit_cosmetics:3002](http://submit_cosmetics:3002)
+and [search_cosmetics:3002](http://search_cosmetics:3002).
+
 
 ## Tests
 
