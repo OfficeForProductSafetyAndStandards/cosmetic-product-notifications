@@ -7,7 +7,5 @@
     span = link_to investigation.title, investigation, class: "govuk-!-font-weight-bold"
   .govuk-grid-column-one-half
     - displayable_highlights.each do |highlight|
-      - label = capture do
-        = highlight[:label] == "Case id" ? "Case ID" : highlight[:label]
-      span.govuk-caption-m[class="govuk-!-font-size-16"] = label
+      span.govuk-caption-m[class="govuk-!-font-size-16"] = highlight[:label]
       span = highlight[:content]
