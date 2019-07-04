@@ -1,7 +1,8 @@
 - title = "Internal reference"
 - question = "Do you want to add an internal reference?"
 - hint = "Use this to identify your cosmetic products. " \
-              "It will not be seen by NPIS or market surveillance authorities."
+              "It will not be seen by the National Poisons Information Service (NPIS) or market surveillance authorities
+like Trading Standards."
 
 - content_for :page_title, title
 - content_for :after_header do
@@ -17,7 +18,7 @@
       = render "form_components/govuk_radios", form: form, key: :add_internal_reference,
           fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
           hint: { text: hint },
-          items: [{ text: "Yes, add an internal reference", value: "yes", conditional: { html: reference_input_html },
+          items: [{ text: "Yes", value: "yes", conditional: { html: reference_input_html },
                   checked: params[:notification].present? && params[:notification][:add_internal_reference] == "yes" },
                   { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"
