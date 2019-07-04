@@ -62,12 +62,16 @@
               reproduction (CMR) substances
           li
             | an image of the label
+          p
+          | You can do this manually or via the 'upload' method below..
+            
         - warning_html = capture do
           | You must submit your notifications for these products by
           span.no-wrap< = display_full_time_and_date SUBMISSION_WINDOW_END_DATE
           | .
         = render "warning_text", html: warning_html
-
+      
+      
         h2.govuk-heading-m
           | How to provide notifications
         h3.govuk-heading-s
