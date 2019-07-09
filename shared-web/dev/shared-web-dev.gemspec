@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.add_dependency "brakeman", "4.5.1"
   s.add_dependency "capybara", "3.24.0"
   s.add_dependency "coveralls", "0.8.23"
-  s.add_dependency "govuk-lint", "3.11.2"
+  s.add_dependency "govuk-lint", "3.11.3"
   s.add_dependency "rubocop", "0.71.0"
   s.add_dependency "rubocop-performance", "1.4.0"
   s.add_dependency "selenium-webdriver", "3.142.3"
