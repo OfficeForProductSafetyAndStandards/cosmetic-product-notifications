@@ -22,41 +22,12 @@
                   label: { text: "Keywords", classes: "govuk-label--s" }
           = form.submit "Search", name: nil, class: "search-box--submit"
         hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
-        - other_assignee = capture do
-          - entities = User.get_assignees(except: User.current) + Team.all
-          = render "form_components/govuk_select", key: :assigned_to_someone_else_id, form: form,
-                        items: entities.map { |e| { text: e.display_name, value: e.id } },
-                        label: { text: "Name" }, is_autocomplete: true
-        - other_creator = capture do
-          - entities = User.get_assignees(except: User.current) + Team.all
-          = render "form_components/govuk_select", key: :created_by_someone_else_id, form: form,
-                        items: entities.map { |e| { text: e.display_name, value: e.id } },
-                        label: { text: "Name" }, is_autocomplete: true
-        ruby:
-          assigned_to_items = [{ key: "assigned_to_me", value: "checked", unchecked_value: "unchecked", text: "Me" }]
-          assignee_teams_with_keys.each do |key, team, name|
-              assigned_to_items << { key: key, value: team.id, unchecked_value: "unchecked", text: name }
-          end
-          assigned_to_items << { key: "assigned_to_someone_else",
-                           value: "checked",
-                           unchecked_value: "unchecked",
-                           text: "Other person or team",
-                           conditional: { html: other_assignee } }
-          created_by_items = [{ key: "created_by_me", value: "checked", unchecked_value: "unchecked", text: "Me" }]
-          creator_teams_with_keys.each do |key, team, name|
-              created_by_items << { key: key, value: team.id, unchecked_value: "unchecked", text: name }
-          end
-          created_by_items << { key: "created_by_someone_else",
-                           value: "checked",
-                           unchecked_value: "unchecked",
-                           text: "Other person or team",
-                           conditional: { html: other_creator } }
         = render "form_components/govuk_checkboxes", form: form, key: :assigned_to,
           fieldset: { legend: { text: "Assigned to", classes: "govuk-fieldset__legend--s" } },
-          items: assigned_to_items
+          items: assigned_to(form)
         = render "form_components/govuk_checkboxes", form: form, key: :created_by,
           fieldset: { legend: { text: "Created by", classes: "govuk-fieldset__legend--s" } },
-          items: created_by_items
+          items: created_by(form)
         = render "form_components/govuk_checkboxes", form: form, key: :type,
                  fieldset: { legend: { text: "Type", classes: "govuk-fieldset__legend--s" } },
                  items: [{ key: "allegation", value: "checked", unchecked_value: "unchecked", text: "Allegation" },
