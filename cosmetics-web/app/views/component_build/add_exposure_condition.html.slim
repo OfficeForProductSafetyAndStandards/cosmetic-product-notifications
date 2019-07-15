@@ -1,0 +1,18 @@
+- title = "Exposure condition"
+- question = "Is #{@component_name} intended to be rinsed off or left on?"
+- items = NanoMaterial.exposure_conditions.map { |key, value| { text: get_exposure_condition_name(key), value: value } }
+
+- content_for :page_title, title
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with(model: @component, url: wizard_path, method: :put) do |form|
+  = form.fields_for :nano_material do |nano_material_form|
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
+        = render "form_components/govuk_error_summary", form: nano_material_form
+        = nano_material_form.hidden_field :exposure_condition, value: nil
+        = render "form_components/govuk_radios", form: nano_material_form, key: :exposure_condition,
+                fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+                items: items
+        = form.submit "Continue", class: "govuk-button"

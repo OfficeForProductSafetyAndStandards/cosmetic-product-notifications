@@ -1,5 +1,5 @@
 class Correspondence < ApplicationRecord
-  include DateConcern
+  include Shared::Web::Concerns::DateConcern
   include SanitizationHelper
   belongs_to :investigation, optional: true
   has_one :activity, dependent: :destroy
@@ -8,12 +8,10 @@ class Correspondence < ApplicationRecord
   before_validation { trim_line_endings(:details) }
 
   validates :email_address, allow_blank: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :context
-  validates_presence_of :correspondence_date, on: :context
   validates_length_of :details, maximum: 50000
+  validate :date_cannot_be_in_the_future
 
-  def get_date_key
-    :correspondence_date
-  end
+  date_attribute :correspondence_date
 
   has_many_attached :documents
 
@@ -32,6 +30,12 @@ class Correspondence < ApplicationRecord
 
   def can_be_displayed?
     can_be_seen_by_current_user? || investigation.child_should_be_displayed?
+  end
+
+  def date_cannot_be_in_the_future
+    if correspondence_date.present? && correspondence_date > Time.zone.today
+      errors.add(:correspondence_date, 'Correspondence date must be today or in the past')
+    end
   end
 
 private

@@ -34,13 +34,13 @@ class CreateNewRecordTest < ApplicationSystemTestCase
     choose "type_allegation", visible: false
     click_on "Continue"
 
-    assert_text "New Allegation"
+    assert_text "New allegation"
   end
 
   test "should show the new enquiry page when selecting enquiry" do
     choose "type_enquiry", visible: false
     click_on "Continue"
 
-    assert_text "New Enquiry"
+    assert_text "New enquiry"
   end
 end

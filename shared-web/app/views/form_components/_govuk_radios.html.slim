@@ -12,12 +12,14 @@ ruby:
     value = item[:value].to_s.gsub(/\s/, "_").gsub(/[^-[[:word:]]]/, "").mb_chars.downcase.to_s
     item[:id] ||= "#{local_assigns[:idPrefix]}_#{value}"
   end
-- if form.object
-  - if form.object.respond_to?(key)
-    / Make item checked based on attribute value
-    - item_matching_state = items.find { |item| item[:value].to_s == form.object.send(key).to_s }
-    - item_matching_state[:checked] = true if item_matching_state
-  - if form.object.errors
-    - error_text = form.object.errors.full_messages_for(key).first.presence
-    - local_assigns[:errorMessage] ||= { text: error_text } if error_text
+  if form.object.respond_to?(key)
+    # Make item checked based on attribute value
+    item_matching_state = items.find { |item| item[:value].to_s == form.object.send(key).to_s }
+    item_matching_state[:checked] = true if item_matching_state
+  end
+  unless form.object.nil?
+    error_text = form.object.errors.full_messages_for(key).first.presence
+    local_assigns[:errorMessage] ||= { text: error_text } if error_text
+  end
+
 = render "components/govuk_radios", **local_assigns

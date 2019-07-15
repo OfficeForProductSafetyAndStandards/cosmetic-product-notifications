@@ -32,6 +32,6 @@ private
     @component = Component.find(params[:component_id])
     @notification = @component.notification
     @responsible_person = @notification.responsible_person
-    authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
+    authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 end

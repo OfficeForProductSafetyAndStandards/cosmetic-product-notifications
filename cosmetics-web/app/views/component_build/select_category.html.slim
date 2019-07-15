@@ -1,19 +1,24 @@
-- content_for :page_title, "Select the component category category"
-- content_for :after_header do
-  - previous_step = @component.nano_material.nil? ? :contains_nanomaterials : :add_nanomaterial
-  = link_to "Back",
-          responsible_person_notification_component_build_path(@component.notification.responsible_person,
-                  @component.notification, @component, previous_step),
-          class: "govuk-back-link"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | What category of cosmetic is the product?
-      = form_for(@component, url: wizard_path, method: :put) do |form|
-        = render "form_components/autocomplete_select", key: :sub_sub_category, form: form, show_all_values: true,
-                items: get_sub_sub_categories.keys.map { |category_key| \
-                  [get_full_category_name(category_key), category_key] \
-                }
+ruby:
+  title = @category.present? ? "Select sub category" : "Select category"
+  question =
+    if @category.present?
+      "What category of #{get_category_name(@category).downcase} is #{@component_name}?"
+    else
+      "What category of cosmetic product is it?"
+    end
+  items = @sub_categories.map { |category| \
+            { text: get_category_name(category), value: category, checked: category == @selected_sub_category } \
+  }
 
-        .govuk-form-group
-          = form.submit "Continue", class: "govuk-button"
+- content_for :page_title, title
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with model: @component, url: wizard_path(:select_category, category: @category), method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_radios", form: form, key: :sub_category,
+              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              items: items
+      = form.submit "Continue", class: "govuk-button"

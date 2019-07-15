@@ -5,6 +5,7 @@ RSpec.describe "Invite a user to join a responsible person", type: :system do
   let(:user) { create(:user) }
 
   before do
+    configure_requests_for_submit_domain
     stub_notify_mailer
   end
 
@@ -28,8 +29,7 @@ RSpec.describe "Invite a user to join a responsible person", type: :system do
 
   it "allows user to accept responsible person invitation" do
     sign_in
-    pending_responsible_person_user = PendingResponsiblePersonUser.create(email_address: user.email)
-    pending_responsible_person_user.update responsible_person: responsible_person
+    PendingResponsiblePersonUser.create(email_address: user.email, responsible_person: responsible_person)
 
     visit join_responsible_person_team_members_path(responsible_person)
 

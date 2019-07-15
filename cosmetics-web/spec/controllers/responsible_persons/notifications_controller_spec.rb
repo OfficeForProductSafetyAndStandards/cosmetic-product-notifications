@@ -59,14 +59,14 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
       expect(assigns(:unfinished_notifications).count).to eq(2)
     end
 
-    it "gets the correct number of registered notifications" do
+    it "gets the correct number of submitted notifications" do
       create(:registered_notification, responsible_person: responsible_person)
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:registered_notifications).count).to eq(1)
     end
 
     it "does not allow the user to access another Responsible Person's dashboard" do
-      other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
+      other_responsible_person = create(:responsible_person)
       expect { get :index, params: { responsible_person_id: other_responsible_person.id } }
           .to raise_error(Pundit::NotAuthorizedError)
     end
@@ -86,7 +86,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
     end
 
     it "does not allow the user to show a notification for a Responsible Person they not belong to" do
-      other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
+      other_responsible_person = create(:responsible_person)
       other_notification = create(:registered_notification, responsible_person: other_responsible_person)
       expect {
         get :show, params: { responsible_person_id: other_responsible_person.id, reference_number: other_notification.reference_number }
@@ -111,7 +111,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
     end
 
     it "does not allow the user to create a new notification for a Responsible Person they not belong to" do
-      other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
+      other_responsible_person = create(:responsible_person)
       expect {
         get :new, params: { responsible_person_id: other_responsible_person.id }
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -142,7 +142,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
     end
 
     it "does not allow the user to edit notification for a Responsible Person they not belong to" do
-      other_responsible_person = create(:responsible_person, email_address: "another.person@example.com")
+      other_responsible_person = create(:responsible_person)
       other_notification = create(:draft_notification, responsible_person: other_responsible_person)
       expect {
         get :edit, params: { responsible_person_id: other_responsible_person.id, reference_number: other_notification.reference_number }

@@ -8,6 +8,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
   let(:notification_file_manual_ranges_trigger_rules) { create(:notification_file, uploaded_file: create_file_blob("testManualRangesTriggerRules.zip")) }
   let(:notification_file_nano_materials_cmr) { create(:notification_file, uploaded_file: create_file_blob("testWithNanomaterialsAndCmrs.zip")) }
   let(:notification_file_formulation_required) { create(:notification_file, uploaded_file: create_file_blob("testFormulationRequiredExportFile.zip")) }
+  let(:notification_file_different_language) { create(:notification_file, uploaded_file: create_file_blob("testDifferentLanguage.zip")) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
@@ -16,6 +17,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
   after do
     sign_out
     remove_uploaded_files
+    close_file
   end
 
   describe "#accept" do
@@ -175,6 +177,40 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.state).to eq("notification_file_imported")
+    end
+
+    it "creates a notification with the first language's name if there is no english name" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_different_language.uploaded_file)
+      analyzer_instance.metadata
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.product_name).to eq("Multiple product test")
+    end
+
+    it "creates a notification with the first language's shades if there is no english shades" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_different_language.uploaded_file)
+      analyzer_instance.metadata
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.shades).to eq("yellow, orange, purple")
+    end
+
+    it "creates a notification with the first language's component name if there is no english component name" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_different_language.uploaded_file)
+      analyzer_instance.metadata
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.components.first.name).to eq("A")
+      expect(notification.components.second.name).to eq("B")
+    end
+
+    it "creates a notification with the first language's component shades if there is no english component shades" do
+      analyzer_instance = ReadDataAnalyzer.new(notification_file_different_language.uploaded_file)
+      analyzer_instance.metadata
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.components.first.shades.first).to eq("blue, green")
+      expect(notification.components.second.shades.first).to eq("pink, lazuli")
     end
   end
 end

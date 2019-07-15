@@ -4,7 +4,7 @@ class ResponsiblePerson < ApplicationRecord
   has_many :responsible_person_users, dependent: :destroy
   has_many :pending_responsible_person_users, dependent: :destroy
   has_many :users, through: :responsible_person_users
-  has_many :email_verification_keys, dependent: :destroy
+  has_many :contact_persons, dependent: :destroy
 
   enum account_type: { business: "business", individual: "individual" }
 
@@ -14,9 +14,6 @@ class ResponsiblePerson < ApplicationRecord
   validates :address_line_1, presence: true, on: %i[enter_details create]
   validates :city, presence: true, on: %i[enter_details create]
   validates :postal_code, presence: true, on: %i[enter_details create]
-
-  validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }, on: %i[contact_person create]
-  validates :phone_number, presence: true, on: %i[contact_person create]
 
   def add_user(user)
     responsible_person_users << ResponsiblePersonUser.create(user: user)

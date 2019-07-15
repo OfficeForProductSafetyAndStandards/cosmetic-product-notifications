@@ -19,11 +19,11 @@ class CreateProjectTest < ApplicationSystemTestCase
     choose "type_project", visible: false
     click_on "Continue"
 
-    assert_text "New Project"
+    assert_text "New project"
   end
 
   test "first step should be allegation details" do
-    assert_text "New Project"
+    assert_text "New project"
     assert_text "Please provide a title"
     assert_text "Project summary"
   end

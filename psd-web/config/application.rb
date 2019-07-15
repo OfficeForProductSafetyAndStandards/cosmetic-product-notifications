@@ -28,9 +28,9 @@ module ProductSafetyDatabase
     # This changes Rails timezone, but keeps ActiveRecord in UTC
     config.time_zone = "Europe/London"
 
-    # This is the requests' timeout value in seconds. 15 is the default set by Slowpoke
-    # Dev environments need longer due to occasional asset compilation
-    Slowpoke.timeout = Rails.env.production? ? 15 : 180
+    # Set the request timeout in seconds. The default set by Slowpoke is 15 seconds.
+    # Use a longer timeout on development environments to allow for asset compilation.
+    config.slowpoke.timeout = Rails.env.production? ? 15 : 180
 
     config.exceptions_app = self.routes
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden

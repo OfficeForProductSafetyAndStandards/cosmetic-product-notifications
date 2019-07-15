@@ -3,14 +3,28 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 <!-- ### Product safety database -->
+- New service navigation
+- Welcome email
+- Product search
+- Cookie banner
 
 <!-- ### Cosmetics -->
 
 ### Next release checklist
-- [ ] Update cosmetics-app's name in keycloak
-     1. Log into keycloak admin app, click on `Clients` and select `cosmetics-app`
-         1. In the `Settings` tab, change the `Name` field to `Submit cosmetic product notifications`
-         2. Press the `Save` button, to apply the changes
+- [ ] Add `HEALTH_USERNAME` and `HEALTH_PASSWORD` environment variables to the antivirus server
+
+
+## 2019-04-23
+### Product safety database
+- Fixed a bug where the wrong user was attributed to entries in the activity log.
+- Improvements to the display of error messages across the service.
+- Various bug fixes.
+
+
+## 2019-04-03
+### Product safety database
+- Update introduction, about page, terms and conditions and privacy notice.
+
 
 ## 2019-03-29
 ### Product safety database
@@ -22,6 +36,7 @@ All notable changes to this project will be documented in this file.
 - Allow users to view their team members.
 - Allow users to add new team members.
 - Various bug fixes.
+
 
 ## 2019-03-07
 ### MSPSDS

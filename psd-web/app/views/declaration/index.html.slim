@@ -1,16 +1,16 @@
 - content_for :page_title, "Declaration"
 
 = form_with(url: declaration_accept_path, local: true) do |form|
-  - if @error_list&.any?
-    = render "components/govuk_error_summary", titleText: "There is a problem", errorList: @error_list
+  - if @error_list.include?(:declaration_not_agreed_to)
+    = render "components/govuk_error_summary", titleText: "There is a problem",
+    errorList: [{ text: "You must agree to the declaration to use this service", href: "#agree" }]
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       h1.govuk-heading-l Declaration
-      p
-        | By continuing you agree:
+      p By continuing you agree:
       ul.govuk-list.govuk-list--bullet
         li
-          ' To the
+          ' to the
           - # rubocop:disable Rails/LinkToBlank
           - html = capture do
             | terms and conditions
@@ -22,14 +22,13 @@
             | privacy policy
             span.govuk-visually-hidden
               |  (opens new window)
-          = link_to html, help_privacy_policy_path, target: "_blank"
+          = link_to html, help_privacy_notice_path, target: "_blank"
           - # rubocop:enable Rails/LinkToBlank
-        li That any information you provide is correct to your best of your knowledge
-        li That you have the right to share information you enter
-        li Not to share any information from the product safety database outside your organisation
-      .govuk-form-group
-        .govuk-checkboxes data-module="checkboxes"
-          .govuk-checkboxes__item
-            = form.check_box :agree_to_declaration, { class: "govuk-checkboxes__input" }, "checked", "unchecked"
-            = form.label :agree_to_declaration, "I agree", class: "govuk-checkboxes__label"
+        li not to share information from the Product safety database outside your organisation
+        li that you have the right to share the information you enter
+        li that the information you provide is correct to the best of your knowledge
+      - show_error = @error_list.include?(:declaration_not_agreed_to)
+      = render "components/govuk_checkboxes", name: "agree",
+        errorMessage: ({ text: "You must agree to the declaration to use this service" } if show_error),
+        items: [{ id: "agree", value: "checked", text: "I agree" }]
   = form.submit "Continue", class: "govuk-button"

@@ -18,4 +18,15 @@ class ErrorsController < ApplicationController
   def forbidden
     render status: :forbidden, formats: [:html]
   end
+
+  def invalid_account
+    template = if search_domain?
+                 :wrong_service_for_business_account
+               elsif User.current&.poison_centre_user?
+                 :wrong_service_for_poison_centre_account
+               else
+                 :wrong_service_for_msa_account
+               end
+    render template, status: :forbidden, formats: [:html]
+  end
 end

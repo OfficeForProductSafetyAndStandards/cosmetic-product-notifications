@@ -1,3 +1,65 @@
+// Taken from https://github.com/alphagov/govuk-design-system/blob/master/src/stylesheets/components/_navigation.scss
+// ---
+.app-navigation {
+  position: relative;
+  background-color: govuk-colour("grey-4");
+
+  &__list {
+    position: relative;
+    z-index: 1;
+
+    border-bottom: 1px solid $govuk-border-colour;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+
+    &>li {
+      display: inline-block;
+
+      a {
+        //@include bold-19;
+        //@extend .bold-small;
+        color:    $govuk-text-colour;
+        display:  inline-block;
+        padding:  15px;
+        margin-right: 0;
+        text-decoration: none;
+        font-weight: 700;
+        font-size:  19px;
+
+        &:hover {
+          -webkit-box-shadow: inset 0 -5px 0 0 $govuk-link-hover-colour;
+          -moz-box-shadow: inset 0 -5px 0 0 $govuk-link-hover-colour;
+          box-shadow: inset 0 -5px 0 0 $govuk-link-hover-colour;
+        }
+
+        &:focus {
+          outline: 0;
+        }
+      }
+
+      &.app-navigation--current-page a,
+      &.app-navigation--current-page a:hover {
+        color: $govuk-link-colour;
+        -webkit-box-shadow: inset 0 -5px 0 0 $govuk-link-colour;
+        -moz-box-shadow: inset 0 -5px 0 0 $govuk-link-colour;
+        box-shadow: inset 0 -5px 0 0 $govuk-link-colour;
+      }
+    }
+  }
+
+  .right-aligned {
+    position: absolute;
+    right: 0;
+  }
+}
+// ---
+
+
+.govuk-header nav {
+  float: right;
+}
+
 .responsible-person-name {
   float: right;
   padding: 15px;

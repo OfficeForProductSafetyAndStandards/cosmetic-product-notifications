@@ -42,6 +42,10 @@ update_configs:
     - fixme
 
   - package_manager: "ruby:bundler"
+    directory: "/antivirus"
+    update_schedule: "live"
+
+  - package_manager: "ruby:bundler"
     directory: "/cosmetics-web"
     update_schedule: "live"
 
@@ -55,14 +59,6 @@ update_configs:
 
   - package_manager: "ruby:bundler"
     directory: "/shared-web"
-    update_schedule: "live"
-    default_labels:
-    - dependencies
-    - ruby
-    - fixme
-
-  - package_manager: "ruby:bundler"
-    directory: "/shared-web/dev"
     update_schedule: "live"
     default_labels:
     - dependencies

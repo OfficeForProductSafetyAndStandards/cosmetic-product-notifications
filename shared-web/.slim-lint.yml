@@ -38,11 +38,12 @@ linters:
     ignored_cops:
       - Layout/AlignArray
       - Layout/AlignHash
+      - Layout/AlignArguments
       - Layout/AlignParameters
       - Layout/FirstParameterIndentation
-      - Layout/IndentArray
       - Layout/IndentationConsistency
       - Layout/IndentationWidth
+      - Layout/IndentFirstArrayElement
       - Layout/MultilineArrayBraceLayout
       - Layout/MultilineAssignmentLayout
       - Layout/MultilineHashBraceLayout

@@ -4,14 +4,12 @@ ruby File.read(".ruby-version").strip
 
 gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c593a08"
 gem "axlsx_rails"
-gem "bootsnap", ">= 1.1.0"
 gem "cf-app-utils"
-gem "jbuilder", "~> 2.8"
+gem "jbuilder", "~> 2.9"
 gem "pg", "~> 1.1"
 gem "pghero"
 gem "puma", "~> 3.12"
 gem "pundit"
-gem "rails", "~> 5.2"
 gem "redcarpet"
 gem 'redis-rails'
 gem "rubyzip", ">= 1.2.1"
@@ -25,7 +23,6 @@ gem "shared-web", path: "./vendor/shared-web"
 group :development, :test do
   gem "roo", "~> 2.8.2"
   gem "rspec-mocks"
-  gem "selenium-webdriver"
 
   gem "shared-web-dev", path: "./vendor/shared-web/dev"
 end

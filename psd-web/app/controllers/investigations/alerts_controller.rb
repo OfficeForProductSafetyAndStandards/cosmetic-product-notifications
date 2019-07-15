@@ -84,10 +84,10 @@ private
   def get_preview
     @preview = NotificationsClient.instance.generate_template_preview(
       NotifyMailer::TEMPLATES[:alert],
-        personalisation: {
-          email_text: @alert.description,
-          subject_text: @alert.summary
-        }
+      personalisation: {
+        email_text: @alert.description,
+        subject_text: @alert.summary
+      }
     )
   end
 end

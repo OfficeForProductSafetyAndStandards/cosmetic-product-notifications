@@ -23,9 +23,9 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "first step validates date" do
-    fill_in("correspondence_phone_call[day]", with: "333")
+    fill_in("correspondence_phone_call[correspondence_date][day]", with: "333")
     click_on "Continue"
-    assert_text("Correspondence date must specify a day, month and year")
+    assert_text("Correspondence date must include a month and year")
   end
 
   test "second step should be content" do
@@ -100,7 +100,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
     click_button "Continue"
 
-    other_org_user = User.find_by last_name: "Ts_user"
+    other_org_user = User.find_by name: "Test Ts_user"
     sign_in_as other_org_user
     visit investigation_path(@investigation)
 
@@ -112,7 +112,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "does not conceal consumer information from assignee" do
-    other_org_user = User.find_by last_name: "Ts_user"
+    other_org_user = User.find_by name: "Test Ts_user"
     set_investigation_assignee! @investigation, other_org_user
     fill_in_context_form
     choose :correspondence_phone_call_has_consumer_info_true, visible: false
@@ -131,10 +131,10 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
   end
 
   test "does not conceal consumer information from assignee's team" do
-    other_org_user = User.find_by last_name: "Ts_user"
+    other_org_user = User.find_by name: "Test Ts_user"
     sign_in_as other_org_user
-    assignee = User.find_by last_name: "User_one"
-    same_team_user = User.find_by last_name: "User_four"
+    assignee = User.find_by name: "Test User_one"
+    same_team_user = User.find_by name: "Test User_four"
 
     set_investigation_assignee! @investigation, assignee
     fill_in_context_form
@@ -161,7 +161,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
     click_button "Continue"
 
-    same_org_user = User.find_by last_name: "User_three"
+    same_org_user = User.find_by name: "Test User_three"
     sign_in_as same_org_user
     visit investigation_path(@investigation)
 

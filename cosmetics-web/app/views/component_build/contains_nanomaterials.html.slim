@@ -1,26 +1,25 @@
-- content_for :page_title, "Contains nanomaterials"
+- title = "Contains nanomaterials"
+- question = "Does #{@component_name} contain nanomaterials?"
+- nanomaterial_definition = capture do
+  p
+    | A nanomaterial:
+  ul.govuk-list--bullet
+    li has one or more external dimensions, or an internal structure, with a size ranging from 1 nm to 100 nm
+    li is insoluble or biopersistent
+    li is intentionally manufactured
+- hint = capture do
+  = render "govuk_details", summary: "What is a nanomaterial?", text: nanomaterial_definition
+
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | Does the cosmetic product contain nanomaterials?
-    p
-      | A ‘nanomaterial’:
 
-    ul.govuk-list.govuk-list--bullet
-        li has one or more external dimensions, or an internal structure, with a size ranging from 1nm to 100 nm
-        li is insoluble or biopersistent
-        li is intentionally manufactured
-    = render "radio_select_error" if @component.errors.messages[:nano_materials].any?
-    = form_with url: wizard_path, method: :put do |form|
-      = form.hidden_field :contains_nanomaterials, value: nil
-      .govuk-form-group
-        .govuk-radios
-          .govuk-radios__item
-            = form.radio_button :contains_nanomaterials, "yes", class: "govuk-radios__input"
-            = form.label :contains_nanomaterials_yes, "Yes", class: "govuk-label govuk-radios__label"
-          .govuk-radios__item
-            = form.radio_button :contains_nanomaterials, "no", class: "govuk-radios__input"
-            = form.label :contains_nanomaterials_no, "No", class: "govuk-label govuk-radios__label"
+= form_with model: @component, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_radios", form: form, key: :contains_nanomaterials,
+              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              hint: { html: hint },
+              items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

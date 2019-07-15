@@ -1,0 +1,25 @@
+- content_for :page_title, "Check your email"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      ' We have sent a confirmation email to
+      = @contact_person.name
+    p
+      ' We have sent an email to
+      strong = @contact_person.email_address
+    p
+      ' Wrong email address?
+      = link_to "Change the contact person details",
+              edit_responsible_person_contact_person_path(@responsible_person, @contact_person),
+              class: "button-link", role: "button"
+      ' .
+    p
+      = @contact_person.name
+      '  will need to confirm that they are the contact person before you can notify any products.
+
+    p
+      ' If they haven’t received the email within 10 minutes, you can
+      = link_to "resend a confirmation email",
+              resend_email_responsible_person_contact_person_path(@responsible_person, @contact_person),
+              class: "button-link", role: "button"
+      ' .

@@ -3,7 +3,11 @@ class HelpController < ApplicationController
 
   def terms_and_conditions; end
 
-  def privacy_policy; end
+  def privacy_notice; end
 
   def about; end
+
+  def hide_nav?
+    !(User.current.present? && User.current.has_accepted_declaration)
+  end
 end

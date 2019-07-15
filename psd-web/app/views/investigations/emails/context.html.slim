@@ -27,7 +27,7 @@
                       classes: "govuk-fieldset__legend--m" } },
               hint: { text: "Consumer contact details are protected by GDPR legislation" },
               items: [{ text: "No", value: "false" }, { text: "Yes", value: "true" }]
-      = render "components/govuk_fieldset", legend: { text: "Date sent", classes: "govuk-fieldset__legend--m" },
-              attributes: { "aria-describedby": "correspondence-date-hint" } do
-        = render "date_input", form: form
+
+      = render "form_components/govuk_date_input", form: form, key: :correspondence_date,
+              fieldset: { legend: { classes: "govuk-fieldset__legend--m", text: "Date sent" } }
       = form.submit "Continue", class: "govuk-button"

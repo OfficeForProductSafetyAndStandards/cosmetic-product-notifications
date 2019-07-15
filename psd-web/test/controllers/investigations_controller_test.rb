@@ -2,15 +2,15 @@ require "test_helper"
 
 class InvestigationsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    mock_out_keycloak_and_notify(last_name: "User_four")
+    mock_out_keycloak_and_notify(name: "User_four")
 
-    @assignee = User.find_by(last_name: "User_one")
-    @non_opss_user = User.find_by(last_name: "User_two")
+    @assignee = User.find_by(name: "Test User_one")
+    @non_opss_user = User.find_by(name: "Test User_two")
     mock_user_as_non_opss(@non_opss_user)
 
     @investigation_one = load_case(:one)
     @investigation_one.created_at = Time.zone.parse('2014-07-11 21:00')
-    @investigation_one.assignee = User.find_by(last_name: "User_four")
+    @investigation_one.assignee = User.find_by(name: "Test User_four")
     @investigation_one.source = sources(:investigation_one)
     @investigation_one.save
 
@@ -176,6 +176,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         assigned_to_me: "checked",
         assigned_to_someone_else: "unchecked",
         assigned_to_someone_else_id: nil,
+        assigned_to_team_0: "unchecked",
         status_open: "unchecked",
         status_closed: "unchecked"
     }
@@ -204,6 +205,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
         assigned_to_me: "unchecked",
         assigned_to_someone_else: "checked",
         assigned_to_someone_else_id: @investigation_two.assignable_id,
+        assigned_to_team_0: "unchecked",
         status_open: "unchecked",
         status_closed: "unchecked"
     }
@@ -289,7 +291,7 @@ class InvestigationsControllerTest < ActionDispatch::IntegrationTest
 
   def create_new_private_case
     description = "new_investigation_description"
-    Investigation::Allegation.create(user_title: "title", description: description)
+    Investigation::Allegation.create(description: description)
     patch visibility_investigation_url(Investigation.find_by(description: description)), params: {
       investigation: {
         is_private: true

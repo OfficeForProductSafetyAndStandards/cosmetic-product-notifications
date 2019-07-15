@@ -15,12 +15,19 @@
   .govuk-grid-column-one-third.product-images
     - @notification.image_uploads.each do |image|
       - if image.marked_as_safe?
-        = link_to image_tag(url_for(image.file.variant(resize: "450x450"))),
-                url_for(image.file)
+        - if image.file.variable?
+          = link_to image_tag(image.file.variant(resize: "450x450")), url_for(image.file)
+        - elsif image.file.previewable?
+          = link_to image_tag(image.file.preview(resize: "450x450")), url_for(image.file)
+        - else
+          h2.govuk-heading-l[class="govuk-!-margin-bottom-1"]
+            | Product image
+          = link_to image.filename, url_for(image.file), class: "govuk-body-m"
   .govuk-grid-column-two-thirds
     = render "poison_centres/notifications/poison_centre_trigger_rule_formulation", notification: @notification
     = render "notifications/ingredient_details", notification: @notification
     = render "notifications/frame_formulation_details", notification: @notification
     = render "notifications/substances_details", notification: @notification
-    = render "/notifications/responsible_person_details", responsible_person: @notification.responsible_person
-    = render "/notifications/contact_person_details", contact_person: @notification.responsible_person
+    = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
+    = render "notifications/contact_person_overview",
+            contact_person: @notification.responsible_person.contact_persons.first

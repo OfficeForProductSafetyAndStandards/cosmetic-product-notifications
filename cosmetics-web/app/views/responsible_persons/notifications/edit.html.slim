@@ -1,6 +1,6 @@
 - content_for :page_title, "Check your answers"
 - content_for :after_header do
-  = link_to "Back", responsible_person_notifications_path(@responsible_person, anchor: "unfinished"),
+  = link_to "Back", responsible_person_notifications_path(@responsible_person, anchor: "incomplete"),
           class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -13,9 +13,8 @@
 
   .govuk-grid-column-full
     = render "notifications/responsible_person_details", responsible_person: @notification.responsible_person
-    /TODO: replace it with the contact person details (COSBETA-158)
-    = render "notifications/contact_person_details", contact_person: @notification.responsible_person
-    = render "notifications/product_details", notification: @notification
+    = render "notifications/contact_person_overview", contact_person: @responsible_person.contact_persons.first
+    = render "notifications/product_details", notification: @notification, allow_edits: true
 
   - if @notification.may_submit_notification?
-    = render "notifications/product_registration", notification: @notification, responsible_person: @responsible_person
+    = render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person

@@ -20,19 +20,36 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_in :notification_product_name, with: "Super Shampoo"
     click_button "Continue"
 
+    # add_internal_reference
+    choose("No")
+    click_button "Continue"
+
     # is_imported
     choose("No")
     click_button "Continue"
 
+    # for_children_under_three
+    choose("No")
+    click_button "Continue"
+
     # single_or_multi_component
-    choose("Yes")
+    choose("The cosmetic product is a single item")
     click_button "Continue"
 
     # number_of_shades
     choose("No")
     click_button "Continue"
 
-    # add_cmrs
+    # physical-form
+    choose("Foam")
+    click_button "Continue"
+
+    # special-applicator
+    choose("No")
+    click_button "Continue"
+
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -40,14 +57,18 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_category
-    click_button "Continue"
+    select_default_category
 
     # select_formulation_type
-    choose("Predefined frame formulation")
+    choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
+    fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
+
+    # trigger_questions
+    skip_trigger_questions
 
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
@@ -57,10 +78,12 @@ RSpec.describe "Manually enter product details", type: :system do
     notification = get_notification_from_edit_page_url
     expect_check_your_answer(get_product_table, "Name", "Super Shampoo")
     expect_check_your_answers_value("Imported", "No")
+    expect_check_your_answers_value("For children under 3", "No")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
+    expect_check_your_answers_value("Special applicator", "No")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetic product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -73,19 +96,36 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_in :notification_product_name, with: "Super Shampoo"
     click_button "Continue"
 
+    # add_internal_reference
+    choose("No")
+    click_button "Continue"
+
     # is_imported
     choose("No")
     click_button "Continue"
 
+    # for_children_under_three
+    choose("No")
+    click_button "Continue"
+
     # single_or_multi_component
-    choose("Yes")
+    choose("The cosmetic product is a single item")
     click_button "Continue"
 
     # number_of_shades
     choose("No")
     click_button "Continue"
 
-    # add_cmrs
+    # physical-form
+    choose("Foam")
+    click_button "Continue"
+
+    # special-applicator
+    choose("No")
+    click_button "Continue"
+
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -93,14 +133,18 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_category
-    click_button "Continue"
+    select_default_category
 
     # select_formulation_type
-    choose("Predefined frame formulation")
+    choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
+    fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
+
+    # trigger_questions
+    skip_trigger_questions
 
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
@@ -108,8 +152,6 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # Check your answers page
     expect_check_your_answers_value("Name", responsible_person.name)
-    expect_check_your_answers_value("Email address", responsible_person.email_address)
-    expect_check_your_answers_value("Phone number", responsible_person.phone_number)
   end
 
   it "allows user to complete notification for imported cosmetics" do
@@ -117,6 +159,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # add_product_name
     fill_in :notification_product_name, with: "Super Shampoo"
+    click_button "Continue"
+
+    # add_internal_reference
+    choose("No")
     click_button "Continue"
 
     # is_imported
@@ -127,15 +173,28 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_autocomplete "location-autocomplete", with: "New Zealand"
     click_button "Continue"
 
+    # for_children_under_three
+    choose("No")
+    click_button "Continue"
+
     # single_or_multi_component
-    choose("Yes")
+    choose("The cosmetic product is a single item")
     click_button "Continue"
 
     # number_of_shades
     choose("No")
     click_button "Continue"
 
-    # add_cmrs
+    # physical-form
+    choose("Foam")
+    click_button "Continue"
+
+    # special-applicator
+    choose("No")
+    click_button "Continue"
+
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -143,14 +202,18 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_category
-    click_button "Continue"
+    select_default_category
 
     # select_formulation_type
-    choose("Predefined frame formulation")
+    choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
+    fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
+
+    # trigger_questions
+    skip_trigger_questions
 
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
@@ -163,8 +226,9 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Imported from", "New Zealand")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "None")
+    expect_check_your_answers_value("Special applicator", "No")
     expect_check_your_answers_value("Label image", "testImage.png")
-    click_button "Accept and register the cosmetic product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -177,16 +241,24 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_in :notification_product_name, with: "Super Shampoo"
     click_button "Continue"
 
+    # add_internal_reference
+    choose("No")
+    click_button "Continue"
+
     # is_imported
     choose("No")
     click_button "Continue"
 
+    # for_children_under_three
+    choose("No")
+    click_button "Continue"
+
     # single_or_multi_component
-    choose("Yes")
+    choose("The cosmetic product is a single item")
     click_button "Continue"
 
     # number_of_shades
-    choose("Yes")
+    choose("Yes, the cosmetic product is available in more than 1 shade and all other aspects of the notification are the same")
     click_button "Continue"
 
     # add_shades
@@ -198,7 +270,16 @@ RSpec.describe "Manually enter product details", type: :system do
     end
     click_button "Continue"
 
-    # add_cmrs
+    # physical-form
+    choose("Foam")
+    click_button "Continue"
+
+    # special-applicator
+    choose("No")
+    click_button "Continue"
+
+    # contains_cmrs
+    choose("No")
     click_button "Continue"
 
     # nano_materials
@@ -206,14 +287,18 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # select_category
-    click_button "Continue"
+    select_default_category
 
     # select_formulation_type
-    choose("Predefined frame formulation")
+    choose("Choose a predefined frame formulation")
     click_button "Continue"
 
     # select_frame_formulation
+    fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
+
+    # trigger_questions
+    skip_trigger_questions
 
     # add_product_image
     attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
@@ -225,9 +310,10 @@ RSpec.describe "Manually enter product details", type: :system do
     expect_check_your_answers_value("Imported", "No")
     expect_check_your_answers_value("Number of components", "1")
     expect_check_your_answers_value("Shades", "RedBlueYellow")
+    expect_check_your_answers_value("Special applicator", "No")
     expect_check_your_answers_value("Label image", "testImage.png")
 
-    click_button "Accept and register the cosmetic product"
+    click_button "Accept and submit the cosmetic product notification"
 
     # Check notification was completed
     expect(notification.reload.state).to eq("notification_complete")
@@ -255,5 +341,114 @@ private
     end
 
     Notification.find_by reference_number: reference_number
+  end
+
+  def select_default_category
+    # category
+    choose("Skin products")
+    click_button "Continue"
+
+    # sub-category
+    choose("Skin care products")
+    click_button "Continue"
+
+    # sub-sub-category
+    choose("Face mask")
+    click_button "Continue"
+  end
+
+  def skip_trigger_questions
+    # contains_anti_dandruff_agents
+    choose("No")
+    click_button "Continue"
+
+    # select_ph_range
+    choose("Yes")
+    click_button "Continue"
+
+
+    # contains_anti_hair_loss_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_anti_pigmenting_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_chemical_exfoliating_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_vitamin_a
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_xanthine_derivatives
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_cationic_surfactants
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_propellant
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_hydrogen_peroxide
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_compounds_releasing_hydrogen_peroxide
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_reducing_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_persulfates
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_straightening_agents
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_inorganic_sodium_salts
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_fluoride_compounds
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_essential_oils
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_ethanol
+    choose("No")
+    click_button "Continue"
+
+
+    # contains_isopropanol
+    choose("No")
+    click_button "Continue"
   end
 end

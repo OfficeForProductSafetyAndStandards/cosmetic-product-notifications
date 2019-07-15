@@ -1,9 +1,10 @@
+- responsible_person = notification.responsible_person
 li.product
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       h3.govuk-heading-m[class="govuk-!-margin-bottom-2"]
         = link_to notification.product_name,
-                edit_responsible_person_notification_path(notification.responsible_person, notification),
+                edit_responsible_person_notification_path(responsible_person, notification),
                 class: "product-title govuk-link--no-visited-state"
       .product-data.govuk-body-s
         dl
@@ -20,13 +21,12 @@ li.product
               dd
                 = notification.cpnp_reference
 
-    p.add-documents
-      - if notification.formulation_required? || notification.images_required?
-        = link_to link_text(notification),
-          responsible_person_notification_additional_information_index_path(notification.responsible_person, \
-            notification),
-          class: "govuk-link--no-visited-state"
-      - else
-        = link_to "Confirm and notify",
-          edit_responsible_person_notification_path(notification.responsible_person, notification),
-          class: "govuk-link--no-visited-state"
+      .add-documents
+        - if notification.formulation_required? || notification.images_required?
+          = link_to "Add missing information",
+                  responsible_person_notification_additional_information_index_path(responsible_person, notification),
+                  class: "govuk-link--no-visited-state"
+        - else
+          = link_to "Confirm and notify",
+                  edit_responsible_person_notification_path(responsible_person, notification),
+                  class: "govuk-link--no-visited-state"

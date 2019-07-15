@@ -1,0 +1,9 @@
+- content_for :page_title, "Contains vitamin A or its derivatives"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= render "trigger_questions/substance_check", substance: "vitamin A or its derivative",
+        question: "Does #{@component_name} contain more than 0.20% (calculated as retinol) or 0.09 grams" + \
+          " (calculated as retinol) of vitamin A or its derivatives?",
+        yes_option: "Yes, it contains more than 0.20% (calculated as retinol) or 0.09 grams (calculated as retinol)" + \
+          " of vitamin A or its derivatives"

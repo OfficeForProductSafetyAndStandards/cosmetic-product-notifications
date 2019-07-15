@@ -8,6 +8,7 @@ Capybara.server_host = ENV["HTTP_HOST"]
 Capybara.server_port = ENV["HTTP_PORT"]
 Capybara.app_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"
 Capybara.default_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"
+Rails.application.routes.default_url_options = { host: ENV["HTTP_HOST"], port: ENV["HTTP_PORT"] }
 
 Capybara.server = :puma, { Silent: true }
 
@@ -44,6 +45,6 @@ end
 def stub_notify_mailer
   result = double
   allow(result).to receive(:deliver_later)
-  allow(NotifyMailer).to receive(:send_responsible_person_verification_email) { result }
+  allow(NotifyMailer).to receive(:send_contact_person_verification_email) { result }
   allow(NotifyMailer).to receive(:send_responsible_person_invite_email) { result }
 end

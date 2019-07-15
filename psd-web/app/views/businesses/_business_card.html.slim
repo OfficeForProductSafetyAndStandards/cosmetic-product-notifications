@@ -2,10 +2,6 @@
   .govuk-grid-column-one-half
     span.govuk-caption-m[class="govuk-!-font-size-16"] Business
     span = link_to business.trading_name, business
-  .govuk-grid-column-one-quarter
+  .govuk-grid-column-one-half
     span.govuk-caption-m[class="govuk-!-font-size-16"] Company No.
     span = business.company_number
-  .govuk-grid-column-one-quarter
-    span.govuk-caption-m[class="govuk-!-font-size-16"] Cases
-    /TODO after MSPSDS-530: use visible cases instead
-    span = business.investigations.count

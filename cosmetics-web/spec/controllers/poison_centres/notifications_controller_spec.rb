@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PoisonCentres::NotificationsController, type: :controller do
-  let(:responsible_person_1) { create(:responsible_person, email_address: "one@example.com") }
-  let(:responsible_person_2) { create(:responsible_person, email_address: "two@example.com") }
+  let(:responsible_person_1) { create(:responsible_person) }
+  let(:responsible_person_2) { create(:responsible_person) }
 
   let(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
   let(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
@@ -33,7 +33,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         get :index
       end
 
-      it "gets all registered notifications" do
+      it "gets all submitted notifications" do
         expect(assigns(:notifications).records.to_a.sort).to eq((rp_1_notifications + rp_2_notifications).sort)
       end
 
@@ -41,7 +41,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         expect(assigns(:notifications).records.to_a).not_to include(draft_notification)
       end
 
-      it "excludes unfinished imported notifications" do
+      it "excludes incomplete imported notifications" do
         expect(assigns(:notifications).records.to_a).not_to include(imported_notification)
       end
 

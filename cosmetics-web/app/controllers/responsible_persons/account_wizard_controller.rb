@@ -1,9 +1,10 @@
 class ResponsiblePersons::AccountWizardController < ApplicationController
   include Wicked::Wizard
 
-  steps :overview, :create_or_join_existing, :join_existing, :select_type, :enter_details, :contact_person
+  steps :overview, :create_or_join_existing, :join_existing, :select_type, :enter_details
 
   skip_before_action :create_or_join_responsible_person
+  before_action :clear_session, if: -> { step == :overview }
   before_action :set_responsible_person, only: %i[show update]
   before_action :store_responsible_person, only: %i[update]
 
@@ -17,10 +18,9 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
     case step
     when :create_or_join_existing
       create_or_join_existing_account
-    when :contact_person
+    when :enter_details
       if responsible_person_saved?
-        send_verification_email
-        redirect_to responsible_person_email_verification_keys_path(@responsible_person)
+        redirect_to new_responsible_person_contact_person_path(@responsible_person)
       else
         render step
       end
@@ -36,7 +36,7 @@ class ResponsiblePersons::AccountWizardController < ApplicationController
 private
 
   def clear_session
-    session[:responsible_person] = nil
+    session.delete(:responsible_person)
   end
 
   def set_responsible_person
@@ -71,28 +71,18 @@ private
     end
   end
 
-  def send_verification_email
-    NotifyMailer.send_responsible_person_verification_email(
-      @responsible_person.id,
-      @responsible_person.email_address,
-      User.current.full_name
-    ).deliver_later
-  end
-
   def responsible_person_params
-    session_params.merge(request_params)
+    responsible_person_session_params.merge(responsible_person_request_params)
   end
 
-  def session_params
+  def responsible_person_session_params
     session.fetch(:responsible_person, {})
   end
 
-  def request_params
+  def responsible_person_request_params
     params.fetch(:responsible_person, {}).permit(
       :account_type,
       :name,
-      :email_address,
-      :phone_number,
       :address_line_1,
       :address_line_2,
       :city,

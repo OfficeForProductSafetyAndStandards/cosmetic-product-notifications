@@ -1,0 +1,10 @@
+h2.govuk-heading-m Notified cosmetic products
+- if @registered_notifications.present?
+  .govuk-grid-row
+    .govuk-grid-column-full
+      ul.product-list[class="govuk-!-margin-bottom-0"]
+        - @registered_notifications.each do |notification|
+          = render "registered_product", notification: notification, responsible_person: @responsible_person
+  .govuk-grid-row
+    .govuk-grid-column-full.pagination-links
+      = will_paginate(@registered_notifications, param_name: "notified", params: { anchor: "notified" })

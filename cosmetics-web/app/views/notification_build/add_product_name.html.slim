@@ -1,20 +1,20 @@
-- content_for :page_title, "Cosmetic product name"
+- question = "Cosmetic product name"
+- hint = capture do
+  p
+    | Include the brand, range, individual product name and its use so it can
+       be easily identified and distinguished from other products.
+
+- content_for :page_title, question
 - content_for :after_header do
-  = link_to "Back", responsible_person_add_notification_path(@notification.responsible_person,
-    :have_products_been_notified_in_eu), class: "govuk-back-link"
-.govuk-grid-row
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with model: @notification, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
     .govuk-grid-column-two-thirds
-        h1.govuk-heading-xl
-            | Cosmetic product name
-        = render "mandatory_field_error", field_name: "Cosmetic name" \
-            if @notification.errors.messages[:product_name].any?
-        = form_for(@notification, url: wizard_path, method: :put) do |form|
-            .govuk-form-group
-                = form.label :product_name, "Include the brand, range, individual product name and its "\
-                    "use so it can be easily identified and distinguished from other "\
-                    "products.", class: "govuk-label"
-                = form.text_field :product_name,
-                    class: ["govuk-input", \
-                            @notification.errors.messages[:product_name].any? ? "govuk-input--error" : nil]
-            .govuk-form-group
-                = form.submit "Continue", class: "govuk-button"
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_input",
+              form: form,
+              key: :product_name,
+              label: { text: question, classes: "govuk-label--xl", isPageHeading: true },
+              hint: { text: hint }
+      = form.submit "Continue", class: "govuk-button"

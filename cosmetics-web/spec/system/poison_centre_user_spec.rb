@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Poison Centre user", type: :system do
-  let(:responsible_person_1) { create(:responsible_person, email_address: "one@example.com") }
-  let(:responsible_person_2) { create(:responsible_person, email_address: "two@example.com") }
+  let(:responsible_person_1) { create(:responsible_person) }
+  let(:responsible_person_2) { create(:responsible_person) }
 
   let!(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
   let!(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
@@ -29,7 +29,7 @@ RSpec.describe "Poison Centre user", type: :system do
     assert_current_path(/notifications/)
   end
 
-  it "can view a list of all registered notifications" do
+  it "can view a list of all submitted notifications" do
     (rp_1_notifications + rp_2_notifications).each do |notification|
       assert_text notification.product_name
     end
@@ -39,14 +39,14 @@ RSpec.describe "Poison Centre user", type: :system do
     assert_no_text draft_notification.product_name
   end
 
-  it "is able to see the product details for a registered notification" do
+  it "is able to see the product details for a submitted notification" do
     notification = rp_1_notifications.first
     click_on notification.product_name
 
     assert_text notification.product_name
   end
 
-  it "is able to see the Responsible Person details for a registered notification" do
+  it "is able to see the Responsible Person details for a submitted notification" do
     notification = rp_1_notifications.first
     click_on notification.product_name
 

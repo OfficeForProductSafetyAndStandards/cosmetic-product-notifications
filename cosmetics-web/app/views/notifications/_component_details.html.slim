@@ -1,9 +1,15 @@
 - if component.notification.notified_post_eu_exit?
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
-      | CMR
+      | Contains CMR substances
     td.govuk-table__cell
-      = render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)
+      = component.cmrs.any? ? "Yes" : "No"
+    - if component.cmrs.any?
+      tr.govuk-table__row
+        th.govuk-table__header[scope="row"]
+          | CMR substances
+        td.govuk-table__cell
+          = render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
@@ -15,12 +21,12 @@ tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Application instruction
     td.govuk-table__cell
-      = component.nano_material.exposure_route
+      = get_exposure_routes_names(component.nano_material.exposure_routes)
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Exposure condition
     td.govuk-table__cell
-      = component.nano_material.exposure_condition
+      = get_exposure_condition_name(component.nano_material.exposure_condition)
 
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
@@ -69,11 +75,13 @@ tr.govuk-table__row
           = link_to "Refresh",
                   edit_responsible_person_notification_path(@responsible_person, @notification),
                   class: "govuk-link--no-visited-state"
-      - else
+      - elsif allow_edits
         = link_to "Add formulation document",
                 new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
                         @notification, component),
                 class: "govuk-link--no-visited-state"
+      - else
+        | N/A
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Physical form
@@ -83,7 +91,13 @@ tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Special applicator
   td.govuk-table__cell
-    = get_special_applicator_name(component.special_applicator)
+    = component.special_applicator.present? ? "Yes" : "No"
+- if component.special_applicator.present?
+  tr.govuk-table__row
+    th.govuk-table__header[scope="row"]
+      | Applicator type
+    td.govuk-table__cell
+      = component_special_applicator_name(component)
 tr.govuk-table__row
   th.govuk-table__header[scope="row"]
     | Acute poisoning information
@@ -92,5 +106,4 @@ tr.govuk-table__row
 
 - if component.trigger_questions
   - component.trigger_questions.each do |question|
-    - if question.applicable?
-      = render "notifications/trigger_question_details", trigger_question: question
+    = render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: true

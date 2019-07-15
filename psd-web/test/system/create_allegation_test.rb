@@ -11,7 +11,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
     @allegation = Investigation::Allegation.new(
       hazard_type: "Blunt force",
-      product_category: "Small Electronics",
+      product_category: "Small electronics",
       description: "Allegation description"
     )
 
@@ -31,11 +31,11 @@ class CreateAllegationTest < ApplicationSystemTestCase
     choose "type_allegation", visible: false
     click_on "Continue"
 
-    assert_text "New Allegation"
+    assert_text "New allegation"
   end
 
   test "first step should be complainant type" do
-    assert_text "New Allegation"
+    assert_text "New allegation"
     assert_text "Who's making the allegation?"
   end
 
@@ -52,7 +52,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
   test "second step should be complainant details" do
     select_complainant_type_and_continue
 
-    assert_text "New Allegation"
+    assert_text "New allegation"
     assert_text "What are their contact details?"
   end
 
@@ -61,7 +61,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_in "complainant[email_address]", with: "invalid_email_address"
     click_on "Continue"
 
-    assert_text "Enter a real email address"
+    assert_text "Enter an email address in the correct format, like name@example.com"
   end
 
   test "second step should allow an empty email address" do
@@ -82,7 +82,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
 
-    assert_text "New Allegation"
+    assert_text "New allegation"
     assert_text "What is being alleged?"
   end
 
@@ -197,8 +197,8 @@ class CreateAllegationTest < ApplicationSystemTestCase
 
   def fill_allegation_details_and_continue
     fill_in "allegation[description]", with: @allegation.description
-    fill_autocomplete "picker-hazard_type", with: @allegation.hazard_type
-    fill_autocomplete "picker-product_category", with: @allegation.product_category
+    fill_autocomplete "allegation_hazard_type", with: @allegation.hazard_type
+    fill_autocomplete "allegation_product_category", with: @allegation.product_category
     click_on "Create allegation"
   end
 end

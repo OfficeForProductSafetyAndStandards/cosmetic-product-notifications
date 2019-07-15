@@ -2,13 +2,8 @@ class Product < ApplicationRecord
   include Shared::Web::CountriesHelper
   include Documentable
   include Searchable
-  include DateConcern
   include AttachmentConcern
   include SanitizationHelper
-
-  def get_date_key
-    :date_placed_on_market
-  end
 
   index_name [Rails.env, "products"].join("_")
 
@@ -33,7 +28,7 @@ class Product < ApplicationRecord
   end
 
   def pretty_description
-    "Product #{id}"
+    "Product: #{name}"
   end
 end
 
