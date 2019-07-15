@@ -11,7 +11,7 @@
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :account_type,
               fieldset: { legend: { html: heading } },
-              items: [{ text: "Business or legal entity", value: :business },
+              items: [{ text: "Limited company or Limited Liability Partnership (LLP)", value: :business },
                       { text: "Individual or sole trader", value: :individual }]
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
