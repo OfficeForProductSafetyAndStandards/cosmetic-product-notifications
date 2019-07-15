@@ -7,7 +7,7 @@
     .govuk-grid-column-two-thirds
       - heading = capture do
         h1.govuk-heading-xl
-          | Is the UK responsible person a business or an individual?
+          | Is the UK Responsible Person a business or an individual?
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :account_type,
               fieldset: { legend: { html: heading } },
