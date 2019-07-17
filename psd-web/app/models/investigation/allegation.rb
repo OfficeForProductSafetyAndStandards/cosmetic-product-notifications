@@ -1,7 +1,7 @@
 class Investigation::Allegation < Investigation
   validates :description, presence: true, on: :allegation_details
   validate :product_category_error, on: :allegation_details
-  validate :hazard_type_error
+  validate :hazard_type_error, on: [:allegation_details, :unsafe]
   validates :hazard_description, presence: true, on: :unsafe
   validates :non_compliant_reason, presence: true, on: :non_compliant
 
@@ -55,7 +55,7 @@ private
   end
 
   def hazard_type_error
-    if hazard_type.empty?
+    if hazard_type.blank?
       errors.add(:hazard_type, :invalid, attribute: "hazard type")
     end
   end

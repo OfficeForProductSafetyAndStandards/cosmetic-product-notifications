@@ -115,9 +115,3 @@ en:
           attributes:
             correspondence_date:
               invalid: "Enter a real correspondence date"
-        allegation:
-          attributes:
-            product_category:
-              blank: "Select a valid product category"
-
-
