@@ -66,6 +66,7 @@ en:
 
       # Our own
       date_missing_component: "%{attribute} must include a %{missing_components}"
+      invalid: "Select a valid %{attribute}"
     attributes:
       email_address:
         invalid: "Enter an email address in the correct format, like name@example.com"
@@ -114,4 +115,9 @@ en:
           attributes:
             correspondence_date:
               invalid: "Enter a real correspondence date"
+        allegation:
+          attributes:
+            product_category:
+              blank: "Select a valid product category"
+
 

@@ -1,6 +1,8 @@
 class Investigation::Allegation < Investigation
-  validates :description, :hazard_type, :product_category, presence: true, on: :allegation_details
-  validates :hazard_description, :hazard_type, presence: true, on: :unsafe
+  validates :description, presence: true, on: :allegation_details
+  validate :product_category_error, on: :allegation_details
+  validate :hazard_type_error
+  validates :hazard_description, presence: true, on: :unsafe
   validates :non_compliant_reason, presence: true, on: :non_compliant
 
   # Elasticsearch index name must be declared in children and parent
@@ -44,5 +46,17 @@ private
   def get_product_property_value_if_shared(property_name)
     first_product = products.first
     first_product[property_name] if products.drop(1).all? { |product| product[property_name] == first_product[property_name] }
+  end
+
+  def product_category_error
+    if product_category.empty?
+      errors.add(:product_category, :invalid, attribute: "product category")
+    end
+  end
+
+  def hazard_type_error
+    if hazard_type.empty?
+      errors.add(:hazard_type, :invalid, attribute: "hazard type")
+    end
   end
 end
