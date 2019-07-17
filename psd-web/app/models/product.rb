@@ -10,7 +10,7 @@ class Product < ApplicationRecord
   before_validation { trim_line_endings(:description) }
   validates :name, presence: true
   validates :product_type, presence: true
-  validates :category, presence: { message: "Select a valid product category" }
+  validates :category, presence: true
   validates_length_of :description, maximum: 10000
 
   has_many_attached :documents
