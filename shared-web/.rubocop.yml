@@ -2,6 +2,7 @@ inherit_gem:
   govuk-lint: configs/rubocop/all.yml
 
 require: rubocop-performance
+require: rubocop-rails
 
 AllCops:
   Exclude:

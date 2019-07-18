@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
   liblzma-dev \
   xvfb \
   unzip \
-  libgconf2-4 \
+  # libgconf2-4 \
   libnss3 \
   google-chrome-stable
 

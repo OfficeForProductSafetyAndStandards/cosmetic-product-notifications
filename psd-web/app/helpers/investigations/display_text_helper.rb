@@ -40,7 +40,7 @@ module Investigations::DisplayTextHelper
 
   def get_highlight_content(result)
     sanitized_content = sanitize(result, tags: %w(em))
-    sanitized_content.html_safe # rubocop:disable Rails/OutputSafety
+    sanitized_content.html_safe
   end
 
   def gdpr_restriction_text

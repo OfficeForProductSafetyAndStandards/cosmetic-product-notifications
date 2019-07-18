@@ -1,5 +1,5 @@
 PATH
-  remote: vendor/shared-web/dev
+  remote: dev
   specs:
     shared-web-dev (1.0.0)
       brakeman (= 4.5.1)
@@ -18,7 +18,7 @@ PATH
       solargraph (= 0.34.3)
 
 PATH
-  remote: vendor/shared-web
+  remote: .
   specs:
     shared-web (1.0.0)
       active_hash (= 2.2.1)
@@ -44,8 +44,6 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (5.0.5)
-      concurrent-ruby (~> 1.0)
     actioncable (5.2.3)
       actionpack (= 5.2.3)
       nio4r (~> 2.0)
@@ -121,7 +119,6 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
-    cf-app-utils (0.6)
     childprocess (1.0.1)
       rake (< 13.0)
     concurrent-ruby (1.1.5)
@@ -136,7 +133,6 @@ GEM
     debase (0.2.3)
       debase-ruby_core_source (>= 0.10.2)
     debase-ruby_core_source (0.10.5)
-    diff-lcs (1.3)
     docile (1.3.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -156,11 +152,6 @@ GEM
     erubi (1.8.0)
     et-orbi (1.2.1)
       tzinfo
-    factory_bot (5.0.2)
-      activesupport (>= 4.2.0)
-    factory_bot_rails (5.0.2)
-      factory_bot (~> 5.0.2)
-      railties (>= 4.2.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
@@ -183,8 +174,6 @@ GEM
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.3)
-    jbuilder (2.9.1)
-      activesupport (>= 4.2.0)
     jmespath (1.4.0)
     json (2.2.0)
     jwt (2.2.1)
@@ -230,12 +219,7 @@ GEM
     parallel (1.17.0)
     parser (2.6.3.0)
       ast (~> 2.4.0)
-    pg (1.1.4)
     public_suffix (3.1.1)
-    puma (4.0.1)
-      nio4r (~> 2.0)
-    pundit (2.0.1)
-      activesupport (>= 3.0.0)
     raabro (1.1.6)
     rack (2.0.7)
     rack-protection (2.0.5)
@@ -258,10 +242,6 @@ GEM
       bundler (>= 1.3.0)
       railties (= 5.2.3)
       sprockets-rails (>= 2.0.0)
-    rails-controller-testing (1.0.4)
-      actionpack (>= 5.0.1.x)
-      actionview (>= 5.0.1.x)
-      activesupport (>= 5.0.1.x)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -288,25 +268,6 @@ GEM
       netrc (~> 0.8)
     reverse_markdown (1.1.0)
       nokogiri
-    rspec-collection_matchers (1.1.3)
-      rspec-expectations (>= 2.99.0.beta1)
-    rspec-core (3.8.2)
-      rspec-support (~> 3.8.0)
-    rspec-expectations (3.8.4)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.8.0)
-    rspec-mocks (3.8.1)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.8.0)
-    rspec-rails (3.8.2)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
-      rspec-support (~> 3.8.0)
-    rspec-support (3.8.2)
     rubocop (0.72.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -316,9 +277,6 @@ GEM
       unicode-display_width (>= 1.4.0, < 1.7)
     rubocop-performance (1.4.0)
       rubocop (>= 0.71.0)
-    rubocop-rails (2.2.1)
-      rack (>= 1.1)
-      rubocop (>= 0.72.0)
     rubocop-rspec (1.33.0)
       rubocop (>= 0.60.0)
     ruby-debug-ide (0.7.0)
@@ -331,6 +289,12 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    sass-rails (5.0.7)
+      railties (>= 4.0.0, < 6)
+      sass (~> 3.1)
+      sprockets (>= 2.8, < 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
+      tilt (>= 1.1, < 3)
     scss_lint (0.58.0)
       rake (>= 0.9, < 13)
       sass (~> 3.5, >= 3.5.5)
@@ -359,10 +323,6 @@ GEM
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
-    slim-rails (3.2.0)
-      actionpack (>= 3.1)
-      railties (>= 3.1)
-      slim (>= 3.0, < 5.0)
     slim_lint (0.17.0)
       rake (>= 10, < 13)
       rubocop (>= 0.50.0)
@@ -391,8 +351,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    strong_migrations (0.4.1)
-      activerecord (>= 5)
     sysexits (1.2.0)
     temple (0.8.1)
     term-ansicolor (1.7.1)
@@ -416,8 +374,6 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
-    wicked (1.3.3)
-      railties (>= 3.0.7)
     will_paginate (3.1.7)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -427,27 +383,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aasm
-  cf-app-utils
-  factory_bot_rails
-  jbuilder (~> 2.9)
-  pg (~> 1.1)
-  puma (~> 4.0)
-  pundit
-  rails-controller-testing
-  rspec-collection_matchers
-  rspec-rails
-  rubocop-rails
-  rubocop-rspec
-  rubyzip (>= 1.2.1)
+  sass-rails (~> 5.0)
   shared-web!
   shared-web-dev!
-  slim-rails
-  strong_migrations
-  wicked
-
-RUBY VERSION
-   ruby 2.5.5p157
 
 BUNDLED WITH
-   1.17.3
+   2.0.1
