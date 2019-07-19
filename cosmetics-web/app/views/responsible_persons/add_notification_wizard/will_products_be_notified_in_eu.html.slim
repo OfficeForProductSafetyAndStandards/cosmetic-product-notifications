@@ -5,7 +5,6 @@
   .govuk-grid-column-two-thirds
     = form_with url: wizard_path, method: :put do |form|
         - hint_html = capture do
-         
         = render "components/govuk_radios",
           name: :answer,
           errorMessage: @error_text.present? && { text: @error_text },
