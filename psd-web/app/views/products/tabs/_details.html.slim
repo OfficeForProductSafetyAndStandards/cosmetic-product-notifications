@@ -5,45 +5,4 @@ hr.govuk-section-break.govuk-section-break--l
 
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-full
-    table.govuk-table
-      tbody.govuk-table__body
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Name
-          td.govuk-table__cell
-            = @product.name
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Barcode / serial number
-          td.govuk-table__cell
-            = @product.product_code
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Type
-          td.govuk-table__cell
-            = @product.product_type
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Batch number
-          td.govuk-table__cell
-            = @product.batch_number
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Category
-          td.govuk-table__cell
-            = @product.category
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Webpage
-          td.govuk-table__cell
-            = @product.webpage
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Country of origin
-          td.govuk-table__cell
-            = country_from_code @product.country_of_origin
-        tr.govuk-table__row
-          th.govuk-table__header[scope="row"]
-            | Description
-          td.govuk-table__cell
-            = @product.description
+    = product_summary_list(@product, include_batch_number: true)
