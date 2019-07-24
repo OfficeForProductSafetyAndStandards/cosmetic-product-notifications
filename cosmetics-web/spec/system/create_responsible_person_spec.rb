@@ -60,7 +60,7 @@ private
     create_new_responsible_person
     select_individual_account_type
 
-    assert_text "UK responsible person details"
+    assert_text "UK Responsible Person details"
 
     fill_in "Name", with: responsible_person.name
     fill_in "Building and street", with: responsible_person.address_line_1
@@ -81,7 +81,7 @@ private
     create_new_responsible_person
     select_business_account_type
 
-    assert_text "UK responsible person details"
+    assert_text "UK Responsible Person details"
 
     fill_in "Business name", with: business_responsible_person.name
     fill_in "Building and street", with: business_responsible_person.address_line_1
