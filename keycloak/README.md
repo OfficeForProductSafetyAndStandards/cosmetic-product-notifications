@@ -8,8 +8,8 @@ This folder contains the configuration and code for the Keycloak service.
 We are using a customised version of the [Keycloak](https://www.keycloak.org/index.html) standalone server
 for user identity and access management (IdAM).
 
-We're using the [GOV.UK theme](https://github.com/UKHomeOffice/keycloak-theme-govuk) for Keycloak
-maintained by the Home Office.
+We're using the [GOV.UK theme](https://github.com/UKGovernmentBEIS/keycloak-theme-govuk) for Keycloak (forked from the
+[original theme](https://github.com/UKHomeOffice/keycloak-theme-govuk) maintained by the Home Office).
 
 
 ## Getting Setup
@@ -79,7 +79,8 @@ Set a strong password for the master admin account:
 * Enter and confirm the new password, disable the 'Temporary' option, and click 'Reset Password'
 
 #### Setup clients
-*The instructions in this sections are given for the psd client, but should be repeated for all clients required.*
+*The instructions in this sections are given for the PSD client, but should be repeated for Cosmetics and
+all other clients required.*
 
 Generate a new client secret for the PSD app:
 * Select realm > OPSS > Clients > psd-app > Credentials > Regenerate Secret
