@@ -30,7 +30,7 @@ RSpec.describe "Create a responsible person", type: :system do
   it "requires an account type to be selected" do
     visit account_path(:select_type)
 
-    assert_text "Is the UK responsible person a business or an individual?"
+    assert_text "Is the UK Responsible Person a business or an individual?"
     click_on "Continue"
 
     assert_current_path account_path(:select_type)
@@ -103,7 +103,7 @@ private
     assert_text "UK Responsible Person"
     click_on "Continue"
 
-    assert_text "Do you or your organisation have an account to submit cosmetic product notifications in the UK?"
+    assert_text "Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?"
     choose "option_create_new", visible: false
     click_on "Continue"
   end
