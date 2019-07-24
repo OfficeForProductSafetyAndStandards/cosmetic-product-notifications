@@ -100,7 +100,7 @@ private
 
   def create_new_responsible_person
     visit account_path(:overview)
-    assert_text "UK responsible person"
+    assert_text "UK Responsible Person"
     click_on "Continue"
 
     assert_text "Do you or your organisation have an account to submit cosmetic product notifications in the UK?"
@@ -109,13 +109,13 @@ private
   end
 
   def select_business_account_type
-    assert_text "Is the UK responsible person a business or an individual?"
+    assert_text "Is the UK Responsible Person a business or an individual?"
     choose "responsible_person_account_type_business", visible: false
     click_on "Continue"
   end
 
   def select_individual_account_type
-    assert_text "Is the UK responsible person a business or an individual?"
+    assert_text "Is the UK Responsible Person a business or an individual?"
     choose "responsible_person_account_type_individual", visible: false
     click_on "Continue"
   end
