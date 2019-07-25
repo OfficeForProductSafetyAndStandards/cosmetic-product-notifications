@@ -202,6 +202,10 @@ private
     self.source = UserSource.new(user: User.current) if source.blank? && User.current
   end
 
+  def creator_id
+    self.source&.user_id
+  end
+
   def assign_to_current_user
     self.assignee = User.current if assignee.blank? && User.current
   end
