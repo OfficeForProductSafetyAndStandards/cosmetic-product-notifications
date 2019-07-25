@@ -35,6 +35,7 @@
         h2.govuk-heading-m
           | If your products were not notified in the EU before
           span.no-wrap< = display_full_month_date EU_EXIT_DATE
+          |  (Brexit)
         p[class="govuk-!-margin-bottom-1"]
           | Use the service to give information about:
         ul.govuk-list.govuk-list--bullet
@@ -47,7 +48,7 @@
             | the product’s formulation and whether it contains carcinogenic, mutagenic or toxic for reproduction (CMR)
               substances, and nanomaterials
         p
-          | You also need to upload an image of the label.
+          | You also need to upload an image of the label, as a PDF, JPG or PNG and up to 30 MB in size.
         p
           | If your product contains certain nanomaterials, you’ll have to wait 6 months before you place the product
             on the market.
@@ -58,9 +59,13 @@
           | The process is similar, but you do not need to provide:
         ul.govuk-list.govuk-list--bullet
           li
-            | information about whether or not the cosmetic product contains CMR substances
+            | information about whether or not the cosmetic product contains carcinogenic, mutagenic or toxic for
+               reproduction (CMR) substances
           li
             | an image of the label
+          p
+          | You can do this manually or via the 'upload' method below.
+
         - warning_html = capture do
           | You must submit your notifications for these products by
           span.no-wrap< = display_full_time_and_date SUBMISSION_WINDOW_END_DATE
@@ -84,10 +89,11 @@
           =<> NotificationFile.get_max_number_of_files
           | files at a time.
         p[class="govuk-!-margin-bottom-1"]
-          | The original EU notification does not contain:
+          | The ZIP files will not contain:
         ul.govuk-list.govuk-list--bullet
           li
-            | the formulation of the product if it was an attached document – you must provide this separately
+            | the formulation of the product if it was an attached document –
+              you must provide this separately and can do this as a PDF, RTF or TXT file
           li
             | any images – you’ll need to provide them for products notified after Brexit
           li
