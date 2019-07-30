@@ -14,14 +14,14 @@ RSpec.describe "After signing in", type: :system do
 
     it "is prompted to create or join an existing account" do
       assert_current_path account_path(:overview)
-      assert_text "UK responsible person"
+      assert_text "UK Responsible Person"
     end
 
     it "is redirected to create or join an account if attempting to access another page" do
       visit responsible_person_url(responsible_person)
 
       assert_current_path account_path(:overview)
-      assert_text "UK responsible person"
+      assert_text "UK Responsible Person"
     end
   end
 

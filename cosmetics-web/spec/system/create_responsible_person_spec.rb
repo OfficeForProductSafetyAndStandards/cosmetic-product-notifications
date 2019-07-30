@@ -30,7 +30,7 @@ RSpec.describe "Create a responsible person", type: :system do
   it "requires an account type to be selected" do
     visit account_path(:select_type)
 
-    assert_text "Is the UK responsible person a business or an individual?"
+    assert_text "Is the UK Responsible Person a business or an individual?"
     click_on "Continue"
 
     assert_current_path account_path(:select_type)
@@ -60,7 +60,7 @@ private
     create_new_responsible_person
     select_individual_account_type
 
-    assert_text "UK responsible person details"
+    assert_text "UK Responsible Person details"
 
     fill_in "Name", with: responsible_person.name
     fill_in "Building and street", with: responsible_person.address_line_1
@@ -81,7 +81,7 @@ private
     create_new_responsible_person
     select_business_account_type
 
-    assert_text "UK responsible person details"
+    assert_text "UK Responsible Person details"
 
     fill_in "Business name", with: business_responsible_person.name
     fill_in "Building and street", with: business_responsible_person.address_line_1
@@ -100,22 +100,22 @@ private
 
   def create_new_responsible_person
     visit account_path(:overview)
-    assert_text "UK responsible person"
+    assert_text "UK Responsible Person"
     click_on "Continue"
 
-    assert_text "Do you or your organisation have an account to submit cosmetic product notifications in the UK?"
+    assert_text "Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?"
     choose "option_create_new", visible: false
     click_on "Continue"
   end
 
   def select_business_account_type
-    assert_text "Is the UK responsible person a business or an individual?"
+    assert_text "Is the UK Responsible Person a business or an individual?"
     choose "responsible_person_account_type_business", visible: false
     click_on "Continue"
   end
 
   def select_individual_account_type
-    assert_text "Is the UK responsible person a business or an individual?"
+    assert_text "Is the UK Responsible Person a business or an individual?"
     choose "responsible_person_account_type_individual", visible: false
     click_on "Continue"
   end
