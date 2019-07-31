@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  db:
+    build:
+      context: ../db
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    env_file:
+      - ../.env.keycloak
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.3
+    environment:
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
+    volumes:
+      - elasticsearch-volume:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+
+  redis:
+    image: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+
+  keycloak:
+    build:
+      context: ../keycloak
+    env_file:
+      - ../.env.keycloak
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+
+  antivirus:
+    build:
+      context: ../antivirus
+    env_file:
+      - ../.env.antivirus
+    environment:
+      - PORT=3006
+    ports:
+      - "3006:3006"
+    volumes:
+      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+      - ${PWD-.}/../antivirus:/antivirus
+      - bundle-cache:/usr/local/bundle
+
+volumes:
+  postgres-volume:
+  elasticsearch-volume:
+  bundle-cache:

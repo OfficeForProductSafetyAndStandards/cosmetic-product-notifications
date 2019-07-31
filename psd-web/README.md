@@ -8,7 +8,7 @@ This folder also contains the code for the [background worker](../psd-worker/REA
 
 The site is written in [Ruby on Rails](https://rubyonrails.org/).
 
-We're using [Slim](http://slim-lang.com/) as our HTML templating language, 
+We're using [Slim](http://slim-lang.com/) as our HTML templating language,
 ES6 JavaScript and [Sass](https://sass-lang.com/) for styling transplied with webpack.
 
 ## Getting Setup
@@ -35,6 +35,23 @@ if there are new migrations:
 
     docker-compose exec psd-web bin/rake db:migrate
 
+### Runing the app locally outside of docker
+
+Run:
+
+    bin/run_local
+
+This runs `psd-web` and `psd-worker` locally, directly on your machine outside of docker, and uses docker-compose to run a minimum set of backing services.
+
+All logs and output will appear on the terminal, use Ctl-C to stop the app and allow the rest of the `run_local` script to perform it's clean-up operations.
+
+While the app is running, you may use all the usual rails, rake and other usual development commands in a different terminal. you should notice that the performance of tests and the running of the app in the browser are significantly improved.
+
+#### Caveats
+
+- Only works on Mac
+- Assumes you have homebrew installed
+
 
 ### VS Code Setup
 
@@ -44,7 +61,7 @@ In order to get things like code completion and linting, it's necessary to insta
 
 To make managing ruby versions easier, you can use [rbenv](https://github.com/rbenv/rbenv).
 Once rbenv is installed, run the following commands:
-    
+
     # Install the version of ruby specified in `.ruby-version`.
     rbenv install
     # Install bundler
@@ -65,7 +82,7 @@ RubyMine comes with db inspection tools, too. To connect to the dev db, you'll n
 
 ### Debugging
 
-Debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up psd-web` and then 
+Debugging is available by running `docker-compose -f docker-compose.yml -f docker-compose.debug.yml up psd-web` and then
 - the `Docker: Attach to PSD` configuration, if in VS Code.
 - the `Remote Debug` configuration, if in RubyMine
 Note, that when run in this mode, the website won't launch until the debugger is connected!
@@ -120,7 +137,7 @@ To create an Elasticsearch instance for the current space:
 
 #### Redis
 
-To create a redis instance for the current space. 
+To create a redis instance for the current space.
 
     cf marketplace -s redis
     cf create-service redis tiny-3.2 psd-queue

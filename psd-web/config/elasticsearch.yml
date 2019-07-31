@@ -1,5 +1,5 @@
 default: &default
-  :url: "http://elasticsearch:9200"
+  :url: <%= ENV['RUN_LOCAL'] == 'true' ? 'http://localhost:9200' : 'http://elasticsearch:9200' %>
   :transport_options:
     :request:
       :timeout: 5

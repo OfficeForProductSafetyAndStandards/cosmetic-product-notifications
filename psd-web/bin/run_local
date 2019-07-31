@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+echo 'Escaping docker...'
+
+export RUN_LOCAL=true
+
+echo
+echo 'Installing chromdriver if required. This is needed to run system tests...'
+echo '======================================================='
+if which chromedriver
+then
+  echo 'Already installed'
+else
+  brew update && brew install imagemagick
+fi
+
+echo
+echo 'Installing imagemagick if required. This is needed for the background worker...'
+echo '======================================================='
+if which magick
+then
+  echo 'Already installed'
+else
+  brew tap homebrew/cask && brew cask install chromedriver
+fi
+
+echo
+echo 'Starting backing services via docker-compose'
+echo '======================================================='
+docker-compose --file docker-compose-backing-services.yml up --detach
+
+echo
+echo 'Backing up original /vendor...'
+mv ./vendor ./vendor.bak
+mkdir ./vendor
+echo '...done'
+
+echo
+echo 'Copying shared web to /vendor...'
+cp -r ../shared-web ./vendor
+echo '...done'
+
+echo
+echo 'Ensure all gems are installed...'
+bin/bundle check || bin/bundle install
+echo '...done'
+
+echo
+echo 'Ensure all node packages are installed...'
+yarn install
+echo '...done'
+
+echo
+echo 'Starting backgroud worker...'
+bin/sidekiq -C config/sidekiq.yml &
+BACKGROUND_PID=$!
+echo '...done'
+
+echo
+echo 'Starting webpacker dev server...'
+bin/webpack-dev-server --progress &
+WEBPACK_PID=$!
+echo '...done'
+
+echo
+echo 'Starting rails outside docker...'
+echo 'Once this has started, you can run rake and bin/* commands in another terminal'
+echo '======================================================='
+bundle exec rails s
+
+echo
+echo 'Stopping webpack dev server...'
+kill -INT $WEBPACK_PID
+wait $WEBPACK_PID
+echo '...done'
+
+echo
+echo 'Stopping background worker...'
+kill -INT $BACKGROUND_PID
+wait $BACKGROUND_PID
+echo '...done'
+
+echo
+echo 'Removing shared web from /vendor...'
+rm -r ./vendor/shared-web
+echo '...done'
+
+echo
+echo 'Restoring original /vendor...'
+rmdir ./vendor
+mv ./vendor.bak ./vendor
+echo '...done'
+
+echo
+echo "Stopping backing services -- this shouldn't take long..."
+echo '======================================================='
+docker-compose --file docker-compose-backing-services.yml down
+
+unset RUN_LOCAL

@@ -1,15 +1,15 @@
 {
-    "files.exclude": {
-        ".git": true,
-        "**/bin/": true,
-        "**/storage/": true,
-        "**/tmp/": true,
-        "**/node_modules/": true,
-        "**/*.lock": true
-    },
-    "files.autoSave": "onFocusChange",
-    "ruby.lint": {
-        "rubocop": true,
-    },
-    "ruby.format": "rubocop",
+  "files.exclude": {
+    ".git": true,
+    // "**/bin/": true,
+    "**/storage/": true,
+    "**/tmp/": true,
+    "**/node_modules/": true,
+    "**/*.lock": true
+  },
+  "files.autoSave": "onFocusChange",
+  "ruby.lint": {
+    "rubocop": true
+  },
+  "ruby.format": "rubocop"
 }
