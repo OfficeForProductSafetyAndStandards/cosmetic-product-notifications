@@ -12,6 +12,7 @@
       = render "form_components/govuk_select", form: form, key: :frame_formulation,
               show_all_values: true, is_autocomplete: true,
               label: { text: question, classes: "govuk-label--xl", isPageHeading: true },
+              hint: { text: html_escape(link_to("Download frame formulations (PDF)", "#")) },
               items: Component.frame_formulations.keys.map { |formulation_key| \
                 { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
               }
