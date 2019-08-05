@@ -69,10 +69,10 @@ RSpec.describe NanomaterialBuildController, type: :controller do
     end
 
     describe "at confirm_restrictions" do
-      it "redirects to the unhappy path when nano-element purposes include 'other'" do
+      it "redirects to the non-standard nanomaterial path when nano-element purposes include 'other'" do
         nano_element1.update(purposes: %w(other))
         get(:show, params: params.merge(id: :confirm_restrictions))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :unhappy_path))
+        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :non_standard_nanomaterial_notified))
       end
     end
   end
@@ -110,9 +110,9 @@ RSpec.describe NanomaterialBuildController, type: :controller do
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :confirm_usage))
       end
 
-      it "redirects to the unhappy path when confirm_restrictions is 'no'" do
+      it "redirects to the non-standard nonomaterial notified path when confirm_restrictions is 'no'" do
         post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "no" }))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :unhappy_path))
+        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :non_standard_nanomaterial_notified))
       end
 
       it "sets error when no option is selected" do
@@ -129,9 +129,9 @@ RSpec.describe NanomaterialBuildController, type: :controller do
         expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element2))
       end
 
-      it "redirects to the unhappy path when confirm_usage is 'no'" do
+      it "redirects to the non-standard nanomaterial path when confirm_usage is 'no'" do
         post(:update, params: confirm_usage_params.merge(nano_element: { confirm_usage: "no" }))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :unhappy_path))
+        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :non_standard_nanomaterial_notified))
       end
 
       it "sets error when no option is selected" do
