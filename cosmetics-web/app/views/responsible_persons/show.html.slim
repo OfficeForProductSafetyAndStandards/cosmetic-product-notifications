@@ -21,4 +21,4 @@
             - @responsible_person.address_lines.each do |address_line|
               = address_line
               br
-    = render "notifications/contact_person_details", contact_person: @responsible_person.contact_persons.first
+    = render "notifications/contact_persons_list", contact_persons: @responsible_person.contact_persons

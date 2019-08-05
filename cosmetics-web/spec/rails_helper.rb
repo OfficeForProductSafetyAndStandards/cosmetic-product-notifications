@@ -1,8 +1,10 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require 'login_helpers'
+require 'domain_helpers'
 require 'responsible_person_helpers'
 require 'file_helpers'
+require 'policy_helpers'
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
@@ -67,6 +69,7 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
+  config.include DomainHelpers
   config.include LoginHelpers
   config.include ResponsiblePersonHelpers
   config.include FileHelpers

@@ -9,14 +9,17 @@ module InvestigationElasticsearch
     settings do
       mappings do
         indexes :status, type: :keyword
+        indexes :type, type: :keyword
         indexes :assignable_id, type: :keyword
+        indexes :creator_id, type: :keyword
       end
     end
 
     def as_indexed_json(*)
       as_json(
-        only: %i[user_title description hazard_type product_category is_closed assignable_id updated_at created_at pretty_id
+        only: %i[description hazard_type product_category is_closed assignable_id type updated_at created_at pretty_id
                  hazard_description non_compliant_reason],
+        methods: %i[title creator_id],
         include: {
           documents: {
             only: [],
@@ -52,12 +55,12 @@ module InvestigationElasticsearch
     end
 
     def self.highlighted_fields
-      %w[*.* pretty_id user_title description hazard_type product_category hazard_description non_compliant_reason]
+      %w[*.* pretty_id title description hazard_type product_category hazard_description non_compliant_reason]
     end
 
     def self.fuzzy_fields
       %w[documents.* correspondences.* activities.* businesses.* products.* complainant.* corrective_actions.*
-         tests.* alerts.* user_title description hazard_type product_category hazard_description non_compliant_reason]
+         tests.* alerts.* title description hazard_type product_category hazard_description non_compliant_reason]
     end
 
     def self.exact_fields

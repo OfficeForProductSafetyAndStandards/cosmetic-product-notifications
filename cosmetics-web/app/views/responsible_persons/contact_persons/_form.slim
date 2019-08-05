@@ -1,0 +1,21 @@
+= form_with model: @contact_person, url: url, method: method do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+
+      h1.govuk-heading-xl
+        | Contact person details
+      p
+        | A contact person must provide information when the National Poison Information Service
+          or market surveillance authorities (for example, Trading Standards officers) ask for it.
+
+      = render "form_components/govuk_input", form: form, key: :name,
+              label: { text: "Full name" }
+      = render "form_components/govuk_input", form: form, key: :email_address, type: :email,
+              label: { text: "Email address" }
+      = render "form_components/govuk_input", form: form, key: :phone_number, type: :tel,
+              label: { text: "Phone number" }, classes: "govuk-input--width-20"
+      p
+        | We will send an email asking them to confirm that they are a willing to be a contact person.
+      .govuk-form-group
+        = form.submit "Send email", class: "govuk-button"

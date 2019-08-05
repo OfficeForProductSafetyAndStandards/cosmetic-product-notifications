@@ -1,0 +1,4 @@
+h2.govuk-heading-m
+  | Contact person
+- contact_persons.each do |contact_person|
+  = render "/notifications/contact_person_details", contact_person: contact_person

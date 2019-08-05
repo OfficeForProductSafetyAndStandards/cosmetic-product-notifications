@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe LandingPageController, type: :controller do
   describe "When not signed in" do
+    after do
+      reset_domain_request_mocking
+    end
+
     describe "GET #index" do
       it "returns success status" do
         get :index
@@ -13,17 +17,24 @@ RSpec.describe LandingPageController, type: :controller do
         expect(assigns(:responsible_person)).to eq(nil)
       end
 
-      it "renders the index template" do
+      it "renders the submit landing page template for submit domain requests" do
+        configure_requests_for_submit_domain
         get :index
-        expect(response).to render_template("landing_page/index")
+        expect(response).to render_template("landing_page/submit_landing_page")
+      end
+
+      it "renders the search landing page template for search domain requests" do
+        configure_requests_for_search_domain
+        get :index
+        expect(response).to render_template("landing_page/search_landing_page")
       end
     end
   end
 
   describe "When signed in as a Responsible Person user" do
     let(:user) { build(:user) }
-    let(:responsible_person_1) { create(:responsible_person, email_address: "one@example.com") }
-    let(:responsible_person_2) { create(:responsible_person, email_address: "two@example.com") }
+    let(:responsible_person_1) { create(:responsible_person) }
+    let(:responsible_person_2) { create(:responsible_person) }
 
     before do
       responsible_person_1.add_user(user)

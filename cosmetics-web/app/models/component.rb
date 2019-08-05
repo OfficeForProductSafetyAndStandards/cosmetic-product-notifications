@@ -12,11 +12,22 @@ class Component < ApplicationRecord
   has_many :exact_formulas, dependent: :destroy
   has_many :range_formulas, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
-  has_many :cmrs, dependent: :destroy
+  has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_one :nano_material, dependent: :destroy
   has_one_attached :formulation_file
 
+  accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
+  accepts_nested_attributes_for :nano_material
+
+  validates :physical_form, presence: true, on: :add_physical_form
+  validates :special_applicator, presence: true, on: :select_special_applicator_type
+  validates :other_special_applicator, presence: true, on: :select_special_applicator_type, if: :other_special_applicator?
+  validates :frame_formulation, presence: true, on: :select_frame_formulation
+  validates :cmrs, presence: true, on: :add_cmrs
+  validates :notification_type, presence: true, on: :select_formulation_type
+
   before_save :add_shades, if: :will_save_change_to_shades?
+  before_save :remove_other_special_applicator, unless: :other_special_applicator?
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
@@ -39,6 +50,10 @@ class Component < ApplicationRecord
 
   def root_category
     Component.get_parent_category(sub_category)
+  end
+
+  def belongs_to_category?(category)
+    [root_category, sub_category, sub_sub_category&.to_sym].include?(category)
   end
 
   # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
@@ -82,5 +97,13 @@ private
 
   def update_notification_state
     notification&.set_single_or_multi_component!
+  end
+
+  def other_special_applicator?
+    special_applicator == "other_special_applicator"
+  end
+
+  def remove_other_special_applicator
+    self.other_special_applicator = nil
   end
 end

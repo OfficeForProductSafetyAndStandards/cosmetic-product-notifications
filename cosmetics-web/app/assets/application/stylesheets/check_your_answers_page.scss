@@ -2,24 +2,36 @@
   th {
     vertical-align: top;
   }
+
+  ul {
+    margin-bottom: 0;
+
+    li {
+      text-align: left;
+    }
+  }
 }
 
 .entity-list {
-  display: block;
-  margin-bottom: 0;
-  min-width: 60%;
-
-  dt,
-  dd {
+  dl {
     display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    margin: 0;
   }
 
   dt {
-    min-width: 100px;
+    word-break: break-word;
+    clear: left;
+    float: left;
+    width: calc(100% - 10em);
+    padding: 0 10px 0 0;
+    margin: 0;
   }
 
   dd {
-    margin-left: 0;
-    float: right;
+    float: left;
+    width: 10em;
+    margin: 0;
   }
 }

@@ -1,10 +1,8 @@
 require 'simplecov'
 require 'simplecov-console'
-require 'shared/web/coveralls_formatter'
 SimpleCov.formatters = [
     SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::Console,
-    Shared::Web::CoverallsFormatter
+    SimpleCov::Formatter::Console
 ]
 SimpleCov.start
 

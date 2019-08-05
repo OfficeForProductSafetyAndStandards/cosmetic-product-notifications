@@ -13,6 +13,10 @@ DOMAIN=cosmetic-product-notifications.service.gov.uk
 if [[ $SPACE == "prod" ]]; then
     SUBMIT_HOSTNAME=submit
     SEARCH_HOSTNAME=search
+elif [[ $SPACE == "research" ]]; then
+    DOMAIN=london.cloudapps.digital
+    SUBMIT_HOSTNAME=cosmetics-research
+    SEARCH_HOSTNAME=cosmetics-research
 else
     SUBMIT_HOSTNAME=$SPACE-submit
     SEARCH_HOSTNAME=$SPACE-search
@@ -43,6 +47,8 @@ cp -a ./shared-web/. ./cosmetics-web/vendor/shared-web/
 # Deploy the new app, set the hostnames and start the app
 cf push $NEW_APP -f ./cosmetics-web/manifest.yml -d $DOMAIN --hostname $NEW_SUBMIT_HOSTNAME --no-start
 cf set-env $NEW_APP COSMETICS_HOST "$NEW_SUBMIT_HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP SUBMIT_HOST "$NEW_SUBMIT_HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP SEARCH_HOST "$NEW_SEARCH_HOSTNAME.$DOMAIN"
 cf map-route $NEW_APP $DOMAIN --hostname $NEW_SEARCH_HOSTNAME
 
 # Increase the assigned memory for staging
@@ -58,7 +64,25 @@ if [[ ! $APP_PREEXISTS ]]; then
     exit 0
 fi
 
-# TODO smoke test or manual confirmation?
+# Run smoke tests before switching over to the new app
+if [[ $SPACE != "prod" ]]; then
+    echo "Running smoke tests."
+    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    docker pull beisopss/opss-functional-tests
+    docker run beisopss/opss-functional-tests mvn --quiet --file ./cosmetics/pom.xml test -Dcucumber.options="--tags @smoke" \
+      -Dhostname=$NEW_SUBMIT_HOSTNAME.$DOMAIN \
+      -Dauth.username=${COS_BASIC_AUTH_USERNAME} -Dauth.password=${COS_BASIC_AUTH_PASSWORD} \
+      -Daccount.rp.username=${RP_ACCOUNT_USERNAME} -Daccount.rp.password=${RP_ACCOUNT_PASSWORD} \
+      -Daccount.npis.username=${NPIS_ACCOUNT_USERNAME} -Daccount.npis.password=${NPIS_ACCOUNT_PASSWORD}
+fi
+SMOKE_TEST_RESULT=$?
+
+if [[ $SMOKE_TEST_RESULT -ne 0 ]]; then
+    # Delete the temporary deployment and exit
+    echo "Smoke tests failed. Aborting deployment."
+    cf delete -f $NEW_APP
+    exit 1
+fi
 
 # Unmap the temporary hostname(s) from the new app
 cf unmap-route $NEW_APP $DOMAIN --hostname $NEW_SUBMIT_HOSTNAME
@@ -72,7 +96,10 @@ cf unmap-route $NEW_APP $DOMAIN --hostname $NEW_SEARCH_HOSTNAME
 
 # Map the live hostnames to the new app
 cf set-env $NEW_APP COSMETICS_HOST "$SUBMIT_HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP SUBMIT_HOST "$SUBMIT_HOSTNAME.$DOMAIN"
+cf set-env $NEW_APP SEARCH_HOST "$SEARCH_HOSTNAME.$DOMAIN"
 cf restart $NEW_APP
+
 cf map-route $NEW_APP $DOMAIN --hostname $SUBMIT_HOSTNAME
 cf map-route $NEW_APP $DOMAIN --hostname $SEARCH_HOSTNAME
 

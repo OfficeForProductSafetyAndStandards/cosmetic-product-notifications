@@ -10,8 +10,16 @@ module CategoryHelper
     "#{get_category_name(sub_category)} - #{get_category_name(sub_sub_category)}"
   end
 
-  def get_sub_sub_categories
+  def get_main_categories
     parent_of_categories = Component.get_parent_of_categories
-    Component.categories.reject { |key| parent_of_categories.has_value?(key.to_sym) }
+    Component.categories.reject { |category| parent_of_categories[category.to_sym].present? }.keys.map(&:to_sym)
+  end
+
+  def get_sub_categories category
+    Component.get_parent_of_categories.select { |_key, value| value == category.to_sym }.keys
+  end
+
+  def has_sub_categories(category)
+    get_sub_categories(category).any?
   end
 end

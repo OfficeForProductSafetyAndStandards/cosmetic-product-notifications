@@ -68,7 +68,7 @@ en:
       date_missing_component: "%{attribute} must include a %{missing_components}"
     attributes:
       email_address:
-        invalid: "Enter a real email address"
+        invalid: "Enter an email address in the correct format, like name@example.com"
 
   activemodel:
     errors:
@@ -110,4 +110,8 @@ en:
               required: "Enter an alert subject"
             description:
               required: "Enter a summary"
+        correspondence:
+          attributes:
+            correspondence_date:
+              invalid: "Enter a real correspondence date"
 

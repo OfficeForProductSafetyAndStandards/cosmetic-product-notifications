@@ -1,44 +1,35 @@
-- content_for :page_title, "Add CMRs"
+- title = "Add CMRs"
+- question = "List all Category 1A or 1B CMRs."
+- cmr_errors = cmr_errors(@component)
+
+- content_for :page_title, title
 - content_for :after_header do
-  - previous_step = @component.shades.nil? ? :number_of_shades : :add_shades
-  = link_to "Back",
-          responsible_person_notification_component_build_path(@component.notification.responsible_person,
-                  @component.notification, @component, previous_step),
-          class: "govuk-back-link"
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-- cmr_list_url = "https://example.example-list-cmr.com" # TODO COSBETA-194
-- cmr_read_url = "https://example.example-read-cmr.com" # TODO COSBETA-194
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | Does the cosmetic product contain any substances that are known or presumed to be
-      |  carcinogenic, mutagenic or toxic for reproduction?
-    p
-      | These substance are commonly referred to as CMR.
-    p
-      = link_to "View carcinogenic, mutagenic or toxic for reproduction substances (opens in a new tab).",
-              cmr_list_url, target: :_blank, rel: 'noopener'
-    p
-      | Apart from in exceptional cases, these substances are banned for use in cosmetic products.
-      | &nbsp
-      = link_to "Read about carcinogenic, mutagenic or toxic for reproduction substances that aren’t banned" + \
-                " (opens in a new tab).", cmr_read_url, target: :_blank, rel: 'noopener'
-
-    = form_for(@component, url: wizard_path, method: :put) do |form|
-      - @component.cmrs.each_with_index do |cmr, index|
-        - cmr_number = index + 1
-
-        h2.govuk-heading-l
-          | Substance #{cmr_number}
-        = render "components/govuk_input",
-                name: "cmrs[#{index}][name]",
-                id: "cmrs-name",
-                value: cmr.name,
-                label: { text: "Substance #{cmr_number} name" }
-        = render "components/govuk_input",
-                name: "cmrs[#{index}][cas_number]",
-                id: "cmrs-cas_number",
-                value: cmr.cas_number,
-                label: { text: "Substance #{cmr_number} Chemical Abstracts Service registry number" }
-      .govuk-form-group
-          = form.submit "Continue", class: "govuk-button"
+= form_with model: @component, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      - if cmr_errors.any?
+        = render "components/govuk_error_summary", titleText: "There is a problem", errorList: cmr_errors
+      = render "components/govuk_fieldset",
+              legend: { text: question, classes: "govuk-label--xl", isPageHeading: true }
+      = form.fields_for :cmrs do |cmr_fields|
+        = cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-l"
+        = render "form_components/govuk_input",
+                form: cmr_fields,
+                key: :name,
+                label: { text: "International Nomenclature of Cosmetic Ingredients (INCI) name" }
+        .govuk-grid-row.multi-field-row
+          = render "form_components/govuk_input",
+                  form: cmr_fields,
+                  key: :cas_number,
+                  label: { text: "Chemical Abstracts Service (CAS) number", classes: "multi-field-item-label" },
+                  hint: { text: "For example, 1111-11-1" },
+                  formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }
+          = render "form_components/govuk_input",
+                  form: cmr_fields,
+                  key: :ec_number,
+                  label: { text: "European Community (EC) number", classes: "multi-field-item-label" },
+                  hint: { text: "For example, 111-111-1" },
+                  formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }
+  = form.submit "Continue", class: "govuk-button"

@@ -1,0 +1,31 @@
+ruby:
+  title = "Confirm use in accordance with the restrictions"
+  annex_details = get_ec_regulation_annex_details_for_nanomaterial_purposes(@nano_element.purposes)
+  question = "Is #{@nano_element.inci_name} listed in EC regulation 1223/2009, #{annex_details}?"
+
+- legend_html = capture do
+  h1.govuk-fieldset__heading.govuk-label--xl
+    = question
+  p
+    - @nano_element.purposes.each do |purpose|
+      ruby:
+        purpose_name = get_display_name_for_nanomaterial_purpose(purpose)
+        annex_number = get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose)
+        link_text = "Annex #{annex_number} list of #{purpose_name.pluralize} (opens in a new window)"
+        link_url = get_ec_regulation_link_for_annex_number(annex_number)
+      | View the
+      =< link_to link_text, link_url, target: "_blank", rel: "noopener"
+      br
+
+- content_for :page_title, title
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= form_with model: @nano_element, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+      = render "form_components/govuk_radios", form: form, key: :confirm_restrictions,
+              fieldset: { legend: { html: legend_html } },
+              items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }]
+      = form.submit "Continue", class: "govuk-button"

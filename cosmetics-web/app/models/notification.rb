@@ -33,6 +33,14 @@ class Notification < ApplicationRecord
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
             allow_nil: true
   validates :cpnp_reference, presence: true, on: :file_upload
+  validates :import_country, presence: true, on: :add_import_country
+  validates :industry_reference, presence: true, on: :add_internal_reference
+  validates :under_three_years, inclusion: { in: [true, false] }, on: :for_children_under_three
+  validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
+  validates :ph_min_value, :ph_max_value, presence: true, on: :ph_range
+  validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 },
+            allow_nil: true
+  validate :max_ph_is_greater_than_min_ph
 
   def as_indexed_json(*)
     as_json(
@@ -184,6 +192,12 @@ private
       mandatory_attributes('draft_complete')
     when 'notification_file_imported'
       mandatory_attributes('empty')
+    end
+  end
+
+  def max_ph_is_greater_than_min_ph
+    if ph_min_value.present? && ph_max_value.present? && ph_min_value > ph_max_value
+      errors.add :ph_range, "The minimum pH must be lower than the maximum pH"
     end
   end
 end

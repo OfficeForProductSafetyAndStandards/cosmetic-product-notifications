@@ -3,7 +3,6 @@ $govuk-assets-path: '~govuk-frontend/assets/';
 @import "~govuk-frontend/all";
 
 @import "remove-default-button-styling";
-@import "navbar";
 @import "autocomplete";
 @import "badge";
 @import "banner";
@@ -11,3 +10,4 @@ $govuk-assets-path: '~govuk-frontend/assets/';
 @import "search-box";
 @import "header";
 @import "text";
+@import "cookie-banner";

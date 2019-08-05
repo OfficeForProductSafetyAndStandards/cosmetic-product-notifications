@@ -202,17 +202,23 @@ private
     self.source = UserSource.new(user: User.current) if source.blank? && User.current
   end
 
+  def creator_id
+    self.source&.user_id
+  end
+
   def assign_to_current_user
     self.assignee = User.current if assignee.blank? && User.current
   end
 
   def send_confirmation_email
     if User.current
-      NotifyMailer.investigation_created(pretty_id,
-                                       User.current.name,
-                                       User.current.email,
-                                       title,
-                                       case_type).deliver_later
+      NotifyMailer.investigation_created(
+        pretty_id,
+        User.current.name,
+        User.current.email,
+        title,
+        case_type
+      ).deliver_later
     end
   end
 end

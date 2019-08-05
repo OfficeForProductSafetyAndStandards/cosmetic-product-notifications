@@ -1,34 +1,26 @@
 class NotifyMailer < GovukNotifyRails::Mailer
-  def send_responsible_person_verification_email(responsible_person_id, email_address, contact_person_name, responsible_person_name, user_name)
+  def send_contact_person_verification_email(contact_person_id, contact_person_name, contact_person_email, responsible_person_name, user_name)
+    EmailVerificationKey.where(contact_person_id: contact_person_id).delete_all
+
     key = EmailVerificationKey.create(
-      responsible_person_id: responsible_person_id
-)
+      contact_person_id: contact_person_id
+    )
 
     set_template('50072d05-d058-4a02-a239-0d73ef7291b2')
-    set_reference('Responsible person verification email')
+    set_reference('Contact person verification email')
 
     set_personalisation(
       user_name: user_name,
-      verification_link: responsible_person_email_verification_key_url(responsible_person_id, key.key),
+      verification_link: confirmation_url(key.key),
       contact_name: contact_person_name,
       responsible_person: responsible_person_name
     )
 
-    mail(to: email_address)
+    mail(to: contact_person_email)
     Sidekiq.logger.info "Contact person verification email sent"
   end
 
   def send_responsible_person_invite_email(responsible_person_id, responsible_person_name, invited_email_address, inviting_user_name)
-    PendingResponsiblePersonUser.where(
-      responsible_person_id: responsible_person_id,
-      email_address: invited_email_address
-    ).delete_all
-
-    PendingResponsiblePersonUser.create(
-      email_address: invited_email_address,
-      responsible_person_id: responsible_person_id
-)
-
     set_template('a473bca1-ff6d-4cee-88f6-83a2592727f4')
     set_reference('Invite user to join responsible person')
 

@@ -12,6 +12,9 @@ set -ex
 DOMAIN=opss-access.service.gov.uk
 if [[ $SPACE == "prod" ]]; then
     HOSTNAME=www
+elif [[ $SPACE == "research" ]]; then
+    HOSTNAME="keycloak-research"
+    DOMAIN=london.cloudapps.digital
 else
     HOSTNAME=$SPACE
 fi

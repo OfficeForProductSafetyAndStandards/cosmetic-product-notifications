@@ -13,5 +13,9 @@ FactoryBot.define do
     factory :registered_notification do
       state { :notification_complete }
     end
+
+    factory :pre_eu_exit_notification do
+      was_notified_before_eu_exit { true }
+    end
   end
 end

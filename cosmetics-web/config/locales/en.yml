@@ -37,6 +37,37 @@ en:
           notification_validation_error: "Try again or manually enter the production notification data"
           draft_notification_error: "The uploaded file is for a draft notification"
           unknown_error: "Try again or manually enter the production notification data"
+      notification:
+        ph_min_value: "pH"
+        ph_max_value: "pH"
+      cmr:
+        cas_number: "CAS number"
+        ec_number: "EC number"
+      non_standard_nanomaterial:
+        iupac_name: "IUPAC name"
+    errors:
+      models:
+        notification:
+          attributes:
+            components_are_mixed:
+              inclusion: "Select an option"
+            under_three_years:
+              inclusion: "Choose an option"
+        component:
+          attributes:
+            special_applicator:
+              blank: "Choose an option"
+            other_special_applicator:
+              blank: "Enter the type of applicator"
+        nano_element:
+          attributes:
+            purposes:
+              blank: "Choose an option"
+              inclusion: "%{value} is not a valid purpose"
+        trigger_question:
+          attributes:
+            applicable:
+              inclusion: "Select an option"
   errors:
     format: "%{message}"
     messages:

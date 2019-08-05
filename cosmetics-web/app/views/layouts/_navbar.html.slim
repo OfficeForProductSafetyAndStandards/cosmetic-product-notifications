@@ -4,6 +4,11 @@ nav.app-navigation.govuk-clearfix
       = link_to "Cosmetic products", responsible_person_notifications_path(@responsible_person),
               "data-topnav": "responsible_persons/notifications",
               class: "govuk-link--no-visited-state"
+    li[
+    class=(params[:controller] == "responsible_persons/non_standard_nanomaterials" && "app-navigation--current-page")]
+      = link_to "Nanomaterials", responsible_person_non_standard_nanomaterials_path(@responsible_person),
+              "data-topnav": "responsible_persons/non_standard_nanomaterials",
+              class: "govuk-link--no-visited-state"
     li[class=(params[:controller] == "responsible_persons" && "app-navigation--current-page")]
       = link_to "Responsible person details", responsible_person_path(@responsible_person),
               "data-topnav": "responsible_persons",

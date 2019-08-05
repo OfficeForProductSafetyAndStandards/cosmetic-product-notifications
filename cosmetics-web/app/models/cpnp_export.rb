@@ -8,9 +8,7 @@ class CpnpExport
   end
 
   def product_name
-    name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName[language='#{@language}']/name").first&.text
-    name = @xml_doc.xpath("//currentVersion/generalInfo/productNameList/productName/name").first&.text if name.blank?
-    name
+    get_attribute_with_language(current_version_product_names_node, ".//productName", "name")
   end
 
   def cpnp_reference
@@ -60,7 +58,7 @@ class CpnpExport
   end
 
   def shades
-    current_version_info_node.xpath(".//shade").first&.text
+    get_attribute_with_language(current_version_product_names_node, ".//productName", "shade")
   end
 
   def components
@@ -101,8 +99,9 @@ private
     nano_elements = nano_list_node&.xpath(".//nano")&.collect do |nano_element_node|
       nano_element(nano_element_node)
     end
+    # TODO: COSBETA-401: save multiple exposure_routes
     NanoMaterial.create(exposure_condition: exposure_condition(nano_list_node),
-                        exposure_route: exposure_route(nano_list_node),
+                        exposure_routes: Array(exposure_routes(nano_list_node)),
                         nano_elements: nano_elements)
   end
 
@@ -121,7 +120,7 @@ private
     get_exposure_condition(nano_list_node&.xpath(".//exposureCondition")&.first&.text.to_i)
   end
 
-  def exposure_route(nano_list_node)
+  def exposure_routes(nano_list_node)
     get_exposure_route(nano_list_node&.xpath(".//exposureRoute/exposureID")&.first&.text.to_i)
   end
 
@@ -131,8 +130,21 @@ private
         trigger_rules_element(question_element_node)
       end
       TriggerQuestion.create(question: trigger_rules_question(question_node),
+                             applicable: is_trigger_question_applicable(question_elements),
                              trigger_question_elements: question_elements)
     end
+  end
+
+  def is_trigger_question_applicable(question_elements)
+    question_elements.any? && applicable_inciname(question_elements) && applicable_ph(question_elements)
+  end
+
+  def applicable_inciname(question_elements)
+    !(question_elements.size == 1 && question_elements.first.inciname? && question_elements.first.answer == "NA")
+  end
+
+  def applicable_ph(question_elements)
+    !(question_elements.size == 1 && question_elements.first.ph? && question_elements.first.answer == "N")
   end
 
   def trigger_rules_element(question_element_node)
@@ -169,7 +181,7 @@ private
   end
 
   def component_name(component_node)
-    component_node.xpath(".//componentName[language='#{@language}']/name").first&.text
+    get_attribute_with_language(component_node, ".//componentName", "name")
   end
 
   # Because CPNP stores shades as just a plain text field, we are unable to
@@ -177,7 +189,8 @@ private
   # single element array containing the shades data, which should display as we
   # require.
   def component_shades(component_node)
-    [component_node.xpath(".//componentName[language='#{@language}']/shade").first&.text]
+    shades = get_attribute_with_language(component_node, ".//componentName", "shade")
+    [shades]
   end
 
   def sub_sub_category(component_node)
@@ -203,11 +216,15 @@ private
   end
 
   def current_version_component_lists_node
-    current_version_info_node.xpath("//currentVersion/componentList")
+    @xml_doc.xpath("//currentVersion/componentList")
   end
 
   def current_version_info_node
     @xml_doc.xpath("//currentVersion/generalInfo")
+  end
+
+  def current_version_product_names_node
+    current_version_info_node.xpath(".//productNameList")
   end
 
   def get_gov_uk_country_code(cpnp_country_code)
@@ -215,5 +232,11 @@ private
 
     country = all_countries.find { |c| c[1].include? cpnp_country_code }
     (country && country[1]) || cpnp_country_code
+  end
+
+  def get_attribute_with_language(node, path, attribute)
+    selected_attribute = node.xpath("#{path}[language='#{@language}']/#{attribute}").first&.text
+    selected_attribute = node.xpath("#{path}/#{attribute}").first&.text if selected_attribute.blank?
+    selected_attribute
   end
 end

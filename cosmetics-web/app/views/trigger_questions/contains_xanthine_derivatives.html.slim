@@ -1,0 +1,9 @@
+- content_for :page_title, "Contains xanthine derivatives"
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+= render "trigger_questions/substance_check", substance: "xanthine derivative",
+        question: "Does #{@component_name} contain more than 0.5% xanthine derivatives?",
+        hint: "Xanthine derivatives include caffeine, theophylline, theobromine, plant extracts containing xanthine" + \
+          " derivatives, for example, paulinia cupana (guarana) extracts or powders",
+        yes_option: "Yes, it contains more than 0.5% xanthine derivatives?"

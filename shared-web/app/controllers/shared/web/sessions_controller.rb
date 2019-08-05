@@ -24,7 +24,7 @@ module Shared
     private
 
       def request_and_store_token(auth_code, redirect_url)
-        self.keycloak_token = Shared::Web::KeycloakClient.instance.exchange_code_for_token(auth_code, get_session_url_with_redirect(redirect_url))
+        self.keycloak_token = Shared::Web::KeycloakClient.instance.exchange_code_for_token(auth_code, session_url_with_redirect(redirect_url))
       end
 
       def signin_error_message(error)
@@ -33,6 +33,10 @@ module Shared
 
       def auth_code
         params.require(:code)
+      end
+
+      def is_relative(url)
+        url =~ /^\/[^\/\\]/
       end
     end
   end

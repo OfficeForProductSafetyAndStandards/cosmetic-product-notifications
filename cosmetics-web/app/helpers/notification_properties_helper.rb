@@ -27,6 +27,10 @@ module NotificationPropertiesHelper
     UNIT_NAME[unit&.to_sym]
   end
 
+  def get_exposure_routes_names(exposure_routes)
+    exposure_routes&.map(&method(:get_exposure_route_name))&.join(', ')
+  end
+
   def get_exposure_route_name(exposure_route)
     EXPOSURE_ROUTE_NAME[exposure_route&.to_sym]
   end
@@ -492,10 +496,10 @@ module NotificationPropertiesHelper
   }.freeze
 
   SPECIAL_APPLICATOR = {
-      wipe_sponge_patch_pad: "Wipe/sponge/patch/pad",
-      encapsulated_products: "Encapsulated products",
-      pressurised_spray_container: "Pressurised spray container",
-      pressurised_container_non_spray_product: "Pressurised container - non spray product",
+      wipe_sponge_patch_pad: "Wipe, sponge, patch or pad",
+      encapsulated_products: "Encapsulated",
+      pressurised_spray_container: "Pressurised spray",
+      pressurised_container_non_spray_product: "Pressurised non-spray",
       other_special_applicator: "Other"
   }.freeze
 end

@@ -2,11 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "Responsible person dashboard", type: :system do
   let(:responsible_person_1) { create(:responsible_person_with_user) }
-  let(:responsible_person_2) { create(:responsible_person, email_address: "responsible_person_2@example.com") }
+  let(:responsible_person_2) { create(:responsible_person) }
   let(:user_1) { responsible_person_1.responsible_person_users.first.user }
   let(:user_2) { create(:user) }
 
   before do
+    configure_requests_for_submit_domain
     sign_in as_user: user_1
   end
 
@@ -90,6 +91,7 @@ RSpec.describe "Responsible person dashboard", type: :system do
     click_button "Dismiss all error messages"
     sign_out
     sign_in as_user: user_2
+    configure_requests_for_submit_domain
     visit responsible_person_notifications_path(responsible_person_1)
     assert_text "Errors (11)"
   end

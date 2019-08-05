@@ -24,6 +24,12 @@ table.govuk-table.check-your-answers-table#product-table
           | Imported from
         td.govuk-table__cell
           = product_import_country(notification)
+    - if notification.notified_post_eu_exit?
+      tr.govuk-table__row
+        th.govuk-table__header
+          | For children under 3
+        td.govuk-table__cell
+          = notification.under_three_years ? "Yes" : "No"
     tr.govuk-table__row
       th.govuk-table__header[scope="row"]
         | Number of components
@@ -34,21 +40,20 @@ table.govuk-table.check-your-answers-table#product-table
         | Shades
       td.govuk-table__cell
         = display_shades(notification)
-      tr.govuk-table__row
-        th.govuk-table__header[scope="row"]
-          | Label image
-        td.govuk-table__cell
-          - if notification.image_uploads.present?
-            ul.govuk-list
-              - notification.image_uploads.each do |image|
-                - if image.file_exists? && image.marked_as_safe?
-                  li = link_to image.filename, url_for(image.file)
-          - elsif allow_edits
-            = link_to "Add product images", \
-              new_responsible_person_notification_product_image_upload_path( \
-                notification.responsible_person, notification)
-          - else
-            | N/A
+    tr.govuk-table__row
+      th.govuk-table__header[scope="row"]
+        | Label image
+      td.govuk-table__cell
+        - if notification.image_uploads.present?
+          ul.govuk-list
+            - notification.image_uploads.each do |image|
+              - if image.file_exists? && image.marked_as_safe?
+                li = link_to image.filename, url_for(image.file)
+        - elsif allow_edits
+          = link_to "Add product images",
+            new_responsible_person_notification_product_image_upload_path(notification.responsible_person, notification)
+        - else
+          | N/A
     - if notification.cpnp_notification_date.present?
       tr.govuk-table__row
         th.govuk-table__header
@@ -60,11 +65,6 @@ table.govuk-table.check-your-answers-table#product-table
         | Still on the market
       td.govuk-table__cell
         = notification.still_on_the_market ? "Yes" : "No"
-    tr.govuk-table__row
-      th.govuk-table__header
-        | Intended for age 3 or under?
-      td.govuk-table__cell
-        = notification.under_three_years ? "Yes" : "No"
     tr.govuk-table__row
       th.govuk-table__header
         | Are the components mixed?
