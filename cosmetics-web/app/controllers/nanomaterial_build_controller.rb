@@ -1,14 +1,14 @@
 class NanomaterialBuildController < ApplicationController
   include Wicked::Wizard
 
-  steps :select_purposes, :confirm_restrictions, :confirm_usage, :unhappy_path
+  steps :select_purposes, :confirm_restrictions, :confirm_usage, :non_standard_nanomaterial_notified
 
   before_action :set_component
   before_action :set_nano_element
 
   def show
     if step == :confirm_restrictions && @nano_element.non_standard?
-      return redirect_to wizard_path(:unhappy_path)
+      return redirect_to wizard_path(:non_standard_nanomaterial_notified)
     end
 
     render_wizard
@@ -33,7 +33,7 @@ class NanomaterialBuildController < ApplicationController
     case step
     when :select_purposes
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :list_nanomaterials)
-    when :confirm_usage, :unhappy_path
+    when :confirm_usage, :non_standard_nanomaterial_notified
       wizard_path(:select_purposes)
     else
       super
@@ -85,7 +85,7 @@ private
     when "yes"
       render_wizard @nano_element
     when "no"
-      redirect_to wizard_path(:unhappy_path)
+      redirect_to wizard_path(:non_standard_nanomaterial_notified)
     else
       @nano_element.errors.add :confirm_restrictions, "Select an option"
       render step
@@ -98,7 +98,7 @@ private
     when "yes"
       redirect_to finish_wizard_path
     when "no"
-      redirect_to wizard_path(:unhappy_path)
+      redirect_to wizard_path(:non_standard_nanomaterial_notified)
     else
       @nano_element.errors.add :confirm_usage, "Select an option"
       render step
