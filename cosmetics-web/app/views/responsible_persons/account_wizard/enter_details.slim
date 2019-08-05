@@ -1,4 +1,4 @@
-- content_for :page_title, "Responsible person details"
+- content_for :page_title, "UK Responsible Person details"
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
@@ -11,7 +11,7 @@
       = render "form_components/govuk_error_summary", form: form
 
       h1.govuk-heading-xl
-        | UK responsible person details
+        | UK Responsible Person details
 
       = render "form_components/govuk_input", form: form, key: :name, label: { text: name_label }
 
