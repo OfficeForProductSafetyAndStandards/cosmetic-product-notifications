@@ -1,19 +1,23 @@
 - title = "Choose frame formulation"
-- question = "Choose frame formulation"
+- question = "Frame formulation name"
 
 - content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
 = form_with model: @component, url: wizard_path, method: :put do |form|
+  = render "form_components/govuk_error_summary", form: form
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = render "form_components/govuk_error_summary", form: form
+      h1.govuk-fieldset__heading.govuk-label--xl
+        = title
+
+      p.govuk-body
+        = link_to("Download frame formulations (PDF)", "#")
       = render "form_components/govuk_select", form: form, key: :frame_formulation,
-              show_all_values: true, is_autocomplete: true,
-              label: { text: question, classes: "govuk-label--xl", isPageHeading: true },
-              hint: { text: html_escape(link_to("Download frame formulations (PDF)", "#")) },
-              items: Component.frame_formulations.keys.map { |formulation_key| \
-                { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
-              }
-      = form.submit "Continue", class: "govuk-button"
+                show_all_values: true, is_autocomplete: true,
+                label: { text: question, classes: "govuk-label--m", isPageHeading: true },
+                items: Component.frame_formulations.keys.map { |formulation_key| \
+                  { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
+                }
+        = form.submit "Continue", class: "govuk-button"
