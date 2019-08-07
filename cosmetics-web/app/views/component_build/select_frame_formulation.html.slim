@@ -13,11 +13,12 @@
         = title
 
       p.govuk-body
-        = link_to("Download frame formulations (PDF)", "#")
+        ' Download list of
+        = link_to("predefined frame formulations (PDF)", "#")
       = render "form_components/govuk_select", form: form, key: :frame_formulation,
                 show_all_values: true, is_autocomplete: true,
                 label: { text: question, classes: "govuk-label--m", isPageHeading: true },
                 items: Component.frame_formulations.keys.map { |formulation_key| \
                   { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
                 }
-        = form.submit "Continue", class: "govuk-button"
+      = form.submit "Continue", class: "govuk-button"
