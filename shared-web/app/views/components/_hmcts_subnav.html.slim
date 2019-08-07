@@ -1,0 +1,6 @@
+nav.hmcts-sub-navigation
+  ul.hmcts-sub-navigation__list
+    - items.each do |item|
+      li.hmcts-sub-navigation__item
+        a.hmcts-sub-navigation__link aria-current=("page" if item[:active]) href=item[:href]
+          = item[:html]|| item[:text]
