@@ -9,25 +9,7 @@ main.govuk-main-wrapper role="main"
     .govuk-grid-column-two-thirds
       = form_with(model: @correspondence, local: true,
               url: investigation_phone_calls_path(@investigation), method: :post) do |form|
-        table.govuk-table
-          tbody.govuk-table__body
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Call with
-              td.govuk-table__cell = get_call_with_field @correspondence
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Contains consumer info
-              td.govuk-table__cell = @correspondence.has_consumer_info ? "Yes" : "No"
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Summary
-              td.govuk-table__cell = @correspondence.overview
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Date
-              td.govuk-table__cell = @correspondence.correspondence_date&.strftime("%d/%m/%Y")
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Content
-              td.govuk-table__cell = @correspondence.details
-            tr.govuk-table__row
-              th.govuk-table__header scope="row" Attachments
-              td.govuk-table__cell = @transcript_blob&.filename
+
+        = correspondence_summary_list(@correspondence, attachments: @transcript_blob&.filename)
         = form.submit "Continue", class: "govuk-button"
         = link_to("Edit details", wizard_path(:context), class: "govuk-link psd-block-link")
