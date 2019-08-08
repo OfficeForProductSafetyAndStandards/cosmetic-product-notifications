@@ -17,7 +17,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     choose @user.display_name, visible: false
     click_on "Continue"
     click_on "Confirm change"
-    assert_text "Assigned to\n#{@user.name}\n#{@user.organisation.name}"
+    assert_text "Assigned to #{@user.name}\n#{@user.organisation.name}"
     click_on "Activity"
     assert_text "Assigned to #{@user.display_name}"
   end
@@ -27,7 +27,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     choose @team.name, visible: false
     click_on "Continue"
     click_on "Confirm change"
-    assert_text "Assigned to\n#{@team.name}"
+    assert_text "Assigned to #{@team.name}"
     click_on "Activity"
     assert_text "Assigned to #{@team.name}"
   end
@@ -38,7 +38,7 @@ class InvestigationAssigneeTest < ApplicationSystemTestCase
     click_on "Continue"
     fill_in "Message to new assignee (optional)", with: "Test assignment comment"
     click_on "Confirm change"
-    assert_text "Assigned to\n#{@team.name}"
+    assert_text "Assigned to #{@team.name}"
     click_on "Activity"
     assert_text "Assigned to #{@team.name}"
     assert_text "Test assignment comment"
