@@ -3,11 +3,11 @@ module Investigations::DisplayTextHelper
     document.image? ? 'image' : 'document'
   end
   
-  def investigation_sub_nav
-    items = [{ href: investigation_url(@investigation), text: "Overview", active: @current == @investigation.pretty_id},
-      { href: investigation_products_url(@investigation), text: "Products (#{@investigation.products.count})", active: @current == "products"},
-      { href: investigation_businesses_url(@investigation), text: "Businesses (#{@investigation.businesses.count})", active: @current == "businesses"},
-      { href: investigation_documents_url(@investigation), text: "Attachments (#{@investigation.documents.count})", active: @current == "documents"},
+  def investigation_sub_nav(investigation)
+    items = [{ href: investigation_url(investigation), text: "Overview", active: @current == @investigation.pretty_id},
+      { href: investigation_products_url(investigation), text: "Products (#{@investigation.products.count})", active: @current == "products"},
+      { href: investigation_businesses_url(investigation), text: "Businesses (#{@investigation.businesses.count})", active: @current == "businesses"},
+      { href: investigation_documents_url(investigation), text: "Attachments (#{@investigation.documents.count})", active: @current == "documents"},
       { href: "/cases/#{@investigation.pretty_id}/activities", text: "Timeline", active: @current == "activities"}].compact
     render 'components/hmcts_subnav', title: "Summary", items: items
   end
