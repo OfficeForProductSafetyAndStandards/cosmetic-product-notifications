@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.add_dependency "aws-sdk-s3", "1.43.0"
   s.add_dependency "elasticsearch", "6.8.0"
   s.add_dependency "elasticsearch-model", "6.0.0"
-  s.add_dependency "elasticsearch-rails", "6.0.0"
+  s.add_dependency "elasticsearch-rails", "6.1.0"
   s.add_dependency "govuk_notify_rails", "2.1.0"
   s.add_dependency "keycloak", "2.4.1"
   s.add_dependency "lograge", "0.11.2"
