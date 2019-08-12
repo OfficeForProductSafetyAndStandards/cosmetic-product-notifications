@@ -117,7 +117,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-    click_on "Activity"
+    click_on "Timeline"
     assert_text "Enquiry logged: #{@enquiry.title}"
     assert_text @enquiry.description
 
@@ -151,7 +151,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     fill_enquiry_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-    click_on "Activity"
+    click_on "Timeline"
     assert_text "Attachment: #{attachment_filename}"
     assert_text "View attachment"
   end

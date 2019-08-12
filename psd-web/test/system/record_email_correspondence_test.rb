@@ -49,7 +49,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
 
     assert_text(attachment_filename)
     click_button "Continue"
-    click_on "Activity"
+    click_on "Timeline"
     assert_text("Email: #{attachment_filename}")
     assert_text("View email file")
 
@@ -69,7 +69,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
 
     assert_text(attachment_filename)
     click_button "Continue"
-    click_on "Activity"
+    click_on "Timeline"
     assert_text("Attached: #{attachment_filename}")
     assert_text("View email attachment")
 
@@ -141,7 +141,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as other_org_user
     visit investigation_path(@investigation)
 
-    click_on "Activity"
+    click_on "Timeline"
     within id: "activity" do
       assert_equal("Email added", first('h3').text)
       assert_equal("RESTRICTED ACCESS", first(".hmcts-badge").text)
@@ -161,7 +161,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as other_org_user
     visit investigation_path(@investigation)
 
-    click_on "Activity"
+    click_on "Timeline"
     within id: "activity" do
       assert_equal(@correspondence.overview, first('h3').text)
     end
@@ -184,7 +184,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as same_team_user
     visit investigation_path(@investigation)
 
-    click_on "Activity"
+    click_on "Timeline"
     within id: "activity" do
       assert_equal(@correspondence.overview, first('h3').text)
     end
@@ -202,7 +202,7 @@ class RecordEmailCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as same_org_user
     visit investigation_path(@investigation)
 
-    click_on "Activity"
+    click_on Timeline
     within id: "activity" do
       assert_equal(@correspondence.overview, first('h3').text)
     end

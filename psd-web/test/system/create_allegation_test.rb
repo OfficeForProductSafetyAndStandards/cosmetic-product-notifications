@@ -125,7 +125,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_allegation_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-    click_on "Activity"
+    click_on "Timeline"
 
     assert_text "Allegation logged: #{@allegation.title}"
     assert_text "Product category: #{@allegation.product_category}"
@@ -162,7 +162,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_allegation_details_and_continue
 
     assert_current_path(/cases\/\d+/)
-    click_on "Activity"
+    click_on "Timeline"
     assert_text "Attachment: #{attachment_filename}"
     assert_text "View attachment"
   end

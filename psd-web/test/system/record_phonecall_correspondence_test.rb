@@ -43,7 +43,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     click_button "Continue"
 
     assert_current_path(/cases\/\d+/)
-    click_on "Activity"
+    click_on "Timeline"
     assert_text "Attached: testImage.png"
     assert_text "View attachment"
   end
@@ -104,7 +104,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as other_org_user
     visit investigation_path(@investigation)
 
-    click_on "Activity"
+    click_on "Timeline"
     within id: "activity" do
       assert_equal("Phone call added", first('h3').text)
       assert_equal("RESTRICTED ACCESS", first(".hmcts-badge").text)
@@ -124,7 +124,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as other_org_user
     visit investigation_path(@investigation)
 
-    click_on "Activity"
+    click_on "Timeline"
     within id: "activity" do
       assert_equal(@correspondence.overview, first('h3').text)
     end
@@ -147,7 +147,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as same_team_user
     visit investigation_path(@investigation)
 
-    click_on "Activity"
+    click_on "Timeline"
     within id: "activity" do
       assert_equal(@correspondence.overview, first('h3').text)
     end
@@ -165,7 +165,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     sign_in_as same_org_user
     visit investigation_path(@investigation)
 
-    click_on "Activity"
+    click_on "Timeline"
     within id: "activity" do
       assert_equal(@correspondence.overview, first('h3').text)
     end

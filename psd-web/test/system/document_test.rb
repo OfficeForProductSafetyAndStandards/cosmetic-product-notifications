@@ -83,7 +83,7 @@ class DocumentTest < ApplicationSystemTestCase
     fill_in "Document title", with: "long document"
     fill_in "Description", with: "description"
     click_on "Save attachment"
-    click_on "Activity"
+    click_on "Timeline"
     assert_text "Document added"
   end
 
@@ -91,7 +91,7 @@ class DocumentTest < ApplicationSystemTestCase
     get_to_edit
     fill_in "Description", with: "This is a long document"
     click_on "Update attachment"
-    click_on "Activity"
+    click_on "Timeline"
     assert_text "Document details updated"
   end
 
@@ -99,7 +99,7 @@ class DocumentTest < ApplicationSystemTestCase
     get_to_attachments
     click_on "Remove document"
     click_on "Delete attachment"
-    click_on "Activity"
+    click_on "Timeline"
     assert_text "Document deleted"
   end
 

@@ -118,7 +118,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     click_on "View case"
 
     # assert that corrective actions saved
-    click_link "tab_activity"
+    click_on "Timeline"
     assert_text @corrective_action_one.summary
     assert_text @corrective_action_two.summary
 

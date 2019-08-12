@@ -30,7 +30,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
-    click_on "Activity"
+    click_on "Timeline"
     assert_text "Test requested: #{@test.product.name}"
     assert_text "Testing requested"
   end
@@ -103,7 +103,7 @@ class InvestigationTestRequestTest < ApplicationSystemTestCase
     click_on "Continue"
 
     assert_current_path(/cases\/\d+/)
-    click_on "Activity"
+    click_on "Timeline"
     assert_text "Attached: #{attachment_filename}"
     assert_text "View attachment"
   end
