@@ -105,7 +105,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     visit investigation_path(@investigation)
 
     click_on "Timeline"
-    within id: "activity" do
+    within "div.timeline" do
       assert_equal("Phone call added", first('h3').text)
       assert_equal("RESTRICTED ACCESS", first(".hmcts-badge").text)
     end
@@ -125,7 +125,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     visit investigation_path(@investigation)
 
     click_on "Timeline"
-    within id: "activity" do
+    within "div.timeline" do
       assert_equal(@correspondence.overview, first('h3').text)
     end
   end
@@ -148,7 +148,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     visit investigation_path(@investigation)
 
     click_on "Timeline"
-    within id: "activity" do
+    within "div.timeline" do
       assert_equal(@correspondence.overview, first('h3').text)
     end
   end
@@ -166,7 +166,7 @@ class RecordPhoneCallCorrespondenceTest < ApplicationSystemTestCase
     visit investigation_path(@investigation)
 
     click_on "Timeline"
-    within id: "activity" do
+    within "div.timeline" do
       assert_equal(@correspondence.overview, first('h3').text)
     end
   end
