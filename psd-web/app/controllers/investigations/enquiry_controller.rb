@@ -2,7 +2,7 @@ class Investigations::EnquiryController < Investigations::CreationFlowController
   set_attachment_names :attachment
   set_file_params_key :enquiry
 
-  steps :complainant, :complainant_details, :enquiry_details
+  steps :about, :complainant, :complainant_details, :enquiry_details
 
 private
 
@@ -11,7 +11,7 @@ private
   end
 
   def model_params
-    %i[user_title description]
+    %i[user_title description date_received other_date_received]
   end
 
   def set_investigation

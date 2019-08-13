@@ -36,6 +36,7 @@ class Investigations::CreationFlowController < ApplicationController
       if step == steps.last
         create
       else
+        step == :about ? assign_about_enquiry
         redirect_to next_wizard_path
       end
     else
@@ -92,9 +93,17 @@ private
   end
 
   def investigation_valid?
-    @complainant.validate(step)
-    @investigation.validate(step)
-    validate_blob_size(@file_blob, @investigation.errors, "File")
+    if step == :about
+      if investigation_params[:date_received].nil?
+        @investigation.errors.add(:type, "Enter date received")
+      elsif investigation_params[:date_received] == "other" && investigation_params[:other_date_received].blank?
+        @business.errors.add(:type, "Enter \"Other\" date received")
+      end
+    else
+      @complainant.validate(step)
+      @investigation.validate(step)
+      validate_blob_size(@file_blob, @investigation.errors, "File")
+    end
     @complainant.errors.empty? && @investigation.errors.empty?
   end
 
@@ -140,5 +149,9 @@ private
     get_attachment_metadata_params(:file).merge(
       title: @file_blob&.filename
     )
+  end
+
+  def assign_about_enquiry
+    session[:date_received] = investigation_params[:date_received] == "other" ? investigation_params[:other_date_received] : investigation_params[:date_received]
   end
 end
