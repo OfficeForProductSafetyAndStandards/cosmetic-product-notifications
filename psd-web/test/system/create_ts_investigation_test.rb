@@ -123,7 +123,7 @@ class CreateTsInvestigationTest < ApplicationSystemTestCase
     assert_text @corrective_action_two.summary
 
     # assert that product saved
-    click_link "tab_products"
+    click_on "Timeline"
     assert_text @product.name
     assert_text @product.product_code
     assert_text @product.product_type
