@@ -7,8 +7,9 @@ class Investigations::CreationFlowController < ApplicationController
   before_action :set_investigation, only: %i[show create update]
   before_action :set_attachment, only: %i[show create update]
   before_action :update_attachment, only: %i[create update]
+  # before_action :assign_about_enquiry, only: :update, if: -> { step == :about_enquiry}
   before_action :store_investigation, only: %i[update]
-  before_action :store_complainant, only: %i[update]
+  before_action :store_complainant, only: %i[update], if: -> { step != :about_enquiry}
 
   # GET /xxx/step
   def show
@@ -31,18 +32,30 @@ class Investigations::CreationFlowController < ApplicationController
   end
 
   # PATCH/PUT /xxx
+  # def update
+  #   if investigation_valid?
+  #     if step == steps.last
+  #       create
+  #     else
+  #       redirect_to next_wizard_path
+  #     end
+  #   else
+  #     render step
+  #   end
+  # end
+  # PATCH/PUT /xxx
   def update
     if investigation_valid?
       if step == steps.last
         create
       else
-        step == :about ? assign_about_enquiry
         redirect_to next_wizard_path
       end
     else
       render step
     end
   end
+
 
 private
 
@@ -89,21 +102,33 @@ private
   end
 
   def store_investigation
+    p "Store inv"
     session[model_key] = @investigation.attributes if @investigation.valid?(step)
   end
 
+  # def investigation_valid?
+  #   if step == :about_enquiry
+  #     p "inside"
+  #     if !session[:date_received].nil?
+  #       @investigation.errors.add(:date_received, "Enter date received")
+  #       @investigation.validate(step)
+  #     end
+  #   else
+  #     @complainant.validate(step) unless step == "about_enquiry"
+  #     @investigation.validate(step)
+  #     validate_blob_size(@file_blob, @investigation.errors, "File")
+  #   end
+  #   @complainant.errors.empty? &&
+  #   @investigation.errors.empty?
+  # end
+
   def investigation_valid?
-    if step == :about
-      if investigation_params[:date_received].nil?
-        @investigation.errors.add(:type, "Enter date received")
-      elsif investigation_params[:date_received] == "other" && investigation_params[:other_date_received].blank?
-        @business.errors.add(:type, "Enter \"Other\" date received")
-      end
-    else
-      @complainant.validate(step)
-      @investigation.validate(step)
-      validate_blob_size(@file_blob, @investigation.errors, "File")
-    end
+    p "step enquiry?"
+    p step != :about_enquiry
+    # if (step != :about_enquiry) then @complainant.validate(step) end
+    @investigation.validate(step)
+    validate_blob_size(@file_blob, @investigation.errors, "File")
+    p @complainant.errors
     @complainant.errors.empty? && @investigation.errors.empty?
   end
 
@@ -151,7 +176,7 @@ private
     )
   end
 
-  def assign_about_enquiry
-    session[:date_received] = investigation_params[:date_received] == "other" ? investigation_params[:other_date_received] : investigation_params[:date_received]
-  end
+  # def assign_about_enquiry
+  #   session[:date_received] = params[:date_received] == "other" ? investigation_params[:other_date] : investigation_params[:date_received]
+  # end
 end
