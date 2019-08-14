@@ -110,6 +110,10 @@ class Investigation < ApplicationRecord
     past_assignees.reject { |user| user.id == assignee.id }
   end
 
+  def allegation?
+    self.is_a?(Investigation::Allegation)
+  end
+
   # To be implemented by children
   def title; end
 
