@@ -48,6 +48,7 @@
       = render "table", search_results: @results, sorted_by: query_params[:sort_by]
       = will_paginate @investigations
       br
-      = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: export_params)
+      - if User.current.is_psd_admin?
+        = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: export_params)
     - else
       .govuk-heading-l[style="text-align:center"] No results

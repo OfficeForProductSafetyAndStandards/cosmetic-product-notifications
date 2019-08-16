@@ -96,6 +96,10 @@ class User < Shared::Web::User
     has_role? :psd_user
   end
 
+  def is_psd_admin?
+    has_role? :psd_admin
+  end
+
   def is_opss?
     has_role? :opss_user
   end

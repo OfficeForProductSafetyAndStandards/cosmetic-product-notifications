@@ -152,6 +152,7 @@ private
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin, anything).and_return(false)
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :psd_user, anything).and_return(true)
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user, anything).and_return(true) unless ts_user
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :psd_admin, anything).and_return(false)
     { id: id, email: "#{name}@example.com", name: "Test #{name}" }
   end
 
@@ -160,6 +161,7 @@ private
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :team_admin, anything).and_return(false)
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :psd_user, anything).and_return(false)
     allow(@keycloak_client_instance).to receive(:has_role?).with(id, :opss_user, anything).and_return(false)
+    allow(@keycloak_client_instance).to receive(:has_role?).with(id, :psd_admin, anything).and_return(false)
     { id: id, email: "#{name}@example.com", name: "Test #{name}" }
   end
 
