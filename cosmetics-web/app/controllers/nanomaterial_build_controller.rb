@@ -5,7 +5,7 @@ class NanomaterialBuildController < ApplicationController
         :confirm_restrictions,
         :confirm_usage,
         :non_standard_nanomaterial_notified,
-        :committee_on_toxicology_notified,
+        :when_products_containing_nanomaterial_can_be_placed_on_market,
         :notify_your_nanomaterial
 
   before_action :set_component
@@ -29,6 +29,8 @@ class NanomaterialBuildController < ApplicationController
       render_confirm_usage_step
     when :non_standard_nanomaterial_notified
       render_non_standard_nanomaterial_step
+    when :when_products_containing_nanomaterial_can_be_placed_on_market
+      redirect_to finish_wizard_path
     end
   end
 
@@ -42,7 +44,7 @@ class NanomaterialBuildController < ApplicationController
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :list_nanomaterials)
     when :confirm_usage, :non_standard_nanomaterial_notified
       wizard_path(:select_purposes)
-    when :committee_on_toxicology_notified, :notify_your_nanomaterial
+    when :when_products_containing_nanomaterial_can_be_placed_on_market, :notify_your_nanomaterial
       wizard_path(:non_standard_nanomaterial_notified)
     else
       super
@@ -119,7 +121,7 @@ private
 
     case confirm_toxicology_notified
     when "yes"
-      redirect_to wizard_path(:committee_on_toxicology_notified)
+      redirect_to wizard_path(:when_products_containing_nanomaterial_can_be_placed_on_market)
     when "no"
       redirect_to wizard_path(:notify_your_nanomaterial)
     when "not sure"
