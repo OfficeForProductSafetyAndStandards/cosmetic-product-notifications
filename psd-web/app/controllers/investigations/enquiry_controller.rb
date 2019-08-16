@@ -1,7 +1,6 @@
 class Investigations::EnquiryController < Investigations::CreationFlowController
   set_attachment_names :attachment
   set_file_params_key :enquiry
-
   steps :about_enquiry, :complainant, :complainant_details, :enquiry_details
 
 private
@@ -11,13 +10,16 @@ private
   end
 
   def model_params
-    %i[user_title description date_received]
+    %i[user_title description date_received received_type]
   end
 
   def set_investigation
-    p "Set inv"
     @investigation = Investigation::Enquiry.new(investigation_params)
     @investigation.set_dates_from_params(params[:enquiry])
+  end
+
+  def assign_type
+    session[:enquiry][:received_type] = params[:enquiry][:received_type] == "other" ? params[:enquiry][:other_received_type] : params[:enquiry][:recieved_type]
   end
 
   def success_message

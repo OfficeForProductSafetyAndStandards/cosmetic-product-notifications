@@ -32,23 +32,12 @@ class Investigations::CreationFlowController < ApplicationController
   end
 
   # PATCH/PUT /xxx
-  # def update
-  #   if investigation_valid?
-  #     if step == steps.last
-  #       create
-  #     else
-  #       redirect_to next_wizard_path
-  #     end
-  #   else
-  #     render step
-  #   end
-  # end
-  # PATCH/PUT /xxx
   def update
     if investigation_valid?
       if step == steps.last
         create
       else
+        assign_type if step == :about_enquiry
         redirect_to next_wizard_path
       end
     else
@@ -102,33 +91,20 @@ private
   end
 
   def store_investigation
-    p "Store inv"
     session[model_key] = @investigation.attributes if @investigation.valid?(step)
   end
 
-  # def investigation_valid?
-  #   if step == :about_enquiry
-  #     p "inside"
-  #     if !session[:date_received].nil?
-  #       @investigation.errors.add(:date_received, "Enter date received")
-  #       @investigation.validate(step)
-  #     end
-  #   else
-  #     @complainant.validate(step) unless step == "about_enquiry"
-  #     @investigation.validate(step)
-  #     validate_blob_size(@file_blob, @investigation.errors, "File")
-  #   end
-  #   @complainant.errors.empty? &&
-  #   @investigation.errors.empty?
-  # end
-
   def investigation_valid?
-    p "step enquiry?"
-    p step != :about_enquiry
-    # if (step != :about_enquiry) then @complainant.validate(step) end
-    @investigation.validate(step)
-    validate_blob_size(@file_blob, @investigation.errors, "File")
-    p @complainant.errors
+    if step == :about_enquiry
+      if params[:enquiry][:received_type].nil?
+        @investigation.errors.add(:received_type, "Select a type")
+      elsif params[:enquiry][:received_type] == "other" && params[:enquiry][:other_received_type].blank?
+        @investigation.errors.add(:received_type, "Enter a business type \"Other\"")
+      end
+    else
+      @investigation.validate(step)
+      validate_blob_size(@file_blob, @investigation.errors, "File")
+    end
     @complainant.errors.empty? && @investigation.errors.empty?
   end
 
@@ -175,8 +151,4 @@ private
       title: @file_blob&.filename
     )
   end
-
-  # def assign_about_enquiry
-  #   session[:date_received] = params[:date_received] == "other" ? investigation_params[:other_date] : investigation_params[:date_received]
-  # end
 end
