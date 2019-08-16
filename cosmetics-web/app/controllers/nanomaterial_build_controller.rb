@@ -1,7 +1,12 @@
 class NanomaterialBuildController < ApplicationController
   include Wicked::Wizard
 
-  steps :select_purposes, :confirm_restrictions, :confirm_usage, :non_standard_nanomaterial_notified
+  steps :select_purposes,
+        :confirm_restrictions,
+        :confirm_usage,
+        :non_standard_nanomaterial_notified,
+        :committee_on_toxicology_notified,
+        :committee_on_toxicology_not_notified
 
   before_action :set_component
   before_action :set_nano_element
@@ -22,6 +27,8 @@ class NanomaterialBuildController < ApplicationController
       render_confirm_restrictions_step
     when :confirm_usage
       render_confirm_usage_step
+    when :non_standard_nanomaterial_notified
+      render_non_standard_nanomaterial_step
     end
   end
 
@@ -35,6 +42,8 @@ class NanomaterialBuildController < ApplicationController
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :list_nanomaterials)
     when :confirm_usage, :non_standard_nanomaterial_notified
       wizard_path(:select_purposes)
+    when :committee_on_toxicology_notified, :committee_on_toxicology_not_notified
+      wizard_path(:non_standard_nanomaterial_notified)
     else
       super
     end
@@ -101,6 +110,22 @@ private
       redirect_to wizard_path(:non_standard_nanomaterial_notified)
     else
       @nano_element.errors.add :confirm_usage, "Select an option"
+      render step
+    end
+  end
+
+  def render_non_standard_nanomaterial_step
+    confirm_toxicology_notified = params.dig(:nano_element, :confirm_toxicology_notified)
+
+    case confirm_toxicology_notified
+    when "yes"
+      redirect_to wizard_path(:committee_on_toxicology_notified)
+    when "no"
+      redirect_to wizard_path(:committee_on_toxicology_not_notified)
+    when "not sure"
+      redirect_to wizard_path(:committee_on_toxicology_not_notified)
+    else
+      @nano_element.errors.add :confirm_toxicology_notified, "Select an option"
       render step
     end
   end

@@ -85,6 +85,10 @@ Rails.application.routes.draw do
 
   resource :dashboard, controller: :dashboard, only: %i[show]
 
+  namespace :guidance, as: "" do
+    get :how_to_notify_nanomaterials, path: "how-to-notify-nanomaterials"
+  end
+
   namespace :help, as: "" do
     get :terms_and_conditions, path: "terms-and-conditions"
     get :privacy_notice, path: "privacy-notice"
