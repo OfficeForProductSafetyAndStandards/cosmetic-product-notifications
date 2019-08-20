@@ -2,7 +2,93 @@ h2.govuk-heading-m Summary
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   .govuk-grid-column-two-thirds
     p = @investigation.description
-    p = link_to "Edit summary", edit_summary_investigation_path(@investigation), class: "govuk-link--no-visited-state"
+    p = link_to "Change summary", edit_summary_investigation_path(@investigation), class: "govuk-link--no-visited-state"
+
+    hr
+    h3.govuk-heading-s
+      | Products
+
+    = render 'components/govuk_summary_list',
+        borders: false,
+        rows: [ { key: { text: 'Product category' },
+                  value: { text: @investigation.product_category }, # TODO: include from products if blank \
+                  actions: [ { href: '#', text: 'Change', visually_hidden_text: 'product category' } ] },
+                { key: { text: 'Hazards' },
+                  value: { text: "#{@investigation.hazard_type}: #{@investigation.hazard_description}" },
+                  actions: [ { href: '#', text: 'Change', visually_hidden_text: 'hazards' } ] },
+                { key: { text: 'Compliance' },
+                  value: { text: @investigation.non_compliant_reason || 'No non-compliance reason given' },
+                  actions: [ { href: '#', text: 'Change', visually_hidden_text: 'compliance' } ] },
+                { key: { text: 'Product details' },
+                  value: { text: "#{@investigation.products.count} product(s)" },
+                  actions: [ { href: '#', text: 'View', visually_hidden_text: 'product details' } ] } ]
+
+    hr
+    h3.govuk-heading-s
+      | Businesses
+
+    = render 'components/govuk_summary_list',
+        borders: false,
+        rows: @investigation.investigation_businesses.map { |investigation_business| \
+          { key: { text: investigation_business.relationship.capitalize },
+            value: { text: investigation_business.business.trading_name },
+            actions: [ { href: business_path(investigation_business.business), text: 'View', visually_hidden_text: investigation_business.relationship } ] } }
+
+    hr
+    h3.govuk-heading-s
+      | Test results
+
+    = render 'components/govuk_summary_list',
+        borders: false,
+        rows: @investigation.tests.map { |test| \
+          { key: { text: test.type.capitalize },
+            value: { text: test.result },
+            actions: [ { href: investigation_test_path(@investigation, test), text: 'View', visually_hidden_text: test.type } ] } }
+
+    hr
+    h3.govuk-heading-s
+      | Files and attachments
+
+    = render 'components/govuk_summary_list',
+        borders: false,
+        rows: [ { key: { text: 'Images' },
+                  value: { text: image_attachment_count(@product_image_attachment_count, @other_image_attachment_count) },
+                  actions: [ { href: '#', text: 'View', visually_hidden_text: 'images' } ] },
+                { key: { text: 'Other attachments' },
+                  value: { text: I18n.t('investigations.other_attachment_count', count: @other_attachment_count) },
+                  actions: [ { href: '#', text: 'View', visually_hidden_text: 'other attachments' } ] } ]
+
+    hr
+    h3.govuk-heading-s
+      | Actions and correspondence
+
+    = render 'components/govuk_summary_list',
+        borders: false,
+        rows: [ { key: { text: 'Corrective actions' },
+                  value: { text: 'ccc' },
+                  actions: [ { href: '#', text: 'View', visually_hidden_text: 'corrective actions' } ] },
+                { key: { text: 'Correspondence' },
+                  value: { text: 'ccc' },
+                  actions: [ { href: '#', text: 'View', visually_hidden_text: 'correspondence' } ] },
+                { key: { text: 'Comments' },
+                  value: { text: 'ccc' },
+                  actions: [ { href: '#', text: 'View', visually_hidden_text: 'comments' } ] } ]
+
+    hr
+    h3.govuk-heading-s
+      | About the case
+
+    = render 'components/govuk_summary_list',
+        borders: false,
+        rows: [ ]
+
+    hr
+    h3.govuk-heading-s
+      | Reporter
+
+    = render 'components/govuk_summary_list',
+        borders: false,
+        rows: [ ]
 
 .govuk-grid-row[class="govuk-!-padding-bottom-6"]
   hr.govuk-section-break.govuk-section-break--s

@@ -5,6 +5,7 @@ class InvestigationsController < ApplicationController
   before_action :set_search_params, only: %i[index]
   before_action :set_investigation, only: %i[status visibility edit_summary created]
   before_action :set_investigation_with_associations, only: %i[show]
+  before_action :get_attachment_counts, only: %i[show]
   before_action :build_breadcrumbs, only: %i[show]
 
   # GET /cases
@@ -138,5 +139,22 @@ private
 
   def set_suggested_previous_assignees
     @suggested_previous_assignees = suggested_previous_assignees
+  end
+
+  def get_attachment_counts
+    other_attachments = @investigation.documents.map { |doc| doc.blob.content_type } +
+      @investigation.tests.map { |test| test.documents.map { |doc| doc.blob.content_type } }.flatten +
+      @investigation.correspondences.map { |corr| corr.documents.map { |doc| doc.blob.content_type } }.flatten +
+      @investigation.corrective_actions.map { |corr| corr.documents.map { |doc| doc.blob.content_type } }.flatten +
+      @investigation.businesses.map { |biz| biz.documents.map { |doc| doc.blob.content_type } }.flatten +
+      @investigation.businesses.map { |biz| biz.corrective_actions.map { |corr| corr.documents.map { |doc| doc.blob.content_type } } }.flatten +
+      @investigation.products.map { |prod| prod.corrective_actions.map { |corr| corr.documents.map { |doc| doc.blob.content_type } } }.flatten +
+      @investigation.products.map { |prod| prod.tests.map { |test| test.documents.map { |doc| doc.blob.content_type } } }.flatten
+
+    product_attachments = @investigation.products.map { |prod| prod.documents.map { |doc| doc.blob.content_type } }.flatten
+
+    @product_image_attachment_count = product_attachments.select { |content_type| content_type == 'image/jpeg' } .size
+    @other_image_attachment_count = other_attachments.select { |content_type| content_type == 'image/jpeg' } .size
+    @other_attachment_count = (product_attachments + other_attachments).size - (@product_image_attachment_count + @other_image_attachment_count)
   end
 end

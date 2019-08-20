@@ -174,4 +174,9 @@ module Investigations::DisplayTextHelper
 
     render 'components/govuk_summary_list', rows: rows
   end
+
+  def image_attachment_count(product_count, other_count)
+    [ t('investigations.product_image_attachment_count', count: @product_image_attachment_count),
+      t('investigations.other_image_attachment_count', count: @other_image_attachment_count) ].join(' ')
+  end
 end

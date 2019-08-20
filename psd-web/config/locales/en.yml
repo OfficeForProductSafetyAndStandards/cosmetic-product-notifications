@@ -114,4 +114,16 @@ en:
           attributes:
             correspondence_date:
               invalid: "Enter a real correspondence date"
-
+  investigations:
+    product_image_attachment_count:
+      zero: 'No product images.'
+      one: '%{count} product image.'
+      other: '%{count} product images.'
+    other_image_attachment_count:
+      zero: 'No other images.'
+      one: '%{count} other image.'
+      other: '%{count} other images.'
+    other_attachment_count:
+      zero: 'none'
+      one: '%{count} attachment.'
+      other: '%{count} attachments.'
