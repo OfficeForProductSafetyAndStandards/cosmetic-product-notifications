@@ -13,19 +13,14 @@ module Investigations::DisplayTextHelper
   end
 
   def investigation_sub_nav_tabs
-    partial = case @current
-              when "products"
-                "investigations/tabs/products"
-              when "businesses"
-                "investigations/tabs/businesses"
-              when "documents"
-                "investigations/tabs/attachments"
-              when "activities"
-                "investigations/tabs/activity"
-              else
-                "investigations/tabs/overview"
-              end
-    render partial
+    mapping = {
+      products: :products,
+      businesses: :businesses,
+      documents: :attachments,
+      activities: :activity
+    }
+  
+    render 'investigations/tabs/' + mapping.fetch(@current.to_sym, :overview).to_s
   end
 
   def get_displayable_highlights(highlights, investigation)
