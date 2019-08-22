@@ -48,7 +48,7 @@ cf scale $NEW_APP -f -m 2G
 cf start $NEW_APP
 
 # Decrease the assigned memory
-cf scale $NEW_APP -f -m 512M
+cf scale $NEW_APP -f -m 1G
 
 
 if [[ ! $APP_PREEXISTS ]]; then

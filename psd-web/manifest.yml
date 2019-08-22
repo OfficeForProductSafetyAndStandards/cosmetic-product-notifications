@@ -1,7 +1,7 @@
 ---
 applications:
 - name: psd-web
-  memory: 512M # Also see deploy.sh
+  memory: 1G # Also see deploy.sh
   instances: 1
   buildpacks:
     - ruby_buildpack
