@@ -1,6 +1,10 @@
 class AddMoreEnquiryDetailsToInvestigations < ActiveRecord::Migration[5.2]
   def change
-    add_column :investigations, :date_received, :date
-    add_column :investigations, :received_type, :string
+    safety_assured do
+      change_table :investigations, bulk: true do |t|
+        t.date :date_received
+        t.string :received_type
+      end
+    end
   end
 end
