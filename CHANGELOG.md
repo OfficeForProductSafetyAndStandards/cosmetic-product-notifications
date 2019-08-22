@@ -1,19 +1,22 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
-<!-- ### Product safety database -->
-- Filter by case type
-- - New service navigation
-- Welcome email
-- Product search
-- Cookie banner
-- Filter by creator
-
 <!-- ### Cosmetics -->
 
 ### Next release checklist
 - [ ] Add `HEALTH_USERNAME` and `HEALTH_PASSWORD` environment variables to the antivirus server
+
+
+## 2019-08-05
+<!-- ### Product safety database -->
+- Filter by case type
+- New service navigation
+- Welcome email
+- Product search
+- Cookie banner
+- Filter by creator
+- Search by case ID
+- 
 
 
 ## 2019-04-23

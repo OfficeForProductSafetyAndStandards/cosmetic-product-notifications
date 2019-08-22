@@ -101,6 +101,7 @@ enquiry:
   is_closed: false
   type: Investigation::Enquiry
   pretty_id: 1902-0014
+  received_type: Email
 
 project:
   description: Investigation project

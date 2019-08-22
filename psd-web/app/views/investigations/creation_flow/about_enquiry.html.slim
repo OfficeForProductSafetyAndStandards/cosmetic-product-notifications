@@ -8,7 +8,7 @@
       h1.govuk-heading-l
         = @page_title
       fieldset.govuk-fieldset
-        = other_date(form)
+        = date_received(form)
         p
           | Set to:
           '  #{link_to('Today', 'javascript:void(0)', id: :today)}
@@ -18,3 +18,5 @@
                 items: received_type(form)
       .govuk-form-group
         = form.submit "Continue", class: "govuk-button"
+javascript:
+  window.dateInput("enquiry_date_received-enquiry[date_received]");

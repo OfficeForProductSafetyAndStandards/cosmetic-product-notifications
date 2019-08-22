@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-function dateInput() {
+function dateInput(idPrefix) {
   $(document).ready(() => {
     var dateObj = new Date();
     var current_day = dateObj.getUTCDate();
@@ -9,19 +9,19 @@ function dateInput() {
     var today = document.getElementById("today");
     var yesterday = document.getElementById("yesterday");
     today.onclick = function() {
-      var day = document.getElementById('enquiry_date_received-enquiry[date_received][day]');
+      var day = document.getElementById(idPrefix + '[day]');
       day.value = current_day;
-      var month = document.getElementById('enquiry_date_received-enquiry[date_received][month]');
+      var month = document.getElementById(idPrefix + '[month]');
       month.value = current_month;
-      var year = document.getElementById('enquiry_date_received-enquiry[date_received][year]');
+      var year = document.getElementById(idPrefix + '[year]');
       year.value = current_year;
     }
     yesterday.onclick = function() {
-        var day = document.getElementById('enquiry_date_received-enquiry[date_received][day]');
+        var day = document.getElementById(idPrefix + '[day]');
         day.value = current_day - 1;
-        var month = document.getElementById('enquiry_date_received-enquiry[date_received][month]');
+        var month = document.getElementById(idPrefix + '[month]');
         month.value = current_month;
-        var year = document.getElementById('enquiry_date_received-enquiry[date_received][year]');
+        var year = document.getElementById(idPrefix + '[year]');
         year.value = current_year;
       }
   });
