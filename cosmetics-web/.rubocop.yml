@@ -3,6 +3,11 @@ require: rubocop-rspec
 inherit_gem:
   shared-web: .rubocop.yml
 
+AllCops:
+  Exclude:
+    - './node_modules/**/*'
+    - './db/schema.rb'
+
 RSpec/MultipleExpectations:
   Max: 2
 
