@@ -19,7 +19,7 @@ module Investigations::DisplayTextHelper
       documents: :attachments,
       activities: :activity
     }
-  
+
     render 'investigations/tabs/' + mapping.fetch(@current.to_sym, :overview).to_s
   end
 
