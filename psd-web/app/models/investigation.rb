@@ -110,6 +110,10 @@ class Investigation < ApplicationRecord
     past_assignees.reject { |user| user.id == assignee.id }
   end
 
+  def allegation?
+    self.is_a?(Investigation::Allegation)
+  end
+
   # To be implemented by children
   def title; end
 
@@ -200,6 +204,10 @@ private
 
   def set_source_to_current_user
     self.source = UserSource.new(user: User.current) if source.blank? && User.current
+  end
+
+  def creator_id
+    self.source&.user_id
   end
 
   def assign_to_current_user

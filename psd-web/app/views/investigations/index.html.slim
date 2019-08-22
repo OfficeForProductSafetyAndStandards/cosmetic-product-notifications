@@ -22,24 +22,17 @@
                   label: { text: "Keywords", classes: "govuk-label--s" }
           = form.submit "Search", name: nil, class: "search-box--submit"
         hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
-        - other_assignee = capture do
-          - entities = User.get_assignees(except: User.current) + Team.all
-          = render "form_components/govuk_select", key: :assigned_to_someone_else_id, form: form,
-                        items: entities.map { |e| { text: e.display_name, value: e.id } },
-                        label: { text: "Name" }, is_autocomplete: true
-        ruby:
-          assigned_to_items = [{ key: "assigned_to_me", value: "checked", unchecked_value: "unchecked", text: "Me" }]
-          teams_with_keys.each do |key, team, name|
-              assigned_to_items << { key: key, value: team.id, unchecked_value: "unchecked", text: name }
-          end
-          assigned_to_items << { key: "assigned_to_someone_else",
-                           value: "checked",
-                           unchecked_value: "unchecked",
-                           text: "Other person or team",
-                           conditional: { html: other_assignee } }
         = render "form_components/govuk_checkboxes", form: form, key: :assigned_to,
           fieldset: { legend: { text: "Assigned to", classes: "govuk-fieldset__legend--s" } },
-          items: assigned_to_items
+          items: assigned_to(form)
+        = render "form_components/govuk_checkboxes", form: form, key: :created_by,
+          fieldset: { legend: { text: "Created by", classes: "govuk-fieldset__legend--s" } },
+          items: created_by(form)
+        = render "form_components/govuk_checkboxes", form: form, key: :type,
+                 fieldset: { legend: { text: "Type", classes: "govuk-fieldset__legend--s" } },
+                 items: [{ key: "allegation", value: "checked", unchecked_value: "unchecked", text: "Allegation" },
+                 { key: "enquiry", value: "checked", unchecked_value: "unchecked", text: "Enquiry" },
+                 { key: "project", value: "checked", unchecked_value: "unchecked", text: "Project" }]
         = render "form_components/govuk_checkboxes", form: form, key: :status,
                  fieldset: { legend: { text: "Status", classes: "govuk-fieldset__legend--s" } },
                  items: [{ key: "status_open", value: "checked", unchecked_value: "unchecked", text: "Open" },
@@ -55,6 +48,7 @@
       = render "table", search_results: @results, sorted_by: query_params[:sort_by]
       = will_paginate @investigations
       br
-      = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: export_params)
+      - if User.current.is_psd_admin?
+        = link_to "Export as spreadsheet", investigations_path(format: :xlsx, params: export_params)
     - else
       .govuk-heading-l[style="text-align:center"] No results

@@ -89,3 +89,22 @@ private:
   product_category: Alarms
   is_private: true
   pretty_id: 1902-0012
+
+allegation:
+  description: Investigation allegation
+  is_closed: false
+  type: Investigation::Allegation
+  pretty_id: 1902-0013
+
+enquiry:
+  description: Investigation enquiry
+  is_closed: false
+  type: Investigation::Enquiry
+  pretty_id: 1902-0014
+
+project:
+  description: Investigation project
+  is_closed: false
+  type: Investigation::Project
+  pretty_id: 1902-0015
+
