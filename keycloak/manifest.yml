@@ -1,7 +1,7 @@
 ---
 applications:
 - name: keycloak
-  memory: 512M
+  memory: 1G
   instances: 1
   buildpacks:
     - https://github.com/kirmerzlikin/keycloak-buildpack
