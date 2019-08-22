@@ -1,3 +1,5 @@
+$black: #000000;
+
 .hmcts-sub-navigation {
   margin-bottom: govuk-spacing(7);
 }
@@ -62,7 +64,7 @@
 
 
 .hmcts-sub-navigation__link[aria-current="page"] {
-  color: govuk-colour(#000000);
+  color: govuk-colour($black);
   position: relative;
   text-decoration: none;
 
