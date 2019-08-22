@@ -7,7 +7,6 @@ class Investigations::CreationFlowController < ApplicationController
   before_action :set_investigation, only: %i[show create update]
   before_action :set_attachment, only: %i[show create update]
   before_action :update_attachment, only: %i[create update]
-  # before_action :assign_about_enquiry, only: :update, if: -> { step == :about_enquiry}
   before_action :store_investigation, only: %i[update]
   before_action :store_complainant, only: %i[update], if: -> { step != :about_enquiry }
 
@@ -44,7 +43,6 @@ class Investigations::CreationFlowController < ApplicationController
       render step
     end
   end
-
 
 private
 
