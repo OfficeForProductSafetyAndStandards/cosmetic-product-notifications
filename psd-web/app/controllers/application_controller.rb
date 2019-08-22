@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   before_action :has_accepted_declaration
   before_action :set_cache_headers
 
-  helper_method :nav_items, :secondary_nav_items
+  helper_method :nav_items, :secondary_nav_items, :previous_search_params
 
   def authorize_user
     raise Pundit::NotAuthorizedError unless User.current&.is_psd_user?
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     unless User.current.is_opss?
       items.push text: "Home", href: root_path, active: params[:controller] == "homepage"
     end
-    items.push text: "Cases", href: investigations_path, active: params[:controller].start_with?("investigations")
+    items.push text: "Cases", href: investigations_path(previous_search_params), active: params[:controller].start_with?("investigations")
     items.push text: "Businesses", href: businesses_path, active: params[:controller].start_with?("businesses")
     items.push text: "Products", href: products_path, active: params[:controller].start_with?("products")
     # In principle all our users belong to a team, but this saves crashes in case of a misconfiguration
@@ -45,6 +45,33 @@ class ApplicationController < ActionController::Base
       items.push text: text, href: path, active: params[:controller].start_with?("teams"), right: true
     end
     items
+  end
+
+  def previous_search_params
+    # No clear way to only replace search params, as they are seperate from each other and not easily identifiable.
+    # This list will have to be updated when new search filters are added.
+    if session[:previous_search_params].present?
+      s = session[:previous_search_params]
+      {
+        q: s[:q],
+        assigned_to_me: s[:assigned_to_me],
+        assigned_to_someone_else: s[:assigned_to_someone_else],
+        assigned_to_someone_else_id: s[:assigned_to_someone_else_id],
+        assigned_to_team_0: s[:assigned_to_team_0],
+        created_by_me: s[:created_by_me],
+        created_by_someone_else: s[:created_by_someone_else],
+        created_by_someone_else_id: s[:created_by_someone_else_id],
+        created_by_team_0: s[:created_by_team_0],
+        allegation: s[:allegation],
+        enquiry: s[:enquiry],
+        project: s[:project],
+        status_open: s[:status_open],
+        status_closed: s[:status_closed],
+        sort_by: s[:sort_by]
+      }
+    else
+      {}
+    end
   end
 
   def secondary_nav_items
