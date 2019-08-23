@@ -20,7 +20,7 @@ private
   end
 
   def assign_type
-    session[:enquiry][:received_type] = params[:enquiry][:received_type] == "other" ? params[:enquiry][:other_received_type] : params[:enquiry][:recieved_type]
+    session[:enquiry][:received_type] = params[:enquiry][:received_type] == "other" ? params[:enquiry][:other_received_type] : params[:enquiry][:received_type]
   end
 
   def success_message

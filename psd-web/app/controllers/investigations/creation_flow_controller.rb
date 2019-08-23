@@ -97,9 +97,10 @@ private
       if params[:enquiry][:received_type].nil?
         @investigation.errors.add(:received_type, "Select a type")
       elsif params[:enquiry][:received_type] == "other" && params[:enquiry][:other_received_type].blank?
-        @investigation.errors.add(:received_type, "Enter a business type \"Other\"")
+        @investigation.errors.add(:received_type, "Enter a received type \"Other\"")
       end
     else
+      @complainant.validate(step)
       @investigation.validate(step)
       validate_blob_size(@file_blob, @investigation.errors, "File")
     end
