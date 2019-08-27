@@ -13,7 +13,7 @@ function cookieBanner() {
     setCookie(365);
     document.getElementById('global-cookie-message').style.display = 'none';
   }
-  if (hideLinkButton){
+  if (hideLinkButton) {
     hideLinkButton.addEventListener('click', hideCookieBanner);
   }
 }
