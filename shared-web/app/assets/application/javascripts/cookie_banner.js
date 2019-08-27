@@ -13,7 +13,9 @@ function cookieBanner() {
     setCookie(365);
     document.getElementById('global-cookie-message').style.display = 'none';
   }
-  hideLinkButton.addEventListener('click', hideCookieBanner);
+  if (hideLinkButton){
+    hideLinkButton.addEventListener('click', hideCookieBanner);
+  }
 }
 $(document).ready(() => {
   cookieBanner();
