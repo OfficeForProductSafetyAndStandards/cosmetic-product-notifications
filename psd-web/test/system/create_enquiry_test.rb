@@ -11,7 +11,9 @@ class CreateEnquiryTest < ApplicationSystemTestCase
 
     @enquiry = Investigation::Enquiry.new(
       user_title: "Enquiry title",
-      description: "Enquiry description"
+      description: "Enquiry description",
+      date_received: "1-1-1",
+      received_type: "Email"
     )
 
     mock_out_keycloak_and_notify
@@ -33,29 +35,34 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     assert_text "New enquiry"
   end
 
-  test "first step should be complainant type" do
+  test "complainant type step should be complainant type" do
+    fill_about_enquiry_and_continue
     assert_text "New enquiry"
     assert_text "Who did the enquiry come from?"
   end
 
-  test "first step should require an option to be selected" do
+  test "complainant type step should require an option to be selected" do
+    fill_about_enquiry_and_continue
     click_on "Continue"
     assert_text "Select complainant type"
   end
 
-  test "first step should allow a complainant type to be selected" do
+  test "complainant type step should allow a complainant type to be selected" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     assert_no_text "There is a problem"
   end
 
-  test "second step should be complainant details" do
+  test "complainant details step should be complainant details" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
 
     assert_text "New enquiry"
     assert_text "What are their contact details?"
   end
 
-  test "second step should validate email address" do
+  test "complainant details should validate email address" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_in "complainant[email_address]", with: "invalid_email_address"
     click_on "Continue"
@@ -63,21 +70,24 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     assert_text "Enter an email address in the correct format, like name@example.com"
   end
 
-  test "second step should allow an empty email address" do
+  test "complainant details should allow an empty email address" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     click_on "Continue"
 
     assert_no_text "There is a problem"
   end
 
-  test "second step should allow a valid email address" do
+  test "complainant details should allow a valid email address" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
 
     assert_no_text "There is a problem"
   end
 
-  test "third step should be enquiry details" do
+  test "enquiry details should be enquiry details" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
 
@@ -85,7 +95,8 @@ class CreateEnquiryTest < ApplicationSystemTestCase
     assert_text "What is the enquiry?"
   end
 
-  test "third step should require an enquiry title and description" do
+  test "enquiry details should require an enquiry title and description" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
     click_on "Create enquiry"
@@ -95,6 +106,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
   end
 
   test "enquiry page should be shown when complete" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
     fill_enquiry_details_and_continue
@@ -104,6 +116,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
   end
 
   test "confirmation message should be shown when complete" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
     fill_enquiry_details_and_continue
@@ -112,6 +125,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
   end
 
   test "enquiry and complainant details should be logged as case activity" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_all_complainant_details_and_continue
     fill_enquiry_details_and_continue
@@ -130,7 +144,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
 
   test "related file is attached to the enquiry" do
     attachment_filename = "new_risk_assessment.txt"
-
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
     attach_file "enquiry[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
@@ -144,7 +158,7 @@ class CreateEnquiryTest < ApplicationSystemTestCase
 
   test "attachment details should be shown in activity entry" do
     attachment_filename = "new_risk_assessment.txt"
-
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
     attach_file "enquiry[attachment][file]", Rails.root + "test/fixtures/files/#{attachment_filename}"
@@ -157,12 +171,21 @@ class CreateEnquiryTest < ApplicationSystemTestCase
   end
 
   test "enquiry details should be shown in overview" do
+    fill_about_enquiry_and_continue
     select_complainant_type_and_continue
     fill_complainant_details_and_continue
     fill_enquiry_details_and_continue
 
     assert_no_text "Product category"
     assert_text @complainant.name
+  end
+
+  def fill_about_enquiry_and_continue
+    fill_in "enquiry[date_received][day]", with: "1"
+    fill_in "enquiry[date_received][month]", with: "1"
+    fill_in "enquiry[date_received][year]", with: "1"
+    choose("enquiry_received_type_email", visible: false, match: :first)
+    click_on "Continue"
   end
 
   def select_complainant_type_and_continue
