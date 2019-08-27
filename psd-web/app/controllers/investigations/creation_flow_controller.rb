@@ -8,7 +8,7 @@ class Investigations::CreationFlowController < ApplicationController
   before_action :set_attachment, only: %i[show create update]
   before_action :update_attachment, only: %i[create update]
   before_action :store_investigation, only: %i[update]
-  before_action :store_complainant, only: %i[update]
+  before_action :store_complainant, only: %i[update], if: -> { step != :about_enquiry }
 
   # GET /xxx/step
   def show
@@ -36,6 +36,7 @@ class Investigations::CreationFlowController < ApplicationController
       if step == steps.last
         create
       else
+        assign_type if step == :about_enquiry
         redirect_to next_wizard_path
       end
     else
@@ -92,9 +93,17 @@ private
   end
 
   def investigation_valid?
-    @complainant.validate(step)
-    @investigation.validate(step)
-    validate_blob_size(@file_blob, @investigation.errors, "File")
+    if step == :about_enquiry
+      if params[:enquiry][:received_type].nil?
+        @investigation.errors.add(:received_type, "Select a type")
+      elsif params[:enquiry][:received_type] == "other" && params[:enquiry][:other_received_type].blank?
+        @investigation.errors.add(:received_type, "Enter a received type \"Other\"")
+      end
+    else
+      @complainant.validate(step)
+      @investigation.validate(step)
+      validate_blob_size(@file_blob, @investigation.errors, "File")
+    end
     @complainant.errors.empty? && @investigation.errors.empty?
   end
 
