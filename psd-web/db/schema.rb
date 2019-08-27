@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_121614) do
+ActiveRecord::Schema.define(version: 2019_08_13_153818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_121614) do
     t.string "assignable_type"
     t.string "complainant_reference"
     t.datetime "created_at", null: false
+    t.date "date_received"
     t.text "description"
     t.text "hazard_description"
     t.string "hazard_type"
@@ -160,6 +161,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_121614) do
     t.text "non_compliant_reason"
     t.string "pretty_id"
     t.string "product_category"
+    t.string "received_type"
     t.string "type", default: "Investigation::Allegation"
     t.datetime "updated_at", null: false
     t.string "user_title"
