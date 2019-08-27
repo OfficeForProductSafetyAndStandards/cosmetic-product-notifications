@@ -147,3 +147,5 @@ $RECYCLE.BIN/
 .env
 
 psd-web/.ruby-gemset
+
+*.log
