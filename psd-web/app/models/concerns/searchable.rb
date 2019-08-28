@@ -17,8 +17,7 @@ module Searchable
       # This line makes sure elasticsearch index is recreated before we search
       # It fixes the issue of getting no results the first time case list page is loaded
       # It's only used in dev because it lowers performance and the issue it fixes should be an edge case in production
-      p Rails.env
-      __elasticsearch__.refresh_index! if Rails.env.development?
+      __elasticsearch__.refresh_index! if Rails.env.development? || Rails.env.test?
       __elasticsearch__.search(query.build_query(highlighted_fields, fuzzy_fields, exact_fields))
     end
 
