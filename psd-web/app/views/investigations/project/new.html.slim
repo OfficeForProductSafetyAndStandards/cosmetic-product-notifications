@@ -1,6 +1,6 @@
 - content_for :page_title, "New project"
 - content_for :after_header do
-  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
+  = link_to "Back to Cases", investigations_path(previous_search_params), class: "govuk-back-link"
 = form_with(model: @investigation, url: project_index_path, method: :post) do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
