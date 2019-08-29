@@ -13,6 +13,10 @@ class NanoElement < ApplicationRecord
       .reject(&:blank?).join(', ')
   end
 
+  def incomplete?
+    purposes.nil? || pruposes.empty?
+  end
+
   def non_standard?
     purposes.present? && purposes.include?("other")
   end
