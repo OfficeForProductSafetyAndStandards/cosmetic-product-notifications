@@ -1,6 +1,6 @@
 - content_for :page_title, "Create new"
 - content_for :after_header do
-  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
+  = link_to "Back to Cases", investigations_path(previous_search_params), class: "govuk-back-link"
 - if @nothing_selected
   = render "components/govuk_error_summary",
           titleText: "There is a problem",

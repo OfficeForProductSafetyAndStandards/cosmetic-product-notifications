@@ -3,18 +3,21 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 <!-- ### Product safety database -->
-- Filter by case type
-- - New service navigation
-- Welcome email
-- Product search
-- Cookie banner
-- Filter by creator
-
-<!-- ### Cosmetics -->
+- Persistent case filters in session
 
 ### Next release checklist
 - [ ] Add `HEALTH_USERNAME` and `HEALTH_PASSWORD` environment variables to the antivirus server
 
+## 2019-08-05
+### Product safety database
+- Filter by case type
+- Filter by creator
+- New service navigation
+- Welcome email
+- Product search
+- Cookie banner
+- Content fixes
+- Case ID can now be searched by using an exact match (e.g 1907-001)
 
 ## 2019-04-23
 ### Product safety database
