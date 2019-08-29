@@ -14,7 +14,7 @@ class NanoElement < ApplicationRecord
   end
 
   def incomplete?
-    purposes.nil? || pruposes.empty?
+    purposes.nil?
   end
 
   def non_standard?
