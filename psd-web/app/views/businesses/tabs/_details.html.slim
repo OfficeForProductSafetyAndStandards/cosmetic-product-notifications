@@ -1,31 +1,4 @@
 h2.govuk-heading-m Full detail
 = link_to "Edit details", edit_business_path(@business)
 
-table.govuk-table
-  tbody.govuk-table__body
-  br
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Trading name
-      td.govuk-table__cell
-        = @business.trading_name
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Legal name
-      td.govuk-table__cell
-        = @business.legal_name
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Company number
-      td.govuk-table__cell
-        = @business.company_number
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Registered office address
-      td.govuk-table__cell
-        = @business.primary_location&.summary
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Contact
-      td.govuk-table__cell
-        = @business.primary_contact&.summary
+= business_summary_list(@business)

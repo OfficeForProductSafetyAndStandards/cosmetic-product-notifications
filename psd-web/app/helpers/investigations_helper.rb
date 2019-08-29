@@ -6,6 +6,11 @@ module InvestigationsHelper
     result.paginate(page: params[:page], per_page: page_size)
   end
 
+  def set_search_params
+    session[:previous_search_params] = params
+    @search = SearchParams.new(query_params)
+  end
+
   def sorting_params
     case params[:sort_by]
     when "newest"
@@ -211,7 +216,7 @@ module InvestigationsHelper
         items: [
             {
                 text: "Cases",
-                href: investigations_path
+                href: investigations_path(previous_search_params)
             },
             {
                 text: @investigation.pretty_description
