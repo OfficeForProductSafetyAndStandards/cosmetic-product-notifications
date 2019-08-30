@@ -7,4 +7,3 @@ class DomainCheck
     !@domains.include?(request.host)
   end
 end
-
