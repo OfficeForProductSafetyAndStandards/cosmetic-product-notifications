@@ -87,6 +87,7 @@ Rails.application.routes.draw do
 
   namespace :guidance, as: "" do
     get :how_to_notify_nanomaterials, path: "how-to-notify-nanomaterials"
+    get :how_to_prepare_images_for_notification, path: "how-to-prepare-images-for-notification"
   end
 
   namespace :help, as: "" do
