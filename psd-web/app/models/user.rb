@@ -1,4 +1,6 @@
 class User < Shared::Web::User
+  include ActiveHashSafeLoadable
+
   has_many :activities, dependent: :nullify
   has_many :investigations, dependent: :nullify, as: :assignable
   has_many :user_sources, dependent: :delete
@@ -47,10 +49,12 @@ class User < Shared::Web::User
       # - however, checking this based on permissions would require a request per user
       # Some user object are missing their name when they have not finished their registration yet.
       # But we need to be able to show them on the teams page for example, so we ensure that the attribute is not nil
-      self.data = all_users.deep_dup # We want a copy of the data to modify freely, not mutating the cached version
+      users = all_users.deep_dup # We want a copy of the data to modify freely, not mutating the cached version
                       .map(&method(:populate_organisation))
                       .map(&method(:populate_name))
                       .reject { |user| user[:organisation_id].blank? }
+
+      self.safe_load(users, data_name: 'users')
     rescue StandardError => e
       Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
       self.data = nil
@@ -94,6 +98,10 @@ class User < Shared::Web::User
 
   def is_psd_user?
     has_role? :psd_user
+  end
+
+  def is_psd_admin?
+    has_role? :psd_admin
   end
 
   def is_opss?

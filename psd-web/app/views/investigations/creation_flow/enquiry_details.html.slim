@@ -1,29 +1,29 @@
 - content_for :page_title, @page_title
 - content_for :after_header do
-  = link_to "Back to Cases", investigations_path, class: "govuk-back-link"
+  = link_to "Back to Cases", investigations_path(previous_search_params), class: "govuk-back-link"
 
 = form_with model: @investigation, scope: :enquiry, local: true, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
       = render "form_components/govuk_error_summary", form: form
-      h1.govuk-heading-xl
+      h1.govuk-heading-l
         = @page_title
       fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--m
           | What is the enquiry?
         = render "form_components/govuk_textarea", key: :description, form: form, attributes: { maxlength: 10000 },
                 hint: { text: "Please give as much detail as possible" },
                 label: { text: "Enquiry description", classes: "govuk-visually-hidden" }
 
       fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--m
           | Please provide a title
         = render "form_components/govuk_input", key: :user_title, form: form, attributes: { maxlength: 100 },
                 label: { text: "Title", classes: "govuk-visually-hidden" },
                 hint: { text: "This will help other users identify this enquiry" }
 
       fieldset.govuk-fieldset
-        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--m
           | Are there any files or images related to the enquiry?
         .govuk-form-group class=("govuk-form-group--error" if file_validation_errors?(@investigation.errors))
           - if @file_blob.present?

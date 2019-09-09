@@ -1,0 +1,12 @@
+- title = "You cannot notify this product until you have notified #{@nano_element.inci_name}"
+
+- content_for :page_title, title
+- content_for :after_header do
+  = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      = title
+    p
+      | Read #{link_to("how to notify nanomaterials", how_to_notify_nanomaterials_path)}.

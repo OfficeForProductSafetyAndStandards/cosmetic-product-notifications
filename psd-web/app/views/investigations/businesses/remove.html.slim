@@ -7,5 +7,5 @@ h2.govuk-heading-m
   .govuk-grid-column-one-half
     = form_with(url: unlink_investigation_business_path(@investigation), method: :delete) do |form|
       h3.govuk-heading-s[class="govuk-!-margin-bottom-2"] Business details
-      = render "business_summary", business: @business
+      = business_summary_list @business
       = form.submit "Remove business", class: "govuk-button remove-button"

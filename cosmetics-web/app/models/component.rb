@@ -71,6 +71,10 @@ class Component < ApplicationRecord
     get_category_name(root_category)
   end
 
+  def nano_material_incomplete?
+    nano_material&.nano_elements_incomplete?
+  end
+
   def formulation_required?
     if range?
       !formulation_file.attached? && range_formulas&.empty?
