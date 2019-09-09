@@ -3,10 +3,6 @@ require 'constraints/domain_check'
 
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  constraints DomainCheck.new(ENV["SUBMIT_HOST"] || ENV["SEARCH_HOST"] || ENV["COSMETICS_HOST"]) do
-    root 'errors#internal_server_error'
-  end
-
   mount Shared::Web::Engine => '/', as: 'shared_engine'
 
   constraints DomainConstraint.new(ENV["SEARCH_HOST"] || ENV["COSMETICS_HOST"]) do
@@ -82,6 +78,11 @@ Rails.application.routes.draw do
         end
       end
     end
+  end
+
+  domains = "#{ENV['SUBMIT_HOST']}, #{ENV['SEARCH_HOST']}, #{ENV['COSMETICS_HOST']}"
+  constraints DomainCheck.new(domains) do
+    root 'errors#internal_server_error'
   end
 
   resource :declaration, controller: :declaration, only: %i[show] do
