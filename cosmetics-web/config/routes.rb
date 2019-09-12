@@ -1,4 +1,5 @@
 require 'constraints/domain_constraint'
+require 'constraints/domain_check'
 
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
@@ -79,6 +80,11 @@ Rails.application.routes.draw do
     end
   end
 
+  domains = "#{ENV['SUBMIT_HOST']}, #{ENV['SEARCH_HOST']}, #{ENV['COSMETICS_HOST']}"
+  constraints DomainCheck.new(domains) do
+    root 'errors#internal_server_error'
+  end
+
   resource :declaration, controller: :declaration, only: %i[show] do
     post :accept
   end
@@ -87,6 +93,7 @@ Rails.application.routes.draw do
 
   namespace :guidance, as: "" do
     get :how_to_notify_nanomaterials, path: "how-to-notify-nanomaterials"
+    get :how_to_prepare_images_for_notification, path: "how-to-prepare-images-for-notification"
   end
 
   namespace :help, as: "" do

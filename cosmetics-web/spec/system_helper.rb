@@ -4,6 +4,9 @@ require "selenium-webdriver"
 ENV["HTTP_HOST"] = "localhost"
 ENV["HTTP_PORT"] = "3003"
 
+ENV["SUBMIT_HOST"] = "localhost"
+ENV["SEARCH_HOST"] = "localhost"
+
 Capybara.server_host = ENV["HTTP_HOST"]
 Capybara.server_port = ENV["HTTP_PORT"]
 Capybara.app_host = "http://#{ENV['HTTP_HOST']}:#{ENV['HTTP_PORT']}"

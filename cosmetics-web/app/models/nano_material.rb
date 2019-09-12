@@ -12,6 +12,10 @@ class NanoMaterial < ApplicationRecord
     leave_on: "leave_on"
   }
 
+  def nano_elements_incomplete?
+    nano_elements.any?(&:incomplete?)
+  end
+
   def self.exposure_routes_options
     %i(dermal oral inhalation).freeze
   end
