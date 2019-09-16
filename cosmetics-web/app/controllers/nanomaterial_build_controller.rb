@@ -105,6 +105,8 @@ private
 
   def render_confirm_usage_step
     confirm_usage = params.dig(:nano_element, :confirm_usage)
+    @nano_element.update_with_context(nano_element_params, step)
+
     case confirm_usage
     when "yes"
       redirect_to finish_wizard_path
