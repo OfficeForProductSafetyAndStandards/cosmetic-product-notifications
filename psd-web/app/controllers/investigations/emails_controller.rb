@@ -61,6 +61,7 @@ private
     @correspondence.validate_email_file_and_content(@email_file_blob) if step == :content
     validate_blob_size(@email_file_blob, @correspondence.errors, "email file")
     validate_blob_size(@email_attachment_blob, @correspondence.errors, "email attachment")
+    Rails.logger.error "#{__method__}: correspondence has errors: #{@correspondence.errors.full_messages}" if @correspondence.errors.any?
     @correspondence.errors.empty?
   end
 

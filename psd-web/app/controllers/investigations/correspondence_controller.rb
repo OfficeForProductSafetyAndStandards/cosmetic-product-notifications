@@ -23,6 +23,7 @@ class Investigations::CorrespondenceController < ApplicationController
       audit_class.from(@correspondence, @investigation)
       redirect_to investigation_path @investigation, flash: { success: 'Correspondence was successfully recorded' }
     else
+      Rails.logger.error "Cannot create correspondence because investigation has errors: #{@investigation.errors.full_messages}" unless @investigation.valid?
       redirect_to investigation_path(@investigation), flash: { warning: "Correspondence could not be saved." }
     end
   end
