@@ -139,5 +139,24 @@ RSpec.describe NanomaterialBuildController, type: :controller do
         expect(assigns(:nano_element).errors[:confirm_usage]).to include("Select an option")
       end
     end
+
+    describe " at non_standard_nanomaterial_notified" do
+      let(:confirm_toxicology_notified) { params.merge(id: :non_standard_nanomaterial_notified) }
+
+      it "redirects to 'when_products_containing_nanomaterial_can_be_placed_on_market'" do
+        post(:update, params: confirm_toxicology_notified.merge(nano_element: { confirm_toxicology_notified: "yes" }))
+        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1 , :when_products_containing_nanomaterial_can_be_placed_on_market))
+      end
+
+      it "redirects to 'notify_your_nanomaterial'" do
+        post(:update, params: confirm_toxicology_notified.merge(nano_element: { confirm_toxicology_notified: "no" }))
+        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1 , :notify_your_nanomaterial))
+      end
+
+      it "redirects to 'notify_your_nanomaterial'" do
+        post(:update, params: confirm_toxicology_notified.merge(nano_element: { confirm_toxicology_notified: "not sure"}))
+        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1 , :notify_your_nanomaterial))
+      end
+    end
   end
 end

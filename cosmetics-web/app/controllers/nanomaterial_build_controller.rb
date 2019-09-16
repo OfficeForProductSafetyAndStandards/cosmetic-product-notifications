@@ -131,8 +131,6 @@ private
         @nano_element.errors.add :confirm_toxicology_notified, "Select an option"
         render step
       end
-    else
-      render step
     end
   end
 
