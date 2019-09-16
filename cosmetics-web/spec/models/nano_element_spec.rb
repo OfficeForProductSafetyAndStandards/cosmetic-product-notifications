@@ -41,4 +41,31 @@ RSpec.describe NanoElement, type: :model do
       expect(nano_element.non_standard?).to be false
     end
   end
+
+  describe "#incomplete?" do
+    context "non standard and nanomaterial notified incomplete" do
+      it "purposes is not set" do
+        nano_element.purposes = nil
+
+        expect(nano_element.incomplete?).to be(true)
+      end
+
+      it "purpose is empty" do
+        nano_element.purposes = []
+
+        expect(nano_element.incomplete?).to be(true)
+      end
+
+      it "has not confirmed toxicology has been notified" do
+        nano_element.purposes = ['other']
+        nano_element.confirm_toxicology_notified = nil
+
+        expect(nano_element.incomplete?).to be(true)
+      end
+    end
+
+    context "standard" do
+
+    end
+  end
 end
