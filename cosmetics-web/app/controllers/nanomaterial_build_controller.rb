@@ -121,18 +121,17 @@ private
   def render_non_standard_nanomaterial_step
     confirm_toxicology_notified = params.dig(:nano_element, :confirm_toxicology_notified)
 
-    if @nano_element.update_with_context(nano_element_params, step)
-      case confirm_toxicology_notified
-      when "yes"
-        redirect_to wizard_path(:when_products_containing_nanomaterial_can_be_placed_on_market)
-      when "no"
-        redirect_to wizard_path(:notify_your_nanomaterial)
-      when "not sure"
-        redirect_to wizard_path(:notify_your_nanomaterial)
-      else
-        @nano_element.errors.add :confirm_toxicology_notified, "Select an option"
-        render step
-      end
+    @nano_element.update_with_context(nano_element_params, step)
+    case confirm_toxicology_notified
+    when "yes"
+      redirect_to wizard_path(:when_products_containing_nanomaterial_can_be_placed_on_market)
+    when "no"
+      redirect_to wizard_path(:notify_your_nanomaterial)
+    when "not sure"
+      redirect_to wizard_path(:notify_your_nanomaterial)
+    else
+      @nano_element.errors.add :confirm_toxicology_notified, "Select an option"
+      render step
     end
   end
 
