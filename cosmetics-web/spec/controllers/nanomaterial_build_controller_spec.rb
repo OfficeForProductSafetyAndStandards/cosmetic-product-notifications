@@ -141,21 +141,37 @@ RSpec.describe NanomaterialBuildController, type: :controller do
     end
 
     describe " at non_standard_nanomaterial_notified" do
-      let(:confirm_toxicology_notified) { params.merge(id: :non_standard_nanomaterial_notified) }
+      context "answered yes" do
+        let(:confirm_toxicology_notified) do
+          params.merge(id: :non_standard_nanomaterial_notified, nano_element: { confirm_toxicology_notified: "yes" })
+        end
 
-      it "redirects to 'when_products_containing_nanomaterial_can_be_placed_on_market'" do
-        post(:update, params: confirm_toxicology_notified.merge(nano_element: { confirm_toxicology_notified: "yes" }))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1 , :when_products_containing_nanomaterial_can_be_placed_on_market))
+        it "redirects to 'when_products_containing_nanomaterial_can_be_placed_on_market'" do
+          post(:update, params: confirm_toxicology_notified)
+          expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :when_products_containing_nanomaterial_can_be_placed_on_market))
+        end
       end
 
-      it "redirects to 'notify_your_nanomaterial'" do
-        post(:update, params: confirm_toxicology_notified.merge(nano_element: { confirm_toxicology_notified: "no" }))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1 , :notify_your_nanomaterial))
+      context "answered no" do
+        let(:confirm_toxicology_notified) do
+          params.merge(id: :non_standard_nanomaterial_notified, nano_element: { confirm_toxicology_notified: "no" })
+        end
+
+        it "redirects to 'notify_your_nanomaterial'" do
+          post(:update, params: confirm_toxicology_notified)
+          expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :notify_your_nanomaterial))
+        end
       end
 
-      it "redirects to 'notify_your_nanomaterial'" do
-        post(:update, params: confirm_toxicology_notified.merge(nano_element: { confirm_toxicology_notified: "not sure"}))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1 , :notify_your_nanomaterial))
+      context "answered not sure" do
+        let(:confirm_toxicology_notified) do
+          params.merge(id: :non_standard_nanomaterial_notified, nano_element: { confirm_toxicology_notified: "not sure" })
+        end
+
+        it "redirects to to the same path as answering no" do
+          post(:update, params: confirm_toxicology_notified)
+          expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :notify_your_nanomaterial))
+        end
       end
     end
   end
