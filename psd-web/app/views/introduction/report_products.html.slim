@@ -5,9 +5,18 @@
 .flash-card
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
-      h1.govuk-heading-l It replaces the EU’s RAPEX and ICSMS systems
+      h1.govuk-heading-l The Product safety database replaces the EU’s RAPEX and ICSMS systems
+      p.govuk-body-l class="govuk-!-margin-bottom-3"
+        | You must use the database to tell OPSS immediately about corrective
+          actions that have been or will be taken because a product is:
+
+      ul.govuk-list.govuk-list--bullet.govuk-body-l
+        li unsafe (according to the General Product Safety Regulations 2005)
+        li poses a serious risk (as determined by a risk assessment)
+
       p.govuk-body-l
-        | Trading Standards officers must use this service to report ‘serious’ product safety issues to the
-          Office for Product Safety and Standards immediately.
+        | You should use the database to report products that do not comply with
+          relevant product safety legislation as soon as possible.
+
       = link_to "Continue", introduction_track_investigations_path,
               class: "govuk-button", role: "button", draggable: false
