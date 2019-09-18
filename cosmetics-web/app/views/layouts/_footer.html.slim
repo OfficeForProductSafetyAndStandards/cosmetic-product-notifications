@@ -1,5 +1,19 @@
 footer.govuk-footer[role="contentinfo"]
   .govuk-width-container
+    .govuk-footer__navigation
+      .govuk-footer__section
+        h2.govuk-footer__heading.govuk-heading-m
+          | Related sources
+        ul.govuk-footer__list.govuk-footer__list
+          li.govuk-footer__list-item
+            = link_to "How to notify nanomaterials", how_to_notify_nanomaterials_path,
+                    class: "govuk-footer__link"
+          li.govuk-footer__list-item
+            = link_to "How to prepare images for notification", how_to_prepare_images_for_notification_path,
+                    class: "govuk-footer__link"
+
+    hr.govuk-footer__section-break
+
     .govuk-footer__meta
       .govuk-footer__meta-item.govuk-footer__meta-item--grow
         ul.govuk-footer__inline-list
