@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file.
 
 Rails.application.configure do
-  config.lograge.enabled = false
+  config.lograge.enabled = true
 
   config.lograge.custom_payload do |_controller|
     extra_payload = {}
