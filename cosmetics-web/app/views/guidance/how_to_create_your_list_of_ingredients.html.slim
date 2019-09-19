@@ -1,0 +1,186 @@
+- title = "How to create your list of ingredients"
+
+- content_for :page_title, title
+- hint = capture do
+  h2.govuk-heading-s
+    | Glycols and glycol ethers
+
+  p class="govuk-!-margin-bottom-0"
+    | Above 1%
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Buteth-2 Acetate
+    li Butoxydiglycol
+    li Butoxyethanol
+    li Butoxyethyl Acetate
+    li Diethoxydiglycol
+    li Ethoxydiglycol
+    li Ethoxydiglycol Acetate
+    li Ethylene Glycol Only (INCI name: ‘Glycol’)
+    li Glycol Ethers (not Polymers)
+
+  p class="govuk-!-margin-bottom-0"
+    | Above 10%
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Dipropylene Glycol
+    li Dipropylene Glycol Dimethyl Ether
+    li Dipropylene Glycol Isobornyl Ether
+    li Methoxyisopropanol
+    li Methoxyisopropyl Acetate
+    li PPG-2 Methyl Ether
+    li PPG-2 Methyl Ether Acetate
+    li Propylene Glycol
+    li Propylene Glycol Butyl Ether
+
+  h2.govuk-heading-s
+    | Hydrocarbon solvents
+
+  p class="govuk-!-margin-bottom-0"
+  | Above 5%
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Cyclohexane
+    li Hydrogenated Didodecene
+    li Isopentane
+    li Pentane
+    li Toluene
+    li Turpentine
+
+  h2.govuk-heading-s
+    | Alcohols
+
+  p class="govuk-!-margin-bottom-0"
+    | Any amount of
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Ethanol
+    li Isopropanol
+
+  p class="govuk-!-margin-bottom-0"
+    | Above 1%
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Benzyl alcohol
+    li Furfuryl alcohol
+    li n-Butyl alcohol
+    li n-Propyl alcohol (INCI name: ‘propyl alcohol’)
+    li t-Butyl alcohol
+
+  p class="govuk-!-margin-bottom-0"
+    | Above 5%
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Hexyl alcohol
+
+  h2.govuk-heading-s
+    | Other ingredients
+
+  p class="govuk-!-margin-bottom-0"
+    | Any amount of
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Brucine Sulfate
+
+  p class="govuk-!-margin-bottom-0"
+    | More than 0.1%
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Butyrolactone
+    li Chloroplatinic Acid
+    li Copper Sulfate
+    li Dimethyltolylamine
+    li Methyl Acetate
+    li Potassium Chlorate
+    li Sodium Chlorate
+    li Triethyl Phosphate
+    li m-Cresol, o-Cresol, p-Cresol, Mixed Cresols
+
+  p class="govuk-!-margin-bottom-0"
+    | More than 0.2%
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Formaldehyde
+
+  p class="govuk-!-margin-bottom-0"
+    | More than 1%
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Benzyl Benzoate
+    li Butyl Acetate
+    li Ethyl Acetate
+    li Hydroxylamine HCL; Hydroxylamine Sulfate
+
+  p class="govuk-!-margin-bottom-0"
+    | Any ingredients classified as:
+
+  ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+    li Alkaline agents
+    li Anti dandruff agents
+    li Anti hair loss agents
+    li Anti pigmenting and depigmenting agents
+    li Essential oils, camphor, menthol or eucalyptol
+    li Cationic surfactants
+    li Chemical exfoliating agents
+    li Compounds releasing hydrogen peroxide
+    li Fluoride compounds
+    li Hydrogen peroxide
+    li Inorganic sodium salts
+    li Persulfates
+    li Propellants
+    li Reducing agents
+    li Straightening agents
+    li Vitamin A or its derivatives
+    li Xanthine derivatives
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      = title
+
+    p class="govuk-!-margin-bottom-1"
+      | If you notify using exact concentrations or concentration ranges,
+      ' you need to create a document which lists the cosmetic product’s ingredients:
+      ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+        li for every new notification
+        li where a product’s formulation has changed significantly
+
+    h2.govuk-heading-m
+      | Ingredients document
+
+    p class="govuk-!-margin-bottom-1"
+      | Use the International Nomenclature of Cosmetic Ingredients (INCI) name and its exact concentration as a
+      ' percentage weight for weight (% w/w).
+
+    p class="govuk-!-margin-bottom-1"
+      | The file type must be a PDF.
+
+    h3.govuk-heading-s
+      | Information for poison services
+
+    = render "govuk_details", summary: "Which ingredients do NPIS need to know about?", text: hint
+
+    p class="govuk-!-margin-bottom-1"
+      | After you’ve added ingredients of concern, list all other ingredients in decreasing order of concentration.
+
+    h3.govuk-heading-s
+      | Exact concentration
+
+    p
+      | List all the ingredients as exact quantities using % w/w.
+
+    h3.govuk-heading-s
+      | Concentration ranges
+
+    p class="govuk-!-margin-bottom-1"
+      | You must report (using % w/w) for the following ranges:
+
+    ul class="govuk-!-margin-top-0 govuk-list govuk-list--bullet"
+      li up to and including 0.1%
+      li above 0.1%, up to and including 1%
+      li above 1%, up to and including 5%
+      li above 5%, up to and including 10%
+      li above 10%, up to and including 25%
+      li above 25%, up to and including 50%
+      li above 50%, up to and including 75%
+      li above 75%, up to and including 100%
