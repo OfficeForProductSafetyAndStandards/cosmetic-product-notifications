@@ -18,7 +18,8 @@ class ComponentBuildController < ApplicationController
         :select_category,
         :select_formulation_type,
         :upload_formulation,
-        :select_frame_formulation
+        :select_frame_formulation,
+        :contains_poisonous_ingredients
 
   before_action :set_component
   before_action :set_nano_material
@@ -60,6 +61,8 @@ class ComponentBuildController < ApplicationController
       render_select_formulation_type
     when :upload_formulation
       render_upload_formulation
+    when :contains_poisonous_ingredients
+      update_contains_poisonous_ingredients
     else
       # Apply this since render_wizard(@component, context: :context) doesn't work as expected
       if @component.update_with_context(component_params, step)
@@ -138,6 +141,10 @@ private
         cmrs_attributes: %i[id name cas_number ec_number],
         shades: []
       )
+  end
+
+  def contains_poisonous_ingredients_params
+    params.require(:component).permit(:contains_poisonous_ingredients)
   end
 
   def nano_material_params
@@ -263,6 +270,20 @@ private
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
     end
     render_wizard @component
+  end
+
+  def update_contains_poisonous_ingredients
+
+    if params.fetch(:component, {})[:contains_poisonous_ingredients].present?
+      @component.update_attribute(:contains_poisonous_ingredients, params[:component][:contains_poisonous_ingredients])
+
+      redirect_to responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, :select_ph_range)
+    else
+      @component.errors.add :contains_poisonous_ingredients, "Select whether the product contains any poisonous ingredients"
+      render :contains_poisonous_ingredients
+    end
+
+
   end
 
   def render_upload_formulation
