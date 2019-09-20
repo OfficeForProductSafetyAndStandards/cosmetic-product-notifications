@@ -127,7 +127,7 @@ private
       redirect_to wizard_path(:when_products_containing_nanomaterial_can_be_placed_on_market)
     when "no"
       redirect_to wizard_path(:notify_your_nanomaterial)
-    when "not sure"
+    when "not_sure"
       redirect_to wizard_path(:notify_your_nanomaterial)
     else
       @nano_element.errors.add :confirm_toxicology_notified, "Select an option"
