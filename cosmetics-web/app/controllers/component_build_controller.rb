@@ -96,7 +96,6 @@ class ComponentBuildController < ApplicationController
   end
 
   def finish_wizard_path
-
     if @component.predefined?
       new_responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component)
     else
