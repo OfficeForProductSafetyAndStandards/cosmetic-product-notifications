@@ -170,22 +170,19 @@ RSpec.describe ComponentBuildController, type: :controller do
     end
 
     context "when selecting whether the component contains poisonous materials" do
+      it "saves and redirect to PH trigger question if you select an answer" do
+        post(:update, params: params.merge(id: :contains_poisonous_ingredients, component: { contains_poisonous_ingredients: 'true' }))
 
-      it "should save and redirect to PH trigger question if you select an answer" do
-        post(:update, params: params.merge(id: :contains_poisonous_ingredients, component: {contains_poisonous_ingredients: 'true'}))
-
-        expect(assigns(:component).contains_poisonous_ingredients).to eql(true)
+        expect(assigns(:component).contains_poisonous_ingredients).to be(true)
         expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :select_ph_range))
       end
 
-      it "should re-render the question with an error if you don’t select an answer" do
+      it "re-renders the question with an error if you don’t select an answer" do
         post(:update, params: params.merge(id: :contains_poisonous_ingredients))
 
-        expect(assigns(:component).contains_poisonous_ingredients).to be_nil
+        expect(response.status).to be(200)
         expect(assigns(:component).errors[:contains_poisonous_ingredients]).to include("Select whether the product contains any poisonous ingredients")
-        expect(response.status).to eql(200)
       end
-
     end
 
     context "when notified pre EU-exit" do

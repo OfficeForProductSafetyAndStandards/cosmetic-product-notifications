@@ -273,7 +273,6 @@ private
   end
 
   def update_contains_poisonous_ingredients
-
     if params.fetch(:component, {})[:contains_poisonous_ingredients].present?
       @component.update_attribute(:contains_poisonous_ingredients, params[:component][:contains_poisonous_ingredients])
 
@@ -282,8 +281,6 @@ private
       @component.errors.add :contains_poisonous_ingredients, "Select whether the product contains any poisonous ingredients"
       render :contains_poisonous_ingredients
     end
-
-
   end
 
   def render_upload_formulation
