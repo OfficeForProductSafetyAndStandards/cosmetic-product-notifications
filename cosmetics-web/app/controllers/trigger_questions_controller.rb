@@ -94,6 +94,9 @@ class TriggerQuestionsController < ApplicationController
   def previous_wizard_path
     if step == steps.first
       return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_frame_formulation)
+
+    elsif step == :select_ph_range && !@component.predefined?
+      return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
     end
 
     previous_step = get_previous_step
