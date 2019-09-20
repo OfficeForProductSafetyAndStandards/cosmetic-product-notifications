@@ -3,5 +3,18 @@
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-= render "trigger_questions/substance_check", substance: "ph_range",
-        question: title, yes_option: "Yes", option_values: %w(false true)
+
+= form_with model: @question, url: wizard_path, method: :put do |form|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "form_components/govuk_error_summary", form: form
+
+      = render "form_components/govuk_radios", form: form, key: :applicable,
+              fieldset: { legend: { text: title, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              hint: { text: local_assigns[:hint] },
+              items: [{ text: "The minimum pH is 3 or higher, and the maximum pH is 10 or lower", value: "between-3-and-10" },
+                { text: "The minimum pH is lower than 3", value: "lower-than-3" },
+                { text: "The maximum pH is higher than 10", value: "higher-than-10" },
+                { text: "It does not have a pH", value: "no-ph" }]
+
+      = form.submit "Continue", class: "govuk-button"
