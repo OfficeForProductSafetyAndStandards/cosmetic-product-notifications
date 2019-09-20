@@ -1,6 +1,7 @@
-- content_for :page_title, "pH between 3 and 10"
+- title = "What is the pH range of the product?"
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
 = render "trigger_questions/substance_check", substance: "ph_range",
-        question: "Is the pH between 3 and 10?", yes_option: "Yes", option_values: %w(false true)
+        question: title, yes_option: "Yes", option_values: %w(false true)
