@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_114626) do
+ActiveRecord::Schema.define(version: 2019_09_23_133032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 2019_09_19_114626) do
     t.string "acute_poisoning_info"
     t.string "other_special_applicator"
     t.boolean "contains_poisonous_ingredients"
+    t.float "minimum_ph"
+    t.float "maximum_ph"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
