@@ -158,7 +158,7 @@ RSpec.describe NanomaterialBuildController, type: :controller do
       end
 
       it "redirects to to the same path as answering no" do
-        confirm_toxicology_notified = params.merge(id: :non_standard_nanomaterial_notified, nano_element: { confirm_toxicology_notified: "not sure" })
+        confirm_toxicology_notified = params.merge(id: :non_standard_nanomaterial_notified, nano_element: { confirm_toxicology_notified: "not_sure" })
 
         post(:update, params: confirm_toxicology_notified)
 
