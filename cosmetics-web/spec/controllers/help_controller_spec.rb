@@ -3,11 +3,6 @@ require 'rails_helper'
 RSpec.describe HelpController, type: :controller do
   describe "When not signed in" do
     describe "GET #terms_and_conditions" do
-      it "returns success status" do
-        get :terms_and_conditions
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the terms and conditions template" do
         get :terms_and_conditions
         expect(response).to render_template("help/terms_and_conditions")
@@ -15,11 +10,6 @@ RSpec.describe HelpController, type: :controller do
     end
 
     describe "GET #privacy_notice" do
-      it "returns success status" do
-        get :privacy_notice
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the privacy notice template" do
         get :privacy_notice
         expect(response).to render_template("help/privacy_notice")
@@ -39,11 +29,6 @@ RSpec.describe HelpController, type: :controller do
     end
 
     describe "GET #terms_and_conditions" do
-      it "returns success status" do
-        get :terms_and_conditions
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the terms and conditions template" do
         get :terms_and_conditions
         expect(response).to render_template("help/terms_and_conditions")
@@ -51,11 +36,6 @@ RSpec.describe HelpController, type: :controller do
     end
 
     describe "GET #privacy_notice" do
-      it "returns success status" do
-        get :privacy_notice
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the privacy notice template" do
         get :privacy_notice
         expect(response).to render_template("help/privacy_notice")
@@ -73,11 +53,6 @@ RSpec.describe HelpController, type: :controller do
     end
 
     describe "GET #terms_and_conditions" do
-      it "returns success status" do
-        get :terms_and_conditions
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the terms and conditions template" do
         get :terms_and_conditions
         expect(response).to render_template("help/terms_and_conditions")
@@ -85,11 +60,6 @@ RSpec.describe HelpController, type: :controller do
     end
 
     describe "GET #privacy_notice" do
-      it "returns success status" do
-        get :privacy_notice
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the privacy notice template" do
         get :privacy_notice
         expect(response).to render_template("help/privacy_notice")
@@ -107,11 +77,6 @@ RSpec.describe HelpController, type: :controller do
     end
 
     describe "GET #terms_and_conditions" do
-      it "returns success status" do
-        get :terms_and_conditions
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the terms and conditions template" do
         get :terms_and_conditions
         expect(response).to render_template("help/terms_and_conditions")
@@ -119,11 +84,6 @@ RSpec.describe HelpController, type: :controller do
     end
 
     describe "GET #privacy_notice" do
-      it "returns success status" do
-        get :privacy_notice
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the privacy notice template" do
         get :privacy_notice
         expect(response).to render_template("help/privacy_notice")
@@ -141,11 +101,6 @@ RSpec.describe HelpController, type: :controller do
     end
 
     describe "GET #terms_and_conditions" do
-      it "returns success status" do
-        get :terms_and_conditions
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the terms and conditions template" do
         get :terms_and_conditions
         expect(response).to render_template("help/terms_and_conditions")
@@ -153,11 +108,6 @@ RSpec.describe HelpController, type: :controller do
     end
 
     describe "GET #privacy_notice" do
-      it "returns success status" do
-        get :privacy_notice
-        expect(response).to have_http_status(:success)
-      end
-
       it "renders the privacy notice template" do
         get :privacy_notice
         expect(response).to render_template("help/privacy_notice")
