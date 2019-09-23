@@ -8,8 +8,8 @@ RSpec.describe Component, type: :model do
 
   describe "attributes" do
     subject(:component) { described_class.new }
-    it "has a contains_poisonous_ingredients attribute" do
-      is_expected.to have_attributes(contains_poisonous_ingredients: nil)
+    it "has a contains_poisonous_ingredients boolean" do
+      expect(component).to have_attributes(contains_poisonous_ingredients: nil)
     end
   end
 
