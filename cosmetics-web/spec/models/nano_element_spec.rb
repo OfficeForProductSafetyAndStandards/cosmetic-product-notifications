@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe NanoElement, type: :model do
-  let(:nano_element) { create(:nano_element) }
+  subject(:nano_element) { described_class.new }
+
+  it "stores whether toxicology has been notified" do
+    expect(nano_element).to respond_to(:confirm_toxicology_notified)
+  end
 
   describe "updating purposes" do
     it "allows multiple purposes to be specified" do

@@ -1,5 +1,13 @@
-- content_for :page_title, "There is a problem with the service"
+- title = "Sorry, there is a problem with the service"
+
+- content_for :page_title, title
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl Sorry, there is a problem with the service
-    p Try again later.
+    h1.govuk-heading-xl
+      = title
+
+    p
+      | The service is unavailable. Try again later.
+
+    p
+      | We have not saved your answers. When the service is available, you will have to start again.
