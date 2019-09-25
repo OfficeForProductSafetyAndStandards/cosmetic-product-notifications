@@ -16,6 +16,7 @@ gem "rubyzip", ">= 1.2.1"
 gem "slim-rails"
 gem "strong_migrations"
 gem "wicked"
+gem 'scout_apm'
 
 gem "shared-web", path: "./vendor/shared-web"
 
