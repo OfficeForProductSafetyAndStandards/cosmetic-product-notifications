@@ -57,7 +57,7 @@ if [[ ! $APP_PREEXISTS ]]; then
 fi
 
 # Run smoke tests before switching over to the new app
-if [[ $SPACE != "prod" ]]; then
+if [[ $SPACE != "prod" && $SPACE != "research" ]]; then
     echo "Running smoke tests."
     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     docker pull beisopss/opss-functional-tests
@@ -66,14 +66,15 @@ if [[ $SPACE != "prod" ]]; then
       -Dauth.username=${PSD_BASIC_AUTH_USERNAME} -Dauth.password=${PSD_BASIC_AUTH_PASSWORD} \
       -Daccount.ts.username=${TS_ACCOUNT_USERNAME} -Daccount.ts.password=${TS_ACCOUNT_PASSWORD} \
       -Daccount.opss.username=${OPSS_ACCOUNT_USERNAME} -Daccount.opss.password=${OPSS_ACCOUNT_PASSWORD}
-fi
-SMOKE_TEST_RESULT=$?
 
-if [[ $SMOKE_TEST_RESULT -ne 0 ]]; then
-    # Delete the temporary deployment and exit
-    echo "Smoke tests failed. Aborting deployment."
-    cf delete -f $NEW_APP
-    exit 1
+    SMOKE_TEST_RESULT=$?
+
+    if [[ $SMOKE_TEST_RESULT -ne 0 ]]; then
+        # Delete the temporary deployment and exit
+        echo "Smoke tests failed. Aborting deployment."
+        cf delete -f $NEW_APP
+        exit 1
+    fi
 fi
 
 # Unmap the temporary hostname from the new app
