@@ -13,10 +13,10 @@ gem "pundit"
 gem "redcarpet"
 gem 'redis-rails'
 gem "rubyzip", ">= 1.2.1"
+gem 'scout_apm'
 gem "slim-rails"
 gem "strong_migrations"
 gem "wicked"
-gem 'scout_apm'
 
 gem "shared-web", path: "./vendor/shared-web"
 
