@@ -95,10 +95,10 @@ class TriggerQuestionsController < ApplicationController
     if step == steps.first
       return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_frame_formulation)
 
-    elsif step == :select_ph_range 
+    elsif step == :select_ph_range
       if @component.predefined?
         return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
-      else 
+      else
         return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
       end
     end
