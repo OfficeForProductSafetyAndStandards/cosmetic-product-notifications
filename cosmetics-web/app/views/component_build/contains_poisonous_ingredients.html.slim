@@ -138,7 +138,7 @@
 
       = render "form_components/govuk_radios", form: form, key:   :contains_poisonous_ingredients,
               fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--m", isPageHeading: false } },
-              items: [{ text: "Yes", value: true },
-                      { text: "No", value: false }]
+              items: [{ text: "Yes", value: "true" },
+                      { text: "No", value: "false" }]
 
       = form.submit "Continue", class: "govuk-button"
