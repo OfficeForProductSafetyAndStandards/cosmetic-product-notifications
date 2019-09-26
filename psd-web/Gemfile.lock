@@ -337,6 +337,8 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    scout_apm (2.6.1)
+      parser
     scss_lint (0.58.0)
       rake (>= 0.9, < 13)
       sass (~> 3.5, >= 3.5.5)
@@ -446,6 +448,7 @@ DEPENDENCIES
   roo (~> 2.8.2)
   rspec-mocks
   rubyzip (>= 1.2.1)
+  scout_apm
   shared-web!
   shared-web-dev!
   slim-rails
