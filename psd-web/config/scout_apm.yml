@@ -4,7 +4,7 @@ common: &defaults
 
   # key: Your Organization key for Scout APM. Found on the settings screen.
   # - Default: none
-  # key: From env var SCOUT_KEY
+  key: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("psd-web-scout-env")["key"] %>
 
   # log_level: Verboseness of logs.
   # - Default: 'info'
