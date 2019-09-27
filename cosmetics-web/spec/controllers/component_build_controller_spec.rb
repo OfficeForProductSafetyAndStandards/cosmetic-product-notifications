@@ -169,6 +169,14 @@ RSpec.describe ComponentBuildController, type: :controller do
       expect(assigns(:component).cmrs.first.name).to eq(cmr_name)
     end
 
+    context "when selecting a frame formulation" do
+      it "saves and redirects to the 'poisonous ingredients' question if you select an answer" do
+        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: 'skin_care_cream_lotion_gel' }))
+
+        expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients))
+      end
+    end
+
     context "when selecting whether the component contains poisonous materials" do
       it "saves and redirect to PH trigger question if you select an answer" do
         post(:update, params: params.merge(id: :contains_poisonous_ingredients, component: { contains_poisonous_ingredients: 'true' }))
@@ -193,6 +201,12 @@ RSpec.describe ComponentBuildController, type: :controller do
       it "skips special applicator and CMRs questions and redirects to contains_nanomaterials if pre-eu-exit" do
         post(:update, params: params.merge(id: :add_physical_form, component: { physical_form: "loose powder" }))
         expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, pre_eu_exit_notification, component, :contains_nanomaterials))
+      end
+
+      it "skips contains poisonous ingredients question and redirects to PH question" do
+        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: 'skin_care_cream_lotion_gel' }))
+
+        expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, pre_eu_exit_notification, component, :select_ph_range))
       end
     end
   end
