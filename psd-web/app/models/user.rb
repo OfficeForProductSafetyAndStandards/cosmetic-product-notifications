@@ -97,19 +97,25 @@ class User < Shared::Web::User
   end
 
   def is_psd_user?
-    has_role? :psd_user
+    roles.include?(:psd_user)
   end
 
   def is_psd_admin?
-    has_role? :psd_admin
+    roles.include?(:psd_admin)
   end
 
   def is_opss?
-    has_role? :opss_user
+    roles.include?(:opss_user)
   end
 
   def is_team_admin?
-    has_role? :team_admin
+    roles.include?(:team_admin)
+  end
+
+  def roles
+    @roles ||=
+      JSON(Shared::Web::KeycloakClient.instance.get_client_user_roles(id, access_token))
+        .map{|role| role["name"].to_sym }
   end
 
   def self.get_assignees(except: [])
