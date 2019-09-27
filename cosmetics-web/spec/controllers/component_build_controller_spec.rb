@@ -175,6 +175,13 @@ RSpec.describe ComponentBuildController, type: :controller do
 
         expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients))
       end
+
+      it "re-renders the question with an error if you don’t select a formulation" do
+        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: '' }))
+
+        expect(response.status).to be(200)
+        expect(assigns(:component).errors[:frame_formulation]).to include("Frame formulation can not be blank")
+      end
     end
 
     context "when selecting whether the component contains poisonous materials" do
