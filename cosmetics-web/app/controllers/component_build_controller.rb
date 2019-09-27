@@ -59,6 +59,8 @@ class ComponentBuildController < ApplicationController
       render_select_category_step
     when :select_formulation_type
       render_select_formulation_type
+    when :select_frame_formulation
+      update_frame_formulation
     when :upload_formulation
       render_upload_formulation
     when :contains_poisonous_ingredients
@@ -270,6 +272,19 @@ private
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
     end
     render_wizard @component
+  end
+
+  def update_frame_formulation
+    if @component.update_with_context(component_params, :select_frame_formulation)
+
+      if @component.notification.notified_post_eu_exit?
+        redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
+      else
+        redirect_to responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, :select_ph_range)
+      end
+    else
+      render :select_frame_formulation
+    end
   end
 
   def update_contains_poisonous_ingredients
