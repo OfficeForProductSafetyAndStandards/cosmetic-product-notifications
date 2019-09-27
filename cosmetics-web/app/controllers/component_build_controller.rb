@@ -275,7 +275,7 @@ private
   end
 
   def update_frame_formulation
-    if @component.update_with_context(component_params, :update_frame_formulation)
+    if @component.update_with_context(component_params, :select_frame_formulation)
 
       if @component.notification.notified_post_eu_exit?
         # Redirect to "Contains poisonous ingredients?" question
@@ -284,7 +284,7 @@ private
         redirect_to responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, :select_ph_range)
       end
     else
-      render :update_frame_formulation
+      render :select_frame_formulation
     end
   end
 
