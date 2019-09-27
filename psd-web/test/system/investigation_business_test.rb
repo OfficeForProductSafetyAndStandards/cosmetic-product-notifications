@@ -20,6 +20,7 @@ class InvestigationBusinessTest < ApplicationSystemTestCase
     click_on "Continue"
     fill_in_business_details
     click_on "Save business"
+    click_on "Businesses"
     assert_text @business.trading_name
   end
 
