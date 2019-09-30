@@ -1,12 +1,19 @@
 doctype html
-- content_for :start_of_head
-  - if Rails.env.production?
-    script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-1"
-    javascript:
+html.govuk-template.app-html-class[lang="en"]
+  head
+    / Google Analytics
+    - if Rails.env.production?
+      script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-1"
+      javascript:
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
         gtag('config', 'UA-126364208-1');
+
 = render "components/govuk_cookie_banner", path: help_privacy_notice_path(anchor: "cookies-policy")
 = content_for :page_title_suffix do
   |  - Product safety database - GOV.UK
