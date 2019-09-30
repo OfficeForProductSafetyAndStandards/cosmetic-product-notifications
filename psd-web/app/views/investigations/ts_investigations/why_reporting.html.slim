@@ -1,3 +1,5 @@
+- content_for :page_title, "Report an unsafe or non-compliant product"
+
 = form_with model: @investigation, url: wizard_path, method: :put, local: true do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds-from-desktop
@@ -7,8 +9,8 @@
           span.govuk-caption-l Report an unsafe or non-compliant product
           | Why are you reporting this product?
       - unsafe_details = capture do
-          #hazard-type-auto-complete-container
-            = render "form_components/govuk_select", choices: hazard_types, key: :hazard_type, form: form,
+        #hazard-type-auto-complete-container
+          = render "form_components/govuk_select", choices: hazard_types, key: :hazard_type, form: form,
                     show_all_values: true, hint: { text: "The primary danger the product presents" },
                     aria_describedby: "hazard-type-category-hint", label: { text: "Hazard type" },
                     is_autocomplete: true

@@ -49,7 +49,7 @@ private
     end
     if @team.users.include? user
       @new_user.errors.add(:email_address,
-                           "#{@new_user.email_address.capitalize} is already a member of #{@team.display_name}")
+                           "#{@new_user.email_address} is already a member of #{@team.display_name}")
       return
     end
     invite_user user
