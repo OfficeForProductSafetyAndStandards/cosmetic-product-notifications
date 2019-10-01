@@ -91,7 +91,7 @@ RSpec.describe NanoElement, type: :model do
     end
 
     context "when a standard nanomaterial notification is incomplete" do
-      before(:each) do
+      before do
         nano_element.purposes = %w(colorant)
       end
 
@@ -102,7 +102,7 @@ RSpec.describe NanoElement, type: :model do
       end
 
       context "when restrictions is set to 'no'" do
-        before(:each) do
+        before do
           nano_element.confirm_restrictions = "no"
         end
 
@@ -120,8 +120,11 @@ RSpec.describe NanoElement, type: :model do
       end
 
       context "when restrictions is set to 'yes'" do
-        it "has not confirmed usage" do
+        before do
           nano_element.confirm_restrictions = "yes"
+        end
+
+        it "has not confirmed usage" do
           nano_element.confirm_usage = nil
 
           expect(nano_element).to be_incomplete
