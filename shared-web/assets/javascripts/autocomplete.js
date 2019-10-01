@@ -10,7 +10,7 @@ function simpleAccessibleAutocomplete(id, autocompleteOptions) {
       defaultValue: '',
       selectElement: element,
       showAllValues: options.showAllValues,
-      preserveNullOptions: true,
+      preserveNullOptions: false,
     });
 
     // In the case that the user deletes the entry from the field, we want this to be reflected in
