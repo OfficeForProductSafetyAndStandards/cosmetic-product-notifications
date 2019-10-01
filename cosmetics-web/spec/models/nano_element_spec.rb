@@ -3,6 +3,24 @@ require 'rails_helper'
 RSpec.describe NanoElement, type: :model do
   subject(:nano_element) { described_class.new }
 
+  describe "#attributes" do
+    it "confirms purposes" do
+      expect(nano_element).to have_attributes(purposes: nil)
+    end
+
+    it "confirms restrictions" do
+      expect(nano_element).to have_attributes(confirm_restrictions: nil)
+    end
+
+    it "confirms usage" do
+      expect(nano_element).to have_attributes(confirm_usage: nil)
+    end
+
+    it "confirms toxicology has been notified" do
+      expect(nano_element).to have_attributes(confirm_toxicology_notified: nil)
+    end
+  end
+
   describe "updating purposes" do
     it "allows multiple purposes to be specified" do
       purposes = %w(preservative uv_filter)
