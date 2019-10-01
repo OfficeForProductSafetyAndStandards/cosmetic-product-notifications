@@ -165,9 +165,11 @@ module Investigations::DisplayTextHelper
   def report_summary_list(investigation)
     rows = [
       { key: { text: 'Date recorded' }, value: { text: investigation.created_at.strftime("%d/%m/%Y") } },
-      { key: { text: 'Date received' }, value: { text: investigation.date_received? ? investigation.date_received.strftime("%d/%m/%Y") : "Not provided" } },
-      { key: { text: 'Received by' }, value: { text: investigation.received_type? ? investigation.received_type.capitalize : "Not provided" } }
     ]
+    if investigation.enquiry?
+      rows << { key: { text: 'Date received' }, value: { text: investigation.date_received? ? investigation.date_received.strftime("%d/%m/%Y") : "Not provided" } }
+      rows << { key: { text: 'Received by' }, value: { text: investigation.received_type? ? investigation.received_type.capitalize : "Not provided" } }
+    end
 
     if investigation.allegation?
       rows << { key: { text: 'Product catgerory' }, value: { text: investigation.product_category } }
