@@ -1,8 +1,6 @@
 class NanoElement < ApplicationRecord
   belongs_to :nano_material
 
-  enum confirm_toxicology_notified: { yes: 'yes', no: 'no', not_sure: 'not sure' }
-
   def self.purposes
     %w(colorant preservative uv_filter other).freeze
   end
