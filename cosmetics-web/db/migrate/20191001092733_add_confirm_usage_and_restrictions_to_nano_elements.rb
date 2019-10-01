@@ -1,6 +1,8 @@
 class AddConfirmUsageAndRestrictionsToNanoElements < ActiveRecord::Migration[5.2]
   def change
-    add_column :nano_elements, :confirm_usage, :string
-    add_column :nano_elements, :confirm_restrictions, :string
+    change_table :nano_elements, bulk: true do |t|
+      t.string :confirm_usage
+      t.string :confirm_restrictions
+    end
   end
 end
