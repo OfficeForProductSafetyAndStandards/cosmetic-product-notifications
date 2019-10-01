@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_114626) do
+ActiveRecord::Schema.define(version: 2019_10_01_092733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,8 @@ ActiveRecord::Schema.define(version: 2019_09_19_114626) do
     t.bigint "nano_material_id"
     t.string "purposes", array: true
     t.string "confirm_toxicology_notified"
+    t.string "confirm_usage"
+    t.string "confirm_restrictions"
     t.index ["nano_material_id"], name: "index_nano_elements_on_nano_material_id"
   end
 
