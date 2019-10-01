@@ -26,7 +26,7 @@ class UpdateProductTest < ApplicationSystemTestCase
     updated_product = Product.new(
       name: "Updated product name",
       product_type: "White goods type",
-      category: "White goods",
+      category: "Electrical appliances and equipment",
       description: "Updated description",
       country_of_origin: "United States"
     )
