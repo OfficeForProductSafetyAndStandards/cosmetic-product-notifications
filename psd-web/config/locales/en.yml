@@ -114,4 +114,14 @@ en:
           attributes:
             correspondence_date:
               invalid: "Enter a real correspondence date"
+        investigation:
+          attributes:
+            hazard_type:
+              blank: "Enter a valid hazard type"
+            product_category:
+              blank: "Enter a valid product category"
+        product:
+          attributes:
+            product_category:
+              blank: "Enter a valid product category"
 
