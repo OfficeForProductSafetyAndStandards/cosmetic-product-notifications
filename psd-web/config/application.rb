@@ -30,7 +30,7 @@ module ProductSafetyDatabase
 
     # Set the request timeout in seconds. The default set by Slowpoke is 15 seconds.
     # Use a longer timeout on development environments to allow for asset compilation.
-    config.slowpoke.timeout = Rails.env.production? ? 15 : 180
+    # config.slowpoke.timeout = Rails.env.production? ? 15 : 180
 
     config.exceptions_app = self.routes
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
