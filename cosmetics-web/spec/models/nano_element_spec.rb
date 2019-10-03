@@ -3,8 +3,22 @@ require 'rails_helper'
 RSpec.describe NanoElement, type: :model do
   subject(:nano_element) { described_class.new }
 
-  it "stores whether toxicology has been notified" do
-    expect(nano_element).to respond_to(:confirm_toxicology_notified)
+  describe "#attributes" do
+    it "confirms purposes" do
+      expect(nano_element).to have_attributes(purposes: nil)
+    end
+
+    it "confirms restrictions" do
+      expect(nano_element).to have_attributes(confirm_restrictions: nil)
+    end
+
+    it "confirms usage" do
+      expect(nano_element).to have_attributes(confirm_usage: nil)
+    end
+
+    it "confirms toxicology has been notified" do
+      expect(nano_element).to have_attributes(confirm_toxicology_notified: nil)
+    end
   end
 
   describe "updating purposes" do
@@ -18,7 +32,7 @@ RSpec.describe NanoElement, type: :model do
 
     it "adds error if invalid purpose is specified" do
       invalid_purpose = "invalid_purpose"
-      nano_element.purposes = [invalid_purpose]
+      nano_element.purposes = %w(invalid_purpose)
 
       expect(nano_element.save(context: :select_purposes)).to be false
       expect(nano_element.errors[:purposes]).to include("#{invalid_purpose} is not a valid purpose")
@@ -36,13 +50,86 @@ RSpec.describe NanoElement, type: :model do
     it "is true when purposes includes 'other'" do
       nano_element.purposes = %w(colorant other)
 
-      expect(nano_element.non_standard?).to be true
+      expect(nano_element).to be_non_standard
     end
 
     it "is false when purposes do not include 'other'" do
-      expect(nano_element.non_standard?).to be false
       nano_element.purposes = %w(colorant preservative uv_filter)
-      expect(nano_element.non_standard?).to be false
+
+      expect(nano_element).not_to be_non_standard
+    end
+  end
+
+  describe "#standard?" do
+    it "is true when purposes includes 'other'" do
+      nano_element.purposes = %w(colorant)
+
+      expect(nano_element).to be_standard
+    end
+  end
+
+  describe "#incomplete?" do
+    context "when a nonstandard nanomaterial notification is incomplete" do
+      it "purposes is not set" do
+        nano_element.purposes = nil
+
+        expect(nano_element).to be_incomplete
+      end
+
+      it "purpose is empty" do
+        nano_element.purposes = []
+
+        expect(nano_element).to be_incomplete
+      end
+
+      it "has not confirmed that toxicology notified" do
+        nano_element.purposes = %w(other)
+        nano_element.confirm_toxicology_notified = nil
+
+        expect(nano_element).to be_incomplete
+      end
+    end
+
+    context "when a standard nanomaterial notification is incomplete" do
+      before do
+        nano_element.purposes = %w(colorant)
+      end
+
+      it "has not confirmed restrictions" do
+        nano_element.confirm_restrictions = nil
+
+        expect(nano_element).to be_incomplete
+      end
+
+      context "when restrictions is set to 'no'" do
+        before do
+          nano_element.confirm_restrictions = "no"
+        end
+
+        it "must have set confirm toxicology has been notified" do
+          nano_element.confirm_toxicology_notified = nil
+
+          expect(nano_element).to be_incomplete
+        end
+
+        it "is not incomplete when toxicology is notified" do
+          nano_element.confirm_toxicology_notified = 'yes'
+
+          expect(nano_element).not_to be_incomplete
+        end
+      end
+
+      context "when restrictions is set to 'yes'" do
+        before do
+          nano_element.confirm_restrictions = "yes"
+        end
+
+        it "has not confirmed usage" do
+          nano_element.confirm_usage = nil
+
+          expect(nano_element).to be_incomplete
+        end
+      end
     end
   end
 end
