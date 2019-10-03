@@ -10,7 +10,7 @@ class CreateAllegationTest < ApplicationSystemTestCase
     )
 
     @allegation = Investigation::Allegation.new(
-      hazard_type: "Blunt force",
+      hazard_type: "Injuries",
       product_category: "Electrical appliances and equipment",
       description: "Allegation description"
     )

@@ -4,7 +4,7 @@ one:
   description: Investigation one description
   is_closed: false
   type: Investigation::Allegation
-  hazard_type: Blunt force
+  hazard_type: Injuries
   hazard_description: investigation one hazard_description
   non_compliant_reason: investigation one non_compliant_reason
   complainant_reference: investigation one complainant_reference
