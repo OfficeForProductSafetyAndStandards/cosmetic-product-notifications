@@ -37,26 +37,19 @@ jobs:
       before_install:
         - mkdir -p ~/bundle-cache
         - mkdir -p ~/coverage-cache/cosmetics
-        - mkdir -p ~/coverage-cache/psd
       install:
         - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./infrastructure/ci/build-docker-images.sh
 
     - stage: Test
-      name: PSD Tests
-      script: COMPONENT=psd-web ./infrastructure/ci/test-if-changed.sh
-      env: &test_env
-        - COVERALLS_PARALLEL=true
-    - name: PSD Static Analysis
-      script: COMPONENT=psd-web ./infrastructure/ci/static-analysis-if-changed.sh
-    - name: Cosmetics Tests
+      name: Cosmetics Tests
       script: COMPONENT=cosmetics-web ./infrastructure/ci/test-if-changed.sh
       env: *test_env
     - name: Cosmetics Static Analysis
       script: COMPONENT=cosmetics-web ./infrastructure/ci/static-analysis-if-changed.sh
 
     - stage: Deploy to int
-      name: Deploy PSD web
-      script: COMPONENT=psd-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
+      name: Deploy Keycloak
+      script: COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
       env: &deploy_int_env
         - SPACE=int
         - BRANCH=${TRAVIS_BRANCH}
@@ -66,14 +59,6 @@ jobs:
         - secure: "JtBIjx+FhhKFaIGdg+HZGE62P9MFW4/Q2IMH6+zCwed2ag2tDVQNn1irrJnWhVMjVqH44OnslpbktkTPQEFy7t6/+DT1X0Je185/WqILgmSQHPiwVzqwptJJ6BnXcbY0uYanMxnVNiQW3yTxNgVXW7K5JaOzjrt4atnFcpywCDOQCdxmtX1JuI2H4Li2KadW5uOEYmSk3ErAcGSSFnhPQJ9pVX6lM6tfcs8YBsGKenBpphvQ75pE+LCcMiVQEyeWMtASO43mWJaDZwgRAZHGa/XevTFQQH6M07OrA7YGAtXigfqIw7HXCOB33oAbuURxvAC3PYTrrBpZm2rTid+vGtPFzN/eKm1iBWo009z/zY1PDqCuIJ2wzP0IToyYEBQbMqQ7hv9YFjdx+G0HeNq/0rKuHl7quLuNV49E19+9u7iJ35vSAXjWsLWHb5eGJuD5S0vE+sm58dYXDEtGS0sWjsKzJZijh0OaZKUHIY239IHryIUvrPRgGex0hBrGSEOBXkNcauJv/mk0QHvond6hRc9ukwBTZkFVqUaB90kFKCGJKuBFzi2E0FbIx5rxA70D2WKxwuecVPjnre96Tp56Ed0ZNU7zrVvqUu/Y2M4GlmDxB8MpxjfDO3blT1ePGNnlkT3Il2ljmroKWmhdLK2esWmC37dMCXyTgWs8bULKBp8=" # CF_PASSWORD
         - secure: DpvqpffMHn9zAkLVhNwdRYLvei8tM6vuLZrwrwJM+dpwo5umGyLP3xDOue/FNotN3nZWaKQvtS+q/P0pcwdlBSgujR2z5uiUlb0B+pKJuIuoyBn5e7f4NMvRS/r/VxcYXr88CFLgfTv9Ya1RO5giCvVUAYilroufKr1sZXM58lNv7oIo89SSlwILFCjIzJ2kZGRutpPROBnM/ZhR9Ks38tdTzy+/Re3u4cnC0xsGSq0ZoYqIWSorfPPLwc9rtDjOA9ls1/jFCPcS4Ip7pmANrb2k2UtcyYQTLagJIp6cqo1bTughEWFXYg+S7ejYGJ0c03sYC29Vq/EtXQqIarIcReDapFH5Bdczy+ENrBxBywLlCDkAYUMMcGNxv3w8cnyDKE4qcayBfCCrfPgcqlSHVaB/xTN7n2Hylxd44EifOTj9kPy/lZbGFsrJ/OEJALqoTft1EjJo0NwvGFlN0rKyNDpVRA2QVnePfBqmxejg6MXDuA8SfXAiTnb2OYD3qYjuQbhOqPj9mKVYTMPeuOhT5qd2F6ZHZhY8tP228IcM2xcUd6kZks109k1n1e6S/tdPEdCrIBdEOlIVY7KBMPrmATUxYrRqYwVuNCQML8ItL+I1yG5UO1XUs2+L7GjMU9MDASICmvuWRA5BFU+Uy8hCTCwKkQpBbR6W7cexc77sRHU= # COS_BASIC_AUTH_USERNAME
         - secure: e0WEZvgXD+dxklljq+MFgEVyeX8/KTi+WwrWuqRcOzDO3DweqkH2hg3dsBAuVpnfgQrueUdL1YKR+pnYxRN6wnalN2qAR+zEdgV3KmkUSMP2qGNXsdsrMQIAbjepelZwyaIzt9RmJPHcTtg2n9SZSk0dVk/5/DofdlnThM7tXgoGQiBm8AAY4SWkLollh3kIedNFE1+gwcM3pV1EfbsuYEslXMc7VV/JAFrOGMk+/nUCZLgVEGlS3QfJJfV9mBhgbtPiASfAXcVz2MTekXrQFeKQjhN+oNKx2AoRHzv2eiTpHqgtItS0jXaj3SnKgLCvMvMjP3W8NGIHE/Sege56571S5Dv5Ei7/kYFPYYzmUK0W9fIIWxraJ9Wp5CC+3kKXE1os10eMoZWpxZQEbCLQDKqCKHS/X6TbBs8uC72arOVjxQVLYrLbhO3chIe/aUawtBQ+1C1Ip0r371BpWRnPFpMVALZyBx+Ff1o+0YaG235lOF+9jq64v6lGKyk7EMh+sqbgsMKnjG6jM/cv1HQjAX1MnkDydMMqbMG1QXkrbI1lg1GW2Ux0BjQW3AetQxDNcxhLC8De7UdVdO0IDCDIBzfv2G47yLeRmh3q+YP0TV4OYqjvADXXEnP9Pe86Wwppeiuw1euPqzks4VXpe4NkgTTihky9J/qbMnTGLkPmFsQ= # COS_BASIC_AUTH_PASSWORD
-        - secure: AtLt0OhSuL4tO3T22c4efJrXMrAeZN36Wc2xC0PYlwFQrjOOLcPOxZoLQ5+23ViuEKq5ZpCUbnIVkvS5qsFwDW5R5aARBjbPfeO32GG9/cekvbwF6egKSD9F4liRlGlFIlo/pVb7Xvgy+CM2iLUc2EwteRFbaNCSq34uhu8Sposg94cJDaj4upLBI7hH0N6GPtcjvA+ZOdQaOe8/AJ6+D7TuoeJnOSgDzgQTtgtsnDl+feXpzzEoA+jruvQpGBIo3U3PjX31h98qqR3BFTjFzgjNlBly6H/RJkZrh0DAq0Sky3uqrsVVOZcPVRrUwHZl8QR8H8BHQvpLXiLEM+uyhZgnPRNsBddvTIVzFT0e4qYPITMhuGNAEgWVuD7fAh3yc8hPFALSuJod4h5Kp0leg+EJOra620iD/B2GT5yevGRAjBhCbSI3AgnEHvcFtYNV1CQ8372pUa7Yhhz513NzGYNreIJx8/Sfdt7jkD/B/AuMZP+lpu7cFITRU1Z/WMp053opN3bEhEBO0TXZCu9XMYk2sbYoi8SwgnA6YQxXmy+SH04zxzRSzB+gaIISJSJjbZ0LqGH0zHje/3TbkSZYcw0aQvnklA14iSNK4e/ExlrBGCnQjv45xu0OvVEHQkX/T5EN0/8WVeDHOLcGOPZLNRWozqQuFEaBopfH3gBC8Fk= # PSD_BASIC_AUTH_USERNAME
-        - secure: UY2cncCCvyyzEzlEuELifMiYaxBg67TuFwR9ClLN7DqH6nxTKNBjyeDNpqYokU7PPfzWnsfrV/P28a5QRKiIVp4R4nZKPP1kQ36I64y3FiVxDdkCOa/znzkuoyL9BI0vxIALHgqoD02/tuEuW3SqoQZtpyvFs8+nq/iWNWp/4/ewkaCCzwR6A6X3/Svz4iLoF4g0cQdp5hha+wVJYUTOGLjqNhPz6ND07GemnlXpTQ7HtfcvsvXwo3LNFBWF4z6HZIcXl8vbVNQl5KTu0QyHojaBbZSYH5IkPJRZ1SnoNFESVB3t10IQKr9X8SB9BPXsQKyXA5PZlW/gK1x8FR7mg04shmJ6Mthe/0Mvu2IToIsMrbV7s/LpmpU2aboy9Mkr9ZlvCZ4qzWLypLVdykVxEdIWeDgB9q13t9xUGiM8116HZD4p8NhbiBp9vBKjxmRbhKhQHRl97jeB0DQqIWSlL8Ckv/UtlxtCvdpWKLEsRgFIjUYFhdIb0YN+fODdu1BzXPdZUKA/cEEkPJ1+ztgWpmxVT/ebsaoOQ1OFLwCiBIyAwCx1POtBllNvpS78ygKavDnbp6EEx3sjw5mHpvu4a/SbOmqageQvJzuh7xoWrvRZ8IYMERP3fUdnUb3jRaecFBIYDV13sPsk/pFuYW0PJ1+6b7HT/5jie6qCuMLdViw= # PSD_BASIC_AUTH_PASSWORD
-    - name: Deploy PSD worker
-      script: COMPONENT=psd-worker ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_int_env
-    - name: Deploy Keycloak
-      script: COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_int_env
     - name: Deploy Cosmetics web
       script: COMPONENT=cosmetics-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
       env: *deploy_int_env
@@ -88,8 +73,8 @@ jobs:
       env: *deploy_int_env
 
     - stage: Deploy to staging
-      name: Deploy PSD web
-      script: COMPONENT=psd-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
+      name: Deploy Keycloak
+      script: COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
       env: &deploy_staging_env
         - SPACE=staging
         - BRANCH=${TRAVIS_BRANCH}
@@ -99,14 +84,6 @@ jobs:
         - secure: "MI25ifcjmL7vdGeoMCQ7cgBUjadXBkvQwlIMDQPYvsN5RGT2gclR8rkoJhMyf19bqfIopCFqh/dy1MXHJa9HVLjrtKbnPt+Zm+nH8Nooa20bVyprr5DOopKKE80Y+iTnh0kYcWN7+ogGr3JS/RyK9y4SDNDG9Uk8E2D5OzaMwyKCOL4sEMuvnm1fwc11/+KULCY6PBNaUjPgWQ079awUitNO1liBGmMrMoVvA3O72pqx1PHa2I1ciCd7LtjaLKN2cmstqd4Usilv53i/nXKD1KL/9uxF+37QQRE59Mrbp0TOWJkG9V9DoiJdn/SzXtzY8q95x6XVqCzpi9m9TH8LX2LpkpcZNI/ooDfOH3s/M8rSFx6MNNLWMSfSLqCHZRk8FLwMPJP0GBa62fErSreXdm+mNcMyS8T7djrqbQQ0NSPs1wDsNH9IqjLuEqWP3py/FHSFAXUUMbjaiR/P7oPirxdH+NqXw7/zW4mx4ciUKlbeZkij5CO6H9ZqiBZ6nlaT1hwo5Cq3owcZTMl7gfXnyzXtNBq3/1r5pnfhsYA2ZwAlS83aqmgvRVnwbSPUorR5PCpSHORXTPNG/hl5jwjWiCYMjjnQZNJtZX9Lyep7dwACc8/uVhBEw114HTZfUUt6gHvflRU95WdeDiiwyFXZB8bLQKO+H270saocmvkpdo4=" # CF_PASSWORD
         - secure: qbMypSFbNCuiJwlS2xYy6TaCiFkmU9s2kTddai+L19xn9eCuxYCKrCA7kbUSdAVQ0K5uFgeggU/OrA0Gy4qRNz8gtxazSpihhHrCqHNlcpkowrF/mNbXySVUZFIiz138/N+doFzOyFJoc6t13XbTZ6TCkff/QNzB+5vX1KGjApPWZkStpKkE2NrlKQCCLlUL/aUCW+w8zy7VIZNuozJtIywQAganppbN3eClPicuNI4+QILp3xuQ6ZNj0cvIZXkWYB0GYmrU9mDVRaIXvSfBjxRho+c91TDON/hbptu6j3Iiwv0pVFKVZ0o6R+1dSa9LmrtRr09cDuxam3GRG1V5i2GNCXOggHHuL3QaaLT7NBkDq5laMr8gLCJzmtAouthYBnZn3LQysbo1+YA+agX8oQdAk6hc2A773q5InWOVQ7IXusnIzrkce4J0NOKpvkB3sCsIutfiHWAP8Adk/stqJsjiziNTVr1GGsNMvckjsMa9/ZnaOCMU6FLuoGugdv8cRv3EfQYKUY8hjMAXzjUXzvQRNhxvIhjQr0eo+Qx+1Hg0f/IfQLIrN8azh/Dk9v3fOENqiPA/bxfAnYQH4Of/Ba8jI2dxRzXobEiEdXP8gquNR9u4nBMedtwyeu8Pl3/WjgTmekZuCpGNhWfrzvXQU9jzaXiXIl7lgAGfvvK4EVo= # COS_BASIC_AUTH_USERNAME
         - secure: rTNOPL8nr4UdF8VLbG2guXN5Pwiowp62v4p8/FNgcRwSRJrOCuF8sd4iJRe1I+O/9BMN/bVbbHFK8WHQ6KmIvBNxCQwqLITfNtYh/+a6BirieqoDyA+QUomBChixjaDQSe3KDyr2FTZhSkrBGwBRPUqC179R4fXdDllDw612S8DTG463or6IoRmc8cQ5T7Bk602Tlri+nGHaOcgSUSmRohOWGycOLWPUxxTKOBXoXGNgcOG2RbKJIm/hsaWLa7K0xJWpQiT70lKCQw9h+3pPGGQc+szwwmerxgFdOsrnH49hXiVmhouv8+Wcb4/BUlMDQJ7tWjwVWIXag/XtbpzDLUGItLKkZ/OZF6CjSx1POJgdFzZxbKqUadMmO/hsW6G7TSxYxyTNvlyFE+5fFuO/+zV/8M5jWxtsC4w9s+0/VtOJv9taolfhLmn70hAtzxZHM6jNi7BvIOCPl56Lw4v7cfXdvxtwWlkgkzvnqTAUR2fFYL6ZYPeuoRLyL0eZeaRFrbC2mbSfBV8x5+G8cEnAQKXJvqm5FKgiqVHyoiY4H9sHJXBEb1/zotGyf99eJe4RxuZaeZOA/kNeTpfuHFNyPaa8+yo25LTEuVUr1Ackq2jg+ra2+IuhtpUsmiFK7S5AObxz8OQr2+uzG/mEG0xE+9y8NAX56W+sNZcpjlWP+7U= # COS_BASIC_AUTH_PASSWORD
-        - secure: fMxdrVkJwKQrlszdq5lRMvUrmkYuHEJwIcmA8cWh8TeLak5m7t+EQgbEX/4DjpOclKWtd0/p80JaO36aVpkkMoTgQ/JW3q9vWpGaP2w4uLSfd6A+32ltgQCtpyO0dAeUXE1X5eY10oBwAsKydMZtMecE1dFPkBtcbY0U0no744Pf4yMOOa/V4iiD3RBB/ZRDSSGou2bkLdXDzgbjDLuugP4qmmnuS2IMzsrJpFtqh8aDGZd2vtCRiS3niKCshIUN/9/YX60lQi3b9BU1ZIS4Wz8LrYXPBhJBbRgZOYJ4qBoq0lUNdPkGKbtWt2qDGs6tJJ/LKqjLcAAa1ONgdhwy+q+C+5+fg1jHD8bN7hPcp+Smh5cuAg8oznHf+XdV9ZO+R3XudvGyehJxyNGRGAyJLbOlaK0eERQVDruNRFXoqerrnaI6v1LV4IZ1JQTdptGqDEegGIXk0sddgImovkVAkFwcNSq7crU/NbnCbCvy3kDXrd7nRIzso08V9I5Tcj13K2CjVhJE9Z1VNIZCx3ScUmnqS+1QvuJzJZEup2i7Z55CzXBxWJD9thIIden/4wvfiW6DpO+kEIbWMx30Jviri1jdfs+GtvUhapYw1oHEbMV9hwNRh+JjbI6T18UDwE3qHlDNqSjI/AWPt7oaMlMdySjkcoYRu2SHkKpivkFIeho= # PSD_BASIC_AUTH_USERNAME
-        - secure: fCxsuNP1V7vOTBd5qUUApHYFz9Tt5YbS0j4DeaqWITx+l2axK9dS2hRVOw50ozNH7z1HOINfh6HeT5jhC+QkCsfSfUUQW6anQ5Edk+7qOHQrEXw6yd4EeotRU1WZT9cRyYFHDDoBru0wY97oMdZwnUg9uZt7+ESQbhywPS/dZzjG1ldnoaZ0VwJ6GUZQQG1xdYwVuXgpCuNgcjrDit2Qa+TUJtnYiee5F+tmit5ZLlKhrRaCfKvPVDtv+J+KtYD2MyXwlgf6Xntp/5miEIg2gjyeaCK1LrTXjHgChyit5NzFu2lfY0VQFZX+H2c8RAH12Oqx2Bvri5cZJj8X+Q+sSJnsK5YuJjbP1He3rsqsvZsl/XWHBNp/PCCPNpQtWrClN4H0AlorboNhLkGpohZwC1/o/m6+GkvvFcLJ1WkSkjBMjyP0RCRjMQ2oZdfickAlisTTHRr6WUM6IXmx8AiEK5iLx9P47/ODNrUuh9BiJ6NMf3bhzsi1rsrz/d8Ycvwa/Hq8jL7Sz349iNvpil64VV9MQ9Earwjgp+Ned2dbpvhdwnAWm1HnZH7MyT/LoQBZntVWaegXJ7AKkA66/CMyhBRgBnwyLssh/TFhtL0q2LqAQ2zrhxj4OT+u5TrzewDi6kKhMTYmGr+paztVF/T7b6PTMhry1c1bDy8oX5bOIks= # PSD_BASIC_AUTH_PASSWORD
-    - name: Deploy PSD worker
-      script: COMPONENT=psd-worker ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_staging_env
-    - name: Deploy Keycloak
-      script: COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_staging_env
     - name: Deploy Cosmetics web
       script: COMPONENT=cosmetics-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
       env: *deploy_staging_env
@@ -121,8 +98,8 @@ jobs:
       env: *deploy_staging_env
 
     - stage: Deploy to production
-      name: Deploy PSD web
-      script: COMPONENT=psd-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
+      name: Deploy Keycloak
+      script: COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
       env: &deploy_prod_env
         - SPACE=prod
         - BRANCH=${TRAVIS_BRANCH}
@@ -130,12 +107,6 @@ jobs:
         - CF_STAGING_TIMEOUT=30 # Extend CF staging timeout to 30 minutes
         - secure: fXT1dyOFJiElJ1dLvPICDKhHFypSTa0+soCxxOuAcAMJK049h69GvkxDU9CKj471ZQwFs2PUYnGBu0r/J2hgAKDVIIN3ch3kJP7sEbi0ye8WXteIojIAelrcCuueKazhCORRPlJVOojXCMwtLpAyRi4qAev563jM+4CeivcY3W9xEmbZCMPuSsp/2cp5yVIQ0c/B4TgMG5T8tLLvPdUIHcHkxQURMJnFh10zVpSsUBwlCrVxAFNPLcaxVQyQ0xFEivw4HsYVrvfQ6Rh3i31PWAzupzb11ZolqQ1W43Z2jXCFAUjBZ48vMzsIsSMcws1kaPkN07R3Gtwuxurzp96AI68NoA+lf8xbzeCHsFkDO/rfmmVgXwi3nObXHUMInIazO4ZRwoHHoofl4YsmxPpYfkm1gtq15uh5/d8Xl7CWe7fU5xl0CPutpAOaPnoTcTzhMwaDyRVWzm0t4wzcBR2psKBi9c3kaRTFpz2K8K7xIuQ3ke2Smf+l6cZj0cgcb5OpdT79qLshgZPw3svsV8iS2akeq22Qg2qSPe2Mu8hhjAx0V1+nlnMuTeSOEa9s93QQR8jX2E4uqkWNo8zshKeCbMp591TnW8Hkzjzoi2m0sRDYZuRBbuIG0N2NqCnWspGamijGa8/zUbbFL1Cax9RmzIh24Hn6G1MyCa729ssdHZ0= # CF_USERNAME
         - secure: "U0kSbQkr+ztK/etHLaARNKwxOZug/9DCC28xx+x8DnONaZ+/zkJjmsQXOUNpgw0JM3gpCUA++lczKfbr8r/q8T35EPXDfCLUQhK5+Ht2da9SnmupNmF5ePd2tkWRmSdHZmgd6/620YxRto7zakTyAHlJ5fkmBDypMl/l2OycKtBEeLmr5XkdEUSdaooAZKb9zFy5Tgvqfk8BW96lIV2xcHDWJDxA0zQHX1ML6lPz3TZrwNtJMn7oFSN4DaifWaoYREIxVtOKGnhOOM5cd+Nc2R4np+wbFFslf4M2YdzBLCs2x0TrLpOKrWiRjfSukUZfI6mtWlLQUtfa15JHhz8KCPVrIOVNHYY+13VGm2bbKcg5Gl3wcHRPHcAtpdGrPs9lJhVhXWSvaHY/0NckfIQBBrA3b5o7tDx13ph0e8uPMhF5NkJPHg+XflAxFLVC74VLPsNLQBvn0Icjj/eCnhv4FEJxT9Xd6YM+N4AXHQ40gR9eW6j8XCgDTZH6+GvH2/UJlv8RWmpieFeYlcjI8xr4gCtkx55IbJuaUkM/466Jm0GhHL1k3S3EP8Vgy0wb5Ad37Va0IbrCvmJWuvUA5p9drr2ItJpEch8YGN03YJyukEZU+MI/EzeQFYRvwEwXTDQTYvOR0TVvlOyrfCI/evtn3yT2lseNvkab2SgG/9kaQWA=" # CF_PASSWORD
-    - name: Deploy PSD worker
-      script: COMPONENT=psd-worker ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_prod_env
-    - name: Deploy Keycloak
-      script: COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_prod_env
     - name: Deploy Cosmetics web
       script: COMPONENT=cosmetics-web ./infrastructure/ci/travis-wait.sh ./infrastructure/ci/deploy-if-changed.sh
       env: *deploy_prod_env
@@ -150,10 +121,7 @@ jobs:
       env: *deploy_prod_env
 
     - stage: Update code coverage
-      name: PSD coverage
-      script: COMPONENT=psd-web ./infrastructure/ci/update-code-coverage.sh
-      env: COVERALLS_PARALLEL=true
-    - name: Cosmetics coverage
+      name: Cosmetics coverage
       script: COMPONENT=cosmetics-web ./infrastructure/ci/update-code-coverage.sh
       env: COVERALLS_PARALLEL=true
 
@@ -163,7 +131,7 @@ notifications:
 env:
   global:
     - secure: DViGwoypFYMAckQ/8WxLdbSwRRu5BnhNHIdngaxZsXmzai3j5tHtFZ1QppTrsVUmp4I3PLAY20rlUST6U4g/5vPp5z6pQco67/7QWSbbRtQ3yrYzOKdeXlF15dFEmcNJKcn6NavQRkv3PegP8M0BFSUnLiMZ13b+QBcEQ4w+AzjKaHpm+GnuW4+v8QJ6XBPEusq1UeWj3dJffuwpFKYolg0nbdWE6ElDgRDePXMd0fhdTxnlt9FM8IqZVjQy/ldvApJfyEBHE2QlFUut00mtHfHQcufsPARLSuNqp24TieyDl5JjCJ9tbj6rRpGriH0Zizx4sA1ATNDSojbKN5AbKsvbYlpHNuTSlqa0fklvYu01PyaOyFpCmoTXScWMYu8x8QAoqSlspRxA5s1ErkyvR0zVwH36bNkjBtIUd05FatebXwd7SLhl9gnQKepAz06OPesNEEilLCPrZAOks7mSnYiKzjdJNAg3F6WvAlCzQPZgw2gi47r1RCaYghNQJomkWSbCJ2IpiKBpxD+H0wuUpFTbljvShD7NSTkp0WjXlZr1hrSCc2cP/3vnokg5gfgL/SqhtioeubXLjeLV0QneJARA1v5YWK/976/XBJEleNb4ORJ5YZ6Fz1ZoPcD/PNmRE+8HDykmMCwb089SMgrbaKfI7/2/2KQR59GM2SpImHk= # DOCKER_USERNAME
-    - secure: rbdZRBcUp7iSYIpsdggPs3CjhtZmxjYmrjb38OttqntqdSPoSDkVsnrhwGOBPVRwgTdZR3w4Xv/KUt3eUPk5gemFbi1P3PjrtFTmTlQecE69B8+x1IpOA1psERZUsIcL6x/DM3WtEzSA8VoJOXcGjESpPTBolokzTp6lNpg+p1bSJL8sJW9xdUmVgMLGlArDP9jeV/AXQwdWjtcQ/gDHYpwbmA/gjraQZ7D5VYyvTA8rEv8St8K3iPPJSZMgAJPC8dqzSumOdj6Z7wbk0gkLf+aWM7C4Zp/AmAETWMgN/xIvGrhBvLRUk8sVqDl+rleZAFxsqVW/bvSEuCC/lNHAQLBotQL9aIGAm1JswIXrkhixGYqh1Jq3aZJ6mKSzW/XQ1THNJl+XeMAxkNz+azoXNutEiSi5SrIhHhbiIjCmmEJTXPKG4RYnvT5JCyulpszuRn3zSmuaRIlG+w7HByfWL5sqs12LxNGPKdbCt7YJZDncSGqYkQ/iVxHS18LmfassDeTFfCkDNKWPO8JY95dYQzrIfW5fDq1WSnz1MrEgvN/QV71/++Kpv0uJMV7UcL/H4mUuy34hSskgbntXFyq6jRvCtQhm80EzZKbC6Jw+6w5Hw0zdnT+5xKvSS+IQH23iMTRBE5NOIFxPEcZbcjpqAr1xT0Ml7mCjLwlJAz3DAjo= # DOCKER_PASSWORD
+    - secure: "AkUHOHC7L5NN8V8OALIGGsexfoAOs6brKawq4qHhh+3jFVK6sxuqPO8yzv0hZlbUNog/EHBQa5UufUfSY835LaxK0wxkQKKpGBjE10ggHdaGArgdugPp4Y0M8hSTIoVWYC8ECEhzDZ+7xZnX14BAmSHBp8OY8yxDGGmX+4TC1DQElqSiwQvnXh7y/Nqd2ZOYMA6O0eBBZbb+erAefiDuYHydk9dPyo4efqiH7mEkkqKltpTNJB2SP9vuETv1cZc1FNTZXp7fxJEdtDdiKfKQMIM0tXaSqYiu6LinHxWEQJdIwT4HHQx0a3wSl2A+b+avK+q6CQ0KWRS0eOky1YY6DYKCwHihl4bSvJnRB/Kzo0uuFFSmjm5kKE0vYSYl4g57i4P7D4WgcmTbjb3IsNBv2rxp4xaiaLkxpgLOVK5+hi+vU3OKT/f3B+Az0lzvb6mL0hq6oFkMA32NFzCCScPA83OPcUlO7CFpcxwar8zy5sn5HdxI+KhWiC6PucNoUkgyHqpodVoe+x2G/qaFUGSmPh82TobKzVpGGjdAKHkjV+v3dLqVJnS0r74wybt6zwDd7jjQzGGkXTAEwOOeFmwuRUUD1H9o3Zx6TZYxnYApfsz+FZXG3Eu1ZkXeOcKaG/rPTcZ3C91RdQB2sP9hAiITgIKRFWiRyaEXGdOxgZuNQVA=" # DOCKER_PASSWORD
     - secure: f3S6q8IhKr8KXOZccuwpBmOna35iTUUSfMUc4YPrhNmaqfi87f7nX3Fn3rCR2Jwckve0rIOghXqfovLT1Z3lrGyyOBePYIR+5YOoF/uUiD3MHCBhm+YxekNENQZzegEG/cgsH15NciAOHyl5YWfuaboONHoy1NmAGQnylrIz81ujWpHNbyRqexVr0KzIPZo/NFaagjnp4Xzn1MvmWp5ESSI+9Y3m1aXSlIQXECcGH/arHYu4JmfnnmeSjpjbgxoYG7eQszBhWFOS0T8PmxlfB1J6O8xyUeYcfPeXzKaVLnFgfegDr3buHD7gRP0phz/49mmv58HSxxfH6Vr6xDUU3W8z1yoOeaYxi697HMnEz0JTHQmGzs5syYVoi98I1qAvZzg3Fu1lcMM5POVOgv31Z82pal0cngqihRXXqxZXwq052Dx1PSWeQNlrcGPv5HFtbCwt/e0h4aFg1UIpRjSXVQ4Qu+v6+LoLU8qF4S1PLKKxW1n355f6K22OxEgpP58bbfsGX6y1oFrrVhvXOHBEKLBw8Kn/jwaRig6CuGWie22YyaEmx32m8N9Roc7sj1cnBK5dQK+VpO8qOg9fCUTfe8acFtvVwhPraAwiAKaKPRyVH4qUQ/6/cO71F2wSjk6FWEwofWU8IrJ8o274n5O1BUWP26pEQSiBS+7X8HAuu4E= # NOTIFY_API_KEY
     - secure: PJRguulLCe4OJyTBNKe5T9CNTpYI2cG2OG1qw5IWcr9bmkCa9CPPicvMb5ACfwDhz1WxjcwNgcTz6XAe3bqBOowJJaLA6yerY9M/w6Mx3c0f1/tfTBhANXjKHdVWfAlsHekYpDxi/JhpL8XjWSHvWv36Mp43i29NCnuqvfAHmwVauptSD++ipY7piQgiizu1lFCuWAEa2zrW0kcHjGKTiAxU3KHjHadU1EAmvAmQ11o4JcERbOo9abP1HJu3ByUz+xwMtzflSrL73X9EXg3Tisuds8LFaVLVFHkDfqvKiTHmNLqcD8QvJJPSgp8NXGWgcj90Ns6UxIxNvJlc/68PTlU2yVf0KvpjUZatJSSBVRr/GSwg+P5vCViijlhGPC/VlXX6inzgkR1IEMA0I4g4HBktaPjceeTB7a8xEE+pfWtJokaW8q0lnBsIp8Qcg1l3WzifjzDrlaZGnGpq9rd0NxNnMGQMiKwHKgxxfmLix52RtIe07VgM97y39gldhi2lKgjAaStIhQGeSZZh2G1+ZG3GIqgjG8Jh0u6auMIpKOktEFHmOXdEA+/S9+EVeKyRXVANdqJ9fVk/CRIan5PvMweO4v8wqnVon8glIVtjOI2u+YEyogmy7ZfZLr62ASc89YzFRZIaqiKx19kNUi8Emwrd0UhmAVn02EvDcmbZhNM= # NPIS_ACCOUNT_USERNAME
     - secure: KfJO7yUou6KaQZV+3h2tq+gJOQHMbdybyaUGpD7uJBr/0vNa+xsIDdmg0tPpYfmjJlBBxl3HoCyzeRHEnpiGKJ9JFeKjlUlzFsZqCLT5SAqflmd9lmE1Eab/O2QBJnLrVG/XH3djzTxQ9Ysil5jNvQNGBTMKDBj3ETYhlQGkcYJzXiY+FdUhzDDxFUYXXimtbEkzBwWMERlwMbx05fXGetb3RJNXCEoCl4N905XNCi0RePnAg2nmzdTfKAOMdpTPmcXGa4oqS++++4vilBut/p5S3Lx42UYjbLd7h1l3rwBKKUB6CYqJYhSu1HBpcUgy/iWdFabwqqG6Jdsfpo3UD9kOC09JirrByiGjmQS5jON+CHHa3hBhA6WY6yB6NjBN7kPP/e5tl3DUDr4YXpLLa9bpTFUCeTElmyzJr+gP/X8luWFPAfqn7WvpUuObnIcNvd9xtDhZQFC7dw/+dE68oEmpjb4WmmbsReNIZ6liux345uUxtiq+dMtdEMOkpWJHt7fRHE+ZI2ifJfyl1WKTjwpKTaU0ITYAH95GKKyl4XH3GEX5QNSa8DYlYQwdOMdSOGDe55qW1OctQCpTqWoF5eCX2PktILvJhPP8qKOcPeG4fOeqPzKqxKGG160OXAh/AMFS32QmsRvjjFWVQ3qMBLAyllJnD4Iq8PIMnZxSfOM= # NPIS_ACCOUNT_PASSWORD

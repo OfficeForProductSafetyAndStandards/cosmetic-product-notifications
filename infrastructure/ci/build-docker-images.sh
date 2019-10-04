@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds Docker images for components that have changes, and then pushes all current images 
+# Builds Docker images for components that have changes, and then pushes all current images
 # tagged with the build ID to DockerHub.
 set -ex
 
@@ -10,8 +10,6 @@ COMPONENTS=(
     'keycloak'
     'cosmetics-web'
     'cosmetics-worker'
-    'psd-web'
-    'psd-worker'
 )
 
 function docker_tag_exists {
