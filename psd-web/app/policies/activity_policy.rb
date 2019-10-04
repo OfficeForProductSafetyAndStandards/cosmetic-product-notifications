@@ -1,2 +1,0 @@
-class ActivityPolicy < ApplicationPolicy
-end
