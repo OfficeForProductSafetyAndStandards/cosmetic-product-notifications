@@ -32,6 +32,13 @@ else
     NEW_APP=$APP
 fi
 
+# Set the manifest file depending on PaaS enviornment
+if [[ $SPACE == "prod" ]]; then
+    MANIFEST_FILE=./psd-web/manifest.prod.yml
+else
+    MANIFEST_FILE=./psd-web/manifest.yml
+fi
+
 # Copy the environment helper script
 cp -a ./infrastructure/env/. ./psd-web/env/
 
@@ -40,16 +47,20 @@ rm -rf ./psd-web/vendor/shared-web/
 cp -a ./shared-web/. ./psd-web/vendor/shared-web/
 
 # Deploy the new app and set the hostname
-cf push $NEW_APP -f ./psd-web/manifest.yml -d $DOMAIN --hostname $NEW_HOSTNAME --no-start
+cf push $NEW_APP -f $MANIFEST_FILE -d $DOMAIN --hostname $NEW_HOSTNAME --no-start
 cf set-env $NEW_APP PSD_HOST "$NEW_HOSTNAME.$DOMAIN"
 
 # Increase the assigned memory for staging
-cf scale $NEW_APP -f -m 2G
+if [[ $SPACE != "prod" ]]; then
+    cf scale $NEW_APP -f -m 2G
+fi
+
 cf start $NEW_APP
 
 # Decrease the assigned memory
-cf scale $NEW_APP -f -m 1G
-
+if [[ $SPACE != "prod" ]]; then
+    cf scale $NEW_APP -f -m 1G
+fi
 
 if [[ ! $APP_PREEXISTS ]]; then
     # We don't need to go any further
