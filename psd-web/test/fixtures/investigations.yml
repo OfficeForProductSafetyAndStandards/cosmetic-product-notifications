@@ -4,7 +4,7 @@ one:
   description: Investigation one description
   is_closed: false
   type: Investigation::Allegation
-  hazard_type: Blunt force
+  hazard_type: Injuries
   hazard_description: investigation one hazard_description
   non_compliant_reason: investigation one non_compliant_reason
   complainant_reference: investigation one complainant_reference
@@ -102,10 +102,19 @@ enquiry:
   type: Investigation::Enquiry
   pretty_id: 1902-0014
   received_type: Email
+  date_received: 2019-1-1
 
 project:
   description: Investigation project
   is_closed: false
   type: Investigation::Project
   pretty_id: 1902-0015
+
+enquiry_with_no_date:
+  description: Investigation enquiry
+  is_closed: false
+  type: Investigation::Enquiry
+  pretty_id: 1902-0016
+  received_type: Email
+
 

@@ -2,8 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-<!-- ### Product safety database -->
-- Persistent case filters in session
+- Fix bug when updating cases
 
 ### Next release checklist
 - [ ] Add `HEALTH_USERNAME` and `HEALTH_PASSWORD` environment variables to the antivirus server

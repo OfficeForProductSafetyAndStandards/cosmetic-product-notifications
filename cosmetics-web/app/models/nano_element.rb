@@ -1,8 +1,6 @@
 class NanoElement < ApplicationRecord
   belongs_to :nano_material
 
-  enum confirm_toxicology_notified: { yes: 'yes', no: 'no', not_sure: 'not sure' }
-
   def self.purposes
     %w(colorant preservative uv_filter other).freeze
   end
@@ -16,7 +14,19 @@ class NanoElement < ApplicationRecord
   end
 
   def incomplete?
-    purposes.nil?
+    purposes.blank? ||
+      (non_standard? && confirm_toxicology_notified.nil?) ||
+      (
+        standard? && (
+          confirm_restrictions.nil? ||
+          (confirm_restrictions == 'no' && confirm_toxicology_notified.nil?) ||
+          (confirm_restrictions == 'yes' && confirm_usage.nil?)
+        )
+      )
+  end
+
+  def standard?
+    !non_standard?
   end
 
   def non_standard?

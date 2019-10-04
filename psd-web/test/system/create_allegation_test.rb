@@ -10,8 +10,8 @@ class CreateAllegationTest < ApplicationSystemTestCase
     )
 
     @allegation = Investigation::Allegation.new(
-      hazard_type: "Blunt force",
-      product_category: "Small electronics",
+      hazard_type: "Injuries",
+      product_category: "Electrical appliances and equipment",
       description: "Allegation description"
     )
 
@@ -99,8 +99,8 @@ class CreateAllegationTest < ApplicationSystemTestCase
     fill_complainant_details_and_continue
     click_on "Create allegation"
 
-    assert_text "Product category can't be blank"
-    assert_text "Hazard type can't be blank"
+    assert_text "Enter a valid product category"
+    assert_text "Enter a valid hazard type"
   end
 
   test "case page should be shown when complete" do
