@@ -29,10 +29,4 @@ elif [[ "$TOP_LEVEL_CHANGES" =~ shared-worker ]] || [[ "$TOP_LEVEL_CHANGES" =~ c
     COMPONENTS="$COMPONENTS cosmetics-worker"
 fi
 
-if [[ "$TOP_LEVEL_CHANGES" =~ keycloak ]] || [[ "$TOP_LEVEL_CHANGES" =~ shared-web ]] || [[ "$TOP_LEVEL_CHANGES" =~ psd-web ]]; then
-    COMPONENTS="$COMPONENTS psd-web psd-worker"
-elif [[ "$TOP_LEVEL_CHANGES" =~ shared-worker ]] || [[ "$TOP_LEVEL_CHANGES" =~ psd-worker ]]; then
-    COMPONENTS="$COMPONENTS psd-worker"
-fi
-
 echo $COMPONENTS
