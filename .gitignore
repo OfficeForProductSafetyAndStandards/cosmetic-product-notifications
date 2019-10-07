@@ -147,3 +147,6 @@ $RECYCLE.BIN/
 .env
 
 *.log
+
+# Redis snapshots. See https://redis.io/topics/persistence
+dump.rdb
