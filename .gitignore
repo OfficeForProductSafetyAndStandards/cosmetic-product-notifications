@@ -146,8 +146,6 @@ $RECYCLE.BIN/
 
 .env
 
-psd-web/.ruby-gemset
-
 *.log
 
 # Redis snapshots. See https://redis.io/topics/persistence

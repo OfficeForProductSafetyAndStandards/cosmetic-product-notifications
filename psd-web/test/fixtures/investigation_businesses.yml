@@ -1,9 +1,0 @@
-one:
-  investigation: one
-  business: one
-  relationship: advertiser
-
-two:
-  investigation: search_related_businesses
-  business: biscuit_base
-  relationship: manufacturer
