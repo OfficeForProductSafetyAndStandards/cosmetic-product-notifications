@@ -11,6 +11,10 @@ require "active_job/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Elasticsearch gems need to be 'required' with a different name than gem name, hence we do it separately
+require "elasticsearch/model"
+require "elasticsearch/rails"
+
 module Cosmetics
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
