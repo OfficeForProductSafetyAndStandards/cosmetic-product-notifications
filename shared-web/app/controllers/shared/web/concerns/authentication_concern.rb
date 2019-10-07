@@ -6,7 +6,7 @@ module Shared
 
         include Pundit
 
-        include Shared::Web::LoginHelper
+        include ::LoginHelper
 
         def initialize
           # Ensure that the Keycloak gem never attempts to fetch a token from the cookie by returning nil from the lambda.

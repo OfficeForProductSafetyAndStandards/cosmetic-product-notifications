@@ -1,6 +1,6 @@
 class NotificationBuildController < ApplicationController
   include Wicked::Wizard
-  include Shared::Web::CountriesHelper
+  include CountriesHelper
   include ManualNotificationConcern
 
   steps :add_product_name,
