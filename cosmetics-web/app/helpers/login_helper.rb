@@ -14,6 +14,6 @@ module LoginHelper
   end
 
   def session_url
-    shared_engine.signin_session_url(host: request.host)
+    signin_session_url(host: request.host)
   end
 end
