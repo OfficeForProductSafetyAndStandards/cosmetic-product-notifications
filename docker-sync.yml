@@ -12,8 +12,5 @@ syncs:
   cosmetics-web-sync:
     src: './cosmetics-web'
     sync_excludes: ['node_modules', 'tmp', 'vendor/shared-web']
-  psd-web-sync:
-    src: './psd-web'
-    sync_excludes: ['node_modules', 'tmp', 'vendor/shared-web']
   shared-web-sync:
     src: './shared-web'
