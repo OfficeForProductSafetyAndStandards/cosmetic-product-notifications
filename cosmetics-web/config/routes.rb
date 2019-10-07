@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => "/sidekiq"
   end
 
-  constraints DomainConstraint.new(ENV["SEARCH_HOST"] || ENV["COSMETICS_HOST"]) do
+  constraints DomainConstraint.new(ENV.fetch("SEARCH_HOST") || ENV.fetch("COSMETICS_HOST")) do
     root "landing_page#index"
 
     scope module: "poison_centres", as: "poison_centre" do
@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints DomainConstraint.new(ENV["SUBMIT_HOST"] || ENV["COSMETICS_HOST"]) do
+  constraints DomainConstraint.new(ENV.fetch("SEARCH_HOST") || ENV.fetch("COSMETICS_HOST")) do
     root "landing_page#index"
 
     resources :responsible_persons, only: %i[show] do
