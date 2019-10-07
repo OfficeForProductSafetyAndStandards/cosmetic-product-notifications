@@ -142,7 +142,7 @@ See [maintenance/README.md](maintenance/README.md#deployment).
 
 #### Keycloak
 
-See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
+See [keycloak_repo/README.md](keycloak/README.md#deployment-from-scratch).
 
 #### Cosmetics
 
