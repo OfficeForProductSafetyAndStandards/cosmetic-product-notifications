@@ -6,7 +6,6 @@ OkComputer.require_authentication(ENV["HEALTH_CHECK_USERNAME"], ENV["HEALTH_CHEC
 OkComputer::Registry.register "elasticsearch", OkComputer::ElasticsearchCheck.new(Rails.application.config_for(:elasticsearch)[:url])
 OkComputer::Registry.register "redis", OkComputer::RedisCheck.new(Rails.application.config_for(:redis))
 OkComputer::Registry.register "sidekiq", OkComputer::SidekiqLatencyCheck.new(30)
-OkComputer::Registry.register "keycloak", KeycloakCheck.new
 
 class KeycloakCheck < OkComputer::Check
   def check
@@ -19,3 +18,5 @@ class KeycloakCheck < OkComputer::Check
     end
   end
 end
+
+OkComputer::Registry.register "keycloak", KeycloakCheck.new
