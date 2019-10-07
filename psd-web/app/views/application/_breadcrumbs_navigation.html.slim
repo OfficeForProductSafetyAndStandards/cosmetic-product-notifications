@@ -1,7 +1,0 @@
-- if breadcrumbs[:is_simple_link]
-  = link_to breadcrumbs[:text], breadcrumbs[:href], class: "govuk-back-link"
-- else
-  = render "components/govuk_breadcrumbs",
-          items: breadcrumbs[:items],
-          classes: local_assigns[:classes],
-          attributes: local_assigns[:attributes]

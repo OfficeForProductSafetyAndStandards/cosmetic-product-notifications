@@ -1,8 +1,0 @@
-= render "repeatable_info",
-        title: "Upload an evidence image",
-        scope: :file,
-        model: @investigation,
-        hide_break: true,
-        other_text: "Are there other evidence images to report?",
-        further_key: :further_evidence_images do |form|
-  = render "file_page", form: form
