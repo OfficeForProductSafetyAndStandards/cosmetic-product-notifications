@@ -20,13 +20,13 @@ module Shared
         end
 
         def user_signed_in?
-          @user_signed_in ||= Shared::Web::KeycloakClient.instance.user_signed_in?(access_token)
+          @user_signed_in ||= ::KeycloakClient.instance.user_signed_in?(access_token)
         end
 
         def set_current_user
           return unless user_signed_in?
 
-          user_info = Shared::Web::KeycloakClient.instance.user_info(access_token)
+          user_info = ::KeycloakClient.instance.user_info(access_token)
           User.current = ::User.find_or_create(user_info)
           User.current.access_token = access_token
         end
@@ -59,7 +59,7 @@ module Shared
 
         def try_refresh_token
           begin
-            self.keycloak_token = Shared::Web::KeycloakClient.instance.exchange_refresh_token_for_token(refresh_token)
+            self.keycloak_token = ::KeycloakClient.instance.exchange_refresh_token_for_token(refresh_token)
           rescue StandardError => e
             if e.is_a? Keycloak::KeycloakException
               raise

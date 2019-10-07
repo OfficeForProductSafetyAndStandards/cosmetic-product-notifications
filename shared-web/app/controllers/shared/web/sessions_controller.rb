@@ -17,14 +17,14 @@ module Shared
       end
 
       def logout
-        Shared::Web::KeycloakClient.instance.logout(refresh_token)
+        ::KeycloakClient.instance.logout(refresh_token)
         redirect_to main_app.root_path
       end
 
     private
 
       def request_and_store_token(auth_code, redirect_url)
-        self.keycloak_token = Shared::Web::KeycloakClient.instance.exchange_code_for_token(auth_code, session_url_with_redirect(redirect_url))
+        self.keycloak_token = ::KeycloakClient.instance.exchange_code_for_token(auth_code, session_url_with_redirect(redirect_url))
       end
 
       def signin_error_message(error)

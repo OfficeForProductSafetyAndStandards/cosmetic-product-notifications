@@ -11,7 +11,7 @@ Keycloak.auth_server_url = ""
 
 Rails.application.config.after_initialize do
   begin
-    Shared::Web::KeycloakClient.instance.all_organisations unless Rails.env.test? || Sidekiq.server?
+    KeycloakClient.instance.all_organisations unless Rails.env.test? || Sidekiq.server?
   rescue StandardError => e
     # Can be deleted after the following is merged: https://github.com/imagov/keycloak/pull/11
     # The gem we are using is importing client_id and secret too late in default_call method, causing first request

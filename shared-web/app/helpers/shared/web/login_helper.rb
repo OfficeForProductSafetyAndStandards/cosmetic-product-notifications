@@ -2,11 +2,11 @@ module Shared
   module Web
     module LoginHelper
       def keycloak_login_url(request_path = nil)
-        Shared::Web::KeycloakClient.instance.login_url(session_url_with_redirect(request_path))
+        ::KeycloakClient.instance.login_url(session_url_with_redirect(request_path))
       end
 
       def keycloak_registration_url(request_path = nil)
-        Shared::Web::KeycloakClient.instance.registration_url(session_url_with_redirect(request_path))
+        ::KeycloakClient.instance.registration_url(session_url_with_redirect(request_path))
       end
 
       def session_url_with_redirect(request_path)
