@@ -1,5 +1,0 @@
-= render "form_components/govuk_input", key: :name, form: form,
-        hint: { text: "For example, ‘Head office’, ‘Registered office’ or ‘Northern office’" },
-        label: { text: "Location name", classes: "govuk-label--m" }
-= render "address_form", form: form, countries: @countries
-= form.submit "Save", class: "govuk-button"
