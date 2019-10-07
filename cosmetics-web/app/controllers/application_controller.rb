@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
-  include Shared::Web::Concerns::AuthenticationConcern
-  include Shared::Web::Concerns::CacheConcern
-  include Shared::Web::Concerns::HttpAuthConcern
-  include Shared::Web::Concerns::RavenConfigurationConcern
+  include AuthenticationConcern
+  include CacheConcern
+  include HttpAuthConcern
+  include RavenConfigurationConcern
   include DomainConcern
 
   helper Shared::Web::Engine.helpers
