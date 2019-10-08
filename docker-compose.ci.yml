@@ -2,18 +2,15 @@ version: '3'
 
 services:
   db:
-    image: beisopss/db:${TRAVIS_BUILD_NUMBER}
+    image: postgres:10.5
 
   keycloak:
     environment:
       - NOTIFY_API_KEY
-    image: beisopss/keycloak:${TRAVIS_BUILD_NUMBER}
+    image: beisopss/keycloak:prod
 
   antivirus:
-    image: beisopss/antivirus:${TRAVIS_BUILD_NUMBER}
-
-  maintenance:
-    image: beisopss/maintenance:${TRAVIS_BUILD_NUMBER}
+    image: beisopss/antivirus:prod
 
   cosmetics-web:
     command: tail -f /dev/null
