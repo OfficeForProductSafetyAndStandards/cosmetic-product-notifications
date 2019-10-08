@@ -6,6 +6,14 @@ RSpec.describe Component, type: :model do
   let(:exact_component) { create(:exact_component) }
   let(:text_file) { fixture_file_upload('/testText.txt', 'application/text') }
 
+  describe "attributes" do
+    subject(:component) { described_class.new }
+
+    it "has a contains_poisonous_ingredients boolean" do
+      expect(component).to have_attributes(contains_poisonous_ingredients: nil)
+    end
+  end
+
   describe "formulation_required" do
     it "returns false for predefined formulation even if no file attached" do
       expect(predefined_component.formulation_required?).to be false
