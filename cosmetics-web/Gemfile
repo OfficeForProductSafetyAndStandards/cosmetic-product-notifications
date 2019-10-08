@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version").strip
 
+gem "will_paginate", "3.1.7" # Must be laoded before elasticsearch gems
+
 gem "aasm"
 gem "active_hash", "2.2.1"
 gem "aws-sdk-s3", "1.43.0"
@@ -30,7 +32,6 @@ gem "slowpoke", "0.3.0"
 gem "strong_migrations"
 gem "webpacker", "4.0.7"
 gem "wicked"
-gem "will_paginate", "3.1.7"
 
 gem "shared-web", path: "./vendor/shared-web"
 
