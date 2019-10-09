@@ -6,6 +6,9 @@ inherit_gem:
 RSpec/MultipleExpectations:
   Max: 2
 
+RSpec/NestedGroups:
+  Max: 4
+
 ExampleLength:
   Exclude:
     - 'spec/system/**/*'

@@ -1,9 +1,0 @@
-one:
-  summary: Alert one summary
-  description: Alert one description
-  investigation: one
-
-on_private_investigation:
-  summary: alert for private investigation summary
-  description: alert for private investigation description
-  investigation: private

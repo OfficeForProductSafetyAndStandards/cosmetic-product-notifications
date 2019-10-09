@@ -44,8 +44,15 @@ cp -a ./infrastructure/env/. ./cosmetics-web/env/
 rm -rf ./cosmetics-web/vendor/shared-web/
 cp -a ./shared-web/. ./cosmetics-web/vendor/shared-web/
 
+# Set the manifest file depending on PaaS enviornment
+if [[ $SPACE == "prod" ]]; then
+    MANIFEST_FILE=./cosmetics-web/manifest.prod.yml
+else
+    MANIFEST_FILE=./cosmetics-web/manifest.yml
+fi
+
 # Deploy the new app, set the hostnames and start the app
-cf push $NEW_APP -f ./cosmetics-web/manifest.yml -d $DOMAIN --hostname $NEW_SUBMIT_HOSTNAME --no-start
+cf push $NEW_APP -f $MANIFEST_FILE -d $DOMAIN --hostname $NEW_SUBMIT_HOSTNAME --no-start
 cf set-env $NEW_APP COSMETICS_HOST "$NEW_SUBMIT_HOSTNAME.$DOMAIN"
 cf set-env $NEW_APP SUBMIT_HOST "$NEW_SUBMIT_HOSTNAME.$DOMAIN"
 cf set-env $NEW_APP SEARCH_HOST "$NEW_SEARCH_HOSTNAME.$DOMAIN"
