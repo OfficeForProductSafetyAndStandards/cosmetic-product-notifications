@@ -35,6 +35,8 @@ class Component < ApplicationRecord
 
   validate :maximum_ph_must_be_equal_or_above_minimum_ph, if: -> { maximum_ph.present? && minimum_ph.present? }
 
+  validate :difference_between_maximum_and_minimum_ph, if: -> { maximum_ph.present? && minimum_ph.present? }
+
   validates :minimum_ph, numericality: { message: "Enter a value of 0 or higher for minimum pH", greater_than_or_equal_to: 0 }, if: -> { minimum_ph.present? }
 
   validates :minimum_ph, numericality: { message: "Enter a value of 14 or lower for minimum pH", less_than_or_equal_to: 14 }, if: -> { minimum_ph.present? }
@@ -157,6 +159,12 @@ private
   def maximum_ph_must_be_equal_or_above_minimum_ph
     if maximum_ph < minimum_ph
       errors.add(:maximum_ph, "The maximum pH must be the same or higher than the minimum pH")
+    end
+  end
+
+  def difference_between_maximum_and_minimum_ph
+    if (maximum_ph - minimum_ph) > 1.0
+      errors.add(:maximum_ph, "The maximum pH cannot be more than 1 higher than the minimum pH")
     end
   end
 end
