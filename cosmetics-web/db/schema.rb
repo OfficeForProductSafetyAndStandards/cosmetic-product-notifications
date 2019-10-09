@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 2019_09_19_114626) do
     t.string "acute_poisoning_info"
     t.string "other_special_applicator"
     t.boolean "contains_poisonous_ingredients"
+    t.float "minimum_ph"
+    t.float "maximum_ph"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
