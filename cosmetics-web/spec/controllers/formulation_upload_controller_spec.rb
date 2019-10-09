@@ -7,7 +7,7 @@ RSpec.describe FormulationUploadController, type: :controller do
   let(:other_responsible_person) { create(:responsible_person) }
   let(:other_notification) { create(:notification, responsible_person: other_responsible_person) }
   let(:other_component) { create(:component, notification: other_notification) }
-  let(:text_file) { fixture_file_upload('/testText.txt', 'text/plain') }
+  let(:pdf_file) { fixture_file_upload('/testPdf.pdf', 'application/pdf') }
   let(:image_file) { fixture_file_upload('/testImage.png', 'image/png') }
 
   let(:params) {
@@ -69,25 +69,25 @@ RSpec.describe FormulationUploadController, type: :controller do
     end
 
     it "adds the formulation file to the component when the uploaded file is valid" do
-      post(:create, params: params.merge(formulation_file: text_file))
+      post(:create, params: params.merge(formulation_file: pdf_file))
       expect(component.reload.formulation_file.attached?).to be true
     end
 
     it "redirects to the additional information controller when the uploaded file is valid" do
-      post(:create, params: params.merge(formulation_file: text_file))
+      post(:create, params: params.merge(formulation_file: pdf_file))
       expect(response).to redirect_to(responsible_person_notification_additional_information_index_path(responsible_person, notification))
     end
 
     it "does not let the user submit the form for a component for a responsible person they do not belong to" do
       expect {
-        post(:create, params: other_responsible_person_params.merge(formulation_file: text_file))
+        post(:create, params: other_responsible_person_params.merge(formulation_file: pdf_file))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
     it "does not let the user submit the form for a component for a completed notification" do
       notification.update state: "notification_complete"
       expect {
-        post(:create, params: params.merge(formulation_file: text_file))
+        post(:create, params: params.merge(formulation_file: pdf_file))
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end

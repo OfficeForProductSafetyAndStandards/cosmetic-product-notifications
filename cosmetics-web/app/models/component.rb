@@ -4,7 +4,7 @@ class Component < ApplicationRecord
   include NotificationPropertiesHelper
   include FileUploadConcern
   set_attachment_name :formulation_file
-  set_allowed_types %w[application/pdf application/rtf text/plain].freeze
+  set_allowed_types %w[application/pdf].freeze
   set_max_file_size 30.megabytes
 
   belongs_to :notification
