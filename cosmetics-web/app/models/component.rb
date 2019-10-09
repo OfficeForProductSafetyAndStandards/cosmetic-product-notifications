@@ -4,7 +4,7 @@ class Component < ApplicationRecord
   include NotificationPropertiesHelper
   include FileUploadConcern
   set_attachment_name :formulation_file
-  set_allowed_types %w[application/pdf application/rtf text/plain].freeze
+  set_allowed_types %w[application/pdf].freeze
   set_max_file_size 30.megabytes
 
   belongs_to :notification
@@ -25,6 +25,25 @@ class Component < ApplicationRecord
   validates :frame_formulation, presence: true, on: :select_frame_formulation
   validates :cmrs, presence: true, on: :add_cmrs
   validates :notification_type, presence: true, on: :select_formulation_type
+
+
+  validates :maximum_ph, presence: { message: "Enter a maximum pH" }, if: -> { minimum_ph.present? }
+  validates :minimum_ph, presence: { message: "Enter a minimum pH" }, if: -> { maximum_ph.present? }
+
+  validates :maximum_ph, presence: { message: "Enter a maximum pH" }, on: :ph_range
+  validates :minimum_ph, presence: { message: "Enter a minimum pH" }, on: :ph_range
+
+  validate :maximum_ph_must_be_equal_or_above_minimum_ph, if: -> { maximum_ph.present? && minimum_ph.present? }
+
+  validate :difference_between_maximum_and_minimum_ph, if: -> { maximum_ph.present? && minimum_ph.present? }
+
+  validates :minimum_ph, numericality: { message: "Enter a value of 0 or higher for minimum pH", greater_than_or_equal_to: 0 }, if: -> { minimum_ph.present? }
+
+  validates :minimum_ph, numericality: { message: "Enter a value of 14 or lower for minimum pH", less_than_or_equal_to: 14 }, if: -> { minimum_ph.present? }
+
+  validates :maximum_ph, numericality: { message: "Enter a value of 0 or higher for maximum pH", greater_than_or_equal_to: 0 }, if: -> { maximum_ph.present? }
+
+  validates :maximum_ph, numericality: { message: "Enter a value of 14 or lower for maximum pH", less_than_or_equal_to: 14 }, if: -> { maximum_ph.present? }
 
   before_save :add_shades, if: :will_save_change_to_shades?
   before_save :remove_other_special_applicator, unless: :other_special_applicator?
@@ -97,7 +116,33 @@ class Component < ApplicationRecord
     name.present?
   end
 
+  def maximum_ph=(value)
+    super(reject_non_decimal_strings(value))
+  end
+
+  def minimum_ph=(value)
+    super(reject_non_decimal_strings(value))
+  end
+
+
 private
+
+  # This takes any value and returns nil if the value
+  # is a string but isn’t a format which represents an
+  # integer (10) or decimal (1.3). Otherwise, returns the value.
+  #
+  # This allows `.to_f` to be called on the result, without the
+  # unexpected behaviour of strings such as `"N/A"` being converted
+  # to 0.0
+  def reject_non_decimal_strings(value)
+    decimal_regex = /\A\s*\d+(?:\.\d+)?\s*\z/
+
+    if String === value && value !~ decimal_regex
+      nil
+    else
+      value
+    end
+  end
 
   def update_notification_state
     notification&.set_single_or_multi_component!
@@ -109,5 +154,17 @@ private
 
   def remove_other_special_applicator
     self.other_special_applicator = nil
+  end
+
+  def maximum_ph_must_be_equal_or_above_minimum_ph
+    if maximum_ph < minimum_ph
+      errors.add(:maximum_ph, "The maximum pH must be the same or higher than the minimum pH")
+    end
+  end
+
+  def difference_between_maximum_and_minimum_ph
+    if (maximum_ph - minimum_ph) > 1.0
+      errors.add(:maximum_ph, "The maximum pH cannot be more than 1 higher than the minimum pH")
+    end
   end
 end

@@ -66,7 +66,7 @@ module CpnpNotificationTriggerRules
       100032 => :incivalue,
       100033 => :value,
       100034 => :value,
-      100004 => :ph,
+      100004 => :value,
       100039 => :value,
       100040 => :inciname,
       100041 => :incivalue,

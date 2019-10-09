@@ -76,7 +76,9 @@ class CpnpExport
                        physical_form: physical_form(component_node),
                        special_applicator: special_applicator(component_node),
                        acute_poisoning_info: acute_poisoning_info(component_node),
-                       state: "component_complete")
+                       state: "component_complete",
+                       minimum_ph: minimum_ph(component_node) || component_ph(component_node),
+                       maximum_ph: maximum_ph(component_node) || component_ph(component_node))
     end
   end
 
@@ -125,14 +127,27 @@ private
   end
 
   def trigger_questions(component_node)
+    trigger_questions = []
+
     component_node.xpath(".//quetionList/question").collect do |question_node|
-      question_elements = question_node.xpath(".//questionElement").collect do |question_element_node|
-        trigger_rules_element(question_element_node)
+      question_id = question_node.xpath('./questionID').first.content
+      question_elements = question_node.xpath(".//questionElement")
+
+      unless %w(100004 100023).include? question_id
+
+        trigger_question_elements = question_elements.collect do |question_element_node|
+          trigger_rules_element(question_element_node)
+        end
+
+        trigger_questions << TriggerQuestion.create(question: trigger_rules_question(question_node),
+                               applicable: is_trigger_question_applicable(trigger_question_elements),
+                               trigger_question_elements: trigger_question_elements)
+
+
       end
-      TriggerQuestion.create(question: trigger_rules_question(question_node),
-                             applicable: is_trigger_question_applicable(question_elements),
-                             trigger_question_elements: question_elements)
     end
+
+    trigger_questions
   end
 
   def is_trigger_question_applicable(question_elements)
@@ -148,7 +163,7 @@ private
   end
 
   def trigger_rules_element(question_element_node)
-    TriggerQuestionElement.create(answer_order: question_element_node.xpath(".//answerOrder").first&.text.to_i,
+    TriggerQuestionElement.create!(answer_order: question_element_node.xpath(".//answerOrder").first&.text.to_i,
                                   answer: question_element_node.xpath(".//answer").first&.text,
                                   element_order: question_element_node.xpath(".//elementOrder").first&.text.to_i,
                                   element: get_trigger_rules_question_element(normalize_id(question_element_node.xpath(".//elementID").first&.text)))
@@ -238,5 +253,41 @@ private
     selected_attribute = node.xpath("#{path}[language='#{@language}']/#{attribute}").first&.text
     selected_attribute = node.xpath("#{path}/#{attribute}").first&.text if selected_attribute.blank?
     selected_attribute
+  end
+
+  def minimum_ph(component_node)
+    answer(component_node, question_id: '100023', element_id: '100037')
+  end
+
+  def maximum_ph(component_node)
+    answer(component_node, question_id: '100023', element_id: '100038')
+  end
+
+  def component_ph(component_node)
+    answer(component_node, question_id: '100004', element_id: '100005')
+  end
+
+  def answer(component_node, question_id:, element_id:)
+    question_node = question_node_with_id(component_node, question_id)
+    if question_node
+      question_element_node = question_element_with_id(question_node, element_id)
+      question_element_answer(question_element_node)
+    end
+  end
+
+  def question_node_with_id(component_node, question_id)
+    component_node.xpath(".//quetionList/question").detect do |question_node|
+      question_node.xpath('./questionID')&.first&.content == question_id
+    end
+  end
+
+  def question_element_with_id(question_node, element_id)
+    question_node.xpath('./questionElement').detect do |question_element|
+      question_element.xpath('./elementID')&.first&.content == element_id
+    end
+  end
+
+  def question_element_answer(question_element_node)
+    question_element_node.xpath('./answer')&.first&.content
   end
 end

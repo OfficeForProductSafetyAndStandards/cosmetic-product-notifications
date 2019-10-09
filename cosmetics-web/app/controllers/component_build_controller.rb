@@ -101,7 +101,11 @@ class ComponentBuildController < ApplicationController
   end
 
   def finish_wizard_path
-    new_responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component)
+    if @component.predefined?
+      new_responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component)
+    else
+      responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, :select_ph_range)
+    end
   end
 
 private
