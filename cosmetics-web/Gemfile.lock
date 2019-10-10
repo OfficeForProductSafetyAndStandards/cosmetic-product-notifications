@@ -1,23 +1,4 @@
 PATH
-  remote: vendor/shared-web/dev
-  specs:
-    shared-web-dev (1.0.0)
-      brakeman (= 4.5.1)
-      capybara (= 3.24.0)
-      coveralls (= 0.8.23)
-      debase (= 0.2.2)
-      govuk-lint (= 3.11.2)
-      listen (= 3.1.5)
-      rubocop (= 0.71.0)
-      rubocop-performance (= 1.4.0)
-      ruby-debug-ide (= 0.7.0)
-      selenium-webdriver (= 3.142.3)
-      simplecov (= 0.16.1)
-      simplecov-console (= 0.5.0)
-      slim_lint (= 0.17.0)
-      solargraph (= 0.33.2)
-
-PATH
   remote: vendor/shared-web
   specs:
     shared-web (1.0.0)
@@ -418,20 +399,33 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  brakeman (= 4.5.1)
+  capybara (= 3.24.0)
   cf-app-utils
+  coveralls (= 0.8.23)
+  debase (= 0.2.2)
   factory_bot_rails
+  govuk-lint (= 3.11.2)
   jbuilder (~> 2.9)
+  listen (= 3.1.5)
   pg (~> 1.1)
   puma (~> 3.12)
   pundit
   rails-controller-testing
   rspec-collection_matchers
   rspec-rails
+  rubocop (= 0.71.0)
+  rubocop-performance (= 1.4.0)
   rubocop-rspec
+  ruby-debug-ide (= 0.7.0)
   rubyzip (>= 1.2.1)
+  selenium-webdriver (= 3.142.3)
   shared-web!
-  shared-web-dev!
+  simplecov (= 0.16.1)
+  simplecov-console (= 0.5.0)
   slim-rails
+  slim_lint (= 0.17.0)
+  solargraph (= 0.33.2)
   strong_migrations
   wicked
 
