@@ -197,9 +197,12 @@ private
 
   def update_component_ph
     if @component.update_with_context(component_ph_attributes, :ph_range)
+      alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
       if @component.maximum_ph > 10.0
+        alkaline_list_question.update(applicable: true)
         render_wizard @component
       else
+        alkaline_list_question.trigger_question_elements.destroy_all
         skip_question
       end
     else
