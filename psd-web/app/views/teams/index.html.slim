@@ -1,7 +1,0 @@
-- content_for :page_title, "Your teams"
-.govuk-grid-row
-  .govuk-grid-column-two-thirds-from-desktop
-    h1.govuk-heading-l Your teams
-    ul.govuk-list
-      - @teams.sort_by(&:display_name).each do |team|
-        li: a.govuk-link.govuk-heading-m href=team_path(team) = team.display_name

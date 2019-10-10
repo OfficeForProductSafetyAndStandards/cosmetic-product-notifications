@@ -5,16 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Docker: Attach to PSD",
-            "type": "Ruby",
-            "request": "attach",
-            "cwd": "${workspaceRoot}/psd-web",
-            "remoteHost": "localhost",
-            "remotePort": "1234",
-            "remoteWorkspaceRoot": "/psd-web",
-            "showDebuggerOutput": true,
-        },
-        {
             "name": "Docker: Attach to Cosmetics",
             "type": "Ruby",
             "request": "attach",

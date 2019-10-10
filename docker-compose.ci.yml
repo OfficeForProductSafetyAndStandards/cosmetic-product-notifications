@@ -3,12 +3,12 @@ version: '3'
 services:
   db:
     image: beisopss/db:${TRAVIS_BUILD_NUMBER}
-  
+
   keycloak:
     environment:
       - NOTIFY_API_KEY
     image: beisopss/keycloak:${TRAVIS_BUILD_NUMBER}
-  
+
   antivirus:
     image: beisopss/antivirus:${TRAVIS_BUILD_NUMBER}
 
@@ -34,26 +34,7 @@ services:
     image: beisopss/cosmetics-worker:${TRAVIS_BUILD_NUMBER}
     volumes:
       - ~/bundle-cache:/usr/local/bundle
-  
-  psd-web:
-    command: tail -f /dev/null
-    image: beisopss/psd-web:${TRAVIS_BUILD_NUMBER}
-    volumes:
-      - ~/bundle-cache:/usr/local/bundle
-      - ~/coverage-cache/psd:/psd-web/coverage
-    environment:
-      - CI
-      - TRAVIS
-      - TRAVIS_BRANCH
-      - TRAVIS_JOB_ID
-      - TRAVIS_PULL_REQUEST
-      - NOTIFY_API_KEY
-  psd-worker:
-    command: tail -f /dev/null
-    image: beisopss/psd-worker:${TRAVIS_BUILD_NUMBER}
-    volumes:
-      - ~/bundle-cache:/usr/local/bundle
-  
+
   start_dependencies:
     image: dadarek/wait-for-dependencies
     depends_on:

@@ -1,8 +1,0 @@
-- if @parent.is_a?(Investigation)
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds-from-desktop
-      = render "investigation_heading", investigation: @parent
-= render "business_heading", business: @parent if @parent.is_a?(Business)
-= render "product_heading", product: @parent if @parent.is_a?(Product)
-h2.govuk-heading-m[class="govuk-!-margin-bottom-2"]
-  = title

@@ -1,8 +1,0 @@
-= render "repeatable_info",
-        title: "Upload a product image",
-        scope: :file,
-        model: @investigation,
-        hide_break: true,
-        other_text: "Are there other product images to report?",
-        further_key: :further_product_images do |form|
-  = render "file_page", form: form
