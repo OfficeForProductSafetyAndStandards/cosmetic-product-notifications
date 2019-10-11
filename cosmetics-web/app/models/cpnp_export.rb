@@ -1,5 +1,5 @@
 class CpnpExport
-  include ::Shared::Web::CountriesHelper
+  include CountriesHelper
   include CpnpNotificationProperties
 
   def initialize(xml_file_content, language = "EN")

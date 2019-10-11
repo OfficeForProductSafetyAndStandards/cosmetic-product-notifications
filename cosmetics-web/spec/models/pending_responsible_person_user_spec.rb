@@ -37,7 +37,7 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
                                                     responsible_person: pending_responsible_person.responsible_person)
 
       expect(pending_responsible_person_same_email.save).to be true
-      expect(PendingResponsiblePersonUser.count).to eq(1)
+      expect(described_class.count).to eq(1)
     end
   end
 end
