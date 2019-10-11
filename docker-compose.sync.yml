@@ -43,34 +43,12 @@ services:
       - shared-web-sync:/cosmetics-web/vendor/shared-web:nocopy
       - bundle-cache:/usr/local/bundle
 
-  psd-web:
-    command: bin/rails s -p 3000 -b 0.0.0.0
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env
-      - .env.keycloak.psd
-    volumes:
-      - psd-web-sync:/psd-web:nocopy
-      - shared-web-sync:/psd-web/vendor/shared-web:nocopy
-      - bundle-cache:/usr/local/bundle
-  psd-worker:
-    env_file:
-      - .env
-      - .env.antivirus
-    volumes:
-      - psd-web-sync:/psd-web:nocopy
-      - shared-web-sync:/psd-web/vendor/shared-web:nocopy
-      - bundle-cache:/usr/local/bundle
-
 volumes:
   antivirus-sync:
     external: true
   maintenance-sync:
     external: true
   cosmetics-web-sync:
-    external: true
-  psd-web-sync:
     external: true
   shared-web-sync:
     external: true

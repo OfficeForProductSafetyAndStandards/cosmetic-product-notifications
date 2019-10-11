@@ -92,6 +92,39 @@ RSpec.describe TriggerQuestionsController, type: :controller do
       expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :select_ph_range))
     end
 
+    context "when setting the pH range" do
+      let!(:alkaline_agent_trigger_question) { create(:trigger_question, component: component, question: 'please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators') }
+      let!(:alkaline_agent_trigger_question_element) { create(:trigger_question_element, trigger_question: alkaline_agent_trigger_question) }
+
+      context "when the maximum is above 10" do
+        before do
+          post(:update, params: params.merge(id: :ph, component: { minimum_ph: 10, maximum_ph: 11 }))
+        end
+
+        it "redirects to the alkaline question" do
+          expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :add_alkaline_agents))
+        end
+
+        it "sets the alkaline trigger question to be applicable" do
+          expect(alkaline_agent_trigger_question.reload.applicable).to be true
+        end
+      end
+
+      context "when the maximum is below 10" do
+        before do
+          post(:update, params: params.merge(id: :ph, component: { minimum_ph: 8, maximum_ph: 8.2 }))
+        end
+
+        it "redirects to the hair-loss agents question" do
+          expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :contains_anti_hair_loss_agents))
+        end
+
+        it "deletes the trigger question element" do
+          expect { alkaline_agent_trigger_question_element.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+
     # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/MultipleExpectations
     describe "at add_anti_dandruff_agents step" do

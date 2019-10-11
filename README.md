@@ -8,7 +8,7 @@
 ## Getting Setup
 
 This project includes [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules), so when running `git clone` you need to add the `--recurse-submodules` option.
-If you have already pulled, you can run `git submodule init` and then `git submodule update --recursive` instead. 
+If you have already pulled, you can run `git submodule init` and then `git submodule update --recursive` instead.
 You might also need to run `git submodule update --recursive` if the submodule is updated because of a pull.
 
 Install Docker: https://docs.docker.com/install/.
@@ -28,9 +28,9 @@ Build and start-up the full project:
 
     docker-compose up
 
-Alternatively, you can run the specific component you're interested in using e.g. `docker-compose up psd-web` or `docker-compose up cosmetics-web`.
+Alternatively, you can run the specific component you're interested in using e.g. `docker-compose up cosmetics-web`.
 
-You'll then most likely want to run the [Cosmetics setup steps](cosmetics-web/README.md#getting-setup) or [PSD setup steps](psd-web/README.md#getting-setup).
+You'll then most likely want to run the [Cosmetics setup steps](cosmetics-web/README.md#getting-setup).
 
 When pulling new changes from master, it is sometimes necessary to run the following
 if there are changes to the Docker config:
@@ -39,9 +39,9 @@ if there are changes to the Docker config:
 
 
 ### Design system
-Projects in this repository use the [GOV.UK design system](https://design-system.service.gov.uk). 
-To aid it, the shared-web gem provides an implementation of some of the components - see 
-the [README](shared-web/README.md#design-system-components) for more details. 
+Projects in this repository use the [GOV.UK design system](https://design-system.service.gov.uk).
+To aid it, the shared-web gem provides an implementation of some of the components - see
+the [README](shared-web/README.md#design-system-components) for more details.
 
 ### Mac tips
 
@@ -97,7 +97,7 @@ If you want to update any of the deployed instances, you'll need an account for
 
 We're using AWS to supplement the functionality of GOV.UK PaaS.
 If you want to update any of the deployed instances, you'll need an account - ask someone on the team to invite you.
-If you get an error saying you don't have permission to set something, make sure you have MFA set up. 
+If you get an error saying you don't have permission to set something, make sure you have MFA set up.
 
 
 ## Deployment
@@ -106,7 +106,7 @@ Anything which is merged to `master` (via a Pull Request or push) will trigger t
 [Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
 and cause deployments of the various components to the int space on GOV.UK PaaS.
 
-Deployment to research environment does not currently happen automatically, for details see section "Research" in 
+Deployment to research environment does not currently happen automatically, for details see section "Research" in
 [prototypes](https://regulatorydelivery.atlassian.net/wiki/spaces/PSD/pages/452689949/Prototypes)
 
 Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
@@ -127,7 +127,7 @@ https://github.com/cloudfoundry/cli#downloads and then run the following command
 
 This will log you in and set the correct target organisation.
 The login command without -u -p options will not work in some terminals, in particular git-bash. Passing username and
-password in one line will. 
+password in one line will.
 
 If you need to create a new environment, you can run `cf create-space SPACE-NAME`, otherwise, select the correct space using `cf target -o beis-opss -s SPACE-NAME`.
 
@@ -147,10 +147,6 @@ See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
 #### Cosmetics
 
 See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
-
-#### Product safety database
-
-See [psd-web/README.md](psd-web/README.md#deployment-from-scratch).
 
 #### Other infrastructure
 

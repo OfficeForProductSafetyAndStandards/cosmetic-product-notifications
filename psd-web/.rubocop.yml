@@ -1,2 +1,0 @@
-inherit_gem:
-  shared-web: .rubocop.yml

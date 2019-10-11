@@ -158,11 +158,31 @@ RSpec.describe NanomaterialBuildController, type: :controller do
       end
 
       it "redirects to to the same path as answering no" do
-        confirm_toxicology_notified = params.merge(id: :non_standard_nanomaterial_notified, nano_element: { confirm_toxicology_notified: "not_sure" })
+        confirm_toxicology_notified = params.merge(id: :non_standard_nanomaterial_notified, nano_element: { confirm_toxicology_notified: "not sure" })
 
         post(:update, params: confirm_toxicology_notified)
 
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :notify_your_nanomaterial))
+      end
+
+      context "when completed nanomaterial within bulk journey" do
+        before do
+          # rubocop:disable RSpec/AnyInstance
+          allow_any_instance_of(Notification).to receive(:notification_file_imported?).and_return true
+          # rubocop:enable RSpec/AnyInstance
+
+          allow(controller).to receive(:get_next_nano_element).and_return nil
+        end
+
+        let(:when_products_containing_nanomaterial_can_be_placed_on_market) do
+          params.merge(id: :when_products_containing_nanomaterial_can_be_placed_on_market)
+        end
+
+        it "redirects to additional information" do
+          post(:update, params: when_products_containing_nanomaterial_can_be_placed_on_market)
+
+          expect(response).to redirect_to(responsible_person_notification_additional_information_index_path(responsible_person, notification))
+        end
       end
     end
   end
