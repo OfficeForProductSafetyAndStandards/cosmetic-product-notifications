@@ -49,11 +49,11 @@ You can run the tests with `docker-compose exec cosmetics-web bin/rspec`.
 You can run the ruby linting with `docker-compose exec cosmetics-web bin/rubocop`.
 Running this with the `--auto-correct` flag set will cause rubocop to attempt to fix as many of the issues as it can.
 
-You can run the Slim linting with `docker-compose exec cosmetics-web bin/slim-lint -c .slim-lint.yml app`.
+You can run the Slim linting with `docker-compose exec cosmetics-web bin/slim-lint app`.
 
-You can run the Sass linting with `docker-compose exec cosmetics-web yarn sass-lint -vq -c .sasslint.yml 'app/**/*.scss'`.
+You can run the Sass linting with `docker-compose exec cosmetics-web yarn sass-lint -vq 'app/**/*.scss'`.
 
-You can run the JavaScript linting with `docker-compose exec cosmetics-web yarn eslint -c .eslintrc.yml app config`.
+You can run the JavaScript linting with `docker-compose exec cosmetics-web yarn eslint app config`.
 
 You can run the security vulnerability static analysis with `bin/brakeman --no-pager`.
 

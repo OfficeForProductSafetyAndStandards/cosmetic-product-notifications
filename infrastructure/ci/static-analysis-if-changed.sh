@@ -7,9 +7,9 @@ if [[ $(./infrastructure/ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| ))
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps $COMPONENT echo 'Gems pre-installed'
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d $COMPONENT
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT bin/rubocop
-    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT bin/slim-lint -c .slim-lint.yml app
-    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT yarn eslint -c .eslintrc.yml app config
-    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT yarn sass-lint -vq -c .sasslint.yml 'app/**/*.scss'
+    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT bin/slim-lint app
+    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT yarn eslint app config
+    docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT yarn sass-lint -vq 'app/**/*.scss'
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec $COMPONENT bin/brakeman --no-pager
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
 else
