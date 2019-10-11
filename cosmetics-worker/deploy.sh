@@ -23,7 +23,4 @@ cp -a ./infrastructure/env/. ./cosmetics-web/env/
 mkdir -p ./cosmetics-web/public/assets
 touch ./cosmetics-web/public/assets/.sprockets-manifest-qq.json
 
-rm -rf ./cosmetics-web/vendor/shared-web/
-cp -a ./shared-web ./cosmetics-web/vendor/shared-web
-
 cf push -f ./cosmetics-worker/manifest.yml $( [[ ! ${APP_PREEXISTS} ]] && printf %s '--no-start' )

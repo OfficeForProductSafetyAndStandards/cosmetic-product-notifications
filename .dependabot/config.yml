@@ -40,11 +40,3 @@ update_configs:
   - package_manager: "ruby:bundler"
     directory: "/infrastructure/fluentd"
     update_schedule: "live"
-
-  - package_manager: "ruby:bundler"
-    directory: "/shared-web"
-    update_schedule: "live"
-    default_labels:
-    - dependencies
-    - ruby
-    - fixme

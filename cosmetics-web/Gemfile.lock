@@ -1,7 +1,7 @@
 PATH
-  remote: vendor/shared-web
+  remote: ../../govuk-design-system-rails
   specs:
-    shared-web (1.0.0)
+    govuk-design-system-rails (1.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -102,6 +102,10 @@ GEM
     docile (1.3.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.7.5)
+    dotenv-rails (2.7.5)
+      dotenv (= 2.7.5)
+      railties (>= 3.2, < 6.1)
     elasticsearch (6.8.0)
       elasticsearch-api (= 6.8.0)
       elasticsearch-transport (= 6.8.0)
@@ -393,10 +397,12 @@ DEPENDENCIES
   cf-app-utils
   coveralls (= 0.8.23)
   debase (= 0.2.2)
+  dotenv-rails
   elasticsearch (= 6.8.0)
   elasticsearch-model (= 6.0.0)
   elasticsearch-rails (= 6.0.0)
   factory_bot_rails
+  govuk-design-system-rails!
   govuk-lint (= 3.11.2)
   govuk_notify_rails (= 2.1.0)
   jbuilder (~> 2.9)
@@ -421,7 +427,6 @@ DEPENDENCIES
   rubyzip (>= 1.2.1)
   selenium-webdriver (= 3.142.3)
   sentry-raven (= 2.9.0)
-  shared-web!
   sidekiq (= 5.2.7)
   sidekiq-cron (= 1.1.0)
   simplecov (= 0.16.1)
