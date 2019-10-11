@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ResponsiblePersonNotificationPolicy, type: :policy do
-  subject { ResponsiblePersonNotificationPolicy.new(user, notification) }
+  subject { described_class.new(user, notification) }
 
   let(:user) { create(:user) }
   let(:notification) { create(:notification) }

@@ -69,3 +69,4 @@ module Searchable
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

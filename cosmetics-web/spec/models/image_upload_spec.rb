@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe ImageUpload, type: :model do
-  let(:image_upload) { ImageUpload.create }
+  let(:image_upload) { described_class.create }
   let(:file) { fixture_file_upload("/testImage.png", "image/png") }
 
   before do
-    allow(ImageUpload).to receive(:max_file_size).and_return(10)
+    allow(described_class).to receive(:max_file_size).and_return(10)
   end
 
   after do
-    allow(ImageUpload).to receive(:max_file_size).and_call_original
+    allow(described_class).to receive(:max_file_size).and_call_original
   end
 
   describe "image validation" do

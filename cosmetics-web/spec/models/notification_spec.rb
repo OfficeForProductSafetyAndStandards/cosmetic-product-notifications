@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Notification, type: :model do
   before do
-    notification = Notification.create
+    notification = described_class.create
     allow(notification)
       .to receive(:country_from_code)
       .with('country:NZ').and_return("New Zealand")
