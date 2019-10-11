@@ -1,7 +1,23 @@
 require: rubocop-rspec
 
 inherit_gem:
-  shared-web: .rubocop.yml
+  govuk-lint: configs/rubocop/all.yml
+
+require: rubocop-performance
+
+AllCops:
+  Exclude:
+    - 'app/**/*.axlsx'
+    - 'bin/**/*'
+    - 'coverage/**/*'
+    - 'db/schema.rb'
+    - 'log/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'bin/**/*'
+
+Rails:
+  Enabled: true
 
 RSpec/MultipleExpectations:
   Max: 2

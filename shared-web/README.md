@@ -4,8 +4,6 @@ This folder contains a [Rails engine](https://guides.rubyonrails.org/engines.htm
 
 Features of this engine include:
 - The [GOV.UK Design System](https://design-system.service.gov.uk/)
-- Support for [GOV.UK Notify](https://www.notifications.service.gov.uk/)
-- Various linting tools (e.g. rubocop, slim-lint)
 
 # Installation
 
@@ -23,16 +21,16 @@ yarn add <path to shared web>
 
 # Design System Components
 The [GOV.UK design system](https://design-system.service.gov.uk) provides a reference implementation of its components
-in nunjucks, which are unfortunately not supported on ruby. In lieu of that, we are implementing 
+in nunjucks, which are unfortunately not supported on ruby. In lieu of that, we are implementing
 slim versions of the components that can be used throughout the applications.
 In the future, this could be split off as its own gem.
 
 ## Component implementations
-Component implementations can be found in the [components directory](app/views/components). They try to follow the 
-nunjucks implementations as close as possible. In particular, we are keeping the interface the same (param names etc.) 
+Component implementations can be found in the [components directory](app/views/components). They try to follow the
+nunjucks implementations as close as possible. In particular, we are keeping the interface the same (param names etc.)
 to make translating code between the macros usage and our implementation as close as possible.
 This means that we can use the documentation provided by design system for macro options,
-e.g. see [macro options for radios](https://design-system.service.gov.uk/components/radios/#options-example-default) 
+e.g. see [macro options for radios](https://design-system.service.gov.uk/components/radios/#options-example-default)
 
 Notable differences from nunjucks:
 - we are not allowing unescaped html in `html` attributes. Instead, the expected use-case is to build the required html
@@ -62,7 +60,7 @@ date with the corresponding macros as simple as possible.
 
 ## Gallery
 As a way to showcase the possible use cases, we are providing "gallery" pages. They are based on examples provided
-in the govuk-frontend repo, e.g. [radios examples]( 
+in the govuk-frontend repo, e.g. [radios examples](
 https://github.com/alphagov/govuk-frontend/blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/radios/radios.yaml).
 
 The gallery pages area available at `/components/<component_name>`, and only get mounted in dev mode.

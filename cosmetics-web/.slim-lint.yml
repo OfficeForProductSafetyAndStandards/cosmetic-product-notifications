@@ -24,7 +24,6 @@ linters:
       - 'app/views/layouts/_header.html.slim'
       - 'app/views/layouts/_footer.html.slim'
       - 'app/views/layouts/application.html.slim'
-      - 'vendor/shared-web/app/views/layouts/shared/web/component_gallery.html.slim'
     max: 120
 
   FileLength:

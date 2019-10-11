@@ -8,7 +8,7 @@ This folder also contains the code for the [background worker](../cosmetics-work
 
 The site is written in [Ruby on Rails](https://rubyonrails.org/).
 
-We're using [Slim](http://slim-lang.com/) as our HTML templating language, 
+We're using [Slim](http://slim-lang.com/) as our HTML templating language,
 ES6 JavaScript and [Sass](https://sass-lang.com/) for styling transpiled with webpack.
 
 
@@ -49,11 +49,11 @@ You can run the tests with `docker-compose exec cosmetics-web bin/rspec`.
 You can run the ruby linting with `docker-compose exec cosmetics-web bin/rubocop`.
 Running this with the `--auto-correct` flag set will cause rubocop to attempt to fix as many of the issues as it can.
 
-You can run the Slim linting with `docker-compose exec cosmetics-web bin/slim-lint -c vendor/shared-web/.slim-lint.yml app vendor`.
+You can run the Slim linting with `docker-compose exec cosmetics-web bin/slim-lint -c .slim-lint.yml app vendor`.
 
-You can run the Sass linting with `docker-compose exec cosmetics-web yarn sass-lint -vq -c vendor/shared-web/.sasslint.yml 'app/**/*.scss' 'vendor/**/*.scss'`.
+You can run the Sass linting with `docker-compose exec cosmetics-web yarn sass-lint -vq -c .sasslint.yml 'app/**/*.scss' 'vendor/**/*.scss'`.
 
-You can run the JavaScript linting with `docker-compose exec cosmetics-web yarn eslint -c vendor/shared-web/.eslintrc.yml app config vendor`.
+You can run the JavaScript linting with `docker-compose exec cosmetics-web yarn eslint -c .eslintrc.yml app config vendor`.
 
 You can run the security vulnerability static analysis with `bin/brakeman --no-pager`.
 
@@ -91,7 +91,7 @@ To create an Elasticsearch instance for the current space:
 
 #### Redis
 
-To create a redis instance for the current space. 
+To create a redis instance for the current space.
 
     cf marketplace -s redis
     cf create-service redis tiny-3.2 cosmetics-queue

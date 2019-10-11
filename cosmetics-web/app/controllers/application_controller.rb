@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   include RavenConfigurationConcern
   include DomainConcern
 
-  helper Shared::Web::Engine.helpers
-
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   before_action :set_current_user
