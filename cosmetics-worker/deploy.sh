@@ -9,6 +9,19 @@ set -ex
 #
 # SPACE: the space to which you want to deploy
 
+DOMAIN=cosmetic-product-notifications.service.gov.uk
+if [[ $SPACE == "prod" ]]; then
+    SUBMIT_HOSTNAME=submit
+    SEARCH_HOSTNAME=search
+elif [[ $SPACE == "research" ]]; then
+    DOMAIN=london.cloudapps.digital
+    SUBMIT_HOSTNAME=cosmetics-research
+    SEARCH_HOSTNAME=cosmetics-research
+else
+    SUBMIT_HOSTNAME=$SPACE-submit
+    SEARCH_HOSTNAME=$SPACE-search
+fi
+
 APP=cosmetics-worker
 APP_PREEXISTS=$(cf app $APP && echo 0 || echo 1)
 
@@ -24,3 +37,6 @@ mkdir -p ./cosmetics-web/public/assets
 touch ./cosmetics-web/public/assets/.sprockets-manifest-qq.json
 
 cf push -f ./cosmetics-worker/manifest.yml $( [[ ! ${APP_PREEXISTS} ]] && printf %s '--no-start' )
+
+cf set-env $APP SUBMIT_HOST "$SUBMIT_HOSTNAME.$DOMAIN"
+cf set-env $APP SEARCH_HOST "$SEARCH_HOSTNAME.$DOMAIN"
