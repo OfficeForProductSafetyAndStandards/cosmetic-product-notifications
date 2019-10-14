@@ -34,7 +34,6 @@ class TriggerQuestionsController < ApplicationController
   def update
     case step
     when :contains_anti_dandruff_agents,
-        :select_ph_range,
         :contains_anti_hair_loss_agents,
         :contains_anti_pigmenting_agents,
         :contains_chemical_exfoliating_agents,
@@ -72,6 +71,8 @@ class TriggerQuestionsController < ApplicationController
     when :contains_ethanol,
         :contains_isopropanol
       render_substance_check_with_condition
+    when :select_ph_range
+      update_component_ph_range
     when :ph
       update_component_ph
     else
@@ -192,6 +193,19 @@ private
     when :select_ph_range
       TriggerQuestion.find_or_create_by(component: @component, question: :please_indicate_the_ph)
       TriggerQuestion.find_or_create_by(component: @component, question: :please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators)
+    end
+  end
+
+  def update_component_ph_range
+    if @component.update_with_context({ph: params.fetch(:component, {})[:ph]}, :ph)
+
+      if @component.ph_lower_than_3? || @component.ph_above_10?
+        redirect_to wizard_path(:ph)
+      else
+        skip_question
+      end
+    else
+      re_render_step
     end
   end
 
