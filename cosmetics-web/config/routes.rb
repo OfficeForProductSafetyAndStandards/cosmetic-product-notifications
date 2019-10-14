@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints DomainConstraint.new(ENV.fetch("SEARCH_HOST") || ENV.fetch("COSMETICS_HOST")) do
+  constraints DomainConstraint.new(ENV.fetch("SUBMIT_HOST") || ENV.fetch("COSMETICS_HOST")) do
     root "landing_page#index"
 
     resources :responsible_persons, only: %i[show] do
