@@ -212,5 +212,44 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       expect(notification.components.first.shades.first).to eq("blue, green")
       expect(notification.components.second.shades.first).to eq("pink, lazuli")
     end
+
+
+    context "when the file contains a component with a PH range" do
+      before do
+        notification_file = create(:notification_file, uploaded_file: create_file_blob("testExportWithComponentWithPHRange.zip"))
+
+        analyzer_instance = ReadDataAnalyzer.new(notification_file.uploaded_file)
+        analyzer_instance.metadata
+      end
+
+      let(:notification) { Notification.order(created_at: :asc).last }
+
+      it "imports the minimum PH" do
+        expect(notification.components.first.minimum_ph).to eq(13.0)
+      end
+
+      it "imports the maximum PH" do
+        expect(notification.components.first.maximum_ph).to eq(14.0)
+      end
+    end
+
+    context "when the file contains a component with a single PH value" do
+      before do
+        notification_file = create(:notification_file, uploaded_file: create_file_blob("testExportWithComponentWithSinglePHValue.zip"))
+
+        analyzer_instance = ReadDataAnalyzer.new(notification_file.uploaded_file)
+        analyzer_instance.metadata
+      end
+
+      let(:notification) { Notification.order(created_at: :asc).last }
+
+      it "imports the single PH value as the minimum pH" do
+        expect(notification.components.first.minimum_ph).to eq(2.0)
+      end
+
+      it "imports the single PH value as the maximum pH" do
+        expect(notification.components.first.maximum_ph).to eq(2.0)
+      end
+    end
   end
 end

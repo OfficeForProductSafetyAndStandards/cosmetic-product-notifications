@@ -125,21 +125,6 @@ jobs:
       script: COMPONENT=cosmetics-web ./infrastructure/ci/update-code-coverage.sh
       env: COVERALLS_PARALLEL=true
 
-    - stage: Run regression tests
-      name: Run PSD regression tests
-      script: SERVICE=psd ./infrastructure/ci/run-regression-tests.sh
-      env:
-        - SERVICE_HOSTNAME=int.product-safety-database.service.gov.uk
-        - secure: l+3TZg2akw1wRT4jMsgTZH/0BKG/HfiZeW9DLJFgbGSR5ZhbYffMSUje1oMl7KqfIh4iqQ1Y0wRqGq+9dVkSIP4HBJrV2sg09/1VRt4bw1W52v6HoxPtIxSOUUTs7f8Mo32xFNWjcLVBs2YmxyITRwYazPh1Cr6YHWxAW4dKoqHQiECBQX+XKMHR7+OuJQrV21ciI4wKjpZWaBY6lXRqUI1yLqZXHxgkRd/TDv8tVgChkbIkd8bsGzQhbBY20xTSfs1iXXIOttQ6T6aKJDr669kEsL/N2KMOkqmM3BxjdHk1otU0j13K8EIoJeso09ASL9zgH/b57DFdqgSI6hXCKdLIbKZIDR5xtZWIB/7KYae9pRePmDQwPma2UkcR3tR6TltKYXqkYW0Svg5tkQUOCuh8BmM9GZwJcnWcDYvB97EjKBJhFh+5ZVS/yKMEW3X5X1AJAXAxBRN8dEg4rOla9T8P9/6sN52+UHbt+TKJia8eSzFx4biNrAyqzo5h4pLActrzBzBbawKJ4eF0xz8eA5sVtptba6grJf8li/Oy3P7Odf3hTFw5fO044M+4clrns0CAHHlHI8vsXQNGHmfIhRpTO4KW79xmp4b7E3D6fgoMRjBqdaf8KOz2zP6HJTT61tuq0oiCPxa13tgKAJvmBFo8h4L8t71X0Cf9DqGH4L8= # BASIC_AUTH_USERNAME
-        - secure: Qvy8+OKDL3258MiVdCzP4QNekQMAWaVAlPl3C9PxhIAmQr+WFMFTMwUHOrM3cHpwFtmzJGx7VCT3V3oO+12GEqVxPYjRLfjKcCKr3kw/4jFDWGxX6JaEfSFEcNkEJasE3b3sijxDZf6kYmxOdGheikq+W1ek1PKn8HtAYGWgRwh46F+vvDE2kkRHydRWo8z3J6U/BApamNHJg01pu5SO6wqlMhQjl3/t+M3iamXfi+HqMRpdH6cW3WyIvANXo210A8biz1d0lUoD70MWSDCg+Nv8U82/3c54Fipg5TRpE8nH/k1LPJ1pIKTcZoJtGqMEvBd1av5q/jIvw3TO1GycN29Pz8O6eKg9/pYxSt+sI89Gs3Q5bpp2ffOuc9zcWsVywKZTN4JtFZnDHhKfW3WASRY2S++ndVwNUA52FMI/PbKgrtRwmndpLAcXQVt79KDm/8bFD8qqZ4EwtsCToakGxEiyZQQDZMlA75l32JdFzVcbztgo3ftPas7Bi2x80YTCQwcCmHn2yK/FovgHPPQLyEwvkiLoGw6Z5V/vX+PGm2Z2/CKtordgv36M55pdkaWGI5DM8M+s8RVFO5jeyMydDnlzcuuY3QSw9zY5akzqsbq+1q4SJIqStF0qn+LcEzo9IFtMgfoLpmlWmqnCFOopfJI3Sk+9EqUU+tfOJHKZeJg= # BASIC_AUTH_PASSWORD
-    - name: Run Cosmetics regression tests
-      script: SERVICE=cosmetics ./infrastructure/ci/run-regression-tests.sh
-      env:
-        - SERVICE_HOSTNAME=int-submit.cosmetic-product-notifications.service.gov.uk
-        - secure: YlWZqs3cOPGcxNNM3HRM5H6YLjkbtcspeTJ1M6pEOblVXs3HoFxnjkGlrju3n/jxsf5Gry7sTpq6MGoVjIeIsDm8H67BL1kBc+KaIDY6CBUCWUzTnwpIodBQP0r3UFT6RhNth+zLZAgbiyGF8AxIyH0m5QUhbYxCiUZng9+VuhXzGH4Deq3jat+vpgHgW9qAVnO94RENI61KIRqUQFLi4LdoMTfRfaRzrVw6sZ9bpUbNJYmHnZ1S2uJzDiRLUyV9UVp+kcGW2fXwt0myMKS+rnn4f+aF0B8zbZe5hUeENZin0N84tkJGzOWAgOtPJo11955Ds8HD/iYNNYwKKLWhMGHYU36JEbQYNbYe8m2xBHCXMbrKHDN2X6Jzqx7zMbcXGvrymwz2gAcxUb20CjMEkWosBgSkOsFmA3zgQJA7yhcJjAiURkbiHjZiVisNK7VmgsaqR/JZYtG1Bq+UVUgw4ZmPGFdklbkFHd61gTEzManX5YDaQ9FfAPAvzwJiGj1NtbubatzHOkUIy1y/Pq9nd70zMpQ+qIUn6tYDRyX7M6zlXGhFk1DxAIUVqhm2oR8TNmUGYw6DzR/j+XtxYcBHSR0ZaenqMsutwvdM1/44+pCHQIDgy19dkToz/H9db3ISPGqwjE9qizMCguSvWzGSs0cuPDm1vsPMJXrbF2gt9N8= # BASIC_AUTH_USERNAME
-        - secure: ddNnxBjM4tktg/Y5nFtZFjHBO8c/9amrlRIuzrvkxNDTW7OfQCHklLWikkApB3QfZHU+lX/SqI7+aAVt/Bazr97gfo4pmdlR2LEqylBPR9MEbb/UDou9n/ziSmQI2mD46YU7ozMLIqynW7dJWb19DfPfBHdeAHPXdXtTmkMuWJ6fvG00YfgOUxeCU1myOxbpz2Lp+YSDcQpKiNk77z+7CFKR/3L0woiblDoO8vXDdqR7Krh66wg1qqoqhbYNljwebTj9u6Q+mfJjkKVOAf806GiAZL69jQ8aySOtL3H+9kCRtEXv2DO3NKumi7NS/ZhrOxQzQ4w3l7fOF7ooyafHg8vSegUURZH/NJXJyiTQ8YqCXOQ5mxizV4OCxcXtoea9JaJEmjnwoESPrqfr0PpNaFywUVNxkp5+jh/+LPfQMd0DHnUIxBGzAI7NHpWrjBphuYSq7ZomiiCygXcU8ua6lVOqX1dFcnGLxMTibiUvQioXeldPXH3wbo9roBqvE/fkV+OUaC1n7Xs80npavMHYSsDq5eYllahoTw14kbqFC4j7ADWGQ8Edgg1DiGKSXDOALRwGmtQUJyltJFrRcvDFyBE6Ws0ZuUZqKHqaWFChv2XyoXQoG8m2tkDqDgtINsb2oL5ce3pXHlY+2fw5pmV0OHupjuwEnTRAJTz4SA2oxKs= # BASIC_AUTH_PASSWORD
-
-
 notifications:
   webhooks: https://coveralls.io/webhook
 

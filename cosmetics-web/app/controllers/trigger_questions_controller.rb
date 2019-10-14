@@ -4,7 +4,7 @@ class TriggerQuestionsController < ApplicationController
   include TriggerRulesHelper
 
   steps :contains_anti_dandruff_agents, :add_anti_dandruff_agents,
-        :select_ph_range, :exact_ph, :add_alkaline_agents,
+        :select_ph_range, :ph, :add_alkaline_agents,
         :contains_anti_hair_loss_agents, :add_anti_hair_loss_agents,
         :contains_anti_pigmenting_agents, :add_anti_pigmenting_agents,
         :contains_chemical_exfoliating_agents, :add_chemical_exfoliating_agents,
@@ -72,8 +72,8 @@ class TriggerQuestionsController < ApplicationController
     when :contains_ethanol,
         :contains_isopropanol
       render_substance_check_with_condition
-    when :exact_ph
-      render_exact_ph
+    when :ph
+      update_component_ph
     else
       redirect_to finish_wizard_path
     end
@@ -95,8 +95,12 @@ class TriggerQuestionsController < ApplicationController
     if step == steps.first
       return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_frame_formulation)
 
-    elsif step == :select_ph_range && @component.predefined?
-      return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
+    elsif step == :select_ph_range
+      if @component.predefined?
+        return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
+      else
+        return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
+      end
     end
 
     previous_step = get_previous_step
@@ -181,8 +185,6 @@ private
         :add_fluoride_compounds,
         :add_essential_oils
       populate_answers_for_list
-    when :exact_ph
-      populate_question_with_single_answer :ph
     when :contains_ethanol
       populate_question_with_single_answer :ethanol
     when :contains_isopropanol
@@ -193,27 +195,24 @@ private
     end
   end
 
-  def render_exact_ph
-    if @question.update_with_context(question_params, @step)
-      render_valid_exact_ph(@question.trigger_question_elements.first.answer.to_f)
+  def update_component_ph
+    if @component.update_with_context(component_ph_attributes, :ph_range)
+      alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
+      if @component.maximum_ph > 10.0
+        alkaline_list_question.update(applicable: true)
+        render_wizard @component
+      else
+        alkaline_list_question.trigger_question_elements.destroy_all
+        skip_question
+      end
     else
       re_render_step
     end
   end
 
-  # rubocop:disable Naming/UncommunicativeMethodParamName
-  def render_valid_exact_ph(ph)
-    alkaline_list_question = @component.trigger_questions.where(question: get_question_for_step(:add_alkaline_agents)).first
-
-    alkaline_list_question.update(applicable: ph > 10)
-    if alkaline_list_question.applicable
-      render_wizard @component
-    else
-      alkaline_list_question.trigger_question_elements.destroy_all
-      skip_question
-    end
+  def component_ph_attributes
+    params.require(:component).permit(:minimum_ph, :maximum_ph)
   end
-  # rubocop:enable Naming/UncommunicativeMethodParamName
 
   def render_substance_check
     @question.update(question_params)
@@ -267,7 +266,7 @@ private
     case step
     when :contains_anti_dandruff_agents
       :select_ph_range
-    when :select_ph_range, :exact_ph
+    when :select_ph_range, :ph
       :contains_anti_hair_loss_agents
     when :contains_anti_hair_loss_agents
       :contains_anti_pigmenting_agents
@@ -340,7 +339,7 @@ private
     case step
     when :contains_anti_dandruff_agents, :add_anti_dandruff_agents
       :please_specify_the_inci_name_and_concentration_of_the_antidandruff_agents_if_antidandruff_agents_are_not_present_in_the_cosmetic_product_then_not_applicable_must_be_checked
-    when :select_ph_range, :exact_ph
+    when :select_ph_range, :ph
       :please_indicate_the_ph
     when :add_alkaline_agents
       :please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators

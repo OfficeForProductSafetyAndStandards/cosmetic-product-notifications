@@ -72,7 +72,13 @@ private
   end
 
   def nano_element_params
-    params.fetch(:nano_element, {}).permit(:inci_name).merge(purpose_params)
+    params.fetch(:nano_element, {}).permit(
+      :inci_name,
+      :confirm_restrictions,
+      :purposes,
+      :confirm_usage,
+      :confirm_toxicology_notified
+    )
   end
 
   def purpose_params
@@ -83,7 +89,7 @@ private
   end
 
   def render_select_purposes_step
-    if @nano_element.update_with_context(nano_element_params, step)
+    if @nano_element.update_with_context(purpose_params, step)
       render_wizard @nano_element
     else
       render step
@@ -92,6 +98,8 @@ private
 
   def render_confirm_restrictions_step
     confirm_restrictions = params.dig(:nano_element, :confirm_restrictions)
+
+    @nano_element.update_with_context(nano_element_params, step)
     case confirm_restrictions
     when "yes"
       render_wizard @nano_element
@@ -105,6 +113,8 @@ private
 
   def render_confirm_usage_step
     confirm_usage = params.dig(:nano_element, :confirm_usage)
+
+    @nano_element.update_with_context(nano_element_params, step)
     case confirm_usage
     when "yes"
       redirect_to finish_wizard_path
@@ -119,6 +129,7 @@ private
   def render_non_standard_nanomaterial_step
     confirm_toxicology_notified = params.dig(:nano_element, :confirm_toxicology_notified)
 
+    @nano_element.update_with_context(nano_element_params, step)
     case confirm_toxicology_notified
     when "yes"
       redirect_to wizard_path(:when_products_containing_nanomaterial_can_be_placed_on_market)

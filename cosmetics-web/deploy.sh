@@ -44,8 +44,15 @@ cp -a ./infrastructure/env/. ./cosmetics-web/env/
 rm -rf ./cosmetics-web/vendor/shared-web/
 cp -a ./shared-web/. ./cosmetics-web/vendor/shared-web/
 
+# Set the manifest file depending on PaaS enviornment
+if [[ $SPACE == "prod" ]]; then
+    MANIFEST_FILE=./cosmetics-web/manifest.prod.yml
+else
+    MANIFEST_FILE=./cosmetics-web/manifest.yml
+fi
+
 # Deploy the new app, set the hostnames and start the app
-cf push $NEW_APP -f ./cosmetics-web/manifest.yml -d $DOMAIN --hostname $NEW_SUBMIT_HOSTNAME --no-start
+cf push $NEW_APP -f $MANIFEST_FILE -d $DOMAIN --hostname $NEW_SUBMIT_HOSTNAME --no-start
 cf set-env $NEW_APP COSMETICS_HOST "$NEW_SUBMIT_HOSTNAME.$DOMAIN"
 cf set-env $NEW_APP SUBMIT_HOST "$NEW_SUBMIT_HOSTNAME.$DOMAIN"
 cf set-env $NEW_APP SEARCH_HOST "$NEW_SEARCH_HOSTNAME.$DOMAIN"
@@ -62,26 +69,6 @@ cf scale $NEW_APP -f -m 512M
 if [[ ! $APP_PREEXISTS ]]; then
     # We don't need to go any further
     exit 0
-fi
-
-# Run smoke tests before switching over to the new app
-if [[ $SPACE != "prod" ]]; then
-    echo "Running smoke tests."
-    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    docker pull beisopss/opss-functional-tests
-    docker run beisopss/opss-functional-tests mvn --quiet --file ./cosmetics/pom.xml test -Dcucumber.options="--tags @smoke" \
-      -Dhostname=$NEW_SUBMIT_HOSTNAME.$DOMAIN \
-      -Dauth.username=${COS_BASIC_AUTH_USERNAME} -Dauth.password=${COS_BASIC_AUTH_PASSWORD} \
-      -Daccount.rp.username=${RP_ACCOUNT_USERNAME} -Daccount.rp.password=${RP_ACCOUNT_PASSWORD} \
-      -Daccount.npis.username=${NPIS_ACCOUNT_USERNAME} -Daccount.npis.password=${NPIS_ACCOUNT_PASSWORD}
-fi
-SMOKE_TEST_RESULT=$?
-
-if [[ $SMOKE_TEST_RESULT -ne 0 ]]; then
-    # Delete the temporary deployment and exit
-    echo "Smoke tests failed. Aborting deployment."
-    cf delete -f $NEW_APP
-    exit 1
 fi
 
 # Unmap the temporary hostname(s) from the new app
