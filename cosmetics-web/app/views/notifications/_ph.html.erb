@@ -1,0 +1,17 @@
+<tr class="govuk-table__row">
+  <% if component.minimum_ph == component.maximum_ph %>
+    <th class="govuk-table__header" scope="row">
+      pH
+    </th>
+    <td class="govuk-table__cell">
+      <%= component.minimum_ph %>
+    </td>
+  <% else %>
+    <th class="govuk-table__header" scope="row">
+      <%= pH range %>
+    </th>
+    <td class="govuk-table__cell">
+      <%= component.minimum_ph %> to <%= component.maximum_ph %>
+    </td>
+  <% end %>
+</tr>
