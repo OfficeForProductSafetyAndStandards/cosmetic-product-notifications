@@ -123,6 +123,14 @@ RSpec.describe Component, type: :model do
       end
     end
 
+    context "when explicitly set to not given" do
+      before { predefined_component.ph = 'not_given'}
+
+      it "is valid" do
+        expect(predefined_component).to be_valid
+      end
+    end
+
     context "when set to any other value" do
       it "raises an argument error" do
         expect { predefined_component.ph = 'zzzzzz'}.to raise_exception(ArgumentError)

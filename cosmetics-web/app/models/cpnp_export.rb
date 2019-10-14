@@ -77,6 +77,7 @@ class CpnpExport
                        special_applicator: special_applicator(component_node),
                        acute_poisoning_info: acute_poisoning_info(component_node),
                        state: "component_complete",
+                       ph: ph_answer(component_node),
                        minimum_ph: minimum_ph(component_node) || component_ph(component_node),
                        maximum_ph: maximum_ph(component_node) || component_ph(component_node))
     end
@@ -265,6 +266,27 @@ private
 
   def component_ph(component_node)
     answer(component_node, question_id: '100004', element_id: '100005')
+  end
+
+  def ph_lower_than_3_or_higher_than_10(component_node)
+    answer(component_node, question_id: '100003', element_id: '100004')
+  end
+
+  def ph_answer(component_node)
+    min_ph = minimum_ph(component_node) || component_ph(component_node)
+    max_ph = maximum_ph(component_node) || component_ph(component_node)
+
+    if min_ph && min_ph.to_f < 3
+      "lower_than_3"
+    elsif max_ph && max_ph.to_f > 10
+      "above_10"
+    else
+      if ph_lower_than_3_or_higher_than_10(component_node) == "N"
+        "between_3_and_10"
+      else
+        "not_given"
+      end
+    end
   end
 
   def answer(component_node, question_id:, element_id:)

@@ -107,3 +107,4 @@ en:
       lower_than_3: "Below 3"
       above_10: "Above 10"
       not_applicable: "No pH"
+      not_given: "Not given"
