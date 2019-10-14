@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PubliclyAccessibleController, type: :controller do
-  controller(PubliclyAccessibleController) do
+  controller(described_class) do
     def index
       render body: nil
     end
