@@ -280,12 +280,10 @@ private
       "lower_than_3"
     elsif max_ph && max_ph.to_f > 10
       "above_10"
-    else
-      if ph_lower_than_3_or_higher_than_10(component_node) == "N"
+    elsif ph_lower_than_3_or_higher_than_10(component_node) == "N"
         "between_3_and_10"
-      else
-        "not_given"
-      end
+    else
+      "not_given"
     end
   end
 

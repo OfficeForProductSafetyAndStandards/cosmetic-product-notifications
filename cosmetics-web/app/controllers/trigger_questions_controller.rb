@@ -197,7 +197,7 @@ private
   end
 
   def update_component_ph_range
-    if @component.update_with_context({ph: params.fetch(:component, {})[:ph]}, :ph)
+    if @component.update_with_context({ ph: params.fetch(:component, {})[:ph] }, :ph)
 
       if @component.ph_lower_than_3? || @component.ph_above_10?
         redirect_to wizard_path(:ph)

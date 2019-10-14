@@ -76,7 +76,7 @@ RSpec.describe Component, type: :model do
 
   describe "#ph" do
     context "when not specified" do
-      before { predefined_component.ph = nil}
+      before { predefined_component.ph = nil }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -84,7 +84,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when not specified but with the :ph context" do
-      before { predefined_component.ph = nil}
+      before { predefined_component.ph = nil }
 
       it "is not valid" do
         expect(predefined_component.valid?(:ph)).to be false
@@ -92,7 +92,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when not applicable" do
-      before { predefined_component.ph = 'not_applicable'}
+      before { predefined_component.ph = 'not_applicable' }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -100,7 +100,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when lower than 3" do
-      before { predefined_component.ph = 'lower_than_3'}
+      before { predefined_component.ph = 'lower_than_3' }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -116,7 +116,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when above 10" do
-      before { predefined_component.ph = 'above_10'}
+      before { predefined_component.ph = 'above_10' }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -124,7 +124,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when explicitly set to not given" do
-      before { predefined_component.ph = 'not_given'}
+      before { predefined_component.ph = 'not_given' }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -133,7 +133,7 @@ RSpec.describe Component, type: :model do
 
     context "when set to any other value" do
       it "raises an argument error" do
-        expect { predefined_component.ph = 'zzzzzz'}.to raise_exception(ArgumentError)
+        expect { predefined_component.ph = 'zzzzzz' }.to raise_exception(ArgumentError)
       end
     end
   end
