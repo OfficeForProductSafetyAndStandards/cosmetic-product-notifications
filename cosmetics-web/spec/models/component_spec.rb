@@ -108,7 +108,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when between 3 and 10" do
-      before { predefined_component.ph = 'between_3_and_10'}
+      before { predefined_component.ph = 'between_3_and_10' }
 
       it "is valid" do
         expect(predefined_component).to be_valid

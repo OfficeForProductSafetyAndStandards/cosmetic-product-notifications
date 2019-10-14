@@ -93,9 +93,6 @@ RSpec.describe TriggerQuestionsController, type: :controller do
     end
 
     context "when setting the pH answer" do
-      let!(:alkaline_agent_trigger_question) { create(:trigger_question, component: component, question: 'please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators') }
-      let!(:alkaline_agent_trigger_question_element) { create(:trigger_question_element, trigger_question: alkaline_agent_trigger_question) }
-
       context "when the answer is 'It does not have a pH'" do
         before do
           post(:update, params: params.merge(id: :select_ph_range, component: { ph: 'not_applicable' }))
