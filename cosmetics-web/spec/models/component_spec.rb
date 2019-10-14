@@ -83,6 +83,14 @@ RSpec.describe Component, type: :model do
       end
     end
 
+    context "when not specified but with the :ph context" do
+      before { predefined_component.ph = nil}
+
+      it "is not valid" do
+        expect(predefined_component.valid?(:ph)).to be false
+      end
+    end
+
     context "when not applicable" do
       before { predefined_component.ph = 'not_applicable'}
 

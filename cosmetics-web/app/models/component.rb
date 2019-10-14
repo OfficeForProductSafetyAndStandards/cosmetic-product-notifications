@@ -21,7 +21,7 @@ class Component < ApplicationRecord
     lower_than_3: 'lower_than_3',
     between_3_and_10: 'between_3_and_10',
     above_10: 'above_10'
-  }
+  }, _prefix: true
 
   accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
   accepts_nested_attributes_for :nano_material
@@ -33,6 +33,7 @@ class Component < ApplicationRecord
   validates :cmrs, presence: true, on: :add_cmrs
   validates :notification_type, presence: true, on: :select_formulation_type
 
+  validates :ph, presence: { message: "Select the pH range of the product" }, on: :ph
 
   validates :maximum_ph, presence: { message: "Enter a maximum pH" }, if: -> { minimum_ph.present? }
   validates :minimum_ph, presence: { message: "Enter a minimum pH" }, if: -> { maximum_ph.present? }
