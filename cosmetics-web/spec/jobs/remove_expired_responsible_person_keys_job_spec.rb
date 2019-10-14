@@ -16,13 +16,13 @@ RSpec.describe RemoveExpiredResponsiblePersonKeysJob, type: :job do
 
   describe "#perform" do
     it "deletes an expired email verification key" do
-      RemoveExpiredResponsiblePersonKeysJob.perform_now
+      described_class.perform_now
       expect(EmailVerificationKey.all).to include(email_verification_key)
       expect(EmailVerificationKey.all).not_to include(expired_email_verification_key)
     end
 
     it "deletes an expired pending responsible person user" do
-      RemoveExpiredResponsiblePersonKeysJob.perform_now
+      described_class.perform_now
       expect(PendingResponsiblePersonUser.all).to include(pending_responsible_person_user)
       expect(PendingResponsiblePersonUser.all).not_to include(expired_pending_responsible_person_user)
     end

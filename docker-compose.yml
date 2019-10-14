@@ -66,7 +66,6 @@ services:
     volumes:
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/cosmetics-web:/cosmetics-web
-      - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
       - bundle-cache:/usr/local/bundle
     depends_on:
       - db
@@ -84,7 +83,6 @@ services:
     volumes:
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/cosmetics-web:/cosmetics-web
-      - ${PWD-.}/shared-web:/cosmetics-web/vendor/shared-web
       - bundle-cache:/usr/local/bundle
     depends_on:
       - antivirus

@@ -38,11 +38,6 @@ if there are changes to the Docker config:
     docker-compose down && docker-compose build && docker-compose up
 
 
-### Design system
-Projects in this repository use the [GOV.UK design system](https://design-system.service.gov.uk).
-To aid it, the shared-web gem provides an implementation of some of the components - see
-the [README](shared-web/README.md#design-system-components) for more details.
-
 ### Mac tips
 
 [Docker shared volume performance is poor on Mac](https://docs.docker.com/docker-for-mac/osxfs-caching/) which can significantly affect e.g. asset compilation.

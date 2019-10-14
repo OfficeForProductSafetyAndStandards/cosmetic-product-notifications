@@ -2,7 +2,7 @@ class Notification < ApplicationRecord
   include Searchable
 
   include AASM
-  include Shared::Web::CountriesHelper
+  include CountriesHelper
 
   belongs_to :responsible_person
   has_many :components, dependent: :destroy
