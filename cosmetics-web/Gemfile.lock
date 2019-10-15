@@ -403,7 +403,7 @@ DEPENDENCIES
   cf-app-utils
   coveralls (= 0.8.23)
   debase (= 0.2.2)
-  dotenv-rails
+  dotenv-rails (= 2.7.5)
   elasticsearch (= 6.8.0)
   elasticsearch-model (= 6.0.0)
   elasticsearch-rails (= 6.0.0)
@@ -418,7 +418,7 @@ DEPENDENCIES
   mini_magick (= 4.9.3)
   okcomputer (= 1.17.4)
   pg (~> 1.1)
-  pry
+  pry (= 0.12.2)
   puma (~> 3.12)
   pundit
   rails (= 5.2.3)
