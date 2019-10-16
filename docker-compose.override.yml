@@ -17,9 +17,9 @@ services:
       - ${PWD-.}/keycloak/configuration:/opt/jboss/keycloak/configuration
 
   cosmetics-web:
-    command: bin/rails s -p 3002 -b 0.0.0.0
+    command: bin/rails s -p 3000 -b 0.0.0.0
     ports:
-      - "3002:3002"
+      - "3000:3000"
     env_file:
       - .env
       - .env.keycloak.cosmetics
