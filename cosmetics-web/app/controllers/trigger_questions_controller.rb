@@ -197,15 +197,12 @@ private
   end
 
   def update_component_ph_range
-    if @component.update_with_context({ ph: params.fetch(:component, {})[:ph] }, :ph)
+    return re_render_step unless @component.update_with_context(ph_param, :ph)
 
-      if @component.ph_lower_than_3? || @component.ph_above_10?
-        redirect_to wizard_path(:ph)
-      else
-        skip_question
-      end
+    if @component.ph_range_not_required?
+      skip_question
     else
-      re_render_step
+      redirect_to wizard_path(:ph)
     end
   end
 
@@ -398,5 +395,9 @@ private
     return {} if params[:trigger_question].blank?
 
     params.require(:trigger_question).permit(:applicable, trigger_question_elements_attributes: %i[id answer answer_order element_order element])
+  end
+
+  def ph_param
+    { ph: params.fetch(:component, {})[:ph] }
   end
 end

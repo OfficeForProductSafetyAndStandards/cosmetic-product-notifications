@@ -133,6 +133,10 @@ class Component < ApplicationRecord
     super(reject_non_decimal_strings(value))
   end
 
+  def ph_range_not_required?
+    ph_between_3_and_10? || ph_not_applicable?
+  end
+
 
 private
 
