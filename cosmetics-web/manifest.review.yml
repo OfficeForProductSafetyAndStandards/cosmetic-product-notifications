@@ -1,0 +1,30 @@
+---
+applications:
+- name: ((cosmetics-instance-name))-web
+  memory: 1G # Also see deploy.sh
+  instances: 1
+  buildpacks:
+    - ruby_buildpack
+  path: .
+  routes:
+    - route: ((search-host))
+    - route: ((submit-host))
+  env:
+    SEARCH_HOST: ((search-host))
+    SUBMIT_HOST: ((submit-host))
+    COSMETICS_HOST: ((cosmetics-host))
+    ES_NAMESPACE: ((cosmetics-instance-name))
+  command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate &&  bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
+  stack: cflinuxfs3
+  services:
+    - ((cosmetics-web-database))
+    - cosmetics-elasticsearch
+    - cosmetics-queue
+    - opss-log-drain
+    - cosmetics-aws-env
+    - cosmetics-auth-env
+    - cosmetics-health-env
+    - cosmetics-keycloak-env
+    - cosmetics-rails-env
+    - cosmetics-sentry-env
+    - cosmetics-sidekiq-env
