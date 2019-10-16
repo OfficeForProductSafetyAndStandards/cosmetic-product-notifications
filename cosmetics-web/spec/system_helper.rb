@@ -2,7 +2,7 @@ require "capybara/rspec"
 require "selenium-webdriver"
 
 ENV["HTTP_HOST"] = "localhost"
-ENV["HTTP_PORT"] = "3003"
+ENV["HTTP_PORT"] = "3000"
 
 ENV["SUBMIT_HOST"] = "localhost"
 ENV["SEARCH_HOST"] = "localhost"
