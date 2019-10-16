@@ -1,6 +1,8 @@
 sudo: required
 
-language: generic
+language: ruby
+rvm:
+  - 2.5.5
 
 services:
   - docker
@@ -39,13 +41,14 @@ jobs:
         - mkdir -p ~/coverage-cache/cosmetics
       install:
         - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./infrastructure/ci/build-docker-images.sh
-
+      script: echo "Built"
     - stage: Test
-      name: Cosmetics Tests
+      name: Tests
       script: COMPONENT=cosmetics-web ./infrastructure/ci/test-if-changed.sh
       env: *test_env
-    - name: Cosmetics Static Analysis
-      script: COMPONENT=cosmetics-web ./infrastructure/ci/static-analysis-if-changed.sh
+    - name: Static analysis
+      install: cd cosmetics-web && bundle install && yarn install && cd ..
+      script: ./infrastructure/ci/static-analysis.sh
 
     - stage: Deploy to int
       name: Deploy Keycloak
