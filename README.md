@@ -112,6 +112,22 @@ Anything merged into the branch `prod` (only via a Pull Request) will cause Trav
 space.
 Please only do this if you are confident that this is a stable commit.
 
+### Review applications
+
+In order to make PR review process fast and independent, there is possibility to create
+short lived environment for given change. In order to do start your environment, run
+`REVIEW_INSTANCE_NAME=ticket-123 ./cosmetics-web/deploy-review.sh`, where `ticket-123` is desired name of review app.
+
+This will create 2 urls:
+* `https://cosmetics-ticket-123-submit-web.london.cloudapps.digital`
+* `https://cosmetics-ticket-123-search-web.london.cloudapps.digital`
+
+And 2 applications (db is shared):
+* cosmetics-ticket-123-web
+* cosmetics-ticket-123-worker
+
+By default, database is shared with all review apps, but it can be overriden by setting `DB_NAME` env variable.
+
 ### Deployment from scratch
 
 Once you have a GOV.UK PaaS account as mentioned above, you should install the Cloud Foundry CLI (`cf`) from
