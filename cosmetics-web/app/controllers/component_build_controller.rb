@@ -2,7 +2,11 @@ class ComponentBuildController < ApplicationController
   include Wicked::Wizard
   include CategoryHelper
   include ManualNotificationConcern
+  include ComponentBuildHelper
 
+  # WARN: Must be in this order. There's some hacks used to manipulate the
+  # order which assume this declared ordering! Changing the order of the steps
+  # may affect the branching in unexpected ways.
   steps :add_component_name,
         :number_of_shades,
         :add_shades,
@@ -80,31 +84,6 @@ class ComponentBuildController < ApplicationController
       redirect_to wizard_path(steps.first, component_id: @component.id)
     else
       redirect_to wizard_path(:number_of_shades, component_id: @component.id)
-    end
-  end
-
-  def previous_wizard_path
-    previous_step = get_previous_step
-    previous_step = previous_step(previous_step) if skip_step?(previous_step)
-
-    if step == :add_component_name
-      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
-    elsif step == :number_of_shades && !@component.notification.is_multicomponent?
-      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :single_or_multi_component)
-    elsif step == :select_category && @category.present?
-      wizard_path(:select_category, category: Component.get_parent_category(@category))
-    elsif previous_step.present?
-      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
-    else
-      super
-    end
-  end
-
-  def finish_wizard_path
-    if @component.predefined?
-      new_responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component)
-    else
-      responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, :select_ph_range)
     end
   end
 
@@ -271,10 +250,11 @@ private
 
     if @component.predefined?
       @component.formulation_file.delete if @component.formulation_file.attached?
-      jump_to(next_step(:upload_formulation))
+      jump_to(next_step(:upload_formulation)) # Intended target page is select_frame_formulation - assuming the step order declared above doesn't change!
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
     end
+
     render_wizard @component
   end
 
@@ -292,13 +272,18 @@ private
   end
 
   def update_contains_poisonous_ingredients
-    if params.fetch(:component, {})[:contains_poisonous_ingredients].present?
-      @component.update_attribute(:contains_poisonous_ingredients, params[:component][:contains_poisonous_ingredients])
-
-      redirect_to responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, :select_ph_range)
-    else
+    unless params.fetch(:component, {})[:contains_poisonous_ingredients].present?
       @component.errors.add :contains_poisonous_ingredients, "Select whether the product contains any poisonous ingredients"
       render :contains_poisonous_ingredients
+      return
+    end
+
+    @component.update_attribute(:contains_poisonous_ingredients, params[:component][:contains_poisonous_ingredients])
+
+    if @component.contains_poisonous_ingredients?
+      redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
+    else
+      redirect_to finish_wizard_path
     end
   end
 

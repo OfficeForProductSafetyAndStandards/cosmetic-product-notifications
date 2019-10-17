@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe TriggerQuestionsController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
-  let(:notification) { create(:notification, components: [create(:component)], responsible_person: responsible_person) }
+  let(:component) { create(:component, notification_type: component_type, contains_poisonous_ingredients: contains_poisonous_ingredients) }
+  let(:notification) { create(:notification, components: [component], responsible_person: responsible_person) }
   let(:multi_component_notification) { create(:notification, components: [create(:component), create(:component)], responsible_person: responsible_person) }
-  let(:component) { notification.components.first }
+  let(:component_type) { nil }
+  let(:contains_poisonous_ingredients) { nil }
 
   let(:params) {
     {
@@ -68,6 +70,42 @@ RSpec.describe TriggerQuestionsController, type: :controller do
       get(:show, params: params.merge(id: :add_anti_dandruff_agents))
       expect(assigns(:question).trigger_question_elements).to have(20).items
       expect(assigns(:question).trigger_question_elements).to all(have_attributes(answer: be_nil))
+    end
+
+    describe "back link" do
+      render_views
+
+      context "when on the first step page" do
+        before { get(:show, params: params.merge(id: :contains_anti_dandruff_agents)) }
+
+        context "when the component is of predefined formulation" do
+          let(:component_type) { "predefined" }
+
+          context "when the component contains poisonous ingredients" do
+            let(:contains_poisonous_ingredients) { true }
+
+            it "links to the upload formulation page" do
+              expect(response.body).to match(/\<a class="govuk-back-link" href=".+\/build\/upload_formulation">Back<\/a>/)
+            end
+          end
+
+          context "when the component does not contain poisonous ingredients" do
+            let(:contains_poisonous_ingredients) { false }
+
+            it "links to the poisonous materials page" do
+              expect(response.body).to match(/\<a class="govuk-back-link" href=".+\/build\/contains_poisonous_ingredients">Back<\/a>/)
+            end
+          end
+        end
+
+        context "when the component is not of predefined formulation" do
+          let(:component_type) { "exact" }
+
+          it "links to the upload formulation page" do
+            expect(response.body).to match(/\<a class="govuk-back-link" href=".+\/build\/upload_formulation">Back<\/a>/)
+          end
+        end
+      end
     end
   end
 
