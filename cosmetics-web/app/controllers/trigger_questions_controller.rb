@@ -24,6 +24,8 @@ class TriggerQuestionsController < ApplicationController
     redirect_to wizard_path(steps.first)
   end
 
+private
+
   def finish_wizard_path
     if @component.notification.is_multicomponent?
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
@@ -44,7 +46,6 @@ class TriggerQuestionsController < ApplicationController
     end
   end
 
-private
 
   def set_component
     @component = Component.find(params[:component_id])
@@ -71,11 +72,10 @@ private
   end
 
   def component_ph_attributes
-    params.require(:component).permit(:minimum_ph, :maximum_ph)
+    params.fetch(:component, {}).permit(:minimum_ph, :maximum_ph)
   end
 
   def re_render_step
-    initialize_step
     render step
   end
 
