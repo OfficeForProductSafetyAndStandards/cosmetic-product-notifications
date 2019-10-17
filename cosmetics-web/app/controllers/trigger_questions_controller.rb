@@ -63,6 +63,16 @@ private
     end
   end
 
+  def update_component_ph_range
+    return re_render_step unless @component.update_with_context(ph_param, :ph)
+
+    if @component.ph_range_not_required?
+      skip_question
+    else
+      redirect_to wizard_path(:ph)
+    end
+  end
+
   def update_component_ph
     if @component.update_with_context(component_ph_attributes, :ph_range)
       redirect_to finish_wizard_path
@@ -77,6 +87,10 @@ private
 
   def re_render_step
     render step
+  end
+
+  def ph_param
+    { ph: params.fetch(:component, {})[:ph] }
   end
 
   def ph_param
