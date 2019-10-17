@@ -92,6 +92,58 @@ RSpec.describe TriggerQuestionsController, type: :controller do
       expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :select_ph_range))
     end
 
+    context "when setting the pH answer" do
+      context "when the answer is 'It does not have a pH'" do
+        before do
+          post(:update, params: params.merge(id: :select_ph_range, component: { ph: 'not_applicable' }))
+        end
+
+        it "redirects to the hair-loss agents question" do
+          expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :contains_anti_hair_loss_agents))
+        end
+      end
+
+      context "when the answer is between 3 and 10" do
+        before do
+          post(:update, params: params.merge(id: :select_ph_range, component: { ph: 'between_3_and_10' }))
+        end
+
+        it "redirects to the hair-loss agents question" do
+          expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :contains_anti_hair_loss_agents))
+        end
+      end
+
+      context "when the answer is lower than 3" do
+        before do
+          post(:update, params: params.merge(id: :select_ph_range, component: { ph: 'lower_than_3' }))
+        end
+
+        it "redirects to the pH range question" do
+          expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :ph))
+        end
+      end
+
+      context "when the answer is higher than 10" do
+        before do
+          post(:update, params: params.merge(id: :select_ph_range, component: { ph: 'lower_than_3' }))
+        end
+
+        it "redirects to the pH range question" do
+          expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :ph))
+        end
+      end
+
+      context "when no answer is selected" do
+        before do
+          post(:update, params: params.merge(id: :select_ph_range, component: { ph: nil }))
+        end
+
+        it "re-renders the page" do
+          expect(response.status).to be(200)
+        end
+      end
+    end
+
     context "when setting the pH range" do
       let!(:alkaline_agent_trigger_question) { create(:trigger_question, component: component, question: 'please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators') }
       let!(:alkaline_agent_trigger_question_element) { create(:trigger_question_element, trigger_question: alkaline_agent_trigger_question) }

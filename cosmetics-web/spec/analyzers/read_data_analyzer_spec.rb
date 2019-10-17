@@ -224,6 +224,10 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
 
       let(:notification) { Notification.order(created_at: :asc).last }
 
+      it "sets the ph range to above_10" do
+        expect(notification.components.first.ph).to eq("above_10")
+      end
+
       it "imports the minimum PH" do
         expect(notification.components.first.minimum_ph).to eq(13.0)
       end
@@ -242,6 +246,10 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }
+
+      it "sets the component pH to lower_than_3" do
+        expect(notification.components.first.ph).to eq("lower_than_3")
+      end
 
       it "imports the single PH value as the minimum pH" do
         expect(notification.components.first.minimum_ph).to eq(2.0)
