@@ -28,6 +28,5 @@ class AddFormulationToComponents < ActiveRecord::Migration[5.2]
         t.string :frame_formulation
       end
     end
-
   end
 end
