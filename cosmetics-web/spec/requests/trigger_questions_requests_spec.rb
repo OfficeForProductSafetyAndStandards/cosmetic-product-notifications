@@ -29,8 +29,16 @@ RSpec.describe "Trigger questions", type: :request do
         expect(response.body).to include('What is the pH range of the product?')
       end
 
-      context "with a frame formulation component" do
-        let(:component) { create(:predefined_component, notification: notification) }
+      context "with a frame formulation component that has poisonous ingredients" do
+        let(:component) { create(:predefined_component, notification: notification, contains_poisonous_ingredients: true) }
+
+        it "includes a back link to the 'Upload poisonous ingredients' page" do
+          expect(response.body).to have_tag("a.govuk-back-link", with: { href: "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/build/upload_formulation" })
+        end
+      end
+
+      context "with a frame formulation component that does not have poisonous ingredients" do
+        let(:component) { create(:predefined_component, notification: notification, contains_poisonous_ingredients: false) }
 
         it "includes a back link to the 'Poisonous ingredients' question" do
           expect(response.body).to have_tag("a.govuk-back-link", with: { href: "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/build/contains_poisonous_ingredients" })
