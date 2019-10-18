@@ -44,21 +44,10 @@ private
     end
   end
 
-
   def set_component
     @component = Component.find(params[:component_id])
     authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
     @component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
-  end
-
-  def update_component_ph_range
-    return re_render_step unless @component.update_with_context(ph_param, :ph)
-
-    if @component.ph_range_not_required?
-      redirect_to finish_wizard_path
-    else
-      redirect_to wizard_path(:ph)
-    end
   end
 
   def update_component_ph_range
@@ -85,10 +74,6 @@ private
 
   def re_render_step
     render step
-  end
-
-  def ph_param
-    { ph: params.fetch(:component, {})[:ph] }
   end
 
   def ph_param
