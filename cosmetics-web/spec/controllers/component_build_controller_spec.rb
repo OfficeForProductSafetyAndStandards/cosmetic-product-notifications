@@ -94,7 +94,7 @@ RSpec.describe ComponentBuildController, type: :controller do
           let(:component_type) { "exact" }
 
           it "sets the page title to product ingredients" do
-            expect(response.body).to match(/<title>List of product ingredients .+<\/title>/)
+            expect(response.body).to match(/<title>Upload list of ingredients .+<\/title>/)
           end
         end
       end
