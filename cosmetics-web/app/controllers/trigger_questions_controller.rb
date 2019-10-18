@@ -34,16 +34,6 @@ private
     end
   end
 
-  def previous_wizard_path
-    if step == :ph
-      wizard_path(:select_ph_range)
-    elsif @component.predefined?
-      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
-    else
-      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
-    end
-  end
-
   def set_component
     @component = Component.find(params[:component_id])
     authorize @component.notification, policy_class: ResponsiblePersonNotificationPolicy
