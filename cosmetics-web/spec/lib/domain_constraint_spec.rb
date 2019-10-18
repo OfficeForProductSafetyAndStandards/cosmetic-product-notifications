@@ -4,7 +4,7 @@ RSpec.describe DomainConstraint, type: :constraint do
   let(:expected_domain) { "www.example.com" }
   let(:other_domain) { "other.example.com" }
 
-  let(:domain_constraint) { DomainConstraint.new(expected_domain) }
+  let(:domain_constraint) { described_class.new(expected_domain) }
 
   describe "#matches?" do
     it "returns true for requests with the expected domain" do
@@ -20,7 +20,7 @@ RSpec.describe DomainConstraint, type: :constraint do
 
   context "when configured with multiple comma-separated domains" do
     let(:multiple_expected_domains) { "www.example.com,expected.example.com" }
-    let(:domain_constraint) { DomainConstraint.new(multiple_expected_domains) }
+    let(:domain_constraint) { described_class.new(multiple_expected_domains) }
 
     describe "#matches?" do
       it "returns true for requests with either expected domain" do

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
-  subject { PoisonCentreNotificationPolicy.new(user, notification) }
+  subject { described_class.new(user, notification) }
 
   let(:user) { create(:user, access_token: "access_token") }
   let(:notification) { create(:notification) }

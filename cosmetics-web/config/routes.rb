@@ -1,11 +1,32 @@
 require 'constraints/domain_constraint'
 require 'constraints/domain_check'
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
+
+if Rails.env.production?
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    ActiveSupport::SecurityUtils.secure_compare(username, ENV["SIDEKIQ_USERNAME"]) &&
+      ActiveSupport::SecurityUtils.secure_compare(password, ENV["SIDEKIQ_PASSWORD"])
+  end
+end
 
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  mount Shared::Web::Engine => '/', as: 'shared_engine'
+  mount GovukDesignSystem::Engine => '/', as: 'govuk_design_system_engine'
 
-  constraints DomainConstraint.new(ENV["SEARCH_HOST"] || ENV["COSMETICS_HOST"]) do
+  resource :session, only: %i[new] do
+    member do
+      get :new
+      get :signin
+      get :logout
+    end
+  end
+
+  unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
+    mount Sidekiq::Web => "/sidekiq"
+  end
+
+  constraints DomainConstraint.new(ENV.fetch("SEARCH_HOST") || ENV.fetch("COSMETICS_HOST")) do
     root "landing_page#index"
 
     scope module: "poison_centres", as: "poison_centre" do
@@ -13,7 +34,7 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints DomainConstraint.new(ENV["SUBMIT_HOST"] || ENV["COSMETICS_HOST"]) do
+  constraints DomainConstraint.new(ENV.fetch("SUBMIT_HOST") || ENV.fetch("COSMETICS_HOST")) do
     root "landing_page#index"
 
     resources :responsible_persons, only: %i[show] do

@@ -74,6 +74,110 @@ RSpec.describe Component, type: :model do
     end
   end
 
+  describe "#ph" do
+    context "when not specified" do
+      before { predefined_component.ph = nil }
+
+      it "is valid" do
+        expect(predefined_component).to be_valid
+      end
+    end
+
+    context "when not specified but with the :ph context" do
+      before { predefined_component.ph = nil }
+
+      it "is not valid" do
+        expect(predefined_component.valid?(:ph)).to be false
+      end
+    end
+
+    context "when not applicable" do
+      before { predefined_component.ph = 'not_applicable' }
+
+      it "is valid" do
+        expect(predefined_component).to be_valid
+      end
+    end
+
+    context "when lower than 3" do
+      before { predefined_component.ph = 'lower_than_3' }
+
+      it "is valid" do
+        expect(predefined_component).to be_valid
+      end
+    end
+
+    context "when between 3 and 10" do
+      before { predefined_component.ph = 'between_3_and_10' }
+
+      it "is valid" do
+        expect(predefined_component).to be_valid
+      end
+    end
+
+    context "when above 10" do
+      before { predefined_component.ph = 'above_10' }
+
+      it "is valid" do
+        expect(predefined_component).to be_valid
+      end
+    end
+
+    context "when explicitly set to not given" do
+      before { predefined_component.ph = 'not_given' }
+
+      it "is valid" do
+        expect(predefined_component).to be_valid
+      end
+    end
+
+    context "when set to any other value" do
+      it "raises an argument error" do
+        expect { predefined_component.ph = 'zzzzzz' }.to raise_exception(ArgumentError)
+      end
+    end
+  end
+
+  describe "#ph_range_not_required?" do
+    subject { predefined_component.ph_range_not_required? }
+
+    context "when not specified" do
+      before { predefined_component.ph = nil }
+
+      it { is_expected.to be false }
+    end
+
+    context "when not applicable" do
+      before { predefined_component.ph = 'not_applicable' }
+
+      it { is_expected.to be true }
+    end
+
+    context "when lower than 3" do
+      before { predefined_component.ph = 'lower_than_3' }
+
+      it { is_expected.to be false }
+    end
+
+    context "when between 3 and 10" do
+      before { predefined_component.ph = 'between_3_and_10' }
+
+      it { is_expected.to be true }
+    end
+
+    context "when above 10" do
+      before { predefined_component.ph = 'above_10' }
+
+      it { is_expected.to be false }
+    end
+
+    context "when explicitly set to not given" do
+      before { predefined_component.ph = 'not_given' }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe "adding PH ranges" do
     context "with integers within strings" do
       before do

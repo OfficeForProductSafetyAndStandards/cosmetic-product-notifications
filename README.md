@@ -38,11 +38,6 @@ if there are changes to the Docker config:
     docker-compose down && docker-compose build && docker-compose up
 
 
-### Design system
-Projects in this repository use the [GOV.UK design system](https://design-system.service.gov.uk).
-To aid it, the shared-web gem provides an implementation of some of the components - see
-the [README](shared-web/README.md#design-system-components) for more details.
-
 ### Mac tips
 
 [Docker shared volume performance is poor on Mac](https://docs.docker.com/docker-for-mac/osxfs-caching/) which can significantly affect e.g. asset compilation.
@@ -116,6 +111,22 @@ Please only do this if you are confident that this is a stable commit.
 Anything merged into the branch `prod` (only via a Pull Request) will cause Travis CI to instead build to the prod
 space.
 Please only do this if you are confident that this is a stable commit.
+
+### Review applications
+
+In order to make PR review process fast and independent, there is possibility to create
+short lived environment for given change. In order to do start your environment, run
+`REVIEW_INSTANCE_NAME=ticket-123 ./cosmetics-web/deploy-review.sh`, where `ticket-123` is desired name of review app.
+
+This will create 2 urls:
+* `https://cosmetics-ticket-123-submit-web.london.cloudapps.digital`
+* `https://cosmetics-ticket-123-search-web.london.cloudapps.digital`
+
+And 2 applications (db is shared):
+* cosmetics-ticket-123-web
+* cosmetics-ticket-123-worker
+
+By default, database is shared with all review apps, but it can be overriden by setting `DB_NAME` env variable.
 
 ### Deployment from scratch
 

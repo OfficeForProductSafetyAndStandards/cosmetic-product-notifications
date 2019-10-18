@@ -164,6 +164,26 @@ RSpec.describe NanomaterialBuildController, type: :controller do
 
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :notify_your_nanomaterial))
       end
+
+      context "when completed nanomaterial within bulk journey" do
+        before do
+          # rubocop:disable RSpec/AnyInstance
+          allow_any_instance_of(Notification).to receive(:notification_file_imported?).and_return true
+          # rubocop:enable RSpec/AnyInstance
+
+          allow(controller).to receive(:get_next_nano_element).and_return nil
+        end
+
+        let(:when_products_containing_nanomaterial_can_be_placed_on_market) do
+          params.merge(id: :when_products_containing_nanomaterial_can_be_placed_on_market)
+        end
+
+        it "redirects to additional information" do
+          post(:update, params: when_products_containing_nanomaterial_can_be_placed_on_market)
+
+          expect(response).to redirect_to(responsible_person_notification_additional_information_index_path(responsible_person, notification))
+        end
+      end
     end
   end
 end

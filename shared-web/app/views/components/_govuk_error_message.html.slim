@@ -1,9 +1,0 @@
-/ Implementation based on
-/ https://github.com/alphagov/govuk-frontend/
-/    blob/943ff14752f0a8a765ee3f90bc3e1ecd9205e36c/src/components/error-message/template.njk
-span.govuk-error-message *(local_assigns[:attributes] || {}) id=local_assigns[:id] class=local_assigns[:classes]
-  / Not using `.presence` or `||` here as we want to treat "" and nil differently.
-  - visually_hidden_text = local_assigns[:visuallyHiddenText].nil? ? "Error" : local_assigns[:visuallyHiddenText]
-  - if visually_hidden_text.present?
-    span.govuk-visually-hidden = "#{visually_hidden_text}: "
-  = local_assigns[:html] || local_assigns[:text]

@@ -2,7 +2,7 @@ class Notification < ApplicationRecord
   include Searchable
 
   include AASM
-  include Shared::Web::CountriesHelper
+  include CountriesHelper
 
   belongs_to :responsible_person
   has_many :components, dependent: :destroy
@@ -10,7 +10,7 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
-  index_name [Rails.env, "notifications"].join("_")
+  index_name [ENV.fetch("ES_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
   scope :elasticsearch, -> { where(state: "notification_complete") }
 
   before_create do

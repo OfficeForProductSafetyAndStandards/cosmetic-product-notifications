@@ -22,24 +22,24 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
 
   describe "#accept" do
     it "rejects a null blob" do
-      expect(ReadDataAnalyzer.accept?(nil)).equal?(false)
+      expect(described_class.accept?(nil)).equal?(false)
     end
 
     it "accepts a zip blob" do
-      expect(ReadDataAnalyzer.accept?(notification_file_basic.uploaded_file)).equal?(true)
+      expect(described_class.accept?(notification_file_basic.uploaded_file)).equal?(true)
     end
   end
 
   describe "#metadata" do
     it "creates a notification and removes a notification file" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       expect {
         analyzer_instance.metadata
       }.to change(Notification, :count).by(1).and change(NotificationFile, :count).by(-1)
     end
 
     it "creates a notification populated with relevant name" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
       notification = Notification.order(created_at: :asc).last
 
@@ -47,7 +47,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant cpnp reference" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
       notification = Notification.order(created_at: :asc).last
 
@@ -55,7 +55,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant cpnp date" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
       notification = Notification.order(created_at: :asc).last
 
@@ -63,7 +63,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant shades" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_shades_import.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_shades_import.uploaded_file)
       analyzer_instance.metadata
 
       notification = Notification.order(created_at: :asc).last
@@ -72,7 +72,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant imported info" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_shades_import.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_shades_import.uploaded_file)
       analyzer_instance.metadata
 
       notification = Notification.order(created_at: :asc).last
@@ -82,7 +82,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant number of components" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_multi_component_exact_formula.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_multi_component_exact_formula.uploaded_file)
 
       expect {
         analyzer_instance.metadata
@@ -90,7 +90,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification with components in the component_complete state" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
 
       notification = Notification.order(created_at: :asc).last
@@ -99,7 +99,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant notification type" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
 
       notification = Notification.order(created_at: :asc).last
@@ -108,7 +108,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant sub-sub-category" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
 
       notification = Notification.order(created_at: :asc).last
@@ -117,7 +117,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant number of trigger questions and trigger elements" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_manual_ranges_trigger_rules.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_manual_ranges_trigger_rules.uploaded_file)
 
       expect {
         analyzer_instance.metadata
@@ -125,7 +125,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant frame formulation" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
 
       notification = Notification.order(created_at: :asc).last
@@ -134,35 +134,35 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant number of exact formula" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_multi_component_exact_formula.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_multi_component_exact_formula.uploaded_file)
       expect {
         analyzer_instance.metadata
       }.to change(ExactFormula, :count).by(4)
     end
 
     it "creates a notification populated with relevant number of range formula" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_manual_ranges_trigger_rules.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_manual_ranges_trigger_rules.uploaded_file)
       expect {
         analyzer_instance.metadata
       }.to change(RangeFormula, :count).by(2)
     end
 
     it "creates a notification populated with relevant number of cmr" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_nano_materials_cmr.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_nano_materials_cmr.uploaded_file)
       expect {
         analyzer_instance.metadata
       }.to change(Cmr, :count).by(2)
     end
 
     it "creates a notification populated with relevant number of nanomaterials and nanoelement" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_nano_materials_cmr.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_nano_materials_cmr.uploaded_file)
       expect {
         analyzer_instance.metadata
       }.to change(NanoMaterial, :count).by(1).and change(NanoElement, :count).by(1)
     end
 
     it "creates a notification in the draft_complete state if no formulation information is needed" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_basic.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
 
       notification = Notification.order(created_at: :asc).last
@@ -171,7 +171,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification in the notification_file_imported state if formulation information is required" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_formulation_required.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_formulation_required.uploaded_file)
       analyzer_instance.metadata
 
       notification = Notification.order(created_at: :asc).last
@@ -180,7 +180,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification with the first language's name if there is no english name" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_different_language.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
       analyzer_instance.metadata
       notification = Notification.order(created_at: :asc).last
 
@@ -188,7 +188,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification with the first language's shades if there is no english shades" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_different_language.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
       analyzer_instance.metadata
       notification = Notification.order(created_at: :asc).last
 
@@ -196,7 +196,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification with the first language's component name if there is no english component name" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_different_language.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
       analyzer_instance.metadata
       notification = Notification.order(created_at: :asc).last
 
@@ -205,7 +205,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification with the first language's component shades if there is no english component shades" do
-      analyzer_instance = ReadDataAnalyzer.new(notification_file_different_language.uploaded_file)
+      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
       analyzer_instance.metadata
       notification = Notification.order(created_at: :asc).last
 
@@ -218,11 +218,15 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       before do
         notification_file = create(:notification_file, uploaded_file: create_file_blob("testExportWithComponentWithPHRange.zip"))
 
-        analyzer_instance = ReadDataAnalyzer.new(notification_file.uploaded_file)
+        analyzer_instance = described_class.new(notification_file.uploaded_file)
         analyzer_instance.metadata
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }
+
+      it "sets the ph range to above_10" do
+        expect(notification.components.first.ph).to eq("above_10")
+      end
 
       it "imports the minimum PH" do
         expect(notification.components.first.minimum_ph).to eq(13.0)
@@ -237,11 +241,15 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       before do
         notification_file = create(:notification_file, uploaded_file: create_file_blob("testExportWithComponentWithSinglePHValue.zip"))
 
-        analyzer_instance = ReadDataAnalyzer.new(notification_file.uploaded_file)
+        analyzer_instance = described_class.new(notification_file.uploaded_file)
         analyzer_instance.metadata
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }
+
+      it "sets the component pH to lower_than_3" do
+        expect(notification.components.first.ph).to eq("lower_than_3")
+      end
 
       it "imports the single PH value as the minimum pH" do
         expect(notification.components.first.minimum_ph).to eq(2.0)
