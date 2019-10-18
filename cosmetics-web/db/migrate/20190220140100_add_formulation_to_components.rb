@@ -21,12 +21,12 @@ class AddFormulationToComponents < ActiveRecord::Migration[5.2]
 
     add_reference :range_formulas, :component, foreign_key: true, index: false
     add_index :range_formulas, :component_id, algorithm: :concurrently
-  end
 
-  safety_assured do
-    change_table :components, bulk: true do |t|
-      t.string :notification_type
-      t.string :frame_formulation
+    safety_assured do
+      change_table :components, bulk: true do |t|
+        t.string :notification_type
+        t.string :frame_formulation
+      end
     end
   end
 end
