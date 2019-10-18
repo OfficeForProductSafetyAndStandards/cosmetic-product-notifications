@@ -101,3 +101,10 @@ en:
       other_than: "%{attribute} must be other than %{count}"
       odd: "%{attribute} must be odd"
       even: "%{attribute} must be even"
+  component_ph:
+    check_your_answers:
+      between_3_and_10: "Between 3 and 10"
+      lower_than_3: "Below 3"
+      above_10: "Above 10"
+      not_applicable: "No pH"
+      not_given: "Not given"

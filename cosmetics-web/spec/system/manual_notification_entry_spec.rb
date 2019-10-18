@@ -363,7 +363,7 @@ private
     click_button "Continue"
 
     # select_ph_range
-    choose("Yes")
+    choose("It does not have a pH")
     click_button "Continue"
 
 
