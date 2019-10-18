@@ -47,6 +47,7 @@ group :development, :test do
   gem "pry", "0.12.2"
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
+  gem 'rspec-html-matchers'
   gem "rspec-rails"
   gem "rubocop", "0.71.0"
   gem "rubocop-performance", "1.4.0"
