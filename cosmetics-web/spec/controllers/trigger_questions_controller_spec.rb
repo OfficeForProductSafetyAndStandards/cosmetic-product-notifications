@@ -85,7 +85,8 @@ RSpec.describe TriggerQuestionsController, type: :controller do
             let(:contains_poisonous_ingredients) { true }
 
             it "links to the upload formulation page" do
-              expect(response.body).to match(/\<a class="govuk-back-link" href=".+\/build\/upload_formulation">Back<\/a>/)
+              path = responsible_person_notification_component_build_path(responsible_person, notification, component, :upload_formulation)
+              expect(response.body).to match(/\<a class="govuk-back-link" href="#{path}">Back<\/a>/)
             end
           end
 
@@ -93,7 +94,8 @@ RSpec.describe TriggerQuestionsController, type: :controller do
             let(:contains_poisonous_ingredients) { false }
 
             it "links to the poisonous materials page" do
-              expect(response.body).to match(/\<a class="govuk-back-link" href=".+\/build\/contains_poisonous_ingredients">Back<\/a>/)
+              path = responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients)
+              expect(response.body).to match(/\<a class="govuk-back-link" href="#{path}">Back<\/a>/)
             end
           end
         end
@@ -102,7 +104,8 @@ RSpec.describe TriggerQuestionsController, type: :controller do
           let(:component_type) { "exact" }
 
           it "links to the upload formulation page" do
-            expect(response.body).to match(/\<a class="govuk-back-link" href=".+\/build\/upload_formulation">Back<\/a>/)
+            path = responsible_person_notification_component_build_path(responsible_person, notification, component, :upload_formulation)
+            expect(response.body).to match(/\<a class="govuk-back-link" href="#{path}">Back<\/a>/)
           end
         end
       end

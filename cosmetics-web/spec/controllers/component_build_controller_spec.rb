@@ -104,7 +104,8 @@ RSpec.describe ComponentBuildController, type: :controller do
           let(:component_type) { "predefined" }
 
           it "links to the poisonous materials page" do
-            expect(response.body).to match(/\<a class="govuk-back-link" href=".+\/build\/contains_poisonous_ingredients">Back<\/a>/)
+            path = responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients)
+            expect(response.body).to match(/\<a class="govuk-back-link" href="#{path}">Back<\/a>/)
           end
         end
 
@@ -112,7 +113,8 @@ RSpec.describe ComponentBuildController, type: :controller do
           let(:component_type) { "exact" }
 
           it "links to the select formulation type page" do
-            expect(response.body).to match(/\<a class="govuk-back-link" href=".+\/build\/select_formulation_type">Back<\/a>/)
+            path = responsible_person_notification_component_build_path(responsible_person, notification, component, :select_formulation_type)
+            expect(response.body).to match(/\<a class="govuk-back-link" href="#{path}">Back<\/a>/)
           end
         end
       end
