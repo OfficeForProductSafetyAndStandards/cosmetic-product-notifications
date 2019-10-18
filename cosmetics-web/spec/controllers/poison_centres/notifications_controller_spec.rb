@@ -72,13 +72,13 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     describe "GET #show" do
       let(:notification) { rp_1_notifications.first }
 
+      before { get :show, params: { reference_number: notification.reference_number } }
+
       it "assigns the correct notification" do
-        get :show, params: { reference_number: notification.reference_number }
         expect(assigns(:notification)).to eq(notification)
       end
 
       it "renders the show template" do
-        get :show, params: { reference_number: notification.reference_number }
         expect(response).to render_template("notifications/show_poison_centre")
       end
     end
@@ -99,9 +99,47 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     describe "GET #show" do
       let(:notification) { rp_1_notifications.first }
 
+      before { get :show, params: { reference_number: notification.reference_number } }
+
       it "renders the show template" do
-        get :show, params: { reference_number: notification.reference_number }
         expect(response).to render_template("notifications/show_msa")
+      end
+
+      describe "product ingredients" do
+        let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions) }
+        let(:responsible_person) { create(:responsible_person) }
+        let(:notification) { create(:notification, :imported, :registered, components: [component], responsible_person: responsible_person) }
+
+        render_views
+
+        it "does not render product imported status" do
+          expect(response.body).not_to match(/<th class="govuk-table__header" scope="row">Imported<\/th>/)
+        end
+
+        it "does not render component formulations" do
+          expect(response.body).not_to match(/<th class="govuk-table__header" scope="row">Formulation given as<\/th>/)
+          expect(response.body).not_to match(/<th class="govuk-table__header" scope="row">Frame formulation<\/th>/)
+        end
+
+        it "does not render acute poisoning info" do
+          expect(response.body).not_to match(/<th class="govuk-table__header" scope="row">Acute poisoning information<\/th>/)
+        end
+
+        it "does not render poisonous ingredients" do
+          expect(response.body).not_to match(/<th class="govuk-table__header" scope="row">Contains poisonous ingredients<\/th>/)
+        end
+
+        it "does not render trigger questions" do
+          expect(response.body).not_to match(/<tr class="govuk-table__row trigger-question">/)
+        end
+
+        it "does not render CMR substances" do
+          expect(response.body).not_to match(/<th class="govuk-table__header" scope="row">Contains CMR substances<\/th>/)
+        end
+
+        it "does not render nanomaterials" do
+          expect(response.body).not_to match(/<th class="govuk-table__header" scope="row">Nanomaterials<\/th>/)
+        end
       end
     end
   end

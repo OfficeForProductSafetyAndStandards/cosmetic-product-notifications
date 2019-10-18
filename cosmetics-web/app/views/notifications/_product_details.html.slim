@@ -13,11 +13,12 @@ table.govuk-table.check-your-answers-table#product-table
           | Internal reference number
         td.govuk-table__cell
           = notification.industry_reference
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Imported
-      td.govuk-table__cell
-        = product_imported?(notification)
+    - if current_user.can_view_product_ingredients?
+      tr.govuk-table__row
+        th.govuk-table__header[scope="row"]
+          | Imported
+        td.govuk-table__cell
+          = product_imported?(notification)
     - if product_imported?(notification) == "Yes"
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
