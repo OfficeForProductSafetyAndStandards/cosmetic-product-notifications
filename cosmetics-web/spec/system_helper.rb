@@ -8,7 +8,7 @@ ENV["SUBMIT_HOST"] = "localhost"
 ENV["SEARCH_HOST"] = "localhost"
 
 if ENV['CHROMEDRIVER_PATH']
-  Selenium::WebDriver::Chrome::Service.driver_path=ENV.fetch('CHROMEDRIVER_PATH')
+  Selenium::WebDriver::Chrome::Service.driver_path = ENV.fetch('CHROMEDRIVER_PATH')
 end
 
 Capybara.server_host = ENV["HTTP_HOST"]
