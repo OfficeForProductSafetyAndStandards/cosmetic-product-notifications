@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ApplicationPolicy, type: :policy do
-  subject { ApplicationPolicy.new(user, record) }
+  subject { described_class.new(user, record) }
 
   let(:user) { create(:user) }
   let(:record) { create(:notification) }

@@ -40,10 +40,6 @@ fi
 # Copy the environment helper script
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
-# Copy in the shared dependencies
-rm -rf ./cosmetics-web/vendor/shared-web/
-cp -a ./shared-web/. ./cosmetics-web/vendor/shared-web/
-
 # Set the manifest file depending on PaaS enviornment
 if [[ $SPACE == "prod" ]]; then
     MANIFEST_FILE=./cosmetics-web/manifest.prod.yml

@@ -32,7 +32,6 @@ services:
       - .env.keycloak.cosmetics
     volumes:
       - cosmetics-web-sync:/cosmetics-web:nocopy
-      - shared-web-sync:/cosmetics-web/vendor/shared-web:nocopy
       - bundle-cache:/usr/local/bundle
   cosmetics-worker:
     env_file:
@@ -40,7 +39,6 @@ services:
       - .env.antivirus
     volumes:
       - cosmetics-web-sync:/cosmetics-web:nocopy
-      - shared-web-sync:/cosmetics-web/vendor/shared-web:nocopy
       - bundle-cache:/usr/local/bundle
 
 volumes:
@@ -49,6 +47,4 @@ volumes:
   maintenance-sync:
     external: true
   cosmetics-web-sync:
-    external: true
-  shared-web-sync:
     external: true

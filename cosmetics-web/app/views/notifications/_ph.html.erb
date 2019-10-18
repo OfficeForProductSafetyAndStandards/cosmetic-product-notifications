@@ -1,0 +1,27 @@
+<% if component.ph_range_not_required? %>
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="row">
+      pH
+    </th>
+    <td class="govuk-table__cell">
+      <%= t component.ph, scope: [:component_ph, :check_your_answers] %>
+    </td>
+  </tr>
+<% else %>
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="row">
+      <% if component.minimum_ph == component.maximum_ph %>
+        Exact pH
+      <% else %>
+        pH range
+      <% end %>
+    </th>
+    <td class="govuk-table__cell">
+      <% if component.minimum_ph == component.maximum_ph %>
+        <%= component.minimum_ph %>
+      <% else %>
+        <%= component.minimum_ph %> to <%= component.maximum_ph %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

@@ -1,5 +1,7 @@
 class DomainConstraint
   def initialize(domains)
+    raise "No domains specified" unless domains
+
     @domains = domains.split(',')
   end
 

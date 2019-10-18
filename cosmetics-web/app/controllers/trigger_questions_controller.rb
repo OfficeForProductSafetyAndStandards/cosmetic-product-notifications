@@ -34,7 +34,6 @@ class TriggerQuestionsController < ApplicationController
   def update
     case step
     when :contains_anti_dandruff_agents,
-        :select_ph_range,
         :contains_anti_hair_loss_agents,
         :contains_anti_pigmenting_agents,
         :contains_chemical_exfoliating_agents,
@@ -72,6 +71,8 @@ class TriggerQuestionsController < ApplicationController
     when :contains_ethanol,
         :contains_isopropanol
       render_substance_check_with_condition
+    when :select_ph_range
+      update_component_ph_range
     when :ph
       update_component_ph
     else
@@ -88,65 +89,6 @@ class TriggerQuestionsController < ApplicationController
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
     else
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
-    end
-  end
-
-  def previous_wizard_path
-    if step == steps.first
-      return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_frame_formulation)
-
-    elsif step == :select_ph_range
-      if @component.predefined?
-        return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
-      else
-        return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
-      end
-    end
-
-    previous_step = get_previous_step
-    if !previous_step.nil?
-      responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
-    else
-      super
-    end
-  end
-
-  def get_previous_step
-    case step
-    when :select_ph_range
-      :contains_anti_dandruff_agents
-    when :contains_anti_hair_loss_agents
-      :select_ph_range
-    when :contains_anti_pigmenting_agents
-      :contains_anti_hair_loss_agents
-    when :contains_chemical_exfoliating_agents
-      :contains_anti_pigmenting_agents
-    when :contains_vitamin_a
-      :contains_chemical_exfoliating_agents
-    when :contains_xanthine_derivatives
-      :contains_vitamin_a
-    when :contains_cationic_surfactants
-      :contains_xanthine_derivatives
-    when :contains_propellant
-      :contains_cationic_surfactants
-    when :contains_hydrogen_peroxide
-      :contains_propellant
-    when :contains_compounds_releasing_hydrogen_peroxide
-      :contains_hydrogen_peroxide
-    when :contains_reducing_agents
-      :contains_compounds_releasing_hydrogen_peroxide
-    when :contains_persulfates
-      :contains_reducing_agents
-    when :contains_straightening_agents
-      :contains_persulfates
-    when :contains_inorganic_sodium_salts
-      :contains_straightening_agents
-    when :contains_fluoride_compounds
-      :contains_inorganic_sodium_salts
-    when :contains_essential_oils
-      :contains_fluoride_compounds
-    when :contains_ethanol
-      :contains_essential_oils
     end
   end
 
@@ -192,6 +134,16 @@ private
     when :select_ph_range
       TriggerQuestion.find_or_create_by(component: @component, question: :please_indicate_the_ph)
       TriggerQuestion.find_or_create_by(component: @component, question: :please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators)
+    end
+  end
+
+  def update_component_ph_range
+    return re_render_step unless @component.update_with_context(ph_param, :ph)
+
+    if @component.ph_range_not_required?
+      skip_question
+    else
+      redirect_to wizard_path(:ph)
     end
   end
 
@@ -384,5 +336,9 @@ private
     return {} if params[:trigger_question].blank?
 
     params.require(:trigger_question).permit(:applicable, trigger_question_elements_attributes: %i[id answer answer_order element_order element])
+  end
+
+  def ph_param
+    { ph: params.fetch(:component, {})[:ph] }
   end
 end

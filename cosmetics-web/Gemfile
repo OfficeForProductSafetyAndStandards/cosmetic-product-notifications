@@ -1,29 +1,50 @@
 source "https://rubygems.org"
 
-
 ruby File.read(".ruby-version").strip
 
+gem "will_paginate", "3.1.7" # Must be laoded before elasticsearch gems
+
 gem "aasm"
+gem "active_hash", "2.2.1"
+gem "aws-sdk-s3", "1.43.0"
 gem "cf-app-utils"
+gem "elasticsearch", "6.8.0"
+gem "elasticsearch-model", "6.0.0"
+gem "elasticsearch-rails", "6.0.0"
+gem "govuk_notify_rails", "2.1.0"
 gem "jbuilder", "~> 2.9"
+gem "keycloak", "2.4.1"
+gem "lograge", "0.11.2"
+gem "mini_magick", "4.9.3"
+gem "okcomputer", "1.17.4"
 gem "pg", "~> 1.1"
 gem "puma", "~> 3.12"
 gem "pundit"
+gem "rails", "5.2.3"
+gem "request_store", "1.4.1"
+gem "rest-client", "2.0.2"
 gem "rubyzip", ">= 1.2.1"
+gem "sentry-raven", "2.9.0"
+gem "sidekiq", "5.2.7"
+gem "sidekiq-cron", "1.1.0"
 gem "slim-rails"
+gem "slowpoke", "0.3.0"
 gem "strong_migrations"
+gem "webpacker", "4.0.7"
 gem "wicked"
 
-gem "shared-web", path: "./vendor/shared-web"
+gem "govuk-design-system-rails", github: "UKGovernmentBEIS/govuk-design-system-rails", tag: "0.0.1", require: "govuk_design_system"
 
 group :development, :test do
   gem "brakeman", "4.5.1"
   gem "capybara", "3.24.0"
   gem "coveralls", "0.8.23"
   gem "debase", "0.2.2"
+  gem "dotenv-rails", "2.7.5"
   gem "factory_bot_rails"
   gem "govuk-lint", "3.11.2"
   gem "listen", "3.1.5"
+  gem "pry", "0.12.2"
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
   gem "rspec-rails"
@@ -36,4 +57,5 @@ group :development, :test do
   gem "simplecov-console", "0.5.0"
   gem "slim_lint", "0.17.0"
   gem "solargraph", "0.33.2"
+  gem "sprockets", "3.7.2"
 end
