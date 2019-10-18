@@ -41,14 +41,14 @@ module TriggerRulesHelper
   end
 
   def previous_wizard_path
-    if step == :ph
-       return wizard_path(:select_ph_range)
-    else
-      if @component.predefined?
-        return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
-      else
-        return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
-      end
+    case step
+    when :ph
+      wizard_path(:select_ph_range)
+    when :select_ph_range
+
+      previous_step = @component.predefined? ? :contains_poisonous_ingredients : :upload_formulation
+
+      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
     end
   end
 end
