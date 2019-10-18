@@ -67,6 +67,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
 
+    # Contains poisonous ingredients?
+    choose "No"
+    click_button "Continue"
+
     # trigger_questions
     skip_trigger_questions
 
@@ -143,6 +147,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
 
+    # Contains poisonous ingredients?
+    choose "No"
+    click_button "Continue"
+
     # trigger_questions
     skip_trigger_questions
 
@@ -210,6 +218,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # select_frame_formulation
     fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
+    click_button "Continue"
+
+    # Contains poisonous ingredients?
+    choose "No"
     click_button "Continue"
 
     # trigger_questions
@@ -295,6 +307,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # select_frame_formulation
     fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
+    click_button "Continue"
+
+    # Contains poisonous ingredients?
+    choose "No"
     click_button "Continue"
 
     # trigger_questions
