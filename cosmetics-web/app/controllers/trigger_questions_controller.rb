@@ -36,13 +36,11 @@ private
 
   def previous_wizard_path
     if step == :ph
-      return wizard_path(:select_ph_range)
+      wizard_path(:select_ph_range)
+    elsif @component.predefined?
+      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
     else
-      if @component.predefined?
-        return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
-      else
-        return responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
-      end
+      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
     end
   end
 
