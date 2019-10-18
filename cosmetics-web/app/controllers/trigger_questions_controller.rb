@@ -67,7 +67,7 @@ private
     return re_render_step unless @component.update_with_context(ph_param, :ph)
 
     if @component.ph_range_not_required?
-      skip_question
+      redirect_to finish_wizard_path
     else
       redirect_to wizard_path(:ph)
     end
