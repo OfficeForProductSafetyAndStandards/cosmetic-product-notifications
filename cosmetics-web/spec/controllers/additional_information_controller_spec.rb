@@ -74,7 +74,7 @@ RSpec.describe AdditionalInformationController, type: :controller do
         create(:component, name: "Component 2", nano_material: create(:nano_material, nano_elements: second_nano_elements))
       end
 
-      let!(:notification) do
+      let(:notification) do
         create(:notification, components: [first_component, second_component], responsible_person: responsible_person)
       end
 
