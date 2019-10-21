@@ -259,6 +259,10 @@ GEM
       netrc (~> 0.8)
     reverse_markdown (1.3.0)
       nokogiri
+    rspec (3.9.0)
+      rspec-core (~> 3.9.0)
+      rspec-expectations (~> 3.9.0)
+      rspec-mocks (~> 3.9.0)
     rspec-collection_matchers (1.2.0)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.9.0)
@@ -266,6 +270,9 @@ GEM
     rspec-expectations (3.9.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
+    rspec-html-matchers (0.9.1)
+      nokogiri (~> 1)
+      rspec (>= 3.0.0.a, < 4)
     rspec-mocks (3.9.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
@@ -426,6 +433,7 @@ DEPENDENCIES
   request_store (= 1.4.1)
   rest-client (= 2.0.2)
   rspec-collection_matchers
+  rspec-html-matchers
   rspec-rails
   rubocop (= 0.71.0)
   rubocop-performance (= 1.4.0)
