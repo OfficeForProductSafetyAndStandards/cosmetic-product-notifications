@@ -37,6 +37,7 @@ en:
           notification_validation_error: "Try again or manually enter the production notification data"
           draft_notification_error: "The uploaded file is for a draft notification"
           unknown_error: "Try again or manually enter the production notification data"
+          post_brexit_date: "You can not upload a product notified in the EU after 31 October 2019. To notify this product, enter its details manually. Click 'Add cosmetic products' to start."
       notification:
         ph_min_value: "pH"
         ph_max_value: "pH"
