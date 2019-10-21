@@ -145,6 +145,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
           expect(response.body).not_to match(/Maximum pH value/)
         end
 
+        it "does not render still on the market" do
+          expect(response.body).not_to match(/Still on the market/)
+        end
+
         it "renders CMR substances" do
           expect(response.body).to match(/Contains CMR substances/)
         end
