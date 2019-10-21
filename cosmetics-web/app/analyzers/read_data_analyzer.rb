@@ -9,7 +9,11 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
   end
 
   def self.accept?(given_blob)
-    return false unless given_blob.present? && given_blob.metadata["safe"]
+    return false if given_blob.blank?
+
+    if ENV.fetch('ANTIVIRUS_ENABLED', 'true') == 'true'
+      return false unless given_blob.metadata["safe"]
+    end
 
     notification_file = get_notification_file_from_blob(given_blob)
     notification_file.present? && notification_file.upload_error.blank?
