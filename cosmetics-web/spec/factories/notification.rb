@@ -17,5 +17,18 @@ FactoryBot.define do
     factory :pre_eu_exit_notification do
       was_notified_before_eu_exit { true }
     end
+
+    trait :imported do
+      import_country { "country:FR" }
+    end
+
+    trait :registered do
+      state { :notification_complete }
+    end
+
+    trait :ph_values do
+      ph_min_value { 4 }
+      ph_max_value { 8 }
+    end
   end
 end

@@ -10,6 +10,7 @@ class PoisonCentres::NotificationsController < ApplicationController
     if User.current&.poison_centre_user?
       render "show_poison_centre"
     else
+      @contact_person = @notification.responsible_person.contact_persons.first
       render "show_msa"
     end
   end

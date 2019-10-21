@@ -28,6 +28,10 @@ module AuthenticationConcern
     User.current.access_token = access_token
   end
 
+  def current_user
+    User.current
+  end
+
   def pundit_user
     User.current
   end

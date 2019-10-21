@@ -1,5 +1,5 @@
 - elements = trigger_question.trigger_question_elements
-tr.govuk-table__row
+tr.govuk-table__row.trigger-question
   - if trigger_question.applicable? || display_not_applicable
     th.govuk-table__header[scope="row"]
       = get_trigger_rules_short_question_name(trigger_question.question)
