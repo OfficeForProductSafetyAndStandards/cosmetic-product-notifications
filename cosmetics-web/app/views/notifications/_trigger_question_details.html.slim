@@ -12,7 +12,7 @@ tr.govuk-table__row.trigger-question
           = format_trigger_question_answers(elements.first.answer)
     -else
       td.govuk-table__cell
-        = render "none_or_bullet_list",
+        = render "application/none_or_bullet_list",
                 entities_list: format_trigger_question_elements(elements),
                 key_name: :inci_name,
                 value_name: :quantity
