@@ -19,7 +19,7 @@ applications:
   services:
     - ((cosmetics-web-database))
     - cosmetics-elasticsearch
-    - cosmetics-queue
+    - ((cosmetics-redis-service))
     - opss-log-drain
     - cosmetics-aws-env
     - cosmetics-auth-env

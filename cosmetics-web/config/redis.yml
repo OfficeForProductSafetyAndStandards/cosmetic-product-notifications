@@ -8,4 +8,4 @@ test:
   <<: *default
 
 production:
-  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-queue")["uri"] %>
+  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_label("redis")["uri"] %>
