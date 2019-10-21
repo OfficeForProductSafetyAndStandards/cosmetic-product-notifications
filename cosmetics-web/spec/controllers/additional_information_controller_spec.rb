@@ -52,5 +52,56 @@ RSpec.describe AdditionalInformationController, type: :controller do
         get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
       }.to raise_error(Pundit::NotAuthorizedError)
     end
+
+    context "when a notification has multiple components" do
+      let(:first_nano_elements) do
+        [
+          create(:nano_element, iupac_name: 'NanoMaterial 1'), create(:nano_element, iupac_name: 'NanoMaterial 2')
+        ]
+      end
+
+      let(:second_nano_elements) do
+        [
+          create(:nano_element, iupac_name: 'Element 1A'), create(:nano_element, iupac_name: 'Element 2A')
+        ]
+      end
+
+      let(:first_component) do
+        create(:component, name: "Component 1", nano_material: create(:nano_material, nano_elements: first_nano_elements))
+      end
+      let(:second_component) do
+        create(:component, name: "Component 2", nano_material: create(:nano_material, nano_elements: second_nano_elements))
+      end
+
+      context "when all component's have incomplete nano materials" do
+        let(:notification) do
+          create(:notification, components: [first_component, second_component], responsible_person: responsible_person)
+        end
+
+        it "redirects to the 1st component's next incomplete nano element" do
+          nano_element = first_component.nano_material.nano_elements.find(&:incomplete?)
+          get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
+
+          expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(notification.responsible_person, notification, first_component, nano_element))
+        end
+      end
+
+      context "when the first component is complete" do
+        let(:notification) do
+          create(:notification, components: [first_component, second_component], responsible_person: responsible_person)
+        end
+
+        before do
+          allow(first_component).to receive(:nano_material_incomplete?).and_return(false)
+        end
+
+        it "redirects to the 2nd component incomplete nano element" do
+          nano_element = second_component.nano_material.nano_elements.find(&:incomplete?)
+          get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
+
+          expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(notification.responsible_person, notification, second_component, nano_element))
+        end
+      end
+    end
   end
 end
