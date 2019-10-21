@@ -1,4 +1,4 @@
-- if current_user.can_view_product_ingredients? && component.notification.notified_post_eu_exit?
+- if component.notification.notified_post_eu_exit?
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Contains CMR substances
@@ -11,7 +11,6 @@
         td.govuk-table__cell
           = render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)
 
-- if current_user.can_view_product_ingredients?
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Nanomaterials
@@ -85,11 +84,14 @@ tr.govuk-table__row
                   class: "govuk-link--no-visited-state"
         - else
           | N/A
-  tr.govuk-table__row
-    th.govuk-table__header[scope="row"]
-      | Physical form
-    td.govuk-table__cell
-      = get_physical_form_name(component.physical_form)
+
+tr.govuk-table__row
+  th.govuk-table__header[scope="row"]
+    | Physical form
+  td.govuk-table__cell
+    = get_physical_form_name(component.physical_form)
+
+- if current_user.can_view_product_ingredients?
   tr.govuk-table__row
     th.govuk-table__header[scope="row"]
       | Special applicator

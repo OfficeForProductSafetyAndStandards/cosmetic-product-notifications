@@ -19,12 +19,12 @@ table.govuk-table.check-your-answers-table#product-table
           | Imported
         td.govuk-table__cell
           = product_imported?(notification)
-    - if product_imported?(notification) == "Yes"
-      tr.govuk-table__row
-        th.govuk-table__header[scope="row"]
-          | Imported from
-        td.govuk-table__cell
-          = product_import_country(notification)
+      - if product_imported?(notification) == "Yes"
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Imported from
+          td.govuk-table__cell
+            = product_import_country(notification)
     - if notification.notified_post_eu_exit?
       tr.govuk-table__row
         th.govuk-table__header
@@ -71,13 +71,13 @@ table.govuk-table.check-your-answers-table#product-table
         | Are the components mixed?
       td.govuk-table__cell
         = notification.components_are_mixed ? "Yes" : "No"
-    - if notification.ph_min_value.present?
+    - if current_user.can_view_product_ingredients? && notification.ph_min_value.present?
       tr.govuk-table__row
         th.govuk-table__header
           | Minimum pH value
         td.govuk-table__cell
           = notification.ph_min_value
-    - if notification.ph_max_value.present?
+    - if current_user.can_view_product_ingredients? && notification.ph_max_value.present?
       tr.govuk-table__row
         th.govuk-table__header
           | Maximum pH value
