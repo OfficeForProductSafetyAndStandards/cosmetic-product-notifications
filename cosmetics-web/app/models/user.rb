@@ -66,6 +66,10 @@ class User < ActiveHash::Base
     has_role? :msa_user
   end
 
+  def can_view_product_ingredients?
+    !msa_user?
+  end
+
 private
 
   def current_user?

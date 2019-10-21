@@ -18,6 +18,8 @@ class ApplicationController < ActionController::Base
 
   add_flash_types :confirmation
 
+  helper_method :current_user
+
 private
 
   def authorize_user!
