@@ -85,7 +85,6 @@ services:
       - ${PWD-.}/cosmetics-web:/cosmetics-web
       - bundle-cache:/usr/local/bundle
     depends_on:
-      - antivirus
       - db
       - elasticsearch
       - redis

@@ -9,9 +9,6 @@ services:
       - NOTIFY_API_KEY
     image: beisopss/keycloak:${TRAVIS_BUILD_NUMBER}
 
-  antivirus:
-    image: beisopss/antivirus:${TRAVIS_BUILD_NUMBER}
-
   maintenance:
     image: beisopss/maintenance:${TRAVIS_BUILD_NUMBER}
 
