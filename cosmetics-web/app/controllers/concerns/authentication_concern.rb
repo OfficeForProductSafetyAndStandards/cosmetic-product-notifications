@@ -32,11 +32,10 @@ module AuthenticationConcern
     User.current
   end
 
+  # TODO: verify
   def pundit_user
     User.current
   end
-
-private
 
   def access_token
     keycloak_token["access_token"]
