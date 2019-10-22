@@ -26,6 +26,8 @@ stages:
     if: branch = master AND type = cron
   - name: Run regression tests
     if: branch = master AND type = cron
+  - name: Deploy to staging
+    if: branch = master AND type = push
   - name: Deploy to production
     if: branch = master AND type = push
 
