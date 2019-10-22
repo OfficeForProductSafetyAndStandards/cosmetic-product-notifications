@@ -7,7 +7,7 @@ set -ex
 # CF_PASSWORD: cloudfoundry password
 # SPACE: the space to which you want to deploy
 
-if [[ $(./infrastructure/ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| )) ]]; then
+#if [[ $(./infrastructure/ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| )) ]]; then
     ./infrastructure/ci/install-cf.sh
     cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-opss' -s $SPACE
     export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
@@ -21,6 +21,6 @@ if [[ $(./infrastructure/ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| ))
     docker pull beisopss/$COMPONENT:$BUILD_ID
     docker tag beisopss/$COMPONENT:$BUILD_ID beisopss/$COMPONENT:$BRANCH
     docker push beisopss/$COMPONENT:$BRANCH
-else
+#else
     echo 'Deployment not required.'
-fi
+#fi
