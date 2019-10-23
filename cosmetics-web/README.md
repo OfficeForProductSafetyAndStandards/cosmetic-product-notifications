@@ -1,6 +1,6 @@
-# Cosmetics Website
+# Submit cosmetic product notifications
 
-This folder contains the configuration and code for the Cosmetics website.
+This folder contains the configuration and code for the Submit cosmetic product notifications service.
 This folder also contains the code for the [background worker](../cosmetics-worker/README.md).
 
 

@@ -13,17 +13,18 @@ table.govuk-table.check-your-answers-table#product-table
           | Internal reference number
         td.govuk-table__cell
           = notification.industry_reference
-    tr.govuk-table__row
-      th.govuk-table__header[scope="row"]
-        | Imported
-      td.govuk-table__cell
-        = product_imported?(notification)
-    - if product_imported?(notification) == "Yes"
+    - if current_user.can_view_product_ingredients?
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]
-          | Imported from
+          | Imported
         td.govuk-table__cell
-          = product_import_country(notification)
+          = product_imported?(notification)
+      - if product_imported?(notification) == "Yes"
+        tr.govuk-table__row
+          th.govuk-table__header[scope="row"]
+            | Imported from
+          td.govuk-table__cell
+            = product_import_country(notification)
     - if notification.notified_post_eu_exit?
       tr.govuk-table__row
         th.govuk-table__header
@@ -62,21 +63,16 @@ table.govuk-table.check-your-answers-table#product-table
           = display_full_month_date notification.cpnp_notification_date
     tr.govuk-table__row
       th.govuk-table__header
-        | Still on the market
-      td.govuk-table__cell
-        = notification.still_on_the_market ? "Yes" : "No"
-    tr.govuk-table__row
-      th.govuk-table__header
         | Are the components mixed?
       td.govuk-table__cell
         = notification.components_are_mixed ? "Yes" : "No"
-    - if notification.ph_min_value.present?
+    - if current_user.can_view_product_ingredients? && notification.ph_min_value.present?
       tr.govuk-table__row
         th.govuk-table__header
           | Minimum pH value
         td.govuk-table__cell
           = notification.ph_min_value
-    - if notification.ph_max_value.present?
+    - if current_user.can_view_product_ingredients? && notification.ph_max_value.present?
       tr.govuk-table__row
         th.govuk-table__header
           | Maximum pH value

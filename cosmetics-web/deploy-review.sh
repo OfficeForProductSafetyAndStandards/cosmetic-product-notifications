@@ -29,13 +29,24 @@ cf create-service postgres small-10 $DB_NAME
 
 # Wait until db is prepared, might take up to 10 minutes
 until cf service $DB_NAME > /tmp/db_exists && grep "create succeeded" /tmp/db_exists; do sleep 20; echo "Waiting for db"; done
+
+if [ -z "$REDIS_NAME" ]
+then
+  REDIS_NAME=cosmetics-review-redis
+fi
+cf create-service redis tiny-3.2 $REDIS_NAME
+
+# Wait until redis service is prepared, might take up to 10 minutes
+until cf service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp/redis_exists; do sleep 20; echo "Waiting for redis"; done
+
+
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
 # Deploy the submit app and set the hostname
-cf push $WEB -f $MANIFEST_FILE --no-start --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN
+cf push $WEB -f $MANIFEST_FILE --no-start --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME
 
 # Deploy worker
-cf push $WORKER -f $MANIFEST_FILE_WORKER --no-start --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SEARCH_APP.$DOMAIN
+cf push $WORKER -f $MANIFEST_FILE_WORKER --no-start --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SEARCH_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME
 
 cf start $WEB
 cf start $WORKER

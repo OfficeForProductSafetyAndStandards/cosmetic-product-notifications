@@ -259,5 +259,18 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
         expect(notification.components.first.maximum_ph).to eq(2.0)
       end
     end
+
+    context "when the file contains a post-Brexit date" do
+      let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFilePostBrexit.zip")) }
+
+      before do
+        analyzer_instance = described_class.new(notification_file.uploaded_file)
+        analyzer_instance.metadata
+      end
+
+      it "adds an error to the file" do
+        expect(notification_file.reload.upload_error).to eq("post_brexit_date")
+      end
+    end
   end
 end

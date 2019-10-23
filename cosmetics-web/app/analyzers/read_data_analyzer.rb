@@ -35,6 +35,8 @@ private
         cpnp_export_info = CpnpExport.new(product_xml_file)
         if cpnp_export_info.notification_status == "DR"
           raise DraftNotificationError, "DraftNotificationError - Draft notification uploaded"
+        elsif cpnp_export_info.cpnp_notification_date >= EU_EXIT_DATE
+          raise CpnpFileNotifiedPostBrexitError, "Product was notified to CPNP post-Brexit, which is not currently supported"
         else
           notification = ::Notification.new(product_name: cpnp_export_info.product_name,
                                             shades: cpnp_export_info.shades,
@@ -83,6 +85,9 @@ private
     rescue UnexpectedStaticFilesError => e
       Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :unknown_error)
+    rescue CpnpFileNotifiedPostBrexitError => e
+      Sidekiq.logger.error e.message
+      @notification_file.update(upload_error: :post_brexit_date)
     rescue StandardError => e
       Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
       @notification_file.update(upload_error: :unknown_error)
@@ -171,5 +176,8 @@ private
   end
 
   class UnexpectedStaticFilesError < FileUploadError
+  end
+
+  class CpnpFileNotifiedPostBrexitError < FileUploadError
   end
 end
