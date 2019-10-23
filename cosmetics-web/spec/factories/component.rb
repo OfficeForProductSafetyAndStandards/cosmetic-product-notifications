@@ -8,5 +8,13 @@ FactoryBot.define do
     factory :exact_component do
       notification_type { "exact" }
     end
+
+    trait :with_poisonous_ingredients do
+      contains_poisonous_ingredients { true }
+    end
+
+    trait :with_trigger_questions do
+      trigger_questions { build_list :trigger_question, 2 }
+    end
   end
 end

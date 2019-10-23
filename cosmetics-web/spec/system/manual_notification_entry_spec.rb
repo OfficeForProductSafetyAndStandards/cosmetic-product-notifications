@@ -67,6 +67,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
 
+    # Contains poisonous ingredients?
+    choose "No"
+    click_button "Continue"
+
     # trigger_questions
     skip_trigger_questions
 
@@ -143,6 +147,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
 
+    # Contains poisonous ingredients?
+    choose "No"
+    click_button "Continue"
+
     # trigger_questions
     skip_trigger_questions
 
@@ -210,6 +218,10 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # select_frame_formulation
     fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
+    click_button "Continue"
+
+    # Contains poisonous ingredients?
+    choose "No"
     click_button "Continue"
 
     # trigger_questions
@@ -297,6 +309,10 @@ RSpec.describe "Manually enter product details", type: :system do
     fill_autocomplete "component_frame_formulation", with: "Skin Care Cream, Lotion, Gel"
     click_button "Continue"
 
+    # Contains poisonous ingredients?
+    choose "No"
+    click_button "Continue"
+
     # trigger_questions
     skip_trigger_questions
 
@@ -358,97 +374,8 @@ private
   end
 
   def skip_trigger_questions
-    # contains_anti_dandruff_agents
-    choose("No")
-    click_button "Continue"
-
     # select_ph_range
     choose("It does not have a pH")
-    click_button "Continue"
-
-
-    # contains_anti_hair_loss_agents
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_anti_pigmenting_agents
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_chemical_exfoliating_agents
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_vitamin_a
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_xanthine_derivatives
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_cationic_surfactants
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_propellant
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_hydrogen_peroxide
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_compounds_releasing_hydrogen_peroxide
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_reducing_agents
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_persulfates
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_straightening_agents
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_inorganic_sodium_salts
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_fluoride_compounds
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_essential_oils
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_ethanol
-    choose("No")
-    click_button "Continue"
-
-
-    # contains_isopropanol
-    choose("No")
     click_button "Continue"
   end
 end

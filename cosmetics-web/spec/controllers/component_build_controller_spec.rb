@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe ComponentBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
-  let(:component) { create(:component) }
+  let(:component) { create(:component, notification_type: component_type) }
   let(:notification) { create(:notification, components: [component], responsible_person: responsible_person) }
   let(:pre_eu_exit_notification) { create(:pre_eu_exit_notification, components: [component], responsible_person: responsible_person) }
+  let(:component_type) { nil }
 
   let(:params) {
     {
@@ -48,7 +49,7 @@ RSpec.describe ComponentBuildController, type: :controller do
 
     it "redirects to the trigger rules page on finish" do
       get(:show, params: params.merge(id: :wicked_finish))
-      expect(response).to redirect_to(new_responsible_person_notification_component_trigger_question_path(responsible_person, notification, component))
+      expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :select_ph_range))
     end
 
     it "initialises shades array with two empty strings in add_shades step" do
@@ -73,6 +74,50 @@ RSpec.describe ComponentBuildController, type: :controller do
       get(:show, params: params.merge(id: :add_cmrs))
       expect(assigns(:component).cmrs).to have(5).items
       expect(assigns(:component).cmrs).to all(have_attributes(name: be_nil))
+    end
+
+    describe "upload product ingredients page" do
+      before { get(:show, params: params.merge(id: :upload_formulation)) }
+
+      render_views
+
+      describe "page title" do
+        context "with a component with predefined formulation" do
+          let(:component_type) { "predefined" }
+
+          it "sets the page title to poisonous ingredients" do
+            expect(response.body).to match(/<title>Upload list of poisonous ingredients .+<\/title>/)
+          end
+        end
+
+        context "with a component without predefined formulation" do
+          let(:component_type) { "exact" }
+
+          it "sets the page title to product ingredients" do
+            expect(response.body).to match(/<title>Upload list of ingredients .+<\/title>/)
+          end
+        end
+      end
+
+      describe "back link" do
+        context "with a component with predefined formulation" do
+          let(:component_type) { "predefined" }
+
+          it "links to the poisonous materials page" do
+            path = responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients)
+            expect(response.body).to match(/\<a class="govuk-back-link" href="#{path}">Back<\/a>/)
+          end
+        end
+
+        context "with a component without predefined formulation" do
+          let(:component_type) { "exact" }
+
+          it "links to the select formulation type page" do
+            path = responsible_person_notification_component_build_path(responsible_person, notification, component, :select_formulation_type)
+            expect(response.body).to match(/\<a class="govuk-back-link" href="#{path}">Back<\/a>/)
+          end
+        end
+      end
     end
   end
 
@@ -185,18 +230,37 @@ RSpec.describe ComponentBuildController, type: :controller do
     end
 
     context "when selecting whether the component contains poisonous materials" do
-      it "saves and redirect to PH trigger question if you select an answer" do
-        post(:update, params: params.merge(id: :contains_poisonous_ingredients, component: { contains_poisonous_ingredients: 'true' }))
+      context "when an answer is provided" do
+        let(:answer) { "true" }
 
-        expect(assigns(:component).contains_poisonous_ingredients).to be(true)
-        expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :select_ph_range))
+        before { post(:update, params: params.merge(id: :contains_poisonous_ingredients, component: { contains_poisonous_ingredients: answer })) }
+
+        it "saves the component record" do
+          expect(assigns(:component).contains_poisonous_ingredients).to be(true)
+        end
+
+        context "when the answer is true" do
+          it "redirects to the upload formulation page" do
+            expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :upload_formulation))
+          end
+        end
+
+        context "when the answer is true" do
+          let(:answer) { "false" }
+
+          it "redirects to the select pH range page" do
+            expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :select_ph_range))
+          end
+        end
       end
 
-      it "re-renders the question with an error if you don’t select an answer" do
-        post(:update, params: params.merge(id: :contains_poisonous_ingredients))
+      context "with no answer provided" do
+        before { post(:update, params: params.merge(id: :contains_poisonous_ingredients)) }
 
-        expect(response.status).to be(200)
-        expect(assigns(:component).errors[:contains_poisonous_ingredients]).to include("Select whether the product contains any poisonous ingredients")
+        it "re-renders the question with an error" do
+          expect(response.status).to be(200)
+          expect(assigns(:component).errors[:contains_poisonous_ingredients]).to include("Select whether the product contains any poisonous ingredients")
+        end
       end
     end
 
