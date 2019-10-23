@@ -1,6 +1,6 @@
-# Cosmetics Background Worker
+# Submit cosmetic product notifications – background Worker
 
-This folder contains the configuration to setup the worker processes which support the [Cosmetics website](../cosmetics-web/README.md).
+This folder contains the configuration to setup the worker processes which support the [Submit cosmetic product notifications service](../cosmetics-web/README.md).
 The codebase is shared with the website.
 
 
