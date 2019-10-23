@@ -26,11 +26,11 @@ class TriggerQuestionsController < ApplicationController
 
 private
 
-  def finish_wizard_path
+  def finish_wizard_path(from_path:)
     if @component.notification.is_multicomponent?
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
-   elsif @component.notification.was_notified_before_eu_exit?
-     edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+    elsif @component.notification.was_notified_before_eu_exit?
+      edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification, from: from_path)
     else
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
     end
@@ -46,7 +46,7 @@ private
     return re_render_step unless @component.update_with_context(ph_param, :ph)
 
     if @component.ph_range_not_required?
-      redirect_to finish_wizard_path
+      redirect_to finish_wizard_path(from_path: wizard_path(:select_ph_range))
     else
       redirect_to wizard_path(:ph)
     end
@@ -54,7 +54,7 @@ private
 
   def update_component_ph
     if @component.update_with_context(component_ph_attributes, :ph_range)
-      redirect_to finish_wizard_path
+      redirect_to finish_wizard_path(from_path: wizard_path(:ph))
     else
       re_render_step
     end

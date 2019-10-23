@@ -4,7 +4,7 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
         <%= link_to notification.product_name,
-                edit_responsible_person_notification_path(responsible_person, notification),
+                edit_responsible_person_notification_path(responsible_person, notification, from: responsible_person_notifications_path(responsible_person, anchor: "incomplete")),
                 class: "product-title govuk-link--no-visited-state" %>
       </h3>
       <div class="product-data govuk-body-s">
@@ -29,7 +29,7 @@
                   class: "govuk-link--no-visited-state" %>
         <% else %>
           <%= link_to "Confirm and notify",
-                  edit_responsible_person_notification_path(responsible_person, notification),
+                  edit_responsible_person_notification_path(responsible_person, notification, from: responsible_person_notifications_path(responsible_person, anchor: "incomplete")),
                   class: "govuk-link--no-visited-state" %>
         <% end %>
       </div>

@@ -38,6 +38,8 @@ class ResponsiblePersons::NotificationsController < ApplicationController
 
   # Check your answers page
   def edit
+    @from = params[:from] || responsible_person_notifications_path(@responsible_person)
+
     if params[:submit_failed]
       add_image_upload_errors
     end

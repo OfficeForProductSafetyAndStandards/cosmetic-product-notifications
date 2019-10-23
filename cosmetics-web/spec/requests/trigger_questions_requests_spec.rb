@@ -18,7 +18,7 @@ RSpec.describe "Trigger questions", type: :request do
   describe "GET #show" do
     context "when seeing the pH question" do
       before do
-        get "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/select_ph_range"
+        get "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range"
       end
 
       it "renders the template" do
@@ -64,7 +64,7 @@ RSpec.describe "Trigger questions", type: :request do
 
     context "with the exact pH question" do
       before do
-        get "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/ph"
+        get "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/ph"
       end
 
       it "renders the template" do
@@ -76,7 +76,7 @@ RSpec.describe "Trigger questions", type: :request do
       end
 
       it "includes a back link to the pH range question" do
-        expect(response.body).to have_tag("a.govuk-back-link", with: { href: "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/select_ph_range" })
+        expect(response.body).to have_tag("a.govuk-back-link", with: { href: "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range" })
       end
     end
   end
@@ -85,7 +85,7 @@ RSpec.describe "Trigger questions", type: :request do
     context "when answering the pH range question" do
       context "without specifying an answer" do
         before do
-          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/select_ph_range"
+          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range"
         end
 
         it "re-renders the page" do
@@ -99,7 +99,7 @@ RSpec.describe "Trigger questions", type: :request do
 
       context "with 'it does not have a pH'" do
         before do
-          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: 'not_applicable' } }
+          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: 'not_applicable' } }
         end
 
         it "sets the ph answer on the component" do
@@ -110,7 +110,7 @@ RSpec.describe "Trigger questions", type: :request do
           let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
 
           it "redirects to the add check your answers page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit?from=%2Fresponsible_persons%2F#{responsible_person.id}%2Fnotifications%2F#{notification.reference_number}%2Fcomponents%2F#{component.id}%2Ftrigger_question%2Fselect_ph_range")
           end
         end
 
@@ -134,7 +134,7 @@ RSpec.describe "Trigger questions", type: :request do
           let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
 
           it "redirects to the add check your answers page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit?from=%2Fresponsible_persons%2F#{responsible_person.id}%2Fnotifications%2F#{notification.reference_number}%2Fcomponents%2F#{component.id}%2Ftrigger_question%2Fselect_ph_range")
           end
         end
 
@@ -177,7 +177,7 @@ RSpec.describe "Trigger questions", type: :request do
     context "when answering the exact pH question" do
       context "without specifying an answer" do
         before do
-          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/ph"
+          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/ph"
         end
 
         it "re-renders the page" do
@@ -191,7 +191,7 @@ RSpec.describe "Trigger questions", type: :request do
 
       context "when specifying a minimum and maximum pH" do
         before do
-          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/ph", params: { component: { minimum_ph: '2.1 ', maximum_ph: '2.3 ' } }
+          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/ph", params: { component: { minimum_ph: '2.1 ', maximum_ph: '2.3 ' } }
         end
 
         it "sets the minimum ph value of the component" do
@@ -206,7 +206,7 @@ RSpec.describe "Trigger questions", type: :request do
           let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
 
           it "redirects to the add check your answers page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit?from=%2Fresponsible_persons%2F#{responsible_person.id}%2Fnotifications%2F#{notification.reference_number}%2Fcomponents%2F#{component.id}%2Ftrigger_question%2Fph")
           end
         end
 
