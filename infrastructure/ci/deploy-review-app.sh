@@ -13,6 +13,7 @@ set -ex
     export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
     export REVIEW_INSTANCE_NAME=$TRAVIS_PULL_REQUEST_BRANCH
     export DB_NAME=cosmetics-db-$DB_VERSION
+    # redis will be new for each review app
     export REDIS_NAME=cosmetics-review-redis-$TRAVIS_PULL_REQUEST_BRANCH
     ./$COMPONENT/deploy-review.sh
     cf logout
