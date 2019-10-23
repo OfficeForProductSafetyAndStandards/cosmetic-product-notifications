@@ -11,9 +11,9 @@ set -ex
     ./infrastructure/ci/install-cf.sh
     cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-opss' -s $SPACE
     export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
-    export REVIEW_INSTANCE_NAME=$BRANCH
+    export REVIEW_INSTANCE_NAME=$TRAVIS_PULL_REQUEST_BRANCH
     export DB_NAME=cosmetics-db-$DB_VERSION
-    export REDIS_NAME=cosmetics-review-redis-$BRANCH
+    export REDIS_NAME=cosmetics-review-redis-$TRAVIS_PULL_REQUEST_BRANCH
     ./$COMPONENT/deploy-review.sh
     cf logout
 
