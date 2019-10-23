@@ -49,7 +49,7 @@ RSpec.describe NotificationBuildController, type: :controller do
 
     it "redirects to the check your answers page on finish" do
       get(:show, params: params.merge(id: :wicked_finish))
-      expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, notification))
+      expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, notification, from: responsible_person_notification_build_path(notification.responsible_person, notification, :add_product_image)))
     end
 
     it "does not allow the user to view a notification for a Responsible Person they not belong to" do

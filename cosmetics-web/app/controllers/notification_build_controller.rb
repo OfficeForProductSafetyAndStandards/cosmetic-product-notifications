@@ -55,7 +55,7 @@ class NotificationBuildController < ApplicationController
   end
 
   def finish_wizard_path
-    edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+    edit_responsible_person_notification_path(@notification.responsible_person, @notification, from: responsible_person_notification_build_path(@notification.responsible_person, @notification, :add_product_image))
   end
 
   def previous_wizard_path
