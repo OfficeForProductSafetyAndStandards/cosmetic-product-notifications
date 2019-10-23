@@ -18,7 +18,7 @@ RSpec.describe AdditionalInformationController, type: :controller do
       notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component])
       notification.image_uploads.create
       get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
-      expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, notification))
+      expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, notification, from: responsible_person_notification_additional_information_index_path(notification.responsible_person, notification)))
     end
 
     it "updates the notification state to draft_complete if all components have complete formulations and don't require images" do

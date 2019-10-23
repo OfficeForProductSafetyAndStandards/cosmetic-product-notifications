@@ -17,7 +17,7 @@ class AdditionalInformationController < ApplicationController
       return redirect_to new_responsible_person_notification_product_image_upload_path(@notification.responsible_person, @notification)
     end
 
-    redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+    redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification, from: responsible_person_notification_additional_information_index_path(@notification.responsible_person, @notification))
   end
 
 private
