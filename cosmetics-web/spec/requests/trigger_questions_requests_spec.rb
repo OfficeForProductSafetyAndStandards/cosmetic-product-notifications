@@ -106,8 +106,18 @@ RSpec.describe "Trigger questions", type: :request do
           expect(component.reload.ph).to eql('not_applicable')
         end
 
-        it "redirects to the add product image page" do
-          expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+        context "when the notification was first notified pre-Brexit" do
+          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+
+          it "redirects to the add check your answers page" do
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
+          end
+        end
+
+        context "when the notification was first notified post-Brexit" do
+          it "redirects to the add product image page" do
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+          end
         end
       end
 
@@ -120,8 +130,18 @@ RSpec.describe "Trigger questions", type: :request do
           expect(component.reload.ph).to eql('between_3_and_10')
         end
 
-        it "redirects to the add product image page" do
-          expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+        context "when the notification was first notified pre-Brexit" do
+          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+
+          it "redirects to the add check your answers page" do
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
+          end
+        end
+
+        context "when the notification was first notified post-Brexit" do
+          it "redirects to the add product image page" do
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+          end
         end
       end
 
@@ -182,8 +202,18 @@ RSpec.describe "Trigger questions", type: :request do
           expect(component.reload.maximum_ph).to be(2.3)
         end
 
-        it "redirects to the 'Upload an image of the product label' page" do
-          expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+        context "when the notification was first notified pre-Brexit" do
+          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+
+          it "redirects to the add check your answers page" do
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
+          end
+        end
+
+        context "when the notification was first notified post-Brexit" do
+          it "redirects to the add product image page" do
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+          end
         end
       end
     end
