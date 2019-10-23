@@ -183,11 +183,7 @@ private
 
   def render_add_cmrs
     if @component.update_with_context(component_params, step)
-      if @component.notification.was_notified_before_eu_exit?
-        jump_to(next_step(:contains_cmrs))
-      else
-        render_wizard @component
-      end
+      render_wizard @component
     else
       create_required_cmrs
       render step
