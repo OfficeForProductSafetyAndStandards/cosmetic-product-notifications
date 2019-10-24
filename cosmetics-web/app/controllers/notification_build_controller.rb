@@ -156,7 +156,14 @@ private
       new_component = invalid_multicomponents.empty? ? @notification.components.create : invalid_multicomponents.first
       redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, new_component)
     elsif @notification.get_valid_multicomponents.length > 1
-      render_wizard @notification
+
+      if @notification.was_notified_before_eu_exit?
+        # Product images aren’t needed for pre-Brexit notifications,
+        # so redirect to Check your answers page instead
+        redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+      else
+        render_wizard @notification
+      end
     else
       render step
     end
