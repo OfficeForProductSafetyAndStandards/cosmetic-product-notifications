@@ -40,6 +40,7 @@ cf create-service redis tiny-3.2 $REDIS_NAME
 until cf service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp/redis_exists; do sleep 20; echo "Waiting for redis"; done
 
 
+# Copy files from infrastructure env
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
 # Deploy the submit app and set the hostname
@@ -50,3 +51,6 @@ cf push $WORKER -f $MANIFEST_FILE_WORKER --no-start --var cosmetics-instance-nam
 
 cf start $WEB
 cf start $WORKER
+
+# Remove the copied infrastructure env files to clean up
+rm -R cosmetics-web/env/
