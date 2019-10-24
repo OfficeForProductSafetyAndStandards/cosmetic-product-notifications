@@ -107,10 +107,14 @@ RSpec.describe "Trigger questions", type: :request do
         end
 
         context "when the notification was first notified pre-Brexit" do
-          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person, state: 'components_complete') }
 
           it "redirects to the add check your answers page" do
             expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
+          end
+
+          it "updates the notification state to draft_complete" do
+            expect(notification.reload.state).to eql('draft_complete')
           end
         end
 
@@ -203,10 +207,14 @@ RSpec.describe "Trigger questions", type: :request do
         end
 
         context "when the notification was first notified pre-Brexit" do
-          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person, state: 'components_complete') }
 
           it "redirects to the add check your answers page" do
             expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
+          end
+
+          it "updates the notification state to draft_complete" do
+            expect(notification.reload.state).to eql('draft_complete')
           end
         end
 
