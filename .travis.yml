@@ -19,7 +19,8 @@ cache:
     - ~/coverage-cache
 
 stages:
-  - Build
+  - name: Build
+    if: type = pull_request
   - name: Test and deploy review
     if: type = pull_request # This is designed to cut out unnecessary runs of the test suite. See PSD-821 for details.
   - name: Update code coverage
@@ -42,7 +43,7 @@ jobs:
       install:
         - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./infrastructure/ci/build-docker-images.sh
       script: echo "Built"
-    - stage: Test
+    - stage: Test and deploy review
       name: Tests
       script: COMPONENT=cosmetics-web ./infrastructure/ci/test-if-changed.sh
       env: *test_env
