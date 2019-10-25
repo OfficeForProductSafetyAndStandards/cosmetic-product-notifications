@@ -172,7 +172,7 @@ private
       @notification.add_product_image
       render_wizard @notification
     else
-      @notification.errors.add :image_uploads, "You must upload at least one product image"
+      @notification.errors.add :image_uploads, "Select an image"
       render step
     end
   end
