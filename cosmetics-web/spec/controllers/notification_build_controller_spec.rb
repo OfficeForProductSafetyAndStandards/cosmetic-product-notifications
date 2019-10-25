@@ -130,7 +130,7 @@ RSpec.describe NotificationBuildController, type: :controller do
 
     it "adds errors if user does not upload images in the add_product_image step" do
       post(:update, params: params.merge(id: :add_product_image, image_upload: []))
-      expect(assigns[:notification].errors[:image_uploads]).to include("You must upload at least one product image")
+      expect(assigns[:notification].errors[:image_uploads]).to include("Select an image")
     end
 
     it "adds errors if the user uploads an incorrect file type as a label image" do
