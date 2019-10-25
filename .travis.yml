@@ -42,7 +42,7 @@ jobs:
       install:
         - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./infrastructure/ci/build-docker-images.sh
       script: echo "Built"
-    - stage: Test adn deploy review
+    - stage: Test and deploy review
       name: Tests
       script: COMPONENT=cosmetics-web ./infrastructure/ci/test-if-changed.sh
       env: *test_env
