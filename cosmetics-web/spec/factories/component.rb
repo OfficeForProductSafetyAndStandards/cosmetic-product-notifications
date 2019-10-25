@@ -16,5 +16,9 @@ FactoryBot.define do
     trait :with_trigger_questions do
       trigger_questions { build_list :trigger_question, 2 }
     end
+
+    trait :with_name do
+      name { "a component" }
+    end
   end
 end

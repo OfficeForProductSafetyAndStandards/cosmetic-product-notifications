@@ -29,6 +29,8 @@ private
   def finish_wizard_path
     if @component.notification.is_multicomponent?
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
+    elsif @component.notification.was_notified_before_eu_exit?
+      edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
     else
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
     end
@@ -44,6 +46,7 @@ private
     return re_render_step unless @component.update_with_context(ph_param, :ph)
 
     if @component.ph_range_not_required?
+      update_notification_state
       redirect_to finish_wizard_path
     else
       redirect_to wizard_path(:ph)
@@ -52,9 +55,16 @@ private
 
   def update_component_ph
     if @component.update_with_context(component_ph_attributes, :ph_range)
+      update_notification_state
       redirect_to finish_wizard_path
     else
       re_render_step
+    end
+  end
+
+  def update_notification_state
+    if @component.notification.was_notified_before_eu_exit?
+      @component.notification.components_completed_and_product_image_not_needed!
     end
   end
 
