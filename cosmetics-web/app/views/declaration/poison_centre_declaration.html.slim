@@ -18,4 +18,6 @@
           | and accept them
         li I will not share any information from the UK cosmetic product notification database outside my organisation
 
-      = render "declaration/accept_declaration", accept_label: "I agree", form: form, errors: @errors
+      .form-group
+        = form.submit "I confirm", class: "govuk-button"
+

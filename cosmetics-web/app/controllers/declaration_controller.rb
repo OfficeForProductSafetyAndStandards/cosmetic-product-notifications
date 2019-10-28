@@ -9,20 +9,8 @@ class DeclarationController < ApplicationController
   end
 
   def accept
-    if params[:accept_declaration] != "checked"
-
-      error_message = if current_user.poison_centre_user? || current_user.msa_user?
-                        "You must agree to the declaration to use this service"
-                      else
-                        "You must confirm the declaration to use this service"
-                      end
-
-      @errors = [{ text: error_message, href: "#accept_declaration" }]
-      show_declaration
-    else
-      User.current.has_accepted_declaration!
-      redirect_to session[:redirect_path] || root_path
-    end
+    User.current.has_accepted_declaration!
+    redirect_to session[:redirect_path] || root_path
   end
 
 private
