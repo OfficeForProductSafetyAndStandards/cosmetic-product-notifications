@@ -11,9 +11,9 @@
       ul.govuk-list.govuk-list--bullet
         li
           | The
-          =<> link_to "terms and conditions", terms_and_conditions_path
+          =<> link_to "terms and conditions", terms_and_conditions_path, target: '_new'
           | and
-          =<> link_to "privacy policy", privacy_notice_path
+          =<> link_to "privacy policy", privacy_notice_path, target: '_new'
         li only use the information in this service to assist medical and healthcare professionals
 
       = render "declaration/accept_declaration", form: form, errors: @errors
