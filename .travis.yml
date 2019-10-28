@@ -19,8 +19,7 @@ cache:
     - ~/coverage-cache
 
 stages:
-  - name: Build
-    if: type = pull_request
+  - Build
   - name: Test and deploy review
     if: type = pull_request # This is designed to cut out unnecessary runs of the test suite. See PSD-821 for details.
   - name: Update code coverage
