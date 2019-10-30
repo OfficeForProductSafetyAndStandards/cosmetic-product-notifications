@@ -1,6 +1,6 @@
 $govuk-global-styles: true;
-$govuk-assets-path: '~govuk-frontend/assets/';
-@import "~govuk-frontend/all";
+$govuk-assets-path: '~govuk-frontend/govuk/assets/';
+@import "~govuk-frontend/govuk/all";
 
 @import "remove-default-button-styling";
 @import "autocomplete";
