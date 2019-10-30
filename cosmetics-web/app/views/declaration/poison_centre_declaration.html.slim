@@ -16,4 +16,5 @@
           =<> link_to "privacy policy", privacy_notice_path, target: '_new'
         li only use the information in this service to assist medical and healthcare professionals
 
-      = render "declaration/accept_declaration", accept_label: "I agree", form: form, errors: @errors
+      .form-group
+        = form.submit "I accept", class: "govuk-button"
