@@ -3,12 +3,17 @@ require 'rails_helper'
 RSpec.describe "Check your answers page", type: :request do
   include RSpecHtmlMatchers
 
-  let(:user) { build(:user) }
-  let!(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person) }
   let(:notification) { create(:draft_notification, responsible_person: responsible_person) }
+  let(:params) do
+    {
+      responsible_person_id: responsible_person.id,
+      reference_number: notification.reference_number
+    }
+  end
 
   before do
-    sign_in_as_member_of_responsible_person(responsible_person, user)
+    sign_in_as_member_of_responsible_person(responsible_person)
   end
 
   after do
@@ -16,15 +21,17 @@ RSpec.describe "Check your answers page", type: :request do
   end
 
   describe "GET #edit" do
+    it "displays the UK cosmetics product number " do
+      get edit_responsible_person_notification_path(params)
+
+      expect(response.body).to include("UK cosmetic product number:")
+    end
+
     context "when the component has CMRS" do
-      let!(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, notification: notification, cmrs: [create(:cmr)]) }
+      let!(:component) { create(:component, notification: notification, cmrs: [create(:cmr)]) }
 
       before do
-        get "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit"
-      end
-
-      it "should have a UK cosmetics product number " do
-        expect(response.body).to include("UK cosmetic product number:")
+        get edit_responsible_person_notification_path(params)
       end
 
       it "displays that the product contains CMRs" do
@@ -41,10 +48,10 @@ RSpec.describe "Check your answers page", type: :request do
     end
 
     context "when the component has no CMRs" do
-      let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, notification: notification) }
-
       before do
-        get "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit"
+        create(:component, notification: notification)
+
+        get edit_responsible_person_notification_path(params)
       end
 
       it "displays whether CMRs are present" do
