@@ -523,7 +523,9 @@
                 <ajp-listener name="ajp" socket-binding="ajp"/>
                 <http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true" proxy-address-forwarding="true"/>
                 <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true" proxy-address-forwarding="true"/>
+
                 <host name="default-host" alias="localhost">
+                    <access-log pattern="%A%t%h%l%u%r%s%b%T%I"/>
                     <http-invoker security-realm="ApplicationRealm"/>
                 </host>
             </server>
