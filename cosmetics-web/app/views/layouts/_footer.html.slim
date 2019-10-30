@@ -16,6 +16,11 @@ footer.govuk-footer[role="contentinfo"]
 
     .govuk-footer__meta
       .govuk-footer__meta-item.govuk-footer__meta-item--grow
+
+        .govuk-footer__meta-custom
+          | Email
+          =<> link_to "opss.enquiries@beis.gov.uk", "mailto:OPSS.enquiries@beis.gov.uk", class: "govuk-footer__link "
+          | for help using this service
         ul.govuk-footer__inline-list
           li.govuk-footer__inline-list-item
             = link_to "Privacy policy", privacy_notice_path,
