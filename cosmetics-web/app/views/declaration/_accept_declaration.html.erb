@@ -1,0 +1,15 @@
+<div class="govuk-form-group <%= "govuk-form-group--error" if errors.present? %>">
+  <% if errors.present? %>
+    <span class="govuk-error-message" id="accept_declaration-error">
+      <%= errors.first[:text] %>
+    </span>
+  <% end %>
+  <div class="govuk-checkboxes">
+    <div class="govuk-checkboxes__item">
+      <%= form.check_box :accept_declaration, { class: "govuk-checkboxes__input" }, "checked", "unchecked" %>
+      <%= form.label :accept_declaration, accept_label, class: "govuk-checkboxes__label" %>
+    </div>
+  </div>
+</div>
+<div class="govuk-form-group">
+  <%= form.submit "Continue", class: "govuk-button" %>
