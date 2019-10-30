@@ -18,20 +18,10 @@ RSpec.describe "Declaration page", type: :system do
     assert_current_path declaration_path
   end
 
-  it "requires confirmation before continuing" do
-    visit root_path
-
-    click_on "Continue"
-
-    assert_current_path accept_declaration_path
-    assert_text "You must confirm the declaration"
-  end
-
   it "records confirmation and redirects to account page" do
     visit root_path
 
-    check "I confirm"
-    click_on "Continue"
+    click_on "I confirm"
 
     assert_current_path account_path(:overview)
     expect(first_time_user.has_accepted_declaration?).to be true
