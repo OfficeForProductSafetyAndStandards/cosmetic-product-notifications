@@ -28,9 +28,9 @@ RSpec.describe "Check your answers page", type: :request do
     end
 
     context "when the component has CMRS" do
-      let!(:component) { create(:component, notification: notification, cmrs: [create(:cmr)]) }
-
       before do
+        create(:component, notification: notification, cmrs: [create(:cmr)])
+
         get edit_responsible_person_notification_path(params)
       end
 
