@@ -5,13 +5,16 @@
   @include govuk-text-colour;
   @include govuk-responsive-padding(4);
   @include govuk-responsive-margin(6, "top");
-  @include govuk-focusable;
 
-  border: $govuk-border-width-mobile solid govuk-colour("green");
+  border: $govuk-border-width-narrow solid govuk-colour("green");
 
   @include govuk-media-query($from: tablet) {
     border: $govuk-border-width solid govuk-colour("green");
   }
+}
+
+.confirmation-banner:focus {
+  @include govuk-focused-text;
 }
 
 .confirmation-banner__title {
