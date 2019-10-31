@@ -1,6 +1,5 @@
 class NotifyMailer < GovukNotifyRails::Mailer
-  def send_contact_person_verification_email(contact_person_id, contact_person_name, contact_person_email, responsible_person_name, user_name)
-
+  def send_contact_person_verification_email(contact_person_name, contact_person_email, responsible_person_name, user_name)
     set_template('50072d05-d058-4a02-a239-0d73ef7291b2')
     set_reference('Contact person verification email')
 

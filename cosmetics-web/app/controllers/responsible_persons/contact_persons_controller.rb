@@ -48,7 +48,6 @@ private
 
   def send_verification_email
     NotifyMailer.send_contact_person_verification_email(
-      @contact_person.id,
       @contact_person.name,
       @contact_person.email_address,
       @responsible_person.name,
