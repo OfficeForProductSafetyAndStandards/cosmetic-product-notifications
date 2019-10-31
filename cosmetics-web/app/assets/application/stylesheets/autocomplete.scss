@@ -109,7 +109,7 @@
 }
 
 .autocomplete__option--odd {
-  background-color: govuk-colour("grey-4");
+  background-color: govuk-colour("light-grey");
 }
 
 .autocomplete__option--focused,
@@ -121,8 +121,8 @@
 }
 
 .autocomplete__option--no-results {
-  background-color: govuk-colour("grey-4");
-  color: govuk-colour("grey-1");
+  background-color: govuk-colour("light-grey");
+  color: govuk-colour("dark-grey");
   cursor: not-allowed;
 }
 
