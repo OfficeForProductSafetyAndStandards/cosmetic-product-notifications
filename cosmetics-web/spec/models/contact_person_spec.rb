@@ -29,5 +29,4 @@ RSpec.describe ContactPerson, type: :model do
     expect(contact_person.save).to be false
     expect(contact_person.errors[:email_address]).to include("Email address is invalid")
   end
-
 end

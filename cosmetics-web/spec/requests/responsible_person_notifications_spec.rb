@@ -19,8 +19,7 @@ RSpec.describe "Responsible person notifications", type: :request do
     end
 
     it "is successful" do
-      expect(response.status).to eql(200)
+      expect(response.status).to be 200
     end
-
   end
 end

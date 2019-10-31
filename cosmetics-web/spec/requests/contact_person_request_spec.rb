@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Contact person pages", type: :request do
-
   let(:responsible_person) { create(:responsible_person, :with_no_contact_person) }
 
   before do
@@ -30,11 +29,11 @@ RSpec.describe "Contact person pages", type: :request do
       end
 
       it "saves the contact person’s details" do
-        expect(responsible_person.reload.contact_persons.first).to have_attributes({
+        expect(responsible_person.reload.contact_persons.first).to have_attributes(
           name: "Test Person",
           email_address: "test@example.com",
           phone_number: "07712 345678"
-        })
+        )
       end
 
       it "sends a welcome email to that contact" do
@@ -54,7 +53,7 @@ RSpec.describe "Contact person pages", type: :request do
       end
 
       it "renders a page" do
-        expect(response.status).to eql(200)
+        expect(response.status).to be 200
       end
 
       it "displays an error message" do
@@ -62,7 +61,7 @@ RSpec.describe "Contact person pages", type: :request do
       end
 
       it "does not save the contact person" do
-        expect(responsible_person.reload.contact_persons.count).to eql(0)
+        expect(responsible_person.reload.contact_persons.count).to be 0
       end
     end
   end
@@ -75,18 +74,17 @@ RSpec.describe "Contact person pages", type: :request do
     end
 
     it "is successful" do
-      expect(response.status).to eql(200)
+      expect(response.status).to be 200
     end
   end
 
   describe "updating the contact person’s details" do
     let(:contact_person) {
       create(:contact_person,
-        name: 'Alpha Person',
-        email_address: 'alpha@example.com',
-        phone_number: "07711 111111",
-        responsible_person: responsible_person
-      )
+             name: 'Alpha Person',
+             email_address: 'alpha@example.com',
+             phone_number: "07711 111111",
+             responsible_person: responsible_person)
     }
 
     context "with all the required fields" do
@@ -105,11 +103,11 @@ RSpec.describe "Contact person pages", type: :request do
       end
 
       it "updates the contact person’s details" do
-        expect(contact_person.reload).to have_attributes({
+        expect(contact_person.reload).to have_attributes(
           name: "Beta Person",
           email_address: "beta@example.com",
           phone_number: "07722 222222"
-        })
+        )
       end
     end
 
@@ -125,7 +123,7 @@ RSpec.describe "Contact person pages", type: :request do
       end
 
       it "renders a page instead of redirecting" do
-        expect(response.status).to eql(200)
+        expect(response.status).to be 200
       end
 
       it "displays an error message" do
@@ -133,11 +131,11 @@ RSpec.describe "Contact person pages", type: :request do
       end
 
       it "does not update the contact person’s details" do
-        expect(contact_person.reload).to have_attributes({
+        expect(contact_person.reload).to have_attributes(
           name: 'Alpha Person',
           email_address: 'alpha@example.com',
           phone_number: "07711 111111",
-        })
+        )
       end
     end
   end
