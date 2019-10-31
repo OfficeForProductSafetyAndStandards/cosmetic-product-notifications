@@ -12,7 +12,6 @@ RSpec.describe NotifyMailer, type: :mailer do
       mail = described_class.send_contact_person_verification_email(contact_person.id, contact_person.name, contact_person.email_address,
                                                                     responsible_person.name, user_name)
       expect(mail.to).to eq([contact_person.email_address])
-      expect(contact_person.reload.email_verification_key).not_to be_nil
     end
   end
 
