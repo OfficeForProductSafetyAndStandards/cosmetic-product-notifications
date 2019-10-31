@@ -86,16 +86,6 @@ Rails.application.routes.draw do
         end
       end
     end
-
-    resources :contact_persons, only: %i[] do
-      collection do
-        resources :confirmation, path: "confirm", param: :key, only: %i[show] do
-          collection do
-            get :link_expired, path: "link-expired"
-          end
-        end
-      end
-    end
   end
 
   domains = "#{ENV['SUBMIT_HOST']}, #{ENV['SEARCH_HOST']}, #{ENV['COSMETICS_HOST']}"
