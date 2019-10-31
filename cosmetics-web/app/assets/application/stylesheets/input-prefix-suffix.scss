@@ -4,7 +4,7 @@
 
 .govuk-c-input__prefix,
 .govuk-c-input__suffix {
-  background-color: govuk-colour("grey-3");
+  background-color: govuk-colour("light-grey");
   white-space: nowrap;
   cursor: default; // emphasise non-editable status of prefixes and suffixes
   flex: 0;
