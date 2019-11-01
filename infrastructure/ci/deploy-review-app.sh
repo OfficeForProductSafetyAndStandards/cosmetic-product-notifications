@@ -8,7 +8,9 @@ set -ex
 # SPACE: the space to which you want to deploy
 
 ./infrastructure/ci/install-cf.sh
-cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-opss' -s $SPACE
+cf api api.london.cloud.service.gov.uk
+cf auth
+cf target -o 'beis-opss' -s $SPACE
 export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
 export REVIEW_INSTANCE_NAME=pr-$TRAVIS_PULL_REQUEST
 export DB_NAME=cosmetics-db-$DB_VERSION
