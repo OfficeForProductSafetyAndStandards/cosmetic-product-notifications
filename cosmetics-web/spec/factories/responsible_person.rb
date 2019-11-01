@@ -7,6 +7,10 @@ FactoryBot.define do
     postal_code { "AB12 3CD" }
     contact_persons { [create(:contact_person)] }
 
+    trait :with_no_contact_person do
+      contact_persons { [] }
+    end
+
     factory :business_responsible_person do
       account_type { :business }
     end
