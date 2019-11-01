@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Component, type: :model do
+  let(:notification) { create(:notification) }
   let(:predefined_component) { create(:component) }
   let(:ranges_component) { create(:ranges_component) }
   let(:exact_component) { create(:exact_component) }
@@ -11,6 +12,25 @@ RSpec.describe Component, type: :model do
 
     it "has a contains_poisonous_ingredients boolean" do
       expect(component).to have_attributes(contains_poisonous_ingredients: nil)
+    end
+  end
+
+  describe "validations" do
+    context "when there is already a component with the same name for the same notification" do
+      let(:component) { described_class.new(name: 'Component X', notification: notification) }
+
+      before do
+        create(:component, name: "Component X", notification: notification)
+      end
+
+      it "is not valid" do
+        expect(component).not_to be_valid
+      end
+
+      it "has an error message" do
+        component.valid?
+        expect(component.errors[:name]).to eql(["A component with that name has already been added to this notification"])
+      end
     end
   end
 
