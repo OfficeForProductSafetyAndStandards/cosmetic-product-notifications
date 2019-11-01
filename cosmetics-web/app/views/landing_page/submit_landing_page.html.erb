@@ -1,0 +1,107 @@
+<% content_for :page_title, "Landing Page" %>
+<div class="app-masthead">
+  <div class="govuk-width-container">
+    <%= render "layouts/phase_banner" %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+          Submit cosmetic product notifications
+        </h1>
+        <p class="masthead-account-links govuk-!-padding-top-2 govuk-!-margin-bottom-5">
+          <% if @responsible_person.present? %>
+            <%= link_to "Your cosmetic products", responsible_person_notifications_path(@responsible_person), class: "govuk-button govuk-!-font-weight-bold", role: "button", draggable: "false" %>
+          <% else %>
+            <%= link_to "Create an account", keycloak_registration_url(dashboard_path), class: "govuk-button govuk-!-font-weight-bold", role: "button", draggable: "false" %>
+            or
+            <%= link_to "sign in", keycloak_login_url(dashboard_path), class: "govuk-link govuk-link--no-visited-state" %>
+            if you have used this service before
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-width-container">
+  <main id="main-content" class="govuk-main-wrapper app-main-class" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <p>
+          If you sell or give away cosmetic products in the UK, you now need to submit a notification for every
+            product. This covers products already notified to the EU Cosmetic Product Notification Portal (CPNP) before
+          <span class="no-wrap"><%= display_full_month_date EU_EXIT_DATE %></span>
+          (Brexit), as well as products you’ve brought to market since then.
+        </p>
+        <p>
+          You do not have to submit notifications for cosmetic products taken off the market in the UK before
+          <span class="no-wrap"><%= display_full_month_date EU_EXIT_DATE %></span>.
+        </p>
+
+        <h2 class="govuk-heading-m">
+          If your products were not notified in the EU before
+          <span class="no-wrap"><%= display_full_month_date EU_EXIT_DATE %></span>
+          (Brexit)
+        </h2>
+        <p class="govuk-!-margin-bottom-1">Use the service to give information about:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>the ‘responsible person’ (this can be an individual or company) who is responsible for ensuring regulations are followed</li>
+          <li>a contact person for people from National Poisons Information Service and Trading Standards to speak to</li>
+          <li>the product’s formulation and whether it contains carcinogenic, mutagenic or toxic for reproduction (CMR) substances, and nanomaterials</li>
+        </ul>
+
+        <p>You also need to upload an image of the label, as a PDF, JPG or PNG and up to 30 MB in size.</p>
+        <p>If your product contains certain nanomaterials, you’ll have to wait 6 months before you place the product on the market.</p>
+
+        <h2 class="govuk-heading-m">If your products were notified in the EU before Brexit</h2>
+        <p class="govuk-!-margin-bottom-1">The process is similar, but you do not need to provide:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>information about whether or not the cosmetic product contains carcinogenic, mutagenic or toxic for reproduction (CMR) substances</li>
+          <li>an image of the label</li>
+        </ul>
+
+        <p>You can do this manually or via the 'upload' method below.</p>
+
+        <% warning_html = capture do %>
+          You must submit your notifications for these products by
+          <span class="no-wrap"><%= display_full_time_and_date SUBMISSION_WINDOW_END_DATE %></span>.
+        <% end %>
+        <%= render "warning_text", html: warning_html %>
+
+        <h2 class="govuk-heading-m">How to provide notifications</h2>
+        <h3 class="govuk-heading-s">Upload</h3>
+
+        <p class="govuk-!-margin-bottom-1">
+          If your products have been notified in the EU, you can use the data you’ve already supplied for your EU notification. You will need to:
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>export your data as a ZIP file for each notification – the CPNP allows you to do this</li>
+          <li>upload the ZIP files</li>
+        </ul>
+
+        <p>
+          You can upload
+          <%= NotificationFile.get_max_number_of_files %>
+          files at a time.
+        </p>
+
+        <p class="govuk-!-margin-bottom-1">
+          The ZIP files will not contain:
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>the formulation of the product if it was an attached document –
+              you must provide this separately and can do this as a PDF, RTF or TXT file</li>
+          <li>any images – you’ll need to provide them for products notified after Brexit</li>
+          <li>details of the nanomaterial – you may need to answer some extra questions</li>
+        </ul>
+
+        <h3 class="govuk-heading-s">Add a product manually</h3>
+        <p>If your products have not been notified in the EU, you need to manually enter information about the product.</p>
+      </div>
+    </div>
+  </main>
+</div>

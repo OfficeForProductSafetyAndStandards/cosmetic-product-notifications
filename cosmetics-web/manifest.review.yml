@@ -28,3 +28,4 @@ applications:
     - cosmetics-rails-env
     - cosmetics-sentry-env
     - cosmetics-sidekiq-env
+    - cosmetics-notify-env

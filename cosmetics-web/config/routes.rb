@@ -42,10 +42,7 @@ Rails.application.routes.draw do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
       end
 
-      resources :contact_persons, controller: "responsible_persons/contact_persons", only: %i[show new create edit update] do
-        member do
-          get :resend_email
-        end
+      resources :contact_persons, controller: "responsible_persons/contact_persons", only: %i[new create edit update] do
       end
 
       resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do
@@ -86,16 +83,6 @@ Rails.application.routes.draw do
 
         member do
           post :confirm
-        end
-      end
-    end
-
-    resources :contact_persons, only: %i[] do
-      collection do
-        resources :confirmation, path: "confirm", param: :key, only: %i[show] do
-          collection do
-            get :link_expired, path: "link-expired"
-          end
         end
       end
     end
