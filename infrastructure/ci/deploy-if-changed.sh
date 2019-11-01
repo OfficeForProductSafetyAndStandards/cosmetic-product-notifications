@@ -9,7 +9,9 @@ set -ex
 
 if [[ $(./infrastructure/ci/get-changed-components.sh) =~ ((^| )$COMPONENT($| )) ]]; then
     ./infrastructure/ci/install-cf.sh
-    cf login -a api.london.cloud.service.gov.uk -u $CF_USERNAME -p $CF_PASSWORD -o 'beis-opss' -s $SPACE
+    cf api api.london.cloud.service.gov.uk
+    cf auth
+    cf target -o 'beis-opss' -s $SPACE
     ./$COMPONENT/deploy.sh
     cf logout
 
