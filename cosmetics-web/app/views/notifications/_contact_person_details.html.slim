@@ -1,12 +1,6 @@
 dl class="govuk-summary-list govuk-!-margin-bottom-9"
   .govuk-summary-list__row
     dt.govuk-summary-list__key
-      | Status
-    dd.govuk-summary-list__value
-      = contact_person.email_verified ? 'Confirmed' : 'Invitation sent'
-    dd.govuk-summary-list__actions
-  .govuk-summary-list__row
-    dt.govuk-summary-list__key
       | Name
     dd.govuk-summary-list__value
       = contact_person.name
@@ -16,11 +10,6 @@ dl class="govuk-summary-list govuk-!-margin-bottom-9"
       | Email address
     dd.govuk-summary-list__value
       = contact_person.email_address
-    dd.govuk-summary-list__actions
-      -if !contact_person.email_verified?
-        = link_to "Resend validation link",
-                resend_email_responsible_person_contact_person_path(contact_person.responsible_person, contact_person),
-                class: "button-link", role: "button"
   .govuk-summary-list__row
     dt.govuk-summary-list__key
       | Phone number
