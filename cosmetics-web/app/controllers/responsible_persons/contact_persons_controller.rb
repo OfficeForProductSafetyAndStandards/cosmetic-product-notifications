@@ -3,8 +3,6 @@ class ResponsiblePersons::ContactPersonsController < ApplicationController
   before_action :set_responsible_person
   before_action :set_contact_person
 
-  def show; end
-
   def new; end
 
   def create
@@ -23,12 +21,6 @@ class ResponsiblePersons::ContactPersonsController < ApplicationController
     else
       render :edit
     end
-  end
-
-  def resend_email
-    send_verification_email
-
-    redirect_to responsible_person_contact_person_path(@responsible_person, @contact_person)
   end
 
 private
@@ -56,7 +48,6 @@ private
 
   def send_verification_email
     NotifyMailer.send_contact_person_verification_email(
-      @contact_person.id,
       @contact_person.name,
       @contact_person.email_address,
       @responsible_person.name,
@@ -65,11 +56,7 @@ private
   end
 
   def redirect_contact_person
-    if @contact_person.email_verified?
-      redirect_to responsible_person_path(@responsible_person)
-    else
-      send_verification_email
-      redirect_to responsible_person_contact_person_path(@responsible_person, @contact_person)
-    end
+    send_verification_email
+    redirect_to responsible_person_notifications_path(@responsible_person)
   end
 end
