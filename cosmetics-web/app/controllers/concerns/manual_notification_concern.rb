@@ -55,6 +55,8 @@ module ManualNotificationConcern
     else
       if param == :is_hair_dye
         model.errors.add param, "Select yes if the product contains a hair dye"
+      elsif param == :is_ph_between_3_and_10
+        model.errors.add param, "Select the pH range of the product when mixed as instructed"
       else
         model.errors.add param, "Choose an option"
       end
