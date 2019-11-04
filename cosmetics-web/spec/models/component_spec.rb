@@ -15,7 +15,7 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "validations" do
+  describe "name validation" do
     context "when there is already a component with the same name for the same notification" do
       let(:component) { described_class.new(name: 'Component X', notification: notification) }
 
@@ -30,6 +30,18 @@ RSpec.describe Component, type: :model do
       it "has an error message" do
         component.valid?
         expect(component.errors[:name]).to eql(["A component with that name has already been added to this notification"])
+      end
+    end
+
+    context "when there is already a component with no name for the same notification" do
+      let(:component) { described_class.new(name: nil, notification: notification) }
+
+      before do
+        create(:component, name: nil, notification: notification)
+      end
+
+      it "is valid" do
+        expect(component).to be_valid
       end
     end
   end
