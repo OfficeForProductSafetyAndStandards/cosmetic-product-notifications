@@ -1,0 +1,29 @@
+<% content_for :page_title, "Landing Page" %>
+<div class="app-masthead">
+  <div class="govuk-width-container">
+    <%= render "layouts/phase_banner" %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+          Find cosmetic product information
+        </h1>
+        <p class="masthead-account-links govuk-!-padding-top-2 govuk-!-margin-bottom-5">
+          <%= link_to "Sign in", keycloak_login_url(dashboard_path), class: "govuk-link govuk-link--no-visited-state" %>
+          to view cosmetic products for medical enquiries.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-width-container">
+  <main id="main-content" class="govuk-main-wrapper app-main-class" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">Request an account</h2>
+        <p>Content TBD.</p>
+      </div>
+    </div>
+  </main>
+</div>
