@@ -1,4 +1,5 @@
-- content_for :page_title, "Have the cosmetic products been notified on CPNP?"
+- title = "Have the products been notified on CPNP?"
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", responsible_person_notifications_path(@responsible_person), class: "govuk-back-link"
 .govuk-grid-row
@@ -6,7 +7,7 @@
     = form_with url: wizard_path, method: :put do |form|
       = render "components/govuk_radios", name: :answer,
         errorMessage: @error_text.present? && { text: @error_text },
-        fieldset: { legend: { text: "Have the cosmetic products been notified on CPNP?", \
+        fieldset: { legend: { text: title, \
           isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
         items: [{ text: "Yes", value: "yes" },
           { text: "No", value: "no" }]
