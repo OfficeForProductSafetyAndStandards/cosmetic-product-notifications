@@ -1,21 +1,20 @@
-- content_for :page_title, "Notifying cosmetic products in the EU and UK"
+- title = "Notifying cosmetic products in the EU and UK"
+- content_for :page_title
 - content_for :after_header do
     = link_to "Back", wizard_path(:will_products_be_notified_in_eu), class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl
-      | Notifying cosmetic products in the EU and UK
+    h1.govuk-heading-xl = title
     p
-      | If you plan to notify the same cosmetic products in the EU, CPNP allows you to export ZIP files
-        containing XML files for each notification.
+      | Once you have notified a product in the EU, CPNP allows you to export ZIP files for each notification.
     p
       | You can
-      =<> link_to "upload notification files", new_responsible_person_notification_file_path(@responsible_person),
+      =<> link_to "upload your EU notification file", new_responsible_person_notification_file_path(@responsible_person),
               class: "govuk-link"
-      | only as ZIP files containing XML files on the UK cosmetic product notification service.
+      | so you need to answer fewer questions when notifying the same product in the UK.
     p
-      | If you do not have access to an EU notification file for this cosmetic product
-      =< link_to "enter the details of the cosmetic product manually",
+      | If you do not have access to an EU notification file for this cosmetic product,
+      =< link_to "enter the details manually",
               new_responsible_person_notification_path(@responsible_person, notified_before_eu_exit: false),
               class: "govuk-link"
       | .
