@@ -15,6 +15,6 @@
       = render "components/govuk_radios", name: :answer,
         errorMessage: @error_text.present? && { text: @error_text },
         fieldset: { legend: { text: "Do you have the files from your EU notification?", classes: "govuk-fieldset__legend--m" } },
-        items: [{ text: "Yes, I have ZIP files containing XML to upload", value: "yes" },
+        items: [{ text: "Yes, I have ZIP files", value: "yes" },
           { text: "No, I will enter the information manually", value: "no" }]
       = form.submit "Continue", class: "govuk-button"
