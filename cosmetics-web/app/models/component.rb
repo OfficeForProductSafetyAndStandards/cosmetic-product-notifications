@@ -27,7 +27,13 @@ class Component < ApplicationRecord
   accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
   accepts_nested_attributes_for :nano_material
 
-  validates :physical_form, presence: true, on: :add_physical_form
+  validates :physical_form, presence: {on: :add_physical_form,
+    message: -> (object, data) do
+      "Select the physical form of #{object.component_name}"
+    end
+  }
+
+
   validates :special_applicator, presence: true, on: :select_special_applicator_type
   validates :other_special_applicator, presence: true, on: :select_special_applicator_type, if: :other_special_applicator?
   validates :frame_formulation, presence: true, on: :select_frame_formulation
@@ -135,6 +141,10 @@ class Component < ApplicationRecord
 
   def ph_range_not_required?
     ph_between_3_and_10? || ph_not_applicable?
+  end
+
+  def component_name
+    notification.is_multicomponent? ? name : "the product"
   end
 
 
