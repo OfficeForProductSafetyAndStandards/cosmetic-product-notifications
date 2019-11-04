@@ -18,6 +18,8 @@ class ResponsiblePersons::AddNotificationWizardController < ApplicationControlle
     if answer != "yes" && answer != "no"
       if step == :do_you_have_files_from_eu_notification
         @error_text = "Select yes if you have EU notification files"
+      elsif step == :will_products_be_notified_in_eu
+        @error_text = "Select yes if the products will be notified in the EU"
       else
         @error_text = "Select an answer"
       end
