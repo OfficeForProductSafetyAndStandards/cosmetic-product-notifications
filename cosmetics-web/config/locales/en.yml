@@ -53,7 +53,7 @@ en:
             components_are_mixed:
               inclusion: "Select an option"
             under_three_years:
-              inclusion: "Choose an option"
+              inclusion: "Select yes if the product is intended for children under 3"
         component:
           attributes:
             special_applicator:
