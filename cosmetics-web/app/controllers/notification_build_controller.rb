@@ -196,7 +196,7 @@ private
       @notification.industry_reference = nil
       render_wizard @notification
     else
-      @notification.errors.add :add_internal_reference, "Please select an option"
+      @notification.errors.add :add_internal_reference, "Select yes to add an internal reference"
       render step
     end
   end
