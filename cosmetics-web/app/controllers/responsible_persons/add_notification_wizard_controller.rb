@@ -16,7 +16,7 @@ class ResponsiblePersons::AddNotificationWizardController < ApplicationControlle
   def update
     answer = params[:answer]
     if answer != "yes" && answer != "no"
-      @error_text = "Please select an answer"
+      @error_text = "Select an answer"
       return render step
     end
 
