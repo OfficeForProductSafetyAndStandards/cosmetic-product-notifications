@@ -10,7 +10,7 @@
           name: :answer,
           errorMessage: @error_text.present? && { text: @error_text },
           fieldset: { legend: { text: title, \
-            isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
+            isPageHeading: true, classes: "govuk-fieldset__legend--xl" } },
           hint: { html: hint_html },
           items: [{ text: "Yes", value: "yes", id: "answer_yes" },
             { text: "No", value: "no", id: "answer_no" }]
