@@ -1,19 +1,22 @@
-- question = "Cosmetic product name"
-- hint = capture do
-  p
-    | Enter the name as it appears on the label, including the brand name, range and product name.
+- title = "What’s the product called?"
 
-- content_for :page_title, question
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-= form_with model: @notification, url: wizard_path, method: :put do |form|
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-from-desktop
+    = form_with model: @notification, url: wizard_path, method: :put do |form|
       = render "form_components/govuk_error_summary", form: form
+
+      h1.govuk-heading-xl = title
+
+      p.govuk-body
+        | Enter the name as it appears on the label, including the brand, range and product name.
+
       = render "form_components/govuk_input",
               form: form,
               key: :product_name,
-              label: { text: question, classes: "govuk-label--xl", isPageHeading: true },
-              hint: { text: hint }
+              label: { text: "Product name", classes: "govuk-label--m", isPageHeading: false },
+              hint: { text: "For example, ‘Nivea body lotion with aloe vera’." }
       = form.submit "Continue", class: "govuk-button"
