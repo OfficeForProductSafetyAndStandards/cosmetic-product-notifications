@@ -1,5 +1,4 @@
 - title = "Internal reference"
-- question = "Do you want to add an internal reference?"
 - hint = "Use this to identify your cosmetic products. " \
               "It will not be seen by the National Poisons Information Service (NPIS)" \
               " or market surveillance authorities" \
@@ -13,12 +12,16 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
+
+      h1.govuk-heading-xl = title
+
+      p You can use this to identify your products. Only people in your organisation can see this reference.
+
       - reference_input_html = capture do
         = render "form_components/govuk_input", form: form, key: :industry_reference,
-            label: { text: "Reference" }, classes: "govuk-!-width-one-half"
+            label: { text: "Internal reference" }
       = render "form_components/govuk_radios", form: form, key: :add_internal_reference,
-          fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
-          hint: { text: hint },
+          fieldset: { legend: { text: "Do you want to add an internal reference?", classes: "govuk-label--m" } },
           items: [{ text: "Yes", value: "yes", conditional: { html: reference_input_html },
                   checked: params[:notification].present? && params[:notification][:add_internal_reference] == "yes" },
                   { text: "No", value: "no" }]
