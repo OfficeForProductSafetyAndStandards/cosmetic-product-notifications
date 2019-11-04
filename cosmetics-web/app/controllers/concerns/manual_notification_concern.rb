@@ -53,7 +53,11 @@ module ManualNotificationConcern
       before_render&.call
       render_wizard model
     else
-      model.errors.add param, "Choose an option"
+      if param == :is_hair_dye
+        model.errors.add param, "Select yes if the product contains a hair dye"
+      else
+        model.errors.add param, "Choose an option"
+      end
       render step
     end
   end
