@@ -1,21 +1,20 @@
-- content_for :page_title, "Do you have the files from your EU notification?"
+- title = "EU notification files"
+- content_for :page_title, title
 - content_for :after_header do
     = link_to "Back", wizard_path(:have_products_been_notified_in_eu), class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = title
+    p
+      | To notify your products you can use data from an EU notification or give the information manually. Using the data from your EU notification means you need to answer fewer questions and you can upload up to 100 at a time.
+    p
+      | The data from your EU notification must be in the same format as a ZIP file exported from CPNP.
+    p
+      | You can use an EU notification file regardless of whether the product was notified before Brexit or not.
     = form_with url: wizard_path, method: :put do |form|
-      - hint_html = capture do
-        p CPNP allows you to export ZIP files containing XML files for each notification.
-        p
-          ' To use your EU notification files, you must
-          strong export
-          |  your data as ZIP files for the cosmetic products you want to notify.
-      end
       = render "components/govuk_radios", name: :answer,
         errorMessage: @error_text.present? && { text: @error_text },
-        fieldset: { legend: { text: "Do you have the files from your EU notification", \
-          isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
-        hint: { html: hint_html },
+        fieldset: { legend: { text: "Do you have the files from your EU notification?", classes: "govuk-fieldset__legend--m" } },
         items: [{ text: "Yes, I have ZIP files containing XML to upload", value: "yes" },
           { text: "No, I will enter the information manually", value: "no" }]
       = form.submit "Continue", class: "govuk-button"
