@@ -51,7 +51,7 @@ en:
         notification:
           attributes:
             components_are_mixed:
-              inclusion: "Select an option"
+              inclusion: "Select yes if the kit contains items that need to be mixed"
             under_three_years:
               inclusion: "Select yes if the product is intended for children under 3"
         component:
