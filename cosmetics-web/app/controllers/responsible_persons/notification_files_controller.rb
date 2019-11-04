@@ -10,13 +10,13 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
   def create
     @errors = []
     if uploaded_files_params.nil?
-      @errors << { text: "No files selected", href: "#uploaded_files" }
+      @errors << { text: "Select an EU notification file", href: "#uploaded_files" }
       return render :new
     end
 
     if uploaded_files_params.length > NotificationFile.get_max_number_of_files
       @errors << {
-          text: "Too many files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
+          text: "Too many files selected. You can only select up to #{NotificationFile.get_max_number_of_files} files",
           href: "#uploaded_files"
       }
       return render :new
