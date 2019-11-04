@@ -179,7 +179,13 @@ private
 
     changed.each { |attribute|
       if mandatory_attributes.include?(attribute) && self[attribute].blank?
-        errors.add attribute, "must not be blank"
+
+        # TODO: refactor this by moving validation to the model.
+        if attribute == "product_name"
+          errors.add attribute, "Enter the product name"
+        else
+          errors.add attribute, "must not be blank"
+        end
       end
     }
   end
