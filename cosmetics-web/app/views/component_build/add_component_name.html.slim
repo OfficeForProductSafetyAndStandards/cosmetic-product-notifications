@@ -1,9 +1,14 @@
-- title = "Add component name"
-- question = "Name of this component"
+- title = "What’s the item called?"
+- question = "Item name"
 
 - content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
+
+h1.govuk-heading-xl = title
+
+p
+  | Each item must have a different name.
 
 = form_with model: @component, url: wizard_path, method: :put do |form|
   .govuk-grid-row
@@ -12,5 +17,6 @@
       = render "form_components/govuk_input",
               form: form,
               key: :name,
-              label: { text: question, classes: "govuk-label--xl", isPageHeading: true }
+              label: { text: question, classes: "govuk-label--m" },
+              hint: {text: 'For example, ’Cream peroxide’'}
       = form.submit "Continue", class: "govuk-button"
