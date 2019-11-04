@@ -1,15 +1,8 @@
 ruby:
   title = "Number of shades"
-  question = "Is #{@component_name} available in more than 1 shade?"
-  hint = "You can submit a single notification for all the shades this product is available in,
-        if all other aspects of the notification are the same."
-  items = [{ text: "Yes, #{@component_name} is available in more than 1 shade and all other aspects " \
-                          + "of the notification are the same",
-                  value: "multiple-shades-same-notification" },
-          { text: "Yes, #{@component_name} is available in more than 1 shade but needs separate notifications",
-                  value: "multiple-shades-different-notification" },
-          { text: "No, #{@component_name} is not available in more than 1 shade",
-                  value: "single-or-no-shades" }]
+  question = "Is #{@component_name} available in shades?"
+  items = [{ text: "Yes", value: "multiple-shades-same-notification" },
+          { text: "No", value: "single-or-no-shades" }]
 
 - content_for :page_title, title
 - content_for :after_header do
@@ -21,6 +14,5 @@ ruby:
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :number_of_shades,
           fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
-          hint: { text: hint },
           items: items
       = form.submit "Continue", class: "govuk-button"

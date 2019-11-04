@@ -95,7 +95,7 @@ private
   def set_component
     @component = Component.find(params[:component_id])
     authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
-    @component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
+    @component_name = @component.notification.is_multicomponent? ? @component.name : "the product"
   end
 
   def set_nano_material
@@ -147,7 +147,7 @@ private
     when "multiple-shades-same-notification"
       render_wizard @component
     else
-      @component.errors.add :number_of_shades, "Please select an option"
+      @component.errors.add :number_of_shades, "Select yes if the product is available in shades"
       render step
     end
   end
