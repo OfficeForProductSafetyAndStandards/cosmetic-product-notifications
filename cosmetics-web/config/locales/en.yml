@@ -54,6 +54,10 @@ en:
               inclusion: "Select yes if the kit contains items that need to be mixed"
             under_three_years:
               inclusion: "Select yes if the product is intended for children under 3"
+            ph_min_value:
+              blank: "Enter the minimum\u00A0pH"
+            ph_max_value:
+              blank: "Enter the maximum\u00A0pH"
         component:
           attributes:
             special_applicator:
