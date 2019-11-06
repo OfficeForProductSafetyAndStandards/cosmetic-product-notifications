@@ -1,0 +1,31 @@
+<% content_for :page_title, "Create or join an existing account" %>
+<% content_for :after_header do %>
+  <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
+<% end %>
+
+<%= form_with url: wizard_path, method: :put do |form| %>
+  <% error_message = @nothing_selected && { text: "Select an option before continuing", href: "#option-error" } %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <% heading = capture do %>
+        <h1 class="govuk-heading-xl">Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?</h1>
+
+        <p class="govuk-!-margin-bottom-2">
+          This is a different service to the EU Cosmetic product notification portal (CPNP). You will need a new account if you or your organisation have not created an account since Brexit.
+        </p>
+      <% end %>
+      <% if error_message %>
+        <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: [error_message] %>
+      <% end %>
+      <%= render "form_components/govuk_radios", form: form, key: :option,
+              errorMessage: error_message,
+              fieldset: { legend: { html: heading } },
+              items: [{ text: "Yes, I or my organisation have an account", value: :join_existing },
+                      { text: "No, I need to create an account",
+                              value: :create_new }] %>
+      <div class="govuk-form-group">
+        <%= form.submit "Continue", class: "govuk-button" %>
+      </div>
+    </div>
+  </div>
+<% end %>
