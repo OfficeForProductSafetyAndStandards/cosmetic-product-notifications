@@ -24,7 +24,7 @@
         | If the cosmetic product is sold as a gift set where the items are not mixed or used sequentially, submit a notification for each product separately.
 
       = render "form_components/govuk_radios", form: form, key: :single_or_multi_component,
-          fieldset: { legend: { text: "Is the product a single item or as a multi-item kit?", classes: "govuk-label--m" } },
-          items: [{ text: "Single item", value: "single" },
-                  { text: "Multi-item kit", value: "multiple" }]
+          fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m" } },
+          items: [{ text: "Yes", value: "multiple" },
+                  { text: "No", value: "single" }]
       = form.submit "Continue", class: "govuk-button"
