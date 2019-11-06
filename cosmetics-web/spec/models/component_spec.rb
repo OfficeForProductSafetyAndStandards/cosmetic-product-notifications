@@ -29,7 +29,7 @@ RSpec.describe Component, type: :model do
 
       it "has an error message" do
         component.valid?
-        expect(component.errors[:name]).to eql(["A component with that name has already been added to this notification"])
+        expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
       end
     end
 

@@ -30,12 +30,7 @@ class Component < ApplicationRecord
   # Currently two components with no name are immediately created for
   # a notification when the user indicates that it is a kit/multi-component,
   # so the uniquness validation has to allow non-unique null values.
-  validates :name, uniqueness: {
-    scope: :notification_id, message: ->(object, _) do
-      "You’ve already told us about an item called ‘#{object.component_name}’"
-    end, allow_nil: true
-  }
-
+  validates :name, uniqueness: { scope: :notification_id, allow_nil: true }
 
   validates :physical_form, presence: true, on: :add_physical_form
   validates :special_applicator, presence: true, on: :select_special_applicator_type
@@ -145,10 +140,6 @@ class Component < ApplicationRecord
 
   def ph_range_not_required?
     ph_between_3_and_10? || ph_not_applicable?
-  end
-
-  def component_name
-    notification.is_multicomponent? ? name : "the cosmetic product"
   end
 
 private
