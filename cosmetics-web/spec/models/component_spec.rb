@@ -33,6 +33,23 @@ RSpec.describe Component, type: :model do
       end
     end
 
+    context "when there is already a component with the same name but using uppercase for the same notification" do
+      let(:component) { described_class.new(name: 'Component X', notification: notification) }
+
+      before do
+        create(:component, name: "COMPONENT X", notification: notification)
+      end
+
+      it "is not valid" do
+        expect(component).not_to be_valid
+      end
+
+      it "has an error message" do
+        component.valid?
+        expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
+      end
+    end
+
     context "when there is already a component with no name for the same notification" do
       let(:component) { described_class.new(name: nil, notification: notification) }
 
