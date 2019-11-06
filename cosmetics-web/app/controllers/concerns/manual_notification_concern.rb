@@ -59,6 +59,8 @@ module ManualNotificationConcern
         model.errors.add param, "Select the pH range of the product when mixed as instructed"
       elsif param == :contains_special_applicator
         model.errors.add param, "Select yes if #{model.component_name} comes in an applicator"
+      elsif param == :contains_cmrs
+        model.errors.add param, "Select yes if #{model.component_name} contains category 1A or 1B CMRs"
       else
         model.errors.add param, "Choose an option"
       end
