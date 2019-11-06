@@ -111,7 +111,7 @@ private
       end
       render_wizard @notification
     else
-      @notification.errors.add :single_or_multi_component, "Select if the product is a single item or a multi-item kit"
+      @notification.errors.add :single_or_multi_component, "Select yes if the product is a multi-item kit"
       render step
     end
   end
