@@ -60,8 +60,6 @@ en:
               blank: "Enter the maximum\u00A0pH"
         component:
           attributes:
-            special_applicator:
-              blank: "Choose an option"
             other_special_applicator:
               blank: "Enter the type of applicator"
         nano_element:
