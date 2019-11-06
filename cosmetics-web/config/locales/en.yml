@@ -73,6 +73,8 @@ en:
           attributes:
             exposure_condition:
               missing: "Select if %{component_name} is intended to be rinsed off or left on"
+            exposure_routes:
+              blank: "Select how the user is likely to be exposed to the nanomaterials"
         trigger_question:
           attributes:
             applicable:
