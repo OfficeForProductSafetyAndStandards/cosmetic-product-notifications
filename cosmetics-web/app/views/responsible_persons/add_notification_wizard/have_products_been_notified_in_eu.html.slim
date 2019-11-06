@@ -1,4 +1,4 @@
-- title = "Have the products been notified on CPNP?"
+- title = "Has the EU been notified about these products using CPNP?"
 - content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", responsible_person_notifications_path(@responsible_person), class: "govuk-back-link"
@@ -8,7 +8,7 @@
       = render "components/govuk_radios", name: :answer,
         errorMessage: @error_text.present? && { text: @error_text },
         fieldset: { legend: { text: title, \
-          isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
+          isPageHeading: true, classes: "govuk-fieldset__legend--xl" } },
         items: [{ text: "Yes", value: "yes" },
           { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

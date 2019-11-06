@@ -21,6 +21,8 @@ class ResponsiblePersons::AddNotificationWizardController < ApplicationControlle
                       "Select yes if you have EU notification files"
                     elsif step == :will_products_be_notified_in_eu
                       "Select yes if the products will be notified in the EU"
+                    elsif step == :have_products_been_notified_in_eu
+                      "Select yes if the EU has been notified about these products using CPNP"
                     else
                       "Select an answer"
                     end
