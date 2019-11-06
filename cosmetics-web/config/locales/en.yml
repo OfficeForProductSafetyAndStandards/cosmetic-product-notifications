@@ -62,15 +62,25 @@ en:
           attributes:
             other_special_applicator:
               blank: "Enter the type of applicator"
+            cmrs:
+              blank: "Enter at least 1 CMR"
         nano_element:
           attributes:
             purposes:
               blank: "Choose an option"
               inclusion: "%{value} is not a valid purpose"
+        nano_material:
+          attributes:
+            exposure_condition:
+              missing: "Select if %{component_name} is intended to be rinsed off or left on"
         trigger_question:
           attributes:
             applicable:
               inclusion: "Select an option"
+        cmr:
+          attributes:
+            name:
+              blank: "Enter a name"
   errors:
     format: "%{message}"
     messages:

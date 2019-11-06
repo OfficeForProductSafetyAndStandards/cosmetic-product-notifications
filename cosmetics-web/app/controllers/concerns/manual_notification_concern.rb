@@ -61,6 +61,8 @@ module ManualNotificationConcern
         model.errors.add param, "Select yes if #{model.component_name} comes in an applicator"
       elsif param == :contains_cmrs
         model.errors.add param, "Select yes if #{model.component_name} contains category 1A or 1B CMRs"
+      elsif param == :contains_nanomaterials
+        model.errors.add param, "Select yes if #{model.component_name} contains nanomaterials"
       else
         model.errors.add param, "Choose an option"
       end

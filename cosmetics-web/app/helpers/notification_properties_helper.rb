@@ -481,8 +481,8 @@ module NotificationPropertiesHelper
   }.freeze
 
   EXPOSURE_CONDITION_NAME = {
-      rinse_off: "Rinse off",
-      leave_on: "Leave on"
+      rinse_off: "Rinsed off",
+      leave_on: "Left on"
   }.freeze
 
   PHYSICAL_FORM = {
