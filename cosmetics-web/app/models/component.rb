@@ -35,7 +35,9 @@ class Component < ApplicationRecord
 
 
   validates :special_applicator, presence: true, on: :select_special_applicator_type
+
   validates :other_special_applicator, presence: true, on: :select_special_applicator_type, if: :other_special_applicator?
+
   validates :frame_formulation, presence: true, on: :select_frame_formulation
   validates :cmrs, presence: true, on: :add_cmrs
   validates :notification_type, presence: true, on: :select_formulation_type
