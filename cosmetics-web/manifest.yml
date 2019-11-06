@@ -19,4 +19,5 @@ applications:
     - cosmetics-keycloak-env
     - cosmetics-rails-env
     - cosmetics-sentry-env
+    - cosmetics-notify-env
     - cosmetics-sidekiq-env

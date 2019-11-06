@@ -1,4 +1,5 @@
-- content_for :page_title, "Will these cosmetic products be notified in the EU?"
+- title = "Will these products be notified in the EU?"
+- content_for :page_title, title
 - content_for :after_header do
     = link_to "Back", wizard_path(:have_products_been_notified_in_eu), class: "govuk-back-link"
 .govuk-grid-row
@@ -8,8 +9,8 @@
         = render "components/govuk_radios",
           name: :answer,
           errorMessage: @error_text.present? && { text: @error_text },
-          fieldset: { legend: { text: "Will these cosmetic products be notified in the EU?", \
-            isPageHeading: true, classes: "govuk-fieldset__legend--xl govuk-!-margin-bottom-8" } },
+          fieldset: { legend: { text: title, \
+            isPageHeading: true, classes: "govuk-fieldset__legend--xl" } },
           hint: { html: hint_html },
           items: [{ text: "Yes", value: "yes", id: "answer_yes" },
             { text: "No", value: "no", id: "answer_no" }]

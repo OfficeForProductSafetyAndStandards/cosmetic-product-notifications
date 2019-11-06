@@ -1,0 +1,30 @@
+<% content_for :page_title, "Declaration" %>
+<%= form_with url: accept_declaration_path, local: true do |form| %>
+  <% if @errors.present? %>
+    <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors %>
+  <% end %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Declaration</h1>
+
+      <p class="govuk-body">By using this service you agree to:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the <%= link_to "terms and conditions (opens in a new tab)", terms_and_conditions_path, target: '_new' %></li>
+        <li>the <%= link_to "privacy policy (opens in a new tab)", privacy_notice_path, target: '_new' %></li>
+        <li>only use the information in this service to:
+          <ul class="govuk-list govuk-list--bullet">
+            <li>investigate product safety issues</li>
+            <li>alert people to product safety issues</li>
+            <li>monitor compliance with legislation</li>
+            <li>enforce legislation</li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="form-group">
+        <%= form.submit "I accept", class: "govuk-button" %>
+      </div>
+    </div>
+  </div>
+<% end %>

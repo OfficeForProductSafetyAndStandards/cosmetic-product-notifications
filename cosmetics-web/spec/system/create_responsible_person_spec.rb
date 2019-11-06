@@ -18,13 +18,13 @@ RSpec.describe "Create a responsible person", type: :system do
   it "succeeds with valid individual account details" do
     create_individual_responsible_person
 
-    assert_current_path(/responsible_persons\/\d+\/contact_persons\/\d+/)
+    assert_current_path(/responsible_persons\/\d+\/notifications/)
   end
 
   it "succeeds with valid business account details" do
     create_business_responsible_person
 
-    assert_current_path(/responsible_persons\/\d+\/contact_persons\/\d+/)
+    assert_current_path(/responsible_persons\/\d+\/notifications/)
   end
 
   it "requires an account type to be selected" do
@@ -35,23 +35,6 @@ RSpec.describe "Create a responsible person", type: :system do
 
     assert_current_path account_path(:select_type)
     assert_text "Account type can not be blank"
-  end
-
-  it "redirects to confirmation page on email validation" do
-    email_verification_key = responsible_person.contact_persons.first.create_email_verification_key
-
-    visit confirmation_path(email_verification_key.key)
-
-    assert_current_path(/contact_persons\/confirm\/[a-zA-Z0-9_\-]+/)
-  end
-
-  it "redirects to dashboard page if email is same as to current user email" do
-    User.current = user
-    responsible_person.contact_persons.first.update(email_address: user.email)
-
-    create_individual_responsible_person
-
-    assert_current_path(/responsible_persons\/[0-9]+/)
   end
 
 private
@@ -74,7 +57,7 @@ private
     fill_in "Full name", with: responsible_person.contact_persons.first.name
     fill_in "Email address", with: responsible_person.contact_persons.first.email_address
     fill_in "Phone number", with: responsible_person.contact_persons.first.phone_number
-    click_on "Send email"
+    click_on "Continue"
   end
 
   def create_business_responsible_person
@@ -95,7 +78,7 @@ private
     fill_in "Full name", with: business_responsible_person.contact_persons.first.name
     fill_in "Email address", with: business_responsible_person.contact_persons.first.email_address
     fill_in "Phone number", with: business_responsible_person.contact_persons.first.phone_number
-    click_on "Send email"
+    click_on "Continue"
   end
 
   def create_new_responsible_person
