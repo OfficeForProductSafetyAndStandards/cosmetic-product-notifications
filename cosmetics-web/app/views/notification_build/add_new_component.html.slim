@@ -14,10 +14,10 @@
       - valid_multicomponents.each do |valid_component|
         p #{valid_component.name}
         .govuk-form-group
-          button.govuk-button.secondary-button[type="submit"
+          button.govuk-button.govuk-button--secondary[type="submit"
             name="remove_component" value=valid_component.id] Remove component
       .govuk-form-group
-        button.govuk-button.secondary-button[type="submit" name="add_component" value='true'] Add item
+        button.govuk-button.govuk-button--secondary[type="submit" name="add_component" value='true'] Add item
       - if valid_multicomponents.length > 1
         .govuk-form-group
           = form.submit "Continue", class: "govuk-button"
