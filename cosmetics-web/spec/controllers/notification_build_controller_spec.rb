@@ -198,7 +198,7 @@ RSpec.describe NotificationBuildController, type: :controller do
       end
 
       context "when the product was notified pre-Brexit and has 2 valid component" do
-        let(:completed_notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person, components: [create(:component, :with_name), create(:component, :with_name)]) }
+        let(:completed_notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person, components: [create(:component, name: 'Component 1'), create(:component, name: 'Component 2')]) }
 
         it "redirects to the add 'check your answers' page" do
           expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, completed_notification.reference_number))
@@ -206,7 +206,7 @@ RSpec.describe NotificationBuildController, type: :controller do
       end
 
       context "when the product was notified post-Brexit and has 2 valid component" do
-        let(:completed_notification) { create(:notification, responsible_person: responsible_person, components: [create(:component, :with_name), create(:component, :with_name)]) }
+        let(:completed_notification) { create(:notification, responsible_person: responsible_person, components: [create(:component, name: 'Component 1'), create(:component, name: 'Component 2')]) }
 
         it "redirects to the add product image page" do
           expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, completed_notification.reference_number, :add_product_image))

@@ -27,6 +27,11 @@ class Component < ApplicationRecord
   accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
   accepts_nested_attributes_for :nano_material
 
+  # Currently two components with no name are immediately created for
+  # a notification when the user indicates that it is a kit/multi-component,
+  # so the uniquness validation has to allow non-unique null values.
+  validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false }
+
   validates :physical_form, presence: true, on: :add_physical_form
   validates :special_applicator, presence: true, on: :select_special_applicator_type
   validates :other_special_applicator, presence: true, on: :select_special_applicator_type, if: :other_special_applicator?
@@ -136,7 +141,6 @@ class Component < ApplicationRecord
   def ph_range_not_required?
     ph_between_3_and_10? || ph_not_applicable?
   end
-
 
 private
 
