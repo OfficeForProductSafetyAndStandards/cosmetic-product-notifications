@@ -1,20 +1,20 @@
-- title = "Notifying cosmetic products in the EU and UK"
+- title = "If you’re likely to notify the EU"
 - content_for :page_title
 - content_for :after_header do
     = link_to "Back", wizard_path(:will_products_be_notified_in_eu), class: "govuk-back-link"
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl = title
-    p
-      | Once you have notified a product in the EU, CPNP allows you to export ZIP files for each notification.
-    p
-      | You can
-      =<> link_to "upload your EU notification file", new_responsible_person_notification_file_path(@responsible_person),
-              class: "govuk-link"
-      | so you need to answer fewer questions when notifying the same product in the UK.
-    p
-      | If you do not have access to an EU notification file for this cosmetic product,
-      =< link_to "enter the details manually",
-              new_responsible_person_notification_path(@responsible_person, notified_before_eu_exit: false),
-              class: "govuk-link"
-      | .
+    / h1.govuk-heading-xl = title
+    / p
+      | Once you have notified the EU about a product, the Cosmetic Product Notification Portal (CPNP) allows you to export ZIP files for each notification.
+
+    = form_with url: wizard_path, method: :put do |form|
+      = render "components/govuk_radios", name: :answer,
+        errorMessage: @error_text.present? && { text: @error_text },
+        fieldset: { legend: { text: 'Do you want to notify the product on CPNP first?', \
+          isPageHeading: true, classes: "govuk-fieldset__legend--xl" } },
+        hint: { html: 'Once you have notified the EU about a product, the Cosmetic Product Notification Portal (CPNP) allows you to export ZIP files for each notification.'},
+        items: [{ text: "Yes", value: "yes" },
+          { text: "No", value: "no" }]
+      = form.submit "Continue", class: "govuk-button"
+
