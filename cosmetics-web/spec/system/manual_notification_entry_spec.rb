@@ -32,8 +32,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
-    # single_or_multi_component
-    choose("The cosmetic product is a single item")
+    # Multi-item kit?
+    choose("No")
     click_button "Continue"
 
     # number_of_shades
@@ -112,8 +112,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
-    # single_or_multi_component
-    choose("The cosmetic product is a single item")
+    # Multi-item kit?
+    choose("No")
     click_button "Continue"
 
     # number_of_shades
@@ -185,8 +185,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
-    # single_or_multi_component
-    choose("The cosmetic product is a single item")
+    # Multi-item kit?
+    choose("No")
     click_button "Continue"
 
     # number_of_shades
@@ -265,8 +265,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
-    # single_or_multi_component
-    choose("The cosmetic product is a single item")
+    # Multi-item kit?
+    choose("No")
     click_button "Continue"
 
     # number_of_shades

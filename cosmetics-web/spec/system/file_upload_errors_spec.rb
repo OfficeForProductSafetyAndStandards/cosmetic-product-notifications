@@ -16,13 +16,13 @@ RSpec.describe "File upload errors", type: :system do
   it "shows an error when no file is selected for upload" do
     visit new_responsible_person_notification_file_path(responsible_person)
     click_button "Continue"
-    expect(page).to have_text("No files selected")
+    expect(page).to have_text("Select an EU notification file")
   end
 
   it "shows an error when too many files are selected for upload" do
     allow(NotificationFile).to receive(:get_max_number_of_files).and_return(2)
     upload_files ["testExportFile.zip"] * 3
-    expect(page).to have_text("Too many files selected. Please select no more than 2 files")
+    expect(page).to have_text("Too many files selected. You can only select up to 2 files")
   end
 
   it "shows an error when the uploaded file has the wrong file type" do
