@@ -1,9 +1,4 @@
 - title = "Internal reference"
-- hint = "Use this to identify your cosmetic products. " \
-              "It will not be seen by the National Poisons Information Service (NPIS)" \
-              " or market surveillance authorities" \
-              " like Trading Standards."
-
 - content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
@@ -23,6 +18,7 @@
       = render "form_components/govuk_radios", form: form, key: :add_internal_reference,
           fieldset: { legend: { text: "Do you want to add an internal reference?", classes: "govuk-label--m" } },
           items: [{ text: "Yes", value: "yes", conditional: { html: reference_input_html },
-                  checked: params[:notification].present? && params[:notification][:add_internal_reference] == "yes" },
+                  checked: params[:notification].present? && \
+                    params[:notification][:add_internal_reference] == "yes" },
                   { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"

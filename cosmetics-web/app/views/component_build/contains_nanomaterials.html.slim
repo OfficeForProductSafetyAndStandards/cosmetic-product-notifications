@@ -17,8 +17,8 @@
         li is insoluble or biopersistent
         li is intentionally manufactured
 
-
       = render "form_components/govuk_radios", form: form, key: :contains_nanomaterials,
-              fieldset: { legend: { text: "Does #{@component_name} contain nanomaterials?", classes: "govuk-label--m" } },
+              fieldset: { legend: { text: "Does #{@component_name} contain nanomaterials?",
+              classes: "govuk-label--m" } },
               items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"
