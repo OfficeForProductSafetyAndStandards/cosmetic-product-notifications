@@ -33,6 +33,10 @@ class Component < ApplicationRecord
     end
   }
 
+  # Currently two components with no name are immediately created for
+  # a notification when the user indicates that it is a kit/multi-component,
+  # so the uniquness validation has to allow non-unique null values.
+  validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false }
 
   validates :special_applicator, presence: true, on: :select_special_applicator_type
 
@@ -148,7 +152,6 @@ class Component < ApplicationRecord
   def component_name
     notification.is_multicomponent? ? name : "the product"
   end
-
 
 private
 

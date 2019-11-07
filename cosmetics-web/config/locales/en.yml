@@ -60,6 +60,10 @@ en:
               blank: "Enter the maximum\u00A0pH"
         component:
           attributes:
+            name:
+              taken: "You’ve already told us about an item called ‘%{value}’"
+            special_applicator:
+              blank: "Choose an option"
             other_special_applicator:
               blank: "Enter the type of applicator"
             cmrs:
