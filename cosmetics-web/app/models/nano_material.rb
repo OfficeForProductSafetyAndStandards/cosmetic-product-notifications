@@ -6,8 +6,8 @@ class NanoMaterial < ApplicationRecord
 
   validates :exposure_condition, presence: {
     on: :add_exposure_condition,
-    message: ->(object,_) do
-      I18n.t(:missing, scope: [:activerecord, :errors, :models, :nano_material, :attributes, :exposure_condition], component_name: object.component_name)
+    message: ->(object, _) do
+      I18n.t(:missing, scope: %i[activerecord errors models nano_material attributes exposure_condition], component_name: object.component_name)
     end
   }
   validates :exposure_routes, presence: true, on: :add_exposure_routes
