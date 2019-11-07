@@ -270,7 +270,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # number_of_shades
-    choose("Yes, the cosmetic product is available in more than 1 shade and all other aspects of the notification are the same")
+    choose("Yes")
     click_button "Continue"
 
     # add_shades
