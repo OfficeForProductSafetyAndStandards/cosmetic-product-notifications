@@ -7,7 +7,7 @@ RSpec.describe Cmr, type: :model do
     cmr.name = nil
 
     expect(cmr.save).to be false
-    expect(cmr.errors[:name]).to include("Name can not be blank")
+    expect(cmr.errors[:name]).to eql(["Enter a name"])
   end
 
   it "fails if ec number doesn't contain 7 digits" do

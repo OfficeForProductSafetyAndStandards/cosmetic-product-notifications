@@ -24,7 +24,7 @@ RSpec.describe Notification, type: :model do
       notification.product_name = ''
       notification.save
 
-      expect(notification.errors[:product_name]).to include('must not be blank')
+      expect(notification.errors[:product_name]).to eql(['Enter the product name'])
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe Notification, type: :model do
       notification.under_three_years = nil
       notification.save(context: :for_children_under_three)
 
-      expect(notification.errors[:under_three_years]).to include('Choose an option')
+      expect(notification.errors[:under_three_years]).to eql(['Select yes if the product is intended for children under 3'])
     end
   end
 end
