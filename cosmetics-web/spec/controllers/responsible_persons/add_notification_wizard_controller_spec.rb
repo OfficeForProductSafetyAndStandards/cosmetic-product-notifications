@@ -38,7 +38,7 @@ RSpec.describe ResponsiblePersons::AddNotificationWizardController, type: :contr
 
       it "adds error message if no option selected" do
         put(:update, params: { responsible_person_id: responsible_person.id, id: "have_products_been_notified_in_eu" })
-        expect(assigns(:error_text)).to eq("Please select an answer")
+        expect(assigns(:error_text)).to eq("Select yes if the EU has been notified about these products using CPNP")
       end
     end
 

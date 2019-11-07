@@ -90,7 +90,7 @@ RSpec.describe NotificationBuildController, type: :controller do
 
     it "adds errors if single_or_multi_component is empty" do
       post(:update, params: params.merge(id: :single_or_multi_component, notification: { single_or_multi_component: nil }))
-      expect(assigns(:notification).errors[:single_or_multi_component]).to include("Must not be nil")
+      expect(assigns(:notification).errors[:single_or_multi_component]).to eql(["Select yes if the product is a multi-item kit"])
     end
 
     it "redirects to add_import_country step if is_imported set to true" do
@@ -141,12 +141,12 @@ RSpec.describe NotificationBuildController, type: :controller do
 
     it "adds error if user doesn't select radio option on add_internal_reference page" do
       post(:update, params: params.merge(id: :add_internal_reference, notification: {}))
-      expect(assigns[:notification].errors[:add_internal_reference]).to include("Please select an option")
+      expect(assigns[:notification].errors[:add_internal_reference]).to eql(["Select yes to add an internal reference"])
     end
 
     it "adds error if user selects add internal reference but doesn't add one on add_internal_reference page" do
       post(:update, params: params.merge(id: :add_internal_reference, notification: { add_internal_reference: "yes" }))
-      expect(assigns[:notification].errors[:industry_reference]).to include("Industry reference can not be blank")
+      expect(assigns[:notification].errors[:industry_reference]).to eql(["Enter an internal reference or select ‘No’"])
     end
 
     it "stores internal reference if user adds internal reference" do
