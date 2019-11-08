@@ -5,7 +5,6 @@ class LandingPageController < ApplicationController
   before_action :set_responsible_person
 
   def index
-    raise "Just testing Sentry"
     if search_domain?
       render "search_landing_page"
     else
