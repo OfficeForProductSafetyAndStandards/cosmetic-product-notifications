@@ -8,7 +8,7 @@ $(document).ready(() => {
   const fileUploadFormGroup = document.getElementById('file-upload-form-group');
   const fileUploadErrorMessage = document.getElementById('file-upload-error-message');
 
-  const tooManyFilesMessage = `Too many files selected. Please select no more than ${maxNumberOfFiles} files`;
+  const tooManyFilesMessage = `Too many files selected. You can only select up to ${maxNumberOfFiles} files`;
   const noFilesSelectedMessage = 'No files selected';
 
   const errorSummaryText = errorSummary.getElementsByClassName('govuk-error-summary__list')[0].getElementsByTagName('A')[0];
