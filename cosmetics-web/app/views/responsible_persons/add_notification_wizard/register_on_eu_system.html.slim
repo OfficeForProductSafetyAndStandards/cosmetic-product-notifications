@@ -1,4 +1,4 @@
-- title = "If you’re likely to notify the EU"
+- title = "If you’re likely to notify the EU about the products"
 - content_for :page_title, title
 - content_for :after_header do
     = link_to "Back", wizard_path(:will_products_be_notified_in_eu), class: "govuk-back-link"
@@ -6,17 +6,34 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl = title
     p
-      | Once you have notified the EU about a product, the Cosmetic Product
-      | Notification Portal (CPNP) allows you to export ZIP files for each notification.
+      | CPNP allows you to export your notification as a ZIP file.
 
-    = form_with url: wizard_path, method: :put do |form|
-      = render "components/govuk_radios", name: :answer,
-        errorMessage: @error_text.present? && { text: @error_text },
-        fieldset: { legend: { text: 'Do you want to notify the product on CPNP first?', \
-          isPageHeading: true, classes: "govuk-fieldset__legend--xl" } },
-        hint: { html: 'Once you have notified the EU about a product, the Cosmetic' + \
-          ' Product Notification Portal (CPNP) allows you to export ZIP files for' + \
-          ' each notification.' },
-        items: [{ text: "Yes", value: "yes" },
-          { text: "No", value: "no" }]
+    p.[class='govuk-!-margin-bottom-1']
+      | To notify OPSS about your products, you can either:
+    ul.govuk-list.govuk-list--bullet
+      li
+        |  upload this ZIP file
+      li
+        |  give the information manually
+
+    p
+      | Uploading the ZIP file means you need to answer fewer questions – you can upload up to 100 ZIP files at a time.
+
+    p
+
+      |
+      =<> link_to "Notify the EU using CPNP (takes you to another website)", "https://ec.europa.eu/growth/sectors/cosmetics/cpnp_en", class: 'govuk-link'
+    p
+      =< link_to "Notify OPSS without using a ZIP file",
+              new_responsible_person_notification_path(@responsible_person, notified_before_eu_exit: false), class: 'govuk-link'
+
+
+
+    / = form_with url: wizard_path, method: :put do |form|
+    /   = render "components/govuk_radios", name: :answer,
+    /     errorMessage: @error_text.present? && { text: @error_text },
+    /     fieldset: { legend: { text: 'Do you want to notify the EU first?', \
+    /       isPageHeading: true, classes: "govuk-fieldset__legend--m" } },
+    /     items: [{ text: "Yes", value: "yes" },
+    /       { text: "No, continue with manual notification", value: "no" }]
       = form.submit "Continue", class: "govuk-button"
