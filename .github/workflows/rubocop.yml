@@ -1,0 +1,55 @@
+name: Code style
+
+on: [push]
+
+jobs:
+  ruby:
+    name: "Ruby"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.5.x
+    - name: Run code style checks
+      run: |
+        cd cosmetics-web
+        gem install rubocop -v 0.71.0
+        gem install rubocop-performance -v 1.4.0
+        gem install rubocop-rspec -v 1.36
+        gem install govuk-lint -v 3.11.2
+        rubocop
+  slim:
+    name: "Slim templates"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.5.x
+    - name: Run linter
+      run: |
+        cd cosmetics-web
+        gem install slim_lint -v 0.17.0
+        slim-lint app
+  front_end:
+    name: "Sass and Javascript"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Nodejs
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.16.3
+    - name: Run SASS and javascript linters
+      run: |
+        cd cosmetics-web
+        npm install yarn
+        yarn install
+        yarn eslint app config
+        yarn sass-lint -c .sasslint.yml -vq 'app/**/*.scss'
