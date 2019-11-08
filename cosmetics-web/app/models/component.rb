@@ -150,7 +150,7 @@ class Component < ApplicationRecord
   end
 
   def component_name
-    notification.is_multicomponent? ? name : "the product"
+    notification.is_multicomponent? ? name : "product"
   end
 
 private

@@ -1,5 +1,5 @@
 - title = "Mixed kit"
-- question = "Does the kit contain items that need to be mixed?"
+- question = "How are the items in the kit used?"
 
 - content_for :page_title, title
 - content_for :after_header do
@@ -11,6 +11,6 @@
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :components_are_mixed,
               fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
-              items: [{ text: "Yes", value: "true" },
-                      { text: "No, the items are used in sequence", value: "false" }]
+              items: [{ text: "Mixed together", value: "true" },
+                      { text: "Used in a particular order", value: "false" }]
       = form.submit "Continue", class: "govuk-button"
