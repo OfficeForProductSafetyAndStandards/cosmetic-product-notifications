@@ -4,6 +4,16 @@ module LoginHelpers
   end
 
   # rubocop:disable RSpec/AnyInstance
+  def mock_keycloak_as_not_signed_in
+    allow(Keycloak::Client).to receive(:user_signed_in?).and_return(false)
+
+    # This normally returns an external URL, but requires an active keycloak
+    # connection, so needs to be mocked.
+    allow_any_instance_of(KeycloakClient).to receive(:login_url).and_return('https://sso.example/login')
+  end
+  # rubocop:enable RSpec/AnyInstance
+
+  # rubocop:disable RSpec/AnyInstance
   def sign_in(as_user: build(:user), with_roles: [])
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(as_user))

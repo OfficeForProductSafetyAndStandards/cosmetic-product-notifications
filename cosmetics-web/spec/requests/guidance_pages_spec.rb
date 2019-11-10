@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe "Guidance pages", type: :request do
   include RSpecHtmlMatchers
 
+  before do
+    mock_keycloak_as_not_signed_in
+  end
+
   describe "'How to notify nanomaterials'" do
     before do
       get "/guidance/how-to-notify-nanomaterials"
