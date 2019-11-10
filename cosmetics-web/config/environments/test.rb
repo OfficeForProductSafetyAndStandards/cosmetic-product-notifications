@@ -43,6 +43,8 @@ Rails.application.configure do
   # Store uploaded files on the local file system in a temporary directory
   config.active_storage.service = :test
 
+  config.active_job.queue_adapter = :async
+
   config.action_controller.default_url_options = {
       host: ENV['HTTP_HOST'] || "localhost",
       port: ENV['HTTP_PORT'] || 3003
