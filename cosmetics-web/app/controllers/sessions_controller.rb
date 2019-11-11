@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :authenticate_user!
+  skip_before_action :authorize_user!, only: 'logout'
 
   def new
     redirect_to keycloak_login_url(request.original_fullpath)
