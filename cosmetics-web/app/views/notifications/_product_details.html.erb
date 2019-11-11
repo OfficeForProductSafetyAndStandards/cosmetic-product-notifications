@@ -17,12 +17,12 @@
         <th class="govuk-table__header" scope="row">Imported</th>
         <td class="govuk-table__cell"><%= product_imported?(notification) %></td>
       </tr>
-    <% end %>
-    <% if product_imported?(notification) == "Yes" %>
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header" scope="row">Imported from</th>
-        <td class="govuk-table__cell"><%= product_import_country(notification) %></td>
-      </tr>
+      <% if product_imported?(notification) == "Yes" %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Imported from</th>
+          <td class="govuk-table__cell"><%= product_import_country(notification) %></td>
+        </tr>
+      <% end %>
     <% end %>
     <% if notification.notified_post_eu_exit? %>
       <tr class="govuk-table__row">
