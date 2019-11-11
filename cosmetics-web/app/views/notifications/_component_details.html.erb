@@ -1,0 +1,155 @@
+<tr class="govuk-table__row">
+  <th id="contains-cmrs" class="govuk-table__header" scope="row">
+    Contains CMR substances
+  </th>
+  <td class="govuk-table__cell" id="has-cmrs">
+    <%= component.cmrs.any? ? "Yes" : "No" %>
+  </td>
+</tr>
+<% if component.cmrs.any? %>
+  <tr cass="govuk-table__row" id="cmr-list">
+    <th class="govuk-table__header" scope="row">CMR substances</th>
+    <td class="govuk-table__cell" id="cmr-names">
+      <%= render "application/none_or_bullet_list", entities_list: component.cmrs.map(&:display_name) %>
+    </td>
+  </tr>
+<% end %>
+<tr class="govuk-table__row">
+  <th class="govuk-table__header" scope="row">Nanomaterials</th>
+  <td class="govuk-table__cell">
+    <%= render "application/none_or_bullet_list",
+      entities_list: component.nano_material&.nano_elements&.map(&:display_name) %>
+  </td>
+</tr>
+<% if component.nano_material&.nano_elements.present? %>
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="row">Application instruction</th>
+    <td class="govuk-table__cell">
+      <%= get_exposure_routes_names(component.nano_material.exposure_routes) %>
+    </td>
+  </tr>
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="row">Exposure condition</th>
+    <td class="govuk-table__cell">
+      <%= get_exposure_condition_name(component.nano_material.exposure_condition) %>
+    </td>
+  </tr>
+<% end %>
+
+<tr class="govuk-table__row">
+  <th class="govuk-table__header" scope="row">Category of product</th>
+  <td class="govuk-table__cell">
+    <%= get_category_name(component.root_category) %>
+  </td>
+</tr>
+<tr class="govuk-table__row">
+  <th class="govuk-table__header" scope="row">
+    <%= "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" %>
+  </th>
+  <td class="govuk-table__cell">
+    <%= get_category_name(component.sub_category) %>
+  </td>
+</tr>
+<tr class="govuk-table__row">
+  <th class="govuk-table__header" scope="row">
+    <%= "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" %>
+  </th>
+  <td class="govuk-table__cell">
+    <%= get_category_name(component.sub_sub_category) %>
+  </td>
+</tr>
+<% if current_user.can_view_product_ingredients? %>
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="row">Formulation given as</th>
+    <td class="govuk-table__cell">
+      <%= get_notification_type_name(component.notification_type) %>
+    </td>
+  </tr>
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="row">Frame formulation</th>
+    <td class="govuk-table__cell">
+      <%= get_frame_formulation_name(component.frame_formulation) %>
+    </td>
+  </tr>
+<% end %>
+<% if current_user.can_view_product_ingredients? %>
+  <% if !component.predefined? %>
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="row">Formulation</th>
+      <td class="govuk-table__cell">
+        <% if component.exact? && component.exact_formulas.present? %>
+          <%= render "application/none_or_bullet_list", entities_list: format_exact_formulas(component.exact_formulas),
+                  key_name: :inci_name, value_name: :quantity %>
+        <% elsif component.range? && component.range_formulas.present? %>
+          <%= render "application/none_or_bullet_list", entities_list: format_range_formulas(component.range_formulas),
+                  key_name: :inci_name, value_name: :range %>
+        <% elsif component.formulation_file.attached? %>
+          <% if component.formulation_file.metadata["safe"] %>
+            <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
+          <% else %>
+            <%= "Processing file #{component.formulation_file.filename} ..." %>
+            <br>
+            <%= link_to "Refresh",
+                    edit_responsible_person_notification_path(@responsible_person, @notification),
+                    class: "govuk-link--no-visited-state" %>
+          <% end %>
+        <% elsif allow_edits %>
+          <%= link_to "Add formulation document",
+                  new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
+                          @notification, component),
+                  class: "govuk-link--no-visited-state" %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+<% end %>
+
+<tr class="govuk-table__row">
+  <th class="govuk-table__header" scope="row">Physical form</th>
+  <td class="govuk-table__cell">
+    <%= get_physical_form_name(component.physical_form) %>
+  </td>
+</tr>
+
+<% if current_user.can_view_product_ingredients? %>
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="row">Special applicator</th>
+    <td class="govuk-table__cell">
+      <%= component.special_applicator.present? ? "Yes" : "No" %>
+    </td>
+  </tr>
+  <% if component.special_applicator.present? %>
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="row">Applicator type</th>
+      <td class="govuk-table__cell">
+        <%= component_special_applicator_name(component) %>
+      </td>
+    </tr>
+  <% end %>
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="row">Acute poisoning information</th>
+    <td class="govuk-table__cell">
+      <%= component.acute_poisoning_info %>
+    </td>
+  </tr>
+<% end %>
+<% if current_user.can_view_product_ingredients? %>
+  <% if component.predefined? %>
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="row">Contains poisonous ingredients</th>
+      <td class="govuk-table__cell">
+        <%= component.contains_poisonous_ingredients.present? ? "Yes" : "No" %>
+      </td>
+    </tr>
+  <% end %>
+  <% if component.trigger_questions %>
+    <%= render "notifications/ph", component: component %>
+    <% component.trigger_questions.each do |question| %>
+      <% unless question.question == "please_indicate_the_ph" %>
+        <%= render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: true %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
