@@ -10,4 +10,4 @@ end
 Rails.application.config.document_analyzers.append ReadDataAnalyzer
 # MasterAnalyzer is the only one that we pass to active_storage
 Rails.application.config.active_storage.analyzers = [MasterAnalyzer]
-Rails.application.config.active_storage.queue = :cosmetics
+Rails.application.config.active_storage.queue = ENV["SIDEKIQ_QUEUE"] || "cosmetics"

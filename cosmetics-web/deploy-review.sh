@@ -52,6 +52,9 @@ cf push $WORKER -f $MANIFEST_FILE_WORKER --no-start --var cosmetics-instance-nam
 cf set-env $WEB SENTRY_CURRENT_ENV $REVIEW_INSTANCE_NAME
 cf set-env $WORKER SENTRY_CURRENT_ENV $REVIEW_INSTANCE_NAME
 
+cf set-env $WEB SIDEKIQ_QUEUE "$INSTANCE_NAME"
+cf set-env $WORKER SIDEKIQ_QUEUE "$INSTANCE_NAME"
+
 cf start $WEB
 cf start $WORKER
 

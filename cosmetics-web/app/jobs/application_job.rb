@@ -1,3 +1,3 @@
 class ApplicationJob < ActiveJob::Base
-  queue_as :cosmetics
+  queue_as ENV["SIDEKIQ_QUEUE"] || "cosmetics"
 end
