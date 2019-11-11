@@ -45,7 +45,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # special-applicator
-    choose("No")
+    choose("A typical non-pressurised bottle, jar, sachet or other package")
     click_button "Continue"
 
     # contains_cmrs
@@ -125,7 +125,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # special-applicator
-    choose("No")
+    choose("A typical non-pressurised bottle, jar, sachet or other package")
     click_button "Continue"
 
     # contains_cmrs
@@ -198,7 +198,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # special-applicator
-    choose("No")
+    choose("A typical non-pressurised bottle, jar, sachet or other package")
     click_button "Continue"
 
     # contains_cmrs
@@ -287,7 +287,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # special-applicator
-    choose("No")
+    choose("A typical non-pressurised bottle, jar, sachet or other package")
     click_button "Continue"
 
     # contains_cmrs
