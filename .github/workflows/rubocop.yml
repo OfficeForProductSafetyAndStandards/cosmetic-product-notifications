@@ -54,7 +54,7 @@ jobs:
           ${{ runner.OS }}-build-${{ env.cache-name }}-
           ${{ runner.OS }}-build-
           ${{ runner.OS }}-
-    - name: Install node dependencies
+    - name: Install npm dependencies
       run: |
         cd cosmetics-web
         npm install yarn
