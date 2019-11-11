@@ -35,7 +35,7 @@ RSpec.describe Notification, type: :model do
       notification.under_three_years = nil
       notification.save(context: :for_children_under_three)
 
-      expect(notification.errors[:under_three_years]).to eql(['Select yes if the product is intended for children under 3'])
+      expect(notification.errors[:under_three_years]).to eql(['Select yes if the product is intended to be used on children under 3 years old'])
     end
   end
 end
