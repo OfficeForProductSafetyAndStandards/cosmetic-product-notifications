@@ -22,18 +22,9 @@
     p
 
       |
-      =<> link_to "Notify the EU using CPNP (takes you to another website)", "https://ec.europa.eu/growth/sectors/cosmetics/cpnp_en", class: 'govuk-link'
+      =<> link_to "Notify the EU using CPNP (takes you to another website)", \
+      "https://ec.europa.eu/growth/sectors/cosmetics/cpnp_en", class: 'govuk-link'
     p
       =< link_to "Notify OPSS without using a ZIP file",
-              new_responsible_person_notification_path(@responsible_person, notified_before_eu_exit: false), class: 'govuk-link'
-
-
-
-    / = form_with url: wizard_path, method: :put do |form|
-    /   = render "components/govuk_radios", name: :answer,
-    /     errorMessage: @error_text.present? && { text: @error_text },
-    /     fieldset: { legend: { text: 'Do you want to notify the EU first?', \
-    /       isPageHeading: true, classes: "govuk-fieldset__legend--m" } },
-    /     items: [{ text: "Yes", value: "yes" },
-    /       { text: "No, continue with manual notification", value: "no" }]
-      = form.submit "Continue", class: "govuk-button"
+              new_responsible_person_notification_path(@responsible_person,
+              notified_before_eu_exit: false), class: 'govuk-link'
