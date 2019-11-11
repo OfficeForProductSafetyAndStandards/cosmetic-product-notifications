@@ -46,10 +46,21 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.16.3
-    - name: Run SASS and javascript linters
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/node_modules
+        key: ${{ runner.OS }}-build-${{ hashFiles('cosmetics-web/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-build-${{ env.cache-name }}-
+          ${{ runner.OS }}-build-
+          ${{ runner.OS }}-
+    - name: Install node dependencies
       run: |
         cd cosmetics-web
         npm install yarn
         yarn install
+    - name: Run linters
+      run: |
+        cd cosmetics-web
         yarn eslint app config
         yarn sass-lint -c .sasslint.yml -vq 'app/**/*.scss'
