@@ -13,14 +13,15 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.5.x
+    - name: Install gem dependencies
+      run: |
+        cd cosmetics-web
+        gem install bundler -v 1.17.3
+        bundle install --deployment
     - name: Run code style checks
       run: |
         cd cosmetics-web
-        gem install rubocop -v 0.71.0
-        gem install rubocop-performance -v 1.4.0
-        gem install rubocop-rspec -v 1.36
-        gem install govuk-lint -v 3.11.2
-        rubocop
+        bundle exec rubocop app/ spec/
   slim:
     name: "Slim templates"
     runs-on: ubuntu-latest
