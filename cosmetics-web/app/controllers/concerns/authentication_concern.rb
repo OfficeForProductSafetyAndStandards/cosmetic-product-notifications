@@ -55,7 +55,7 @@ private
   end
 
   def cookie_name
-    :"keycloak_token_#{ENV['KEYCLOAK_CLIENT_ID']}"
+    :"keycloak_token_#{ENV["KEYCLOAK_CLIENT_ID"]}"
   end
 
   def try_refresh_token

@@ -42,7 +42,7 @@ private
   def nanomaterial_params
     params.fetch(:non_standard_nanomaterial, {})
         .permit(
-          :iupac_name
+          :iupac_name,
         )
   end
 end

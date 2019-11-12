@@ -9,7 +9,7 @@ module LoginHelper
 
   def session_url_with_redirect(request_path)
     uri = URI.parse(session_url)
-    uri.query = [uri.query, "request_path=#{request_path}"].compact.join('&')
+    uri.query = [uri.query, "request_path=#{request_path}"].compact.join("&")
     uri.to_s
   end
 
