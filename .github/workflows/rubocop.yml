@@ -13,6 +13,14 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.5.x
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/vendor/bundle
+        key: ${{ runner.OS }}-build-${{ hashFiles('cosmetics-web/Gemfile.lock') }}
+        restore-keys: |
+           ${{ runner.OS }}-build-${{ env.cache-name }}-
+           ${{ runner.OS }}-build-
+           ${{ runner.OS }}-
     - name: Install gem dependencies
       run: |
         cd cosmetics-web
