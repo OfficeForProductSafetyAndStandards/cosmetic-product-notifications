@@ -44,12 +44,12 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "listen", "3.1.5"
   gem "pry", "0.12.2"
-  gem 'rails-controller-testing'
-  gem 'rspec-collection_matchers'
-  gem 'rspec-html-matchers'
+  gem "rails-controller-testing"
+  gem "rspec-collection_matchers"
+  gem "rspec-html-matchers"
   gem "rspec-rails"
-  gem 'rubocop', '~> 0.76.0'
-  gem 'rubocop-govuk', '~> 1.0'
+  gem "rubocop", "~> 0.76.0"
+  gem "rubocop-govuk", "~> 1.0"
   gem "rubocop-performance", "1.4.0"
   gem "rubocop-rspec"
   gem "ruby-debug-ide", "0.7.0"
