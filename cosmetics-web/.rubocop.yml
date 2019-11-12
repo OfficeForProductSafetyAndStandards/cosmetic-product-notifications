@@ -30,3 +30,7 @@ RSpec/NestedGroups:
 ExampleLength:
   Exclude:
     - 'spec/system/**/*'
+
+# TODO: re-enable this after updating the helpers
+Rails/HelperInstanceVariable:
+  Enabled: false
