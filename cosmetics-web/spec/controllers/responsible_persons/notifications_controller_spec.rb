@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
   let(:user) { build(:user) }
@@ -22,7 +22,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
 
     it "renders the index template" do
       get :index, params: { responsible_person_id: responsible_person.id }
-      expect(response).to render_template('responsible_persons/notifications/index')
+      expect(response).to render_template("responsible_persons/notifications/index")
     end
 
     it "counts pending notification files" do
@@ -82,7 +82,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
 
     it "renders the index template" do
       get :show, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
-      expect(response).to render_template('responsible_persons/notifications/show')
+      expect(response).to render_template("responsible_persons/notifications/show")
     end
 
     it "does not allow the user to show a notification for a Responsible Person they not belong to" do
@@ -161,7 +161,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
     it "marks the notification as complete" do
       attach_image_to_draft_with_metadata(safe: true)
       post :confirm, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number }
-      expect(draft_notification.reload.state).to eq('notification_complete')
+      expect(draft_notification.reload.state).to eq("notification_complete")
     end
   end
 

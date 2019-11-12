@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Trigger questions", type: :request do
   include RSpecHtmlMatchers
@@ -26,7 +26,7 @@ RSpec.describe "Trigger questions", type: :request do
       end
 
       it "includes the question" do
-        expect(response.body).to include('What is the pH range of the product?')
+        expect(response.body).to include("What is the pH range of the product?")
       end
 
       context "with a frame formulation component that has poisonous ingredients" do
@@ -72,7 +72,7 @@ RSpec.describe "Trigger questions", type: :request do
       end
 
       it "includes the question" do
-        expect(response.body).to include('What is the pH of the cosmetic product?')
+        expect(response.body).to include("What is the pH of the cosmetic product?")
       end
 
       it "includes a back link to the pH range question" do
@@ -99,22 +99,22 @@ RSpec.describe "Trigger questions", type: :request do
 
       context "with 'it does not have a pH'" do
         before do
-          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: 'not_applicable' } }
+          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: "not_applicable" } }
         end
 
         it "sets the ph answer on the component" do
-          expect(component.reload.ph).to eql('not_applicable')
+          expect(component.reload.ph).to eql("not_applicable")
         end
 
         context "when the notification was first notified pre-Brexit" do
-          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person, state: 'components_complete') }
+          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person, state: "components_complete") }
 
           it "redirects to the add check your answers page" do
             expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
           end
 
           it "updates the notification state to draft_complete" do
-            expect(notification.reload.state).to eql('draft_complete')
+            expect(notification.reload.state).to eql("draft_complete")
           end
         end
 
@@ -127,11 +127,11 @@ RSpec.describe "Trigger questions", type: :request do
 
       context "with 'The minimum pH is 3 or higher, and the maximum pH is 10 or lower'" do
         before do
-          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: 'between_3_and_10' } }
+          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: "between_3_and_10" } }
         end
 
         it "sets the ph answer on the component" do
-          expect(component.reload.ph).to eql('between_3_and_10')
+          expect(component.reload.ph).to eql("between_3_and_10")
         end
 
         context "when the notification was first notified pre-Brexit" do
@@ -151,11 +151,11 @@ RSpec.describe "Trigger questions", type: :request do
 
       context "with 'The minimum pH is lower than 3'" do
         before do
-          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: 'lower_than_3' } }
+          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: "lower_than_3" } }
         end
 
         it "sets the ph answer on the component" do
-          expect(component.reload.ph).to eql('lower_than_3')
+          expect(component.reload.ph).to eql("lower_than_3")
         end
 
         it "redirects to the exact pH question" do
@@ -165,11 +165,11 @@ RSpec.describe "Trigger questions", type: :request do
 
       context "with 'The maximum pH is higher than 10'" do
         before do
-          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: 'above_10' } }
+          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range", params: { component: { ph: "above_10" } }
         end
 
         it "sets the ph answer on the component" do
-          expect(component.reload.ph).to eql('above_10')
+          expect(component.reload.ph).to eql("above_10")
         end
 
         it "redirects to the exact pH question" do
@@ -195,7 +195,7 @@ RSpec.describe "Trigger questions", type: :request do
 
       context "when specifying a minimum and maximum pH" do
         before do
-          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/ph", params: { component: { minimum_ph: '2.1 ', maximum_ph: '2.3 ' } }
+          put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.id}/components/#{component.id}/trigger_question/ph", params: { component: { minimum_ph: "2.1 ", maximum_ph: "2.3 " } }
         end
 
         it "sets the minimum ph value of the component" do
@@ -207,14 +207,14 @@ RSpec.describe "Trigger questions", type: :request do
         end
 
         context "when the notification was first notified pre-Brexit" do
-          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person, state: 'components_complete') }
+          let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person, state: "components_complete") }
 
           it "redirects to the add check your answers page" do
             expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
           end
 
           it "updates the notification state to draft_complete" do
-            expect(notification.reload.state).to eql('draft_complete')
+            expect(notification.reload.state).to eql("draft_complete")
           end
         end
 
