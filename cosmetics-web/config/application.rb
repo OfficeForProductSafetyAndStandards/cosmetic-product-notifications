@@ -1,4 +1,4 @@
-require File.expand_path('boot', __dir__)
+require File.expand_path("boot", __dir__)
 
 require "active_record/railtie"
 require "active_storage/engine"
@@ -31,7 +31,7 @@ module Cosmetics
     config.eager_load_paths << Rails.root.join("presenters")
 
     config.active_job.queue_adapter = :sidekiq
-    config.action_mailer.deliver_later_queue_name = 'cosmetics-mailers'
+    config.action_mailer.deliver_later_queue_name = "cosmetics-mailers"
 
     # Set the request timeout in seconds. The default set by Slowpoke is 15 seconds.
     # Use a longer timeout on development environments to allow for asset compilation.
