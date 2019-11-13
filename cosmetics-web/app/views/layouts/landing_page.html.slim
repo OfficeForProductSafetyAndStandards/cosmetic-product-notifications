@@ -1,6 +1,13 @@
-= render "layouts/header"
+doctype html
+html.govuk-template.app-html-class[lang="en"]
 
-.govuk-main-wrapper
-  = yield
+  = render "layouts/head"
 
-= render "layouts/footer"
+  body.govuk-template__body.app-body-class
+
+    = render "layouts/header"
+
+    .govuk-main-wrapper
+      = yield
+
+    = render "layouts/footer"
