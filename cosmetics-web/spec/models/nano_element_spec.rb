@@ -130,6 +130,22 @@ RSpec.describe NanoElement, type: :model do
           expect(nano_element).to be_incomplete
         end
       end
+
+      context "when toxicology has not been notified" do
+        it "confirms toxicology has not been notified" do
+          nano_element.confirm_restrictions = "no"
+          nano_element.confirm_toxicology_notified = "no"
+
+          expect(nano_element).to be_incomplete
+        end
+
+        it "is not sure toxicology has been notified" do
+          nano_element.confirm_restrictions = "no"
+          nano_element.confirm_toxicology_notified = "not_sure"
+
+          expect(nano_element).to be_incomplete
+        end
+      end
     end
   end
 end

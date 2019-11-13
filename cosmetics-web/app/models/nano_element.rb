@@ -19,8 +19,11 @@ class NanoElement < ApplicationRecord
       (
         standard? && (
           confirm_restrictions.nil? ||
-          (confirm_restrictions == "no" && confirm_toxicology_notified.nil?) ||
-          (confirm_restrictions == "yes" && confirm_usage.nil?)
+          (
+            confirm_restrictions == 'no' && confirm_toxicology_notified.nil? ||
+            (confirm_toxicology_notified == 'not_sure' || confirm_toxicology_notified == 'no')
+          ) ||
+         (confirm_restrictions == 'yes' && confirm_usage.nil?)
         )
       )
   end
