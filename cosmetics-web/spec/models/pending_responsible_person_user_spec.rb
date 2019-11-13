@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe PendingResponsiblePersonUser, type: :model do
   let(:pending_responsible_person) { build(:pending_responsible_person_user) }
@@ -16,7 +16,7 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
     end
 
     it "fails if an invalid email is specified" do
-      pending_responsible_person.email_address = 'invalid-email'
+      pending_responsible_person.email_address = "invalid-email"
 
       expect(pending_responsible_person.save).to be false
       expect(pending_responsible_person.errors[:email_address]).to include("Email address is invalid")

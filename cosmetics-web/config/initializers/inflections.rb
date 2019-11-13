@@ -11,7 +11,7 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.irregular 'person', 'persons'
-  inflect.irregular 'compound releasing hydrogen peroxide', 'compounds releasing hydrogen peroxide'
-  inflect.irregular 'essential oil, camphor, menthol, or eucalyptol', 'essential oils, camphor, menthol, or eucalyptol'
+  inflect.irregular "person", "persons"
+  inflect.irregular "compound releasing hydrogen peroxide", "compounds releasing hydrogen peroxide"
+  inflect.irregular "essential oil, camphor, menthol, or eucalyptol", "essential oils, camphor, menthol, or eucalyptol"
 end

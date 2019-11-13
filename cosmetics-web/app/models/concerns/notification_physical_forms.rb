@@ -9,7 +9,7 @@ module NotificationPhysicalForms
         liquid: "liquid",
         foam: "foam",
         spray: "spray",
-        other_physical_form: "other"
+        other_physical_form: "other",
     }
   end
 end

@@ -9,7 +9,7 @@ class NanoMaterial < ApplicationRecord
 
   enum exposure_condition: {
     rinse_off: "rinse_off",
-    leave_on: "leave_on"
+    leave_on: "leave_on",
   }
 
   def nano_elements_incomplete?

@@ -17,7 +17,7 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
     if uploaded_files_params.length > NotificationFile.get_max_number_of_files
       @errors << {
           text: "Too many files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
-          href: "#uploaded_files"
+          href: "#uploaded_files",
       }
       return render :new
     end
@@ -26,7 +26,7 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
       notification_file = NotificationFile.new(
         name: uploaded_file.original_filename,
         responsible_person: @responsible_person,
-        user: User.current
+        user: User.current,
       )
       notification_file.uploaded_file.attach(uploaded_file)
 

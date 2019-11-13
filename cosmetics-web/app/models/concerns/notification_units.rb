@@ -10,7 +10,7 @@ module NotificationUnits
         greater_than_10_less_than_25_percent: "greater_than_10_less_than_25_percent",
         greater_than_25_less_than_50_percent: "greater_than_25_less_than_50_percent",
         greater_than_50_less_than_75_percent: "greater_than_50_less_than_75_percent",
-        greater_than_75_less_than_100_percent: "greater_than_75_less_than_100_percent"
+        greater_than_75_less_than_100_percent: "greater_than_75_less_than_100_percent",
     }
   end
 end

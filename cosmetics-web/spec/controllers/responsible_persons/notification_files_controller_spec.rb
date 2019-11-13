@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
