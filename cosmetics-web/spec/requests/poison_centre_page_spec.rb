@@ -8,7 +8,7 @@ RSpec.describe "Poison centre page", type: :request do
   let(:notification) { create(:draft_notification, responsible_person: responsible_person) }
   let(:params) do
     {
-      reference_number: notification.reference_number
+      reference_number: notification.reference_number,
     }
   end
 

@@ -23,7 +23,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.serve_static_files = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
@@ -40,13 +40,13 @@ Rails.application.configure do
 
   config.action_controller.default_url_options = {
     host: ENV["COSMETICS_HOST"],
-    protocol: "https"
+    protocol: "https",
   }
 
   # Url for mailer
   config.action_mailer.default_url_options = {
     host: ENV["COSMETICS_HOST"],
-    protocol: "https"
+    protocol: "https",
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.

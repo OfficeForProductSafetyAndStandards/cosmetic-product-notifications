@@ -16,17 +16,17 @@ class ElasticsearchQuery
       query: {
         multi_match: {
           query: @query,
-          fuzziness: "AUTO"
-        }
-      }
+          fuzziness: "AUTO",
+        },
+      },
     }
   end
 
   def match_all_query
     {
       query: {
-        match_all: {}
-      }
+        match_all: {},
+      },
     }
   end
 end

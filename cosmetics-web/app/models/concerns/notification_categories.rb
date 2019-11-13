@@ -111,7 +111,7 @@ module NotificationCategories
         tooth_whiteners: "tooth_whiteners",
         tooth_whiteners_child: "tooth_whiteners_child",
         other_oral_hygiene_products: "other_oral_hygiene_products",
-        other_oral_hygiene_products_child: "other_oral_hygiene_products_child"
+        other_oral_hygiene_products_child: "other_oral_hygiene_products_child",
     }, _prefix: :category
 
     PARENT_OF_CATEGORY = {
@@ -218,7 +218,7 @@ module NotificationCategories
         tooth_whiteners: :oral_hygiene_products,
         tooth_whiteners_child: :tooth_whiteners,
         other_oral_hygiene_products: :oral_hygiene_products,
-        other_oral_hygiene_products_child: :other_oral_hygiene_products
+        other_oral_hygiene_products_child: :other_oral_hygiene_products,
     }.freeze
   end
 end

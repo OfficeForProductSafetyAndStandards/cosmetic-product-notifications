@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ProductImageUploadController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
@@ -7,14 +7,14 @@ RSpec.describe ProductImageUploadController, type: :controller do
   let(:other_responsible_person) { create(:responsible_person) }
   let(:other_notification) { create(:notification, responsible_person: other_responsible_person) }
   let(:other_component) { create(:component, notification: other_notification) }
-  let(:text_file) { fixture_file_upload('/testText.txt', 'text/plain') }
-  let(:image_file) { fixture_file_upload('/testImage.png', 'image/png') }
+  let(:text_file) { fixture_file_upload("/testText.txt", "text/plain") }
+  let(:image_file) { fixture_file_upload("/testImage.png", "image/png") }
 
   let(:params) {
     {
       responsible_person_id: responsible_person.id,
       notification_reference_number: notification.reference_number,
-      component_id: component.id
+      component_id: component.id,
     }
   }
 
@@ -22,7 +22,7 @@ RSpec.describe ProductImageUploadController, type: :controller do
     {
       responsible_person_id: other_responsible_person.id,
       notification_reference_number: other_notification.reference_number,
-      component_id: other_component.id
+      component_id: other_component.id,
     }
   }
 

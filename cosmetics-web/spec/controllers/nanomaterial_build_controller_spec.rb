@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe NanomaterialBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
@@ -10,7 +10,7 @@ RSpec.describe NanomaterialBuildController, type: :controller do
            component: component,
            nano_elements: [
                create(:nano_element, inci_name: "nanomaterial1"),
-               create(:nano_element, inci_name: "nanomaterial2")
+               create(:nano_element, inci_name: "nanomaterial2"),
            ])
   }
   let(:nano_element1) { nanomaterial.nano_elements.first }
@@ -21,7 +21,7 @@ RSpec.describe NanomaterialBuildController, type: :controller do
         responsible_person_id: responsible_person.id,
         notification_reference_number: notification.reference_number,
         component_id: component.id,
-        nanomaterial_nano_element_id: nano_element1
+        nanomaterial_nano_element_id: nano_element1,
     }
   }
 

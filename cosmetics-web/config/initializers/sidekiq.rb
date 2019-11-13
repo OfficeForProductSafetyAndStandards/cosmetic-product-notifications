@@ -1,9 +1,9 @@
 def create_log_db_metrics_job
   log_db_metrics_job = Sidekiq::Cron::Job.new(
-    name: 'log db metrics, every day at 1 am',
-    cron: '0 1 * * *',
-    class: 'LogDbMetricsJob',
-    queue: 'cosmetics'
+    name: "log db metrics, every day at 1 am",
+    cron: "0 1 * * *",
+    class: "LogDbMetricsJob",
+    queue: "cosmetics",
   )
   unless log_db_metrics_job.save
     Rails.logger.error "***** WARNING - Log DB metrics job was not saved! *****"

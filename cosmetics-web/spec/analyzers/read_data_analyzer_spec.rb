@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ReadDataAnalyzer, type: :analyzer do
   let(:responsible_person) { create(:responsible_person) }
@@ -104,7 +104,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
 
       notification = Notification.order(created_at: :asc).last
 
-      expect(notification.components.first.notification_type).equal?('predefined')
+      expect(notification.components.first.notification_type).equal?("predefined")
     end
 
     it "creates a notification populated with relevant sub-sub-category" do
@@ -113,7 +113,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
 
       notification = Notification.order(created_at: :asc).last
 
-      expect(notification.components.first.sub_sub_category).equal?('Hair conditioner')
+      expect(notification.components.first.sub_sub_category).equal?("Hair conditioner")
     end
 
     it "creates a notification populated with relevant number of trigger questions and trigger elements" do
@@ -130,7 +130,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
 
       notification = Notification.order(created_at: :asc).last
 
-      expect(notification.components.first.frame_formulation).equal?('Hair Conditioner')
+      expect(notification.components.first.frame_formulation).equal?("Hair Conditioner")
     end
 
     it "creates a notification populated with relevant number of exact formula" do

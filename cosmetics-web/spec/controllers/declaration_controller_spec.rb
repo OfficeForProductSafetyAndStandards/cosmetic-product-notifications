@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe DeclarationController, type: :controller do
   let(:first_time_user) { build(:user, first_login: true) }

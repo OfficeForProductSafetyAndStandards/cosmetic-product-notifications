@@ -18,7 +18,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   def join
     pending_requests = PendingResponsiblePersonUser.pending_requests_to_join_responsible_person(
       User.current,
-      @responsible_person
+      @responsible_person,
     )
 
     if pending_requests.any?
@@ -39,7 +39,7 @@ private
 
   def team_member_params
     params.fetch(:team_member, {}).permit(
-      :email_address
+      :email_address,
     )
   end
 

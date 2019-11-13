@@ -87,7 +87,7 @@ private
       :address_line_2,
       :city,
       :county,
-      :postal_code
+      :postal_code,
     )
   end
 end

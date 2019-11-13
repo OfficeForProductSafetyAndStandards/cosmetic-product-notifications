@@ -14,7 +14,7 @@ module TriggerRulesHelper
     answer_order = element.answer_order
     inciname_incivalue_pair = []
     question.trigger_question_elements.where(
-      trigger_question_id: question_id, answer_order: answer_order
+      trigger_question_id: question_id, answer_order: answer_order,
     ).each do |question_element|
       inciname_incivalue_pair << question_element.answer
     end
@@ -24,7 +24,7 @@ module TriggerRulesHelper
     trigger_question_elements.group_by(&:answer_order).map do |_answer_order, elements|
       {
           inci_name: elements.first.answer,
-          quantity: display_concentration(elements.last.answer)
+          quantity: display_concentration(elements.last.answer),
       }
     end
   end

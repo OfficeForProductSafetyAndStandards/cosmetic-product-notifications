@@ -18,12 +18,12 @@ class AddMinimumAndMaximumPhToComponents < ActiveRecord::Migration[5.2]
             .select("trigger_questions.*, trigger_question_elements.*")
             .joins(:trigger_question).where(
               trigger_questions: {
-                question: 'please_indicate_the_ph'
-              }
+                question: "please_indicate_the_ph",
+              },
             ).find_each do |ph_question_answer|
             Component.where(id: ph_question_answer.component_id).update_all(
               minimum_ph: ph_question_answer.answer,
-              maximum_ph: ph_question_answer.answer
+              maximum_ph: ph_question_answer.answer,
             )
 
             TriggerQuestionElement.find(ph_question_answer.id).delete
@@ -45,8 +45,8 @@ class AddMinimumAndMaximumPhToComponents < ActiveRecord::Migration[5.2]
 
             trigger_question = TriggerQuestion.new(
               component_id: component.id,
-              question: 'please_indicate_the_ph',
-              applicable: true
+              question: "please_indicate_the_ph",
+              applicable: true,
             )
 
             trigger_question.save!
@@ -55,7 +55,7 @@ class AddMinimumAndMaximumPhToComponents < ActiveRecord::Migration[5.2]
               answer: component.minimum_ph,
               answer_order: 0,
               element_order: 0,
-              element: 'ph'
+              element: "ph",
             )
           end
         end

@@ -42,7 +42,7 @@ private
     params.fetch(:contact_person, {}).permit(
       :email_address,
       :phone_number,
-      :name
+      :name,
     )
   end
 
@@ -51,7 +51,7 @@ private
       @contact_person.name,
       @contact_person.email_address,
       @responsible_person.name,
-      User.current.name
+      User.current.name,
     ).deliver_later
   end
 

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Declaration page", type: :system do
   let(:first_time_user) { build(:user, first_login: true) }

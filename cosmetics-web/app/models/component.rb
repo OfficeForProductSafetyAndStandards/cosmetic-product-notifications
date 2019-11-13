@@ -17,11 +17,11 @@ class Component < ApplicationRecord
   has_one_attached :formulation_file
 
   enum ph: {
-    not_applicable: 'not_applicable',
-    lower_than_3: 'lower_than_3',
-    between_3_and_10: 'between_3_and_10',
-    above_10: 'above_10',
-    not_given: 'not_given'
+    not_applicable: "not_applicable",
+    lower_than_3: "lower_than_3",
+    between_3_and_10: "between_3_and_10",
+    above_10: "above_10",
+    not_given: "not_given",
   }, _prefix: true
 
   accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }

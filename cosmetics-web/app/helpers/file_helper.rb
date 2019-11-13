@@ -9,7 +9,7 @@ private
     {
         "application/pdf" => ".pdf",
         "application/rtf" => ".rtf",
-        "text/plain" => ".txt"
+        "text/plain" => ".txt",
     }
   end
 end

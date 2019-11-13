@@ -1,5 +1,5 @@
-require 'rails_helper'
-require Rails.root.join('db', 'migrate', '20190923133032_add_minimum_and_maximum_ph_to_components.rb')
+require "rails_helper"
+require Rails.root.join("db", "migrate", "20190923133032_add_minimum_and_maximum_ph_to_components.rb")
 
 RSpec.describe AddMinimumAndMaximumPhToComponents do
   let(:migrations_paths) { ActiveRecord::Migrator.migrations_paths }
@@ -23,17 +23,17 @@ RSpec.describe AddMinimumAndMaximumPhToComponents do
       ActiveRecord::Migrator.new(:down, migrations, previous_version).migrate
     end
 
-    context 'when there is a component with a PH answer' do
+    context "when there is a component with a PH answer" do
       let!(:component) { create(:component) }
 
       before do
         trigger_question = create(:trigger_question,
                                   component_id: component.id,
-                                  question: 'please_indicate_the_ph')
+                                  question: "please_indicate_the_ph")
 
         create(:trigger_question_element,
                trigger_question: trigger_question,
-               answer: '2.3')
+               answer: "2.3")
 
         ActiveRecord::Migrator.new(:up, migrations, current_version).migrate
 
@@ -41,26 +41,26 @@ RSpec.describe AddMinimumAndMaximumPhToComponents do
         component.reload
       end
 
-      it 'updates the component with a minimum pH' do
+      it "updates the component with a minimum pH" do
         expect(component.minimum_ph).to be 2.3
       end
 
-      it 'updates the component with a maximum pH' do
+      it "updates the component with a maximum pH" do
         expect(component.maximum_ph).to be 2.3
       end
     end
 
-    context 'when there is a component with a PH empty string answer' do
+    context "when there is a component with a PH empty string answer" do
       let!(:component) { create(:component) }
 
       before do
         trigger_question = create(:trigger_question,
                                   component_id: component.id,
-                                  question: 'please_indicate_the_ph')
+                                  question: "please_indicate_the_ph")
 
         create(:trigger_question_element,
                trigger_question: trigger_question,
-               answer: '')
+               answer: "")
 
         ActiveRecord::Migrator.new(:up, migrations, current_version).migrate
 
@@ -68,11 +68,11 @@ RSpec.describe AddMinimumAndMaximumPhToComponents do
         component.reload
       end
 
-      it 'updates the component with a minimum pH' do
+      it "updates the component with a minimum pH" do
         expect(component.minimum_ph).to be_nil
       end
 
-      it 'updates the component with a maximum pH' do
+      it "updates the component with a maximum pH" do
         expect(component.maximum_ph).to be_nil
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe AddMinimumAndMaximumPhToComponents do
       end
 
       it "creates a trigger question with the question 'please_indicate_the_ph'" do
-        expect(trigger_question.question).to eq 'please_indicate_the_ph'
+        expect(trigger_question.question).to eq "please_indicate_the_ph"
       end
 
       it "creates a trigger question with applicable being true" do
@@ -116,11 +116,11 @@ RSpec.describe AddMinimumAndMaximumPhToComponents do
       end
 
       it "creates a trigger question element with the answer '3.2'" do
-        expect(trigger_question_element.answer).to eq '3.2'
+        expect(trigger_question_element.answer).to eq "3.2"
       end
 
       it "creates a trigger question element with the element 'ph'" do
-        expect(trigger_question_element.element).to eq 'ph'
+        expect(trigger_question_element.element).to eq "ph"
       end
     end
 

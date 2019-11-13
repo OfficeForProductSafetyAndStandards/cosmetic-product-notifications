@@ -111,6 +111,6 @@ module CpnpNotificationCategories
       100400 => :tooth_whiteners,
       100401 => :tooth_whiteners_child,
       100403 => :other_oral_hygiene_products,
-      100404 => :other_oral_hygiene_products_child
+      100404 => :other_oral_hygiene_products_child,
   }.freeze
 end
