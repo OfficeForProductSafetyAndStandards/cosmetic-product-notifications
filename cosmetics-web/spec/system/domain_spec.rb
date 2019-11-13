@@ -34,7 +34,7 @@ RSpec.describe "Service domain", type: :system do
     it "shows relevant landing page content for finding product information" do
       visit root_path
 
-      assert_text "Find cosmetic product information"
+      assert_text "Search for cosmetic products"
     end
 
     it "shows invalid account page for Responsible Person user" do
