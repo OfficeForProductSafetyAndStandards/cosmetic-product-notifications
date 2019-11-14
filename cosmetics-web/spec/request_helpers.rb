@@ -1,4 +1,3 @@
-
 # Adds a custom matcher asserting that a given HTML string contains
 # a 'Back link' component to the URL path given.
 RSpec::Matchers.define :have_back_link_to do |expected_path|
