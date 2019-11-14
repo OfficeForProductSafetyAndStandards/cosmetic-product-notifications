@@ -9,7 +9,7 @@ module LoginHelpers
 
     # This normally returns an external URL, but requires an active keycloak
     # connection, so needs to be mocked.
-    allow_any_instance_of(KeycloakClient).to receive(:login_url).and_return('https://sso.example/login')
+    allow_any_instance_of(KeycloakClient).to receive(:login_url).and_return("https://sso.example/login")
   end
   # rubocop:enable RSpec/AnyInstance
 
