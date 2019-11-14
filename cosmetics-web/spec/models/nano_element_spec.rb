@@ -82,26 +82,26 @@ RSpec.describe NanoElement, type: :model do
         expect(nano_element).to be_incomplete
       end
 
-      it "has not confirmed that toxicology notified" do
+      it "toxicology notified is not set" do
         nano_element.purposes = %w(other)
         nano_element.confirm_toxicology_notified = nil
 
         expect(nano_element).to be_incomplete
       end
 
-      context "when toxicology has not been notified" do
+      context "when toxicology notified is set" do
         before do
           nano_element.purposes = %w(other)
         end
 
-        it "confirms toxicology has not been notified" do
+        it "is set to 'no'" do
           nano_element.confirm_restrictions = "no"
           nano_element.confirm_toxicology_notified = "no"
 
           expect(nano_element).to be_incomplete
         end
 
-        it "is not sure toxicology has been notified" do
+        it "is set to 'not sure'" do
           nano_element.confirm_restrictions = "no"
           nano_element.confirm_toxicology_notified = "not_sure"
 
@@ -121,7 +121,7 @@ RSpec.describe NanoElement, type: :model do
         expect(nano_element).to be_incomplete
       end
 
-      context "when restrictions is set to 'no'" do
+      context "when restrictions are set to 'no'" do
         before do
           nano_element.confirm_restrictions = "no"
         end
@@ -139,7 +139,7 @@ RSpec.describe NanoElement, type: :model do
         end
       end
 
-      context "when restrictions is set to 'yes'" do
+      context "when restrictions are set to 'yes'" do
         before do
           nano_element.confirm_restrictions = "yes"
         end
