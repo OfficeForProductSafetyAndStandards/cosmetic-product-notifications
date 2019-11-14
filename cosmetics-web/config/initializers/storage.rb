@@ -3,7 +3,7 @@
 # document_analyzers is a list of the analyzers that we will use
 Rails.application.config.document_analyzers = Rails.application.config.active_storage.analyzers
 
-if ENV.fetch('ANTIVIRUS_ENABLED', 'true') == 'true'
+if ENV.fetch("ANTIVIRUS_ENABLED", "true") == "true"
   Rails.application.config.document_analyzers.append AntiVirusAnalyzer
 end
 

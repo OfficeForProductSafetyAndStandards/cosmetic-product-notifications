@@ -1,4 +1,4 @@
-require 'zip'
+require "zip"
 
 class ReadDataAnalyzer < ActiveStorage::Analyzer
   extend AnalyzerHelper
@@ -11,7 +11,7 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
   def self.accept?(given_blob)
     return false if given_blob.blank?
 
-    if ENV.fetch('ANTIVIRUS_ENABLED', 'true') == 'true'
+    if ENV.fetch("ANTIVIRUS_ENABLED", "true") == "true"
       return false unless given_blob.metadata["safe"]
     end
 

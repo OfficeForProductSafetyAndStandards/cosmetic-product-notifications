@@ -1,4 +1,4 @@
-require 'zlib'
+require "zlib"
 
 module CpnpStaticFiles
   def static_file?(file)

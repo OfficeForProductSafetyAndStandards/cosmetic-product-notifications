@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Component, type: :model do
   let(:notification) { create(:notification) }
   let(:predefined_component) { create(:component) }
   let(:ranges_component) { create(:ranges_component) }
   let(:exact_component) { create(:exact_component) }
-  let(:text_file) { fixture_file_upload('/testText.txt', 'application/text') }
+  let(:text_file) { fixture_file_upload("/testText.txt", "application/text") }
 
   describe "attributes" do
     subject(:component) { described_class.new }
@@ -17,7 +17,7 @@ RSpec.describe Component, type: :model do
 
   describe "name validation" do
     context "when there is already a component with the same name for the same notification" do
-      let(:component) { described_class.new(name: 'Component X', notification: notification) }
+      let(:component) { described_class.new(name: "Component X", notification: notification) }
 
       before do
         create(:component, name: "Component X", notification: notification)
@@ -34,7 +34,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when there is already a component with the same name but using uppercase for the same notification" do
-      let(:component) { described_class.new(name: 'Component X', notification: notification) }
+      let(:component) { described_class.new(name: "Component X", notification: notification) }
 
       before do
         create(:component, name: "COMPONENT X", notification: notification)
@@ -141,7 +141,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when not applicable" do
-      before { predefined_component.ph = 'not_applicable' }
+      before { predefined_component.ph = "not_applicable" }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -149,7 +149,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when lower than 3" do
-      before { predefined_component.ph = 'lower_than_3' }
+      before { predefined_component.ph = "lower_than_3" }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -157,7 +157,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when between 3 and 10" do
-      before { predefined_component.ph = 'between_3_and_10' }
+      before { predefined_component.ph = "between_3_and_10" }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -165,7 +165,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when above 10" do
-      before { predefined_component.ph = 'above_10' }
+      before { predefined_component.ph = "above_10" }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -173,7 +173,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when explicitly set to not given" do
-      before { predefined_component.ph = 'not_given' }
+      before { predefined_component.ph = "not_given" }
 
       it "is valid" do
         expect(predefined_component).to be_valid
@@ -182,7 +182,7 @@ RSpec.describe Component, type: :model do
 
     context "when set to any other value" do
       it "raises an argument error" do
-        expect { predefined_component.ph = 'zzzzzz' }.to raise_exception(ArgumentError)
+        expect { predefined_component.ph = "zzzzzz" }.to raise_exception(ArgumentError)
       end
     end
   end
@@ -197,31 +197,31 @@ RSpec.describe Component, type: :model do
     end
 
     context "when not applicable" do
-      before { predefined_component.ph = 'not_applicable' }
+      before { predefined_component.ph = "not_applicable" }
 
       it { is_expected.to be true }
     end
 
     context "when lower than 3" do
-      before { predefined_component.ph = 'lower_than_3' }
+      before { predefined_component.ph = "lower_than_3" }
 
       it { is_expected.to be false }
     end
 
     context "when between 3 and 10" do
-      before { predefined_component.ph = 'between_3_and_10' }
+      before { predefined_component.ph = "between_3_and_10" }
 
       it { is_expected.to be true }
     end
 
     context "when above 10" do
-      before { predefined_component.ph = 'above_10' }
+      before { predefined_component.ph = "above_10" }
 
       it { is_expected.to be false }
     end
 
     context "when explicitly set to not given" do
-      before { predefined_component.ph = 'not_given' }
+      before { predefined_component.ph = "not_given" }
 
       it { is_expected.to be false }
     end

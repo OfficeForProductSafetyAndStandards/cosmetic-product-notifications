@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Enter a nan standard nanomaterial", type: :system do
   let(:responsible_person) { create(:responsible_person) }
@@ -33,7 +33,7 @@ private
   end
 
   def expect_check_your_answer(table, attribute_name, value)
-    row = table.find('tr', text: attribute_name)
+    row = table.find("tr", text: attribute_name)
     expect(row).to have_text(value)
   end
 

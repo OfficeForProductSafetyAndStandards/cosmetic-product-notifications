@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "File upload errors", type: :system do
   let(:responsible_person) { create(:responsible_person) }

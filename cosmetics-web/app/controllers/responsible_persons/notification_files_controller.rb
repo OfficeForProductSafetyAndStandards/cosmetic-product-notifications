@@ -26,7 +26,7 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
       notification_file = NotificationFile.new(
         name: uploaded_file.original_filename,
         responsible_person: @responsible_person,
-        user: User.current
+        user: User.current,
       )
       notification_file.uploaded_file.attach(uploaded_file)
 

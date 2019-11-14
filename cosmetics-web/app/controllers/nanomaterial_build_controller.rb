@@ -79,7 +79,7 @@ private
       :confirm_restrictions,
       :purposes,
       :confirm_usage,
-      :confirm_toxicology_notified
+      :confirm_toxicology_notified,
     )
   end
 

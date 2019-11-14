@@ -17,9 +17,9 @@ module Searchable
           strings: {
             match_mapping_type: "string",
             mapping: {
-              type: "text"
-            }
-          }
+              type: "text",
+            },
+          },
         }, {
           numbers: {
             match_mapping_type: "long",
@@ -27,11 +27,11 @@ module Searchable
               "type": "long",
               fields: {
                 sort: {
-                  type: "long"
-                }
-              }
-            }
-          }
+                  type: "long",
+                },
+              },
+            },
+          },
         }, {
           dates: {
             match_mapping_type: "date",
@@ -39,11 +39,11 @@ module Searchable
               type: "date",
               fields: {
                 sort: {
-                  type: "date"
-                }
-              }
-            }
-          }
+                  type: "date",
+                },
+              },
+            },
+          },
         }, {
           booleans: {
             match_mapping_type: "boolean",
@@ -51,11 +51,11 @@ module Searchable
               type: "boolean",
               fields: {
                 sort: {
-                  type: "boolean"
-                }
-              }
-            }
-          }
+                  type: "boolean",
+                },
+              },
+            },
+          },
         }
       ]
     end

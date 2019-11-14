@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Contact person pages", type: :request do
   let(:responsible_person) { create(:responsible_person, :with_no_contact_person) }
@@ -19,8 +19,8 @@ RSpec.describe "Contact person pages", type: :request do
           contact_person: {
             name: "Test Person",
             email_address: "test@example.com",
-            phone_number: "07712 345678"
-          }
+            phone_number: "07712 345678",
+          },
         }
       end
 
@@ -32,7 +32,7 @@ RSpec.describe "Contact person pages", type: :request do
         expect(responsible_person.reload.contact_persons.first).to have_attributes(
           name: "Test Person",
           email_address: "test@example.com",
-          phone_number: "07712 345678"
+          phone_number: "07712 345678",
         )
       end
 
@@ -47,8 +47,8 @@ RSpec.describe "Contact person pages", type: :request do
           contact_person: {
             name: "",
             email_address: "",
-            phone_number: ""
-          }
+            phone_number: "",
+          },
         }
       end
 
@@ -81,8 +81,8 @@ RSpec.describe "Contact person pages", type: :request do
   describe "updating the contact person’s details" do
     let(:contact_person) {
       create(:contact_person,
-             name: 'Alpha Person',
-             email_address: 'alpha@example.com',
+             name: "Alpha Person",
+             email_address: "alpha@example.com",
              phone_number: "07711 111111",
              responsible_person: responsible_person)
     }
@@ -93,8 +93,8 @@ RSpec.describe "Contact person pages", type: :request do
           contact_person: {
             name: "Beta Person",
             email_address: "beta@example.com",
-            phone_number: "07722 222222"
-          }
+            phone_number: "07722 222222",
+          },
         }
       end
 
@@ -106,7 +106,7 @@ RSpec.describe "Contact person pages", type: :request do
         expect(contact_person.reload).to have_attributes(
           name: "Beta Person",
           email_address: "beta@example.com",
-          phone_number: "07722 222222"
+          phone_number: "07722 222222",
         )
       end
     end
@@ -117,8 +117,8 @@ RSpec.describe "Contact person pages", type: :request do
           contact_person: {
             name: "Alpha Person",
             email_address: "alpha@example.com",
-            phone_number: ""
-          }
+            phone_number: "",
+          },
         }
       end
 
@@ -132,8 +132,8 @@ RSpec.describe "Contact person pages", type: :request do
 
       it "does not update the contact person’s details" do
         expect(contact_person.reload).to have_attributes(
-          name: 'Alpha Person',
-          email_address: 'alpha@example.com',
+          name: "Alpha Person",
+          email_address: "alpha@example.com",
           phone_number: "07711 111111",
         )
       end

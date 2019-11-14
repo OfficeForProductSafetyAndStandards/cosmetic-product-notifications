@@ -19,6 +19,6 @@ module FileHelpers
   end
 
   def remove_uploaded_files
-    FileUtils.rm_rf(Rails.root.join('tmp', 'storage'))
+    FileUtils.rm_rf(Rails.root.join("tmp", "storage"))
   end
 end

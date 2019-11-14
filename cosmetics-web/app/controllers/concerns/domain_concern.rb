@@ -16,10 +16,10 @@ private
   end
 
   def submit_domains
-    ENV["SUBMIT_HOST"].split(',')
+    ENV["SUBMIT_HOST"].split(",")
   end
 
   def search_domains
-    ENV["SEARCH_HOST"].split(',')
+    ENV["SEARCH_HOST"].split(",")
   end
 end

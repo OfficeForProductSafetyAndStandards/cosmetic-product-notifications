@@ -10,7 +10,7 @@ class NanoElement < ApplicationRecord
 
   def display_name
     [iupac_name, inci_name, inn_name, xan_name, cas_number, ec_number, einecs_number, elincs_number]
-      .reject(&:blank?).join(', ')
+      .reject(&:blank?).join(", ")
   end
 
   def incomplete?
@@ -19,8 +19,8 @@ class NanoElement < ApplicationRecord
       (
         standard? && (
           confirm_restrictions.nil? ||
-          (confirm_restrictions == 'no' && confirm_toxicology_notified.nil?) ||
-          (confirm_restrictions == 'yes' && confirm_usage.nil?)
+          (confirm_restrictions == "no" && confirm_toxicology_notified.nil?) ||
+          (confirm_restrictions == "yes" && confirm_usage.nil?)
         )
       )
   end

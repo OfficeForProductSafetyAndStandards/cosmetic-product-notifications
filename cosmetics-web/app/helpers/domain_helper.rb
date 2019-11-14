@@ -10,10 +10,10 @@ module DomainHelper
 private
 
   def submit_host
-    ENV["SUBMIT_HOST"].split(',').first
+    ENV["SUBMIT_HOST"].split(",").first
   end
 
   def search_host
-    ENV["SEARCH_HOST"].split(',').first
+    ENV["SEARCH_HOST"].split(",").first
   end
 end

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ResponsiblePersons::TeamMembersController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
@@ -23,7 +23,7 @@ RSpec.describe ResponsiblePersons::TeamMembersController, type: :controller do
 
     it "renders the index template" do
       get :index, params: params
-      expect(response).to render_template('responsible_persons/team_members/index')
+      expect(response).to render_template("responsible_persons/team_members/index")
     end
   end
 

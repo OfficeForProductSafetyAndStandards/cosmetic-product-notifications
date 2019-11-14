@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe AdditionalInformationController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
@@ -56,13 +56,13 @@ RSpec.describe AdditionalInformationController, type: :controller do
     context "when a notification has multiple components" do
       let(:first_nano_elements) do
         [
-          create(:nano_element, iupac_name: 'NanoMaterial 1'), create(:nano_element, iupac_name: 'NanoMaterial 2')
+          create(:nano_element, iupac_name: "NanoMaterial 1"), create(:nano_element, iupac_name: "NanoMaterial 2")
         ]
       end
 
       let(:second_nano_elements) do
         [
-          create(:nano_element, iupac_name: 'Element 1A'), create(:nano_element, iupac_name: 'Element 2A')
+          create(:nano_element, iupac_name: "Element 1A"), create(:nano_element, iupac_name: "Element 2A")
         ]
       end
 
@@ -90,8 +90,8 @@ RSpec.describe AdditionalInformationController, type: :controller do
       context "when one component is complete" do
         let(:second_nano_elements) do
           [
-            create(:nano_element, iupac_name: 'Element 1A', purposes: %w(other), confirm_toxicology_notified: 'yes'),
-            create(:nano_element, iupac_name: 'Element 2A', purposes: %w(other), confirm_toxicology_notified: 'yes')
+            create(:nano_element, iupac_name: "Element 1A", purposes: %w(other), confirm_toxicology_notified: "yes"),
+            create(:nano_element, iupac_name: "Element 2A", purposes: %w(other), confirm_toxicology_notified: "yes"),
           ]
         end
 

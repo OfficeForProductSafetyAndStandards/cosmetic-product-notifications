@@ -1,18 +1,18 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
-require 'login_helpers'
-require 'domain_helpers'
-require 'responsible_person_helpers'
-require 'file_helpers'
-require 'policy_helpers'
+require "spec_helper"
+require "login_helpers"
+require "domain_helpers"
+require "responsible_person_helpers"
+require "file_helpers"
+require "policy_helpers"
 
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../config/environment', __dir__)
+ENV["RAILS_ENV"] ||= "test"
+require File.expand_path("../config/environment", __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
-require 'rspec/rails'
+require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-require 'system_helper'
+require "system_helper"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

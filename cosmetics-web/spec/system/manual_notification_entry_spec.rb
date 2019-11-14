@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Manually enter product details", type: :system do
   let(:responsible_person) { create(:responsible_person) }
@@ -75,7 +75,7 @@ RSpec.describe "Manually enter product details", type: :system do
     skip_trigger_questions
 
     # add_product_image
-    attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
+    attach_file(:image_upload, Rails.root + "spec/fixtures/testImage.png")
     click_button "Continue"
 
     # Check your answers page
@@ -155,7 +155,7 @@ RSpec.describe "Manually enter product details", type: :system do
     skip_trigger_questions
 
     # add_product_image
-    attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
+    attach_file(:image_upload, Rails.root + "spec/fixtures/testImage.png")
     click_button "Continue"
 
     # Check your answers page
@@ -228,7 +228,7 @@ RSpec.describe "Manually enter product details", type: :system do
     skip_trigger_questions
 
     # add_product_image
-    attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
+    attach_file(:image_upload, Rails.root + "spec/fixtures/testImage.png")
     click_button "Continue"
 
     # Check your answers page
@@ -275,7 +275,7 @@ RSpec.describe "Manually enter product details", type: :system do
 
     # add_shades
     click_button "Add another"
-    inputs = find_all(class: 'govuk-input')
+    inputs = find_all(class: "govuk-input")
     shades = %w[Red Blue Yellow]
     inputs.each_with_index do |input, i|
       input.set shades[i]
@@ -317,7 +317,7 @@ RSpec.describe "Manually enter product details", type: :system do
     skip_trigger_questions
 
     # add_product_image
-    attach_file(:image_upload, Rails.root + 'spec/fixtures/testImage.png')
+    attach_file(:image_upload, Rails.root + "spec/fixtures/testImage.png")
     click_button "Continue"
 
     # Check your answers page
@@ -338,12 +338,12 @@ RSpec.describe "Manually enter product details", type: :system do
 private
 
   def expect_check_your_answers_value(attribute_name, value)
-    row = find('tr', text: attribute_name, match: :first)
+    row = find("tr", text: attribute_name, match: :first)
     expect(row).to have_text(value)
   end
 
   def expect_check_your_answer(table, attribute_name, value)
-    row = table.find('tr', text: attribute_name)
+    row = table.find("tr", text: attribute_name)
     expect(row).to have_text(value)
   end
 

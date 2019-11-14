@@ -34,7 +34,7 @@ module CpnpNotificationTriggerRules
       100004 => :please_indicate_the_ph,
       100007 => :please_indicate_the_ph_of_the_mixed_product_,
       100006 => :do_the_components_of_the_product_need_to_be_mixed,
-      100005 => :please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators
+      100005 => :please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators,
   }.freeze
 
   TRIGGER_RULES_QUESTION_ELEMENT_ID = {
@@ -80,6 +80,6 @@ module CpnpNotificationTriggerRules
       100010 => :maxrangevalue,
       100008 => :ph,
       100006 => :inciname,
-      100007 => :incivalue
+      100007 => :incivalue,
   }.freeze
 end

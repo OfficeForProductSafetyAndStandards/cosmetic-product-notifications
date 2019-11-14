@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ComponentBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
@@ -11,7 +11,7 @@ RSpec.describe ComponentBuildController, type: :controller do
     {
       responsible_person_id: responsible_person.id,
       notification_reference_number: notification.reference_number,
-      component_id: component.id
+      component_id: component.id,
     }
   }
 
@@ -216,13 +216,13 @@ RSpec.describe ComponentBuildController, type: :controller do
 
     context "when selecting a frame formulation" do
       it "saves and redirects to the 'poisonous ingredients' question if you select an answer" do
-        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: 'skin_care_cream_lotion_gel' }))
+        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: "skin_care_cream_lotion_gel" }))
 
         expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients))
       end
 
       it "re-renders the question with an error if you don’t select a formulation" do
-        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: '' }))
+        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: "" }))
 
         expect(response.status).to be(200)
         expect(assigns(:component).errors[:frame_formulation]).to include("Frame formulation can not be blank")
@@ -275,7 +275,7 @@ RSpec.describe ComponentBuildController, type: :controller do
       end
 
       it "skips contains poisonous ingredients question and redirects to PH question" do
-        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: 'skin_care_cream_lotion_gel' }))
+        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: "skin_care_cream_lotion_gel" }))
 
         expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, pre_eu_exit_notification, component, :select_ph_range))
       end
@@ -292,7 +292,7 @@ private
     {
       responsible_person_id: other_responsible_person.id,
       notification_reference_number: other_notification.reference_number,
-      component_id: other_component.id
+      component_id: other_component.id,
     }
   end
 end

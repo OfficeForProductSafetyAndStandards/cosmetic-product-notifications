@@ -83,7 +83,7 @@ private
         :components_are_mixed,
         :ph_min_value,
         :ph_max_value,
-        image_uploads_attributes: [file: []]
+        image_uploads_attributes: [file: []],
       )
   end
 

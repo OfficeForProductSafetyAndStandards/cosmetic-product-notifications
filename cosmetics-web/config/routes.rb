@@ -1,7 +1,7 @@
-require 'constraints/domain_constraint'
-require 'constraints/domain_check'
-require 'sidekiq/web'
-require 'sidekiq/cron/web'
+require "constraints/domain_constraint"
+require "constraints/domain_check"
+require "sidekiq/web"
+require "sidekiq/cron/web"
 
 if Rails.env.production?
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
@@ -12,7 +12,7 @@ end
 
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  mount GovukDesignSystem::Engine => '/', as: 'govuk_design_system_engine'
+  mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 
   resource :session, only: %i[new] do
     member do
@@ -90,7 +90,7 @@ Rails.application.routes.draw do
 
   domains = "#{ENV['SUBMIT_HOST']}, #{ENV['SEARCH_HOST']}, #{ENV['COSMETICS_HOST']}"
   constraints DomainCheck.new(domains) do
-    root 'errors#internal_server_error'
+    root "errors#internal_server_error"
   end
 
   resource :declaration, controller: :declaration, only: %i[show] do
