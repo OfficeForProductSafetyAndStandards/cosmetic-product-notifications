@@ -64,6 +64,8 @@ RSpec.describe "Check your answers page", type: :request do
     end
 
     context "when the notification was post-Brexit" do
+      let(:notification) { create(:notification, :post_brexit, responsible_person: responsible_person) }
+
       before do
         get edit_responsible_person_notification_path(params)
       end
@@ -74,7 +76,7 @@ RSpec.describe "Check your answers page", type: :request do
     end
 
     context "when the notification was pre-Brexit and the no pH range was needed for the last component" do
-      let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+      let(:notification) { create(:notification, :pre_brexit, responsible_person: responsible_person) }
       let!(:component) { create(:component, notification: notification) }
 
       before do
@@ -87,7 +89,7 @@ RSpec.describe "Check your answers page", type: :request do
     end
 
     context "when the notification was pre-Brexit and the a specific pH range was entered for the last component" do
-      let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+      let(:notification) { create(:notification, :pre_brexit, responsible_person: responsible_person) }
       let!(:component) { create(:component, notification: notification, minimum_ph: 2.5, maximum_ph: 2.9) }
 
       before do
