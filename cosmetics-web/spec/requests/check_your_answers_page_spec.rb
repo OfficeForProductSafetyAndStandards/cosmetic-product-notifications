@@ -62,5 +62,41 @@ RSpec.describe "Check your answers page", type: :request do
         expect(response.body).not_to have_tag("td#cmr-names")
       end
     end
+
+    context "when the notification was post-Brexit" do
+      before do
+        get edit_responsible_person_notification_path(params)
+      end
+
+      it "includes a back link to the image upload page" do
+        expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+      end
+    end
+
+    context "when the notification was pre-Brexit and the no pH range was needed for the last component" do
+      let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+      let!(:component) { create(:component, notification: notification) }
+
+      before do
+        get edit_responsible_person_notification_path(params)
+      end
+
+      it "includes a back link to the pH question" do
+        expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range")
+      end
+    end
+
+    context "when the notification was pre-Brexit and the a specific pH range was entered for the last component" do
+      let(:notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+      let!(:component) { create(:component, notification: notification, minimum_ph: 2.5, maximum_ph: 2.9) }
+
+      before do
+        get edit_responsible_person_notification_path(params)
+      end
+
+      it "includes a back link to the pH range" do
+        expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/ph")
+      end
+    end
   end
 end
