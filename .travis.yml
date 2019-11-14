@@ -35,18 +35,19 @@ stages:
 
 jobs:
   include:
-    - stage: Build
+    - stage: Build and test
+      name: Build
       before_install:
         - mkdir -p ~/bundle-cache
         - mkdir -p ~/coverage-cache/cosmetics
       install:
         - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./infrastructure/ci/build-docker-images.sh
       script: echo "Built"
-    - stage: Test and deploy review
-      name: Tests
+    - name: Test
       script: COMPONENT=cosmetics-web ./infrastructure/ci/test-if-changed.sh
       env: *test_env
-    - name: Deploy review app
+    - stage: Deploy review app
+      name: Deploy review app
       env: &deploy_int_env
         - SPACE=int
         - BRANCH=${TRAVIS_BRANCH}
