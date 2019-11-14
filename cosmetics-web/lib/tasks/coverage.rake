@@ -1,7 +1,7 @@
 return if Rails.env.production?
 
-require 'coveralls'
-require 'simplecov'
+require "coveralls"
+require "simplecov"
 
 task :submit_coverage do
   ENV["COVERALLS_PARALLEL"] = "true"

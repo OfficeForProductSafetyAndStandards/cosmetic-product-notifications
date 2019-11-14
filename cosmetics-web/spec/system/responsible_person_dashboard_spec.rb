@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Responsible person dashboard", type: :system do
   let(:responsible_person_1) { create(:responsible_person_with_user) }

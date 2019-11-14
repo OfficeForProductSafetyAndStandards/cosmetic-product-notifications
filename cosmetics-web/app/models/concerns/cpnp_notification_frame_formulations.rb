@@ -227,6 +227,6 @@ module CpnpNotificationFrameFormulations
       100405 => :other_oral_hygiene_products,
       100406 => :dry_shampoo,
       100407 => :syndet_bar_soap,
-      100408 => :combo_bar_soap
+      100408 => :combo_bar_soap,
   }.freeze
 end

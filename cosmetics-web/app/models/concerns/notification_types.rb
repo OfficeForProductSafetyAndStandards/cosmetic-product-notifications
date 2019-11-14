@@ -5,7 +5,7 @@ module NotificationTypes
     enum notification_type: {
         predefined: "predefined",
         exact: "exact",
-        range: "range"
+        range: "range",
     }
   end
 end

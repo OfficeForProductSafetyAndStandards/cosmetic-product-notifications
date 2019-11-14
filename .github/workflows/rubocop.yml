@@ -16,10 +16,10 @@ jobs:
     - name: Run code style checks
       run: |
         cd cosmetics-web
-        gem install rubocop -v 0.71.0
+        gem install rubocop -v 0.76
         gem install rubocop-performance -v 1.4.0
         gem install rubocop-rspec -v 1.36
-        gem install govuk-lint -v 3.11.2
+        gem install rubocop-govuk -v 1.0
         rubocop
   slim:
     name: "Slim templates"

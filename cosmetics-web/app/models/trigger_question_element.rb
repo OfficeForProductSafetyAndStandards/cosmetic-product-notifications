@@ -15,7 +15,7 @@ class TriggerQuestionElement < ApplicationRecord
       ph: "ph",
       concentration: "concentration",
       minrangevalue: "minrangevalue",
-      maxrangevalue: "maxrangevalue"
+      maxrangevalue: "maxrangevalue",
   }
 
 private

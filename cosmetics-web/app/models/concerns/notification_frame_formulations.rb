@@ -227,7 +227,7 @@ module NotificationFrameFormulations
         other_oral_hygiene_products: "other_oral_hygiene_products",
         dry_shampoo: "dry_shampoo",
         syndet_bar_soap: "syndet_bar_soap",
-        combo_bar_soap: "combo_bar_soap"
+        combo_bar_soap: "combo_bar_soap",
     }, _prefix: :frame_formulation
   end
 end

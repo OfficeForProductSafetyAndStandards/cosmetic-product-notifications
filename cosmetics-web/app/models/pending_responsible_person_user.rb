@@ -16,7 +16,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
       "email_address = ? AND responsible_person_id = ? AND expires_at > ?",
       user.email,
       responsible_person.id,
-      DateTime.current
+      DateTime.current,
     )
   end
 
@@ -24,7 +24,7 @@ private
 
   def email_address_is_not_in_team?
     if responsible_person.responsible_person_users.any? { |user| user.email_address == email_address }
-      errors.add :email_address, 'The email address is already a member of this team'
+      errors.add :email_address, "The email address is already a member of this team"
     end
   end
 
@@ -35,7 +35,7 @@ private
   def remove_duplicate_pending_responsible_users
     PendingResponsiblePersonUser.where(
       responsible_person_id: responsible_person.id,
-      email_address: email_address
+      email_address: email_address,
     ).delete_all
   end
 end

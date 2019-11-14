@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe NonStandardNanomaterialBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
@@ -7,7 +7,7 @@ RSpec.describe NonStandardNanomaterialBuildController, type: :controller do
   let(:params) {
     {
       responsible_person_id: responsible_person.id,
-      non_standard_nanomaterial_id: non_standard_nanomaterial.id
+      non_standard_nanomaterial_id: non_standard_nanomaterial.id,
     }
   }
 
@@ -81,7 +81,7 @@ private
 
     {
         responsible_person_id: other_responsible_person.id,
-        non_standard_nanomaterial_id: other_non_standard_nanomaterial.id
+        non_standard_nanomaterial_id: other_non_standard_nanomaterial.id,
     }
   end
 end

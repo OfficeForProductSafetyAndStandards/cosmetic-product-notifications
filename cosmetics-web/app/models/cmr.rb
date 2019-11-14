@@ -10,7 +10,7 @@ class Cmr < ApplicationRecord
   before_save :remove_hyphens
 
   def display_name
-    [name, display_cas_number, display_ec_number].reject(&:blank?).join(', ')
+    [name, display_cas_number, display_ec_number].reject(&:blank?).join(", ")
   end
 
   def display_cas_number

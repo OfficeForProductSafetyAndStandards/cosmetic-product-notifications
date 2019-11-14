@@ -37,13 +37,13 @@ module NanomaterialHelper
     colorant: "colourant",
     preservative: "preservative",
     uv_filter: "UV filter",
-    other: "another purpose"
+    other: "another purpose",
   }.freeze
 
   ANNEX_NUMBER_FOR_PURPOSE = {
     colorant: 4,
     preservative: 5,
-    uv_filter: 6
+    uv_filter: 6,
   }.freeze
 
   private_constant :ANNEX_NUMBER_FOR_PURPOSE, :DISPLAY_NAME_FOR_PURPOSE

@@ -10,6 +10,6 @@ module CpnpNotificationPhysicalForms
       4 => :liquid,
       5 => :foam,
       6 => :spray,
-      -2 => :other_physical_form
+      -2 => :other_physical_form,
   }.freeze
 end

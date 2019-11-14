@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   let(:responsible_person_1) { create(:responsible_person) }

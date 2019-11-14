@@ -1,6 +1,6 @@
 class DomainCheck
   def initialize(domains)
-    @domains = domains.split(',')
+    @domains = domains.split(",")
   end
 
   def matches?(request)
