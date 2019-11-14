@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Poison Centre user", type: :system do
   let(:responsible_person_1) { create(:responsible_person) }
@@ -57,7 +57,7 @@ RSpec.describe "Poison Centre user", type: :system do
 private
 
   def assert_value_in_table(table, attribute_name, value)
-    row = table.find('tr', text: attribute_name)
+    row = table.find("tr", text: attribute_name)
     expect(row).to have_text(value)
   end
 

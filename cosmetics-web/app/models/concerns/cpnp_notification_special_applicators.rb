@@ -8,6 +8,6 @@ module CpnpNotificationSpecialApplicators
       100002 => :encapsulated_products,
       100003 => :pressurised_spray_container,
       100004 => :pressurised_container_non_spray_product,
-      99998 => :other_special_applicator
+      99998 => :other_special_applicator,
   }.freeze
 end

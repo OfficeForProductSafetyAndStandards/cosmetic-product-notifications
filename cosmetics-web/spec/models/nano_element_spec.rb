@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe NanoElement, type: :model do
   subject(:nano_element) { described_class.new }
@@ -113,7 +113,7 @@ RSpec.describe NanoElement, type: :model do
         end
 
         it "is not incomplete when toxicology is notified" do
-          nano_element.confirm_toxicology_notified = 'yes'
+          nano_element.confirm_toxicology_notified = "yes"
 
           expect(nano_element).not_to be_incomplete
         end

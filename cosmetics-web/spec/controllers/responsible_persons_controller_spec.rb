@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ResponsiblePersonsController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
@@ -19,7 +19,7 @@ RSpec.describe ResponsiblePersonsController, type: :controller do
 
     it "renders the show template" do
       get :show, params: { id: responsible_person.id }
-      expect(response).to render_template('responsible_persons/show')
+      expect(response).to render_template("responsible_persons/show")
     end
   end
 end

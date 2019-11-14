@@ -32,7 +32,7 @@ class ComponentBuildController < ApplicationController
   def show
     case step
     when :add_shades
-      @component.shades = ['', ''] if @component.shades.nil?
+      @component.shades = ["", ""] if @component.shades.nil?
     when :add_cmrs
       create_required_cmrs
     when :list_nanomaterials
@@ -124,7 +124,7 @@ private
         :frame_formulation,
         nano_material_attributes: %i[id exposure_condition],
         cmrs_attributes: %i[id name cas_number ec_number],
-        shades: []
+        shades: [],
       )
   end
 
@@ -156,7 +156,7 @@ private
     @component.update(component_params)
 
     if params.key?(:add_shade) && params[:add_shade]
-      @component.shades.push ''
+      @component.shades.push ""
       render :add_shades
     elsif params.key?(:remove_shade_with_id)
       @component.shades.delete_at(params[:remove_shade_with_id].to_i)
@@ -306,7 +306,7 @@ private
 
   def setup_nano_elements
     nano_materials_needed = NUMBER_OF_NANO_MATERIALS - @nano_material.nano_elements.size
-    nano_materials_needed.times { @nano_material.nano_elements.build(inci_name: '') }
+    nano_materials_needed.times { @nano_material.nano_elements.build(inci_name: "") }
   end
 
   def get_previous_step
@@ -327,7 +327,7 @@ private
   def create_required_shades
     if @component.shades.length < 2
       required_shades = 2 - @component.shades.length
-      @component.shades.concat(Array.new(required_shades, ''))
+      @component.shades.concat(Array.new(required_shades, ""))
     end
   end
 

@@ -14,7 +14,7 @@ Rails.application.configure do
 
   # Configure static file server for tests with Cache-Control for performance.
   config.serve_static_files   = true
-  config.static_cache_control = 'public, max-age=3600'
+  config.static_cache_control = "public, max-age=3600"
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = false
@@ -46,8 +46,8 @@ Rails.application.configure do
   config.active_job.queue_adapter = :async
 
   config.action_controller.default_url_options = {
-      host: ENV['HTTP_HOST'] || "localhost",
-      port: ENV['HTTP_PORT'] || 3003
+      host: ENV["HTTP_HOST"] || "localhost",
+      port: ENV["HTTP_PORT"] || 3003,
   }
 
   # Url for mailer

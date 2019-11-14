@@ -11,6 +11,6 @@ module CpnpNotificationUnits
       5 => :greater_than_10_less_than_25_percent,
       6 => :greater_than_25_less_than_50_percent,
       7 => :greater_than_50_less_than_75_percent,
-      8 => :greater_than_75_less_than_100_percent
+      8 => :greater_than_75_less_than_100_percent,
   }.freeze
 end

@@ -1,4 +1,4 @@
-require 'will_paginate/array'
+require "will_paginate/array"
 
 class ResponsiblePersons::NotificationsController < ApplicationController
   before_action :set_responsible_person
@@ -30,7 +30,7 @@ class ResponsiblePersons::NotificationsController < ApplicationController
 
     @notification = Notification.create(
       responsible_person: @responsible_person,
-      was_notified_before_eu_exit: was_notified_before_eu_exit
+      was_notified_before_eu_exit: was_notified_before_eu_exit,
     )
 
     redirect_to new_responsible_person_notification_build_path(@responsible_person, @notification)

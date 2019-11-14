@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe NonStandardNanomaterial, type: :model do
   let(:non_standard_nanomaterial) { build(:non_standard_nanomaterial) }

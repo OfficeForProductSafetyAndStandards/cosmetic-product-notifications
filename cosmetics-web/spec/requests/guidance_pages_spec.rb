@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Guidance pages", type: :request do
   include RSpecHtmlMatchers

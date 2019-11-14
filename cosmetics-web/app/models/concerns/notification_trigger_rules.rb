@@ -30,7 +30,7 @@ module NotificationTriggerRules
         please_indicate_the_ph: "please_indicate_the_ph",
         please_indicate_the_ph_of_the_mixed_product_: "please_indicate_the_ph_of_the_mixed_product_",
         do_the_components_of_the_product_need_to_be_mixed: "do_the_components_of_the_product_need_to_be_mixed",
-        please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators: "please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators"
+        please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators: "please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators",
     }.freeze
 
     TRIGGER_RULES_QUESTION_ELEMENT = {
@@ -42,7 +42,7 @@ module NotificationTriggerRules
         ph: "ph",
         concentration: "concentration",
         minrangevalue: "minrangevalue",
-        maxrangevalue: "maxrangevalue"
+        maxrangevalue: "maxrangevalue",
     }.freeze
   end
 end

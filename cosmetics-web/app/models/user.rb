@@ -21,12 +21,10 @@ class User < ActiveHash::Base
   end
 
   def self.load(force: false)
-    begin
-      self.data = KeycloakClient.instance.all_users(force: force)
-    rescue StandardError => e
-      Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
-      self.data = nil
-    end
+    self.data = KeycloakClient.instance.all_users(force: force)
+  rescue StandardError => e
+    Rails.logger.error "Failed to fetch users from Keycloak: #{e.message}"
+    self.data = nil
   end
 
   def self.all(options = {})

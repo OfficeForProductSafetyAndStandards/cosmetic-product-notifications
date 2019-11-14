@@ -26,7 +26,7 @@ class CpnpExport
   end
 
   def notification_status
-    @xml_doc.xpath('//status').first&.text
+    @xml_doc.xpath("//status").first&.text
   end
 
   def is_imported
@@ -131,7 +131,7 @@ private
     trigger_questions = []
 
     component_node.xpath(".//quetionList/question").collect do |question_node|
-      question_id = question_node.xpath('./questionID').first.content
+      question_id = question_node.xpath("./questionID").first.content
       question_elements = question_node.xpath(".//questionElement")
 
       unless %w(100004 100023).include? question_id
@@ -257,19 +257,19 @@ private
   end
 
   def minimum_ph(component_node)
-    answer(component_node, question_id: '100023', element_id: '100037')
+    answer(component_node, question_id: "100023", element_id: "100037")
   end
 
   def maximum_ph(component_node)
-    answer(component_node, question_id: '100023', element_id: '100038')
+    answer(component_node, question_id: "100023", element_id: "100038")
   end
 
   def component_ph(component_node)
-    answer(component_node, question_id: '100004', element_id: '100005')
+    answer(component_node, question_id: "100004", element_id: "100005")
   end
 
   def ph_lower_than_3_or_higher_than_10(component_node)
-    answer(component_node, question_id: '100003', element_id: '100004')
+    answer(component_node, question_id: "100003", element_id: "100004")
   end
 
   def ph_answer(component_node)
@@ -297,17 +297,17 @@ private
 
   def question_node_with_id(component_node, question_id)
     component_node.xpath(".//quetionList/question").detect do |question_node|
-      question_node.xpath('./questionID')&.first&.content == question_id
+      question_node.xpath("./questionID")&.first&.content == question_id
     end
   end
 
   def question_element_with_id(question_node, element_id)
-    question_node.xpath('./questionElement').detect do |question_element|
-      question_element.xpath('./elementID')&.first&.content == element_id
+    question_node.xpath("./questionElement").detect do |question_element|
+      question_element.xpath("./elementID")&.first&.content == element_id
     end
   end
 
   def question_element_answer(question_element_node)
-    question_element_node.xpath('./answer')&.first&.content
+    question_element_node.xpath("./answer")&.first&.content
   end
 end

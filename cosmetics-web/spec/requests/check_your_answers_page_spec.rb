@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Check your answers page", type: :request do
   include RSpecHtmlMatchers
@@ -8,7 +8,7 @@ RSpec.describe "Check your answers page", type: :request do
   let(:params) do
     {
       responsible_person_id: responsible_person.id,
-      reference_number: notification.reference_number
+      reference_number: notification.reference_number,
     }
   end
 

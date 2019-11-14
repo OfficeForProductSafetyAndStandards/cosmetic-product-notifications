@@ -47,12 +47,12 @@ class Notification < ApplicationRecord
       only: %i[product_name],
       include: {
           responsible_person: {
-              only: %i[name]
+              only: %i[name],
           },
           components: {
-              methods: %i[display_sub_category display_sub_sub_category display_root_category]
-          }
-      }
+              methods: %i[display_sub_category display_sub_sub_category display_root_category],
+          },
+      },
     )
   end
 
@@ -186,20 +186,20 @@ private
 
   def mandatory_attributes(state)
     case state
-    when 'empty'
+    when "empty"
       %w[product_name]
-    when 'product_name_added'
-      mandatory_attributes('empty')
-    when 'import_country_added'
-      %w[components] + mandatory_attributes('product_name_added')
-    when 'components_complete'
-      mandatory_attributes('import_country_added')
-    when 'draft_complete'
-      mandatory_attributes('components_complete')
-    when 'notification_complete'
-      mandatory_attributes('draft_complete')
-    when 'notification_file_imported'
-      mandatory_attributes('empty')
+    when "product_name_added"
+      mandatory_attributes("empty")
+    when "import_country_added"
+      %w[components] + mandatory_attributes("product_name_added")
+    when "components_complete"
+      mandatory_attributes("import_country_added")
+    when "draft_complete"
+      mandatory_attributes("components_complete")
+    when "notification_complete"
+      mandatory_attributes("draft_complete")
+    when "notification_file_imported"
+      mandatory_attributes("empty")
     end
   end
 

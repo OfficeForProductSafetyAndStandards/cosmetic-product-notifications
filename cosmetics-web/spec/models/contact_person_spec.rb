@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ContactPerson, type: :model do
   let(:contact_person) { build(:contact_person) }

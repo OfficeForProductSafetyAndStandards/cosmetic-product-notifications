@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ResponsiblePersons::NonStandardNanomaterialsController, type: :controller do
   let(:user) { build(:user) }
@@ -7,7 +7,7 @@ RSpec.describe ResponsiblePersons::NonStandardNanomaterialsController, type: :co
   let(:params) {
     {
         responsible_person_id: responsible_person.id,
-        id: non_standard_nanomaterial.id
+        id: non_standard_nanomaterial.id,
     }
   }
 
@@ -100,7 +100,7 @@ private
 
     {
         responsible_person_id: other_responsible_person.id,
-        id: other_non_standard_nanomaterial.id
+        id: other_non_standard_nanomaterial.id,
     }
   end
 end

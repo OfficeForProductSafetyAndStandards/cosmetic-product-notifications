@@ -28,7 +28,7 @@ module NotificationPropertiesHelper
   end
 
   def get_exposure_routes_names(exposure_routes)
-    exposure_routes&.map(&method(:get_exposure_route_name))&.join(', ')
+    exposure_routes&.map(&method(:get_exposure_route_name))&.join(", ")
   end
 
   def get_exposure_route_name(exposure_route)
@@ -50,7 +50,7 @@ module NotificationPropertiesHelper
   NOTIFICATION_TYPE = {
       predefined: "Frame formulation",
       exact: "Exact concentration",
-      range: "Concentration ranges"
+      range: "Concentration ranges",
   }.freeze
 
   CATEGORY_NAME = {
@@ -161,7 +161,7 @@ module NotificationPropertiesHelper
       tooth_whiteners: "Tooth whiteners",
       tooth_whiteners_child: "Tooth whiteners",
       other_oral_hygiene_products: "Other oral hygiene products",
-      other_oral_hygiene_products_child: "Other oral hygiene products"
+      other_oral_hygiene_products_child: "Other oral hygiene products",
   }.freeze
 
   FRAME_FORMULATION_NAME = {
@@ -388,7 +388,7 @@ module NotificationPropertiesHelper
       other_oral_hygiene_products: "Other Oral Hygiene Products",
       dry_shampoo: "Dry Shampoo",
       syndet_bar_soap: "Syndet Bar Soap",
-      combo_bar_soap: "Combo Bar Soap"
+      combo_bar_soap: "Combo Bar Soap",
   }.freeze
 
   TRIGGER_RULES_QUESTION_NAME = {
@@ -418,7 +418,7 @@ module NotificationPropertiesHelper
       please_indicate_the_ph: "Please indicate the pH",
       please_indicate_the_ph_of_the_mixed_product_: "Please indicate the pH of the mixed product. ",
       do_the_components_of_the_product_need_to_be_mixed: "Do the components of the product need to be mixed?",
-      please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators: "Please indicate the INCI name and concentration of each alkaline agent (including ammonium hydroxide liberators)"
+      please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators: "Please indicate the INCI name and concentration of each alkaline agent (including ammonium hydroxide liberators)",
   }.freeze
 
   TRIGGER_RULES_SHORT_QUESTION_NAME = {
@@ -448,7 +448,7 @@ module NotificationPropertiesHelper
       please_indicate_the_ph: "	Exact pH",
       please_indicate_the_ph_of_the_mixed_product_: "pH of mixed components",
       do_the_components_of_the_product_need_to_be_mixed: "Components mixed",
-      please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators: "Alkaline agents"
+      please_indicate_the_inci_name_and_concentration_of_each_alkaline_agent_including_ammonium_hydroxide_liberators: "Alkaline agents",
   }.freeze
 
   TRIGGER_RULES_QUESTION_ELEMENT_NAME = {
@@ -460,7 +460,7 @@ module NotificationPropertiesHelper
       ph: "ph",
       concentration: "concentration",
       minrangevalue: "minRangeValue",
-      maxrangevalue: "maxRangeValue"
+      maxrangevalue: "maxRangeValue",
   }.freeze
 
   UNIT_NAME = {
@@ -471,18 +471,18 @@ module NotificationPropertiesHelper
       greater_than_10_less_than_25_percent: "> 10 and ≤ 25",
       greater_than_25_less_than_50_percent: "> 25 and ≤ 50",
       greater_than_50_less_than_75_percent: "> 50 and ≤ 75",
-      greater_than_75_less_than_100_percent: "> 75 and ≤ 100"
+      greater_than_75_less_than_100_percent: "> 75 and ≤ 100",
   }.freeze
 
   EXPOSURE_ROUTE_NAME = {
       dermal: "Dermal",
       oral: "Oral",
-      inhalation: "Inhalation"
+      inhalation: "Inhalation",
   }.freeze
 
   EXPOSURE_CONDITION_NAME = {
       rinse_off: "Rinse off",
-      leave_on: "Leave on"
+      leave_on: "Leave on",
   }.freeze
 
   PHYSICAL_FORM = {
@@ -492,7 +492,7 @@ module NotificationPropertiesHelper
       liquid: "Liquid",
       foam: "Foam",
       spray: "Spray",
-      other_physical_form: "Other"
+      other_physical_form: "Other",
   }.freeze
 
   SPECIAL_APPLICATOR = {
@@ -500,6 +500,6 @@ module NotificationPropertiesHelper
       encapsulated_products: "Encapsulated",
       pressurised_spray_container: "Pressurised spray",
       pressurised_container_non_spray_product: "Pressurised non-spray",
-      other_special_applicator: "Other"
+      other_special_applicator: "Other",
   }.freeze
 end
