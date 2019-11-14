@@ -17,7 +17,7 @@ module HaveBackLinkToMatcher
 
     def failure_message
       if @back_link
-        "expected a back to #{@expected_path}, but was #{@back_link['href']}"
+        "expected a back link to #{@expected_path}, but was #{@back_link['href']}"
       else
         "expected:\n\n#{@body.to_xhtml(indent: 3)}\n\n ...to contain a back link using a 'govuk-back-link' class"
       end
