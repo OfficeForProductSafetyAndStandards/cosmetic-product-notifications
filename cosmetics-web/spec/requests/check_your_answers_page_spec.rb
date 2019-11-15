@@ -112,5 +112,17 @@ RSpec.describe "Check your answers page", type: :request do
         expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_new_component")
       end
     end
+
+    context "when the notification used a ZIP file from CPNP" do
+      let(:notification) { create(:notification, :via_zip_file, responsible_person: responsible_person) }
+
+      before do
+        get edit_responsible_person_notification_path(params)
+      end
+
+      it "includes a back link to incomplete notifications page" do
+        expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/notifications\#incomplete")
+      end
+    end
   end
 end
