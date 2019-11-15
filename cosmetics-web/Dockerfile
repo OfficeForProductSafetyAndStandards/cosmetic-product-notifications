@@ -1,4 +1,4 @@
-FROM ruby:2.5.5
+FROM ruby:2.5.7
 
 ENV LANG C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
