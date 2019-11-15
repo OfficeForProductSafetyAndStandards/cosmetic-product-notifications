@@ -24,7 +24,7 @@ class ResponsiblePersons::AddNotificationWizardController < ApplicationControlle
                     elsif step == :have_products_been_notified_in_eu
                       "Select yes if the EU has been notified about these products using CPNP"
                     else
-                      "Select an answer"
+                      "Select an option"
                     end
       return render step
     end
