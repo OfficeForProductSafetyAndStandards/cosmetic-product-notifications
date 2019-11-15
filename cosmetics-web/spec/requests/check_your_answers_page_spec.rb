@@ -75,7 +75,7 @@ RSpec.describe "Check your answers page", type: :request do
       end
     end
 
-    context "when the notification was pre-Brexit and the no pH range was needed for the last component" do
+    context "when the notification was pre-Brexit and there was a single component with the no pH range needed" do
       let(:notification) { create(:notification, :pre_brexit, responsible_person: responsible_person) }
       let!(:component) { create(:component, notification: notification) }
 
@@ -88,7 +88,7 @@ RSpec.describe "Check your answers page", type: :request do
       end
     end
 
-    context "when the notification was pre-Brexit and the a specific pH range was entered for the last component" do
+    context "when the notification was pre-Brexit and there was a single component with a specific pH range entered" do
       let(:notification) { create(:notification, :pre_brexit, responsible_person: responsible_person) }
       let!(:component) { create(:component, notification: notification, minimum_ph: 2.5, maximum_ph: 2.9) }
 
@@ -98,6 +98,18 @@ RSpec.describe "Check your answers page", type: :request do
 
       it "includes a back link to the pH range" do
         expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/ph")
+      end
+    end
+
+    context "when the notification was pre-Brexit and there were multiple components" do
+      let(:notification) { create(:notification, :pre_brexit, responsible_person: responsible_person, components: [create(:component), create(:component)]) }
+
+      before do
+        get edit_responsible_person_notification_path(params)
+      end
+
+      it "includes a back link to list of components page" do
+        expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_new_component")
       end
     end
   end

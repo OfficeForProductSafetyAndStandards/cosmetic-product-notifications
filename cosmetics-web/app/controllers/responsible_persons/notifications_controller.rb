@@ -63,15 +63,20 @@ private
 
       # Last question is image upload page
       responsible_person_notification_build_path(notification.responsible_person, notification, :add_product_image)
+
+    elsif notification.is_multicomponent?
+
+      # Last page is the List of components
+      responsible_person_notification_build_path(notification.responsible_person, notification, :add_new_component)
+
     else
 
-      # Last component questions were answered for is the one with the highest ID
-      last_component = notification.components.order(:id).last
+      component = notification.components.first
 
       # Last question was either pH question or exact pH range for the component
-      page = last_component.minimum_ph ? :ph : :select_ph_range
+      page = component.minimum_ph ? :ph : :select_ph_range
 
-      responsible_person_notification_component_trigger_question_path(notification.responsible_person, notification, last_component, page)
+      responsible_person_notification_component_trigger_question_path(notification.responsible_person, notification, component, page)
     end
   end
 
