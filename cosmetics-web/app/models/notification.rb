@@ -34,7 +34,7 @@ class Notification < ApplicationRecord
             allow_nil: true
   validates :cpnp_reference, presence: true, on: :file_upload
   validates :import_country, presence: true, on: :add_import_country
-  validates :industry_reference, presence: { on: :add_internal_reference, message: "Enter an internal reference or select ‘No’" }
+  validates :industry_reference, presence: { on: :add_internal_reference, message: "Enter an internal reference" }
   validates :under_three_years, inclusion: { in: [true, false] }, on: :for_children_under_three
   validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
   validates :ph_min_value, :ph_max_value, presence: true, on: :ph_range
