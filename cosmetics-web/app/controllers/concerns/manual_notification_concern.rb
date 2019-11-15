@@ -64,7 +64,7 @@ module ManualNotificationConcern
       elsif param == :contains_nanomaterials
         model.errors.add param, "Select yes if #{model.component_name} contains nanomaterials"
       else
-        model.errors.add param, "Choose an option"
+        model.errors.add param, "Select an option"
       end
       render step
     end
