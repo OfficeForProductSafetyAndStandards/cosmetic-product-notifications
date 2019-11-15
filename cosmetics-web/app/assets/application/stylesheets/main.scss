@@ -24,10 +24,6 @@ $govuk-assets-path: '~govuk-frontend/govuk/assets/';
 @import "poison_centre_product_page";
 @import "input-prefix-suffix";
 
-* {
-  box-sizing: border-box;
-}
-
 .no-wrap {
   white-space: nowrap;
 }
