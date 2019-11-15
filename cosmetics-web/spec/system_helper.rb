@@ -41,6 +41,10 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :chrome_headless
     ActiveJob::Base.queue_adapter = :inline
+
+    # For system tests we want to render error pages instead of
+    # raising an exception.
+    Rails.application.config.action_dispatch.show_exceptions = true
   end
 end
 
