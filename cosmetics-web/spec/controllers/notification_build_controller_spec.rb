@@ -146,7 +146,7 @@ RSpec.describe NotificationBuildController, type: :controller do
 
     it "adds error if user selects add internal reference but doesn't add one on add_internal_reference page" do
       post(:update, params: params.merge(id: :add_internal_reference, notification: { add_internal_reference: "yes" }))
-      expect(assigns[:notification].errors[:industry_reference]).to eql(["Enter an internal reference or select ‘No’"])
+      expect(assigns[:notification].errors[:industry_reference]).to eql(["Enter an internal reference"])
     end
 
     it "stores internal reference if user adds internal reference" do
