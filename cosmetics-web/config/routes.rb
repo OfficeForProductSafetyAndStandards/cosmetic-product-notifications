@@ -37,10 +37,14 @@ Rails.application.routes.draw do
   constraints DomainConstraint.new(ENV.fetch("SUBMIT_HOST") || ENV.fetch("COSMETICS_HOST")) do
     root "landing_page#index"
 
+
     resources :responsible_persons, only: %i[show] do
       collection do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
       end
+
+      resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index new]
+
 
       resources :contact_persons, controller: "responsible_persons/contact_persons", only: %i[new create edit update] do
       end

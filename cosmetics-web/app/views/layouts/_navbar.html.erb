@@ -5,6 +5,10 @@
               "data-topnav": "responsible_persons/notifications",
               class: "govuk-link--no-visited-state" %>
     </li>
+
+    <li class="">
+      <%= link_to "Nanomaterials", responsible_person_nanomaterials_path(@responsible_person), class: "govuk-link--no-visited-state" %>
+    </li>
     <li class="<%= "app-navigation--current-page" if params[:controller] == "responsible_persons" %>">
       <%= link_to "Responsible person details", responsible_person_path(@responsible_person),
               "data-topnav": "responsible_persons",
