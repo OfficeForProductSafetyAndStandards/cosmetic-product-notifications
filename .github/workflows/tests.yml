@@ -67,10 +67,8 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        npm install yarn -g
-        yarn install
-        bin/webpack
-        bin/rails db:setup
+        gem install bundler -v 1.17.3
+        bundle install
     - name: Install js dependencies
       env:
         PGHOST: localhost
@@ -88,4 +86,5 @@ jobs:
         KEYCLOAK_CLIENT_SECRET: ${{ secrets.KeycloakClientSecret }}
       run: |
         cd cosmetics-web
+        bin/rails db:setup
         bundle exec rspec spec
