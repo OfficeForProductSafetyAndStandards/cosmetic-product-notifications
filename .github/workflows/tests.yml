@@ -39,6 +39,14 @@ jobs:
     # required to compile pg ruby gem
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/vendor/bundle
+        key: ${{ runner.OS }}-build-${{ hashFiles('cosmetics-web/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-build-${{ env.cache-name }}-
+          ${{ runner.OS }}-build-
+          ${{ runner.OS }}-
     - name: Install ruby gems
       env:
         PGHOST: localhost
@@ -53,6 +61,10 @@ jobs:
         bin/webpack
         bin/rails db:setup
     - name: Run Tests
+      env:
+        KEYCLOAK_AUTH_URL: {{ secrets.KeycloakAuthUrl }}
+        KEYCLOAK_CLIENT_ID: {{ secrets.KeycloakClientId }}
+        KEYCLOAK_CLIENT_SECRET: {{ secrets.KeycloakClientSecret }}
       run: |
         cd cosmetics-web
-        bundle exec rspec spec/models/ spec/requests/
+        bundle exec rspec spec
