@@ -1,6 +1,6 @@
 <% content_for :page_title, "Check your answers" %>
 <% content_for :after_header do %>
-  <%= link_to "Back", responsible_person_notifications_path(@responsible_person, anchor: "incomplete"), class: "govuk-back-link" %>
+  <%= link_to "Back", @previous_page_path, class: "govuk-back-link" %>
 <% end %>
 
 <div class="govuk-grid-row">
