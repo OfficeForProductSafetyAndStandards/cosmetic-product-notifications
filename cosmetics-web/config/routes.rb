@@ -43,7 +43,14 @@ Rails.application.routes.draw do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
       end
 
-      resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index new]
+      resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index new create] do
+
+        member do
+          get :notified_to_eu
+          patch :notified_to_eu, action: 'update_notified_to_eu'
+          get :upload_file
+        end
+      end
 
 
       resources :contact_persons, controller: "responsible_persons/contact_persons", only: %i[new create edit update] do

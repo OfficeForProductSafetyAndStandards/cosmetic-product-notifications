@@ -9,5 +9,14 @@
 
     <h1 class="govuk-heading-xl">Nanomaterial name</h1>
 
+    <%= form_for @nanomaterial_notification, url: responsible_person_nanomaterials_path(@responsible_person) do |form| %>
+
+      <%= render "form_components/govuk_error_summary", form: form %>
+
+      <%= render "form_components/govuk_input", form: form, key: :iupac_name, label: { text: "IUPAC name" } %>
+
+      <button type="submit" class="govuk-button">Continue</button>
+    <% end %>
+
   </div>
 </div>

@@ -44,8 +44,6 @@ en:
       cmr:
         cas_number: "CAS number"
         ec_number: "EC number"
-      non_standard_nanomaterial:
-        iupac_name: "IUPAC name"
     errors:
       models:
         notification:
@@ -71,6 +69,15 @@ en:
           attributes:
             applicable:
               inclusion: "Select an option"
+        nanomaterial_notification:
+          attributes:
+            iupac_name:
+              blank: "Enter an IUPAC name"
+            eu_notified:
+              inclusion: "Select whether the EU was notified"
+            notified_to_eu_on:
+              blank: "Enter the date the EU was notified on"
+              date_specified_but_eu_not_notified: "Remove date or change answer to Yes"
   errors:
     format: "%{message}"
     messages:

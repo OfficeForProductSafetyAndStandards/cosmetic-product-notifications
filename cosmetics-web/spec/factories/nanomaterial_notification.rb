@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :non_standard_nanomaterial do
+  factory :nanomaterial_notification do
     iupac_name { "Zinc oxide" }
   end
 end
