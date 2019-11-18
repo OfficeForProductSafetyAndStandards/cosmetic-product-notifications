@@ -70,7 +70,8 @@ jobs:
         npm install yarn -g
         yarn install
         bin/webpack
-    - name: Install ruby gems
+        bin/rails db:setup
+    - name: Install js dependencies
       env:
         PGHOST: localhost
         PGUSER: postgres
@@ -80,7 +81,6 @@ jobs:
         npm install yarn -g
         yarn install
         bin/webpack
-        bin/rails db:setup
     - name: Run Tests
       env:
         KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
