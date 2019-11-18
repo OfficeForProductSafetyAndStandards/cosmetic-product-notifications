@@ -43,7 +43,9 @@ RSpec.describe "After signing in", type: :system do
     end
 
     it "cannot access the Poison Centre notifications page" do
-      visit poison_centre_notifications_url
+      with_error_page_rendering do
+        visit poison_centre_notifications_url
+      end
 
       assert_current_path poison_centre_notifications_path
       assert_text "Access denied"
@@ -61,7 +63,9 @@ RSpec.describe "After signing in", type: :system do
     end
 
     it "cannot access Responsible Person pages" do
-      visit responsible_person_url(responsible_person)
+      with_error_page_rendering do
+        visit responsible_person_url(responsible_person)
+      end
 
       assert_current_path responsible_person_path(responsible_person)
       assert_text "Access denied"

@@ -8,19 +8,25 @@ RSpec.describe "Error page", type: :system do
   end
 
   it "is shown for 403 Forbidden response" do
-    visit_unauthorised_page
+    with_error_page_rendering do
+      visit_unauthorised_page
+    end
 
     assert_text "Access denied"
   end
 
   it "is shown for 404 Not Found response" do
-    visit_non_existent_page
+    with_error_page_rendering do
+      visit_non_existent_page
+    end
 
     assert_text "Page not found"
   end
 
   it "is shown for 500 Server Error response" do
-    trigger_server_error
+    with_error_page_rendering do
+      trigger_server_error
+    end
 
     assert_text "Sorry, there is a problem with the service"
   end

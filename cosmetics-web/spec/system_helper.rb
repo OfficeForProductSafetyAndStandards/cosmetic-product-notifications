@@ -41,10 +41,32 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :chrome_headless
     ActiveJob::Base.queue_adapter = :inline
+  end
+end
 
-    # For system tests we want to render error pages instead of
-    # raising an exception.
-    Rails.application.config.action_dispatch.show_exceptions = true
+# This module and method allows an individual test to temporarily turn
+# on error page rendering (rather than raising an exception) in order to
+# allow assertions based upon the rendered error page.
+#
+# Due to Rails config caching, this has to alter `env_config` directly
+# rather than setting Rails.application.config.action_dispatch.show_exception
+#
+# See https://github.com/rspec/rspec-rails/issues/2024
+module WithErrorPageRendering
+  RSpec.configure do |config|
+    config.include self, type: :system
+  end
+
+  def with_error_page_rendering
+    env_config = Rails.application.env_config
+    original_show_exceptions = env_config["action_dispatch.show_exceptions"]
+    original_show_detailed_exceptions = env_config["action_dispatch.show_detailed_exceptions"]
+    env_config["action_dispatch.show_exceptions"] = true
+    env_config["action_dispatch.show_detailed_exceptions"] = false
+    yield
+  ensure
+    env_config["action_dispatch.show_exceptions"] = original_show_exceptions
+    env_config["action_dispatch.show_detailed_exceptions"] = original_show_detailed_exceptions
   end
 end
 
