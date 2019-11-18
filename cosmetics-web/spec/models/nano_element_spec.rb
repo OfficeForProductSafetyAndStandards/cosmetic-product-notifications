@@ -166,6 +166,19 @@ RSpec.describe NanoElement, type: :model do
           expect(nano_element).to be_incomplete
         end
       end
+
+      context "when nano element has restrictions and usage is set to 'no'" do
+        before do
+          nano_element.purposes = %w(colorant)
+
+          nano_element.confirm_restrictions = "yes"
+          nano_element.confirm_usage = "no"
+        end
+
+        it "returns incomplete" do
+          expect(nano_element).to be_incomplete
+        end
+      end
     end
   end
 end
