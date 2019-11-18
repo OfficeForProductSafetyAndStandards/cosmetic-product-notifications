@@ -3,30 +3,26 @@ require "rails_helper"
 RSpec.describe "Error page", type: :system do
   let(:responsible_person) { create(:responsible_person) }
 
+  include_context "with errors rendered"
+
   after do
     sign_out
   end
 
   it "is shown for 403 Forbidden response" do
-    with_error_page_rendering do
-      visit_unauthorised_page
-    end
+    visit_unauthorised_page
 
     assert_text "Access denied"
   end
 
   it "is shown for 404 Not Found response" do
-    with_error_page_rendering do
-      visit_non_existent_page
-    end
+    visit_non_existent_page
 
     assert_text "Page not found"
   end
 
   it "is shown for 500 Server Error response" do
-    with_error_page_rendering do
-      trigger_server_error
-    end
+    trigger_server_error
 
     assert_text "Sorry, there is a problem with the service"
   end
