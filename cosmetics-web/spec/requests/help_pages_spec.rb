@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.describe "Help pages", type: :request do
   include RSpecHtmlMatchers
 
+  before do
+    mock_keycloak_as_not_signed_in
+  end
+
   describe "'Terms and conditions'" do
     before do
       get "/help/terms-and-conditions"
