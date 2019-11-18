@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 2019_11_18_140031) do
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
     t.text "user_id", null: false
+    t.boolean "eu_notified"
     t.date "notified_to_eu_on"
     t.datetime "submitted_at"
     t.index ["responsible_person_id"], name: "index_nanomaterial_notifications_on_responsible_person_id"
