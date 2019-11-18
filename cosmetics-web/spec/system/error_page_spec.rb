@@ -1,9 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "Error page", type: :system do
+RSpec.describe "Error page", type: :system, with_errors_rendered: true do
   let(:responsible_person) { create(:responsible_person) }
-
-  include_context "with errors rendered"
 
   after do
     sign_out

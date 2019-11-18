@@ -23,3 +23,7 @@ RSpec.shared_context "with errors rendered" do
     env_config["action_dispatch.show_detailed_exceptions"] = original_show_detailed_exceptions
   end
 end
+
+RSpec.configure do |rspec|
+  rspec.include_context "with errors rendered", with_errors_rendered: true
+end
