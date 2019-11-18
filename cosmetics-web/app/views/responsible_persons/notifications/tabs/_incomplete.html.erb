@@ -1,0 +1,18 @@
+<h2 class="govuk-heading-m">Incomplete notifications</h2>
+<% if @unfinished_notifications.present? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <ul class="product-list govuk-!-margin-bottom-0">
+        <% @unfinished_notifications.each do |notification| %>
+          <%= render "unfinished_product", notification: notification %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full pagination-links">
+      <%= will_paginate(@unfinished_notifications, param_name: "incomplete", params: { anchor: "incomplete" }) %>
+    </div>
+  </div>
+<% end %>

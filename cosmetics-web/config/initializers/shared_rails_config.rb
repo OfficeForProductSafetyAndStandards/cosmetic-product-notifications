@@ -8,3 +8,4 @@ Rails.application.config.action_view.form_with_generates_ids = true
 
 ActionView::Base.include GovukDesignSystem::ComponentsHelper
 ActionView::Base.include GovukDesignSystem::DetailsHelper
+ActionView::Base.include GovukDesignSystem::WarningTextHelper
