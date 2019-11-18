@@ -25,6 +25,11 @@ jobs:
         ports: ["5432:5432"]
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      elasticsearch:
+        image: elasticsearch:6.7.2
+        ports: ["9200:9200"]
+        # needed because the postgres container does not provide a healthcheck
+        # options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
     - uses: actions/checkout@v1
@@ -47,6 +52,14 @@ jobs:
           ${{ runner.OS }}-build-${{ env.cache-name }}-
           ${{ runner.OS }}-build-
           ${{ runner.OS }}-
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/node_modules
+        key: ${{ runner.OS }}-build-${{ hashFiles('cosmetics-web/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-build-${{ env.cache-name }}-
+          ${{ runner.OS }}-build-
+          ${{ runner.OS }}-
     - name: Install ruby gems
       env:
         PGHOST: localhost
@@ -54,8 +67,16 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        gem install bundler -v 1.17.3
-        bundle install
+        npm install yarn -g
+        yarn install
+        bin/webpack
+    - name: Install ruby gems
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        RAILS_ENV: test
+      run: |
+        cd cosmetics-web
         npm install yarn -g
         yarn install
         bin/webpack
