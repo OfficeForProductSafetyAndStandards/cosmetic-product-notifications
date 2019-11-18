@@ -1,0 +1,22 @@
+<nav class="app-navigation govuk-clearfix">
+  <ul class="app-navigation__list">
+    <li class="<%= "app-navigation--current-page" if params[:controller] == "responsible_persons/notifications" %>">
+      <%= link_to "Cosmetic products", responsible_person_notifications_path(@responsible_person),
+              "data-topnav": "responsible_persons/notifications",
+              class: "govuk-link--no-visited-state" %>
+    </li>
+    <li class="<%= "app-navigation--current-page" if params[:controller] == "responsible_persons" %>">
+      <%= link_to "Responsible person details", responsible_person_path(@responsible_person),
+              "data-topnav": "responsible_persons",
+              class: "govuk-link--no-visited-state" %>
+    </li>
+    <li class="<%= "app-navigation--current-page" if params[:controller] == "responsible_persons/team_members" %>">
+      <%= link_to "Team members", responsible_person_team_members_path(@responsible_person),
+              "data-topnav": "responsible_persons/team_members",
+              class: "govuk-link--no-visited-state" %>
+    </li>
+    <div class="responsible-person-name govuk-heading-s">
+      <%= @responsible_person.name %>
+    </div>
+  </ul>
+</nav>
