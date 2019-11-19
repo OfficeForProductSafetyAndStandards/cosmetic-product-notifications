@@ -47,24 +47,24 @@ jobs:
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
     - name: install chromedriver
-      run: wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/bin && sudo chmod +x /usr/bin/chromedriver
+      run: wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && unzip chromedriver_linux64.zip #&& sudo mv chromedriver /usr/bin && sudo chmod +x /usr/bin/chromedriver
     - name: Check elasticsearch
       run: curl -v 0.0.0.0:9200
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/vendor/bundle
-        key: ${{ runner.OS }}-build-${{ hashFiles('cosmetics-web/Gemfile.lock') }}
+        key: ${{ runner.OS }}-gems-${{ hashFiles('cosmetics-web/Gemfile.lock') }}
         restore-keys: |
-          ${{ runner.OS }}-build-${{ env.cache-name }}-
-          ${{ runner.OS }}-build-
+          ${{ runner.OS }}-gems-${{ env.cache-name }}-
+          ${{ runner.OS }}-gems-
           ${{ runner.OS }}-
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/node_modules
-        key: ${{ runner.OS }}-build-${{ hashFiles('cosmetics-web/yarn.lock') }}
+        key: ${{ runner.OS }}-node-${{ hashFiles('cosmetics-web/yarn.lock') }}
         restore-keys: |
-          ${{ runner.OS }}-build-${{ env.cache-name }}-
-          ${{ runner.OS }}-build-
+          ${{ runner.OS }}-node-${{ env.cache-name }}-
+          ${{ runner.OS }}-node-
           ${{ runner.OS }}-
     - name: Check gems
       run: ls cosmetics-web/vendor/bundle
@@ -101,4 +101,4 @@ jobs:
       run: |
         cd cosmetics-web
         bin/rails db:setup
-        bundle exec rspec spec
+        bundle exec rspec spec/system
