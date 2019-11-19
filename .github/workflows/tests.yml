@@ -53,17 +53,17 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/vendor/bundle
-        key: ${{ runner.OS }}-gems-${{ hashFiles('cosmetics-web/Gemfile.lock') }}
+        key: ${{ runner.OS }}-gems
         restore-keys: |
-          ${{ runner.OS }}-gems-${{ env.cache-name }}-
+          ${{ runner.OS }}-gems
           ${{ runner.OS }}-gems-
           ${{ runner.OS }}-
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/node_modules
-        key: ${{ runner.OS }}-node-${{ hashFiles('cosmetics-web/yarn.lock') }}
+        key: ${{ runner.OS }}-node
         restore-keys: |
-          ${{ runner.OS }}-node-${{ env.cache-name }}-
+          ${{ runner.OS }}-node
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
     - name: Check gems
