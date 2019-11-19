@@ -258,18 +258,6 @@ RSpec.describe NanoElement, type: :model do
 
           expect(nano_element).to be_incomplete
         end
-
-        it "has confirmed usage as 'no'" do
-          nano_element.confirm_usage = "no"
-
-          expect(nano_element).not_to be_incomplete
-        end
-
-        it "has confirmed usage as 'yes'" do
-          nano_element.confirm_usage = "yes"
-
-          expect(nano_element).not_to be_incomplete
-        end
       end
     end
 
@@ -297,6 +285,12 @@ RSpec.describe NanoElement, type: :model do
 
         it "has confirmed usage as 'yes'" do
           nano_element.confirm_usage = "yes"
+
+          expect(nano_element).not_to be_incomplete
+        end
+
+        it "has confirmed usage as 'no'" do
+          nano_element.confirm_usage = "no"
 
           expect(nano_element).not_to be_incomplete
         end
