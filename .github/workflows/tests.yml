@@ -101,4 +101,4 @@ jobs:
       run: |
         cd cosmetics-web
         bin/rails db:setup
-        bundle exec rspec spec/system
+        bundle exec rspec spec/system/non_standard_nanomaterial_entry_spec.rb
