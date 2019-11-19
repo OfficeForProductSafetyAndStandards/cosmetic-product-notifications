@@ -44,6 +44,8 @@ jobs:
     # required to compile pg ruby gem
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
+    - name: Check elasticsearc
+      run: curl -v localhost:9200
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/vendor/bundle
