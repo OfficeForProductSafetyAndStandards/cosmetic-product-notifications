@@ -47,7 +47,7 @@ jobs:
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
     - name: install chromedriver
-      run: wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && unzip chromedriver_linux64.zip #&& sudo mv chromedriver /usr/bin && sudo chmod +x /usr/bin/chromedriver
+      run: wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/bin && sudo chmod +x /usr/bin/chromedriver
     - name: Check elasticsearch
       run: curl -v 0.0.0.0:9200
     - uses: actions/cache@v1
