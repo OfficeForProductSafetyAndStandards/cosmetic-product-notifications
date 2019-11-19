@@ -66,6 +66,8 @@ jobs:
           ${{ runner.OS }}-build-${{ env.cache-name }}-
           ${{ runner.OS }}-build-
           ${{ runner.OS }}-
+    - name: Check gems
+      run: ls cosmetics-web/vendor/bundle
     - name: Install ruby gems
       env:
         PGHOST: localhost
@@ -75,6 +77,8 @@ jobs:
         cd cosmetics-web
         gem install bundler -v 1.17.3
         bundle install --deployment
+    - name: Check gems 2
+      run: ls cosmetics-web/vendor/bundle
     - name: Install js dependencies
       env:
         PGHOST: localhost
