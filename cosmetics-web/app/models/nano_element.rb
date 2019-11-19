@@ -40,6 +40,6 @@ class NanoElement < ApplicationRecord
   end
 
   def usage_confirmed?
-    (confirm_usage.nil? || confirm_usage == "no")
+    confirm_usage.nil?
   end
 end
