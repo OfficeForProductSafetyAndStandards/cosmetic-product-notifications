@@ -89,6 +89,14 @@ jobs:
         npm install yarn -g
         yarn install
         bin/webpack
+    - name: Prepare db
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        RAILS_ENV: test
+      run: |
+        cd cosmetics-web
+        bin/rails db:setup
     - name: Run Tests
       env:
         KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
@@ -100,5 +108,4 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bin/rails db:setup
         bundle exec rspec spec/system/non_standard_nanomaterial_entry_spec.rb
