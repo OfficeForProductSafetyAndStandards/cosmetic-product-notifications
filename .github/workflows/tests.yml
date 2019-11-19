@@ -108,4 +108,4 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bundle exec rspec spec/system/non_standard_nanomaterial_entry_spec.rb
+        bundle exec rspec spec/system
