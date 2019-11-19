@@ -46,6 +46,8 @@ jobs:
     # required to compile pg ruby gem
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
+    - name: install chromedriver
+      run: wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && mv chromedriver /usr/local
     - name: Check elasticsearch
       run: curl -v 0.0.0.0:9200
     - uses: actions/cache@v1
