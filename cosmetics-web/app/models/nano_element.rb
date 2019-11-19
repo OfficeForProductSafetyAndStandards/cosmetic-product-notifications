@@ -36,7 +36,10 @@ class NanoElement < ApplicationRecord
   def restrictions_confirmed?
     confirm_restrictions.nil? ||
       (confirm_restrictions == "no" && notified_toxicology?) ||
-      (confirm_restrictions == "yes" && usage_confirmed?)
+      (
+        confirm_restrictions == "yes" && usage_confirmed? ||
+       (confirm_usage == "no" && notified_toxicology?)
+      )
   end
 
   def usage_confirmed?

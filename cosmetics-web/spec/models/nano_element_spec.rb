@@ -172,7 +172,7 @@ RSpec.describe NanoElement, type: :model do
         it "has confirmed usage as 'no'" do
           nano_element.confirm_usage = "no"
 
-          expect(nano_element).not_to be_incomplete
+          expect(nano_element).to be_incomplete
         end
 
         it "has confirmed usage as 'yes'" do
@@ -290,6 +290,7 @@ RSpec.describe NanoElement, type: :model do
         end
 
         it "has confirmed usage as 'no'" do
+          nano_element.confirm_toxicology_notified = "yes"
           nano_element.confirm_usage = "no"
 
           expect(nano_element).not_to be_incomplete
