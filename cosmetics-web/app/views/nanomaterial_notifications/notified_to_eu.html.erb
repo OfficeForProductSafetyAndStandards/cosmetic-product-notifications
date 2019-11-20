@@ -13,15 +13,26 @@
 
       <%= render "form_components/govuk_error_summary", form: form %>
 
-
       <% date_notified_to_eu_html = render("components/govuk_date_input",
         id: "notified_to_eu_on",
-        namePrefix: "notified_to_eu_on",
         fieldset: { legend: { text: "Date EU notified on" } },
         hint: { text: "For example, 31 3 2019" },
-        items: [{ name: "day", classes: "govuk-input--width-2" },
-                { name: "month", classes: "govuk-input--width-2" },
-                { name: "year", classes: "govuk-input--width-4" }]) %>
+        items: [
+          {
+            name: "notified_to_eu_on(3i)",
+            classes: "govuk-input--width-2",
+            label: "Day"
+          },
+          {
+            name: "notified_to_eu_on(2i)",
+            classes: "govuk-input--width-2",
+            label: "Month"
+          },
+          {
+            name: "notified_to_eu_on(1i)",
+            classes: "govuk-input--width-4",
+            label: "Year"
+          }]) %>
 
 
       <%= render "components/govuk_radios",
