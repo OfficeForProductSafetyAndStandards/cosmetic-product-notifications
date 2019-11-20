@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Error page", type: :system do
+RSpec.describe "Error page", type: :system, with_errors_rendered: true do
   let(:responsible_person) { create(:responsible_person) }
 
   after do
