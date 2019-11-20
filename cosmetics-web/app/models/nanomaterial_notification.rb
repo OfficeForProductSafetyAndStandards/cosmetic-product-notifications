@@ -1,5 +1,4 @@
 class NanomaterialNotification < ApplicationRecord
-
   class AlreadySubmittedError < StandardError; end
 
   belongs_to :responsible_person
