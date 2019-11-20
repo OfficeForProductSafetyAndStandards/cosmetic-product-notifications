@@ -67,7 +67,7 @@ jobs:
       #          ${{ runner.OS }}-node-
       #          ${{ runner.OS }}-
     - name: Check gems
-      run: ls cosmetics-web/vendor
+      run: ls cosmetics-web
     - name: Install ruby gems
       env:
         PGHOST: localhost
