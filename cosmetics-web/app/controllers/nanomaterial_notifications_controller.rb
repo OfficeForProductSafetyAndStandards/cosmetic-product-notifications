@@ -46,7 +46,11 @@ class NanomaterialNotificationsController < ApplicationController
   def upload_file; end
 
   def update_file
-    @nanomaterial_notification.file.attach(params.fetch(:nanomaterial_notification, {})[:file])
+    file = params.fetch(:nanomaterial_notification, {})[:file]
+
+    if file
+      @nanomaterial_notification.file.attach(file)
+    end
 
     if @nanomaterial_notification.save(context: :upload_file)
       redirect_to review_nanomaterial_path(@nanomaterial_notification)
@@ -60,7 +64,7 @@ class NanomaterialNotificationsController < ApplicationController
   def submit
     @nanomaterial_notification.submit!
 
-    redirect_to confirmation_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification)
+    redirect_to confirmation_nanomaterial_path(@nanomaterial_notification)
   end
 
   def confirmation_page

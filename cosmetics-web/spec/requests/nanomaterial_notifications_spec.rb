@@ -224,6 +224,18 @@ RSpec.describe "Nanomaterial notifications", type: :request do
           expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/review")
         end
       end
+
+      context "when no file is selected" do
+        let(:params) { {} }
+
+        it "is renders a page" do
+          expect(response.code).to eql("200")
+        end
+
+        it "displays an error message" do
+          expect(response.body).to include("There is a problem")
+        end
+      end
     end
 
     context "when the nanomaterial notification belongs to a different company" do
@@ -232,6 +244,86 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       it "displays an error" do
         expect {
           patch "/nanomaterials/#{nanomaterial_notification.id}/file"
+        }.to raise_error(Pundit::NotAuthorizedError)
+      end
+    end
+  end
+
+  describe "GET /nanomaterials/ID/review" do
+    context "when the user has access" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+
+      before do
+        get "/nanomaterials/#{nanomaterial_notification.id}/review"
+      end
+
+      it "is successful" do
+        expect(response.code).to eql("200")
+      end
+
+      it "has a page heading" do
+        expect(response.body).to have_tag("h1", text: "Check your answers")
+      end
+    end
+
+    context "when the nanomaterial notification belongs to a different company" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: other_company) }
+
+      it "displays an error" do
+        expect {
+          get "/nanomaterials/#{nanomaterial_notification.id}/review"
+        }.to raise_error(Pundit::NotAuthorizedError)
+      end
+    end
+  end
+
+  describe "PATCH /nanomaterials/ID/submission" do
+    context "when the user has access" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+
+      before do
+        patch "/nanomaterials/#{nanomaterial_notification.id}/submission"
+      end
+
+      it "redirects to the confirmation page" do
+        expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/confirmation")
+      end
+    end
+
+    context "when the nanomaterial notification belongs to a different company" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: other_company) }
+
+      it "displays an error" do
+        expect {
+          patch "/nanomaterials/#{nanomaterial_notification.id}/submission"
+        }.to raise_error(Pundit::NotAuthorizedError)
+      end
+    end
+  end
+
+  describe "GET /nanomaterials/ID/confirmation" do
+    context "when the user has access" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+
+      before do
+        get "/nanomaterials/#{nanomaterial_notification.id}/confirmation"
+      end
+
+      it "is successful" do
+        expect(response.code).to eql("200")
+      end
+
+      it "has a page heading" do
+        expect(response.body).to have_tag("h1", text: "Nanomaterial submitted")
+      end
+    end
+
+    context "when the nanomaterial notification belongs to a different company" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: other_company) }
+
+      it "displays an error" do
+        expect {
+          get "/nanomaterials/#{nanomaterial_notification.id}/confirmation"
         }.to raise_error(Pundit::NotAuthorizedError)
       end
     end

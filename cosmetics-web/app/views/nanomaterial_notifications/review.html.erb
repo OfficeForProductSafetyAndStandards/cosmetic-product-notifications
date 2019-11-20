@@ -61,7 +61,7 @@
 
       <p class="govuk-body">Your submission will be reviewed by the Office for Product Safety and Standards.</p>
 
-      <%= form_for @nanomaterial_notification, url: submission_nanomaterial_path(@responsible_person, @nanomaterial_notification) do |form| %>
+      <%= form_for @nanomaterial_notification, url: submission_nanomaterial_path(@nanomaterial_notification) do |form| %>
 
         <button type="submit" class="govuk-button">Accept and send</button>
       <% end %>
