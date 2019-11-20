@@ -1,12 +1,10 @@
 require "rails_helper"
 
 RSpec.describe NanomaterialNotification, type: :model do
-
   describe "validations" do
     describe "IUPAC name" do
       context "when not setting a name" do
-
-        let(:nanomaterial_notification) { NanomaterialNotification.new }
+        let(:nanomaterial_notification) { described_class.new }
 
         before do
           nanomaterial_notification.valid?(:add_iupac_name)
@@ -18,8 +16,7 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
 
       context "when setting a name" do
-
-        let(:nanomaterial_notification) { NanomaterialNotification.new(iupac_name: 'Test name') }
+        let(:nanomaterial_notification) { described_class.new(iupac_name: "Test name") }
 
         it "is valid" do
           expect(nanomaterial_notification.valid?(:add_iupac_name)).to be true
@@ -28,11 +25,9 @@ RSpec.describe NanomaterialNotification, type: :model do
     end
 
     describe "EU notification" do
-
       context "when not specified" do
-
         let(:nanomaterial_notification) do
-          NanomaterialNotification.new(eu_notified: nil)
+          described_class.new(eu_notified: nil)
         end
 
         before do
@@ -45,9 +40,8 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
 
       context "when the EU was notified but no date set" do
-
         let(:nanomaterial_notification) do
-          NanomaterialNotification.new(eu_notified: true, notified_to_eu_on: nil)
+          described_class.new(eu_notified: true, notified_to_eu_on: nil)
         end
 
         before do
@@ -60,20 +54,18 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
 
       context "when the EU was notified and a pre-Brexit date is set" do
-
         let(:nanomaterial_notification) do
-          NanomaterialNotification.new(eu_notified: true, notified_to_eu_on: Date.parse("2020-01-20"))
+          described_class.new(eu_notified: true, notified_to_eu_on: Date.parse("2020-01-20"))
         end
 
         it "is valid" do
-          expect(nanomaterial_notification.valid?(:eu_notification)).to be(true), "#{nanomaterial_notification.errors.full_messages}"
+          expect(nanomaterial_notification.valid?(:eu_notification)).to be(true), nanomaterial_notification.errors.full_messages.to_s
         end
       end
 
       context "when the EU was notified and a post-Brexit date is set" do
-
         let(:nanomaterial_notification) do
-          NanomaterialNotification.new(eu_notified: true, notified_to_eu_on: Date.parse("2020-02-02"))
+          described_class.new(eu_notified: true, notified_to_eu_on: Date.parse("2020-02-02"))
         end
 
         before do
@@ -86,9 +78,8 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
 
       context "when the EU was not notified and no date is set" do
-
         let(:nanomaterial_notification) do
-          NanomaterialNotification.new(eu_notified: false, notified_to_eu_on: nil)
+          described_class.new(eu_notified: false, notified_to_eu_on: nil)
         end
 
         it "is valid" do
@@ -97,9 +88,8 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
 
       context "when the EU was not notified but a date has been set" do
-
         let(:nanomaterial_notification) do
-          NanomaterialNotification.new(eu_notified: false, notified_to_eu_on: Date.parse("2020-04-02"))
+          described_class.new(eu_notified: false, notified_to_eu_on: Date.parse("2020-04-02"))
         end
 
         before do

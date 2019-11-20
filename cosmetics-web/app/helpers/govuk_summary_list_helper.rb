@@ -1,8 +1,11 @@
 module GovukSummaryListHelper
-  # rubocop:disable Naming/MethodName
+  # rubocop:disable Naming/MethodName, Naming/VariableName
   def govukSummaryList(rows: [], classes: "", attributes: {})
     attributes[:class] = "govuk-summary-list #{classes}"
-    content_tag("dl", class: classes) do
+
+    anyRowHasActions = rows.detect { |row| row.fetch(:actions, {})[:items] }
+
+    content_tag("dl", attributes) do
       rows.each do |row|
         row = content_tag("div", class: "govuk-summary-list__row") do
           concat content_tag("dt", (row[:key][:text] || row[:key][:html]), class: "govuk-summary-list__key")
@@ -17,6 +20,10 @@ module GovukSummaryListHelper
             end
 
             concat actions
+
+          elsif anyRowHasActions
+            # Add dummy column to extend border #
+            concat content_tag("span", "", class: "govuk-summary-list__actions")
           end
         end
 
@@ -24,5 +31,5 @@ module GovukSummaryListHelper
       end
     end
   end
-  # rubocop:enable Naming/MethodName
+  # rubocop:enable Naming/MethodName, Naming/VariableName
 end

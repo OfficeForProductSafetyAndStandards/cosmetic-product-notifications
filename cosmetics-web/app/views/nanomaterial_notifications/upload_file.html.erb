@@ -7,10 +7,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-xl">Upload file</h1>
+    <%= form_for @nanomaterial_notification, url: file_nanomaterial_path(@nanomaterial_notification), method: :patch, multipart: true do |form| %>
 
-    <%= form_for @nanomaterial_notification, url: file_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification), method: :patch do |form| %>
+      <%= render "form_components/govuk_error_summary", form: form %>
 
+      <h1 class="govuk-heading-xl">Upload file</h1>
 
       <div class="govuk-form-group">
         <label class="govuk-label" for="file">

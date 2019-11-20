@@ -78,6 +78,8 @@ en:
             notified_to_eu_on:
               blank: "Enter the date the EU was notified on"
               date_specified_but_eu_not_notified: "Remove date or change answer to Yes"
+            file:
+              missing: "Select a file"
   errors:
     format: "%{message}"
     messages:

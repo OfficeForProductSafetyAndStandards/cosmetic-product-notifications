@@ -1,25 +1,12 @@
 class NanomaterialNotificationsController < ApplicationController
-  before_action :set_responsible_person
+  before_action :set_responsible_person_from_url, only: %w[index new create]
+
+  before_action :set_nanomaterial_notification_from_url, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit confirmation_page]
 
   def index; end
 
   def new
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new
-  end
-
-  def update_name
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.find(params[:id])
-    @nanomaterial_notification.iupac_name = params[:nanomaterial_notification][:iupac_name]
-
-    if @nanomaterial_notification.save(context: :add_iupac_name)
-      redirect_to review_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification)
-    else
-      render "name"
-    end
-  end
-
-  def name
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.find(params[:id])
   end
 
   def create
@@ -28,55 +15,55 @@ class NanomaterialNotificationsController < ApplicationController
     @nanomaterial_notification.user_id = current_user.id
 
     if @nanomaterial_notification.save(context: :add_iupac_name)
-      redirect_to notified_to_eu_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification)
+      redirect_to notified_to_eu_nanomaterial_path(@nanomaterial_notification)
     else
       render "new"
     end
   end
 
-  def notified_to_eu
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.find(params[:id])
+  def name; end
+
+  def update_name
+    @nanomaterial_notification.iupac_name = params[:nanomaterial_notification][:iupac_name]
+
+    if @nanomaterial_notification.save(context: :add_iupac_name)
+      redirect_to review_responsible_person_nanomaterial_path(@nanomaterial_notification)
+    else
+      render "name"
+    end
   end
 
+  def notified_to_eu; end
+
   def update_notified_to_eu
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.find(params[:id])
-
-
     if @nanomaterial_notification.update_with_context(eu_notification_params, :eu_notification)
-      redirect_to upload_file_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification)
+      redirect_to upload_file_nanomaterial_path(@nanomaterial_notification)
     else
       render "notified_to_eu"
     end
   end
 
-  def upload_file
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.find(params[:id])
-  end
+  def upload_file; end
 
   def update_file
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.find(params[:id])
+    @nanomaterial_notification.file.attach(params.fetch(:nanomaterial_notification, {})[:file])
 
-    @nanomaterial_notification.file.attach(params[:nanomaterial_notification][:file])
-
-    @nanomaterial_notification.save!
-
-    redirect_to review_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification)
+    if @nanomaterial_notification.save(context: :upload_file)
+      redirect_to review_nanomaterial_path(@nanomaterial_notification)
+    else
+      render "upload_file"
+    end
   end
 
-  def review
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.find(params[:id])
-  end
+  def review; end
 
   def submit
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.find(params[:id])
-
     @nanomaterial_notification.submit!
 
     redirect_to confirmation_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification)
   end
 
   def confirmation_page
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.find(params[:id])
     render "confirmation_page"
   end
 
@@ -86,7 +73,13 @@ private
     params.permit(:eu_notified, :notified_to_eu_on)
   end
 
-  def set_responsible_person
+  def set_nanomaterial_notification_from_url
+    @nanomaterial_notification = NanomaterialNotification.find(params[:id])
+    @responsible_person = @nanomaterial_notification.responsible_person
+    authorize @responsible_person, :show?
+  end
+
+  def set_responsible_person_from_url
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
     authorize @responsible_person, :show?
   end

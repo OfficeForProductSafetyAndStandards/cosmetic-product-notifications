@@ -17,7 +17,7 @@
         actions: {
           items: [
             {
-              href: name_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification),
+              href: name_nanomaterial_path(@nanomaterial_notification),
               text: "Change",
               visuallyHiddenText: "IUPAC name"
             }
@@ -32,7 +32,7 @@
         actions: {
           items: [
             {
-              href: notified_to_eu_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification),
+              href: notified_to_eu_nanomaterial_path(@nanomaterial_notification),
               text: "Change",
               visuallyHiddenText: "EU notification"
             }
@@ -42,7 +42,16 @@
       {
         key: {text: 'PDF file'},
         value: {
-          text: link_to("PDF file", @nanomaterial_notification.file)
+          text: (link_to("PDF file", @nanomaterial_notification.file) if @nanomaterial_notification.file.attached?)
+        },
+        actions: {
+          items: [
+            {
+              href: upload_file_nanomaterial_path(@nanomaterial_notification),
+              text: "Change",
+              visuallyHiddenText: "file"
+            }
+          ]
         }
       }
     ]) %>
@@ -52,7 +61,7 @@
 
       <p class="govuk-body">Your submission will be reviewed by the Office for Product Safety and Standards.</p>
 
-      <%= form_for @nanomaterial_notification, url: submission_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification) do |form| %>
+      <%= form_for @nanomaterial_notification, url: submission_nanomaterial_path(@responsible_person, @nanomaterial_notification) do |form| %>
 
         <button type="submit" class="govuk-button">Accept and send</button>
       <% end %>

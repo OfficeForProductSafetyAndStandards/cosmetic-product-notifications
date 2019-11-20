@@ -10,6 +10,8 @@ class NanomaterialNotification < ApplicationRecord
 
   validate :eu_notification_date_is_nil, on: :eu_notification, if: :eu_not_notified?
 
+  validate :file_attached, on: :upload_file
+
   has_one_attached :file
 
 
@@ -28,6 +30,12 @@ private
   def eu_notification_date_is_nil
     if notified_to_eu_on != nil
       errors.add(:notified_to_eu_on, I18n.t(:date_specified_but_eu_not_notified, scope: %i[activerecord errors models nanomaterial_notification attributes notified_to_eu_on]))
+    end
+  end
+
+  def file_attached
+    if !file.attached?
+      errors.add(:file, I18n.t(:missing, scope: %i[activerecord errors models nanomaterial_notification attributes file]))
     end
   end
 

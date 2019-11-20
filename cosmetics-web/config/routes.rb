@@ -43,7 +43,7 @@ Rails.application.routes.draw do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
       end
 
-      resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index new create] do
+      resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index new create], shallow: true do
 
         member do
           get :name
