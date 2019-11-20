@@ -10,8 +10,14 @@ class NanomaterialNotification < ApplicationRecord
 
   validate :eu_notification_date_is_nil, on: :eu_notification, if: :eu_not_notified?
 
+  has_one_attached :file
 
-  private
+
+  def submit!
+    self.submitted_at = DateTime.now
+  end
+
+private
 
   def eu_notification_date_must_be_pre_brexit
     if notified_to_eu_on && notified_to_eu_on > EU_EXIT_DATE
@@ -21,13 +27,11 @@ class NanomaterialNotification < ApplicationRecord
 
   def eu_notification_date_is_nil
     if notified_to_eu_on != nil
-      errors.add(:notified_to_eu_on, I18n.t(:date_specified_but_eu_not_notified, scope: [:activerecord, :errors, :models, :nanomaterial_notification, :attributes, :notified_to_eu_on]))
+      errors.add(:notified_to_eu_on, I18n.t(:date_specified_but_eu_not_notified, scope: %i[activerecord errors models nanomaterial_notification attributes notified_to_eu_on]))
     end
   end
-
 
   def eu_not_notified?
     eu_notified == false
   end
-
 end

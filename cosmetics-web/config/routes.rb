@@ -46,9 +46,15 @@ Rails.application.routes.draw do
       resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index new create] do
 
         member do
+          get :name
+          patch :name, action: 'update_name'
           get :notified_to_eu
           patch :notified_to_eu, action: 'update_notified_to_eu'
           get :upload_file
+          patch :file, action: 'update_file'
+          get :review
+          patch :submission, action: 'submit'
+          get :confirmation, action: 'confirmation_page'
         end
       end
 

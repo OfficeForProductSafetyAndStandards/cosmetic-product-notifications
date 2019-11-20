@@ -9,6 +9,17 @@
 
     <h1 class="govuk-heading-xl">Upload file</h1>
 
+    <%= form_for @nanomaterial_notification, url: file_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification), method: :patch do |form| %>
 
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="file">
+          Upload a file
+        </label>
+        <%= form.file_field :file %>
+      </div>
+
+      <button type="submit" class="govuk-button">Continue</button>
+    <% end %>
   </div>
 </div>
