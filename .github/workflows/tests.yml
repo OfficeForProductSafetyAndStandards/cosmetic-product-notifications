@@ -108,16 +108,17 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bundle exec rspec spec/system/user_registration_spec.rb
-        bundle exec rspec spec/system/create_responsible_person_spec.rb
-        bundle exec rspec spec/system/declaration_spec.rb
-        bundle exec rspec spec/system/domain_spec.rb
-        bundle exec rspec spec/system/error_page_spec.rb
-        bundle exec rspec spec/system/file_upload_errors_spec.rb
-        bundle exec rspec spec/system/file_upload_spec.rb
-        bundle exec rspec spec/system/invite_user_to_join_responsible_person_spec.rb
-        bundle exec rspec spec/system/manual_notification_entry_spec.rb
-        bundle exec rspec spec/system/non_standard_nanomaterial_entry_spec.rb
-        bundle exec rspec spec/system/poison_centre_user_spec.rb
-        bundle exec rspec spec/system/responsible_person_dashboard_spec.rb
-        bundle exec rspec spec/system/sign_in_spec.rb
+        bundle exec rspec spec/system/
+        # bundle exec rspec spec/system/user_registration_spec.rb
+        # bundle exec rspec spec/system/create_responsible_person_spec.rb
+        # bundle exec rspec spec/system/declaration_spec.rb
+        # bundle exec rspec spec/system/domain_spec.rb
+        # bundle exec rspec spec/system/error_page_spec.rb
+        # bundle exec rspec spec/system/file_upload_errors_spec.rb
+        # bundle exec rspec spec/system/file_upload_spec.rb
+        # bundle exec rspec spec/system/invite_user_to_join_responsible_person_spec.rb
+        # bundle exec rspec spec/system/manual_notification_entry_spec.rb
+        # bundle exec rspec spec/system/non_standard_nanomaterial_entry_spec.rb
+        # bundle exec rspec spec/system/poison_centre_user_spec.rb
+        # bundle exec rspec spec/system/responsible_person_dashboard_spec.rb
+        # bundle exec rspec spec/system/sign_in_spec.rb
