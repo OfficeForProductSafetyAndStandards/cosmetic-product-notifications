@@ -81,6 +81,10 @@ private
     @nanomaterial_notification = NanomaterialNotification.find(params[:id])
     @responsible_person = @nanomaterial_notification.responsible_person
     authorize @responsible_person, :show?
+
+    if @nanomaterial_notification.submitted?
+      redirect_to(confirmation_nanomaterial_path(@nanomaterial_notification)) && return
+    end
   end
 
   def set_responsible_person_from_url

@@ -1,4 +1,7 @@
 class NanomaterialNotification < ApplicationRecord
+
+  class AlreadySubmittedError < StandardError; end
+
   belongs_to :responsible_person
 
   validates :iupac_name, presence: true, on: :add_iupac_name
@@ -16,7 +19,14 @@ class NanomaterialNotification < ApplicationRecord
 
 
   def submit!
+    raise AlreadySubmittedError, "Nanomaterial previously notified, on #{submitted_at}" if submitted?
+
     self.submitted_at = DateTime.now
+    save!
+  end
+
+  def submitted?
+    submitted_at != nil
   end
 
 private

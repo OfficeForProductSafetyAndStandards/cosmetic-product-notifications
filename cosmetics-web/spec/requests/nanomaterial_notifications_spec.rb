@@ -6,6 +6,8 @@ RSpec.describe "Nanomaterial notifications", type: :request do
   let(:responsible_person) { create(:responsible_person) }
   let(:other_company) { create(:responsible_person) }
 
+  let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
+
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
   end
@@ -114,6 +116,16 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
     end
 
+    context "when the notification has already been submitted" do
+      before do
+        get "/nanomaterials/#{submitted_nanomaterial_notification.id}/notified_to_eu"
+      end
+
+      it "redirects to the confirmation page" do
+        expect(response).to redirect_to("/nanomaterials/#{submitted_nanomaterial_notification.id}/confirmation")
+      end
+    end
+
     context "when the nanomaterial notification belongs to a different company" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: other_company) }
 
@@ -197,6 +209,16 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
     end
 
+    context "when the notification has already been submitted" do
+      before do
+        get "/nanomaterials/#{submitted_nanomaterial_notification.id}/upload_file"
+      end
+
+      it "redirects to the confirmation page" do
+        expect(response).to redirect_to("/nanomaterials/#{submitted_nanomaterial_notification.id}/confirmation")
+      end
+    end
+
     context "when the nanomaterial notification belongs to a different company" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: other_company) }
 
@@ -266,6 +288,16 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
     end
 
+    context "when the notification has already been submitted" do
+      before do
+        get "/nanomaterials/#{submitted_nanomaterial_notification.id}/review"
+      end
+
+      it "redirects to the confirmation page" do
+        expect(response).to redirect_to("/nanomaterials/#{submitted_nanomaterial_notification.id}/confirmation")
+      end
+    end
+
     context "when the nanomaterial notification belongs to a different company" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: other_company) }
 
@@ -283,6 +315,10 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
       before do
         patch "/nanomaterials/#{nanomaterial_notification.id}/submission"
+      end
+
+      it "sets a submission date" do
+        expect(nanomaterial_notification.reload.submitted_at).to be_within(1.second).of(Time.zone.now)
       end
 
       it "redirects to the confirmation page" do

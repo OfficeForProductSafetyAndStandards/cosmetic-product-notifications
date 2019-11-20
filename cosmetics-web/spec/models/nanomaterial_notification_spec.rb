@@ -102,4 +102,44 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
     end
   end
+
+  describe "#submitted?" do
+    context "when a submitted_at date is present" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, submitted_at: 1.hour.ago) }
+
+      it "is true" do
+        expect(nanomaterial_notification.submitted?).to be true
+      end
+    end
+
+    context "when no submitted_at date is present" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, submitted_at: nil) }
+
+      it "is false" do
+        expect(nanomaterial_notification.submitted?).to be false
+      end
+    end
+  end
+
+  describe "#submit!" do
+    context "when not previously submitted" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, submitted_at: nil) }
+
+      before { nanomaterial_notification.submit! }
+
+      it "sets a submission date and time" do
+        expect(nanomaterial_notification.reload.submitted_at).to be_within(1.second).of(Time.zone.now)
+      end
+    end
+
+    context "when previously submitted" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, submitted_at: 1.hour.ago) }
+
+      it "raises an error" do
+        expect {
+          nanomaterial_notification.submit!
+        }.to raise_error(NanomaterialNotification::AlreadySubmittedError)
+      end
+    end
+  end
 end
