@@ -50,22 +50,22 @@ jobs:
       run: wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/bin && sudo chmod +x /usr/bin/chromedriver
     - name: Check elasticsearch
       run: curl -v 0.0.0.0:9200
-    - uses: actions/cache@v1
-      with:
-        path: cosmetics-web/vendor/bundle
-        key: ${{ runner.OS }}-gems
-        restore-keys: |
-          ${{ runner.OS }}-gems
-          ${{ runner.OS }}-gems-
-          ${{ runner.OS }}-
-    - uses: actions/cache@v1
-      with:
-        path: cosmetics-web/node_modules
-        key: ${{ runner.OS }}-node
-        restore-keys: |
-          ${{ runner.OS }}-node
-          ${{ runner.OS }}-node-
-          ${{ runner.OS }}-
+      #    - uses: actions/cache@v1
+      #      with:
+      #        path: cosmetics-web/vendor/bundle
+      #        key: ${{ runner.OS }}-gems
+      #        restore-keys: |
+      #          ${{ runner.OS }}-gems
+      #          ${{ runner.OS }}-gems-
+      #          ${{ runner.OS }}-
+      #    - uses: actions/cache@v1
+      #      with:
+      #        path: cosmetics-web/node_modules
+      #        key: ${{ runner.OS }}-node
+      #        restore-keys: |
+      #          ${{ runner.OS }}-node
+      #          ${{ runner.OS }}-node-
+      #          ${{ runner.OS }}-
     - name: Check gems
       run: ls cosmetics-web/vendor/bundle
     - name: Install ruby gems
@@ -108,4 +108,16 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bundle exec rspec spec/system
+        bundle exec rspec spec/system/create_responsible_person_spec.rb
+        bundle exec rspec spec/system/declaration_spec.rb
+        bundle exec rspec spec/system/domain_spec.rb
+        bundle exec rspec spec/system/error_page_spec.rb
+        bundle exec rspec spec/system/file_upload_errors_spec.rb
+        bundle exec rspec spec/system/file_upload_spec.rb
+        bundle exec rspec spec/system/invite_user_to_join_responsible_person_spec.rb
+        bundle exec rspec spec/system/manual_notification_entry_spec.rb
+        bundle exec rspec spec/system/non_standard_nanomaterial_entry_spec.rb
+        bundle exec rspec spec/system/poison_centre_user_spec.rb
+        bundle exec rspec spec/system/responsible_person_dashboard_spec.rb
+        bundle exec rspec spec/system/sign_in_spec.rb
+        bundle exec rspec spec/system/user_registration_spec.rb
