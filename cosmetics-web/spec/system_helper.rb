@@ -33,7 +33,7 @@ Capybara.register_driver :chrome_headless do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options, http_client: client)
 end
 
-Capybara.javascript_driver = :chrome_headless
+#Capybara.javascript_driver = :chrome_headless
 
 Capybara.ignore_hidden_elements = false
 
