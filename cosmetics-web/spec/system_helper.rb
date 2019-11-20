@@ -7,9 +7,9 @@ ENV["HTTP_PORT"] = "3003"
 ENV["SUBMIT_HOST"] = "localhost"
 ENV["SEARCH_HOST"] = "localhost"
 
-if ENV["CHROMEDRIVER_PATH"]
-  Selenium::WebDriver::Chrome::Service.driver_path = ENV.fetch("CHROMEDRIVER_PATH")
-end
+# if ENV["CHROMEDRIVER_PATH"]
+#   Selenium::WebDriver::Chrome::Service.driver_path = ENV.fetch("CHROMEDRIVER_PATH")
+# end
 
 Capybara.server_host = ENV["HTTP_HOST"]
 Capybara.server_port = ENV["HTTP_PORT"]

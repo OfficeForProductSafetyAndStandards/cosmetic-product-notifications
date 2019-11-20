@@ -23,7 +23,6 @@ class ApplicationController < ActionController::Base
 private
 
   def authorize_user!
-    puts Thread.current
     return unless user_signed_in?
 
     redirect_to invalid_account_path if invalid_account_for_domain?
