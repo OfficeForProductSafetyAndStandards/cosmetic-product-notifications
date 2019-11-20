@@ -22,6 +22,7 @@ RSpec.describe "Account registration", type: :system do
     click_on "Sign in"
     click_on "create an account"
 
+    page.save_screenshot('screenshot.png')
     assert_text "Your details"
     assert_current_path(/auth\/realms\/opss\/login-actions\/registration\?client_id=cosmetics-app/)
   end
