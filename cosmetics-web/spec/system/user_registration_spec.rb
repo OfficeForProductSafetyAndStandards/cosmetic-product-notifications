@@ -27,6 +27,7 @@ RSpec.describe "Account registration", type: :system do
   end
 
   it "succeeds with valid details" do
+    binding.pry
     create_new_account
 
     fill_in "Full name", with: "New User"

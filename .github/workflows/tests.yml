@@ -108,6 +108,7 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
+        bundle exec rspec spec/system/user_registration_spec.rb
         bundle exec rspec spec/system/create_responsible_person_spec.rb
         bundle exec rspec spec/system/declaration_spec.rb
         bundle exec rspec spec/system/domain_spec.rb
@@ -120,4 +121,3 @@ jobs:
         bundle exec rspec spec/system/poison_centre_user_spec.rb
         bundle exec rspec spec/system/responsible_person_dashboard_spec.rb
         bundle exec rspec spec/system/sign_in_spec.rb
-        bundle exec rspec spec/system/user_registration_spec.rb
