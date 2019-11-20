@@ -25,8 +25,7 @@ RSpec.describe "After signing in", type: :system do
     end
   end
 
-  describe "a user associated with a Responsible Person account" do
-    include_context "with errors rendered"
+  describe "a user associated with a Responsible Person account", with_errors_rendered: true do
     before do
       sign_in_as_member_of_responsible_person
     end
@@ -50,9 +49,7 @@ RSpec.describe "After signing in", type: :system do
     end
   end
 
-  describe "a Poison Centre user" do
-    include_context "with errors rendered"
-
+  describe "a Poison Centre user", with_errors_rendered: true do
     before do
       sign_in_as_poison_centre_user
     end
