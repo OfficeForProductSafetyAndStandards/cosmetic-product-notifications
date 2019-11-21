@@ -21,10 +21,9 @@
         li permanent styling products
         li anti-ageing or revitalising kits
       p.govuk-inset-text
-        | Where a set contains separate products that do not need to be
-          mixed together, or used one after the other in a particular order,
-          for the product to work, you need to
-        =< link_to "submit a notification for each product separately", \
+        | Where a set contains separate products that do not need to be mixed together or used in a particular order
+          for the product to work, you’ll need to
+        =< link_to "submit a separate notification for each product", \
           responsible_person_notifications_path(@notification.responsible_person),
                 "data-topnav": "responsible_persons/notifications",
                 class: "govuk-link--no-visited-state"
