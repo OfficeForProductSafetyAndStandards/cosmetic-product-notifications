@@ -29,7 +29,7 @@ class NanomaterialNotificationsController < ApplicationController
     @nanomaterial_notification.iupac_name = params[:nanomaterial_notification][:iupac_name]
 
     if @nanomaterial_notification.save(context: :add_iupac_name)
-      redirect_to review_responsible_person_nanomaterial_path(@nanomaterial_notification)
+      redirect_to review_nanomaterial_path(@nanomaterial_notification)
     else
       render "name"
     end

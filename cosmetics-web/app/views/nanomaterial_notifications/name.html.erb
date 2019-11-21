@@ -9,7 +9,7 @@
 
     <h1 class="govuk-heading-xl">Nanomaterial name</h1>
 
-    <%= form_for @nanomaterial_notification, url: name_responsible_person_nanomaterial_path(@responsible_person, @nanomaterial_notification) do |form| %>
+    <%= form_for @nanomaterial_notification, url: name_nanomaterial_path(@nanomaterial_notification) do |form| %>
 
       <%= render "form_components/govuk_error_summary", form: form %>
 
