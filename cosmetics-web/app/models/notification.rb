@@ -172,6 +172,12 @@ class Notification < ApplicationRecord
     components - get_valid_multicomponents
   end
 
+  # Returns true if the notification was notified via uploading
+  # a ZIP file (eg from CPNP).
+  def via_zip_file?
+    notification_file_imported? || cpnp_reference
+  end
+
 private
 
   def all_required_attributes_must_be_set

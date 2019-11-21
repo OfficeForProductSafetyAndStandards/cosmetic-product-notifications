@@ -1,0 +1,58 @@
+name: Tests
+
+on: [push]
+
+env:
+  SEARCH_HOST: search
+  SUBMIT_HOST: submit
+  DATABASE_URL: postgres://localhost:5432/cosmetics_test
+
+jobs:
+  ruby:
+    name: "Ruby"
+    runs-on: ubuntu-latest
+
+    # If you need DB like PostgreSQL then define service below.
+    # Example for Redis can be found here:
+    # https://github.com/actions/example-services/tree/master/.github/workflows
+    services:
+      postgres:
+        image: postgres:11.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: postgres
+        ports: ["5432:5432"]
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.5.x
+    - name: Set up Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.16.x
+    # required to compile pg ruby gem
+    - name: install PostgreSQL client
+      run: sudo apt-get install libpq-dev
+    - name: Install ruby gems
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        RAILS_ENV: test
+      run: |
+        cd cosmetics-web
+        gem install bundler -v 1.17.3
+        bundle install
+        npm install yarn -g
+        yarn install
+        bin/webpack
+        bin/rails db:setup
+    - name: Run Tests
+      run: |
+        cd cosmetics-web
+        bundle exec rspec spec/models/ spec/requests/
