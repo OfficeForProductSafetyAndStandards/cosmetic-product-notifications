@@ -110,5 +110,5 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bundle exec rspec spec/requests
+        bundle exec rspec spec/requests --profile
         #bundle exec rspec spec/system/user_registration_spec.rb spec/system/create_responsible_person_spec.rb spec/system/declaration_spec.rb spec/system/domain_spec.rb spec/system/error_page_spec.rb spec/system/file_upload_errors_spec.rb spec/system/file_upload_spec.rb spec/system/invite_user_to_join_responsible_person_spec.rb spec/system/manual_notification_entry_spec.rb spec/system/non_standard_nanomaterial_entry_spec.rb spec/system/poison_centre_user_spec.rb spec/system/responsible_person_dashboard_spec.rb spec/system/sign_in_spec.rb
