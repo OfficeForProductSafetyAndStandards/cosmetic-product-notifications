@@ -93,7 +93,7 @@ private
     @nanomaterial_notification = NanomaterialNotification.find(params[:id])
     @responsible_person = @nanomaterial_notification.responsible_person
     authorize @responsible_person, :show?
- end
+  end
 
   def set_responsible_person_from_url
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
