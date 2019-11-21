@@ -9,7 +9,7 @@ $(document).ready(() => {
   const fileUploadErrorMessage = document.getElementById('file-upload-error-message');
 
   const tooManyFilesMessage = `You can only select up to ${maxNumberOfFiles} files at the same time`;
-  const noFilesSelectedMessage = 'No files selected';
+  const noFilesSelectedMessage = 'Select a file';
 
   const errorSummaryText = errorSummary.getElementsByClassName('govuk-error-summary__list')[0].getElementsByTagName('A')[0];
 
