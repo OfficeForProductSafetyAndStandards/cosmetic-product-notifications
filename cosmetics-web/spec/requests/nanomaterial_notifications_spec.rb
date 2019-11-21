@@ -339,7 +339,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
   describe "GET /nanomaterials/ID/confirmation" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/confirmation"
@@ -355,12 +355,24 @@ RSpec.describe "Nanomaterial notifications", type: :request do
     end
 
     context "when the nanomaterial notification belongs to a different company" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: other_company) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: other_company) }
 
       it "displays an error" do
         expect {
           get "/nanomaterials/#{nanomaterial_notification.id}/confirmation"
         }.to raise_error(Pundit::NotAuthorizedError)
+      end
+    end
+
+    context "when the nanomaterial notification has not yet been submitted" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :not_submitted, responsible_person: responsible_person) }
+
+      before do
+        get "/nanomaterials/#{nanomaterial_notification.id}/confirmation"
+      end
+
+      it "redirects to the check your answers page" do
+        expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/review")
       end
     end
   end

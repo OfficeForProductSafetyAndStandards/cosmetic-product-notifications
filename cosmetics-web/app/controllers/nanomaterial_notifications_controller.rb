@@ -3,6 +3,8 @@ class NanomaterialNotificationsController < ApplicationController
 
   before_action :set_nanomaterial_notification_from_url, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit confirmation_page]
 
+  before_action :redirect_to_confirmation_page_if_submitted, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit]
+
   def index; end
 
   def new
@@ -68,6 +70,10 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def confirmation_page
+    if !@nanomaterial_notification.submitted?
+      redirect_to(review_nanomaterial_path(@nanomaterial_notification)) && return
+    end
+
     render "confirmation_page"
   end
 
@@ -77,15 +83,17 @@ private
     params.permit(:eu_notified, :notified_to_eu_on)
   end
 
-  def set_nanomaterial_notification_from_url
-    @nanomaterial_notification = NanomaterialNotification.find(params[:id])
-    @responsible_person = @nanomaterial_notification.responsible_person
-    authorize @responsible_person, :show?
-
+  def redirect_to_confirmation_page_if_submitted
     if @nanomaterial_notification.submitted?
       redirect_to(confirmation_nanomaterial_path(@nanomaterial_notification)) && return
     end
   end
+
+  def set_nanomaterial_notification_from_url
+    @nanomaterial_notification = NanomaterialNotification.find(params[:id])
+    @responsible_person = @nanomaterial_notification.responsible_person
+    authorize @responsible_person, :show?
+ end
 
   def set_responsible_person_from_url
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
