@@ -23,7 +23,6 @@ applications:
     - opss-log-drain
     - cosmetics-aws-env
     - cosmetics-auth-env
-    - antivirus-auth-env
     - cosmetics-health-env
     - cosmetics-keycloak-env
     - cosmetics-rails-env
