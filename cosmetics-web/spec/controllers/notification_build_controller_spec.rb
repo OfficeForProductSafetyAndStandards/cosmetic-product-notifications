@@ -105,7 +105,7 @@ RSpec.describe NotificationBuildController, type: :controller do
 
     it "adds an error if user doesn't pick a radio option for is_imported" do
       post(:update, params: params.merge(id: :is_imported, notification: { is_imported: nil }))
-      expect(assigns(:notification).errors[:is_imported]).to include("Choose an option")
+      expect(assigns(:notification).errors[:is_imported]).to include("Select an option")
     end
 
     it "adds an error if user submits import_country with a blank value" do

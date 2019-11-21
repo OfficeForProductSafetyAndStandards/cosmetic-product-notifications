@@ -149,7 +149,7 @@ RSpec.describe ComponentBuildController, type: :controller do
 
     it "adds errors if number_of_shades is empty" do
       post(:update, params: params.merge(id: :number_of_shades, component: { number_of_shades: nil }))
-      expect(assigns(:component).errors[:number_of_shades]).to eql(["Select yes if the product is available in different shades"])
+      expect(assigns(:component).errors[:number_of_shades]).to eql(["Select yes if the product is available in shades"])
     end
 
     it "adds empty string to shades array if add_shade parameter passed" do
