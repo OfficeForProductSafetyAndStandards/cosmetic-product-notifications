@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
-docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
+docker-compose -f docker-compose.yml -f docker-compose.ci.yml build
 docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --no-deps $COMPONENT echo 'Gems pre-installed'
 docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d $COMPONENT
 
