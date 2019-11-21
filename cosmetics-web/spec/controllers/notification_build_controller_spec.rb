@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe NotificationBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
-  let(:pre_eu_exit_notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person) }
+  let(:pre_eu_exit_notification) { create(:notification, :pre_brexit, responsible_person: responsible_person) }
 
   let(:image_file) { fixture_file_upload("testImage.png", "image/png") }
   let(:text_file) { fixture_file_upload("testText.txt", "application/text") }
@@ -198,7 +198,7 @@ RSpec.describe NotificationBuildController, type: :controller do
       end
 
       context "when the product was notified pre-Brexit and has 2 valid component" do
-        let(:completed_notification) { create(:pre_eu_exit_notification, responsible_person: responsible_person, components: [create(:component, name: "Component 1"), create(:component, name: "Component 2")]) }
+        let(:completed_notification) { create(:notification, :pre_brexit, responsible_person: responsible_person, components: [create(:component, name: "Component 1"), create(:component, name: "Component 2")]) }
 
         it "redirects to the add 'check your answers' page" do
           expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, completed_notification.reference_number))

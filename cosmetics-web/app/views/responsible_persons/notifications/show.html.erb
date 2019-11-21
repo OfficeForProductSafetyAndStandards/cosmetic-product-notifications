@@ -1,14 +1,10 @@
-<% content_for :page_title, "Check your answers" %>
+<% content_for :page_title, "Product details" %>
 <% content_for :after_header do %>
-  <%= link_to "Back", @previous_page_path, class: "govuk-back-link" %>
+  <%= link_to "Back", responsible_person_notifications_path(@responsible_person, anchor: "notified"), class: "govuk-back-link" %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <% if @errors.present? %>
-      <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors %>
-    <% end %>
-
     <h1 class="govuk-heading-xl"><%= @notification.product_name %></h1>
 
     <%= render "notifications/product_overview", notification: @notification %>
@@ -17,10 +13,6 @@
   <div class="govuk-grid-column-full">
     <%= render "notifications/responsible_person_details", responsible_person: @notification.responsible_person %>
     <%= render "notifications/contact_person_overview", contact_person: @responsible_person.contact_persons.first %>
-    <%= render "notifications/product_details", notification: @notification, allow_edits: true %>
+    <%= render "notifications/product_details", notification: @notification, allow_edits: false %>
   </div>
-
-  <% if @notification.may_submit_notification? %>
-    <%= render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person %>
-  <% end %>
 </div>

@@ -21,7 +21,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = true
+  config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
@@ -42,6 +42,8 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system in a temporary directory
   config.active_storage.service = :test
+
+  config.active_job.queue_adapter = :async
 
   config.action_controller.default_url_options = {
       host: ENV["HTTP_HOST"] || "localhost",

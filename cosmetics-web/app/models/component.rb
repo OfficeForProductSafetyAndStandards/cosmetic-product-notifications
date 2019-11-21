@@ -145,6 +145,16 @@ class Component < ApplicationRecord
     super(reject_non_decimal_strings(value))
   end
 
+  def ph=(value)
+    super(value)
+
+    # Remove min and max pH if no longer required
+    if ph_range_not_required?
+      self.minimum_ph = nil
+      self.maximum_ph = nil
+    end
+  end
+
   def ph_range_not_required?
     ph_between_3_and_10? || ph_not_applicable?
   end
