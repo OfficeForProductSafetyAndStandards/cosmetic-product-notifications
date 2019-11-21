@@ -184,7 +184,7 @@ private
         if attribute == "product_name"
           errors.add attribute, "Enter the product name"
         else
-          errors.add attribute, "must not be blank"
+          errors.add attribute, "Must not be empty"
         end
       end
     }
