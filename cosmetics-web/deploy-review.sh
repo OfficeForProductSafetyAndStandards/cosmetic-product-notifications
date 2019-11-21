@@ -23,19 +23,19 @@ if [ -z "$DB_NAME" ]
 then
   DB_NAME=cosmetics-review-database
 fi
-cf create-service postgres small-10 $DB_NAME
+cf7 create-service postgres small-10 $DB_NAME
 
 # Wait until db is prepared, might take up to 10 minutes
-until cf service $DB_NAME > /tmp/db_exists && grep "create succeeded" /tmp/db_exists; do sleep 20; echo "Waiting for db"; done
+until cf7 service $DB_NAME > /tmp/db_exists && grep "create succeeded" /tmp/db_exists; do sleep 20; echo "Waiting for db"; done
 
 if [ -z "$REDIS_NAME" ]
 then
   REDIS_NAME=cosmetics-review-redis
 fi
-cf create-service redis tiny-3.2 $REDIS_NAME
+cf7 create-service redis tiny-3.2 $REDIS_NAME
 
 # Wait until redis service is prepared, might take up to 10 minutes
-until cf service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp/redis_exists; do sleep 20; echo "Waiting for redis"; done
+until cf7 service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp/redis_exists; do sleep 20; echo "Waiting for redis"; done
 
 
 # Copy files from infrastructure env
