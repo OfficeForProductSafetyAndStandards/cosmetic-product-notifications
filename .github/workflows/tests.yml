@@ -99,9 +99,9 @@ jobs:
         bin/rails db:setup
     - name: Run Tests
       env:
-        KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
-        KEYCLOAK_CLIENT_ID: ${{ secrets.KeycloakClientId }}
-        KEYCLOAK_CLIENT_SECRET: ${{ secrets.KeycloakClientSecret }}
+        # KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
+        # KEYCLOAK_CLIENT_ID: ${{ secrets.KeycloakClientId }}
+        # KEYCLOAK_CLIENT_SECRET: ${{ secrets.KeycloakClientSecret }}
         ELASTICSEARCH_URL: localhost
         PGHOST: localhost
         PGUSER: postgres
