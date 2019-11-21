@@ -20,7 +20,7 @@ class NotificationBuildController < ApplicationController
   before_action :set_countries, only: %i[show update]
 
   def show
-    binding.pry
+    # binding.pry
     render_wizard
   end
 
