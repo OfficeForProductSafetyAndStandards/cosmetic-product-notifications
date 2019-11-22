@@ -102,7 +102,7 @@ RSpec.describe NanoElement, type: :model do
         end
 
         it "is set to 'not sure'" do
-          nano_element.confirm_toxicology_notified = "not_sure"
+          nano_element.confirm_toxicology_notified = "not sure"
 
           expect(nano_element).to be_incomplete
         end
@@ -152,7 +152,7 @@ RSpec.describe NanoElement, type: :model do
         end
 
         it "is not sure toxicology has been notified" do
-          nano_element.confirm_toxicology_notified = "not_sure"
+          nano_element.confirm_toxicology_notified = "not sure"
 
           expect(nano_element).to be_incomplete
         end
@@ -236,7 +236,7 @@ RSpec.describe NanoElement, type: :model do
         end
 
         it "is not sure toxicology has been notified" do
-          nano_element.confirm_toxicology_notified = "not_sure"
+          nano_element.confirm_toxicology_notified = "not sure"
 
           expect(nano_element).to be_incomplete
         end
