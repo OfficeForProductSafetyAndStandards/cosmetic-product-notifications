@@ -1,5 +1,5 @@
 - title = "Add physical form"
-- question = "What is the physical form of #{@component_name}?"
+- question = "What is the physical form of the #{@component_name}?"
 - items = Component.physical_forms.map { |key, value| \
             { text: get_physical_form_name(key), value: value, checked: @component.physical_form == key } \
   }
