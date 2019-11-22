@@ -9,8 +9,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-xl">Nanomaterial name</h1>
-
     <%= form_for @nanomaterial_notification, url: notified_to_eu_nanomaterial_path(@nanomaterial_notification) do |form| %>
 
       <%= render "form_components/govuk_error_summary", form: form %>
@@ -42,13 +40,15 @@
           "name": "eu_notified",
           "fieldset": {
             "legend": {
-              "text": "Was ‘#{h(@nanomaterial_notification.iupac_name)}’ notified in the EU?"
+              "text": "Was the EU notified about #{h(@nanomaterial_notification.iupac_name)} on CPNP before 1 February 2020?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--xl"
             }
           },
           "items": [
             {
               "value": "true",
-              "text": "Yes",
+              "text": "Yes, the EU was notified about the nanomaterial on CPNP before 1 February 2020",
               "conditional": {"html": date_notified_to_eu_html}
             },
             {

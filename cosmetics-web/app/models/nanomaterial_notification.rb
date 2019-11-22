@@ -32,7 +32,7 @@ private
 
   def eu_notification_date_must_be_pre_brexit
     if notified_to_eu_on && notified_to_eu_on > EU_EXIT_DATE
-      errors.add(:notified_to_eu_on, "Enter a date before Brexit")
+      errors.add(:notified_to_eu_on, I18n.t(:post_brexit_date_given, scope: %i[activerecord errors models nanomaterial_notification attributes notified_to_eu_on]))
     end
   end
 

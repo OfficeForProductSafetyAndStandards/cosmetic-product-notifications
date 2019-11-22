@@ -11,7 +11,7 @@ RSpec.describe NanomaterialNotification, type: :model do
         end
 
         it "adds an error" do
-          expect(nanomaterial_notification.errors[:iupac_name]).to include("Enter an IUPAC name")
+          expect(nanomaterial_notification.errors[:iupac_name]).to include("Enter the name of the nanomaterial")
         end
       end
 
@@ -35,7 +35,7 @@ RSpec.describe NanomaterialNotification, type: :model do
         end
 
         it "adds an error" do
-          expect(nanomaterial_notification.errors[:eu_notified]).to include("Select whether the EU was notified")
+          expect(nanomaterial_notification.errors[:eu_notified]).to include("Select yes if the EU was notified about the nanomaterial before 1 February 2020")
         end
       end
 
@@ -49,7 +49,7 @@ RSpec.describe NanomaterialNotification, type: :model do
         end
 
         it "adds an error" do
-          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("Enter the date the EU was notified on")
+          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("Enter the date the EU was notified about the nanomaterial on CPNP")
         end
       end
 
@@ -73,7 +73,7 @@ RSpec.describe NanomaterialNotification, type: :model do
         end
 
         it "adds an error" do
-          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("Enter a date before Brexit")
+          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("The date the EU was notified on CPNP must be before 1 February 2020")
         end
       end
 

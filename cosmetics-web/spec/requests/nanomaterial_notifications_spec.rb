@@ -27,7 +27,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
 
       it "has a page heading" do
-        expect(response.body).to have_tag("h1", text: "Nanomaterials")
+        expect(response.body).to have_h1_with_text("Nanomaterials")
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
     end
 
     it "has a page heading" do
-      expect(response.body).to have_tag("h1", text: "Nanomaterial name")
+      expect(response.body).to have_h1_with_text("What is the name of the nanomaterial?")
     end
   end
 
@@ -101,7 +101,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
   describe "GET /nanomaterials/ID/notified_to_eu" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, iupac_name: "Zinc oxide") }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu"
@@ -112,7 +112,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
 
       it "has a page heading" do
-        expect(response.body).to have_tag("h1", text: "Nanomaterial name")
+        expect(response.body).to have_h1_with_text("Was the EU notified about Zinc oxide on CPNP before 1 February 2020?")
       end
     end
 
@@ -205,7 +205,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
 
       it "has a page heading" do
-        expect(response.body).to have_tag("h1", text: "Upload file")
+        expect(response.body).to have_h1_with_text("Upload details about the nanomaterial")
       end
     end
 
@@ -284,7 +284,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
 
       it "has a page heading" do
-        expect(response.body).to have_tag("h1", text: "Check your answers")
+        expect(response.body).to have_h1_with_text("Check your answers")
       end
     end
 
@@ -339,7 +339,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
   describe "GET /nanomaterials/ID/confirmation" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person, iupac_name: "Zinc oxide") }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/confirmation"
@@ -350,7 +350,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
 
       it "has a page heading" do
-        expect(response.body).to have_tag("h1", text: "Nanomaterial submitted")
+        expect(response.body).to have_h1_with_text("You’ve told us about Zinc oxide")
       end
     end
 

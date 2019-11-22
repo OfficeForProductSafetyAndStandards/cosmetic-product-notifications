@@ -12,13 +12,28 @@
 
       <%= render "form_components/govuk_error_summary", form: form %>
 
-      <h1 class="govuk-heading-xl">Upload file</h1>
+      <h1 class="govuk-heading-xl">Upload details about the nanomaterial</h1>
+
+      <p class="govuk-body">You’ll need to upload a PDF with the following information about the nanomaterial:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the International Union of Pure and Applied Chemistry (IUPAC) name</li>
+        <li>the quantity expected to be placed on the market each year</li>
+        <li>the specification, including the size of particles, physical and chemical properties</li>
+        <li>the droplet size and distribution when sprayed</li>
+        <li>the toxicological profile</li>
+        <li>the safety data relating to the category of products in which it will be used</li>
+        <li>whether it reacts or changes its properties in certain conditions, for example, if its photocatalytic</li>
+      </ul>
+
+      <p class="govuk-body">You’ll also need to include the email address of someone to contact about the nanomaterial.</p>
+
 
       <div class="govuk-form-group">
-        <label class="govuk-label" for="file">
+        <label class="govuk-label govuk-label--s" for="nanomaterial_notification_file">
           Upload a file
         </label>
-        <%= form.file_field :file %>
+        <%= form.file_field :file, class: "govuk-file-upload" %>
       </div>
 
       <button type="submit" class="govuk-button">Continue</button>
