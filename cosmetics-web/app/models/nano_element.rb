@@ -27,7 +27,7 @@ class NanoElement < ApplicationRecord
     purposes.present? && purposes.include?("other")
   end
 
-  protected
+protected
 
   def toxicology_incomplete?
     confirm_toxicology_notified.nil? ||
