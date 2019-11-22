@@ -20,7 +20,6 @@ class NotificationBuildController < ApplicationController
   before_action :set_countries, only: %i[show update]
 
   def show
-    puts "show: #{Time.now.to_f}"
     render_wizard
   end
 

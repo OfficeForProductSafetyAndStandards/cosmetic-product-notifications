@@ -1,7 +1,86 @@
-<% page_title = true ? "Upload images of the item labels" : "Upload an image of the product label" %>
+<% page_title = @notification.is_multicomponent? ? "Upload images of the item labels" : "Upload an image of the product label" %>
 
-<% page_title = true ? "Upload images of the item labels" : "Upload an image of the product label" %>
+<% content_for :page_title, page_title %>
+<% content_for :after_header do %>
+  <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
+<% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
+    <%= render 'error_summary', errors: @notification.errors %>
 
-<h1 class="govuk-heading-xl">Upload images of the item labels</h1>
-<h1 class="govuk-heading-xl">Upload an image of the product label</h1>
+    <h1 class="govuk-heading-xl"><%= page_title %></h1>
+
+    <% if @notification.is_multicomponent? %>
+      <p class="govuk-body">
+        For National Poison Information Services to identify the item, you need to upload images of the item labels.
+      </p>
+      <p class="govuk-body">
+        To further help identify the items, you can also provide a photo of the kit and its items.
+      </p>
+      <p class="govuk-body">
+        You can upload up to 10 images. Each file can be up to 30MB and must be a JPG, PNG or PDF.
+      </p>
+      <p class="govuk-body">
+        Upload an image of the label for each item in the kit.
+      </p>
+      <p class="govuk-body">
+        The image must be in focus and all packaging text legible.
+      </p>
+    <% else %>
+      <p class="govuk-body">
+        For National Poison Information Services to identify the product, you need to upload an image of the product label.
+      </p>
+      <p class="govuk-body">
+        To further help identify the product, you can also provide a photo of it.
+      </p>
+      <p class="govuk-body">
+       The images you need to provide depend on the type of product and how it’s packaged.
+     </p>
+     <p class="govuk-body">
+       The image must be in focus and all packaging text legible.
+     </p>
+
+      <%= govukDetails(summaryText: 'What images are needed?') do %>
+        <h2 class="govuk-heading-s">
+          Example 1
+        </h2>
+        <p class="govuk-body">
+          The product is a standalone bottle with no secondary packaging.
+        </p>
+        <p class="govuk-body">
+          You must supply an image of the bottle label. You can also supply a photo of the bottle.
+        </p>
+        <h2 class="govuk-heading-s">
+          Example 2
+        </h2>
+        <p class="govuk-body">
+          The product is a bottle in a box.
+        </p>
+        <p class="govuk-!-margin-bottom-1">
+          You must supply an image of the bottle label. You can also supply:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+           <li>a photo of the bottle</li>
+           <li>an image of the label on the box</li>
+           <li>a photo of the packing</li>
+        </ul>
+      <% end %>
+    <% end %>
+
+    <%= form_with(url: wizard_path, method: :put, multipart: true) do |form| %>
+
+      <% classes = "govuk-form-group" %>
+      <% classes += " govuk-form-group--error" if @notification.errors.messages[:image_uploads].any? %>
+
+      <div class="<%= classes %>">
+        <%= form.label :image_upload, "Upload a file", class: "govuk-label govuk-label--s" %>
+        <% if @notification.errors.messages[:image_uploads].any? %>
+          <span class="govuk-error-message"><%= @notification.errors.messages[:image_uploads][0] %></span>
+        <% end %>
+        <%= form.file_field :image_upload, multiple: true, class: "govuk-file-upload", accept: ImageUpload.allowed_types.join(", ") %>
+      </div>
+      <%= form.submit "Continue", class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>
