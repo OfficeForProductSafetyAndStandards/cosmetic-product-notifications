@@ -21,6 +21,7 @@ class NotificationBuildController < ApplicationController
 
   def show
     # binding.pry
+    puts "show: #{Time.now.to_f}"
     render_wizard
   end
 
