@@ -481,14 +481,14 @@ module NotificationPropertiesHelper
   }.freeze
 
   EXPOSURE_CONDITION_NAME = {
-      rinse_off: "Rinse off",
-      leave_on: "Leave on",
+      rinse_off: "Rinsed off",
+      leave_on: "Left on",
   }.freeze
 
   PHYSICAL_FORM = {
-      solid_or_pressed_powder: "Solid/pressed powder",
+      solid_or_pressed_powder: "Solid or pressed powder",
       loose_powder: "Loose powder",
-      cream_or_paste: "Cream/paste",
+      cream_or_paste: "Cream or paste",
       liquid: "Liquid",
       foam: "Foam",
       spray: "Spray",

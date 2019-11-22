@@ -111,7 +111,7 @@ private
       end
       render_wizard @notification
     else
-      @notification.errors.add :single_or_multi_component, "Must not be nil"
+      @notification.errors.add :single_or_multi_component, "Select yes if the product is a multi-item kit"
       render step
     end
   end
@@ -196,7 +196,7 @@ private
       @notification.industry_reference = nil
       render_wizard @notification
     else
-      @notification.errors.add :add_internal_reference, "Please select an option"
+      @notification.errors.add :add_internal_reference, "Select yes to add an internal reference"
       render step
     end
   end

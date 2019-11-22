@@ -32,8 +32,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
-    # single_or_multi_component
-    choose("The cosmetic product is a single item")
+    # Multi-item kit?
+    choose("No")
     click_button "Continue"
 
     # number_of_shades
@@ -45,7 +45,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # special-applicator
-    choose("No")
+    choose("A typical non-pressurised bottle, jar, sachet or other package")
     click_button "Continue"
 
     # contains_cmrs
@@ -112,8 +112,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
-    # single_or_multi_component
-    choose("The cosmetic product is a single item")
+    # Multi-item kit?
+    choose("No")
     click_button "Continue"
 
     # number_of_shades
@@ -125,7 +125,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # special-applicator
-    choose("No")
+    choose("A typical non-pressurised bottle, jar, sachet or other package")
     click_button "Continue"
 
     # contains_cmrs
@@ -185,8 +185,8 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
-    # single_or_multi_component
-    choose("The cosmetic product is a single item")
+    # Multi-item kit?
+    choose("No")
     click_button "Continue"
 
     # number_of_shades
@@ -198,7 +198,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # special-applicator
-    choose("No")
+    choose("A typical non-pressurised bottle, jar, sachet or other package")
     click_button "Continue"
 
     # contains_cmrs
@@ -265,12 +265,12 @@ RSpec.describe "Manually enter product details", type: :system do
     choose("No")
     click_button "Continue"
 
-    # single_or_multi_component
-    choose("The cosmetic product is a single item")
+    # Multi-item kit?
+    choose("No")
     click_button "Continue"
 
     # number_of_shades
-    choose("Yes, the cosmetic product is available in more than 1 shade and all other aspects of the notification are the same")
+    choose("Yes")
     click_button "Continue"
 
     # add_shades
@@ -287,7 +287,7 @@ RSpec.describe "Manually enter product details", type: :system do
     click_button "Continue"
 
     # special-applicator
-    choose("No")
+    choose("A typical non-pressurised bottle, jar, sachet or other package")
     click_button "Continue"
 
     # contains_cmrs

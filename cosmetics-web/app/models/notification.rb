@@ -34,7 +34,7 @@ class Notification < ApplicationRecord
             allow_nil: true
   validates :cpnp_reference, presence: true, on: :file_upload
   validates :import_country, presence: true, on: :add_import_country
-  validates :industry_reference, presence: true, on: :add_internal_reference
+  validates :industry_reference, presence: { on: :add_internal_reference, message: "Enter an internal reference" }
   validates :under_three_years, inclusion: { in: [true, false] }, on: :for_children_under_three
   validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
   validates :ph_min_value, :ph_max_value, presence: true, on: :ph_range
@@ -185,7 +185,12 @@ private
 
     changed.each { |attribute|
       if mandatory_attributes.include?(attribute) && self[attribute].blank?
-        errors.add attribute, "must not be blank"
+
+        if attribute == "product_name"
+          errors.add attribute, "Enter the product name"
+        else
+          errors.add attribute, "Must not be empty"
+        end
       end
     }
   end

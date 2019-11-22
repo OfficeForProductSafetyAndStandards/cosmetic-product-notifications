@@ -1,30 +1,37 @@
-- title = "Is the cosmetic product available as a single item or as a kit?"
-- hint = capture do
-  p
-    | Kits are composed of components that are not marketed separately.
-                They are sold as a kit and intended to be used as a mix or sequentially.
-  p
-    | Examples of multi-component cosmetics include:
-  ul.govuk-list.govuk-list--bullet
-    li hair dye sets
-    li skin peeling kits
-    li permanent styling products
-    li anti-age or revitalising kits
-  p
-    | If the cosmetic product is sold as a gift set where the components are not mixed
-                or used sequentially, submit a notification for each product separately.
-
-- content_for :page_title, "Single item or kit"
+- title = "Multi-item kits"
+- content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
 = form_with model: @notification, url: wizard_path, method: :put do |form|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+
       = render "form_components/govuk_error_summary", form: form
+
+      h1.govuk-heading-xl = title
+
+      p
+        | Multi-item kits have items that need to be mixed together or used in a particular order for them to work.
+      p[class="govuk-!-margin-bottom-1"]
+        | Examples of multi-item kits include:
+      ul.govuk-list.govuk-list--bullet
+        li hair dye kits
+        li skin peeling kits
+        li permanent styling products
+        li anti-ageing or revitalising kits
+      p.govuk-inset-text
+        | Where a set contains separate products that do not need to be mixed together or used in a particular order
+          for the product to work, you’ll need to
+        =< link_to "submit a separate notification for each product", \
+          responsible_person_notifications_path(@notification.responsible_person),
+                "data-topnav": "responsible_persons/notifications",
+                class: "govuk-link--no-visited-state"
+
+        | .
+
       = render "form_components/govuk_radios", form: form, key: :single_or_multi_component,
-          fieldset: { legend: { text: title, classes: "govuk-label--xl", isPageHeading: true } },
-          hint: { text: hint },
-          items: [{ text: "The cosmetic product is a single item", value: "single" },
-                  { text: "The cosmetic product is a multi-item kit", value: "multiple" }]
+          fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m" } },
+          items: [{ text: "Yes", value: "multiple" },
+                  { text: "No, this is a single product", value: "single" }]
       = form.submit "Continue", class: "govuk-button"
