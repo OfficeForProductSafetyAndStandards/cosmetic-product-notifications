@@ -53,19 +53,23 @@ module ManualNotificationConcern
       before_render&.call
       render_wizard model
     else
-      if param == :is_hair_dye
-        model.errors.add param, "Select yes if the product contains a hair dye"
-      elsif param == :is_ph_between_3_and_10
-        model.errors.add param, "Select the pH range of the product when mixed as instructed"
-      elsif param == :contains_special_applicator
-        model.errors.add param, "Select yes if #{model.component_name} comes in an applicator"
-      elsif param == :contains_cmrs
-        model.errors.add param, "Select yes if #{model.component_name} contains category 1A or 1B CMRs"
-      elsif param == :contains_nanomaterials
-        model.errors.add param, "Select yes if #{model.component_name} contains nanomaterials"
+
+      error_message = case param
+      when :is_hair_dye
+        "Select yes if the product contains a hair dye"
+      when :is_ph_between_3_and_10
+        "Select the pH range of the product when mixed as instructed"
+      when :contains_special_applicator
+        "Select yes if #{model.component_name} comes in an applicator"
+      when :contains_cmrs
+        "Select yes if #{model.component_name} contains category 1A or 1B CMRs"
+      when :contains_nanomaterials
+        "Select yes if #{model.component_name} contains nanomaterials"
       else
-        model.errors.add param, "Select an option"
+        "Select an option"
       end
+
+      model.errors.add param, error_message
       render step
     end
   end

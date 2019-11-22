@@ -17,11 +17,12 @@ class ResponsiblePersons::AddNotificationWizardController < ApplicationControlle
     answer = params[:answer]
     if answer != "yes" && answer != "no"
 
-      @error_text = if step == :do_you_have_files_from_eu_notification
+      @error_text = case step
+                    when :do_you_have_files_from_eu_notification
                       "Select yes if you have EU notification files"
-                    elsif step == :will_products_be_notified_in_eu
+                    when :will_products_be_notified_in_eu
                       "Select yes if you’re likely to notify the EU about these products"
-                    elsif step == :have_products_been_notified_in_eu
+                    when :have_products_been_notified_in_eu
                       "Select yes if the EU has been notified about these products using CPNP"
                     else
                       "Select an option"
