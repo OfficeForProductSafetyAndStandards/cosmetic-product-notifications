@@ -5,14 +5,13 @@ class NanomaterialNotificationsController < ApplicationController
 
   before_action :redirect_to_confirmation_page_if_submitted, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit]
 
-  def index
-  end
+  def index; end
 
   def new
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new
     @form_url = responsible_person_nanomaterials_path(@responsible_person)
     @form_method = :post
-    render 'name'
+    render "name"
   end
 
   def create
@@ -23,7 +22,9 @@ class NanomaterialNotificationsController < ApplicationController
     if @nanomaterial_notification.save(context: :add_name)
       redirect_to notified_to_eu_nanomaterial_path(@nanomaterial_notification)
     else
-      render "new"
+      @form_url = responsible_person_nanomaterials_path(@responsible_person)
+      @form_method = :post
+      render "name"
     end
   end
 
