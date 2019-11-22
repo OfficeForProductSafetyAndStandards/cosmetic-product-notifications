@@ -39,7 +39,7 @@ private
     confirm_restrictions.nil? ||
       (confirm_restrictions == "no" && toxicology_incomplete?) ||
       (
-        confirm_restrictions == "yes" && usage_confirmed_incomplete? ||
+        (confirm_restrictions == "yes" && usage_confirmed_incomplete?) ||
        (confirm_usage == "no" && toxicology_incomplete?)
       )
   end
