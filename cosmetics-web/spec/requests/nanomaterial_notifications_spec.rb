@@ -99,6 +99,83 @@ RSpec.describe "Nanomaterial notifications", type: :request do
     end
   end
 
+  describe "GET /nanomaterials/ID/name" do
+    context "when the user has access" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Zinc oxide") }
+
+      before do
+        get "/nanomaterials/#{nanomaterial_notification.id}/name"
+      end
+
+      it "is successful" do
+        expect(response.code).to eql("200")
+      end
+
+      it "has a page heading" do
+        expect(response.body).to have_h1_with_text("What is the name of the nanomaterial?")
+      end
+    end
+
+    context "when the notification has already been submitted" do
+      before do
+        get "/nanomaterials/#{submitted_nanomaterial_notification.id}/name"
+      end
+
+      it "redirects to the confirmation page" do
+        expect(response).to redirect_to("/nanomaterials/#{submitted_nanomaterial_notification.id}/confirmation")
+      end
+    end
+
+    context "when the nanomaterial notification belongs to a different company" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: other_company) }
+
+      it "displays an error" do
+        expect {
+          get "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu"
+        }.to raise_error(Pundit::NotAuthorizedError)
+      end
+    end
+  end
+
+  describe "PATCH /nanomaterials/ID/name" do
+    before do
+      patch "/nanomaterials/#{nanomaterial_notification.id}/name", params: {
+        nanomaterial_notification: {
+          name: name,
+        },
+      }
+    end
+
+    context "when the user has access" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Previous name") }
+
+      context "with a valid new name" do
+        let(:name) { "Updated name" }
+
+        it "redirects to the Check your answers page" do
+          expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/review")
+        end
+
+        it "updates the name of the nanomaterial" do
+          expect(nanomaterial_notification.reload.name).to eql("Updated name")
+        end
+      end
+
+      context "with no new name given" do
+        let(:name) { "" }
+
+        it "renders the page" do
+          expect(response.code).to eql("200")
+        end
+
+        it "displays an error message" do
+          expect(response.body).to include("There is a problem")
+        end
+      end
+    end
+  end
+
+
   describe "GET /nanomaterials/ID/notified_to_eu" do
     context "when the user has access" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Zinc oxide") }
