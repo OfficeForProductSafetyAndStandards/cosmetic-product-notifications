@@ -55,18 +55,18 @@ module ManualNotificationConcern
     else
 
       error_message = case param
-      when :is_hair_dye
-        "Select yes if the product contains a hair dye"
-      when :is_ph_between_3_and_10
-        "Select the pH range of the product when mixed as instructed"
-      when :contains_special_applicator
-        "Select yes if #{model.component_name} comes in an applicator"
-      when :contains_cmrs
-        "Select yes if #{model.component_name} contains category 1A or 1B CMRs"
-      when :contains_nanomaterials
-        "Select yes if #{model.component_name} contains nanomaterials"
-      else
-        "Select an option"
+                      when :is_hair_dye
+                        "Select yes if the product contains a hair dye"
+                      when :is_ph_between_3_and_10
+                        "Select the pH range of the product when mixed as instructed"
+                      when :contains_special_applicator
+                        "Select yes if #{model.component_name} comes in an applicator"
+                      when :contains_cmrs
+                        "Select yes if #{model.component_name} contains category 1A or 1B CMRs"
+                      when :contains_nanomaterials
+                        "Select yes if #{model.component_name} contains nanomaterials"
+                      else
+                        "Select an option"
       end
 
       model.errors.add param, error_message
