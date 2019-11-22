@@ -49,9 +49,13 @@ en:
         notification:
           attributes:
             components_are_mixed:
-              inclusion: "Select an option"
+              inclusion: "Select yes if the kit contains items that need to be mixed"
             under_three_years:
-              inclusion: "Choose an option"
+              inclusion: "Select yes if the product is intended to be used on children under 3 years old"
+            ph_min_value:
+              blank: "Enter the minimum\u00A0pH"
+            ph_max_value:
+              blank: "Enter the maximum\u00A0pH"
         component:
           attributes:
             name:
@@ -60,11 +64,19 @@ en:
               blank: "Choose an option"
             other_special_applicator:
               blank: "Enter the type of applicator"
+            cmrs:
+              blank: "Enter at least 1 CMR"
         nano_element:
           attributes:
             purposes:
               blank: "Choose an option"
               inclusion: "%{value} is not a valid purpose"
+        nano_material:
+          attributes:
+            exposure_condition:
+              missing: "Select if %{component_name} is intended to be rinsed off or left on"
+            exposure_routes:
+              blank: "Select how the user is likely to be exposed to the nanomaterials"
         trigger_question:
           attributes:
             applicable:
@@ -81,6 +93,10 @@ en:
               post_brexit_date_given: "The date the EU was notified on CPNP must be before 1 February 2020"
             file:
               missing: "Select a file"
+        cmr:
+          attributes:
+            name:
+              blank: "Enter a name"
   errors:
     format: "%{message}"
     messages:

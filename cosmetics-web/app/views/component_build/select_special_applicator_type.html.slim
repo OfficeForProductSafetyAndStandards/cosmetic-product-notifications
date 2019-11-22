@@ -2,8 +2,8 @@
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-- title = "What form does #{@component_name} take?"
-- other_text = "How is #{@component_name} packaged?"
+- title = "What type of applicator?"
+- other_text = "Type of applicator"
 
 = form_with model: @component, url: wizard_path, method: :put do |form|
   .govuk-grid-row

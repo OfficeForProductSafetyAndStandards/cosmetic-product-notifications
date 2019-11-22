@@ -1,32 +1,27 @@
-ruby:
-  title = "Contains CMRs"
-  question =  "Does #{@component_name} contain substances listed as Category 1A or 1B mutagens,
-  carcinogens or reproductive toxicants (CMRs)?"
-  cmr_list_url = "https://eur-lex.europa.eu/legal-content/en/TXT/PDF/?uri=CELEX:02008R1272-20180301&from=EN"
-- hint = capture do
-  p
-    | Category 1A substances are ‘known’ CMRs.
-  p
-    | Category 1B substances are ‘presumed’ CMRs.
-  p
-    => link_to "The classification, labelling and packaging regulation (opens in a new tab)",
-            cmr_list_url, target: :_blank, rel: 'noopener'
-    | contains definitions of category 1A and 1B mutagens (table 3.5.1),
-      carcinogens (table 3.6.1) and reproductive toxicants (table 3.7.1).
-- hint = capture do
-  = render "govuk_details", summary: "CMRs definition", text: hint
+- title = "Substances known or presumed to cause cancer, mutations or are toxic for reproduction (CMRs)"
+- question = "Does #{@component_name} contain category 1A or 1B CMRs?"
 
 - content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
 
-= form_with model: @component, url: wizard_path, method: :put do |form|
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_with model: @component, url: wizard_path, method: :put do |form|
       = render "form_components/govuk_error_summary", form: form
+
+      h1.govuk-heading-xl = title
+
+      p[class='govuk-!-margin-bottom-1']
+        | CMRs categories are:
+
+      ul.govuk-list.govuk-list--bullet
+        li 1A – known from studies on humans
+        li 1B – presumed from studies on animals
+        li 2 – suspected from some human or animal studies
+
       = render "form_components/govuk_radios", form: form, key: :contains_cmrs,
-              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
-              hint: { text: hint },
+              fieldset: { legend: { text: question, classes: "govuk-label--m" } },
               items: [{ text: "Yes", value: :yes },
                       { text: "No", value: :no }]
       = form.submit "Continue", class: "govuk-button"

@@ -10,8 +10,9 @@
             id: "file-upload-form", local: true do |form|
       span.error-summary-js
         - if @errors.blank?
-          = render "components/govuk_error_summary", titleText: "There is a problem", errorList: [{ text: "Too many" + \
-              " files selected. Please select no more than #{NotificationFile.get_max_number_of_files} files",
+          = render "components/govuk_error_summary", titleText: "There is a problem",
+            errorList: [{ text: "You can only select up to " \
+            "#{NotificationFile.get_max_number_of_files} files at the same time",
               href: "#uploaded_files" }]
       span#error-summary
         - if @errors.present?

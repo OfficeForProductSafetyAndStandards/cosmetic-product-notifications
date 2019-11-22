@@ -1,15 +1,4 @@
-- title = "Contains nanomaterials"
-- question = "Does #{@component_name} contain nanomaterials?"
-- nanomaterial_definition = capture do
-  p
-    | A nanomaterial:
-  ul.govuk-list--bullet
-    li has one or more external dimensions, or an internal structure, with a size ranging from 1 nm to 100 nm
-    li is insoluble or biopersistent
-    li is intentionally manufactured
-- hint = capture do
-  = render "govuk_details", summary: "What is a nanomaterial?", text: nanomaterial_definition
-
+- title = "Nanomaterials"
 - content_for :page_title, title
 - content_for :after_header do
   = link_to "Back", previous_wizard_path, class: "govuk-back-link"
@@ -18,8 +7,18 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = render "form_components/govuk_error_summary", form: form
+
+      h1.govuk-heading-xl = title
+
+      p.govuk-body[class="govuk-!-margin-bottom-1"]
+        | A nanomaterial:
+      ul.govuk-list.govuk-list--bullet
+        li has one or more external dimensions, or an internal structure, with a size ranging from 1 nm to 100 nm
+        li is insoluble or biopersistent
+        li is intentionally manufactured
+
       = render "form_components/govuk_radios", form: form, key: :contains_nanomaterials,
-              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
-              hint: { html: hint },
+              fieldset: { legend: { text: "Does #{@component_name} contain nanomaterials?",
+              classes: "govuk-label--m" } },
               items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }]
       = form.submit "Continue", class: "govuk-button"
