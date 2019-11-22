@@ -15,14 +15,8 @@ class NanoElement < ApplicationRecord
 
   def incomplete?
     purposes.blank? ||
-      (non_standard? && confirm_toxicology_notified.nil?) ||
-      (
-        standard? && (
-          confirm_restrictions.nil? ||
-          (confirm_restrictions == "no" && confirm_toxicology_notified.nil?) ||
-          (confirm_restrictions == "yes" && confirm_usage.nil?)
-        )
-      )
+      (non_standard? && toxicology_incomplete?) ||
+      (standard? && restrictions_confirmed_incomplete?)
   end
 
   def standard?
@@ -31,5 +25,26 @@ class NanoElement < ApplicationRecord
 
   def non_standard?
     purposes.present? && purposes.include?("other")
+  end
+
+private
+
+  def toxicology_incomplete?
+    confirm_toxicology_notified.nil? ||
+      confirm_toxicology_notified == "not sure" ||
+      confirm_toxicology_notified == "no"
+  end
+
+  def restrictions_confirmed_incomplete?
+    confirm_restrictions.nil? ||
+      (confirm_restrictions == "no" && toxicology_incomplete?) ||
+      (
+        (confirm_restrictions == "yes" && usage_confirmed_incomplete?) ||
+       (confirm_usage == "no" && toxicology_incomplete?)
+      )
+  end
+
+  def usage_confirmed_incomplete?
+    confirm_usage.nil?
   end
 end
