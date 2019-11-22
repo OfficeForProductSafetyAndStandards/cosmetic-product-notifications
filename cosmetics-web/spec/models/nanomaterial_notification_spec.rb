@@ -2,24 +2,24 @@ require "rails_helper"
 
 RSpec.describe NanomaterialNotification, type: :model do
   describe "validations" do
-    describe "IUPAC name" do
+    describe "name" do
       context "when not setting a name" do
         let(:nanomaterial_notification) { described_class.new }
 
         before do
-          nanomaterial_notification.valid?(:add_iupac_name)
+          nanomaterial_notification.valid?(:add_name)
         end
 
         it "adds an error" do
-          expect(nanomaterial_notification.errors[:iupac_name]).to include("Enter the name of the nanomaterial")
+          expect(nanomaterial_notification.errors[:name]).to include("Enter the name of the nanomaterial")
         end
       end
 
       context "when setting a name" do
-        let(:nanomaterial_notification) { described_class.new(iupac_name: "Test name") }
+        let(:nanomaterial_notification) { described_class.new(name: "Test name") }
 
         it "is valid" do
-          expect(nanomaterial_notification.valid?(:add_iupac_name)).to be true
+          expect(nanomaterial_notification.valid?(:add_name)).to be true
         end
       end
     end

@@ -12,14 +12,14 @@
 
     <%= govukSummaryList(rows: [
       {
-        key: {text: 'IUPAC name'},
-        value: {text: @nanomaterial_notification.iupac_name},
+        key: {text: 'Name'},
+        value: {text: @nanomaterial_notification.name},
         actions: {
           items: [
             {
               href: name_nanomaterial_path(@nanomaterial_notification),
               text: "Change",
-              visuallyHiddenText: "IUPAC name"
+              visuallyHiddenText: "name"
             }
           ]
         }

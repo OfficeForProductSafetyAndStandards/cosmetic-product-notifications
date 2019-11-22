@@ -71,7 +71,7 @@ en:
               inclusion: "Select an option"
         nanomaterial_notification:
           attributes:
-            iupac_name:
+            name:
               blank: "Enter the name of the nanomaterial"
             eu_notified:
               inclusion: "Select yes if the EU was notified about the nanomaterial before 1 February 2020"

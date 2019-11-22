@@ -13,10 +13,10 @@ class NanomaterialNotificationsController < ApplicationController
 
   def create
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new
-    @nanomaterial_notification.iupac_name = params[:nanomaterial_notification][:iupac_name]
+    @nanomaterial_notification.name = params[:nanomaterial_notification][:name]
     @nanomaterial_notification.user_id = current_user.id
 
-    if @nanomaterial_notification.save(context: :add_iupac_name)
+    if @nanomaterial_notification.save(context: :add_name)
       redirect_to notified_to_eu_nanomaterial_path(@nanomaterial_notification)
     else
       render "new"
@@ -26,9 +26,9 @@ class NanomaterialNotificationsController < ApplicationController
   def name; end
 
   def update_name
-    @nanomaterial_notification.iupac_name = params[:nanomaterial_notification][:iupac_name]
+    @nanomaterial_notification.name = params[:nanomaterial_notification][:name]
 
-    if @nanomaterial_notification.save(context: :add_iupac_name)
+    if @nanomaterial_notification.save(context: :add_name)
       redirect_to review_nanomaterial_path(@nanomaterial_notification)
     else
       render "name"

@@ -3,7 +3,7 @@ class NanomaterialNotification < ApplicationRecord
 
   belongs_to :responsible_person
 
-  validates :iupac_name, presence: true, on: :add_iupac_name
+  validates :name, presence: true, on: :add_name
 
   validates :eu_notified, inclusion: { in: [true, false] }, on: :eu_notification
 

@@ -58,13 +58,13 @@ RSpec.describe "Nanomaterial notifications", type: :request do
     before do
       post "/responsible_persons/#{responsible_person.id}/nanomaterials", params: {
         nanomaterial_notification: {
-          iupac_name: iupac_name,
+          name: name,
         },
       }
     end
 
     context "with a valid name" do
-      let(:iupac_name) { "Test nanomaterial" }
+      let(:name) { "Test nanomaterial" }
 
       it "redirects to the EU notification page" do
         expect(response).to redirect_to(/\/nanomaterials\/\d+\/notified_to_eu/)
@@ -72,14 +72,14 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
       it "creates a nanomaterial notification with that name" do
         nanomaterial_notification = responsible_person.nanomaterial_notifications
-          .find_by(iupac_name: "Test nanomaterial")
+          .find_by(name: "Test nanomaterial")
 
         expect(nanomaterial_notification).not_to be_nil
       end
 
       it "associates the nanomaterial notification with the current user" do
         nanomaterial_notification = responsible_person.nanomaterial_notifications
-          .find_by(iupac_name: "Test nanomaterial")
+          .find_by(name: "Test nanomaterial")
 
         # TODO: specify this using mocked user_id
         expect(nanomaterial_notification.user_id).not_to be_nil
@@ -87,7 +87,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
     end
 
     context "with no name given" do
-      let(:iupac_name) { "" }
+      let(:name) { "" }
 
       it "renders the page" do
         expect(response.code).to eql("200")
@@ -101,7 +101,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
   describe "GET /nanomaterials/ID/notified_to_eu" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, iupac_name: "Zinc oxide") }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Zinc oxide") }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu"
@@ -339,7 +339,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
   describe "GET /nanomaterials/ID/confirmation" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person, iupac_name: "Zinc oxide") }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person, name: "Zinc oxide") }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/confirmation"
