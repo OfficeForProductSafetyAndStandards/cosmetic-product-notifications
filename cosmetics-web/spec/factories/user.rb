@@ -15,7 +15,7 @@ FactoryBot.define do
     # The following users match specific test accounts on Keycloak and are used in system tests for Keycloak integration
 
     factory :keycloak_test_user do
-      id { "dbbc495b-475e-419a-a151-2e61c6f9fdce" }
+      id { ENV.fetch("KEYCLOAK_USER_ID", "dbbc495b-475e-419a-a151-2e61c6f9fdce") }
       name { "Test User" }
       email { "user@example.com" }
     end
@@ -33,7 +33,7 @@ FactoryBot.define do
     end
 
     factory :keycloak_poison_centre_user do
-      id { "ece05a23-25bd-4be1-9a65-deda1dac3f8c" }
+      id { ENV.fetch("KEYCLOAK_POISON_CENTER_USER_ID", "ece05a23-25bd-4be1-9a65-deda1dac3f8c") }
       name { "Poison Centre User" }
       email { "poison.centre@example.com" }
     end

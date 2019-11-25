@@ -101,25 +101,26 @@ jobs:
         bin/rails db:setup
     - name: Run Tests
       env:
-        KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
-        KEYCLOAK_CLIENT_ID: ${{ secrets.KeycloakClientId }}
-        KEYCLOAK_CLIENT_SECRET: ${{ secrets.KeycloakClientSecret }}
         ELASTICSEARCH_URL: localhost
         PGHOST: localhost
         PGUSER: postgres
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bundle exec rspec spec/requests
+        bundle exec rspec spec/requests spec/controllers/ spec/mailers spec/models spec/policies/
     - name: Run system tests
       env:
         KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
         KEYCLOAK_CLIENT_ID: ${{ secrets.KeycloakClientId }}
         KEYCLOAK_CLIENT_SECRET: ${{ secrets.KeycloakClientSecret }}
+        KEYCLOAK_USER_ID: ${{ secrets.KeycloakUserId }}
+        KEYCLOAK_POISON_CENTER_USER_ID: ${{ secrets.KeycloakPoisonCenterUserId }}
+        KEYCLOAK_USER_PASSWORD: ${{ secrets.KeycloakUserPassword }}
         ELASTICSEARCH_URL: localhost
         PGHOST: localhost
         PGUSER: postgres
         RAILS_ENV: test
       run: |
         cd cosmetics-web
+        ./bin/webpack
         bundle exec rspec spec/system
