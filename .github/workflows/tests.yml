@@ -52,22 +52,22 @@ jobs:
       run: time curl -v 0.0.0.0:9200
     - name: Check elasticsearch 2
       run: time curl -v 0.0.0.0:9200
-      #    - uses: actions/cache@v1
-      #      with:
-      #        path: cosmetics-web/vendor/bundle
-      #        key: ${{ runner.OS }}-gems
-      #        restore-keys: |
-      #          ${{ runner.OS }}-gems
-      #          ${{ runner.OS }}-gems-
-      #          ${{ runner.OS }}-
-      #    - uses: actions/cache@v1
-      #      with:
-      #        path: cosmetics-web/node_modules
-      #        key: ${{ runner.OS }}-node
-      #        restore-keys: |
-      #          ${{ runner.OS }}-node
-      #          ${{ runner.OS }}-node-
-      #          ${{ runner.OS }}-
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/vendor/bundle
+        key: ${{ runner.OS }}-gems
+        restore-keys: |
+          ${{ runner.OS }}-gems
+          ${{ runner.OS }}-gems-
+          ${{ runner.OS }}-
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/node_modules
+        key: ${{ runner.OS }}-node
+        restore-keys: |
+          ${{ runner.OS }}-node
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
     - name: Check gems
       run: ls cosmetics-web
     - name: Install ruby gems
@@ -78,7 +78,7 @@ jobs:
       run: |
         cd cosmetics-web
         gem install bundler -v 1.17.3
-        bundle install --deployment
+        bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
     - name: Check gems 2
       run: ls cosmetics-web/vendor/bundle
     - name: Install js dependencies
@@ -107,20 +107,20 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bundle exec rspec spec/requests spec/controllers/ spec/mailers spec/models spec/policies/
-    - name: Run system tests
-      env:
-        KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
-        KEYCLOAK_CLIENT_ID: ${{ secrets.KeycloakClientId }}
-        KEYCLOAK_CLIENT_SECRET: ${{ secrets.KeycloakClientSecret }}
-        KEYCLOAK_USER_ID: ${{ secrets.KeycloakUserId }}
-        KEYCLOAK_POISON_CENTER_USER_ID: ${{ secrets.KeycloakPoisonCenterUserId }}
-        KEYCLOAK_USER_PASSWORD: ${{ secrets.KeycloakUserPassword }}
-        ELASTICSEARCH_URL: localhost
-        PGHOST: localhost
-        PGUSER: postgres
-        RAILS_ENV: test
-      run: |
-        cd cosmetics-web
-        ./bin/webpack
-        bundle exec rspec spec/system
+        bundle exec rspec spec/requests spec/controllers/ spec/mailers spec/models spec/policies/ spec/lib spec/analyzers spec/db
+        #    - name: Run system tests
+        #      env:
+        #        KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
+        #        KEYCLOAK_CLIENT_ID: ${{ secrets.KeycloakClientId }}
+        #        KEYCLOAK_CLIENT_SECRET: ${{ secrets.KeycloakClientSecret }}
+        #        KEYCLOAK_USER_ID: ${{ secrets.KeycloakUserId }}
+        #        KEYCLOAK_POISON_CENTER_USER_ID: ${{ secrets.KeycloakPoisonCenterUserId }}
+        #        KEYCLOAK_USER_PASSWORD: ${{ secrets.KeycloakUserPassword }}
+        #        ELASTICSEARCH_URL: localhost
+        #        PGHOST: localhost
+        #        PGUSER: postgres
+        #        RAILS_ENV: test
+        #      run: |
+        #        cd cosmetics-web
+        #        ./bin/webpack
+        #        bundle exec rspec spec/system
