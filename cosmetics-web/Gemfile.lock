@@ -158,6 +158,8 @@ GEM
       jwt
       rest-client
     kramdown (1.17.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -414,6 +416,7 @@ DEPENDENCIES
   govuk_notify_rails (= 2.1.0)
   jbuilder (~> 2.9)
   keycloak (= 2.4.1)
+  launchy
   listen (= 3.1.5)
   lograge (= 0.11.2)
   mini_magick (= 4.9.3)
