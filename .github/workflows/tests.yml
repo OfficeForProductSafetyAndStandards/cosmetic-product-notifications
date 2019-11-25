@@ -48,10 +48,6 @@ jobs:
       run: sudo apt-get install libpq-dev
     - name: install chromedriver
       run: wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/bin && sudo chmod +x /usr/bin/chromedriver
-    - name: Check elasticsearch
-      run: time curl -v 0.0.0.0:9200
-    - name: Check elasticsearch 2
-      run: time curl -v 0.0.0.0:9200
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/vendor/bundle
@@ -69,7 +65,7 @@ jobs:
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
     - name: Check gems
-      run: ls cosmetics-web
+      run: ls -a cosmetics-web/vendor/bundle
     - name: Install ruby gems
       env:
         PGHOST: localhost
@@ -80,7 +76,7 @@ jobs:
         gem install bundler -v 1.17.3
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
     - name: Check gems 2
-      run: ls cosmetics-web/vendor/bundle
+      run: ls -a cosmetics-web/vendor/bundle
     - name: Install js dependencies
       env:
         PGHOST: localhost
