@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html class="govuk-template app-html-class" lang="en">
+
+  <%= render "layouts/head" %>
+
+  <body class="govuk-template__body app-body-class">
+
+    <%= render "layouts/header" %>
+
+    <div class="govuk-main-wrapper">
+      <%= yield %>
+    </div>
+
+    <%= render "layouts/footer" %>
+  </body>
+</html>

@@ -1,5 +1,4 @@
-- question = "Does #{@component_name} come in an applicator?"
-- hint = "For example, a spray, a patch or encapsulated"
+- question = "What is the #{@component_name} contained in?"
 
 - content_for :page_title, question
 - content_for :after_header do
@@ -11,7 +10,7 @@
       = render "form_components/govuk_error_summary", form: form
       = render "form_components/govuk_radios", form: form, key: :contains_special_applicator,
             fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
-            hint: { text: hint },
-            items: [{ text: "Yes", value: :yes },
-                    { text: "No", value: :no }]
+            items: [{ text: "A typical non-pressurised bottle, jar, sachet or other package", value: :no },
+                    { text: "A pressurised container, an impregnated sponge, " \
+                    + "wipe, patch or pad, or is encapsulated", value: :yes }]
       = form.submit "Continue", class: "govuk-button"

@@ -1,5 +1,5 @@
 - title = "Add CMRs"
-- question = "List all Category 1A or 1B CMRs."
+- question = "List category 1A or 1B CMRs"
 - cmr_errors = cmr_errors(@component)
 
 - content_for :page_title, title
@@ -14,7 +14,7 @@
       = render "components/govuk_fieldset",
               legend: { text: question, classes: "govuk-label--xl", isPageHeading: true }
       = form.fields_for :cmrs do |cmr_fields|
-        = cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-l"
+        = cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-m"
         = render "form_components/govuk_input",
                 form: cmr_fields,
                 key: :name,
