@@ -53,5 +53,35 @@ RSpec.describe "Notifications Dashboard", type: :feature do
         expect(body).to have_css(".add-documents", text: "Confirm and notify")
       end
     end
+
+    context "when the notification is missing information" do
+      it "has requires a frame formulation" do
+        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(true)
+        allow_any_instance_of(Notification).to receive(:images_required?).and_return(false)
+
+        visit responsible_person_notifications_path(responsible_person)
+
+        expect(body).to have_css(".add-documents", text: "Add missing information")
+      end
+
+      it "has requires a product image" do
+        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(false)
+        allow_any_instance_of(Notification).to receive(:images_required?).and_return(true)
+
+        visit responsible_person_notifications_path(responsible_person)
+
+        expect(body).to have_css(".add-documents", text: "Add missing information")
+      end
+
+      it "has incomplete nanomaterial" do
+        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(false)
+        allow_any_instance_of(Notification).to receive(:images_required?).and_return(false)
+        allow_any_instance_of(Notification).to receive(:nano_material_incomplete?).and_return(true)
+
+        visit responsible_person_notifications_path(responsible_person)
+
+        expect(body).to have_css(".add-documents", text: "Add missing information")
+      end
+    end
   end
 end
