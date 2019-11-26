@@ -77,6 +77,8 @@ jobs:
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
     - name: Check gems 2
       run: ls -a cosmetics-web/vendor/bundle
+    - name: Show ruby version
+      run: ruby -v
     - name: Install js dependencies
       env:
         PGHOST: localhost
