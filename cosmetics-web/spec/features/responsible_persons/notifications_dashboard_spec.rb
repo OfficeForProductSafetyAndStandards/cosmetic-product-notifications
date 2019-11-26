@@ -41,10 +41,17 @@ RSpec.describe "Notifications Dashboard", type: :feature do
       expect(body).to have_css(".govuk-tabs", text: "Incomplete (1)")
     end
 
-    context "when the notification is missing information" do
-      it "has requires a frame formulation"
-      it "has requires a product image"
-      it "has incomplete nanomaterial"
+    context "when the notification requires no more information" do
+      before do
+        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(false)
+        allow_any_instance_of(Notification).to receive(:images_required?).and_return(false)
+      end
+
+      it "can be notified" do
+        visit responsible_person_notifications_path(responsible_person)
+
+        expect(body).to have_css(".add-documents", text: "Confirm and notify")
+      end
     end
   end
 end
