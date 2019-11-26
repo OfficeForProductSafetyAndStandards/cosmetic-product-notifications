@@ -22,8 +22,6 @@ RSpec.describe "Add product image page", type: :request do
       let(:notification) { create(:notification, responsible_person: responsible_person, components: [create(:component)]) }
 
       it "has a singular page title" do
-        get "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image"
-        puts "  it: #{Time.now.to_f}"
         expect(response.body).to have_tag("h1", text: "Upload an image of the product label")
       end
     end

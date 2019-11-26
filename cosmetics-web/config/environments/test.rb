@@ -52,8 +52,4 @@ Rails.application.configure do
 
   # Url for mailer
   config.action_mailer.default_url_options = { host: "localhost", port: 3002 }
-
-  # Disable all logging during tests
-  #config.logger = Logger.new(nil)
-  Sidekiq::Logging.logger = nil
 end
