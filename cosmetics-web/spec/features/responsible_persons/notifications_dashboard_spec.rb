@@ -1,27 +1,50 @@
 require "rails_helper"
 
 RSpec.describe "Notifications Dashboard", type: :feature do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person_with_user) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
-
-    visit "/responsible_persons/#{responsible_person.id}/notifications"
   end
 
   it "is able to view my Notification Dashboard" do
+    visit responsible_person_notifications_path(responsible_person)
+
     expect(body).to have_css("#main-content")
   end
 
   it "has a errors tab" do
+    visit responsible_person_notifications_path(responsible_person)
+
     expect(body).to have_css(".govuk-tabs section#incomplete")
   end
 
   it "has an incomplete tab" do
+    visit responsible_person_notifications_path(responsible_person)
+
     expect(body).to have_css(".govuk-tabs section#errors")
   end
 
   it "has a complete tab" do
+    visit responsible_person_notifications_path(responsible_person)
+
     expect(body).to have_css(".govuk-tabs section#notified")
+  end
+
+  context "when the user incomplete notifications" do
+    let(:user) { responsible_person.responsible_person_users.first.user }
+    let!(:notification) { create(:draft_notification, responsible_person: responsible_person) }
+
+    it "should display the incomplete notification" do
+      visit responsible_person_notifications_path(responsible_person)
+
+      expect(body).to have_css(".govuk-tabs", text: "Incomplete (1)")
+    end
+
+    context "when the notification is missing information" do
+      it "has requires a frame formulation"
+      it "has requires a product image"
+      it "has incomplete nanomaterial"
+    end
   end
 end
