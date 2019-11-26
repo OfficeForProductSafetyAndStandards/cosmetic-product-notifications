@@ -68,25 +68,25 @@ RSpec.describe NanoElement, type: :model do
     end
   end
 
-  describe "#incomplete?" do
-    context "when a nonstandard nanomaterial notification is incomplete" do
+  describe "#required?" do
+    context "when a nonstandard nanomaterial notification is required" do
       it "purposes is not set" do
         nano_element.purposes = nil
 
-        expect(nano_element).to be_incomplete
+        expect(nano_element).to be_required
       end
 
       it "purpose is empty" do
         nano_element.purposes = []
 
-        expect(nano_element).to be_incomplete
+        expect(nano_element).to be_required
       end
 
       it "toxicology notified is not set" do
         nano_element.purposes = %w(other)
         nano_element.confirm_toxicology_notified = nil
 
-        expect(nano_element).to be_incomplete
+        expect(nano_element).to be_required
       end
 
       context "when toxicology notified is set" do
@@ -98,13 +98,13 @@ RSpec.describe NanoElement, type: :model do
         it "is set to 'no'" do
           nano_element.confirm_toxicology_notified = "no"
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
 
         it "is set to 'not sure'" do
           nano_element.confirm_toxicology_notified = "not sure"
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
       end
     end
@@ -118,12 +118,12 @@ RSpec.describe NanoElement, type: :model do
         it "has confirmed as 'yes'" do
           nano_element.confirm_toxicology_notified = "yes"
 
-          expect(nano_element).not_to be_incomplete
+          expect(nano_element).not_to be_required
         end
       end
     end
 
-    context "when a standard nanomaterial notification is incomplete" do
+    context "when a standard nanomaterial notification is required" do
       before do
         nano_element.purposes = %w(colorant)
       end
@@ -131,7 +131,7 @@ RSpec.describe NanoElement, type: :model do
       it "has not confirmed restrictions" do
         nano_element.confirm_restrictions = nil
 
-        expect(nano_element).to be_incomplete
+        expect(nano_element).to be_required
       end
 
       context "when restrictions are set to 'no'" do
@@ -142,19 +142,19 @@ RSpec.describe NanoElement, type: :model do
         it "must have set confirm toxicology has been notified" do
           nano_element.confirm_toxicology_notified = nil
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
 
         it "confirms toxicology has not been notified" do
           nano_element.confirm_toxicology_notified = "no"
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
 
         it "is not sure toxicology has been notified" do
           nano_element.confirm_toxicology_notified = "not sure"
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
       end
 
@@ -166,13 +166,13 @@ RSpec.describe NanoElement, type: :model do
         it "has not confirmed usage" do
           nano_element.confirm_usage = nil
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
 
         it "has confirmed usage as 'no'" do
           nano_element.confirm_usage = "no"
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
       end
     end
@@ -187,10 +187,10 @@ RSpec.describe NanoElement, type: :model do
           nano_element.confirm_restrictions = "no"
         end
 
-        it "is not incomplete when toxicology is notified" do
+        it "is not required when toxicology is notified" do
           nano_element.confirm_toxicology_notified = "yes"
 
-          expect(nano_element).not_to be_incomplete
+          expect(nano_element).not_to be_required
         end
       end
 
@@ -202,12 +202,12 @@ RSpec.describe NanoElement, type: :model do
         it "has confirmed usage as 'yes'" do
           nano_element.confirm_usage = "yes"
 
-          expect(nano_element).not_to be_incomplete
+          expect(nano_element).not_to be_required
         end
       end
     end
 
-    context "when a standard nanomaterial notification is incomplete" do
+    context "when a standard nanomaterial notification is required" do
       before do
         nano_element.purposes = %w(colorant)
       end
@@ -215,7 +215,7 @@ RSpec.describe NanoElement, type: :model do
       it "has not confirmed restrictions" do
         nano_element.confirm_restrictions = nil
 
-        expect(nano_element).to be_incomplete
+        expect(nano_element).to be_required
       end
 
       context "when restrictions are set to 'no'" do
@@ -226,19 +226,19 @@ RSpec.describe NanoElement, type: :model do
         it "must have set confirm toxicology has been notified" do
           nano_element.confirm_toxicology_notified = nil
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
 
         it "confirms toxicology has not been notified" do
           nano_element.confirm_toxicology_notified = "no"
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
 
         it "is not sure toxicology has been notified" do
           nano_element.confirm_toxicology_notified = "not sure"
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
       end
 
@@ -250,7 +250,7 @@ RSpec.describe NanoElement, type: :model do
         it "has not confirmed usage" do
           nano_element.confirm_usage = nil
 
-          expect(nano_element).to be_incomplete
+          expect(nano_element).to be_required
         end
       end
     end
@@ -265,10 +265,10 @@ RSpec.describe NanoElement, type: :model do
           nano_element.confirm_restrictions = "no"
         end
 
-        it "is not incomplete when toxicology is notified" do
+        it "is not required when toxicology is notified" do
           nano_element.confirm_toxicology_notified = "yes"
 
-          expect(nano_element).not_to be_incomplete
+          expect(nano_element).not_to be_required
         end
       end
 
@@ -280,14 +280,14 @@ RSpec.describe NanoElement, type: :model do
         it "has confirmed usage as 'yes'" do
           nano_element.confirm_usage = "yes"
 
-          expect(nano_element).not_to be_incomplete
+          expect(nano_element).not_to be_required
         end
 
         it "has confirmed usage as 'no'" do
           nano_element.confirm_toxicology_notified = "yes"
           nano_element.confirm_usage = "no"
 
-          expect(nano_element).not_to be_incomplete
+          expect(nano_element).not_to be_required
         end
       end
     end

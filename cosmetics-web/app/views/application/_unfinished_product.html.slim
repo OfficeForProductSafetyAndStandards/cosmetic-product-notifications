@@ -22,7 +22,7 @@ li.product
                 = notification.cpnp_reference
 
       .add-documents
-        - if (notification.nano_material_incomplete? || notification.formulation_required? || notification.images_required?)
+        - if (notification.nano_material_required? || notification.formulation_required? || notification.images_required?)
           = link_to "Add missing information",
                   responsible_person_notification_additional_information_index_path(responsible_person, notification),
                   class: "govuk-link--no-visited-state"

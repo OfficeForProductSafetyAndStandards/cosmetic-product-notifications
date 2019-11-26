@@ -33,7 +33,10 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
   context "when the user incomplete notifications" do
     let(:user) { responsible_person.responsible_person_users.first.user }
-    let!(:notification) { create(:draft_notification, responsible_person: responsible_person) }
+
+    before do
+       create(:draft_notification, responsible_person: responsible_person)
+    end
 
     it "should display the incomplete notification" do
       visit responsible_person_notifications_path(responsible_person)
@@ -76,7 +79,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
       it "has incomplete nanomaterial" do
         allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(false)
         allow_any_instance_of(Notification).to receive(:images_required?).and_return(false)
-        allow_any_instance_of(Notification).to receive(:nano_material_incomplete?).and_return(true)
+        allow_any_instance_of(Notification).to receive(:nano_material_required?).and_return(true)
 
         visit responsible_person_notifications_path(responsible_person)
 
