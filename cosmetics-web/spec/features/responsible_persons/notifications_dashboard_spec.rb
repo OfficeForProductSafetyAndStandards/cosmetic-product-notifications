@@ -35,10 +35,10 @@ RSpec.describe "Notifications Dashboard", type: :feature do
     let(:user) { responsible_person.responsible_person_users.first.user }
 
     before do
-       create(:draft_notification, responsible_person: responsible_person)
+      create(:draft_notification, responsible_person: responsible_person)
     end
 
-    it "should display the incomplete notification" do
+    it "displays the incomplete notification" do
       visit responsible_person_notifications_path(responsible_person)
 
       expect(body).to have_css(".govuk-tabs", text: "Incomplete (1)")
@@ -46,7 +46,9 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
     context "when the notification requires no more information" do
       before do
+        # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Notification).to receive(:missing_information?).and_return(false)
+        # rubocop:enable RSpec/AnyInstance
       end
 
       it "can be confirmed and notified" do
@@ -58,7 +60,9 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
     context "when the notification is missing information" do
       it "requires a frame formulation" do
-        allow_any_instance_of(Notification).to receive(:missing_information?).and_return(true)
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(true)
+        # rubocop:enable RSpec/AnyInstance
 
         visit responsible_person_notifications_path(responsible_person)
 
@@ -66,7 +70,9 @@ RSpec.describe "Notifications Dashboard", type: :feature do
       end
 
       it "has requires a product image" do
+        # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Notification).to receive(:images_required?).and_return(true)
+        # rubocop:enable RSpec/AnyInstance
 
         visit responsible_person_notifications_path(responsible_person)
 
@@ -74,7 +80,47 @@ RSpec.describe "Notifications Dashboard", type: :feature do
       end
 
       it "has incomplete nanomaterial" do
+        # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Notification).to receive(:nano_material_required?).and_return(true)
+        # rubocop:enable RSpec/AnyInstance
+
+        visit responsible_person_notifications_path(responsible_person)
+
+        expect(body).to have_css(".add-documents", text: "Add missing information")
+      end
+
+      it "can be confirmed and notified" do
+        visit responsible_person_notifications_path(responsible_person)
+
+        expect(body).to have_css(".add-documents", text: "Confirm and notify")
+      end
+    end
+
+    context "when the notification is missing information" do
+      it "requires a frame formulation" do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(true)
+        # rubocop:enable RSpec/AnyInstance
+
+        visit responsible_person_notifications_path(responsible_person)
+
+        expect(body).to have_css(".add-documents", text: "Add missing information")
+      end
+
+      it "has requires a product image" do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(Notification).to receive(:images_required?).and_return(true)
+        # rubocop:enable RSpec/AnyInstance
+
+        visit responsible_person_notifications_path(responsible_person)
+
+        expect(body).to have_css(".add-documents", text: "Add missing information")
+      end
+
+      it "has incomplete nanomaterial" do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(Notification).to receive(:nano_material_required?).and_return(true)
+        # rubocop:enable RSpec/AnyInstance
 
         visit responsible_person_notifications_path(responsible_person)
 
