@@ -416,7 +416,7 @@ DEPENDENCIES
   govuk_notify_rails (= 2.1.0)
   jbuilder (~> 2.9)
   keycloak (= 2.4.1)
-  launchy
+  launchy (~> 2.4.3)
   listen (= 3.1.5)
   lograge (= 0.11.2)
   mini_magick (= 4.9.3)
