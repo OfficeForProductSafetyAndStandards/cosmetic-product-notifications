@@ -46,11 +46,10 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
     context "when the notification requires no more information" do
       before do
-        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(false)
-        allow_any_instance_of(Notification).to receive(:images_required?).and_return(false)
+        allow_any_instance_of(Notification).to receive(:missing_information?).and_return(false)
       end
 
-      it "can be notified" do
+      it "can be confirmed and notified" do
         visit responsible_person_notifications_path(responsible_person)
 
         expect(body).to have_css(".add-documents", text: "Confirm and notify")
@@ -58,9 +57,8 @@ RSpec.describe "Notifications Dashboard", type: :feature do
     end
 
     context "when the notification is missing information" do
-      it "has requires a frame formulation" do
-        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(true)
-        allow_any_instance_of(Notification).to receive(:images_required?).and_return(false)
+      it "requires a frame formulation" do
+        allow_any_instance_of(Notification).to receive(:missing_information?).and_return(true)
 
         visit responsible_person_notifications_path(responsible_person)
 
@@ -68,7 +66,6 @@ RSpec.describe "Notifications Dashboard", type: :feature do
       end
 
       it "has requires a product image" do
-        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(false)
         allow_any_instance_of(Notification).to receive(:images_required?).and_return(true)
 
         visit responsible_person_notifications_path(responsible_person)
@@ -77,8 +74,6 @@ RSpec.describe "Notifications Dashboard", type: :feature do
       end
 
       it "has incomplete nanomaterial" do
-        allow_any_instance_of(Notification).to receive(:formulation_required?).and_return(false)
-        allow_any_instance_of(Notification).to receive(:images_required?).and_return(false)
         allow_any_instance_of(Notification).to receive(:nano_material_required?).and_return(true)
 
         visit responsible_person_notifications_path(responsible_person)
