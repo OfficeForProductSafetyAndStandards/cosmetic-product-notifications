@@ -65,7 +65,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
         # rubocop:enable RSpec/AnyInstance
       end
 
-      it "can be confirmed and notified" do
+      it "can not be confirmed and notified" do
         visit responsible_person_notifications_path(responsible_person)
 
         expect(body).to have_css(".add-documents .add-missing-info")
