@@ -16,13 +16,13 @@ RSpec.describe "Notifications Dashboard", type: :feature do
   it "has a errors tab" do
     visit responsible_person_notifications_path(responsible_person)
 
-    expect(body).to have_css(".govuk-tabs section#incomplete")
+    expect(body).to have_css(".govuk-tabs section#errors")
   end
 
   it "has an incomplete tab" do
     visit responsible_person_notifications_path(responsible_person)
 
-    expect(body).to have_css(".govuk-tabs section#errors")
+    expect(body).to have_css(".govuk-tabs section#incomplete")
   end
 
   it "has a notified tab" do
