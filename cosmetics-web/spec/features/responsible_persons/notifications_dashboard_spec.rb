@@ -25,13 +25,13 @@ RSpec.describe "Notifications Dashboard", type: :feature do
     expect(body).to have_css(".govuk-tabs section#errors")
   end
 
-  it "has a complete tab" do
+  it "has a notified tab" do
     visit responsible_person_notifications_path(responsible_person)
 
     expect(body).to have_css(".govuk-tabs section#notified")
   end
 
-  context "when the user incomplete notifications" do
+  context "when the user has an incomplete notification" do
     let(:user) { responsible_person.responsible_person_users.first.user }
 
     before do
@@ -69,7 +69,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
         expect(body).to have_css(".add-documents .add-missing-info")
       end
 
-      it "has requires a product image" do
+      it "requires a product image" do
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Notification).to receive(:images_required?).and_return(true)
         # rubocop:enable RSpec/AnyInstance
@@ -79,7 +79,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
         expect(body).to have_css(".add-documents .add-missing-info")
       end
 
-      it "has incomplete nanomaterial" do
+      it "requires nanomaterial" do
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Notification).to receive(:nano_material_required?).and_return(true)
         # rubocop:enable RSpec/AnyInstance
@@ -107,7 +107,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
         expect(body).to have_css(".add-documents .add-missing-info")
       end
 
-      it "has requires a product image" do
+      it "does not requires a product image" do
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Notification).to receive(:images_required?).and_return(true)
         # rubocop:enable RSpec/AnyInstance
@@ -117,7 +117,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
         expect(body).to have_css(".add-documents .add-missing-info")
       end
 
-      it "has incomplete nanomaterial" do
+      it "does not incomplete nanomaterial" do
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Notification).to receive(:nano_material_required?).and_return(true)
         # rubocop:enable RSpec/AnyInstance
