@@ -78,7 +78,7 @@ RSpec.describe AdditionalInformationController, type: :controller do
         create(:notification, components: [first_component, second_component], responsible_person: responsible_person)
       end
 
-      context "when all component's have required nano materials" do
+      context "when all components have required nano materials" do
         it "redirects to the 2nd component's next required nano element" do
           nano_element = second_component.nano_material.nano_elements.find(&:required?)
           get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
