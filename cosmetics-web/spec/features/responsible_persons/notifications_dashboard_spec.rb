@@ -89,10 +89,10 @@ RSpec.describe "Notifications Dashboard", type: :feature do
         expect(body).to have_css(".add-documents", text: "Add missing information")
       end
 
-      it "can be confirmed and notified" do
+      it "can not be confirmed and notified" do
         visit responsible_person_notifications_path(responsible_person)
 
-        expect(body).to have_css(".add-documents", text: "Confirm and notify")
+        expect(body).not_to have_css(".add-documents", text: "Confirm and notify")
       end
     end
 
