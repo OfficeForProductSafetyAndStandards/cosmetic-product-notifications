@@ -21,9 +21,9 @@
       </div>
       <div class="add-documents">
         <% if notification.missing_information? %>
-          <%= link_to "Add missing information", responsible_person_notification_additional_information_index_path(responsible_person, notification), class: "govuk-link--no-visited-state" %>
+          <%= link_to "Add missing information", responsible_person_notification_additional_information_index_path(responsible_person, notification), class: "add-missing-info govuk-link--no-visited-state" %>
         <% else %>
-          <%= link_to "Confirm and notify", edit_responsible_person_notification_path(responsible_person, notification), class: "govuk-link--no-visited-state" %>
+          <%= link_to "Confirm and notify", edit_responsible_person_notification_path(responsible_person, notification), class: "confirm-and-notify govuk-link--no-visited-state" %>
         <% end %>
       </div>
     </div>

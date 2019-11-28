@@ -12,7 +12,7 @@ RSpec.describe "application/_unfinished_product.html.erb", type: :view do
     end
 
     it "allows the user to add information" do
-      expect(response.body).to match(/Add missing information/)
+      expect(response.body).to have_css(".add-documents .add-missing-info")
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe "application/_unfinished_product.html.erb", type: :view do
     end
 
     it "allows the user to confirm and notify notification" do
-      expect(response.body).to match(/Confirm and notify/)
+      expect(response.body).to have_css(".add-documents .confirm-and-notify")
     end
   end
 end

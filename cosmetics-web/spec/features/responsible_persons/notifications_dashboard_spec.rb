@@ -54,7 +54,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
       it "can be confirmed and notified" do
         visit responsible_person_notifications_path(responsible_person)
 
-        expect(body).to have_css(".add-documents", text: "Confirm and notify")
+        expect(body).to have_css(".add-documents .confirm-and-notify")
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
         visit responsible_person_notifications_path(responsible_person)
 
-        expect(body).to have_css(".add-documents", text: "Add missing information")
+        expect(body).to have_css(".add-documents .add-missing-info")
       end
 
       it "has requires a product image" do
@@ -76,7 +76,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
         visit responsible_person_notifications_path(responsible_person)
 
-        expect(body).to have_css(".add-documents", text: "Add missing information")
+        expect(body).to have_css(".add-documents .add-missing-info")
       end
 
       it "has incomplete nanomaterial" do
@@ -86,13 +86,13 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
         visit responsible_person_notifications_path(responsible_person)
 
-        expect(body).to have_css(".add-documents", text: "Add missing information")
+        expect(body).to have_css(".add-documents .add-missing-info")
       end
 
       it "can not be confirmed and notified" do
         visit responsible_person_notifications_path(responsible_person)
 
-        expect(body).not_to have_css(".add-documents", text: "Confirm and notify")
+        expect(body).not_to have_css(".add-documents .confirm-and-notify")
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
         visit responsible_person_notifications_path(responsible_person)
 
-        expect(body).to have_css(".add-documents", text: "Add missing information")
+        expect(body).to have_css(".add-documents .add-missing-info")
       end
 
       it "has requires a product image" do
@@ -114,7 +114,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
         visit responsible_person_notifications_path(responsible_person)
 
-        expect(body).to have_css(".add-documents", text: "Add missing information")
+        expect(body).to have_css(".add-documents .add-missing-info")
       end
 
       it "has incomplete nanomaterial" do
@@ -124,7 +124,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
 
         visit responsible_person_notifications_path(responsible_person)
 
-        expect(body).to have_css(".add-documents", text: "Add missing information")
+        expect(body).to have_css(".add-documents .add-missing-info")
       end
     end
   end
