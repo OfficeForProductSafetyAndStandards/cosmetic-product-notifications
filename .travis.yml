@@ -20,7 +20,7 @@ cache:
 
 stages:
   - Build
-  - name: Deploy review
+  - name: Deploy review application
     if: type = pull_request # This is designed to cut out unnecessary runs of the test suite. See PSD-821 for details.
   - name: Update code coverage
     if: branch = master AND type = cron
@@ -42,7 +42,7 @@ jobs:
       install:
         - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./infrastructure/ci/build-docker-images.sh
       script: echo "Built"
-    - name: Deploy review app
+    - name: Deploy review application
       env: &deploy_int_env
         - SPACE=int
         - BRANCH=${TRAVIS_BRANCH}
