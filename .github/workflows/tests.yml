@@ -76,6 +76,8 @@ jobs:
         yarn install
         bin/webpack
     - name: Prepare application database
+      env:
+        RAILS_ENV: test
       run: |
         cd cosmetics-web
         bin/rails db:setup
