@@ -32,6 +32,7 @@ private
     return unless user_signed_in?
 
     redirect_path = request.original_fullpath unless request.original_fullpath == root_path
+
     redirect_to declaration_path(redirect_path: redirect_path) unless User.current.has_accepted_declaration?
   end
 
