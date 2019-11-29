@@ -373,4 +373,40 @@ RSpec.describe Component, type: :model do
       end
     end
   end
+
+  describe "#nano_material_required?" do
+    context "when there is no nano material" do
+      it "should return false" do
+        allow(predefined_component).to receive(:nano_material).and_return nil
+
+        expect(predefined_component).not_to be_nano_material_required
+      end
+    end
+
+    context "when there is a nano material" do
+      let(:first_nano_element) { build(:nano_element) }
+      let(:nano_material) { build(:nano_material, nano_elements: [first_nano_element]) }
+      let(:component) { build(:component, nano_material: nano_material) }
+
+      context "when a nano element requires information" do
+        before do
+          allow(first_nano_element).to receive(:required?).and_return true
+        end
+
+        it "requires more information the nano_material" do
+          expect(component).to be_nano_material_required
+        end
+      end
+
+      context "when a nano element does not require information" do
+        before do
+          allow(first_nano_element).to receive(:required?).and_return false
+        end
+
+        it "requires nano material information" do
+          expect(component).not_to be_nano_material_required
+        end
+      end
+    end
+  end
 end
