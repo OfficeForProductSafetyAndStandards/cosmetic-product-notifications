@@ -30,7 +30,7 @@ RSpec.describe "Account registration", type: :system do
     create_new_account
 
     fill_in "Full name", with: "New User"
-    fill_in "Work email address", with: "test#{rand(100)}@example.com"
+    fill_in "Work email address", with: "test#{Time.now.to_f}@example.com"
     fill_in "Mobile phone number", with: "07797 900982"
     fill_in "Password", with: "complex_password"
     fill_in "Confirm password", with: "complex_password"
