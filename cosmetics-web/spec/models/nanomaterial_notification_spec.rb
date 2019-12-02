@@ -103,6 +103,24 @@ RSpec.describe NanomaterialNotification, type: :model do
     end
   end
 
+  describe "#submittable?" do
+    context "when all required questions have been answered" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable) }
+
+      it "is true" do
+        expect(nanomaterial_notification.submittable?).to be true
+      end
+    end
+
+    context "when the name hasn’t been set" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, name: nil) }
+
+      it "is false" do
+        expect(nanomaterial_notification.submittable?).to be false
+      end
+    end
+  end
+
   describe "#submitted?" do
     context "when a submitted_at date is present" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, submitted_at: 1.hour.ago) }

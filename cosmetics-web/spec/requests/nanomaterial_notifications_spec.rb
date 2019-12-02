@@ -116,6 +116,18 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
     end
 
+    context "when all the other questions have been answered" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
+
+      before do
+        get "/nanomaterials/#{nanomaterial_notification.id}/name"
+      end
+
+      it "includes a back link to the Check your answers page" do
+        expect(response.body).to have_back_link_to("/nanomaterials/#{nanomaterial_notification.id}/review")
+      end
+    end
+
     context "when the notification has already been submitted" do
       before do
         get "/nanomaterials/#{submitted_nanomaterial_notification.id}/name"
@@ -146,8 +158,8 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       }
     end
 
-    context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Previous name") }
+    context "when the user has access and notification is submittable" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person, name: "Previous name") }
 
       context "with a valid new name" do
         let(:name) { "Updated name" }
@@ -173,6 +185,18 @@ RSpec.describe "Nanomaterial notifications", type: :request do
         end
       end
     end
+
+    context "when the user has access but EU question not yet answered" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Previous name", eu_notified: nil) }
+
+      context "with a valid new name" do
+        let(:name) { "Updated name" }
+
+        it "redirects to the EU notification question page" do
+          expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu")
+        end
+      end
+    end
   end
 
 
@@ -190,6 +214,22 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
       it "has a page heading" do
         expect(response.body).to have_h1_with_text("Was the EU notified about Zinc oxide on CPNP before 1 February 2020?")
+      end
+
+      it "includes a back link to the name page" do
+        expect(response.body).to have_back_link_to("/nanomaterials/#{nanomaterial_notification.id}/name")
+      end
+    end
+
+    context "when all the other questions have been answered" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
+
+      before do
+        get "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu"
+      end
+
+      it "includes a back link to Check your answers page" do
+        expect(response.body).to have_back_link_to("/nanomaterials/#{nanomaterial_notification.id}/review")
       end
     end
 
@@ -215,7 +255,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
   end
 
   describe "PATCH /nanomaterials/ID/notified_to_eu" do
-    context "when the user has access" do
+    context "when the user has access but the file hasn’t been uploaded yet" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
 
       before do
@@ -258,6 +298,22 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       end
     end
 
+    context "when the user has access and the file has been uploaded" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
+
+      before do
+        patch "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu", params: nanomaterial_params
+      end
+
+      context "when a valid answer is given" do
+        let(:nanomaterial_params) { { eu_notified: "false" } }
+
+        it "redirects to the Check your answers page" do
+          expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/review")
+        end
+      end
+    end
+
     context "when the nanomaterial notification belongs to a different company" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: other_company) }
 
@@ -283,6 +339,22 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
       it "has a page heading" do
         expect(response.body).to have_h1_with_text("Upload details about the nanomaterial")
+      end
+
+      it "includes a back link to EU notification question page" do
+        expect(response.body).to have_back_link_to("/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu")
+      end
+    end
+
+    context "when all questions have been answered" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
+
+      before do
+        get "/nanomaterials/#{nanomaterial_notification.id}/upload_file"
+      end
+
+      it "includes a back link to Check your answers page" do
+        expect(response.body).to have_back_link_to("/nanomaterials/#{nanomaterial_notification.id}/review")
       end
     end
 
@@ -388,7 +460,7 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
   describe "PATCH /nanomaterials/ID/submission" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
 
       before do
         patch "/nanomaterials/#{nanomaterial_notification.id}/submission"
@@ -400,6 +472,22 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
       it "redirects to the confirmation page" do
         expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/confirmation")
+      end
+    end
+
+    context "when there is no file attached" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Test", eu_notified: false) }
+
+      before do
+        patch "/nanomaterials/#{nanomaterial_notification.id}/submission"
+      end
+
+      it "renders the page" do
+        expect(response.code).to eql("200")
+      end
+
+      it "displays an error message" do
+        expect(response.body).to include("There is a problem")
       end
     end
 

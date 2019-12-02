@@ -28,6 +28,14 @@ class NanomaterialNotification < ApplicationRecord
     submitted_at != nil
   end
 
+  # Checks whether all validations have passed, but without adding error messages.
+  # Used to determine whether user is changing an answer from Check your answers or not.
+  def submittable?
+    submittable = valid?(%i[add_name eu_notification upload_file])
+    errors.clear
+    submittable
+  end
+
   def can_be_made_available_on_uk_market_from
     return nil unless submitted?
 

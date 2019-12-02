@@ -29,6 +29,7 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def name
+    @back_link_path = review_nanomaterial_path(@nanomaterial_notification)
     @form_url = name_nanomaterial_path(@nanomaterial_notification)
     @form_method = :patch
   end
@@ -37,7 +38,12 @@ class NanomaterialNotificationsController < ApplicationController
     @nanomaterial_notification.name = params[:nanomaterial_notification][:name]
 
     if @nanomaterial_notification.save(context: :add_name)
-      redirect_to review_nanomaterial_path(@nanomaterial_notification)
+
+      if @nanomaterial_notification.submittable?
+        redirect_to review_nanomaterial_path(@nanomaterial_notification)
+      else
+        redirect_to notified_to_eu_nanomaterial_path(@nanomaterial_notification)
+      end
     else
       @form_url = name_nanomaterial_path(@nanomaterial_notification)
       @form_method = :patch
@@ -46,17 +52,36 @@ class NanomaterialNotificationsController < ApplicationController
     end
   end
 
-  def notified_to_eu; end
+  def notified_to_eu
+    @back_link_path =
+      if @nanomaterial_notification.submittable?
+        review_nanomaterial_path(@nanomaterial_notification)
+      else
+        name_nanomaterial_path(@nanomaterial_notification)
+      end
+  end
 
   def update_notified_to_eu
     if @nanomaterial_notification.update_with_context(eu_notification_params, :eu_notification)
-      redirect_to upload_file_nanomaterial_path(@nanomaterial_notification)
+
+      if @nanomaterial_notification.submittable?
+        redirect_to review_nanomaterial_path(@nanomaterial_notification)
+      else
+        redirect_to upload_file_nanomaterial_path(@nanomaterial_notification)
+      end
     else
       render "notified_to_eu"
     end
   end
 
-  def upload_file; end
+  def upload_file
+    @back_link_path =
+      if @nanomaterial_notification.submittable?
+        review_nanomaterial_path(@nanomaterial_notification)
+      else
+        notified_to_eu_nanomaterial_path(@nanomaterial_notification)
+      end
+  end
 
   def update_file
     file = params.fetch(:nanomaterial_notification, {})[:file]
@@ -75,9 +100,12 @@ class NanomaterialNotificationsController < ApplicationController
   def review; end
 
   def submit
-    @nanomaterial_notification.submit!
-
-    redirect_to confirmation_nanomaterial_path(@nanomaterial_notification)
+    if @nanomaterial_notification.valid?(%i[add_name eu_notification upload_file])
+      @nanomaterial_notification.submit!
+      redirect_to confirmation_nanomaterial_path(@nanomaterial_notification)
+    else
+      render "review"
+    end
   end
 
   def confirmation_page

@@ -7,8 +7,34 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+
+    <% if @nanomaterial_notification.errors %>
+
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+
+            <li>
+              Some information is missing
+            </li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
     <h1 class="govuk-heading-xl">Check your answers</h1>
 
+    <% @notified_in_eu_text = capture do %>
+      <% case @nanomaterial_notification.eu_notified
+        when true %>
+        On <%= @nanomaterial_notification.notified_to_eu_on.to_s(:long) %>
+      <% when false %>
+        No
+      <% end %>
+    <% end %>
 
     <%= govukSummaryList(rows: [
       {
@@ -27,7 +53,7 @@
       {
         key: {text: 'Notified in EU'},
         value: {
-          text: (@nanomaterial_notification.eu_notified? ? "On " + @nanomaterial_notification.notified_to_eu_on.to_s(:long) : "No")
+          text: @notified_in_eu_text
         },
         actions: {
           items: [
