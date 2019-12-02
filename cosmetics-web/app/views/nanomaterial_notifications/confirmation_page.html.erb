@@ -15,5 +15,19 @@
       </div>
     </div>
 
+    <h2 class="govuk-heading-m">What happens next</h2>
+
+    <% if @nanomaterial_notification.can_be_made_available_on_uk_market? %>
+
+      <p class="govuk-body">Notified products containing the nanomaterial can be made available on the UK market.</p>
+
+    <% else %>
+
+      <p class="govuk-body">The Office for Product Safety and Standards may contact you for more information about the nanomaterial.</p>
+
+      <p class="govuk-body">Notified products containing the nanomaterial you’ve told us about can be made available on the UK market from <%= @nanomaterial_notification.can_be_made_available_on_uk_market_from.in_time_zone("London").strftime("%-d %B %Y") %>.</p>
+
+    <% end %>
+
   </div>
 </div>

@@ -45,6 +45,10 @@ class NanomaterialNotification < ApplicationRecord
     (availability_date + 1.day).at_midnight
   end
 
+  def can_be_made_available_on_uk_market?
+    can_be_made_available_on_uk_market_from <= Time.zone.now
+  end
+
 private
 
   def eu_notification_date_must_be_pre_brexit
