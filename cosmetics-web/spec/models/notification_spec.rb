@@ -80,4 +80,60 @@ RSpec.describe Notification, type: :model do
       end
     end
   end
+
+  describe "#may_submit_notification?" do
+    let(:notification) { create(:draft_notification) }
+
+    context "when no missing information" do
+      before do
+        allow(notification).to receive(:missing_information?).and_return(false)
+      end
+
+      context "when notified pre EU exit" do
+        before do
+          allow(notification).to receive(:notified_pre_eu_exit?).and_return(true)
+        end
+
+        it "can submit a notification" do
+          expect(notification).to be_may_submit_notification
+        end
+      end
+
+      context "when images are present and safe" do
+        before do
+          allow(notification).to receive(:images_are_present_and_safe?).and_return(true)
+        end
+
+        it "can submit a notification" do
+          expect(notification).to be_may_submit_notification
+        end
+      end
+    end
+
+    context "when information is missing" do
+      before do
+        allow(notification).to receive(:missing_information?).and_return(true)
+      end
+
+      context "when notified pre EU exit" do
+        before do
+          allow(notification).to receive(:notified_pre_eu_exit?).and_return(true)
+        end
+
+        it "can not submit a notification" do
+          expect(notification).not_to be_may_submit_notification
+        end
+      end
+
+      context "when images are present and safe" do
+        before do
+          allow(notification).to receive(:images_are_present_and_safe?).and_return(true)
+        end
+
+        it "can not submit a notification" do
+          expect(notification).not_to be_may_submit_notification
+        end
+      end
+    end
+  end
 end
