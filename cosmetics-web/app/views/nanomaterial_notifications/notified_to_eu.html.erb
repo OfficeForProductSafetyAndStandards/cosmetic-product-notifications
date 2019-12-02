@@ -49,11 +49,13 @@
             {
               "value": "true",
               "text": "Yes, the EU was notified about the nanomaterial on CPNP before 1 February 2020",
+              "checked": @nanomaterial_notification.eu_notified == true,
               "conditional": {"html": date_notified_to_eu_html}
             },
             {
               "value": "false",
-              "text": "No"
+              "text": "No",
+              "checked": @nanomaterial_notification.eu_notified == false,
             }
           ]
         %>
