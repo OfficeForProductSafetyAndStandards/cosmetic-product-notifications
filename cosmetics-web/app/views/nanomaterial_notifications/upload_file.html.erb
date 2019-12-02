@@ -29,9 +29,20 @@
       <p class="govuk-body">You’ll also need to include the email address of someone to contact about the nanomaterial.</p>
 
 
+      <% if @nanomaterial_notification.file.attached? %>
+        <div class="govuk-inset-text">
+          Previously uploaded file:
+          <%= link_to @nanomaterial_notification.file.filename, @nanomaterial_notification.file %>
+        </div>
+      <% end %>
+
       <div class="govuk-form-group">
         <label class="govuk-label govuk-label--s" for="nanomaterial_notification_file">
-          Upload a file
+          <% if @nanomaterial_notification.file.attached? %>
+            Upload a replacement file
+          <% else %>
+            Upload a file
+          <% end %>
         </label>
         <%= form.file_field :file, class: "govuk-file-upload" %>
       </div>
