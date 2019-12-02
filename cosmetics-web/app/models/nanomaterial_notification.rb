@@ -28,6 +28,23 @@ class NanomaterialNotification < ApplicationRecord
     submitted_at != nil
   end
 
+  def can_be_made_available_on_uk_market_from
+    return nil unless submitted?
+
+    availability_date =
+      if eu_notified?
+        if notified_to_eu_on <= (EU_EXIT_DATE - 6.months)
+          notified_to_eu_on + 6.months
+        else
+          notified_to_eu_on + 7.months
+        end
+      else
+        submitted_at.in_time_zone("London") + 6.months
+      end
+
+    (availability_date + 1.day).at_midnight
+  end
+
 private
 
   def eu_notification_date_must_be_pre_brexit

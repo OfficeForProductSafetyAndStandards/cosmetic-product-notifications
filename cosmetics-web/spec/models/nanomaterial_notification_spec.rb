@@ -142,4 +142,61 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
     end
   end
+
+  describe "#can_be_made_available_on_uk_market_from" do
+    context "when not submitted yet" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, submitted_at: nil) }
+
+      it "is nil" do
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to be nil
+      end
+    end
+
+    context "when notified to the EU 6 months or more before Brexit" do
+      let(:nanomaterial_notification) {
+        create(:nanomaterial_notification,
+               submitted_at: Time.zone.parse("2020-02-05T12:00Z"),
+               eu_notified: true,
+               notified_to_eu_on: Date.parse("2019-07-31"))
+      }
+
+      it "is available from the start of the day after Brexit" do
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-02-01T00:00Z"))
+      end
+    end
+
+    context "when notified to the EU less than 6 months before Brexit" do
+      let(:nanomaterial_notification) {
+        create(:nanomaterial_notification,
+               submitted_at: Time.zone.parse("2020-02-05T12:00Z"),
+               eu_notified: true,
+               notified_to_eu_on: Date.parse("2019-08-01"))
+      }
+
+      it "is available from the start of the day after 7 months later" do
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-03-02T00:00Z"))
+      end
+    end
+
+    context "when notified after Brexit" do
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, submitted_at: Time.zone.parse("2020-01-01T23:01Z"), notified_to_eu_on: nil, eu_notified: false) }
+
+      it "is available from the day after 6 months later" do
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-07-02T00:00 BST +01:00"))
+      end
+    end
+
+    context "when notified after Brexit between 11pm and mightnight during British Summer Time (BST)" do
+      let(:nanomaterial_notification) {
+        create(:nanomaterial_notification,
+               submitted_at: Time.zone.parse("2020-08-31T23:30Z"),
+               notified_to_eu_on: nil,
+               eu_notified: false)
+      }
+
+      it "is available from the day after 6 months later" do
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2021-03-02T00:00Z"))
+      end
+    end
+  end
 end
