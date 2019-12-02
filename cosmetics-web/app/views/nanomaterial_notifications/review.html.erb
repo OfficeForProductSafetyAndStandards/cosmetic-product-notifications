@@ -42,7 +42,7 @@
       {
         key: {text: 'PDF file'},
         value: {
-          text: (link_to("PDF file", @nanomaterial_notification.file) if @nanomaterial_notification.file.attached?)
+          text: (link_to(@nanomaterial_notification.file.filename, @nanomaterial_notification.file) if @nanomaterial_notification.file.attached?)
         },
         actions: {
           items: [
