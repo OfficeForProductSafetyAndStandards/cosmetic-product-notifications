@@ -6,14 +6,15 @@ env:
   SEARCH_HOST: search
   SUBMIT_HOST: submit
   DATABASE_URL: postgres://localhost:5432/cosmetics_test
+  PGHOST: localhost
+  PGUSER: postgres
 
 jobs:
   ruby:
     name: "Ruby"
     runs-on: ubuntu-latest
 
-    # If you need DB like PostgreSQL then define service below.
-    # Example for Redis can be found here:
+    # Example for can be found here:
     # https://github.com/actions/example-services/tree/master/.github/workflows
     services:
       postgres:
@@ -23,9 +24,11 @@ jobs:
           POSTGRES_PASSWORD: ""
           POSTGRES_DB: postgres
         ports: ["5432:5432"]
-        # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
+      elasticsearch:
+        image: elasticsearch:6.7.2
+        ports: ["9200:9200"]
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
     - uses: actions/checkout@v1
     - name: Set up Ruby
@@ -39,20 +42,55 @@ jobs:
     # required to compile pg ruby gem
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
-    - name: Install ruby gems
+    - name: install chromedriver
+      run: wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/bin && sudo chmod +x /usr/bin/chromedriver
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/vendor/bundle
+        key: ${{ runner.OS }}-gems
+        restore-keys: |
+          ${{ runner.OS }}-gems
+          ${{ runner.OS }}-gems-
+          ${{ runner.OS }}-
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/node_modules
+        key: ${{ runner.OS }}-node
+        restore-keys: |
+          ${{ runner.OS }}-node
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+    - name: Install Ruby Gems
       env:
-        PGHOST: localhost
-        PGUSER: postgres
         RAILS_ENV: test
       run: |
         cd cosmetics-web
         gem install bundler -v 1.17.3
-        bundle install
+        bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+    - name: Install JavaScript dependencies
+      env:
+        RAILS_ENV: test
+      run: |
+        cd cosmetics-web
         npm install yarn -g
         yarn install
         bin/webpack
-        bin/rails db:setup
-    - name: Run Tests
+    - name: Prepare application database
+      env:
+        RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bundle exec rspec spec/models/ spec/requests/
+        bin/rails db:setup
+    - name: Run Tests
+      env:
+        KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
+        KEYCLOAK_CLIENT_ID: ${{ secrets.KeycloakClientId }}
+        KEYCLOAK_CLIENT_SECRET: ${{ secrets.KeycloakClientSecret }}
+        KEYCLOAK_USER_ID: ${{ secrets.KeycloakUserId }}
+        KEYCLOAK_POISON_CENTER_USER_ID: ${{ secrets.KeycloakPoisonCenterUserId }}
+        KEYCLOAK_USER_PASSWORD: ${{ secrets.KeycloakUserPassword }}
+        ELASTICSEARCH_URL: localhost
+        RAILS_ENV: test
+      run: |
+        cd cosmetics-web
+        bundle exec rspec spec

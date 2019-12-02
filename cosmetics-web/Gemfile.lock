@@ -432,7 +432,8 @@ DEPENDENCIES
   rubocop (~> 0.76.0)
   rubocop-govuk (~> 1.0)
   rubocop-performance (= 1.4.0)
-  rubocop-rspec
+  rubocop-rails (~> 2.3.2)
+  rubocop-rspec (~> 1.36)
   ruby-debug-ide (= 0.7.0)
   rubyzip (>= 1.2.1)
   selenium-webdriver (= 3.142.3)

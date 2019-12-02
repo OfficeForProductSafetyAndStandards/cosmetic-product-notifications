@@ -95,7 +95,7 @@ private
     assert_text "Sign in to submit cosmetic product notifications"
 
     fill_in "Email address", with: as_user.email
-    fill_in "Password", with: "password"
+    fill_in "Password", with: ENV.fetch("KEYCLOAK_USER_PASSWORD", "password")
     click_on "Continue"
   end
 
