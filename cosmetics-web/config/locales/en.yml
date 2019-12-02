@@ -93,6 +93,7 @@ en:
               post_brexit_date_given: "The date the EU was notified on CPNP must be before 1 February 2020"
             file:
               missing: "Select a file"
+              must_be_a_pdf: "File must be a PDF"
         cmr:
           attributes:
             name:

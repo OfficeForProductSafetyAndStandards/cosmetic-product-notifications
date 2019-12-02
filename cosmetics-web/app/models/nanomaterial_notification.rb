@@ -12,7 +12,7 @@ class NanomaterialNotification < ApplicationRecord
 
   validate :eu_notification_date_is_nil, on: :eu_notification, if: :eu_not_notified?
 
-  validate :file_attached, on: :upload_file
+  validate :pdf_file_attached, on: :upload_file
 
   has_one_attached :file
 
@@ -71,9 +71,12 @@ private
     end
   end
 
-  def file_attached
+  def pdf_file_attached
     if !file.attached?
       errors.add(:file, I18n.t(:missing, scope: %i[activerecord errors models nanomaterial_notification attributes file]))
+    elsif file.blob.content_type != "application/pdf"
+      file.purge
+      errors.add(:file, I18n.t(:must_be_a_pdf, scope: %i[activerecord errors models nanomaterial_notification attributes file]))
     end
   end
 

@@ -44,7 +44,7 @@
             Upload a file
           <% end %>
         </label>
-        <%= form.file_field :file, class: "govuk-file-upload" %>
+        <%= form.file_field :file, class: "govuk-file-upload", accept: "application/pdf" %>
       </div>
 
       <button type="submit" class="govuk-button">Continue</button>
