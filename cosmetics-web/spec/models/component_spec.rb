@@ -376,7 +376,7 @@ RSpec.describe Component, type: :model do
 
   describe "#nano_material_required?" do
     context "when there is no nano material" do
-      it "should return false" do
+      it "does not require nano material information" do
         allow(predefined_component).to receive(:nano_material).and_return nil
 
         expect(predefined_component).not_to be_nano_material_required
