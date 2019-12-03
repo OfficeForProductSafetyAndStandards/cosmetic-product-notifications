@@ -19,8 +19,8 @@ class NanoMaterial < ApplicationRecord
 
   delegate :component_name, to: :component
 
-  def nano_elements_incomplete?
-    nano_elements.any?(&:incomplete?)
+  def nano_elements_required?
+    nano_elements.any?(&:required?)
   end
 
   def self.exposure_routes_options

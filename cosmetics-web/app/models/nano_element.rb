@@ -13,10 +13,10 @@ class NanoElement < ApplicationRecord
       .reject(&:blank?).join(", ")
   end
 
-  def incomplete?
+  def required?
     purposes.blank? ||
-      (non_standard? && toxicology_incomplete?) ||
-      (standard? && restrictions_confirmed_incomplete?)
+      (non_standard? && toxicology_required?) ||
+      (standard? && restrictions_confirmed_required?)
   end
 
   def standard?
@@ -29,22 +29,22 @@ class NanoElement < ApplicationRecord
 
 private
 
-  def toxicology_incomplete?
+  def toxicology_required?
     confirm_toxicology_notified.nil? ||
       confirm_toxicology_notified == "not sure" ||
       confirm_toxicology_notified == "no"
   end
 
-  def restrictions_confirmed_incomplete?
+  def restrictions_confirmed_required?
     confirm_restrictions.nil? ||
-      (confirm_restrictions == "no" && toxicology_incomplete?) ||
+      (confirm_restrictions == "no" && toxicology_required?) ||
       (
-        (confirm_restrictions == "yes" && usage_confirmed_incomplete?) ||
-       (confirm_usage == "no" && toxicology_incomplete?)
+        (confirm_restrictions == "yes" && usage_confirmed_required?) ||
+       (confirm_usage == "no" && toxicology_required?)
       )
   end
 
-  def usage_confirmed_incomplete?
+  def usage_confirmed_required?
     confirm_usage.nil?
   end
 end
