@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "notifications/_product_details.html.slim" do
+describe "notifications/_product_details.html.erb", type: :view do
   let(:responsible_person) { create(:responsible_person) }
   let(:current_user) { create(:user) }
   let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
@@ -9,7 +9,7 @@ describe "notifications/_product_details.html.slim" do
     before do
       allow(current_user).to receive(:can_view_product_ingredients?).and_return(false)
 
-      render :partial => "notifications/product_details.html.slim", locals: { notification: notification, allow_edits: false, current_user: current_user }
+      render partial: "notifications/product_details.html.erb", locals: { notification: notification, allow_edits: false, current_user: current_user }
     end
 
     it "does not render product imported status" do
