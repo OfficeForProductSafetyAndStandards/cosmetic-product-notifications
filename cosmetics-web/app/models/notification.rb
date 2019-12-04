@@ -136,8 +136,12 @@ class Notification < ApplicationRecord
     reference_number.to_s
   end
 
-  def nano_material_incomplete?
-    components.any?(&:nano_material_incomplete?)
+  def missing_information?
+    nano_material_required? || formulation_required? || images_required?
+  end
+
+  def nano_material_required?
+    components.any?(&:nano_material_required?)
   end
 
   def formulation_required?

@@ -1,0 +1,31 @@
+<% responsible_person = notification.responsible_person %>
+<li class="product">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+        <%= link_to notification.product_name, edit_responsible_person_notification_path(responsible_person, notification), class: "product-title govuk-link--no-visited-state" %>
+      </h3>
+      <div class="product-data govuk-body-s">
+        <dl>
+          <div class="govuk-clearfix">
+            <dt>UK cosmetic product number: </dt>
+            <dd><%= notification.reference_number_for_display %></dd>
+          </div>
+          <% if notification.cpnp_reference.present? %>
+            <div class="govuk-clearfix">
+              <dt>EU reference number: </dt>
+              <dd><%= notification.cpnp_reference %></dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+      <div class="add-documents">
+        <% if notification.missing_information? %>
+          <%= link_to "Add missing information", responsible_person_notification_additional_information_index_path(responsible_person, notification), class: "add-missing-info govuk-link--no-visited-state" %>
+        <% else %>
+          <%= link_to "Confirm and notify", edit_responsible_person_notification_path(responsible_person, notification), class: "confirm-and-notify govuk-link--no-visited-state" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</li>
