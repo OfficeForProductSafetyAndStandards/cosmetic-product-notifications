@@ -21,7 +21,12 @@
 
       <% date_notified_to_eu_html = render("components/govuk_date_input",
         id: "notified_to_eu_on",
-        fieldset: { legend: { text: "Date EU notified on" } },
+        fieldset: {
+          legend: {
+            text: "Date EU notified on",
+            classes: "govuk-fieldset__legend--m"
+          },
+        },
         hint: { text: "For example, 31 3 2019" },
         errorMessage: errorMessage,
         items: [
