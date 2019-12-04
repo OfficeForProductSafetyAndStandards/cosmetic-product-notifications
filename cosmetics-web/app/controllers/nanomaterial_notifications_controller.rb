@@ -62,7 +62,10 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def update_notified_to_eu
-    if @nanomaterial_notification.update_with_context(eu_notification_params, :eu_notification)
+    @nanomaterial_notification.eu_notified = params[:eu_notified]
+    @nanomaterial_notification.notified_to_eu_on = params[:notified_to_eu_on]
+
+    if @nanomaterial_notification.save(context: :eu_notification)
 
       if @nanomaterial_notification.submittable?
         redirect_to review_nanomaterial_path(@nanomaterial_notification)
