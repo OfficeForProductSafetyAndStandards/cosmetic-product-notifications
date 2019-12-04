@@ -9,30 +9,39 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <%= form_for @nanomaterial_notification, url: notified_to_eu_nanomaterial_path(@nanomaterial_notification) do |form| %>
+    <%= form_for @nanomaterial_notification, url: notified_to_eu_nanomaterial_path(@nanomaterial_notification), html: { novalidate: true } do |form| %>
 
       <%= render "form_components/govuk_error_summary", form: form %>
+
+      <% if @nanomaterial_notification.errors[:notified_to_eu_on].size > 0 %>
+        <% errorMessage = {
+          text: @nanomaterial_notification.errors.full_messages_for(:notified_to_eu_on).first.presence
+        }  %>
+
+        <% error_class = "govuk-input--error" %>
+      <% end %>
 
       <% date_notified_to_eu_html = render("components/govuk_date_input",
         id: "notified_to_eu_on",
         fieldset: { legend: { text: "Date EU notified on" } },
         hint: { text: "For example, 31 3 2019" },
+        errorMessage: errorMessage,
         items: [
           {
             name: "notified_to_eu_on[day]",
-            classes: "govuk-input--width-2",
+            classes: "govuk-input--width-2 #{error_class}",
             label: "Day",
             value: @nanomaterial_notification.notified_to_eu_on&.day
           },
           {
             name: "notified_to_eu_on[month]",
-            classes: "govuk-input--width-2",
+            classes: "govuk-input--width-2 #{error_class}",
             label: "Month",
             value: @nanomaterial_notification.notified_to_eu_on&.month
           },
           {
             name: "notified_to_eu_on[year]",
-            classes: "govuk-input--width-4",
+            classes: "govuk-input--width-4 #{error_class}",
             label: "Year",
             value: @nanomaterial_notification.notified_to_eu_on&.year
           }]) %>
