@@ -100,6 +100,134 @@ RSpec.describe NanomaterialNotification, type: :model do
           expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("Remove date or change answer to Yes")
         end
       end
+
+      context "when the EU was notified but an invalid date has been set" do
+        let(:nanomaterial_notification) do
+          described_class.new(eu_notified: true, notified_to_eu_on: { day: "12", month: "24", year: "2019" })
+        end
+
+        before do
+          nanomaterial_notification.valid?(:eu_notification)
+        end
+
+        it "adds an error" do
+          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("Enter a real EU notification date")
+        end
+      end
+
+      context "when a day is missing from the date" do
+        let(:nanomaterial_notification) do
+          described_class.new(eu_notified: true, notified_to_eu_on: { day: "", month: "01", year: "2019" })
+        end
+
+        before do
+          nanomaterial_notification.valid?(:eu_notification)
+        end
+
+        it "adds an error" do
+          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("EU notification date must include a day")
+        end
+      end
+
+      context "when a month is missing from the date" do
+        let(:nanomaterial_notification) do
+          described_class.new(eu_notified: true, notified_to_eu_on: { day: "01", month: "", year: "2019" })
+        end
+
+        before do
+          nanomaterial_notification.valid?(:eu_notification)
+        end
+
+        it "adds an error" do
+          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("EU notification date must include a month")
+        end
+      end
+
+      context "when a year is missing from the date" do
+        let(:nanomaterial_notification) do
+          described_class.new(eu_notified: true, notified_to_eu_on: { day: "01", month: "01", year: "" })
+        end
+
+        before do
+          nanomaterial_notification.valid?(:eu_notification)
+        end
+
+        it "adds an error" do
+          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("EU notification date must include a year")
+        end
+      end
+
+      context "when a day and month are missing from the date" do
+        let(:nanomaterial_notification) do
+          described_class.new(eu_notified: true, notified_to_eu_on: { day: "", month: "", year: "2019" })
+        end
+
+        before do
+          nanomaterial_notification.valid?(:eu_notification)
+        end
+
+        it "adds an error" do
+          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("EU notification date must include a day and month")
+        end
+      end
+
+      context "when the date is blank" do
+        let(:nanomaterial_notification) do
+          described_class.new(eu_notified: true, notified_to_eu_on: { day: "", month: "", year: "" })
+        end
+
+        before do
+          nanomaterial_notification.valid?(:eu_notification)
+        end
+
+        it "adds an error" do
+          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("Enter the date the EU was notified about the nanomaterial on CPNP")
+        end
+      end
+    end
+  end
+
+  describe "#notified_to_eu_on=" do
+    let(:nanomaterial_notification) { described_class.new }
+
+    context "when setting with a date object" do
+      before do
+        nanomaterial_notification.notified_to_eu_on = Date.new(2019, 1, 2)
+      end
+
+      it "sets the date" do
+        expect(nanomaterial_notification.notified_to_eu_on).to eql(Date.new(2019, 1, 2))
+      end
+    end
+
+    context "when setting with nil" do
+      before do
+        nanomaterial_notification.notified_to_eu_on = nil
+      end
+
+      it "sets the date as nil" do
+        expect(nanomaterial_notification.notified_to_eu_on).to be nil
+      end
+    end
+
+    context "when setting with a valid hash" do
+      before do
+        nanomaterial_notification.notified_to_eu_on = { day: "02", month: "01", year: "2019" }
+      end
+
+      it "sets the date" do
+        expect(nanomaterial_notification.notified_to_eu_on).to eql(Date.new(2019, 1, 2))
+      end
+    end
+
+    context "when setting with hash containing an invalid date" do
+      before do
+        nanomaterial_notification.notified_to_eu_on = { day: "40", month: "13", year: "2019" }
+      end
+
+      it "sets an invalid date" do
+        expect(nanomaterial_notification.notified_to_eu_on).to eql(OpenStruct.new(day: "40", month: "13", year: "2019"))
+      end
     end
   end
 

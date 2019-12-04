@@ -91,6 +91,8 @@ en:
               blank: "Enter the date the EU was notified about the nanomaterial on CPNP"
               date_specified_but_eu_not_notified: "Remove date or change answer to Yes"
               post_brexit_date_given: "The date the EU was notified on CPNP must be before 1 February 2020"
+              not_a_real_date: "Enter a real EU notification date"
+              date_incomplete: "EU notification date must include a %{missing_date_parts}"
             file:
               missing: "Select a file"
               must_be_a_pdf: "File must be a PDF"

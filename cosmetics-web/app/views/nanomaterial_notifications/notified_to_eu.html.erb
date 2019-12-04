@@ -19,19 +19,22 @@
         hint: { text: "For example, 31 3 2019" },
         items: [
           {
-            name: "notified_to_eu_on(3i)",
+            name: "notified_to_eu_on[day]",
             classes: "govuk-input--width-2",
-            label: "Day"
+            label: "Day",
+            value: @nanomaterial_notification.notified_to_eu_on&.day
           },
           {
-            name: "notified_to_eu_on(2i)",
+            name: "notified_to_eu_on[month]",
             classes: "govuk-input--width-2",
-            label: "Month"
+            label: "Month",
+            value: @nanomaterial_notification.notified_to_eu_on&.month
           },
           {
-            name: "notified_to_eu_on(1i)",
+            name: "notified_to_eu_on[year]",
             classes: "govuk-input--width-4",
-            label: "Year"
+            label: "Year",
+            value: @nanomaterial_notification.notified_to_eu_on&.year
           }]) %>
 
 

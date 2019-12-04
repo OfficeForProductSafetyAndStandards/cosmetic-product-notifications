@@ -12,10 +12,34 @@ class NanomaterialNotification < ApplicationRecord
 
   validate :eu_notification_date_is_nil, on: :eu_notification, if: :eu_not_notified?
 
+  validate :eu_notification_date_is_real
+
   validate :pdf_file_attached, on: :upload_file
 
   has_one_attached :file
 
+
+  # Expects either a date object, or a hash containing
+  # year, month and day, for example:
+  #
+  # {year: "2019", month: "01", day: "20"}
+  def notified_to_eu_on=(notified_to_eu_on)
+    return if notified_to_eu_on.nil?
+
+    if Date === notified_to_eu_on
+      date = notified_to_eu_on
+    elsif notified_to_eu_on[:year].present? && notified_to_eu_on[:month].present? && notified_to_eu_on[:day].present?
+      begin
+        date = Date.new(notified_to_eu_on[:year].to_i, notified_to_eu_on[:month].to_i, notified_to_eu_on[:day].to_i)
+      rescue ArgumentError
+        date = OpenStruct.new(year: notified_to_eu_on[:year], month: notified_to_eu_on[:month], day: notified_to_eu_on[:day])
+      end
+    else
+      date = OpenStruct.new(year: notified_to_eu_on[:year], month: notified_to_eu_on[:month], day: notified_to_eu_on[:day])
+    end
+
+    write_attribute(:notified_to_eu_on, date)
+  end
 
   def submit!
     raise AlreadySubmittedError, "Nanomaterial previously notified, on #{submitted_at}" if submitted?
@@ -60,8 +84,34 @@ class NanomaterialNotification < ApplicationRecord
 private
 
   def eu_notification_date_must_be_pre_brexit
-    if notified_to_eu_on && notified_to_eu_on > EU_EXIT_DATE
+    if notified_to_eu_on && Date === notified_to_eu_on && notified_to_eu_on > EU_EXIT_DATE
       errors.add(:notified_to_eu_on, I18n.t(:post_brexit_date_given, scope: %i[activerecord errors models nanomaterial_notification attributes notified_to_eu_on]))
+    end
+  end
+
+  def eu_notification_date_is_real
+    if notified_to_eu_on && !(Date === notified_to_eu_on)
+
+      translation_scope = %i[activerecord errors models nanomaterial_notification attributes notified_to_eu_on]
+
+      if notified_to_eu_on.day.blank? || notified_to_eu_on.month.blank? || notified_to_eu_on.year.blank?
+
+        missing_date_parts = []
+        missing_date_parts << "day" if notified_to_eu_on.day.blank?
+        missing_date_parts << "month" if notified_to_eu_on.month.blank?
+        missing_date_parts << "year" if notified_to_eu_on.year.blank?
+
+        error_message = if missing_date_parts.size == 3
+                          I18n.t(:blank, scope: translation_scope)
+                        else
+                          I18n.t(:date_incomplete, missing_date_parts: missing_date_parts.to_sentence, scope: translation_scope)
+                        end
+
+      else
+        error_message = I18n.t(:not_a_real_date, scope: translation_scope)
+      end
+
+      errors.add(:notified_to_eu_on, error_message)
     end
   end
 

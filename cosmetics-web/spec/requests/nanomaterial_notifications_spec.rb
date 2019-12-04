@@ -265,11 +265,13 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       context "when a valid pre-Brexit date is entered" do
         let(:nanomaterial_params) {
           {
-          eu_notified: "true",
-          "notified_to_eu_on(3i)" => "01",  # day
-          "notified_to_eu_on(2i)" => "01",  # month
-          "notified_to_eu_on(1i)" => "2020", # year
-        }
+            eu_notified: "true",
+            notified_to_eu_on: {
+              day: "01",
+              month: "01",
+              year: "2020",
+            },
+          }
         }
 
         it "redirects to the upload PDF page" do
@@ -294,6 +296,27 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
         it "renders an error page" do
           expect(response.code).to eql("200")
+        end
+      end
+
+      context "when a an invalid date is entered" do
+        let(:nanomaterial_params) {
+          {
+          eu_notified: "true",
+            notified_to_eu_on: {
+              day: "12",
+              month: "30",
+              year: "2020",
+            },
+          }
+        }
+
+        it "renders an error page" do
+          expect(response.code).to eql("200")
+        end
+
+        it "displays an error message" do
+          expect(response.body).to include("There is a problem")
         end
       end
     end
