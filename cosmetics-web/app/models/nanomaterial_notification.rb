@@ -34,8 +34,10 @@ class NanomaterialNotification < ApplicationRecord
       rescue ArgumentError
         date = OpenStruct.new(year: notified_to_eu_on[:year], month: notified_to_eu_on[:month], day: notified_to_eu_on[:day])
       end
-    else
+    elsif notified_to_eu_on[:year].present? || notified_to_eu_on[:month].present? || notified_to_eu_on[:day].present?
       date = OpenStruct.new(year: notified_to_eu_on[:year], month: notified_to_eu_on[:month], day: notified_to_eu_on[:day])
+    else
+      date = nil
     end
 
     write_attribute(:notified_to_eu_on, date)

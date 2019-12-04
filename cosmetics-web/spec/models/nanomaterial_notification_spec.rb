@@ -229,6 +229,16 @@ RSpec.describe NanomaterialNotification, type: :model do
         expect(nanomaterial_notification.notified_to_eu_on).to eql(OpenStruct.new(day: "40", month: "13", year: "2019"))
       end
     end
+
+    context "when setting with hash containing all blank values" do
+      before do
+        nanomaterial_notification.notified_to_eu_on = { day: "", month: "", year: "" }
+      end
+
+      it "sets an nil date" do
+        expect(nanomaterial_notification.notified_to_eu_on).to be nil
+      end
+    end
   end
 
   describe "#submittable?" do
