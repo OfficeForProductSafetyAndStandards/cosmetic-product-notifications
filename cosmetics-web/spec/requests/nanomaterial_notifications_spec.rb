@@ -52,6 +52,10 @@ RSpec.describe "Nanomaterial notifications", type: :request do
     it "has a page heading" do
       expect(response.body).to have_h1_with_text("What is the name of the nanomaterial?")
     end
+
+    it "includes a back link to the Nanomaterials tab page" do
+      expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/nanomaterials")
+    end
   end
 
   describe "POST /responsible_persons/ID/nanomaterials" do

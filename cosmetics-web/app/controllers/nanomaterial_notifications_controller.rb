@@ -8,6 +8,7 @@ class NanomaterialNotificationsController < ApplicationController
   def index; end
 
   def new
+    @back_link_path = responsible_person_nanomaterials_path(@responsible_person)
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new
     @form_url = responsible_person_nanomaterials_path(@responsible_person)
     @form_method = :post

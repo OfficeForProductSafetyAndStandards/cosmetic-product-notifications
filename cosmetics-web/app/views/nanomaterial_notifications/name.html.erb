@@ -2,9 +2,7 @@
 <% content_for :after_header do %>
   <%= render "layouts/navbar" %>
 
-  <% if @back_link_path %>
-    <%= govukBackLink(text: "Back", href: @back_link_path) %>
-  <% end %>
+  <%= govukBackLink(text: "Back", href: @back_link_path) %>
 <% end %>
 
 
