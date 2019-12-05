@@ -82,17 +82,9 @@ RSpec.describe Notification, type: :model do
   end
 
   describe "#may_submit_notification?" do
-    let(:notification) { create(:draft_notification) }
-
     context "when no missing information" do
-      before do
-        allow(notification).to receive(:missing_information?).and_return(false)
-      end
-
       context "when notified pre EU exit" do
-        before do
-          notification.was_notified_before_eu_exit = true
-        end
+        let(:notification) { create(:draft_notification, :pre_brexit) }
 
         it "can submit a notification" do
           expect(notification).to be_may_submit_notification
@@ -100,15 +92,8 @@ RSpec.describe Notification, type: :model do
       end
 
       context "when images are present and safe" do
-        let(:image_upload) { ImageUpload.new }
-        let(:file) { fixture_file_upload("/testImage.png", "image/png") }
-
-        before do
-          image_upload.file.attach(file)
-          image_upload.file.metadata["safe"] = "true"
-
-          notification.image_uploads = [image_upload]
-        end
+        let(:notification) { create(:draft_notification, image_uploads: [image_upload]) }
+        let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned) }
 
         it "can submit a notification" do
           expect(notification).to be_may_submit_notification
@@ -122,9 +107,7 @@ RSpec.describe Notification, type: :model do
       end
 
       context "when notified pre EU exit" do
-        before do
-          notification.was_notified_before_eu_exit = true
-        end
+        let(:notification) { create(:draft_notification, :pre_brexit) }
 
         it "can not submit a notification" do
           expect(notification).not_to be_may_submit_notification
@@ -132,15 +115,8 @@ RSpec.describe Notification, type: :model do
       end
 
       context "when images is present and safe" do
-        let(:image_upload) { ImageUpload.new }
-        let(:file) { fixture_file_upload("/testImage.png", "image/png") }
-
-        before do
-          image_upload.file.attach(file)
-          image_upload.file.metadata["safe"] = "true"
-
-          notification.image_uploads = [image_upload]
-        end
+        let(:notification) { create(:draft_notification, image_uploads: [image_upload]) }
+        let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned) }
 
         it "can not submit a notification" do
           expect(notification).not_to be_may_submit_notification
