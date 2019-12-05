@@ -39,6 +39,32 @@ RSpec.describe Notification, type: :model do
     end
   end
 
+  describe "#images_required?" do
+    let(:notification) { build(:notification) }
+
+    context "when the notification has no images uploaded" do
+      context "when notifiying pre EU exit" do
+        before do
+          notification.was_notified_before_eu_exit = true
+        end
+
+        it "requires an image upload" do
+          expect(notification).to be_images_required
+        end
+      end
+
+      context "when notifiying post EU exit" do
+        before do
+          notification.was_notified_before_eu_exit = false
+        end
+
+        it "does not require an image upload" do
+          expect(notification).to be_images_required
+        end
+      end
+    end
+  end
+
   describe "#missing_information?" do
     let(:notification) { build(:notification) }
 
