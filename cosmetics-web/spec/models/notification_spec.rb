@@ -91,7 +91,7 @@ RSpec.describe Notification, type: :model do
 
       context "when notified pre EU exit" do
         before do
-          allow(notification).to receive(:notified_pre_eu_exit?).and_return(true)
+          notification.was_notified_before_eu_exit = true
         end
 
         it "can submit a notification" do
@@ -100,8 +100,14 @@ RSpec.describe Notification, type: :model do
       end
 
       context "when images are present and safe" do
+        let(:image_upload) { ImageUpload.new }
+        let(:file) { fixture_file_upload("/testImage.png", "image/png") }
+
         before do
-          allow(notification).to receive(:images_are_present_and_safe?).and_return(true)
+          image_upload.file.attach(file)
+          image_upload.file.metadata["safe"] = "true"
+
+          notification.image_uploads = [image_upload]
         end
 
         it "can submit a notification" do
@@ -117,7 +123,7 @@ RSpec.describe Notification, type: :model do
 
       context "when notified pre EU exit" do
         before do
-          allow(notification).to receive(:notified_pre_eu_exit?).and_return(true)
+          notification.was_notified_before_eu_exit = true
         end
 
         it "can not submit a notification" do
@@ -125,9 +131,15 @@ RSpec.describe Notification, type: :model do
         end
       end
 
-      context "when images are present and safe" do
+      context "when images is present and safe" do
+        let(:image_upload) { ImageUpload.new }
+        let(:file) { fixture_file_upload("/testImage.png", "image/png") }
+
         before do
-          allow(notification).to receive(:images_are_present_and_safe?).and_return(true)
+          image_upload.file.attach(file)
+          image_upload.file.metadata["safe"] = "true"
+
+          notification.image_uploads = [image_upload]
         end
 
         it "can not submit a notification" do
