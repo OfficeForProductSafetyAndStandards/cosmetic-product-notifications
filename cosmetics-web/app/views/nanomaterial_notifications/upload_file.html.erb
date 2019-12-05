@@ -7,9 +7,14 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <%= form_for @nanomaterial_notification, url: file_nanomaterial_path(@nanomaterial_notification), method: :patch, multipart: true do |form| %>
+    <%= form_tag file_nanomaterial_path(@nanomaterial_notification), method: :patch, multipart: true do %>
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <% if @nanomaterial_notification.errors.any? %>
+        <% error_list = @nanomaterial_notification.errors.messages.collect do |key, messages|
+          { text: messages.first, href: "#nanomaterial_notification_#{key}-error" }
+        end %>
+        <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: error_list %>
+      <% end %>
 
       <h1 class="govuk-heading-xl">Upload details about the nanomaterial</h1>
 
