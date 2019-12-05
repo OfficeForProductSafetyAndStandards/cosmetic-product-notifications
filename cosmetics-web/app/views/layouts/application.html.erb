@@ -8,16 +8,7 @@
     <%= render "layouts/header" %>
 
     <div class="govuk-width-container">
-
-      <% phase_banner_html = capture do %>
-        This is a new service – your
-          <%= link_to "https://www.surveymonkey.co.uk/r/PQXTHPW", class: "govuk-link govuk-link--no-visited-state", target: "_blank", rel: "noopener" do %>
-            feedback<span class="govuk-visually-hidden"> (opens new window)</span>
-          <% end %>
-        will help us to improve it.
-      <% end %>
-
-      <%= govukPhaseBanner(tag: {text: "beta"}, html: phase_banner_html) %>
+      <%= render "shared/phase_banner" %>
       <%= yield :after_header %>
 
       <% if alert %>
