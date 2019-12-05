@@ -11,3 +11,7 @@ ActionView::Base.include GovukDesignSystem::DetailsHelper
 ActionView::Base.include GovukDesignSystem::WarningTextHelper
 ActionView::Base.include GovukDesignSystem::BackLinkHelper
 ActionView::Base.include GovukDesignSystem::SummaryListHelper
+ActionView::Base.include GovukDesignSystem::FileUploadHelper
+ActionView::Base.include GovukDesignSystem::ErrorMessageHelper
+ActionView::Base.include GovukDesignSystem::LabelHelper
+ActionView::Base.include GovukDesignSystem::HintHelper

@@ -35,16 +35,23 @@
         </div>
       <% end %>
 
-      <div class="govuk-form-group">
-        <label class="govuk-label govuk-label--s" for="nanomaterial_notification_file">
-          <% if @nanomaterial_notification.file.attached? %>
-            Upload a replacement file
-          <% else %>
-            Upload a file
-          <% end %>
-        </label>
-        <%= form.file_field :file, class: "govuk-file-upload", accept: "application/pdf" %>
-      </div>
+      <% label_text = @nanomaterial_notification.file.attached? ? "Upload a replacement file" : "Upload a file" %>
+
+      <% if @nanomaterial_notification.errors.full_messages_for(:file).any? %>
+        <% error_message = {text: @nanomaterial_notification.errors.full_messages_for(:file).first} %>
+      <% end %>
+
+      <%= govukFileUpload(
+        id: "nanomaterial_notification_file",
+        name: "nanomaterial_notification[file]",
+        label: {
+          text: label_text,
+          classes: "govuk-label--s"
+        },
+        errorMessage: error_message,
+        attributes: {
+          accept: "application/pdf"
+        }) %>
 
       <button type="submit" class="govuk-button">Continue</button>
     <% end %>
