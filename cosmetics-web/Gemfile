@@ -33,7 +33,7 @@ gem "strong_migrations"
 gem "webpacker", "4.0.7"
 gem "wicked"
 
-gem "govuk-design-system-rails", git: "https://github.com/UKGovernmentBEIS/govuk-design-system-rails", tag: "0.2.0", require: "govuk_design_system"
+gem "govuk-design-system-rails", git: "https://github.com/UKGovernmentBEIS/govuk-design-system-rails", tag: "0.4.1", require: "govuk_design_system"
 
 group :development, :test do
   gem "brakeman", "4.5.1"
