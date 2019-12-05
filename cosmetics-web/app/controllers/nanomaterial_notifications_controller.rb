@@ -8,8 +8,8 @@ class NanomaterialNotificationsController < ApplicationController
   def index; end
 
   def new
-    @back_link_path = responsible_person_nanomaterials_path(@responsible_person)
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new
+    @back_link_path = back_link_path_for(:name)
     @form_url = responsible_person_nanomaterials_path(@responsible_person)
     @form_method = :post
     render "name"
@@ -19,10 +19,12 @@ class NanomaterialNotificationsController < ApplicationController
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new
     @nanomaterial_notification.name = params[:nanomaterial_notification][:name]
     @nanomaterial_notification.user_id = current_user.id
+    @back_link_path = back_link_path_for(:name)
 
     if @nanomaterial_notification.save(context: :add_name)
       redirect_to notified_to_eu_nanomaterial_path(@nanomaterial_notification)
     else
+
       @form_url = responsible_person_nanomaterials_path(@responsible_person)
       @form_method = :post
       render "name"
@@ -30,13 +32,14 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def name
-    @back_link_path = review_nanomaterial_path(@nanomaterial_notification)
+    @back_link_path = back_link_path_for(:name)
     @form_url = name_nanomaterial_path(@nanomaterial_notification)
     @form_method = :patch
   end
 
   def update_name
     @nanomaterial_notification.name = params[:nanomaterial_notification][:name]
+    @back_link_path = back_link_path_for(:name)
 
     if @nanomaterial_notification.save(context: :add_name)
 
@@ -46,6 +49,7 @@ class NanomaterialNotificationsController < ApplicationController
         redirect_to notified_to_eu_nanomaterial_path(@nanomaterial_notification)
       end
     else
+
       @form_url = name_nanomaterial_path(@nanomaterial_notification)
       @form_method = :patch
 
@@ -54,17 +58,13 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def notified_to_eu
-    @back_link_path =
-      if @nanomaterial_notification.submittable?
-        review_nanomaterial_path(@nanomaterial_notification)
-      else
-        name_nanomaterial_path(@nanomaterial_notification)
-      end
+    @back_link_path = back_link_path_for(:notified_to_eu)
   end
 
   def update_notified_to_eu
     @nanomaterial_notification.eu_notified = params[:eu_notified]
     @nanomaterial_notification.notified_to_eu_on = params[:notified_to_eu_on]
+    @back_link_path = back_link_path_for(:notified_to_eu)
 
     if @nanomaterial_notification.save(context: :eu_notification)
 
@@ -79,15 +79,12 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def upload_file
-    @back_link_path =
-      if @nanomaterial_notification.submittable?
-        review_nanomaterial_path(@nanomaterial_notification)
-      else
-        notified_to_eu_nanomaterial_path(@nanomaterial_notification)
-      end
+    @back_link_path = back_link_path_for(:file)
   end
 
   def update_file
+    @back_link_path = back_link_path_for(:file)
+
     file = params.fetch(:nanomaterial_notification, {})[:file]
 
     if file
@@ -121,6 +118,21 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
 private
+
+  def back_link_path_for(step)
+    if @nanomaterial_notification.submittable?
+      review_nanomaterial_path(@nanomaterial_notification)
+    else
+      case step
+      when :name
+        responsible_person_nanomaterials_path(@responsible_person)
+      when :notified_to_eu
+        name_nanomaterial_path(@nanomaterial_notification)
+      when :file
+        notified_to_eu_nanomaterial_path(@nanomaterial_notification)
+      end
+    end
+  end
 
   def eu_notification_params
     params.permit(:eu_notified, :notified_to_eu_on)
