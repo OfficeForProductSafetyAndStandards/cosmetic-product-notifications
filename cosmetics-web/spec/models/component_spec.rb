@@ -376,10 +376,10 @@ RSpec.describe Component, type: :model do
 
   describe "#nano_material_required?" do
     context "when there is no nano material" do
-      it "does not require nano material information" do
-        allow(predefined_component).to receive(:nano_material).and_return nil
+      let(:component) { build(:component) }
 
-        expect(predefined_component).not_to be_nano_material_required
+      it "does not require nano material information" do
+        expect(component).not_to be_nano_material_required
       end
     end
 
@@ -389,19 +389,13 @@ RSpec.describe Component, type: :model do
       let(:component) { build(:component, nano_material: nano_material) }
 
       context "when a nano element requires information" do
-        before do
-          allow(first_nano_element).to receive(:required?).and_return true
-        end
-
         it "requires more information the nano_material" do
           expect(component).to be_nano_material_required
         end
       end
 
       context "when a nano element does not require information" do
-        before do
-          allow(first_nano_element).to receive(:required?).and_return false
-        end
+        let(:first_nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w(other)) }
 
         it "requires nano material information" do
           expect(component).not_to be_nano_material_required
