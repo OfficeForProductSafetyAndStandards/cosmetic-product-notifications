@@ -99,7 +99,7 @@ class Notification < ApplicationRecord
       transitions from: :draft_complete, to: :notification_complete,
                   after: Proc.new { __elasticsearch__.index_document } do
         guard do
-          notified_pre_eu_exit? || images_are_present_and_safe?
+          (notified_pre_eu_exit? || images_are_present_and_safe?) && !missing_information?
         end
       end
     end
