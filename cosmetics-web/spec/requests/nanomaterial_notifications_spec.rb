@@ -29,6 +29,10 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       it "has a page heading" do
         expect(response.body).to have_h1_with_text("Nanomaterials")
       end
+
+      it "has a page title" do
+        expect(response.body).to have_title("Nanomaterials")
+      end
     end
 
     context "when user attempts to look at a another company’s nanomaterials" do
@@ -51,6 +55,10 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
     it "has a page heading" do
       expect(response.body).to have_h1_with_text("What is the name of the nanomaterial?")
+    end
+
+    it "has a page title" do
+      expect(response.body).to have_title("What is the name of the nanomaterial?")
     end
 
     it "includes a back link to the Nanomaterials tab page" do
@@ -117,6 +125,10 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
       it "has a page heading" do
         expect(response.body).to have_h1_with_text("What is the name of the nanomaterial?")
+      end
+
+      it "has a page title" do
+        expect(response.body).to have_title("What is the name of the nanomaterial?")
       end
     end
 
@@ -218,6 +230,10 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
       it "has a page heading" do
         expect(response.body).to have_h1_with_text("Was the EU notified about Zinc oxide on CPNP before 1 February 2020?")
+      end
+
+      it "has a page title" do
+        expect(response.body).to have_title("Was the EU notified about Zinc oxide on CPNP before 1 February 2020?")
       end
 
       it "includes a back link to the name page" do
@@ -368,6 +384,10 @@ RSpec.describe "Nanomaterial notifications", type: :request do
         expect(response.body).to have_h1_with_text("Upload details about the nanomaterial")
       end
 
+      it "has a page title" do
+        expect(response.body).to have_title("Upload details about the nanomaterial")
+      end
+
       it "includes a back link to EU notification question page" do
         expect(response.body).to have_back_link_to("/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu")
       end
@@ -462,6 +482,10 @@ RSpec.describe "Nanomaterial notifications", type: :request do
       it "has a page heading" do
         expect(response.body).to have_h1_with_text("Check your answers")
       end
+
+      it "has a page title" do
+        expect(response.body).to have_title("Check your answers")
+      end
     end
 
     context "when the notification has already been submitted" do
@@ -543,6 +567,10 @@ RSpec.describe "Nanomaterial notifications", type: :request do
 
       it "has a page heading" do
         expect(response.body).to have_h1_with_text("You’ve told us about Zinc oxide")
+      end
+
+      it "has a page title" do
+        expect(response.body).to have_title("You’ve told us about Zinc oxide")
       end
     end
 

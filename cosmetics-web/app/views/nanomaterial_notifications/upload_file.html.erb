@@ -1,4 +1,5 @@
-<% content_for :page_title, "Nanomaterials" %>
+<% page_title = "Upload details about the nanomaterial" %>
+<% content_for :page_title, page_title %>
 <% content_for :after_header do %>
   <%= govukBackLink(text: "Back", href: @back_link_path) %>
 <% end %>
@@ -16,7 +17,7 @@
         <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: error_list %>
       <% end %>
 
-      <h1 class="govuk-heading-xl">Upload details about the nanomaterial</h1>
+      <h1 class="govuk-heading-xl"><%= page_title %></h1>
 
       <p class="govuk-body">You’ll need to upload a PDF with the following information about the nanomaterial:</p>
 

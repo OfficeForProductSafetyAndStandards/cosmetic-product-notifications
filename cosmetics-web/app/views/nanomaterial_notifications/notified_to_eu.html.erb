@@ -1,4 +1,9 @@
-<% content_for :page_title, "Nanomaterials" %>
+<% page_title_prefix = safe_join(["Was the EU notified about ", @nanomaterial_notification.name," on CPNP before "]) %>
+<% brexit_date = display_full_month_date(EU_EXIT_DATE + 1.day) %>
+
+<% page_title = "What is the name of the nanomaterial?" %>
+
+<% content_for :page_title, safe_join([page_title_prefix, brexit_date, "?"]) %>
 <% content_for :after_header do %>
   <%= govukBackLink(text: "Back", href: @back_link_path) %>
 <% end %>
@@ -55,7 +60,7 @@
           "name": "eu_notified",
           "fieldset": {
             "legend": {
-              "html": safe_join(["Was the EU notified about ", @nanomaterial_notification.name," on CPNP before ", content_tag('span', display_full_month_date(EU_EXIT_DATE + 1.day), class: 'no-wrap'), "?"]),
+              "html": safe_join([page_title_prefix, content_tag('span', brexit_date, class: 'no-wrap'), "?"]),
               isPageHeading: true,
               classes: "govuk-fieldset__legend--xl"
             }
