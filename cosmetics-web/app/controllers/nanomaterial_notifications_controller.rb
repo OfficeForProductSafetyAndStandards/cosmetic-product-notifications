@@ -16,9 +16,10 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def create
-    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new
-    @nanomaterial_notification.name = params[:nanomaterial_notification][:name]
-    @nanomaterial_notification.user_id = current_user.id
+    @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new(
+      name: params[:nanomaterial_notification][:name],
+      user_id: current_user.id,
+    )
     @previous_page_path = back_link_path_for(:name)
 
     if @nanomaterial_notification.save(context: :add_name)
