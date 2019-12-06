@@ -5,7 +5,7 @@
 
 <% content_for :page_title, safe_join([page_title_prefix, brexit_date, "?"]) %>
 <% content_for :after_header do %>
-  <%= govukBackLink(text: "Back", href: @back_link_path) %>
+  <%= govukBackLink(text: "Back", href: @previous_page_path) %>
 <% end %>
 
 

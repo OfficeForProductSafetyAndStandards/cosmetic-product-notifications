@@ -9,7 +9,7 @@ class NanomaterialNotificationsController < ApplicationController
 
   def new
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new
-    @back_link_path = back_link_path_for(:name)
+    @previous_page_path = back_link_path_for(:name)
     @form_url = responsible_person_nanomaterials_path(@responsible_person)
     @form_method = :post
     render "name"
@@ -19,7 +19,7 @@ class NanomaterialNotificationsController < ApplicationController
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new
     @nanomaterial_notification.name = params[:nanomaterial_notification][:name]
     @nanomaterial_notification.user_id = current_user.id
-    @back_link_path = back_link_path_for(:name)
+    @previous_page_path = back_link_path_for(:name)
 
     if @nanomaterial_notification.save(context: :add_name)
       redirect_to notified_to_eu_nanomaterial_path(@nanomaterial_notification)
@@ -32,14 +32,14 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def name
-    @back_link_path = back_link_path_for(:name)
+    @previous_page_path = back_link_path_for(:name)
     @form_url = name_nanomaterial_path(@nanomaterial_notification)
     @form_method = :patch
   end
 
   def update_name
     @nanomaterial_notification.name = params[:nanomaterial_notification][:name]
-    @back_link_path = back_link_path_for(:name)
+    @previous_page_path = back_link_path_for(:name)
 
     if @nanomaterial_notification.save(context: :add_name)
 
@@ -58,13 +58,13 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def notified_to_eu
-    @back_link_path = back_link_path_for(:notified_to_eu)
+    @previous_page_path = back_link_path_for(:notified_to_eu)
   end
 
   def update_notified_to_eu
     @nanomaterial_notification.eu_notified = params[:eu_notified]
     @nanomaterial_notification.notified_to_eu_on = params[:notified_to_eu_on]
-    @back_link_path = back_link_path_for(:notified_to_eu)
+    @previous_page_path = back_link_path_for(:notified_to_eu)
 
     if @nanomaterial_notification.save(context: :eu_notification)
 
@@ -79,11 +79,11 @@ class NanomaterialNotificationsController < ApplicationController
   end
 
   def upload_file
-    @back_link_path = back_link_path_for(:file)
+    @previous_page_path = back_link_path_for(:file)
   end
 
   def update_file
-    @back_link_path = back_link_path_for(:file)
+    @previous_page_path = back_link_path_for(:file)
 
     file = params.fetch(:nanomaterial_notification, {})[:file]
 
