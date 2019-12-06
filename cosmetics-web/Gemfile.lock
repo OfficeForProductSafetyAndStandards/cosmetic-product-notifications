@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/UKGovernmentBEIS/govuk-design-system-rails
-  revision: 5ea4ce2bb0c1521243afe8669223974c7dd59b5b
-  tag: 0.4.0
+  revision: 30fb7f9262de7ba965e2533a48ce85082a01503c
+  tag: 0.5.0
   specs:
-    govuk-design-system-rails (0.4.0)
+    govuk-design-system-rails (0.5.0)
 
 GEM
   remote: https://rubygems.org/
