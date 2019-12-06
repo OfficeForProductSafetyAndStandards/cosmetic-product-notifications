@@ -317,7 +317,7 @@ RSpec.describe NanomaterialNotification, type: :model do
       }
 
       it "is available from the start of the day after Brexit" do
-        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-02-01T00:00Z"))
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-01-31T00:00Z"))
       end
     end
 
@@ -329,16 +329,16 @@ RSpec.describe NanomaterialNotification, type: :model do
                notified_to_eu_on: Date.parse("2019-08-01"))
       }
 
-      it "is available from the start of the day after 7 months later" do
-        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-03-02T00:00Z"))
+      it "is available 7 months later" do
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-03-01T00:00Z"))
       end
     end
 
     context "when notified after Brexit" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, submitted_at: Time.zone.parse("2020-01-01T23:01Z"), notified_to_eu_on: nil, eu_notified: false) }
 
-      it "is available from the day after 6 months later" do
-        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-07-02T00:00 BST +01:00"))
+      it "is available 6 months later" do
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-07-01T00:00 BST +01:00"))
       end
     end
 
@@ -350,8 +350,8 @@ RSpec.describe NanomaterialNotification, type: :model do
                eu_notified: false)
       }
 
-      it "is available from the day after 6 months later" do
-        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2021-03-02T00:00Z"))
+      it "is available 6 months later" do
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2021-03-01T00:00Z"))
       end
     end
   end

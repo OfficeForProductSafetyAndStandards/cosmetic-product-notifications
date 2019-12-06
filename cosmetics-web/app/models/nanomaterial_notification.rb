@@ -76,7 +76,7 @@ class NanomaterialNotification < ApplicationRecord
         submitted_at.in_time_zone("London") + 6.months
       end
 
-    (availability_date + 1.day).at_midnight
+    availability_date.at_midnight
   end
 
   def can_be_made_available_on_uk_market?
