@@ -23,6 +23,8 @@ Rails:
 
 RSpec/MultipleExpectations:
   Max: 2
+  Exclude:
+    - 'spec/features/**/*'
 
 RSpec/NestedGroups:
   Max: 6
@@ -30,6 +32,12 @@ RSpec/NestedGroups:
 ExampleLength:
   Exclude:
     - 'spec/system/**/*'
+    - 'spec/features/**/*'
+
+# Disable this so that we can use Capybara aliases like
+# 'feature' and 'scenario' for more readable tests
+Capybara/FeatureMethods:
+  Enabled: false
 
 # TODO: re-enable this after updating the helpers
 Rails/HelperInstanceVariable:

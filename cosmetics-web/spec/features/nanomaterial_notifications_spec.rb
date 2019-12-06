@@ -51,6 +51,4 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
 
     expect(page).to have_text("You’ve told us about My EU nanomaterial")
   end
-
-
 end
