@@ -82,9 +82,13 @@ RSpec.describe Notification, type: :model do
   end
 
   describe "#may_submit_notification?" do
+    let(:nano_element) { create(:nano_element, confirm_toxicology_notified: "yes", purposes: %w(other)) }
+    let(:nano_material) { create(:nano_material, nano_elements: [nano_element]) }
+    let(:component) { create(:component, nano_material: nano_material) }
+
     context "when no missing information" do
       context "when notified pre EU exit" do
-        let(:notification) { create(:draft_notification, :pre_brexit) }
+        let(:notification) { create(:draft_notification, :pre_brexit, components: [component]) }
 
         it "can submit a notification" do
           expect(notification).to be_may_submit_notification
@@ -92,7 +96,7 @@ RSpec.describe Notification, type: :model do
       end
 
       context "when images are present and safe" do
-        let(:notification) { create(:draft_notification, image_uploads: [image_upload]) }
+        let(:notification) { create(:draft_notification, image_uploads: [image_upload], components: [component]) }
         let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned) }
 
         it "can submit a notification" do
@@ -102,12 +106,12 @@ RSpec.describe Notification, type: :model do
     end
 
     context "when information is missing" do
-      before do
-        allow(notification).to receive(:missing_information?).and_return(true)
-      end
+      let(:nano_element) { create(:nano_element, confirm_toxicology_notified: "no", purposes: %w(other)) }
+      let(:nano_material) { create(:nano_material, nano_elements: [nano_element]) }
+      let(:component) { create(:component, nano_material: nano_material) }
 
       context "when notified pre EU exit" do
-        let(:notification) { create(:draft_notification, :pre_brexit) }
+        let(:notification) { create(:draft_notification, :pre_brexit, components: [component]) }
 
         it "can not submit a notification" do
           expect(notification).not_to be_may_submit_notification
@@ -115,7 +119,7 @@ RSpec.describe Notification, type: :model do
       end
 
       context "when images is present and safe" do
-        let(:notification) { create(:draft_notification, image_uploads: [image_upload]) }
+        let(:notification) { create(:draft_notification, image_uploads: [image_upload], components: [component]) }
         let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned) }
 
         it "can not submit a notification" do
