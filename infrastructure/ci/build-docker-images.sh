@@ -7,8 +7,8 @@ COMPONENTS=(
     'antivirus'
     'maintenance'
     'db'
-    'keycloak',
-    'cosmetics-web',
+    'keycloak'
+    'cosmetics-web'
     'cosmetics-worker'
 )
 
