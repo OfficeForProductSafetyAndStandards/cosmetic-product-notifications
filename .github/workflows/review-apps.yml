@@ -17,6 +17,8 @@ jobs:
         sudo apt-get install cf-cli
         sudo apt-get install cf7-cli
         env
+        number=`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss/commits/$GITHUB_SHA/pulls | jq '.[0] | .number'`
+        echo $number
         #     - name: Deploy
         #       env:
         #         SPACE: int
