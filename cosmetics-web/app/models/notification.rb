@@ -106,14 +106,6 @@ class Notification < ApplicationRecord
   end
   # rubocop:enable Metrics/BlockLength
 
-  def imported?
-    notification.state == :notification_file_imported ? cpnp_is_imported : import_country.present?
-  end
-
-  def imported_country
-    notification.state == :notification_file_imported ? cpnp_imported_country : import_country
-  end
-
   def reference_number_for_display
     "UKCP-%08d" % reference_number
   end
