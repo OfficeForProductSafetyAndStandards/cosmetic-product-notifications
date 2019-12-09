@@ -375,7 +375,7 @@ RSpec.describe Component, type: :model do
   end
 
   describe "#nano_material_required?" do
-    context "when there is no nano material" do
+    context "when there is no nanomaterial" do
       let(:component) { build(:component) }
 
       it "does not require nano material information" do
