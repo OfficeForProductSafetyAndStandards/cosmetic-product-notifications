@@ -1,0 +1,34 @@
+name: Tests
+
+on: [push]
+
+jobs:
+  reviewapp:
+    name: "Deploy Review app"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install cf client
+      run: |
+        wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+        echo 'deb https://packages.cloudfoundry.org/debian stable main' | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+        sudo apt-get -qq update
+        sudo apt-get install cf-cli
+        sudo apt-get install cf7-cli
+        env
+        #     - name: Deploy
+        #       env:
+        #         SPACE: int
+        #         CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
+        #         CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
+        #       run: |
+        #         cf api api.london.cloud.service.gov.uk
+        #         cf auth
+        #         cf target -o 'beis-opss' -s $SPACE
+        #         export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
+        #         export REVIEW_INSTANCE_NAME=pr-$TRAVIS_PULL_REQUEST
+        #         export DB_NAME=cosmetics-db-$DB_VERSION
+        #         export REDIS_NAME=cosmetics-review-redis-$TRAVIS_PULL_REQUEST
+        #         ./$COMPONENT/deploy-review.sh
+        #         cf logout
