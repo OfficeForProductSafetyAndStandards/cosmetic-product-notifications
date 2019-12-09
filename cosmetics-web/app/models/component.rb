@@ -112,7 +112,7 @@ class Component < ApplicationRecord
   end
 
   def nano_material_required?
-    return false if nano_material.nil?
+    return nano_material && nano_material.nano_elements_required?
 
     nano_material&.nano_elements_required?
   end
