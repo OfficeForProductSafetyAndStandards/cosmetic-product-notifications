@@ -1,0 +1,21 @@
+<% page_title = "What is the name of the nanomaterial?" %>
+<% content_for :page_title, page_title %>
+<% content_for :after_header do %>
+  <%= govukBackLink(text: "Back", href: @previous_page_path) %>
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= form_for @nanomaterial_notification, url: @form_url do |form| %>
+
+      <%= render "form_components/govuk_error_summary", form: form %>
+
+      <%= render "form_components/govuk_input", form: form, key: :name, label: { text: page_title, isPageHeading: "true", classes: "govuk-label--xl" }  %>
+
+      <button type="submit" class="govuk-button">Continue</button>
+    <% end %>
+
+  </div>
+</div>
