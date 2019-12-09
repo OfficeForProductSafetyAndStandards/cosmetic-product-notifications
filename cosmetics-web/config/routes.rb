@@ -37,10 +37,26 @@ Rails.application.routes.draw do
   constraints DomainConstraint.new(ENV.fetch("SUBMIT_HOST") || ENV.fetch("COSMETICS_HOST")) do
     root "landing_page#index"
 
+
     resources :responsible_persons, only: %i[show] do
       collection do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
       end
+
+      resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index new create], shallow: true do
+        member do
+          get :name
+          patch :name, action: "update_name"
+          get :notified_to_eu
+          patch :notified_to_eu, action: "update_notified_to_eu"
+          get :upload_file
+          patch :file, action: "update_file"
+          get :review
+          patch :submission, action: "submit"
+          get :confirmation, action: "confirmation_page"
+        end
+      end
+
 
       resources :contact_persons, controller: "responsible_persons/contact_persons", only: %i[new create edit update] do
       end
@@ -72,14 +88,6 @@ Rails.application.routes.draw do
             resources :build, controller: :nanomaterial_build, only: %i[show update new]
           end
         end
-
-        member do
-          post :confirm
-        end
-      end
-
-      resources :non_standard_nanomaterials, controller: "responsible_persons/non_standard_nanomaterials", only: %i[index new edit] do
-        resources :build, controller: :non_standard_nanomaterial_build, only: %i[show update new]
 
         member do
           post :confirm

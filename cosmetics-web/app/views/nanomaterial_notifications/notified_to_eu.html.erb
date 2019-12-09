@@ -1,0 +1,87 @@
+<% page_title_prefix = safe_join(["Was the EU notified about ", @nanomaterial_notification.name," on CPNP before "]) %>
+<% brexit_date = display_full_month_date(EU_EXIT_DATE + 1.day) %>
+
+<% page_title = "What is the name of the nanomaterial?" %>
+
+<% content_for :page_title, safe_join([page_title_prefix, brexit_date, "?"]) %>
+<% content_for :after_header do %>
+  <%= govukBackLink(text: "Back", href: @previous_page_path) %>
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= form_for @nanomaterial_notification, url: notified_to_eu_nanomaterial_path(@nanomaterial_notification), html: { novalidate: true } do |form| %>
+
+      <%= render "form_components/govuk_error_summary", form: form %>
+
+      <% if @nanomaterial_notification.errors[:notified_to_eu_on].size > 0 %>
+        <% errorMessage = {
+          text: @nanomaterial_notification.errors.full_messages_for(:notified_to_eu_on).first.presence
+        }  %>
+
+        <% error_class = "govuk-input--error" %>
+      <% end %>
+
+      <% date_notified_to_eu_html = render("components/govuk_date_input",
+        id: "notified_to_eu_on",
+        fieldset: {
+          legend: {
+            text: "Date EU notified on",
+            classes: "govuk-fieldset__legend--m"
+          },
+        },
+        hint: { text: "For example, 31 3 2019" },
+        errorMessage: errorMessage,
+        items: [
+          {
+            name: "notified_to_eu_on[day]",
+            classes: "govuk-input--width-2 #{error_class}",
+            label: "Day",
+            value: @nanomaterial_notification.notified_to_eu_on&.day
+          },
+          {
+            name: "notified_to_eu_on[month]",
+            classes: "govuk-input--width-2 #{error_class}",
+            label: "Month",
+            value: @nanomaterial_notification.notified_to_eu_on&.month
+          },
+          {
+            name: "notified_to_eu_on[year]",
+            classes: "govuk-input--width-4 #{error_class}",
+            label: "Year",
+            value: @nanomaterial_notification.notified_to_eu_on&.year
+          }]) %>
+
+
+      <%= render "components/govuk_radios",
+          "idPrefix": "eu_notified",
+          "name": "eu_notified",
+          "fieldset": {
+            "legend": {
+              "html": safe_join([page_title_prefix, content_tag('span', brexit_date, class: 'no-wrap'), "?"]),
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--xl"
+            }
+          },
+          "items": [
+            {
+              "value": "true",
+              "html": safe_join(["Yes, the EU was notified about the nanomaterial on CPNP before ", content_tag('span', display_full_month_date(EU_EXIT_DATE + 1.day), class: 'no-wrap')]),
+              "checked": @nanomaterial_notification.eu_notified == true,
+              "conditional": {"html": date_notified_to_eu_html}
+            },
+            {
+              "value": "false",
+              "text": "No",
+              "checked": @nanomaterial_notification.eu_notified == false,
+            }
+          ]
+        %>
+
+      <button type="submit" class="govuk-button">Continue</button>
+    <% end %>
+
+  </div>
+</div>
