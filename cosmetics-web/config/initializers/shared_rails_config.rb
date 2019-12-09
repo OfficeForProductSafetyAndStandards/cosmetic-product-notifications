@@ -15,3 +15,5 @@ ActionView::Base.include GovukDesignSystem::FileUploadHelper
 ActionView::Base.include GovukDesignSystem::ErrorMessageHelper
 ActionView::Base.include GovukDesignSystem::LabelHelper
 ActionView::Base.include GovukDesignSystem::HintHelper
+ActionView::Base.include GovukDesignSystem::PhaseBannerHelper
+ActionView::Base.include GovukDesignSystem::TagHelper
