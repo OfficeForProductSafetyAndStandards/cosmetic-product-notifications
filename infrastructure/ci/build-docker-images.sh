@@ -7,7 +7,9 @@ COMPONENTS=(
     'antivirus'
     'maintenance'
     'db'
-    'keycloak'
+    'keycloak',
+    'cosmetics-web',
+    'cosmetics-worker'
 )
 
 function docker_tag_exists {
