@@ -1,0 +1,20 @@
+<% title = "Are you likely to notify the EU about these products?" %>
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= link_to "Back", wizard_path(:have_products_been_notified_in_eu), class: "govuk-back-link" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: wizard_path, method: :put do |form| %>
+      <%= render "components/govuk_radios",
+        name: :answer,
+        errorMessage: @error_text.present? && { text: @error_text },
+        fieldset: { legend: { text: title, \
+          isPageHeading: true, classes: "govuk-fieldset__legend--xl" } },
+        items: [{ text: "Yes", value: "yes", id: "answer_yes" },
+          { text: "No", value: "no", id: "answer_no" }] %>
+      <%= form.submit "Continue", class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>
