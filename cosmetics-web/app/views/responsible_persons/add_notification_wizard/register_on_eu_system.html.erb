@@ -1,0 +1,30 @@
+<% title = "If you’re likely to notify the EU about the products" %>
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= link_to "Back", wizard_path(:will_products_be_notified_in_eu), class: "govuk-back-link" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+    <p>CPNP allows you to export your notification as a ZIP file.</p>
+
+    <p class="govuk-!-margin-bottom-1">To notify OPSS about your products, you can either:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>upload this ZIP file</li>
+      <li>give the information manually</li>
+    </ul>
+
+    <p>Uploading the ZIP file means you need to answer fewer questions – you can upload up to 100 ZIP files at a time.</p>
+
+
+    <p><%= link_to "Notify the EU using CPNP (takes you to another website)", \
+      "https://ec.europa.eu/growth/sectors/cosmetics/cpnp_en", class: 'govuk-link' %></p>
+
+    <p><%= link_to "Notify OPSS without using a ZIP file",
+        new_responsible_person_notification_path(@responsible_person,
+        notified_before_eu_exit: false), class: 'govuk-link' %></p>
+
+  </div>
+</div>
