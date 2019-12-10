@@ -1,10 +1,10 @@
-name: Tests
+name: Review app
 
 on: [pull_request]
 
 jobs:
   reviewapp:
-    name: "Deploy Review app"
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,6 @@ jobs:
         sudo apt-get -qq update
         sudo apt-get install cf-cli
         sudo apt-get install cf7-cli
-        env
     - name: Deploy
       env:
         SPACE: int
