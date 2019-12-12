@@ -22,5 +22,6 @@ jobs:
         CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
       run: |
-        echo "GitHub REF:"
-        echo $GITHUB_REF
+        GITHUB_REF_2=$(echo ${GITHUB_REF/refs\/pull\//})
+        PR_ID=${GITHUB_REF_2/\/merge/}
+        echo $PR_ID
