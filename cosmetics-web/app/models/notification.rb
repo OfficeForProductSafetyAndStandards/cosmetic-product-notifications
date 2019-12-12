@@ -99,20 +99,12 @@ class Notification < ApplicationRecord
       transitions from: :draft_complete, to: :notification_complete,
                   after: Proc.new { __elasticsearch__.index_document } do
         guard do
-          notified_pre_eu_exit? || images_are_present_and_safe?
+          !missing_information?
         end
       end
     end
   end
   # rubocop:enable Metrics/BlockLength
-
-  def imported?
-    notification.state == :notification_file_imported ? cpnp_is_imported : import_country.present?
-  end
-
-  def imported_country
-    notification.state == :notification_file_imported ? cpnp_imported_country : import_country
-  end
 
   def reference_number_for_display
     "UKCP-%08d" % reference_number
@@ -165,7 +157,8 @@ class Notification < ApplicationRecord
   end
 
   def images_required?
-    notified_post_eu_exit? && image_uploads.empty?
+    (notified_pre_eu_exit? && !images_are_present_and_safe?) ||
+      (notified_post_eu_exit? && image_uploads.empty?)
   end
 
   def get_valid_multicomponents

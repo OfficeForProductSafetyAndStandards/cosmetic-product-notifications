@@ -1,0 +1,66 @@
+<% page_title = "Upload details about the nanomaterial" %>
+<% content_for :page_title, page_title %>
+<% content_for :after_header do %>
+  <%= govukBackLink(text: "Back", href: @previous_page_path) %>
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= form_tag file_nanomaterial_path(@nanomaterial_notification), method: :patch, multipart: true do %>
+
+      <% if @nanomaterial_notification.errors.any? %>
+        <% error_list = @nanomaterial_notification.errors.messages.collect do |key, messages|
+          { text: messages.first, href: "#nanomaterial_notification_#{key}-error" }
+        end %>
+        <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: error_list %>
+      <% end %>
+
+      <h1 class="govuk-heading-xl"><%= page_title %></h1>
+
+      <p class="govuk-body">You’ll need to upload a PDF with the following information about the nanomaterial:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the International Union of Pure and Applied Chemistry (IUPAC) name</li>
+        <li>the quantity expected to be placed on the market each year</li>
+        <li>the specification, including the size of particles, physical and chemical properties</li>
+        <li>the droplet size and distribution when sprayed</li>
+        <li>the toxicological profile</li>
+        <li>the safety data relating to the category of products in which it will be used</li>
+        <li>whether it reacts or changes its properties in certain conditions, for example, if its photocatalytic</li>
+      </ul>
+
+      <p class="govuk-body">You’ll also need to include the email address of someone to contact about the nanomaterial.</p>
+
+
+      <% if @nanomaterial_notification.file.attached? %>
+        <div class="govuk-inset-text">
+          Previously uploaded file:
+          <%= link_to @nanomaterial_notification.file.filename, @nanomaterial_notification.file %>
+        </div>
+      <% end %>
+
+      <% label_text = @nanomaterial_notification.file.attached? ? "Upload a replacement file" : "Upload a file" %>
+
+      <% if @nanomaterial_notification.errors.full_messages_for(:file).any? %>
+        <% error_message = {text: @nanomaterial_notification.errors.full_messages_for(:file).first} %>
+      <% end %>
+
+      <%= govukFileUpload(
+        id: "nanomaterial_notification_file",
+        name: "nanomaterial_notification[file]",
+        label: {
+          text: label_text,
+          classes: "govuk-label--s",
+          attributes: {for: "nanomaterial_notification_file"}
+        },
+        errorMessage: error_message,
+        attributes: {
+          accept: "application/pdf"
+        }) %>
+
+      <button type="submit" class="govuk-button">Continue</button>
+    <% end %>
+  </div>
+</div>

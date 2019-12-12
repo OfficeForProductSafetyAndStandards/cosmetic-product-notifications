@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_31_140425) do
+ActiveRecord::Schema.define(version: 2019_11_22_105631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,12 +122,16 @@ ActiveRecord::Schema.define(version: 2019_10_31_140425) do
     t.index ["component_id"], name: "index_nano_materials_on_component_id"
   end
 
-  create_table "non_standard_nanomaterials", force: :cascade do |t|
-    t.string "iupac_name"
+  create_table "nanomaterial_notifications", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
-    t.index ["responsible_person_id"], name: "index_non_standard_nanomaterials_on_responsible_person_id"
+    t.text "user_id", null: false
+    t.boolean "eu_notified"
+    t.date "notified_to_eu_on"
+    t.datetime "submitted_at"
+    t.index ["responsible_person_id"], name: "index_nanomaterial_notifications_on_responsible_person_id"
   end
 
   create_table "notification_files", force: :cascade do |t|
@@ -238,7 +242,7 @@ ActiveRecord::Schema.define(version: 2019_10_31_140425) do
   add_foreign_key "image_uploads", "notifications"
   add_foreign_key "nano_elements", "nano_materials"
   add_foreign_key "nano_materials", "components"
-  add_foreign_key "non_standard_nanomaterials", "responsible_persons"
+  add_foreign_key "nanomaterial_notifications", "responsible_persons"
   add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "responsible_persons"

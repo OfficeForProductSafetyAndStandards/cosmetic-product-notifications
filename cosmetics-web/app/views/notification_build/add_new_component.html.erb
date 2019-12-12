@@ -1,0 +1,37 @@
+<% content_for :page_title, "Add new component" %>
+<% content_for :after_header do %>
+  <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">Kit items</h1>
+
+    <%= form_for(@notification, url: wizard_path, method: :put) do |form| %>
+      <% valid_multicomponents = @notification.get_valid_multicomponents %>
+      <% valid_multicomponents.each do |valid_component| %>
+        <p><%= valid_component.name %></p>
+        <div class="govuk-form-group">
+          <button class="govuk-button govuk-button--secondary" type="submit"
+            name="remove_component" value="<%= valid_component.id %>">
+            Remove component
+          </button>
+        </div>
+      <% end %>
+
+      <div class="govuk-form-group">
+        <button class="govuk-button govuk-button--secondary" type="submit" name="add_component" value="true">
+          Add item
+        </button>
+      </div>
+
+      <% if valid_multicomponents.length > 1 %>
+        <div class="govuk-form-group">
+          <%= form.submit "Continue", class: "govuk-button" %>
+        </div>
+      <% end %>
+
+    <% end %>
+  </div>
+</div>

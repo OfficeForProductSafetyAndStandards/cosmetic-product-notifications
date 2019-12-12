@@ -39,6 +39,26 @@ RSpec.describe Notification, type: :model do
     end
   end
 
+  describe "#images_required?" do
+    context "when the notification has no images uploaded" do
+      context "when notifiying pre EU exit" do
+        let(:notification) { build(:draft_notification, :pre_brexit) }
+
+        it "requires an image upload" do
+          expect(notification).to be_images_required
+        end
+      end
+
+      context "when notifiying post EU exit" do
+        let(:notification) { build(:draft_notification, :post_brexit) }
+
+        it "does not require an image upload" do
+          expect(notification).to be_images_required
+        end
+      end
+    end
+  end
+
   describe "#missing_information?" do
     let(:notification) { build(:notification) }
 
@@ -77,6 +97,29 @@ RSpec.describe Notification, type: :model do
         allow(notification).to receive(:images_required?).and_return(false)
 
         expect(notification).not_to be_missing_information
+      end
+    end
+  end
+
+  describe "#may_submit_notification?" do
+    let(:nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w(other)) }
+    let(:nano_material) { build(:nano_material, nano_elements: [nano_element]) }
+    let(:component) { build(:component, nano_material: nano_material) }
+
+    context "when no information is missing" do
+      let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned) }
+      let(:notification) { build(:draft_notification, :pre_brexit, image_uploads: [image_upload], components: [component]) }
+
+      it "can submit a notification" do
+        expect(notification).to be_may_submit_notification
+      end
+    end
+
+    context "when information is missing" do
+      let(:notification) { build(:draft_notification, :pre_brexit, components: [component]) }
+
+      it "can not submit a notification" do
+        expect(notification).not_to be_may_submit_notification
       end
     end
   end
