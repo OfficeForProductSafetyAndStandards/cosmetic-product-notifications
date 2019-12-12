@@ -22,13 +22,5 @@ jobs:
         CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
       run: |
-        cf api api.london.cloud.service.gov.uk
-        cf auth
-        cf target -o 'beis-opss' -s $SPACE
-        export PR_NUMBER=`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss/commits/$GITHUB_SHA/pulls | jq '.[0] | .number'`
-        export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
-        export REVIEW_INSTANCE_NAME=pr-$PR_NUMBER
-        export DB_NAME=cosmetics-db-$DB_VERSION
-        export REDIS_NAME=cosmetics-review-redis-$PR_NUMBER
-        ./cosmetics-web/deploy-review.sh
-        cf logout
+        echo "GitHub REF:"
+        echo $GITHUB_REF
