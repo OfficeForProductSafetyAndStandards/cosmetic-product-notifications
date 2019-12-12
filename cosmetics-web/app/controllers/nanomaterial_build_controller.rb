@@ -53,10 +53,11 @@ class NanomaterialBuildController < ApplicationController
 
   def finish_wizard_path
     next_nano_element = get_next_nano_element
+
     if next_nano_element.present?
       new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, @component, next_nano_element)
-    elsif @component.notification.notification_file_imported?
-      responsible_person_notification_additional_information_index_path(@component.notification.responsible_person, @component.notification)
+    elsif @component.notification.via_zip_file?
+      edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
     else
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_category)
     end
