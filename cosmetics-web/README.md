@@ -8,8 +8,10 @@ This folder also contains the code for the [background worker](../cosmetics-work
 
 The site is written in [Ruby on Rails](https://rubyonrails.org/).
 
-We're using [Slim](http://slim-lang.com/) as our HTML templating language,
-ES6 JavaScript and [Sass](https://sass-lang.com/) for styling transpiled with webpack.
+We're using ERb as our HTML templating language, but some legacy templates
+are currently still using [Slim](http://slim-lang.com/).
+
+ES6 JavaScript and [Sass](https://sass-lang.com/) for styling are transpiled with webpack.
 
 
 ## Getting Setup
