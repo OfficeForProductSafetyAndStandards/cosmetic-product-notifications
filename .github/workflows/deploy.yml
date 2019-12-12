@@ -23,8 +23,8 @@ jobs:
         APP_NAME: cosmetics-web
         SUBMIT_HOST: staging-submit.cosmetic-product-notifications.service.gov.uk
         SEARCH_HOST: staging-search.cosmetic-product-notifications.service.gov.uk
-        CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
-        CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
+        CF_USERNAME: ${{ secrets.PaaSUsernameStaging }}
+        CF_PASSWORD: ${{ secrets.PaaSPasswordStaging }}
       run: |
         cf api api.london.cloud.service.gov.uk
         cf auth
@@ -37,8 +37,8 @@ jobs:
         APP_NAME: cosmetics-web
         SUBMIT_HOST: submit.cosmetic-product-notifications.service.gov.uk
         SEARCH_HOST: search.cosmetic-product-notifications.service.gov.uk
-        CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
-        CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
+        CF_USERNAME: ${{ secrets.PaaSUsernameProduction }}
+        CF_PASSWORD: ${{ secrets.PaaSPasswordProduction }}
       run: |
         cf api api.london.cloud.service.gov.uk
         cf auth
