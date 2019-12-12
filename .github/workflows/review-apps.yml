@@ -26,12 +26,6 @@ jobs:
         cf auth
         cf target -o 'beis-opss' -s $SPACE
         export PR_NUMBER=`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss/commits/$GITHUB_SHA/pulls | jq '.[0] | .number'`
-
-        if [ -z "$PR_NUMBER" ]
-        then
-          echo "Failed to get PR_NUMBER from GitHub API"
-          exit
-        fi
         export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
         export REVIEW_INSTANCE_NAME=pr-$PR_NUMBER
         export DB_NAME=cosmetics-db-$DB_VERSION
