@@ -42,7 +42,7 @@ until cf7 service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tm
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
 # Deploy the submit app and set the hostname
-cf7 push $APP -f $MANIFEST_FILE --no-start --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME
+cf7 push $APP -f $MANIFEST_FILE --no-start --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME --strategy rolling
 
 cf7 set-env $APP SENTRY_CURRENT_ENV $REVIEW_INSTANCE_NAME
 
