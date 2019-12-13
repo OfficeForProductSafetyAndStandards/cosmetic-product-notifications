@@ -34,7 +34,7 @@ jobs:
         cf7 logout
     - name: Deploy to production
       env:
-        SPACE: production
+        SPACE: prod
         APP_NAME: cosmetics-web
         SUBMIT_HOST: submit.cosmetic-product-notifications.service.gov.uk
         SEARCH_HOST: search.cosmetic-product-notifications.service.gov.uk
