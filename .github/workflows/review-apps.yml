@@ -10,25 +10,24 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Install cf client
+      env:
+        CF_CLI_VERSION: 7.0.0-beta.25
       run: |
-        wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
-        echo 'deb https://packages.cloudfoundry.org/debian stable main' | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-        sudo apt-get -qq update
-        sudo apt-get install cf-cli
-        sudo apt-get install cf7-cli
+        curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
+        sudo cp /tmp/cf7 /usr/local/bin/cf7
     - name: Deploy
       env:
         SPACE: int
         CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
       run: |
-        cf api api.london.cloud.service.gov.uk
-        cf auth
-        cf target -o 'beis-opss' -s $SPACE
+        cf7 api api.london.cloud.service.gov.uk
+        cf7 auth
+        cf7 target -o 'beis-opss' -s $SPACE
         export PR_NUMBER=`echo $GITHUB_REF | grep -o '[0-9_]\+'`
         export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
         export REVIEW_INSTANCE_NAME=pr-$PR_NUMBER
         export DB_NAME=cosmetics-db-$DB_VERSION
         export REDIS_NAME=cosmetics-review-redis-$PR_NUMBER
         ./cosmetics-web/deploy-review.sh
-        cf logout
+        cf7 logout
