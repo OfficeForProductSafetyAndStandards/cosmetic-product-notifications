@@ -112,7 +112,7 @@ Anything merged into the branch `prod` (only via a Pull Request) will cause Trav
 space.
 Please only do this if you are confident that this is a stable commit.
 
-### Review applications
+### Review Applications
 
 In order to make PR review process fast and independent, there is possibility to create
 short lived environment for given change. In order to do start your environment, run
