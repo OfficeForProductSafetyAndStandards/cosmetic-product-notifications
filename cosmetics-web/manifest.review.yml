@@ -12,6 +12,7 @@ applications:
     SUBMIT_HOST: ((submit-host))
     COSMETICS_HOST: ((cosmetics-host))
     ES_NAMESPACE: ((cosmetics-instance-name))
+    SENTRY_CURRENT_ENV: ((sentry-current-env))
   stack: cflinuxfs3
   services:
     - ((cosmetics-web-database))
