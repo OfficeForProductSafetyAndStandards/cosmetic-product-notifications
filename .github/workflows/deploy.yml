@@ -12,11 +12,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Install cf client
+      env:
+        CF_CLI_VERSION: 7.0.0-beta.25
       run: |
-        wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
-        echo 'deb https://packages.cloudfoundry.org/debian stable main' | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-        sudo apt-get -qq update
-        sudo apt-get install cf7-cli
+        curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
+        sudo cp /tmp/cf7 /usr/local/bin/cf7
     - name: Deploy to staging
       env:
         SPACE: staging
@@ -26,11 +26,11 @@ jobs:
         CF_USERNAME: ${{ secrets.PaaSUsernameStaging }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordStaging }}
       run: |
-        cf api api.london.cloud.service.gov.uk
-        cf auth
-        cf target -o 'beis-opss' -s $SPACE
+        cf7 api api.london.cloud.service.gov.uk
+        cf7 auth
+        cf7 target -o 'beis-opss' -s $SPACE
         ./cosmetics-web/deploy.sh
-        cf logout
+        cf7 logout
     - name: Deploy to production
       env:
         SPACE: production
@@ -40,8 +40,8 @@ jobs:
         CF_USERNAME: ${{ secrets.PaaSUsernameProduction }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordProduction }}
       run: |
-        cf api api.london.cloud.service.gov.uk
-        cf auth
-        cf target -o 'beis-opss' -s $SPACE
+        cf7 api api.london.cloud.service.gov.uk
+        cf7 auth
+        cf7 target -o 'beis-opss' -s $SPACE
         ./cosmetics-web/deploy.sh
-        cf logout
+        cf7 logout
