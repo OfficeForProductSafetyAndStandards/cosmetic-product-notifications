@@ -20,7 +20,7 @@ MANIFEST_FILE=./cosmetics-web/manifest.yml
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
 # Deploy the submit app and set the hostname
-cf7 push $APP_NAME -f $MANIFEST_FILE --var app-name=$APP_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --strategy rolling
+cf7 push $APP_NAME -f $MANIFEST_FILE --var app-name=$APP_NAME --var submit-host=$SUBMIT_HOST --var search-host=$SEARCH_HOST --strategy rolling
 
 cf7 scale $APP_NAME --process worker -i 1
 
