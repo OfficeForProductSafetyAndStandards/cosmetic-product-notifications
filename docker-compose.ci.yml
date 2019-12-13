@@ -1,9 +1,6 @@
 version: '3'
 
 services:
-  db:
-    image: beisopss/db:${TRAVIS_BUILD_NUMBER}
-
   keycloak:
     environment:
       - NOTIFY_API_KEY

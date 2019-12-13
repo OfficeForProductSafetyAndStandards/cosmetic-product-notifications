@@ -7,10 +7,6 @@ COMMITS=$TRAVIS_COMMIT_RANGE
 TOP_LEVEL_CHANGES=$(git diff --name-only $COMMITS | awk -F'/' '{ print $1 }' | sort -u)
 
 COMPONENTS=''
-if [[ "$TOP_LEVEL_CHANGES" =~ db ]]; then
-    COMPONENTS="$COMPONENTS db"
-fi
-
 if [[ "$TOP_LEVEL_CHANGES" =~ antivirus ]]; then
     COMPONENTS="$COMPONENTS antivirus"
 fi
