@@ -57,7 +57,12 @@ class NanomaterialBuildController < ApplicationController
     if next_nano_element.present?
       new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, @component, next_nano_element)
     elsif @component.notification.via_zip_file?
-      edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+
+      if @component.formulation_required?
+        responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
+      else
+        edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+      end
     else
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_category)
     end

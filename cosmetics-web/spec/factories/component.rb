@@ -21,6 +21,18 @@ FactoryBot.define do
       name { "a component" }
     end
 
+    trait :using_exact do
+      notification_type { "exact" }
+    end
+
+    trait :using_range do
+      notification_type { "range" }
+    end
+
+    trait :using_frame_formulation do
+      notification_type { "predefined" }
+    end
+
     trait :with_range_formulas do
       notification_type { "range" }
       after(:create) do |component|
