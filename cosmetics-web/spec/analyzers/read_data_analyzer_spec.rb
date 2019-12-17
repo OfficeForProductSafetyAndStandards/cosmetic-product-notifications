@@ -89,6 +89,16 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       }.to change(Component, :count).by(2)
     end
 
+    it "creates a notification when orphaned component exists" do
+      #create(:component, name: 'A', notification: nil)
+      analyzer_instance = described_class.new(notification_file_multi_component_exact_formula.uploaded_file)
+      puts "foo bar"
+
+      expect {
+        analyzer_instance.metadata
+      }.to change(Notification, :count).by(1)
+    end
+
     it "creates a notification with components in the component_complete state" do
       analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       analyzer_instance.metadata
