@@ -1,4 +1,6 @@
 class CpnpNotificationExporter
+  class DraftNotificationError < StandardError; end
+  class CpnpFileNotifiedPostBrexitError < StandardError; end
   attr_reader :notification
 
   def initialize(cpnp_parser, responsible_person)
@@ -7,11 +9,11 @@ class CpnpNotificationExporter
   end
 
   def create!
-    # if @cpnp_parser.notification_status == "DR"
-    #   raise DraftNotificationError, "DraftNotificationError - Draft notification uploaded"
-    # elsif @cpnp_parser.cpnp_notification_date >= EU_EXIT_DATE
-    #   raise CpnpFileNotifiedPostBrexitError, "Product was notified to CPNP post-Brexit, which is not currently supported"
-    # else
+    if @cpnp_parser.notification_status == "DR"
+      raise DraftNotificationError, "DraftNotificationError - Draft notification uploaded"
+    elsif @cpnp_parser.cpnp_notification_date >= EU_EXIT_DATE
+      raise CpnpFileNotifiedPostBrexitError, "Product was notified to CPNP post-Brexit, which is not currently supported"
+    else
       @notification = ::Notification.new(product_name: @cpnp_parser.product_name,
                                         shades: @cpnp_parser.shades,
                                         components: @cpnp_parser.components,
@@ -28,6 +30,6 @@ class CpnpNotificationExporter
                                         ph_max_value: @cpnp_parser.ph_max_value)
       @notification.notification_file_parsed
       @notification.save(context: :file_upload)
-    # end
+    end
   end
 end

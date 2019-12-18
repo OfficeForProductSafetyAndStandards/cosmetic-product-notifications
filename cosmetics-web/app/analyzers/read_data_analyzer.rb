@@ -1,6 +1,24 @@
 require "zip"
 
 class ReadDataAnalyzer < ActiveStorage::Analyzer
+  class FileUploadError < StandardError
+    def initialize(error_message)
+      @error_message = error_message
+      super(@error_message)
+    end
+
+    def message
+      "File Upload Error: #{@error_message}"
+    end
+  end
+
+  class UnexpectedPdfFileError < FileUploadError; end
+  class ProductFileNotFoundError < FileUploadError; end
+  class DuplicateNotificationError < FileUploadError; end
+  class NotificationMissingDataError < FileUploadError; end
+  class NotificationValidationError < FileUploadError; end
+  class UnexpectedStaticFilesError < FileUploadError; end
+
   extend AnalyzerHelper
   include CpnpStaticFiles
 
@@ -33,28 +51,10 @@ private
       # rubocop:disable Metrics/BlockLength
       get_product_xml_file do |product_xml_file|
         cpnp_export_info = CpnpParser.new(product_xml_file)
-        if cpnp_export_info.notification_status == "DR"
-          raise DraftNotificationError, "DraftNotificationError - Draft notification uploaded"
-        elsif cpnp_export_info.cpnp_notification_date >= EU_EXIT_DATE
-          raise CpnpFileNotifiedPostBrexitError, "Product was notified to CPNP post-Brexit, which is not currently supported"
-        else
-          notification = ::Notification.new(product_name: cpnp_export_info.product_name,
-                                            shades: cpnp_export_info.shades,
-                                            components: cpnp_export_info.components,
-                                            cpnp_reference: cpnp_export_info.cpnp_reference,
-                                            industry_reference: cpnp_export_info.industry_reference,
-                                            cpnp_is_imported: cpnp_export_info.is_imported,
-                                            cpnp_imported_country: cpnp_export_info.imported_country,
-                                            cpnp_notification_date: cpnp_export_info.cpnp_notification_date,
-                                            responsible_person: @notification_file.responsible_person,
-                                            under_three_years: cpnp_export_info.under_three_years,
-                                            still_on_the_market: cpnp_export_info.still_on_the_market,
-                                            components_are_mixed: cpnp_export_info.components_are_mixed,
-                                            ph_min_value: cpnp_export_info.ph_min_value,
-                                            ph_max_value: cpnp_export_info.ph_max_value)
-          notification.notification_file_parsed
-          notification.save(context: :file_upload)
-        end
+        cpnp_exporter    = CpnpNotificationExporter.new(cpnp_export_info, @notification_file.responsible_person)
+
+        cpnp_exporter.create!
+        notification = cpnp_exporter.notification
 
         if notification.errors.messages.present?
           if notification.errors.messages[:cpnp_reference].include? Notification.duplicate_notification_message
@@ -79,13 +79,13 @@ private
     rescue NotificationValidationError => e
       Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :notification_validation_error)
-    rescue DraftNotificationError => e
+    rescue CpnpNotificationExporter::DraftNotificationError => e
       Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :draft_notification_error)
     rescue UnexpectedStaticFilesError => e
       Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :unknown_error)
-    rescue CpnpFileNotifiedPostBrexitError => e
+    rescue CpnpNotificationExporter::CpnpFileNotifiedPostBrexitError => e
       Sidekiq.logger.error e.message
       @notification_file.update(upload_error: :post_brexit_date)
     rescue StandardError => e
@@ -144,40 +144,5 @@ private
 
   def delete_notification_file
     @notification_file.destroy
-  end
-
-  class FileUploadError < StandardError
-    def initialize(error_message)
-      @error_message = error_message
-      super(@error_message)
-    end
-
-    def message
-      "File Upload Error: #{@error_message}"
-    end
-  end
-
-  class UnexpectedPdfFileError < FileUploadError
-  end
-
-  class ProductFileNotFoundError < FileUploadError
-  end
-
-  class DuplicateNotificationError < FileUploadError
-  end
-
-  class NotificationMissingDataError < FileUploadError
-  end
-
-  class NotificationValidationError < FileUploadError
-  end
-
-  class DraftNotificationError < FileUploadError
-  end
-
-  class UnexpectedStaticFilesError < FileUploadError
-  end
-
-  class CpnpFileNotifiedPostBrexitError < FileUploadError
   end
 end
