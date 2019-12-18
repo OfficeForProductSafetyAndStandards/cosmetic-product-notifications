@@ -47,52 +47,50 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
 private
 
   def create_notification_from_file
-    begin
-      # rubocop:disable Metrics/BlockLength
-      get_product_xml_file do |product_xml_file|
-        cpnp_export_info = CpnpParser.new(product_xml_file)
-        cpnp_exporter    = CpnpNotificationExporter.new(cpnp_export_info, @notification_file.responsible_person)
+    # rubocop:disable Metrics/BlockLength
+    get_product_xml_file do |product_xml_file|
+      cpnp_export_info = CpnpParser.new(product_xml_file)
+      cpnp_exporter    = CpnpNotificationExporter.new(cpnp_export_info, @notification_file.responsible_person)
 
-        cpnp_exporter.create!
-        notification = cpnp_exporter.notification
+      cpnp_exporter.create!
+      notification = cpnp_exporter.notification
 
-        if notification.errors.messages.present?
-          if notification.errors.messages[:cpnp_reference].include? Notification.duplicate_notification_message
-            raise DuplicateNotificationError, "DuplicateNotificationError - A notification for this product already
-             exists for this responsible person (CPNP reference no. #{notification.cpnp_reference})"
-          else
-            raise NotificationValidationError, "NotificationValidationError - #{notification.errors.messages}"
-          end
+      if notification.errors.messages.present?
+        if notification.errors.messages[:cpnp_reference].include? Notification.duplicate_notification_message
+          raise DuplicateNotificationError, "DuplicateNotificationError - A notification for this product already
+            exists for this responsible person (CPNP reference no. #{notification.cpnp_reference})"
         else
-          Sidekiq.logger.info "Successful File Upload"
+          raise NotificationValidationError, "NotificationValidationError - #{notification.errors.messages}"
         end
+      else
+        Sidekiq.logger.info "Successful File Upload"
       end
-    rescue UnexpectedPdfFileError => e
-      Sidekiq.logger.error e.message
-      @notification_file.update(upload_error: :unzipped_files_are_pdf)
-    rescue ProductFileNotFoundError => e
-      Sidekiq.logger.error e.message
-      @notification_file.update(upload_error: :product_file_not_found)
-    rescue DuplicateNotificationError => e
-      Sidekiq.logger.error e.message
-      @notification_file.update(upload_error: :notification_duplicated)
-    rescue NotificationValidationError => e
-      Sidekiq.logger.error e.message
-      @notification_file.update(upload_error: :notification_validation_error)
-    rescue CpnpNotificationExporter::DraftNotificationError => e
-      Sidekiq.logger.error e.message
-      @notification_file.update(upload_error: :draft_notification_error)
-    rescue UnexpectedStaticFilesError => e
-      Sidekiq.logger.error e.message
-      @notification_file.update(upload_error: :unknown_error)
-    rescue CpnpNotificationExporter::CpnpFileNotifiedPostBrexitError => e
-      Sidekiq.logger.error e.message
-      @notification_file.update(upload_error: :post_brexit_date)
-    rescue StandardError => e
-      Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
-      @notification_file.update(upload_error: :unknown_error)
     end
-    # rubocop:enable Metrics/BlockLength
+  rescue UnexpectedPdfFileError => e
+    Sidekiq.logger.error e.message
+    @notification_file.update(upload_error: :unzipped_files_are_pdf)
+  rescue ProductFileNotFoundError => e
+    Sidekiq.logger.error e.message
+    @notification_file.update(upload_error: :product_file_not_found)
+  rescue DuplicateNotificationError => e
+    Sidekiq.logger.error e.message
+    @notification_file.update(upload_error: :notification_duplicated)
+  rescue NotificationValidationError => e
+    Sidekiq.logger.error e.message
+    @notification_file.update(upload_error: :notification_validation_error)
+  rescue CpnpNotificationExporter::DraftNotificationError => e
+    Sidekiq.logger.error e.message
+    @notification_file.update(upload_error: :draft_notification_error)
+  rescue UnexpectedStaticFilesError => e
+    Sidekiq.logger.error e.message
+    @notification_file.update(upload_error: :unknown_error)
+  rescue CpnpNotificationExporter::CpnpFileNotifiedPostBrexitError => e
+    Sidekiq.logger.error e.message
+    @notification_file.update(upload_error: :post_brexit_date)
+  rescue StandardError => e
+    Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
+    @notification_file.update(upload_error: :unknown_error)
+  # rubocop:enable Metrics/BlockLength
   end
 
   def get_product_xml_file
