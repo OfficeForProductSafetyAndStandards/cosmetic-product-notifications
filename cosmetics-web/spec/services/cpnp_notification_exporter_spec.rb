@@ -11,13 +11,13 @@ RSpec.describe CpnpNotificationExporter do
   let(:cpnp_parser_formulation_required) { create_cpnp_parser("testFormulationRequiredExportFile.zip") }
   let(:cpnp_parser_different_language) { create_cpnp_parser("testDifferentLanguage.zip") }
 
-  describe "#metadata" do
+  describe "#create!" do
     # This should be tested in different spec, possibly ReadDataAnalyzer
     #
     # it "creates a notification and removes a notification file" do
     #   exporter_instance = described_class.new(cpnp_parser_basic)
     #   expect {
-    #     exporter_instance.metadata
+    #     exporter_instance.create!
     #   }.to change(Notification, :count).by(1).and change(NotificationFile, :count).by(-1)
     # end
 
@@ -32,7 +32,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification populated with relevant cpnp reference" do
       exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.cpnp_reference).equal?("1000094")
@@ -40,7 +40,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification populated with relevant cpnp date" do
       exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.cpnp_notification_date.to_s).equal?("2012-02-08 16:02:34 UTC")
@@ -48,7 +48,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification populated with relevant shades" do
       exporter_instance = described_class.new(cpnp_parser_shades_import, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -57,7 +57,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification populated with relevant imported info" do
       exporter_instance = described_class.new(cpnp_parser_shades_import, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -69,7 +69,7 @@ RSpec.describe CpnpNotificationExporter do
       exporter_instance = described_class.new(cpnp_parser_multi_component_exact_formula, responsible_person)
 
       expect {
-        exporter_instance.metadata
+        exporter_instance.create!
       }.to change(Component, :count).by(2)
     end
 
@@ -79,13 +79,13 @@ RSpec.describe CpnpNotificationExporter do
       puts "foo bar"
 
       expect {
-        exporter_instance.metadata
+        exporter_instance.create!
       }.to change(Notification, :count).by(1)
     end
 
     it "creates a notification with components in the component_complete state" do
       exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -94,7 +94,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification populated with relevant notification type" do
       exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -103,7 +103,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification populated with relevant sub-sub-category" do
       exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -114,13 +114,13 @@ RSpec.describe CpnpNotificationExporter do
       exporter_instance = described_class.new(cpnp_parser_manual_ranges_trigger_rules, responsible_person)
 
       expect {
-        exporter_instance.metadata
+        exporter_instance.create!
       }.to change(TriggerQuestion, :count).by(5).and change(TriggerQuestionElement, :count).by(6)
     end
 
     it "creates a notification populated with relevant frame formulation" do
       exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -130,34 +130,34 @@ RSpec.describe CpnpNotificationExporter do
     it "creates a notification populated with relevant number of exact formula" do
       exporter_instance = described_class.new(cpnp_parser_multi_component_exact_formula, responsible_person)
       expect {
-        exporter_instance.metadata
+        exporter_instance.create!
       }.to change(ExactFormula, :count).by(4)
     end
 
     it "creates a notification populated with relevant number of range formula" do
       exporter_instance = described_class.new(cpnp_parser_manual_ranges_trigger_rules, responsible_person)
       expect {
-        exporter_instance.metadata
+        exporter_instance.create!
       }.to change(RangeFormula, :count).by(2)
     end
 
     it "creates a notification populated with relevant number of cmr" do
       exporter_instance = described_class.new(cpnp_parser_nano_materials_cmr, responsible_person)
       expect {
-        exporter_instance.metadata
+        exporter_instance.create!
       }.to change(Cmr, :count).by(2)
     end
 
     it "creates a notification populated with relevant number of nanomaterials and nanoelement" do
       exporter_instance = described_class.new(cpnp_parser_nano_materials_cmr, responsible_person)
       expect {
-        exporter_instance.metadata
+        exporter_instance.create!
       }.to change(NanoMaterial, :count).by(1).and change(NanoElement, :count).by(1)
     end
 
     it "creates a notification in the draft_complete state if no formulation information is needed" do
       exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -166,7 +166,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification in the cpnp_parser_imported state if formulation information is required" do
       exporter_instance = described_class.new(cpnp_parser_formulation_required, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -175,7 +175,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification with the first language's name if there is no english name" do
       exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.product_name).to eq("Multiple product test")
@@ -183,7 +183,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification with the first language's shades if there is no english shades" do
       exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.shades).to eq("yellow, orange, purple")
@@ -191,7 +191,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification with the first language's component name if there is no english component name" do
       exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.components.first.name).to eq("A")
@@ -200,7 +200,7 @@ RSpec.describe CpnpNotificationExporter do
 
     it "creates a notification with the first language's component shades if there is no english component shades" do
       exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
-      exporter_instance.metadata
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.components.first.shades.first).to eq("blue, green")
@@ -213,7 +213,7 @@ RSpec.describe CpnpNotificationExporter do
         cpnp_parser = create_cpnp_parser("testExportWithComponentWithPHRange.zip")
 
         exporter_instance = described_class.new(cpnp_parser, responsible_person)
-        exporter_instance.metadata
+        exporter_instance.create!
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }
@@ -236,7 +236,7 @@ RSpec.describe CpnpNotificationExporter do
         cpnp_parser = create_cpnp_parser("testExportWithComponentWithSinglePHValue.zip")
 
         exporter_instance = described_class.new(cpnp_parser, responsible_person)
-        exporter_instance.metadata
+        exporter_instance.create!
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }
@@ -259,7 +259,7 @@ RSpec.describe CpnpNotificationExporter do
 
       before do
         exporter_instance = described_class.new(cpnp_parser, responsible_person)
-        exporter_instance.metadata
+        exporter_instance.create!
       end
 
       it "adds an error to the file" do
