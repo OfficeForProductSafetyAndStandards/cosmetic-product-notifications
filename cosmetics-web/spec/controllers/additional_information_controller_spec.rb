@@ -15,7 +15,7 @@ RSpec.describe AdditionalInformationController, type: :controller do
 
   describe "GET #index" do
     it "redirects to the check your answers page if all components have complete formulations and don't require images" do
-      notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component])
+      notification = Notification.create(responsible_person_id: responsible_person.id, was_notified_before_eu_exit: true, components: [predefined_component])
       notification.image_uploads.create
       get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
       expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, notification))

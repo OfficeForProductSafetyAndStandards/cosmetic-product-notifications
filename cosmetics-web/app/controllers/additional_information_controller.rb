@@ -13,7 +13,7 @@ class AdditionalInformationController < ApplicationController
       @notification.formulation_file_uploaded!
     end
 
-    if @notification.images_required?
+    if @notification.images_required_and_missing?
       return redirect_to new_responsible_person_notification_product_image_upload_path(@notification.responsible_person, @notification)
     end
 

@@ -129,7 +129,7 @@ class Notification < ApplicationRecord
   end
 
   def missing_information?
-    nano_material_required? || formulation_required? || images_required?
+    nano_material_required? || formulation_required? || images_required_and_missing?
   end
 
   def nano_material_required?
@@ -156,9 +156,10 @@ class Notification < ApplicationRecord
     was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date < EU_EXIT_DATE))
   end
 
-  def images_required?
-    (notified_pre_eu_exit? && !images_are_present_and_safe?) ||
-      (notified_post_eu_exit? && image_uploads.empty?)
+  # Returns true if images are required by policy AND have not yet
+  # been uploaded (and virus-scanned).
+  def images_required_and_missing?
+    notified_post_eu_exit? && !images_are_present_and_safe?
   end
 
   def get_valid_multicomponents
