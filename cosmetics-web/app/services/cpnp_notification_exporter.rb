@@ -29,3 +29,4 @@ class CpnpNotificationExporter
       @notification.save(context: :file_upload)
     end
   end
+end
