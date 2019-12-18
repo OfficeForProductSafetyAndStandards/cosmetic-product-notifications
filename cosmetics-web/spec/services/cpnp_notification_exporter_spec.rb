@@ -260,7 +260,7 @@ RSpec.describe CpnpNotificationExporter do
 
       it "adds an error to the file" do
         exporter_instance = described_class.new(cpnp_parser, responsible_person)
-        expect { exporter_instance.create! }.to raise(CpnpFileNotifiedPostBrexitError)
+        expect { exporter_instance.create! }.to raise_error(CpnpNotificationExporter::CpnpFileNotifiedPostBrexitError)
       end
     end
   end
