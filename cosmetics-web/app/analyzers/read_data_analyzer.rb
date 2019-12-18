@@ -32,7 +32,7 @@ private
     begin
       # rubocop:disable Metrics/BlockLength
       get_product_xml_file do |product_xml_file|
-        cpnp_export_info = CpnpExport.new(product_xml_file)
+        cpnp_export_info = CpnpParser.new(product_xml_file)
         if cpnp_export_info.notification_status == "DR"
           raise DraftNotificationError, "DraftNotificationError - Draft notification uploaded"
         elsif cpnp_export_info.cpnp_notification_date >= EU_EXIT_DATE
