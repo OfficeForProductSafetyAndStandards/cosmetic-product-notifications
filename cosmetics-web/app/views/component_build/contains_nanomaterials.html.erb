@@ -1,0 +1,30 @@
+<% title = "Nanomaterials" %>
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render "form_components/govuk_error_summary", form: form %>
+
+      <h1 class="govuk-heading-xl"><%= title %></h1>
+
+      <p class="govuk-body govuk-!-margin-bottom-1">A nanomaterial:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>has one or more external dimensions, or an internal structure, with a size ranging from 1 nm to 100 nm</li>
+        <li>is insoluble or biopersistent</li>
+        <li>is intentionally manufactured</li>
+      </ul>
+
+      <%= render "form_components/govuk_radios", form: form, key: :contains_nanomaterials,
+              fieldset: { legend: { text: "Does #{@component_name} contain nanomaterials?",
+              classes: "govuk-label--m" } },
+              items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }] %>
+      <%= form.submit "Continue", class: "govuk-button" %>
+
+    </div>
+  </div>
+<% end %>
