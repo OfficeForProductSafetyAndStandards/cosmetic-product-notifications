@@ -1,0 +1,25 @@
+<% title = "Exposure routes" %>
+<% question = "How is the user likely to be exposed to the nanomaterials?" %>
+<% exposure_routes = @nano_material.exposure_routes %>
+<% items = NanoMaterial.exposure_routes_options.map { |route|
+  { key: route, text: get_exposure_route_name(route), checked: exposure_routes&.include?(route.to_s) }
+} %>
+
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<%= form_with model: @nano_material, url: wizard_path, method: :put do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= render "form_components/govuk_checkboxes", form: form, key: :exposure_routes,
+              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              items: items %>
+      <%= form.submit "Continue", class: "govuk-button" %>
+
+    </div>
+  </div>
+<% end %>

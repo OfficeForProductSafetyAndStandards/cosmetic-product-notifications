@@ -1,0 +1,159 @@
+<% title = "Poisonous ingredients" %>
+<% question = "Does the product contain any poisonous ingredients?" %>
+
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+
+      <%= render "form_components/govuk_error_summary", form: form %>
+
+      <h1 class="govuk-heading-xl">Poisonous ingredients</h1>
+
+      <p class="govuk-body">
+        To treat anyone who may be poisoned by the product, National&nbsp;Poison&nbsp;Information&nbsp;Services need the exact quantities (% w/w) of the most harmful&nbsp;ingredients.
+      </p>
+
+      <h2 class="govuk-heading-s">Glycols and glycol ethers</h2>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">Above 1% w/w</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Buteth-2 Acetate</li>
+        <li>Butoxydiglycol</li>
+        <li>Butoxyethanol</li>
+        <li>Butoxyethyl Acetate</li>
+        <li>Diethoxydiglycol</li>
+        <li>Ethoxydiglycol</li>
+        <li>Ethoxydiglycol Acetate</li>
+        <li>Ethylene Glycol Only (INCI name: ‘Glycol’)</li>
+        <li>Glycol Ethers (not Polymers)</li>
+      </ul>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">Above 10% w/w</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Dipropylene Glycol</li>
+        <li>Dipropylene Glycol Dimethyl Ether</li>
+        <li>Dipropylene Glycol Isobornyl Ether</li>
+        <li>Methoxyisopropanol</li>
+        <li>Methoxyisopropyl Acetate</li>
+        <li>PPG-2 Methyl Ether</li>
+        <li>PPG-2 Methyl Ether Acetate</li>
+        <li>Propylene Glycol</li>
+        <li>Propylene Glycol Butyl Ether</li>
+      </ul>
+
+      <h2 class="govuk-heading-s">Hydrocarbon solvents</h2>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">Above 5% w/w</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Cyclohexane</li>
+        <li>Hydrogenated Didodecene</li>
+        <li>Isopentane</li>
+        <li>Pentane</li>
+        <li>Toluene</li>
+        <li>Turpentine</li>
+      </ul>
+
+      <h2 class="govuk-heading-s">Alcohols</h2>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">Any amount of</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Ethanol</li>
+        <li>Isopropanol</li>
+      </ul>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">Above 1% w/w</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Benzyl alcohol</li>
+        <li>Furfuryl alcohol</li>
+        <li>n-Butyl alcohol</li>
+        <li>n-Propyl alcohol (INCI name: ‘propyl alcohol’)</li>
+        <li>t-Butyl alcohol</li>
+      </ul>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">Above 5% w/w</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Hexyl alcohol</li>
+      </ul>
+
+      <h2 class="govuk-heading-s">Other ingredients</h2>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">Any amount of</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Brucine Sulfate</li>
+      </ul>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">More than 0.1% w/w</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Butyrolactone</li>
+        <li>Chloroplatinic Acid</li>
+        <li>Copper Sulfate</li>
+        <li>Dimethyltolylamine</li>
+        <li>Methyl Acetate</li>
+        <li>Potassium Chlorate</li>
+        <li>Sodium Chlorate</li>
+        <li>Triethyl Phosphate</li>
+        <li>m-Cresol, o-Cresol, p-Cresol, Mixed Cresols</li>
+      </ul>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">More than 0.2% w/w</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Formaldehyde</li>
+      </ul>
+
+      <p class="govuk-body govuk-body-s govuk-body-s govuk-!-margin-bottom-1">More than 1% w/w</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Benzyl Benzoate</li>
+        <li>Butyl Acetate</li>
+        <li>Ethyl Acetate</li>
+        <li>Hydroxylamine HCL, Hydroxylamine Sulfate</li>
+      </ul>
+
+      <h2 class="govuk-heading-s">Any ingredients classified as</h2>
+
+      <ul class="govuk-list govuk-list--bullet govuk-body-s">
+        <li>Alkaline agents</li>
+        <li>Anti-dandruff agents</li>
+        <li>Anti-hair loss agents</li>
+        <li>Anti-pigmenting and depigmenting agents</li>
+        <li>Essential oils, camphor, menthol or eucalyptol</li>
+        <li>Cationic surfactants</li>
+        <li>Chemical exfoliating agents</li>
+        <li>Compounds releasing hydrogen peroxide</li>
+        <li>Fluoride compounds</li>
+        <li>Hydrogen peroxide</li>
+        <li>Inorganic sodium salts</li>
+        <li>Persulfates</li>
+        <li>Propellants</li>
+        <li>Reducing agents</li>
+        <li>Straightening agents</li>
+        <li>Vitamin A or its derivatives</li>
+        <li>Xanthine derivatives</li>
+      </ul>
+
+
+      <%= render "form_components/govuk_radios", form: form, key:   :contains_poisonous_ingredients,
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--m", isPageHeading: false } },
+              items: [{ text: "Yes", value: "true" },
+                      { text: "No", value: "false" }] %>
+
+      <%= form.submit "Continue", class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>
+
