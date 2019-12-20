@@ -77,49 +77,49 @@ RSpec.describe "Notifications", type: :feature do
     visit new_responsible_person_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
-    answer_was_eu_notified(with: "Yes")
+    answer_was_eu_notified_with "Yes"
 
     expect_to_be_on_do_you_have_the_zip_files_page
-    answer_do_you_have_zip_files(with: "No, I’ll enter information manually")
+    answer_do_you_have_zip_files_with "No, I’ll enter information manually"
 
     expect_to_be_on_was_product_notified_before_brexit_page
-    answer_was_product_notified_before_brexit(with: "Yes")
+    answer_was_product_notified_before_brexit_with "Yes"
 
     expect_to_be_on_what_is_product_called_page
-    answer_product_name(with: "SkinSoft tangerine shampoo")
+    answer_product_name_with "SkinSoft tangerine shampoo"
 
     expect_to_be_on_internal_reference_page
-    answer_do_you_want_to_give_an_internal_reference(with: "No")
+    answer_do_you_want_to_give_an_internal_reference_with "No"
 
     expect_to_be_on_was_product_imported_page
-    answer_was_product_imported(with: "No, it is manufactured in the UK")
+    answer_was_product_imported_with "No, it is manufactured in the UK"
 
     expect_to_be_on_multi_item_kits_page
-    answer_is_product_multi_item_kit(with: "No, this is a single product")
+    answer_is_product_multi_item_kit_with "No, this is a single product"
 
     expect_to_be_on_is_product_available_in_shades_page
-    answer_is_product_available_in_shades(with: "No")
+    answer_is_product_available_in_shades_with "No"
 
     expect_to_be_on_physical_form_of_product_page
-    answer_what_is_physical_form_of_product(with: "Liquid")
+    answer_what_is_physical_form_of_product_with "Liquid"
 
     expect_to_be_on_does_product_contain_cmrs_page
-    answer_does_product_contain_cmrs(with: "No")
+    answer_does_product_contain_cmrs_with "No"
 
     expect_to_be_on_does_product_contain_nanomaterial_page
-    answer_does_product_contain_nanomaterials(with: "No")
+    answer_does_product_contain_nanomaterials_with "No"
 
     expect_to_be_on_product_category_page
-    answer_product_category(with: "Hair and scalp products")
+    answer_product_category_with "Hair and scalp products"
 
     expect_to_be_on_product_subcategoy_page(category: "hair and scalp products")
-    answer_product_subcategory(with: "Hair and scalp care and cleansing products")
+    answer_product_subcategory_with "Hair and scalp care and cleansing products"
 
     expect_to_be_on_product_sub_subcategory_page(subcategory: "hair and scalp care and cleansing products")
-    answer_product_sub_subcategory(with: "Shampoo")
+    answer_product_sub_subcategory_with "Shampoo"
 
     expect_to_be_on_formulation_method_page
-    answer_how_do_you_want_to_give_formulation(with: "List ingredients and their exact concentration")
+    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
 
     expect_to_be_on_upload_ingredients_page
     upload_ingredients_pdf
@@ -128,7 +128,7 @@ RSpec.describe "Notifications", type: :feature do
     upload_product_image
 
     expect_to_be_on_what_is_ph_range_of_product_page
-    answer_what_is_ph_range_of_product(with: "The minimum pH is 3 or higher, and the maximum pH is 10 or lower")
+    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
 
     expect_to_be_on_check_your_answers_page
 
