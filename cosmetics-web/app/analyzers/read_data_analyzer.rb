@@ -47,7 +47,6 @@ class ReadDataAnalyzer < ActiveStorage::Analyzer
 private
 
   def create_notification_from_file
-    # rubocop:disable Metrics/BlockLength
     get_product_xml_file do |product_xml_file|
       cpnp_export_info = CpnpParser.new(product_xml_file)
       cpnp_exporter    = CpnpNotificationExporter.new(cpnp_export_info, @notification_file.responsible_person)
@@ -90,7 +89,6 @@ private
   rescue StandardError => e
     Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
     @notification_file.update(upload_error: :unknown_error)
-  # rubocop:enable Metrics/BlockLength
   end
 
   def get_product_xml_file

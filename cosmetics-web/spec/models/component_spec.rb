@@ -16,7 +16,7 @@ RSpec.describe Component, type: :model do
   end
 
   describe "Notification Validation" do
-    context "cannot create component without notification" do
+    context "when notifiaction is empty" do
       specify do
         component = described_class.new(name: "Component X", notification: nil)
         expect(component).to be_invalid
