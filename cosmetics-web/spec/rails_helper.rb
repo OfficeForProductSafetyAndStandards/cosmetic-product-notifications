@@ -7,6 +7,7 @@ require "file_helpers"
 require "policy_helpers"
 require "support/render_errors"
 require "request_helpers"
+require "support/feature_helpers"
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)

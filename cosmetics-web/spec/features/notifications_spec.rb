@@ -26,6 +26,12 @@ RSpec.describe "Notifications", type: :feature do
   # 10. Is user required to say if product is imported?
   # 11. Is user required to say if product contains a hair dye?
 
+  let(:responsible_person) { create(:responsible_person_with_user) }
+
+  before do
+    sign_in_as_member_of_responsible_person(responsible_person)
+  end
+
 
   # ---- ZIP file, pre-Brexit ------
 
@@ -74,7 +80,7 @@ RSpec.describe "Notifications", type: :feature do
 
   scenario "Manual, pre-Brexit, exact ingredients, single item, no nanomaterials" do
 
-    visit new_responsible_person_notification_path(responsible_person)
+    visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
     answer_was_eu_notified_with "Yes"
@@ -124,13 +130,10 @@ RSpec.describe "Notifications", type: :feature do
     expect_to_be_on_upload_ingredients_page
     upload_ingredients_pdf
 
-    expect_to_be_on_product_image_upload_page
-    upload_product_image
-
     expect_to_be_on_what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
 
-    expect_to_be_on_check_your_answers_page
+    expect_to_be_on_check_your_answers_page(product_name: "SkinSoft tangerine shampoo")
 
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft tangerine shampoo",
@@ -149,16 +152,164 @@ RSpec.describe "Notifications", type: :feature do
     click_button "Accept and submit the cosmetic product notification"
 
     expect_to_be_on_your_cosmetic_products_page
-    expect_to_see_message "SkinSoft tangerine shampoo submitted"
+    expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
 
   end
 
   scenario "Manual, pre-Brexit, ingredient ranges, single item, no nanomaterials" do
-    # TODO
+
+    visit new_responsible_person_add_notification_path(responsible_person)
+
+    expect_to_be_on_was_eu_notified_about_products_page
+    answer_was_eu_notified_with "Yes"
+
+    expect_to_be_on_do_you_have_the_zip_files_page
+    answer_do_you_have_zip_files_with "No, I’ll enter information manually"
+
+    expect_to_be_on_was_product_notified_before_brexit_page
+    answer_was_product_notified_before_brexit_with "Yes"
+
+    expect_to_be_on_what_is_product_called_page
+    answer_product_name_with "SkinSoft tangerine shampoo"
+
+    expect_to_be_on_internal_reference_page
+    answer_do_you_want_to_give_an_internal_reference_with "No"
+
+    expect_to_be_on_was_product_imported_page
+    answer_was_product_imported_with "No, it is manufactured in the UK"
+
+    expect_to_be_on_multi_item_kits_page
+    answer_is_product_multi_item_kit_with "No, this is a single product"
+
+    expect_to_be_on_is_product_available_in_shades_page
+    answer_is_product_available_in_shades_with "No"
+
+    expect_to_be_on_physical_form_of_product_page
+    answer_what_is_physical_form_of_product_with "Liquid"
+
+    expect_to_be_on_does_product_contain_cmrs_page
+    answer_does_product_contain_cmrs_with "No"
+
+    expect_to_be_on_does_product_contain_nanomaterial_page
+    answer_does_product_contain_nanomaterials_with "No"
+
+    expect_to_be_on_product_category_page
+    answer_product_category_with "Hair and scalp products"
+
+    expect_to_be_on_product_subcategoy_page(category: "hair and scalp products")
+    answer_product_subcategory_with "Hair and scalp care and cleansing products"
+
+    expect_to_be_on_product_sub_subcategory_page(subcategory: "hair and scalp care and cleansing products")
+    answer_product_sub_subcategory_with "Shampoo"
+
+    expect_to_be_on_formulation_method_page
+    answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range"
+
+    expect_to_be_on_upload_ingredients_page
+    upload_ingredients_pdf
+
+    expect_to_be_on_what_is_ph_range_of_product_page
+    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
+
+    expect_to_be_on_check_your_answers_page(product_name: "SkinSoft tangerine shampoo")
+
+    expect_check_your_answers_page_to_contain(
+      product_name: "SkinSoft tangerine shampoo",
+      imported: "No",
+      number_of_components: "1",
+      shades: "None",
+      contains_cmrs: "No",
+      nanomaterials: "None",
+      category: "Hair and scalp products",
+      subcategory: "Hair and scalp care and cleansing products",
+      sub_subcategory: "Shampoo",
+      formulation_given_as: "Concentration ranges",
+      physical_form: "Liquid",
+      ph: "Between 3 and 10"
+    )
+    click_button "Accept and submit the cosmetic product notification"
+
+    expect_to_be_on_your_cosmetic_products_page
+    expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
+
   end
 
   scenario "Manual, pre-Brexit, frame formulation, single item, no nanomaterials" do
-    # TODO
+
+    visit new_responsible_person_add_notification_path(responsible_person)
+
+    expect_to_be_on_was_eu_notified_about_products_page
+    answer_was_eu_notified_with "Yes"
+
+    expect_to_be_on_do_you_have_the_zip_files_page
+    answer_do_you_have_zip_files_with "No, I’ll enter information manually"
+
+    expect_to_be_on_was_product_notified_before_brexit_page
+    answer_was_product_notified_before_brexit_with "Yes"
+
+    expect_to_be_on_what_is_product_called_page
+    answer_product_name_with "SkinSoft deep blue mouthwash"
+
+    expect_to_be_on_internal_reference_page
+    answer_do_you_want_to_give_an_internal_reference_with "No"
+
+    expect_to_be_on_was_product_imported_page
+    answer_was_product_imported_with "No, it is manufactured in the UK"
+
+    expect_to_be_on_multi_item_kits_page
+    answer_is_product_multi_item_kit_with "No, this is a single product"
+
+    expect_to_be_on_is_product_available_in_shades_page
+    answer_is_product_available_in_shades_with "No"
+
+    expect_to_be_on_physical_form_of_product_page
+    answer_what_is_physical_form_of_product_with "Liquid"
+
+    expect_to_be_on_does_product_contain_cmrs_page
+    answer_does_product_contain_cmrs_with "No"
+
+    expect_to_be_on_does_product_contain_nanomaterial_page
+    answer_does_product_contain_nanomaterials_with "No"
+
+    expect_to_be_on_product_category_page
+    answer_product_category_with "Oral hygiene products"
+
+    expect_to_be_on_product_subcategoy_page(category: "oral hygiene products")
+    answer_product_subcategory_with "Mouth wash / breath spray"
+
+    expect_to_be_on_product_sub_subcategory_page(subcategory: "mouth wash / breath spray")
+    answer_product_sub_subcategory_with "Mouth wash"
+
+    expect_to_be_on_formulation_method_page
+    answer_how_do_you_want_to_give_formulation_with "Choose a predefined frame formulation"
+
+    expect_to_be_on_frame_formulation_select_page
+    give_frame_formulation_as "Mouthwash"
+
+    expect_to_be_on_what_is_ph_range_of_product_page
+    answer_what_is_ph_range_of_product_with "It does not have a pH"
+
+    expect_to_be_on_check_your_answers_page(product_name: "SkinSoft deep blue mouthwash")
+
+    expect_check_your_answers_page_to_contain(
+      product_name: "SkinSoft deep blue mouthwash",
+      imported: "No",
+      number_of_components: "1",
+      shades: "None",
+      contains_cmrs: "No",
+      nanomaterials: "None",
+      category: "Oral hygiene products",
+      subcategory: "Mouth wash / breath spray",
+      sub_subcategory: "Mouth wash",
+      formulation_given_as: "Frame formulation",
+      physical_form: "Liquid",
+      ph: "No pH"
+    )
+    click_button "Accept and submit the cosmetic product notification"
+
+    expect_to_be_on_your_cosmetic_products_page
+    expect_to_see_message "SkinSoft deep blue mouthwash notification submitted"
+
   end
 
   scenario "Manual, pre-Brexit, frame formulation, multi-item, no nanomaterials" do
