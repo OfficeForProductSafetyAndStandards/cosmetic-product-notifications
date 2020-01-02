@@ -1,6 +1,4 @@
-
 module PageMatchers
-
   def have_h1(text)
     have_selector("h1", text: text)
   end
@@ -21,7 +19,7 @@ module PageMatchers
       begin
         @key_element = @page.find("th", text: @key)
         @sibling_element = @key_element.sibling("td", text: @value)
-      rescue
+      rescue StandardError
         Capybara::ElementNotFound
       end
 
@@ -40,5 +38,4 @@ module PageMatchers
   def have_summary_item(key:, value:)
     HaveSummaryItem.new(key: key, value: value)
   end
-
 end

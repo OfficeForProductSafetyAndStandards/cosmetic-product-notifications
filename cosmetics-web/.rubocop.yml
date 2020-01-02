@@ -39,6 +39,12 @@ ExampleLength:
 Capybara/FeatureMethods:
   Enabled: false
 
+# We can disable this as we’re using Capybara with RackTest which
+# doesn’t support javascript, and so we we don’t need to use the
+# asynchronous `have_current_path` matcher.
+Capybara/CurrentPathExpectation:
+  Enabled: false
+
 # TODO: re-enable this after updating the helpers
 Rails/HelperInstanceVariable:
   Enabled: false
