@@ -76,6 +76,36 @@ def expect_to_be_on_does_item_contain_nanomaterial_page
   expect(page).to have_h1("Nanomaterials")
 end
 
+def expect_to_be_on_is_item_intended_to_be_rinsed_off_or_left_on_page
+  expect(page.current_path).to end_with("/build/add_exposure_condition")
+  expect(page).to have_h1("Is the product intended to be rinsed off or left on?")
+end
+
+def expect_to_be_on_how_is_user_exposed_to_nanomaterials_page
+  expect(page.current_path).to end_with("/build/add_exposure_routes")
+  expect(page).to have_h1("How is the user likely to be exposed to the nanomaterials?")
+end
+
+def expect_to_be_on_list_the_nanomaterials_page
+  expect(page.current_path).to end_with("/build/list_nanomaterials")
+  expect(page).to have_h1("List the nanomaterials in the product")
+end
+
+def expect_to_be_on_what_is_the_purpose_of_nanomaterial_page(nanomaterial_name:)
+  expect(page.current_path).to end_with("/build/select_purposes")
+  expect(page).to have_h1("What is the purpose of #{nanomaterial_name}")
+end
+
+def expect_to_be_on_is_nanomaterial_listed_in_ec_regulation_page(nanomaterial_name:)
+  expect(page.current_path).to end_with("/build/confirm_restrictions")
+  expect(page).to have_h1("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annex 4?")
+end
+
+def expect_to_be_on_does_nanomaterial_conform_to_restrictions_page(nanomaterial_name:)
+  expect(page.current_path).to end_with("/build/confirm_usage")
+  expect(page).to have_h1("Does the #{nanomaterial_name} conform to the restrictions set out in Annex 4?")
+end
+
 def expect_to_be_on_item_category_page
   expect(page.current_path).to end_with("/build/select_category")
   expect(page).to have_h1("What category of cosmetic product is it?")
@@ -117,7 +147,7 @@ def expect_to_be_on_how_are_items_used_together_page
 end
 
 # rubocop:disable Naming/UncommunicativeMethodParamName
-def expect_check_your_answers_page_to_contain(product_name:, imported:, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, ph:)
+def expect_check_your_answers_page_to_contain(product_name:, imported:, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, ph:, application_instruction: nil, exposure_condition: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
     expect(page).to have_summary_item(key: "Imported", value: imported)
@@ -131,6 +161,14 @@ def expect_check_your_answers_page_to_contain(product_name:, imported:, number_o
     expect(page).to have_summary_item(key: "Formulation given as", value: formulation_given_as)
     expect(page).to have_summary_item(key: "Physical form", value: physical_form)
     expect(page).to have_summary_item(key: "pH", value: ph)
+
+    if application_instruction
+      expect(page).to have_summary_item(key: "Application instruction", value: application_instruction)
+    end
+
+    if exposure_condition
+      expect(page).to have_summary_item(key: "Exposure condition", value: exposure_condition)
+    end
   end
 end
 # rubocop:enable Naming/UncommunicativeMethodParamName
@@ -258,6 +296,50 @@ end
 
 def answer_does_item_contain_nanomaterials_with(answer, item_name: nil)
   within_fieldset("Does #{item_name || 'the product'} contain nanomaterials?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
+def answer_is_item_intended_to_be_rinsed_off_or_left_on_with(answer)
+  within_fieldset("Is the product intended to be rinsed off or left on?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
+def answer_how_user_is_exposed_to_nanomaterials_with(answer)
+  within_fieldset("How is the user likely to be exposed to the nanomaterials?") do
+    page.check(answer)
+  end
+  click_button "Continue"
+end
+
+def answer_nanomaterial_names_with(nanomaterial_names)
+  if String === nanomaterial_names
+    # TODO: replace with label once these are unambiguous
+    fill_in "nano_material_nano_elements_attributes_0_inci_name", with: nanomaterial_names
+  end
+
+  click_button "Continue"
+end
+
+def answer_what_is_purpose_of_nanomaterial_with(purpose, nanomaterial_name:)
+  within_fieldset("What is the purpose of #{nanomaterial_name}?") do
+    page.check(purpose)
+  end
+  click_button "Continue"
+end
+
+def answer_is_nanomaterial_listed_in_ec_regulation_with(answer, nanomaterial_name:)
+  within_fieldset("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annex 4?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
+def answer_does_nanomaterial_conform_to_restrictions_with(answer, nanomaterial_name:)
+  within_fieldset("Does the #{nanomaterial_name} conform to the restrictions set out in Annex 4?") do
     page.choose(answer)
   end
   click_button "Continue"
