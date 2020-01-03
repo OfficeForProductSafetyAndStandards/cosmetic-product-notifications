@@ -706,6 +706,27 @@ RSpec.describe "Notifications", type: :feature do
         },
         {
           name: "SkinSoft nano black hair dye kit fixer",
+          shades: "None",
+          contains_cmrs: "No",
+          nanomaterials: "Carbon Black",
+          application_instruction: "Dermal",
+          exposure_condition: "Rinsed off",
+          category: "Hair and scalp products",
+          subcategory: "Hair colouring product",
+          sub_subcategory: "Oxidative hair colour products",
+          formulation_given_as: "Frame formulation",
+          physical_form: "Liquid",
+          ph: "No pH",
+        },
+      ],
+    )
+
+    click_button "Accept and submit the cosmetic product notification"
+
+    expect_to_be_on_your_cosmetic_products_page
+    expect_to_see_message "SkinSoft nano black hair dye kit notification submitted"
+
+  end
 
 
 
