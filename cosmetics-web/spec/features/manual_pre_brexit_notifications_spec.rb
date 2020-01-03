@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Notifications", type: :feature do
+RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
   # Key input variables:
   #
   # 1. Using a zip file vs answering questions manually
@@ -728,35 +728,4 @@ RSpec.describe "Notifications", type: :feature do
 
   end
 
-
-
-  # ----- Manual, Post-Brexit --------
-
-  # scenario "Manual, post-Brexit, exact ingredients, single item, no nanomaterials" do
-  #   # TODO
-  # end
-
-  # scenario "Manual, post-Brexit, ingredient ranges, single item, no nanomaterials" do
-  #   # TODO
-  # end
-
-  # scenario "Manual, post-Brexit, frame formulation, single item, no nanomaterials" do
-  #   # TODO
-  # end
-
-  # scenario "Manual, post-Brexit, frame formulation (with poisonous ingredients), single item, no nanomaterials" do
-  #   # TODO
-  # end
-
-  # scenario "Manual, post-Brexit, frame formulation, multi-item, no nanomaterials" do
-  #   # TODO
-  # end
-
-  # scenario "Manual, post-Brexit, frame formulation, single item, with nanomaterials" do
-  #   # TODO
-  # end
-
-  # scenario "Manual, post-Brexit, frame formulation, multi-item, each with nanomaterials" do
-  #   # TODO
-  # end
 end
