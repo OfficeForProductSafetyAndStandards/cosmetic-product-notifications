@@ -151,6 +151,11 @@ def expect_to_be_on_upload_ingredients_page
   expect(page).to have_h1("Upload list of ingredients")
 end
 
+def expect_to_be_on_poisonous_ingredients_page
+  expect(page.current_path).to end_with("/contains_poisonous_ingredients")
+  expect(page).to have_h1("Poisonous ingredients")
+end
+
 def expect_to_be_on_what_is_ph_range_of_product_page
   expect(page.current_path).to end_with("/trigger_question/select_ph_range")
   expect(page).to have_h1("What is the pH range of the product?")
@@ -450,6 +455,13 @@ end
 
 def give_frame_formulation_as(frame_formulation_name)
   page.select(frame_formulation_name, from: "Frame formulation name")
+  click_button "Continue"
+end
+
+def answer_does_product_contain_poisonous_ingredients_with(answer)
+  within_fieldset("Does the product contain any poisonous ingredients?") do
+    page.choose(answer)
+  end
   click_button "Continue"
 end
 
