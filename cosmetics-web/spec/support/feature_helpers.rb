@@ -76,9 +76,9 @@ def expect_to_be_on_does_item_contain_nanomaterial_page
   expect(page).to have_h1("Nanomaterials")
 end
 
-def expect_to_be_on_is_item_intended_to_be_rinsed_off_or_left_on_page
+def expect_to_be_on_is_item_intended_to_be_rinsed_off_or_left_on_page(item_name: nil)
   expect(page.current_path).to end_with("/build/add_exposure_condition")
-  expect(page).to have_h1("Is the product intended to be rinsed off or left on?")
+  expect(page).to have_h1("Is #{item_name || "the product"} intended to be rinsed off or left on?")
 end
 
 def expect_to_be_on_how_is_user_exposed_to_nanomaterials_page
@@ -86,9 +86,9 @@ def expect_to_be_on_how_is_user_exposed_to_nanomaterials_page
   expect(page).to have_h1("How is the user likely to be exposed to the nanomaterials?")
 end
 
-def expect_to_be_on_list_the_nanomaterials_page
+def expect_to_be_on_list_the_nanomaterials_page(item_name: nil)
   expect(page.current_path).to end_with("/build/list_nanomaterials")
-  expect(page).to have_h1("List the nanomaterials in the product")
+  expect(page).to have_h1("List the nanomaterials in #{item_name || "the product"}")
 end
 
 def expect_to_be_on_what_is_the_purpose_of_nanomaterial_page(nanomaterial_name:)
@@ -188,6 +188,15 @@ def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, impor
       expect(page).to have_summary_item(key: "Shades", value: kit_item[:shades])
       expect(page).to have_summary_item(key: "Contains CMR substances", value: kit_item[:contains_cmrs])
       expect(page).to have_summary_item(key: "Nanomaterials", value: kit_item[:nanomaterials])
+
+      if kit_item[:application_instruction]
+        expect(page).to have_summary_item(key: "Application instruction", value: kit_item[:application_instruction])
+      end
+
+      if kit_item[:exposure_condition]
+        expect(page).to have_summary_item(key: "Exposure condition", value: kit_item[:exposure_condition])
+      end
+
       expect(page).to have_summary_item(key: "Category of product", value: kit_item[:category])
       expect(page).to have_summary_item(key: "Category of #{kit_item[:category].downcase.singularize}", value: kit_item[:subcategory])
       expect(page).to have_summary_item(key: "Category of #{kit_item[:subcategory].downcase.singularize}", value: kit_item[:sub_subcategory])
@@ -301,8 +310,8 @@ def answer_does_item_contain_nanomaterials_with(answer, item_name: nil)
   click_button "Continue"
 end
 
-def answer_is_item_intended_to_be_rinsed_off_or_left_on_with(answer)
-  within_fieldset("Is the product intended to be rinsed off or left on?") do
+def answer_is_item_intended_to_be_rinsed_off_or_left_on_with(answer, item_name: nil)
+  within_fieldset("Is #{item_name || "the product"} intended to be rinsed off or left on?") do
     page.choose(answer)
   end
   click_button "Continue"
