@@ -96,7 +96,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
   end
 
   scenario "Manual, post-Brexit, ingredient ranges, single item, no nanomaterials", :with_stubbed_antivirus do
-
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -179,11 +178,9 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on_your_cosmetic_products_page
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
-
   end
 
   scenario "Manual, post-Brexit, frame formulation, single item, no nanomaterials", :with_stubbed_antivirus do
-
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -269,11 +266,9 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on_your_cosmetic_products_page
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
-
   end
 
   scenario "Manual, post-Brexit, frame formulation (with poisonous ingredients), single item, no nanomaterials", :with_stubbed_antivirus do
-
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -362,7 +357,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on_your_cosmetic_products_page
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
-
   end
 
   # scenario "Manual, post-Brexit, frame formulation, multi-item, no nanomaterials" do
