@@ -151,6 +151,11 @@ def expect_to_be_on_upload_ingredients_page
   expect(page).to have_h1("Upload list of ingredients")
 end
 
+def expect_to_be_on_upload_poisonous_ingredients_page
+  expect(page.current_path).to end_with("/build/upload_formulation")
+  expect(page).to have_h1("Upload list of poisonous ingredients")
+end
+
 def expect_to_be_on_poisonous_ingredients_page
   expect(page.current_path).to end_with("/contains_poisonous_ingredients")
   expect(page).to have_h1("Poisonous ingredients")
