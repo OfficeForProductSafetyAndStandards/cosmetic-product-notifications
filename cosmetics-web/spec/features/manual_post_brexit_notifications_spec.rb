@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
-
   let(:responsible_person) { create(:responsible_person_with_user) }
 
   before do
@@ -12,7 +11,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
   # ----- Manual, Post-Brexit --------
 
   scenario "Manual, post-Brexit, exact ingredients, single item, no nanomaterials", :with_stubbed_antivirus do
-
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -95,7 +93,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on_your_cosmetic_products_page
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
-
   end
 
   # scenario "Manual, post-Brexit, ingredient ranges, single item, no nanomaterials" do

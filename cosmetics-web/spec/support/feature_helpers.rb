@@ -98,7 +98,7 @@ end
 
 def expect_to_be_on_is_item_intended_to_be_rinsed_off_or_left_on_page(item_name: nil)
   expect(page.current_path).to end_with("/build/add_exposure_condition")
-  expect(page).to have_h1("Is #{item_name || "the product"} intended to be rinsed off or left on?")
+  expect(page).to have_h1("Is #{item_name || 'the product'} intended to be rinsed off or left on?")
 end
 
 def expect_to_be_on_how_is_user_exposed_to_nanomaterials_page
@@ -108,7 +108,7 @@ end
 
 def expect_to_be_on_list_the_nanomaterials_page(item_name: nil)
   expect(page.current_path).to end_with("/build/list_nanomaterials")
-  expect(page).to have_h1("List the nanomaterials in #{item_name || "the product"}")
+  expect(page).to have_h1("List the nanomaterials in #{item_name || 'the product'}")
 end
 
 def expect_to_be_on_what_is_the_purpose_of_nanomaterial_page(nanomaterial_name:)
@@ -364,7 +364,7 @@ def answer_does_item_contain_nanomaterials_with(answer, item_name: nil)
 end
 
 def answer_is_item_intended_to_be_rinsed_off_or_left_on_with(answer, item_name: nil)
-  within_fieldset("Is #{item_name || "the product"} intended to be rinsed off or left on?") do
+  within_fieldset("Is #{item_name || 'the product'} intended to be rinsed off or left on?") do
     page.choose(answer)
   end
   click_button "Continue"

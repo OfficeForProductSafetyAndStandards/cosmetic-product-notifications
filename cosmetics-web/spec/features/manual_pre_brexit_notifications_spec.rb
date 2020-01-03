@@ -544,7 +544,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
   end
 
   scenario "Manual, pre-Brexit, frame formulation, multi-item, each with nanomaterials", :with_stubbed_antivirus do
-
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -725,7 +724,5 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on_your_cosmetic_products_page
     expect_to_see_message "SkinSoft nano black hair dye kit notification submitted"
-
   end
-
 end
