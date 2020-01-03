@@ -9,7 +9,8 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
   end
 
-  scenario "submitting a nanomaterial that has not been notified to the EU" do
+  scenario "submitting a nanomaterial that has not been notified to the EU", :with_stubbed_antivirus do
+
     click_link "Add nanomaterial"
 
     fill_in "What is the name of the nanomaterial?", with: "My nanomaterial"
@@ -29,7 +30,8 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_text("You’ve told us about My nanomaterial")
   end
 
-  scenario "submitting a nanomaterial which was previously notified to the EU" do
+  scenario "submitting a nanomaterial which was previously notified to the EU", :with_stubbed_antivirus do
+
     click_link "Add nanomaterial"
 
     fill_in "What is the name of the nanomaterial?", with: "My EU nanomaterial"

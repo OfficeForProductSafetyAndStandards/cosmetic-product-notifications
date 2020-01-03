@@ -14,6 +14,11 @@ def expect_to_be_on_was_eu_notified_about_products_page
   expect(page).to have_h1("Has the EU been notified about these products using CPNP?")
 end
 
+def expect_to_be_on_are_you_likely_to_notify_eu_page
+  expect(page.current_path).to end_with("/will_products_be_notified_in_eu")
+  expect(page).to have_h1("Are you likely to notify the EU about these products?")
+end
+
 def expect_to_be_on_do_you_have_the_zip_files_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/do_you_have_files_from_eu_notification")
 
@@ -40,6 +45,11 @@ def expect_to_be_on_was_product_imported_page
   expect(page).to have_h1("Is the product imported into the UK?")
 end
 
+def expect_to_be_on_is_product_for_under_threes_page
+  expect(page.current_path).to end_with("/for_children_under_three")
+  expect(page).to have_h1("Is the product intended to be used on children under 3 years old?")
+end
+
 def expect_to_be_on_multi_item_kits_page
   expect(page.current_path).to end_with("/build/single_or_multi_component")
   expect(page).to have_h1("Multi-item kits")
@@ -64,6 +74,16 @@ end
 def expect_to_be_on_physical_form_of_item_page(item_name: nil)
   expect(page.current_path).to end_with("/build/add_physical_form")
   expect(page).to have_h1("What is the physical form of the #{item_name || 'the product'}?")
+end
+
+def expect_to_be_on_what_is_product_contained_in_page(item_name: nil)
+  expect(page.current_path).to end_with("/contains_special_applicator")
+  expect(page).to have_h1("What is the #{item_name || 'the product'} contained in?")
+end
+
+def expect_to_be_on_what_type_of_applicator_page
+  expect(page.current_path).to end_with("/select_special_applicator_type")
+  expect(page).to have_h1("What type of applicator?")
 end
 
 def expect_to_be_on_does_item_contain_cmrs_page
@@ -144,6 +164,11 @@ end
 def expect_to_be_on_how_are_items_used_together_page
   expect(page.current_path).to end_with("/is_mixed")
   expect(page).to have_h1("How are the items in the kit used?")
+end
+
+def exepct_to_be_on_upload_product_label_page
+  expect(page.current_path).to end_with("/add_product_image")
+  expect(page).to have_h1("Upload an image of the product label")
 end
 
 # rubocop:disable Naming/UncommunicativeMethodParamName
@@ -230,6 +255,13 @@ def answer_was_eu_notified_with(answer)
   click_button "Continue"
 end
 
+def answer_are_you_likely_to_notify_eu_with(answer)
+  within_fieldset("Are you likely to notify the EU about these products?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
 def answer_do_you_have_zip_files_with(answer)
   within_fieldset("Do you have the ZIP files from your EU notification?") do
     page.choose(answer)
@@ -258,6 +290,13 @@ end
 
 def answer_was_product_imported_with(answer)
   within_fieldset("Is the product imported into the UK?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
+def answer_is_product_for_under_threes_with(answer)
+  within_fieldset("Is the product intended to be used on children under 3 years old?") do
     page.choose(answer)
   end
   click_button "Continue"
@@ -298,6 +337,20 @@ end
 
 def answer_does_item_contain_cmrs_with(answer, item_name: nil)
   within_fieldset("Does #{item_name || 'the product'} contain category 1A or 1B CMRs?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
+def answer_what_is_product_contained_in_with(answer, item_name: nil)
+  within_fieldset("What is the #{item_name || 'the product'} contained in?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
+def answer_what_type_of_applicator_with(answer)
+  within_fieldset("What type of applicator?") do
     page.choose(answer)
   end
   click_button "Continue"
@@ -380,6 +433,11 @@ end
 
 def upload_ingredients_pdf
   page.attach_file "spec/fixtures/testPdf.pdf"
+  click_button "Continue"
+end
+
+def upload_product_label
+  page.attach_file "spec/fixtures/testImage.png"
   click_button "Continue"
 end
 

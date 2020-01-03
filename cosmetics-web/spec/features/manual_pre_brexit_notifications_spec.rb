@@ -77,7 +77,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
   # ----- Manual, Pre-Brexit ---------
 
-  scenario "Manual, pre-Brexit, exact ingredients, single item, no nanomaterials" do
+  scenario "Manual, pre-Brexit, exact ingredients, single item, no nanomaterials", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -153,7 +153,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
   end
 
-  scenario "Manual, pre-Brexit, ingredient ranges, single item, no nanomaterials" do
+  scenario "Manual, pre-Brexit, ingredient ranges, single item, no nanomaterials", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -229,7 +229,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
   end
 
-  scenario "Manual, pre-Brexit, frame formulation, single item, no nanomaterials" do
+  scenario "Manual, pre-Brexit, frame formulation, single item, no nanomaterials", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -305,7 +305,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_see_message "SkinSoft deep blue mouthwash notification submitted"
   end
 
-  scenario "Manual, pre-Brexit, frame formulation, multi-item, no nanomaterials" do
+  scenario "Manual, pre-Brexit, frame formulation, multi-item, no nanomaterials", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -447,7 +447,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_see_message "SkinSoft strawberry blonde hair dye notification submitted"
   end
 
-  scenario "Manual, pre-Brexit, frame formulation, single item, with nanomaterials" do
+  scenario "Manual, pre-Brexit, frame formulation, single item, with nanomaterials", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -543,7 +543,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_see_message "SkinSoft carbon black eyeshadow notification submitted"
   end
 
-  scenario "Manual, pre-Brexit, frame formulation, multi-item, each with nanomaterials" do
+  scenario "Manual, pre-Brexit, frame formulation, multi-item, each with nanomaterials", :with_stubbed_antivirus do
 
     visit new_responsible_person_add_notification_path(responsible_person)
 
