@@ -1,0 +1,6 @@
+<% content_for :page_title, "New contact person" %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: account_path(:enter_details) %>
+<% end %>
+
+<%= render "responsible_persons/contact_persons/form", contact_person: @contact_person, url: responsible_person_contact_persons_path(@responsible_person), method: :post %>

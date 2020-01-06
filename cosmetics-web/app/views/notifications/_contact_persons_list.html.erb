@@ -1,0 +1,5 @@
+<h2 class="govuk-heading-m">Contact person</h2>
+
+<% contact_persons.each do |contact_person| %>
+  <%= render "/notifications/contact_person_details", contact_person: contact_person %>
+<% end %>
