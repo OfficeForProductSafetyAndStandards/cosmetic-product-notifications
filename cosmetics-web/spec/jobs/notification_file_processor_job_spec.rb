@@ -21,7 +21,6 @@ RSpec.describe NotificationFileProcessorJob do
   end
 
   describe "#perform" do
-
     it "creates a notification and removes a notification file" do
       expect {
         described_class.new.perform(notification_file_basic.id)
@@ -122,7 +121,6 @@ RSpec.describe NotificationFileProcessorJob do
     end
 
     it "creates a notification populated with relevant number of cmr" do
-
       expect {
         described_class.new.perform(notification_file_nano_materials_cmr.id)
       }.to change(Cmr, :count).by(2)
@@ -206,7 +204,7 @@ RSpec.describe NotificationFileProcessorJob do
       before do
         notification_file = create(:notification_file, uploaded_file: create_file_blob("testExportWithComponentWithSinglePHValue.zip"))
 
-        analyzer_instance = described_class.new.perform(notification_file.id)
+        described_class.new.perform(notification_file.id)
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }

@@ -9,7 +9,7 @@ class NotificationFileProcessorJob < ApplicationJob
     @notification_file = NotificationFile.find(notification_file_id)
     create_notification_from_file
     delete_notification_file if @notification_file.upload_error.blank?
-    return true
+    true
   end
 
   def blob
@@ -86,10 +86,8 @@ private
   end
 
   def get_product_xml_file
-
     download_blob_to_tempfile do |zip_file|
       Zip::File.open(zip_file.path) do |files|
-
         valid_files = files.select { |file| file_is_valid?(file) }
         if invalid_static_files(valid_files)
           raise UnexpectedStaticFilesError, "UnexpectedStaticFilesError - a different static file was detected!"
