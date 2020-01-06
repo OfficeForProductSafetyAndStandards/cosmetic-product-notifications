@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe ReadDataAnalyzer, type: :analyzer do
+RSpec.describe NotificationFileProcessorJob do
   let(:responsible_person) { create(:responsible_person) }
-  let(:notification_file_basic) { create(:notification_file, uploaded_file: create_file_blob) }
+  let!(:notification_file_basic) { create(:notification_file, uploaded_file: create_file_blob) }
   let(:notification_file_shades_import) { create(:notification_file, uploaded_file: create_file_blob("testWithShadesAndImport.zip")) }
   let(:notification_file_multi_component_exact_formula) { create(:notification_file, uploaded_file: create_file_blob("testMultiComponentExactFormula.zip")) }
   let(:notification_file_manual_ranges_trigger_rules) { create(:notification_file, uploaded_file: create_file_blob("testManualRangesTriggerRules.zip")) }
@@ -20,51 +20,36 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     close_file
   end
 
-  describe "#accept" do
-    it "rejects a null blob" do
-      expect(described_class.accept?(nil)).equal?(false)
-    end
+  describe "#perform" do
 
-    it "accepts a zip blob" do
-      expect(described_class.accept?(notification_file_basic.uploaded_file)).equal?(true)
-    end
-  end
-
-  describe "#metadata" do
     it "creates a notification and removes a notification file" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       expect {
-        analyzer_instance.metadata
+        described_class.new.perform(notification_file_basic.id)
       }.to change(Notification, :count).by(1).and change(NotificationFile, :count).by(-1)
     end
 
     it "creates a notification populated with relevant name" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_basic.id)
       notification = Notification.order(created_at: :asc).last
-
       expect(notification.product_name).equal?("CTPA moisture conditioner")
     end
 
     it "creates a notification populated with relevant cpnp reference" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_basic.id)
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.cpnp_reference).equal?("1000094")
     end
 
     it "creates a notification populated with relevant cpnp date" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_basic.id)
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.cpnp_notification_date.to_s).equal?("2012-02-08 16:02:34 UTC")
     end
 
     it "creates a notification populated with relevant shades" do
-      analyzer_instance = described_class.new(notification_file_shades_import.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_shades_import.id)
 
       notification = Notification.order(created_at: :asc).last
 
@@ -72,8 +57,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant imported info" do
-      analyzer_instance = described_class.new(notification_file_shades_import.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_shades_import.id)
 
       notification = Notification.order(created_at: :asc).last
 
@@ -82,16 +66,13 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant number of components" do
-      analyzer_instance = described_class.new(notification_file_multi_component_exact_formula.uploaded_file)
-
       expect {
-        analyzer_instance.metadata
+        described_class.new.perform(notification_file_multi_component_exact_formula.id)
       }.to change(Component, :count).by(2)
     end
 
     it "creates a notification with components in the component_complete state" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_basic.id)
 
       notification = Notification.order(created_at: :asc).last
 
@@ -99,8 +80,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant notification type" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_basic.id)
 
       notification = Notification.order(created_at: :asc).last
 
@@ -108,8 +88,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant sub-sub-category" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_basic.id)
 
       notification = Notification.order(created_at: :asc).last
 
@@ -117,16 +96,13 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant number of trigger questions and trigger elements" do
-      analyzer_instance = described_class.new(notification_file_manual_ranges_trigger_rules.uploaded_file)
-
       expect {
-        analyzer_instance.metadata
+        described_class.new.perform(notification_file_manual_ranges_trigger_rules.id)
       }.to change(TriggerQuestion, :count).by(5).and change(TriggerQuestionElement, :count).by(6)
     end
 
     it "creates a notification populated with relevant frame formulation" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_basic.id)
 
       notification = Notification.order(created_at: :asc).last
 
@@ -134,36 +110,32 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant number of exact formula" do
-      analyzer_instance = described_class.new(notification_file_multi_component_exact_formula.uploaded_file)
       expect {
-        analyzer_instance.metadata
+        described_class.new.perform(notification_file_multi_component_exact_formula.id)
       }.to change(ExactFormula, :count).by(4)
     end
 
     it "creates a notification populated with relevant number of range formula" do
-      analyzer_instance = described_class.new(notification_file_manual_ranges_trigger_rules.uploaded_file)
       expect {
-        analyzer_instance.metadata
+        described_class.new.perform(notification_file_manual_ranges_trigger_rules.id)
       }.to change(RangeFormula, :count).by(2)
     end
 
     it "creates a notification populated with relevant number of cmr" do
-      analyzer_instance = described_class.new(notification_file_nano_materials_cmr.uploaded_file)
+
       expect {
-        analyzer_instance.metadata
+        described_class.new.perform(notification_file_nano_materials_cmr.id)
       }.to change(Cmr, :count).by(2)
     end
 
     it "creates a notification populated with relevant number of nanomaterials and nanoelement" do
-      analyzer_instance = described_class.new(notification_file_nano_materials_cmr.uploaded_file)
       expect {
-        analyzer_instance.metadata
+        described_class.new.perform(notification_file_nano_materials_cmr.id)
       }.to change(NanoMaterial, :count).by(1).and change(NanoElement, :count).by(1)
     end
 
     it "creates a notification in the draft_complete state if no formulation information is needed" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_basic.id)
 
       notification = Notification.order(created_at: :asc).last
 
@@ -171,33 +143,28 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification in the notification_file_imported state if formulation information is required" do
-      analyzer_instance = described_class.new(notification_file_formulation_required.uploaded_file)
-      analyzer_instance.metadata
-
+      described_class.new.perform(notification_file_formulation_required.id)
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.state).to eq("notification_file_imported")
     end
 
     it "creates a notification with the first language's name if there is no english name" do
-      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_different_language.id)
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.product_name).to eq("Multiple product test")
     end
 
     it "creates a notification with the first language's shades if there is no english shades" do
-      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_different_language.id)
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.shades).to eq("yellow, orange, purple")
     end
 
     it "creates a notification with the first language's component name if there is no english component name" do
-      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_different_language.id)
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.components.first.name).to eq("A")
@@ -205,8 +172,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification with the first language's component shades if there is no english component shades" do
-      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
-      analyzer_instance.metadata
+      described_class.new.perform(notification_file_different_language.id)
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.components.first.shades.first).to eq("blue, green")
@@ -218,8 +184,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       before do
         notification_file = create(:notification_file, uploaded_file: create_file_blob("testExportWithComponentWithPHRange.zip"))
 
-        analyzer_instance = described_class.new(notification_file.uploaded_file)
-        analyzer_instance.metadata
+        described_class.new.perform(notification_file.id)
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }
@@ -241,8 +206,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       before do
         notification_file = create(:notification_file, uploaded_file: create_file_blob("testExportWithComponentWithSinglePHValue.zip"))
 
-        analyzer_instance = described_class.new(notification_file.uploaded_file)
-        analyzer_instance.metadata
+        analyzer_instance = described_class.new.perform(notification_file.id)
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }
@@ -264,8 +228,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFilePostBrexit.zip")) }
 
       before do
-        analyzer_instance = described_class.new(notification_file.uploaded_file)
-        analyzer_instance.metadata
+        described_class.new.perform(notification_file.id)
       end
 
       it "adds an error to the file" do

@@ -1,29 +1,19 @@
 require "zip"
 
-class ReadDataAnalyzer < ActiveStorage::Analyzer
-  extend AnalyzerHelper
+class NotificationFileProcessorJob < ApplicationJob
   include CpnpStaticFiles
+  include ActiveStorage::Downloading
 
-  def initialize(blob)
-    super(blob)
-  end
 
-  def self.accept?(given_blob)
-    return false if given_blob.blank?
-
-    if ENV.fetch("ANTIVIRUS_ENABLED", "true") == "true"
-      return false unless given_blob.metadata["safe"]
-    end
-
-    notification_file = get_notification_file_from_blob(given_blob)
-    notification_file.present? && notification_file.upload_error.blank?
-  end
-
-  def metadata
-    @notification_file = self.class.get_notification_file_from_blob(blob)
+  def perform(notification_file_id)
+    @notification_file = NotificationFile.find(notification_file_id)
     create_notification_from_file
     delete_notification_file if @notification_file.upload_error.blank?
-    {}
+    return true
+  end
+
+  def blob
+    @notification_file.uploaded_file.blob
   end
 
 private
@@ -96,8 +86,10 @@ private
   end
 
   def get_product_xml_file
+
     download_blob_to_tempfile do |zip_file|
       Zip::File.open(zip_file.path) do |files|
+
         valid_files = files.select { |file| file_is_valid?(file) }
         if invalid_static_files(valid_files)
           raise UnexpectedStaticFilesError, "UnexpectedStaticFilesError - a different static file was detected!"
@@ -143,7 +135,7 @@ private
   end
 
   def delete_notification_file
-    @notification_file.destroy
+    @notification_file.destroy!
   end
 
   class FileUploadError < StandardError
