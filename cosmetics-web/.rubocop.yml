@@ -37,6 +37,7 @@ ExampleLength:
 Metrics/BlockLength:
   Exclude:
     - 'Gemfile'
+    - 'spec/**/*'
 
 # Disable this so that we can use Capybara aliases like
 # 'feature' and 'scenario' for more readable tests
