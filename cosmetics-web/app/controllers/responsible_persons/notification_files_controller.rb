@@ -36,6 +36,8 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
         })
         return render :new
       end
+
+      NotificationFileProcessorJob.perform_later(notification_file.id)
     end
     redirect_to responsible_person_notifications_path(@responsible_person)
   end
