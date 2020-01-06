@@ -20,7 +20,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     close_file
   end
 
-  describe "#accept" do
+  describe "#accept", :with_stubbed_antivirus do
     it "rejects a null blob" do
       expect(described_class.accept?(nil)).equal?(false)
     end
@@ -30,7 +30,7 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
   end
 
-  describe "#metadata" do
+  describe "#metadata", :with_stubbed_antivirus do
     it "creates a notification and removes a notification file" do
       analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
       expect {
