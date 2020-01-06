@@ -25,6 +25,11 @@ def expect_to_be_on_do_you_have_the_zip_files_page
   expect(page).to have_h1("EU notification ZIP files")
 end
 
+def expect_to_be_on_upload_eu_notification_files_page
+  expect(page.current_path).to end_with("/notification_files/new")
+  expect(page).to have_h1("Upload your EU notification files")
+end
+
 def expect_to_be_on_was_product_notified_before_brexit_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/was_product_on_sale_before_eu_exit")
   expect(page).to have_h1("Was this product notified in the EU before 1 February 2020?")
@@ -256,6 +261,12 @@ def expect_to_be_on_frame_formulation_select_page
   expect(page).to have_h1("Choose frame formulation")
 end
 
+def expect_to_see_incomplete_notification_with_eu_reference_number(eu_reference_number)
+  within("#incomplete") do
+    expect(page).to have_text("EU reference number: #{eu_reference_number}")
+  end
+end
+
 # ---- Page interactions ----
 
 def answer_was_eu_notified_with(answer)
@@ -448,6 +459,11 @@ end
 
 def upload_product_label
   page.attach_file "spec/fixtures/testImage.png"
+  click_button "Continue"
+end
+
+def upload_zip_file(zip_file_name)
+  page.attach_file "spec/fixtures/#{zip_file_name}"
   click_button "Continue"
 end
 
