@@ -49,7 +49,7 @@ private
   def create_notification_from_file
     get_product_xml_file do |product_xml_file|
       cpnp_export_info = CpnpParser.new(product_xml_file)
-      cpnp_exporter    = CpnpNotificationExporter.new(cpnp_export_info, @notification_file.responsible_person)
+      cpnp_exporter    = CpnpNotificationImporter.new(cpnp_export_info, @notification_file.responsible_person)
 
       cpnp_exporter.create!
       notification = cpnp_exporter.notification
@@ -77,13 +77,13 @@ private
   rescue NotificationValidationError => e
     Sidekiq.logger.error e.message
     @notification_file.update(upload_error: :notification_validation_error)
-  rescue CpnpNotificationExporter::DraftNotificationError => e
+  rescue CpnpNotificationImporter::DraftNotificationError => e
     Sidekiq.logger.error e.message
     @notification_file.update(upload_error: :draft_notification_error)
   rescue UnexpectedStaticFilesError => e
     Sidekiq.logger.error e.message
     @notification_file.update(upload_error: :unknown_error)
-  rescue CpnpNotificationExporter::CpnpFileNotifiedPostBrexitError => e
+  rescue CpnpNotificationImporter::CpnpFileNotifiedPostBrexitError => e
     Sidekiq.logger.error e.message
     @notification_file.update(upload_error: :post_brexit_date)
   rescue StandardError => e

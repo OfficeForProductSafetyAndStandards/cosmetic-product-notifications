@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CpnpNotificationExporter do
+RSpec.describe CpnpNotificationImporter do
   let(:responsible_person) { create(:responsible_person) }
 
   let(:cpnp_parser_basic) { create_cpnp_parser }
@@ -260,7 +260,7 @@ RSpec.describe CpnpNotificationExporter do
 
       it "adds an error to the file" do
         exporter_instance = described_class.new(cpnp_parser, responsible_person)
-        expect { exporter_instance.create! }.to raise_error(CpnpNotificationExporter::CpnpFileNotifiedPostBrexitError)
+        expect { exporter_instance.create! }.to raise_error(CpnpNotificationImporter::CpnpFileNotifiedPostBrexitError)
       end
     end
   end

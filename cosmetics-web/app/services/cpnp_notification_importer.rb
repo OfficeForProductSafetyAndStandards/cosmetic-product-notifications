@@ -1,4 +1,4 @@
-class CpnpNotificationExporter
+class CpnpNotificationImporter
   class DraftNotificationError < StandardError; end
   class CpnpFileNotifiedPostBrexitError < StandardError; end
   attr_reader :notification
