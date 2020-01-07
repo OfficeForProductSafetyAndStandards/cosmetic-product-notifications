@@ -48,22 +48,13 @@ private
 
   def create_notification_from_file
     get_product_xml_file do |product_xml_file|
-      cpnp_export_info = CpnpParser.new(product_xml_file)
-      cpnp_exporter    = CpnpNotificationImporter.new(cpnp_export_info, @notification_file.responsible_person)
+      cpnp_import_info = CpnpParser.new(product_xml_file)
+      cpnp_import    = CpnpNotificationImporter.new(cpnp_import_info, @notification_file.responsible_person)
 
-      cpnp_exporter.create!
-      notification = cpnp_exporter.notification
+      cpnp_import.create!
+      cpnp_import.notification
 
-      if notification.errors.messages.present?
-        if notification.errors.messages[:cpnp_reference].include? Notification.duplicate_notification_message
-          raise DuplicateNotificationError, "DuplicateNotificationError - A notification for this product already
-            exists for this responsible person (CPNP reference no. #{notification.cpnp_reference})"
-        else
-          raise NotificationValidationError, "NotificationValidationError - #{notification.errors.messages}"
-        end
-      else
-        Sidekiq.logger.info "Successful File Upload"
-      end
+      Sidekiq.logger.info "Successful File Upload"
     end
   rescue UnexpectedPdfFileError => e
     Sidekiq.logger.error e.message

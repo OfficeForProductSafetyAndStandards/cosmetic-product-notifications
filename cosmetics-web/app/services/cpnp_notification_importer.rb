@@ -1,7 +1,6 @@
 class CpnpNotificationImporter
   class DraftNotificationError < StandardError; end
   class CpnpFileNotifiedPostBrexitError < StandardError; end
-  attr_reader :notification
 
   def initialize(cpnp_parser, responsible_person)
     @cpnp_parser = cpnp_parser
@@ -14,7 +13,7 @@ class CpnpNotificationImporter
     elsif @cpnp_parser.cpnp_notification_date >= EU_EXIT_DATE
       raise CpnpFileNotifiedPostBrexitError, "Product was notified to CPNP post-Brexit, which is not currently supported"
     else
-      @notification = ::Notification.new(product_name: @cpnp_parser.product_name,
+      notification = ::Notification.new(product_name: @cpnp_parser.product_name,
                                         shades: @cpnp_parser.shades,
                                         components: @cpnp_parser.components,
                                         cpnp_reference: @cpnp_parser.cpnp_reference,
@@ -28,8 +27,17 @@ class CpnpNotificationImporter
                                         components_are_mixed: @cpnp_parser.components_are_mixed,
                                         ph_min_value: @cpnp_parser.ph_min_value,
                                         ph_max_value: @cpnp_parser.ph_max_value)
-      @notification.notification_file_parsed
-      @notification.save(context: :file_upload)
+      notification.notification_file_parsed
+      notification.valid?
+      if notification.errors.messages.present?
+        if notification.errors.messages[:cpnp_reference].include? Notification.duplicate_notification_message
+          raise DuplicateNotificationError, "DuplicateNotificationError - A notification for this product already
+            exists for this responsible person (CPNP reference no. #{notification.cpnp_reference})"
+        else
+          raise NotificationValidationError, "NotificationValidationError - #{notification.errors.messages}"
+        end
+      end
+      notification.save(context: :file_upload)
     end
   end
 end
