@@ -49,7 +49,7 @@ private
   def create_notification_from_file
     get_product_xml_file do |product_xml_file|
       cpnp_import_info = CpnpParser.new(product_xml_file)
-      cpnp_import    = CpnpNotificationImporter.new(cpnp_import_info, @notification_file.responsible_person)
+      cpnp_import      = CpnpNotificationImporter.new(cpnp_import_info, @notification_file.responsible_person)
 
       cpnp_import.create!
       cpnp_import.notification
