@@ -1,22 +1,9 @@
 require "zip"
 
 class ReadDataAnalyzer < ActiveStorage::Analyzer
-  class FileUploadError < StandardError
-    def initialize(error_message)
-      @error_message = error_message
-      super(@error_message)
-    end
-
-    def message
-      "File Upload Error: #{@error_message}"
-    end
-  end
-
   class UnexpectedPdfFileError < FileUploadError; end
   class ProductFileNotFoundError < FileUploadError; end
-  class DuplicateNotificationError < FileUploadError; end
   class NotificationMissingDataError < FileUploadError; end
-  class NotificationValidationError < FileUploadError; end
   class UnexpectedStaticFilesError < FileUploadError; end
 
   extend AnalyzerHelper
@@ -62,10 +49,10 @@ private
   rescue ProductFileNotFoundError => e
     Sidekiq.logger.error e.message
     @notification_file.update(upload_error: :product_file_not_found)
-  rescue DuplicateNotificationError => e
+  rescue CpnpNotificationImporter::DuplicateNotificationError => e
     Sidekiq.logger.error e.message
     @notification_file.update(upload_error: :notification_duplicated)
-  rescue NotificationValidationError => e
+  rescue CpnpNotificationImporter::NotificationValidationError => e
     Sidekiq.logger.error e.message
     @notification_file.update(upload_error: :notification_validation_error)
   rescue CpnpNotificationImporter::DraftNotificationError => e

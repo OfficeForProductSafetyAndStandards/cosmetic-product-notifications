@@ -1,4 +1,6 @@
 class CpnpNotificationImporter
+  class DuplicateNotificationError < FileUploadError; end
+  class NotificationValidationError < FileUploadError; end
   class DraftNotificationError < StandardError; end
   class CpnpFileNotifiedPostBrexitError < StandardError; end
 
@@ -28,16 +30,17 @@ class CpnpNotificationImporter
                                         ph_min_value: @cpnp_parser.ph_min_value,
                                         ph_max_value: @cpnp_parser.ph_max_value)
       notification.notification_file_parsed
-      notification.valid?
+      notification.save(context: :file_upload)
       if notification.errors.messages.present?
         if notification.errors.messages[:cpnp_reference].include? Notification.duplicate_notification_message
+          binding.pry
           raise DuplicateNotificationError, "DuplicateNotificationError - A notification for this product already
             exists for this responsible person (CPNP reference no. #{notification.cpnp_reference})"
         else
           raise NotificationValidationError, "NotificationValidationError - #{notification.errors.messages}"
         end
       end
-      notification.save(context: :file_upload)
+      notification
     end
   end
 end
