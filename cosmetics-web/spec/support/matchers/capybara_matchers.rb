@@ -17,8 +17,8 @@ module PageMatchers
     def matches?(page)
       @page = page
       begin
-        @key_element = @page.find("th", text: @key)
-        @sibling_element = @key_element.sibling("td", text: @value)
+        @key_element = @page.find("th", text: @key, exact_text: true)
+        @sibling_element = @key_element.sibling("td", text: @value, exact_text: true)
       rescue StandardError
         Capybara::ElementNotFound
       end
@@ -28,7 +28,7 @@ module PageMatchers
 
     def failure_message
       if !@key_element
-        "Could not find <th> containing ‘#{@key}’"
+        "Could not find <th> containing ‘#{@key}’ within #{@page.html}"
       elsif !@sibling_element
         "Could not find sibling <td> containing ‘#{@value}’ within #{@key_element.find(:xpath, '..').native}"
       end

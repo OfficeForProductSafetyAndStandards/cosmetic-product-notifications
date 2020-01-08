@@ -187,20 +187,34 @@ def exepct_to_be_on_upload_product_label_page
 end
 
 # rubocop:disable Naming/UncommunicativeMethodParamName
-def expect_check_your_answers_page_to_contain(product_name:, imported:, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, ph:, application_instruction: nil, exposure_condition: nil)
+def expect_check_your_answers_page_to_contain(product_name:, imported:, imported_from: nil, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
-    expect(page).to have_summary_item(key: "Imported", value: imported)
-    expect(page).to have_summary_item(key: "Number of components", value: number_of_components)
     expect(page).to have_summary_item(key: "Shades", value: shades)
+
+    expect(page).to have_summary_item(key: "Imported", value: imported)
+
+    if imported_from
+      expect(page).to have_summary_item(key: "Imported from", value: imported_from)
+    end
+
+    expect(page).to have_summary_item(key: "Number of components", value: number_of_components)
     expect(page).to have_summary_item(key: "Contains CMR substances", value: contains_cmrs)
     expect(page).to have_summary_item(key: "Nanomaterials", value: nanomaterials)
     expect(page).to have_summary_item(key: "Category of product", value: category)
     expect(page).to have_summary_item(key: "Category of #{category.downcase.singularize}", value: subcategory)
     expect(page).to have_summary_item(key: "Category of #{subcategory.downcase.singularize}", value: sub_subcategory)
     expect(page).to have_summary_item(key: "Formulation given as", value: formulation_given_as)
+
+    if frame_formulation
+      expect(page).to have_summary_item(key: "Frame formulation", value: frame_formulation)
+    end
+
     expect(page).to have_summary_item(key: "Physical form", value: physical_form)
-    expect(page).to have_summary_item(key: "pH", value: ph)
+
+    if ph
+      expect(page).to have_summary_item(key: "pH", value: ph)
+    end
 
     if application_instruction
       expect(page).to have_summary_item(key: "Application instruction", value: application_instruction)

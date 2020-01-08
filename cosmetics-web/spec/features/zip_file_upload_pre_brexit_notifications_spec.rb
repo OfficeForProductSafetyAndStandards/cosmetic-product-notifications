@@ -39,12 +39,52 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
       subcategory: "Hair and scalp care and cleansing products",
       sub_subcategory: "Hair conditioner",
       formulation_given_as: "Frame formulation",
-      physical_form: "Liquid",
-      ph: "",
+      physical_form: "Liquid"
     )
     click_button "Accept and submit the cosmetic product notification"
 
     expect_to_be_on_your_cosmetic_products_page
     expect_to_see_message "CTPA moisture conditioner notification submitted"
   end
+
+  scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with ingredients specied as ranges", :with_stubbed_antivirus do
+
+    visit new_responsible_person_add_notification_path(responsible_person)
+
+    expect_to_be_on_was_eu_notified_about_products_page
+    answer_was_eu_notified_with "Yes"
+
+    expect_to_be_on_do_you_have_the_zip_files_page
+    answer_do_you_have_zip_files_with "Yes"
+
+    expect_to_be_on_upload_eu_notification_files_page
+    upload_zip_file "testNotificationUsingRanges.zip"
+
+    visit responsible_person_notifications_path(responsible_person)
+
+    expect_to_see_incomplete_notification_with_eu_reference_number "1005901"
+    click_link "Confirm and notify"
+
+    expect_to_be_on_check_your_answers_page(product_name: "SkinSoft skin whitener")
+    expect_check_your_answers_page_to_contain(
+      product_name: "SkinSoft skin whitener",
+      imported: "Yes",
+      imported_from: "France",
+      number_of_components: "1",
+      shades: "",
+      contains_cmrs: "No",
+      nanomaterials: "None",
+      category: "Skin products",
+      subcategory: "Bleach for body hair products",
+      sub_subcategory: "Bleach for body hair",
+      formulation_given_as: "Concentration ranges",
+      frame_formulation: "Bleach For Body Hair",
+      physical_form: "Loose powder"
+    )
+    click_button "Accept and submit the cosmetic product notification"
+
+    expect_to_be_on_your_cosmetic_products_page
+    expect_to_see_message "SkinSoft skin whitener notification submitted"
+  end
+
 end
