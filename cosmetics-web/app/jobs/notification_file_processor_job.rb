@@ -1,37 +1,26 @@
 require "zip"
 
-class ReadDataAnalyzer < ActiveStorage::Analyzer
+class NotificationFileProcessorJob < ApplicationJob
   class UnexpectedPdfFileError < FileUploadError; end
   class ProductFileNotFoundError < FileUploadError; end
   class NotificationMissingDataError < FileUploadError; end
   class UnexpectedStaticFilesError < FileUploadError; end
 
-  extend AnalyzerHelper
   include CpnpStaticFiles
+  include ActiveStorage::Downloading
 
-  def initialize(blob)
-    super(blob)
-  end
 
-  def self.accept?(given_blob)
-    return false if given_blob.blank?
-
-    if ENV.fetch("ANTIVIRUS_ENABLED", "true") == "true"
-      return false unless given_blob.metadata["safe"]
-    end
-
-    notification_file = get_notification_file_from_blob(given_blob)
-    notification_file.present? && notification_file.upload_error.blank?
-  end
-
-  def metadata
-    @notification_file = self.class.get_notification_file_from_blob(blob)
+  def perform(notification_file_id)
+    @notification_file = NotificationFile.find(notification_file_id)
     create_notification_from_file
     delete_notification_file if @notification_file.upload_error.blank?
-    {}
   end
 
 private
+
+  def blob
+    @notification_file.uploaded_file.blob
+  end
 
   def create_notification_from_file
     get_product_xml_file do |product_xml_file|
@@ -39,7 +28,6 @@ private
       cpnp_import      = CpnpNotificationImporter.new(cpnp_import_info, @notification_file.responsible_person)
 
       cpnp_import.create!
-      cpnp_import.notification
 
       Sidekiq.logger.info "Successful File Upload"
     end
@@ -117,6 +105,6 @@ private
   end
 
   def delete_notification_file
-    @notification_file.destroy
+    @notification_file.destroy!
   end
 end

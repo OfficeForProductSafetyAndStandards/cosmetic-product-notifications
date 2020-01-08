@@ -7,7 +7,6 @@ if ENV.fetch("ANTIVIRUS_ENABLED", "true") == "true"
   Rails.application.config.document_analyzers.append AntiVirusAnalyzer
 end
 
-Rails.application.config.document_analyzers.append ReadDataAnalyzer
 # MasterAnalyzer is the only one that we pass to active_storage
 Rails.application.config.active_storage.analyzers = [MasterAnalyzer]
 Rails.application.config.active_storage.queue = :cosmetics

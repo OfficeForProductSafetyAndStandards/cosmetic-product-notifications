@@ -33,7 +33,6 @@ class CpnpNotificationImporter
       notification.save(context: :file_upload)
       if notification.errors.messages.present?
         if notification.errors.messages[:cpnp_reference].include? Notification.duplicate_notification_message
-          binding.pry
           raise DuplicateNotificationError, "DuplicateNotificationError - A notification for this product already
             exists for this responsible person (CPNP reference no. #{notification.cpnp_reference})"
         else
