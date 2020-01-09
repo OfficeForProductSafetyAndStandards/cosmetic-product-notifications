@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersons::NotificationsController, type: :controller do
+RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivirus, type: :controller do
   let(:user) { build(:user) }
   let(:responsible_person) { create(:responsible_person) }
   let(:predefined_component) { create(:component) }

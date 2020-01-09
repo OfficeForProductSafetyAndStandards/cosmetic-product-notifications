@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Nanomaterial notifications", type: :request do
+RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :request do
   include RSpecHtmlMatchers
 
   let(:responsible_person) { create(:responsible_person) }

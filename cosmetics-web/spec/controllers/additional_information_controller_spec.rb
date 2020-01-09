@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AdditionalInformationController, type: :controller do
+RSpec.describe AdditionalInformationController, :with_stubbed_antivirus, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:predefined_component) { create(:predefined_component) }
   let(:ranges_component) { create(:ranges_component) }

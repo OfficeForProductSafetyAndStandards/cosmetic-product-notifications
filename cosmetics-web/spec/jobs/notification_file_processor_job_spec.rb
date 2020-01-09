@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NotificationFileProcessorJob do
+RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
   let!(:notification_file_basic) { create(:notification_file, uploaded_file: create_file_blob) }
 
   after do
