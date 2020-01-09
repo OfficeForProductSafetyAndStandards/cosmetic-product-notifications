@@ -186,8 +186,13 @@ def exepct_to_be_on_upload_product_label_page
   expect(page).to have_h1("Upload an image of the product label")
 end
 
+def exect_to_be_on_upload_formulation_document_page
+  expect(page.current_path).to end_with("/formulation/new")
+  expect(page).to have_h1("Upload formulation document")
+end
+
 # rubocop:disable Naming/UncommunicativeMethodParamName
-def expect_check_your_answers_page_to_contain(product_name:, imported:, imported_from: nil, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil)
+def expect_check_your_answers_page_to_contain(product_name:, imported:, imported_from: nil, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
     expect(page).to have_summary_item(key: "Shades", value: shades)
@@ -205,6 +210,10 @@ def expect_check_your_answers_page_to_contain(product_name:, imported:, imported
     expect(page).to have_summary_item(key: "Category of #{category.downcase.singularize}", value: subcategory)
     expect(page).to have_summary_item(key: "Category of #{subcategory.downcase.singularize}", value: sub_subcategory)
     expect(page).to have_summary_item(key: "Formulation given as", value: formulation_given_as)
+
+    if eu_notification_date
+      expect(page).to have_summary_item(key: "EU notification date", value: eu_notification_date)
+    end
 
     if frame_formulation
       expect(page).to have_summary_item(key: "Frame formulation", value: frame_formulation)
@@ -467,6 +476,11 @@ def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
 end
 
 def upload_ingredients_pdf
+  page.attach_file "spec/fixtures/testPdf.pdf"
+  click_button "Continue"
+end
+
+def upload_formulation_file
   page.attach_file "spec/fixtures/testPdf.pdf"
   click_button "Continue"
 end
