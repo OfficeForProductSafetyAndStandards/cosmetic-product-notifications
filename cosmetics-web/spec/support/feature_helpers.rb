@@ -290,6 +290,18 @@ def expect_to_see_incomplete_notification_with_eu_reference_number(eu_reference_
   end
 end
 
+def expect_to_see_notification_error(error_message)
+  within("#errors") do
+    expect(page).to have_text(error_message)
+  end
+end
+
+def expect_not_to_see_any_notification_errors
+  within("#errors") do
+    expect(page).not_to have_selector("table")
+  end
+end
+
 # ---- Page interactions ----
 
 def answer_was_eu_notified_with(answer)
