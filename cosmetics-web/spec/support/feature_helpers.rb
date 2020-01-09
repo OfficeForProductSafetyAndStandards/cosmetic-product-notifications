@@ -186,7 +186,7 @@ def exepct_to_be_on_upload_product_label_page
   expect(page).to have_h1("Upload an image of the product label")
 end
 
-def exect_to_be_on_upload_formulation_document_page
+def expect_to_be_on_upload_formulation_document_page
   expect(page.current_path).to end_with("/formulation/new")
   expect(page).to have_h1("Upload formulation document")
 end

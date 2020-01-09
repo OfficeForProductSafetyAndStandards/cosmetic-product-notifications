@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
+RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivirus, type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 
-  scenario "Using a zip file, pre-Brexit, frame formulation, single item, no nanomaterials", :with_stubbed_antivirus do
+  scenario "Using a zip file, pre-Brexit, frame formulation, single item, no nanomaterials" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -44,7 +44,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
     expect_to_see_message "CTPA moisture conditioner notification submitted"
   end
 
-  scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with ingredients specied as ranges", :with_stubbed_antivirus do
+  scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with ingredients specied as ranges" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -83,7 +83,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
     expect_to_see_message "SkinSoft skin whitener notification submitted"
   end
 
-  scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with missing formulation document", :with_stubbed_antivirus do
+  scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with missing formulation document" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -100,7 +100,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
     expect_to_see_incomplete_notification_with_eu_reference_number "10000098"
     click_link "Add missing information"
 
-    exect_to_be_on_upload_formulation_document_page
+    expect_to_be_on_upload_formulation_document_page
     upload_formulation_file
 
     expect_to_be_on_check_your_answers_page(product_name: "Beautify Facial Night Cream")
@@ -125,7 +125,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
     expect_to_see_message "Beautify Facial Night Cream notification submitted"
   end
 
-  scenario "Using a zip file, pre-Brexit, single item, containing nanomaterials, with missing formulation document", :with_stubbed_antivirus do
+  scenario "Using a zip file, pre-Brexit, single item, containing nanomaterials, with missing formulation document" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on_was_eu_notified_about_products_page
@@ -151,9 +151,8 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
     expect_to_be_on_does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
-    exect_to_be_on_upload_formulation_document_page
+    expect_to_be_on_upload_formulation_document_page
     upload_formulation_file
-
 
     expect_to_be_on_check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
     expect_check_your_answers_page_to_contain(
@@ -172,6 +171,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
       frame_formulation: "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Components - Colorant Part",
       physical_form: "Cream or paste",
     )
+    # puts page.html
     click_button "Accept and submit the cosmetic product notification"
 
     expect_to_be_on_your_cosmetic_products_page
