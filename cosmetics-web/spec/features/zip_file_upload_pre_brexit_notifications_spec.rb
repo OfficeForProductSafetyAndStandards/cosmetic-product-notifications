@@ -7,9 +7,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 
-
-  # ---- ZIP file, pre-Brexit ------
-
   scenario "Using a zip file, pre-Brexit, frame formulation, single item, no nanomaterials", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 

@@ -7,9 +7,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 
-
-  # ----- Manual, Post-Brexit --------
-
   scenario "Manual, post-Brexit, exact ingredients, single item, no nanomaterials", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
@@ -358,16 +355,4 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on_your_cosmetic_products_page
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
   end
-
-  # scenario "Manual, post-Brexit, frame formulation, multi-item, no nanomaterials" do
-  #   # TODO
-  # end
-
-  # scenario "Manual, post-Brexit, frame formulation, single item, with nanomaterials" do
-  #   # TODO
-  # end
-
-  # scenario "Manual, post-Brexit, frame formulation, multi-item, each with nanomaterials" do
-  #   # TODO
-  # end
 end
