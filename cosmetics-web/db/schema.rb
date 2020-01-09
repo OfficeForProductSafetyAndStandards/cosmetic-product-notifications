@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_22_105631) do
+ActiveRecord::Schema.define(version: 2019_12_20_160827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2019_11_22_105631) do
     t.string "shades", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "notification_id"
+    t.bigint "notification_id", null: false
     t.string "notification_type"
     t.string "frame_formulation"
     t.string "sub_sub_category"

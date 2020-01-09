@@ -1,6 +1,8 @@
 FactoryBot.define do
   factory :component do
     notification_type { "predefined" }
+    notification
+
     factory :predefined_component
     factory :ranges_component do
       notification_type { "range" }
