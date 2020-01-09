@@ -1,0 +1,43 @@
+<% content_for :page_title, "Upload formulation document" %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: responsible_person_notifications_path(@responsible_person, anchor: "incomplete") %>
+<% end %>
+
+<%= form_with url: responsible_person_notification_component_formulation_index_path(@responsible_person, @notification, @component), method: :post do |form| %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <% if @error_list.present? %>
+        <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: @error_list %>
+      <% end %>
+
+
+      <h1 class="govuk-heading-xl">
+        Upload formulation document
+        <% if @notification.is_multicomponent? %>
+          for component <%= @component_name %>
+        <% end %>
+      </h1>
+
+      <p>This can be either as ranges or the exact concentration.</p>
+      <p>For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.</p>
+
+      <div class="govuk-form-group <%= "govuk-form-group--error" if @error_list.present? %>">
+        <%= form.label :formulation_file, "File type can be a ‘pdf’, ‘rtf’ or ‘txt’.", class: "govuk-label" %>
+
+        <% if @error_list.present? %>
+          <span class="govuk-error-message"><%= @error_list.first[:text] %></span>
+        <% end %>
+
+        <%= form.file_field :formulation_file, class: "govuk-file-upload", accept: Component.allowed_types.map(&method(:get_filetype_extension)).join(",") %>
+      </div>
+
+
+      <div class="govuk-form-group">
+        <%= form.submit "Continue", class: "govuk-button" %>
+      </div>
+
+    </div>
+  </div>
+<% end %>
