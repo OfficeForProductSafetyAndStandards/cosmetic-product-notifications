@@ -1,70 +1,54 @@
 require "rails_helper"
 
-RSpec.describe ReadDataAnalyzer, type: :analyzer do
+RSpec.describe CpnpNotificationImporter do
   let(:responsible_person) { create(:responsible_person) }
-  let(:notification_file_basic) { create(:notification_file, uploaded_file: create_file_blob) }
-  let(:notification_file_shades_import) { create(:notification_file, uploaded_file: create_file_blob("testWithShadesAndImport.zip")) }
-  let(:notification_file_multi_component_exact_formula) { create(:notification_file, uploaded_file: create_file_blob("testMultiComponentExactFormula.zip")) }
-  let(:notification_file_manual_ranges_trigger_rules) { create(:notification_file, uploaded_file: create_file_blob("testManualRangesTriggerRules.zip")) }
-  let(:notification_file_nano_materials_cmr) { create(:notification_file, uploaded_file: create_file_blob("testWithNanomaterialsAndCmrs.zip")) }
-  let(:notification_file_formulation_required) { create(:notification_file, uploaded_file: create_file_blob("testFormulationRequiredExportFile.zip")) }
-  let(:notification_file_different_language) { create(:notification_file, uploaded_file: create_file_blob("testDifferentLanguage.zip")) }
 
-  before do
-    sign_in_as_member_of_responsible_person(responsible_person)
-  end
+  let(:cpnp_parser_basic) { create_cpnp_parser }
+  let(:cpnp_parser_shades_import) { create_cpnp_parser("testWithShadesAndImport.zip") }
+  let(:cpnp_parser_multi_component_exact_formula) { create_cpnp_parser("testMultiComponentExactFormula.zip") }
+  let(:cpnp_parser_manual_ranges_trigger_rules) { create_cpnp_parser("testManualRangesTriggerRules.zip") }
+  let(:cpnp_parser_nano_materials_cmr) { create_cpnp_parser("testWithNanomaterialsAndCmrs.zip") }
+  let(:cpnp_parser_formulation_required) { create_cpnp_parser("testFormulationRequiredExportFile.zip") }
+  let(:cpnp_parser_different_language) { create_cpnp_parser("testDifferentLanguage.zip") }
 
-  after do
-    sign_out
-    remove_uploaded_files
-    close_file
-  end
-
-  describe "#accept", :with_stubbed_antivirus do
-    it "rejects a null blob" do
-      expect(described_class.accept?(nil)).equal?(false)
-    end
-
-    it "accepts a zip blob" do
-      expect(described_class.accept?(notification_file_basic.uploaded_file)).equal?(true)
-    end
-  end
-
-  describe "#metadata", :with_stubbed_antivirus do
-    it "creates a notification and removes a notification file" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      expect {
-        analyzer_instance.metadata
-      }.to change(Notification, :count).by(1).and change(NotificationFile, :count).by(-1)
-    end
+  describe "#create!" do
+    # TODO: This should be tested in different spec, possibly ReadDataAnalyzer
+    #
+    # it "creates a notification and removes a notification file" do
+    #   exporter_instance = described_class.new(cpnp_parser_basic)
+    #   expect {
+    #     exporter_instance.create!
+    #   }.to change(Notification, :count).by(1).and change(NotificationFile, :count).by(-1)
+    # end
 
     it "creates a notification populated with relevant name" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
+
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.product_name).equal?("CTPA moisture conditioner")
     end
 
     it "creates a notification populated with relevant cpnp reference" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.cpnp_reference).equal?("1000094")
     end
 
     it "creates a notification populated with relevant cpnp date" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.cpnp_notification_date.to_s).equal?("2012-02-08 16:02:34 UTC")
     end
 
     it "creates a notification populated with relevant shades" do
-      analyzer_instance = described_class.new(notification_file_shades_import.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_shades_import, responsible_person)
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -72,8 +56,8 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant imported info" do
-      analyzer_instance = described_class.new(notification_file_shades_import.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_shades_import, responsible_person)
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -82,16 +66,25 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant number of components" do
-      analyzer_instance = described_class.new(notification_file_multi_component_exact_formula.uploaded_file)
+      exporter_instance = described_class.new(cpnp_parser_multi_component_exact_formula, responsible_person)
 
       expect {
-        analyzer_instance.metadata
+        exporter_instance.create!
       }.to change(Component, :count).by(2)
     end
 
+    it "creates a notification when orphaned component exists" do
+      #create(:component, name: 'A', notification: nil)
+      exporter_instance = described_class.new(cpnp_parser_multi_component_exact_formula, responsible_person)
+
+      expect {
+        exporter_instance.create!
+      }.to change(Notification, :count).by(1)
+    end
+
     it "creates a notification with components in the component_complete state" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -99,8 +92,8 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant notification type" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -108,8 +101,8 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant sub-sub-category" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -117,16 +110,16 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant number of trigger questions and trigger elements" do
-      analyzer_instance = described_class.new(notification_file_manual_ranges_trigger_rules.uploaded_file)
+      exporter_instance = described_class.new(cpnp_parser_manual_ranges_trigger_rules, responsible_person)
 
       expect {
-        analyzer_instance.metadata
+        exporter_instance.create!
       }.to change(TriggerQuestion, :count).by(5).and change(TriggerQuestionElement, :count).by(6)
     end
 
     it "creates a notification populated with relevant frame formulation" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -134,36 +127,36 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification populated with relevant number of exact formula" do
-      analyzer_instance = described_class.new(notification_file_multi_component_exact_formula.uploaded_file)
+      exporter_instance = described_class.new(cpnp_parser_multi_component_exact_formula, responsible_person)
       expect {
-        analyzer_instance.metadata
+        exporter_instance.create!
       }.to change(ExactFormula, :count).by(4)
     end
 
     it "creates a notification populated with relevant number of range formula" do
-      analyzer_instance = described_class.new(notification_file_manual_ranges_trigger_rules.uploaded_file)
+      exporter_instance = described_class.new(cpnp_parser_manual_ranges_trigger_rules, responsible_person)
       expect {
-        analyzer_instance.metadata
+        exporter_instance.create!
       }.to change(RangeFormula, :count).by(2)
     end
 
     it "creates a notification populated with relevant number of cmr" do
-      analyzer_instance = described_class.new(notification_file_nano_materials_cmr.uploaded_file)
+      exporter_instance = described_class.new(cpnp_parser_nano_materials_cmr, responsible_person)
       expect {
-        analyzer_instance.metadata
+        exporter_instance.create!
       }.to change(Cmr, :count).by(2)
     end
 
     it "creates a notification populated with relevant number of nanomaterials and nanoelement" do
-      analyzer_instance = described_class.new(notification_file_nano_materials_cmr.uploaded_file)
+      exporter_instance = described_class.new(cpnp_parser_nano_materials_cmr, responsible_person)
       expect {
-        analyzer_instance.metadata
+        exporter_instance.create!
       }.to change(NanoMaterial, :count).by(1).and change(NanoElement, :count).by(1)
     end
 
     it "creates a notification in the draft_complete state if no formulation information is needed" do
-      analyzer_instance = described_class.new(notification_file_basic.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -171,8 +164,8 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification in the notification_file_imported state if formulation information is required" do
-      analyzer_instance = described_class.new(notification_file_formulation_required.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_formulation_required, responsible_person)
+      exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last
 
@@ -180,24 +173,24 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification with the first language's name if there is no english name" do
-      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.product_name).to eq("Multiple product test")
     end
 
     it "creates a notification with the first language's shades if there is no english shades" do
-      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.shades).to eq("yellow, orange, purple")
     end
 
     it "creates a notification with the first language's component name if there is no english component name" do
-      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.components.first.name).to eq("A")
@@ -205,8 +198,8 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
     end
 
     it "creates a notification with the first language's component shades if there is no english component shades" do
-      analyzer_instance = described_class.new(notification_file_different_language.uploaded_file)
-      analyzer_instance.metadata
+      exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
+      exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
 
       expect(notification.components.first.shades.first).to eq("blue, green")
@@ -216,10 +209,10 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
 
     context "when the file contains a component with a PH range" do
       before do
-        notification_file = create(:notification_file, uploaded_file: create_file_blob("testExportWithComponentWithPHRange.zip"))
+        cpnp_parser = create_cpnp_parser("testExportWithComponentWithPHRange.zip")
 
-        analyzer_instance = described_class.new(notification_file.uploaded_file)
-        analyzer_instance.metadata
+        exporter_instance = described_class.new(cpnp_parser, responsible_person)
+        exporter_instance.create!
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }
@@ -239,10 +232,10 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
 
     context "when the file contains a component with a single PH value" do
       before do
-        notification_file = create(:notification_file, uploaded_file: create_file_blob("testExportWithComponentWithSinglePHValue.zip"))
+        cpnp_parser = create_cpnp_parser("testExportWithComponentWithSinglePHValue.zip")
 
-        analyzer_instance = described_class.new(notification_file.uploaded_file)
-        analyzer_instance.metadata
+        exporter_instance = described_class.new(cpnp_parser, responsible_person)
+        exporter_instance.create!
       end
 
       let(:notification) { Notification.order(created_at: :asc).last }
@@ -260,16 +253,26 @@ RSpec.describe ReadDataAnalyzer, type: :analyzer do
       end
     end
 
+    # TODO: this probably should be tested somewhere else?
     context "when the file contains a post-Brexit date" do
-      let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFilePostBrexit.zip")) }
+      let(:cpnp_parser) { create_cpnp_parser("testExportFilePostBrexit.zip") }
 
-      before do
-        analyzer_instance = described_class.new(notification_file.uploaded_file)
-        analyzer_instance.metadata
-      end
 
       it "adds an error to the file" do
-        expect(notification_file.reload.upload_error).to eq("post_brexit_date")
+        exporter_instance = described_class.new(cpnp_parser, responsible_person)
+        expect { exporter_instance.create! }.to raise_error(CpnpNotificationImporter::CpnpFileNotifiedPostBrexitError)
+      end
+    end
+  end
+
+  def create_cpnp_parser(filename = "testExportFile.zip")
+    path = Rails.root.join("spec", "fixtures", filename)
+    Zip::File.open(path) do |files|
+      files.each do |file|
+        name_regexp = /[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml/
+        if file.name&.match?(name_regexp)
+          return CpnpParser.new(file.get_input_stream.read)
+        end
       end
     end
   end
