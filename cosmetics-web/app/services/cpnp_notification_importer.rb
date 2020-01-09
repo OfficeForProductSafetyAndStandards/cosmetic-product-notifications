@@ -29,6 +29,7 @@ class CpnpNotificationImporter
                                         components_are_mixed: @cpnp_parser.components_are_mixed,
                                         ph_min_value: @cpnp_parser.ph_min_value,
                                         ph_max_value: @cpnp_parser.ph_max_value)
+
       notification.notification_file_parsed
       notification.save(context: :file_upload)
       if notification.errors.messages.present?

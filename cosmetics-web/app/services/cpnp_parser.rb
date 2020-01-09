@@ -63,23 +63,23 @@ class CpnpParser
 
   def components
     current_version_component_lists_node.xpath(".//component").collect do |component_node|
-      Component.create(name: component_name(component_node),
-                       shades: component_shades(component_node),
-                       notification_type: notification_type(component_node),
-                       sub_sub_category: sub_sub_category(component_node),
-                       frame_formulation: frame_formulation(component_node),
-                       exact_formulas: exact_formulas(component_node),
-                       range_formulas: range_formulas(component_node),
-                       trigger_questions: trigger_questions(component_node),
-                       cmrs: cmrs(component_node),
-                       nano_material: nano_material(component_node),
-                       physical_form: physical_form(component_node),
-                       special_applicator: special_applicator(component_node),
-                       acute_poisoning_info: acute_poisoning_info(component_node),
-                       state: "component_complete",
-                       ph: ph_answer(component_node),
-                       minimum_ph: minimum_ph(component_node) || component_ph(component_node),
-                       maximum_ph: maximum_ph(component_node) || component_ph(component_node))
+      Component.new(name: component_name(component_node),
+                    shades: component_shades(component_node),
+                    notification_type: notification_type(component_node),
+                    sub_sub_category: sub_sub_category(component_node),
+                    frame_formulation: frame_formulation(component_node),
+                    exact_formulas: exact_formulas(component_node),
+                    range_formulas: range_formulas(component_node),
+                    trigger_questions: trigger_questions(component_node),
+                    cmrs: cmrs(component_node),
+                    nano_material: nano_material(component_node),
+                    physical_form: physical_form(component_node),
+                    special_applicator: special_applicator(component_node),
+                    acute_poisoning_info: acute_poisoning_info(component_node),
+                    state: "component_complete",
+                    ph: ph_answer(component_node),
+                    minimum_ph: minimum_ph(component_node) || component_ph(component_node),
+                    maximum_ph: maximum_ph(component_node) || component_ph(component_node))
     end
   end
 
