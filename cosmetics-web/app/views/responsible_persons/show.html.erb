@@ -1,0 +1,36 @@
+<% content_for :page_title, "Responsible Person" %>
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-3">
+    <h1 class="govuk-heading-xl">Responsible person</h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-!-width-one-third" scope="row">
+            Responsible person
+          </th>
+          <td class="govuk-table__cell"><%= @responsible_person.name %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="row">Address</th>
+          <td class="govuk-table__cell">
+            <% @responsible_person.address_lines.each do |address_line| %>
+              <%= address_line %>
+              <br>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <%= render "notifications/contact_persons_list", contact_persons: @responsible_person. contact_persons %>
+  </div>
+</div>

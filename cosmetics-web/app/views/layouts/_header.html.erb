@@ -3,7 +3,7 @@
 </script>
 <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
 
-<header class="govuk-header" role="banner" data-module="header">
+<header class="govuk-header" role="banner" data-module="govuk-header">
   <div class="govuk-header__container govuk-width-container">
     <div class="govuk-header__logo">
       <a class="govuk-header__link govuk-header__link--homepage" href="/">
@@ -22,7 +22,7 @@
       <a class="govuk-header__link govuk-header__link--service-name" href="/">
         <%= @service_name %>
       </a>
-      <button class="govuk-header__menu-button js-header-toggle" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+      <button class="govuk-header__menu-button govuk-js-header-toggle" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
       <nav>
         <ul id="navigation" class="govuk-header__navigation" aria-label="Top Level Navigation">
           <% if User.current %>

@@ -15,6 +15,15 @@ RSpec.describe Component, type: :model do
     end
   end
 
+  describe "Notification Validation" do
+    context "when notification is missing" do
+      specify do
+        component = described_class.new(name: "Component X", notification: nil)
+        expect(component).to be_invalid
+      end
+    end
+  end
+
   describe "name validation" do
     context "when there is already a component with the same name for the same notification" do
       let(:component) { described_class.new(name: "Component X", notification: notification) }

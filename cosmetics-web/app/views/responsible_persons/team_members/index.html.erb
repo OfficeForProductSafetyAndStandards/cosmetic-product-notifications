@@ -1,0 +1,41 @@
+<% content_for :page_title, "Team members" %>
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Team members</h1>
+    <%= link_to "Invite a colleague", new_responsible_person_team_member_path, class: "govuk-button govuk-button", role: "button" %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Name</th>
+          <th class="govuk-table__header" scope="col">Email address</th>
+          <th class="govuk-table__header" scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @responsible_person.pending_responsible_person_users.each do |user| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">-</td>
+            <td class="govuk-table__cell"><%= user.email_address %></td>
+            <td class="govuk-table__cell">Pending</td>
+          </tr>
+        <% end %>
+        <% @responsible_person.responsible_person_users.each do |user| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= user.name %></td>
+            <td class="govuk-table__cell"><%= user.email_address %></td>
+            <td class="govuk-table__cell">-</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
