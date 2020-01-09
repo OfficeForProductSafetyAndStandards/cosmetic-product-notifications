@@ -35,6 +35,10 @@ FactoryBot.define do
       was_notified_before_eu_exit { false }
     end
 
+    trait :manual do
+      cpnp_reference { nil }
+    end
+
     trait :via_zip_file do
       state { :notification_file_imported }
       cpnp_reference { "123456789" }

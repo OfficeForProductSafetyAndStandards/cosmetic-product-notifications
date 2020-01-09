@@ -53,10 +53,25 @@ class NanomaterialBuildController < ApplicationController
 
   def finish_wizard_path
     next_nano_element = get_next_nano_element
+
     if next_nano_element.present?
       new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, @component, next_nano_element)
-    elsif @component.notification.notification_file_imported?
-      responsible_person_notification_additional_information_index_path(@component.notification.responsible_person, @component.notification)
+    elsif @component.notification.via_zip_file?
+
+      if @component.formulation_required?
+        responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
+      else
+        # This calls an :formulation_file_uploaded event on the Notification model,
+        # which sets the `state` to `draft_complete`, which is required in order to be able
+        # to submit the notification. This is consistent with the logic in the
+        # AdditionalInformationController.
+        #
+        # TODO: refactor onto the model and move away from using the `state` attribute
+        # to manage required/missing information.
+        @component.notification.formulation_file_uploaded!
+
+        edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+      end
     else
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_category)
     end
