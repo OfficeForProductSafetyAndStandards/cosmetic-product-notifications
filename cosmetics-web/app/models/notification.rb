@@ -5,6 +5,7 @@ class Notification < ApplicationRecord
   include CountriesHelper
 
   belongs_to :responsible_person
+
   has_many :components, dependent: :destroy
   has_many :image_uploads, dependent: :destroy
 

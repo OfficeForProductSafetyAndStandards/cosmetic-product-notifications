@@ -29,6 +29,7 @@ module Cosmetics
     # config.active_record.raise_in_transactional_callbacks = true
 
     config.eager_load_paths << Rails.root.join("presenters")
+    config.eager_load_paths << Rails.root.join("services")
 
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = "cosmetics-mailers"
