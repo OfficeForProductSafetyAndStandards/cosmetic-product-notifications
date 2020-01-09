@@ -40,5 +40,7 @@ module Cosmetics
 
     config.exceptions_app = self.routes
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
+
+    config.active_record.belongs_to_required_by_default = true
   end
 end
