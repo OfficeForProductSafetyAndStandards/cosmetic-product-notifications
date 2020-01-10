@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe NanoElement, type: :model do
-  subject(:nano_element) { described_class.new }
+  subject(:nano_element) { build(:nano_element) }
 
   describe "#attributes" do
     it "confirms purposes" do

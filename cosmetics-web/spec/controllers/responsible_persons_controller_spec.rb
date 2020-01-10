@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ResponsiblePersonsController, type: :controller do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)

@@ -33,14 +33,14 @@ RSpec.describe LandingPageController, type: :controller do
 
   describe "When signed in as a Responsible Person user" do
     let(:user) { build(:user) }
-    let(:responsible_person_1) { create(:responsible_person) }
-    let(:responsible_person_2) { create(:responsible_person) }
+    let(:responsible_person_1) { create(:responsible_person, :with_a_contact_person) }
+    let(:responsible_person_2) { create(:responsible_person, :with_a_contact_person) }
 
     before do
       responsible_person_1.add_user(user)
       responsible_person_2.add_user(user)
 
-      sign_in_as_member_of_responsible_person(create(:responsible_person), user)
+      sign_in_as_member_of_responsible_person(create(:responsible_person, :with_a_contact_person), user)
     end
 
     after do

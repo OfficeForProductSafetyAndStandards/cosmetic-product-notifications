@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe "Create a responsible person", type: :system do
   let(:user) { create(:user) }
-  let(:responsible_person) { create(:responsible_person) }
-  let(:business_responsible_person) { create(:business_responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+  let(:business_responsible_person) { create(:business_responsible_person, :with_a_contact_person) }
 
   before do
     configure_requests_for_submit_domain

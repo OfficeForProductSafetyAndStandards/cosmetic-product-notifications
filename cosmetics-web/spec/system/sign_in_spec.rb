@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "After signing in", type: :system do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
   after do
     sign_out

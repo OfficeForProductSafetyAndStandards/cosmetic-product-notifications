@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
-  let(:responsible_person) { create(:responsible_person, :with_no_contact_person) }
+  let(:responsible_person) { create(:responsible_person) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)

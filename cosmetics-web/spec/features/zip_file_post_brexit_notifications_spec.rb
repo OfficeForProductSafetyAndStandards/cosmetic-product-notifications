@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
-  let(:responsible_person) { create(:responsible_person_with_user) }
+  let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)

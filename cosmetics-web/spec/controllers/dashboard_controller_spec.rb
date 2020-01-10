@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe DashboardController, type: :controller do
   describe "When signed in as a Responsible Person user" do
-    let(:responsible_person) { create(:responsible_person) }
+    let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
     before do
       sign_in_as_member_of_responsible_person(responsible_person)

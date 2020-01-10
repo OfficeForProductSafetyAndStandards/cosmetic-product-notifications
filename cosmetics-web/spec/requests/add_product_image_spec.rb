@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Add product image page", type: :request do
   include RSpecHtmlMatchers
 
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
