@@ -10,13 +10,13 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
   scenario "Using a zip file, pre-Brexit, frame formulation, single item, no nanomaterials" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
-    expect_to_be_on_was_eu_notified_about_products_page
+    expect_to_be_on__was_eu_notified_about_products_page
     answer_was_eu_notified_with "Yes"
 
-    expect_to_be_on_do_you_have_the_zip_files_page
+    expect_to_be_on__do_you_have_the_zip_files_page
     answer_do_you_have_zip_files_with "Yes"
 
-    expect_to_be_on_upload_eu_notification_files_page
+    expect_to_be_on__upload_eu_notification_files_page
     upload_zip_file "testExportFile.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -24,7 +24,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_incomplete_notification_with_eu_reference_number "1000094"
     click_link "Confirm and notify"
 
-    expect_to_be_on_check_your_answers_page(product_name: "CTPA moisture conditioner")
+    expect_to_be_on__check_your_answers_page(product_name: "CTPA moisture conditioner")
     expect_check_your_answers_page_to_contain(
       product_name: "CTPA moisture conditioner",
       imported: "Manufactured in EU before Brexit",
@@ -40,20 +40,20 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     )
     click_button "Accept and submit the cosmetic product notification"
 
-    expect_to_be_on_your_cosmetic_products_page
+    expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "CTPA moisture conditioner notification submitted"
   end
 
   scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with ingredients specied as ranges" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
-    expect_to_be_on_was_eu_notified_about_products_page
+    expect_to_be_on__was_eu_notified_about_products_page
     answer_was_eu_notified_with "Yes"
 
-    expect_to_be_on_do_you_have_the_zip_files_page
+    expect_to_be_on__do_you_have_the_zip_files_page
     answer_do_you_have_zip_files_with "Yes"
 
-    expect_to_be_on_upload_eu_notification_files_page
+    expect_to_be_on__upload_eu_notification_files_page
     upload_zip_file "testNotificationUsingRanges.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -61,7 +61,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_incomplete_notification_with_eu_reference_number "1005901"
     click_link "Confirm and notify"
 
-    expect_to_be_on_check_your_answers_page(product_name: "SkinSoft skin whitener")
+    expect_to_be_on__check_your_answers_page(product_name: "SkinSoft skin whitener")
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft skin whitener",
       imported: "Yes",
@@ -79,20 +79,20 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     )
     click_button "Accept and submit the cosmetic product notification"
 
-    expect_to_be_on_your_cosmetic_products_page
+    expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft skin whitener notification submitted"
   end
 
   scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with missing formulation document" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
-    expect_to_be_on_was_eu_notified_about_products_page
+    expect_to_be_on__was_eu_notified_about_products_page
     answer_was_eu_notified_with "Yes"
 
-    expect_to_be_on_do_you_have_the_zip_files_page
+    expect_to_be_on__do_you_have_the_zip_files_page
     answer_do_you_have_zip_files_with "Yes"
 
-    expect_to_be_on_upload_eu_notification_files_page
+    expect_to_be_on__upload_eu_notification_files_page
     upload_zip_file "testMissingFormulationDocument.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -100,10 +100,10 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_incomplete_notification_with_eu_reference_number "10000098"
     click_link "Add missing information"
 
-    expect_to_be_on_upload_formulation_document_page
+    expect_to_be_on__upload_formulation_document_page
     upload_formulation_file
 
-    expect_to_be_on_check_your_answers_page(product_name: "Beautify Facial Night Cream")
+    expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
     expect_check_your_answers_page_to_contain(
       product_name: "Beautify Facial Night Cream",
       imported: "Manufactured in EU before Brexit",
@@ -121,20 +121,20 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     )
     click_button "Accept and submit the cosmetic product notification"
 
-    expect_to_be_on_your_cosmetic_products_page
+    expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Beautify Facial Night Cream notification submitted"
   end
 
   scenario "Using a zip file, pre-Brexit, single item, containing nanomaterials, with missing formulation document" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
-    expect_to_be_on_was_eu_notified_about_products_page
+    expect_to_be_on__was_eu_notified_about_products_page
     answer_was_eu_notified_with "Yes"
 
-    expect_to_be_on_do_you_have_the_zip_files_page
+    expect_to_be_on__do_you_have_the_zip_files_page
     answer_do_you_have_zip_files_with "Yes"
 
-    expect_to_be_on_upload_eu_notification_files_page
+    expect_to_be_on__upload_eu_notification_files_page
     upload_zip_file "testNanomaterialAndMissingFormulation.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -142,19 +142,19 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_incomplete_notification_with_eu_reference_number "1006034"
     click_link "Add missing information"
 
-    expect_to_be_on_what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
-    expect_to_be_on_is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
-    expect_to_be_on_does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
-    expect_to_be_on_upload_formulation_document_page
+    expect_to_be_on__upload_formulation_document_page
     upload_formulation_file
 
-    expect_to_be_on_check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
+    expect_to_be_on__check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft shocking green hair dye",
       imported: "Yes",
@@ -174,7 +174,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     # puts page.html
     click_button "Accept and submit the cosmetic product notification"
 
-    expect_to_be_on_your_cosmetic_products_page
+    expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft shocking green hair dye"
   end
 end
