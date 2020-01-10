@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivirus, type: :controller do
   let(:user) { build(:user) }
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:predefined_component) { create(:component) }
   let(:ranges_component) { create(:ranges_component) }
 

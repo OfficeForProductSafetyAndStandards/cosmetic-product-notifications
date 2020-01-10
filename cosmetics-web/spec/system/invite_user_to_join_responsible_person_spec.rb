@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Invite a user to join a responsible person", type: :system do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:user) { create(:user) }
 
   before do

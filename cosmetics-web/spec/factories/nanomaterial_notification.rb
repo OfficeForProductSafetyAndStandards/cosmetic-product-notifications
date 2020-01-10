@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :nanomaterial_notification do
+    responsible_person
     name { "Zinc oxide" }
     user_id { "123-456-abc" }
 

@@ -5,10 +5,9 @@ FactoryBot.define do
     address_line_1 { "Street address" }
     city { "City" }
     postal_code { "AB12 3CD" }
-    contact_persons { [create(:contact_person)] }
 
-    trait :with_no_contact_person do
-      contact_persons { [] }
+    trait :with_a_contact_person do
+      contact_persons { [create(:contact_person)] }
     end
 
     factory :business_responsible_person do

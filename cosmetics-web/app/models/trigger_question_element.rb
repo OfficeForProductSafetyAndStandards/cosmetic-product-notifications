@@ -1,5 +1,6 @@
 class TriggerQuestionElement < ApplicationRecord
-  belongs_to :trigger_question
+  # TODO: make this non-optional after refactoring CpnpParser
+  belongs_to :trigger_question, optional: true
 
   validates :answer, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, if: -> { question_is_applicable? && self.ph? }
   validates :answer, presence: true, if: -> { question_is_applicable? && answer_is_single_value? }

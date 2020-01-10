@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Poison Centre user", type: :system do
-  let(:responsible_person_1) { create(:responsible_person) }
-  let(:responsible_person_2) { create(:responsible_person) }
+  let(:responsible_person_1) { create(:responsible_person, :with_a_contact_person) }
+  let(:responsible_person_2) { create(:responsible_person, :with_a_contact_person) }
 
   let!(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
   let!(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }

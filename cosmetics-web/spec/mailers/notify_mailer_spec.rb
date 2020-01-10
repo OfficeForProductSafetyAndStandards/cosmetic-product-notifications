@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe NotifyMailer, type: :mailer do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:contact_person) { responsible_person.contact_persons.first }
 
   let(:user_name) { "Test User" }

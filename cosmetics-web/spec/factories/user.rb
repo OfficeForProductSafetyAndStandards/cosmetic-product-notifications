@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :user do
+    organisation
     transient do
       first_login { false }
     end

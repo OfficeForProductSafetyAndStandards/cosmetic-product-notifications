@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe PoisonCentres::NotificationsController, type: :controller do
-  let(:responsible_person_1) { create(:responsible_person) }
-  let(:responsible_person_2) { create(:responsible_person) }
+  let(:responsible_person_1) { create(:responsible_person, :with_a_contact_person) }
+  let(:responsible_person_2) { create(:responsible_person, :with_a_contact_person) }
 
   let(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
   let(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
@@ -107,7 +107,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
       describe "displayed information" do
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions) }
-        let(:responsible_person) { create(:responsible_person) }
+        let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
         let(:notification) { create(:notification, :imported, :registered, :ph_values, components: [component], responsible_person: responsible_person) }
 
         render_views
