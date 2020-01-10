@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe NanomaterialNotification, type: :model do
+  let(:responsible_person) { create(:responsible_person) }
+
   describe "validations" do
     describe "name" do
       context "when not setting a name" do
@@ -16,7 +18,7 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
 
       context "when setting a name" do
-        let(:nanomaterial_notification) { described_class.new(name: "Test name") }
+        let(:nanomaterial_notification) { described_class.new(name: "Test name", responsible_person: responsible_person) }
 
         it "is valid" do
           expect(nanomaterial_notification.valid?(:add_name)).to be true
@@ -55,11 +57,11 @@ RSpec.describe NanomaterialNotification, type: :model do
 
       context "when the EU was notified and a pre-Brexit date is set" do
         let(:nanomaterial_notification) do
-          described_class.new(eu_notified: true, notified_to_eu_on: Date.parse("2020-01-20"))
+          described_class.new(responsible_person: responsible_person, eu_notified: true, notified_to_eu_on: Date.parse("2020-01-20"))
         end
 
         it "is valid" do
-          expect(nanomaterial_notification.valid?(:eu_notification)).to be(true), nanomaterial_notification.errors.full_messages.to_s
+          expect(nanomaterial_notification.valid?(:eu_notification)).to be(true), nanomaterial_notification.errors.inspect
         end
       end
 
@@ -79,7 +81,7 @@ RSpec.describe NanomaterialNotification, type: :model do
 
       context "when the EU was not notified and no date is set" do
         let(:nanomaterial_notification) do
-          described_class.new(eu_notified: false, notified_to_eu_on: nil)
+          described_class.new(eu_notified: false, notified_to_eu_on: nil, responsible_person: responsible_person)
         end
 
         it "is valid" do

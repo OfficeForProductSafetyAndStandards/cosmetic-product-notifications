@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "Nanomaterial notifications", type: :request do
   include RSpecHtmlMatchers
 
-  let(:responsible_person) { create(:responsible_person) }
-  let(:other_company) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+  let(:other_company) { create(:responsible_person, :with_a_contact_person) }
 
   let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
 

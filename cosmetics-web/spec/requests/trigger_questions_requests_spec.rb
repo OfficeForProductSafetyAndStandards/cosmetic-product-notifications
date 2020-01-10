@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Trigger questions", type: :request do
   include RSpecHtmlMatchers
 
-  let!(:responsible_person) { create(:responsible_person) }
+  let!(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let!(:notification) { create(:notification, responsible_person: responsible_person) }
   let(:component) { create(:predefined_component, notification: notification) }
 

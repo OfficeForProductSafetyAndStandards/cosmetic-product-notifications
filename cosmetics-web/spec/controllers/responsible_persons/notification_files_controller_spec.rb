@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ResponsiblePersons::NotificationFilesController, type: :controller do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:valid_attributes) {
     [fixture_file_upload("testExportFile.zip")]
   }

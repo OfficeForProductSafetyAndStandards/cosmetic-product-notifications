@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ComponentBuildController, type: :controller do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:component) { create(:component, notification_type: component_type) }
   let(:notification) { create(:notification, components: [component], responsible_person: responsible_person) }
   let(:pre_eu_exit_notification) { create(:notification, :pre_brexit, components: [component], responsible_person: responsible_person) }

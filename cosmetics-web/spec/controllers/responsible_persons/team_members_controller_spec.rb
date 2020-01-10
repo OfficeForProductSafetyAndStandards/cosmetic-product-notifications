@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ResponsiblePersons::TeamMembersController, type: :controller do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:user) { create(:user) }
   let(:email_address) { "user@example.com" }
   let(:pending_responsible_person_user) { create(:pending_responsible_person_user, responsible_person: responsible_person) }

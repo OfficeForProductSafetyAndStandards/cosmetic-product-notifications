@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Manually enter product details", type: :system do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
   before do
     mock_antivirus_api
