@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :notification do
+    responsible_person
     sequence(:product_name) { |n| "Product #{n}" }
 
     factory :draft_notification do
