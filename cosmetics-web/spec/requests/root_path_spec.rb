@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
-  let(:responsible_person) { create(:responsible_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+  let(:responsible_person_with_no_contact_person) { create(:responsible_person) }
   let(:user) { create(:user) }
   let(:user_who_hasnt_accepted_declaration) { create(:user, first_login: true) }
 
@@ -43,6 +44,18 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
 
       it "redirects to the declaration page" do
         expect(response).to redirect_to("/declaration")
+      end
+    end
+
+    context "when signed in as a user associated with a Responsible Person account that doesn’t have a contact person" do
+      before do
+        responsible_person_with_no_contact_person.add_user(user)
+        sign_in as_user: user
+        get "/"
+      end
+
+      it "redirects to a page prompting user to add a contact person" do
+        expect(response).to redirect_to("/responsible_persons/#{responsible_person_with_no_contact_person.id}/contact_persons/new")
       end
     end
 
