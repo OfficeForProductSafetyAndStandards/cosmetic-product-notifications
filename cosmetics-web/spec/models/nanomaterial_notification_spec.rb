@@ -243,7 +243,7 @@ RSpec.describe NanomaterialNotification, type: :model do
     end
   end
 
-  describe "#submittable?" do
+  describe "#submittable?", :with_stubbed_antivirus do
     context "when all required questions have been answered" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable) }
 

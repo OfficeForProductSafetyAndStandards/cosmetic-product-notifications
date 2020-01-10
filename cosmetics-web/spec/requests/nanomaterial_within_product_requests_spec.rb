@@ -50,7 +50,7 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
       end
 
       it "redirects to the Upload formulation page" do
-        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/build/upload_formulation")
+        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/formulation/new")
       end
     end
 

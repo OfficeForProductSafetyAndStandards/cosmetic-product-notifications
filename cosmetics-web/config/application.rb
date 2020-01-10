@@ -42,5 +42,6 @@ module Cosmetics
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
 
     config.active_record.belongs_to_required_by_default = true
+    config.antivirus_url = ENV.fetch("ANTIVIRUS_URL", "http://localhost:3006/safe")
   end
 end

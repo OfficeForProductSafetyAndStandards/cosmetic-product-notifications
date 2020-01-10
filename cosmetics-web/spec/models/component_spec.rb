@@ -72,7 +72,7 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "formulation_required" do
+  describe "formulation_required", :with_stubbed_antivirus do
     it "returns false for predefined formulation even if no file attached" do
       expect(predefined_component.formulation_required?).to be false
     end

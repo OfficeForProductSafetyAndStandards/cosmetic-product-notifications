@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe FormulationUploadController, type: :controller do
+RSpec.describe FormulationUploadController, :with_stubbed_antivirus, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
   let(:component) { create(:component, notification: notification) }
