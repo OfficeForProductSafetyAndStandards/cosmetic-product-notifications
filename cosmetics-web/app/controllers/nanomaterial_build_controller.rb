@@ -59,7 +59,7 @@ class NanomaterialBuildController < ApplicationController
     elsif @component.notification.via_zip_file?
 
       if @component.formulation_required?
-        responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
+        new_responsible_person_notification_component_formulation_path(@component.notification.responsible_person, @component.notification, @component)
       else
         # This calls an :formulation_file_uploaded event on the Notification model,
         # which sets the `state` to `draft_complete`, which is required in order to be able

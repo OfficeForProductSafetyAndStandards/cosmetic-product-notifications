@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersons::TeamMembersController, type: :controller do
+RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:user) { create(:user) }
   let(:email_address) { "user@example.com" }

@@ -40,7 +40,7 @@ RSpec.describe Notification, type: :model do
   end
 
   describe "#images_required_and_missing?" do
-    context "when notifiying pre EU exit" do
+    context "when notifiying pre EU exit", :with_stubbed_antivirus do
       let(:notification) { build(:draft_notification, :pre_brexit) }
 
       it "does not require images" do
@@ -48,7 +48,7 @@ RSpec.describe Notification, type: :model do
       end
     end
 
-    context "when notifiying post EU exit with no images uploaded yet" do
+    context "when notifiying post EU exit with no images uploaded yet", :with_stubbed_antivirus do
       let(:notification) { build(:draft_notification, :post_brexit) }
 
       it "requires images" do
@@ -56,7 +56,7 @@ RSpec.describe Notification, type: :model do
       end
     end
 
-    context "when notifiying post EU exit with 1 image uploaded but not virus-scanned" do
+    context "when notifiying post EU exit with 1 image uploaded but not virus-scanned", :with_stubbed_antivirus_returning_false do
       let(:notification) { create(:draft_notification, :post_brexit) }
 
       before do
@@ -68,7 +68,7 @@ RSpec.describe Notification, type: :model do
       end
     end
 
-    context "when notifiying post EU exit with 1 image uploaded and virus-scanned" do
+    context "when notifiying post EU exit with 1 image uploaded and virus-scanned", :with_stubbed_antivirus do
       let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned) }
       let(:notification) { build(:draft_notification, :post_brexit, image_uploads: [image_upload]) }
 
@@ -120,7 +120,7 @@ RSpec.describe Notification, type: :model do
     end
   end
 
-  describe "#may_submit_notification?" do
+  describe "#may_submit_notification?", :with_stubbed_antivirus do
     let(:nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w(other)) }
     let(:nano_material) { build(:nano_material, nano_elements: [nano_element]) }
     let(:component) { build(:component, nano_material: nano_material) }

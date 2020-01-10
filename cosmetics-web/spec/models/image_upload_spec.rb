@@ -12,7 +12,7 @@ RSpec.describe ImageUpload, type: :model do
     allow(described_class).to receive(:max_file_size).and_call_original
   end
 
-  describe "image validation" do
+  describe "image validation", :with_stubbed_antivirus do
     it "adds an error if the file is above the allowed filesize" do
       image_upload.file.attach(file)
       image_upload.save

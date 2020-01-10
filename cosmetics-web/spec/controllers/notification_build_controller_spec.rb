@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NotificationBuildController, type: :controller do
+RSpec.describe NotificationBuildController, :with_stubbed_antivirus, type: :controller do
   let(:responsible_person) { create(:responsible_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
   let(:pre_eu_exit_notification) { create(:notification, :pre_brexit, responsible_person: responsible_person) }
