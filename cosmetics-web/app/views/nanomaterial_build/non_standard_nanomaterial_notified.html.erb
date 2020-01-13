@@ -1,0 +1,24 @@
+<% title = "Have you submitted a notification about #{@nano_element.inci_name} in the UK since Brexit?" %>
+<% question = title %>
+<% items = [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }, { text: "Not sure", value: "not sure" }] %>
+
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<%= form_with(model: @nano_element, url: wizard_path, method: :put) do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= render "form_components/govuk_radios",
+        form: form,
+          key: :confirm_toxicology_notified,
+            fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              items: items %>
+      <%= form.submit "Continue", class: "govuk-button" %>
+
+    </div>
+  </div>
+<% end %>

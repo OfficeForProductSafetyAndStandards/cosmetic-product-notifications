@@ -1,0 +1,31 @@
+<% content_for :page_title, "Search cosmetic products" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Search cosmetic products</h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter govuk-!-margin-bottom-2">
+    <%= form_with(method: :get) do |form| %>
+      <div class="search-box">
+        <%= form.label :q, "Keywords", class: "govuk-label--s" %>
+        <%= form.text_field :q, class: "govuk-input", value: params[:q] %>
+        <%= form.submit "Search", name: nil, class: "search-box--submit" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render "results", results: @notifications %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full pagination-links">
+    <%= will_paginate @notifications %>
+  </div>
+</div>
+

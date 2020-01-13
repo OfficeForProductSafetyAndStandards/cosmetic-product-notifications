@@ -1,0 +1,42 @@
+<% content_for :page_title, "Product details" %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: poison_centre_notifications_path %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= @notification.product_name %></h1>
+    <h2 class="govuk-heading-m"><%= @notification.responsible_person.name %></h2>
+    <h3 class="govuk-heading-s govuk-!-font-weight-regular">
+      <% if @notification.components&.first&.sub_sub_category&.present? %>
+        <%= full_category_display_name(@notification.components.first) %>
+      <% end %>
+    </h3>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third product-images">
+    <% @notification.image_uploads.each do |image| %>
+      <% if image.marked_as_safe? %>
+        <% if image.file.variable? %>
+          <%= link_to image_tag(image.file.variant(resize: "450x450")), url_for(image.file) %>
+        <% elsif image.file.previewable? %>
+          <%= link_to image_tag(image.file.preview(resize: "450x450")), url_for(image.file) %>
+        <% else %>
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Product image</h2>
+          <%= link_to image.filename, url_for(image.file), class: "govuk-body-m" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <%= render "poison_centres/notifications/poison_centre_trigger_rule_formulation", notification: @notification %>
+    <%= render "notifications/ingredient_details", notification: @notification %>
+    <%= render "notifications/frame_formulation_details", notification: @notification %>
+    <%= render "notifications/substances_details", notification: @notification %>
+    <%= render "notifications/responsible_person_details", responsible_person: @notification.responsible_person %>
+    <%= render "notifications/contact_person_overview", contact_person: @notification.responsible_person.contact_persons.first %>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<% if entities_list.blank? %>
+  None
+<% elsif entities_list.count == 1 %>
+  <% if local_assigns[:key_name].present? && local_assigns[:value_name].present? %>
+    <div class="entity-list">
+      <dl>
+        <dt><%= entities_list.first[key_name] %></dt>
+        <dd><%= entities_list.first[value_name] %></dd>
+      </dl>
+    </div>
+  <% else %>
+    <%= entities_list.first %>
+  <% end %>
+<% else %>
+  <ul class="govuk-list govuk-list--bullet entity-list">
+    <% entities_list.each do |entity| %>
+      <% if local_assigns[:key_name].present? && local_assigns[:value_name].present? %>
+        <li>
+          <dl>
+            <dt><%= entity[key_name] %></dt>
+            <dd><%= entity[value_name] %></dd>
+          </dl>
+
+        </li>
+      <% else %>
+        <li class="govuk-table__cell--numeric"><%= entity %></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+
+

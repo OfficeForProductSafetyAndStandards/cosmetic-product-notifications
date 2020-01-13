@@ -1,0 +1,16 @@
+<% content_for :page_title, "Product details" %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: poison_centre_notifications_path %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= @notification.product_name %></h1>
+
+    <%= render "notifications/responsible_person_details", responsible_person: @notification.responsible_person %>
+    <%= render "notifications/contact_person_overview", contact_person: @contact_person %>
+    <%= render "notifications/product_details", notification: @notification, allow_edits: false %>
+  </div>
+</div>
+
+

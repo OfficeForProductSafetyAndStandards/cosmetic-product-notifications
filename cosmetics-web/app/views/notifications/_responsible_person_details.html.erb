@@ -1,0 +1,19 @@
+<% responsible_person = local_assigns[:responsible_person] %>
+
+<table class="govuk-table check-your-answers-table" id="responsible-person-table">
+  <caption class="govuk-table__caption govuk-heading-m">Responsible person</caption>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header govuk-!-width-one-third" scope="row">Name</th>
+      <td class="govuk-table__cell"><%= responsible_person.name %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="row">Address</th>
+      <td class="govuk-table__cell">
+        <% responsible_person.address_lines.each do |address_line| %>
+          <%= address_line %><br>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,9 @@
+<% if results.present? %>
+  <ul class="product-list govuk-!-margin-bottom-0">
+    <% results.each do |notification| %>
+      <%= render "registered_product", notification: notification %>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="govuk-!-font-weight-bold">No results found.</p>
+<% end %>

@@ -1,0 +1,24 @@
+<% title = "Select nanomaterial purpose" %>
+<% question = "What is the purpose of #{@nano_element.inci_name}?" %>
+<% items = get_nanomaterial_purpose_options.map { |purpose, label|
+    { key: purpose, text: label, checked: @nano_element.purposes&.include?(purpose) }
+  } %>
+
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<%= form_with(model: @nano_element, url: wizard_path, method: :put) do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= render "form_components/govuk_checkboxes", form: form, key: :purposes,
+              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              items: items %>
+      <%= form.submit "Continue", class: "govuk-button" %>
+
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,23 @@
+<h2 class="govuk-heading-l poison-centre__table-heading">Substances</h2>
+
+<% notification.components.each do |component| %>
+  <table class="govuk-table">
+    <% if component.name.present? %>
+      <caption class="govuk-table__caption govuk-heading-m"><%= component.name %></caption>
+    <% end %>
+
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header govuk-!-width-one-half" scope="row">CMR</th>
+      <td class="govuk-table__cell" id="cmr-names">
+        <%= render "none_or_bullet_list", entities_list: component.cmrs.map(&:display_name) %>
+      </td>
+    </tr>
+
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header govuk-!-width-one-half" scope="row">Nanomaterials</th>
+      <td class="govuk-table__cell">
+        <%= render "none_or_bullet_list", entities_list: component.nano_material&.nano_elements&.map(&:display_name) %>
+      </td>
+    </tr>
+  </table>
+<% end %>
