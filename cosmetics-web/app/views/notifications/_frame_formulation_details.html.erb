@@ -1,0 +1,14 @@
+<h2 class="govuk-heading-m">Frame formulations</h2>
+
+<table class="govuk-table">
+  <% notification.components.each do |component| %>
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header govuk-!-width-one-half" scope="row">
+        <%= component.name %>
+      </th>
+      <td class="govuk-table__cell">
+        <%= get_frame_formulation_name(component.frame_formulation) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
