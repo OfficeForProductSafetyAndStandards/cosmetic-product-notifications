@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
 
 private
 
+  # foo bar
   def authorize_user!
     return unless user_signed_in?
 
