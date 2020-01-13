@@ -30,7 +30,7 @@
       <%= render "form_components/govuk_radios", form: form, key: :confirm_restrictions,
               fieldset: { legend: { html: legend_html } },
               items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }] %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
     </div>
   </div>
 <% end %>

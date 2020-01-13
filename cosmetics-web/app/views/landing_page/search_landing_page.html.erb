@@ -9,7 +9,7 @@
           Search for cosmetic products
         </h1>
         <p class="masthead-account-links govuk-!-padding-top-2 govuk-!-margin-bottom-5">
-          <%= link_to "Sign in", keycloak_login_url(dashboard_path), class: "govuk-button govuk-!-font-weight-bold", role: "button", draggable: "false" %>
+          <%= govukButton text: "Sign in", href: keycloak_login_url(dashboard_path) %>
         </p>
       </div>
     </div>

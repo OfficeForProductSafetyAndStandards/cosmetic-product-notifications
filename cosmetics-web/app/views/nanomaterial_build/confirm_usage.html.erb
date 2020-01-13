@@ -14,7 +14,7 @@
       <%= render "form_components/govuk_radios", form: form, key: :confirm_usage,
               fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
               items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }] %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
     </div>
   </div>
 <% end %>
