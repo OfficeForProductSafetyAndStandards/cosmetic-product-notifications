@@ -1,0 +1,13 @@
+<% entities_list.each do |entity| %>
+  <% if local_assigns[:key_name].present? && local_assigns[:value_name].present? %>
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header govuk-!-width-one-half" scope="row">
+        <%= entity[key_name] %>
+      </th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+        <%= display_concentration(entity[value_name]) %>
+      </td>
+    </tr>
+  <% end %>
+<% end %>
+
