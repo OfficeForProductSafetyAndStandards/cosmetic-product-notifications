@@ -1,0 +1,14 @@
+<% title = "You cannot notify this product until you have notified #{@nano_element.inci_name}" %>
+
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <p>Read <%= link_to "how to notify nanomaterials", how_to_notify_nanomaterials_path %>.</p>
+  </div>
+</div>

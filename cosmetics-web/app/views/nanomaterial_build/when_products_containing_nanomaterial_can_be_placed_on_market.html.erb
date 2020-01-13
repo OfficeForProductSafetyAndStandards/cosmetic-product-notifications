@@ -1,0 +1,25 @@
+<% title = "When you can place products containing #{@nano_element.inci_name} on the market" %>
+
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <p>The date depends on whether or not you notified the nanomaterial using CPNP before October 31, 2019 (Brexit).</p>
+
+    <p>If you notified <%= @nano_element.inci_name %> using CPNP before October 31 2019 (Brexit), and notified it in the UK before 29 January 2020 you must wait 7 months from the original EU notification before you can place products containing <%= @nano_element.inci_name %> on the market.</p>
+
+    <p>If you didn’t notify <%= @nano_element.inci_name %> using CPNP before Brexit you must wait 6 months from the date you notified it in the UK before you can place products containing <%= @nano_element.inci_name %> on the market.</p>
+
+    <%= form_with model: @nano_element, url: wizard_path, method: :put do |form| %>
+      <%= form.submit "Continue", class: "govuk-button" %>
+    <% end %>
+
+
+  </div>
+</div>
