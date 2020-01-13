@@ -1,0 +1,25 @@
+<% elements = trigger_question.trigger_question_elements %>
+<tr class="govuk-table__row trigger-question">
+  <% if trigger_question.applicable? || display_not_applicable %>
+    <th class="govuk-table__header" scope="row">
+      <%= get_trigger_rules_short_question_name(trigger_question.question) %>
+    </th>
+
+    <% if elements.count == 1 %>
+      <% if %w[incivalue value propanol ethanol concentration].include?(elements.first.element) %>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+          <%= display_concentration(elements.first.answer) %>
+        </td>
+      <% else %>
+        <td class="govuk-table__cell"><%= format_trigger_question_answers(elements.first.answer) %></td>
+      <% end %>
+    <% else %>
+      <td class="govuk-table__cell">
+        <%= render "none_or_bullet_list",
+                entities_list: format_trigger_question_elements(elements),
+                key_name: :inci_name,
+                value_name: :quantity %>
+      </td>
+    <% end %>
+  <% end %>
+</tr>
