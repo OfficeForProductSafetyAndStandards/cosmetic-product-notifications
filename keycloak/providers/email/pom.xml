@@ -16,7 +16,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <keycloak.version>4.8.3.Final</keycloak.version>
-        <notify.version>3.14.2-RELEASE</notify.version>
+        <notify.version>3.15.1-RELEASE</notify.version>
         <slf4j.version>1.7.26</slf4j.version>
     </properties>
 
