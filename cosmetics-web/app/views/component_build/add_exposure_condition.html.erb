@@ -17,7 +17,7 @@
         <%= render "form_components/govuk_radios", form: nano_material_form, key: :exposure_condition,
                 fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
                 items: items %>
-        <%= form.submit "Continue", class: "govuk-button" %>
+        <%= govukButton text: "Continue" %>
 
       </div>
     </div>

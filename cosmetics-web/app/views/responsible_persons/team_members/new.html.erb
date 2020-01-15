@@ -19,7 +19,7 @@
       <%= render "form_components/govuk_input", form: form, key: :email_address, type: :email_field, label: { text: "Email address" } %>
 
       <div class="govuk-form-group">
-        <%= form.submit "Send invitation", class: "govuk-button" %>
+        <%= govukButton text: "Send invitation" %>
       </div>
     </div>
   </div>

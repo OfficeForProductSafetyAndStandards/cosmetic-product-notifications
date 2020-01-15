@@ -8,7 +8,6 @@
     <p>
       <%= link_to "Read about the legal obligations of a Responsible Person", 'https://www.gov.uk/government/publications/uk-product-safety-and-metrology-guidance-in-a-no-deal-scenario', class: "govuk-link" %>
     </p>
-
-    <%= link_to "Continue", next_wizard_path, class: "govuk-button", role: "button" %>
+    <%= govukButton text: "Continue", href: next_wizard_path %>
   </div>
 </div>

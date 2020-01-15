@@ -14,7 +14,7 @@
 
       <%= render "form_components/govuk_input", form: form, key: :name, label: { text: page_title, isPageHeading: "true", classes: "govuk-label--xl" }  %>
 
-      <button type="submit" class="govuk-button">Continue</button>
+      <%= govukButton text: "Continue" %>
     <% end %>
 
   </div>

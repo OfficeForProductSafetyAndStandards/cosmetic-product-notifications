@@ -27,7 +27,7 @@
       <%= render "form_components/govuk_input", form: form, key: :postal_code, label: { text: "Postcode" }, classes: "govuk-input--width-10" %>
 
       <div class="govuk-form-group">
-        <%= form.submit "Continue", class: "govuk-button" %>
+        <%= govukButton text: "Continue" %>
       </div>
     </div>
   </div>
