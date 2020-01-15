@@ -1,0 +1,14 @@
+<% title = "You cannot submit notifications with this account" %>
+
+<% content_for :page_title, title %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <p>The login details you provided tell us that you work for the National Poisons Information Service, but you’ve tried to access the service which cosmetic companies use to submit product information.</p>
+
+    <p>To search product notifications, you need to sign in to the <%= link_to "cosmetic product information service", search_domain_url, class: "govuk-link govuk-link--no-visited-state" %>.</p>
+  </div>
+</div>
+

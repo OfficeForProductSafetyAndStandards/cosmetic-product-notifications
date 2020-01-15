@@ -6,7 +6,7 @@
   <%= form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification), method: :post do |form| %>
 
     <div class="govuk-form-group">
-      <%= form.submit "Accept and submit the cosmetic product notification", class: "govuk-button" %>
+      <%= govukButton text: "Accept and submit the cosmetic product notification" %>
     </div>
   <% end %>
 
