@@ -16,7 +16,7 @@
       <%= render "form_components/govuk_radios", form: form, key: :physical_form,
               fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
               items: items %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
 
     </div>
   </div>

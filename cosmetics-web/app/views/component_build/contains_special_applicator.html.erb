@@ -14,7 +14,7 @@
             items: [{ text: "A typical non-pressurised bottle, jar, sachet or other package", value: :no },
                     { text: "A pressurised container, an impregnated sponge, " \
                     + "wipe, patch or pad, or is encapsulated", value: :yes }] %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
     </div>
   </div>
 <% end %>

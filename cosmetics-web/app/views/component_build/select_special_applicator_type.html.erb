@@ -25,7 +25,7 @@
       <%= render "form_components/govuk_radios", form: form, key: :special_applicator,
             fieldset: { legend: { text: title, classes: "govuk-label--xl", isPageHeading: true } },
             items: items %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
 
     </div>
   </div>
