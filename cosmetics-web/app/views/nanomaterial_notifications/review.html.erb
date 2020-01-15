@@ -86,7 +86,7 @@
 
       <%= form_for @nanomaterial_notification, url: submission_nanomaterial_path(@nanomaterial_notification) do |form| %>
 
-        <button type="submit" class="govuk-button">Accept and send</button>
+        <%= govukButton text: "Accept and send" %>
       <% end %>
 
       <p class="govuk-body"><%= link_to "Cancel and return to Nanomaterials", responsible_person_nanomaterials_path(@responsible_person), class: "govuk-link" %></p>

@@ -17,7 +17,7 @@
     <p>If you didn’t notify <%= @nano_element.inci_name %> using CPNP before Brexit you must wait 6 months from the date you notified it in the UK before you can place products containing <%= @nano_element.inci_name %> on the market.</p>
 
     <%= form_with model: @nano_element, url: wizard_path, method: :put do |form| %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
     <% end %>
 
 
