@@ -22,21 +22,6 @@ jobs:
         gem install rubocop-rspec -v 1.36
         gem install rubocop-govuk -v 1.0
         rubocop
-  slim:
-    name: "Slim templates"
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Set up Ruby
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 2.5.x
-    - name: Run linter
-      run: |
-        cd cosmetics-web
-        gem install slim_lint -v 0.17.0
-        slim-lint app
   front_end:
     name: "Sass and Javascript"
     runs-on: ubuntu-latest
