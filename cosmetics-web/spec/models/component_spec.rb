@@ -40,6 +40,11 @@ RSpec.describe Component, type: :model do
         component.valid?
         expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
       end
+
+      it "is valid when :skip_uniqueness_on_import is set to true" do
+        component.skip_name_uniqueness_on_import = true
+        expect(component).to be_valid
+      end
     end
 
     context "when there is already a component with the same name but using uppercase for the same notification" do
@@ -56,6 +61,11 @@ RSpec.describe Component, type: :model do
       it "has an error message" do
         component.valid?
         expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
+      end
+
+      it "is valid when :skip_uniqueness_on_import is set to true" do
+        component.skip_name_uniqueness_on_import = true
+        expect(component).to be_valid
       end
     end
 
