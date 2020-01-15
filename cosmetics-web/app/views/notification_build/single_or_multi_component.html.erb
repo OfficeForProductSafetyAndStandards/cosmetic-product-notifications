@@ -36,7 +36,7 @@
           fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m" } },
           items: [{ text: "Yes", value: "multiple" },
                   { text: "No, this is a single product", value: "single" }] %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
 
     </div>
   </div>

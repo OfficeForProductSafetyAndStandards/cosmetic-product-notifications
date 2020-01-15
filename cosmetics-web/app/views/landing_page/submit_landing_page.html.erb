@@ -10,9 +10,9 @@
         </h1>
         <p class="masthead-account-links govuk-!-padding-top-2 govuk-!-margin-bottom-5">
           <% if @responsible_person.present? %>
-            <%= link_to "Your cosmetic products", responsible_person_notifications_path(@responsible_person), class: "govuk-button govuk-!-font-weight-bold", role: "button", draggable: "false" %>
+            <%= govukButton text: "Your cosmetic products", href: responsible_person_notifications_path(@responsible_person), classes: "govuk-!-font-weight-bold" %>
           <% else %>
-            <%= link_to "Create an account", keycloak_registration_url(dashboard_path), class: "govuk-button govuk-!-font-weight-bold", role: "button", draggable: "false" %>
+            <%= govukButton text: "Create an account", href: keycloak_registration_url(dashboard_path), classes: "govuk-!-font-weight-bold" %>
             or
             <%= link_to "sign in", keycloak_login_url(dashboard_path), class: "govuk-link govuk-link--no-visited-state" %>
             if you have used this service before
