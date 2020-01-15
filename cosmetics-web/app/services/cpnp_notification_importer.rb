@@ -15,7 +15,6 @@ class CpnpNotificationImporter
     elsif @cpnp_parser.cpnp_notification_date >= EU_EXIT_DATE
       raise CpnpFileNotifiedPostBrexitError, "Product was notified to CPNP post-Brexit, which is not currently supported"
     else
-#      binding.pry
       notification = ::Notification.new(product_name: @cpnp_parser.product_name,
                                         shades: @cpnp_parser.shades,
                                         components: @cpnp_parser.components,

@@ -63,7 +63,7 @@ class CpnpParser
 
   def components
     current_version_component_lists_node.xpath(".//component").collect do |component_node|
-      c = Component.new(name: component_name(component_node),
+      component = Component.new(name: component_name(component_node),
                     shades: component_shades(component_node),
                     notification_type: notification_type(component_node),
                     sub_sub_category: sub_sub_category(component_node),
@@ -80,8 +80,8 @@ class CpnpParser
                     ph: ph_answer(component_node),
                     minimum_ph: minimum_ph(component_node) || component_ph(component_node),
                     maximum_ph: maximum_ph(component_node) || component_ph(component_node))
-      c.skip_name_uniqueness_on_import = true
-      c
+      component.skip_name_uniqueness_on_import = true
+      component
     end
   end
 
