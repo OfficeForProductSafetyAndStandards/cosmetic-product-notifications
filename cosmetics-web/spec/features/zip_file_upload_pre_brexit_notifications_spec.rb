@@ -177,4 +177,66 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft shocking green hair dye"
   end
+
+scenario "Verify zip file upload with multi-items with range doc and exact values and nano elements in each item" do
+    visit new_responsible_person_add_notification_path(responsible_person)
+
+    expect_to_be_on__was_eu_notified_about_products_page
+    answer_was_eu_notified_with "Yes"
+
+    expect_to_be_on__do_you_have_the_zip_files_page
+    answer_do_you_have_zip_files_with "Yes"
+
+    expect_to_be_on__upload_eu_notification_files_page
+    upload_zip_file "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano_modified.zip"
+
+    visit responsible_person_notifications_path(responsible_person)
+
+    expect_to_see_incomplete_notification_with_eu_reference_number "1006080"
+    click_link "Add missing information"
+
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_what_is_purpose_of_nanomaterial_with "Preservative", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__upload_formulation_document_page
+    upload_formulation_file
+
+    expect_to_be_on__check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
+    expect_check_your_answers_page_to_contain(
+      product_name: " Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
+      imported: "Manufactured in EU before Brexit",
+      number_of_components: "2",
+      shades: "black/brown",
+      eu_notification_date: "14 January 2020",
+    )
+    # puts page.html
+    click_button "Accept and submit the cosmetic product notification"
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano notification submitted"
+  end
+
 end
