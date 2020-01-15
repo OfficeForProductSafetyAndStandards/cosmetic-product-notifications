@@ -58,7 +58,6 @@ group :development, :test do
   gem "selenium-webdriver", "3.142.3"
   gem "simplecov", "0.16.1"
   gem "simplecov-console", "0.5.0"
-  gem "slim_lint", "0.17.0"
   gem "solargraph", "0.33.2"
   gem "sprockets", "3.7.2"
   gem "webmock", "~> 3.7"

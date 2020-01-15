@@ -339,11 +339,6 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 5.0)
-    slim_lint (0.17.0)
-      rake (>= 10, < 13)
-      rubocop (>= 0.50.0)
-      slim (>= 3.0, < 5.0)
-      sysexits (~> 1.1)
     slowpoke (0.3.0)
       actionpack
       rack-timeout (>= 0.4.0)
@@ -369,7 +364,6 @@ GEM
       sprockets (>= 3.0.0)
     strong_migrations (0.4.1)
       activerecord (>= 5)
-    sysexits (1.2.0)
     temple (0.8.2)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
@@ -454,7 +448,6 @@ DEPENDENCIES
   simplecov (= 0.16.1)
   simplecov-console (= 0.5.0)
   slim-rails
-  slim_lint (= 0.17.0)
   slowpoke (= 0.3.0)
   solargraph (= 0.33.2)
   sprockets (= 3.7.2)
