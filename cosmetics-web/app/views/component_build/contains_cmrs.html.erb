@@ -25,7 +25,7 @@
               fieldset: { legend: { text: question, classes: "govuk-label--m" } },
               items: [{ text: "Yes", value: :yes },
                       { text: "No", value: :no }] %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
     <% end %>
   </div>
 </div>

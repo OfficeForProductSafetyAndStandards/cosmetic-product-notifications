@@ -17,7 +17,7 @@
       <%= render "form_components/govuk_checkboxes", form: form, key: :purposes,
               fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
               items: items %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
 
     </div>
   </div>
