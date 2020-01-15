@@ -13,7 +13,8 @@
           isPageHeading: true, classes: "govuk-fieldset__legend--xl" } },
         items: [{ text: "Yes", value: "yes" },
           { text: "No", value: "no" }] %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+
+      <%= govukButton text: "Continue" %>
     <% end %>
   </div>
 </div>

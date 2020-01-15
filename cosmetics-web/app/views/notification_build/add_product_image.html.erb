@@ -80,7 +80,7 @@
         <% end %>
         <%= form.file_field :image_upload, multiple: true, class: "govuk-file-upload", accept: ImageUpload.allowed_types.join(", ") %>
       </div>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
     <% end %>
   </div>
 </div>

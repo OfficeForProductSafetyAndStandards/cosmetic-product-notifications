@@ -22,7 +22,7 @@
                 items: Component.frame_formulations.keys.map { |formulation_key| \
                   { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
                 } %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
 
     </div>
   </div>

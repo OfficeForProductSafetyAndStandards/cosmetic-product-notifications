@@ -16,7 +16,7 @@
       <%= form.fields_for :nano_elements do |nano_element_form| %>
         <%= render "form_components/govuk_input", form: nano_element_form, key: :inci_name, label: { text: "INCI name" } %>
       <% end %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
 
     </div>
   </div>

@@ -7,6 +7,7 @@ class Component < ApplicationRecord
   set_allowed_types %w[application/pdf].freeze
   set_max_file_size 30.megabytes
 
+  attr_writer :skip_name_uniqueness_on_import
   belongs_to :notification
 
   has_many :exact_formulas, dependent: :destroy
@@ -36,7 +37,7 @@ class Component < ApplicationRecord
   # Currently two components with no name are immediately created for
   # a notification when the user indicates that it is a kit/multi-component,
   # so the uniquness validation has to allow non-unique null values.
-  validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false }
+  validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false }, unless: -> { @skip_name_uniqueness_on_import }
 
   validates :special_applicator, presence: true, on: :select_special_applicator_type
 
