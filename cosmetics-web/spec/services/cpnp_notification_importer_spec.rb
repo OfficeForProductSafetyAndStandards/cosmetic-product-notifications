@@ -5,6 +5,7 @@ RSpec.describe CpnpNotificationImporter do
 
   let(:cpnp_parser_basic) { create_cpnp_parser }
   let(:cpnp_parser_shades_import) { create_cpnp_parser("testWithShadesAndImport.zip") }
+  let(:cpnp_parser_component_validation) { create_cpnp_parser("testNameValidationMultiComponent.zip") }
   let(:cpnp_parser_multi_component_exact_formula) { create_cpnp_parser("testMultiComponentExactFormula.zip") }
   let(:cpnp_parser_manual_ranges_trigger_rules) { create_cpnp_parser("testManualRangesTriggerRules.zip") }
   let(:cpnp_parser_nano_materials_cmr) { create_cpnp_parser("testWithNanomaterialsAndCmrs.zip") }
@@ -23,6 +24,15 @@ RSpec.describe CpnpNotificationImporter do
 
     it "creates a notification populated with relevant name" do
       exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
+
+      exporter_instance.create!
+      notification = Notification.order(created_at: :asc).last
+
+      expect(notification.product_name).equal?("CTPA moisture conditioner")
+    end
+
+    it "skips component name validation" do
+      exporter_instance = described_class.new(cpnp_parser_component_validation, responsible_person)
 
       exporter_instance.create!
       notification = Notification.order(created_at: :asc).last
