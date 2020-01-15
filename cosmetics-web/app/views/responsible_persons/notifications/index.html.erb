@@ -34,7 +34,8 @@
 
     <% end %>
 
-    <%= link_to "Add cosmetic products", new_responsible_person_add_notification_path(@responsible_person), class: "govuk-button", role: "button" %>
+
+    <%= govukButton text: "Add cosmetics products", href: new_responsible_person_add_notification_path(@responsible_person) %>
 
   </div>
 </div>

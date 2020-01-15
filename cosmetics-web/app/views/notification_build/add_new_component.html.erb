@@ -13,10 +13,7 @@
       <% valid_multicomponents.each do |valid_component| %>
         <p><%= valid_component.name %></p>
         <div class="govuk-form-group">
-          <button class="govuk-button govuk-button--secondary" type="submit"
-            name="remove_component" value="<%= valid_component.id %>">
-            Remove component
-          </button>
+          <%= govukButton text: "Remove component", classes: "govuk-button--secondary", value: valid_component.id, name: "remove_component" %>
         </div>
       <% end %>
 
@@ -28,7 +25,7 @@
 
       <% if valid_multicomponents.length > 1 %>
         <div class="govuk-form-group">
-          <%= form.submit "Continue", class: "govuk-button" %>
+          <%= govukButton text: "Continue" %>
         </div>
       <% end %>
 

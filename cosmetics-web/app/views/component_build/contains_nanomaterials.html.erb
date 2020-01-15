@@ -23,7 +23,7 @@
               fieldset: { legend: { text: "Does #{@component_name} contain nanomaterials?",
               classes: "govuk-label--m" } },
               items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }] %>
-      <%= form.submit "Continue", class: "govuk-button" %>
+      <%= govukButton text: "Continue" %>
 
     </div>
   </div>
