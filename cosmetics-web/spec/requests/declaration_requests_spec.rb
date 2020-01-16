@@ -15,7 +15,7 @@ RSpec.describe "User declarations", :with_stubbed_antivirus, type: :request do
 
     context "when viewing the declaration page" do
       before do
-        get "/declaration"
+        get declaration_path
       end
 
       it "renders the page" do
@@ -26,11 +26,11 @@ RSpec.describe "User declarations", :with_stubbed_antivirus, type: :request do
 
     context "when submitting the declaration page" do
       before do
-        post "/declaration/accept"
+        post accept_declaration_path
       end
 
       it "redirects to the homepage" do
-        expect(response).to redirect_to("/")
+        expect(response).to redirect_to(root_path)
       end
 
       it "updates the user attributes" do
