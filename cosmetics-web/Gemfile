@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "~> 2.5"
 
-gem "will_paginate", "3.1.7" # Must be laoded before elasticsearch gems
+gem "will_paginate", "3.2.1" # Must be laoded before elasticsearch gems
 
 gem "aasm", "~> 5.0.6"
 gem "active_hash", "~> 2.2.1"
