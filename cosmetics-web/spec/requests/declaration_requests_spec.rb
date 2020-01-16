@@ -13,7 +13,7 @@ RSpec.describe "User declarations", :with_stubbed_antivirus, type: :request do
       sign_in_as_member_of_responsible_person(responsible_person, user)
     end
 
-    context "viewing the declaration page" do
+    context "when viewing the declaration page" do
       before do
         get "/declaration"
       end
@@ -24,7 +24,7 @@ RSpec.describe "User declarations", :with_stubbed_antivirus, type: :request do
       end
     end
 
-    context "submitting the declaration page" do
+    context "when submitting the declaration page" do
       before do
         post "/declaration/accept"
       end
