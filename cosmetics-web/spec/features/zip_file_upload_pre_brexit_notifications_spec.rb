@@ -178,6 +178,92 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_message "SkinSoft shocking green hair dye"
   end
 
+  scenario "Verify zip file upload with multi-items with exact and range document and nano elements in each item" do
+    visit new_responsible_person_add_notification_path(responsible_person)
+    go_to_upload_notification_page
+
+    upload_zip_file "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano_elements.zip"
+
+    visit responsible_person_notifications_path(responsible_person)
+
+    expect_to_see_incomplete_notification_with_eu_reference_number "100608777"
+    click_link "Add missing information"
+
+    
+
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__upload_formulation_document_page
+    upload_formulation_file
+
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__upload_formulation_document_page
+    upload_formulation_file
+   
+
+    expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
+    expect_check_your_answers_page_for_kit_items_to_contain(product_name:"Multi-Item-RangeDoc_pHRange_ExactDoc_Nano",
+      imported: "Manufactured in EU before Brexit",
+      number_of_components: "2",
+      components_mixed: "No",
+       kit_items: [
+        {
+          name: "RangeDoc",
+          shades: "",
+          contains_cmrs: "No",
+          nanomaterials: "1,3,5-Triazine, 2,4,6-tris(1,1, TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO), 31274-51-8, 31274-51-8 2,2′-Methylene-bis(6-(2H-benzotriazol-2-yl)-4- (1,1,3,3-tetramethylbutyl)phenol)/BisoctrizoleMethylene Bis- Benzotriazolyl Tetramethylbutylphenol (nano), METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO), 103597-45-1, 103597-45-1",
+          category: "Hair and scalp products",
+          subcategory: "Hair colouring products",
+          sub_subcategory: "Non-oxidative hair colour products",
+          formulation_given_as: "Concentration ranges",
+          physical_form: "Cream or paste",
+          pH_range:"4.0 to 5.0",
+        },
+        {
+          name: "ExactValues",
+          shades: "",
+          contains_cmrs: "No",
+          nanomaterials: "2,2′-Methylene-bis(6-(2H-benzotriazol-2-yl)-4- (1,1,3,3-tetramethylbutyl)phenol)/BisoctrizoleMethylene Bis- Benzotriazolyl Tetramethylbutylphenol (nano), METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO), 103597-45-1, 103597-45-1",
+          category: "Skin products",
+          subcategory: "Skin cleansing products",
+          sub_subcategory: "Bath / shower products",
+          formulation_given_as: "Exact concentration",
+          physical_form: "Loose powder",
+        },
+      ],
+
+      )
+    # puts page.html
+    click_button "Accept and submit the cosmetic product notification"
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano"
+  end
+
+
 scenario "Verify zip file upload with multi-items with range doc and exact values and nano elements in each item" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
@@ -225,18 +311,120 @@ scenario "Verify zip file upload with multi-items with range doc and exact value
     expect_to_be_on__upload_formulation_document_page
     upload_formulation_file
 
-    expect_to_be_on__check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
-    expect_check_your_answers_page_to_contain(
-      product_name: " Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
+    expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano")
+    expect_check_your_answers_page_for_kit_items_to_contain(product_name:"Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
       imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
-      shades: "black/brown",
-      eu_notification_date: "14 January 2020",
-    )
+      components_mixed: "No",
+       kit_items: [
+        {
+          name: "RangeDoc",
+          shades: "",
+          contains_cmrs: "No",
+          nanomaterials: "1,3,5-Triazine, 2,4,6-tris(1,1, TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO), 31274-51-8, 31274-51-8 2,2′-Methylene-bis(6-(2H-benzotriazol-2-yl)-4- (1,1,3,3-tetramethylbutyl)phenol)/BisoctrizoleMethylene Bis- Benzotriazolyl Tetramethylbutylphenol (nano), METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO), 103597-45-1, 103597-45-1",
+          category: "Hair and scalp products",
+          subcategory: "Hair colouring products",
+          sub_subcategory: "Non-oxidative hair colour products",
+          formulation_given_as: "Concentration ranges",
+          physical_form: "Cream or paste",
+          pH_range:"4.0 to 5.0",
+        },
+        {
+          name: "ExactValues",
+          shades: "",
+          contains_cmrs: "No",
+          nanomaterials: "2,2′-Methylene-bis(6-(2H-benzotriazol-2-yl)-4- (1,1,3,3-tetramethylbutyl)phenol)/BisoctrizoleMethylene Bis- Benzotriazolyl Tetramethylbutylphenol (nano), METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO), 103597-45-1, 103597-45-1",
+          category: "Skin products",
+          subcategory: "Skin cleansing products",
+          sub_subcategory: "Bath / shower products",
+          formulation_given_as: "Exact concentration",
+          physical_form: "Loose powder",
+        },
+      ],
+
+      )
     # puts page.html
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano notification submitted"
   end
+
+scenario "Verify zip file upload with multi-items with exact and range values and nano elements in each item" do
+    visit new_responsible_person_add_notification_path(responsible_person)
+    go_to_upload_notification_page
+
+    upload_zip_file "Multi_itemConcentrationRangeValues_ExactValues_Nano_modified.zip"
+
+    visit responsible_person_notifications_path(responsible_person)
+
+    expect_to_see_incomplete_notification_with_eu_reference_number "1006079"
+    click_link "Add missing information"
+
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_what_is_purpose_of_nanomaterial_with "Preservative", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__upload_formulation_document_page
+    upload_formulation_file
+
+    expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-Rangevalues_Exactvalues_Nano")
+    expect_check_your_answers_page_for_kit_items_to_contain(product_name:"Multi-Item-Rangevalues_Exactvalues_Nano",
+      imported: "Manufactured in EU before Brexit",
+      number_of_components: "2",
+      components_mixed: "No",
+       kit_items: [
+        {
+          name: "RangeDoc",
+          shades: "",
+          contains_cmrs: "No",
+          nanomaterials: "1,3,5-Triazine, 2,4,6-tris(1,1, TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO), 31274-51-8, 31274-51-8 2,2′-Methylene-bis(6-(2H-benzotriazol-2-yl)-4- (1,1,3,3-tetramethylbutyl)phenol)/BisoctrizoleMethylene Bis- Benzotriazolyl Tetramethylbutylphenol (nano), METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO), 103597-45-1, 103597-45-1",
+          category: "Hair and scalp products",
+          subcategory: "Hair colouring products",
+          sub_subcategory: "Non-oxidative hair colour products",
+          formulation_given_as: "Concentration ranges",
+          physical_form: "Cream or paste",
+          pH_range:"4.0 to 5.0",
+        },
+        {
+          name: "ExactValues",
+          shades: "",
+          contains_cmrs: "No",
+          nanomaterials: "2,2′-Methylene-bis(6-(2H-benzotriazol-2-yl)-4- (1,1,3,3-tetramethylbutyl)phenol)/BisoctrizoleMethylene Bis- Benzotriazolyl Tetramethylbutylphenol (nano), METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO), 103597-45-1, 103597-45-1",
+          category: "Skin products",
+          subcategory: "Skin cleansing products",
+          sub_subcategory: "Bath / shower products",
+          formulation_given_as: "Exact concentration",
+          physical_form: "Loose powder",
+        },
+      ],
+
+      )
+    # puts page.html
+    click_button "Accept and submit the cosmetic product notification"
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano notification submitted"
 
 end
