@@ -4,7 +4,7 @@
   "license": "MIT",
   "dependencies": {
     "@rails/webpacker": "4.2.2",
-    "accessible-autocomplete": "1.6.2",
+    "accessible-autocomplete": "2.0.1",
     "copy-webpack-plugin": "5.1.1",
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.2.0",
