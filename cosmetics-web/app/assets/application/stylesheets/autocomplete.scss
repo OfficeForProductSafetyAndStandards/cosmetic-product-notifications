@@ -1,17 +1,17 @@
 
-/* Apply GOVUK typography */
+// Apply GOVUK typography
 .autocomplete__wrapper {
   @include govuk-typography-common();
 }
 
-/* Override source to fix a bug */
+// Override source to fix a bug
 .autocomplete__input--show-all-values {
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 5px;
 }
 
-/* Add a clear button. */
+// Add a clear button.
 .autocomplete-select-with-clear {
   width: calc(100% - 48px);
   display: inline-block;
