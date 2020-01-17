@@ -1,11 +1,12 @@
 
-// Apply GOVUK typography
-// see https://github.com/alphagov/accessible-autocomplete/issues/285
+// Apply GOVUK typography:
+// https://github.com/alphagov/accessible-autocomplete/issues/285
 .autocomplete__wrapper * {
   @include govuk-typography-common();
 }
 
-// Override source to fix a bug (https://github.com/alphagov/accessible-autocomplete/issues/405)
+// Override source to fix a bug:
+// https://github.com/alphagov/accessible-autocomplete/issues/405)
 .autocomplete__input--show-all-values {
   padding-top: 5px;
   padding-bottom: 5px;
