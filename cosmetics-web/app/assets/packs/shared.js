@@ -7,8 +7,7 @@ import '../application/javascripts/autocomplete';
 import '../application/javascripts/bulk_file_upload_error_handling';
 
 // Styles
-import 'govuk-country-and-territory-autocomplete/dist/location-autocomplete.min.css';
-
+import 'accessible-autocomplete/src/autocomplete.css';
 // Images
 import 'govuk-frontend/govuk/assets/images/favicon.ico';
 import 'govuk-frontend/govuk/assets/images/govuk-mask-icon.svg';
