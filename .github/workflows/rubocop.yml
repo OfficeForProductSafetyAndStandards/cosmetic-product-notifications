@@ -48,5 +48,5 @@ jobs:
     - name: Run linters
       run: |
         cd cosmetics-web
-        yarn eslint app config
+        yarn standard
         yarn sass-lint -c .sasslint.yml -vq 'app/**/*.scss'
