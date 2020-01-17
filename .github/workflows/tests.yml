@@ -42,8 +42,6 @@ jobs:
     # required to compile pg ruby gem
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
-    - name: install chromedriver
-      run: wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && sudo mv chromedriver /usr/bin && sudo chmod +x /usr/bin/chromedriver
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/vendor/bundle
