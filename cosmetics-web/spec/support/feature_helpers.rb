@@ -591,15 +591,6 @@ def create_individual_responsible_person
     click_on "Continue"
   end
 
-  def create_new_responsible_person
-    visit account_path(:overview)
-    assert_text "UK Responsible Person"
-    click_on "Continue"
-
-    assert_text "Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?"
-    choose "option_create_new", visible: false
-    click_on "Continue"
-  end
 
   def select_business_account_type
     assert_text "Is the UK Responsible Person a business or an individual?"
