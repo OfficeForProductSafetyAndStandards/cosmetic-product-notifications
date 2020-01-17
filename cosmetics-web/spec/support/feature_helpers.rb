@@ -552,18 +552,18 @@ def create_individual_responsible_person
 
   assert_text "UK Responsible Person details"
 
-  fill_in "Name", with: responsible_person.name
-  fill_in "Building and street", with: responsible_person.address_line_1
-  fill_in "Town or city", with: responsible_person.city
-  fill_in "County", with: responsible_person.county
-  fill_in "Postcode", with: responsible_person.postal_code
+  fill_in "Name", with: 'Auto-test rpuser'
+  fill_in "Building and street", with: 'Auto-test-address1'
+  fill_in "Town or city", with: 'Auto-test city'
+  fill_in "County", with: 'auto-test-county'
+  fill_in "Postcode", with: 'b28 9un'
   click_on "Continue"
 
-  assert_text "contact person"
+  expect(page).to have_h1("Contact person details")
 
-  fill_in "Full name", with: responsible_person.contact_persons.first.name
-  fill_in "Email address", with: responsible_person.contact_persons.first.email_address
-  fill_in "Phone number", with: responsible_person.contact_persons.first.phone_number
+  fill_in "Full name", with: 'Auto-test contact person'
+  fill_in "Email address", with: 'auto-test@exaple.com'
+  fill_in "Phone number", with: '07984563072'
   click_on "Continue"
   end
 
@@ -571,31 +571,31 @@ def create_business_responsible_person
   go_to_rp_declaration_page
   select_business_account_type
 
-  assert_text "UK Responsible Person details"
+  expect(page).to have_h1("UK Responsible Person details")
 
-  fill_in "Business name", with: business_responsible_person.name
-  fill_in "Building and street", with: business_responsible_person.address_line_1
-  fill_in "Town or city", with: business_responsible_person.city
-  fill_in "County", with: business_responsible_person.county
-  fill_in "Postcode", with: business_responsible_person.postal_code
+  fill_in "Business name", with:'Auto-test rp-user'
+  fill_in "Building and street", with: 'Auto-test-address1'
+  fill_in "Town or city", with: 'Auto-test city'
+  fill_in "County", with: 'auto-test-county'
+  fill_in "Postcode", with: 'b28 9un'
   click_on "Continue"
 
   assert_text "contact person"
 
-  fill_in "Full name", with: business_responsible_person.contact_persons.first.name
-  fill_in "Email address", with: business_responsible_person.contact_persons.first.email_address
-  fill_in "Phone number", with: business_responsible_person.contact_persons.first.phone_number
+  fill_in "Full name", with: 'Auto-test contact person'
+  fill_in "Email address", with:'auto-test-business@exaple.com'
+  fill_in "Phone number", with: '07984563072'
   click_on "Continue"
 end
 
 def select_business_account_type
   assert_text "Is the UK Responsible Person a business or an individual?"
-  choose "responsible_person_account_type_business", visible: false
+  choose "Limited company or Limited Liability Partnership (LLP)"
   click_on "Continue"
 end
 
 def select_individual_account_type
   assert_text "Is the UK Responsible Person a business or an individual?"
-  choose "responsible_person_account_type_individual", visible: false
+  choose 'Individual or sole trader'
   click_on "Continue"
 end
