@@ -53,7 +53,7 @@ group :development, :test do
   gem "rubocop-govuk", "~> 1.0"
   gem "rubocop-performance", "~> 1.4.0"
   gem "rubocop-rails", "~> 2.4.1"
-  gem "rubocop-rspec", "~> 1.36"
+  gem "rubocop-rspec", "~> 1.37"
   gem "ruby-debug-ide", "~> 0.7.0"
   gem "simplecov", "~> 0.16.1"
   gem "simplecov-console", "~> 0.5.0"
