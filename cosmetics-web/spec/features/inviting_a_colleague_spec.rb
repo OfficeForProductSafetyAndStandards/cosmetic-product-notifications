@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe "Invite a user to join a responsible person", type: :system do
+RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:user) { create(:user) }
+  let(:invited_user) { create(:user) }
 
   before do
-    configure_requests_for_submit_domain
     stub_notify_mailer
   end
 
@@ -13,12 +13,13 @@ RSpec.describe "Invite a user to join a responsible person", type: :system do
     sign_out
   end
 
-  it "allows user to send an invite to join a responsible person" do
+  scenario "sending an invitation" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
-
     visit responsible_person_team_members_path(responsible_person)
 
     click_on "Invite a colleague"
+
+    expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
 
     fill_in "Email address", with: "inviteduser@example.com"
     click_on "Send invitation"
@@ -27,13 +28,15 @@ RSpec.describe "Invite a user to join a responsible person", type: :system do
     expect(NotifyMailer).to have_received(:send_responsible_person_invite_email)
   end
 
-  it "allows user to accept responsible person invitation" do
-    sign_in
-    PendingResponsiblePersonUser.create(email_address: user.email, responsible_person: responsible_person)
+  scenario "accepting an invitation" do
+    configure_requests_for_submit_domain
+    sign_in as_user: invited_user
+
+    PendingResponsiblePersonUser.create(email_address: invited_user.email, responsible_person: responsible_person)
 
     visit join_responsible_person_team_members_path(responsible_person)
 
     expect(page).to have_current_path(responsible_person_path(responsible_person))
-    expect(responsible_person.reload.responsible_person_users.size).to eq(1)
+    expect(invited_user.responsible_persons).to include(responsible_person)
   end
 end

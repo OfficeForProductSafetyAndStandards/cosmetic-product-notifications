@@ -1,9 +1,0 @@
----
-applications:
-- name: antivirus
-  memory: 2G
-  instances: 1
-  stack: cflinuxfs3
-  disk_quota: 2G
-  services:
-    - opss-log-drain
