@@ -189,7 +189,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_incomplete_notification_with_eu_reference_number "100608777"
     click_link "Add missing information"
 
-    
+
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
@@ -223,7 +223,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
 
     expect_to_be_on__upload_formulation_document_page
     upload_formulation_file
-   
+
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
     expect_check_your_answers_page_for_kit_items_to_contain(product_name:"Multi-Item-RangeDoc_pHRange_ExactDoc_Nano",
@@ -426,5 +426,5 @@ scenario "Verify zip file upload with multi-items with exact and range values an
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano notification submitted"
-
+  end
 end
