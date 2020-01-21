@@ -33,7 +33,7 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    active_hash (2.2.1)
+    active_hash (3.1.0)
       activesupport (>= 5.0.0)
     activejob (5.2.3)
       activesupport (= 5.2.3)
@@ -400,7 +400,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (~> 5.0.6)
-  active_hash (~> 2.2.1)
+  active_hash (~> 3.1.0)
   aws-sdk-s3 (~> 1.60.1)
   brakeman (~> 4.7.2)
   capybara (~> 3.30.0)
