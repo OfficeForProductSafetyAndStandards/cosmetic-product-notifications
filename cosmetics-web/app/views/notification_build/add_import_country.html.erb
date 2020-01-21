@@ -11,7 +11,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@notification) %>
       <%= render "form_components/govuk_select", form: form, key: :import_country, id: "location-autocomplete",
               items: @countries.map { |country| { text: country[0], value: country[1] } },
               is_autocomplete: true, show_all_values: true,
