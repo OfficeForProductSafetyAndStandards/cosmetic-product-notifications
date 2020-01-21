@@ -76,7 +76,7 @@ GEM
       aws-eventstream (~> 1.0, >= 1.0.2)
     backport (1.1.2)
     benchmark (0.1.0)
-    brakeman (4.7.1)
+    brakeman (4.7.2)
     builder (3.2.4)
     capybara (3.30.0)
       addressable
@@ -402,7 +402,7 @@ DEPENDENCIES
   aasm (~> 5.0.6)
   active_hash (~> 2.2.1)
   aws-sdk-s3 (~> 1.43.0)
-  brakeman (~> 4.7.1)
+  brakeman (~> 4.7.2)
   capybara (~> 3.30.0)
   cf-app-utils (~> 0.6)
   coveralls (~> 0.8.23)
