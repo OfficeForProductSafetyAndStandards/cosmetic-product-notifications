@@ -39,7 +39,7 @@ group :development, :test do
   gem "brakeman", "~> 4.7.2"
   gem "capybara", "~> 3.30.0"
   gem "coveralls", "~> 0.8.23"
-  gem "debase", "~> 0.2.2"
+  gem "debase", "~> 0.2.4"
   gem "dotenv-rails", "~> 2.7.5"
   gem "factory_bot_rails"
   gem "launchy", "~> 2.4.3"
