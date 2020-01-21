@@ -1,4 +1,5 @@
 require "rails_helper"
+require "zip"
 
 RSpec.describe CpnpNotificationImporter do
   let(:responsible_person) { create(:responsible_person) }
