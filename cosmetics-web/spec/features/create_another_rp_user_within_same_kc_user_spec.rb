@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Create multiple rp within same kc user", type: :feature do
+RSpec.describe "Create multiple responsible person within same keycloak user", type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
 
   before do
@@ -8,15 +8,13 @@ RSpec.describe "Create multiple rp within same kc user", type: :feature do
     stub_notify_mailer
   end
 
-  scenario "creating another respoonsible person as a limited company" do
-    visit new_responsible_person_add_notification_path(responsible_person)
+  scenario "creating another responsible person as a limited company" do
     visit "/responsible_persons/account/overview"
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     create_another_business_responsible_person
   end
 
   scenario "Verify dead end page when user choosen as account already exist" do
-    visit new_responsible_person_add_notification_path(responsible_person)
     visit "/responsible_persons/account/overview"
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     click_on "Continue"
