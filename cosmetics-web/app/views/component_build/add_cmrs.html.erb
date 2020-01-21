@@ -11,7 +11,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <% if cmr_errors.any? %>
-        <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: cmr_errors %>
+        <%= govukErrorSummary titleText: "There is a problem", errorList: cmr_errors %>
       <% end %>
       <%= render "components/govuk_fieldset",
               legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } %>

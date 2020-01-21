@@ -10,7 +10,7 @@
 
     <%= form_with model: @notification, url: wizard_path, method: :put do |form| %>
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@notification) %>
 
       <h1 class="govuk-heading-xl"><%= title %></h1>
 

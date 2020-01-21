@@ -11,7 +11,7 @@
 
     <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@component, first_values: {contains_poisonous_ingredients: "true"}) %>
 
       <h1 class="govuk-heading-xl">Poisonous ingredients</h1>
 

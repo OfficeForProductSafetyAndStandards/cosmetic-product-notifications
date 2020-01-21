@@ -12,7 +12,9 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
 
-        <%= render "form_components/govuk_error_summary", form: nano_material_form %>
+        <% if @component.errors.messages.include?(:"nano_material.exposure_condition") %>
+          <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @component.errors.messages[:"nano_material.exposure_condition"][0], href: "#component_nano_material_attributes_exposure_condition_rinse_off"}] ) %>
+        <% end %>
         <%= nano_material_form.hidden_field :exposure_condition, value: nil %>
         <%= render "form_components/govuk_radios", form: nano_material_form, key: :exposure_condition,
                 fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },

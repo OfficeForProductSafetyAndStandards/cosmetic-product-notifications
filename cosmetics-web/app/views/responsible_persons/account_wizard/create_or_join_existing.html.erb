@@ -15,7 +15,7 @@
         </p>
       <% end %>
       <% if error_message %>
-        <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: [error_message] %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: [error_message]) %>
       <% end %>
       <%= render "form_components/govuk_radios", form: form, key: :option,
               errorMessage: error_message,
