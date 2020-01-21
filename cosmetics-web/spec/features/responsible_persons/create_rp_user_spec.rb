@@ -15,7 +15,6 @@ RSpec.describe "Responsible person creation journey", type: :feature do
       expect(page).to have_h1("Your cosmetic products")
     end
 
-
     scenario "creating a respoosible person as a limited company" do
       create_business_responsible_person
       expect(page).to have_h1("Your cosmetic products")

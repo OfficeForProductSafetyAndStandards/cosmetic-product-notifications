@@ -191,7 +191,6 @@ def expect_to_be_on__upload_formulation_document_page
   expect(page).to have_h1("Upload formulation document")
 end
 
-# rubocop:disable Naming/UncommunicativeMethodParamName
 def expect_check_your_answers_page_to_contain(product_name:, imported:, imported_from: nil, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
@@ -234,7 +233,6 @@ def expect_check_your_answers_page_to_contain(product_name:, imported:, imported
     end
   end
 end
-# rubocop:enable Naming/UncommunicativeMethodParamName
 
 def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, imported:, number_of_components:, components_mixed:, kit_items:)
   within_table("Product") do
@@ -534,58 +532,57 @@ end
 
 #Create responsible person helpers
 
-def go_to_rp_declaration_page
+def create_individual_responsible_person
+  go_to_rp_declaration_and_confirm
+  select_options_to_create_account
+  select_individual_account_type
+  expect(page).to have_h1("UK Responsible Person details")
+  fill_in "Name", with: "Auto-test rpuser"
+  fill_in_rp_contact_details
+end
+
+def create_business_responsible_person
+  go_to_rp_declaration_and_confirm
+  select_options_to_create_account
+  select_business_account_type
+  expect(page).to have_h1("UK Responsible Person details")
+  fill_in "Business name", with: "Auto-test rpuser"
+  fill_in_rp_contact_details
+end
+
+def go_to_rp_declaration_and_confirm
   visit(root_path)
   expect(page).to have_h1("Responsible Person Declaration")
   click_button "I confirm"
   expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
+end
+
+def select_options_to_create_account
   click_on "Continue"
   expect(page).to have_h1("Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?")
-  choose "option_create_new", visible: false
+  choose "No, I need to create an account"
   click_on "Continue"
   expect(page).to have_h1("Is the UK Responsible Person a business or an individual?")
 end
 
-def create_individual_responsible_person
-  go_to_rp_declaration_page
-  select_individual_account_type
-
-  assert_text "UK Responsible Person details"
-
-  fill_in "Name", with: "Auto-test rpuser"
+def fill_in_rp_contact_details
   fill_in "Building and street", with: "Auto-test-address1"
   fill_in "Town or city", with: "Auto-test city"
   fill_in "County", with: "auto-test-county"
   fill_in "Postcode", with: "b28 9un"
   click_on "Continue"
-
   expect(page).to have_h1("Contact person details")
-
   fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@exaple.com"
   fill_in "Phone number", with: "07984563072"
   click_on "Continue"
 end
 
-def create_business_responsible_person
-  go_to_rp_declaration_page
-  select_business_account_type
-
-  expect(page).to have_h1("UK Responsible Person details")
-
-  fill_in "Business name", with: "Auto-test rp-user"
-  fill_in "Building and street", with: "Auto-test-address1"
-  fill_in "Town or city", with: "Auto-test city"
-  fill_in "County", with: "auto-test-county"
-  fill_in "Postcode", with: "b28 9un"
-  click_on "Continue"
-
-  assert_text "contact person"
-
-  fill_in "Full name", with: "Auto-test contact person"
-  fill_in "Email address", with: "auto-test-business@exaple.com"
-  fill_in "Phone number", with: "07984563072"
-  click_on "Continue"
+def create_another_business_responsible_person
+  select_options_to_create_account
+  select_individual_account_type
+  fill_in "Name", with: "Auto-test rpuser"
+  fill_in_rp_contact_details
 end
 
 def select_business_account_type
