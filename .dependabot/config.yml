@@ -36,7 +36,7 @@ update_configs:
   - package_manager: "ruby:bundler"
     directory: "/cosmetics-web"
     update_schedule: "live"
-    version_requirement_updates: off
+    version_requirement_updates: "off"
 
   - package_manager: "ruby:bundler"
     directory: "/infrastructure/fluentd"
