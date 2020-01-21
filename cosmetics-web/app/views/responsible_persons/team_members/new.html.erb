@@ -5,7 +5,7 @@
 
 <%= form_with model: @team_member, scope: :team_member, url: responsible_person_team_members_path(@responsible_person), method: :post do |form| %>
   <div class="govuk-grid-row">
-    <%= render "form_components/govuk_error_summary", form: form %>
+    <%= error_summary_for(@team_member) %>
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Invite a team member</h1>
 

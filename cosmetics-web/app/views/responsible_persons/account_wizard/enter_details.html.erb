@@ -9,7 +9,7 @@
 <%= form_with model: @responsible_person, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@responsible_person) %>
 
       <h1 class="govuk-heading-xl">UK Responsible Person details</h1>
 

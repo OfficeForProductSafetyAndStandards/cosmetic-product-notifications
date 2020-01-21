@@ -7,7 +7,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <%= render 'error_summary', errors: @notification.errors %>
+    <% if @notification.errors.messages.include?(:image_uploads) %>
+      <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @notification.errors.messages[:image_uploads][0], href: "#image_upload"}]) %>
+    <% end %>
 
     <h1 class="govuk-heading-xl"><%= page_title %></h1>
 

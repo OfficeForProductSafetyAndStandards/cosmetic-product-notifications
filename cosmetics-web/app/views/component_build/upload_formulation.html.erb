@@ -11,7 +11,7 @@
 
       <h1 class="govuk-heading-xl"><%= title %></h1>
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@component) %>
       <div class="govuk-form-group">
         <%= form.label :formulation_file, "The file type must be a PDF", class: "govuk-label" %>
         <%= form.file_field :formulation_file, class: "govuk-file-upload",
