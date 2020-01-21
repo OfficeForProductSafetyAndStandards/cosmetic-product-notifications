@@ -14,7 +14,7 @@
         <% error_list = @nanomaterial_notification.errors.messages.collect do |key, messages|
           { text: messages.first, href: "#nanomaterial_notification_#{key}-error" }
         end %>
-        <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: error_list %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: error_list) %>
       <% end %>
 
       <h1 class="govuk-heading-xl"><%= page_title %></h1>

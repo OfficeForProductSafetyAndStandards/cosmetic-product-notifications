@@ -7,20 +7,22 @@
 <% other_text = "Type of applicator" %>
 
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+
+  <% other_text_field = capture do %>
+    <%= render "form_components/govuk_input", form: form,
+            key: :other_special_applicator, label: { text: other_text } %>
+  <% end %>
+
+  <% items = NotificationPropertiesHelper::SPECIAL_APPLICATOR.keys.map { |applicator|
+      { text: get_special_applicator_name(applicator),
+        value: applicator,
+        conditional: ({ html: other_text_field } if applicator == :other_special_applicator) }
+    }.compact %>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <%= render "form_components/govuk_error_summary", form: form %>
-      <% other_text_field = capture do %>
-        <%= render "form_components/govuk_input", form: form,
-                key: :other_special_applicator, label: { text: other_text } %>
-      <% end %>
-
-      <%  items = NotificationPropertiesHelper::SPECIAL_APPLICATOR.keys.map { |applicator|
-          { text: get_special_applicator_name(applicator),
-            value: applicator,
-            conditional: ({ html: other_text_field } if applicator == :other_special_applicator) }
-        }.compact %>
+      <%= error_summary_for(@component, first_values: {special_applicator: items[0][:value] }) %>
 
       <%= render "form_components/govuk_radios", form: form, key: :special_applicator,
             fieldset: { legend: { text: title, classes: "govuk-label--xl", isPageHeading: true } },

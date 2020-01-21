@@ -14,7 +14,7 @@
 
     <%= form_for @nanomaterial_notification, url: notified_to_eu_nanomaterial_path(@nanomaterial_notification), html: { novalidate: true } do |form| %>
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@nanomaterial_notification, first_values: {eu_notified: "true"}) %>
 
       <% if @nanomaterial_notification.errors[:notified_to_eu_on].size > 0 %>
         <% errorMessage = {

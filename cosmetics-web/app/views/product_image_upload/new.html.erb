@@ -9,7 +9,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <% if @error_list.present? %>
-        <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: @error_list %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: @error_list) %>
       <% end %>
 
       <h1 class="govuk-heading-xl">Upload an image of the product label</h1>
