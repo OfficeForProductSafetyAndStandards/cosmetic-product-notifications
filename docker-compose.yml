@@ -35,20 +35,6 @@ services:
 #    volumes:
 #      - ${PWD-.}/keycloak/govuk-theme/govuk:/opt/jboss/keycloak/themes/govuk
 
-  antivirus:
-    build:
-      context: ./antivirus
-    env_file:
-      - .env.antivirus
-    environment:
-      - PORT=3006
-    ports:
-      - "3006:3006"
-    volumes:
-      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
-      - ${PWD-.}/antivirus:/antivirus
-      - bundle-cache:/usr/local/bundle
-
   maintenance:
     build:
       context: .
@@ -85,7 +71,6 @@ services:
       - ${PWD-.}/cosmetics-web:/cosmetics-web
       - bundle-cache:/usr/local/bundle
     depends_on:
-      - antivirus
       - db
       - elasticsearch
       - redis

@@ -11,10 +11,6 @@ if [[ "$TOP_LEVEL_CHANGES" =~ db ]]; then
     COMPONENTS="$COMPONENTS db"
 fi
 
-if [[ "$TOP_LEVEL_CHANGES" =~ antivirus ]]; then
-    COMPONENTS="$COMPONENTS antivirus"
-fi
-
 if [[ "$TOP_LEVEL_CHANGES" =~ maintenance ]]; then
     COMPONENTS="$COMPONENTS maintenance"
 fi

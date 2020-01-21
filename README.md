@@ -145,7 +145,7 @@ If you need to create a new environment, you can run `cf create-space SPACE-NAME
 
 #### Antivirus API
 
-See [antivirus/README.md](antivirus/README.md#deployment-from-scratch).
+See [antivirus repo](https://github.com/UKGovernmentBEIS/beis-opss-antivirus).
 
 #### Maintenance page
 
