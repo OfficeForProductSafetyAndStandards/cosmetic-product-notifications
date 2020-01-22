@@ -25,7 +25,9 @@ jobs:
         cf7 api api.london.cloud.service.gov.uk
         cf7 auth
         cf7 target -o 'beis-opss' -s $SPACE
+        echo "GITHUB_REF:"
         echo $GITHUB_REF
+        echo "GITHUB_SHA:"
         echo $GITHUB_SHA
         export PR_NUMBER=`echo $GITHUB_REF | grep -o '[0-9_]\+'`
         cf7 delete -f -r pr-$PR_NUMBER
