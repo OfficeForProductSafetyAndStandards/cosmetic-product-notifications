@@ -21,19 +21,24 @@ jobs:
       if: github.event.pull_request.merged == true
       run: |
         export PR_NUMBER=`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss/commits/$GITHUB_SHA/pulls | ./infrastructure/env/jq '.[0] | .number'`
-    - name: Get Pull Request ID from GITHUB_REF
-      if: github.event.pull_request.merged != true
-      run: |
-        export PR_NUMBER=`echo $GITHUB_REF | grep -o '[0-9_]\+'`
-    - name: Delete app
-      env:
-        SPACE: int
-        CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
-        CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
-      run: |
         cf7 api api.london.cloud.service.gov.uk
         cf7 auth
         cf7 target -o 'beis-opss' -s $SPACE
         cf7 delete -f -r cosmetics-pr-$PR_NUMBER
         cf7 delete-service -f cosmetics-review-redis-$PR_NUMBER
         cf7 logout
+    - name: Get Pull Request ID from GITHUB_REF
+      if: github.event.pull_request.merged != true
+      env:
+        SPACE: int
+        CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
+        CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
+      run: |
+        export PR_NUMBER=`echo $GITHUB_REF | grep -o '[0-9_]\+'`
+        cf7 api api.london.cloud.service.gov.uk
+        cf7 auth
+        cf7 target -o 'beis-opss' -s $SPACE
+        cf7 delete -f -r cosmetics-pr-$PR_NUMBER
+        cf7 delete-service -f cosmetics-review-redis-$PR_NUMBER
+        cf7 logout
+
