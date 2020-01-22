@@ -216,7 +216,7 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rack-timeout (0.5.1)
+    rack-timeout (0.6.0)
     rails (5.2.3)
       actioncable (= 5.2.3)
       actionmailer (= 5.2.3)
@@ -336,7 +336,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 5.0)
-    slowpoke (0.3.0)
+    slowpoke (0.3.2)
       actionpack
       rack-timeout (>= 0.4.0)
       railties (>= 5)
