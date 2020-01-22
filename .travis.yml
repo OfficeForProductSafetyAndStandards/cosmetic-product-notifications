@@ -24,8 +24,6 @@ stages:
     if: branch = master AND type = push
   - name: Deploy to production
     if: branch = master AND type = push
-  - name: Remove review app
-    if: branch = master AND type = push
 
 jobs:
   include:
