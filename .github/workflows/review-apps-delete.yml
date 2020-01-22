@@ -23,16 +23,9 @@ jobs:
         CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
       run: |
         PR_NUMBER=`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss/commits/$GITHUB_SHA/pulls | ./infrastructure/env/jq '.[0] | .number'`
-
-        echo "PR_NUMBER "
-        echo $PR_NUMBER
         cf7 api api.london.cloud.service.gov.uk
         cf7 auth
         cf7 target -o 'beis-opss' -s $SPACE
-        echo "GITHUB_REF:"
-        echo $GITHUB_REF
-        echo "GITHUB_SHA:"
-        echo $GITHUB_SHA
-        cf7 delete -f -r pr-$PR_NUMBER
+        cf7 delete -f -r cosmetics-pr-$PR_NUMBER
         cf7 delete-service -f cosmetics-review-redis-$PR_NUMBER
         cf7 logout
