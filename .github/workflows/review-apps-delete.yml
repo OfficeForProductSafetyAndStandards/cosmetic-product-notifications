@@ -10,19 +10,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+      if: github.event.pull_request.merged == true
     - name: Install cf7 client
       env:
         CF_CLI_VERSION: 7.0.0-beta.25
       run: |
         curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
         sudo cp /tmp/cf7 /usr/local/bin/cf7
+    - name: Get Pull Request ID using GitHub API
+      if: github.event.pull_request.merged == true
+      run: |
+        export PR_NUMBER=`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss/commits/$GITHUB_SHA/pulls | ./infrastructure/env/jq '.[0] | .number'`
+    - name: Get Pull Request ID from GITHUB_REF
+      if: github.event.pull_request.merged != true
+      run: |
+        export PR_NUMBER=`echo $GITHUB_REF | grep -o '[0-9_]\+'`
     - name: Delete app
       env:
         SPACE: int
         CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
       run: |
-        PR_NUMBER=`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss/commits/$GITHUB_SHA/pulls | ./infrastructure/env/jq '.[0] | .number'`
         cf7 api api.london.cloud.service.gov.uk
         cf7 auth
         cf7 target -o 'beis-opss' -s $SPACE
