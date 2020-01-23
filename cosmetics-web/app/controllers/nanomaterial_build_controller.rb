@@ -70,7 +70,21 @@ class NanomaterialBuildController < ApplicationController
         # to manage required/missing information.
         @component.notification.formulation_file_uploaded!
 
-        edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+        next_component = @component.notification.components.order(:id)
+          .where(["id > ?", @component.id]).first
+
+        if next_component
+          next_nano_element = next_component.nano_material.nano_elements.order(:id).first
+        end
+
+        if next_nano_element
+
+          new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, next_component, next_nano_element)
+
+        else
+
+          edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+        end
       end
     else
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_category)
