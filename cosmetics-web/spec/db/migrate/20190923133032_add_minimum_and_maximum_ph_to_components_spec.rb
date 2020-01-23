@@ -1,5 +1,5 @@
 require "rails_helper"
-require Rails.root.join("db", "migrate", "20190923133032_add_minimum_and_maximum_ph_to_components.rb")
+require Rails.root.join("db/migrate/20190923133032_add_minimum_and_maximum_ph_to_components.rb")
 
 RSpec.describe AddMinimumAndMaximumPhToComponents do
   let(:migrations_paths) { ActiveRecord::Migrator.migrations_paths }

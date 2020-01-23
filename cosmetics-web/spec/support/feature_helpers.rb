@@ -236,7 +236,6 @@ def expect_check_your_answers_page_to_contain(product_name:, imported:, imported
 end
 # rubocop:enable Naming/MethodParameterName
 
-
 def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, imported:, number_of_components:, components_mixed:, kit_items:)
   within_table("Product") do
     expect(page).to have_summary_item(key: "Name", value: product_name)

@@ -1,13 +1,13 @@
 namespace :cpnp_import do
   desc "Print static product data from CPNP"
-  task :categories do
+  task categories: :environment do
     print_three_mapping_data_structures("category", "categories", "category")
   end
 
-  task :categories_parent do
+  task categories_parent: :environment do
     parent_hash_command = start_hash_command("PARENT_OF_CATEGORY")
 
-    xml_file_content = File.read(Rails.root.join("app", "assets", "files", "cpnp", "categories.xml"))
+    xml_file_content = File.read(Rails.root.join("app/assets/files/cpnp/categories.xml"))
     xml_doc = Nokogiri::XML(xml_file_content)
 
     category_key_names_set = Set.new
@@ -28,27 +28,27 @@ namespace :cpnp_import do
     puts(end_command(parent_hash_command))
   end
 
-  task :frame_formulations do
+  task frame_formulations: :environment do
     print_three_mapping_data_structures("frame_formulation", "frameFormulation", "frameFormulation")
   end
 
-  task :trigger_rules_questions do
+  task trigger_rules_questions: :environment do
     print_three_mapping_data_structures("trigger_rules_question", "questions", "question", "id", "description", false)
   end
 
-  task :trigger_rules_question_elements do
+  task trigger_rules_question_elements: :environment do
     print_three_mapping_data_structures("trigger_rules_question_element", "questions", "element", "elemID", "elemName", false, false)
   end
 
-  task :units do
+  task units: :environment do
     print_three_mapping_data_structures("unit", "units", "unit", "id", "name", false, false, true)
   end
 
-  task :exposure_routes do
+  task exposure_routes: :environment do
     print_three_mapping_data_structures("exposure_route", "exposureRoute", "exposureRoute")
   end
 
-  task :exposure_conditions do
+  task exposure_conditions: :environment do
     print_three_mapping_data_structures("exposure_condition", "exposureConditions", "exposureCondition")
   end
 end
