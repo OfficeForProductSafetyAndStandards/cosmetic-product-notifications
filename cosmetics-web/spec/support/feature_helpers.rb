@@ -191,7 +191,7 @@ def expect_to_be_on__upload_formulation_document_page
   expect(page).to have_h1("Upload formulation document")
 end
 
-# rubocop:disable Naming/UncommunicativeMethodParamName
+# rubocop:disable Naming/MethodParameterName
 def expect_check_your_answers_page_to_contain(product_name:, imported:, imported_from: nil, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
@@ -234,7 +234,7 @@ def expect_check_your_answers_page_to_contain(product_name:, imported:, imported
     end
   end
 end
-# rubocop:enable Naming/UncommunicativeMethodParamName
+# rubocop:enable Naming/MethodParameterName
 
 def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, imported:, number_of_components:, components_mixed:, kit_items:)
   within_table("Product") do
