@@ -10,7 +10,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@notification) %>
       <%= render "components/govuk_fieldset",
               legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } do %>
         <div class="govuk-grid-column-one-third govuk-!-padding-left-0">

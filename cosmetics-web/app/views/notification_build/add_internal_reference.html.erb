@@ -9,7 +9,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@notification, first_values: {add_internal_reference: "yes"}) %>
 
         <h1 class="govuk-heading-xl"><%= title %></h1>
 

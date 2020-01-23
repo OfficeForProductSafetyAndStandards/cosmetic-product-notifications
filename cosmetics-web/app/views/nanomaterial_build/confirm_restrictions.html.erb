@@ -26,7 +26,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@nano_element, first_values: {confirm_restrictions: "yes"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :confirm_restrictions,
               fieldset: { legend: { html: legend_html } },
               items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }] %>

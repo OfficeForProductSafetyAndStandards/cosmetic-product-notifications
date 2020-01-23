@@ -11,7 +11,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@notification, first_values: {components_are_mixed: "true"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :components_are_mixed,
               fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
               items: [{ text: "Mixed together", value: "true" },
