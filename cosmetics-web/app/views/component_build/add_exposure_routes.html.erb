@@ -14,7 +14,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <% if @nano_material.errors.messages.include?(:exposure_routes) %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @nano_material.errors.messages[:exposure_routes][0], href: "#nano_material_dermal"}] ) %>
+      <% end %>
       <%= render "form_components/govuk_checkboxes", form: form, key: :exposure_routes,
               fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
               items: items %>

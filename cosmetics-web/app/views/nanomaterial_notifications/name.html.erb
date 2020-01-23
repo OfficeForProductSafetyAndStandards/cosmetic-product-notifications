@@ -10,7 +10,7 @@
 
     <%= form_for @nanomaterial_notification, url: @form_url do |form| %>
 
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@nanomaterial_notification) %>
 
       <%= render "form_components/govuk_input", form: form, key: :name, label: { text: page_title, isPageHeading: "true", classes: "govuk-label--xl" }  %>
 

@@ -24,8 +24,6 @@ stages:
     if: branch = master AND type = push
   - name: Deploy to production
     if: branch = master AND type = push
-  - name: Remove review app
-    if: branch = master AND type = push
 
 jobs:
   include:
@@ -48,9 +46,6 @@ jobs:
         - secure: "MI25ifcjmL7vdGeoMCQ7cgBUjadXBkvQwlIMDQPYvsN5RGT2gclR8rkoJhMyf19bqfIopCFqh/dy1MXHJa9HVLjrtKbnPt+Zm+nH8Nooa20bVyprr5DOopKKE80Y+iTnh0kYcWN7+ogGr3JS/RyK9y4SDNDG9Uk8E2D5OzaMwyKCOL4sEMuvnm1fwc11/+KULCY6PBNaUjPgWQ079awUitNO1liBGmMrMoVvA3O72pqx1PHa2I1ciCd7LtjaLKN2cmstqd4Usilv53i/nXKD1KL/9uxF+37QQRE59Mrbp0TOWJkG9V9DoiJdn/SzXtzY8q95x6XVqCzpi9m9TH8LX2LpkpcZNI/ooDfOH3s/M8rSFx6MNNLWMSfSLqCHZRk8FLwMPJP0GBa62fErSreXdm+mNcMyS8T7djrqbQQ0NSPs1wDsNH9IqjLuEqWP3py/FHSFAXUUMbjaiR/P7oPirxdH+NqXw7/zW4mx4ciUKlbeZkij5CO6H9ZqiBZ6nlaT1hwo5Cq3owcZTMl7gfXnyzXtNBq3/1r5pnfhsYA2ZwAlS83aqmgvRVnwbSPUorR5PCpSHORXTPNG/hl5jwjWiCYMjjnQZNJtZX9Lyep7dwACc8/uVhBEw114HTZfUUt6gHvflRU95WdeDiiwyFXZB8bLQKO+H270saocmvkpdo4=" # CF_PASSWORD
         - secure: qbMypSFbNCuiJwlS2xYy6TaCiFkmU9s2kTddai+L19xn9eCuxYCKrCA7kbUSdAVQ0K5uFgeggU/OrA0Gy4qRNz8gtxazSpihhHrCqHNlcpkowrF/mNbXySVUZFIiz138/N+doFzOyFJoc6t13XbTZ6TCkff/QNzB+5vX1KGjApPWZkStpKkE2NrlKQCCLlUL/aUCW+w8zy7VIZNuozJtIywQAganppbN3eClPicuNI4+QILp3xuQ6ZNj0cvIZXkWYB0GYmrU9mDVRaIXvSfBjxRho+c91TDON/hbptu6j3Iiwv0pVFKVZ0o6R+1dSa9LmrtRr09cDuxam3GRG1V5i2GNCXOggHHuL3QaaLT7NBkDq5laMr8gLCJzmtAouthYBnZn3LQysbo1+YA+agX8oQdAk6hc2A773q5InWOVQ7IXusnIzrkce4J0NOKpvkB3sCsIutfiHWAP8Adk/stqJsjiziNTVr1GGsNMvckjsMa9/ZnaOCMU6FLuoGugdv8cRv3EfQYKUY8hjMAXzjUXzvQRNhxvIhjQr0eo+Qx+1Hg0f/IfQLIrN8azh/Dk9v3fOENqiPA/bxfAnYQH4Of/Ba8jI2dxRzXobEiEdXP8gquNR9u4nBMedtwyeu8Pl3/WjgTmekZuCpGNhWfrzvXQU9jzaXiXIl7lgAGfvvK4EVo= # COS_BASIC_AUTH_USERNAME
         - secure: rTNOPL8nr4UdF8VLbG2guXN5Pwiowp62v4p8/FNgcRwSRJrOCuF8sd4iJRe1I+O/9BMN/bVbbHFK8WHQ6KmIvBNxCQwqLITfNtYh/+a6BirieqoDyA+QUomBChixjaDQSe3KDyr2FTZhSkrBGwBRPUqC179R4fXdDllDw612S8DTG463or6IoRmc8cQ5T7Bk602Tlri+nGHaOcgSUSmRohOWGycOLWPUxxTKOBXoXGNgcOG2RbKJIm/hsaWLa7K0xJWpQiT70lKCQw9h+3pPGGQc+szwwmerxgFdOsrnH49hXiVmhouv8+Wcb4/BUlMDQJ7tWjwVWIXag/XtbpzDLUGItLKkZ/OZF6CjSx1POJgdFzZxbKqUadMmO/hsW6G7TSxYxyTNvlyFE+5fFuO/+zV/8M5jWxtsC4w9s+0/VtOJv9taolfhLmn70hAtzxZHM6jNi7BvIOCPl56Lw4v7cfXdvxtwWlkgkzvnqTAUR2fFYL6ZYPeuoRLyL0eZeaRFrbC2mbSfBV8x5+G8cEnAQKXJvqm5FKgiqVHyoiY4H9sHJXBEb1/zotGyf99eJe4RxuZaeZOA/kNeTpfuHFNyPaa8+yo25LTEuVUr1Ackq2jg+ra2+IuhtpUsmiFK7S5AObxz8OQr2+uzG/mEG0xE+9y8NAX56W+sNZcpjlWP+7U= # COS_BASIC_AUTH_PASSWORD
-    - name: Deploy Antivirus API
-      script: COMPONENT=antivirus ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_staging_env
     - name: Deploy Maintenance page
       script: COMPONENT=maintenance ./infrastructure/ci/deploy-if-changed.sh
       env: *deploy_staging_env
@@ -65,21 +60,9 @@ jobs:
         - CF_STAGING_TIMEOUT=30 # Extend CF staging timeout to 30 minutes
         - secure: fXT1dyOFJiElJ1dLvPICDKhHFypSTa0+soCxxOuAcAMJK049h69GvkxDU9CKj471ZQwFs2PUYnGBu0r/J2hgAKDVIIN3ch3kJP7sEbi0ye8WXteIojIAelrcCuueKazhCORRPlJVOojXCMwtLpAyRi4qAev563jM+4CeivcY3W9xEmbZCMPuSsp/2cp5yVIQ0c/B4TgMG5T8tLLvPdUIHcHkxQURMJnFh10zVpSsUBwlCrVxAFNPLcaxVQyQ0xFEivw4HsYVrvfQ6Rh3i31PWAzupzb11ZolqQ1W43Z2jXCFAUjBZ48vMzsIsSMcws1kaPkN07R3Gtwuxurzp96AI68NoA+lf8xbzeCHsFkDO/rfmmVgXwi3nObXHUMInIazO4ZRwoHHoofl4YsmxPpYfkm1gtq15uh5/d8Xl7CWe7fU5xl0CPutpAOaPnoTcTzhMwaDyRVWzm0t4wzcBR2psKBi9c3kaRTFpz2K8K7xIuQ3ke2Smf+l6cZj0cgcb5OpdT79qLshgZPw3svsV8iS2akeq22Qg2qSPe2Mu8hhjAx0V1+nlnMuTeSOEa9s93QQR8jX2E4uqkWNo8zshKeCbMp591TnW8Hkzjzoi2m0sRDYZuRBbuIG0N2NqCnWspGamijGa8/zUbbFL1Cax9RmzIh24Hn6G1MyCa729ssdHZ0= # CF_USERNAME
         - secure: "U0kSbQkr+ztK/etHLaARNKwxOZug/9DCC28xx+x8DnONaZ+/zkJjmsQXOUNpgw0JM3gpCUA++lczKfbr8r/q8T35EPXDfCLUQhK5+Ht2da9SnmupNmF5ePd2tkWRmSdHZmgd6/620YxRto7zakTyAHlJ5fkmBDypMl/l2OycKtBEeLmr5XkdEUSdaooAZKb9zFy5Tgvqfk8BW96lIV2xcHDWJDxA0zQHX1ML6lPz3TZrwNtJMn7oFSN4DaifWaoYREIxVtOKGnhOOM5cd+Nc2R4np+wbFFslf4M2YdzBLCs2x0TrLpOKrWiRjfSukUZfI6mtWlLQUtfa15JHhz8KCPVrIOVNHYY+13VGm2bbKcg5Gl3wcHRPHcAtpdGrPs9lJhVhXWSvaHY/0NckfIQBBrA3b5o7tDx13ph0e8uPMhF5NkJPHg+XflAxFLVC74VLPsNLQBvn0Icjj/eCnhv4FEJxT9Xd6YM+N4AXHQ40gR9eW6j8XCgDTZH6+GvH2/UJlv8RWmpieFeYlcjI8xr4gCtkx55IbJuaUkM/466Jm0GhHL1k3S3EP8Vgy0wb5Ad37Va0IbrCvmJWuvUA5p9drr2ItJpEch8YGN03YJyukEZU+MI/EzeQFYRvwEwXTDQTYvOR0TVvlOyrfCI/evtn3yT2lseNvkab2SgG/9kaQWA=" # CF_PASSWORD
-    - name: Deploy Antivirus API
-      script: COMPONENT=antivirus ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_prod_env
     - name: Deploy Maintenance page
       script: COMPONENT=maintenance ./infrastructure/ci/deploy-if-changed.sh
       env: *deploy_prod_env
-
-    - stage: Remove review app
-      name: Remove review app
-      script: ./infrastructure/ci/cleanup-review-app.sh
-      env:
-        - SPACE=int
-        - CF_STAGING_TIMEOUT=30 # Extend CF staging timeout to 30 minutes
-        - secure: qoP7Gbk7CpO6BXtgw4XfopbWMjO0ssO70BsK8sgDtA5vi2z7Bw+vPyjeAVg9vVzjbLl8TP0Bee+yterHZ7sZ5CEaZ+3QSFz+CO9QFoKFXW9E8TZC4NuNJoRun28MueNOJEF3PmT4rSJUlgfL1yrshezrjD5W5Ol9aTG70my0yZnJeyESfKAxFEypPAi9SetzZVvtX8co3I1ZKRoHfb9UHh5KhShl5RLbFQjBI77maCyI4w7GWP8gKPGX7423hIj5H2qvYGRyUYb6/NLQW51V0ra+yK21nBgNmqrzp9uV83iSpoMsRKU2sDV3hbux/YWmvzrvA1xgGf/YkJkXUMz3QAnps6nVrtTj5yF/7/m2xkLJXjZgpZ/343ou2gxJjiXg9+4TohTSIs9bqJV3nZPiodJKMOcuGUuzlxozSwtwmSp7iOkoDWZpDrAq4BdyEbUnl/Ys6vrwloahPYssamphXqVY3LC6pv3akNFsQpU/+Fq1aWoRVn2p6vTQ62TmqZcWNsYYIGeqn8zlIL+x2i5V1wwtfafLtQWFSearvXPOt/ZtinpaM1eV1ojb2ITopxJw7MEm1C3T9Psvw7jw1lZKAY76OqJTGzqvM5hYaIq7YeGGfg/PeA/+n5MFZj28dp/3FulHLS38ei76XIyNodh0UtK59JZ+b9ZopMPg4oQ/0Rc= # CF_USERNAME
-        - secure: "JtBIjx+FhhKFaIGdg+HZGE62P9MFW4/Q2IMH6+zCwed2ag2tDVQNn1irrJnWhVMjVqH44OnslpbktkTPQEFy7t6/+DT1X0Je185/WqILgmSQHPiwVzqwptJJ6BnXcbY0uYanMxnVNiQW3yTxNgVXW7K5JaOzjrt4atnFcpywCDOQCdxmtX1JuI2H4Li2KadW5uOEYmSk3ErAcGSSFnhPQJ9pVX6lM6tfcs8YBsGKenBpphvQ75pE+LCcMiVQEyeWMtASO43mWJaDZwgRAZHGa/XevTFQQH6M07OrA7YGAtXigfqIw7HXCOB33oAbuURxvAC3PYTrrBpZm2rTid+vGtPFzN/eKm1iBWo009z/zY1PDqCuIJ2wzP0IToyYEBQbMqQ7hv9YFjdx+G0HeNq/0rKuHl7quLuNV49E19+9u7iJ35vSAXjWsLWHb5eGJuD5S0vE+sm58dYXDEtGS0sWjsKzJZijh0OaZKUHIY239IHryIUvrPRgGex0hBrGSEOBXkNcauJv/mk0QHvond6hRc9ukwBTZkFVqUaB90kFKCGJKuBFzi2E0FbIx5rxA70D2WKxwuecVPjnre96Tp56Ed0ZNU7zrVvqUu/Y2M4GlmDxB8MpxjfDO3blT1ePGNnlkT3Il2ljmroKWmhdLK2esWmC37dMCXyTgWs8bULKBp8=" # CF_PASSWORD
 
 notifications:
   webhooks: https://coveralls.io/webhook

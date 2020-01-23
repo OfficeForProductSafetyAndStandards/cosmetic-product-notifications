@@ -9,7 +9,7 @@
       <% heading = capture do %>
         <h1 class="govuk-heading-xl">Is the UK Responsible Person a business or an individual?</h1>
       <% end %>
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@responsible_person, first_values: {account_type: "business"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :account_type,
               fieldset: { legend: { html: heading } },
               items: [{ text: "Limited company or Limited Liability Partnership (LLP)", value: :business },
