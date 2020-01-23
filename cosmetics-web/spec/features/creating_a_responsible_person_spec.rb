@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Responsible person creation journey", type: :feature do
+RSpec.describe "Creating a responsible person", type: :feature do
   context "when logged in as a new user," do
     let(:user) { create(:user, first_login: true) }
 
