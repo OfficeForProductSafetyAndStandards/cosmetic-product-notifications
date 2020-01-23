@@ -309,17 +309,15 @@ end
 
 # ---- Page interactions ----
 
-def go_to_upload_notification_page()
-     expect_to_be_on__was_eu_notified_about_products_page
-     page.choose("Yes")
-     click_button "Continue"
-     expect_to_be_on__do_you_have_the_zip_files_page
-     page.choose("Yes")
-     click_button "Continue"
-     expect_to_be_on__upload_eu_notification_files_page
+def go_to_upload_notification_page
+  expect_to_be_on__was_eu_notified_about_products_page
+  page.choose("Yes")
+  click_button "Continue"
+  expect_to_be_on__do_you_have_the_zip_files_page
+  page.choose("Yes")
+  click_button "Continue"
+  expect_to_be_on__upload_eu_notification_files_page
 end
-
-
 
 def answer_was_eu_notified_with(answer)
   within_fieldset("Has the EU been notified about these products using CPNP?") do

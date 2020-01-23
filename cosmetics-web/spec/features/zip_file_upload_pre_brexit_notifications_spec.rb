@@ -221,10 +221,10 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
 
     expect_to_be_on__upload_formulation_document_page
     upload_formulation_file
-    
+
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
-    expect_check_your_answers_page_for_kit_items_to_contain(product_name:"Multi-Item-RangeDoc_pHRange_ExactDoc_Nano",
+    expect_check_your_answers_page_for_kit_items_to_contain(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano",
       imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
@@ -239,7 +239,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
           sub_subcategory: "Non-oxidative hair colour products",
           formulation_given_as: "Concentration ranges",
           physical_form: "Cream or paste",
-          pH_range:"4.0 to 5.0",
+          pH_range: "4.0 to 5.0",
         },
         {
           name: "ExactValues",
@@ -252,9 +252,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
           formulation_given_as: "Exact concentration",
           physical_form: "Loose powder",
         },
-      ],
-
-      )
+      ])
     # puts page.html
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
@@ -262,7 +260,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
   end
 
 
-scenario "Verify zip file upload with multi-items with range doc and exact values and nano elements in each item" do
+  scenario "Verify zip file upload with multi-items with range doc and exact values and nano elements in each item" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
@@ -280,7 +278,7 @@ scenario "Verify zip file upload with multi-items with range doc and exact value
     click_link "Add missing information"
 
 
-    
+
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
@@ -315,7 +313,7 @@ scenario "Verify zip file upload with multi-items with range doc and exact value
 
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano")
-    expect_check_your_answers_page_for_kit_items_to_contain(product_name:"Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
+    expect_check_your_answers_page_for_kit_items_to_contain(product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
       imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
@@ -330,7 +328,7 @@ scenario "Verify zip file upload with multi-items with range doc and exact value
           sub_subcategory: "Non-oxidative hair colour products",
           formulation_given_as: "Concentration ranges",
           physical_form: "Cream or paste",
-          pH_range:"4.0 to 5.0",
+          pH_range: "4.0 to 5.0",
         },
         {
           name: "ExactValues",
@@ -343,16 +341,14 @@ scenario "Verify zip file upload with multi-items with range doc and exact value
           formulation_given_as: "Exact concentration",
           physical_form: "Loose powder",
         },
-      ],
-
-      )
-    # puts page.html
+      ])
+      # puts page.html
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano notification submitted"
   end
 
-scenario "Verify zip file upload with multi-items with exact and range values and nano elements in each item" do
+  scenario "Verify zip file upload with multi-items with exact and range values and nano elements in each item" do
     visit new_responsible_person_add_notification_path(responsible_person)
     go_to_upload_notification_page
 
@@ -362,7 +358,7 @@ scenario "Verify zip file upload with multi-items with exact and range values an
 
     expect_to_see_incomplete_notification_with_eu_reference_number "1006079"
     click_link "Add missing information"
-    
+
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
@@ -393,7 +389,7 @@ scenario "Verify zip file upload with multi-items with exact and range values an
 
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-Rangevalues_Exactvalues_Nano")
-    expect_check_your_answers_page_for_kit_items_to_contain(product_name:"Multi-Item-Rangevalues_Exactvalues_Nano",
+    expect_check_your_answers_page_for_kit_items_to_contain(product_name: "Multi-Item-Rangevalues_Exactvalues_Nano",
       imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
@@ -408,7 +404,7 @@ scenario "Verify zip file upload with multi-items with exact and range values an
           sub_subcategory: "Non-oxidative hair colour products",
           formulation_given_as: "Concentration ranges",
           physical_form: "Cream or paste",
-          pH_range:"4.0 to 5.0",
+          pH_range: "4.0 to 5.0",
         },
         {
           name: "ExactValues",
@@ -421,10 +417,8 @@ scenario "Verify zip file upload with multi-items with exact and range values an
           formulation_given_as: "Exact concentration",
           physical_form: "Loose powder",
         },
-      ],
-
-      )
-    # puts page.html
+      ])
+      # puts page.html
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano notification submitted"
