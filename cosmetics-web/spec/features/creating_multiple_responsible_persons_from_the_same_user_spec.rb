@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Create multiple responsible person within same keycloak user", type: :feature do
+RSpec.describe "Creating multiple responsible persons from the same user", type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
 
   before do

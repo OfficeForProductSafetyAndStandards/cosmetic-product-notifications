@@ -530,35 +530,6 @@ def add_an_item
   click_button "Add item"
 end
 
-
-
-#Create responsible person helpers
-
-def create_individual_responsible_person
-  go_to_rp_declaration_and_confirm
-  select_options_to_create_account
-  select_individual_account_type
-  expect(page).to have_h1("UK Responsible Person details")
-  fill_in "Name", with: "Auto-test rpuser"
-  fill_in_rp_contact_details
-end
-
-def create_business_responsible_person
-  go_to_rp_declaration_and_confirm
-  select_options_to_create_account
-  select_business_account_type
-  expect(page).to have_h1("UK Responsible Person details")
-  fill_in "Business name", with: "Auto-test rpuser"
-  fill_in_rp_contact_details
-end
-
-def go_to_rp_declaration_and_confirm
-  visit(root_path)
-  expect(page).to have_h1("Responsible Person Declaration")
-  click_button "I confirm"
-  expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
-end
-
 def select_options_to_create_account
   click_on "Continue"
   expect(page).to have_h1("Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?")
