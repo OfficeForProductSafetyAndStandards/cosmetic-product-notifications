@@ -29,8 +29,8 @@ jobs:
         bundle config path vendor/bundle
         bundle check || bundle install --jobs 4 --retry 3
     - name: Run ruby code style checks
-      working-directory: cosmetics-web
       run: |
+        cd cosmetics-web
         bundle exec rubocop
   front_end:
     name: "Sass and Javascript"
