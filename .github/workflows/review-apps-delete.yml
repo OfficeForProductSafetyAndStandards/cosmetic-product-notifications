@@ -8,6 +8,10 @@ jobs:
   cleanup_reviewapp:
     name: Delete review app
     runs-on: ubuntu-latest
+    env:
+      SPACE: int
+      CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
+      CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
     steps:
     - uses: actions/checkout@v1
       if: github.event.pull_request.merged == true
@@ -29,10 +33,6 @@ jobs:
         cf7 logout
     - name: Get Pull Request ID from GITHUB_REF
       if: github.event.pull_request.merged != true
-      env:
-        SPACE: int
-        CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
-        CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
       run: |
         export PR_NUMBER=`echo $GITHUB_REF | grep -o '[0-9_]\+'`
         cf7 api api.london.cloud.service.gov.uk
