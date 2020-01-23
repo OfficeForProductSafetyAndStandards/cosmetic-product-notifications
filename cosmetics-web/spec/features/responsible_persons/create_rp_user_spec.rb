@@ -23,7 +23,7 @@ RSpec.describe "Responsible person creation journey", type: :feature do
       expect(page).to have_h1("Your cosmetic products")
     end
 
-    scenario "creating a respoosible person as a limited company" do
+    scenario "creating a responsible person as a limited company" do
       visit(root_path)
       expect(page).to have_h1("Responsible Person Declaration")
       click_button "I confirm"
