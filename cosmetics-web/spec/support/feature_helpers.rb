@@ -302,6 +302,11 @@ def expect_not_to_see_any_notification_errors
   end
 end
 
+def expect_to_be_on__responsible_person_declaration_page
+  expect(page).to have_h1("Responsible Person Declaration")
+end
+
+
 # ---- Page interactions ----
 
 def go_to_upload_notification_page()
@@ -542,62 +547,32 @@ def add_an_item
   click_button "Add item"
 end
 
-
-
-#Create responsible person helpers
-
-def go_to_rp_declaration_page
-  visit(root_path)
-  expect(page).to have_h1("Responsible Person Declaration")
-  click_button "I confirm"
-  expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
+def select_options_to_create_account
   click_on "Continue"
   expect(page).to have_h1("Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?")
-  choose "option_create_new", visible: false
+  choose "No, I need to create an account"
   click_on "Continue"
   expect(page).to have_h1("Is the UK Responsible Person a business or an individual?")
 end
 
-def create_individual_responsible_person
-  go_to_rp_declaration_page
-  select_individual_account_type
-
-  assert_text "UK Responsible Person details"
-
-  fill_in "Name", with: "Auto-test rpuser"
+def fill_in_rp_contact_details
   fill_in "Building and street", with: "Auto-test-address1"
   fill_in "Town or city", with: "Auto-test city"
   fill_in "County", with: "auto-test-county"
   fill_in "Postcode", with: "b28 9un"
   click_on "Continue"
-
   expect(page).to have_h1("Contact person details")
-
   fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@exaple.com"
   fill_in "Phone number", with: "07984563072"
   click_on "Continue"
 end
 
-def create_business_responsible_person
-  go_to_rp_declaration_page
-  select_business_account_type
-
-  expect(page).to have_h1("UK Responsible Person details")
-
-  fill_in "Business name", with: "Auto-test rp-user"
-  fill_in "Building and street", with: "Auto-test-address1"
-  fill_in "Town or city", with: "Auto-test city"
-  fill_in "County", with: "auto-test-county"
-  fill_in "Postcode", with: "b28 9un"
-  click_on "Continue"
-
-  assert_text "contact person"
-
-  fill_in "Full name", with: "Auto-test contact person"
-  fill_in "Email address", with: "auto-test-business@exaple.com"
-  fill_in "Phone number", with: "07984563072"
-  click_on "Continue"
+def create_another_business_responsible_person
+  select_options_to_create_account
+  select_individual_account_type
+  fill_in "Name", with: "Auto-test rpuser"
+  fill_in_rp_contact_details
 end
 
 def select_business_account_type
