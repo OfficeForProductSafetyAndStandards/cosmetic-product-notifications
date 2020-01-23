@@ -302,6 +302,11 @@ def expect_not_to_see_any_notification_errors
   end
 end
 
+def expect_to_be_on__responsible_person_declaration_page
+  expect(page).to have_h1("Responsible Person Declaration")
+end
+
+
 # ---- Page interactions ----
 
 def answer_was_eu_notified_with(answer)
@@ -569,3 +574,4 @@ def select_individual_account_type
   choose "Individual or sole trader"
   click_on "Continue"
 end
+
