@@ -37,8 +37,8 @@ jobs:
         - BRANCH=${TRAVIS_BRANCH} BUILD_ID=${TRAVIS_BUILD_NUMBER} ./infrastructure/ci/build-docker-images.sh
       script: echo "Built"
     - stage: Deploy to staging
-      name: Deploy Keycloak
-      script: COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
+      name: Deploy Maintenance page
+      script: COMPONENT=maintenance ./infrastructure/ci/deploy-if-changed.sh
       env: &deploy_staging_env
         - SPACE=staging
         - BRANCH=${TRAVIS_BRANCH}
@@ -48,13 +48,10 @@ jobs:
         - secure: "MI25ifcjmL7vdGeoMCQ7cgBUjadXBkvQwlIMDQPYvsN5RGT2gclR8rkoJhMyf19bqfIopCFqh/dy1MXHJa9HVLjrtKbnPt+Zm+nH8Nooa20bVyprr5DOopKKE80Y+iTnh0kYcWN7+ogGr3JS/RyK9y4SDNDG9Uk8E2D5OzaMwyKCOL4sEMuvnm1fwc11/+KULCY6PBNaUjPgWQ079awUitNO1liBGmMrMoVvA3O72pqx1PHa2I1ciCd7LtjaLKN2cmstqd4Usilv53i/nXKD1KL/9uxF+37QQRE59Mrbp0TOWJkG9V9DoiJdn/SzXtzY8q95x6XVqCzpi9m9TH8LX2LpkpcZNI/ooDfOH3s/M8rSFx6MNNLWMSfSLqCHZRk8FLwMPJP0GBa62fErSreXdm+mNcMyS8T7djrqbQQ0NSPs1wDsNH9IqjLuEqWP3py/FHSFAXUUMbjaiR/P7oPirxdH+NqXw7/zW4mx4ciUKlbeZkij5CO6H9ZqiBZ6nlaT1hwo5Cq3owcZTMl7gfXnyzXtNBq3/1r5pnfhsYA2ZwAlS83aqmgvRVnwbSPUorR5PCpSHORXTPNG/hl5jwjWiCYMjjnQZNJtZX9Lyep7dwACc8/uVhBEw114HTZfUUt6gHvflRU95WdeDiiwyFXZB8bLQKO+H270saocmvkpdo4=" # CF_PASSWORD
         - secure: qbMypSFbNCuiJwlS2xYy6TaCiFkmU9s2kTddai+L19xn9eCuxYCKrCA7kbUSdAVQ0K5uFgeggU/OrA0Gy4qRNz8gtxazSpihhHrCqHNlcpkowrF/mNbXySVUZFIiz138/N+doFzOyFJoc6t13XbTZ6TCkff/QNzB+5vX1KGjApPWZkStpKkE2NrlKQCCLlUL/aUCW+w8zy7VIZNuozJtIywQAganppbN3eClPicuNI4+QILp3xuQ6ZNj0cvIZXkWYB0GYmrU9mDVRaIXvSfBjxRho+c91TDON/hbptu6j3Iiwv0pVFKVZ0o6R+1dSa9LmrtRr09cDuxam3GRG1V5i2GNCXOggHHuL3QaaLT7NBkDq5laMr8gLCJzmtAouthYBnZn3LQysbo1+YA+agX8oQdAk6hc2A773q5InWOVQ7IXusnIzrkce4J0NOKpvkB3sCsIutfiHWAP8Adk/stqJsjiziNTVr1GGsNMvckjsMa9/ZnaOCMU6FLuoGugdv8cRv3EfQYKUY8hjMAXzjUXzvQRNhxvIhjQr0eo+Qx+1Hg0f/IfQLIrN8azh/Dk9v3fOENqiPA/bxfAnYQH4Of/Ba8jI2dxRzXobEiEdXP8gquNR9u4nBMedtwyeu8Pl3/WjgTmekZuCpGNhWfrzvXQU9jzaXiXIl7lgAGfvvK4EVo= # COS_BASIC_AUTH_USERNAME
         - secure: rTNOPL8nr4UdF8VLbG2guXN5Pwiowp62v4p8/FNgcRwSRJrOCuF8sd4iJRe1I+O/9BMN/bVbbHFK8WHQ6KmIvBNxCQwqLITfNtYh/+a6BirieqoDyA+QUomBChixjaDQSe3KDyr2FTZhSkrBGwBRPUqC179R4fXdDllDw612S8DTG463or6IoRmc8cQ5T7Bk602Tlri+nGHaOcgSUSmRohOWGycOLWPUxxTKOBXoXGNgcOG2RbKJIm/hsaWLa7K0xJWpQiT70lKCQw9h+3pPGGQc+szwwmerxgFdOsrnH49hXiVmhouv8+Wcb4/BUlMDQJ7tWjwVWIXag/XtbpzDLUGItLKkZ/OZF6CjSx1POJgdFzZxbKqUadMmO/hsW6G7TSxYxyTNvlyFE+5fFuO/+zV/8M5jWxtsC4w9s+0/VtOJv9taolfhLmn70hAtzxZHM6jNi7BvIOCPl56Lw4v7cfXdvxtwWlkgkzvnqTAUR2fFYL6ZYPeuoRLyL0eZeaRFrbC2mbSfBV8x5+G8cEnAQKXJvqm5FKgiqVHyoiY4H9sHJXBEb1/zotGyf99eJe4RxuZaeZOA/kNeTpfuHFNyPaa8+yo25LTEuVUr1Ackq2jg+ra2+IuhtpUsmiFK7S5AObxz8OQr2+uzG/mEG0xE+9y8NAX56W+sNZcpjlWP+7U= # COS_BASIC_AUTH_PASSWORD
-    - name: Deploy Maintenance page
-      script: COMPONENT=maintenance ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_staging_env
 
     - stage: Deploy to production
-      name: Deploy Keycloak
-      script: COMPONENT=keycloak ./infrastructure/ci/deploy-if-changed.sh
+      name: Deploy Maintenance page
+      script: COMPONENT=maintenance ./infrastructure/ci/deploy-if-changed.sh
       env: &deploy_prod_env
         - SPACE=prod
         - BRANCH=${TRAVIS_BRANCH}
@@ -62,9 +59,6 @@ jobs:
         - CF_STAGING_TIMEOUT=30 # Extend CF staging timeout to 30 minutes
         - secure: fXT1dyOFJiElJ1dLvPICDKhHFypSTa0+soCxxOuAcAMJK049h69GvkxDU9CKj471ZQwFs2PUYnGBu0r/J2hgAKDVIIN3ch3kJP7sEbi0ye8WXteIojIAelrcCuueKazhCORRPlJVOojXCMwtLpAyRi4qAev563jM+4CeivcY3W9xEmbZCMPuSsp/2cp5yVIQ0c/B4TgMG5T8tLLvPdUIHcHkxQURMJnFh10zVpSsUBwlCrVxAFNPLcaxVQyQ0xFEivw4HsYVrvfQ6Rh3i31PWAzupzb11ZolqQ1W43Z2jXCFAUjBZ48vMzsIsSMcws1kaPkN07R3Gtwuxurzp96AI68NoA+lf8xbzeCHsFkDO/rfmmVgXwi3nObXHUMInIazO4ZRwoHHoofl4YsmxPpYfkm1gtq15uh5/d8Xl7CWe7fU5xl0CPutpAOaPnoTcTzhMwaDyRVWzm0t4wzcBR2psKBi9c3kaRTFpz2K8K7xIuQ3ke2Smf+l6cZj0cgcb5OpdT79qLshgZPw3svsV8iS2akeq22Qg2qSPe2Mu8hhjAx0V1+nlnMuTeSOEa9s93QQR8jX2E4uqkWNo8zshKeCbMp591TnW8Hkzjzoi2m0sRDYZuRBbuIG0N2NqCnWspGamijGa8/zUbbFL1Cax9RmzIh24Hn6G1MyCa729ssdHZ0= # CF_USERNAME
         - secure: "U0kSbQkr+ztK/etHLaARNKwxOZug/9DCC28xx+x8DnONaZ+/zkJjmsQXOUNpgw0JM3gpCUA++lczKfbr8r/q8T35EPXDfCLUQhK5+Ht2da9SnmupNmF5ePd2tkWRmSdHZmgd6/620YxRto7zakTyAHlJ5fkmBDypMl/l2OycKtBEeLmr5XkdEUSdaooAZKb9zFy5Tgvqfk8BW96lIV2xcHDWJDxA0zQHX1ML6lPz3TZrwNtJMn7oFSN4DaifWaoYREIxVtOKGnhOOM5cd+Nc2R4np+wbFFslf4M2YdzBLCs2x0TrLpOKrWiRjfSukUZfI6mtWlLQUtfa15JHhz8KCPVrIOVNHYY+13VGm2bbKcg5Gl3wcHRPHcAtpdGrPs9lJhVhXWSvaHY/0NckfIQBBrA3b5o7tDx13ph0e8uPMhF5NkJPHg+XflAxFLVC74VLPsNLQBvn0Icjj/eCnhv4FEJxT9Xd6YM+N4AXHQ40gR9eW6j8XCgDTZH6+GvH2/UJlv8RWmpieFeYlcjI8xr4gCtkx55IbJuaUkM/466Jm0GhHL1k3S3EP8Vgy0wb5Ad37Va0IbrCvmJWuvUA5p9drr2ItJpEch8YGN03YJyukEZU+MI/EzeQFYRvwEwXTDQTYvOR0TVvlOyrfCI/evtn3yT2lseNvkab2SgG/9kaQWA=" # CF_PASSWORD
-    - name: Deploy Maintenance page
-      script: COMPONENT=maintenance ./infrastructure/ci/deploy-if-changed.sh
-      env: *deploy_prod_env
 
     - stage: Remove review app
       name: Remove review app

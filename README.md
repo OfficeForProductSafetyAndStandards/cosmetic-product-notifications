@@ -20,10 +20,6 @@ Rename the copy of the file to `.env` and fill in any environment variables.
 This `.env` file will be git ignored, so it is safe to add sensitive data.
 See the [accounts section](#accounts) below for information on how to obtain some of the optional variables.
 
-Add the following entry for Keycloak to your hosts file ([instructions](https://support.rackspace.com/how-to/modify-your-hosts-file/)):
-
-    127.0.0.1   keycloak
-
 Build and start-up the full project:
 
     docker-compose up
@@ -153,7 +149,7 @@ See [maintenance/README.md](maintenance/README.md#deployment).
 
 #### Keycloak
 
-See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
+See [keycloak repo](https://github.com/UKGovernmentBEIS/beis-opss-keycloak).
 
 #### Cosmetics
 
