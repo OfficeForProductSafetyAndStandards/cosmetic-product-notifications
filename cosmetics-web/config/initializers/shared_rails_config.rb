@@ -18,3 +18,4 @@ ActionView::Base.include GovukDesignSystem::HintHelper
 ActionView::Base.include GovukDesignSystem::PhaseBannerHelper
 ActionView::Base.include GovukDesignSystem::TagHelper
 ActionView::Base.include GovukDesignSystem::ButtonHelper
+ActionView::Base.include GovukDesignSystem::ErrorSummaryHelper

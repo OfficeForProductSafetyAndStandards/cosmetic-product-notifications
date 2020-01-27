@@ -8,7 +8,7 @@
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= render "form_components/govuk_error_summary", form: form %>
+      <%= error_summary_for(@component) %>
       <%= render "components/govuk_fieldset", legend: { text: title, classes: "govuk-label--xl", isPageHeading: true } %>
 
         <% @component.shades.each_with_index do |shade, _index| %>

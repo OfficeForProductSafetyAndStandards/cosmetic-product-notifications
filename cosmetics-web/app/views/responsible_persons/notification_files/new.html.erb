@@ -14,15 +14,15 @@
 
         <span class="error-summary-js">
           <% if @errors.blank? %>
-            <%= render "components/govuk_error_summary", titleText: "There is a problem",
+            <%= govukErrorSummary(titleText: "There is a problem",
               errorList: [{ text: "You can only select up to " \
               "#{NotificationFile.get_max_number_of_files} files at the same time",
-                href: "#uploaded_files" }] %>
+                href: "#uploaded_files" }]) %>
           <% end %>
         </span>
         <span id="error-summary">
           <% if @errors.present? %>
-            <%= render "components/govuk_error_summary", titleText: "There is a problem", errorList: @errors %>
+            <%= govukErrorSummary(titleText: "There is a problem", errorList: @errors) %>
           <% end %>
         </span>
 

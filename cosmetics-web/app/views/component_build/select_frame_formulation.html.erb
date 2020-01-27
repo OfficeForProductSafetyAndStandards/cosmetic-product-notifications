@@ -7,7 +7,7 @@
 <% end %>
 
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
-  <%= render "form_components/govuk_error_summary", form: form %>
+  <%= error_summary_for(@component) %>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
