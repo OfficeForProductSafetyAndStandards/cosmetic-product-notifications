@@ -3,7 +3,7 @@ applications:
 - name: cosmetics-worker
   memory: 1G
   buildpacks:
-    - ruby_buildpack
+    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.8.4
   instances: 1
   path: ../cosmetics-web
   command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && bin/sidekiq -C config/sidekiq.yml

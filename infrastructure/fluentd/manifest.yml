@@ -4,7 +4,7 @@ applications:
   memory: 256M
   instances: 1
   buildpacks:
-    - ruby_buildpack
+    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.8.4
   path: .
   command: bin/fluentd -c ./fluent.conf -p ./plugins/
   stack: cflinuxfs3
