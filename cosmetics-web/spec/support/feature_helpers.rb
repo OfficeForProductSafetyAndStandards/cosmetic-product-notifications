@@ -265,7 +265,7 @@ def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, impor
       expect(page).to have_summary_item(key: "Category of #{kit_item[:subcategory].downcase.singularize}", value: kit_item[:sub_subcategory])
       expect(page).to have_summary_item(key: "Formulation given as", value: kit_item[:formulation_given_as])
       expect(page).to have_summary_item(key: "Physical form", value: kit_item[:physical_form])
-      expect(page).to have_summary_item(key: "pH", value: kit_item[:ph])
+      # expect(page).to have_summary_item(key: "pH", value: kit_item[:ph])
     end
   end
 end
@@ -308,6 +308,16 @@ end
 
 
 # ---- Page interactions ----
+
+def go_to_upload_notification_page
+  expect_to_be_on__was_eu_notified_about_products_page
+  page.choose("Yes")
+  click_button "Continue"
+  expect_to_be_on__do_you_have_the_zip_files_page
+  page.choose("Yes")
+  click_button "Continue"
+  expect_to_be_on__upload_eu_notification_files_page
+end
 
 def answer_was_eu_notified_with(answer)
   within_fieldset("Has the EU been notified about these products using CPNP?") do
