@@ -11,7 +11,7 @@ if [[ "$TOP_LEVEL_CHANGES" =~ maintenance ]]; then
     COMPONENTS="$COMPONENTS maintenance"
 fi
 
-if [[ "$TOP_LEVEL_CHANGES" =~ keycloak ]] || [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-web ]]; then
+if [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-web ]]; then
     COMPONENTS="$COMPONENTS cosmetics-web cosmetics-worker"
 elif [[ "$TOP_LEVEL_CHANGES" =~ cosmetics-worker ]]; then
     COMPONENTS="$COMPONENTS cosmetics-worker"
