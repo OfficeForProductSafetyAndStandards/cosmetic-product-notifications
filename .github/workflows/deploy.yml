@@ -24,7 +24,7 @@ jobs:
       run: |
         DEPLOY_URL=$(curl -X POST \
           -H "Authorization: token $GITHUB_TOKEN" \
-          https://api.github.com/repos/UKGovernmentBEIS/beis-opss/deployments \
+          https://api.github.com/repos/$GITHUB_REPOSITORY/deployments \
           -d '{
           "ref": "master",
           "description": "Staging deploy",
@@ -44,8 +44,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
         DEPLOY_STATUSES_URL: ${{ env.DEPLOY_URL }}/statuses
-        ACTIONS_DEPLOY_URL: https://github.com/UKGovernmentBEIS/beis-opss/actions?query=branch%3Amaster+workflow%3ADeploy
       run: |
+        ACTIONS_DEPLOY_URL=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amaster+workflow%3ADeploy")
         echo "::set-env name=ACTIONS_DEPLOY_URL::$ACTIONS_DEPLOY_URL" # Export for future steps
 
         curl -X POST \
@@ -119,7 +119,7 @@ jobs:
       run: |
         DEPLOY_URL=$(curl -X POST \
           -H "Authorization: token $GITHUB_TOKEN" \
-          https://api.github.com/repos/UKGovernmentBEIS/beis-opss/deployments \
+          https://api.github.com/repos/$GITHUB_REPOSITORY/deployments \
           -d '{
           "ref": "master",
           "description": "Production deploy",

@@ -17,7 +17,7 @@ jobs:
       run: |
         DEPLOY_URL=$(curl -X POST \
           -H "Authorization: token $GITHUB_TOKEN" \
-          https://api.github.com/repos/UKGovernmentBEIS/beis-opss/deployments \
+          https://api.github.com/repos/$GITHUB_REPOSITORY/deployments \
           -d '{
           "ref": "'"$BRANCH"'",
           "description": "Review App deploy",
@@ -42,7 +42,7 @@ jobs:
         PR_NUMBER: ${{ env.PR_NUMBER }}
       run: |
         # The Pull Request checks URL needs to be available in further steps
-        PR_CHECKS_URL=$(echo "https://github.com/UKGovernmentBEIS/beis-opss/pull/$PR_NUMBER/checks")
+        PR_CHECKS_URL=$(echo "https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER/checks")
         echo "::set-env name=PR_CHECKS_URL::$PR_CHECKS_URL"
 
         curl -X POST \
