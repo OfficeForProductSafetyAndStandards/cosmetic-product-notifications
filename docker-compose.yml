@@ -3,11 +3,11 @@ version: '3'
 services:
   db:
     build:
-      context: ./db
+      context: ./dev-docker/db/
     volumes:
       - postgres-volume:/var/lib/postgresql/data
     env_file:
-      - .env.keycloak
+      - ./dev-docker/.env.keycloak
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.3
@@ -22,18 +22,18 @@ services:
     hostname: redis
 
   keycloak:
-    build:
-      context: ./keycloak
-    env_file:
-      - .env.keycloak
-    depends_on:
-      - db
-    ports:
-      - "8080:8080"
-#    This can speed up development when working on themes in keycloak, by not requiring to rebuild the keycloak image
-#    to pickup changes, instead simply restarting the keycloak container
-#    volumes:
-#      - ${PWD-.}/keycloak/govuk-theme/govuk:/opt/jboss/keycloak/themes/govuk
+    image: beisopss/keycloak:latest
+    command: ls /opt/jboss/keycloak/configuration #/opt/jboss/keycloak/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.strategy=OVERWRITE_EXISTING -Dkeycloak.migration.file=/opt/jboss/keycloak/configuration/initial-setup.json -b 0.0.0.0
+    # command: #/opt/jboss/keycloak/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.strategy=OVERWRITE_EXISTING -Dkeycloak.migration.file=/opt/jboss/keycloak/configuration/initial-setup.json -b 0.0.0.0
+    #    env_file:
+    #      - ./dev-docker/.env.keycloak
+    #    environment:
+    #      - NOTIFY_API_KEY=
+    #        #    depends_on:
+    #        #      - db
+    #    ports:
+    #      - "8080:8080"
+    #      - "9990:9990"
 
   maintenance:
     build:
