@@ -33,6 +33,14 @@ if there are changes to the Docker config:
 
     docker-compose down && docker-compose build && docker-compose up
 
+### Troubleshooting
+
+#### Keycloak ports are not exposed
+
+If `docker ps` shows that keycloak is up and running, but port are not expose, run keycloak with such command:
+
+`docker-compose run -p 8080:8080 keycloak`
+
 
 ### Mac tips
 
@@ -94,19 +102,12 @@ If you get an error saying you don't have permission to set something, make sure
 ## Deployment
 
 Anything which is merged to `master` (via a Pull Request or push) will trigger the
-[Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
+[Github Action Build](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
 and cause deployments of the various components to the int space on GOV.UK PaaS.
 
 Deployment to research environment does not currently happen automatically, for details see section "Research" in
 [prototypes](https://regulatorydelivery.atlassian.net/wiki/spaces/PSD/pages/452689949/Prototypes)
 
-Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
-space.
-Please only do this if you are confident that this is a stable commit.
-
-Anything merged into the branch `prod` (only via a Pull Request) will cause Travis CI to instead build to the prod
-space.
-Please only do this if you are confident that this is a stable commit.
 
 ### Review applications
 
