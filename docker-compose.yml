@@ -3,14 +3,11 @@ version: '3'
 services:
   db:
     build:
-      context: ./dev-docker/db/
+      context: ./db
     volumes:
       - postgres-volume:/var/lib/postgresql/data
     env_file:
-      - ./dev-docker/.env.keycloak
-    ports:
-      - "5432:5432"
-      - "6432:6432"
+      - .env.keycloak
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.3
@@ -25,16 +22,18 @@ services:
     hostname: redis
 
   keycloak:
-    image: beisopss/keycloak:latest
+    build:
+      context: ./keycloak
     env_file:
-      - ./dev-docker/.env.keycloak
-    environment:
-      - NOTIFY_API_KEY=
+      - .env.keycloak
     depends_on:
       - db
     ports:
       - "8080:8080"
-      - "9990:9990"
+#    This can speed up development when working on themes in keycloak, by not requiring to rebuild the keycloak image
+#    to pickup changes, instead simply restarting the keycloak container
+#    volumes:
+#      - ${PWD-.}/keycloak/govuk-theme/govuk:/opt/jboss/keycloak/themes/govuk
 
   maintenance:
     build:

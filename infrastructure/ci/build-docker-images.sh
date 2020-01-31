@@ -5,6 +5,8 @@ set -ex
 
 COMPONENTS=(
     'maintenance'
+    'db'
+    'keycloak'
 )
 
 function docker_tag_exists {

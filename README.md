@@ -20,6 +20,10 @@ Rename the copy of the file to `.env` and fill in any environment variables.
 This `.env` file will be git ignored, so it is safe to add sensitive data.
 See the [accounts section](#accounts) below for information on how to obtain some of the optional variables.
 
+Add the following entry for Keycloak to your hosts file ([instructions](https://support.rackspace.com/how-to/modify-your-hosts-file/)):
+
+    127.0.0.1   keycloak
+
 Build and start-up the full project:
 
     docker-compose up
@@ -32,14 +36,6 @@ When pulling new changes from master, it is sometimes necessary to run the follo
 if there are changes to the Docker config:
 
     docker-compose down && docker-compose build && docker-compose up
-
-### Troubleshooting
-
-#### Keycloak ports are not exposed
-
-If `docker ps` shows that keycloak is up and running, but port are not expose, run keycloak with such command:
-
-`docker-compose run -p 8080:8080 keycloak`
 
 
 ### Mac tips
@@ -102,12 +98,19 @@ If you get an error saying you don't have permission to set something, make sure
 ## Deployment
 
 Anything which is merged to `master` (via a Pull Request or push) will trigger the
-[Github Action Build](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
+[Travis CI build](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
 and cause deployments of the various components to the int space on GOV.UK PaaS.
 
 Deployment to research environment does not currently happen automatically, for details see section "Research" in
 [prototypes](https://regulatorydelivery.atlassian.net/wiki/spaces/PSD/pages/452689949/Prototypes)
 
+Anything merged into the branch `staging` (only via a Pull Request) will cause Travis CI to instead build to the staging
+space.
+Please only do this if you are confident that this is a stable commit.
+
+Anything merged into the branch `prod` (only via a Pull Request) will cause Travis CI to instead build to the prod
+space.
+Please only do this if you are confident that this is a stable commit.
 
 ### Review applications
 
@@ -150,7 +153,7 @@ See [maintenance/README.md](maintenance/README.md#deployment).
 
 #### Keycloak
 
-See [keycloak repo](https://github.com/UKGovernmentBEIS/beis-opss-keycloak).
+See [keycloak/README.md](keycloak/README.md#deployment-from-scratch).
 
 #### Cosmetics
 
