@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+set -e
+
+# Creates a Deploy in Github
+#
+# Input:
+# - environment to deploy at.
+#   eg: $ gh_deploy_create staging
+#
+# Required environment variables:
+# - GITHUB_TOKEN      - Github user token with deploy rights.
+# - GITHUB_REPOSITORY - Set by default by Github. Formatted as "org/repo".
+# - BRANCH            - Branch to be deployed.
+# - GITHUB_REF        - Set by default by Github.
+#
+# Required system tools:
+# - curl
+# - jq
+# - awk
+gh_deploy_create() {
+  environment_name=$1
+  deploy_url=$(curl -X POST \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    https://api.github.com/repos/$GITHUB_REPOSITORY/deployments \
+    -d '{
+    "ref": "'"$BRANCH"'",
+    "description": "'"$environment_name"' deploy created",
+    "environment": "'"$environment_name"'",
+    "auto_merge": false,
+    "required_contexts": []
+    }' | jq '.url?' | tr -d '"') # Gets 'url' field from the response and trims the surronding quotes.
+
+  if [ -z "$deploy_url" ]; then
+    echo "Failed to create Github deployment"
+  else
+    # We need these values to be shared between steps
+    # 'int' deployments are created for Pull Requests
+    if [ "$environment_name" == "int" ]; then
+      echo "::set-env name=PR_NUMBER::$(echo "$GITHUB_REF" | awk -F / '{print $3}')"
+    fi
+    echo "::set-env name=DEPLOY_STATUSES_URL::$deploy_url/statuses"
+    echo "Github deployment created: $deploy_url"
+  fi
+}
+
+# Sets Github deploy status as "in_progress"
+#
+# Input:
+# - Deployment environment to update the status at.
+#   eg: $ gh_deploy_initiate staging
+#
+# Required environment variables:
+# - GITHUB_TOKEN        - Github user token with deploy rights.
+# - GITHUB_REPOSITORY   - Set by default by Github. Formatted as "org/repo".
+# - PR_NUMBER           - Pull Request number. Only needed for "int" environment.
+# - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set up by "gh_deploy_create"
+#
+# Required system tools:
+# - curl
+gh_deploy_initiate() {
+  environment_name=$1
+  if [ "$environment_name" == "int" ]; then
+    log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER/checks")
+  else
+    log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amaster+workflow%3ADeploy")
+  fi
+  echo "::set-env name=LOG_URL::$log_url" # Export for future steps
+
+  curl -X POST \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    -H "Accept: application/vnd.github.ant-man-preview+json" \
+    -H "Accept: application/vnd.github.flash-preview+json" \
+    $DEPLOY_STATUSES_URL \
+    -d '{
+      "environment": "'"$environment_name"'",
+      "state": "in_progress",
+      "description": "'"$environment_name"' deployment initiated",
+      "log_url": "'"$log_url"'"
+    }'
+}
+
+# Sets Github deploy status as "success"
+#
+# Input:
+# - Deployment environment to update the status at.
+#   eg: $ gh_deploy_success staging
+#
+# Required environment variables:
+# - GITHUB_TOKEN        - Github user token with deploy rights.
+# - PR_NUMBER           - Pull Request number. Only needed for "int" environment.
+# - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set up by "gh_deploy_create"
+# - LOG_URL             - URL to track the deployment progress. Set up by "gh_deploy_initiate"
+#
+# Required system tools:
+# - curl
+gh_deploy_success() {
+  environment_name=$1
+  if [ "$environment_name" == "int" ]; then
+    environment_url="https://cosmetics-pr-${PR_NUMBER}-submit-web.london.cloudapps.digital/"
+  elif [ "$environment_name" == "staging" ]; then
+    environment_url="https://staging-submit.cosmetic-product-notifications.service.gov.uk/"
+  elif [ "$environment_name" == "production" ]; then
+    environment_url="https://submit.cosmetic-product-notifications.service.gov.uk/"
+  fi
+
+  curl -X POST \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    -H "Accept: application/vnd.github.ant-man-preview+json" \
+    $DEPLOY_STATUSES_URL \
+    -d '{
+      "environment": "'"$environment_name"'",
+      "state": "success",
+      "description": "'"$environment_name"' deployment succeeded",
+      "environment_url": "'"$environment_url"'",
+      "log_url": "'"$LOG_URL"'"
+    }'
+}
+
+# Sets Github deploy status as "failure"
+#
+# Input:
+# - Deployment environment to update the status at.
+#   eg: $ gh_deploy_failure staging
+#
+# Required environment variables:
+# - GITHUB_TOKEN        - Github user token with deploy rights.
+# - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set up by "gh_deploy_create"
+# - LOG_URL             - URL to track the deployment progress. Set up by "gh_deploy_initiate"
+#
+# Required system tools:
+# - curl
+gh_deploy_failure() {
+  environment_name=$1
+  curl -X POST \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    -H "Accept: application/vnd.github.ant-man-preview+json" \
+    $DEPLOY_STATUSES_URL \
+    -d '{
+      "environment": "'"$environment_name"'",
+      "state": "failure",
+      "description": "'"$environment_name"' deployment failed",
+      "log_url": "'"$LOG_URL"'"
+    }'
+}
+

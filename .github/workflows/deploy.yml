@@ -21,44 +21,18 @@ jobs:
     - name: Create GitHub deployment for Staging
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        BRANCH: master
       run: |
-        DEPLOY_URL=$(curl -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          https://api.github.com/repos/$GITHUB_REPOSITORY/deployments \
-          -d '{
-          "ref": "master",
-          "description": "Staging deploy",
-          "environment": "staging",
-          "auto_merge": false,
-          "required_contexts": []
-          }' | jq '.url?' | tr -d '"') # Gets 'url' field from the response and trims the surronding quotes.
-
-        if [ -z "$DEPLOY_URL" ]; then
-          echo "Failed to create Github deployment"
-        else
-          echo "::set-env name=DEPLOY_URL::$DEPLOY_URL"
-          echo "Github deployment created: $DEPLOY_URL"
-        fi
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_create staging
 
     - name: Initiate Staging deployment status
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_URL }}/statuses
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
       run: |
-        ACTIONS_DEPLOY_URL=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amaster+workflow%3ADeploy")
-        echo "::set-env name=ACTIONS_DEPLOY_URL::$ACTIONS_DEPLOY_URL" # Export for future steps
-
-        curl -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.ant-man-preview+json" \
-          -H "Accept: application/vnd.github.flash-preview+json" \
-          $DEPLOY_STATUSES_URL \
-          -d '{
-            "environment": "staging",
-            "state": "in_progress",
-            "description": "Staging deployment initiated",
-            "log_url": "'"$ACTIONS_DEPLOY_URL"'"
-          }'
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_initiate staging
 
     - name: Deploy to Staging
       env:
@@ -80,78 +54,37 @@ jobs:
       if: success()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_URL }}/statuses
-        ACTIONS_DEPLOY_URL: ${{ env.ACTIONS_DEPLOY_URL }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+        LOG_URL: ${{ env.LOG_URL }}
       run: |
-        curl -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.ant-man-preview+json" \
-          $DEPLOY_STATUSES_URL \
-          -d '{
-            "environment": "staging",
-            "state": "success",
-            "description": "Staging deployment succeeded",
-            "environment_url": "https://staging-submit.cosmetic-product-notifications.service.gov.uk/",
-            "log_url": "'"$ACTIONS_DEPLOY_URL"'"
-          }'
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_success staging
 
     - name: Update Staging deployment status (failure)
       if: failure()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_URL }}/statuses
-        ACTIONS_DEPLOY_URL: ${{ env.ACTIONS_DEPLOY_URL }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+        LOG_URL: ${{ env.LOG_URL }}
       run: |
-        curl -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.ant-man-preview+json" \
-          $DEPLOY_STATUSES_URL \
-          -d '{
-            "environment": "staging",
-            "state": "failure",
-            "description": "Staging deployment failed",
-            "log_url": "'"$ACTIONS_DEPLOY_URL"'"
-          }'
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_failure staging
 
     - name: Create GitHub deployment for Production
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        BRANCH: master
       run: |
-        DEPLOY_URL=$(curl -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          https://api.github.com/repos/$GITHUB_REPOSITORY/deployments \
-          -d '{
-          "ref": "master",
-          "description": "Production deploy",
-          "environment": "production",
-          "auto_merge": false,
-          "required_contexts": []
-          }' | jq '.url?' | tr -d '"') # Gets 'url' field from the response and trims the surronding quotes.
-
-        if [ -z "$DEPLOY_URL" ]; then
-          echo "Failed to create Github deployment"
-        else
-          echo "::set-env name=DEPLOY_URL::$DEPLOY_URL"
-          echo "Github deployment created: $DEPLOY_URL"
-        fi
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_create production
 
     - name: Initiate Production deployment status
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_URL }}/statuses
-        ACTIONS_DEPLOY_URL: ${{ env.ACTIONS_DEPLOY_URL }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
       run: |
-        curl -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.ant-man-preview+json" \
-          -H "Accept: application/vnd.github.flash-preview+json" \
-          $DEPLOY_STATUSES_URL \
-          -d '{
-            "environment": "production",
-            "state": "in_progress",
-            "description": "Production deployment initiated",
-            "log_url": "'"$ACTIONS_DEPLOY_URL"'"
-          }'
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_initiate production
 
     - name: Deploy to production
       env:
@@ -172,35 +105,18 @@ jobs:
       if: success()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_URL }}/statuses
-        ACTIONS_DEPLOY_URL: ${{ env.ACTIONS_DEPLOY_URL }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+        LOG_URL: ${{ env.LOG_URL }}
       run: |
-        curl -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.ant-man-preview+json" \
-          $DEPLOY_STATUSES_URL \
-          -d '{
-            "environment": "production",
-            "state": "success",
-            "description": "Production deployment succeeded",
-            "environment_url": "https://submit.cosmetic-product-notifications.service.gov.uk/",
-            "log_url": "'"$ACTIONS_DEPLOY_URL"'"
-          }'
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_success production
 
     - name: Update Production deployment status (failure)
       if: failure()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_URL }}/statuses
-        ACTIONS_DEPLOY_URL: ${{ env.ACTIONS_DEPLOY_URL }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+        LOG_URL: ${{ env.LOG_URL }}
       run: |
-        curl -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.ant-man-preview+json" \
-          $DEPLOY_STATUSES_URL \
-          -d '{
-            "environment": "production",
-            "state": "failure",
-            "description": "Production deployment failed",
-            "log_url": "'"$ACTIONS_DEPLOY_URL"'"
-          }'
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_failure production
