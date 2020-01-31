@@ -8,6 +8,9 @@ services:
       - postgres-volume:/var/lib/postgresql/data
     env_file:
       - ./dev-docker/.env.keycloak
+    ports:
+      - "5432:5432"
+      - "6432:6432"
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.3
