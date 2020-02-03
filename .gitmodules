@@ -1,3 +1,0 @@
-[submodule "infrastructure/paas-metric-exporter"]
-	path = infrastructure/paas-metric-exporter
-	url = https://github.com/alphagov/paas-metric-exporter.git
