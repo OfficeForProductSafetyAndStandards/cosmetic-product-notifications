@@ -17,7 +17,24 @@ jobs:
       run: |
         curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
         sudo cp /tmp/cf7 /usr/local/bin/cf7
-    - name: Deploy to staging
+
+    - name: Create GitHub deployment for Staging
+      env:
+        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        BRANCH: master
+      run: |
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_create staging
+
+    - name: Initiate Staging deployment status
+      env:
+        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+      run: |
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_initiate staging
+
+    - name: Deploy to Staging
       env:
         SPACE: staging
         APP_NAME: cosmetics-web
@@ -32,6 +49,43 @@ jobs:
         chmod +x ./cosmetics-web/deploy.sh
         ./cosmetics-web/deploy.sh
         cf7 logout
+
+    - name: Update Staging deployment status (success)
+      if: success()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+        LOG_URL: ${{ env.LOG_URL }}
+      run: |
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_success staging https://staging-submit.cosmetic-product-notifications.service.gov.uk/
+
+    - name: Update Staging deployment status (failure)
+      if: failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+        LOG_URL: ${{ env.LOG_URL }}
+      run: |
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_failure staging
+
+    - name: Create GitHub deployment for Production
+      env:
+        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        BRANCH: master
+      run: |
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_create production
+
+    - name: Initiate Production deployment status
+      env:
+        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+      run: |
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_initiate production
+
     - name: Deploy to production
       env:
         SPACE: prod
@@ -46,3 +100,23 @@ jobs:
         cf7 target -o 'beis-opss' -s $SPACE
         ./cosmetics-web/deploy.sh
         cf7 logout
+
+    - name: Update Production deployment status (success)
+      if: success()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+        LOG_URL: ${{ env.LOG_URL }}
+      run: |
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_success production https://submit.cosmetic-product-notifications.service.gov.uk/
+
+    - name: Update Production deployment status (failure)
+      if: failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+        LOG_URL: ${{ env.LOG_URL }}
+      run: |
+        source cosmetics-web/deploy-github-functions.sh
+        gh_deploy_failure production
