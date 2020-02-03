@@ -146,7 +146,7 @@ See [antivirus repo](https://github.com/UKGovernmentBEIS/beis-opss-antivirus).
 
 #### Maintenance page
 
-See [maintenance in infrastructure repo](https://github.com/UKGovernmentBEIS/beis-opss-infrastructure).
+See [maintenance in infrastructure repo](https://github.com/UKGovernmentBEIS/beis-opss-infrastructure/blob/master/maintenance/README.md).
 
 #### Keycloak
 
