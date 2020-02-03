@@ -5,22 +5,6 @@ update_configs:
     directory: "/"
     update_schedule: "daily"
 
-  # - package_manager: "java:maven"
-  #   directory: "/keycloak/providers/email"
-  #   update_schedule: "daily"
-
-  # - package_manager: "java:maven"
-  #   directory: "/keycloak/providers/registration-form"
-  #   update_schedule: "daily"
-
-  # - package_manager: "java:maven"
-  #   directory: "/keycloak/providers/rest-api"
-  #   update_schedule: "daily"
-
-  # - package_manager: "java:maven"
-  #   directory: "/keycloak/providers/system-out-event-listener"
-  #   update_schedule: "daily"
-
   - package_manager: "javascript"
     directory: "/cosmetics-web"
     update_schedule: "live"
