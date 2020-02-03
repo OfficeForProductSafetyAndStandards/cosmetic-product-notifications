@@ -92,6 +92,7 @@ jobs:
       run: |
         cd cosmetics-web
         bundle exec rspec spec
-    - name: Update Coveralls
-      run: |
-        bin/rake submit_coverage
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.CoverallsToken }}
