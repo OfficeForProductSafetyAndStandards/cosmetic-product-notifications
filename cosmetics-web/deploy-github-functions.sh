@@ -4,7 +4,7 @@ set -e
 # Creates a Deploy in Github
 #
 # Input:
-# - environment to deploy at.
+# - Name of the environment to deploy at.
 #   eg: $ gh_deploy_create staging
 #
 # Required environment variables:
@@ -19,13 +19,22 @@ set -e
 # - awk
 gh_deploy_create() {
   environment_name=$1
+
+  if [[ $environment_name == review* ]]; then
+    transient_environment=true
+  else
+    transient_environment=false
+  fi
+
   deploy_url=$(curl -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
+    -H "Accept: application/vnd.github.ant-man-preview+json" \
     https://api.github.com/repos/$GITHUB_REPOSITORY/deployments \
     -d '{
     "ref": "'"$BRANCH"'",
     "description": "'"$environment_name"' deploy created",
     "environment": "'"$environment_name"'",
+    "transient_environment": '"$transient_environment"',
     "auto_merge": false,
     "required_contexts": []
     }' | jq '.url?' | tr -d '"') # Gets 'url' field from the response and trims the surronding quotes.
@@ -33,11 +42,7 @@ gh_deploy_create() {
   if [ -z "$deploy_url" ]; then
     echo "Failed to create Github deployment"
   else
-    # We need these values to be shared between steps
-    # 'int' deployments are created for Pull Requests
-    if [ "$environment_name" == "int" ]; then
-      echo "::set-env name=PR_NUMBER::$(echo "$GITHUB_REF" | awk -F / '{print $3}')"
-    fi
+    # Need to be shared between steps
     echo "::set-env name=DEPLOY_STATUSES_URL::$deploy_url/statuses"
     echo "Github deployment created: $deploy_url"
   fi
@@ -46,20 +51,20 @@ gh_deploy_create() {
 # Sets Github deploy status as "in_progress"
 #
 # Input:
-# - Deployment environment to update the status at.
+# - Name of the deployment environment to update the status at.
 #   eg: $ gh_deploy_initiate staging
 #
 # Required environment variables:
 # - GITHUB_TOKEN        - Github user token with deploy rights.
 # - GITHUB_REPOSITORY   - Set by default by Github. Formatted as "org/repo".
-# - PR_NUMBER           - Pull Request number. Only needed for "int" environment.
+# - PR_NUMBER           - Pull Request number. Only needed for review apps.
 # - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set up by "gh_deploy_create".
 #
 # Required system tools:
 # - curl
 gh_deploy_initiate() {
   environment_name=$1
-  if [ "$environment_name" == "int" ]; then
+  if [[ $environment_name == review* ]]; then
     log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER/checks")
   else
     log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amaster+workflow%3ADeploy")
@@ -82,7 +87,7 @@ gh_deploy_initiate() {
 # Sets Github deploy status as "success"
 #
 # Input:
-# - 1. Deployment environment to update the status at.
+# - 1. Name of the deployment environment to update the status at.
 # - 2. Environment url where the deployed changes can be viewed.
 #   eg: $ gh_deploy_success staging https://opss-service.digital/
 #
@@ -113,7 +118,7 @@ gh_deploy_success() {
 # Sets Github deploy status as "failure"
 #
 # Input:
-# - Deployment environment to update the status at.
+# - Name of the deployment environment to update the status at.
 #   eg: $ gh_deploy_failure staging
 #
 # Required environment variables:
