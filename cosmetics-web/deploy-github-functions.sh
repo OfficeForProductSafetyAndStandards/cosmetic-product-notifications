@@ -53,7 +53,7 @@ gh_deploy_create() {
 # - GITHUB_TOKEN        - Github user token with deploy rights.
 # - GITHUB_REPOSITORY   - Set by default by Github. Formatted as "org/repo".
 # - PR_NUMBER           - Pull Request number. Only needed for "int" environment.
-# - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set up by "gh_deploy_create"
+# - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set up by "gh_deploy_create".
 #
 # Required system tools:
 # - curl
@@ -82,26 +82,20 @@ gh_deploy_initiate() {
 # Sets Github deploy status as "success"
 #
 # Input:
-# - Deployment environment to update the status at.
-#   eg: $ gh_deploy_success staging
+# - 1. Deployment environment to update the status at.
+# - 2. Environment url where the deployed changes can be viewed.
+#   eg: $ gh_deploy_success staging https://opss-service.digital/
 #
 # Required environment variables:
 # - GITHUB_TOKEN        - Github user token with deploy rights.
-# - PR_NUMBER           - Pull Request number. Only needed for "int" environment.
-# - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set up by "gh_deploy_create"
-# - LOG_URL             - URL to track the deployment progress. Set up by "gh_deploy_initiate"
+# - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set by "gh_deploy_create".
+# - LOG_URL             - URL to track the deployment progress. Set by "gh_deploy_initiate".
 #
 # Required system tools:
 # - curl
 gh_deploy_success() {
   environment_name=$1
-  if [ "$environment_name" == "int" ]; then
-    environment_url="https://cosmetics-pr-${PR_NUMBER}-submit-web.london.cloudapps.digital/"
-  elif [ "$environment_name" == "staging" ]; then
-    environment_url="https://staging-submit.cosmetic-product-notifications.service.gov.uk/"
-  elif [ "$environment_name" == "production" ]; then
-    environment_url="https://submit.cosmetic-product-notifications.service.gov.uk/"
-  fi
+  environment_url=$2
 
   curl -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
@@ -124,8 +118,8 @@ gh_deploy_success() {
 #
 # Required environment variables:
 # - GITHUB_TOKEN        - Github user token with deploy rights.
-# - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set up by "gh_deploy_create"
-# - LOG_URL             - URL to track the deployment progress. Set up by "gh_deploy_initiate"
+# - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set by "gh_deploy_create".
+# - LOG_URL             - URL to track the deployment progress. Set by "gh_deploy_initiate".
 #
 # Required system tools:
 # - curl

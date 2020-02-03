@@ -60,7 +60,7 @@ jobs:
         PR_NUMBER: ${{ env.PR_NUMBER }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_success int
+        gh_deploy_success int https://cosmetics-pr-${PR_NUMBER}-submit-web.london.cloudapps.digital/
 
     - name: Update deployment status (failure)
       if: failure()
