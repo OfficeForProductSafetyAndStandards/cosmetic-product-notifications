@@ -146,11 +146,11 @@ See [antivirus repo](https://github.com/UKGovernmentBEIS/beis-opss-antivirus).
 
 #### Maintenance page
 
-See [maintenance/README.md](maintenance/README.md#deployment).
+See [maintenance in infrastructure repo](https://github.com/UKGovernmentBEIS/beis-opss-infrastructure).
 
 #### Keycloak
 
-See [keycloak repo](https://github.com/UKGovernmentBEIS/beis-opss-keycloak).
+See [keycloak repository](https://github.com/UKGovernmentBEIS/beis-opss-keycloak).
 
 #### Cosmetics
 
@@ -158,7 +158,7 @@ See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
 
 #### Other infrastructure
 
-See [infrastructure/README.md](infrastructure/README.md).
+See [infrastructure repository](https://github.com/UKGovernmentBEIS/beis-opss-infrastructure).
 
 
 ## BrowserStack
