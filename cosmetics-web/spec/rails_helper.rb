@@ -12,6 +12,9 @@ require "support/antivirus"
 require "support/mailer"
 
 require 'simplecov'
+require 'coveralls'
+
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
 SimpleCov.start
 
 ENV["RAILS_ENV"] ||= "test"
