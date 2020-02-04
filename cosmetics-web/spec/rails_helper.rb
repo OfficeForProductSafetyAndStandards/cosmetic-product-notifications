@@ -15,6 +15,7 @@ require 'simplecov'
 require 'simplecov-lcov'
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov::Formatter::LcovFormatter.config.cingle_report_path = 'coverage/lcov.info'
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start
 
