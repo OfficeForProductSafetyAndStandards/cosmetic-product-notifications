@@ -91,7 +91,7 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bundle exec rspec spec/models
+        bundle exec rspec spec
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
