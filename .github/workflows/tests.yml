@@ -95,5 +95,5 @@ jobs:
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
-        github-token: ${{ secrets.CoverallsToken }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         path-to-lcov: ./cosmetics-web/coverage/lcov.info
