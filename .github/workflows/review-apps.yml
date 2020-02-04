@@ -31,7 +31,12 @@ jobs:
         PR_NUMBER: ${{ env.PR_NUMBER }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_initiate review-app-${PR_NUMBER}
+
+        # URL where the deployment progress can be tracked. Exported for future steps.
+        log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER/checks")
+        echo "::set-env name=LOG_URL::$log_url"
+
+        gh_deploy_initiate review-app-${PR_NUMBER} $log_url
 
     - name: Install cf client
       env:
@@ -66,7 +71,10 @@ jobs:
         PR_NUMBER: ${{ env.PR_NUMBER }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_success review-app-${PR_NUMBER} https://cosmetics-pr-${PR_NUMBER}-submit-web.london.cloudapps.digital/
+
+        environment_url=https://cosmetics-pr-${PR_NUMBER}-submit-web.london.cloudapps.digital/
+
+        gh_deploy_success review-app-${PR_NUMBER} $LOG_URL $environment_url
 
     - name: Update deployment status (failure)
       if: failure()
@@ -77,4 +85,4 @@ jobs:
         PR_NUMBER: ${{ env.PR_NUMBER }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_failure review-app-${PR_NUMBER}
+        gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL

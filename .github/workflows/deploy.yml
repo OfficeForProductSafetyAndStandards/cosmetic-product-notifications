@@ -32,7 +32,12 @@ jobs:
         DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_initiate staging
+
+        # URL where the deployment progress can be tracked. Exported for future steps.
+        log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amaster+workflow%3ADeploy")
+        echo "::set-env name=LOG_URL::$log_url"
+
+        gh_deploy_initiate staging $log_url
 
     - name: Deploy to Staging
       env:

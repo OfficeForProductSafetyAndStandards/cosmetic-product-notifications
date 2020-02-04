@@ -4,11 +4,11 @@ set -e
 # Creates a Deploy in Github
 #
 # Input:
-# 1. Transient flag (optional): -t | --transient.
-# 2. Name of the environment to deploy at.
-#   eg:  $ gh_deploy_create staging
-#   eg:  $ gh_deploy_create -t review-app-15
-#   eg:  $ gh_deploy_create --transient review-app-15
+# - 1. Transient flag (optional): -t | --transient.
+# - 2. Name of the environment to deploy at.
+# - eg:  $ gh_deploy_create staging
+# - eg:  $ gh_deploy_create -t review-app-15
+# - eg:  $ gh_deploy_create --transient review-app-15
 #
 # Required environment variables:
 # - GITHUB_TOKEN      - Github user token with deploy rights.
@@ -58,25 +58,19 @@ gh_deploy_create() {
 # Sets Github deploy status as "in_progress"
 #
 # Input:
-# - Name of the deployment environment to update the status at.
-#   eg: $ gh_deploy_initiate staging
+# - 1. Name of the deployment environment to update the status at.
+# - 2. Url where the deployment progress can be tracked.
+# - eg: $ gh_deploy_initiate staging https://github.com/user/repo/pull/15/checks
 #
 # Required environment variables:
 # - GITHUB_TOKEN        - Github user token with deploy rights.
-# - GITHUB_REPOSITORY   - Set by default by Github. Formatted as "org/repo".
-# - PR_NUMBER           - Pull Request number. Only needed for review apps.
 # - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set up by "gh_deploy_create".
 #
 # Required system tools:
 # - curl
 gh_deploy_initiate() {
   environment_name=$1
-  if [[ $environment_name == review* ]]; then
-    log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER/checks")
-  else
-    log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amaster+workflow%3ADeploy")
-  fi
-  echo "::set-env name=LOG_URL::$log_url" # Export for future steps
+  log_url=$2
 
   curl -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
@@ -95,19 +89,20 @@ gh_deploy_initiate() {
 #
 # Input:
 # - 1. Name of the deployment environment to update the status at.
-# - 2. Environment url where the deployed changes can be viewed.
-#   eg: $ gh_deploy_success staging https://opss-service.digital/
+# - 2. Url where the deployment progress can be tracked.
+# - 3. Environment url where the deployed changes can be viewed.
+# - eg: $ gh_deploy_success staging https://github.com/user/repo/pull/15/checks https://opss-service.digital/
 #
 # Required environment variables:
 # - GITHUB_TOKEN        - Github user token with deploy rights.
 # - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set by "gh_deploy_create".
-# - LOG_URL             - URL to track the deployment progress. Set by "gh_deploy_initiate".
 #
 # Required system tools:
 # - curl
 gh_deploy_success() {
   environment_name=$1
-  environment_url=$2
+  log_url=$2
+  environment_url=$3
 
   curl -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
@@ -118,25 +113,26 @@ gh_deploy_success() {
       "state": "success",
       "description": "'"$environment_name"' deployment succeeded",
       "environment_url": "'"$environment_url"'",
-      "log_url": "'"$LOG_URL"'"
+      "log_url": "'"$log_url"'"
     }'
 }
 
 # Sets Github deploy status as "failure"
 #
 # Input:
-# - Name of the deployment environment to update the status at.
-#   eg: $ gh_deploy_failure staging
+# - 1. Name of the deployment environment to update the status at.
+# - 2. Url where the deployment progress can be tracked.
+# - eg: $ gh_deploy_failure staging https://github.com/user/repo/pull/15/checks
 #
 # Required environment variables:
 # - GITHUB_TOKEN        - Github user token with deploy rights.
 # - DEPLOY_STATUSES_URL - URL for Github deployment statuses. Set by "gh_deploy_create".
-# - LOG_URL             - URL to track the deployment progress. Set by "gh_deploy_initiate".
 #
 # Required system tools:
 # - curl
 gh_deploy_failure() {
   environment_name=$1
+  log_url=$2
   curl -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
     -H "Accept: application/vnd.github.ant-man-preview+json" \
@@ -145,7 +141,7 @@ gh_deploy_failure() {
       "environment": "'"$environment_name"'",
       "state": "failure",
       "description": "'"$environment_name"' deployment failed",
-      "log_url": "'"$LOG_URL"'"
+      "log_url": "'"$log_url"'"
     }'
 }
 
