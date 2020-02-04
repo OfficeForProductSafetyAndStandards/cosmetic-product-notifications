@@ -4,8 +4,11 @@ set -e
 # Creates a Deploy in Github
 #
 # Input:
-# - Name of the environment to deploy at.
-#   eg: $ gh_deploy_create staging
+# 1. Transient flag (optional): -t | --transient.
+# 2. Name of the environment to deploy at.
+#   eg:  $ gh_deploy_create staging
+#   eg:  $ gh_deploy_create -t review-app-15
+#   eg:  $ gh_deploy_create --transient review-app-15
 #
 # Required environment variables:
 # - GITHUB_TOKEN      - Github user token with deploy rights.
@@ -14,17 +17,21 @@ set -e
 # - GITHUB_REF        - Set by default by Github.
 #
 # Required system tools:
+# - getopt
 # - curl
 # - jq
 # - awk
 gh_deploy_create() {
-  environment_name=$1
-
-  if [[ $environment_name == review* ]]; then
+  # Set the environment as transient depending on a optionally
+  # given flag when calling the function.
+  if [[ $1 == "-t" || $1 == "--transient" ]]; then
     transient_environment=true
+    shift # The second argument becomes $1
   else
     transient_environment=false
   fi
+  environment_name=$1
+  echo "Transient Environment: $transient_environment"
 
   deploy_url=$(curl -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
