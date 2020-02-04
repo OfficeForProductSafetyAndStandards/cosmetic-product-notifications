@@ -12,9 +12,10 @@ require "support/antivirus"
 require "support/mailer"
 
 require 'simplecov'
-require 'coveralls'
+require 'simplecov-lcov'
 
-SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start
 
 ENV["RAILS_ENV"] ||= "test"
