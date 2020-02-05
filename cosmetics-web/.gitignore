@@ -1,3 +1,5 @@
+.env.development
+.env.test
 # Created by https://www.gitignore.io/api/ruby,node,rails
 
 ### Node ###

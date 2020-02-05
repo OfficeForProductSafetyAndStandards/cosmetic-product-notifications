@@ -26,7 +26,7 @@ Restart the website (which may have crashed):
 
     docker-compose restart cosmetics-web
 
-Visit the site on [localhost:3002](http://localhost:3002)
+Visit the site on [localhost:3000](http://submit_cosmetics:3000)
 
 When pulling new changes from master, it is sometimes necessary to run the following
 if there are new migrations:
@@ -40,8 +40,8 @@ hosts file ([instructions](https://support.rackspace.com/how-to/modify-your-host
     127.0.0.1   search_cosmetics
 
 and update the `SUBMIT_HOST` and `SEARCH_HOST` values in your local `.env` file to match. After restarting the website,
-you should then be able to access the two versions of the site on [submit_cosmetics:3002](http://submit_cosmetics:3002)
-and [search_cosmetics:3002](http://search_cosmetics:3002).
+you should then be able to access the two versions of the site on [submit_cosmetics:3000](http://submit_cosmetics:3000)
+and [search_cosmetics:3000](http://search_cosmetics:3000).
 
 
 ## Tests

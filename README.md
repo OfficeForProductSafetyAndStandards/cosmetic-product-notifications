@@ -7,6 +7,24 @@
 
 ## Getting Setup
 
+### Quick steps
+
+Add required hosts in `/etc/hosts`:
+
+```
+127.0.0.1       search_cosmetics
+127.0.0.1       keycloak
+127.0.0.1       submit_cosmetics
+```
+
+Run docker compose:
+
+`docker-compose up`
+
+Go to app on [submit_cosmetics:3000](http://submit_cosmetics:3000)
+
+### Long read
+
 This project includes [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules), so when running `git clone` you need to add the `--recurse-submodules` option.
 If you have already pulled, you can run `git submodule init` and then `git submodule update --recursive` instead.
 You might also need to run `git submodule update --recursive` if the submodule is updated because of a pull.
@@ -19,6 +37,14 @@ Copy the file in the root of the directory called `.env-template`.
 Rename the copy of the file to `.env` and fill in any environment variables.
 This `.env` file will be git ignored, so it is safe to add sensitive data.
 See the [accounts section](#accounts) below for information on how to obtain some of the optional variables.
+
+Add required hosts in `/etc/hosts`:
+
+```
+127.0.0.1       search_cosmetics
+127.0.0.1       keycloak
+127.0.0.1       submit_cosmetics
+```
 
 Build and start-up the full project:
 
