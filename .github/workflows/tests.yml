@@ -92,3 +92,8 @@ jobs:
       run: |
         cd cosmetics-web
         bundle exec rspec spec
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./cosmetics-web/coverage/lcov.info
