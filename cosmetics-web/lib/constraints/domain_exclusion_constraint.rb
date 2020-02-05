@@ -1,4 +1,4 @@
-class DomainCheck
+class DomainExclusionConstraint
   def initialize(domains)
     @domains = domains.split(",")
   end

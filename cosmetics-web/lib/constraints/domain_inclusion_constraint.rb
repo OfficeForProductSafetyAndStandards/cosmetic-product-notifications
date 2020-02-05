@@ -1,4 +1,4 @@
-class DomainConstraint
+class DomainInclusionConstraint
   def initialize(domains)
     raise "No domains specified" unless domains
 

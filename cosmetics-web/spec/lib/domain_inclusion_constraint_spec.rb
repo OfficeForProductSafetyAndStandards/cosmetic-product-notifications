@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe DomainConstraint, type: :constraint do
+RSpec.describe DomainInclusionConstraint, type: :constraint do
   let(:expected_domain) { "www.example.com" }
   let(:other_domain) { "other.example.com" }
 
