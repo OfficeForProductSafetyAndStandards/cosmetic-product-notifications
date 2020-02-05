@@ -18,9 +18,7 @@ RSpec.describe DomainExclusionConstraint, type: :constraint do
       expect(constraint.matches?(request)).to be true
     end
 
-    context "when configured with multiple comma-separated domains" do
-      let(:excluded_domain) { "www.example.com,excluded.example.com" }
-
+    shared_examples_for "constraint check against multiple domains" do
       it "returns false for requests with either excluded domain" do
         request1 = ActionDispatch::Request.new("HTTP_HOST" => "www.example.com")
         request2 = ActionDispatch::Request.new("HTTP_HOST" => "excluded.example.com")
@@ -32,6 +30,18 @@ RSpec.describe DomainExclusionConstraint, type: :constraint do
         request = ActionDispatch::Request.new("HTTP_HOST" => other_domain)
         expect(constraint.matches?(request)).to be true
       end
+    end
+
+    context "when configured with multiple comma-separated domains" do
+      let(:excluded_domain) { "www.example.com,excluded.example.com" }
+
+      include_examples "constraint check against multiple domains"
+    end
+
+    context "when configured with multiple comma&space-separated domains" do
+      let(:excluded_domain) { "www.example.com, excluded.example.com" }
+
+      include_examples "constraint check against multiple domains"
     end
   end
 end
