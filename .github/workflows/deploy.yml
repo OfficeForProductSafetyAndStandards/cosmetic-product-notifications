@@ -32,7 +32,12 @@ jobs:
         DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_initiate staging
+
+        # URL where the deployment progress can be tracked. Exported for future steps.
+        log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amaster+workflow%3ADeploy")
+        echo "::set-env name=LOG_URL::$log_url"
+
+        gh_deploy_initiate staging $log_url
 
     - name: Deploy to Staging
       env:
@@ -58,7 +63,8 @@ jobs:
         LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_success staging https://staging-submit.cosmetic-product-notifications.service.gov.uk/
+        environment_url=https://staging-submit.cosmetic-product-notifications.service.gov.uk/
+        gh_deploy_success staging $LOG_URL $environment_url
 
     - name: Update Staging deployment status (failure)
       if: failure()
@@ -68,7 +74,7 @@ jobs:
         LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_failure staging
+        gh_deploy_failure staging $LOG_URL
 
     - name: Create GitHub deployment for Production
       env:
@@ -82,9 +88,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
         DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
+        LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_initiate production
+        gh_deploy_initiate production $LOG_URL
 
     - name: Deploy to production
       env:
@@ -109,7 +116,8 @@ jobs:
         LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_success production https://submit.cosmetic-product-notifications.service.gov.uk/
+        environment_url=https://submit.cosmetic-product-notifications.service.gov.uk/
+        gh_deploy_success production $LOG_URL $environment_url
 
     - name: Update Production deployment status (failure)
       if: failure()
@@ -119,4 +127,4 @@ jobs:
         LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_failure production
+        gh_deploy_failure production $LOG_URL
