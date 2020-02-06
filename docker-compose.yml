@@ -51,7 +51,6 @@ services:
       - elasticsearch
       - keycloak
       - redis
-      - cosmetics-worker
     env_file:
         - .env.keycloak.cosmetics
     ports:
@@ -71,18 +70,28 @@ services:
   cosmetics-worker:
     build:
       context: .
-      dockerfile: ./cosmetics-worker/Dockerfile
+      dockerfile: ./cosmetics-web/Dockerfile
     command: bin/sidekiq -C config/sidekiq.yml
     volumes:
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/cosmetics-web:/cosmetics-web
       - bundle-cache:/usr/local/bundle
+    environment:
+      - NOTIFY_API_KEY=
+      - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
+      - KEYCLOAK_AUTH_URL=http://keycloak:8080/auth
+      - KEYCLOAK_CLIENT_ID=cosmetics-app
+      - KEYCLOAK_CLIENT_SECRET=bb1c1dde-7b7a-488a-9061-8090b59857ef
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - REDIS_URL=redis://redis:6379
+      - SEARCH_HOST=search_cosmetics
+      - SUBMIT_HOST=submit_cosmetics
+      - COSMETICS_HOST=submit_cosmetics
+      - ANTIVIRUS_ENABLED=false
     depends_on:
       - db
       - elasticsearch
       - redis
-    env_file:
-      - .env.antivirus
 
 volumes:
   postgres-volume:
