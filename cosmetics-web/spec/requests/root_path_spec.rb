@@ -121,4 +121,13 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
     end
   end
+
+  context "when requested from localhost" do
+    before { host! "localhost" }
+
+    it "renders the submit homepage" do
+      get "/"
+      expect(response).to render_template("landing_page/submit_landing_page")
+    end
+  end
 end

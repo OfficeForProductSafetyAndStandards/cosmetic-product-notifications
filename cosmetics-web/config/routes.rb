@@ -34,7 +34,8 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints DomainInclusionConstraint.new(ENV.fetch("SUBMIT_HOST") || ENV.fetch("COSMETICS_HOST")) do
+  domains = "#{ENV.fetch('SUBMIT_HOST') || ENV.fetch('COSMETICS_HOST')},localhost"
+  constraints DomainInclusionConstraint.new(domains) do
     root "landing_page#index"
 
 
