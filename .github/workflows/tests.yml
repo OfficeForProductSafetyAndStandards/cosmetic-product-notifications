@@ -89,11 +89,8 @@ jobs:
         KEYCLOAK_USER_PASSWORD: ${{ secrets.KeycloakUserPassword }}
         ELASTICSEARCH_URL: localhost
         RAILS_ENV: test
+        CI: true
+        COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}
       run: |
         cd cosmetics-web
         bundle exec rspec spec
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./cosmetics-web/coverage/lcov.info
