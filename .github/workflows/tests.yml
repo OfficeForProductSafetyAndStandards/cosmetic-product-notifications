@@ -95,4 +95,4 @@ jobs:
       run: |
         echo $BRANCH_NAME
         cd cosmetics-web
-        bundle exec rspec spec/master
+        bundle exec rspec spec/models
