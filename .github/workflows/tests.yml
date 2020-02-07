@@ -89,10 +89,9 @@ jobs:
         KEYCLOAK_USER_PASSWORD: ${{ secrets.KeycloakUserPassword }}
         ELASTICSEARCH_URL: localhost
         RAILS_ENV: test
-        GIT_BRANCH: ${GITHUB_REF##*/}
         CI: true
         COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}
       run: |
         echo $BRANCH_NAME
         cd cosmetics-web
-        bundle exec rspec spec/models
+        GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec spec/models
