@@ -94,4 +94,5 @@ jobs:
       run: |
         echo $BRANCH_NAME
         cd cosmetics-web
-        GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec spec/models
+        #GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec spec/models
+        GIT_BRANCH=debug-coveralls-test bundle exec rspec spec/models
