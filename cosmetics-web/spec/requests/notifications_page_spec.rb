@@ -5,17 +5,18 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, type: :request do
     sign_out
   end
 
-  context "when signed in as a poison centre user", with_errors_rendered: true do
+  context "when signed in as a poison centre user but accesing from submit domain", with_errors_rendered: true do
     let(:user) { create(:user) }
     let(:responsible_person) { create(:responsible_person) }
 
     before do
       sign_in_as_poison_centre_user(user: user)
+      configure_requests_for_submit_domain
       get "/responsible_persons/#{responsible_person.id}/notifications"
     end
 
-    it "responds with a 403 Forbidden status code" do
-      expect(response.status).to be(403)
+    it "redirects to invalid account page" do
+      expect(response).to redirect_to("/invalid-account")
     end
   end
 
