@@ -167,6 +167,11 @@ And 2 applications (db is shared):
 
 By default, database is shared with all review apps, but it can be overriden by setting `DB_NAME` env variable.
 
+#### Debuging review application
+
+
+Please run debug app deployment locally. See [".github/workflows/review-apps.yml"](https://github.com/UKGovernmentBEIS/beis-opss/blob/master/.github/workflows/review-apps.yml) for details.
+
 ### Deployment from scratch
 
 Once you have a GOV.UK PaaS account as mentioned above, you should install the Cloud Foundry CLI (`cf`) from
@@ -271,10 +276,53 @@ Once all the credentials are created, the app can be deployed using:
 
     SPACE=<<space>> ./cosmetics-web/deploy.sh
 
+### Clound Foundry reference
 
-#### Cosmetics Worker
+#### Useful examples
 
-See [cosmetics-worker/README.md](../cosmetics-worker/README.md#deployment-from-scratch).
+Please take a look into github actions in `.github/workflows` to see how deployments are done.
+
+#### Proper executable
+
+If `cf` is not working, try `cf7`
+
+#### Login to CF Api
+
+```
+cf login -a api.london.cloud.service.gov.uk -u some@email.com
+```
+
+#### SSH to service and run rails console
+
+```
+cf ssh APP-NAME
+
+cd app && export $(./env/get-env-from-vcap.sh) && /tmp/lifecycle/launcher /home/vcap/app 'rails c' ''
+```
+
+#### List apps
+
+```
+cf apps
+```
+
+#### Show app details
+
+```
+cf app APP-NAME
+```
+
+#### Show app env
+
+```
+cf env APP-NAME
+```
+
+#### List services
+
+```
+cf apps
+```
 
 #### Antivirus API
 
@@ -287,10 +335,6 @@ See [maintenance in infrastructure repo](https://github.com/UKGovernmentBEIS/bei
 #### Keycloak
 
 See [keycloak repository](https://github.com/UKGovernmentBEIS/beis-opss-keycloak).
-
-#### Cosmetics
-
-See [cosmetics-web/README.md](cosmetics-web/README.md#deployment-from-scratch).
 
 #### Other infrastructure
 
