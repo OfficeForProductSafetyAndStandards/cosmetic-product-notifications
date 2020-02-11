@@ -5,7 +5,7 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, type: :request do
     sign_out
   end
 
-  context "when signed in as a poison centre user but accesing from submit domain", with_errors_rendered: true do
+  context "when signed in as a poison centre user but accessing from submit domain", with_errors_rendered: true do
     let(:user) { create(:user) }
     let(:responsible_person) { create(:responsible_person) }
 
