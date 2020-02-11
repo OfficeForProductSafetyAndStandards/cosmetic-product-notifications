@@ -169,7 +169,8 @@ By default, database is shared with all review apps, but it can be overriden by 
 
 #### Debuging review application
 
-Please run debug app deployment locally. See `.github/workflows/review-apps.yml` for details.
+
+Please run debug app deployment locally. See [".github/workflows/review-apps.yml"](https://github.com/UKGovernmentBEIS/beis-opss/blob/master/.github/workflows/review-apps.yml) for details.
 
 ### Deployment from scratch
 
