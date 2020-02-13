@@ -136,7 +136,7 @@ gh_deploy_failure() {
 #
 # Input:
 # - 1. ID of the deploy to have the status updated.
-# - eg: $ gh_deploy_inactivate staging
+# - eg: $ gh_deploy_deactivate staging
 #
 # Required environment variables:
 # - GITHUB_TOKEN        - Github user token with deploy rights.
@@ -145,7 +145,7 @@ gh_deploy_failure() {
 # Required system tools:
 # - curl
 #
-gh_deploy_inactivate() {
+gh_deploy_deactivate() {
   deploy_id=$1
   curl -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
@@ -177,15 +177,15 @@ gh_deploy_list() {
   curl -X GET $url
 }
 
-# Inactivates Dangling deploys
+# Deactivates Dangling deploys
 #
-# This function checks all the review app active deploys and inactivates them if
+# This function checks all the review app active deploys and deactivates them if
 # the branch associated to the deploy has no open PRs.
 #
 # Input:
-# 1. Environment. Inactivates dangling deploys only for the given environment.
-# - eg: $ gh_inactivate_dangling
-# - eg: $ gh_inactivate_dangling review-app-156
+# 1. Environment. Deactivates dangling deploys only for the given environment.
+# - eg: $ gh_deactivate_dangling
+# - eg: $ gh_deactivate_dangling review-app-156
 #
 # Required environment variables:
 # - GITHUB_REPOSITORY - Set by default by Github. Formatted as "org/repo".
@@ -194,7 +194,7 @@ gh_deploy_list() {
 # - curl
 # - jq
 #
-gh_deploy_inactivate_dangling() {
+gh_deploy_deactivate_dangling() {
   environment=$1
   if [ -n $environment ]; then
     deploy_list_command="gh_deploy_list $environment"
@@ -208,18 +208,18 @@ gh_deploy_inactivate_dangling() {
     # Parses id, environment and reference into separate variables.
     # '@' is used as separator for the splitting.
     IFS='@' read deploy_id deploy_environment deploy_ref <<< $deploy
-    # We only want to inactivate Review Apps.
+    # We only want to deactivate Review Apps.
     if [[ $deploy_environment != "staging" && $deploy_environment != "production" ]]; then
       # Number of open Pull Requests belonging to the branch.
       # We assume "deploy_ref" is a branch as our GH deploys use branch as ref.
       open_prs=$(curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls?state=open&head=UKGovernmentBEIS:$deploy_ref" | jq '. | length')
-      # If there are no open PRs from the branch we can safely inactivate this branch deploys.
+      # If there are no open PRs from the branch we can safely deactivate this branch deploys.
       if [[ $open_prs -eq 0 ]]; then
         # Gets most recent status for the deploy.
         deploy_status=$(curl https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/$deploy_id/statuses | jq -r '.[0].state')
         if [[ $deploy_status != "inactive" ]]; then
-          echo "Inactivating $deploy_environment deployment $deploy_id for branch $deploy_ref"
-          gh_deploy_inactivate $deploy_id
+          echo "Deactivating $deploy_environment deployment $deploy_id for branch $deploy_ref"
+          gh_deploy_deactivate $deploy_id
         fi
       fi
     fi
