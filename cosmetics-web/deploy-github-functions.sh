@@ -31,7 +31,7 @@ gh_deploy_create() {
     "environment": "'"$environment_name"'",
     "auto_merge": false,
     "required_contexts": []
-    }' | jq '.url?' | tr -d '"') # Gets 'url' field from the response and trims the surronding quotes.
+    }' | jq -r '.url?') # Gets 'url' field from the response
 
   if [ -z "$deploy_url" ]; then
     echo "Failed to create Github deployment"
