@@ -210,9 +210,11 @@ gh_deploy_deactivate_dangling() {
     IFS='@' read deploy_id deploy_environment deploy_ref <<< $deploy
     # We only want to deactivate Review Apps.
     if [[ $deploy_environment != "staging" && $deploy_environment != "production" ]]; then
+      # Extracts Organization name from "org/repo".
+      IFS='/' read -r org repo <<< $GITHUB_REPOSITORY
       # Number of open Pull Requests belonging to the branch.
       # We assume "deploy_ref" is a branch as our GH deploys use branch as ref.
-      open_prs=$(curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls?state=open&head=UKGovernmentBEIS:$deploy_ref" | jq '. | length')
+      open_prs=$(curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls?state=open&head=${org}:${deploy_ref}" | jq '. | length')
       # If there are no open PRs from the branch we can safely deactivate this branch deploys.
       if [[ $open_prs -eq 0 ]]; then
         # Gets most recent status for the deploy.
