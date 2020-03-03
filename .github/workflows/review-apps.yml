@@ -2,6 +2,9 @@ name: Review app
 
 on: [pull_request]
 
+env:
+  PR_NUMBER: ${{ github.event.number }}
+
 jobs:
   reviewapp:
     name: Deploy
@@ -16,19 +19,12 @@ jobs:
         BRANCH: ${{ github.head_ref }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
-
-        # Review apps need the Pull Request number for their environment
-        # name and to be able to be linked to the specific PR checks.
-        PR_NUMBER=$(echo "$GITHUB_REF" | awk -F / '{print $3}')
-        echo "::set-env name=PR_NUMBER::$PR_NUMBER"
-
         gh_deploy_create review-app-${PR_NUMBER}
 
     - name: Initiate deployment status
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
         DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
-        PR_NUMBER: ${{ env.PR_NUMBER }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
 
@@ -54,7 +50,6 @@ jobs:
         cf7 api api.london.cloud.service.gov.uk
         cf7 auth
         cf7 target -o 'beis-opss' -s $SPACE
-        export PR_NUMBER=`echo $GITHUB_REF | grep -o '[0-9_]\+'`
         export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
         export REVIEW_INSTANCE_NAME=pr-$PR_NUMBER
         export DB_NAME=cosmetics-db-$DB_VERSION
@@ -68,7 +63,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
         DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
         LOG_URL: ${{ env.LOG_URL }}
-        PR_NUMBER: ${{ env.PR_NUMBER }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
 
@@ -82,7 +76,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
         DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
         LOG_URL: ${{ env.LOG_URL }}
-        PR_NUMBER: ${{ env.PR_NUMBER }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL
