@@ -8,7 +8,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (5.0.6)
+    aasm (5.0.7)
+      after_commit_action (~> 1.0)
       concurrent-ruby (~> 1.0)
     actioncable (5.2.4.1)
       actionpack (= 5.2.4.1)
@@ -55,6 +56,9 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    after_commit_action (1.1.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     ansi (1.5.0)
     arel (9.0.0)
     ast (2.4.0)
@@ -88,7 +92,7 @@ GEM
       xpath (~> 3.2)
     cf-app-utils (0.6)
     coderay (1.1.2)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
     coveralls (0.8.23)
       json (>= 1.8, < 3)
