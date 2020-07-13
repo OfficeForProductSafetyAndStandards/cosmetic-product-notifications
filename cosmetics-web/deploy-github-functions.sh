@@ -4,11 +4,8 @@ set -e
 # Creates a Deploy in Github
 #
 # Input:
-# - 1. Transient flag (optional): -t | --transient.
-# - 2. Name of the environment to deploy at.
+# - 1. Name of the environment to deploy at.
 # - eg:  $ gh_deploy_create staging
-# - eg:  $ gh_deploy_create -t review-app-15
-# - eg:  $ gh_deploy_create --transient review-app-15
 #
 # Required environment variables:
 # - GITHUB_TOKEN      - Github user token with deploy rights.
@@ -22,16 +19,7 @@ set -e
 # - jq
 # - awk
 gh_deploy_create() {
-  # Set the environment as transient depending on a optionally
-  # given flag when calling the function.
-  if [[ $1 == "-t" || $1 == "--transient" ]]; then
-    transient_environment=true
-    shift # The second argument becomes $1
-  else
-    transient_environment=false
-  fi
   environment_name=$1
-  echo "Transient Environment: $transient_environment"
 
   deploy_url=$(curl -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
@@ -41,10 +29,9 @@ gh_deploy_create() {
     "ref": "'"$BRANCH"'",
     "description": "'"$environment_name"' deploy created",
     "environment": "'"$environment_name"'",
-    "transient_environment": '"$transient_environment"',
     "auto_merge": false,
     "required_contexts": []
-    }' | jq '.url?' | tr -d '"') # Gets 'url' field from the response and trims the surronding quotes.
+    }' | jq -r '.url?') # Gets 'url' field from the response
 
   if [ -z "$deploy_url" ]; then
     echo "Failed to create Github deployment"
@@ -145,3 +132,98 @@ gh_deploy_failure() {
     }'
 }
 
+# Sets Github deploy status as "inactive"
+#
+# Input:
+# - 1. ID of the deploy to have the status updated.
+# - eg: $ gh_deploy_deactivate staging
+#
+# Required environment variables:
+# - GITHUB_TOKEN        - Github user token with deploy rights.
+# - DEPLOY_STATUSES_URL - URL for Github deploy statuses. Set by "gh_deploy_create".
+#
+# Required system tools:
+# - curl
+#
+gh_deploy_deactivate() {
+  deploy_id=$1
+  curl -X POST \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    -H "Accept: application/vnd.github.ant-man-preview+json" \
+    https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${deploy_id}/statuses \
+    -d '{ "state": "inactive" }'
+}
+
+# Gets list of Github repository deployments.
+#
+# Input:
+# - 1. Environment (optional).
+# - eg: $ gh_deploy_list
+# - eg: $ gh_deploy_list review-app-156
+#
+# Required environment variables:
+# - GITHUB_REPOSITORY - Set by default by Github. Formatted as "org/repo".
+#
+# Required system tools:
+# - curl
+#
+gh_deploy_list() {
+  environment=$1
+  url="https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments"
+  # Filters by environment if provided.
+  if [ -n $environment ]; then
+    url="${url}?environment=${environment}"
+  fi
+  curl -X GET $url
+}
+
+# Deactivates Dangling deploys
+#
+# This function checks all the review app active deploys and deactivates them if
+# the branch associated to the deploy has no open PRs.
+#
+# Input:
+# 1. Environment. Deactivates dangling deploys only for the given environment.
+# - eg: $ gh_deactivate_dangling
+# - eg: $ gh_deactivate_dangling review-app-156
+#
+# Required environment variables:
+# - GITHUB_REPOSITORY - Set by default by Github. Formatted as "org/repo".
+#
+# Required system tools:
+# - curl
+# - jq
+#
+gh_deploy_deactivate_dangling() {
+  environment=$1
+  if [ -n $environment ]; then
+    deploy_list_command="gh_deploy_list $environment"
+  else
+    deploy_list_command="gh_deploy_list"
+  fi
+
+  # Iterates over all the deploys and gets their id, environment and references.
+  # Format: "id@environment@reference".
+  for deploy in $(eval $deploy_list_command |  jq -r '.[] | (.id|tostring) + "@" + .environment + "@" + .ref'); do
+    # Parses id, environment and reference into separate variables.
+    # '@' is used as separator for the splitting.
+    IFS='@' read deploy_id deploy_environment deploy_ref <<< $deploy
+    # We only want to deactivate Review Apps.
+    if [[ $deploy_environment != "staging" && $deploy_environment != "production" ]]; then
+      # Extracts Organization name from "org/repo".
+      IFS='/' read -r org repo <<< $GITHUB_REPOSITORY
+      # Number of open Pull Requests belonging to the branch.
+      # We assume "deploy_ref" is a branch as our GH deploys use branch as ref.
+      open_prs=$(curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls?state=open&head=${org}:${deploy_ref}" | jq '. | length')
+      # If there are no open PRs from the branch we can safely deactivate this branch deploys.
+      if [[ $open_prs -eq 0 ]]; then
+        # Gets most recent status for the deploy.
+        deploy_status=$(curl https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/$deploy_id/statuses | jq -r '.[0].state')
+        if [[ $deploy_status != "inactive" ]]; then
+          echo "Deactivating $deploy_environment deployment $deploy_id for branch $deploy_ref"
+          gh_deploy_deactivate $deploy_id
+        fi
+      fi
+    fi
+  done
+}

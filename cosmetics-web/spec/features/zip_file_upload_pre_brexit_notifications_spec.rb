@@ -41,7 +41,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     click_button "Accept and submit the cosmetic product notification"
 
     expect_to_be_on__your_cosmetic_products_page
-    expect_to_see_message "CTPA moisture conditioner notification submitted"
+    expect_to_see_message "CTPA moisture conditioner"
   end
 
   scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with ingredients specied as ranges" do
@@ -80,7 +80,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     click_button "Accept and submit the cosmetic product notification"
 
     expect_to_be_on__your_cosmetic_products_page
-    expect_to_see_message "SkinSoft skin whitener notification submitted"
+    expect_to_see_message "SkinSoft skin whitener"
   end
 
   scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with missing formulation document" do
@@ -122,7 +122,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     click_button "Accept and submit the cosmetic product notification"
 
     expect_to_be_on__your_cosmetic_products_page
-    expect_to_see_message "Beautify Facial Night Cream notification submitted"
+    expect_to_see_message "Beautify Facial Night Cream"
   end
 
   scenario "Using a zip file, pre-Brexit, single item, containing nanomaterials, with missing formulation document" do
@@ -171,7 +171,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
       frame_formulation: "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Components - Colorant Part",
       physical_form: "Cream or paste",
     )
-    # puts page.html
     click_button "Accept and submit the cosmetic product notification"
 
     expect_to_be_on__your_cosmetic_products_page
@@ -253,7 +252,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
           physical_form: "Loose powder",
         },
       ])
-    # puts page.html
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano"
@@ -342,10 +340,9 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
           physical_form: "Loose powder",
         },
       ])
-      # puts page.html
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
-    expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano notification submitted"
+    expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano"
   end
 
   scenario "Verify zip file upload with multi-items with exact and range values and nano elements in each item" do
@@ -419,9 +416,8 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
           physical_form: "Loose powder",
         },
       ])
-      # puts page.html
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
-    expect_to_see_message "Multi-Item-Rangevalues_Exactvalues_Nano notification submitted"
+    expect_to_see_message "Multi-Item-Rangevalues_Exactvalues_Nano"
   end
 end

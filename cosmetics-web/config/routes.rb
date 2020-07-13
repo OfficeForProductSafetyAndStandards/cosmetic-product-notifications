@@ -1,5 +1,5 @@
-require "constraints/domain_constraint"
-require "constraints/domain_check"
+require "constraints/domain_inclusion_constraint"
+require "constraints/domain_exclusion_constraint"
 require "sidekiq/web"
 require "sidekiq/cron/web"
 
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => "/sidekiq"
   end
 
-  constraints DomainConstraint.new(ENV.fetch("SEARCH_HOST") || ENV.fetch("COSMETICS_HOST")) do
+  constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
     root "landing_page#index"
 
     scope module: "poison_centres", as: "poison_centre" do
@@ -34,7 +34,8 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints DomainConstraint.new(ENV.fetch("SUBMIT_HOST") || ENV.fetch("COSMETICS_HOST")) do
+  # All requests besides "Search" host ones will default to "Submit" pages.
+  constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
     root "landing_page#index"
 
 
@@ -94,11 +95,6 @@ Rails.application.routes.draw do
         end
       end
     end
-  end
-
-  domains = "#{ENV['SUBMIT_HOST']}, #{ENV['SEARCH_HOST']}, #{ENV['COSMETICS_HOST']}"
-  constraints DomainCheck.new(domains) do
-    root "errors#internal_server_error"
   end
 
   resource :declaration, controller: :declaration, only: %i[show] do
