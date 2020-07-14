@@ -19,6 +19,6 @@ private
   end
 
   def set_responsible_person
-    @responsible_person = User.current.responsible_persons.first if user_signed_in?
+    @responsible_person = current_user.responsible_persons.first if user_signed_in?
   end
 end

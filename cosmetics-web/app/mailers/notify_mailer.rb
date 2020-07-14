@@ -22,6 +22,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
       inviting_user_name: inviting_user_name,
       invite_url: join_responsible_person_team_members_url(responsible_person_id),
     )
+    binding.pry
 
     mail(to: invited_email_address)
     Sidekiq.logger.info "Responsible person invite email sent"

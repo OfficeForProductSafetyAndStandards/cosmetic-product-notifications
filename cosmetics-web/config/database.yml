@@ -13,6 +13,7 @@ development:
 test:
   <<: *default
   database: cosmetics_test
+  host: localhost
 
 production:
   url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_label("postgres")["uri"] %>

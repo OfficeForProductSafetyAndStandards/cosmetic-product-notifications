@@ -51,7 +51,7 @@ private
       @contact_person.name,
       @contact_person.email_address,
       @responsible_person.name,
-      User.current.name,
+      current_user.name,
     ).deliver_later
   end
 

@@ -22,7 +22,7 @@ class ErrorsController < ApplicationController
   def invalid_account
     template = if search_domain?
                  :wrong_service_for_business_account
-               elsif User.current&.poison_centre_user?
+               elsif current_user&.poison_centre_user?
                  :wrong_service_for_poison_centre_account
                else
                  :wrong_service_for_msa_account

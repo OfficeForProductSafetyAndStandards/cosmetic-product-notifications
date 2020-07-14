@@ -10,7 +10,7 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
     sign_in_as_poison_centre_user(user: user)
 
     # This line is needed since the application controller is not called
-    User.current = user
+    current_user = user
   end
 
   after do

@@ -9,14 +9,14 @@ class DeclarationController < ApplicationController
   end
 
   def accept
-    User.current.has_accepted_declaration!
+    current_user.update(has_accepted_declaration: true)
     redirect_to session[:redirect_path] || root_path
   end
 
 private
 
   def show_declaration
-    if User.current&.poison_centre_user?
+    if current_user&.poison_centre_user?
       render "poison_centre_declaration"
     elsif current_user&.msa_user?
       render "msa_user_declaration"

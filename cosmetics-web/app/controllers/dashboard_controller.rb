@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
     if poison_centre_or_msa_user?
       redirect_to(poison_centre_notifications_path)
     else
-      redirect_to(responsible_person_notifications_path(User.current.responsible_persons.first))
+      redirect_to(responsible_person_notifications_path(current_user.responsible_persons.first))
     end
   end
 end

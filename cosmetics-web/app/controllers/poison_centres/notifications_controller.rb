@@ -7,7 +7,7 @@ class PoisonCentres::NotificationsController < ApplicationController
   def show
     @notification = Notification.find_by reference_number: params[:reference_number]
     authorize @notification, policy_class: PoisonCentreNotificationPolicy
-    if User.current&.poison_centre_user?
+    if current_user&.poison_centre_user?
       render "show_poison_centre"
     else
       @contact_person = @notification.responsible_person.contact_persons.first

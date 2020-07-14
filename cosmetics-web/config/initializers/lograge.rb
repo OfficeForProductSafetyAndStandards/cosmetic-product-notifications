@@ -5,7 +5,7 @@ Rails.application.configure do
 
   config.lograge.custom_payload do |_controller|
     extra_payload = {}
-    extra_payload[:user_id] = User.current&.id
+    extra_payload[:user_id] = current_user&.id
     extra_payload
   end
 end

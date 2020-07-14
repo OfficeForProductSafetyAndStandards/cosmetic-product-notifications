@@ -3,6 +3,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   before_action :set_team_member, only: %i[new create]
   skip_before_action :create_or_join_responsible_person
 
+  def index; binding.pry; end
   def new; end
 
   def create
@@ -17,12 +18,12 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
   def join
     pending_requests = PendingResponsiblePersonUser.pending_requests_to_join_responsible_person(
-      User.current,
+      current_user,
       @responsible_person,
     )
 
     if pending_requests.any?
-      @responsible_person.add_user(User.current)
+      @responsible_person.add_user(current_user)
       Rails.logger.info "Team member added to Responsible Person"
       pending_requests.delete_all
     end
@@ -49,6 +50,6 @@ private
 
   def send_invite_email
     NotifyMailer.send_responsible_person_invite_email(@responsible_person.id, @responsible_person.name,
-                                                      @team_member.email_address, User.current.name).deliver_later
+                                                      @team_member.email_address, current_user.name).deliver_later
   end
 end

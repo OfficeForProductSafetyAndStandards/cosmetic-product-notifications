@@ -25,16 +25,17 @@
       <button class="govuk-header__menu-button govuk-js-header-toggle" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
       <nav>
         <ul id="navigation" class="govuk-header__navigation" aria-label="Top Level Navigation">
-          <% if User.current %>
+          <% if current_user %>
             <li class="govuk-header__navigation-item">
               <%= link_to "Your account", user_account_url, class: "govuk-header__link" %>
             </li>
             <li class="govuk-header__navigation-item">
-              <%= link_to "Sign out", logout_session_path, class: "govuk-header__link" %>
+              <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "govuk-header__link" %>
+              , class: "govuk-header__link" %>
             </li>
           <% else %>
             <li class="govuk-header__navigation-item">
-              <%= link_to "Sign in", keycloak_login_url(dashboard_path), class: "govuk-header__link" %>
+              <%= link_to "Sign in", new_user_session_path(dashboard_path), class: "govuk-header__link" %>
             </li>
           <% end %>
         </ul>
