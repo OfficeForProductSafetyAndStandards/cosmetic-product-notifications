@@ -243,7 +243,7 @@ RSpec.describe ComponentBuildController, type: :controller do
           end
         end
 
-        context "when the answer is true" do
+        context "when the answer is false" do
           let(:answer) { "false" }
 
           it "redirects to the select pH range page" do
