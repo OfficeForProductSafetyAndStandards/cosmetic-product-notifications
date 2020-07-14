@@ -81,4 +81,9 @@ private
     submit_domain? ? destroy_submit_user_session_path : destroy_search_user_session_path
   end
   helper_method :destroy_user_session_path
+
+  def user_session_path
+    submit_domain? ? submit_user_session_path : search_user_session_path
+  end
+  helper_method :user_session_path
 end
