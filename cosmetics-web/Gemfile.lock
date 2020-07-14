@@ -195,7 +195,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     notifications-ruby-client (5.1.1)
       jwt (>= 1.5, < 3)
-    okcomputer (1.18.1)
+    okcomputer (1.18.2)
     parallel (1.19.1)
     parser (2.7.0.2)
       ast (~> 2.4.0)
