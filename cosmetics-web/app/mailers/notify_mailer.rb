@@ -22,9 +22,22 @@ class NotifyMailer < GovukNotifyRails::Mailer
       inviting_user_name: inviting_user_name,
       invite_url: join_responsible_person_team_members_url(responsible_person_id),
     )
-    binding.pry
 
     mail(to: invited_email_address)
     Sidekiq.logger.info "Responsible person invite email sent"
+  end
+
+  def send_account_confirmation_email(user)
+    binding.pry
+    set_template("82f13866-747c-4a7a-99d5-2ab279a54b55")
+    set_reference("Send confirmation code")
+
+    set_personalisation(
+      name: user.name,
+      verify_email_url: confirmation_url(user, user.confirmation_token),
+    )
+
+    mail(to: user.email)
+    Sidekiq.logger.info "Confirmation email send"
   end
 end
