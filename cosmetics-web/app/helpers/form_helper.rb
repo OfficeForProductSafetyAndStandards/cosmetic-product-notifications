@@ -2,7 +2,7 @@ module FormHelper
   def email_input(user)
     options = {
       id: "email",
-      name: "user[email]",
+      name: "#{resource_form_name(user)}[email]",
       type: "email",
       classes: "app-!-max-width-two-thirds",
       label: { text: "Email address" },
@@ -16,7 +16,7 @@ module FormHelper
   def password_input(user, options = {})
     options.reverse_merge!(
       id: "password",
-      name: "user[password]",
+      name: "#{resource_form_name(user)}[password]",
       type: "password",
       classes: "app-!-max-width-two-thirds",
       label: { text: "Password" },
@@ -37,5 +37,9 @@ module FormHelper
 
   def base_errors
     { text: errors.full_messages_for(:base).to_sentence(last_word_connector: " and ") }
+  end
+
+  def resource_form_name(resource_object)
+    resource_object.class.name.underscore
   end
 end

@@ -4,6 +4,11 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.2]
   def self.up
     safety_assured do
       create_table :users, id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+        # Properties
+        t.string :mobile_number
+        t.boolean :mobile_number_verified, default: false, null: false
+        t.string :name
+
         t.string :type
         t.boolean :has_accepted_declaration, default: false
 
@@ -42,6 +47,7 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.2]
         t.integer :second_factor_attempts_count, default: 0
         t.datetime :second_factor_attempts_locked_at
         t.string :secondary_authentication_operation
+
 
         # Uncomment below if timestamps were not included in your original model.
         # t.timestamps null: false

@@ -236,6 +236,9 @@ ActiveRecord::Schema.define(version: 2020_07_14_144421) do
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "mobile_number"
+    t.boolean "mobile_number_verified", default: false, null: false
+    t.string "name"
     t.string "type"
     t.boolean "has_accepted_declaration", default: false
     t.string "email", default: "", null: false
