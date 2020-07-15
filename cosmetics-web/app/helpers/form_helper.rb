@@ -1,5 +1,6 @@
 module FormHelper
   def form_input(user, field, options = {})
+    value = user[field]
     field = field.to_s
     options.reverse_merge!(
       id: field,
@@ -7,7 +8,8 @@ module FormHelper
       type: "text",
       classes: "app-!-max-width-two-thirds",
       label: { text: field.titleize },
-      errorMessage: format_errors_for(user, user.errors.full_messages_for(field))
+      errorMessage: format_errors_for(user, user.errors.full_messages_for(field)),
+      value: value
     )
 
     render "components/govuk_input", options

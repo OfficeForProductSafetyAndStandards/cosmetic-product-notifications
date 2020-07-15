@@ -12,10 +12,6 @@ class SubmitUser < User
 
   has_one :user_attributes, dependent: :destroy
 
-  def name
-    "TODO: implement"
-  end
-
   def has_role?(role)
     false # TODO: AFAIK submit users does not have any roles
   end
