@@ -6,6 +6,7 @@ module Users
       # set_resource_as_new_user_from_params
 
       super do
+        devise_parameter_sanitizer.permit(:sign_up, keys: %i(name mobile_number))
         if sign_up_form.invalid?
           handle_invalid_form(resource)
           return render :new
@@ -22,7 +23,8 @@ module Users
       # end
     end
 
-    private
+  private
+
     def handle_invalid_form(resource)
       resource.errors.merge!(sign_up_form.errors)
     end
