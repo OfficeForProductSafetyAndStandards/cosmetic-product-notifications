@@ -1,4 +1,18 @@
 module FormHelper
+  def form_input(user, field, options = {})
+    field = field.to_s
+    options.reverse_merge!(
+      id: field,
+      name: "#{resource_form_name(user)}[#{field}]",
+      type: "text",
+      classes: "app-!-max-width-two-thirds",
+      label: { text: field.titleize },
+      errorMessage: format_errors_for(user, user.errors.full_messages_for(field))
+    )
+
+    render "components/govuk_input", options
+  end
+
   def email_input(user)
     options = {
       id: "email",

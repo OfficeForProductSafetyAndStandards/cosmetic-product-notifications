@@ -86,4 +86,9 @@ private
     submit_domain? ? submit_user_session_path : search_user_session_path
   end
   helper_method :user_session_path
+
+  def user_registration_path
+    submit_domain? ? submit_user_registration_path : search_user_registration_path
+  end
+  helper_method :user_registration_path
 end
