@@ -13,6 +13,9 @@ end
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   devise_for :submit_users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
+  devise_scope :submit_user do
+    resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
+  end
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 
   # resource :session, only: %i[new] do
