@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :authenticate_user!
-  # before_action :set_raven_context TODO
+  before_action :set_raven_context
   before_action :set_cache_headers
   before_action :set_service_name
 
