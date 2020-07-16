@@ -1,5 +1,6 @@
 module Users
   class SessionsController < Devise::SessionsController
+    skip_before_action :create_or_join_responsible_person
 
     def create
       set_resource_as_new_user_from_params
@@ -31,7 +32,7 @@ module Users
       # return redirect_to missing_mobile_number_path unless resource.mobile_number?
 
       set_raven_context
-      authorize_user
+      # authorize_user
       sign_in(resource_name, resource)
       respond_with resource, location: after_sign_in_path_for(resource)
     end
