@@ -28,7 +28,6 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def send_account_confirmation_email(user)
-    binding.pry
     set_template("82f13866-747c-4a7a-99d5-2ab279a54b55")
     set_reference("Send confirmation code")
 

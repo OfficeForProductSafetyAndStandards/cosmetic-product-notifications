@@ -3,7 +3,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   before_action :set_team_member, only: %i[new create]
   skip_before_action :create_or_join_responsible_person
 
-  def index; binding.pry; end
+  # def index; binding.pry; end
   def new; end
 
   def create

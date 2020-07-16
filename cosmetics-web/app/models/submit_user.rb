@@ -35,7 +35,6 @@ class SubmitUser < User
   end
 
   def send_confirmation_instructions
-    binding.pry
     NotifyMailer.send_account_confirmation_email(self)
   end
 
