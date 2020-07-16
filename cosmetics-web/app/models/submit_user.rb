@@ -35,7 +35,7 @@ class SubmitUser < User
   end
 
   def send_confirmation_instructions
-    NotifyMailer.send_account_confirmation_email(self)
+    NotifyMailer.send_account_confirmation_email(self).deliver_later
   end
 
 private
