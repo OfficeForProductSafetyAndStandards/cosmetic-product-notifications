@@ -36,7 +36,7 @@ module FormHelper
       type: "password",
       classes: "app-!-max-width-two-thirds",
       label: { text: "Password" },
-      errorMessage: format_errors_for(user, user.errors.full_messages_for(:password))
+      errorMessage: format_errors_for(user, user.errors.full_messages_for(:password)),
     )
 
     render "components/govuk_input", options
@@ -44,12 +44,12 @@ module FormHelper
 
   def password_confirmation_input(user, options = {})
     options.reverse_merge!(
-      id: "password",
+      id: "password_confirmation",
       name: "#{resource_form_name(user)}[password_confirmation]",
       type: "password",
       classes: "app-!-max-width-two-thirds",
       label: { text: "Password confirmation" },
-      errorMessage: format_errors_for(user, user.errors.full_messages_for(:password_confirmation))
+      errorMessage: format_errors_for(user, user.errors.full_messages_for(:password_confirmation)),
     )
 
     render "components/govuk_input", options
