@@ -1,0 +1,30 @@
+<% title = "Create a new password" %>
+<% page_title(title, errors: resource.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= error_summary resource.errors %>
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <p class="govuk-body">You can now create a new password for your account.</p>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <%#
+        This field is to enable password managers to capture the username as
+        well as the password, but should not be visible to users, nor should
+        the controller process the input.
+      %>
+      <%= content_tag :div, class: "app-password-manager-hidden" do -%>
+        <%= email_field_tag :username, @email, disabled: true, tabindex: "-1", 'aria-hidden': true, autocomplete: "username" %>
+      <% end -%>
+
+      <%= password_input(resource, hint: { text: "At least 8 characters" }, autocomplete: "new-password") %>
+
+      <%= govukButton(text: "Continue") %>
+    <% end %>
+  </div>
+</div>

@@ -38,6 +38,9 @@ class SubmitUser < User
     NotifyMailer.send_account_confirmation_email(self).deliver_later
   end
 
+  def send_reset_password_instructions_notification(token)
+    NotifyMailer.reset_password_instructions(self, token).deliver_later
+  end
 private
 
   def get_user_attributes

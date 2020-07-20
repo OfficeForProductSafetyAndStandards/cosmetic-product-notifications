@@ -1,4 +1,9 @@
 class NotifyMailer < GovukNotifyRails::Mailer
+  TEMPLATES =
+    {
+      reset_password_instruction: "cea1bb37-1d1c-4965-8999-6008d707b981", # PSD one
+    }.freeze
+
   def send_contact_person_verification_email(contact_person_name, contact_person_email, responsible_person_name, user_name)
     set_template("50072d05-d058-4a02-a239-0d73ef7291b2")
     set_reference("Contact person verification email")
@@ -38,5 +43,19 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     mail(to: user.email)
     Sidekiq.logger.info "Confirmation email send"
+  end
+
+  def reset_password_instructions(user, token)
+    set_template(TEMPLATES[:reset_password_instruction])
+    set_reference("Password reset")
+    reset_url = if user.is_a? SubmitUser
+            edit_submit_user_password_url(reset_password_token: token)
+          end
+    set_personalisation(
+      name: user.name,
+      edit_user_password_url_token: reset_url
+    )
+
+    mail(to: user.email)
   end
 end

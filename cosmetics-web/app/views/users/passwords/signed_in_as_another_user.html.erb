@@ -1,0 +1,22 @@
+<% page_title = "You are already signed in to the Product safety database" %>
+<% page_title(page_title) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <p class="govuk-body">Do you want to:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= link_to "Continue as #{current_user.name}", root_path, class: "govuk-link" %></li>
+      <li>
+        <%= form_with url: sign_out_before_resetting_password_path(reset_password_token: reset_password_token), method: :post do %>
+          <button class="button-link govuk-link">
+            <%= "Reset password for #{@user_with_reset_token.name}" %>
+          </button>
+        <% end %>
+      </li>
+    </ul>
+
+  </div>
+</div>
