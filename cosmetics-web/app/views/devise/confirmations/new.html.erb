@@ -8,7 +8,7 @@
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
-    <%= form_for(resource, as: resource_name, url: user_session_path, html: { novalidate: true }, method: :post) do |f| %>
+    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { novalidate: true }, method: :post) do |f| %>
       <%= email_input resource %>
 
       <%= govukButton(text: "Resend confirmation instructions") %>
