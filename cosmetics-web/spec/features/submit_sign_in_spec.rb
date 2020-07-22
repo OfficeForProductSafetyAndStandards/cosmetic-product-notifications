@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.feature "Signing in as a submit user", type: :feature do
   before do
     configure_requests_for_submit_domain
-    Capybara.app_host = 'http://submit'
   end
 
   #You have to confirm your email address before continuing.

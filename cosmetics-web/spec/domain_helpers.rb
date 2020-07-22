@@ -1,11 +1,13 @@
 module DomainHelpers
   # rubocop:disable RSpec/AnyInstance
   def configure_requests_for_submit_domain
+    Capybara.app_host = "http://#{ENV.fetch('SUBMIT_HOST')}"
     allow_any_instance_of(ActionDispatch::Request)
       .to receive(:host).and_return(ENV.fetch("SUBMIT_HOST"))
   end
 
   def configure_requests_for_search_domain
+    Capybara.app_host = "http://#{ENV.fetch('SEARCH_HOST')}"
     allow_any_instance_of(ActionDispatch::Request)
       .to receive(:host).and_return(ENV.fetch("SEARCH_HOST"))
   end
