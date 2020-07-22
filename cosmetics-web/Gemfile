@@ -40,6 +40,7 @@ gem "govuk-design-system-rails", git: "https://github.com/UKGovernmentBEIS/govuk
 group :development, :test do
   gem "brakeman", "~> 4.7.2"
   gem "capybara", "~> 3.30.0"
+  gem "capybara-screenshot"
   gem "coveralls", "~> 0.8.23"
   gem "debase", "~> 0.2.4"
   gem "dotenv-rails", "~> 2.7.5"

@@ -88,6 +88,9 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    capybara-screenshot (1.0.24)
+      capybara (>= 1.0, < 4)
+      launchy
     cf-app-utils (0.6)
     coderay (1.1.2)
     concurrent-ruby (1.1.6)
@@ -428,6 +431,7 @@ DEPENDENCIES
   aws-sdk-s3 (~> 1.60.1)
   brakeman (~> 4.7.2)
   capybara (~> 3.30.0)
+  capybara-screenshot
   cf-app-utils (~> 0.6)
   coveralls (~> 0.8.23)
   debase (~> 0.2.4)
