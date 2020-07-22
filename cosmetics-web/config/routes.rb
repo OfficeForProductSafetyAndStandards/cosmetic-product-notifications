@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   devise_scope :submit_user do
     resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
   end
+  resource :password_changed, controller: "users/password_changed", only: :show, path: "password-changed"
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 
   # resource :session, only: %i[new] do

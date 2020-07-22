@@ -5,11 +5,11 @@ require "domain_helpers"
 require "responsible_person_helpers"
 require "file_helpers"
 require "policy_helpers"
-require "support/render_errors"
-require "request_helpers"
-require "support/feature_helpers"
-require "support/antivirus"
-require "support/mailer"
+# require "support/render_errors"
+# require "request_helpers"
+# require "support/feature_helpers"
+# require "support/antivirus"
+# require "support/mailer"
 
 require "simplecov"
 require "coveralls"
@@ -25,8 +25,10 @@ ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
-require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
+require "rspec/rails"
+
+Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
