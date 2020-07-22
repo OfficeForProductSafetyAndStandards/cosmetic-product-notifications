@@ -100,6 +100,13 @@ en:
           attributes:
             name:
               blank: "Enter a name"
+        submit_user:
+          attributes:
+            password:
+              blank: "Enter a password"
+  sign_in_form:
+    email:
+      wrong_email_or_password: "Enter your email address in the correct format, like name@example.com"
   errors:
     format: "%{message}"
     messages:

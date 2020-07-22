@@ -109,7 +109,6 @@ module Users
     end
 
     def after_resetting_password_path_for(_resource)
-      binding.pry
       password_changed_path
     end
 
