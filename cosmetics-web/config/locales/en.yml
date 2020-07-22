@@ -150,3 +150,23 @@ en:
   users:
     check_your_email:
       body: A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.
+  sign_in_form:
+    email:
+      wrong_format: "Enter your email address in the correct format, like name@example.com"
+      blank: "Enter your email address"
+    password:
+      blank: "Enter your password"
+  sign_up_form:
+    mobile_number:
+      wrong_format: "Enter your mobile number in the correct format, like 07700 900 982"
+      blank: "Enter your mobile number"
+    name:
+      blank: "Enter your name"
+    password:
+      blank: "Enter your password"
+    password_confirmation:
+      blank: "Enter your password confirmation"
+      missmatch: "Should match password"
+  sign_user_in:
+    email:
+      wrong_email_or_password: "Enter correct email address and password"
