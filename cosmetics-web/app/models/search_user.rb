@@ -1,19 +1,19 @@
-class SubmitUser < User
-  # Include default devise modules. Others available are:
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :trackable
-
+class SearchUser < User
   belongs_to :organisation
 
   has_many :notification_files, dependent: :destroy
-  has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id # TODO: actually, only submit_users has resp person
+  has_many :responsible_person_users, dependent: :destroy
   has_many :responsible_persons, through: :responsible_person_users
 
   has_one :user_attributes, dependent: :destroy
 
+  # Getters and setters for each UserAttributes column should be added here so they can be accessed directly via delegation.
+  delegate :has_accepted_declaration?, :has_accepted_declaration!, to: :get_user_attributes
+
+  attr_accessor :access_token
+
   def has_role?(role)
-    false # TODO: AFAIK submit users does not have any roles
+    KeycloakClient.instance.has_role?(id, role, access_token)
   end
 
   def responsible_persons
@@ -32,14 +32,6 @@ class SubmitUser < User
 
   def can_view_product_ingredients?
     !msa_user?
-  end
-
-  def send_confirmation_instructions
-    NotifyMailer.send_account_confirmation_email(self).deliver_later
-  end
-
-  def send_reset_password_instructions_notification(token)
-    NotifyMailer.reset_password_instructions(self, token).deliver_later
   end
 
 private

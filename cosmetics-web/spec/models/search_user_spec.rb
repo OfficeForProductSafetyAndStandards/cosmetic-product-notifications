@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe User, type: :model do
+RSpec.describe SearchUser, type: :model do
   subject(:user) { described_class.new(id: 123) }
 
   describe "#can_view_product_ingredients?" do
