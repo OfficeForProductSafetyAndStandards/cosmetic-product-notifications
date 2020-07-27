@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :authenticate_user!
+  before_action :set_current_user, if: -> { search_domain? }
   before_action :set_raven_context
   before_action :set_cache_headers
   before_action :set_service_name
@@ -60,7 +61,6 @@ class ApplicationController < ActionController::Base
   end
 
   def poison_centre_or_msa_user?
-    return false # TODO
     current_user&.poison_centre_user? || current_user&.msa_user?
   end
 
@@ -85,8 +85,16 @@ class ApplicationController < ActionController::Base
     submit_domain? ? authenticate_submit_user! : authenticate_search_user!
   end
 
+  def authenticate_search_user!
+    redirect_to helpers.keycloak_login_url(request.original_fullpath) unless search_user_signed_in? || try_refresh_token
+  end
+
+  def search_user_signed_in?
+    @search_user_signed_in ||= ::KeycloakClient.instance.user_signed_in?(access_token)
+  end
+
   def destroy_user_session_path
-    submit_domain? ? destroy_submit_user_session_path : destroy_search_user_session_path
+    submit_domain? ? destroy_submit_user_session_path : logout_search_user_session_path
   end
   helper_method :destroy_user_session_path
 
@@ -104,5 +112,4 @@ class ApplicationController < ActionController::Base
     submit_domain? ? submit_user_password_path : search_user_password_path
   end
   helper_method :user_password_path
-
 end

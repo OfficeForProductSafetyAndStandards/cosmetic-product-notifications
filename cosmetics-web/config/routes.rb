@@ -27,6 +27,14 @@ Rails.application.routes.draw do
   #   end
   # end
 
+  resource :search_user_session, only: %i[new] do
+    member do
+      get :new
+      get :signin
+      get :logout
+    end
+  end
+
   unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"
   end

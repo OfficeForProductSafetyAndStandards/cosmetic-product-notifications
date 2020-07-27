@@ -9,7 +9,7 @@ RSpec.describe DashboardController, type: :controller do
     end
 
     after do
-      sign_out
+      sign_out(:submit_user)
     end
 
     describe "GET #show" do
@@ -26,7 +26,7 @@ RSpec.describe DashboardController, type: :controller do
     end
 
     after do
-      sign_out
+      sign_out(:search_user)
     end
 
     describe "GET #show" do
@@ -43,7 +43,7 @@ RSpec.describe DashboardController, type: :controller do
     end
 
     after do
-      sign_out
+      sign_out(:search_user)
     end
 
     describe "GET #show" do

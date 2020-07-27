@@ -14,7 +14,7 @@ module LoginHelpers
   # rubocop:enable RSpec/AnyInstance
 
   # rubocop:disable RSpec/AnyInstance
-  def sign_in(as_user: build(:user), with_roles: [])
+  def keycloak_sign_in(as_user: create(:search_user), with_roles: [])
     allow(Keycloak::Client).to receive(:user_signed_in?).and_return(true)
     allow(Keycloak::Client).to receive(:get_userinfo).and_return(format_user_for_get_userinfo(as_user))
 
@@ -27,18 +27,18 @@ module LoginHelpers
   end
   # rubocop:enable RSpec/AnyInstance
 
-  def sign_in_as_poison_centre_user(user: build(:user))
-    sign_in(as_user: user, with_roles: [:poison_centre_user])
+  def sign_in_as_poison_centre_user(user: create(:search_user))
+    keycloak_sign_in(as_user: user, with_roles: [:poison_centre_user])
     configure_requests_for_search_domain
   end
 
-  def sign_in_as_msa_user(user: build(:user))
-    sign_in(as_user: user, with_roles: [:msa_user])
+  def sign_in_as_msa_user(user: create(:search_user))
+    keycloak_sign_in(as_user: user, with_roles: [:msa_user])
     configure_requests_for_search_domain
   end
 
   # rubocop:disable RSpec/AnyInstance
-  def sign_out
+  def keycloak_sign_out
     allow(Keycloak::Client).to receive(:url_user_account).and_call_original
     allow(Keycloak::Client).to receive(:user_signed_in?).and_call_original
     allow(Keycloak::Client).to receive(:get_userinfo).and_call_original

@@ -4,11 +4,13 @@ RSpec.describe ResponsiblePersonsController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
   before do
+    configure_requests_for_submit_domain
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
+    reset_domain_request_mocking
   end
 
   describe "GET #show" do

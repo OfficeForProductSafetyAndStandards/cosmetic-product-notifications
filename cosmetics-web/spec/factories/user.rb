@@ -15,6 +15,14 @@ FactoryBot.define do
       mobile_number { "07500 000 000" }
       confirmed_at { 1.hour.ago }
       has_accepted_declaration { true }
+
+      transient do
+        first_login { false }
+      end
+
+      after :create do |user, options|
+        create(:user_attributes, user: user, declaration_accepted: !options.first_login)
+      end
     end
 
     # organisation

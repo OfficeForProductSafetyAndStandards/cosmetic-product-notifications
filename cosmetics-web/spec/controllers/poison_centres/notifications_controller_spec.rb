@@ -15,7 +15,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   let(:similar_notification_two) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaab") }
 
   after do
-    sign_out
+    sign_out(:search_user)
   end
 
   describe "When signed in as a Poison Centre user" do

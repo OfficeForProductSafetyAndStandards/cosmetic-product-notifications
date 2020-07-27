@@ -8,7 +8,7 @@ RSpec.describe ResponsiblePersons::AddNotificationWizardController, type: :contr
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "as a signed in member of the responsible person" do
