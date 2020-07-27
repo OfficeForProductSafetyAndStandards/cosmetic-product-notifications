@@ -13,7 +13,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "GET /responsible_persons/ID/nanomaterials" do

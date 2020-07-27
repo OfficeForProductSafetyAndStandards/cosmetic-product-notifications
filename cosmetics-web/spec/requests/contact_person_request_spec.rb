@@ -8,7 +8,7 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "adding a contact person" do

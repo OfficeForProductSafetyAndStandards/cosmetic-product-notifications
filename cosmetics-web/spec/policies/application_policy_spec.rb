@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe ApplicationPolicy, type: :policy do
   subject { described_class.new(user, record) }
 
-  let(:user) { create(:user) }
+  let(:user) { create(:submit_user) }
   let(:record) { create(:notification) }
 
   it { is_expected.not_to permit(:index) }

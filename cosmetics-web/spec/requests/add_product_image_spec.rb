@@ -10,7 +10,7 @@ RSpec.describe "Add product image page", type: :request do
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "GET #show" do

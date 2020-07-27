@@ -32,7 +32,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
 
     it "excludes pending notification files for other users" do
-      other_user = build(:user, email: "other.user@example.com")
+      other_user = build(:submit_user, email: "other.user@example.com")
       responsible_person.add_user(other_user)
 
       create(:notification_file, responsible_person: responsible_person, user: other_user)

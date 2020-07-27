@@ -24,7 +24,7 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
 
     it "fails if the email is already a member of team" do
       create(:responsible_person_user,
-             user: create(:user, email: pending_responsible_person.email_address),
+             user: create(:submit_user, email: pending_responsible_person.email_address),
              responsible_person: pending_responsible_person.responsible_person)
 
       expect(pending_responsible_person.save).to be false

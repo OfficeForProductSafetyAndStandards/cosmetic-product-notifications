@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:user) { create(:user) }
+  let(:user) { create(:submit_user) }
   let(:invited_user) { create(:user) }
 
   before do

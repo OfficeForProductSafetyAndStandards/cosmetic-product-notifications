@@ -10,7 +10,7 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "PUT #confirm_usage" do

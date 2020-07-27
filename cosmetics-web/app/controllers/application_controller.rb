@@ -22,13 +22,17 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  protected
+  rescue_from "ActiveRecord::RecordNotFound" do |_e|
+    render "/404", status: :not_found
+  end
+
+protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :mobile_number])
   end
 
-  private
+private
 
   def after_sign_in_path_for(_resource)
     dashboard_path

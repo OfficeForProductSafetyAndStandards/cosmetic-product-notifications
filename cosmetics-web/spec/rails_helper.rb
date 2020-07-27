@@ -86,10 +86,10 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
   config.include Capybara::DSL, type: :feature
   config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Matchers, type: :controller
   config.include FactoryBot::Syntax::Methods
   config.include DomainHelpers
-  config.include LoginHelpers
-  config.include ResponsiblePersonHelpers
   config.include FileHelpers
+  config.include LoginHelpers
+  config.include Matchers
+  config.include ResponsiblePersonHelpers
 end
