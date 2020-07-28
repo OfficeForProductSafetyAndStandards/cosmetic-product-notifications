@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe ResponsiblePersonPolicy, type: :policy do
   subject(:policy) { described_class.new(user, responsible_person) }
 
-  let(:user) { create(:user) }
+  let(:user) { create(:submit_user) }
   let(:responsible_person) { create(:responsible_person) }
 
   it { is_expected.not_to permit(:index) }

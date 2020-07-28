@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:user) { create(:user) }
+  let(:user) { create(:submit_user) }
   let(:email_address) { "user@example.com" }
   let(:pending_responsible_person_user) { create(:pending_responsible_person_user, responsible_person: responsible_person) }
   let(:params) { { responsible_person_id: responsible_person.id } }
@@ -12,7 +12,7 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "GET #index" do

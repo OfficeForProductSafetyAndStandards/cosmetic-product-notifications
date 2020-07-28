@@ -32,7 +32,7 @@ RSpec.describe LandingPageController, type: :controller do
   end
 
   describe "When signed in as a Responsible Person user" do
-    let(:user) { build(:user) }
+    let(:user) { build(:submit_user) }
     let(:responsible_person_1) { create(:responsible_person, :with_a_contact_person) }
     let(:responsible_person_2) { create(:responsible_person, :with_a_contact_person) }
 
@@ -44,7 +44,7 @@ RSpec.describe LandingPageController, type: :controller do
     end
 
     after do
-      sign_out
+      sign_out(:submit_user)
     end
 
     describe "GET #index" do
@@ -66,7 +66,7 @@ RSpec.describe LandingPageController, type: :controller do
     end
 
     after do
-      sign_out
+      sign_out(:search_user)
     end
 
     describe "GET #index" do
@@ -83,7 +83,7 @@ RSpec.describe LandingPageController, type: :controller do
     end
 
     after do
-      sign_out
+      sign_out(:search_user)
     end
 
     describe "GET #index" do

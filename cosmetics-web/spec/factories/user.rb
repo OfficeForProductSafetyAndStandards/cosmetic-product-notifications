@@ -8,6 +8,23 @@ FactoryBot.define do
       confirmed_at { 1.hour.ago }
       has_accepted_declaration { true }
     end
+
+    factory :search_user, class: "SearchUser" do
+      name { "John Doe" }
+      sequence(:email) { |n| "john.doe#{n}@example.org" }
+      mobile_number { "07500 000 000" }
+      confirmed_at { 1.hour.ago }
+      has_accepted_declaration { true }
+
+      transient do
+        first_login { false }
+      end
+
+      after :create do |user, options|
+        create(:user_attributes, user: user, declaration_accepted: !options.first_login)
+      end
+    end
+
     # organisation
     # transient do
     #   first_login { false }

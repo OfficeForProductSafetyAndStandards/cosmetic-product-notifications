@@ -1,15 +1,16 @@
 require "rails_helper"
 
 RSpec.describe DeclarationController, type: :controller do
-  let(:first_time_user) { build(:user, first_login: true) }
-
   describe "When signed in as a business user" do
+    let(:first_time_user) { create(:submit_user, has_accepted_declaration: false) }
+
     before do
-      sign_in(as_user: first_time_user)
+      configure_requests_for_submit_domain
+      sign_in(first_time_user)
     end
 
     after do
-      sign_out
+      sign_out(:submit_user)
     end
 
     describe "GET #show" do
@@ -22,7 +23,7 @@ RSpec.describe DeclarationController, type: :controller do
     describe "POST #accept" do
       it "records the declaration as accepted" do
         post :accept
-        expect(first_time_user.has_accepted_declaration?).to be true
+        expect(first_time_user.reload.has_accepted_declaration?).to be true
       end
 
       it "redirects to the root path" do
@@ -33,12 +34,14 @@ RSpec.describe DeclarationController, type: :controller do
   end
 
   describe "When signed in as a Poison Centre user" do
+    let(:first_time_user) { create(:search_user, first_login: true) }
+
     before do
       sign_in_as_poison_centre_user(user: first_time_user)
     end
 
     after do
-      sign_out
+      sign_out(:search_user)
     end
 
     describe "GET #show" do

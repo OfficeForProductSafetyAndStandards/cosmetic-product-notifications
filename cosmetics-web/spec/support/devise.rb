@@ -1,6 +1,6 @@
-module LoginHelpers
-  def sign_in(user = create(:user, :activated, has_viewed_introduction: true))
-    visit new_user_session_path
+module DeviseLoginHelpers
+  def sign_in(user = create(:search_user, :activated, has_viewed_introduction: true))
+    visit "/sign-in"
 
     stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/sms").and_return(body: {}.to_json, status: 200)
     fill_in "user[email]", with: user.email
@@ -32,7 +32,7 @@ end
 
 RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers
-  config.include LoginHelpers, type: :feature
+  config.include DeviseLoginHelpers, type: :feature
   config.include Devise::Test::TokenGenerator
   # TODO
   # config.before(:each, :with_2fa) do

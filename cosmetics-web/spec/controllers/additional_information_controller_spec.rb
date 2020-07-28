@@ -10,7 +10,7 @@ RSpec.describe AdditionalInformationController, :with_stubbed_antivirus, type: :
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "GET #index" do
