@@ -1,6 +1,7 @@
 class NotifyMailer < GovukNotifyRails::Mailer
   TEMPLATES =
     {
+      account_locked: "0a78e692-977e-4ca7-94e9-9de64ebd8a5d", # PSD one
       reset_password_instruction: "cea1bb37-1d1c-4965-8999-6008d707b981", # PSD one
     }.freeze
 
@@ -58,4 +59,17 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     mail(to: user.email)
   end
+
+  def account_locked(user, tokens)
+    set_template(TEMPLATES[:account_locked])
+
+    personalization = {
+      name: user.name,
+      edit_user_password_url_token: edit_submit_user_password_url(reset_password_token: tokens[:reset_password_token]),
+      unlock_user_url_token: submit_user_unlock_url(unlock_token: tokens[:unlock_token])
+    }
+    set_personalisation(personalization)
+    mail(to: user.email)
+  end
+
 end

@@ -12,7 +12,7 @@ end
 
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  devise_for :submit_users, path: "",  path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" }, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords" }
+  devise_for :submit_users, path: "",  path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" }, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords", unlocks: "users/unlocks" }
   devise_scope :submit_user do
     resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
   end

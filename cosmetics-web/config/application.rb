@@ -43,5 +43,6 @@ module Cosmetics
 
     config.active_record.belongs_to_required_by_default = true
     config.antivirus_url = ENV.fetch("ANTIVIRUS_URL", "http://localhost:3006/safe")
+    config.secondary_authentication_enabled = false # ENV.fetch("TWO_FACTOR_AUTHENTICATION_ENABLED", "true") == "true"
   end
 end
