@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from "ActiveRecord::RecordNotFound" do |_e|
-    render "/404", status: :not_found
+    redirect_to "/404", status: :not_found
   end
 
 protected

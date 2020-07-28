@@ -13,7 +13,7 @@ class SearchUser < User
   attr_accessor :access_token
 
   def has_role?(role)
-    access_token = self.class.current.access_token if current_user?
+    access_token = self.class.current&.access_token
     KeycloakClient.instance.has_role?(id, role, access_token)
   end
 
