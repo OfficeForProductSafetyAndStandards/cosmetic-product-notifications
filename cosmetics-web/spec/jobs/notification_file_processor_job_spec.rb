@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
   after do
-    sign_out
+    sign_out(:submit_user)
     remove_uploaded_files
     close_file
   end
