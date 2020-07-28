@@ -3,8 +3,8 @@ module DeviseLoginHelpers
     visit "/sign-in"
 
     stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/sms").and_return(body: {}.to_json, status: 200)
-    fill_in "user[email]", with: user.email
-    fill_in "user[password]", with: "2538fhdkvuULE36f"
+    fill_in "email", with: user.email
+    fill_in "password", with: "testpassword123"
     click_on "Continue"
 
     if page.has_field?("Enter security code")

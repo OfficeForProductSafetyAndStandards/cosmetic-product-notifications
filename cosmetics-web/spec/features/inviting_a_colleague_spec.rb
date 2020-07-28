@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:user) { create(:submit_user) }
-  let(:invited_user) { create(:user) }
+  let(:invited_user) { create(:submit_user) }
 
   before do
     stub_notify_mailer
@@ -30,7 +30,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, type: :feature d
 
   scenario "accepting an invitation" do
     configure_requests_for_submit_domain
-    sign_in as_user: invited_user
+    sign_in invited_user
 
     PendingResponsiblePersonUser.create(email_address: invited_user.email, responsible_person: responsible_person)
 

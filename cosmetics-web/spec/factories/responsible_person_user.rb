@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :responsible_person_user do
-    user
+    user factory: :submit_user
   end
 end

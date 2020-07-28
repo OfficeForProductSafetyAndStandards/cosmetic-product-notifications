@@ -3,12 +3,11 @@ require "rails_helper"
 RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed_mailer, :with_2fa, type: :feature do
   before do
     configure_requests_for_submit_domain
-    Capybara.app_host = 'http://submit'
   end
 
   let(:user) { create(:submit_user) }
   let!(:reset_token)                      { stubbed_devise_generated_token }
-  let(:edit_user_password_url_with_token) { "http://submit/password/edit?reset_password_token=#{reset_token.first}" }
+  let(:edit_user_password_url_with_token) { "http://#{ENV.fetch('SUBMIT_HOST')}/password/edit?reset_password_token=#{reset_token.first}" }
 
   scenario "entering an email which does not match an account does not send a notification but shows the confirmation page" do
     user.update!(reset_password_token: reset_token)

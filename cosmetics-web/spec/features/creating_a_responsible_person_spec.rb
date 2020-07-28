@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe "Creating a responsible person", type: :feature do
   context "when logged in as a new user," do
-    let(:user) { create(:user, first_login: true) }
+    let(:user) { create(:submit_user, has_accepted_declaration: false) }
 
     before do
-      sign_in as_user: user
-      stub_notify_mailer
       configure_requests_for_submit_domain
+      stub_notify_mailer
+      sign_in user
     end
 
     scenario "creating a resposible person as a individual sole trader" do
