@@ -34,12 +34,13 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def send_account_confirmation_email(user)
+    set_host(user)
     set_template("82f13866-747c-4a7a-99d5-2ab279a54b55")
     set_reference("Send confirmation code")
 
     set_personalisation(
       name: user.name,
-      verify_email_url: submit_user_confirmation_url(confirmation_token: user.confirmation_token)
+      verify_email_url: submit_user_confirmation_url(confirmation_token: user.confirmation_token, host: @host)
     )
 
     mail(to: user.email)
@@ -47,10 +48,11 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def reset_password_instructions(user, token)
+    set_host(user)
     set_template(TEMPLATES[:reset_password_instruction])
     set_reference("Password reset")
     reset_url = if user.is_a? SubmitUser
-            edit_submit_user_password_url(reset_password_token: token)
+            edit_submit_user_password_url(reset_password_token: token, host: @host)
           end
     set_personalisation(
       name: user.name,
@@ -61,15 +63,27 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def account_locked(user, tokens)
+    set_host(user)
     set_template(TEMPLATES[:account_locked])
 
     personalization = {
       name: user.name,
-      edit_user_password_url_token: edit_submit_user_password_url(reset_password_token: tokens[:reset_password_token]),
-      unlock_user_url_token: submit_user_unlock_url(unlock_token: tokens[:unlock_token])
+      edit_user_password_url_token: edit_submit_user_password_url(reset_password_token: tokens[:reset_password_token], host: @host),
+      unlock_user_url_token: submit_user_unlock_url(unlock_token: tokens[:unlock_token], host: @host)
     }
     set_personalisation(personalization)
     mail(to: user.email)
+  end
+
+  private
+
+  def set_host(user)
+    if user.is_a? SubmitUser
+      @host = ENV['SUBMIT_HOST']
+    end
+    if user.is_a? SearchUser
+      @host = ENV['SEARCH_HOST']
+    end
   end
 
 end
