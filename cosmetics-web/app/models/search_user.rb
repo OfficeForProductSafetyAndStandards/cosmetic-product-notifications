@@ -1,53 +1,67 @@
 class SearchUser < User
-  belongs_to :organisation
+  # Include default devise modules. Others available are:
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :confirmable, :lockable, :trackable
 
-  has_many :notification_files, dependent: :destroy
-  has_many :responsible_person_users, dependent: :destroy
-  has_many :responsible_persons, through: :responsible_person_users
+  belongs_to :organisation
 
   has_one :user_attributes, dependent: :destroy
 
-  # Getters and setters for each UserAttributes column should be added here so they can be accessed directly via delegation.
-  delegate :has_accepted_declaration?, :has_accepted_declaration!, to: :get_user_attributes
-
-  attr_accessor :access_token
-
   def has_role?(role)
-    access_token = self.class.current&.access_token
-    KeycloakClient.instance.has_role?(id, role, access_token)
-  end
-
-  def responsible_persons
-    # ActiveHash does not support has_many through: associations
-    # Therefore adopt the workaround suggested here: https://github.com/zilkey/active_hash/issues/25
-    ResponsiblePerson.find responsible_person_users.map(&:responsible_person_id)
+    false # TODO: AFAIK submit users does not have any roles
   end
 
   def poison_centre_user?
-    has_role? :poison_centre_user
+    false # has_role? :poison_centre_user
   end
 
   def msa_user?
-    has_role? :msa_user
+    true # has_role? :msa_user
   end
 
   def can_view_product_ingredients?
     !msa_user?
   end
 
-  def self.current
-    RequestStore.store[:current_user]
+  def send_confirmation_instructions
+    NotifyMailer.send_account_confirmation_email(self).deliver_later
   end
 
-  def self.current=(user)
-    RequestStore.store[:current_user] = user
+  def send_reset_password_instructions_notification(token)
+    NotifyMailer.reset_password_instructions(self, token).deliver_later
+  end
+
+  # Don't reset password attempts yet, it will happen on next successful login
+  def unlock_access!
+    self.locked_at = nil
+    self.unlock_token = nil
+    save(validate: false)
   end
 
 private
+  # Devise::Models::Lockable
 
-  def current_user?
-    self.class.current&.id == id
+  def send_unlock_instructions
+    raw, enc = Devise.token_generator.generate(self.class, :unlock_token)
+    self.unlock_token = enc
+    save(validate: false)
+    reset_password_token = set_reset_password_token
+    NotifyMailer.account_locked(
+      self,
+      unlock_token: raw,
+      reset_password_token: reset_password_token
+    ).deliver_later
+    raw
   end
+
+  def increment_failed_attempts
+    # TODO:
+    # return unless mobile_number_verified?
+
+    super
+  end
+
 
   def get_user_attributes
     UserAttributes.find_or_create_by(user_id: id)

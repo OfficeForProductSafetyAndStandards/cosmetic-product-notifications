@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :authenticate_user!
-  before_action :set_current_user, if: -> { search_domain? }
+  # before_action :set_current_user, if: -> { search_domain? }
   before_action :set_raven_context
   before_action :set_cache_headers
   before_action :set_service_name
@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
     redirect_to "/404", status: :not_found
   end
 
+  def user_class
+    submit_domain? ? SubmitUser : SearchUser
+  end
+
 protected
 
   def configure_permitted_parameters
@@ -35,7 +39,7 @@ protected
 private
 
   def after_sign_in_path_for(_resource)
-    dashboard_path
+    submit_domain? ?  dashboard_path : poison_centre_notifications_path
   end
 
   def authorize_user!
@@ -89,16 +93,12 @@ private
     submit_domain? ? authenticate_submit_user! : authenticate_search_user!
   end
 
-  def authenticate_search_user!
-    redirect_to helpers.keycloak_login_url(request.original_fullpath) unless search_user_signed_in? || try_refresh_token
-  end
-
   def search_user_signed_in?
     @search_user_signed_in ||= ::KeycloakClient.instance.user_signed_in?(access_token)
   end
 
   def destroy_user_session_path
-    submit_domain? ? destroy_submit_user_session_path : logout_search_user_session_path
+    submit_domain? ? destroy_submit_user_session_path : destroy_search_user_session_path
   end
   helper_method :destroy_user_session_path
 

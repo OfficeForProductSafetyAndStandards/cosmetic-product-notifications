@@ -23,15 +23,15 @@ class SubmitUser < User
   end
 
   def poison_centre_user?
-    has_role? :poison_centre_user
+    false
   end
 
   def msa_user?
-    has_role? :msa_user
+    false
   end
 
   def can_view_product_ingredients?
-    !msa_user?
+    false
   end
 
   def send_confirmation_instructions

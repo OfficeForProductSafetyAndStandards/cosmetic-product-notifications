@@ -28,10 +28,6 @@ module AuthenticationConcern
     SearchUser.current.access_token = access_token
   end
 
-  def current_search_user
-    SearchUser.current
-  end
-
   def pundit_user
     current_submit_user || current_search_user
   end

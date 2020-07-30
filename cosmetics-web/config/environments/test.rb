@@ -53,4 +53,5 @@ Rails.application.configure do
 
   # Url for mailer
   config.action_mailer.default_url_options = { host: "submit" }
+  config.slowpoke.timeout = 3600 # we dont want slowpoke to ruin our tests
 end
