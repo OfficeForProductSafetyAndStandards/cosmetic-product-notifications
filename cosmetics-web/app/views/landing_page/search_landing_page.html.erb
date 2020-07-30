@@ -9,7 +9,7 @@
           Search for cosmetic products
         </h1>
         <p class="masthead-account-links govuk-!-padding-top-2 govuk-!-margin-bottom-5">
-          <%= govukButton text: "Sign in", href: keycloak_login_url(dashboard_path) %>
+          <%= link_to "sign in", new_search_user_session_path, class: "govuk-link govuk-link--no-visited-state" %>
         </p>
       </div>
     </div>
@@ -27,8 +27,6 @@
         <p class="govuk-body govuk-!-margin-bottom-2">If you’re using this service for the first time, send an email to <a href="mailto:opss.enquiries@beis.gov.uk">opss.enquiries@beis.gov.uk</a> to ask for an account.</p>
 
         <h3 class="govuk-heading-s">Trading Standards officers</h3>
-
-        <p class="govuk-body govuk-!-margin-bottom-2">If you’ve used the Product Safety Database (PSD), you can use your PSD sign in details (username and password).</p>
 
         <h2 class="govuk-heading-m">What you can search for</h2>
 

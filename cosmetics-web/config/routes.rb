@@ -12,10 +12,7 @@ end
 
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  devise_for :submit_users, path: "",  path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" }, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords", unlocks: "users/unlocks" }
-  devise_scope :submit_user do
-    resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
-  end
+
   resource :password_changed, controller: "users/password_changed", only: :show, path: "password-changed"
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 
@@ -27,19 +24,23 @@ Rails.application.routes.draw do
   #   end
   # end
 
-  resource :search_user_session, only: %i[new] do
-    member do
-      get :new
-      get :signin
-      get :logout
-    end
-  end
+  # resource :search_user_session, only: %i[new] do
+  #   member do
+  #     get :new
+  #     get :signin
+  #     get :logout
+  #   end
+  # end
 
   unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"
   end
 
   constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
+    devise_for :search_users, path: "",  path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" }, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords", unlocks: "users/unlocks" }
+    devise_scope :search_user do
+      resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
+    end
     root "landing_page#index"
 
     scope module: "poison_centres", as: "poison_centre" do
@@ -49,6 +50,11 @@ Rails.application.routes.draw do
 
   # All requests besides "Search" host ones will default to "Submit" pages.
   constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
+    devise_for :submit_users, path: "",  path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" }, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords", unlocks: "users/unlocks" }
+    devise_scope :submit_user do
+      resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
+    end
+
     root "landing_page#index"
 
 

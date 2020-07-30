@@ -13,6 +13,7 @@ FactoryBot.define do
       name { "John Doe" }
       sequence(:email) { |n| "john.doe#{n}@example.org" }
       mobile_number { "07500 000 000" }
+      password { "testpassword123" }
       confirmed_at { 1.hour.ago }
       has_accepted_declaration { true }
 
