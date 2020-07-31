@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
     submit_domain? ? SubmitUser : SearchUser
   end
 
+  def user_params_key
+    submit_domain? ? :submit_user : :search_user
+  end
+
+
 protected
 
   def configure_permitted_parameters
@@ -91,10 +96,6 @@ private
 
   def authenticate_user!
     submit_domain? ? authenticate_submit_user! : authenticate_search_user!
-  end
-
-  def search_user_signed_in?
-    @search_user_signed_in ||= ::KeycloakClient.instance.user_signed_in?(access_token)
   end
 
   def destroy_user_session_path

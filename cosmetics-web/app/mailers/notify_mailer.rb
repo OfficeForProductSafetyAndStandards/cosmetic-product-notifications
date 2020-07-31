@@ -3,6 +3,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     {
       account_locked: "0a78e692-977e-4ca7-94e9-9de64ebd8a5d", # PSD one
       reset_password_instruction: "cea1bb37-1d1c-4965-8999-6008d707b981", # PSD one
+      invitation: "7b80a680-f8b3-4032-982d-2a3a662b611a", # PSD one
     }.freeze
 
   def send_contact_person_verification_email(contact_person_name, contact_person_email, responsible_person_name, user_name)
@@ -74,6 +75,19 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_personalisation(personalization)
     mail(to: user.email)
   end
+
+  def invitation_email(user)
+    set_host(user)
+    set_template(TEMPLATES[:invitation])
+
+    invitation_url = complete_registration_user_url(user.id, invitation: user.invitation_token, host: @host)
+
+    invited_by = "an admin"
+
+    set_personalisation(invitation_url: invitation_url, inviting_team_member_name: invited_by)
+    mail(to: user.email)
+  end
+
 
   private
 

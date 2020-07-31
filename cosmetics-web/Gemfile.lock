@@ -163,6 +163,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
+    interactor (3.1.2)
     jaro_winkler (1.5.4)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
@@ -444,6 +445,7 @@ DEPENDENCIES
   faker
   govuk-design-system-rails!
   govuk_notify_rails (~> 2.1.0)
+  interactor
   jbuilder (~> 2.9)
   keycloak (~> 2.4.1)
   launchy (~> 2.4.3)

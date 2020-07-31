@@ -46,6 +46,12 @@ Rails.application.routes.draw do
     scope module: "poison_centres", as: "poison_centre" do
       resources :notifications, param: :reference_number, only: %i[index show]
     end
+    resources :users, only: [:update] do
+      member do
+        get "complete-registration", action: :complete_registration
+        post "sign-out-before-accepting-invitation", action: :sign_out_before_accepting_invitation
+      end
+    end
   end
 
   # All requests besides "Search" host ones will default to "Submit" pages.

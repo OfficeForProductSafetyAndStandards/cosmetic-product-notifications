@@ -1,12 +1,15 @@
 class SearchUser < User
+  INVITATION_EXPIRATION_DAYS = 14
+
   # Include default devise modules. Others available are:
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :trackable
+         :lockable, :trackable
 
   belongs_to :organisation
 
   has_one :user_attributes, dependent: :destroy
+  attribute :skip_password_validation, :boolean, default: false
 
   def has_role?(role)
     false # TODO: AFAIK submit users does not have any roles
@@ -38,6 +41,22 @@ class SearchUser < User
     self.unlock_token = nil
     save(validate: false)
   end
+
+  def password_required?
+    return false if skip_password_validation
+
+    super
+  end
+
+  def invitation_expired?
+    invited_at <= INVITATION_EXPIRATION_DAYS.days.ago
+  end
+
+  def has_completed_registration?
+    # TODO: add mobile verification
+    encrypted_password.present? && name.present? && mobile_number.present? # && mobile_number_verified
+  end
+
 
 private
   # Devise::Models::Lockable
