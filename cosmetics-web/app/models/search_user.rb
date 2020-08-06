@@ -53,10 +53,12 @@ class SearchUser < User
   end
 
   def has_completed_registration?
-    # TODO: add mobile verification
-    encrypted_password.present? && name.present? && mobile_number.present? # && mobile_number_verified
+    encrypted_password.present? && name.present? && mobile_number.present? && mobile_number_verified
   end
 
+  def mobile_number_change_allowed?
+    !mobile_number_verified?
+  end
 
 private
   # Devise::Models::Lockable

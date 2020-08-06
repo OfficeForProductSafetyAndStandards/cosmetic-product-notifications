@@ -7,6 +7,15 @@ FactoryBot.define do
       password { "testpassword123" }
       confirmed_at { 1.hour.ago }
       has_accepted_declaration { true }
+      direct_otp_sent_at { Time.current }
+      direct_otp { "12345" }
+      mobile_number_verified { true }
+
+      trait :with_responsible_person do
+        after(:create) do |user|
+          create_list(:responsible_person_user, 1, user: user)
+        end
+      end
     end
 
     factory :search_user, class: "SearchUser" do
@@ -16,6 +25,9 @@ FactoryBot.define do
       password { "testpassword123" }
       confirmed_at { 1.hour.ago }
       has_accepted_declaration { true }
+      direct_otp_sent_at { Time.current }
+      direct_otp { "12345" }
+      mobile_number_verified { true }
 
       transient do
         first_login { false }

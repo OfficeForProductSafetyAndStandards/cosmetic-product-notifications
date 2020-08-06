@@ -49,6 +49,10 @@ class SubmitUser < User
     save(validate: false)
   end
 
+  def mobile_number_change_allowed?
+    !mobile_number_verified?
+  end
+
 private
   # Devise::Models::Lockable
 

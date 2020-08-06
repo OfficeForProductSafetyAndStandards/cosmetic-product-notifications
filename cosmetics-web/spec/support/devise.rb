@@ -34,10 +34,9 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers
   config.include DeviseLoginHelpers, type: :feature
   config.include Devise::Test::TokenGenerator
-  # TODO
-  # config.before(:each, :with_2fa) do
-  #   allow(Rails.application.config).to receive(
-  #     :secondary_authentication_enabled
-  #   ).and_return(true)
-  # end
+  config.before(:each, :with_2fa) do
+    allow(Rails.application.config).to receive(
+      :secondary_authentication_enabled
+    ).and_return(true)
+  end
 end

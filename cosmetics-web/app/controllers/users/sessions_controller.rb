@@ -4,6 +4,7 @@ module Users
     skip_before_action :authorize_user!
     skip_before_action :set_raven_context
     skip_before_action :has_accepted_declaration
+    skip_before_action :require_secondary_authentication
 
     def create
       set_resource_as_new_user_from_params
@@ -34,10 +35,10 @@ module Users
   private
 
     def handle_authentication_success
-      # return redirect_to missing_mobile_number_path unless resource.mobile_number?
+      return redirect_to missing_mobile_number_path unless resource.mobile_number?
 
       set_raven_context
-      # authorize_user
+      authorize_user!
       sign_in(resource_name, resource)
       respond_with resource, location: after_sign_in_path_for(resource)
     end
@@ -71,7 +72,6 @@ module Users
     end
 
     def mobile_not_verified?(user)
-      return false # TODO
       user && !user.mobile_number_verified
     end
 

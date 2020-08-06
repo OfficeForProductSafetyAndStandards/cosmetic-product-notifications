@@ -4,10 +4,13 @@ class ApplicationController < ActionController::Base
   include HttpAuthConcern
   include RavenConfigurationConcern
   include DomainConcern
+  include SecondaryAuthenticationConcern
 
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   # before_action :set_current_user, if: -> { search_domain? }
+  before_action :ensure_secondary_authentication
+  before_action :require_secondary_authentication
   before_action :set_raven_context
   before_action :set_cache_headers
   before_action :set_service_name
@@ -62,7 +65,7 @@ private
   end
 
   def create_or_join_responsible_person
-    return unless user_signed_in? && !poison_centre_or_msa_user?
+    return unless user_signed_in? && secondary_authentication_present? && !poison_centre_or_msa_user?
 
     responsible_person = current_user.responsible_persons.first
 
