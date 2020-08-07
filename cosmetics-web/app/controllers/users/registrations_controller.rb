@@ -11,13 +11,13 @@ module Users
       end
     end
 
-    protected
+  protected
 
     def after_inactive_sign_up_path_for(resource)
       check_your_email_path
     end
 
-    private
+  private
 
     def handle_invalid_form
       self.resource = resource_class.new(sign_up_params)

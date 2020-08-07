@@ -16,10 +16,17 @@ module Users
 
       matching_user = User.find_by(email: sign_in_form.email)
 
-      if mobile_not_verified?(matching_user)
-        handle_mobile_not_verified(resource)
-        return render :new
-      end
+      # TODO: Check if we actually need this in Cosmetics.
+      # User won't be able to login without 2FA, and as its
+      # mobile is not verified, will be able to change the phone
+      # number for verification.
+      # The check below blocks the sign in when the user completes
+      # its registration and follows the confirmation link.
+      #
+      # if mobile_not_verified?(matching_user)
+      #   handle_mobile_not_verified(resource)
+      #   return render :new
+      # end
 
       # TODO: devise has hook to make redirection when
       # resource.active_for_authentication? returns false
