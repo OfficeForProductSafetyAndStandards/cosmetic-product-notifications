@@ -27,7 +27,7 @@
         <ul id="navigation" class="govuk-header__navigation" aria-label="Top Level Navigation">
           <% if current_user %>
             <li class="govuk-header__navigation-item">
-              <%= link_to "Your account", user_account_url, class: "govuk-header__link" %>
+              <%# TODO: = link_to "Your account", user_account_url, class: "govuk-header__link" %>
             </li>
             <li class="govuk-header__navigation-item">
               <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "govuk-header__link" %>
