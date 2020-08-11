@@ -53,8 +53,10 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_template(TEMPLATES[:reset_password_instruction])
     set_reference("Password reset")
     reset_url = if user.is_a? SubmitUser
-            edit_submit_user_password_url(reset_password_token: token, host: @host)
-          end
+                  edit_submit_user_password_url(reset_password_token: token, host: @host)
+                elsif user.is_a? SearchUser
+                  edit_search_user_password_url(reset_password_token: token, host: @host)
+                end
     set_personalisation(
       name: user.name,
       edit_user_password_url_token: reset_url

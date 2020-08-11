@@ -6,16 +6,15 @@ module Users
     #                    :has_viewed_introduction,
     #                    only: %i[edit sign_out_before_resetting_password]
 
-    # skip_before_action :require_secondary_authentication
-
-    # before_action :require_secondary_authentication, only: :update
+    skip_before_action :require_secondary_authentication
+    before_action :require_secondary_authentication, only: :update
 
     def edit
       # return render :signed_in_as_another_user, locals: { reset_password_token: params[:reset_password_token] } if wrong_user?
       return render :invalid_link, status: :not_found if reset_token_invalid?
       return render :expired, status: :gone if reset_token_expired?
 
-      # require_secondary_authentication
+      require_secondary_authentication
 
       @email = user_with_reset_token.email
 
@@ -113,7 +112,7 @@ module Users
     end
 
     def user_id_for_secondary_authentication
-      token_from_put = Devise.token_generator.digest(User, :reset_password_token, params[:user][:reset_password_token]) if request.put?
+      token_from_put = Devise.token_generator.digest(user_class, :reset_password_token, params[user_param_key][:reset_password_token]) if request.put?
       user_with_reset_token&.id ||
         User.find_by(reset_password_token: token_from_put)&.id
     end
@@ -121,5 +120,19 @@ module Users
     def current_operation
       SecondaryAuthentication::RESET_PASSWORD_OPERATION
     end
+
+    def user_class
+      if params.keys.include? "search_user"
+        return SearchUser
+      elsif params.keys.include? "submit_user"
+        return SubmitUser
+      end
+      raise ArgumentError
+    end
+
+    def user_param_key
+      user_class.name.underscore.to_sym
+    end
+
   end
 end

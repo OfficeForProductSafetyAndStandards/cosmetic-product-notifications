@@ -59,14 +59,14 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
         visit edit_user_password_url_with_token
 
-        # expect_to_be_on_secondary_authentication_page
+        expect_to_be_on_secondary_authentication_page
         # click_link "Not received a text message?"
 
         # expect_to_be_on_resend_secondary_authentication_page
         # click_button "Resend security code"
 
         # expect_to_be_on_secondary_authentication_page
-        # complete_secondary_authentication_with(last_user_otp(user))
+        complete_secondary_authentication_with(last_user_otp(user))
 
         expect_to_be_on_edit_user_password_page
 
@@ -99,9 +99,8 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
           visit edit_user_password_url_with_token
 
-          # TODO
-          # expect_to_be_on_secondary_authentication_page
-          # complete_secondary_authentication_with(otp_code)
+          expect_to_be_on_secondary_authentication_page
+          complete_secondary_authentication_with(otp_code)
 
           expect_to_be_on_edit_user_password_page
 
@@ -119,9 +118,8 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
           visit edit_user_password_url_with_token
 
-          # TODO
-          # expect_to_be_on_secondary_authentication_page
-          # complete_secondary_authentication_with(otp_code)
+          expect_to_be_on_secondary_authentication_page
+          complete_secondary_authentication_with(otp_code)
 
           expect_to_be_on_edit_user_password_page
 
@@ -264,5 +262,10 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
   def expect_to_be_on_password_changed_page
     expect(page).to have_current_path("/password-changed")
     expect(page).to have_css("h1", text: "You have changed your password successfully")
+  end
+
+  def expect_to_be_on_secondary_authentication_page
+    expect(page).to have_current_path(/\/two-factor/)
+    expect(page).to have_h1("Check your phone")
   end
 end
