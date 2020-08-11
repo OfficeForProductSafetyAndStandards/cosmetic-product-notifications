@@ -44,6 +44,10 @@ GEM
       activemodel (= 5.2.4.1)
       activesupport (= 5.2.4.1)
       arel (>= 9.0)
+    activerecord-pg_enum (1.1.0)
+      activerecord (>= 4.1.0)
+      activesupport
+      pg
     activestorage (5.2.4.1)
       actionpack (= 5.2.4.1)
       activerecord (= 5.2.4.1)
@@ -429,6 +433,7 @@ PLATFORMS
 DEPENDENCIES
   aasm (~> 5.0.6)
   active_hash (~> 2.2.1)
+  activerecord-pg_enum
   aws-sdk-s3 (~> 1.60.1)
   brakeman (~> 4.7.2)
   capybara (~> 3.30.0)

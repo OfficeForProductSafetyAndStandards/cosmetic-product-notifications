@@ -12,10 +12,6 @@ class SubmitUser < User
 
   has_one :user_attributes, dependent: :destroy
 
-  def has_role?(role)
-    false # TODO: AFAIK submit users does not have any roles
-  end
-
   def responsible_persons
     # ActiveHash does not support has_many through: associations
     # Therefore adopt the workaround suggested here: https://github.com/zilkey/active_hash/issues/25

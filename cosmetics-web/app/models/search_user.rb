@@ -11,16 +11,17 @@ class SearchUser < User
   has_one :user_attributes, dependent: :destroy
   attribute :skip_password_validation, :boolean, default: false
 
-  def has_role?(role)
-    false # TODO: AFAIK submit users does not have any roles
-  end
+  enum role: {
+    poison_centre: "poison_centre",
+    msa: "market_surveilance_authority",
+  }
 
   def poison_centre_user?
-    false # has_role? :poison_centre_user
+    poison_centre?
   end
 
   def msa_user?
-    true # has_role? :msa_user
+    msa?
   end
 
   def can_view_product_ingredients?

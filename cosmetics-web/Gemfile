@@ -6,6 +6,7 @@ gem "will_paginate", "3.2.1" # Must be laoded before elasticsearch gems
 
 gem "aasm", "~> 5.0.6"
 gem "active_hash", "~> 2.2.1"
+gem "activerecord-pg_enum"
 gem "aws-sdk-s3", "~> 1.60.1"
 gem "cf-app-utils", "~> 0.6"
 gem "devise"

@@ -33,6 +33,14 @@ FactoryBot.define do
         first_login { false }
       end
 
+      factory :poison_centre_user do
+        role { :poison_centre }
+      end
+
+      factory :msa_user do
+        role { :msa }
+      end
+
       after :create do |user, options|
         create(:user_attributes, user: user, declaration_accepted: !options.first_login)
       end

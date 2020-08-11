@@ -10,11 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_30_172859) do
+ActiveRecord::Schema.define(version: 2020_08_11_142916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  # These are custom enum types that must be created before they can be used in the schema definition
+  create_enum "user_roles", ["poison_centre", "market_surveilance_authority"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -265,6 +268,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_172859) do
     t.string "secondary_authentication_operation"
     t.string "invitation_token"
     t.datetime "invited_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.enum "role", as: "user_roles"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
