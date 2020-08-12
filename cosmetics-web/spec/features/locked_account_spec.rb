@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_2fa, :feature do
+RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :feature do
   def fill_in_credentials(password_override: nil)
     fill_in "Email address", with: user.email
     if password_override

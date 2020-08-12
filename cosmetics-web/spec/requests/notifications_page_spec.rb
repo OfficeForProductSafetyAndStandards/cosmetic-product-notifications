@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Notifications page", :with_stubbed_antivirus, type: :request do
+RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_notify, type: :request do
   context "when signed in as a poison centre user but accessing from submit domain", with_errors_rendered: true do
     let(:responsible_person) { create(:responsible_person) }
 
