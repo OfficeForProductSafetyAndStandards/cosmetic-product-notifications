@@ -7,7 +7,7 @@ RSpec.describe PhoneValidator do
       attr_accessor :phone
       validates :phone,
                 phone: {
-                  message: "Enter your mobile number in the correct format, like 07700 900 982"
+                  message: "Enter your mobile number in the correct format, like 07700 900 982",
                 }
     }.new
   end
@@ -47,7 +47,7 @@ RSpec.describe PhoneValidator do
     "71234567123",
     "00123456789",
     "+111123 456789",
-    "564544554455544"
+    "564544554455544",
   ]
 
   invalid_phone_numbers.each do |phone_number|
@@ -63,7 +63,7 @@ RSpec.describe PhoneValidator do
 
       it "populates an error message" do
         expect(validator.errors.messages[:phone]).to eq [
-          "Enter your mobile number in the correct format, like 07700 900 982"
+          "Enter your mobile number in the correct format, like 07700 900 982",
         ]
       end
     end

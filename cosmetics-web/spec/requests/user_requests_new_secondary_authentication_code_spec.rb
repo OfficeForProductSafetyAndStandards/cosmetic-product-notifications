@@ -63,7 +63,7 @@ RSpec.describe "User requests new secondary authentication code", type: :request
         request_code
 
         expect(notify_stub).to have_received(:send_sms).with(
-          hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp })
+          hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp }),
         )
       end
 
@@ -79,7 +79,7 @@ RSpec.describe "User requests new secondary authentication code", type: :request
         post new_resend_secondary_authentication_code_path, params: { user: { mobile_number: mobile_number } }
       end
 
-      let(:user) { create(:submit_user, :with_responsible_person,  mobile_number_verified: false) }
+      let(:user) { create(:submit_user, :with_responsible_person, mobile_number_verified: false) }
 
       before do
         sign_in(user)
@@ -129,7 +129,7 @@ RSpec.describe "User requests new secondary authentication code", type: :request
           request_code
 
           expect(notify_stub).to have_received(:send_sms).with(
-            hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp })
+            hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp }),
           )
         end
 

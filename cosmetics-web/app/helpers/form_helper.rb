@@ -9,7 +9,7 @@ module FormHelper
       classes: "app-!-max-width-two-thirds",
       label: { text: field.titleize },
       errorMessage: format_errors_for(user, user.errors.full_messages_for(field)),
-      value: value
+      value: value,
     )
 
     render "components/govuk_input", options
@@ -23,7 +23,7 @@ module FormHelper
       classes: "app-!-max-width-two-thirds",
       label: { text: "Email address" },
       errorMessage: format_errors_for(user, user.errors.full_messages_for(:email)),
-      value: user.email
+      value: user.email,
     }
 
     render "components/govuk_input", options
@@ -55,7 +55,7 @@ module FormHelper
     render "components/govuk_input", options
   end
 
-  private
+private
 
   def format_errors_for(user, errors_for_field)
     return base_errors if user.errors.include?(:base)

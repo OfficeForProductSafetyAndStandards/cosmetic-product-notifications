@@ -120,17 +120,17 @@ module Users
     end
 
     def user_class
-      if params.keys.include? "search_user"
+      if params.key?("search_user")
         return SearchUser
-      elsif params.keys.include? "submit_user"
+      elsif params.key?("submit_user")
         return SubmitUser
       end
+
       raise ArgumentError
     end
 
     def user_param_key
       user_class.name.underscore.to_sym
     end
-
   end
 end

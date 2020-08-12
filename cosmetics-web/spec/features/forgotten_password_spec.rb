@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed_mailer, :with_2fa, type: :feature do
-
   shared_examples "password reset" do
     scenario "entering an email which does not match an account does not send a notification but shows the confirmation page" do
       user.update!(reset_password_token: reset_token)

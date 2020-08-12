@@ -6,7 +6,6 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
   let(:user) { create(:submit_user) }
 
   context "when requested from the submit sub-domain" do
-
     before do
       configure_requests_for_submit_domain
     end

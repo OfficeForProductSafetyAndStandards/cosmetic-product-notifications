@@ -62,6 +62,7 @@ class SearchUser < User
   end
 
 private
+
   # Devise::Models::Lockable
 
   def send_unlock_instructions
@@ -72,7 +73,7 @@ private
     NotifyMailer.account_locked(
       self,
       unlock_token: raw,
-      reset_password_token: reset_password_token
+      reset_password_token: reset_password_token,
     ).deliver_later
     raw
   end
@@ -83,7 +84,6 @@ private
 
     super
   end
-
 
   def get_user_attributes
     UserAttributes.find_or_create_by(user_id: id)

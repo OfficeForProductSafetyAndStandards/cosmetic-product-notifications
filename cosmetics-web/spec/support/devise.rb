@@ -36,7 +36,7 @@ RSpec.configure do |config|
   config.include Devise::Test::TokenGenerator
   config.before(:each, :with_2fa) do
     allow(Rails.application.config).to receive(
-      :secondary_authentication_enabled
+      :secondary_authentication_enabled,
     ).and_return(true)
   end
 end

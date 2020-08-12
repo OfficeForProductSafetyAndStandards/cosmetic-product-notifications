@@ -41,7 +41,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       name: user.name,
-      verify_email_url: submit_user_confirmation_url(confirmation_token: user.confirmation_token, host: @host)
+      verify_email_url: submit_user_confirmation_url(confirmation_token: user.confirmation_token, host: @host),
     )
 
     mail(to: user.email)
@@ -59,7 +59,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
                 end
     set_personalisation(
       name: user.name,
-      edit_user_password_url_token: reset_url
+      edit_user_password_url_token: reset_url,
     )
 
     mail(to: user.email)
@@ -72,7 +72,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     personalization = {
       name: user.name,
       edit_user_password_url_token: edit_submit_user_password_url(reset_password_token: tokens[:reset_password_token], host: @host),
-      unlock_user_url_token: submit_user_unlock_url(unlock_token: tokens[:unlock_token], host: @host)
+      unlock_user_url_token: submit_user_unlock_url(unlock_token: tokens[:unlock_token], host: @host),
     }
     set_personalisation(personalization)
     mail(to: user.email)
@@ -91,15 +91,14 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
 
-  private
+private
 
   def set_host(user)
     if user.is_a? SubmitUser
-      @host = ENV['SUBMIT_HOST']
+      @host = ENV["SUBMIT_HOST"]
     end
     if user.is_a? SearchUser
-      @host = ENV['SEARCH_HOST']
+      @host = ENV["SEARCH_HOST"]
     end
   end
-
 end
