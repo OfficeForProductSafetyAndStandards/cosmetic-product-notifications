@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include SecondaryAuthenticationConcern
 
   protect_from_forgery with: :exception
+  before_action :authorize_user!
   before_action :authenticate_user!
   before_action :ensure_secondary_authentication
   before_action :require_secondary_authentication
@@ -14,7 +15,6 @@ class ApplicationController < ActionController::Base
   before_action :set_cache_headers
   before_action :set_service_name
 
-  before_action :authorize_user!
   before_action :has_accepted_declaration
   before_action :create_or_join_responsible_person
 

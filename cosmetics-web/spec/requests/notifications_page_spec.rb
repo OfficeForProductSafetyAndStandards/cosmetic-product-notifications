@@ -14,8 +14,7 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, type: :request do
       sign_out(:search_user)
     end
 
-    # TODO: Re-enable this test once the Search user is moved to Devise
-    xit "redirects to invalid account page" do
+    it "redirects to invalid account page" do
       expect(response).to redirect_to("/invalid-account")
     end
   end
