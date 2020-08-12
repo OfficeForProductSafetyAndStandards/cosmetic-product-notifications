@@ -1,5 +1,5 @@
 module DeviseLoginHelpers
-  def sign_in(user = create(:search_user, :activated, has_viewed_introduction: true))
+  def sign_in(user = create(:poison_centre_user, :activated, has_viewed_introduction: true))
     visit "/sign-in"
 
     stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/sms").and_return(body: {}.to_json, status: 200)

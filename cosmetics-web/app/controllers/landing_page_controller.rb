@@ -1,5 +1,7 @@
 class LandingPageController < ApplicationController
   skip_before_action :authenticate_user!
+  skip_before_action :ensure_secondary_authentication
+  skip_before_action :require_secondary_authentication
 
   before_action :redirect_poison_centre_users
   before_action :set_responsible_person

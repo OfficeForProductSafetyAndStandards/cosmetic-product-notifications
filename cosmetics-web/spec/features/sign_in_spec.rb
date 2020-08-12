@@ -93,16 +93,6 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
       expect(page).to have_css(".govuk-error-message", text: "Enter your password")
       expect(page).to have_css(".govuk-error-summary__list", text: "Enter your password")
     end
-
-    scenario "user tries to sign in without having verified its mobile number on registration" do
-      user.update_column(:mobile_number_verified, false)
-
-      visit "/sign-in"
-
-      fill_in_credentials
-      expect_incorrect_email_or_password
-      expect(notify_stub).not_to have_received(:send_sms)
-    end
   end
 
   describe "for submit" do
@@ -252,7 +242,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
   end
 
   describe "for search" do
-    let(:user) { create(:search_user, has_accepted_declaration: false) }
+    let(:user) { create(:poison_centre_user, has_accepted_declaration: true) }
 
     before do
       configure_requests_for_search_domain
@@ -352,7 +342,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
       end
 
       scenario "user tries to use unlock link when logged in as different user" do
-        user2 = create(:search_user, has_accepted_declaration: false)
+        user2 = create(:poison_centre_user, has_accepted_declaration: false)
         user2.lock_access!
 
         visit "/sign-in"
@@ -394,5 +384,4 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
 
     include_examples "sign up"
   end
-
 end

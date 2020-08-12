@@ -34,7 +34,7 @@ RSpec.describe DeclarationController, type: :controller do
   end
 
   describe "When signed in as a Poison Centre user" do
-    let(:first_time_user) { create(:search_user, first_login: true) }
+    let(:first_time_user) { create(:poison_centre_user, first_login: true) }
 
     before do
       sign_in_as_poison_centre_user(user: first_time_user)

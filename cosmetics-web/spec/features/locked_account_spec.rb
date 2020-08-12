@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Unlockin account", :with_stubbed_mailer, :feature do
+RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_2fa, :feature do
   def fill_in_credentials(password_override: nil)
     fill_in "Email address", with: user.email
     if password_override
@@ -9,6 +9,10 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :feature do
       fill_in "Password", with: user.password
     end
     click_on "Continue"
+  end
+
+  def otp_code
+    user.reload.direct_otp
   end
 
   shared_examples "locked account" do
@@ -26,34 +30,30 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :feature do
 
         visit unlock_path
 
-        # TODO
-        # expect(page).to have_css("h1", text: "Check your phone")
-
-        # fill_in "Enter security code", with: otp_code
-        # click_on "Continue"
+        expect(page).to have_css("h1", text: "Check your phone")
+        fill_in "Enter security code", with: otp_code
+        click_on "Continue"
 
         fill_in_credentials
-
 
         expect(page).to have_css("h1", text: expected_text)
         expect(page).to have_link("Sign out")
       end
 
-      # TODO
-      # scenario "user tries to use unlock link when logged in as different user" do
-      #   user2 = create(:user, :activated, has_viewed_introduction: true)
-      #   user2.lock_access!
+      scenario "user tries to use unlock link when logged in as different user" do
+        user2 = create(:submit_user)
+        user2.lock_access!
 
-      #   visit "/sign-in"
-      #   fill_in_credentials
-      #   fill_in "Enter security code", with: otp_code
-      #   click_on "Continue"
+        visit "/sign-in"
+        fill_in_credentials
+        fill_in "Enter security code", with: otp_code
+        click_on "Continue"
 
-      #   expect(page).to have_css("h2", text: "Your cases")
+        expect(page).to have_css("h1", text: expected_host_header)
 
-      #   visit unlock_path
-      #   expect(page).to have_css("h1", text: "Check your phone")
-      # end
+        visit unlock_path
+        expect(page).to have_css("h1", text: "Check your phone")
+      end
 
       scenario "user follows an invalid unlock link" do
         visit "/unlock?unlock_token=wrong-token"
@@ -72,10 +72,10 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :feature do
         unlock_email = delivered_emails.last
         visit unlock_email.personalization_path(:edit_user_password_url_token)
 
-        # expect(page).to have_css("h1", text: "Check your phone")
+        expect(page).to have_css("h1", text: "Check your phone")
 
-        # fill_in "Enter security code", with: otp_code
-        # click_on "Continue"
+        fill_in "Enter security code", with: otp_code
+        click_on "Continue"
 
         expect(page).to have_css("h1", text: "Create a new password")
       end
@@ -90,18 +90,21 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :feature do
 
     let(:user) { create(:submit_user) }
     let(:expected_text) { "Are you or your organisation a UK Responsible Person?" }
+    let(:expected_host_header) { "Are you or your organisation a UK Responsible Person?" }
+
 
     include_examples "locked account"
   end
 
-  describe "for submit" do
+  describe "for search" do
     before do
       configure_requests_for_search_domain
       Capybara.app_host = "http://#{ENV['SEARCH_HOST']}"
     end
 
-    let(:user) { create(:search_user) }
+    let(:user) { create(:poison_centre_user) }
     let(:expected_text) { "Search cosmetic products" }
+    let(:expected_host_header) { "Search cosmetic products" }
 
     include_examples "locked account"
   end

@@ -28,11 +28,6 @@ class SecondaryAuthenticationForm
 
   delegate :try_to_verify_user_mobile_number, :operation, to: :secondary_authentication
 
-  def initialize(params, user_klass)
-    @user_klass = user_klass
-    super(params)
-  end
-
   def otp_code=(code)
     super(code.to_s.strip)
   end
@@ -62,6 +57,6 @@ class SecondaryAuthenticationForm
   end
 
   def secondary_authentication
-    @secondary_authentication ||= SecondaryAuthentication.new(user_klass.find(user_id))
+    @secondary_authentication ||= SecondaryAuthentication.new(User.find(user_id))
   end
 end

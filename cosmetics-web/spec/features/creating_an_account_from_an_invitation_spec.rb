@@ -1,9 +1,9 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer do
-  let!(:invited_user) { InviteUser.call(email: 'john.doe@example.com').user }
-  let(:existing_user) { create(:search_user) }
+RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer, :with_2fa, type: :feature do
+  let!(:invited_user) { InviteUser.call(email: "john.doe@example.com", role: :poison_centre).user }
+  let(:existing_user) { create(:poison_centre_user) }
 
   before do
     configure_requests_for_search_domain
@@ -20,10 +20,10 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer do
 
     click_button "Continue"
 
-    # expect_to_be_on_secondary_authentication_page
+    expect_to_be_on_secondary_authentication_page
 
-    # fill_in "Enter security code", with: otp_code
-    # click_on "Continue"
+    fill_in "Enter security code", with: otp_code
+    click_on "Continue"
 
     # FIXME TODO:
     # For some reason, we dont have declaration, only when spec when is being run
@@ -63,10 +63,10 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer do
 
     click_button "Continue"
 
-    #expect_to_be_on_secondary_authentication_page
+    expect_to_be_on_secondary_authentication_page
 
-    # fill_in "Enter security code", with: otp_code
-    # click_on "Continue"
+    fill_in "Enter security code", with: otp_code
+    click_on "Continue"
 
     # FIXME TODO:
     # For some reason, here we have declaration, but we dont have in happy path spec...
@@ -121,7 +121,6 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer do
 
   def expect_to_be_signed_in_as_search_user
     expect(page).to have_css("h1", text: "Search cosmetic products")
-    expect(page).to have_css("a", text: "Your account")
     expect(page).to have_css("a", text: "Sign out")
   end
 

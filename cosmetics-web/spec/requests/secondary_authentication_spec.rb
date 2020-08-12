@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Secondary Authentication submit", :with_stubbed_notify, type: :request do
+RSpec.describe "Secondary Authentication submit", :with_2fa, :with_stubbed_notify, type: :request do
   before do
     configure_requests_for_submit_domain
   end
@@ -73,8 +73,10 @@ RSpec.describe "Secondary Authentication submit", :with_stubbed_notify, type: :r
       end
 
       it "user is signed in" do
+        sign_in(user)
         submit_2fa
         follow_redirect!
+        expect(response.body).not_to include("Sign in")
         expect(response.body).to include("Sign out")
       end
 

@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :authenticate_user!
-  # before_action :set_current_user, if: -> { search_domain? }
   before_action :ensure_secondary_authentication
   before_action :require_secondary_authentication
   before_action :set_raven_context
@@ -47,7 +46,7 @@ protected
 private
 
   def after_sign_in_path_for(_resource)
-    submit_domain? ?  dashboard_path : poison_centre_notifications_path
+    submit_domain? ? dashboard_path : poison_centre_notifications_path
   end
 
   def authorize_user!
@@ -64,8 +63,18 @@ private
     redirect_to declaration_path(redirect_path: redirect_path) unless current_user.has_accepted_declaration?
   end
 
+  def fully_signed_in_submit_user?
+    return false if poison_centre_or_msa_user?
+
+    if Rails.configuration.secondary_authentication_enabled
+      user_signed_in? && secondary_authentication_present?
+    else
+      user_signed_in?
+    end
+  end
+
   def create_or_join_responsible_person
-    return unless user_signed_in? && secondary_authentication_present? && !poison_centre_or_msa_user?
+    return unless fully_signed_in_submit_user?
 
     responsible_person = current_user.responsible_persons.first
 
@@ -81,7 +90,7 @@ private
   end
 
   def invalid_account_for_domain?
-    (submit_domain? && poison_centre_or_msa_user?) || (search_domain? && !poison_centre_or_msa_user?)
+    (submit_domain? && current_search_user) || (search_domain? && current_submit_user)
   end
 
   def current_user
@@ -89,7 +98,7 @@ private
   end
 
   def user_signed_in?
-    submit_domain? ? submit_user_signed_in? : search_user_signed_in?
+    submit_user_signed_in? || search_user_signed_in?
   end
 
   def new_user_session_path(*args)

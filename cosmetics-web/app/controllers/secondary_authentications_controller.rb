@@ -11,10 +11,7 @@ class SecondaryAuthenticationsController < ApplicationController
   def new
     return render("errors/forbidden", status: :forbidden) unless session[:secondary_authentication_user_id]
 
-    @secondary_authentication_form = SecondaryAuthenticationForm.new(
-      { user_id: session[:secondary_authentication_user_id] },
-      submit_domain? ? SubmitUser : SearchUser,
-    )
+    @secondary_authentication_form = SecondaryAuthenticationForm.new(user_id: session[:secondary_authentication_user_id])
   end
 
   def create
@@ -51,17 +48,10 @@ private
   end
 
   def secondary_authentication_form
-    @secondary_authentication_form ||= SecondaryAuthenticationForm.new(
-      secondary_authentication_params,
-      user_klass,
-    )
+    @secondary_authentication_form ||= SecondaryAuthenticationForm.new(secondary_authentication_params)
   end
 
   def secondary_authentication_params
     params.require(:secondary_authentication_form).permit(:otp_code, :user_id)
-  end
-
-  def user_klass
-    submit_domain? ? SubmitUser : SearchUser
   end
 end

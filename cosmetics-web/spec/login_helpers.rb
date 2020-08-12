@@ -27,14 +27,14 @@ module LoginHelpers
   end
   # rubocop:enable RSpec/AnyInstance
 
-  def sign_in_as_poison_centre_user(user: create(:search_user))
-    keycloak_sign_in(as_user: user, with_roles: [:poison_centre_user])
+  def sign_in_as_poison_centre_user(user: create(:poison_centre_user))
     configure_requests_for_search_domain
+    sign_in(user)
   end
 
-  def sign_in_as_msa_user(user: create(:search_user))
-    keycloak_sign_in(as_user: user, with_roles: [:msa_user])
+  def sign_in_as_msa_user(user: create(:msa_user))
     configure_requests_for_search_domain
+    sign_in(user)
   end
 
   # rubocop:disable RSpec/AnyInstance

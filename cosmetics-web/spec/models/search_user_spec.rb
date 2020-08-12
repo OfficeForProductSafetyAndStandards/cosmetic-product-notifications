@@ -5,7 +5,7 @@ RSpec.describe SearchUser, type: :model do
 
   describe "#can_view_product_ingredients?" do
     context "when MSA user" do
-      before { allow(KeycloakClient.instance).to receive(:has_role?).with(user.id, :msa_user, nil).and_return(true) }
+      before { allow(user).to receive(:msa_user?).and_return(true) }
 
       it "returns false" do
         expect(user).not_to be_can_view_product_ingredients
@@ -13,7 +13,7 @@ RSpec.describe SearchUser, type: :model do
     end
 
     context "when not an MSA user" do
-      before { allow(KeycloakClient.instance).to receive(:has_role?).with(user.id, :msa_user, nil).and_return(false) }
+      before { allow(user).to receive(:msa_user?).and_return(false) }
 
       it "returns true" do
         expect(user).to be_can_view_product_ingredients

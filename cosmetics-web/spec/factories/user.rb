@@ -28,6 +28,7 @@ FactoryBot.define do
       direct_otp_sent_at { Time.current }
       direct_otp { "12345" }
       mobile_number_verified { true }
+      role {}
 
       transient do
         first_login { false }

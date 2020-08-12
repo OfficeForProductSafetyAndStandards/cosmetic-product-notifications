@@ -100,17 +100,16 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
         sign_out(:submit_user)
       end
 
-      # TODO: Re-enable this spec once Search users are switched to Devise
-      xit "redirects to invalid account page" do
+      it "redirects to invalid account page" do
         expect(response).to redirect_to("/invalid-account")
       end
     end
 
     context "when signed in as a poison centre user" do
-      let(:user) { create(:search_user) }
+      let(:user) { create(:poison_centre_user) }
 
       before do
-        keycloak_sign_in as_user: user, with_roles: [:poison_centre_user]
+        sign_in_as_poison_centre_user(user: user)
         get "/"
       end
 
@@ -124,10 +123,10 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
     end
 
     context "when signed in as a market surveilance authority user" do
-      let(:user) { create(:search_user) }
+      let(:user) { create(:msa_user) }
 
       before do
-        keycloak_sign_in as_user: user, with_roles: [:msa_user]
+        sign_in_as_msa_user(user: user)
         get "/"
       end
 

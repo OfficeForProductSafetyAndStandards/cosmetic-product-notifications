@@ -27,7 +27,7 @@ class SubmitUser < User
   end
 
   def can_view_product_ingredients?
-    false
+    !msa_user? # Could hardcode "true" but leave it as original for User for clarity
   end
 
   def send_confirmation_instructions
