@@ -16,18 +16,6 @@ module Users
 
       matching_user = User.find_by(email: sign_in_form.email)
 
-      # TODO: Check if we actually need this in Cosmetics.
-      # User won't be able to login without 2FA, and as its
-      # mobile is not verified, will be able to change the phone
-      # number for verification.
-      # The check below blocks the sign in when the user completes
-      # its registration and follows the confirmation link.
-      #
-      # if mobile_not_verified?(matching_user)
-      #   handle_mobile_not_verified(resource)
-      #   return render :new
-      # end
-
       # TODO: devise has hook to make redirection when
       # resource.active_for_authentication? returns false
       self.resource = warden.authenticate(auth_options)
@@ -62,11 +50,6 @@ module Users
       resource.errors.merge!(sign_in_form.errors)
     end
 
-    def handle_mobile_not_verified(resource)
-      sign_out
-      add_wrong_credentials_errors(resource)
-    end
-
     def sign_in_form
       @sign_in_form ||= SignInForm.new(sign_in_params)
     end
@@ -76,10 +59,6 @@ module Users
 
       resource.errors.add(:email, I18n.t(:wrong_email_or_password, scope: "sign_user_in.email"))
       resource.errors.add(:password, nil)
-    end
-
-    def mobile_not_verified?(user)
-      user && !user.mobile_number_verified
     end
 
     def set_resource_as_new_user_from_params

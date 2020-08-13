@@ -66,13 +66,6 @@ private
     raw
   end
 
-  def increment_failed_attempts
-    # TODO:
-    # return unless mobile_number_verified?
-
-    super
-  end
-
   def get_user_attributes
     UserAttributes.find_or_create_by(user_id: id)
   end
