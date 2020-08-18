@@ -24,6 +24,8 @@ $govuk-assets-path: '~govuk-frontend/govuk/assets/';
 @import "poison_centre_product_page";
 @import "input-prefix-suffix";
 
+@import "application/stylesheets/helpers/password-manager-hidden";
+
 .no-wrap {
   white-space: nowrap;
 }
