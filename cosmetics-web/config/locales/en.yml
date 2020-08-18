@@ -110,6 +110,7 @@ en:
               blank: "Enter a password"
             password_confirmation:
               confirmation: "Password and confirmation does not match"
+  enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"
     messages:
