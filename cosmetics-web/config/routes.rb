@@ -128,6 +128,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :my_account, only: [:show], controller: :my_account do
+    resource :password, controller: :my_account_password, only: %i[show update]
+  end
+
   resource :declaration, controller: :declaration, only: %i[show] do
     post :accept
   end

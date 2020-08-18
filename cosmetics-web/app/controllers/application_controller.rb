@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   before_action :set_service_name
 
   before_action :has_accepted_declaration
-  before_action :create_or_join_responsible_person
+  before_action :create_or_join_responsible_person, if: :submit_domain?
 
   add_flash_types :confirmation
 

@@ -108,6 +108,8 @@ en:
           attributes:
             password:
               blank: "Enter a password"
+            password_confirmation:
+              confirmation: "Password and confirmation does not match"
   errors:
     format: "%{message}"
     messages:

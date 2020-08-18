@@ -57,7 +57,21 @@ module SecondaryAuthentications
     end
 
     def mobile_number_param
-      params.dig(:user, :mobile_number)
+      params.dig(user_param_key, :mobile_number)
+    end
+
+    def user_class
+      if params.key?("search_user")
+        return SearchUser
+      elsif params.key?("submit_user")
+        return SubmitUser
+      end
+
+      raise ArgumentError
+    end
+
+    def user_param_key
+      user_class.name.underscore.to_sym
     end
   end
 end
