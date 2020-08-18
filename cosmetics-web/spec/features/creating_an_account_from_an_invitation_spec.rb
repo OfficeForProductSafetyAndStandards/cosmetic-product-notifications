@@ -145,7 +145,7 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer, :w
   end
 
   def expect_to_be_on_signed_in_as_another_user_page
-    expect(page).to have_h1("You are already signed in to the Product safety database")
+    expect(page).to have_h1("You are already signed in")
   end
 
   def expect_to_be_on_complete_registration_page

@@ -19,25 +19,6 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
       end
     end
 
-    # context "when entering an email from a deleted user " do
-    #   let(:user) { create(:user, :deleted) }
-
-    #   scenario "does not send a notification but shows the confirmation page" do
-    #     visit "/sign-in"
-
-    #     click_link "Forgot your password?"
-
-    #     perform_enqueued_jobs do
-    #       expect(page).to have_css("h1", text: "Reset your password")
-    #       fill_in "Email address", with: user.email
-    #       click_on "Send email"
-
-    #       expect(delivered_emails).to be_empty
-    #       expect_to_be_on_check_your_email_page
-    #     end
-    #   end
-    # end
-
     scenario "entering an invalid email shows an error" do
       visit "/sign-in"
 
@@ -59,12 +40,12 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         visit edit_user_password_url_with_token
 
         expect_to_be_on_secondary_authentication_page
-        # click_link "Not received a text message?"
+        click_link "Not received a text message?"
 
-        # expect_to_be_on_resend_secondary_authentication_page
-        # click_button "Resend security code"
+        expect_to_be_on_resend_secondary_authentication_page
+        click_button "Resend security code"
 
-        # expect_to_be_on_secondary_authentication_page
+        expect_to_be_on_secondary_authentication_page
         complete_secondary_authentication_with(last_user_otp(user))
 
         expect_to_be_on_edit_user_password_page
@@ -81,7 +62,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
         expect(page).to have_css("h1", text: expected_text)
 
-        sign_out
+        click_on "Sign out"
 
         click_on "Sign in"
 
@@ -132,36 +113,37 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         end
       end
 
-      # TODO:
-      # context "when signed in as a different user than the one that requested the password reset" do
-      #   scenario "needs to sign out before being able to reset the password for the original user" do
-      #     # Original user requests password reset
-      #     request_password_reset
+      context "when signed in as a different user than the one that requested the password reset" do
+        scenario "needs to sign out before being able to reset the password for the original user" do
+          # Original user requests password reset
+          request_password_reset
 
-      #     # Second user attempts to use original user reset password link
-      #     other_user = create(:user)
-      #     sign_in(other_user)
-      #     visit edit_user_password_url_with_token
+          # Second user attempts to use original user reset password link
+          other_user = case user
+                       when SubmitUser then create(:submit_user, :with_responsible_person)
+                       when SearchUser then create(:poison_centre_user)
+                       end
 
-      #     expect_to_be_on_signed_in_as_another_user_page
+          sign_in(other_user)
+          visit edit_user_password_url_with_token
+          expect_to_be_on_signed_in_as_another_user_page
 
-      #     # Second user decides to continue resetting the password for the original user
-      #     click_on "Reset password for #{user.name}"
+          # Second user decides to continue resetting the password for the original user
+          click_on "Reset password for #{user.name}"
 
-      #     expect_to_be_on_secondary_authentication_page
+          # Need to pass 2FA authentication for original user
+          expect_to_be_on_secondary_authentication_page
+          complete_secondary_authentication_with(otp_code)
 
-      #     # Need to pass 2FA authentication for original user
-      #     complete_secondary_authentication_with(otp_code)
+          # Finally can change the original user password
+          expect_to_be_on_edit_user_password_page
 
-      #     # Finally can change the original user password
-      #     expect_to_be_on_edit_user_password_page
+          fill_in "Password", with: "a_new_password"
+          click_on "Continue"
 
-      #     fill_in "Password", with: "a_new_password"
-      #     click_on "Continue"
-
-      #     expect_to_be_on_password_changed_page
-      #   end
-      # end
+          expect_to_be_on_password_changed_page
+        end
+      end
     end
 
     context "with an expired token" do
@@ -226,8 +208,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
       expect(email.recipient).to eq user.email
       expect(email.reference).to eq "Password reset"
       expect(email.template).to eq NotifyMailer::TEMPLATES[:reset_password_instruction]
-      # TODO:
-      # expect(email.personalization).to eq(edit_user_password_url_token: edit_user_password_url_with_token, name: user.name)
+      expect(email.personalization).to eq(edit_user_password_url_token: edit_user_password_url_with_token, name: user.name)
 
       expect_to_be_on_check_your_email_page
     end
@@ -266,5 +247,14 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
   def expect_to_be_on_secondary_authentication_page
     expect(page).to have_current_path(/\/two-factor/)
     expect(page).to have_h1("Check your phone")
+  end
+
+  def expect_to_be_on_resend_secondary_authentication_page
+    expect(page).to have_current_path("/text-not-received")
+    expect(page).to have_h1("Resend security code")
+  end
+
+  def expect_to_be_on_signed_in_as_another_user_page
+    expect(page).to have_h1("You are already signed in")
   end
 end

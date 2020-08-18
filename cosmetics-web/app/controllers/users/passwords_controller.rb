@@ -1,11 +1,12 @@
 module Users
   class PasswordsController < Devise::PasswordsController
+    skip_before_action :require_no_authentication, only: %i[edit sign_out_before_resetting_password]
+
     skip_before_action :has_accepted_declaration,
                        :create_or_join_responsible_person,
                        only: %i[edit sign_out_before_resetting_password]
 
-    skip_before_action :require_secondary_authentication
-    before_action :require_secondary_authentication, only: :update
+    skip_before_action :require_secondary_authentication, except: :update
 
     def edit
       return render :signed_in_as_another_user, locals: { reset_password_token: params[:reset_password_token] } if wrong_user?
@@ -20,8 +21,16 @@ module Users
     end
 
     def sign_out_before_resetting_password
+      user = current_user
       sign_out
-      redirect_to edit_user_password_path(reset_password_token: params[:reset_password_token])
+
+      if user.is_a? SubmitUser
+        redirect_to edit_submit_user_password_path(reset_password_token: params[:reset_password_token])
+      elsif user.is_a? SearchUser
+        redirect_to edit_search_user_password_path(reset_password_token: params[:reset_password_token])
+      else
+        redirect_to edit_user_password_path(reset_password_token: params[:reset_password_token])
+      end
     end
 
     def create

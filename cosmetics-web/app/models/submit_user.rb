@@ -7,7 +7,7 @@ class SubmitUser < User
   belongs_to :organisation
 
   has_many :notification_files, dependent: :destroy
-  has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id # TODO: actually, only submit_users has resp person
+  has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id
   has_many :responsible_persons, through: :responsible_person_users
 
   has_one :user_attributes, dependent: :destroy
@@ -64,13 +64,6 @@ private
       reset_password_token: reset_password_token,
     ).deliver_later
     raw
-  end
-
-  def increment_failed_attempts
-    # TODO:
-    # return unless mobile_number_verified?
-
-    super
   end
 
   def get_user_attributes

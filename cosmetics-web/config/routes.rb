@@ -22,21 +22,9 @@ Rails.application.routes.draw do
   get "text-not-received", to: "secondary_authentications/resend_code#new", as: :new_resend_secondary_authentication_code
   post "text-not-received", to: "secondary_authentications/resend_code#create", as: :resend_secondary_authentication_code
 
-  # resource :session, only: %i[new] do
-  #   member do
-  #     get :new
-  #     get :signin
-  #     get :logout
-  #   end
-  # end
-
-  # resource :search_user_session, only: %i[new] do
-  #   member do
-  #     get :new
-  #     get :signin
-  #     get :logout
-  #   end
-  # end
+  devise_scope :submit_user do
+    post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password", as: :sign_out_before_resetting_password
+  end
 
   unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"

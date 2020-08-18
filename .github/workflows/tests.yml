@@ -89,6 +89,7 @@ jobs:
         KEYCLOAK_USER_PASSWORD: ${{ secrets.KeycloakUserPassword }}
         ELASTICSEARCH_URL: localhost
         RAILS_ENV: test
+        TWO_FACTOR_AUTHENTICATION_ENABLED: false
         CI: true
         COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}
       run: |
