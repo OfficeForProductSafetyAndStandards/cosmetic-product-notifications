@@ -27,7 +27,16 @@
         },
         {
           key: { text: "Mobile number" },
-          value: { text: current_user.mobile_number }
+          value: { text: current_user.mobile_number },
+          actions: {
+            items: [
+              {
+                href: my_account_mobile_number_path,
+                text: "Change",
+                visuallyHiddenText: "mobile number"
+              }
+            ]
+          }
         },
         {
           key: { text: "Password" },

@@ -118,6 +118,7 @@ Rails.application.routes.draw do
 
   resource :my_account, only: [:show], controller: :my_account do
     resource :password, controller: :my_account_password, only: %i[show update]
+    resource :mobile_number, controller: :my_account_mobile_number, only: %i[show update]
   end
 
   resource :declaration, controller: :declaration, only: %i[show] do
