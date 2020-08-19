@@ -7,13 +7,25 @@ RSpec.feature "Signing up as a submit user", :with_stubbed_mailer, type: :featur
 
   scenario "user signs up and verifies its email" do
     visit "/sign-up"
+    # First attempt with validation errors
     fill_in "Name", with: "Test user"
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Mobile Number", with: "07000000" # Mobile number too short
     fill_in "Email address", with: "signing_up@example.com"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     fill_in "Password confirmation", with: "userpassword", match: :prefer_exact
     click_button "Sign up"
 
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_link("Enter your mobile number in the correct format", href: "#mobile_number")
+    expect(page).to have_css("span#mobile_number-error", text: "Enter your mobile number in the correct format")
+
+    # Submit after fixing te validation issue
+    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
+    fill_in "Password confirmation", with: "userpassword", match: :prefer_exact
+    click_button "Sign up"
+
+    expect(page).not_to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_css("h1", text: "Check your email")
     expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to your email address.")
 
