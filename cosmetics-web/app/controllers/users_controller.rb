@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def complete_registration
     @user = User.find(params[:id])
 
-    return render :signed_in_as_another_user if user_signed_in? && !signed_in_as?(@user)
+    return render :accept_invitation_signed_in_as_another_user if user_signed_in? && !signed_in_as?(@user)
 
     # Some users will bookmark the invitation URL received on the email and may re-use
     # this even once their account has been created. Hence redirecting them to the root page.
