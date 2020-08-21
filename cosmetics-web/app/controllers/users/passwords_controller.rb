@@ -28,8 +28,6 @@ module Users
         redirect_to edit_submit_user_password_path(reset_password_token: params[:reset_password_token])
       elsif user.is_a? SearchUser
         redirect_to edit_search_user_password_path(reset_password_token: params[:reset_password_token])
-      else
-        redirect_to edit_user_password_path(reset_password_token: params[:reset_password_token])
       end
     end
 
@@ -61,7 +59,7 @@ module Users
   private
 
     def wrong_user?
-      user_signed_in? && current_user != user_with_reset_token
+      user_signed_in? && user_with_reset_token && current_user != user_with_reset_token
     end
 
     def passed_secondary_authentication?
