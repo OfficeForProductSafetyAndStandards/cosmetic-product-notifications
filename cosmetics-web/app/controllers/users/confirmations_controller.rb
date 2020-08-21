@@ -6,6 +6,9 @@ module Users
     def show
       if wrong_user?
         render :confirm_email_signed_in_as_another_user, locals: { confirmation_token: params[:confirmation_token] }
+      elsif user_with_confirmation_token.confirmed?
+        sign_out
+        redirect_to new_user_session_path
       else
         super
       end

@@ -39,12 +39,9 @@ RSpec.feature "Signing up as a submit user", :with_stubbed_mailer, type: :featur
     visit verify_url
     expect(page).to have_current_path("/sign-in")
 
-    # Attempt of email verification for second time takes the user to the confirmation page and shows an error
+    # Attempt of email verification for second time takes the user to the sign in page
     visit verify_url
-    expect(page).to have_current_path(verify_url)
-    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_css(".govuk-error-summary__list", text: "already confirmed, please try signing in")
-    expect(page).to have_button("Resend confirmation instructions")
+    expect(page).to have_current_path("/sign-in")
   end
 
   scenario "user signs up and verifies email while signed up as another user" do
