@@ -22,18 +22,19 @@ Rails.application.routes.draw do
   get "text-not-received", to: "secondary_authentications/resend_code#new", as: :new_resend_secondary_authentication_code
   post "text-not-received", to: "secondary_authentications/resend_code#create", as: :resend_secondary_authentication_code
 
-  devise_scope :submit_user do
-    post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password", as: :sign_out_before_resetting_password
-  end
-
   unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"
   end
 
   constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
-    devise_for :search_users, path: "", path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" }, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords", unlocks: "users/unlocks" }
+    devise_for :search_users,
+               path: "",
+               path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" },
+               controllers: { confirmations: "users/confirmations", passwords: "users/passwords", registrations: "users/registrations", sessions: "users/sessions", unlocks: "users/unlocks" }
     devise_scope :search_user do
       resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
+      post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
+      post "sign-out-before-confirming-email", to: "users/confirmations#sign_out_before_confirming_email"
     end
     root "landing_page#index"
 
@@ -50,9 +51,14 @@ Rails.application.routes.draw do
 
   # All requests besides "Search" host ones will default to "Submit" pages.
   constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
-    devise_for :submit_users, path: "", path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" }, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords", unlocks: "users/unlocks" }
+    devise_for :submit_users,
+               path: "",
+               path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" },
+               controllers: { confirmations: "users/confirmations", passwords: "users/passwords", registrations: "users/registrations", sessions: "users/sessions", unlocks: "users/unlocks" }
     devise_scope :submit_user do
       resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
+      post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
+      post "sign-out-before-confirming-email", to: "users/confirmations#sign_out_before_confirming_email"
     end
 
     root "landing_page#index"

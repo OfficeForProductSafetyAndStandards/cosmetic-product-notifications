@@ -1,0 +1,7 @@
+<%= render "signed_in_as_another_user" do %>
+  <%= form_with url: sign_out_before_confirming_email_path(confirmation_token: params[:confirmation_token]), method: :post do %>
+    <button class="button-link govuk-link">
+      <%= "Confirm email for #{@user_with_confirmation_token.name }" %>
+    </button>
+  <% end %>
+<% end %>

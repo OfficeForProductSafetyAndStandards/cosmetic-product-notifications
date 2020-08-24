@@ -30,7 +30,6 @@ module SecondaryAuthenticationConcern
     return false if get_secondary_authentication_datetime.nil?
 
     last_otp_time = get_secondary_authentication_datetime
-    binding.pry if $usepry
     (last_otp_time + SecondaryAuthentication::TIMEOUTS[current_operation].seconds) > Time.now.utc
   end
 

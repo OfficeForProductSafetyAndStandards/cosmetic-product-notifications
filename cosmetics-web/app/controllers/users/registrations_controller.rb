@@ -3,11 +3,11 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
     def create
-      super do
-        if sign_up_form.invalid?
-          handle_invalid_form
-          return render :new
-        end
+      if sign_up_form.invalid?
+        handle_invalid_form
+        render :new
+      else
+        super
       end
     end
 
@@ -21,7 +21,6 @@ module Users
 
     def handle_invalid_form
       self.resource = resource_class.new(sign_up_params)
-      # self.resource.valid?
       self.resource.errors.merge!(sign_up_form.errors)
     end
 

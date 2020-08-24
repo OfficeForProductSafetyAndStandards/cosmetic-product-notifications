@@ -40,6 +40,8 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         visit edit_user_password_url_with_token
 
         expect_to_be_on_secondary_authentication_page
+
+        # User can request the 2FA code again
         click_link "Not received a text message?"
 
         expect_to_be_on_resend_secondary_authentication_page
@@ -48,24 +50,28 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         expect_to_be_on_secondary_authentication_page
         complete_secondary_authentication_with(last_user_otp(user))
 
+        # User updates its password
         expect_to_be_on_edit_user_password_page
 
         expect(page).to have_field("username", type: "email", with: user.email, disabled: true)
 
         fill_in "Password", with: "a_new_password"
-        resp = click_on "Continue"
-
+        click_on "Continue"
 
         expect_to_be_on_password_changed_page
 
         click_link "Continue"
 
+        # User is signed in in the landing page for Submit/Search
         expect(page).to have_css("h1", text: expected_text)
-
         click_on "Sign out"
 
-        click_on "Sign in"
+        # Attempting to use the link after already having setup the new password shows an "invalid link" error page
+        visit edit_user_password_url_with_token
+        expect(page).to have_css("h1", text: "Invalid link")
+        click_on "sign in page"
 
+        # User signs in using the new password
         fill_in "Email address", with: user.email
         fill_in "Password", with: "a_new_password"
         click_on "Continue"
