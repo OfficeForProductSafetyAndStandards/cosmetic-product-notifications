@@ -138,19 +138,4 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer, :w
   def otp_code
     invited_user.reload.direct_otp
   end
-
-  def expect_to_be_on_secondary_authentication_page
-    expect(page).to have_current_path(/\/two-factor/)
-    expect(page).to have_h1("Check your phone")
-  end
-
-  def expect_to_be_on_signed_in_as_another_user_page
-    expect(page).to have_h1("You are already signed in")
-  end
-
-  def expect_to_be_on_complete_registration_page
-    expect(page).to have_current_path(/\/complete-registration?.+$/)
-    expect(page).to have_h1("Create an account")
-    expect(page).to have_field("username", type: "email", with: invited_user.email, disabled: true)
-  end
 end

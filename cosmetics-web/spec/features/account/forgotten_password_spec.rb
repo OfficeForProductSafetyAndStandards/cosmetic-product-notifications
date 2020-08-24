@@ -219,10 +219,4 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
       expect_to_be_on_check_your_email_page
     end
   end
-
-  def complete_secondary_authentication_with(security_code)
-    fill_in "Enter security code", with: security_code
-    click_on "Continue"
-  end
-
 end

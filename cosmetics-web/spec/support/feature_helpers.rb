@@ -22,6 +22,12 @@ def expect_user_to_have_received_sms_code(code)
   )
 end
 
+def complete_secondary_authentication_with(security_code)
+  fill_in "Enter security code", with: security_code
+  click_on "Continue"
+end
+
+
 def expect_to_be_on_secondary_authentication_page
   expect(page).to have_current_path(/\/two-factor/)
   expect(page).to have_h1("Check your phone")
@@ -34,6 +40,12 @@ end
 
 def expect_to_be_on_signed_in_as_another_user_page
   expect(page).to have_h1("You are already signed in")
+end
+
+def expect_to_be_on_complete_registration_page
+  expect(page).to have_current_path(/\/complete-registration?.+$/)
+  expect(page).to have_h1("Create an account")
+  expect(page).to have_field("username", type: "email", with: invited_user.email, disabled: true)
 end
 
 def expect_to_be_on_password_changed_page
