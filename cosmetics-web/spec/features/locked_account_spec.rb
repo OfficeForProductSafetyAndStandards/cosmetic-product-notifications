@@ -1,20 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :feature do
-  def fill_in_credentials(password_override: nil)
-    fill_in "Email address", with: user.email
-    if password_override
-      fill_in "Password", with: password_override
-    else
-      fill_in "Password", with: user.password
-    end
-    click_on "Continue"
-  end
-
-  def otp_code
-    user.reload.direct_otp
-  end
-
   shared_examples "locked account" do
     context "when using wrong credentials over and over again" do
       let(:unlock_email) { delivered_emails.last }

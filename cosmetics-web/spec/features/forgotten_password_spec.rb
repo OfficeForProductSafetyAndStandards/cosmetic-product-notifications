@@ -48,7 +48,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         click_button "Resend security code"
 
         expect_to_be_on_secondary_authentication_page
-        complete_secondary_authentication_with(last_user_otp(user))
+        complete_secondary_authentication_with(otp_code)
 
         # User updates its password
         expect_to_be_on_edit_user_password_page
@@ -225,42 +225,4 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
     click_on "Continue"
   end
 
-  def last_user_otp(user)
-    user.reload.direct_otp
-  end
-
-  def otp_code
-    user.reload.direct_otp
-  end
-
-  def expect_to_be_on_reset_password_page
-    expect(page).to have_current_path("/password/new")
-  end
-
-  def expect_to_be_on_check_your_email_page
-    expect(page).to have_css("h1", text: "Check your email")
-  end
-
-  def expect_to_be_on_edit_user_password_page
-    expect(page).to have_current_path("/password/edit", ignore_query: true)
-  end
-
-  def expect_to_be_on_password_changed_page
-    expect(page).to have_current_path("/password-changed")
-    expect(page).to have_css("h1", text: "You have changed your password successfully")
-  end
-
-  def expect_to_be_on_secondary_authentication_page
-    expect(page).to have_current_path(/\/two-factor/)
-    expect(page).to have_h1("Check your phone")
-  end
-
-  def expect_to_be_on_resend_secondary_authentication_page
-    expect(page).to have_current_path("/text-not-received")
-    expect(page).to have_h1("Resend security code")
-  end
-
-  def expect_to_be_on_signed_in_as_another_user_page
-    expect(page).to have_h1("You are already signed in")
-  end
 end

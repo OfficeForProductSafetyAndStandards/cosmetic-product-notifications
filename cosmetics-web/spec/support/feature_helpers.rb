@@ -32,6 +32,36 @@ def expect_to_be_on_resend_secondary_authentication_page
   expect(page).to have_h1("Resend security code")
 end
 
+def expect_to_be_on_signed_in_as_another_user_page
+  expect(page).to have_h1("You are already signed in")
+end
+
+def expect_to_be_on_password_changed_page
+  expect(page).to have_current_path("/password-changed")
+  expect(page).to have_css("h1", text: "You have changed your password successfully")
+end
+
+def expect_to_be_on_reset_password_page
+  expect(page).to have_current_path("/password/new")
+end
+
+def expect_to_be_on_check_your_email_page
+  expect(page).to have_css("h1", text: "Check your email")
+end
+
+def expect_to_be_on_edit_user_password_page
+  expect(page).to have_current_path("/password/edit", ignore_query: true)
+end
+
+def expect_incorrect_email_or_password
+  expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+  expect(page).to have_link("Enter correct email address and password", href: "#email")
+  expect(page).to have_css("span#email-error", text: "Error: Enter correct email address and password")
+  expect(page).to have_css("span#password-error", text: "")
+
+  expect(page).not_to have_link("Cases")
+end
+
 def otp_code
   user.reload.direct_otp
 end

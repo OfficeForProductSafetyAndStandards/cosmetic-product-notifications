@@ -11,35 +11,6 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
     click_on "Continue"
   end
 
-  def expect_incorrect_email_or_password
-    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Enter correct email address and password", href: "#email")
-    expect(page).to have_css("span#email-error", text: "Error: Enter correct email address and password")
-    expect(page).to have_css("span#password-error", text: "")
-
-    expect(page).not_to have_link("Cases")
-  end
-
-  def expect_user_to_have_received_sms_code(code)
-    expect(notify_stub).to have_received(:send_sms).with(
-      hash_including(phone_number: user.mobile_number, personalisation: { code: code }),
-    )
-  end
-
-  def expect_to_be_on_secondary_authentication_page
-    expect(page).to have_current_path(/\/two-factor/)
-    expect(page).to have_h1("Check your phone")
-  end
-
-  def expect_to_be_on_resend_secondary_authentication_page
-    expect(page).to have_current_path("/text-not-received")
-    expect(page).to have_h1("Resend security code")
-  end
-
-  def otp_code
-    user.reload.direct_otp
-  end
-
   shared_examples "sign up" do
     scenario "user tries to sign in with email address that does not belong to any user" do
       visit "/sign-in"
