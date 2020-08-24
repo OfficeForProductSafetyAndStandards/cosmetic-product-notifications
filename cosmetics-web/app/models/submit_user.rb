@@ -11,6 +11,7 @@ class SubmitUser < User
   has_many :responsible_persons, through: :responsible_person_users
 
   has_one :user_attributes, dependent: :destroy
+  validates :mobile_number, presence: true
 
   def responsible_persons
     # ActiveHash does not support has_many through: associations

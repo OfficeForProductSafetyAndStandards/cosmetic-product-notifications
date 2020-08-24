@@ -23,7 +23,16 @@
         },
         {
           key: { text: "Email address" },
-          value: { text: current_user.email }
+          value: { text: current_user.email },
+          actions: {
+            items: [
+              {
+                href: my_account_email_path,
+                text: "Change",
+                visuallyHiddenText: "email address"
+              }
+            ]
+          }
         },
         {
           key: { text: "Mobile number" },

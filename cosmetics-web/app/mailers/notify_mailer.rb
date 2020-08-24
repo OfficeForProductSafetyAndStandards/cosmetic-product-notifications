@@ -90,6 +90,19 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: user.email)
   end
 
+  def new_email_verification_email(user)
+    set_host(user)
+    set_template("82f13866-747c-4a7a-99d5-2ab279a54b55") # confirmation code
+    set_reference("Send email confirmation code")
+
+    set_personalisation(
+      name: user.name,
+      verify_email_url: confirm_my_account_email_url(confirmation_token: user.new_email_confirmation_token, host: @host),
+    )
+
+    mail(to: user.new_email)
+    Sidekiq.logger.info "Confirmation email send"
+  end
 
 private
 

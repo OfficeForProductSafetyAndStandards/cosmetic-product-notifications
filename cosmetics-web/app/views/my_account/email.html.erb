@@ -1,4 +1,4 @@
-<% title = "Change your password" %>
+<% title = "Change your email" %>
 <% page_title title, errors: @user.errors.any? %>
 
 <% content_for(:after_header) do %>
@@ -11,39 +11,28 @@
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
-    <%= form_with model: @user, url: my_account_password_path, method: :patch do |form| %>
-      <%= render "form_components/govuk_input",
-        key: :old_password,
-        type: :password,
-        form: form,
-        classes: "app-!-max-width-two-thirds",
-        label: {
-          text: "Old password"
-        },
-        value: nil,
-        id: "old_password"
-        %>
+    <%= form_with model: @user, url: my_account_email_path, method: :patch do |form| %>
       <%= render "form_components/govuk_input",
         key: :password,
         type: :password,
         form: form,
         classes: "app-!-max-width-two-thirds",
         label: {
-          text: "New password"
+          text: "Password"
         },
         value: nil,
-        id: "new_password"
+        id: "old_password"
         %>
       <%= render "form_components/govuk_input",
-        key: :password_confirmation,
-        type: :password,
+        key: :new_email,
+        type: :text,
         form: form,
         classes: "app-!-max-width-two-thirds",
         label: {
-          text: "New password confirmation"
+          text: "New email"
         },
         value: nil,
-        id: "new_password_confirmation"
+        id: "new_email"
         %>
       <%= govukButton(text: "Save") %>
     <% end %>

@@ -5,12 +5,14 @@ class SecondaryAuthentication
   UNLOCK_OPERATION = "unlock_operation".freeze
   CHANGE_PASSWORD = "change_password".freeze
   CHANGE_MOBILE_NUMBER = "change_mobile_number".freeze
+  CHANGE_EMAIL_ADDRESS = "change_email_address".freeze
 
   TIMEOUTS = {
     DEFAULT_OPERATION => 7 * 24 * 3600, # 7 days
     RESET_PASSWORD_OPERATION => 300, # 5 minutes
     CHANGE_PASSWORD => 300, # 5 minutes
     CHANGE_MOBILE_NUMBER => 300, # 5 minutes
+    CHANGE_EMAIL_ADDRESS => 300, # 5 minutes
     INVITE_USER => 3600, # 1 hour
     UNLOCK_OPERATION => 300, # 5 minutes
   }.freeze
