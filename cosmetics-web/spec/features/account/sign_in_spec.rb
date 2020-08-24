@@ -1,16 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
-  def fill_in_credentials(password_override: nil)
-    fill_in "Email address", with: user.email
-    if password_override
-      fill_in "Password", with: password_override
-    else
-      fill_in "Password", with: user.password
-    end
-    click_on "Continue"
-  end
-
   shared_examples "sign up" do
     scenario "user tries to sign in with email address that does not belong to any user" do
       visit "/sign-in"
