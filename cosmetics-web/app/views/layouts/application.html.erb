@@ -11,7 +11,7 @@
       <%= render "shared/phase_banner" %>
       <%= yield :after_header %>
 
-      <% if alert %>
+      <% if alert.present? %>
         <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
           <h2 id="error-summary-title" class="govuk-error-summary__title">
             <%= alert %>
