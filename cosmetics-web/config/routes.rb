@@ -124,6 +124,7 @@ Rails.application.routes.draw do
 
   resource :my_account, only: [:show], controller: :my_account do
     resource :password, controller: :my_account_password, only: %i[show update]
+    resource :name, controller: :my_account_name, only: %i[show update]
     resource :mobile_number, controller: :my_account_mobile_number, only: %i[show update]
     resource :email, controller: :my_account_email, only: %i[show update] do
       member do

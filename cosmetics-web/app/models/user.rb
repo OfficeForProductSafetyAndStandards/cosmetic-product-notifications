@@ -6,6 +6,7 @@ class User < ApplicationRecord
   attribute :old_password, :string
 
   validates :new_email, :email => {:allow_nil => true}
+  validates :name, presence: true
 
   def send_new_email_confirmation_email
     NotifyMailer.new_email_verification_email(self).deliver_later

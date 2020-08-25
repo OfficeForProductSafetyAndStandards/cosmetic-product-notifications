@@ -1,8 +1,8 @@
-<% title = "Change your password" %>
+<% title = "Change your name" %>
 <% page_title title, errors: @user.errors.any? %>
 
 <% content_for(:after_header) do %>
-  <%= govukBackLink(text: "Back", href: account_path) %>
+  <%= govukBackLink(text: "Back", href: my_account_path) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -11,29 +11,18 @@
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
-    <%= form_with model: @user, url: account_password_path, method: :patch do |form| %>
+    <%= form_with model: @user, url: my_account_name_path, method: :patch do |form| %>
 
       <%= render "form_components/govuk_input",
-        key: :old_password,
+        key: :name,
         form: form,
         classes: "app-!-max-width-two-thirds",
         label: {
-          text: "Old password"
+          text: "Name"
         },
         value: nil,
         id: "name"
         %>
-      <%= render "form_components/govuk_input",
-        key: :password,
-        form: form,
-        classes: "app-!-max-width-two-thirds",
-        label: {
-          text: "New password"
-        },
-        value: nil,
-        id: "name"
-        %>
-
       <%= govukButton(text: "Save") %>
     <% end %>
   </div>
