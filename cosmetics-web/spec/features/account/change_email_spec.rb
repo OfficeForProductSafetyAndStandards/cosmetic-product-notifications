@@ -8,6 +8,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
     end
 
     let(:user) { create(:submit_user, has_accepted_declaration: true) }
+    let!(:responsible_person_user) { create(:responsible_person_user, user: user) }
 
     before do
       visit "/sign-in"
