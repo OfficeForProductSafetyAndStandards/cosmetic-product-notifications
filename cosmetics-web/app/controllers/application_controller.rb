@@ -28,14 +28,9 @@ class ApplicationController < ActionController::Base
     redirect_to "/404", status: :not_found
   end
 
-  def user_class
-    submit_domain? ? SubmitUser : SearchUser
-  end
-
   def user_params_key
     submit_domain? ? :submit_user : :search_user
   end
-
 
 protected
 
@@ -44,6 +39,24 @@ protected
   end
 
 private
+
+  def user_class
+    if params.key?("search_user")
+      return SearchUser
+    elsif params.key?("submit_user")
+      return SubmitUser
+    end
+
+    raise ArgumentError
+  end
+
+  def user_param_key
+    user_class.name.underscore.to_sym
+  end
+
+  def dig_params(param)
+    params.dig(user_param_key, param)
+  end
 
   def after_sign_in_path_for(_resource)
     submit_domain? ? dashboard_path : poison_centre_notifications_path

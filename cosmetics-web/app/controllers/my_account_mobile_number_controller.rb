@@ -24,10 +24,6 @@ class MyAccountMobileNumberController < ApplicationController
 
   private
 
-  def dig_params(param)
-    params.dig(user_param_key, param)
-  end
-
   def user_class
     if params.key?("search_user")
       return SearchUser
