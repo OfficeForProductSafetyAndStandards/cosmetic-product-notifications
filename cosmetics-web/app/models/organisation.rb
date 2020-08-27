@@ -9,7 +9,7 @@ class Organisation < ActiveHash::Base
 
   def self.load(force: false)
     begin
-      self.data = KeycloakClient.instance.all_organisations(force: force)
+      # self.data = KeycloakClient.instance.all_organisations(force: force)
     rescue StandardError => e
       Rails.logger.error "Failed to fetch organisations from Keycloak: #{e.message}"
       self.data = nil

@@ -23,7 +23,6 @@ applications:
     - cosmetics-aws-env
     - cosmetics-auth-env
     - cosmetics-health-env
-    - cosmetics-keycloak-env
     - cosmetics-rails-env
     - cosmetics-sentry-env
     - cosmetics-sidekiq-env
