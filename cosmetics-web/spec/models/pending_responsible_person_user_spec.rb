@@ -36,8 +36,8 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
       pending_responsible_person_same_email = build(:pending_responsible_person_user, email_address: pending_responsible_person.email_address,
                                                     responsible_person: pending_responsible_person.responsible_person)
 
+      expect { pending_responsible_person_same_email.save }.not_to change(described_class, :count)
       expect(pending_responsible_person_same_email.save).to be true
-      expect(described_class.count).to eq(1)
     end
   end
 end
