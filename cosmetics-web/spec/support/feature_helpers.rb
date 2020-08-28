@@ -27,7 +27,6 @@ def complete_secondary_authentication_with(security_code)
   click_on "Continue"
 end
 
-
 def expect_to_be_on_secondary_authentication_page
   expect(page).to have_current_path(/\/two-factor/)
   expect(page).to have_h1("Check your phone")

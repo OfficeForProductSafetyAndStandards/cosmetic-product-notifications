@@ -6,42 +6,43 @@ RSpec.feature "Signing up as a submit user", :with_stubbed_mailer, type: :featur
   end
 
   scenario "user signs up and verifies its email" do
-    visit "/sign-up"
+    visit "/registration/new_account/new"
     # First attempt with validation errors
-    fill_in "Name", with: "Test user"
-    fill_in "Mobile Number", with: "07000000" # Mobile number too short
-    fill_in "Email address", with: "signing_up@example.com"
-    fill_in "Password", with: "userpassword", match: :prefer_exact
-    fill_in "Password confirmation", with: "userpassword", match: :prefer_exact
-    click_button "Sign up"
+    fill_in "Full Name", with: ""
+    fill_in "Email address", with: "signing_up.example.com"
+    click_button "Continue"
+
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter your mobile number in the correct format", href: "#mobile_number")
     expect(page).to have_css("span#mobile_number-error", text: "Enter your mobile number in the correct format")
 
-    # Submit after fixing te validation issue
-    fill_in "Mobile Number", with: "07000000000"
-    fill_in "Password", with: "userpassword", match: :prefer_exact
-    fill_in "Password confirmation", with: "userpassword", match: :prefer_exact
-    click_button "Sign up"
+    fill_in "Full name", with: "Joe Doe"
+    fill_in "Email address", with: "signing_up@example.com"
+    click_button "Continue"
 
-    expect(page).not_to have_css("h2#error-summary-title", text: "There is a problem")
+    # Submit after fixing te validation issue
+
     expect_to_be_on_check_your_email_page
 
     email = delivered_emails.last
     expect(email.recipient).to eq "signing_up@example.com"
     expect(email.personalization[:name]).to eq("Test user")
 
-    verify_url = email.personalization[:verify_email_url]
-    expect(verify_url).to include("/confirmation?confirmation_token=")
-
-    # Email verification redirects to the sign in page
+    verify_url = email.personalization[:invitation_url]
     visit verify_url
-    expect(page).to have_current_path("/sign-in")
 
-    # Attempt of email verification for second time takes the user to the sign in page
-    visit verify_url
-    expect(page).to have_current_path("/sign-in")
+    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
+    click_button "Continue"
+
+    expect_user_to_have_received_sms_code
+    expect_to_be_on_secondary_authentication_page
+    complete_secondary_authentication_with(otp_code)
+
+    # 2FA
+    expect_to_be_on_declaration_page
+    # responsible person declaration
   end
 
   scenario "user signs up and verifies email while signed up as another user" do

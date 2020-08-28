@@ -61,6 +61,11 @@ Rails.application.routes.draw do
       post "sign-out-before-confirming-email", to: "users/confirmations#sign_out_before_confirming_email"
     end
 
+    namespace :registration do
+      resource :new_account, only: [:new, :create]
+      resource :security_details, only: [:new, :create]
+    end
+
     root "landing_page#index"
 
 
