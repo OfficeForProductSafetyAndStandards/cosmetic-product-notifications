@@ -4,11 +4,11 @@ class NotifyMailer < GovukNotifyRails::Mailer
     {
       account_already_exists: "64ab6e58-12e8-4a66-89a0-84a87d49faa9", # Account creation with existing email address
       contact_person_verification: "06d89c04-51ca-4d30-bad9-2d79fda00b11", # Contact person verification email
-      responsible_person_invitation: "aaa1ae91-c98f-492e-af58-9d44c93fe2f4" # Invitation to join Responsible Person
+      responsible_person_invitation: "aaa1ae91-c98f-492e-af58-9d44c93fe2f4", # Invitation to join Responsible Person
       invitation: "0ac7ff62-5b54-42cf-a0c3-45569c7b30bb", # Invite to join Search Cosmetic Product Notifications
       reset_password_instruction: "aaa945b4-d848-4b11-b22c-8bbc95d97df4", #  Reset password
       account_locked: "26d6fb70-1c5d-49ff-a3ee-dc30e94a305e", # Unlock account / reset password after too many incorrect password attempts
-      verify_new_account: "616e1eb9-4071-4343-8f18-3d2fcd7b9b47" # Verify email address
+      verify_new_account: "616e1eb9-4071-4343-8f18-3d2fcd7b9b47", # Verify email address
       verify_new_email: "68edf46c-627d-4609-ae2e-ba9d4b32e3d6" # Verify new email address
     }.freeze
 
