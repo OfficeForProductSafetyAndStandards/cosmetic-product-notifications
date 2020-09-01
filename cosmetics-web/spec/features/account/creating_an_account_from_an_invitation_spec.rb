@@ -2,7 +2,7 @@ require "rails_helper"
 require "support/feature_helpers"
 
 RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, type: :feature do
-  let!(:invited_user) { InviteUser.call(email: "john.doe@example.com", role: :poison_centre).user }
+  let!(:invited_user) { InviteUser.call(email: "john.doe@example.com", name: "John Doe", role: :poison_centre).user }
   let(:existing_user) { create(:poison_centre_user) }
 
   before do

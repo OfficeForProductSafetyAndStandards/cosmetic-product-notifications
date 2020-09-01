@@ -174,10 +174,6 @@ GEM
     jmespath (1.4.0)
     json (2.3.0)
     jwt (2.2.1)
-    keycloak (2.4.1)
-      json
-      jwt
-      rest-client
     launchy (2.4.3)
       addressable (~> 2.3)
     listen (3.2.1)
@@ -452,7 +448,6 @@ DEPENDENCIES
   govuk_notify_rails (~> 2.1.0)
   interactor
   jbuilder (~> 2.9)
-  keycloak (~> 2.4.1)
   launchy (~> 2.4.3)
   listen (~> 3.2.1)
   lograge (~> 0.11.2)

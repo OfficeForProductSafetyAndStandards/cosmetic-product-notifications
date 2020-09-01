@@ -1,9 +1,10 @@
 class InviteUser
   include Interactor
 
-  delegate :user, :role, to: :context
+  delegate :user, :role, :name, to: :context
 
   def call
+    context.fail!(error: "No user name supplied") unless name
     context.fail!(error: "No email or user supplied") unless email || user
     context.fail!(error: "No user role supplied") unless role
 
@@ -16,6 +17,7 @@ private
 
   def create_user
     user = SearchUser.create!(
+      name: name,
       email: email,
       skip_password_validation: true,
       role: role,

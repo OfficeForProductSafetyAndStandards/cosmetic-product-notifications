@@ -5,7 +5,7 @@ RSpec.describe SecondaryAuthentication do
   let(:direct_otp) { "11111" }
   let(:direct_otp_sent_at) { Time.new.utc }
   let(:second_factor_attempts_locked_at) { nil }
-  let(:user) { create(:user, second_factor_attempts_count: attempts, direct_otp_sent_at: direct_otp_sent_at, second_factor_attempts_locked_at: second_factor_attempts_locked_at, direct_otp: direct_otp) }
+  let(:user) { create(:submit_user, second_factor_attempts_count: attempts, direct_otp_sent_at: direct_otp_sent_at, second_factor_attempts_locked_at: second_factor_attempts_locked_at, direct_otp: direct_otp) }
   let(:secondary_authentication) { described_class.new(user) }
 
   describe "#valid_otp?" do
