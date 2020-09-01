@@ -46,17 +46,7 @@ private
     )
   end
 
-  def send_verification_email
-    NotifyMailer.send_contact_person_verification_email(
-      @contact_person.name,
-      @contact_person.email_address,
-      @responsible_person.name,
-      current_user.name,
-    ).deliver_later
-  end
-
   def redirect_contact_person
-    send_verification_email
     redirect_to responsible_person_notifications_path(@responsible_person)
   end
 end

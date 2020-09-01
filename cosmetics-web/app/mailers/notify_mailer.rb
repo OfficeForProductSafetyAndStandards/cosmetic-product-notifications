@@ -1,51 +1,44 @@
 class NotifyMailer < GovukNotifyRails::Mailer
   TEMPLATES =
+    # please add email name in Notify as comment
     {
-      account_locked: "0a78e692-977e-4ca7-94e9-9de64ebd8a5d", # PSD one
-      reset_password_instruction: "cea1bb37-1d1c-4965-8999-6008d707b981", # PSD one
-      invitation: "7b80a680-f8b3-4032-982d-2a3a662b611a", # PSD one
+      account_already_exists: "64ab6e58-12e8-4a66-89a0-84a87d49faa9", # Account creation with existing email address
+      responsible_person_invitation: "aaa1ae91-c98f-492e-af58-9d44c93fe2f4", # Invitation to join Responsible Person
+      invitation: "0ac7ff62-5b54-42cf-a0c3-45569c7b30bb", # Invite to join Search Cosmetic Product Notifications
+      reset_password_instruction: "aaa945b4-d848-4b11-b22c-8bbc95d97df4", #  Reset password
+      account_locked: "26d6fb70-1c5d-49ff-a3ee-dc30e94a305e", # Unlock account / reset password after too many incorrect password attempts
+      verify_new_account: "616e1eb9-4071-4343-8f18-3d2fcd7b9b47", # Verify email address
+      verify_new_email: "68edf46c-627d-4609-ae2e-ba9d4b32e3d6" # Verify new email address
     }.freeze
 
-  def send_contact_person_verification_email(contact_person_name, contact_person_email, responsible_person_name, user_name)
-    set_template("50072d05-d058-4a02-a239-0d73ef7291b2")
-    set_reference("Contact person verification email")
+  def account_already_exists
+    set_template(TEMPLATES[:account_already_exists])
 
-    set_personalisation(
-      user_name: user_name,
-      contact_name: contact_person_name,
-      responsible_person: responsible_person_name,
-    )
-
-    mail(to: contact_person_email)
-    Sidekiq.logger.info "Contact person verification email sent"
+    # TODO
   end
 
   def send_responsible_person_invite_email(responsible_person_id, responsible_person_name, invited_email_address, inviting_user_name)
-    set_template("a473bca1-ff6d-4cee-88f6-83a2592727f4")
+    set_template(TEMPLATES[:responsible_person_invitation])
     set_reference("Invite user to join responsible person")
 
     set_personalisation(
       responsible_person_name: responsible_person_name,
       inviting_user_name: inviting_user_name,
-      invite_url: join_responsible_person_team_members_url(responsible_person_id),
+      invitation_url: join_responsible_person_team_members_url(responsible_person_id),
     )
 
     mail(to: invited_email_address)
     Sidekiq.logger.info "Responsible person invite email sent"
   end
 
-  def send_account_confirmation_email(user)
+  def invitation_email(user)
     set_host(user)
-    set_template("82f13866-747c-4a7a-99d5-2ab279a54b55")
-    set_reference("Send confirmation code")
+    set_template(TEMPLATES[:invitation])
 
-    set_personalisation(
-      name: user.name,
-      verify_email_url: submit_user_confirmation_url(confirmation_token: user.confirmation_token, host: @host),
-    )
+    invitation_url = complete_registration_user_url(user.id, invitation: user.invitation_token, host: @host)
 
+    set_personalisation(invitation_url: invitation_url)
     mail(to: user.email)
-    Sidekiq.logger.info "Confirmation email send"
   end
 
   def reset_password_instructions(user, token)
@@ -78,21 +71,24 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: user.email)
   end
 
-  def invitation_email(user)
+
+  def send_account_confirmation_email(user)
     set_host(user)
-    set_template(TEMPLATES[:invitation])
+    set_template(TEMPLATES[:verify_new_account])
+    set_reference("Send confirmation code")
 
-    invitation_url = complete_registration_user_url(user.id, invitation: user.invitation_token, host: @host)
+    set_personalisation(
+      name: user.name,
+      verify_email_url: submit_user_confirmation_url(confirmation_token: user.confirmation_token, host: @host),
+    )
 
-    invited_by = "an admin"
-
-    set_personalisation(invitation_url: invitation_url, inviting_team_member_name: invited_by)
     mail(to: user.email)
+    Sidekiq.logger.info "Confirmation email send"
   end
 
   def new_email_verification_email(user)
     set_host(user)
-    set_template("82f13866-747c-4a7a-99d5-2ab279a54b55") # confirmation code
+    set_template(TEMPLATES[:verify_new_email])
     set_reference("Send email confirmation code")
 
     set_personalisation(
