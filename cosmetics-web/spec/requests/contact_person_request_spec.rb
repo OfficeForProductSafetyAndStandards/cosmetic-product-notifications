@@ -35,10 +35,6 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
           phone_number: "07712 345678",
         )
       end
-
-      it "sends a welcome email to that contact" do
-        expect(NotifyMailer).to have_received(:send_contact_person_verification_email)
-      end
     end
 
     context "with the required details missing" do
