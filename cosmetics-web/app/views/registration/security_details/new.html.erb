@@ -1,0 +1,18 @@
+<% title = "Account security" %>
+<% page_title(title, errors: @security_details_form.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= error_summary(@security_details_form.errors, %i[mobile_number password]) %>
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <%= form_for(@security_details_form, url: registration_security_details_path, html: { novalidate: true }, method: :post) do |f| %>
+      <%= form_input @security_details_form, :mobile_number %>
+      <%= password_input @security_details_form %>
+
+      <%= govukButton(text: "Continue") %>
+    <% end %>
+  </div>
+</div>

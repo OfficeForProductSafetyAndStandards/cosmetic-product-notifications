@@ -69,6 +69,6 @@ private
   end
 
   def resource_form_name(resource_object)
-    resource_object.class.name.underscore
+    ActiveModel::Naming.param_key(resource_object.class)
   end
 end

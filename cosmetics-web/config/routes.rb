@@ -62,7 +62,11 @@ Rails.application.routes.draw do
     end
 
     namespace :registration do
-      resource :new_account, only: [:new, :create]
+      resource :new_account, only: [:new, :create] do
+        collection do
+          get :confirm
+        end
+      end
       resource :security_details, only: [:new, :create]
     end
 

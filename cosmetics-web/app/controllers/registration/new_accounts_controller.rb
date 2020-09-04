@@ -9,11 +9,18 @@ module Registration
     end
 
     def create
-      if new_account_form.invalid?
-        render :new
+      if new_account_form.save
+        render 'users/check_your_email/show'
       else
-        # do stuff
-        # redirect to confirmation send
+        render :new
+      end
+    end
+
+    def confirm
+      user = SubmitUser.confirm_by_token(params[:confirmation_token])
+      if user.errors.empty?
+        sign_in(user)
+        redirect_to new_registration_security_details_path
       end
     end
 
@@ -26,7 +33,11 @@ module Registration
   private
 
     def new_account_form
-      @new_account_form ||= NewAccountForm.new(params[:sign_up_form])
+      @new_account_form ||= NewAccountForm.new(new_account_form_params)
+    end
+
+    def new_account_form_params
+      params.require(:registration_new_account_form).permit(:full_name, :email)
     end
   end
 end

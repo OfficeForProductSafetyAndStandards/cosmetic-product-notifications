@@ -12,6 +12,14 @@ module Registration
 
     validates_presence_of :full_name, message: error_message(:full_name, :blank)
 
+    def save
+      return false unless self.valid?
+      user = SubmitUser.new(name: full_name, email: email)
+      user.save(validate: false)
+#      NotifyMailer.send_account_confirmation_email(user).deliver_later
+      user
+    end
+
     def [](field)
       public_send(field.to_sym)
     end

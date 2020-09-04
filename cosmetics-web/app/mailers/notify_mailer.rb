@@ -79,7 +79,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       name: user.name,
-      verify_email_url: submit_user_confirmation_url(confirmation_token: user.confirmation_token, host: @host),
+      verify_email_url: confirm_registration_new_account_url(confirmation_token: user.confirmation_token, host: @host),
     )
 
     mail(to: user.email)

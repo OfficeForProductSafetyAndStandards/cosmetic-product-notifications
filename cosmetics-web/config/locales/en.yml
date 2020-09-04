@@ -77,6 +77,10 @@ en:
               missing: "Select if %{component_name} is intended to be rinsed off or left on"
             exposure_routes:
               blank: "Select how the user is likely to be exposed to the nanomaterials"
+        new_account:
+          attributes:
+            full_name:
+              blank: "Enter your full name"
         trigger_question:
           attributes:
             applicable:
@@ -188,3 +192,6 @@ en:
   sign_user_in:
     email:
       wrong_email_or_password: "Enter correct email address and password"
+  new_account:
+    full_name:
+      blank: "Enter your full name"

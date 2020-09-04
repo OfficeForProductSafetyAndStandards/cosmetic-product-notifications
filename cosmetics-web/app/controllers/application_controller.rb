@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
   before_action :has_accepted_declaration
   before_action :create_or_join_responsible_person, if: :submit_domain?
 
+  after_action do
+    puts request.url
+  end
+
   add_flash_types :confirmation
 
   helper_method :current_user
@@ -70,6 +74,7 @@ private
 
   def has_accepted_declaration
     return unless user_signed_in?
+    return unless current_user.mobile_number_verified?
 
     redirect_path = request.original_fullpath unless request.original_fullpath == root_path
 
@@ -88,6 +93,7 @@ private
 
   def create_or_join_responsible_person
     return unless fully_signed_in_submit_user?
+    return unless current_user.mobile_number_verified?
 
     responsible_person = current_user.responsible_persons.first
 
