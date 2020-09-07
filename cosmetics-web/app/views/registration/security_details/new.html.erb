@@ -9,8 +9,8 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <%= form_for(@security_details_form, url: registration_security_details_path, html: { novalidate: true }, method: :post) do |f| %>
-      <%= form_input @security_details_form, :mobile_number %>
-      <%= password_input @security_details_form %>
+      <%= form_input @security_details_form, :mobile_number, hint: { text: "We'll send you a security code by text message" } %>
+      <%= password_input @security_details_form, hint: { text: 'At least 8 characters' } %>
 
       <%= govukButton(text: "Continue") %>
     <% end %>
