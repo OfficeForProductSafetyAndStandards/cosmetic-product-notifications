@@ -56,6 +56,10 @@ def expect_to_be_on_reset_password_page
   expect(page).to have_current_path("/password/new")
 end
 
+def expect_to_be_on_declaration_page
+  expect(page).to have_current_path("/declaration")
+end
+
 def expect_to_be_on_check_your_email_page
   expect(page).to have_css("h1", text: "Check your email")
 end

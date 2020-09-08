@@ -53,22 +53,19 @@ Rails.application.routes.draw do
   constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
     devise_for :submit_users,
                path: "",
-               path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" },
-               controllers: { confirmations: "users/confirmations", passwords: "users/passwords", registrations: "users/registrations", sessions: "users/sessions", unlocks: "users/unlocks" }
+               path_names: { sign_in: "sign-in", sign_out: "sign-out" },
+               controllers: { confirmations: "users/confirmations", passwords: "users/passwords", sessions: "users/sessions", unlocks: "users/unlocks" }
     devise_scope :submit_user do
       resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
       post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
       post "sign-out-before-confirming-email", to: "users/confirmations#sign_out_before_confirming_email"
     end
 
-    namespace :registration do
-      resource :new_account, only: [:new, :create] do
-        collection do
-          get :confirm
-        end
-      end
-      resource :security_details, only: [:new, :create]
-    end
+    get 'create-an-account', to: 'registration/new_accounts#new', as: :registration_new_submit_user
+    post 'create-an-account', to: 'registration/new_accounts#create', as: :registration_create_submit_user
+    get 'confirm-new-account', to: 'registration/new_accounts#confirm', as: :registration_confirm_submit_user
+    get 'account-security', to: 'registration/security_details#new', as: :registration_new_security_details
+    post 'account-security', to: 'registration/security_details#create', as: :registration_create_security_details
 
     root "landing_page#index"
 

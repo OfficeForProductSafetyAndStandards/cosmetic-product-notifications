@@ -12,7 +12,7 @@
           <% if @responsible_person.present? %>
             <%= govukButton text: "Your cosmetic products", href: responsible_person_notifications_path(@responsible_person), classes: "govuk-!-font-weight-bold" %>
           <% else %>
-            <%= govukButton text: "Create an account", href: new_submit_user_registration_path, classes: "govuk-!-font-weight-bold" %>
+            <%= govukButton text: "Create an account", href: registration_new_submit_user_path, classes: "govuk-!-font-weight-bold" %>
             or
             <%= link_to "sign in", new_submit_user_session_path, class: "govuk-link govuk-link--no-visited-state" %>
             if you have used this service before

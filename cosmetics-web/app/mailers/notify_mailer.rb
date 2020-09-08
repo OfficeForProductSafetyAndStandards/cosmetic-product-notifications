@@ -8,13 +8,23 @@ class NotifyMailer < GovukNotifyRails::Mailer
       reset_password_instruction: "aaa945b4-d848-4b11-b22c-8bbc95d97df4", #  Reset password
       account_locked: "26d6fb70-1c5d-49ff-a3ee-dc30e94a305e", # Unlock account / reset password after too many incorrect password attempts
       verify_new_account: "616e1eb9-4071-4343-8f18-3d2fcd7b9b47", # Verify email address
-      verify_new_email: "68edf46c-627d-4609-ae2e-ba9d4b32e3d6" # Verify new email address
+      verify_new_email: "68edf46c-627d-4609-ae2e-ba9d4b32e3d6", # Confirm new email address
+
     }.freeze
 
-  def account_already_exists
+  def send_account_already_exists(user)
     set_template(TEMPLATES[:account_already_exists])
 
-    # TODO
+    set_reference("Account creation with existing email address")
+
+    set_personalisation(
+      name: user.name,
+      sign_in_url: new_submit_user_session_url(host: submit_host),
+      forgotten_password_url: new_submit_user_password_url(host: submit_host),
+    )
+
+    mail(to: user.email)
+    Sidekiq.logger.info "Account creation with existing email send"
   end
 
   def send_responsible_person_invite_email(responsible_person_id, responsible_person_name, invited_email_address, inviting_user_name)
@@ -79,7 +89,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       name: user.name,
-      verify_email_url: confirm_registration_new_account_url(confirmation_token: user.confirmation_token, host: @host),
+      verify_email_url: registration_confirm_submit_user_url(confirmation_token: user.confirmation_token, host: @host),
     )
 
     mail(to: user.email)
@@ -109,5 +119,9 @@ private
     if user.is_a? SearchUser
       @host = ENV["SEARCH_HOST"]
     end
+  end
+
+  def submit_host
+    ENV['SUBMIT_HOST']
   end
 end

@@ -12,6 +12,9 @@ module Registration
       if new_account_form.save
         render 'users/check_your_email/show'
       else
+        # user might be already in database:
+          # confirmed
+          # unconfirmed
         render :new
       end
     end
@@ -20,7 +23,7 @@ module Registration
       user = SubmitUser.confirm_by_token(params[:confirmation_token])
       if user.errors.empty?
         sign_in(user)
-        redirect_to new_registration_security_details_path
+        redirect_to registration_new_security_details_path
       end
     end
 
