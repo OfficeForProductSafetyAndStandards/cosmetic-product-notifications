@@ -64,8 +64,8 @@ Rails.application.routes.draw do
     get 'create-an-account', to: 'registration/new_accounts#new', as: :registration_new_submit_user
     post 'create-an-account', to: 'registration/new_accounts#create', as: :registration_create_submit_user
     get 'confirm-new-account', to: 'registration/new_accounts#confirm', as: :registration_confirm_submit_user
-    get 'account-security', to: 'registration/security_details#new', as: :registration_new_security_details
-    post 'account-security', to: 'registration/security_details#create', as: :registration_create_security_details
+    get 'account-security', to: 'registration/account_security#new', as: :registration_new_account_security
+    post 'account-security', to: 'registration/account_security#create', as: :registration_create_account_security
 
     root "landing_page#index"
 

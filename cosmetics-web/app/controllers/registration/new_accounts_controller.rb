@@ -23,7 +23,7 @@ module Registration
       user = SubmitUser.confirm_by_token(params[:confirmation_token])
       if user.errors.empty?
         sign_in(user)
-        redirect_to registration_new_security_details_path
+        redirect_to registration_new_account_security_path
       end
     end
 

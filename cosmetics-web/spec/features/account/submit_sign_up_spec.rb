@@ -49,7 +49,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
   end
 
   context "when account already exists" do
-    let(:user) { create(:submit_user, :unconfirmed) }
+    let(:user) { create(:submit_user) }
 
     scenario "sending existing account information to user" do
       visit '/'
