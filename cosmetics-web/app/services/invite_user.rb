@@ -21,7 +21,7 @@ private
       email: email,
       skip_password_validation: true,
       role: role,
-      invite: true
+      invite: true,
     )
     user
   end

@@ -23,7 +23,7 @@ class MyAccountPasswordController < ApplicationController
     end
   end
 
-  private
+private
 
   def current_operation
     SecondaryAuthentication::CHANGE_PASSWORD

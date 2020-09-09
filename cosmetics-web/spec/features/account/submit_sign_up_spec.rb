@@ -6,8 +6,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
   end
 
   scenario "user signs up and verifies its email" do
-    visit '/'
-    click_on 'Create an account'
+    visit "/"
+    click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
     # First attempt with validation errors
     fill_in "Full Name", with: ""
@@ -50,8 +50,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     let(:user) { create(:submit_user) }
 
     scenario "sending existing account information to user" do
-      visit '/'
-      click_on 'Create an account'
+      visit "/"
+      click_on "Create an account"
       expect(page).to have_current_path("/create-an-account")
 
       fill_in "Full Name", with: "Joe Doe"
@@ -72,7 +72,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
 
       visit forgotten_password_url
       expect(page).to have_current_path("/password/new")
-
     end
 
     context "when user is not confirmed" do
@@ -81,8 +80,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
       scenario "sending account reconfirmation to unconfirmed email" do
         # Guard for confirmation email
         expect(delivered_emails.count).to eq(1)
-        visit '/'
-        click_on 'Create an account'
+        visit "/"
+        click_on "Create an account"
         expect(page).to have_current_path("/create-an-account")
 
         fill_in "Full Name", with: "Joe Doe"
@@ -113,8 +112,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
   end
 
   scenario "user signs up and creates new account while signed in as someone else" do
-    visit '/'
-    click_on 'Create an account'
+    visit "/"
+    click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
 
     fill_in "Full Name", with: "Joe Doe"
@@ -145,11 +144,11 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     complete_secondary_authentication_with(otp_code("signing_up@example.com"))
 
     expect_to_be_on_declaration_page
- end
+  end
 
   scenario "user signs up and skips creating an account while signed in as someone else" do
-    visit '/'
-    click_on 'Create an account'
+    visit "/"
+    click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
 
     fill_in "Full Name", with: "Joe Doe"
@@ -175,7 +174,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
     click_link "Your cosmetic products"
     expect(page).to have_css("h1", text: "Your cosmetic products")
- end
+  end
 
   def expect_to_be_on_check_your_email_page
     expect(page).to have_css("h1", text: "Check your email")

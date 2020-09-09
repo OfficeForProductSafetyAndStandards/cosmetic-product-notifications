@@ -81,7 +81,6 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: user.email)
   end
 
-
   def send_account_confirmation_email(user)
     set_host(user)
     set_template(TEMPLATES[:verify_new_account])
@@ -122,6 +121,6 @@ private
   end
 
   def submit_host
-    ENV['SUBMIT_HOST']
+    ENV["SUBMIT_HOST"]
   end
 end

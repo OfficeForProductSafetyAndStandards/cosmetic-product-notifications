@@ -10,7 +10,7 @@ module Registration
 
     def create
       if new_account_form.save
-        render 'users/check_your_email/show'
+        render "users/check_your_email/show"
       else
         # user might be already in database:
           # confirmed
@@ -20,7 +20,7 @@ module Registration
     end
 
     def confirm
-      return render 'signed_as_another_user' if current_submit_user
+      return render "signed_as_another_user" if current_submit_user
 
       @new_user = SubmitUser.confirm_by_token(params[:confirmation_token])
       if @new_user.errors.empty?

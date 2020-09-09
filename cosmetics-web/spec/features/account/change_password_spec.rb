@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   shared_examples "change password" do
@@ -23,7 +23,6 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
     end
 
     context "when the password change is fine" do
-
       it "changes password properly" do
         fill_in "Old password", with: user.password
         fill_in "New password", with: "user.password"

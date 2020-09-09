@@ -25,7 +25,7 @@ module Registration
       public_send(field.to_sym)
     end
 
-    private
+  private
 
     def user_exists?
       if user = SubmitUser.find_by(email: email)

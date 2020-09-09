@@ -1,12 +1,11 @@
 require "rails_helper"
 
 RSpec.describe Registration::AccountSecurityForm do
-
   let(:password) { "foobarbaz" }
   let(:mobile_number) { "07000 000 000" }
 
   let(:form) do
-    Registration::AccountSecurityForm.new(password: password, mobile_number: mobile_number)
+    described_class.new(password: password, mobile_number: mobile_number)
   end
 
   context "when the password is too short" do

@@ -22,7 +22,7 @@ class MyAccountMobileNumberController < ApplicationController
     end
   end
 
-  private
+private
 
   def user_class
     if params.key?("search_user")

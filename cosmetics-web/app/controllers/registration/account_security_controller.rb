@@ -15,7 +15,7 @@ module Registration
       end
     end
 
-    private
+  private
 
     def account_security_form
       @account_security_form ||= AccountSecurityForm.new(account_security_form_params.merge(user: current_user))
@@ -26,4 +26,3 @@ module Registration
     end
   end
 end
-

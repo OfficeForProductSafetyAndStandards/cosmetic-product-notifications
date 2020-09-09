@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   before do
@@ -28,7 +28,6 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
   end
 
   context "when the password change is fine" do
-
     it "changes password properly" do
       fill_in "Password", with: user.password
       fill_in "New mobile number", with: "07234234234"

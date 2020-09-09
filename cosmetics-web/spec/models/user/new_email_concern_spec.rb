@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
     let(:user) { create(:submit_user, email: old_email) }
     let(:expected_token) { "foobar" }
     let(:new_email) { "new@example.com" }
-    let(:new_email_expiration_expiration) { Time.now + User::NEW_EMAIL_TOKEN_VALID_FOR }
+    let(:new_email_expiration_expiration) { Time.zone.now + User::NEW_EMAIL_TOKEN_VALID_FOR }
 
     before do
       freeze_time
@@ -65,7 +65,7 @@ RSpec.describe User, type: :model do
     describe "#new_email!(token)" do
       context "when token is valid" do
         before do
-          User.new_email!(expected_token)
+          described_class.new_email!(expected_token)
         end
 
         it "changes email successfully" do
@@ -81,27 +81,27 @@ RSpec.describe User, type: :model do
 
       context "when token is invalid" do
         it "does not change email" do
-          User.new_email!("token") rescue nil
+          described_class.new_email!("token") rescue nil
           expect(user.reload.email).to eq(old_email)
         end
 
         it "raises ArgumentError" do
-          expect { User.new_email!("token") }.to raise_error(ArgumentError)
+          expect { described_class.new_email!("token") }.to raise_error(ArgumentError)
         end
       end
 
       context "when token is expired" do
         before do
-         travel_to(Time.now + User::NEW_EMAIL_TOKEN_VALID_FOR + 1)
+          travel_to(Time.zone.now + User::NEW_EMAIL_TOKEN_VALID_FOR + 1)
         end
 
         it "does not change email" do
-          User.new_email!(expected_token) rescue nil
+          described_class.new_email!(expected_token) rescue nil
           expect(user.reload.email).to eq(old_email)
         end
 
         it "raises ArgumentError" do
-          expect { User.new_email!(expected_token) }.to raise_error(ArgumentError)
+          expect { described_class.new_email!(expected_token) }.to raise_error(ArgumentError)
         end
       end
     end

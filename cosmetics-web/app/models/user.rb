@@ -6,7 +6,7 @@ class User < ApplicationRecord
   attribute :old_password, :string
   attribute :invite, :boolean
 
-  validates :new_email, :email => {:allow_nil => true}
+  validates :new_email, email: { allow_nil: true }
   validates :name, presence: true, unless: -> { invite }
 
   def send_new_email_confirmation_email

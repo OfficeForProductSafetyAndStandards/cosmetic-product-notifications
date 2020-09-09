@@ -29,7 +29,7 @@ class MyAccountEmailController < ApplicationController
     redirect_to my_account_path, notice: "Email can not be changed, confirmation token is incorrect. Please try again."
   end
 
-  private
+private
 
   def current_operation
     SecondaryAuthentication::CHANGE_EMAIL_ADDRESS
