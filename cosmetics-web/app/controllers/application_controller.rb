@@ -18,10 +18,6 @@ class ApplicationController < ActionController::Base
   before_action :has_accepted_declaration
   before_action :create_or_join_responsible_person, if: :submit_domain?
 
-  after_action do
-    puts request.url
-  end
-
   add_flash_types :confirmation
 
   helper_method :current_user

@@ -14,11 +14,6 @@ module Users
       end
     end
 
-    def sign_out_before_confirming_email
-      sign_out
-      redirect_to submit_user_confirmation_path(confirmation_token: params[:confirmation_token])
-    end
-
   private
 
     def wrong_user?

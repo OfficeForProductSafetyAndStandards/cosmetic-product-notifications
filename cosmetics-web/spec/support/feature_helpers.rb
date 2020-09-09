@@ -16,10 +16,13 @@ def fill_in_credentials(password_override: nil)
   click_on "Continue"
 end
 
-def expect_user_to_have_received_sms_code(code)
+def expect_user_to_have_received_sms_code(code, current_user = nil)
+  if current_user.nil?
+    current_user = user
+  end
   expect(notify_stub).to have_received(:send_sms).with(
-    hash_including(phone_number: user.mobile_number, personalisation: { code: code }),
-  )
+    hash_including(phone_number: current_user.mobile_number, personalisation: { code: code }),
+  ).at_least(:once)
 end
 
 def complete_secondary_authentication_with(security_code)
@@ -77,8 +80,9 @@ def expect_incorrect_email_or_password
   expect(page).not_to have_link("Cases")
 end
 
-def otp_code
-  user.reload.direct_otp
+def otp_code(email = nil)
+  user_with_code = User.find_by(email: email) || user
+  user_with_code.reload.direct_otp
 end
 
 def expect_to_be_on_my_account_page

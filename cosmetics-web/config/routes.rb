@@ -58,7 +58,6 @@ Rails.application.routes.draw do
     devise_scope :submit_user do
       resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
       post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
-      post "sign-out-before-confirming-email", to: "users/confirmations#sign_out_before_confirming_email"
     end
 
     get 'create-an-account', to: 'registration/new_accounts#new', as: :registration_new_submit_user
@@ -66,6 +65,7 @@ Rails.application.routes.draw do
     get 'confirm-new-account', to: 'registration/new_accounts#confirm', as: :registration_confirm_submit_user
     get 'account-security', to: 'registration/account_security#new', as: :registration_new_account_security
     post 'account-security', to: 'registration/account_security#create', as: :registration_create_account_security
+    post "sign-out-before-confirming-email", to: "registration/new_accounts#sign_out_before_confirming_email"
 
     root "landing_page#index"
 

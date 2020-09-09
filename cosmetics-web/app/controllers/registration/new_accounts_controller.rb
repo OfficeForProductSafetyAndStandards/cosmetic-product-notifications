@@ -20,11 +20,18 @@ module Registration
     end
 
     def confirm
-      user = SubmitUser.confirm_by_token(params[:confirmation_token])
-      if user.errors.empty?
-        sign_in(user)
+      return render 'signed_as_another_user' if current_submit_user
+
+      @new_user = SubmitUser.confirm_by_token(params[:confirmation_token])
+      if @new_user.errors.empty?
+        sign_in(@new_user)
         redirect_to registration_new_account_security_path
       end
+    end
+
+    def sign_out_before_confirming_email
+      sign_out
+      redirect_to registration_confirm_submit_user_path(confirmation_token: params[:confirmation_token])
     end
 
   protected

@@ -26,8 +26,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
-    # Submit after fixing te validation issue
-
     expect_to_be_on_check_your_email_page
 
     email = delivered_emails.last
@@ -114,48 +112,77 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     end
   end
 
- #  scenario "user signs up and verifies email while signed up as another user" do
- #    visit "/sign-up"
+  scenario "user signs up and creates new account while signed in as someone else" do
+    visit '/'
+    click_on 'Create an account'
+    expect(page).to have_current_path("/create-an-account")
 
- #    fill_in "Name", with: "Test user"
- #    fill_in "Mobile Number", with: "07000000000"
- #    fill_in "Email address", with: "signing_up@example.com"
- #    fill_in "Password", with: "userpassword", match: :prefer_exact
- #    fill_in "Password confirmation", with: "userpassword", match: :prefer_exact
- #    click_button "Sign up"
+    fill_in "Full Name", with: "Joe Doe"
+    fill_in "Email address", with: "signing_up@example.com"
+    click_button "Continue"
 
- #    expect(page).not_to have_css("h2#error-summary-title", text: "There is a problem")
- #    expect_to_be_on_check_your_email_page
+    expect_to_be_on_check_your_email_page
 
- #    email = delivered_emails.last
- #    expect(email.recipient).to eq "signing_up@example.com"
- #    expect(email.personalization[:name]).to eq("Test user")
+    email = delivered_emails.last
+    expect(email.recipient).to eq "signing_up@example.com"
+    expect(email.personalization[:name]).to eq("Joe Doe")
 
- #    verify_url = email.personalization[:verify_email_url]
- #    expect(verify_url).to include("/confirmation?confirmation_token=")
+    verify_url = email.personalization[:verify_email_url]
 
- #    # Visit the confirmation link while signed in as a different user
- #    second_user = create(:submit_user, :with_responsible_person)
- #    sign_in(second_user)
- #    visit verify_url
+    second_user = create(:submit_user, :with_responsible_person)
+    sign_in(second_user)
 
- #    # Gets a page asking to choose between continuing as current user or continue  with the confirmation for the
- #    # new user
- #    expect(page).to have_css("h1", text: "You are already signed in")
- #    click_button "Confirm email for Test user"
+    # Visit the confirmation link while signed in as a different user
+    visit verify_url
 
- #    # Gets redirected to the sign-in page after verification
- #    expect(page).to have_current_path("/sign-in")
- #  end
+    click_on "Create new account"
+
+    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
+    click_button "Continue"
+
+    expect_to_be_on_secondary_authentication_page
+    complete_secondary_authentication_with(otp_code("signing_up@example.com"))
+
+    expect_to_be_on_declaration_page
+ end
+
+  scenario "user signs up and skips creating an account while signed in as someone else" do
+    visit '/'
+    click_on 'Create an account'
+    expect(page).to have_current_path("/create-an-account")
+
+    fill_in "Full Name", with: "Joe Doe"
+    fill_in "Email address", with: "signing_up@example.com"
+    click_button "Continue"
+
+    expect_to_be_on_check_your_email_page
+
+    email = delivered_emails.last
+    expect(email.recipient).to eq "signing_up@example.com"
+    expect(email.personalization[:name]).to eq("Joe Doe")
+
+    verify_url = email.personalization[:verify_email_url]
+
+    second_user = create(:submit_user, :with_responsible_person)
+    sign_in(second_user)
+
+    # Visit the confirmation link while signed in as a different user
+    visit verify_url
+
+    expect(page).to have_css("h1", text: "You are already signed in")
+    click_link "Continue as #{second_user.name}"
+    expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
+    click_link "Your cosmetic products"
+    expect(page).to have_css("h1", text: "Your cosmetic products")
+ end
 
   def expect_to_be_on_check_your_email_page
     expect(page).to have_css("h1", text: "Check your email")
     expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to your email address.")
   end
 
-  def user
-    raise if SubmitUser.count != 1
-
-    SubmitUser.first
+  def user(email = nil)
+    SubmitUser.find_by(email: email) || SubmitUser.first
   end
 end
