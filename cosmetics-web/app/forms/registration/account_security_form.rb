@@ -8,7 +8,8 @@ module Registration
     attribute :user
 
     validates :password, length: { minimum: 8 }
-    validates :mobile_number, presence: true, format: { with: /\A[0-9 -]+\z/ }, length: { minimum: 11 }
+    validates :mobile_number, format: { with: /\A[0-9 -]+\z/ }, if: -> { mobile_number.length > 10 }
+    validates :mobile_number, length: { minimum: 11 }
 
     private_class_method def self.error_message(attr, key)
       I18n.t(key, scope: "account_security.#{attr}")
