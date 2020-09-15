@@ -18,6 +18,21 @@ class SubmitUser < User
     user.persisted? ? user : nil
   end
 
+  def self.find_by_confirmation_token!(confirmation_token)
+    new_user = SubmitUser.find_by!(confirmation_token: confirmation_token)
+
+    if new_user.send(:confirmation_period_expired?)
+      new_user.resend_confirmation_instructions
+      raise ActiveRecord::RecordInvalid
+    end
+    new_user
+  end
+
+  def active_for_authentication?
+    return true if !account_security_completed && self.persisted?
+    super
+  end
+
   def responsible_persons
     # ActiveHash does not support has_many through: associations
     # Therefore adopt the workaround suggested here: https://github.com/zilkey/active_hash/issues/25

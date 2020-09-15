@@ -1,6 +1,7 @@
 module Registration
   class AccountSecurityController < ApplicationController
     skip_before_action :require_secondary_authentication
+    skip_before_action :try_to_finish_account_setup
 
     def new
       @account_security_form = AccountSecurityForm.new(user: current_user)

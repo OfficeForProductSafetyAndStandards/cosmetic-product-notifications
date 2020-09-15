@@ -16,7 +16,13 @@ module Registration
     end
 
     def update!
-      valid? && user.update!(mobile_number: mobile_number, password: password)
+      valid? && user.update!(mobile_number: mobile_number,
+                             password: password,
+                             account_security_completed: true,
+                             confirmation_token: nil,
+                             confirmation_sent_at: nil,
+                             confirmed_at: Time.now.utc
+                            )
     end
 
     def [](field)

@@ -9,6 +9,7 @@ FactoryBot.define do
     direct_otp_sent_at { Time.current }
     direct_otp { "12345" }
     mobile_number_verified { true }
+    account_security_completed { true }
 
     factory :submit_user, class: "SubmitUser" do
       trait :with_responsible_person do
@@ -26,6 +27,7 @@ FactoryBot.define do
         direct_otp { nil }
         confirmation_token { Devise.friendly_token }
         to_create { |user| user.save(validate: false) }
+        account_security_completed { false }
       end
     end
 

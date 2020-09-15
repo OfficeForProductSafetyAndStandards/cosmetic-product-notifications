@@ -6,6 +6,7 @@ module SecondaryAuthentications
                        :authorize_user!,
                        :has_accepted_declaration,
                        :set_cache_headers
+                       :try_to_finish_account_setup
 
     def new
       @user = find_user

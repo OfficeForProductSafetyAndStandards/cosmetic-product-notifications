@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
 
   before_action :has_accepted_declaration
   before_action :create_or_join_responsible_person, if: :submit_domain?
+  before_action :try_to_finish_account_setup
 
   add_flash_types :confirmation
 
@@ -75,6 +76,15 @@ private
     redirect_path = request.original_fullpath unless request.original_fullpath == root_path
 
     redirect_to declaration_path(redirect_path: redirect_path) unless current_user.has_accepted_declaration?
+  end
+
+  def try_to_finish_account_setup
+    return unless user_signed_in?
+    return unless submit_domain?
+
+    unless current_user.account_security_completed?
+      redirect_to registration_new_account_security_path
+    end
   end
 
   def fully_signed_in_submit_user?

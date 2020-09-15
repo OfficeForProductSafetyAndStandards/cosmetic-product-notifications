@@ -22,16 +22,15 @@ module Registration
     def confirm
       return render "signed_as_another_user" if current_submit_user
 
-      @new_user = SubmitUser.confirm_by_token(params[:confirmation_token])
-      if @new_user && @new_user.errors.empty?
-        sign_in(@new_user)
-        redirect_to registration_new_account_security_path
-      elsif @new_user && @new_user.errors.present?
-        @new_user.resend_confirmation_instructions
-        render 'confirmation_token_is_invalid'
-      else
-        render 'confirmation_token_is_invalid'
-      end
+      #@new_user = SubmitUser.confirm_by_token(params[:confirmation_token])
+      @new_user = SubmitUser.find_by_confirmation_token!(params[:confirmation_token])
+      sign_in(@new_user)
+      redirect_to registration_new_account_security_path
+
+    rescue ActiveRecord::RecordInvalid
+      render 'confirmation_token_is_invalid'
+    rescue ActiveRecord::RecordNotFound
+      render 'confirmation_token_is_invalid'
     end
 
     def sign_out_before_confirming_email
