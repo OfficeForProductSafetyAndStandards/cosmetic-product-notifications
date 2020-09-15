@@ -2,6 +2,7 @@ class User < ApplicationRecord
   NEW_EMAIL_TOKEN_VALID_FOR = 600 # 10 minutes
 
   include NewEmailConcern
+  validates :email, presence: true
 
   attribute :old_password, :string
   attribute :invite, :boolean

@@ -81,6 +81,9 @@ def expect_incorrect_email_or_password
 end
 
 def otp_code(email = nil)
+#  puts user
+
+#  p SubmitUser.pluck(:direct_otp)
   user_with_code = User.find_by(email: email) || user
   user_with_code.reload.direct_otp
 end

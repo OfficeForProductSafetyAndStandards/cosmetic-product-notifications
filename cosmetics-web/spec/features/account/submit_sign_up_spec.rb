@@ -46,6 +46,49 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     expect_to_be_on_declaration_page
   end
 
+  scenario "user signs up and verifies its email with, confirmation expired during the process" do
+    visit "/"
+    click_on "Create an account"
+    expect(page).to have_current_path("/create-an-account")
+    # First attempt with validation errors
+
+    fill_in "Full Name", with: "Joe Doe"
+    fill_in "Email address", with: "signing_up@example.com"
+    click_button "Continue"
+
+    expect_to_be_on_check_your_email_page
+
+    travel_to(3.days.from_now)
+    email = delivered_emails.last
+    expect(email.recipient).to eq "signing_up@example.com"
+    expect(email.personalization[:name]).to eq("Joe Doe")
+
+    verify_url = email.personalization[:verify_email_url]
+    visit verify_url
+
+    expect(page).to have_css("h1", text: "Confirmation token is expired or invalid")
+
+    email = delivered_emails.last
+    expect(email.recipient).to eq "signing_up@example.com"
+    expect(email.personalization[:name]).to eq("Joe Doe")
+
+    verify_url = email.personalization[:verify_email_url]
+
+    visit verify_url[0..-2]
+    expect(page).to have_css("h1", text: "Confirmation token is expired or invalid")
+
+    visit verify_url
+
+    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
+    click_button "Continue"
+
+    expect_to_be_on_secondary_authentication_page
+    complete_secondary_authentication_with(otp_code)
+
+    expect_to_be_on_declaration_page
+  end
+
   context "when account already exists" do
     let(:user) { create(:submit_user) }
 

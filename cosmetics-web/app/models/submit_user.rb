@@ -13,6 +13,11 @@ class SubmitUser < User
   has_one :user_attributes, dependent: :destroy
   validates :mobile_number, presence: true
 
+  def self.confirm_by_token(token)
+    user = super(token)
+    user.persisted? ? user : nil
+  end
+
   def responsible_persons
     # ActiveHash does not support has_many through: associations
     # Therefore adopt the workaround suggested here: https://github.com/zilkey/active_hash/issues/25
@@ -32,6 +37,10 @@ class SubmitUser < User
   end
 
   def send_confirmation_instructions
+    unless @raw_confirmation_token
+      generate_confirmation_token!
+    end
+
     NotifyMailer.send_account_confirmation_email(self).deliver_later
   end
 
@@ -48,6 +57,9 @@ class SubmitUser < User
 
   def mobile_number_change_allowed?
     !mobile_number_verified?
+  end
+
+  def regenerate_confirmation_token_if_expired
   end
 
 private

@@ -23,9 +23,14 @@ module Registration
       return render "signed_as_another_user" if current_submit_user
 
       @new_user = SubmitUser.confirm_by_token(params[:confirmation_token])
-      if @new_user.errors.empty?
+      if @new_user && @new_user.errors.empty?
         sign_in(@new_user)
         redirect_to registration_new_account_security_path
+      elsif @new_user && @new_user.errors.present?
+        @new_user.resend_confirmation_instructions
+        render 'confirmation_token_is_invalid'
+      else
+        render 'confirmation_token_is_invalid'
       end
     end
 
