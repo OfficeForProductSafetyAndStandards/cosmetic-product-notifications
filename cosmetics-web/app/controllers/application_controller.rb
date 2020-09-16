@@ -33,6 +33,11 @@ class ApplicationController < ActionController::Base
     submit_domain? ? :submit_user : :search_user
   end
 
+  # Used by Devise
+  def self.default_url_options
+    Rails.configuration.action_controller.default_url_options
+  end
+
 protected
 
   def configure_permitted_parameters
@@ -59,8 +64,13 @@ private
     params.dig(user_param_key, param)
   end
 
-  def after_sign_in_path_for(_resource)
-    submit_domain? ? dashboard_path : poison_centre_notifications_path
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) ||
+      if submit_domain?
+        dashboard_path
+      else
+        poison_centre_notifications_path
+      end
   end
 
   def authorize_user!
