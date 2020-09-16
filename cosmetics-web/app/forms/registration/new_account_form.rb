@@ -2,7 +2,6 @@ module Registration
   class NewAccountForm
     include ActiveModel::Model
     include ActiveModel::Attributes
-    include EmailFormValidation
 
     attribute :full_name
 
@@ -11,6 +10,7 @@ module Registration
     end
 
     validates_presence_of :full_name, message: error_message(:full_name, :blank)
+    include EmailFormValidation
 
     def save
       return false unless self.valid?

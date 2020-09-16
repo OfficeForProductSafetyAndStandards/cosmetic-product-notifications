@@ -7,9 +7,10 @@ module Registration
     attribute :password
     attribute :user
 
-    validates :password, length: { minimum: 8 }
-    validates :mobile_number, format: { with: /\A[0-9 -]+\z/ }, if: -> { mobile_number.length > 10 }
-    validates :mobile_number, length: { minimum: 11 }
+    validates :mobile_number, presence: true
+    validates :mobile_number, phone:{ message: I18n.t(:invalid, scope: %i[activerecord errors models user attributes mobile_number]) }, if: -> { mobile_number.present? }
+    validates :password, length: { minimum: 8 }, if: -> { password.present? }
+    validates :password, presence: true
 
     private_class_method def self.error_message(attr, key)
       I18n.t(key, scope: "account_security.#{attr}")

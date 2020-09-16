@@ -116,6 +116,20 @@ en:
               blank: "Enter a password"
             password_confirmation:
               confirmation: "Password and confirmation does not match"
+        user:
+          attributes:
+            mobile_number:
+              invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+  activemodel:
+    errors:
+      models:
+        registration/account_security_form:
+          attributes:
+            mobile_number:
+              invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+              blank: "Please enter mobile number"
+            password:
+              blank: "Please enter password"
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"
@@ -195,3 +209,7 @@ en:
   new_account:
     full_name:
       blank: "Enter your full name"
+  account_security_form:
+    mobile_number:
+      invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+      blank: "Please enter mobile number"
