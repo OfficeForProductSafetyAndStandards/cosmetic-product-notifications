@@ -14,6 +14,7 @@ end
 Rails.application.routes.draw do
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 
+  get '/sign_up', to: redirect('/')
   resource :password_changed, controller: "users/password_changed", only: :show, path: "password-changed"
 
   get "two-factor", to: "secondary_authentications#new", as: :new_secondary_authentication
@@ -30,7 +31,7 @@ Rails.application.routes.draw do
     devise_for :search_users,
                path: "",
                path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" },
-               controllers: { confirmations: "users/confirmations", passwords: "users/passwords", registrations: "users/registrations", sessions: "users/sessions", unlocks: "users/unlocks" }
+               controllers: { passwords: "users/passwords", registrations: "users/registrations", sessions: "users/sessions", unlocks: "users/unlocks" }
     devise_scope :search_user do
       resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
       post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
@@ -54,7 +55,8 @@ Rails.application.routes.draw do
     devise_for :submit_users,
                path: "",
                path_names: { sign_in: "sign-in", sign_out: "sign-out" },
-               controllers: { confirmations: "users/confirmations", passwords: "users/passwords", sessions: "users/sessions", unlocks: "users/unlocks" }
+               controllers: { confirmations: "users/confirmations", passwords: "users/passwords", sessions: "users/sessions", unlocks: "users/unlocks" },
+               skip: :confirmation
     devise_scope :submit_user do
       resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
       post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"

@@ -36,21 +36,21 @@ RSpec.describe Registration::AccountSecurityForm do
     context "when the mobile number is empty" do
       include_examples "mobile number" do
         let(:mobile_number) { "" }
-        let(:message) { "Mobile number can not be blank" }
+        let(:message) { "Please enter mobile number" }
       end
     end
 
     context "when mobile number has letters" do
       include_examples "mobile number" do
         let(:mobile_number) { "070000assd" }
-        let(:message) { "Mobile number is invalid" }
+        let(:message) { "Enter your mobile number in the correct format, like 07700 900 982" }
       end
     end
 
     context "when mobile number has not enough characters" do
       include_examples "mobile number" do
         let(:mobile_number) { "0700710120" }
-        let(:message) { "Mobile number is too short (minimum is 11 characters)" }
+        let(:message) { "Enter your mobile number in the correct format, like 07700 900 982" }
       end
     end
   end
