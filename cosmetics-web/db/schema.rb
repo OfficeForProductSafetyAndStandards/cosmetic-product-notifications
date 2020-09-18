@@ -266,6 +266,8 @@ ActiveRecord::Schema.define(version: 2020_09_15_081651) do
     t.integer "second_factor_attempts_count", default: 0
     t.datetime "second_factor_attempts_locked_at"
     t.string "secondary_authentication_operation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "invitation_token"
     t.datetime "invited_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.enum "role", as: "user_roles"

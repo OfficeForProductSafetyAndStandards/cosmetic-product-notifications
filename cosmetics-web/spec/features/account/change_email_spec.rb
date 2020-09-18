@@ -17,7 +17,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       expect_to_be_on_my_account_page
 
       wait_for = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::CHANGE_EMAIL_ADDRESS]
-      travel_to (wait_for + 1).seconds.from_now
+      travel_to((wait_for + 1).seconds.from_now)
 
       click_on "Change email address"
       expect(page).to have_css("h1", text: "Check your phone")
@@ -95,7 +95,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
           it "displays proper message" do
             email = delivered_emails.last
             confirm_url = email.personalization[:verify_email_url]
-            travel_to (User::NEW_EMAIL_TOKEN_VALID_FOR + 1).seconds.from_now
+            travel_to((User::NEW_EMAIL_TOKEN_VALID_FOR + 1).seconds.from_now)
 
             visit confirm_url
 

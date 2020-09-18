@@ -23,6 +23,7 @@ class MyAccountMobileNumberController < ApplicationController
   end
 
 private
+
   def current_operation
     SecondaryAuthentication::CHANGE_MOBILE_NUMBER
   end

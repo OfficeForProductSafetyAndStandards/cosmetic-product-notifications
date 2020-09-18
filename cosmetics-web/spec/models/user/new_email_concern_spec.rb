@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
 
     before do
       freeze_time
-      expect(SecureRandom).to receive(:uuid).and_return(expected_token)
+      allow(SecureRandom).to receive(:uuid).and_return(expected_token)
 
       user.new_email = new_email
       user.save
@@ -72,11 +72,13 @@ RSpec.describe User, type: :model do
           expect(user.reload.email).to eq(new_email)
         end
 
+        # rubocop:disable RSpec/MultipleExpectations
         it "clears all new_email fields" do
           expect(user.reload.new_email).to eq(nil)
           expect(user.reload.new_email_confirmation_token).to eq(nil)
           expect(user.reload.new_email_confirmation_token_expires_at).to eq(nil)
         end
+        # rubocop:enable RSpec/MultipleExpectations
       end
 
       context "when token is invalid" do

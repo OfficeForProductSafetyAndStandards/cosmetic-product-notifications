@@ -21,7 +21,7 @@ RSpec.describe Registration::AccountSecurityForm do
     end
   end
 
-  context "mobile number vaildations" do
+  describe "mobile number vaildations" do
     shared_examples "mobile number" do
       it "is invalid" do
         expect(form).not_to be_valid

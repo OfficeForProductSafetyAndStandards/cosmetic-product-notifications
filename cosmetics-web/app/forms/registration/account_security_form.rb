@@ -8,7 +8,7 @@ module Registration
     attribute :user
 
     validates :mobile_number, presence: true
-    validates :mobile_number, phone:{ message: I18n.t(:invalid, scope: %i[activerecord errors models user attributes mobile_number]) }, if: -> { mobile_number.present? }
+    validates :mobile_number, phone: { message: I18n.t(:invalid, scope: %i[activerecord errors models user attributes mobile_number]) }, if: -> { mobile_number.present? }
     validates :password, length: { minimum: 8 }, if: -> { password.present? }
     validates :password, presence: true
 
@@ -22,8 +22,7 @@ module Registration
                              account_security_completed: true,
                              confirmation_token: nil,
                              confirmation_sent_at: nil,
-                             confirmed_at: Time.now.utc
-                            )
+                             confirmed_at: Time.now.utc)
     end
 
     def [](field)

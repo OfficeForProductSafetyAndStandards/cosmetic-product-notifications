@@ -40,6 +40,23 @@ Metrics/BlockLength:
     - 'Gemfile'
     - 'spec/**/*'
 
+RSpec/ExpectInHook:
+  Exclude:
+    - spec/features/account/change_mobile_number_spec.rb
+    - spec/features/account/change_name_spec.rb
+    - spec/features/account/change_password_spec.rb
+    - spec/features/account/change_email_spec.rb
+
+RSpec/LetSetup:
+  Exclude:
+    - spec/features/account/change_mobile_number_spec.rb
+    - spec/features/account/change_name_spec.rb
+    - spec/features/account/change_password_spec.rb
+
+RSpec/ScatteredSetup:
+  Exclude:
+    - spec/features/account/change_mobile_number_spec.rb
+
 # Disable this so that we can use Capybara aliases like
 # 'feature' and 'scenario' for more readable tests
 Capybara/FeatureMethods:

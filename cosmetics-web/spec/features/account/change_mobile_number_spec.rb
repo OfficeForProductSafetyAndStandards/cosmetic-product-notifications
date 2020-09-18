@@ -1,11 +1,13 @@
 require "rails_helper"
 
 RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
+  let(:user) { create(:poison_centre_user, has_accepted_declaration: true) }
+
+  # TODO: submit domain
+
   before do
     configure_requests_for_search_domain
   end
-
-  let(:user) { create(:poison_centre_user, has_accepted_declaration: true) }
 
   before do
     visit "/sign-in"
@@ -19,7 +21,7 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
     expect_to_be_on_my_account_page
 
     wait_for = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::CHANGE_MOBILE_NUMBER]
-    travel_to (wait_for + 1).seconds.from_now
+    travel_to((wait_for + 1).seconds.from_now)
 
     click_on "Change mobile number"
     expect(page).to have_css("h1", text: "Check your phone")

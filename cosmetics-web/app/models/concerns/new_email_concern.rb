@@ -2,11 +2,11 @@ module NewEmailConcern
   extend ActiveSupport::Concern
 
   def new_email=(email)
-    return super(nil) if email.nil?
-
-    token = SecureRandom.uuid
-    self.new_email_confirmation_token = token
-    self.new_email_confirmation_token_expires_at = Time.now.utc + User::NEW_EMAIL_TOKEN_VALID_FOR.seconds
+    if email.present?
+      token = SecureRandom.uuid
+      self.new_email_confirmation_token = token
+      self.new_email_confirmation_token_expires_at = Time.now.utc + User::NEW_EMAIL_TOKEN_VALID_FOR.seconds
+    end
     super(email)
   end
 

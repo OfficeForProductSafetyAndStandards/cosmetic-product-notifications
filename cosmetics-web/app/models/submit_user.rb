@@ -7,7 +7,7 @@ class SubmitUser < User
   belongs_to :organisation
 
   has_many :notification_files, dependent: :destroy
-  has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id
+  has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   has_many :responsible_persons, through: :responsible_person_users
 
   has_one :user_attributes, dependent: :destroy
@@ -18,7 +18,7 @@ class SubmitUser < User
     user.persisted? ? user : nil
   end
 
-  def self.find_by_confirmation_token!(confirmation_token)
+  def self.find_user_by_confirmation_token!(confirmation_token)
     new_user = SubmitUser.find_by!(confirmation_token: confirmation_token)
 
     if new_user.send(:confirmation_period_expired?)
@@ -30,6 +30,7 @@ class SubmitUser < User
 
   def active_for_authentication?
     return true if !account_security_completed && self.persisted?
+
     super
   end
 
@@ -74,8 +75,7 @@ class SubmitUser < User
     !mobile_number_verified?
   end
 
-  def regenerate_confirmation_token_if_expired
-  end
+  def regenerate_confirmation_token_if_expired; end
 
 private
 

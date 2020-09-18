@@ -14,7 +14,7 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
       expect_to_be_on_my_account_page
 
       wait_for = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::CHANGE_PASSWORD]
-      travel_to (wait_for + 1).seconds.from_now
+      travel_to((wait_for + 1).seconds.from_now)
 
       click_on "Change password"
       expect(page).to have_css("h1", text: "Check your phone")

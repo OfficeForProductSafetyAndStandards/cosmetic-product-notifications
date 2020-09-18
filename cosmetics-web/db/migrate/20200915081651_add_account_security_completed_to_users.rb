@@ -1,6 +1,9 @@
 class AddAccountSecurityCompletedToUsers < ActiveRecord::Migration[5.2]
   def change
-    add_column :users, :account_security_completed, :boolean
-    change_column_default :users, :account_security_completed, false
+    safety_assured do
+      change_table :users, bulk: true do |t|
+        t.column :account_security_completed, :boolean, default: false
+      end
+    end
   end
 end

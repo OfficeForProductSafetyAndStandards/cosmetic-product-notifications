@@ -28,7 +28,7 @@ module Registration
   private
 
     def user_exists?
-      if user = SubmitUser.find_by(email: email)
+      if (user = SubmitUser.find_by(email: email))
         if user.confirmed?
           NotifyMailer.send_account_already_exists(user).deliver_later
         else

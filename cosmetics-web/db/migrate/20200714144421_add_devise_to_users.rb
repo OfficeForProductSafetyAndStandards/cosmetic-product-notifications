@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AddDeviseToUsers < ActiveRecord::Migration[5.2]
+  # rubocop:disable Metrics/BlockLength
   def self.up
     safety_assured do
       create_table :users, id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -50,7 +51,7 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.2]
 
 
         # Uncomment below if timestamps were not included in your original model.
-        # t.timestamps null: false
+        t.timestamps null: false
       end
 
       add_index :users, :email,                unique: true
@@ -59,6 +60,7 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.2]
       add_index :users, :unlock_token,         unique: true
     end
   end
+  # rubocop:enable Metrics/BlockLength
 
   def self.down
     # By default, we don't want to make any assumption about how to roll back a migration when your
