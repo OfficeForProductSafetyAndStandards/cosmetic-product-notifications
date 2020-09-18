@@ -32,9 +32,6 @@ module Users
     end
 
     def create
-      # user = User.find_by(email: params[:user][:email])
-      # return resend_invitation_link_for(user) if user && !user.has_completed_registration?
-
       super do |resource|
         suppress_email_not_found_error
 
@@ -74,7 +71,6 @@ module Users
     end
 
     def reset_token_invalid?
-      # return render :expired, status: :gone if reset_token_expired?
       params[:reset_password_token].blank? || user_with_reset_token.blank?
     end
 

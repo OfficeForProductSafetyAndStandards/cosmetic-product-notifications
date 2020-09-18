@@ -23,21 +23,6 @@ class MyAccountMobileNumberController < ApplicationController
   end
 
 private
-
-  def user_class
-    if params.key?("search_user")
-      return SearchUser
-    elsif params.key?("submit_user")
-      return SubmitUser
-    end
-
-    raise ArgumentError
-  end
-
-  def user_param_key
-    user_class.name.underscore.to_sym
-  end
-
   def current_operation
     SecondaryAuthentication::CHANGE_MOBILE_NUMBER
   end

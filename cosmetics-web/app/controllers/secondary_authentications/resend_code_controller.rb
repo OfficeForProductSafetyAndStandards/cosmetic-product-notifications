@@ -40,10 +40,6 @@ module SecondaryAuthentications
       @user&.secondary_authentication_operation.presence || SecondaryAuthentication::DEFAULT_OPERATION
     end
 
-    def hide_nav?
-      true
-    end
-
     def resend_code_form
       @resend_code_form ||= ResendSecondaryAuthenticationCodeForm.new(mobile_number: mobile_number_param, user: @user)
     end
@@ -58,20 +54,6 @@ module SecondaryAuthentications
 
     def mobile_number_param
       params.dig(user_param_key, :mobile_number)
-    end
-
-    def user_class
-      if params.key?("search_user")
-        return SearchUser
-      elsif params.key?("submit_user")
-        return SubmitUser
-      end
-
-      raise ArgumentError
-    end
-
-    def user_param_key
-      user_class.name.underscore.to_sym
     end
   end
 end

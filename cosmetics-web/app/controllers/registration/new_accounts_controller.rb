@@ -12,9 +12,6 @@ module Registration
       if new_account_form.save
         render "users/check_your_email/show"
       else
-        # user might be already in database:
-          # confirmed
-          # unconfirmed
         render :new
       end
     end
@@ -22,11 +19,9 @@ module Registration
     def confirm
       return render "signed_as_another_user" if current_submit_user
 
-      #@new_user = SubmitUser.confirm_by_token(params[:confirmation_token])
       @new_user = SubmitUser.find_by_confirmation_token!(params[:confirmation_token])
       sign_in(@new_user)
       redirect_to registration_new_account_security_path
-
     rescue ActiveRecord::RecordInvalid
       render 'confirmation_token_is_invalid'
     rescue ActiveRecord::RecordNotFound
