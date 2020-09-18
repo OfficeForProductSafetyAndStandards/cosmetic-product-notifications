@@ -9,7 +9,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
       account_locked: "26d6fb70-1c5d-49ff-a3ee-dc30e94a305e", # Unlock account / reset password after too many incorrect password attempts
       verify_new_account: "616e1eb9-4071-4343-8f18-3d2fcd7b9b47", # Verify email address
       verify_new_email: "68edf46c-627d-4609-ae2e-ba9d4b32e3d6", # Confirm new email address
-
+      update_email_notification: "a1f0632a-a687-4911-8d60-526bdd8933a0", # Email address updated on Submit Cosmetic Product Notifications
     }.freeze
 
   def send_account_already_exists(user)
@@ -106,6 +106,21 @@ class NotifyMailer < GovukNotifyRails::Mailer
     )
 
     mail(to: user.new_email)
+    Sidekiq.logger.info "Confirmation email send"
+  end
+
+  def update_email_address_notification_email(user, old_email)
+    set_host(user)
+    set_template(TEMPLATES[:update_email_notification])
+    set_reference("Email address updated on Submit Cosmetic Product Notifications")
+
+    set_personalisation(
+      name: user.name,
+      old_email_address: old_email,
+      new_email_address: user.email
+    )
+
+    mail(to: old_email)
     Sidekiq.logger.info "Confirmation email send"
   end
 

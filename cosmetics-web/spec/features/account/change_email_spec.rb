@@ -2,7 +2,8 @@ require "rails_helper"
 
 RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   describe "submit domain" do
-    let(:user) { create(:submit_user, :with_responsible_person, has_accepted_declaration: true) }
+    let(:old_email) { "old@example.org" }
+    let(:user) { create(:submit_user, :with_responsible_person, has_accepted_declaration: true, email: old_email) }
 
     before do
       configure_requests_for_submit_domain
@@ -33,7 +34,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
 
         expect_to_be_on_my_account_page
         expect(page).to have_text(/Confirmation email sent. Please follow instructions from email/)
-        email = delivered_emails.last
+        email = delivered_emails.first
         expect(email.recipient).to eq "new@example.org"
 
         confirm_url = email.personalization[:verify_email_url]
@@ -42,6 +43,12 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
         visit confirm_url
 
         expect_to_be_on_my_account_page
+
+        email = delivered_emails.last
+        expect(email.recipient).to eq old_email
+        expect(email.personalization[:old_email_address]).to eq (old_email)
+        expect(email.personalization[:new_email_address]).to eq ("new@example.org")
+
         expect(page).to have_text(/Email changed successfully/)
         expect(user.reload.email).to eq("new@example.org")
       end
