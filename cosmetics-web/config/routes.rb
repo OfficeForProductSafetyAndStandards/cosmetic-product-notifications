@@ -56,7 +56,7 @@ Rails.application.routes.draw do
                path: "",
                path_names: { sign_in: "sign-in", sign_out: "sign-out" },
                controllers: { confirmations: "users/confirmations", passwords: "users/passwords", sessions: "users/sessions", unlocks: "users/unlocks" },
-               skip: :confirmation
+               skip: [:confirmation, :registration]
     devise_scope :submit_user do
       resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
       post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
