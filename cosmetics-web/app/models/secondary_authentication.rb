@@ -106,11 +106,12 @@ private
 
   def otp_whitelisting_allowed?
     uris = JSON(Rails.configuration.vcap_application)["application_uris"]
-    return false if uris.length != 1
+    return false if uris.length > 2
 
-    uri = uris.first
-    Rails.application.config.domains_allowing_otp_whitelisting["domains-regexps"].any? do |domain_regexp|
-      uri =~ domain_regexp
+    uris.all? do |uri|
+      Rails.application.config.domains_allowing_otp_whitelisting["domains-regexps"].any? do |domain_regexp|
+        uri =~ domain_regexp
+      end
     end
   rescue StandardError
     false
