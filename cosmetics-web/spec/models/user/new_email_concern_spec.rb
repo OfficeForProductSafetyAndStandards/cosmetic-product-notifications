@@ -11,6 +11,9 @@ RSpec.describe User, type: :model do
     before do
       freeze_time
       allow(SecureRandom).to receive(:uuid).and_return(expected_token)
+      mailer = double
+      allow(NotifyMailer).to receive(:update_email_address_notification_email).and_return(mailer)
+      allow(mailer).to receive(:deliver_later)
 
       user.new_email = new_email
       user.save
