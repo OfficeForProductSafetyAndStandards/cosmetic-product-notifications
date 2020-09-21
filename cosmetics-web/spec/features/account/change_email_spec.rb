@@ -46,8 +46,8 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
 
         email = delivered_emails.last
         expect(email.recipient).to eq old_email
-        expect(email.personalization[:old_email_address]).to eq (old_email)
-        expect(email.personalization[:new_email_address]).to eq ("new@example.org")
+        expect(email.personalization[:old_email_address]).to eq old_email
+        expect(email.personalization[:new_email_address]).to eq "new@example.org"
 
         expect(page).to have_text(/Email changed successfully/)
         expect(user.reload.email).to eq("new@example.org")

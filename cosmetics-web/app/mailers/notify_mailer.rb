@@ -117,7 +117,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_personalisation(
       name: user.name,
       old_email_address: old_email,
-      new_email_address: user.email
+      new_email_address: user.email,
     )
 
     mail(to: old_email)
