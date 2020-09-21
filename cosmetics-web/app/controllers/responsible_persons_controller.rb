@@ -1,4 +1,4 @@
-class ResponsiblePersonsController < ApplicationController
+class ResponsiblePersonsController < SubmitApplicationController
   before_action :set_responsible_person
 
 private

@@ -1,4 +1,4 @@
-class NanomaterialNotificationsController < ApplicationController
+class NanomaterialNotificationsController < SubmitApplicationController
   before_action :set_responsible_person_from_url, only: %w[index new create]
 
   before_action :set_nanomaterial_notification_from_url, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit confirmation_page]

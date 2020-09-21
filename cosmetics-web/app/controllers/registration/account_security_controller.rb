@@ -1,5 +1,5 @@
 module Registration
-  class AccountSecurityController < ApplicationController
+  class AccountSecurityController < SubmitApplicationController
     skip_before_action :require_secondary_authentication
     skip_before_action :try_to_finish_account_setup
 

@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < SearchApplicationController
   skip_before_action :authenticate_user!
 
   def complete_registration
