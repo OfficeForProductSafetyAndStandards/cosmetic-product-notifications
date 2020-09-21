@@ -131,9 +131,10 @@ RSpec.describe SecondaryAuthentication do
         it_behaves_like "failed auth"
       end
 
-      context "when ENV['VCAP_APPLICATION'] application_uris has more than 1 value" do
+      context "when ENV['VCAP_APPLICATION'] application_uris has more than 2 values" do
         let(:application_uris) do
           ["staging-submit.cosmetic-product-notifications.service.gov.uk",
+           "staging-submit2.cosmetic-product-notifications.service.gov.uk",
            "staging-search.cosmetic-product-notifications.service.gov.uk"]
         end
 

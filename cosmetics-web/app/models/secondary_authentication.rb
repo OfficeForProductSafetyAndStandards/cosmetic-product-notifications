@@ -106,6 +106,7 @@ private
 
   def otp_whitelisting_allowed?
     uris = JSON(Rails.configuration.vcap_application)["application_uris"]
+    return false if uris.blank?
     return false if uris.length > 2
 
     uris.all? do |uri|
