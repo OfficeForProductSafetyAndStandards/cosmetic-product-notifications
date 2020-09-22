@@ -98,6 +98,7 @@ Rails.application.routes.draw do
       resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do
         member do
           get :join
+          get "new-account", action: :new_account
           post "sign-out-before-joining", action: :sign_out_before_joining
         end
       end

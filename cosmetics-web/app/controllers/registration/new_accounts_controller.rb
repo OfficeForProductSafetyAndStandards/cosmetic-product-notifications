@@ -22,9 +22,7 @@ module Registration
       @new_user = SubmitUser.find_user_by_confirmation_token!(params[:confirmation_token])
       sign_in(@new_user)
       redirect_to registration_new_account_security_path
-    rescue ActiveRecord::RecordInvalid
-      render "confirmation_token_is_invalid"
-    rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
       render "confirmation_token_is_invalid"
     end
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_notify, :with_stubbed_mailer, type: :feature do
+RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_notify, :with_stubbed_mailer, :with_2fa, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:user) { create(:submit_user) }
   let(:invited_user) { create(:submit_user, name: "John Doeinvited", email: "inviteduser@example.com") }
@@ -33,16 +33,15 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     )
   end
 
-  scenario "accepting an invitation as an existing user" do
+  scenario "accepting an invitation for an existing user" do
     configure_requests_for_submit_domain
     sign_in invited_user
 
     pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
                                                   responsible_person: responsible_person)
 
-    visit join_responsible_person_team_member_path(responsible_person, pending)
-
-    expect(page).to have_current_path(responsible_person_path(responsible_person))
+    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
@@ -55,7 +54,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
                                                   responsible_person: responsible_person)
 
-    visit join_responsible_person_team_member_path(responsible_person, pending)
+    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
     expect(page).to have_css("h1", text: "You are already signed in")
     expect(page).to have_css("button", text: "Accept team invitation as John Doe")
 
@@ -66,7 +65,9 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     fill_in "Password", with: invited_user.password
     click_button "Continue"
 
-    expect(page).to have_current_path(responsible_person_path(responsible_person))
+    complete_secondary_authentication_for(invited_user)
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
@@ -79,14 +80,43 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     pending = PendingResponsiblePersonUser.create(email_address: "newusertoregister@example.com",
                                                   responsible_person: responsible_person)
 
-    visit join_responsible_person_team_member_path(responsible_person, pending)
+    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
     expect(page).to have_css("h1", text: "You are already signed in")
     expect(page).to have_css("button", text: "Create a new account")
 
     click_button "Create a new account"
 
-    expect(page).to have_current_path(registration_new_submit_user_path)
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/new-account")
     expect(page).to have_css("h1", text: "Create an account")
+
+    fill_in "Full Name", with: "Joe Doe"
+    click_button "Continue"
+
+    expect_to_be_on_check_your_email_page
+
+    email = delivered_emails.last
+    expect(email.recipient).to eq "newusertoregister@example.com"
+    expect(email.personalization[:name]).to eq("Joe Doe")
+
+    verify_url = email.personalization[:verify_email_url]
+    visit verify_url
+
+    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
+    click_button "Continue"
+
+    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    complete_secondary_authentication_for(invited_user)
+
+    expect(page).to have_current_path("/declaration", ignore_query: true)
+    expect(page).to have_css("h1", text: "Responsible Person Declaration")
+    click_button "I confirm"
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(page).to have_css("h1", text: "Your cosmetic products")
+
+
+    expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
   scenario "accepting an invitation for a new user when not signed in" do
@@ -95,10 +125,40 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     pending = PendingResponsiblePersonUser.create(email_address: "newusertoregister@example.com",
                                                   responsible_person: responsible_person)
 
-    visit join_responsible_person_team_member_path(responsible_person, pending)
-
-    expect(page).to have_current_path(registration_new_submit_user_path)
+    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
+    expect(page).to have_current_path(
+      new_account_responsible_person_team_member_path(responsible_person, pending),
+    )
     expect(page).to have_css("h1", text: "Create an account")
+
+    fill_in "Full Name", with: "Joe Doe"
+    click_button "Continue"
+
+    expect_to_be_on_check_your_email_page
+
+    email = delivered_emails.last
+    expect(email.recipient).to eq "newusertoregister@example.com"
+    expect(email.personalization[:name]).to eq("Joe Doe")
+
+    verify_url = email.personalization[:verify_email_url]
+    visit verify_url
+
+    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
+    click_button "Continue"
+
+    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    complete_secondary_authentication_for(invited_user)
+
+    expect(page).to have_current_path("/declaration", ignore_query: true)
+    expect(page).to have_css("h1", text: "Responsible Person Declaration")
+    click_button "I confirm"
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(page).to have_css("h1", text: "Your cosmetic products")
+
+    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
   scenario "accepting an invitation for an existent user when not signed in" do
@@ -107,14 +167,27 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
                                                   responsible_person: responsible_person)
 
-    visit join_responsible_person_team_member_path(responsible_person, pending)
+    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
     expect(page).to have_css("h1", text: "Sign in")
 
     fill_in "Email address", with: invited_user.email
     fill_in "Password", with: invited_user.password
     click_button "Continue"
 
-    expect(page).to have_current_path(responsible_person_path(responsible_person))
+    complete_secondary_authentication_for(invited_user)
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
+end
+
+def expect_to_be_on_check_your_email_page
+  expect(page).to have_css("h1", text: "Check your email")
+  expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to your email address.")
+end
+
+def complete_secondary_authentication_for(user)
+  expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
+  expect_to_be_on_secondary_authentication_page
+  complete_secondary_authentication_with(user.direct_otp)
 end
