@@ -30,7 +30,7 @@ module Registration
       if current_user.is_a?(SubmitUser) && pending_responsible_person_invitation
         join_responsible_person_team_member_path(
           pending_responsible_person_invitation.responsible_person,
-          pending_responsible_person_invitation
+          pending_responsible_person_invitation,
         )
       else
         declaration_path
