@@ -27,14 +27,19 @@ module Registration
     end
 
     def after_creation_path
-      # TODO: Do we need this check? This controller only seems accessible for Submit users.
-      return declaration_path unless current_user.is_a?(SubmitUser)
-
-      if (pending_invitation = PendingResponsiblePersonUser.where(email_address: current_user.email).last)
-        join_responsible_person_team_member_path(pending_invitation.responsible_person, pending_invitation)
+      if current_user.is_a?(SubmitUser) && pending_responsible_person_invitation
+        join_responsible_person_team_member_path(
+          pending_responsible_person_invitation.responsible_person,
+          pending_responsible_person_invitation
+        )
       else
         declaration_path
       end
+    end
+
+    def pending_responsible_person_invitation
+      @pending_responsible_person_invitation ||=
+        PendingResponsiblePersonUser.where(email_address: current_user.email).last
     end
   end
 end
