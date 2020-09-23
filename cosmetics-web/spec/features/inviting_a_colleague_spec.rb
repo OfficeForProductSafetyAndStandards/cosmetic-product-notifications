@@ -9,28 +9,33 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit responsible_person_team_members_path(responsible_person)
 
-    click_on "Invite a colleague"
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    travel_to(Time.now.utc + wait_time.seconds) do
+      click_on "Invite a colleague"
 
-    expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
+      complete_secondary_authentication_for(user)
 
-    fill_in "Email address", with: invited_user.email
-    click_on "Send invitation"
+      expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
 
-    expect(page).to have_current_path(responsible_person_team_members_path(responsible_person))
+      fill_in "Email address", with: invited_user.email
+      click_on "Send invitation"
 
-    invitation = PendingResponsiblePersonUser.last
+      expect(page).to have_current_path(responsible_person_team_members_path(responsible_person))
 
-    expect(delivered_emails.size).to eq 1
-    email = delivered_emails.first
+      invitation = PendingResponsiblePersonUser.last
 
-    expect(email).to have_attributes(
-      recipient: invited_user.email,
-      reference: "Invite user to join responsible person",
-      template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
-      personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/#{invitation.id}/join",
-                         invite_sender: user.name,
-                         responsible_person: responsible_person.name },
-    )
+      expect(delivered_emails.size).to eq 1
+      email = delivered_emails.first
+
+      expect(email).to have_attributes(
+        recipient: invited_user.email,
+        reference: "Invite user to join responsible person",
+        template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
+        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/#{invitation.id}/join",
+                          invite_sender: user.name,
+                          responsible_person: responsible_person.name },
+      )
+    end
   end
 
   scenario "accepting an invitation for an existing user" do

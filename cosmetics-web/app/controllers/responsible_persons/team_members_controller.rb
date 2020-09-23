@@ -72,4 +72,9 @@ private
       current_user.name,
     ).deliver_later
   end
+
+  # See: SecondaryAuthenticationConcern
+  def current_operation
+    SecondaryAuthentication::INVITE_USER
+  end
 end
