@@ -4,9 +4,7 @@ module SecondaryAuthentications
                        :require_secondary_authentication,
                        :set_raven_context,
                        :authorize_user!,
-                       :has_accepted_declaration,
-                       :set_cache_headers,
-                       :try_to_finish_account_setup
+                       :set_cache_headers
 
     def new
       @user = find_user

@@ -1,0 +1,77 @@
+<% content_for :page_title, "Landing Page" %>
+<div class="app-masthead">
+  <div class="govuk-width-container">
+    <%= render "shared/phase_banner" %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+          Submit cosmetic product notifications
+        </h1>
+        <p class="masthead-account-links govuk-!-padding-top-2 govuk-!-margin-bottom-5">
+          <% if @responsible_person.present? %>
+            <%= govukButton text: "Your cosmetic products", href: responsible_person_notifications_path(@responsible_person), classes: "govuk-!-font-weight-bold" %>
+          <% else %>
+            <%= govukButton text: "Create an account", href: registration_new_submit_user_path, classes: "govuk-!-font-weight-bold" %>
+            or
+            <%= link_to "sign in", new_submit_user_session_path, class: "govuk-link govuk-link--no-visited-state" %>
+            if you have used this service before
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-width-container">
+  <main id="main-content" class="govuk-main-wrapper app-main-class" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body-l">Notify the Office for Product Safety and Standards (OPSS) about cosmetic products available to consumers in the UK.</p>
+
+        <h2 class="govuk-heading-m">What you need to do</h2>
+
+        <p class="govuk-body">You need to notify OPSS about every cosmetic product available to consumers in the UK.</p>
+
+        <%= govukWarningText iconFallbackText: "Warning", text: "You may face a fine of up to £5,000, or a prison term of up to 3 months, if you do not notify OPSS about a cosmetics product." %>
+
+        <h2 class="govuk-heading-m">What you’ll need to tell us</h2>
+
+        <p class="govuk-body govuk-!-margin-bottom-2">You’ll need to tell OPSS:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>what’s in the cosmetic product, including certain nanomaterials</li>
+          <li>the name and details of a contact person for the National Poisons Information Service, or Trading Standards, to get in touch with</li>
+          <li>who the ‘responsible person’ is</li>
+        </ul>
+
+        <div class="govuk-inset-text">The ‘responsible person’ (RP) is the individual or company responsible for ensuring the regulations are followed. Every cosmetic product placed on the UK market must have an RP.</div>
+
+        <h2 class="govuk-heading-m">How to tell us what's in the cosmetic product</h2>
+
+        <p class="govuk-body">How you do this depends on whether the product was notified with the EU.</p>
+
+        <%= govukDetails(summaryText: "Cosmetic products notified with the EU before Brexit") do %>
+
+          <p class="govuk-!-margin-bottom-1">You can upload the data from your EU notification. You’ll need to:</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+            <li>export your data as a ZIP file for each notification – the CPNP allows you to do this</li>
+            <li>upload the ZIP files - you can upload 100 files at a time</li>
+          </ul>
+
+          <p class="govuk-!-margin-bottom-1">The ZIP files will not include:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>the formulation of the product if it was an attached document – you must provide this separately as a PDF, RTF or TXT file</li>
+            <li>any images – you’ll need to provide them for products notified after Brexit</li>
+            <li>details of any nanomaterials in the product</li>
+          </ul>
+
+        <% end %>
+
+        <%= govukDetails(summaryText: "Cosmetic products not notified with the EU", text: "You’ll need to enter information about the product manually.") %>
+
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,4 +1,4 @@
-class ResponsiblePersons::NotificationFilesController < ApplicationController
+class ResponsiblePersons::NotificationFilesController < SubmitApplicationController
   before_action :set_responsible_person
 
   def new; end

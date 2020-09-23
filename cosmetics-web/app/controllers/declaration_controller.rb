@@ -1,7 +1,5 @@
 class DeclarationController < ApplicationController
   skip_before_action :authorize_user!
-  skip_before_action :has_accepted_declaration
-  skip_before_action :create_or_join_responsible_person
 
   def show
     session[:redirect_path] = params[:redirect_path]
@@ -10,6 +8,7 @@ class DeclarationController < ApplicationController
 
   def accept
     current_user.update(has_accepted_declaration: true)
+    # return redirect_to root_path
     redirect_to session[:redirect_path] || root_path
   end
 

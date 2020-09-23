@@ -4,10 +4,7 @@ class SecondaryAuthenticationsController < ApplicationController
                      :require_secondary_authentication,
                      :set_raven_context,
                      :authorize_user!,
-                     :has_accepted_declaration,
-                     :create_or_join_responsible_person,
-                     :set_cache_headers,
-                     :try_to_finish_account_setup
+                     :set_cache_headers
 
   def new
     return render("errors/forbidden", status: :forbidden) unless session[:secondary_authentication_user_id]

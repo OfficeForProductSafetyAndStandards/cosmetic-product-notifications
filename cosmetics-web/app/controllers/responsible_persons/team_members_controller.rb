@@ -1,4 +1,4 @@
-class ResponsiblePersons::TeamMembersController < ApplicationController
+class ResponsiblePersons::TeamMembersController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :set_team_member, only: %i[new create]
   skip_before_action :create_or_join_responsible_person

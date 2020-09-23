@@ -15,10 +15,6 @@ class ApplicationController < ActionController::Base
   before_action :set_cache_headers
   before_action :set_service_name
 
-  before_action :has_accepted_declaration
-  before_action :create_or_join_responsible_person, if: :submit_domain?
-  before_action :try_to_finish_account_setup
-
   add_flash_types :confirmation
 
   helper_method :current_user
@@ -76,38 +72,6 @@ private
     redirect_path = request.original_fullpath unless request.original_fullpath == root_path
 
     redirect_to declaration_path(redirect_path: redirect_path) unless current_user.has_accepted_declaration?
-  end
-
-  def try_to_finish_account_setup
-    return unless user_signed_in?
-    return unless submit_domain?
-
-    unless current_user.account_security_completed?
-      redirect_to registration_new_account_security_path
-    end
-  end
-
-  def fully_signed_in_submit_user?
-    return false if poison_centre_or_msa_user?
-
-    if Rails.configuration.secondary_authentication_enabled
-      user_signed_in? && secondary_authentication_present?
-    else
-      user_signed_in?
-    end
-  end
-
-  def create_or_join_responsible_person
-    return unless fully_signed_in_submit_user?
-    return unless current_user.mobile_number_verified?
-
-    responsible_person = current_user.responsible_persons.first
-
-    if responsible_person.blank?
-      redirect_to account_path(:overview)
-    elsif responsible_person.contact_persons.empty?
-      redirect_to new_responsible_person_contact_person_path(responsible_person)
-    end
   end
 
   def poison_centre_or_msa_user?

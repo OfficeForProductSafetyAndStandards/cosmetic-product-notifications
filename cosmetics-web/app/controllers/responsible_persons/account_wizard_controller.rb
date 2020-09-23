@@ -1,4 +1,4 @@
-class ResponsiblePersons::AccountWizardController < ApplicationController
+class ResponsiblePersons::AccountWizardController < SubmitApplicationController
   include Wicked::Wizard
 
   steps :overview, :create_or_join_existing, :join_existing, :select_type, :enter_details
