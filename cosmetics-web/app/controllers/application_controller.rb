@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authorize_user!
   before_action :authenticate_user!
+  before_action :try_to_finish_account_setup
   before_action :ensure_secondary_authentication
   before_action :require_secondary_authentication
   before_action :set_raven_context
@@ -17,7 +18,6 @@ class ApplicationController < ActionController::Base
 
   before_action :has_accepted_declaration
   before_action :create_or_join_responsible_person, if: :submit_domain?
-  before_action :try_to_finish_account_setup
 
   add_flash_types :confirmation
 
