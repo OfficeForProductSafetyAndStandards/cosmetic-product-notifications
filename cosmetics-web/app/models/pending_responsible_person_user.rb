@@ -23,9 +23,17 @@ class PendingResponsiblePersonUser < ApplicationRecord
 private
 
   def email_address_is_not_in_team?
+    # TODO: Move errors to en.yml file
     if responsible_person.responsible_person_users.any? { |user| user.email_address == email_address }
       errors.add :email_address, "The email address is already a member of this team"
+    elsif email_associated_to_any_team?
+      errors.add :email_address, "The email address is already a member of a team"
     end
+  end
+
+  def email_associated_to_any_team?
+    user = User.find_by(email: email_address)
+    user && user.responsible_persons.any?
   end
 
   def set_expires_at

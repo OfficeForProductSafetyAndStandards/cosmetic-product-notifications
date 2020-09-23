@@ -5,7 +5,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
   let(:user) { create(:submit_user) }
   let(:invited_user) { create(:submit_user, name: "John Doeinvited", email: "inviteduser@example.com") }
 
-  scenario "sending an invitation" do
+  scenario "sending an invitation to an existing user that does not belong to any team" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit responsible_person_team_members_path(responsible_person)
 
@@ -35,6 +35,53 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
                           invite_sender: user.name,
                           responsible_person: responsible_person.name },
       )
+    end
+  end
+
+  scenario "sending an invitation to an user that already belongs to the team" do
+    create(:responsible_person_user, user: invited_user, responsible_person: responsible_person)
+
+    sign_in_as_member_of_responsible_person(responsible_person, user)
+    visit responsible_person_team_members_path(responsible_person)
+
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    travel_to(Time.now.utc + wait_time.seconds) do
+      click_on "Invite a colleague"
+
+      complete_secondary_authentication_for(user)
+
+      expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
+
+      fill_in "Email address", with: invited_user.email
+      click_on "Send invitation"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_css(".govuk-error-message", text: "The email address is already a member of this team")
+      expect(delivered_emails.size).to eq 0
+    end
+  end
+
+  scenario "sending an invitation to an user that already belongs to a different team" do
+    team = create(:responsible_person, :with_a_contact_person)
+    create(:responsible_person_user, user: invited_user, responsible_person: team)
+
+    sign_in_as_member_of_responsible_person(responsible_person, user)
+    visit responsible_person_team_members_path(responsible_person)
+
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    travel_to(Time.now.utc + wait_time.seconds) do
+      click_on "Invite a colleague"
+
+      complete_secondary_authentication_for(user)
+
+      expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
+
+      fill_in "Email address", with: invited_user.email
+      click_on "Send invitation"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_css(".govuk-error-message", text: "The email address is already a member of a team")
+      expect(delivered_emails.size).to eq 0
     end
   end
 
