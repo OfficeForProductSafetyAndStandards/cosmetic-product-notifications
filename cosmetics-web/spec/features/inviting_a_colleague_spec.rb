@@ -28,8 +28,8 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
       reference: "Invite user to join responsible person",
       template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
       personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/#{invitation.id}/join",
-                         inviting_user_name: user.name,
-                         responsible_person_name: responsible_person.name },
+                         invite_sender: user.name,
+                         responsible_person: responsible_person.name },
     )
   end
 

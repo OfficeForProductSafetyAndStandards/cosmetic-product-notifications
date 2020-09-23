@@ -28,13 +28,14 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def send_responsible_person_invite_email(responsible_person, invited_team_member, inviting_user_name)
+    @host = submit_host
     set_template(TEMPLATES[:responsible_person_invitation])
     set_reference("Invite user to join responsible person")
 
     set_personalisation(
-      responsible_person_name: responsible_person.name,
-      inviting_user_name: inviting_user_name,
-      invitation_url:  join_responsible_person_team_member_url(responsible_person.id, invited_team_member.id),
+      responsible_person: responsible_person.name,
+      invite_sender: inviting_user_name,
+      invitation_url: join_responsible_person_team_member_url(responsible_person.id, invited_team_member.id),
     )
 
     mail(to: invited_team_member.email_address)
