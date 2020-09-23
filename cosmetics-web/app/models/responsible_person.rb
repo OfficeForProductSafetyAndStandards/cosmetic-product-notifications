@@ -18,7 +18,7 @@ class ResponsiblePerson < ApplicationRecord
   validates :postal_code, presence: true, on: %i[enter_details create]
 
   def add_user(user)
-    responsible_person_users << ResponsiblePersonUser.create(user: user)
+    ResponsiblePersonUser.create!(user: user, responsible_person: self)
   end
 
   def address_lines

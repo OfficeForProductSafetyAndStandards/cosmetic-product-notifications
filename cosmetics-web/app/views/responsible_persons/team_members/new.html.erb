@@ -3,9 +3,9 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
-<%= form_with model: @team_member, scope: :team_member, url: responsible_person_team_members_path(@responsible_person), method: :post do |form| %>
+<%= form_with model: @new_account_form, url: responsible_person_team_members_path(@responsible_person), method: :post do |form| %>
   <div class="govuk-grid-row">
-    <%= error_summary_for(@team_member) %>
+    <%= error_summary_for(@new_account_form) %>
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Invite a team member</h1>
 
@@ -16,7 +16,8 @@
         <li>submit cosmetic product notifications</li>
       </ul>
 
-      <%= render "form_components/govuk_input", form: form, key: :email_address, type: :email_field, label: { text: "Email address" } %>
+      <%= form_input @new_account_form, :full_name %>
+      <%= email_input @new_account_form %>
 
       <div class="govuk-form-group">
         <%= govukButton text: "Send invitation" %>

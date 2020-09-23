@@ -4,6 +4,7 @@ module Registration
     include ActiveModel::Attributes
 
     attribute :full_name
+    attribute :responsible_person
 
     private_class_method def self.error_message(attr, key)
       I18n.t(key, scope: "new_account.#{attr}")
@@ -16,8 +17,14 @@ module Registration
       return false unless self.valid?
       return true if user_exists?
 
+
       user = SubmitUser.new(name: full_name, email: email)
-      user.save(validate: false)
+      ActiveRecord::Base.transaction do
+        user.save(validate: false)
+        if responsible_person
+          responsible_person.add_user(user)
+        end
+      end
       user
     end
 
