@@ -21,18 +21,21 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <% @responsible_person.pending_responsible_person_users.each do |user| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">-</td>
-            <td class="govuk-table__cell"><%= user.email_address %></td>
-            <td class="govuk-table__cell">Pending</td>
-          </tr>
-        <% end %>
         <% @responsible_person.responsible_person_users.each do |user| %>
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= user.name %></td>
-            <td class="govuk-table__cell"><%= user.email_address %></td>
-            <td class="govuk-table__cell">-</td>
+            <td class="govuk-table__cell"><%= user.user.name %></td>
+            <td class="govuk-table__cell"><%= user.user.email %></td>
+            <td class="govuk-table__cell">
+              <% if user.user == current_user %>
+                You
+              <% else %>
+                <% if user.user.account_security_completed %>
+                  Active
+                <% else %>
+                  Pending
+                <% end %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

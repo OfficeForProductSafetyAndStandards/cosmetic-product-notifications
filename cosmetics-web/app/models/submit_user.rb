@@ -13,6 +13,8 @@ class SubmitUser < User
   has_one :user_attributes, dependent: :destroy
   validates :mobile_number, presence: true
 
+  attr_writer :responsible_person, :inviting_user_name
+
   def self.confirm_by_token(token)
     user = super(token)
     user.persisted? ? user : nil
@@ -57,7 +59,11 @@ class SubmitUser < User
       generate_confirmation_token!
     end
 
-    NotifyMailer.send_account_confirmation_email(self).deliver_later
+    if @responsible_person && @inviting_user_name
+      NotifyMailer.send_responsible_person_invite_email(@responsible_person, self, @inviting_user_name).deliver_later
+    else
+      NotifyMailer.send_account_confirmation_email(self).deliver_later
+    end
   end
 
   def send_reset_password_instructions_notification(token)

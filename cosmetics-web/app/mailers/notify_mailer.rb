@@ -27,17 +27,20 @@ class NotifyMailer < GovukNotifyRails::Mailer
     Sidekiq.logger.info "Account creation with existing email send"
   end
 
-  def send_responsible_person_invite_email(responsible_person_id, responsible_person_name, invited_email_address, inviting_user_name)
+  def send_responsible_person_invite_email(responsible_person, invited_team_member, inviting_user_name)
+    @host = submit_host
     set_template(TEMPLATES[:responsible_person_invitation])
     set_reference("Invite user to join responsible person")
 
-    set_personalisation(
-      responsible_person_name: responsible_person_name,
-      inviting_user_name: inviting_user_name,
-      invitation_url: join_responsible_person_team_members_url(responsible_person_id),
-    )
+    personalisation = {
+      responsible_person: responsible_person.name,
+      invite_sender: inviting_user_name,
+      invitation_url: registration_confirm_submit_user_url(confirmation_token: invited_team_member.confirmation_token, host: @host)
+    }
+    set_personalisation(personalisation)
 
-    mail(to: invited_email_address)
+    mail(to: invited_team_member.email)
+    Sidekiq.logger.info personalisation if Rails.env.development?
     Sidekiq.logger.info "Responsible person invite email sent"
   end
 
@@ -72,12 +75,12 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_host(user)
     set_template(TEMPLATES[:account_locked])
 
-    personalization = {
+    personalisation = {
       name: user.name,
       edit_user_password_url_token: edit_submit_user_password_url(reset_password_token: tokens[:reset_password_token], host: @host),
       unlock_user_url_token: submit_user_unlock_url(unlock_token: tokens[:unlock_token], host: @host),
     }
-    set_personalisation(personalization)
+    set_personalisation(personalisation)
     mail(to: user.email)
   end
 
@@ -86,12 +89,14 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_template(TEMPLATES[:verify_new_account])
     set_reference("Send confirmation code")
 
-    set_personalisation(
+    personalization = {
       name: user.name,
-      verify_email_url: registration_confirm_submit_user_url(confirmation_token: user.confirmation_token, host: @host),
-    )
+      verify_email_url: registration_confirm_submit_user_url(confirmation_token: user.confirmation_token, host: @host)
+    }
+    set_personalisation(personalization)
 
     mail(to: user.email)
+    Sidekiq.logger.info personalization if Rails.env.development?
     Sidekiq.logger.info "Confirmation email send"
   end
 

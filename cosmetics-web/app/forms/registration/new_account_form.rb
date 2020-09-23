@@ -5,6 +5,7 @@ module Registration
 
     attribute :full_name
     attribute :responsible_person
+    attribute :inviting_user_name
 
     private_class_method def self.error_message(attr, key)
       I18n.t(key, scope: "new_account.#{attr}")
@@ -20,7 +21,13 @@ module Registration
 
       user = SubmitUser.new(name: full_name, email: email)
       ActiveRecord::Base.transaction do
+        if responsible_person
+          user.responsible_person = responsible_person
+          user.inviting_user_name = inviting_user_name
+        end
+
         user.save(validate: false)
+
         if responsible_person
           responsible_person.add_user(user)
         end

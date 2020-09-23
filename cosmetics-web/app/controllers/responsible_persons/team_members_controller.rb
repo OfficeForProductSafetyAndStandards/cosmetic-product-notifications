@@ -8,6 +8,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
   def create
     new_account_form.responsible_person = @responsible_person
+    new_account_form.inviting_user_name = current_user.name
     if new_account_form.save
       redirect_to responsible_person_team_members_path(@responsible_person)
     else
