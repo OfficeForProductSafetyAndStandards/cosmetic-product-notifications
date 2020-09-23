@@ -5,7 +5,6 @@ module Users
     skip_before_action :has_accepted_declaration
     skip_before_action :create_or_join_responsible_person
     skip_before_action :require_secondary_authentication
-    skip_before_action :try_to_finish_account_setup
 
     def create
       set_resource_as_new_user_from_params
