@@ -31,13 +31,11 @@ class NotifyMailer < GovukNotifyRails::Mailer
     @host = submit_host
     set_template(TEMPLATES[:responsible_person_invitation])
     set_reference("Invite user to join responsible person")
-
     set_personalisation(
       responsible_person: responsible_person.name,
       invite_sender: inviting_user_name,
       invitation_url: join_responsible_person_team_members_url(responsible_person.id, invitation_token: invited_team_member.invitation_token),
     )
-
     mail(to: invited_team_member.email_address)
     Sidekiq.logger.info "Responsible person invite email sent"
   end

@@ -180,6 +180,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
   scenario "accepting an invitation for a new user when signed in as different user" do
     configure_requests_for_submit_domain
 
+    # User invites a new member to the team
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
     visit responsible_person_team_members_path(responsible_person)
@@ -204,10 +205,10 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     expect(email.recipient).to eq "newusertoregister@example.com"
     expect(email.personalization[:responsible_person]).to eq("Responsible Person")
 
+    # Accepting the invitation when signed in as a different user
     different_user = create(:submit_user, name: "John Doedifferent")
     sign_out
-    sign_in different_user
-
+    sign_in_as_member_of_responsible_person(responsible_person, different_user)
     visit email.personalization[:invitation_url]
 
     expect(page).to have_css("h1", text: "You are already signed in")
