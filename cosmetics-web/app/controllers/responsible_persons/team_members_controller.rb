@@ -25,6 +25,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
     responsible_person = pending_request.responsible_person
     if user
+      authenticate_user!
       responsible_person.add_user(current_user)
       PendingResponsiblePersonUser.where(email_address: user.email).delete_all
       redirect_to responsible_person_notifications_path(responsible_person)
