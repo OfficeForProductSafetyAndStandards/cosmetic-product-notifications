@@ -27,7 +27,7 @@ RSpec.describe Registration::AccountSecurityForm do
       let(:user) { create(:submit_user, created_by_invitation: true) }
 
       it "returns true" do
-        expect(form.name_required?).to be_truthy
+        expect(form).to be_name_required
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.describe Registration::AccountSecurityForm do
       let(:user) { create(:submit_user, created_by_invitation: false) }
 
       it "returns false" do
-        expect(form.name_required?).to be_falsey
+        expect(form).not_to be_name_required
       end
     end
   end
