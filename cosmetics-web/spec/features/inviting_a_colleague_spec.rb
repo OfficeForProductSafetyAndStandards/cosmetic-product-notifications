@@ -31,7 +31,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
         recipient: invited_user.email,
         reference: "Invite user to join responsible person",
         template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
-        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+        personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
                           invite_sender: user.name,
                           responsible_person: responsible_person.name },
       )
@@ -114,7 +114,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
         recipient: invited_user.email,
         reference: "Invite user to join responsible person",
         template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
-        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{new_token}",
+        personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{new_token}",
                           invite_sender: user.name,
                           responsible_person: responsible_person.name },
       )
