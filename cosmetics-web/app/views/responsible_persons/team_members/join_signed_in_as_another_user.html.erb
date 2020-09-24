@@ -1,9 +1,0 @@
-<%= render "signed_in_as_another_user" do %>
-  <%= form_with url: sign_out_before_joining_responsible_person_team_member_path(params[:responsible_person_id], params[:id]), method: :post do %>
-    <% if existing_user %>
-      <button class="button-link govuk-link">Accept team invitation as <%= existing_user.name %></button>
-    <% else %>
-      <button class="button-link govuk-link">Create a new account</button>
-    <% end %>
-  <% end %>
-<% end %>

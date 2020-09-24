@@ -5,7 +5,7 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
   let(:user) { create(:submit_user) }
   let(:email_address) { "user@example.com" }
   let(:pending_responsible_person_user) { create(:pending_responsible_person_user, responsible_person: responsible_person) }
-  let(:params) { { responsible_person_id: responsible_person.id, id: pending_responsible_person_user.id } }
+  let(:params) { { responsible_person_id: responsible_person.id, invitation_token: pending_responsible_person_user.invitation_token } }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person, user)
