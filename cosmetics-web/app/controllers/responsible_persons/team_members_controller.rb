@@ -44,7 +44,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
     return render("invitation_expired") if pending_request.expired?
 
     user = SubmitUser.find_by(email: pending_request.email_address)
-    return render("signed_as_another_user", locals: { existing_user: user }) if current_user && current_user.email != pending_request.email_address
+    return render("signed_as_another_user", locals: { existing_user: user }) if signed_as_another_user?(pending_request)
 
     responsible_person = pending_request.responsible_person
     if user
@@ -98,6 +98,10 @@ private
       @team_member,
       current_user.name,
     ).deliver_later
+  end
+
+  def signed_as_another_user?(invitation)
+    current_user && current_user.email != invitation.email_address
   end
 
   # See: SecondaryAuthenticationConcern
