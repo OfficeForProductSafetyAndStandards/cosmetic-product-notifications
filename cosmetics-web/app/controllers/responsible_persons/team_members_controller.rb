@@ -1,35 +1,43 @@
 class ResponsiblePersons::TeamMembersController < ApplicationController
   before_action :set_responsible_person
+  before_action :set_team_member, only: %i[new create]
   skip_before_action :create_or_join_responsible_person
 
-  def new
-    @new_account_form = Registration::NewAccountForm.new
-  end
+  def new; end
 
   def create
-    new_account_form.responsible_person = @responsible_person
-    new_account_form.inviting_user_name = current_user.name
-    if new_account_form.save
+    @responsible_person.save
+    if @responsible_person.errors.empty?
+      send_invite_email
       redirect_to responsible_person_team_members_path(@responsible_person)
     else
       render :new
     end
   end
 
-  # def join
-  #   pending_requests = PendingResponsiblePersonUser.pending_requests_to_join_responsible_person(
-  #     current_user,
-  #     @responsible_person,
-  #   )
+  def join
+    return render "signed_as_another_user" if current_submit_user
 
-  #   if pending_requests.any?
-  #     @responsible_person.add_user(current_user)
-  #     Rails.logger.info "Team member added to Responsible Person"
-  #     pending_requests.delete_all
-  #   end
+    pending_request = PendingResponsiblePersonUser.find_by!(invitation_token: params[:invitation_token])
+    responsible_person = pending_request.responsible_person
+    if (user = SubmitUser.find_by(email: pending_request.email)
+        responsible_person.add_user(current_user)
+        # redirect?
+    else
+      user = SubmitUser.new(email: email)
+      user.save(validate: false)
+      responsible_person.add_user(current_user)
+      sign_in(user)
 
-  #   redirect_to responsible_person_path(@responsible_person)
-  # end
+      redirect_to registration_new_account_security_path
+    end
+
+  end
+
+  def sign_out_before_confirming_email
+    sign_out
+    redirect_to registration_confirm_submit_user_path(confirmation_token: params[:confirmation_token])
+  end
 
 private
 
@@ -38,12 +46,14 @@ private
     authorize @responsible_person, :show?
   end
 
-  def new_account_form
-    @new_account_form ||= Registration::NewAccountForm.new(new_account_form_params)
+  def team_member_params
+    params.fetch(:team_member, {}).permit(
+      :email_address,
+    )
   end
 
-  def new_account_form_params
-    params.require(:registration_new_account_form).permit(:full_name, :email)
+  def set_team_member
+    @team_member = @responsible_person.pending_responsible_person_users.build(team_member_params)
   end
 
   def send_invite_email
