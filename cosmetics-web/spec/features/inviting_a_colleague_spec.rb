@@ -146,7 +146,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
                                                   responsible_person: responsible_person)
 
-    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
@@ -160,7 +160,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
                                                   responsible_person: responsible_person)
 
-    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_css("h1", text: "You are already signed in")
     expect(page).to have_css("button", text: "Accept team invitation as John Doe")
 
@@ -281,7 +281,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
                                                   responsible_person: responsible_person)
 
-    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_css("h1", text: "Sign in")
 
     fill_in "Email address", with: invited_user.email

@@ -3,7 +3,6 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   before_action :set_team_member, only: %i[new create]
   before_action :authorize_responsible_person, only: %i[new create]
   skip_before_action :create_or_join_responsible_person
-  skip_before_action :authenticate_user!, only: %i[join]
   skip_before_action :require_secondary_authentication, only: %i[join]
 
   def new; end
@@ -43,12 +42,14 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   def join
     pending_request = PendingResponsiblePersonUser.find_by!(invitation_token: params[:invitation_token])
     return render("invitation_expired") if pending_request.expired?
-    return render "signed_as_another_user" if current_submit_user
+
+    user = SubmitUser.find_by(email: pending_request.email_address)
+    return render("signed_as_another_user", locals: { existing_user: user }) if current_user && current_user.email != pending_request.email_address
 
     responsible_person = pending_request.responsible_person
-    if (user = SubmitUser.find_by(email: pending_request.email_address))
+    if user
         responsible_person.add_user(current_user)
-        # redirect?
+        redirect_to responsible_person_notifications_path
     else
       user = SubmitUser.new(email: pending_request.email_address)
       user.dont_send_confirmation_instructions!
@@ -62,7 +63,6 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
     PendingResponsiblePersonUser.where(email_address: current_user.email).delete_all
 
   rescue ActiveRecord::RecordNotFound
-    binding.pry
     # TODO: message
     return redirect_to new_account_responsible_person_team_member_path(@responsible_person, pending_request)
   end
