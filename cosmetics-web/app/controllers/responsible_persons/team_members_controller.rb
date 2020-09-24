@@ -7,7 +7,6 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
   def new; end
 
-
   def create
     @responsible_person.save
     return render :new if @responsible_person.errors.any?
@@ -48,8 +47,8 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
     responsible_person = pending_request.responsible_person
     if user
-        responsible_person.add_user(current_user)
-        redirect_to responsible_person_notifications_path
+      responsible_person.add_user(current_user)
+      redirect_to responsible_person_notifications_path
     else
       user = SubmitUser.new(email: pending_request.email_address)
       user.dont_send_confirmation_instructions!
@@ -61,10 +60,9 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
       redirect_to registration_new_account_security_path
     end
     PendingResponsiblePersonUser.where(email_address: current_user.email).delete_all
-
   rescue ActiveRecord::RecordNotFound
     # TODO: message
-    return redirect_to new_account_responsible_person_team_member_path(@responsible_person, pending_request)
+    redirect_to new_account_responsible_person_team_member_path(@responsible_person, pending_request)
   end
 
   def sign_out_before_joining
