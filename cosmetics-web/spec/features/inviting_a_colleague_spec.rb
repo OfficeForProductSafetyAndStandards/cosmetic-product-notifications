@@ -86,14 +86,14 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
   end
 
   scenario "sending an invitation to an user with an expired previous invitation" do
-    invitation = create(:pending_responsible_person_user,
-                        email_address: invited_user.email,
-                        responsible_person: responsible_person)
+    create(:pending_responsible_person_user,
+           email_address: invited_user.email,
+           responsible_person: responsible_person)
 
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit responsible_person_team_members_path(responsible_person)
 
-    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    wait_time = PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1
     travel_to(Time.now.utc + wait_time.seconds) do
       click_on "Invite a colleague"
 
@@ -108,12 +108,13 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
       expect(delivered_emails.size).to eq 1
       email = delivered_emails.first
+      new_token = PendingResponsiblePersonUser.last.invitation_token
 
       expect(email).to have_attributes(
         recipient: invited_user.email,
         reference: "Invite user to join responsible person",
         template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
-        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{new_token}",
                           invite_sender: user.name,
                           responsible_person: responsible_person.name },
       )
@@ -124,15 +125,18 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     configure_requests_for_submit_domain
     sign_in invited_user
 
-    pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
-                                                  responsible_person: responsible_person)
-    pending.update_columns(expires_at: PendingResponsiblePersonUser.key_validity_duration.ago - 1.hour)
+    invitation = PendingResponsiblePersonUser.create(email_address: invited_user.email,
+                                                     responsible_person: responsible_person)
 
+    join_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
 
-    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
-    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join")
-    expect(page).to have_css("h1", text: "This invitation has expired")
-    expect(invited_user.responsible_persons).not_to include(responsible_person)
+    wait_time = PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1
+    travel_to(Time.now.utc + wait_time.seconds) do
+      visit join_path
+      expect(page).to have_current_path(join_path)
+      expect(page).to have_css("h1", text: "This invitation has expired")
+      expect(invited_user.responsible_persons).not_to include(responsible_person)
+    end
   end
 
   scenario "accepting an invitation for an existing user" do

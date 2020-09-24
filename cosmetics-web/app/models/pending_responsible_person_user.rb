@@ -13,15 +13,6 @@ class PendingResponsiblePersonUser < ApplicationRecord
     1.day
   end
 
-  def self.pending_requests_to_join_responsible_person(user, responsible_person)
-    PendingResponsiblePersonUser.where(
-      "email_address = ? AND responsible_person_id = ? AND expires_at > ?",
-      user.email,
-      responsible_person.id,
-      DateTime.current,
-    )
-  end
-
   def expired?
     invitation_token_expires_at < DateTime.current
   end

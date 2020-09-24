@@ -1,21 +1,15 @@
 class ResponsiblePersons::TeamMembersController < ApplicationController
   before_action :set_responsible_person
+  before_action :set_team_member, only: %i[new create]
   before_action :authorize_responsible_person, only: %i[new create]
   skip_before_action :create_or_join_responsible_person
   skip_before_action :authenticate_user!, only: %i[join]
+  skip_before_action :require_secondary_authentication, only: %i[join]
 
-  def new
-    @team_member = @responsible_person.pending_responsible_person_users.build(team_member_params)
-  end
+  def new; end
+
 
   def create
-    pending_user = @responsible_person.pending_responsible_person_users
-                                      .find_by(email_address: team_member_params[:email_address])
-    @team_member = if pending_user&.expired?
-                     pending_user_with_renewed_expiration(pending_user)
-                   else
-                     @responsible_person.pending_responsible_person_users.build(team_member_params)
-                   end
     @responsible_person.save
     return render :new if @responsible_person.errors.any?
 
@@ -48,7 +42,6 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   # end
   def join
     pending_request = PendingResponsiblePersonUser.find_by!(invitation_token: params[:invitation_token])
-
     return render("invitation_expired") if pending_request.expired?
     return render "signed_as_another_user" if current_submit_user
 
@@ -85,6 +78,10 @@ private
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
   end
 
+  def set_team_member
+    @team_member = @responsible_person.pending_responsible_person_users.build(team_member_params)
+  end
+
   def authorize_responsible_person
     authorize @responsible_person, :show?
   end
@@ -93,13 +90,6 @@ private
     params.fetch(:team_member, {}).permit(
       :email_address,
     )
-  end
-
-  def pending_user_with_renewed_expiration(pending_user)
-    pending_user.tap do |p|
-      p.set_expiration
-      p.save!
-    end
   end
 
   def send_invite_email
