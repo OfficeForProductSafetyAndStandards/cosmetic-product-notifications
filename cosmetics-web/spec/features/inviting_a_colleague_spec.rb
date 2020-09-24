@@ -240,24 +240,11 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     pending = PendingResponsiblePersonUser.create(email_address: "newusertoregister@example.com",
                                                   responsible_person: responsible_person)
 
-    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
-    expect(page).to have_current_path(
-      new_account_responsible_person_team_member_path(responsible_person, pending),
-    )
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h1", text: "Create an account")
 
     fill_in "Full Name", with: "Joe Doe"
-    click_button "Continue"
-
-    expect_to_be_on_check_your_email_page
-
-    email = delivered_emails.last
-    expect(email.recipient).to eq "newusertoregister@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
-
-    verify_url = email.personalization[:verify_email_url]
-    visit verify_url
-
     fill_in "Mobile Number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
