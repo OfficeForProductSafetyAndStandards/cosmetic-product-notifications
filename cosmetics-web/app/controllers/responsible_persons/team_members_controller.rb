@@ -25,7 +25,8 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
   def join
     pending = PendingResponsiblePersonUser.find(params[:id])
-    # TODO: What to do when the invitation is expired?
+    return render("invitation_expired") if pending.expired?
+
     invited_user = SubmitUser.find_by(email: pending.email_address)
     return render("join_signed_in_as_another_user", locals: { existing_user: invited_user }) if current_user && current_user.email != pending.email_address
     return redirect_to new_account_responsible_person_team_member_path(@responsible_person, pending) unless invited_user
