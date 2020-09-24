@@ -23,23 +23,11 @@ module Registration
     end
 
     def account_security_form_params
-      params.require(:registration_account_security_form).permit(:mobile_number, :password)
+      params.require(:registration_account_security_form).permit(:mobile_number, :password, :name)
     end
 
     def after_creation_path
-      if current_user.is_a?(SubmitUser) && pending_responsible_person_invitation
-        join_responsible_person_team_member_path(
-          pending_responsible_person_invitation.responsible_person,
-          pending_responsible_person_invitation,
-        )
-      else
-        declaration_path
-      end
-    end
-
-    def pending_responsible_person_invitation
-      @pending_responsible_person_invitation ||=
-        PendingResponsiblePersonUser.where(email_address: current_user.email).last
+      declaration_path
     end
   end
 end

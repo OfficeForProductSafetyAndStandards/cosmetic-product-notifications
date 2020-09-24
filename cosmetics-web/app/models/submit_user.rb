@@ -52,7 +52,13 @@ class SubmitUser < User
     !msa_user? # Could hardcode "true" but leave it as original for User for clarity
   end
 
+  def dont_send_confirmation_instructions!
+    @dont_send_confirmation_instructions = true
+  end
+
   def send_confirmation_instructions
+    return if @dont_send_confirmation_instructions
+
     unless @raw_confirmation_token
       generate_confirmation_token!
     end

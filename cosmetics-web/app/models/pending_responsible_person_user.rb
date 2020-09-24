@@ -1,10 +1,12 @@
 class PendingResponsiblePersonUser < ApplicationRecord
+  INVITATION_TOKEN_VALID_FOR = 3 * 24 * 3600 # 3 days
+
   belongs_to :responsible_person
 
   validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validate :email_address_is_not_in_team?
 
-  before_create :set_expires_at
+  before_create :generate_token
   before_create :remove_duplicate_pending_responsible_users
 
   def self.key_validity_duration
@@ -22,6 +24,12 @@ class PendingResponsiblePersonUser < ApplicationRecord
 
 private
 
+  def generate_token
+    token = SecureRandom.uuid
+    self.invitation_token = token
+    self.invitation_token_expires_at = Time.now.utc + INVITATION_TOKEN_VALID_FOR.seconds
+  end
+
   def email_address_is_not_in_team?
     # TODO: Move errors to en.yml file
     if responsible_person.responsible_person_users.any? { |user| user.email_address == email_address }
@@ -34,10 +42,6 @@ private
   def email_associated_to_any_team?
     user = User.find_by(email: email_address)
     user && user.responsible_persons.any?
-  end
-
-  def set_expires_at
-    self.expires_at = PendingResponsiblePersonUser.key_validity_duration.from_now
   end
 
   def remove_duplicate_pending_responsible_users

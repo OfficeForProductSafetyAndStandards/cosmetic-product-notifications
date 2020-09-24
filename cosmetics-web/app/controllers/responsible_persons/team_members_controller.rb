@@ -17,32 +17,52 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
     end
   end
 
+  # def join
+  #   pending = PendingResponsiblePersonUser.find(params[:id])
+  #   # TODO: What to do when the invitation is expired?
+  #   invited_user = SubmitUser.find_by(email: pending.email_address)
+  #   return render("join_signed_in_as_another_user", locals: { existing_user: invited_user }) if current_user && current_user.email != pending.email_address
+  #   return redirect_to new_account_responsible_person_team_member_path(@responsible_person, pending) unless invited_user
+  #   return authenticate_user! unless current_user
+
+  #   # User at this point is signed as the invited user.
+  #   ActiveRecord::Base.transaction do
+  #     @responsible_person.add_user(current_user)
+  #     Rails.logger.info "Team member added to Responsible Person"
+  #     PendingResponsiblePersonUser.where(email_address: current_user.email).delete_all
+  #   end
+
+  #   redirect_to responsible_person_notifications_path(@responsible_person)
+  # end
+
+
+  # def new_account
+  #   pending = PendingResponsiblePersonUser.find(params[:id])
+  #   @new_account_form = Registration::NewAccountForm.new(email: pending.email_address)
+  # end
   def join
-    pending = PendingResponsiblePersonUser.find(params[:id])
-    # TODO: What to do when the invitation is expired?
-    invited_user = SubmitUser.find_by(email: pending.email_address)
-    return render("join_signed_in_as_another_user", locals: { existing_user: invited_user }) if current_user && current_user.email != pending.email_address
-    return redirect_to new_account_responsible_person_team_member_path(@responsible_person, pending) unless invited_user
-    return authenticate_user! unless current_user
+    return render "signed_as_another_user" if current_submit_user
 
-    # User at this point is signed as the invited user.
-    ActiveRecord::Base.transaction do
-      @responsible_person.add_user(current_user)
-      Rails.logger.info "Team member added to Responsible Person"
-      PendingResponsiblePersonUser.where(email_address: current_user.email).delete_all
+    pending_request = PendingResponsiblePersonUser.find_by!(invitation_token: params[:invitation_token])
+    responsible_person = pending_request.responsible_person
+    if (user = SubmitUser.find_by(email: pending_request.email_address))
+        responsible_person.add_user(current_user)
+        # redirect?
+    else
+      user = SubmitUser.new(email: pending_request.email_address)
+      user.dont_send_confirmation_instructions!
+
+      user.save(validate: false)
+      responsible_person.add_user(current_user)
+      bypass_sign_in(user)
+
+      redirect_to registration_new_account_security_path
     end
-
-    redirect_to responsible_person_notifications_path(@responsible_person)
   end
 
   def sign_out_before_joining
     sign_out
     redirect_to join_responsible_person_team_member_path(params[:responsible_person_id], params[:id])
-  end
-
-  def new_account
-    pending = PendingResponsiblePersonUser.find(params[:id])
-    @new_account_form = Registration::NewAccountForm.new(email: pending.email_address)
   end
 
 private
