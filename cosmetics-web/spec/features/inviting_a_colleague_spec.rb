@@ -31,7 +31,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
         recipient: invited_user.email,
         reference: "Invite user to join responsible person",
         template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
-        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/#{invitation.id}/join",
+        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
                           invite_sender: user.name,
                           responsible_person: responsible_person.name },
       )
@@ -85,6 +85,56 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     end
   end
 
+  scenario "sending an invitation to an user with an expired previous invitation" do
+    invitation = create(:pending_responsible_person_user,
+                        email_address: invited_user.email,
+                        responsible_person: responsible_person)
+
+    sign_in_as_member_of_responsible_person(responsible_person, user)
+    visit responsible_person_team_members_path(responsible_person)
+
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    travel_to(Time.now.utc + wait_time.seconds) do
+      click_on "Invite a colleague"
+
+      complete_secondary_authentication_for(user)
+
+      expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
+
+      fill_in "Email address", with: invited_user.email
+      click_on "Send invitation"
+
+      expect(page).to have_current_path(responsible_person_team_members_path(responsible_person))
+
+      expect(delivered_emails.size).to eq 1
+      email = delivered_emails.first
+
+      expect(email).to have_attributes(
+        recipient: invited_user.email,
+        reference: "Invite user to join responsible person",
+        template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
+        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+                          invite_sender: user.name,
+                          responsible_person: responsible_person.name },
+      )
+    end
+  end
+
+  scenario "accepting an expired invitation for an existing user" do
+    configure_requests_for_submit_domain
+    sign_in invited_user
+
+    pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
+                                                  responsible_person: responsible_person)
+    pending.update_columns(expires_at: PendingResponsiblePersonUser.key_validity_duration.ago - 1.hour)
+
+
+    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join")
+    expect(page).to have_css("h1", text: "This invitation has expired")
+    expect(invited_user.responsible_persons).not_to include(responsible_person)
+  end
+
   scenario "accepting an invitation for an existing user" do
     configure_requests_for_submit_domain
     sign_in invited_user
@@ -125,33 +175,42 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
   scenario "accepting an invitation for a new user when signed in as different user" do
     configure_requests_for_submit_domain
-    different_user = create(:submit_user, name: "John Doedifferent")
 
-    sign_in different_user
+    sign_in_as_member_of_responsible_person(responsible_person, user)
 
-    pending = PendingResponsiblePersonUser.create(email_address: "newusertoregister@example.com",
-                                                  responsible_person: responsible_person)
+    visit responsible_person_team_members_path(responsible_person)
 
-    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
-    expect(page).to have_css("h1", text: "You are already signed in")
-    expect(page).to have_css("button", text: "Create a new account")
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    travel_to(Time.now.utc + wait_time.seconds)
 
-    click_button "Create a new account"
+    click_on "Invite a colleague"
 
-    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/new-account")
-    expect(page).to have_css("h1", text: "Create an account")
+    complete_secondary_authentication_for(user)
 
-    fill_in "Full Name", with: "Joe Doe"
-    click_button "Continue"
+    expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
 
-    expect_to_be_on_check_your_email_page
+    fill_in "Email address", with: "newusertoregister@example.com"
+    click_on "Send invitation"
+
+    expect(page).to have_current_path(responsible_person_team_members_path(responsible_person))
+
+    expect(delivered_emails.size).to eq 1
 
     email = delivered_emails.last
     expect(email.recipient).to eq "newusertoregister@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
+    expect(email.personalization[:responsible_person]).to eq("Responsible Person")
 
-    verify_url = email.personalization[:verify_email_url]
-    visit verify_url
+    different_user = create(:submit_user, name: "John Doedifferent")
+    sign_out
+    sign_in different_user
+
+    visit email.personalization[:invitation_url]
+
+    expect(page).to have_css("h1", text: "You are already signed in")
+
+    click_button "Create new account"
+
+    expect(page).to have_css("h1", text: "Create an account")
 
     fill_in "Mobile Number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
@@ -166,7 +225,6 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(page).to have_css("h1", text: "Your cosmetic products")
-
 
     expect(invited_user.responsible_persons).to include(responsible_person)
   end

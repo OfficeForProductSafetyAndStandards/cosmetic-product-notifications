@@ -22,6 +22,10 @@ class PendingResponsiblePersonUser < ApplicationRecord
     )
   end
 
+  def expired?
+    invitation_token_expires_at < DateTime.current
+  end
+
 private
 
   def generate_token
