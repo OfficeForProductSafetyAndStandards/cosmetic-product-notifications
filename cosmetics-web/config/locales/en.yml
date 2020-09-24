@@ -130,6 +130,8 @@ en:
               blank: "Please enter mobile number"
             password:
               blank: "Please enter password"
+            full_name:
+              blank: "Enter your full name"
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"

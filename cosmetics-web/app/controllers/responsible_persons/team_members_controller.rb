@@ -55,19 +55,20 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
     responsible_person = pending_request.responsible_person
     if (user = SubmitUser.find_by(email: pending_request.email_address))
         responsible_person.add_user(current_user)
-        # redirect?
+        pending_request.delete
+
+        redirect_to dashboard_path
     else
-      user = SubmitUser.new(email: pending_request.email_address)
+      user = SubmitUser.new(email: pending_request.email_address, created_by_invitation: true)
       user.dont_send_confirmation_instructions!
 
       user.save(validate: false)
-      responsible_person.add_user(current_user)
+      responsible_person.add_user(user)
+      pending_request.delete
       bypass_sign_in(user)
 
       redirect_to registration_new_account_security_path
     end
-    PendingResponsiblePersonUser.where(email_address: current_user.email).delete_all
-
   rescue ActiveRecord::RecordNotFound
     binding.pry
     # TODO: message

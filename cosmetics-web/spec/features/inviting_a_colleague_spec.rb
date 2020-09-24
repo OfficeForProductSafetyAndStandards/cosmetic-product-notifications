@@ -212,6 +212,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
     expect(page).to have_css("h1", text: "Create an account")
 
+    fill_in "Full Name", with: "John Doe"
     fill_in "Mobile Number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
