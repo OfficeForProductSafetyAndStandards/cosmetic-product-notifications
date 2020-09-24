@@ -60,9 +60,6 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
       redirect_to registration_new_account_security_path
     end
     PendingResponsiblePersonUser.where(email_address: current_user.email).delete_all
-  rescue ActiveRecord::RecordNotFound
-    # TODO: message
-    redirect_to new_account_responsible_person_team_member_path(@responsible_person, pending_request)
   end
 
   def sign_out_before_joining
