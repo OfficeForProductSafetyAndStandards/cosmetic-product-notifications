@@ -4,7 +4,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
   validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validate :email_address_is_not_in_team?
 
-  before_create :set_expires_at
+  before_create :set_expiration
   before_create :remove_duplicate_pending_responsible_users
 
   def self.key_validity_duration
@@ -18,6 +18,14 @@ class PendingResponsiblePersonUser < ApplicationRecord
       responsible_person.id,
       DateTime.current,
     )
+  end
+
+  def expired?
+    expires_at < DateTime.current
+  end
+
+  def set_expiration
+    self.expires_at = PendingResponsiblePersonUser.key_validity_duration.from_now
   end
 
 private
@@ -34,10 +42,6 @@ private
   def email_associated_to_any_team?
     user = User.find_by(email: email_address)
     user && user.responsible_persons.any?
-  end
-
-  def set_expires_at
-    self.expires_at = PendingResponsiblePersonUser.key_validity_duration.from_now
   end
 
   def remove_duplicate_pending_responsible_users
