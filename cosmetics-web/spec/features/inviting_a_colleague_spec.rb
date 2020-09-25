@@ -31,7 +31,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
         recipient: invited_user.email,
         reference: "Invite user to join responsible person",
         template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
-        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+        personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
                           invite_sender: user.name,
                           responsible_person: responsible_person.name },
       )
@@ -114,7 +114,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
         recipient: invited_user.email,
         reference: "Invite user to join responsible person",
         template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
-        personalization: { invitation_url: "http://submit/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{new_token}",
+        personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{new_token}",
                           invite_sender: user.name,
                           responsible_person: responsible_person.name },
       )
@@ -180,6 +180,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
   scenario "accepting an invitation for a new user when signed in as different user" do
     configure_requests_for_submit_domain
 
+    # User invites a new member to the team
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
     visit responsible_person_team_members_path(responsible_person)
@@ -204,18 +205,19 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     expect(email.recipient).to eq "newusertoregister@example.com"
     expect(email.personalization[:responsible_person]).to eq("Responsible Person")
 
+    # Accepting the invitation when signed in as a different user
     different_user = create(:submit_user, name: "John Doedifferent")
     sign_out
-    sign_in different_user
-
+    sign_in_as_member_of_responsible_person(responsible_person, different_user)
     visit email.personalization[:invitation_url]
 
     expect(page).to have_css("h1", text: "You are already signed in")
 
-    click_button "Create new account"
+    click_button "Create a new account"
 
     expect(page).to have_css("h1", text: "Create an account")
 
+    fill_in "Full Name", with: "John Doe"
     fill_in "Mobile Number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
@@ -239,24 +241,11 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     pending = PendingResponsiblePersonUser.create(email_address: "newusertoregister@example.com",
                                                   responsible_person: responsible_person)
 
-    visit "/responsible_persons/#{responsible_person.id}/team_members/#{pending.id}/join"
-    expect(page).to have_current_path(
-      new_account_responsible_person_team_member_path(responsible_person, pending),
-    )
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h1", text: "Create an account")
 
     fill_in "Full Name", with: "Joe Doe"
-    click_button "Continue"
-
-    expect_to_be_on_check_your_email_page
-
-    email = delivered_emails.last
-    expect(email.recipient).to eq "newusertoregister@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
-
-    verify_url = email.personalization[:verify_email_url]
-    visit verify_url
-
     fill_in "Mobile Number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_24_084810) do
+ActiveRecord::Schema.define(version: 2020_09_24_104319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -278,6 +278,7 @@ ActiveRecord::Schema.define(version: 2020_09_24_084810) do
     t.string "new_email_confirmation_token"
     t.datetime "new_email_confirmation_token_expires_at"
     t.boolean "account_security_completed", default: false
+    t.boolean "created_by_invitation", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

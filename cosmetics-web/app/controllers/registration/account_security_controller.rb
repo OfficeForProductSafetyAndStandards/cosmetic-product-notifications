@@ -23,11 +23,15 @@ module Registration
     end
 
     def account_security_form_params
-      params.require(:registration_account_security_form).permit(:mobile_number, :password, :name)
+      params.require(:registration_account_security_form).permit(:mobile_number, :password, :full_name)
     end
 
     def after_creation_path
-      declaration_path
+      if (rp = current_user.responsible_persons.first)
+        responsible_person_notifications_path(rp)
+      else
+        declaration_path
+      end
     end
   end
 end
