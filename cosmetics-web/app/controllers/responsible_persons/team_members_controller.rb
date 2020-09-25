@@ -4,7 +4,9 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
   before_action :authorize_responsible_person, only: %i[new create]
   skip_before_action :authenticate_user!, only: :join
   skip_before_action :create_or_join_responsible_person
-  skip_before_action :require_secondary_authentication, only: %i[join]
+  skip_before_action :require_secondary_authentication, only: %i[index join]
+
+  def index; end
 
   def new; end
 
