@@ -139,6 +139,18 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     end
   end
 
+  scenario "following an invitation link with a token that does not match any invitation" do
+    configure_requests_for_submit_domain
+    sign_in invited_user
+
+    join_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=8cfa59f3-6b61-44f9-871b-c471651f234b"
+
+    visit join_path
+
+    expect(page).to have_current_path(join_path)
+    expect(page).to have_css("h1", text: "Page not found")
+  end
+
   scenario "accepting an invitation for an existing user" do
     configure_requests_for_submit_domain
     sign_in invited_user
@@ -282,11 +294,6 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
-end
-
-def expect_to_be_on_check_your_email_page
-  expect(page).to have_css("h1", text: "Check your email")
-  expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to your email address.")
 end
 
 def complete_secondary_authentication_for(user)

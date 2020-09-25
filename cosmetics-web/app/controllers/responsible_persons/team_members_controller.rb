@@ -43,6 +43,8 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
 
       redirect_to registration_new_account_security_path
     end
+  rescue ActiveRecord::RecordNotFound
+    render "errors/not_found", status: :not_found
   end
 
   def sign_out_before_joining
