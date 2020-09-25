@@ -32,7 +32,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
       PendingResponsiblePersonUser.where(email_address: user.email).delete_all
       redirect_to responsible_person_notifications_path(responsible_person)
     else
-      user = SubmitUser.new(email: pending_request.email_address, created_by_invitation: true)
+      user = SubmitUser.new(email: pending_request.email_address)
       user.dont_send_confirmation_instructions!
 
       user.save(validate: false)

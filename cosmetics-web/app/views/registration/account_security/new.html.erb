@@ -1,4 +1,4 @@
-<% if current_user.created_by_invitation %>
+<% if @account_security_form.name_required? %>
   <% title = "Create an account" %>
 <% else %>
   <% title = "Account security" %>

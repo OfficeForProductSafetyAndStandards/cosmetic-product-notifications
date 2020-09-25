@@ -33,11 +33,11 @@ module Registration
     end
 
     def full_name
-      user.created_by_invitation? ? super : user.name
+      name_required? ? super : user.name
     end
 
     def name_required?
-      user.created_by_invitation?
+      user.name.blank?
     end
   end
 end
