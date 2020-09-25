@@ -7,6 +7,8 @@ module Users
     skip_before_action :require_secondary_authentication
     before_action :try_to_finish_account_setup, only: :delete
 
+    def delete; end
+
     def create
       set_resource_as_new_user_from_params
 
