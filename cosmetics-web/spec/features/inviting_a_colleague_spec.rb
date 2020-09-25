@@ -121,6 +121,74 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     end
   end
 
+
+  scenario "re-sending an invitation to a new user that accepted the original invitation but didn't complete their user account" do
+    configure_requests_for_submit_domain
+
+    team = create(:responsible_person, :with_a_contact_person)
+    create(:responsible_person_user, user: invited_user, responsible_person: team)
+
+    # User sends the original invitation to the team
+    sign_in_as_member_of_responsible_person(responsible_person, user)
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
+    click_on "Invite a colleague"
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
+    fill_in "Email address", with: "newusertoregister@example.com"
+    click_on "Send invitation"
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
+
+    invitation = PendingResponsiblePersonUser.last
+
+    expect(delivered_emails.size).to eq 1
+    original_email = delivered_emails.first
+
+    expect(original_email).to have_attributes(
+      recipient: "newusertoregister@example.com",
+      reference: "Invite user to join responsible person",
+      template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
+      personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+                        invite_sender: user.name,
+                        responsible_person: responsible_person.name },
+    )
+
+    # Invited user accepts the invitation
+    sign_out
+    visit original_email.personalization[:invitation_url]
+
+    expect(page).to have_css("h1", text: "Create an account")
+
+    # Invited user signs out without completing the registration
+    sign_out
+
+    # Original team member can re-invite the user that didn't complete its registration
+    sign_in(user)
+
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
+    click_on "Invite a colleague"
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
+    fill_in "Email address", with: "newusertoregister@example.com"
+    click_on "Send invitation"
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
+    expect(page).not_to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).not_to have_css(".govuk-error-message", text: "The email address is already a member of this team")
+    expect(delivered_emails.size).to eq 2
+    second_email = delivered_emails.last
+    invitation = PendingResponsiblePersonUser.last
+
+    expect(second_email).to have_attributes(
+      recipient: "newusertoregister@example.com",
+      reference: "Invite user to join responsible person",
+      template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
+      personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+                        invite_sender: user.name,
+                        responsible_person: responsible_person.name },
+    )
+  end
+
   scenario "accepting an expired invitation for an existing user" do
     configure_requests_for_submit_domain
     sign_in invited_user
@@ -255,6 +323,46 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
                                                   responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    expect(page).to have_current_path("/account-security")
+    expect(page).to have_css("h1", text: "Create an account")
+
+    fill_in "Full Name", with: "Joe Doe"
+    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
+    click_button "Continue"
+
+    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    complete_secondary_authentication_for(invited_user)
+
+    expect(page).to have_current_path("/declaration", ignore_query: true)
+    expect(page).to have_css("h1", text: "Responsible Person Declaration")
+    click_button "I confirm"
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(page).to have_css("h1", text: "Your cosmetic products")
+
+    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    expect(invited_user.responsible_persons).to include(responsible_person)
+  end
+
+  scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration" do
+    configure_requests_for_submit_domain
+
+    pending = PendingResponsiblePersonUser.create(email_address: "newusertoregister@example.com",
+                                                  responsible_person: responsible_person)
+
+    # Invited user originally accepts the invitation
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    expect(page).to have_current_path("/account-security")
+    expect(page).to have_css("h1", text: "Create an account")
+
+    # Abandones the service without completing its registration :(
+    sign_out
+
+    # Later, decides to follow the invitation again
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+
+    # Invitation is still valid and allows them to register and be added to the team
     expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h1", text: "Create an account")
 
